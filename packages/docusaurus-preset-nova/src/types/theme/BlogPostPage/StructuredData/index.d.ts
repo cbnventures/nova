@@ -6,3 +6,5 @@ import type { useBlogPostStructuredData } from '@docusaurus/plugin-content-blog/
  * @since 0.18.0
  */
 export type Theme_BlogPostPage_StructuredData_Index_BlogPostPageStructuredData = ReturnType<typeof useBlogPostStructuredData>;
+
+export type Theme_BlogPostPage_StructuredData_Index_BlogPostPageStructuredData_StructuredData = ReturnType<typeof useBlogPostStructuredData>;

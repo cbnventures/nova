@@ -17,20 +17,20 @@ import type {
   Lib_UseNavbarActiveItem_GetClaimLength_Base,
   Lib_UseNavbarActiveItem_GetClaimLength_ClaimBase,
   Lib_UseNavbarActiveItem_GetClaimLength_Match,
-  Lib_UseNavbarActiveItem_GetClaimLength_MatchedSubstring,
+  Lib_UseNavbarActiveItem_GetClaimLength_Matched,
   Lib_UseNavbarActiveItem_GetClaimLength_Normalized,
   Lib_UseNavbarActiveItem_GetClaimLength_Pathname,
   Lib_UseNavbarActiveItem_GetClaimLength_Returns,
   Lib_UseNavbarActiveItem_GetClaimLength_To,
   Lib_UseNavbarActiveItem_Item,
-  Lib_UseNavbarActiveItem_ItemLabelOrSkip,
   Lib_UseNavbarActiveItem_Items,
-  Lib_UseNavbarActiveItem_Item_Type,
   Lib_UseNavbarActiveItem_NonLinkTypes,
-  Lib_UseNavbarActiveItem_NormalizeBase_Input,
+  Lib_UseNavbarActiveItem_NormalizeBase_Base,
   Lib_UseNavbarActiveItem_NormalizeBase_Returns,
   Lib_UseNavbarActiveItem_Pathname,
   Lib_UseNavbarActiveItem_Returns,
+  Lib_UseNavbarActiveItem_UseNavbarActiveItem_ItemType,
+  Lib_UseNavbarActiveItem_UseNavbarActiveItem_Label,
 } from '../types/lib/use-navbar-active-item.d.ts';
 
 /**
@@ -56,13 +56,13 @@ const nonLinkTypes: Lib_UseNavbarActiveItem_NonLinkTypes = new Set([
  * Strips a single trailing slash from a base path so claim comparisons
  * are not split between `/docs/` and `/docs`.
  *
- * @param {Lib_UseNavbarActiveItem_NormalizeBase_Input} base - Base.
+ * @param {Lib_UseNavbarActiveItem_NormalizeBase_Base} base - Base.
  *
  * @returns {Lib_UseNavbarActiveItem_NormalizeBase_Returns}
  *
  * @since 0.18.0
  */
-function normalizeBase(base: Lib_UseNavbarActiveItem_NormalizeBase_Input): Lib_UseNavbarActiveItem_NormalizeBase_Returns {
+function normalizeBase(base: Lib_UseNavbarActiveItem_NormalizeBase_Base): Lib_UseNavbarActiveItem_NormalizeBase_Returns {
   if (base.length > 1 && base.endsWith('/') === true) {
     return base.slice(0, -1);
   }
@@ -77,7 +77,7 @@ function normalizeBase(base: Lib_UseNavbarActiveItem_NormalizeBase_Input): Lib_U
  * pathname, or null when the item does not claim it. Regex matches use
  * the matched substring length; prefix claims use the normalized base.
  *
- * @param {Lib_UseNavbarActiveItem_Item}                   item     - Item.
+ * @param {Lib_UseNavbarActiveItem_Item}                    item     - Item.
  * @param {Lib_UseNavbarActiveItem_GetClaimLength_Pathname} pathname - Pathname.
  *
  * @returns {Lib_UseNavbarActiveItem_GetClaimLength_Returns}
@@ -96,7 +96,7 @@ function getClaimLength(item: Lib_UseNavbarActiveItem_Item, pathname: Lib_UseNav
     }
 
     if (match !== null) {
-      const matched: Lib_UseNavbarActiveItem_GetClaimLength_MatchedSubstring = match[0];
+      const matched: Lib_UseNavbarActiveItem_GetClaimLength_Matched = match[0];
 
       return matched.length;
     }
@@ -144,13 +144,13 @@ export function useNavbarActiveItem(items: Lib_UseNavbarActiveItem_Items): Lib_U
 
   for (let i = 0; i < items.length; i += 1) {
     const item: Lib_UseNavbarActiveItem_Item = items[i] as Lib_UseNavbarActiveItem_Item;
-    const itemType: Lib_UseNavbarActiveItem_Item_Type = item['type'];
+    const itemType: Lib_UseNavbarActiveItem_UseNavbarActiveItem_ItemType = item['type'];
 
     if (itemType !== undefined && nonLinkTypes.has(itemType) === true) {
       continue;
     }
 
-    const label: Lib_UseNavbarActiveItem_ItemLabelOrSkip = item['label'];
+    const label: Lib_UseNavbarActiveItem_UseNavbarActiveItem_Label = item['label'];
 
     if (label === undefined) {
       continue;

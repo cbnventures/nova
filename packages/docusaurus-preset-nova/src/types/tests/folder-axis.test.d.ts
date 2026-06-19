@@ -1,27 +1,52 @@
 /**
- * Tests - Folder Axis - Folder Axis.
+ * Tests - Folder Axis - Folder Axis - Every Blocks Directory Is Re Exported From Index Ts.
  *
  * @since 0.18.0
  */
-export type Tests_FolderAxis_FolderAxis_ThemeDirs = readonly string[];
+export type Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryIsReExportedFromIndexTs_BlockDirs = readonly string[];
 
-export type Tests_FolderAxis_FolderAxis_CasingViolations = string[];
+export type Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryIsReExportedFromIndexTs_Exported = ReadonlySet<string>;
 
-export type Tests_FolderAxis_FolderAxis_CasingMessage = string;
+export type Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryIsReExportedFromIndexTs_Missing = string[];
 
-export type Tests_FolderAxis_FolderAxis_BlockDirs = readonly string[];
+export type Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryIsReExportedFromIndexTs_Message = string;
 
-export type Tests_FolderAxis_FolderAxis_ExportedFolders = ReadonlySet<string>;
+/**
+ * Tests - Folder Axis - Folder Axis - Every Blocks Directory Uses Kebab Case.
+ *
+ * @since 0.18.0
+ */
+export type Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_BlockDirs = readonly string[];
 
-export type Tests_FolderAxis_FolderAxis_MissingExports = string[];
+export type Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_Violations = string[];
 
-export type Tests_FolderAxis_FolderAxis_MissingExportsMessage = string;
+export type Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_Message = string;
 
-export type Tests_FolderAxis_FolderAxis_BlockDirSet = ReadonlySet<string>;
+/**
+ * Tests - Folder Axis - Folder Axis - Every Blocks Index Ts Export Points To An Existing Directory.
+ *
+ * @since 0.18.0
+ */
+export type Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_BlockDirs = readonly string[];
 
-export type Tests_FolderAxis_FolderAxis_StaleExports = string[];
+export type Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Exported = ReadonlySet<string>;
 
-export type Tests_FolderAxis_FolderAxis_StaleExportsMessage = string;
+export type Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_BlockDirSet = ReadonlySet<string>;
+
+export type Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Stale = string[];
+
+export type Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Message = string;
+
+/**
+ * Tests - Folder Axis - Folder Axis - Every Theme Directory Uses Pascal Case.
+ *
+ * @since 0.18.0
+ */
+export type Tests_FolderAxis_FolderAxis_EveryThemeDirectoryUsesPascalCase_ThemeDirs = readonly string[];
+
+export type Tests_FolderAxis_FolderAxis_EveryThemeDirectoryUsesPascalCase_Violations = string[];
+
+export type Tests_FolderAxis_FolderAxis_EveryThemeDirectoryUsesPascalCase_Message = string;
 
 /**
  * Tests - Folder Axis - Get Package Root.

@@ -18,12 +18,14 @@ import type {
   Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Count,
   Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Node,
   Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Returns,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_ArrowFunctionExpression_Node,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_ArrowFunctionExpression_Returns,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_MaxChainLength,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_MaxNestedArrows,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_Options,
   Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsMaxChainLength,
   Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsMaxNestedArrows,
-  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleMaxChainLength,
-  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleMaxNestedArrows,
-  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/no-complex-arrow-concise.d.ts';
 
 /**
@@ -79,9 +81,9 @@ export class Runner {
       maxNestedArrows: 1 as Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsMaxNestedArrows,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleOptions = defaultOptions[0];
-      const maxNestedArrows: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleMaxNestedArrows = options['maxNestedArrows'];
-      const maxChainLength: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleMaxChainLength = options['maxChainLength'];
+      const options: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_Options = defaultOptions[0];
+      const maxNestedArrows: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_MaxNestedArrows = options['maxNestedArrows'];
+      const maxChainLength: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_MaxChainLength = options['maxChainLength'];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -89,7 +91,7 @@ export class Runner {
       }
 
       return {
-        ArrowFunctionExpression(node) {
+        ArrowFunctionExpression(node: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_ArrowFunctionExpression_Node): Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_ArrowFunctionExpression_Returns {
           Runner.checkArrowFunction(context, node, maxNestedArrows, maxChainLength);
 
           return;

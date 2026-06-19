@@ -2,17 +2,9 @@ import type { TranslationFile } from '@docusaurus/types';
 
 import type {
   Options_PluginOptions,
-  Options_PluginOptions_ProgressBar,
   Options_PluginOptions_Search,
 } from './options.d.ts';
-import type {
-  Shared_Preset,
-  Shared_Preset_Cta,
-  Shared_Preset_Footer,
-  Shared_Preset_Logo,
-  Shared_PresetName,
-  Shared_Preset_Navbar,
-} from './shared.d.ts';
+import type { Shared_Preset } from './shared.d.ts';
 
 /**
  * Index - Docusaurus Theme Nova - Default.
@@ -113,7 +105,7 @@ export type Index_Runner_Default_Returns = {
   allContentLoaded: Index_Runner_Default_Returns_AllContentLoaded;
 };
 
-export type Index_Runner_Default_ResolvedPreset = Shared_Preset;
+export type Index_Runner_Default_ResolvedPreset = Pick<Shared_Preset, 'logo' | 'colors' | 'fonts' | 'shape' | 'depth' | 'motion' | 'navbar' | 'footer' | 'cta'>;
 
 export type Index_Runner_Default_GeneratedCss = string;
 
@@ -125,13 +117,29 @@ export type Index_Runner_Default_GeneratedCssPath = string;
 
 export type Index_Runner_Default_GoogleFontsUrl = string;
 
-export type Index_Runner_Default_PresetName = Shared_PresetName;
+export type Index_Runner_Default_PresetName = 'envoy' | 'foundry' | 'lantern' | 'marshal' | 'sentinel' | 'signal';
 
 export type Index_Runner_Default_CurrentDirectory = string;
+
+export type Index_Runner_Default_PresetLogoSrc = string;
+
+export type Index_Runner_Default_AssetsDirectory = string;
+
+export type Index_Runner_Default_PresetLogoPath = string;
+
+export type Index_Runner_Default_PresetLogoContent = string;
+
+export type Index_Runner_Default_PresetLogoDataUri = string;
 
 export type Index_Runner_Default_ThemePath = string;
 
 export type Index_Runner_Default_TypeScriptThemePath = string;
+
+export type Index_Runner_Default_BlocksPath = string;
+
+export type Index_Runner_Default_LibPath = string;
+
+export type Index_Runner_Default_PathsToWatch = string[];
 
 export type Index_Runner_Default_CssResetPath = string;
 
@@ -218,7 +226,7 @@ export type Index_Runner_Default_ThemeConfig = Record<string, unknown>;
 
 export type Index_Runner_Default_AnnouncementBar = Record<string, unknown> | undefined;
 
-export type Index_Runner_Default_ProgressBarConfig = Options_PluginOptions_ProgressBar;
+export type Index_Runner_Default_ProgressBarConfig = boolean | Record<string, unknown>;
 
 export type Index_Runner_Default_NprogressCssPath = string;
 
@@ -240,6 +248,17 @@ export type Index_Runner_Default_AllContentLoaded_Args = {
 };
 
 export type Index_Runner_Default_AllContentLoaded_AllContent = Record<string, Record<string, unknown>>;
+
+export type Index_Runner_Default_AllContentLoaded_Actions_SetGlobalDataData = Record<string, unknown>;
+
+export type Index_Runner_Default_AllContentLoaded_Actions_SetGlobalData = (data: Index_Runner_Default_AllContentLoaded_Actions_SetGlobalDataData) => void;
+
+export type Index_Runner_Default_AllContentLoaded_Actions = {
+  setGlobalData: Index_Runner_Default_AllContentLoaded_Actions_SetGlobalData;
+  [key: string]: unknown;
+};
+
+export type Index_Runner_Default_AllContentLoaded_DocDescriptions = Record<string, string>;
 
 export type Index_Runner_Default_AllContentLoaded_DocsPluginData = Record<string, unknown> | undefined;
 
@@ -263,6 +282,48 @@ export type Index_Runner_Default_AllContentLoaded_DocsVersionDoc = Record<string
 
 export type Index_Runner_Default_AllContentLoaded_DocsVersionDocs = Index_Runner_Default_AllContentLoaded_DocsVersionDoc[];
 
+export type Index_Runner_Default_AllContentLoaded_PermalinkValue = string;
+
+export type Index_Runner_Default_AllContentLoaded_DescriptionValue = string;
+
+export type Index_Runner_Default_AllContentLoaded_BlogPost_Title = string;
+
+export type Index_Runner_Default_AllContentLoaded_BlogPost_Description = string;
+
+export type Index_Runner_Default_AllContentLoaded_BlogPost_Permalink = string;
+
+export type Index_Runner_Default_AllContentLoaded_BlogPost_Date = string;
+
+export type Index_Runner_Default_AllContentLoaded_BlogPost = {
+  title: Index_Runner_Default_AllContentLoaded_BlogPost_Title;
+  description: Index_Runner_Default_AllContentLoaded_BlogPost_Description;
+  permalink: Index_Runner_Default_AllContentLoaded_BlogPost_Permalink;
+  date: Index_Runner_Default_AllContentLoaded_BlogPost_Date;
+};
+
+export type Index_Runner_Default_AllContentLoaded_BlogPosts = Index_Runner_Default_AllContentLoaded_BlogPost[];
+
+export type Index_Runner_Default_AllContentLoaded_BlogSeenPostPermalinks = Set<string>;
+
+export type Index_Runner_Default_AllContentLoaded_BlogAuthor_ImageURL = string | undefined;
+
+export type Index_Runner_Default_AllContentLoaded_BlogAuthor_Key = string;
+
+export type Index_Runner_Default_AllContentLoaded_BlogAuthor_Name = string | undefined;
+
+export type Index_Runner_Default_AllContentLoaded_BlogAuthor_Permalink = string | undefined;
+
+export type Index_Runner_Default_AllContentLoaded_BlogAuthor = {
+  imageURL: Index_Runner_Default_AllContentLoaded_BlogAuthor_ImageURL;
+  key: Index_Runner_Default_AllContentLoaded_BlogAuthor_Key;
+  name: Index_Runner_Default_AllContentLoaded_BlogAuthor_Name;
+  permalink: Index_Runner_Default_AllContentLoaded_BlogAuthor_Permalink;
+};
+
+export type Index_Runner_Default_AllContentLoaded_BlogAuthors = Index_Runner_Default_AllContentLoaded_BlogAuthor[];
+
+export type Index_Runner_Default_AllContentLoaded_BlogSeenAuthorKeys = Set<string>;
+
 export type Index_Runner_Default_AllContentLoaded_BlogPluginData = Record<string, unknown> | undefined;
 
 export type Index_Runner_Default_AllContentLoaded_BlogPluginContent_BlogPosts = Index_Runner_Default_AllContentLoaded_BlogPluginPosts;
@@ -282,6 +343,40 @@ export type Index_Runner_Default_AllContentLoaded_BlogPluginPost = {
 export type Index_Runner_Default_AllContentLoaded_BlogPluginPosts = Index_Runner_Default_AllContentLoaded_BlogPluginPost[];
 
 export type Index_Runner_Default_AllContentLoaded_BlogPostMetadata = Record<string, unknown>;
+
+export type Index_Runner_Default_AllContentLoaded_BlogTitleValue = string;
+
+export type Index_Runner_Default_AllContentLoaded_BlogPermalinkValue = string;
+
+export type Index_Runner_Default_AllContentLoaded_BlogDescriptionValue = string;
+
+export type Index_Runner_Default_AllContentLoaded_BlogDateValue = string;
+
+export type Index_Runner_Default_AllContentLoaded_AuthorRaw = Record<string, unknown>;
+
+export type Index_Runner_Default_AllContentLoaded_BlogPostAuthors = Index_Runner_Default_AllContentLoaded_AuthorRaw[];
+
+export type Index_Runner_Default_AllContentLoaded_AuthorKey = string | undefined;
+
+export type Index_Runner_Default_AllContentLoaded_AuthorName = string | undefined;
+
+export type Index_Runner_Default_AllContentLoaded_AuthorImageUrl = string | undefined;
+
+export type Index_Runner_Default_AllContentLoaded_AuthorPage = Record<string, unknown> | undefined;
+
+export type Index_Runner_Default_AllContentLoaded_AuthorPermalink = string | undefined;
+
+export type Index_Runner_Default_AllContentLoaded_NotFoundBundleCount = number;
+
+export type Index_Runner_Default_AllContentLoaded_ErrorPageContentTitleCount = number;
+
+export type Index_Runner_Default_AllContentLoaded_CreditPhraseCount = number;
+
+export type Index_Runner_Default_AllContentLoaded_NotFoundBundleIndex = number;
+
+export type Index_Runner_Default_AllContentLoaded_ErrorPageContentTitleIndex = number;
+
+export type Index_Runner_Default_AllContentLoaded_CreditPhraseIndex = number;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Configure Post Css.
@@ -323,107 +418,6 @@ export type Index_Runner_Default_ContentLoaded_Args = {
   [key: string]: unknown;
 };
 
-export type Index_Runner_Default_ContentLoaded_Actions_AddRoute = (config: Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig) => void;
-
-export type Index_Runner_Default_ContentLoaded_Actions_SetGlobalData = (data: Index_Runner_Default_ContentLoaded_GlobalData) => void;
-
-export type Index_Runner_Default_ContentLoaded_Actions = {
-  addRoute: Index_Runner_Default_ContentLoaded_Actions_AddRoute;
-  setGlobalData: Index_Runner_Default_ContentLoaded_Actions_SetGlobalData;
-  [key: string]: unknown;
-};
-
-export type Index_Runner_Default_ContentLoaded_GlobalData_BlogAuthors = Index_Runner_Default_ContentLoaded_BlogAuthor[];
-
-export type Index_Runner_Default_ContentLoaded_GlobalData_BlogPosts = Index_Runner_Default_ContentLoaded_BlogPosts;
-
-export type Index_Runner_Default_ContentLoaded_GlobalData_DocDescriptions = Index_Runner_Default_ContentLoaded_DocDescriptions;
-
-export type Index_Runner_Default_ContentLoaded_GlobalData_NavbarVariant = Shared_Preset_Navbar;
-
-export type Index_Runner_Default_ContentLoaded_GlobalData_FooterVariant = Shared_Preset_Footer;
-
-export type Index_Runner_Default_ContentLoaded_GlobalData_PresetLogo = Shared_Preset_Logo;
-
-export type Index_Runner_Default_ContentLoaded_GlobalData_PresetCta = Shared_Preset_Cta;
-
-export type Index_Runner_Default_ContentLoaded_GlobalData_NotFoundBundleIndex = number;
-
-export type Index_Runner_Default_ContentLoaded_GlobalData_ErrorPageContentTitleIndex = number;
-
-export type Index_Runner_Default_ContentLoaded_GlobalData_CreditPhraseIndex = number;
-
-export type Index_Runner_Default_ContentLoaded_GlobalData = {
-  blogAuthors: Index_Runner_Default_ContentLoaded_GlobalData_BlogAuthors;
-  blogPosts: Index_Runner_Default_ContentLoaded_GlobalData_BlogPosts;
-  docDescriptions: Index_Runner_Default_ContentLoaded_GlobalData_DocDescriptions;
-  navbarVariant: Index_Runner_Default_ContentLoaded_GlobalData_NavbarVariant;
-  footerVariant: Index_Runner_Default_ContentLoaded_GlobalData_FooterVariant;
-  presetCta: Index_Runner_Default_ContentLoaded_GlobalData_PresetCta;
-  presetLogo: Index_Runner_Default_ContentLoaded_GlobalData_PresetLogo;
-  notFoundBundleIndex: Index_Runner_Default_ContentLoaded_GlobalData_NotFoundBundleIndex;
-  errorPageContentTitleIndex: Index_Runner_Default_ContentLoaded_GlobalData_ErrorPageContentTitleIndex;
-  creditPhraseIndex: Index_Runner_Default_ContentLoaded_GlobalData_CreditPhraseIndex;
-};
-
-export type Index_Runner_Default_ContentLoaded_DocDescriptions = Record<string, string>;
-
-export type Index_Runner_Default_ContentLoaded_PermalinkValue = string;
-
-export type Index_Runner_Default_ContentLoaded_DescriptionValue = string;
-
-export type Index_Runner_Default_ContentLoaded_BlogPosts = Index_Runner_Default_ContentLoaded_BlogPost[];
-
-export type Index_Runner_Default_ContentLoaded_BlogSeenPostPermalinks = Set<string>;
-
-export type Index_Runner_Default_ContentLoaded_BlogAuthors = Index_Runner_Default_ContentLoaded_BlogAuthor[];
-
-export type Index_Runner_Default_ContentLoaded_BlogSeenAuthorKeys = Set<string>;
-
-export type Index_Runner_Default_ContentLoaded_BlogTitleValue = string;
-
-export type Index_Runner_Default_ContentLoaded_BlogPermalinkValue = string;
-
-export type Index_Runner_Default_ContentLoaded_BlogDescriptionValue = string;
-
-export type Index_Runner_Default_ContentLoaded_BlogDateValue = string;
-
-export type Index_Runner_Default_ContentLoaded_BlogPost_Title = string;
-
-export type Index_Runner_Default_ContentLoaded_BlogPost_Description = string;
-
-export type Index_Runner_Default_ContentLoaded_BlogPost_Permalink = string;
-
-export type Index_Runner_Default_ContentLoaded_BlogPost_Date = string;
-
-export type Index_Runner_Default_ContentLoaded_BlogPost = {
-  title: Index_Runner_Default_ContentLoaded_BlogPost_Title;
-  description: Index_Runner_Default_ContentLoaded_BlogPost_Description;
-  permalink: Index_Runner_Default_ContentLoaded_BlogPost_Permalink;
-  date: Index_Runner_Default_ContentLoaded_BlogPost_Date;
-};
-
-export type Index_Runner_Default_ContentLoaded_BlogFileAuthors = Record<string, unknown>[];
-
-export type Index_Runner_Default_ContentLoaded_BlogFileAuthor = Record<string, unknown>;
-
-export type Index_Runner_Default_ContentLoaded_BlogAuthor_Key = string;
-
-export type Index_Runner_Default_ContentLoaded_BlogAuthor_Name = string | undefined;
-
-export type Index_Runner_Default_ContentLoaded_BlogAuthor_ImageURL = string | undefined;
-
-export type Index_Runner_Default_ContentLoaded_BlogAuthorPage = Record<string, unknown> | undefined;
-
-export type Index_Runner_Default_ContentLoaded_BlogAuthor_Permalink = string | undefined;
-
-export type Index_Runner_Default_ContentLoaded_BlogAuthor = {
-  imageURL: Index_Runner_Default_ContentLoaded_BlogAuthor_ImageURL;
-  key: Index_Runner_Default_ContentLoaded_BlogAuthor_Key;
-  name: Index_Runner_Default_ContentLoaded_BlogAuthor_Name;
-  permalink: Index_Runner_Default_ContentLoaded_BlogAuthor_Permalink;
-};
-
 export type Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig_Path = string;
 
 export type Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig_Component = string;
@@ -435,28 +429,23 @@ export type Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig = {
   [key: string]: unknown;
 };
 
-export type Index_Runner_Default_ContentLoaded_NotFoundBundleCount = number;
+export type Index_Runner_Default_ContentLoaded_Actions_AddRoute = (config: Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig) => void;
 
-export type Index_Runner_Default_ContentLoaded_ErrorPageContentTitleCount = number;
-
-export type Index_Runner_Default_ContentLoaded_CreditPhraseCount = number;
-
-export type Index_Runner_Default_ContentLoaded_NotFoundBundleIndexValue = number;
-
-export type Index_Runner_Default_ContentLoaded_ErrorPageContentTitleIndexValue = number;
-
-export type Index_Runner_Default_ContentLoaded_CreditPhraseIndexValue = number;
+export type Index_Runner_Default_ContentLoaded_Actions = {
+  addRoute: Index_Runner_Default_ContentLoaded_Actions_AddRoute;
+  [key: string]: unknown;
+};
 
 /**
  * Index - Docusaurus Theme Nova - Default - Get Client Modules.
  *
  * @since 0.15.0
  */
-export type Index_Runner_Default_StickyLayoutPath = string;
+export type Index_Runner_Default_GetClientModules_StickyLayoutPath = string;
 
 export type Index_Runner_Default_GetClientModules_ClientModules = string[];
 
-export type Index_Runner_Default_GetClientModules_NprogressCssPath = string;
+export type Index_Runner_Default_GetClientModules_NprogressCssModule = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Get Default Code Translation Messages.
@@ -485,18 +474,21 @@ export type Index_Runner_Default_GetPathsToWatch_Paths = string[];
  *
  * @since 0.15.0
  */
+export type Index_Runner_Default_GetThemePath_Returns = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Get Translation Files.
  *
  * @since 0.15.0
  */
+export type Index_Runner_Default_GetTranslationFiles_Returns = TranslationFile[];
 
 /**
  * Index - Docusaurus Theme Nova - Default - Get TypeScript Theme Path.
  *
  * @since 0.15.0
  */
+export type Index_Runner_Default_GetTypeScriptThemePath_Returns = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Inject HTML Tags.
@@ -515,7 +507,7 @@ export type Index_Runner_Default_InjectHtmlTags_PreBodyTags = Array<{
   innerHTML?: string;
 }>;
 
-export type Index_Runner_Default_InjectHtmlTags_ColorModeInit = string;
+export type Index_Runner_Default_InjectHtmlTags_ColorModeScript = string;
 
 export type Index_Runner_Default_InjectHtmlTags_PreBodyScriptEntries = Array<{
   tagName: string;
@@ -524,7 +516,7 @@ export type Index_Runner_Default_InjectHtmlTags_PreBodyScriptEntries = Array<{
 
 export type Index_Runner_Default_InjectHtmlTags_PresetVariantInit = string;
 
-export type Index_Runner_Default_InjectHtmlTags_AnnouncementBarInit = string;
+export type Index_Runner_Default_InjectHtmlTags_AnnouncementBarScript = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Post Build.
@@ -550,34 +542,6 @@ export type Index_Runner_Default_PostBuild_Args = {
 };
 
 export type Index_Runner_Default_PostBuild_SearchConfigCast = Record<string, unknown>;
-
-/**
- * Index - Docusaurus Theme Nova - Default - Preset Logo Content.
- *
- * @since 0.15.0
- */
-export type Index_Runner_Default_PresetLogoContent = string;
-
-/**
- * Index - Docusaurus Theme Nova - Default - Preset Logo Data Uri.
- *
- * @since 0.15.0
- */
-export type Index_Runner_Default_PresetLogoDataUri = string;
-
-/**
- * Index - Docusaurus Theme Nova - Default - Preset Logo Path.
- *
- * @since 0.15.0
- */
-export type Index_Runner_Default_PresetLogoPath = string;
-
-/**
- * Index - Docusaurus Theme Nova - Default - Preset Logo Src.
- *
- * @since 0.15.0
- */
-export type Index_Runner_Default_PresetLogoSrc = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Translate Theme Config.

@@ -1,26 +1,23 @@
 import type {
+  Plugins_MermaidTooltip_Client_Click,
   Plugins_MermaidTooltip_Client_Click_Anchor,
   Plugins_MermaidTooltip_Client_Click_Href,
-  Plugins_MermaidTooltip_Client_Click_Returns,
   Plugins_MermaidTooltip_Client_Click_Target,
+  Plugins_MermaidTooltip_Client_FindClickable,
   Plugins_MermaidTooltip_Client_FindClickable_Match,
-  Plugins_MermaidTooltip_Client_FindClickable_Returns,
-  Plugins_MermaidTooltip_Client_FindClickable_Target,
   Plugins_MermaidTooltip_Client_FindClickable_Unknown,
   Plugins_MermaidTooltip_Client_GetOrCreateTooltip_El,
-  Plugins_MermaidTooltip_Client_HideFor_Returns,
+  Plugins_MermaidTooltip_Client_HideFor,
   Plugins_MermaidTooltip_Client_HideFor_Stash,
   Plugins_MermaidTooltip_Client_HideFor_Stashed,
   Plugins_MermaidTooltip_Client_HoveredNode,
-  Plugins_MermaidTooltip_Client_Pointermove_Returns,
+  Plugins_MermaidTooltip_Client_Pointermove,
+  Plugins_MermaidTooltip_Client_Pointerover,
   Plugins_MermaidTooltip_Client_Pointerover_Node,
-  Plugins_MermaidTooltip_Client_Pointerover_Returns,
+  Plugins_MermaidTooltip_Client_ShowFor,
   Plugins_MermaidTooltip_Client_ShowFor_El,
-  Plugins_MermaidTooltip_Client_ShowFor_Returns,
   Plugins_MermaidTooltip_Client_ShowFor_Stash,
   Plugins_MermaidTooltip_Client_ShowFor_Title,
-  Plugins_MermaidTooltip_Client_ShowFor_X,
-  Plugins_MermaidTooltip_Client_ShowFor_Y,
   Plugins_MermaidTooltip_Client_TooltipEl,
 } from '../../types/plugins/mermaid-tooltip/client.d.ts';
 
@@ -74,7 +71,7 @@ if (typeof document !== 'undefined') {
     return el;
   };
 
-  const findClickable = (target: Plugins_MermaidTooltip_Client_FindClickable_Target): Plugins_MermaidTooltip_Client_FindClickable_Returns => {
+  const findClickable: Plugins_MermaidTooltip_Client_FindClickable = (target) => {
     if (target instanceof Element === false) {
       return null;
     }
@@ -84,7 +81,7 @@ if (typeof document !== 'undefined') {
     return (match === null) ? null : match as Plugins_MermaidTooltip_Client_FindClickable_Unknown as SVGGElement;
   };
 
-  const showFor = (node: SVGGElement, x: Plugins_MermaidTooltip_Client_ShowFor_X, y: Plugins_MermaidTooltip_Client_ShowFor_Y): Plugins_MermaidTooltip_Client_ShowFor_Returns => {
+  const showFor: Plugins_MermaidTooltip_Client_ShowFor = (node, x, y) => {
     const title: Plugins_MermaidTooltip_Client_ShowFor_Title = node.getAttribute('title');
 
     if (title === null || title.length === 0) {
@@ -109,7 +106,7 @@ if (typeof document !== 'undefined') {
     return undefined;
   };
 
-  const hideFor = (node: SVGGElement): Plugins_MermaidTooltip_Client_HideFor_Returns => {
+  const hideFor: Plugins_MermaidTooltip_Client_HideFor = (node) => {
     const stash: Plugins_MermaidTooltip_Client_HideFor_Stash = node.dataset;
     const stashed: Plugins_MermaidTooltip_Client_HideFor_Stashed = stash[STASH_KEY];
 
@@ -134,7 +131,7 @@ if (typeof document !== 'undefined') {
     return undefined;
   };
 
-  document.addEventListener('pointerover', (event: PointerEvent): Plugins_MermaidTooltip_Client_Pointerover_Returns => {
+  const pointerover: Plugins_MermaidTooltip_Client_Pointerover = (event) => {
     const node: Plugins_MermaidTooltip_Client_Pointerover_Node = findClickable(event.target);
 
     if (node === hoveredNode) {
@@ -152,9 +149,9 @@ if (typeof document !== 'undefined') {
     hoveredNode = node;
 
     return undefined;
-  });
+  };
 
-  document.addEventListener('pointermove', (event: PointerEvent): Plugins_MermaidTooltip_Client_Pointermove_Returns => {
+  const pointermove: Plugins_MermaidTooltip_Client_Pointermove = (event) => {
     if (tooltipEl === null || hoveredNode === null) {
       return undefined;
     }
@@ -163,7 +160,7 @@ if (typeof document !== 'undefined') {
     tooltipEl.style.top = `${String(event.pageY + CURSOR_OFFSET_Y)}px`;
 
     return undefined;
-  });
+  };
 
   /*
    * Mermaid wraps clickable nodes in `<a xlink:href="#">` when the `click`
@@ -172,7 +169,7 @@ if (typeof document !== 'undefined') {
    * a pre-rendered mermaid container whose href resolves to `#`; real URLs
    * (e.g. `xlink:href="https://..."`) are left untouched.
    */
-  document.addEventListener('click', (event: MouseEvent): Plugins_MermaidTooltip_Client_Click_Returns => {
+  const click: Plugins_MermaidTooltip_Client_Click = (event) => {
     if (event.target instanceof Element === true) {
       const target: Plugins_MermaidTooltip_Client_Click_Target = event.target;
 
@@ -206,7 +203,11 @@ if (typeof document !== 'undefined') {
     }
 
     return undefined;
-  });
+  };
+
+  document.addEventListener('pointerover', pointerover);
+  document.addEventListener('pointermove', pointermove);
+  document.addEventListener('click', click);
 }
 
 export {};

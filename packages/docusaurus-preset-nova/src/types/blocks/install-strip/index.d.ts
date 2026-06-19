@@ -49,3 +49,4 @@ export type Blocks_InstallStrip_Index_BlocksInstallStrip_CopyText = string;
  *
  * @since 0.15.0
  */
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_HandleCopy_Returns = undefined;

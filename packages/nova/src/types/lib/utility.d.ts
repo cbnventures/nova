@@ -7,9 +7,9 @@ import type {
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigWorkspace,
   Shared_ShellOutput,
+  Shared_WindowsRegistryKey,
   Shared_WindowsRegistryKeys,
   Shared_WorkspaceManifest,
-  Shared_WorkspaceManifest_FileContents,
 } from '../shared.d.ts';
 
 /**
@@ -48,6 +48,8 @@ export type Lib_Utility_BuildGeneratedFileHeader_IsMarkdownStyle = boolean;
 
 export type Lib_Utility_BuildGeneratedFileHeader_Lines = string[];
 
+export type Lib_Utility_BuildGeneratedFileHeader_MarkdownLines = string[];
+
 /**
  * Lib - Utility - Collect Consumer Workspace Paths.
  *
@@ -63,7 +65,9 @@ export type Lib_Utility_CollectConsumerWorkspacePaths_Returns = string[];
 
 export type Lib_Utility_CollectConsumerWorkspacePaths_Paths = string[];
 
-export type Lib_Utility_CollectConsumerWorkspacePaths_SafeWorkspaces = Shared_NovaConfig_Workspaces;
+export type Lib_Utility_CollectConsumerWorkspacePaths_SafeWorkspaces = {
+  [key: string]: Shared_NovaConfigWorkspace;
+};
 
 export type Lib_Utility_CollectConsumerWorkspacePaths_WorkspacePath = string;
 
@@ -92,11 +96,11 @@ export type Lib_Utility_CompareSemver_A = string;
 export type Lib_Utility_CompareSemver_B = string;
 
 /**
- * Lib - Utility - Compare Semver - Length.
+ * Lib - Utility - Compare Semver - Returns.
  *
  * @since 0.18.0
  */
-export type Lib_Utility_CompareSemver_Length = number;
+export type Lib_Utility_CompareSemver_Returns = number;
 
 /**
  * Lib - Utility - Compare Semver - Parts A.
@@ -113,11 +117,11 @@ export type Lib_Utility_CompareSemver_PartsA = number[];
 export type Lib_Utility_CompareSemver_PartsB = number[];
 
 /**
- * Lib - Utility - Compare Semver - Returns.
+ * Lib - Utility - Compare Semver - Length.
  *
  * @since 0.18.0
  */
-export type Lib_Utility_CompareSemver_Returns = number;
+export type Lib_Utility_CompareSemver_Length = number;
 
 /**
  * Lib - Utility - Compare Semver - Val A.
@@ -142,15 +146,35 @@ export type Lib_Utility_CurrentTimestamp_Returns = string;
 
 export type Lib_Utility_CurrentTimestamp_Now = Date;
 
+export type Lib_Utility_CurrentTimestamp_Number = number;
+
+export type Lib_Utility_CurrentTimestamp_Width = number;
+
+export type Lib_Utility_CurrentTimestamp_PadLeft_Returns = string;
+
+export type Lib_Utility_CurrentTimestamp_PadLeft = (number: number, width?: number) => Lib_Utility_CurrentTimestamp_PadLeft_Returns;
+
+export type Lib_Utility_CurrentTimestamp_PadLeft_CurrentWidth = number;
+
 export type Lib_Utility_CurrentTimestamp_Year = number;
+
+export type Lib_Utility_CurrentTimestamp_RawMonth = number;
 
 export type Lib_Utility_CurrentTimestamp_Month = string;
 
+export type Lib_Utility_CurrentTimestamp_RawDate = number;
+
 export type Lib_Utility_CurrentTimestamp_Day = string;
+
+export type Lib_Utility_CurrentTimestamp_RawHours = number;
 
 export type Lib_Utility_CurrentTimestamp_Hour = string;
 
+export type Lib_Utility_CurrentTimestamp_RawMinutes = number;
+
 export type Lib_Utility_CurrentTimestamp_Minute = string;
+
+export type Lib_Utility_CurrentTimestamp_RawSeconds = number;
 
 export type Lib_Utility_CurrentTimestamp_Second = string;
 
@@ -167,31 +191,6 @@ export type Lib_Utility_CurrentTimestamp_TimezoneHoursTruncated = number;
 export type Lib_Utility_CurrentTimestamp_TimezoneHours = string;
 
 export type Lib_Utility_CurrentTimestamp_TimezoneMinutes = string;
-
-/**
- * Lib - Utility - Current Timestamp - Pad Left.
- *
- * @since 0.11.0
- */
-export type Lib_Utility_CurrentTimestamp_PadLeft_Number = number;
-
-export type Lib_Utility_CurrentTimestamp_PadLeft_Width = number;
-
-export type Lib_Utility_CurrentTimestamp_PadLeft_Returns = string;
-
-export type Lib_Utility_CurrentTimestamp_PadLeft = (number: Lib_Utility_CurrentTimestamp_PadLeft_Number, width?: Lib_Utility_CurrentTimestamp_PadLeft_Width) => Lib_Utility_CurrentTimestamp_PadLeft_Returns;
-
-export type Lib_Utility_CurrentTimestamp_PadLeft_CurrentWidth = number;
-
-export type Lib_Utility_CurrentTimestamp_RawMonth = number;
-
-export type Lib_Utility_CurrentTimestamp_RawDate = number;
-
-export type Lib_Utility_CurrentTimestamp_RawHours = number;
-
-export type Lib_Utility_CurrentTimestamp_RawMinutes = number;
-
-export type Lib_Utility_CurrentTimestamp_RawSeconds = number;
 
 /**
  * Lib - Utility - Detect Shell.
@@ -224,7 +223,7 @@ export type Lib_Utility_DiscoverPathsWithFile_Results = string[];
 
 export type Lib_Utility_DiscoverPathsWithFile_RootDirectory = string;
 
-export type Lib_Utility_DiscoverPathsWithFile_BackwardCurrentDirectory = string;
+export type Lib_Utility_DiscoverPathsWithFile_CurrentDirectory = string;
 
 export type Lib_Utility_DiscoverPathsWithFile_TargetPath = string;
 
@@ -234,7 +233,7 @@ export type Lib_Utility_DiscoverPathsWithFile_Visited = Set<string>;
 
 export type Lib_Utility_DiscoverPathsWithFile_SkipDirectories = Set<string>;
 
-export type Lib_Utility_DiscoverPathsWithFile_ForwardCurrentDirectory = string | undefined;
+export type Lib_Utility_DiscoverPathsWithFile_ForwardDirectory = string | undefined;
 
 export type Lib_Utility_DiscoverPathsWithFile_RealDirectory = string | undefined;
 
@@ -265,6 +264,32 @@ export type Lib_Utility_ExecuteShell_CommandOnPath = boolean;
 
 export type Lib_Utility_ExecuteShell_FullCommand = string;
 
+/**
+ * Lib - Utility - Execute Shell - Quote Posix.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Utility_ExecuteShell_PosixString = string;
+
+export type Lib_Utility_ExecuteShell_QuotePosix_Returns = string;
+
+export type Lib_Utility_ExecuteShell_QuotePosix = (posixString: Lib_Utility_ExecuteShell_PosixString) => Lib_Utility_ExecuteShell_QuotePosix_Returns;
+
+export type Lib_Utility_ExecuteShell_QuotePosix_Pattern = RegExp;
+
+/**
+ * Lib - Utility - Execute Shell - Quote Windows.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Utility_ExecuteShell_WindowsString = string;
+
+export type Lib_Utility_ExecuteShell_QuoteWindows_Returns = string;
+
+export type Lib_Utility_ExecuteShell_QuoteWindows = (windowsString: Lib_Utility_ExecuteShell_WindowsString) => Lib_Utility_ExecuteShell_QuoteWindows_Returns;
+
+export type Lib_Utility_ExecuteShell_QuoteWindows_Pattern = RegExp;
+
 export type Lib_Utility_ExecuteShell_ExecResult_Stdout = string;
 
 export type Lib_Utility_ExecuteShell_ExecResult_Stderr = string;
@@ -278,35 +303,19 @@ export type Lib_Utility_ExecuteShell_Stdout = string;
 
 export type Lib_Utility_ExecuteShell_Stderr = string;
 
-export type Lib_Utility_ExecuteShell_SuccessOutput = Shared_ShellOutput;
+export type Lib_Utility_ExecuteShell_Output_TextOut = string;
 
-export type Lib_Utility_ExecuteShell_ErrorOutput = Shared_ShellOutput;
+export type Lib_Utility_ExecuteShell_Output_TextError = string;
 
-/**
- * Lib - Utility - Execute Shell - Quote Posix.
- *
- * @since 0.11.0
- */
-export type Lib_Utility_ExecuteShell_QuotePosix_String = string;
+export type Lib_Utility_ExecuteShell_Output_Code = number;
 
-export type Lib_Utility_ExecuteShell_QuotePosix_Returns = string;
+export type Lib_Utility_ExecuteShell_Output = {
+  textOut: Lib_Utility_ExecuteShell_Output_TextOut;
+  textError: Lib_Utility_ExecuteShell_Output_TextError;
+  code: Lib_Utility_ExecuteShell_Output_Code;
+};
 
-export type Lib_Utility_ExecuteShell_QuotePosix = (string: Lib_Utility_ExecuteShell_QuotePosix_String) => Lib_Utility_ExecuteShell_QuotePosix_Returns;
-
-export type Lib_Utility_ExecuteShell_QuotePosix_Pattern = RegExp;
-
-/**
- * Lib - Utility - Execute Shell - Quote Windows.
- *
- * @since 0.11.0
- */
-export type Lib_Utility_ExecuteShell_QuoteWindows_String = string;
-
-export type Lib_Utility_ExecuteShell_QuoteWindows_Returns = string;
-
-export type Lib_Utility_ExecuteShell_QuoteWindows = (string: Lib_Utility_ExecuteShell_QuoteWindows_String) => Lib_Utility_ExecuteShell_QuoteWindows_Returns;
-
-export type Lib_Utility_ExecuteShell_QuoteWindows_Pattern = RegExp;
+export type Lib_Utility_ExecuteShell_ErrorOutput = Lib_Utility_ExecuteShell_Output;
 
 /**
  * Lib - Utility - Is Command Exists.
@@ -324,6 +333,20 @@ export type Lib_Utility_IsCommandExists_Bin = string;
 export type Lib_Utility_IsCommandExists_CommandArguments = string[];
 
 export type Lib_Utility_IsCommandExists_ChildProcess = ChildProcess;
+
+/**
+ * Lib - Utility - Is Command Exists - Error.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Utility_IsCommandExists_Error_Returns = void;
+
+/**
+ * Lib - Utility - Is Command Exists - Exit.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Utility_IsCommandExists_Exit_Returns = void;
 
 /**
  * Lib - Utility - Is Execute Shell Error.
@@ -430,17 +453,19 @@ export type Lib_Utility_LoadWorkspaceManifests_Options = {
   workspaces: Lib_Utility_LoadWorkspaceManifests_Options_Workspaces;
 };
 
-export type Lib_Utility_LoadWorkspaceManifests_Returns = Promise<Lib_Utility_LoadWorkspaceManifests_PackageJsons>;
+export type Lib_Utility_LoadWorkspaceManifests_PackageJson = Shared_WorkspaceManifest;
+
+export type Lib_Utility_LoadWorkspaceManifests_Returns = Promise<Lib_Utility_LoadWorkspaceManifests_PackageJson[]>;
 
 export type Lib_Utility_LoadWorkspaceManifests_ProjectRoot = string;
 
 export type Lib_Utility_LoadWorkspaceManifests_Workspaces = [string, Shared_NovaConfigWorkspace][];
 
-export type Lib_Utility_LoadWorkspaceManifests_PackageJsons = Shared_WorkspaceManifest[];
+export type Lib_Utility_LoadWorkspaceManifests_PackageJsons = Lib_Utility_LoadWorkspaceManifests_PackageJson[];
 
 export type Lib_Utility_LoadWorkspaceManifests_RelativeWorkspacePath = string;
 
-export type Lib_Utility_LoadWorkspaceManifests_WorkspaceManifest = Shared_NovaConfigWorkspace;
+export type Lib_Utility_LoadWorkspaceManifests_WorkspaceManifest = Lib_Utility_LoadWorkspaceManifests_Workspaces[number][1];
 
 export type Lib_Utility_LoadWorkspaceManifests_AbsoluteWorkspacePath = string;
 
@@ -448,7 +473,7 @@ export type Lib_Utility_LoadWorkspaceManifests_AbsolutePackageJsonPath = string;
 
 export type Lib_Utility_LoadWorkspaceManifests_RawFile = string;
 
-export type Lib_Utility_LoadWorkspaceManifests_ParsedFile = Shared_WorkspaceManifest_FileContents;
+export type Lib_Utility_LoadWorkspaceManifests_ParsedFile = Record<string, unknown>;
 
 export type Lib_Utility_LoadWorkspaceManifests_LoadErrorMessage = string;
 
@@ -491,7 +516,7 @@ export type Lib_Utility_ParseLinuxOsReleaseText_Returns = Shared_LinuxOsReleaseE
 
 export type Lib_Utility_ParseLinuxOsReleaseText_Lines = string[];
 
-export type Lib_Utility_ParseLinuxOsReleaseText_OsReleaseEntries = Shared_LinuxOsReleaseEntries;
+export type Lib_Utility_ParseLinuxOsReleaseText_OsReleaseEntries = Lib_Utility_ParseLinuxOsReleaseText_Returns;
 
 export type Lib_Utility_ParseLinuxOsReleaseText_Parts = string[];
 
@@ -514,7 +539,9 @@ export type Lib_Utility_ParseWindowsRegistryQuery_Paths = string[];
 
 export type Lib_Utility_ParseWindowsRegistryQuery_Query = Shared_ShellOutput;
 
-export type Lib_Utility_ParseWindowsRegistryQuery_RegistryKeys = Shared_WindowsRegistryKeys;
+export type Lib_Utility_ParseWindowsRegistryQuery_RegistryKeys = {
+  [key: string]: Shared_WindowsRegistryKey;
+};
 
 /**
  * Lib - Utility - Parse Windows Registry Text.
@@ -527,7 +554,7 @@ export type Lib_Utility_ParseWindowsRegistryText_Returns = Shared_WindowsRegistr
 
 export type Lib_Utility_ParseWindowsRegistryText_Lines = string[];
 
-export type Lib_Utility_ParseWindowsRegistryText_RegistryKeys = Shared_WindowsRegistryKeys;
+export type Lib_Utility_ParseWindowsRegistryText_RegistryKeys = Lib_Utility_ParseWindowsRegistryText_Returns;
 
 export type Lib_Utility_ParseWindowsRegistryText_Matches = RegExpMatchArray | null;
 
@@ -645,59 +672,16 @@ export type Lib_Utility_SaveWorkspaceManifest_PackageContents = string;
  *
  * @since 0.18.0
  */
+export type Lib_Utility_ShellQuote_Value = string;
 
-/**
- * Lib - Utility - Shell Quote - Backslash Pattern.
- *
- * @since 0.18.0
- */
-export type Lib_Utility_ShellQuote_BackslashPattern = RegExp;
-
-/**
- * Lib - Utility - Shell Quote - Backtick Pattern.
- *
- * @since 0.18.0
- */
-export type Lib_Utility_ShellQuote_BacktickPattern = RegExp;
-
-/**
- * Lib - Utility - Shell Quote - Dollar Pattern.
- *
- * @since 0.18.0
- */
-export type Lib_Utility_ShellQuote_DollarPattern = RegExp;
-
-/**
- * Lib - Utility - Shell Quote - Double Quote Pattern.
- *
- * @since 0.18.0
- */
-export type Lib_Utility_ShellQuote_DoubleQuotePattern = RegExp;
-
-/**
- * Lib - Utility - Shell Quote - Escaped.
- *
- * @since 0.18.0
- */
-export type Lib_Utility_ShellQuote_Escaped = string;
-
-/**
- * Lib - Utility - Shell Quote - Pattern.
- *
- * @since 0.18.0
- */
-export type Lib_Utility_ShellQuote_Pattern = RegExp;
-
-/**
- * Lib - Utility - Shell Quote - Returns.
- *
- * @since 0.18.0
- */
 export type Lib_Utility_ShellQuote_Returns = string;
 
-/**
- * Lib - Utility - Shell Quote - Value.
- *
- * @since 0.18.0
- */
-export type Lib_Utility_ShellQuote_Value = string;
+export type Lib_Utility_ShellQuote_BackslashPattern = RegExp;
+
+export type Lib_Utility_ShellQuote_BacktickPattern = RegExp;
+
+export type Lib_Utility_ShellQuote_DollarPattern = RegExp;
+
+export type Lib_Utility_ShellQuote_DoubleQuotePattern = RegExp;
+
+export type Lib_Utility_ShellQuote_Escaped = string;

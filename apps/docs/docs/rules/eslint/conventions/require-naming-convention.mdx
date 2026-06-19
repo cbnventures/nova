@@ -183,22 +183,22 @@ Type aliases default to `UnderscorePascalCase` — segments are individually Pas
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option                | Type       | Default                  | Description                             |
-|-----------------------|------------|--------------------------|-----------------------------------------|
-| `classDeclaration`    | `string`   | `PascalCase`             | Casing for class names.                 |
-| `classMethod`         | `string`   | `camelCase`              | Casing for class methods.               |
-| `classProperty`       | `string`   | `camelCase`              | Casing for class properties.            |
-| `constructorVariable` | `string`   | `PascalCase`             | Casing for variables used with `new`.   |
-| `constant`            | `string`   | `UPPER_SNAKE_CASE`       | Casing for const with immutable values. |
-| `enum`                | `string`   | `PascalCase`             | Casing for enum declarations.           |
-| `enumMember`          | `string`   | `PascalCase`             | Casing for enum members.                |
-| `function`            | `string`   | `camelCase`              | Casing for function declarations.       |
-| `ignoreFiles`         | `string[]` | `[]`                     | File patterns to skip.                  |
-| `interface`           | `string`   | `PascalCase`             | Casing for interfaces.                  |
-| `parameter`           | `string`   | `camelCase`              | Casing for function parameters.         |
-| `reactComponent`      | `string`   | `PascalCase`             | Casing for React component functions.   |
-| `typeAlias`           | `string`   | `UnderscorePascalCase`   | Casing for type aliases.                |
-| `variable`            | `string`   | `camelCase`              | Casing for let/var variables.           |
+| Option                | Type       | Default                | Description                             |
+|-----------------------|------------|------------------------|-----------------------------------------|
+| `classDeclaration`    | `string`   | `PascalCase`           | Casing for class names.                 |
+| `classMethod`         | `string`   | `camelCase`            | Casing for class methods.               |
+| `classProperty`       | `string`   | `camelCase`            | Casing for class properties.            |
+| `constructorVariable` | `string`   | `PascalCase`           | Casing for variables used with `new`.   |
+| `constant`            | `string`   | `UPPER_SNAKE_CASE`     | Casing for const with immutable values. |
+| `enum`                | `string`   | `PascalCase`           | Casing for enum declarations.           |
+| `enumMember`          | `string`   | `PascalCase`           | Casing for enum members.                |
+| `function`            | `string`   | `camelCase`            | Casing for function declarations.       |
+| `ignoreFiles`         | `string[]` | `[]`                   | File patterns to skip.                  |
+| `interface`           | `string`   | `PascalCase`           | Casing for interfaces.                  |
+| `parameter`           | `string`   | `camelCase`            | Casing for function parameters.         |
+| `reactComponent`      | `string`   | `PascalCase`           | Casing for React component functions.   |
+| `typeAlias`           | `string`   | `UnderscorePascalCase` | Casing for type aliases.                |
+| `variable`            | `string`   | `camelCase`            | Casing for let/var variables.           |
 
 Accepted casing values: `camelCase`, `PascalCase`, `UnderscorePascalCase`, `UPPER_SNAKE_CASE`.
 

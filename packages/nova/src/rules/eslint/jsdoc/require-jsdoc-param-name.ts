@@ -9,6 +9,8 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Description,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Expected,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FinalFixedValue,
+  Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Fix_Fixer,
+  Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Fix_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FixedValue,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Lines,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Match,
@@ -17,8 +19,9 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_RawDescription,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Words,
+  Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_Create_Options,
+  Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_Create_Program_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleOptions,
 } from '../../../types/rules/eslint/jsdoc/require-jsdoc-param-name.d.ts';
 
 /**
@@ -78,7 +81,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -86,7 +89,7 @@ export class Runner {
       }
 
       return {
-        Program() {
+        Program(): Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_Create_Program_Returns {
           Runner.checkProgram(context);
 
           return;
@@ -166,7 +169,7 @@ export class Runner {
             paramName: mismatch['paramName'],
             expected: mismatch['expected'],
           },
-          fix(fixer) {
+          fix(fixer: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Fix_Fixer): Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Fix_Returns {
             return fixer.replaceTextRange(comment.range, `/*${finalFixedValue}*/`);
           },
         });

@@ -59,20 +59,20 @@ Only four override categories are exposed: `colors`, `fonts`, `navbar`, and `foo
 
 Each color category accepts a `{ light, dark }` pair of hex strings. Both keys are optional within each category — omitted values fall back to the active preset's defaults.
 
-| Option                    | Type     | Default      | Description                                            |
-|---------------------------|----------|--------------|--------------------------------------------------------|
-| `colors.primary.light`    | `string` | Preset value | Primary brand color in light mode (hex).               |
-| `colors.primary.dark`     | `string` | Preset value | Primary brand color in dark mode (hex).                |
-| `colors.secondary.light`  | `string` | Preset value | Secondary accent color in light mode (hex).            |
-| `colors.secondary.dark`   | `string` | Preset value | Secondary accent color in dark mode (hex).             |
-| `colors.text.light`       | `string` | Preset value | Body text color in light mode (hex).                   |
-| `colors.text.dark`        | `string` | Preset value | Body text color in dark mode (hex).                    |
-| `colors.border.light`     | `string` | Preset value | Border and divider color in light mode (hex).          |
-| `colors.border.dark`      | `string` | Preset value | Border and divider color in dark mode (hex).           |
-| `colors.warning.light`    | `string` | Preset value | Warning admonition base color in light mode (hex).     |
-| `colors.warning.dark`     | `string` | Preset value | Warning admonition base color in dark mode (hex).      |
-| `colors.danger.light`     | `string` | Preset value | Danger/error admonition base color in light mode (hex).|
-| `colors.danger.dark`      | `string` | Preset value | Danger/error admonition base color in dark mode (hex). |
+| Option                   | Type     | Default      | Description                                             |
+|--------------------------|----------|--------------|---------------------------------------------------------|
+| `colors.primary.light`   | `string` | Preset value | Primary brand color in light mode (hex).                |
+| `colors.primary.dark`    | `string` | Preset value | Primary brand color in dark mode (hex).                 |
+| `colors.secondary.light` | `string` | Preset value | Secondary accent color in light mode (hex).             |
+| `colors.secondary.dark`  | `string` | Preset value | Secondary accent color in dark mode (hex).              |
+| `colors.text.light`      | `string` | Preset value | Body text color in light mode (hex).                    |
+| `colors.text.dark`       | `string` | Preset value | Body text color in dark mode (hex).                     |
+| `colors.border.light`    | `string` | Preset value | Border and divider color in light mode (hex).           |
+| `colors.border.dark`     | `string` | Preset value | Border and divider color in dark mode (hex).            |
+| `colors.warning.light`   | `string` | Preset value | Warning admonition base color in light mode (hex).      |
+| `colors.warning.dark`    | `string` | Preset value | Warning admonition base color in dark mode (hex).       |
+| `colors.danger.light`    | `string` | Preset value | Danger/error admonition base color in light mode (hex). |
+| `colors.danger.dark`     | `string` | Preset value | Danger/error admonition base color in dark mode (hex).  |
 
 The `primary` and `secondary` colors expand to 11-level shade scales (50 through 950) as CSS custom properties. The `text`, `border`, `warning`, and `danger` colors are used as single values plus derived `color-mix` tokens.
 

@@ -27,32 +27,40 @@ import type {
   Cli_Utility_RunScripts_Runner_RunParallel_BufferMs,
   Cli_Utility_RunScripts_Runner_RunParallel_Child,
   Cli_Utility_RunScripts_Runner_RunParallel_Children,
+  Cli_Utility_RunScripts_Runner_RunParallel_Close_Partial,
   Cli_Utility_RunScripts_Runner_RunParallel_ColoredPrefix,
   Cli_Utility_RunScripts_Runner_RunParallel_ColorFunction,
   Cli_Utility_RunScripts_Runner_RunParallel_ColorFunctions,
   Cli_Utility_RunScripts_Runner_RunParallel_ColorIndex,
+  Cli_Utility_RunScripts_Runner_RunParallel_Data_Returns,
+  Cli_Utility_RunScripts_Runner_RunParallel_Error_Returns,
   Cli_Utility_RunScripts_Runner_RunParallel_ExitPromise,
   Cli_Utility_RunScripts_Runner_RunParallel_ExitPromises,
   Cli_Utility_RunScripts_Runner_RunParallel_ExitResults,
   Cli_Utility_RunScripts_Runner_RunParallel_Failed,
   Cli_Utility_RunScripts_Runner_RunParallel_FlushInterval,
   Cli_Utility_RunScripts_Runner_RunParallel_FlushQueue,
-  Cli_Utility_RunScripts_Runner_RunParallel_FormattedLine,
+  Cli_Utility_RunScripts_Runner_RunParallel_FlushQueue_FormattedLine,
+  Cli_Utility_RunScripts_Runner_RunParallel_FlushQueue_Prefix,
   Cli_Utility_RunScripts_Runner_RunParallel_ForwardSignal,
+  Cli_Utility_RunScripts_Runner_RunParallel_ForwardSignal_Returns,
   Cli_Utility_RunScripts_Runner_RunParallel_HandleData,
+  Cli_Utility_RunScripts_Runner_RunParallel_HandleData_Lines,
+  Cli_Utility_RunScripts_Runner_RunParallel_HandleData_Partial,
+  Cli_Utility_RunScripts_Runner_RunParallel_HandleData_Text,
   Cli_Utility_RunScripts_Runner_RunParallel_LastFlushedScript,
-  Cli_Utility_RunScripts_Runner_RunParallel_Lines,
   Cli_Utility_RunScripts_Runner_RunParallel_MatchedScripts,
   Cli_Utility_RunScripts_Runner_RunParallel_NpmCommand,
-  Cli_Utility_RunScripts_Runner_RunParallel_Partial,
   Cli_Utility_RunScripts_Runner_RunParallel_PartialLines,
-  Cli_Utility_RunScripts_Runner_RunParallel_Prefix,
   Cli_Utility_RunScripts_Runner_RunParallel_Prefixes,
   Cli_Utility_RunScripts_Runner_RunParallel_Queue,
   Cli_Utility_RunScripts_Runner_RunParallel_Returns,
   Cli_Utility_RunScripts_Runner_RunParallel_Script,
-  Cli_Utility_RunScripts_Runner_RunParallel_Text,
+  Cli_Utility_RunScripts_Runner_RunParallel_SIGINT_Returns,
+  Cli_Utility_RunScripts_Runner_RunParallel_SIGTERM_Returns,
   Cli_Utility_RunScripts_Runner_SpawnScript_Child,
+  Cli_Utility_RunScripts_Runner_SpawnScript_Close_ExitCode,
+  Cli_Utility_RunScripts_Runner_SpawnScript_Error_Returns,
   Cli_Utility_RunScripts_Runner_SpawnScript_NpmCommand,
   Cli_Utility_RunScripts_Runner_SpawnScript_Returns,
   Cli_Utility_RunScripts_Runner_SpawnScript_Script,
@@ -279,12 +287,14 @@ export class Runner {
       });
 
       child.on('close', (code) => {
-        promiseResolve(code ?? 1);
+        const exitCode: Cli_Utility_RunScripts_Runner_SpawnScript_Close_ExitCode = code ?? 1;
+
+        promiseResolve(exitCode);
 
         return;
       });
 
-      child.on('error', (error) => {
+      child.on('error', (error): Cli_Utility_RunScripts_Runner_SpawnScript_Error_Returns => {
         reject(error);
 
         return;
@@ -343,7 +353,7 @@ export class Runner {
     // Flush all queued lines with prefixes and blank-line separators.
     const flushQueue: Cli_Utility_RunScripts_Runner_RunParallel_FlushQueue = () => {
       for (const entry of queue) {
-        const prefix: Cli_Utility_RunScripts_Runner_RunParallel_Prefix = prefixes.get(entry['script']) ?? `[${entry['script']}]`;
+        const prefix: Cli_Utility_RunScripts_Runner_RunParallel_FlushQueue_Prefix = prefixes.get(entry['script']) ?? `[${entry['script']}]`;
 
         if (lastFlushedScript !== '' && lastFlushedScript !== entry['script']) {
           process.stdout.write('\n');
@@ -351,7 +361,7 @@ export class Runner {
 
         lastFlushedScript = entry['script'];
 
-        const formattedLine: Cli_Utility_RunScripts_Runner_RunParallel_FormattedLine = `${prefix} ${entry['line']}\n`;
+        const formattedLine: Cli_Utility_RunScripts_Runner_RunParallel_FlushQueue_FormattedLine = `${prefix} ${entry['line']}\n`;
 
         if (entry['stream'] === 'stderr') {
           process.stderr.write(formattedLine);
@@ -381,11 +391,11 @@ export class Runner {
 
       // Handle incoming data by splitting into lines and queuing.
       const handleData: Cli_Utility_RunScripts_Runner_RunParallel_HandleData = (data, stream) => {
-        const text: Cli_Utility_RunScripts_Runner_RunParallel_Text = (partialLines.get(script) ?? '') + data.toString();
-        const lines: Cli_Utility_RunScripts_Runner_RunParallel_Lines = text.split('\n');
+        const text: Cli_Utility_RunScripts_Runner_RunParallel_HandleData_Text = (partialLines.get(script) ?? '') + data.toString();
+        const lines: Cli_Utility_RunScripts_Runner_RunParallel_HandleData_Lines = text.split('\n');
 
         // Hold the last segment as a partial line.
-        const partial: Cli_Utility_RunScripts_Runner_RunParallel_Partial = lines.pop() ?? '';
+        const partial: Cli_Utility_RunScripts_Runner_RunParallel_HandleData_Partial = lines.pop() ?? '';
 
         partialLines.set(script, partial);
 
@@ -402,13 +412,13 @@ export class Runner {
         return;
       };
 
-      child.stdout.on('data', (data) => {
+      child.stdout.on('data', (data): Cli_Utility_RunScripts_Runner_RunParallel_Data_Returns => {
         handleData(data, 'stdout');
 
         return;
       });
 
-      child.stderr.on('data', (data) => {
+      child.stderr.on('data', (data): Cli_Utility_RunScripts_Runner_RunParallel_Data_Returns => {
         handleData(data, 'stderr');
 
         return;
@@ -417,7 +427,7 @@ export class Runner {
       // Track exit and flush remaining partial line.
       const exitPromise: Cli_Utility_RunScripts_Runner_RunParallel_ExitPromise = new Promise((promiseResolve) => {
         child.on('close', (code) => {
-          const partial: Cli_Utility_RunScripts_Runner_RunParallel_Partial = partialLines.get(script) ?? '';
+          const partial: Cli_Utility_RunScripts_Runner_RunParallel_Close_Partial = partialLines.get(script) ?? '';
 
           if (partial.length > 0) {
             queue.push({
@@ -448,7 +458,7 @@ export class Runner {
           return;
         });
 
-        child.on('error', (error) => {
+        child.on('error', (error): Cli_Utility_RunScripts_Runner_RunParallel_Error_Returns => {
           queue.push({
             script,
             stream: 'stderr',
@@ -470,7 +480,7 @@ export class Runner {
     const flushInterval: Cli_Utility_RunScripts_Runner_RunParallel_FlushInterval = setInterval(flushQueue, bufferMs);
 
     // Forward signals to children.
-    const forwardSignal: Cli_Utility_RunScripts_Runner_RunParallel_ForwardSignal = (signal) => {
+    const forwardSignal: Cli_Utility_RunScripts_Runner_RunParallel_ForwardSignal = (signal): Cli_Utility_RunScripts_Runner_RunParallel_ForwardSignal_Returns => {
       for (const child of children) {
         child.kill(signal);
       }
@@ -478,13 +488,13 @@ export class Runner {
       return;
     };
 
-    process.on('SIGINT', () => {
+    process.on('SIGINT', (): Cli_Utility_RunScripts_Runner_RunParallel_SIGINT_Returns => {
       forwardSignal('SIGINT');
 
       return;
     });
 
-    process.on('SIGTERM', () => {
+    process.on('SIGTERM', (): Cli_Utility_RunScripts_Runner_RunParallel_SIGTERM_Returns => {
       forwardSignal('SIGTERM');
 
       return;

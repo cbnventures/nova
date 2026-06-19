@@ -18,7 +18,7 @@ export type Cli_Recipe_PackageJson_Cleanup_Runner_Handle_Workspace = SharedWorks
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_Handle_RemoveUnknownKeys = boolean;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Keys = boolean;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Handle_ReorderKeys = boolean;
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_Handle_Returns = void;
 
@@ -42,6 +42,8 @@ export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_CurrentKeys = st
 export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Reordered = Record<string, unknown>;
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Value = unknown;
+
+export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_UnknownValue = unknown;
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_ReorderedKeys = string[];
 
@@ -102,11 +104,11 @@ export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkingFileWorkspaces = [s
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigFilter = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleConfig = SharedNovaConfigWorkspace;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_RecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleTuple = SharedNovaConfigWorkspaceRecipeTuple | undefined;
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_Workspaces = SharedWorkspaceManifest[];
 

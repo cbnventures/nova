@@ -5,9 +5,13 @@ import { describe, it } from 'vitest';
 import { presetsEnvoyPresetEnvoy } from '../../../presets/envoy/preset.js';
 
 import type {
-  Tests_Presets_Envoy_Preset_Envoy,
-  Tests_Presets_Envoy_Preset_Footer,
-  Tests_Presets_Envoy_Preset_Navbar,
+  Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoy_HasCorrectColorValues_Envoy,
+  Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoy_HasCorrectDepthValues_Envoy,
+  Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoy_HasCorrectFontNames_Envoy,
+  Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoy_HasCorrectMotionValues_Envoy,
+  Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoy_HasCorrectShapeValues_Envoy,
+  Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoyNavbarAndFooter_HasCorrectFooterValue_Footer,
+  Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoyNavbarAndFooter_HasCorrectNavbarValue_Navbar,
 } from '../../../types/tests/presets/envoy/preset.test.d.ts';
 
 /**
@@ -17,7 +21,7 @@ import type {
  */
 describe('presetsEnvoyPresetEnvoy', async () => {
   it('has correct color values', () => {
-    const envoy: Tests_Presets_Envoy_Preset_Envoy = presetsEnvoyPresetEnvoy;
+    const envoy: Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoy_HasCorrectColorValues_Envoy = presetsEnvoyPresetEnvoy;
 
     deepStrictEqual(envoy['colors']['primary'], {
       light: '#7c3aed', dark: '#7c3aed',
@@ -36,7 +40,7 @@ describe('presetsEnvoyPresetEnvoy', async () => {
   });
 
   it('has correct font names', () => {
-    const envoy: Tests_Presets_Envoy_Preset_Envoy = presetsEnvoyPresetEnvoy;
+    const envoy: Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoy_HasCorrectFontNames_Envoy = presetsEnvoyPresetEnvoy;
 
     strictEqual(envoy['fonts']['display'], 'Plus Jakarta Sans');
     strictEqual(envoy['fonts']['body'], 'Inter');
@@ -46,7 +50,7 @@ describe('presetsEnvoyPresetEnvoy', async () => {
   });
 
   it('has correct shape values', () => {
-    const envoy: Tests_Presets_Envoy_Preset_Envoy = presetsEnvoyPresetEnvoy;
+    const envoy: Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoy_HasCorrectShapeValues_Envoy = presetsEnvoyPresetEnvoy;
 
     strictEqual(envoy['shape']['radius'], 'rounded');
     strictEqual(envoy['shape']['density'], 'comfortable');
@@ -55,7 +59,7 @@ describe('presetsEnvoyPresetEnvoy', async () => {
   });
 
   it('has correct depth values', () => {
-    const envoy: Tests_Presets_Envoy_Preset_Envoy = presetsEnvoyPresetEnvoy;
+    const envoy: Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoy_HasCorrectDepthValues_Envoy = presetsEnvoyPresetEnvoy;
 
     strictEqual(envoy['depth']['cards'], 'elevated');
     strictEqual(envoy['depth']['codeBlocks'], 'bordered');
@@ -64,7 +68,7 @@ describe('presetsEnvoyPresetEnvoy', async () => {
   });
 
   it('has correct motion values', () => {
-    const envoy: Tests_Presets_Envoy_Preset_Envoy = presetsEnvoyPresetEnvoy;
+    const envoy: Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoy_HasCorrectMotionValues_Envoy = presetsEnvoyPresetEnvoy;
 
     strictEqual(envoy['motion']['speed'], 'normal');
     strictEqual(envoy['motion']['staggeredReveals'], true);
@@ -77,7 +81,7 @@ describe('presetsEnvoyPresetEnvoy', async () => {
 });
 
 /**
- * Tests - Presets - Envoy - Preset - Presets_Envoy_Preset_Envoy Navbar And Footer.
+ * Tests - Presets - Envoy - Preset - PresetsEnvoyPresetEnvoy Navbar And Footer.
  *
  * Verifies that the envoy preset includes the correct navbar
  * and footer variant identifiers for theme rendering.
@@ -86,7 +90,7 @@ describe('presetsEnvoyPresetEnvoy', async () => {
  */
 describe('presetsEnvoyPresetEnvoy navbar and footer', async () => {
   it('has correct navbar value', () => {
-    const navbar: Tests_Presets_Envoy_Preset_Navbar = presetsEnvoyPresetEnvoy['navbar'];
+    const navbar: Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoyNavbarAndFooter_HasCorrectNavbarValue_Navbar = presetsEnvoyPresetEnvoy['navbar'];
 
     strictEqual(navbar, 'compass');
 
@@ -94,7 +98,7 @@ describe('presetsEnvoyPresetEnvoy navbar and footer', async () => {
   });
 
   it('has correct footer value', () => {
-    const footer: Tests_Presets_Envoy_Preset_Footer = presetsEnvoyPresetEnvoy['footer'];
+    const footer: Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoyNavbarAndFooter_HasCorrectFooterValue_Footer = presetsEnvoyPresetEnvoy['footer'];
 
     strictEqual(footer, 'launchpad');
 

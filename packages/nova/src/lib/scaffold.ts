@@ -64,16 +64,25 @@ import type {
   Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices,
   Lib_Scaffold_PromptScaffoldOptions_InitialAnswers,
   Lib_Scaffold_PromptScaffoldOptions_InitialPrev,
+  Lib_Scaffold_PromptScaffoldOptions_MonorepoNameValue,
+  Lib_Scaffold_PromptScaffoldOptions_MonorepoOutputValue,
+  Lib_Scaffold_PromptScaffoldOptions_MonorepoPromptsAnswers,
+  Lib_Scaffold_PromptScaffoldOptions_MonorepoQuestions,
+  Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedName,
+  Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedOutput,
+  Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedWorkspaceName,
+  Lib_Scaffold_PromptScaffoldOptions_MonorepoWorkspaceNameValue,
   Lib_Scaffold_PromptScaffoldOptions_NameValue,
   Lib_Scaffold_PromptScaffoldOptions_OutputAnswers,
   Lib_Scaffold_PromptScaffoldOptions_OutputValue,
   Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers,
   Lib_Scaffold_PromptScaffoldOptions_Questions,
-  Lib_Scaffold_PromptScaffoldOptions_ResolvedInitialWorkspaceName,
   Lib_Scaffold_PromptScaffoldOptions_ResolvedName,
   Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput,
   Lib_Scaffold_PromptScaffoldOptions_ResolvedOutputDirectory,
   Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName,
+  Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput,
+  Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput_ResolvedInitialWorkspaceName,
   Lib_Scaffold_PromptScaffoldOptions_Returns,
   Lib_Scaffold_PromptScaffoldOptions_WorkspaceNameValue,
   Lib_Scaffold_RegisterWorkspaceInConfig_Category,
@@ -182,14 +191,14 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
 
   if (context['context'] === 'monorepo') {
     // Monorepo mode - prompt for project name, workspace name, and output directory.
-    const nameValue: Lib_Scaffold_PromptScaffoldOptions_NameValue = defaults['name'] ?? undefined;
-    const outputValue: Lib_Scaffold_PromptScaffoldOptions_OutputValue = defaults['output'] ?? undefined;
-    const workspaceNameValue: Lib_Scaffold_PromptScaffoldOptions_WorkspaceNameValue = defaults['workspaceName'] ?? undefined;
+    const monorepoNameValue: Lib_Scaffold_PromptScaffoldOptions_MonorepoNameValue = defaults['name'] ?? undefined;
+    const monorepoOutputValue: Lib_Scaffold_PromptScaffoldOptions_MonorepoOutputValue = defaults['output'] ?? undefined;
+    const monorepoWorkspaceNameValue: Lib_Scaffold_PromptScaffoldOptions_MonorepoWorkspaceNameValue = defaults['workspaceName'] ?? undefined;
 
-    const questions: Lib_Scaffold_PromptScaffoldOptions_Questions = [];
+    const monorepoQuestions: Lib_Scaffold_PromptScaffoldOptions_MonorepoQuestions = [];
 
-    if (nameValue === undefined) {
-      questions.push({
+    if (monorepoNameValue === undefined) {
+      monorepoQuestions.push({
         type: 'text' as const,
         name: 'name',
         message: 'Project name (slug):',
@@ -197,8 +206,8 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
       });
     }
 
-    if (workspaceNameValue === undefined) {
-      questions.push({
+    if (monorepoWorkspaceNameValue === undefined) {
+      monorepoQuestions.push({
         type: 'text' as const,
         name: 'workspaceName',
         message: 'Workspace name (slug):',
@@ -206,15 +215,15 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
       });
     }
 
-    const answers: Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers = await prompts(questions, {
+    const monorepoPromptsAnswers: Lib_Scaffold_PromptScaffoldOptions_MonorepoPromptsAnswers = await prompts(monorepoQuestions, {
       onCancel: () => false,
     });
 
-    if (nameValue === undefined && answers['name'] === undefined) {
+    if (monorepoNameValue === undefined && monorepoPromptsAnswers['name'] === undefined) {
       cancelled = true;
     }
 
-    if (workspaceNameValue === undefined && answers['workspaceName'] === undefined) {
+    if (monorepoWorkspaceNameValue === undefined && monorepoPromptsAnswers['workspaceName'] === undefined) {
       cancelled = true;
     }
 
@@ -222,17 +231,17 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
       return undefined;
     }
 
-    const resolvedName: Lib_Scaffold_PromptScaffoldOptions_ResolvedName = (nameValue ?? answers['name']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedName;
-    const resolvedWorkspaceName: Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName = (workspaceNameValue ?? answers['workspaceName']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName;
+    const monorepoResolvedName: Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedName = (monorepoNameValue ?? monorepoPromptsAnswers['name']) as Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedName;
+    const monorepoResolvedWorkspaceName: Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedWorkspaceName = (monorepoWorkspaceNameValue ?? monorepoPromptsAnswers['workspaceName']) as Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedWorkspaceName;
 
     // Early return if --output is provided.
-    if (outputValue !== undefined) {
-      const resolvedOutputDirectory: Lib_Scaffold_PromptScaffoldOptions_ResolvedOutputDirectory = resolve(currentDirectory, outputValue);
+    if (monorepoOutputValue !== undefined) {
+      const resolvedOutputDirectory: Lib_Scaffold_PromptScaffoldOptions_ResolvedOutputDirectory = resolve(currentDirectory, monorepoOutputValue);
 
       return {
         mode: 'monorepo',
-        name: resolvedName,
-        workspaceName: resolvedWorkspaceName,
+        name: monorepoResolvedName,
+        workspaceName: monorepoResolvedWorkspaceName,
         outputDirectory: resolvedOutputDirectory,
       };
     }
@@ -272,8 +281,8 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
     if (directoryChoice === 'current-directory') {
       return {
         mode: 'monorepo',
-        name: resolvedName,
-        workspaceName: resolvedWorkspaceName,
+        name: monorepoResolvedName,
+        workspaceName: monorepoResolvedWorkspaceName,
         outputDirectory: process.cwd(),
       };
     }
@@ -283,7 +292,7 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
       type: 'text',
       name: 'output',
       message: 'Output directory:',
-      initial: `./${resolvedName}`,
+      initial: `./${monorepoResolvedName}`,
     }, {
       onCancel: () => false,
     });
@@ -296,13 +305,13 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
       return undefined;
     }
 
-    const resolvedOutput: Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput = outputAnswers['output'] as Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput;
+    const monorepoResolvedOutput: Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedOutput = outputAnswers['output'] as Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedOutput;
 
     return {
       mode: 'monorepo',
-      name: resolvedName,
-      workspaceName: resolvedWorkspaceName,
-      outputDirectory: resolve(currentDirectory, resolvedOutput),
+      name: monorepoResolvedName,
+      workspaceName: monorepoResolvedWorkspaceName,
+      outputDirectory: resolve(currentDirectory, monorepoResolvedOutput),
     };
   }
 
@@ -331,32 +340,34 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
     });
   }
 
+  const resolveInitialOutput: Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput = (_initialPrev: Lib_Scaffold_PromptScaffoldOptions_InitialPrev, initialAnswers: Lib_Scaffold_PromptScaffoldOptions_InitialAnswers) => {
+    const resolvedInitialWorkspaceName: Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput_ResolvedInitialWorkspaceName = (workspaceNameValue ?? initialAnswers['workspaceName']) as Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput_ResolvedInitialWorkspaceName;
+
+    return `./apps/${resolvedInitialWorkspaceName}`;
+  };
+
   if (outputValue === undefined) {
     questions.push({
       type: 'text' as const,
       name: 'output',
       message: 'Output directory:',
-      initial: (_prev: Lib_Scaffold_PromptScaffoldOptions_InitialPrev, answers: Lib_Scaffold_PromptScaffoldOptions_InitialAnswers) => {
-        const resolvedInitialWorkspaceName: Lib_Scaffold_PromptScaffoldOptions_ResolvedInitialWorkspaceName = (workspaceNameValue ?? answers['workspaceName']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedInitialWorkspaceName;
-
-        return `./apps/${resolvedInitialWorkspaceName}`;
-      },
+      initial: resolveInitialOutput,
     });
   }
 
-  const answers: Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers = await prompts(questions, {
+  const promptsAnswers: Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers = await prompts(questions, {
     onCancel: () => false,
   });
 
-  if (nameValue === undefined && answers['name'] === undefined) {
+  if (nameValue === undefined && promptsAnswers['name'] === undefined) {
     cancelled = true;
   }
 
-  if (workspaceNameValue === undefined && answers['workspaceName'] === undefined) {
+  if (workspaceNameValue === undefined && promptsAnswers['workspaceName'] === undefined) {
     cancelled = true;
   }
 
-  if (outputValue === undefined && answers['output'] === undefined) {
+  if (outputValue === undefined && promptsAnswers['output'] === undefined) {
     cancelled = true;
   }
 
@@ -364,9 +375,9 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
     return undefined;
   }
 
-  const resolvedName: Lib_Scaffold_PromptScaffoldOptions_ResolvedName = (nameValue ?? answers['name']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedName;
-  const resolvedWorkspaceName: Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName = (workspaceNameValue ?? answers['workspaceName']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName;
-  const resolvedOutput: Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput = (outputValue ?? answers['output']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput;
+  const resolvedName: Lib_Scaffold_PromptScaffoldOptions_ResolvedName = (nameValue ?? promptsAnswers['name']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedName;
+  const resolvedWorkspaceName: Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName = (workspaceNameValue ?? promptsAnswers['workspaceName']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName;
+  const resolvedOutput: Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput = (outputValue ?? promptsAnswers['output']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput;
 
   return {
     mode: 'workspace',

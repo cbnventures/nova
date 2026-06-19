@@ -13,17 +13,39 @@ import { afterAll, describe, it } from 'vitest';
 import { Runner as CliUtilityRunRecipes } from '../../../cli/utility/run-recipes.js';
 
 import type {
-  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ExitCode,
-  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigContents,
-  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigPath,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ErrorsWithExitCodeWhenCategoryIsUnknown_NovaConfigContents,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ErrorsWithExitCodeWhenCategoryIsUnknown_NovaConfigPath,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ErrorsWithExitCodeWhenCategoryIsUnknown_PackageJsonContents,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ErrorsWithExitCodeWhenCategoryIsUnknown_PackageJsonPath,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ErrorsWithExitCodeWhenCategoryIsUnknown_ProjectDirectory,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesALLCategoriesWhenCategoryIsUndefined_ExitCode,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesALLCategoriesWhenCategoryIsUndefined_NovaConfigContents,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesALLCategoriesWhenCategoryIsUndefined_NovaConfigPath,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesALLCategoriesWhenCategoryIsUndefined_PackageJsonContents,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesALLCategoriesWhenCategoryIsUndefined_PackageJsonPath,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesALLCategoriesWhenCategoryIsUndefined_ProjectDirectory,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyTheGithubSubgroupWhenCategoryIsGithub_ExitCode,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyTheGithubSubgroupWhenCategoryIsGithub_NovaConfigContents,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyTheGithubSubgroupWhenCategoryIsGithub_NovaConfigPath,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyTheGithubSubgroupWhenCategoryIsGithub_PackageJsonContents,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyTheGithubSubgroupWhenCategoryIsGithub_PackageJsonPath,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyTheGithubSubgroupWhenCategoryIsGithub_ProjectDirectory,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyThePackageJsonSubgroupWhenCategoryIsPackageJson_ExitCode,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyThePackageJsonSubgroupWhenCategoryIsPackageJson_NovaConfigContents,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyThePackageJsonSubgroupWhenCategoryIsPackageJson_NovaConfigPath,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyThePackageJsonSubgroupWhenCategoryIsPackageJson_PackageJsonContents,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyThePackageJsonSubgroupWhenCategoryIsPackageJson_PackageJsonPath,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyThePackageJsonSubgroupWhenCategoryIsPackageJson_ProjectDirectory,
   Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_OriginalCwd,
-  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonContents,
-  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonPath,
-  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ProjectDirectory,
   Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SandboxRoot,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SetsExitCodeWhenNotAtProjectRoot_ProjectDirectory,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SkipsWhenNoWorkspacesAreConfigured_NovaConfigContents,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SkipsWhenNoWorkspacesAreConfigured_NovaConfigPath,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SkipsWhenNoWorkspacesAreConfigured_PackageJsonContents,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SkipsWhenNoWorkspacesAreConfigured_PackageJsonPath,
+  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SkipsWhenNoWorkspacesAreConfigured_ProjectDirectory,
   Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_TemporaryDirectory,
   Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_TemporaryPrefix,
-  Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_UnknownCategory,
 } from '../../../types/tests/cli/utility/run-recipes.test.d.ts';
 
 /**
@@ -49,7 +71,7 @@ describe('CliUtilityRunRecipes.run', async () => {
   });
 
   it('sets exit code when not at project root', async () => {
-    const projectDirectory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ProjectDirectory = join(sandboxRoot, 'not-project-root');
+    const projectDirectory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SetsExitCodeWhenNotAtProjectRoot_ProjectDirectory = join(sandboxRoot, 'not-project-root');
 
     await mkdir(projectDirectory, { recursive: true });
 
@@ -65,19 +87,19 @@ describe('CliUtilityRunRecipes.run', async () => {
   });
 
   it('skips when no workspaces are configured', async () => {
-    const projectDirectory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ProjectDirectory = join(sandboxRoot, 'no-workspaces');
+    const projectDirectory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SkipsWhenNoWorkspacesAreConfigured_ProjectDirectory = join(sandboxRoot, 'no-workspaces');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJsonPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SkipsWhenNoWorkspacesAreConfigured_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SkipsWhenNoWorkspacesAreConfigured_PackageJsonContents = JSON.stringify({
       name: 'test-no-workspaces',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigContents = JSON.stringify({}, null, 2);
+    const novaConfigPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SkipsWhenNoWorkspacesAreConfigured_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SkipsWhenNoWorkspacesAreConfigured_NovaConfigContents = JSON.stringify({}, null, 2);
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
@@ -94,19 +116,19 @@ describe('CliUtilityRunRecipes.run', async () => {
   });
 
   it('iterates only the package-json subgroup when category is package-json', async () => {
-    const projectDirectory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ProjectDirectory = join(sandboxRoot, 'pkg-json-category');
+    const projectDirectory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyThePackageJsonSubgroupWhenCategoryIsPackageJson_ProjectDirectory = join(sandboxRoot, 'pkg-json-category');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJsonPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyThePackageJsonSubgroupWhenCategoryIsPackageJson_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyThePackageJsonSubgroupWhenCategoryIsPackageJson_PackageJsonContents = JSON.stringify({
       name: 'test-pkg-json-category',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigContents = JSON.stringify({}, null, 2);
+    const novaConfigPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyThePackageJsonSubgroupWhenCategoryIsPackageJson_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyThePackageJsonSubgroupWhenCategoryIsPackageJson_NovaConfigContents = JSON.stringify({}, null, 2);
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
@@ -117,7 +139,7 @@ describe('CliUtilityRunRecipes.run', async () => {
       dryRun: true,
     });
 
-    const exitCode: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ExitCode = process.exitCode;
+    const exitCode: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyThePackageJsonSubgroupWhenCategoryIsPackageJson_ExitCode = process.exitCode;
 
     strictEqual(exitCode, undefined);
 
@@ -125,19 +147,19 @@ describe('CliUtilityRunRecipes.run', async () => {
   });
 
   it('iterates only the github subgroup when category is github', async () => {
-    const projectDirectory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ProjectDirectory = join(sandboxRoot, 'github-category');
+    const projectDirectory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyTheGithubSubgroupWhenCategoryIsGithub_ProjectDirectory = join(sandboxRoot, 'github-category');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJsonPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyTheGithubSubgroupWhenCategoryIsGithub_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyTheGithubSubgroupWhenCategoryIsGithub_PackageJsonContents = JSON.stringify({
       name: 'test-github-category',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigContents = JSON.stringify({}, null, 2);
+    const novaConfigPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyTheGithubSubgroupWhenCategoryIsGithub_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyTheGithubSubgroupWhenCategoryIsGithub_NovaConfigContents = JSON.stringify({}, null, 2);
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
@@ -148,7 +170,7 @@ describe('CliUtilityRunRecipes.run', async () => {
       dryRun: true,
     });
 
-    const exitCode: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ExitCode = process.exitCode;
+    const exitCode: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesOnlyTheGithubSubgroupWhenCategoryIsGithub_ExitCode = process.exitCode;
 
     strictEqual(exitCode, undefined);
 
@@ -156,19 +178,19 @@ describe('CliUtilityRunRecipes.run', async () => {
   });
 
   it('iterates ALL categories when category is undefined', async () => {
-    const projectDirectory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ProjectDirectory = join(sandboxRoot, 'all-categories');
+    const projectDirectory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesALLCategoriesWhenCategoryIsUndefined_ProjectDirectory = join(sandboxRoot, 'all-categories');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJsonPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesALLCategoriesWhenCategoryIsUndefined_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesALLCategoriesWhenCategoryIsUndefined_PackageJsonContents = JSON.stringify({
       name: 'test-all-categories',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigContents = JSON.stringify({}, null, 2);
+    const novaConfigPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesALLCategoriesWhenCategoryIsUndefined_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesALLCategoriesWhenCategoryIsUndefined_NovaConfigContents = JSON.stringify({}, null, 2);
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
@@ -178,7 +200,7 @@ describe('CliUtilityRunRecipes.run', async () => {
       dryRun: true,
     });
 
-    const exitCode: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ExitCode = process.exitCode;
+    const exitCode: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_IteratesALLCategoriesWhenCategoryIsUndefined_ExitCode = process.exitCode;
 
     strictEqual(exitCode, undefined);
 
@@ -186,28 +208,28 @@ describe('CliUtilityRunRecipes.run', async () => {
   });
 
   it('errors with exit code when category is unknown', async () => {
-    const projectDirectory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ProjectDirectory = join(sandboxRoot, 'unknown-category');
+    const projectDirectory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ErrorsWithExitCodeWhenCategoryIsUnknown_ProjectDirectory = join(sandboxRoot, 'unknown-category');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJsonPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ErrorsWithExitCodeWhenCategoryIsUnknown_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ErrorsWithExitCodeWhenCategoryIsUnknown_PackageJsonContents = JSON.stringify({
       name: 'test-unknown-category',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigContents = JSON.stringify({}, null, 2);
+    const novaConfigPath: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ErrorsWithExitCodeWhenCategoryIsUnknown_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ErrorsWithExitCodeWhenCategoryIsUnknown_NovaConfigContents = JSON.stringify({}, null, 2);
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
     process.chdir(projectDirectory);
 
-    const unknownCategory: Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_UnknownCategory = JSON.parse('"unknown"');
-
+    // Inlined JSON.parse feeds an invalid category value without a typed body var
+    // (a typed alias to the foreign RegistryCategory would trip rule 7.2).
     await CliUtilityRunRecipes.run({
-      category: unknownCategory,
+      category: JSON.parse('"unknown"'),
     });
 
     strictEqual(process.exitCode, 1);

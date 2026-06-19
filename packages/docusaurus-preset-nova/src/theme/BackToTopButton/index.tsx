@@ -8,8 +8,7 @@ import {
 
 import type {
   Theme_BackToTopButton_Index_BackToTopButton_ButtonAriaLabel,
-  Theme_BackToTopButton_Index_BackToTopButton_CurrentScrollPosition,
-  Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig_BackToTopButton,
+  Theme_BackToTopButton_Index_BackToTopButton_HandleScroll_CurrentScrollPosition,
   Theme_BackToTopButton_Index_BackToTopButton_IsVisible,
   Theme_BackToTopButton_Index_BackToTopButton_IsVisibleState,
   Theme_BackToTopButton_Index_BackToTopButton_Props,
@@ -17,6 +16,7 @@ import type {
   Theme_BackToTopButton_Index_BackToTopButton_ScrollThreshold,
   Theme_BackToTopButton_Index_BackToTopButton_SetIsVisible,
   Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig,
+  Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig_BackToTopButton,
 } from '../../types/theme/BackToTopButton/index.d.ts';
 
 /**
@@ -48,7 +48,7 @@ function BackToTopButton(props: Theme_BackToTopButton_Index_BackToTopButton_Prop
      * @since 0.15.0
      */
     function handleScroll() {
-      const currentScrollPosition: Theme_BackToTopButton_Index_BackToTopButton_CurrentScrollPosition = window.scrollY;
+      const currentScrollPosition: Theme_BackToTopButton_Index_BackToTopButton_HandleScroll_CurrentScrollPosition = window.scrollY;
 
       setIsVisible(currentScrollPosition > scrollThreshold);
 

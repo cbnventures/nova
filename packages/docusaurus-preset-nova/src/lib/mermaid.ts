@@ -2,19 +2,19 @@ import { useEffect, useState } from 'react';
 
 import type {
   Lib_Mermaid_ContainerClassName,
-  Lib_Mermaid_GetCssVariableAlpha,
-  Lib_Mermaid_GetCssVariableBlue,
-  Lib_Mermaid_GetCssVariableCanvas,
-  Lib_Mermaid_GetCssVariableContext,
-  Lib_Mermaid_GetCssVariableData,
-  Lib_Mermaid_GetCssVariableGreen,
-  Lib_Mermaid_GetCssVariableName,
-  Lib_Mermaid_GetCssVariableProbe,
-  Lib_Mermaid_GetCssVariableRed,
-  Lib_Mermaid_GetCssVariableResolved,
-  Lib_Mermaid_GetCssVariableReturns,
+  Lib_Mermaid_GetResolvedColor_A,
+  Lib_Mermaid_GetResolvedColor_B,
+  Lib_Mermaid_GetResolvedColor_Canvas,
+  Lib_Mermaid_GetResolvedColor_Ctx,
+  Lib_Mermaid_GetResolvedColor_Data,
+  Lib_Mermaid_GetResolvedColor_G,
+  Lib_Mermaid_GetResolvedColor_Name,
+  Lib_Mermaid_GetResolvedColor_Probe,
+  Lib_Mermaid_GetResolvedColor_R,
+  Lib_Mermaid_GetResolvedColor_Resolved,
+  Lib_Mermaid_GetResolvedColor_Returns,
   Lib_Mermaid_LoadMermaid_Returns,
-  Lib_Mermaid_Promise,
+  Lib_Mermaid_MermaidPromise,
   Lib_Mermaid_UseMermaidConfig_ColorMode,
   Lib_Mermaid_UseMermaidConfig_FontFamily,
   Lib_Mermaid_UseMermaidConfig_IsDark,
@@ -27,6 +27,7 @@ import type {
   Lib_Mermaid_UseMermaidRenderResult_MermaidModule,
   Lib_Mermaid_UseMermaidRenderResult_Options,
   Lib_Mermaid_UseMermaidRenderResult_RenderOutput,
+  Lib_Mermaid_UseMermaidRenderResult_Result,
   Lib_Mermaid_UseMermaidRenderResult_Returns,
   Lib_Mermaid_UseMermaidRenderResult_SetResult,
   Lib_Mermaid_UseMermaidRenderResult_State,
@@ -49,24 +50,24 @@ export const MERMAID_CONTAINER_CLASS_NAME: Lib_Mermaid_ContainerClassName = 'nov
  * `rgba(...)` if non-opaque) so Mermaid's color parser can consume
  * color-mix expressions the generator emits for token-bearing colors.
  *
- * @param {Lib_Mermaid_GetCssVariableName} name - Name.
+ * @param {Lib_Mermaid_GetResolvedColor_Name} name - Name.
  *
- * @returns {Lib_Mermaid_GetCssVariableReturns}
+ * @returns {Lib_Mermaid_GetResolvedColor_Returns}
  *
  * @since 0.18.0
  */
-function getResolvedColor(name: Lib_Mermaid_GetCssVariableName): Lib_Mermaid_GetCssVariableReturns {
+function getResolvedColor(name: Lib_Mermaid_GetResolvedColor_Name): Lib_Mermaid_GetResolvedColor_Returns {
   if (typeof document === 'undefined') {
     return '';
   }
 
-  const probe: Lib_Mermaid_GetCssVariableProbe = document.createElement('span');
+  const probe: Lib_Mermaid_GetResolvedColor_Probe = document.createElement('span');
 
   probe.style.color = `var(${name})`;
   probe.style.display = 'none';
   document.body.appendChild(probe);
 
-  const resolved: Lib_Mermaid_GetCssVariableResolved = getComputedStyle(probe).color;
+  const resolved: Lib_Mermaid_GetResolvedColor_Resolved = getComputedStyle(probe).color;
 
   document.body.removeChild(probe);
 
@@ -74,12 +75,12 @@ function getResolvedColor(name: Lib_Mermaid_GetCssVariableName): Lib_Mermaid_Get
     return '';
   }
 
-  const canvas: Lib_Mermaid_GetCssVariableCanvas = document.createElement('canvas');
+  const canvas: Lib_Mermaid_GetResolvedColor_Canvas = document.createElement('canvas');
 
   canvas.width = 1;
   canvas.height = 1;
 
-  const ctx: Lib_Mermaid_GetCssVariableContext = canvas.getContext('2d');
+  const ctx: Lib_Mermaid_GetResolvedColor_Ctx = canvas.getContext('2d');
 
   if (ctx === null) {
     return resolved;
@@ -88,11 +89,11 @@ function getResolvedColor(name: Lib_Mermaid_GetCssVariableName): Lib_Mermaid_Get
   ctx.fillStyle = resolved;
   ctx.fillRect(0, 0, 1, 1);
 
-  const data: Lib_Mermaid_GetCssVariableData = ctx.getImageData(0, 0, 1, 1).data;
-  const r: Lib_Mermaid_GetCssVariableRed = data[0];
-  const g: Lib_Mermaid_GetCssVariableGreen = data[1];
-  const b: Lib_Mermaid_GetCssVariableBlue = data[2];
-  const a: Lib_Mermaid_GetCssVariableAlpha = data[3];
+  const data: Lib_Mermaid_GetResolvedColor_Data = ctx.getImageData(0, 0, 1, 1).data;
+  const r: Lib_Mermaid_GetResolvedColor_R = data[0];
+  const g: Lib_Mermaid_GetResolvedColor_G = data[1];
+  const b: Lib_Mermaid_GetResolvedColor_B = data[2];
+  const a: Lib_Mermaid_GetResolvedColor_A = data[3];
 
   if (a === 255) {
     return `#${[
@@ -113,7 +114,7 @@ function getResolvedColor(name: Lib_Mermaid_GetCssVariableName): Lib_Mermaid_Get
  *
  * @since 0.15.0
  */
-let mermaidPromise: Lib_Mermaid_Promise = undefined;
+let mermaidPromise: Lib_Mermaid_MermaidPromise = undefined;
 
 /**
  * Lib - Mermaid - Load Mermaid.
@@ -235,7 +236,7 @@ export function useMermaidConfig(): Lib_Mermaid_UseMermaidConfig_Returns {
  */
 export function useMermaidRenderResult(options: Lib_Mermaid_UseMermaidRenderResult_Options): Lib_Mermaid_UseMermaidRenderResult_Returns {
   const state: Lib_Mermaid_UseMermaidRenderResult_State = useState<Lib_Mermaid_UseMermaidRenderResult_Returns>(null);
-  const result: Lib_Mermaid_UseMermaidRenderResult_Returns = state[0];
+  const result: Lib_Mermaid_UseMermaidRenderResult_Result = state[0];
   const setResult: Lib_Mermaid_UseMermaidRenderResult_SetResult = state[1];
   const config: Lib_Mermaid_UseMermaidRenderResult_Config = useMermaidConfig();
   const id: Lib_Mermaid_UseMermaidRenderResult_Id = `mermaid-svg-${String(Math.random()).replace('.', '')}`;

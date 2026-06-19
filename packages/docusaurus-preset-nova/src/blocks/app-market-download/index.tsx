@@ -6,10 +6,10 @@ import type {
   Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_AppStoreAriaLabel,
   Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_AppStoreSubtitle,
   Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_AppStoreTitle,
-  Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props,
   Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_GooglePlayAriaLabel,
   Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_GooglePlaySubtitle,
   Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_GooglePlayTitle,
+  Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props,
 } from '../../types/blocks/app-market-download/index.d.ts';
 
 /**

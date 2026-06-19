@@ -4,8 +4,8 @@ import { usePluginData } from '@docusaurus/useGlobalData';
 import { Icon } from '@iconify/react/offline';
 
 import type {
-  Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData_BlogPosts,
   Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData,
+  Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData_BlogPosts,
   Theme_BlogPostPaginator_Index_BlogPostPaginator_Heading,
   Theme_BlogPostPaginator_Index_BlogPostPaginator_NavAriaLabel,
   Theme_BlogPostPaginator_Index_BlogPostPaginator_Props,

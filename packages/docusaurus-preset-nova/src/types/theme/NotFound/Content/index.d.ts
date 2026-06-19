@@ -34,10 +34,16 @@ export type Theme_NotFound_Content_Index_NotFoundContent_BackHomeLabelOverride =
 
 export type Theme_NotFound_Content_Index_NotFoundContent_BackHomeHrefOverride = string | undefined;
 
+export type Theme_NotFound_Content_Index_NotFoundContent_Bundle_Title = string;
+
+export type Theme_NotFound_Content_Index_NotFoundContent_Bundle_Description = string;
+
+export type Theme_NotFound_Content_Index_NotFoundContent_Bundle_BackHomeLabel = string;
+
 export type Theme_NotFound_Content_Index_NotFoundContent_Bundle = {
-  title: string;
-  description: string;
-  backHomeLabel: string;
+  title: Theme_NotFound_Content_Index_NotFoundContent_Bundle_Title;
+  description: Theme_NotFound_Content_Index_NotFoundContent_Bundle_Description;
+  backHomeLabel: Theme_NotFound_Content_Index_NotFoundContent_Bundle_BackHomeLabel;
 };
 
 export type Theme_NotFound_Content_Index_NotFoundContent_Bundles = Theme_NotFound_Content_Index_NotFoundContent_Bundle[];

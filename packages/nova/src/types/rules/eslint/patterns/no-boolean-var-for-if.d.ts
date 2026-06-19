@@ -2,6 +2,13 @@ import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 /**
+ * Rules - ESLint - Patterns - No Boolean Var For If - Rule.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+
+/**
  * Rules - ESLint - Patterns - No Boolean Var For If - Check Variable Declaration.
  *
  * @since 0.15.0
@@ -35,14 +42,21 @@ export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclarat
 export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_References = TSESLint.Scope.Reference[];
 
 /**
- * Rules - ESLint - Patterns - No Boolean Var For If - Rule.
+ * Rules - ESLint - Patterns - No Boolean Var For If - Create.
  *
  * @since 0.15.0
  */
-export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_Create_Options_IgnoreFiles = string[];
 
-export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleOptions_IgnoreFiles = string[];
-
-export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleOptions_IgnoreFiles;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_Create_Options_IgnoreFiles;
 }>;
+
+/**
+ * Rules - ESLint - Patterns - No Boolean Var For If - Create - Variable Declaration.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_Create_VariableDeclaration_Node = TSESTree.VariableDeclaration;
+
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_Create_VariableDeclaration_Returns = void;

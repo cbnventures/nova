@@ -4,21 +4,21 @@ import { Icon } from '@iconify/react/offline';
 import { useState } from 'react';
 
 import type {
-  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_BackgroundColor,
   Theme_AnnouncementBar_Index_AnnouncementBar_CloseAriaLabel,
-  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar,
-  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Content,
   Theme_AnnouncementBar_Index_AnnouncementBar_DismissStorageKey,
-  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id,
   Theme_AnnouncementBar_Index_AnnouncementBar_InlineStyle,
-  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_IsCloseable,
   Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissed,
   Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissedState,
   Theme_AnnouncementBar_Index_AnnouncementBar_Props,
   Theme_AnnouncementBar_Index_AnnouncementBar_Returns,
   Theme_AnnouncementBar_Index_AnnouncementBar_SetIsDismissed,
-  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_TextColor,
   Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_BackgroundColor,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Content,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_IsCloseable,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_TextColor,
 } from '../../types/theme/AnnouncementBar/index.d.ts';
 
 /**

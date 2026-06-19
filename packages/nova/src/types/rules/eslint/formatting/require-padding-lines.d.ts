@@ -1,5 +1,24 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
+import type { RuleContext, RuleFix, RuleFixer } from '@typescript-eslint/utils/ts-eslint';
+
+/**
+ * Rules - ESLint - Formatting - Require Padding Lines - Rule.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBareAwait = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBeforeLineComment = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBeforeLoops = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBetweenOperations = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBetweenSwitchCases = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsExitCodeBeforeReturn = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Check Body.
@@ -10,7 +29,7 @@ export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Context
 
 export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Node = TSESTree.Program | TSESTree.BlockStatement;
 
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_ExitCodeBeforeReturn = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_ExitCodeBeforeReturnEnabled = boolean;
 
 export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BeforeLoops = boolean;
 
@@ -66,6 +85,15 @@ export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments
 export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_TrimmedPrevLine = string;
 
 /**
+ * Rules - ESLint - Formatting - Require Padding Lines - Check Line Comments - Fix.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Fix_Fixer = RuleFixer;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Fix_Returns = RuleFix;
+
+/**
  * Rules - ESLint - Formatting - Require Padding Lines - Check Switch Cases.
  *
  * @since 0.14.0
@@ -87,6 +115,74 @@ export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_
 export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_CurrStartLine = number;
 
 export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_HasBlankLine = boolean;
+
+/**
+ * Rules - ESLint - Formatting - Require Padding Lines - Create.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_IgnoreFiles = string[];
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_ExitCodeBeforeReturn = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_BeforeLineComment = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_BeforeLoops = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_BareAwait = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_BetweenOperations = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_BetweenSwitchCases = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_IgnoreFiles;
+  exitCodeBeforeReturn: Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_ExitCodeBeforeReturn;
+  beforeLineComment: Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_BeforeLineComment;
+  beforeLoops: Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_BeforeLoops;
+  bareAwait: Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_BareAwait;
+  betweenOperations: Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_BetweenOperations;
+  betweenSwitchCases: Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Options_BetweenSwitchCases;
+}>;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_CheckExitCodeBeforeReturnEnabled = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_CheckBeforeLoops = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_CheckBareAwait = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_CheckBeforeLineComment = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_CheckBetweenOperations = boolean;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_CheckBetweenSwitchCases = boolean;
+
+/**
+ * Rules - ESLint - Formatting - Require Padding Lines - Create - Block Statement.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_BlockStatement_Node = TSESTree.BlockStatement;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_BlockStatement_Returns = void;
+
+/**
+ * Rules - ESLint - Formatting - Require Padding Lines - Create - Program.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Program_Node = TSESTree.Program;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_Program_Returns = void;
+
+/**
+ * Rules - ESLint - Formatting - Require Padding Lines - Create - Switch Statement.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_SwitchStatement_Node = TSESTree.SwitchStatement;
+
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_SwitchStatement_Returns = void;
 
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Get Callee Key.
@@ -144,61 +240,6 @@ export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCode
 export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Object = TSESTree.Expression;
 
 export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Property = TSESTree.Expression | TSESTree.PrivateIdentifier;
-
-/**
- * Rules - ESLint - Formatting - Require Padding Lines - Rule.
- *
- * @since 0.14.0
- */
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBareAwait = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBeforeLineComment = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBeforeLoops = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBetweenOperations = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBetweenSwitchCases = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsExitCodeBeforeReturn = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsIgnoreFiles = string[];
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_IgnoreFiles = string[];
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_ExitCodeBeforeReturn = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BeforeLineComment = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BeforeLoops = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BareAwait = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BetweenOperations = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BetweenSwitchCases = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_IgnoreFiles;
-  exitCodeBeforeReturn: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_ExitCodeBeforeReturn;
-  beforeLineComment: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BeforeLineComment;
-  beforeLoops: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BeforeLoops;
-  bareAwait: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BareAwait;
-  betweenOperations: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BetweenOperations;
-  betweenSwitchCases: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BetweenSwitchCases;
-}>;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckExitCodeBeforeReturn = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBeforeLoops = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBareAwait = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBeforeLineComment = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBetweenOperations = boolean;
-
-export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBetweenSwitchCases = boolean;
 
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Serialize Callee.

@@ -6,20 +6,23 @@ import type {
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Checker,
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Context,
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Declarations,
-  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_NeedsParens,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_NeedsParens,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_ObjectText,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_WrappedText,
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Node,
-  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ObjectText,
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ObjectType,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Options,
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ParserServices,
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_PropertyName,
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Returns,
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_SourceFileName,
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Symbol,
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_TsNode,
-  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_WrappedText,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_MemberExpression_Node,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_MemberExpression_Returns,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_Options,
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsAllowedProperties,
   Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions,
 } from '../../../types/rules/eslint/typescript/require-bracket-property-access.d.ts';
 
 /**
@@ -74,7 +77,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -91,7 +94,7 @@ export class Runner {
       }
 
       return {
-        MemberExpression(node) {
+        MemberExpression(node: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_MemberExpression_Node): Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_MemberExpression_Returns {
           Runner.checkMemberExpression(context, node, options);
 
           return;
@@ -110,13 +113,13 @@ export class Runner {
    *
    * @param {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Context} context - Context.
    * @param {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Node}    node    - Node.
-   * @param {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions}                   options - Options.
+   * @param {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Options} options - Options.
    *
    * @returns {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Returns}
    *
    * @since 0.15.0
    */
-  private static checkMemberExpression(context: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Context, node: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Node, options: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions): Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Returns {
+  private static checkMemberExpression(context: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Context, node: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Node, options: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Options): Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Returns {
     // Skip computed access (already bracket notation).
     if (node.computed === true) {
       return;
@@ -190,9 +193,9 @@ export class Runner {
             propertyName,
           },
           fix(fixer) {
-            const objectText: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ObjectText = context.sourceCode.getText(node.object);
-            const needsParens: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_NeedsParens = node.object.type === 'AwaitExpression';
-            const wrappedText: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_WrappedText = (needsParens === true) ? `(${objectText})` : objectText;
+            const objectText: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_ObjectText = context.sourceCode.getText(node.object);
+            const needsParens: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_NeedsParens = node.object.type === 'AwaitExpression';
+            const wrappedText: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_WrappedText = (needsParens === true) ? `(${objectText})` : objectText;
 
             return fixer.replaceText(node, `${wrappedText}['${propertyName}']`);
           },

@@ -6,18 +6,23 @@ import { isIgnoredFile } from '../../../lib/utility.js';
 import type {
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_AllComments,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyLineCount,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyPast,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyReached,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Context,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_FoundSummary,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Lines,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_PastSummary,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Trimmed,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_WidthTrimmed,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Program_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxLines,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxWidth,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMinLines,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsSkipDirectories,
-  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions,
 } from '../../../types/rules/eslint/jsdoc/require-jsdoc-body.d.ts';
 
 /**
@@ -89,7 +94,7 @@ export class Runner {
       skipDirectories: [] as Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsSkipDirectories,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -109,7 +114,7 @@ export class Runner {
       }
 
       return {
-        Program() {
+        Program(): Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Program_Returns {
           Runner.checkProgram(context, options);
 
           return;
@@ -127,13 +132,13 @@ export class Runner {
    * @private
    *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Context} context - Context.
-   * @param {Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions}          options - Options.
+   * @param {Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options} options - Options.
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Returns}
    *
    * @since 0.15.0
    */
-  private static checkProgram(context: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Context, options: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions): Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Returns {
+  private static checkProgram(context: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Context, options: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options): Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Returns {
     const allComments: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_AllComments = context.sourceCode.getAllComments();
 
     for (const comment of allComments) {
@@ -222,13 +227,13 @@ export class Runner {
 
       // Check body line widths.
       if (options['maxWidth'] > 0) {
-        let bodyReached: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_FoundSummary = false;
-        let bodyPast: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_PastSummary = false;
+        let bodyReached: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyReached = false;
+        let bodyPast: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyPast = false;
 
         for (const line of lines) {
-          const trimmed: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Trimmed = line.replace(LIB_REGEX_PATTERN_JSDOC_LINE_PREFIX, '').trim();
+          const widthTrimmed: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_WidthTrimmed = line.replace(LIB_REGEX_PATTERN_JSDOC_LINE_PREFIX, '').trim();
 
-          if (trimmed === '' || trimmed === '*') {
+          if (widthTrimmed === '' || widthTrimmed === '*') {
             if (bodyReached === true) {
               bodyPast = true;
             }
@@ -236,7 +241,7 @@ export class Runner {
             continue;
           }
 
-          if (trimmed.startsWith('@') === true) {
+          if (widthTrimmed.startsWith('@') === true) {
             break;
           }
 
@@ -246,13 +251,13 @@ export class Runner {
             continue;
           }
 
-          if (bodyPast === true && trimmed.length > options['maxWidth']) {
+          if (bodyPast === true && widthTrimmed.length > options['maxWidth']) {
             context.report({
               node: comment,
               messageId: 'bodyLineTooWide',
               data: {
                 maxWidth: String(options['maxWidth']),
-                actual: String(trimmed.length),
+                actual: String(widthTrimmed.length),
               },
             });
 

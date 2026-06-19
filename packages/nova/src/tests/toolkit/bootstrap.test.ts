@@ -12,43 +12,58 @@ import {
 import { Bootstrap } from '../../toolkit/index.js';
 
 import type {
-  Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_DirectoryExists,
-  Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_IncludesAppName,
-  Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_Result,
-  Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_DirectoryExists,
-  Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_IncludesAppName,
+  Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_CreatesDirectory_DirectoryExists,
+  Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_CreatesDirectory_Result,
+  Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_ResultIncludesAppName_IncludesAppName,
+  Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_ResultIncludesAppName_Result,
+  Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_CreatesDirectory_DirectoryExists,
+  Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_CreatesDirectory_Result,
   Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_OriginalXdgConfigHome,
-  Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_Result,
+  Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_ResultIncludesAppName_IncludesAppName,
+  Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_ResultIncludesAppName_Result,
   Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_SandboxDir,
   Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_TempDirPath,
-  Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_TmpDir,
-  Tests_Toolkit_Bootstrap_BootstrapGetDataDir_DirectoryExists,
-  Tests_Toolkit_Bootstrap_BootstrapGetDataDir_IncludesAppName,
-  Tests_Toolkit_Bootstrap_BootstrapGetDataDir_Result,
-  Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_PackageJsonExists,
-  Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_PackageJsonPath,
-  Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_Result,
-  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_EnvContent,
-  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_EnvFilePath,
-  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_OriginalValue,
+  Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_TempTmpDir,
+  Tests_Toolkit_Bootstrap_BootstrapGetDataDir_CreatesDirectory_DirectoryExists,
+  Tests_Toolkit_Bootstrap_BootstrapGetDataDir_CreatesDirectory_Result,
+  Tests_Toolkit_Bootstrap_BootstrapGetDataDir_ResultIncludesAppName_IncludesAppName,
+  Tests_Toolkit_Bootstrap_BootstrapGetDataDir_ResultIncludesAppName_Result,
+  Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_ResultContainsPackageJson_PackageJsonExists,
+  Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_ResultContainsPackageJson_PackageJsonPath,
+  Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_ResultContainsPackageJson_Result,
+  Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_ReturnsAStringWhenRunFromADirectoryWithPackageJson_Result,
+  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_DoesNotOverrideExistingVars_EnvFilePath,
+  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_DoesNotOverrideExistingVars_OriginalValue,
+  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_DoesNotThrowWhenNoEnvExists_EnvDirectory,
+  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_IgnoresComments_EnvContent,
+  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_IgnoresComments_EnvFilePath,
+  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_IgnoresEmptyLines_EnvContent,
+  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_IgnoresEmptyLines_EnvFilePath,
+  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_LoadsDoubleQuotedValue_EnvFilePath,
+  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_LoadsKEYValue_EnvFilePath,
+  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_LoadsSingleQuotedValue_EnvFilePath,
   Tests_Toolkit_Bootstrap_BootstrapLoadEnv_TempDir,
   Tests_Toolkit_Bootstrap_BootstrapLoadEnv_TempDirPath,
-  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_TmpDir,
-  Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_FilePath,
-  Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_Result,
+  Tests_Toolkit_Bootstrap_BootstrapLoadEnv_TempTmpDir,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_FindsFileAtAbsolutePath_FilePath,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_FindsFileAtAbsolutePath_Result,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_RespectsSearchOrder_FilePath,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_RespectsSearchOrder_Result,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_ReturnsUndefinedWhenNotFound_Result,
   Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_TempDir,
   Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_TempDirPath,
-  Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_TmpDir,
-  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_FilePath,
-  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_FilePath2,
-  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_IncludesFirst,
-  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_IncludesSecond,
-  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_Result,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_TempTmpDir,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_ReturnsAllMatchingDirs_FilePath,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_ReturnsAllMatchingDirs_FilePath2,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_ReturnsAllMatchingDirs_IncludesFirst,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_ReturnsAllMatchingDirs_IncludesSecond,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_ReturnsAllMatchingDirs_Result,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_ReturnsEmptyArrayWhenNoneFound_Result,
   Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_TempDir,
   Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_TempDir2,
   Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_TempDir2Path,
   Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_TempDirPath,
-  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_TmpDir,
+  Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_TempTmpDir,
 } from '../../types/tests/toolkit/bootstrap.test.d.ts';
 
 /**
@@ -61,7 +76,7 @@ describe('Bootstrap getConfigDir', async () => {
   let originalXdgConfigHome: Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_OriginalXdgConfigHome = undefined;
 
   beforeEach(() => {
-    const tempTmpDir: Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_TmpDir = tmpdir();
+    const tempTmpDir: Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_TempTmpDir = tmpdir();
     const tempDirPath: Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_TempDirPath = join(tempTmpDir, 'nova-bootstrap-config-');
 
     sandboxDir = mkdtempSync(tempDirPath);
@@ -87,8 +102,8 @@ describe('Bootstrap getConfigDir', async () => {
   });
 
   it('result includes app name', () => {
-    const result: Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_Result = Bootstrap.getConfigDir('nova-test-app');
-    const includesAppName: Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_IncludesAppName = result.includes('nova-test-app');
+    const result: Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_ResultIncludesAppName_Result = Bootstrap.getConfigDir('nova-test-app');
+    const includesAppName: Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_ResultIncludesAppName_IncludesAppName = result.includes('nova-test-app');
 
     ok(includesAppName);
 
@@ -96,8 +111,8 @@ describe('Bootstrap getConfigDir', async () => {
   });
 
   it('creates directory', () => {
-    const result: Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_Result = Bootstrap.getConfigDir('nova-test-app');
-    const directoryExists: Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_DirectoryExists = existsSync(result);
+    const result: Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_CreatesDirectory_Result = Bootstrap.getConfigDir('nova-test-app');
+    const directoryExists: Tests_Toolkit_Bootstrap_BootstrapGetConfigDir_CreatesDirectory_DirectoryExists = existsSync(result);
 
     ok(directoryExists);
 
@@ -114,8 +129,8 @@ describe('Bootstrap getConfigDir', async () => {
  */
 describe('Bootstrap getDataDir', async () => {
   it('result includes app name', () => {
-    const result: Tests_Toolkit_Bootstrap_BootstrapGetDataDir_Result = Bootstrap.getDataDir('nova-test-app');
-    const includesAppName: Tests_Toolkit_Bootstrap_BootstrapGetDataDir_IncludesAppName = result.includes('nova-test-app');
+    const result: Tests_Toolkit_Bootstrap_BootstrapGetDataDir_ResultIncludesAppName_Result = Bootstrap.getDataDir('nova-test-app');
+    const includesAppName: Tests_Toolkit_Bootstrap_BootstrapGetDataDir_ResultIncludesAppName_IncludesAppName = result.includes('nova-test-app');
 
     ok(includesAppName);
 
@@ -123,8 +138,8 @@ describe('Bootstrap getDataDir', async () => {
   });
 
   it('creates directory', () => {
-    const result: Tests_Toolkit_Bootstrap_BootstrapGetDataDir_Result = Bootstrap.getDataDir('nova-test-app');
-    const directoryExists: Tests_Toolkit_Bootstrap_BootstrapGetDataDir_DirectoryExists = existsSync(result);
+    const result: Tests_Toolkit_Bootstrap_BootstrapGetDataDir_CreatesDirectory_Result = Bootstrap.getDataDir('nova-test-app');
+    const directoryExists: Tests_Toolkit_Bootstrap_BootstrapGetDataDir_CreatesDirectory_DirectoryExists = existsSync(result);
 
     ok(directoryExists);
 
@@ -141,8 +156,8 @@ describe('Bootstrap getDataDir', async () => {
  */
 describe('Bootstrap getCacheDir', async () => {
   it('result includes app name', () => {
-    const result: Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_Result = Bootstrap.getCacheDir('nova-test-app');
-    const includesAppName: Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_IncludesAppName = result.includes('nova-test-app');
+    const result: Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_ResultIncludesAppName_Result = Bootstrap.getCacheDir('nova-test-app');
+    const includesAppName: Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_ResultIncludesAppName_IncludesAppName = result.includes('nova-test-app');
 
     ok(includesAppName);
 
@@ -150,8 +165,8 @@ describe('Bootstrap getCacheDir', async () => {
   });
 
   it('creates directory', () => {
-    const result: Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_Result = Bootstrap.getCacheDir('nova-test-app');
-    const directoryExists: Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_DirectoryExists = existsSync(result);
+    const result: Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_CreatesDirectory_Result = Bootstrap.getCacheDir('nova-test-app');
+    const directoryExists: Tests_Toolkit_Bootstrap_BootstrapGetCacheDir_CreatesDirectory_DirectoryExists = existsSync(result);
 
     ok(directoryExists);
 
@@ -168,7 +183,7 @@ describe('Bootstrap getCacheDir', async () => {
  */
 describe('Bootstrap getProjectRoot', async () => {
   it('returns a string when run from a directory with package.json', () => {
-    const result: Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_Result = Bootstrap.getProjectRoot();
+    const result: Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_ReturnsAStringWhenRunFromADirectoryWithPackageJson_Result = Bootstrap.getProjectRoot();
 
     strictEqual(typeof result, 'string');
 
@@ -176,9 +191,9 @@ describe('Bootstrap getProjectRoot', async () => {
   });
 
   it('result contains package.json', () => {
-    const result: Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_Result = Bootstrap.getProjectRoot();
-    const packageJsonPath: Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_PackageJsonPath = join(result!, 'package.json');
-    const packageJsonExists: Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_PackageJsonExists = existsSync(packageJsonPath);
+    const result: Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_ResultContainsPackageJson_Result = Bootstrap.getProjectRoot();
+    const packageJsonPath: Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_ResultContainsPackageJson_PackageJsonPath = join(result!, 'package.json');
+    const packageJsonExists: Tests_Toolkit_Bootstrap_BootstrapGetProjectRoot_ResultContainsPackageJson_PackageJsonExists = existsSync(packageJsonPath);
 
     ok(packageJsonExists);
 
@@ -197,7 +212,7 @@ describe('Bootstrap resolveFileDir', async () => {
   let tempDir: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_TempDir = undefined;
 
   beforeEach(() => {
-    const tempTmpDir: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_TmpDir = tmpdir();
+    const tempTmpDir: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_TempTmpDir = tmpdir();
     const tempDirPath: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_TempDirPath = join(tempTmpDir, 'nova-bootstrap-test-');
 
     tempDir = mkdtempSync(tempDirPath);
@@ -214,11 +229,11 @@ describe('Bootstrap resolveFileDir', async () => {
   });
 
   it('finds file at absolute path', () => {
-    const filePath: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_FilePath = join(tempDir!, 'config.json');
+    const filePath: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_FindsFileAtAbsolutePath_FilePath = join(tempDir!, 'config.json');
 
     writeFileSync(filePath, '{}');
 
-    const result: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_Result = Bootstrap.resolveFileDir('nova-test-app', 'config.json', [tempDir!]);
+    const result: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_FindsFileAtAbsolutePath_Result = Bootstrap.resolveFileDir('nova-test-app', 'config.json', [tempDir!]);
 
     strictEqual(result, tempDir!);
 
@@ -226,7 +241,7 @@ describe('Bootstrap resolveFileDir', async () => {
   });
 
   it('returns undefined when not found', () => {
-    const result: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_Result = Bootstrap.resolveFileDir('nova-test-app', 'missing.json', [tempDir!]);
+    const result: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_ReturnsUndefinedWhenNotFound_Result = Bootstrap.resolveFileDir('nova-test-app', 'missing.json', [tempDir!]);
 
     strictEqual(result, undefined);
 
@@ -234,11 +249,11 @@ describe('Bootstrap resolveFileDir', async () => {
   });
 
   it('respects search order', () => {
-    const filePath: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_FilePath = join(tempDir!, 'config.json');
+    const filePath: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_RespectsSearchOrder_FilePath = join(tempDir!, 'config.json');
 
     writeFileSync(filePath, '{}');
 
-    const result: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_Result = Bootstrap.resolveFileDir('nova-test-app', 'config.json', [
+    const result: Tests_Toolkit_Bootstrap_BootstrapResolveFileDir_RespectsSearchOrder_Result = Bootstrap.resolveFileDir('nova-test-app', 'config.json', [
       '/nonexistent-path',
       tempDir!,
     ]);
@@ -261,7 +276,7 @@ describe('Bootstrap resolveFileDirs', async () => {
   let tempDir2: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_TempDir2 = '';
 
   beforeEach(() => {
-    const tempTmpDir: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_TmpDir = tmpdir();
+    const tempTmpDir: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_TempTmpDir = tmpdir();
     const tempDirPath: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_TempDirPath = join(tempTmpDir, 'nova-bootstrap-test-');
     const tempDir2Path: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_TempDir2Path = join(tempTmpDir, 'nova-bootstrap-test2-');
 
@@ -283,18 +298,18 @@ describe('Bootstrap resolveFileDirs', async () => {
   });
 
   it('returns all matching dirs', () => {
-    const filePath: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_FilePath = join(tempDir!, 'config.json');
-    const filePath2: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_FilePath2 = join(tempDir2!, 'config.json');
+    const filePath: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_ReturnsAllMatchingDirs_FilePath = join(tempDir!, 'config.json');
+    const filePath2: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_ReturnsAllMatchingDirs_FilePath2 = join(tempDir2!, 'config.json');
 
     writeFileSync(filePath, '{}');
     writeFileSync(filePath2, '{}');
 
-    const result: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_Result = Bootstrap.resolveFileDirs('nova-test-app', 'config.json', [
+    const result: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_ReturnsAllMatchingDirs_Result = Bootstrap.resolveFileDirs('nova-test-app', 'config.json', [
       tempDir!,
       tempDir2!,
     ]);
-    const includesFirst: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_IncludesFirst = result.includes(tempDir!);
-    const includesSecond: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_IncludesSecond = result.includes(tempDir2!);
+    const includesFirst: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_ReturnsAllMatchingDirs_IncludesFirst = result.includes(tempDir!);
+    const includesSecond: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_ReturnsAllMatchingDirs_IncludesSecond = result.includes(tempDir2!);
 
     strictEqual(result.length, 2);
     ok(includesFirst);
@@ -304,7 +319,7 @@ describe('Bootstrap resolveFileDirs', async () => {
   });
 
   it('returns empty array when none found', () => {
-    const result: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_Result = Bootstrap.resolveFileDirs('nova-test-app', 'missing.json', [
+    const result: Tests_Toolkit_Bootstrap_BootstrapResolveFileDirs_ReturnsEmptyArrayWhenNoneFound_Result = Bootstrap.resolveFileDirs('nova-test-app', 'missing.json', [
       tempDir!,
       tempDir2!,
     ]);
@@ -326,7 +341,7 @@ describe('Bootstrap loadEnv', async () => {
   let tempDir: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_TempDir = undefined;
 
   beforeEach(() => {
-    const tempTmpDir: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_TmpDir = tmpdir();
+    const tempTmpDir: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_TempTmpDir = tmpdir();
     const tempDirPath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_TempDirPath = join(tempTmpDir, 'nova-bootstrap-env-');
 
     tempDir = mkdtempSync(tempDirPath);
@@ -347,7 +362,7 @@ describe('Bootstrap loadEnv', async () => {
   });
 
   it('loads KEY=value', () => {
-    const envFilePath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_EnvFilePath = join(tempDir!, '.env');
+    const envFilePath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_LoadsKEYValue_EnvFilePath = join(tempDir!, '.env');
 
     writeFileSync(envFilePath, 'NOVA_TEST_KEY=hello\n');
 
@@ -359,7 +374,7 @@ describe('Bootstrap loadEnv', async () => {
   });
 
   it('loads double-quoted value', () => {
-    const envFilePath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_EnvFilePath = join(tempDir!, '.env');
+    const envFilePath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_LoadsDoubleQuotedValue_EnvFilePath = join(tempDir!, '.env');
 
     writeFileSync(envFilePath, 'NOVA_TEST_QUOTED="hello world"\n');
 
@@ -371,7 +386,7 @@ describe('Bootstrap loadEnv', async () => {
   });
 
   it('loads single-quoted value', () => {
-    const envFilePath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_EnvFilePath = join(tempDir!, '.env');
+    const envFilePath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_LoadsSingleQuotedValue_EnvFilePath = join(tempDir!, '.env');
 
     writeFileSync(envFilePath, 'NOVA_TEST_SINGLE=\'hello world\'\n');
 
@@ -383,11 +398,11 @@ describe('Bootstrap loadEnv', async () => {
   });
 
   it('does not override existing vars', () => {
-    const originalValue: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_OriginalValue = 'original';
+    const originalValue: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_DoesNotOverrideExistingVars_OriginalValue = 'original';
 
     Reflect.set(process.env, 'NOVA_TEST_KEY', originalValue);
 
-    const envFilePath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_EnvFilePath = join(tempDir!, '.env');
+    const envFilePath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_DoesNotOverrideExistingVars_EnvFilePath = join(tempDir!, '.env');
 
     writeFileSync(envFilePath, 'NOVA_TEST_KEY=overridden\n');
 
@@ -399,8 +414,8 @@ describe('Bootstrap loadEnv', async () => {
   });
 
   it('ignores comments', () => {
-    const envFilePath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_EnvFilePath = join(tempDir!, '.env');
-    const envContent: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_EnvContent = [
+    const envFilePath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_IgnoresComments_EnvFilePath = join(tempDir!, '.env');
+    const envContent: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_IgnoresComments_EnvContent = [
       '# This is a comment',
       'NOVA_TEST_KEY=hello',
     ].join('\n');
@@ -415,8 +430,8 @@ describe('Bootstrap loadEnv', async () => {
   });
 
   it('ignores empty lines', () => {
-    const envFilePath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_EnvFilePath = join(tempDir!, '.env');
-    const envContent: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_EnvContent = [
+    const envFilePath: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_IgnoresEmptyLines_EnvFilePath = join(tempDir!, '.env');
+    const envContent: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_IgnoresEmptyLines_EnvContent = [
       '',
       '',
       'NOVA_TEST_KEY=hello',
@@ -433,8 +448,10 @@ describe('Bootstrap loadEnv', async () => {
   });
 
   it('does not throw when no .env exists', () => {
+    const envDirectory: Tests_Toolkit_Bootstrap_BootstrapLoadEnv_DoesNotThrowWhenNoEnvExists_EnvDirectory = tempDir!;
+
     doesNotThrow(() => {
-      Bootstrap.loadEnv(tempDir!);
+      Bootstrap.loadEnv(envDirectory);
 
       return;
     });

@@ -45,13 +45,13 @@ import type {
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_IsDryRun,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_IsReplaceFile,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Options,
-  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipeTupleFilter,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipeTuple,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_ReplaceFileNotice,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Returns,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkingFile,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkingFileWorkspaces,
-  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceConfigFilter,
-  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceRecipesFilter,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceConfig,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceRecipes,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Workspaces,
 } from '../../../types/cli/recipe/package-json/sync-ownership.d.ts';
 
@@ -119,14 +119,14 @@ export class Runner {
 
     // Filter workspaces that have the recipe enabled.
     const eligibleWorkspaces: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceConfigFilter = workspace[1];
-      const workspaceRecipes: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceRecipesFilter = workspaceConfig['recipes'];
+      const workspaceConfig: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceConfig = workspace[1];
+      const workspaceRecipes: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceRecipes = workspaceConfig['recipes'];
 
       if (workspaceRecipes === undefined) {
         return false;
       }
 
-      const recipeTuple: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipeTupleFilter = workspaceRecipes['sync-ownership'];
+      const recipeTuple: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipeTuple = workspaceRecipes['sync-ownership'];
 
       if (recipeTuple === undefined) {
         return false;

@@ -1,38 +1,96 @@
 /**
- * Tests - CLI - Recipe - GitHub - Handle Gh Failure - Handle Gh Failure.
+ * Tests - CLI - Recipe - GitHub - Handle Gh Failure - Handle Gh Failure - Logs Generic Failure For Non Rate Limit Errors.
  *
  * @since 0.22.0
  */
-export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock = {
-  debug: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Debug;
-  dev: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Dev;
-  info: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Info;
-  warn: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Warn;
-  error: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Error;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedLoggerMock = {
+  debug: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedLoggerMock_Debug;
+  dev: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedLoggerMock_Dev;
+  info: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedLoggerMock_Info;
+  warn: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedLoggerMock_Warn;
+  error: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedLoggerMock_Error;
 };
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_LoggerCustomizeReturn = import('../../../../toolkit/logger.d.ts').Toolkit_Logger_Customize_Returns;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_LoggerCustomizeReturn = import('../../../../toolkit/logger.d.ts').Toolkit_Logger_Runner_Customize_Returns;
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedErrorCalls = unknown[][];
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedErrorCalls = unknown[][];
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_HasRateLimitError = boolean;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_HasGenericError = boolean;
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_HasResetsAt = boolean;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_HasTextError = boolean;
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_HasUnknownResetTime = boolean;
+/**
+ * Tests - CLI - Recipe - GitHub - Handle Gh Failure - Handle Gh Failure - Logs Rate Limit Specific Error When Stderr Contains API Rate Limit Exceeded And Reset Header.
+ *
+ * @since 0.22.0
+ */
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_HasGenericError = boolean;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type Tests_Cli_Recipe_Github_HandleGhFailure_HasTextError = boolean;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedLoggerMock = {
+  debug: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedLoggerMock_Debug;
+  dev: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedLoggerMock_Dev;
+  info: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedLoggerMock_Info;
+  warn: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedLoggerMock_Warn;
+  error: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedLoggerMock_Error;
+};
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_LoggerCustomizeReturn = import('../../../../toolkit/logger.d.ts').Toolkit_Logger_Runner_Customize_Returns;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedErrorCalls = unknown[][];
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_HasRateLimitError = boolean;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_HasResetsAt = boolean;
+
+/**
+ * Tests - CLI - Recipe - GitHub - Handle Gh Failure - Handle Gh Failure - Uses Unknown Reset Time When X Rate Limit Reset Header Is Missing.
+ *
+ * @since 0.22.0
+ */
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedLoggerMock = {
+  debug: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedLoggerMock_Debug;
+  dev: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedLoggerMock_Dev;
+  info: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedLoggerMock_Info;
+  warn: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedLoggerMock_Warn;
+  error: Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedLoggerMock_Error;
+};
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_LoggerCustomizeReturn = import('../../../../toolkit/logger.d.ts').Toolkit_Logger_Runner_Customize_Returns;
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedErrorCalls = unknown[][];
+
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_HasUnknownResetTime = boolean;

@@ -2,6 +2,15 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 /**
+ * Rules - ESLint - TypeScript - Require Bracket Property Access - Rule.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsAllowedProperties = string[];
+
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+
+/**
  * Rules - ESLint - TypeScript - Require Bracket Property Access - Check Member Expression.
  *
  * @since 0.15.0
@@ -9,6 +18,15 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Context = Readonly<RuleContext<string, readonly unknown[]>>;
 
 export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Node = TSESTree.MemberExpression;
+
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Options_AllowedProperties = string[];
+
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Options_IgnoreFiles = string[];
+
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Options = Readonly<{
+  allowedProperties: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Options_AllowedProperties;
+  ignoreFiles: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Options_IgnoreFiles;
+}>;
 
 export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Returns = void;
 
@@ -28,26 +46,36 @@ export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMem
 
 export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_SourceFileName = string;
 
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ObjectText = string;
-
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_NeedsParens = boolean;
-
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_WrappedText = string;
-
 /**
- * Rules - ESLint - TypeScript - Require Bracket Property Access - Rule.
+ * Rules - ESLint - TypeScript - Require Bracket Property Access - Check Member Expression - Fix.
  *
  * @since 0.15.0
  */
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsAllowedProperties = string[];
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_ObjectText = string;
 
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_NeedsParens = boolean;
 
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions_AllowedProperties = string[];
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_WrappedText = string;
 
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions_IgnoreFiles = string[];
+/**
+ * Rules - ESLint - TypeScript - Require Bracket Property Access - Create.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_Options_AllowedProperties = string[];
 
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions = Readonly<{
-  allowedProperties: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions_AllowedProperties;
-  ignoreFiles: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions_IgnoreFiles;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_Options_IgnoreFiles = string[];
+
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_Options = Readonly<{
+  allowedProperties: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_Options_AllowedProperties;
+  ignoreFiles: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_Options_IgnoreFiles;
 }>;
+
+/**
+ * Rules - ESLint - TypeScript - Require Bracket Property Access - Create - Member Expression.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_MemberExpression_Node = TSESTree.MemberExpression;
+
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_Create_MemberExpression_Returns = void;

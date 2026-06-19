@@ -23,55 +23,31 @@ import {
 } from '../lib/regex.js';
 
 import type {
-  Tests_CascadeDefensive_CascadeDefensive_AnchorClasses,
-  Tests_CascadeDefensive_CascadeDefensive_BareClass,
-  Tests_CascadeDefensive_CascadeDefensive_BareClassMatch,
-  Tests_CascadeDefensive_CascadeDefensive_BareClassPattern,
-  Tests_CascadeDefensive_CascadeDefensive_BareColorClasses,
-  Tests_CascadeDefensive_CascadeDefensive_BareTextDecorationNoneClasses,
-  Tests_CascadeDefensive_CascadeDefensive_BareValue,
-  Tests_CascadeDefensive_CascadeDefensive_BareValueLookup,
-  Tests_CascadeDefensive_CascadeDefensive_ClassName,
-  Tests_CascadeDefensive_CascadeDefensive_ClassPlusPseudoPattern,
-  Tests_CascadeDefensive_CascadeDefensive_ColorProperty,
-  Tests_CascadeDefensive_CascadeDefensive_DarkClass,
-  Tests_CascadeDefensive_CascadeDefensive_DarkClassMatch,
-  Tests_CascadeDefensive_CascadeDefensive_DarkLookupKey,
-  Tests_CascadeDefensive_CascadeDefensive_DarkStrippedSelector,
-  Tests_CascadeDefensive_CascadeDefensive_DeclaringFile,
-  Tests_CascadeDefensive_CascadeDefensive_EndsFocusClass,
-  Tests_CascadeDefensive_CascadeDefensive_EndsFocusClassMatch,
-  Tests_CascadeDefensive_CascadeDefensive_EndsFocusClassPattern,
-  Tests_CascadeDefensive_CascadeDefensive_EndsHoverClass,
-  Tests_CascadeDefensive_CascadeDefensive_EndsHoverClassMatch,
-  Tests_CascadeDefensive_CascadeDefensive_EndsHoverClassPattern,
-  Tests_CascadeDefensive_CascadeDefensive_FilePath,
-  Tests_CascadeDefensive_CascadeDefensive_FileTriples,
-  Tests_CascadeDefensive_CascadeDefensive_FocusClass,
-  Tests_CascadeDefensive_CascadeDefensive_FocusClassMatch,
-  Tests_CascadeDefensive_CascadeDefensive_FocusClassPattern,
-  Tests_CascadeDefensive_CascadeDefensive_FocusPseudoSuffix,
-  Tests_CascadeDefensive_CascadeDefensive_GuardedFocusClasses,
-  Tests_CascadeDefensive_CascadeDefensive_GuardedHoverClasses,
-  Tests_CascadeDefensive_CascadeDefensive_HoverClass,
-  Tests_CascadeDefensive_CascadeDefensive_HoverClassMatch,
-  Tests_CascadeDefensive_CascadeDefensive_HoverClassPattern,
-  Tests_CascadeDefensive_CascadeDefensive_HoverPseudoSuffix,
-  Tests_CascadeDefensive_CascadeDefensive_LookupKey,
-  Tests_CascadeDefensive_CascadeDefensive_MissingGuards,
-  Tests_CascadeDefensive_CascadeDefensive_MissingGuardsMessage,
-  Tests_CascadeDefensive_CascadeDefensive_Part,
-  Tests_CascadeDefensive_CascadeDefensive_Redundancies,
-  Tests_CascadeDefensive_CascadeDefensive_RedundanciesMessage,
-  Tests_CascadeDefensive_CascadeDefensive_TriplesByFile,
-  Tests_CascadeDefensive_CascadeDefensive_TsxPaths,
+  Tests_CascadeDefensive_AnchorClasses,
+  Tests_CascadeDefensive_BareClass,
+  Tests_CascadeDefensive_BareClassPattern,
+  Tests_CascadeDefensive_BareColorClasses,
+  Tests_CascadeDefensive_BareMatch,
+  Tests_CascadeDefensive_BareTextDecorationNoneClasses,
+  Tests_CascadeDefensive_BareValue,
+  Tests_CascadeDefensive_BareValueLookup,
+  Tests_CascadeDefensive_ClassName,
+  Tests_CascadeDefensive_ClassPlusPseudoPattern,
+  Tests_CascadeDefensive_ColorProperty,
+  Tests_CascadeDefensive_DarkClass,
+  Tests_CascadeDefensive_DarkClassMatch,
+  Tests_CascadeDefensive_DarkLookupKey,
+  Tests_CascadeDefensive_DeclaringFile,
+  Tests_CascadeDefensive_EndsFocusPattern,
+  Tests_CascadeDefensive_EndsHoverPattern,
   Tests_CascadeDefensive_ExtractAnchorClasses_AnchorOpenPattern,
   Tests_CascadeDefensive_ExtractAnchorClasses_BraceDepth,
   Tests_CascadeDefensive_ExtractAnchorClasses_Classes,
-  Tests_CascadeDefensive_ExtractAnchorClasses_ClassToken,
+  Tests_CascadeDefensive_ExtractAnchorClasses_ClassTokenTrimmed,
   Tests_CascadeDefensive_ExtractAnchorClasses_Content,
   Tests_CascadeDefensive_ExtractAnchorClasses_EndIndex,
   Tests_CascadeDefensive_ExtractAnchorClasses_MergeCapture,
+  Tests_CascadeDefensive_ExtractAnchorClasses_MergeClassTokenTrimmed,
   Tests_CascadeDefensive_ExtractAnchorClasses_MergeMatch,
   Tests_CascadeDefensive_ExtractAnchorClasses_MergePattern,
   Tests_CascadeDefensive_ExtractAnchorClasses_OpeningTag,
@@ -86,8 +62,9 @@ import type {
   Tests_CascadeDefensive_ExtractRuleTriples_BlockStart,
   Tests_CascadeDefensive_ExtractRuleTriples_Body,
   Tests_CascadeDefensive_ExtractRuleTriples_Char,
+  Tests_CascadeDefensive_ExtractRuleTriples_ClosingPrelude,
   Tests_CascadeDefensive_ExtractRuleTriples_Colon,
-  Tests_CascadeDefensive_ExtractRuleTriples_Declaration,
+  Tests_CascadeDefensive_ExtractRuleTriples_DeclarationText,
   Tests_CascadeDefensive_ExtractRuleTriples_Defensive,
   Tests_CascadeDefensive_ExtractRuleTriples_DefensivePattern,
   Tests_CascadeDefensive_ExtractRuleTriples_Depth,
@@ -105,17 +82,33 @@ import type {
   Tests_CascadeDefensive_ExtractRuleTriples_Triples,
   Tests_CascadeDefensive_ExtractRuleTriples_Value,
   Tests_CascadeDefensive_ExtractRuleTriples_WhitespacePattern,
+  Tests_CascadeDefensive_FilePath,
+  Tests_CascadeDefensive_FileTriples,
+  Tests_CascadeDefensive_FocusClass,
+  Tests_CascadeDefensive_FocusClassPattern,
+  Tests_CascadeDefensive_FocusMatch,
+  Tests_CascadeDefensive_FocusPseudoSuffix,
   Tests_CascadeDefensive_GetPackageRoot_CurrentFileDirectory,
   Tests_CascadeDefensive_GetPackageRoot_CurrentFilePath,
   Tests_CascadeDefensive_GetPackageRoot_Returns,
+  Tests_CascadeDefensive_GuardedFocus,
+  Tests_CascadeDefensive_GuardedHover,
+  Tests_CascadeDefensive_HoverClass,
+  Tests_CascadeDefensive_HoverClassPattern,
+  Tests_CascadeDefensive_HoverMatch,
+  Tests_CascadeDefensive_HoverPseudoSuffix,
   Tests_CascadeDefensive_ListThemeAndBlockTsx_Absolute,
   Tests_CascadeDefensive_ListThemeAndBlockTsx_BlocksFiles,
   Tests_CascadeDefensive_ListThemeAndBlockTsx_BlocksRoot,
   Tests_CascadeDefensive_ListThemeAndBlockTsx_Returns,
   Tests_CascadeDefensive_ListThemeAndBlockTsx_ThemeFiles,
   Tests_CascadeDefensive_ListThemeAndBlockTsx_ThemeRoot,
+  Tests_CascadeDefensive_LookupKey,
+  Tests_CascadeDefensive_MissingGuards,
+  Tests_CascadeDefensive_MissingGuardsMessage,
+  Tests_CascadeDefensive_Part,
   Tests_CascadeDefensive_ReadAnchorClasses_AnchorClasses,
-  Tests_CascadeDefensive_ReadAnchorClasses_ClassName,
+  Tests_CascadeDefensive_ReadAnchorClasses_ClassNameToken,
   Tests_CascadeDefensive_ReadAnchorClasses_Content,
   Tests_CascadeDefensive_ReadAnchorClasses_PerFileClasses,
   Tests_CascadeDefensive_ReadAnchorClasses_Returns,
@@ -126,14 +119,19 @@ import type {
   Tests_CascadeDefensive_ReadCssTriplesByFile_Returns,
   Tests_CascadeDefensive_ReadCssTriplesByFile_StylesRoot,
   Tests_CascadeDefensive_ReadCssTriplesByFile_TriplesByFile,
+  Tests_CascadeDefensive_Redundancies,
+  Tests_CascadeDefensive_RedundanciesMessage,
   Tests_CascadeDefensive_StripBlockComments_Pattern,
   Tests_CascadeDefensive_StripBlockComments_Returns,
   Tests_CascadeDefensive_StripBlockComments_Source,
   Tests_CascadeDefensive_StripDarkSelectorPrefix_Pattern,
   Tests_CascadeDefensive_StripDarkSelectorPrefix_Returns,
   Tests_CascadeDefensive_StripDarkSelectorPrefix_Selector,
+  Tests_CascadeDefensive_StrippedSelector,
   Tests_CascadeDefensive_TripleKey_Returns,
   Tests_CascadeDefensive_TripleKey_Triple,
+  Tests_CascadeDefensive_TriplesByFile,
+  Tests_CascadeDefensive_TsxPaths,
 } from '../types/tests/cascade-defensive.test.d.ts';
 
 /**
@@ -196,7 +194,7 @@ function extractAnchorClasses(content: Tests_CascadeDefensive_ExtractAnchorClass
       const staticCapture: Tests_CascadeDefensive_ExtractAnchorClasses_StaticCapture = staticMatch[1] ?? '';
 
       for (const classToken of staticCapture.trim().split(whitespacePattern)) {
-        const classTokenTrimmed: Tests_CascadeDefensive_ExtractAnchorClasses_ClassToken = classToken;
+        const classTokenTrimmed: Tests_CascadeDefensive_ExtractAnchorClasses_ClassTokenTrimmed = classToken;
 
         if (classTokenTrimmed !== '') {
           classes.add(classTokenTrimmed);
@@ -214,10 +212,10 @@ function extractAnchorClasses(content: Tests_CascadeDefensive_ExtractAnchorClass
       const mergeCapture: Tests_CascadeDefensive_ExtractAnchorClasses_MergeCapture = mergeMatch[1] ?? '';
 
       for (const classToken of mergeCapture.trim().split(whitespacePattern)) {
-        const classTokenTrimmed: Tests_CascadeDefensive_ExtractAnchorClasses_ClassToken = classToken;
+        const mergeClassTokenTrimmed: Tests_CascadeDefensive_ExtractAnchorClasses_MergeClassTokenTrimmed = classToken;
 
-        if (classTokenTrimmed !== '') {
-          classes.add(classTokenTrimmed);
+        if (mergeClassTokenTrimmed !== '') {
+          classes.add(mergeClassTokenTrimmed);
         }
       }
     }
@@ -296,15 +294,15 @@ function extractRuleTriples(source: Tests_CascadeDefensive_ExtractRuleTriples_So
       }
     } else if (char === '}') {
       if (depth === 1) {
-        const prelude: Tests_CascadeDefensive_ExtractRuleTriples_Prelude = stripped.slice(preludeStart, blockStart - 1).trim();
+        const closingPrelude: Tests_CascadeDefensive_ExtractRuleTriples_ClosingPrelude = stripped.slice(preludeStart, blockStart - 1).trim();
         const body: Tests_CascadeDefensive_ExtractRuleTriples_Body = stripped.slice(blockStart, index);
-        const selector: Tests_CascadeDefensive_ExtractRuleTriples_Selector = prelude
+        const selector: Tests_CascadeDefensive_ExtractRuleTriples_Selector = closingPrelude
           .replace(defensivePattern, '')
           .replace(whitespacePattern, ' ')
           .trim();
 
         for (const declaration of body.split(';')) {
-          const declarationText: Tests_CascadeDefensive_ExtractRuleTriples_Declaration = declaration;
+          const declarationText: Tests_CascadeDefensive_ExtractRuleTriples_DeclarationText = declaration;
           const colon: Tests_CascadeDefensive_ExtractRuleTriples_Colon = declarationText.indexOf(':');
 
           if (colon === -1) {
@@ -406,7 +404,7 @@ async function readAnchorClasses(tsxPaths: Tests_CascadeDefensive_ReadAnchorClas
     const perFileClasses: Tests_CascadeDefensive_ReadAnchorClasses_PerFileClasses = extractAnchorClasses(content);
 
     for (const className of perFileClasses) {
-      const classNameToken: Tests_CascadeDefensive_ReadAnchorClasses_ClassName = className;
+      const classNameToken: Tests_CascadeDefensive_ReadAnchorClasses_ClassNameToken = className;
 
       anchorClasses.add(classNameToken);
     }
@@ -536,25 +534,25 @@ function tripleKey(triple: Tests_CascadeDefensive_TripleKey_Triple): Tests_Casca
  */
 describe('cascade defensive', () => {
   it('every anchor class with bare text-decoration: none declares hover and focus-visible guards', async () => {
-    const tsxPaths: Tests_CascadeDefensive_CascadeDefensive_TsxPaths = await listThemeAndBlockTsx();
-    const anchorClasses: Tests_CascadeDefensive_CascadeDefensive_AnchorClasses = await readAnchorClasses(tsxPaths);
-    const triplesByFile: Tests_CascadeDefensive_CascadeDefensive_TriplesByFile = await readCssTriplesByFile();
-    const bareTextDecorationNoneClasses: Tests_CascadeDefensive_CascadeDefensive_BareTextDecorationNoneClasses = new Map();
-    const guardedHover: Tests_CascadeDefensive_CascadeDefensive_GuardedHoverClasses = new Set();
-    const guardedFocus: Tests_CascadeDefensive_CascadeDefensive_GuardedFocusClasses = new Set();
-    const bareClassPattern: Tests_CascadeDefensive_CascadeDefensive_BareClassPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_BARE_CLASS.source);
-    const hoverClassPattern: Tests_CascadeDefensive_CascadeDefensive_HoverClassPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_CLASS_HOVER.source);
-    const focusClassPattern: Tests_CascadeDefensive_CascadeDefensive_FocusClassPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_CLASS_FOCUS_VISIBLE.source);
-    const hoverPseudoSuffix: Tests_CascadeDefensive_CascadeDefensive_HoverPseudoSuffix = ':hover';
-    const focusPseudoSuffix: Tests_CascadeDefensive_CascadeDefensive_FocusPseudoSuffix = ':focus-visible';
+    const tsxPaths: Tests_CascadeDefensive_TsxPaths = await listThemeAndBlockTsx();
+    const anchorClasses: Tests_CascadeDefensive_AnchorClasses = await readAnchorClasses(tsxPaths);
+    const triplesByFile: Tests_CascadeDefensive_TriplesByFile = await readCssTriplesByFile();
+    const bareTextDecorationNoneClasses: Tests_CascadeDefensive_BareTextDecorationNoneClasses = new Map();
+    const guardedHover: Tests_CascadeDefensive_GuardedHover = new Set();
+    const guardedFocus: Tests_CascadeDefensive_GuardedFocus = new Set();
+    const bareClassPattern: Tests_CascadeDefensive_BareClassPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_BARE_CLASS.source);
+    const hoverClassPattern: Tests_CascadeDefensive_HoverClassPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_CLASS_HOVER.source);
+    const focusClassPattern: Tests_CascadeDefensive_FocusClassPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_CLASS_FOCUS_VISIBLE.source);
+    const hoverPseudoSuffix: Tests_CascadeDefensive_HoverPseudoSuffix = ':hover';
+    const focusPseudoSuffix: Tests_CascadeDefensive_FocusPseudoSuffix = ':focus-visible';
 
     // First pass - collect every comma-part of every triple in every file.
     // Comma-separated selectors (`.foo:hover, .foo:focus-visible { ... }`)
     // are treated as independent selector matches against the bare and
     // pseudo regexes so a single rule can register guards for both pseudos.
     for (const entry of triplesByFile) {
-      const filePath: Tests_CascadeDefensive_CascadeDefensive_FilePath = entry[0];
-      const fileTriples: Tests_CascadeDefensive_CascadeDefensive_FileTriples = entry[1];
+      const filePath: Tests_CascadeDefensive_FilePath = entry[0];
+      const fileTriples: Tests_CascadeDefensive_FileTriples = entry[1];
 
       for (const triple of fileTriples) {
         if (triple['property'] !== 'text-decoration' || triple['value'] !== 'none') {
@@ -562,11 +560,11 @@ describe('cascade defensive', () => {
         }
 
         for (const rawPart of triple['selector'].split(',')) {
-          const part: Tests_CascadeDefensive_CascadeDefensive_Part = rawPart.trim();
-          const bareMatch: Tests_CascadeDefensive_CascadeDefensive_BareClassMatch = part.match(bareClassPattern);
+          const part: Tests_CascadeDefensive_Part = rawPart.trim();
+          const bareMatch: Tests_CascadeDefensive_BareMatch = part.match(bareClassPattern);
 
           if (bareMatch !== null) {
-            const bareClass: Tests_CascadeDefensive_CascadeDefensive_BareClass = bareMatch[1] ?? '';
+            const bareClass: Tests_CascadeDefensive_BareClass = bareMatch[1] ?? '';
 
             if (bareClass !== '' && bareTextDecorationNoneClasses.has(bareClass) === false) {
               bareTextDecorationNoneClasses.set(bareClass, filePath);
@@ -575,10 +573,10 @@ describe('cascade defensive', () => {
             continue;
           }
 
-          const hoverMatch: Tests_CascadeDefensive_CascadeDefensive_HoverClassMatch = part.match(hoverClassPattern);
+          const hoverMatch: Tests_CascadeDefensive_HoverMatch = part.match(hoverClassPattern);
 
           if (hoverMatch !== null) {
-            const hoverClass: Tests_CascadeDefensive_CascadeDefensive_HoverClass = hoverMatch[1] ?? '';
+            const hoverClass: Tests_CascadeDefensive_HoverClass = hoverMatch[1] ?? '';
 
             if (hoverClass !== '') {
               guardedHover.add(hoverClass);
@@ -587,10 +585,10 @@ describe('cascade defensive', () => {
             continue;
           }
 
-          const focusMatch: Tests_CascadeDefensive_CascadeDefensive_FocusClassMatch = part.match(focusClassPattern);
+          const focusMatch: Tests_CascadeDefensive_FocusMatch = part.match(focusClassPattern);
 
           if (focusMatch !== null) {
-            const focusClass: Tests_CascadeDefensive_CascadeDefensive_FocusClass = focusMatch[1] ?? '';
+            const focusClass: Tests_CascadeDefensive_FocusClass = focusMatch[1] ?? '';
 
             if (focusClass !== '') {
               guardedFocus.add(focusClass);
@@ -602,11 +600,11 @@ describe('cascade defensive', () => {
 
     // Second pass - for each anchor class with bare text-decoration: none,
     // require both pseudo guards somewhere in the styles tree.
-    const missingGuards: Tests_CascadeDefensive_CascadeDefensive_MissingGuards = [];
+    const missingGuards: Tests_CascadeDefensive_MissingGuards = [];
 
     for (const entry of bareTextDecorationNoneClasses) {
-      const className: Tests_CascadeDefensive_CascadeDefensive_ClassName = entry[0];
-      const declaringFile: Tests_CascadeDefensive_CascadeDefensive_DeclaringFile = entry[1];
+      const className: Tests_CascadeDefensive_ClassName = entry[0];
+      const declaringFile: Tests_CascadeDefensive_DeclaringFile = entry[1];
 
       if (anchorClasses.has(className) === false) {
         continue;
@@ -621,7 +619,7 @@ describe('cascade defensive', () => {
       }
     }
 
-    const missingGuardsMessage: Tests_CascadeDefensive_CascadeDefensive_MissingGuardsMessage = [
+    const missingGuardsMessage: Tests_CascadeDefensive_MissingGuardsMessage = [
       'Anchor classes with bare text-decoration: none missing defensive pseudo guards (the light-mode preset a:hover, a:focus-visible { text-decoration: underline } clobber rule will underline the link otherwise):',
       ...missingGuards,
     ].join('\n');
@@ -632,16 +630,16 @@ describe('cascade defensive', () => {
   });
 
   it('no non-anchor class declares a dark-mode rule matching its light-mode value', async () => {
-    const tsxPaths: Tests_CascadeDefensive_CascadeDefensive_TsxPaths = await listThemeAndBlockTsx();
-    const anchorClasses: Tests_CascadeDefensive_CascadeDefensive_AnchorClasses = await readAnchorClasses(tsxPaths);
-    const triplesByFile: Tests_CascadeDefensive_CascadeDefensive_TriplesByFile = await readCssTriplesByFile();
-    const classPlusPseudoPattern: Tests_CascadeDefensive_CascadeDefensive_ClassPlusPseudoPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_CLASS_PLUS_OPTIONAL_PSEUDO.source);
-    const redundancies: Tests_CascadeDefensive_CascadeDefensive_Redundancies = [];
+    const tsxPaths: Tests_CascadeDefensive_TsxPaths = await listThemeAndBlockTsx();
+    const anchorClasses: Tests_CascadeDefensive_AnchorClasses = await readAnchorClasses(tsxPaths);
+    const triplesByFile: Tests_CascadeDefensive_TriplesByFile = await readCssTriplesByFile();
+    const classPlusPseudoPattern: Tests_CascadeDefensive_ClassPlusPseudoPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_CLASS_PLUS_OPTIONAL_PSEUDO.source);
+    const redundancies: Tests_CascadeDefensive_Redundancies = [];
 
     for (const entry of triplesByFile) {
-      const filePath: Tests_CascadeDefensive_CascadeDefensive_FilePath = entry[0];
-      const fileTriples: Tests_CascadeDefensive_CascadeDefensive_FileTriples = entry[1];
-      const bareValueLookup: Tests_CascadeDefensive_CascadeDefensive_BareValueLookup = new Map();
+      const filePath: Tests_CascadeDefensive_FilePath = entry[0];
+      const fileTriples: Tests_CascadeDefensive_FileTriples = entry[1];
+      const bareValueLookup: Tests_CascadeDefensive_BareValueLookup = new Map();
 
       // Build (selector, property) → value lookup for all non-dark rules in
       // this file. Dark rules are excluded so a dark rule's selector cannot
@@ -651,7 +649,7 @@ describe('cascade defensive', () => {
           continue;
         }
 
-        const lookupKey: Tests_CascadeDefensive_CascadeDefensive_LookupKey = tripleKey(triple);
+        const lookupKey: Tests_CascadeDefensive_LookupKey = tripleKey(triple);
 
         bareValueLookup.set(lookupKey, triple['value']);
       }
@@ -663,26 +661,26 @@ describe('cascade defensive', () => {
           continue;
         }
 
-        const strippedSelector: Tests_CascadeDefensive_CascadeDefensive_DarkStrippedSelector = stripDarkSelectorPrefix(triple['selector']);
+        const strippedSelector: Tests_CascadeDefensive_StrippedSelector = stripDarkSelectorPrefix(triple['selector']);
 
         if (strippedSelector === null) {
           continue;
         }
 
-        const darkLookupKey: Tests_CascadeDefensive_CascadeDefensive_DarkLookupKey = `${strippedSelector}|${triple['property']}`;
-        const bareValue: Tests_CascadeDefensive_CascadeDefensive_BareValue = bareValueLookup.get(darkLookupKey);
+        const darkLookupKey: Tests_CascadeDefensive_DarkLookupKey = `${strippedSelector}|${triple['property']}`;
+        const bareValue: Tests_CascadeDefensive_BareValue = bareValueLookup.get(darkLookupKey);
 
         if (bareValue !== triple['value']) {
           continue;
         }
 
-        const darkClassMatch: Tests_CascadeDefensive_CascadeDefensive_DarkClassMatch = strippedSelector.match(classPlusPseudoPattern);
+        const darkClassMatch: Tests_CascadeDefensive_DarkClassMatch = strippedSelector.match(classPlusPseudoPattern);
 
         if (darkClassMatch === null) {
           continue;
         }
 
-        const darkClass: Tests_CascadeDefensive_CascadeDefensive_DarkClass = darkClassMatch[1] ?? '';
+        const darkClass: Tests_CascadeDefensive_DarkClass = darkClassMatch[1] ?? '';
 
         if (darkClass === '' || anchorClasses.has(darkClass) === true) {
           continue;
@@ -692,7 +690,7 @@ describe('cascade defensive', () => {
       }
     }
 
-    const redundanciesMessage: Tests_CascadeDefensive_CascadeDefensive_RedundanciesMessage = [
+    const redundanciesMessage: Tests_CascadeDefensive_RedundanciesMessage = [
       'Non-anchor classes with redundant dark-mode rules matching the bare light value:',
       ...redundancies,
     ].join('\n');
@@ -703,18 +701,18 @@ describe('cascade defensive', () => {
   });
 
   it('every anchor class with bare color declares hover and focus-visible color guards', async () => {
-    const tsxPaths: Tests_CascadeDefensive_CascadeDefensive_TsxPaths = await listThemeAndBlockTsx();
-    const anchorClasses: Tests_CascadeDefensive_CascadeDefensive_AnchorClasses = await readAnchorClasses(tsxPaths);
-    const triplesByFile: Tests_CascadeDefensive_CascadeDefensive_TriplesByFile = await readCssTriplesByFile();
-    const bareColorClasses: Tests_CascadeDefensive_CascadeDefensive_BareColorClasses = new Map();
-    const guardedHover: Tests_CascadeDefensive_CascadeDefensive_GuardedHoverClasses = new Set();
-    const guardedFocus: Tests_CascadeDefensive_CascadeDefensive_GuardedFocusClasses = new Set();
-    const bareClassPattern: Tests_CascadeDefensive_CascadeDefensive_BareClassPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_BARE_CLASS.source);
-    const endsHoverPattern: Tests_CascadeDefensive_CascadeDefensive_EndsHoverClassPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_ENDS_CLASS_HOVER.source);
-    const endsFocusPattern: Tests_CascadeDefensive_CascadeDefensive_EndsFocusClassPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_ENDS_CLASS_FOCUS_VISIBLE.source);
-    const colorProperty: Tests_CascadeDefensive_CascadeDefensive_ColorProperty = 'color';
-    const hoverPseudoSuffix: Tests_CascadeDefensive_CascadeDefensive_HoverPseudoSuffix = ':hover';
-    const focusPseudoSuffix: Tests_CascadeDefensive_CascadeDefensive_FocusPseudoSuffix = ':focus-visible';
+    const tsxPaths: Tests_CascadeDefensive_TsxPaths = await listThemeAndBlockTsx();
+    const anchorClasses: Tests_CascadeDefensive_AnchorClasses = await readAnchorClasses(tsxPaths);
+    const triplesByFile: Tests_CascadeDefensive_TriplesByFile = await readCssTriplesByFile();
+    const bareColorClasses: Tests_CascadeDefensive_BareColorClasses = new Map();
+    const guardedHover: Tests_CascadeDefensive_GuardedHover = new Set();
+    const guardedFocus: Tests_CascadeDefensive_GuardedFocus = new Set();
+    const bareClassPattern: Tests_CascadeDefensive_BareClassPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_BARE_CLASS.source);
+    const endsHoverPattern: Tests_CascadeDefensive_EndsHoverPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_ENDS_CLASS_HOVER.source);
+    const endsFocusPattern: Tests_CascadeDefensive_EndsFocusPattern = new RegExp(LIB_REGEX_CSS_SELECTOR_ENDS_CLASS_FOCUS_VISIBLE.source);
+    const colorProperty: Tests_CascadeDefensive_ColorProperty = 'color';
+    const hoverPseudoSuffix: Tests_CascadeDefensive_HoverPseudoSuffix = ':hover';
+    const focusPseudoSuffix: Tests_CascadeDefensive_FocusPseudoSuffix = ':focus-visible';
 
     // First pass - collect (a) bare color declarations per class and (b) any
     // hover/focus-visible color guard that targets the class. Guards are
@@ -722,8 +720,8 @@ describe('cascade defensive', () => {
     // `.button:hover`) because either form yields specificity high enough to
     // tie or beat the global `a:hover` (0,1,1) clobber on later source order.
     for (const entry of triplesByFile) {
-      const filePath: Tests_CascadeDefensive_CascadeDefensive_FilePath = entry[0];
-      const fileTriples: Tests_CascadeDefensive_CascadeDefensive_FileTriples = entry[1];
+      const filePath: Tests_CascadeDefensive_FilePath = entry[0];
+      const fileTriples: Tests_CascadeDefensive_FileTriples = entry[1];
 
       for (const triple of fileTriples) {
         if (triple['property'] !== colorProperty) {
@@ -731,11 +729,11 @@ describe('cascade defensive', () => {
         }
 
         for (const rawPart of triple['selector'].split(',')) {
-          const part: Tests_CascadeDefensive_CascadeDefensive_Part = rawPart.trim();
-          const bareMatch: Tests_CascadeDefensive_CascadeDefensive_BareClassMatch = part.match(bareClassPattern);
+          const part: Tests_CascadeDefensive_Part = rawPart.trim();
+          const bareMatch: Tests_CascadeDefensive_BareMatch = part.match(bareClassPattern);
 
           if (bareMatch !== null) {
-            const bareClass: Tests_CascadeDefensive_CascadeDefensive_BareClass = bareMatch[1] ?? '';
+            const bareClass: Tests_CascadeDefensive_BareClass = bareMatch[1] ?? '';
 
             if (bareClass !== '' && bareColorClasses.has(bareClass) === false) {
               bareColorClasses.set(bareClass, filePath);
@@ -744,10 +742,10 @@ describe('cascade defensive', () => {
             continue;
           }
 
-          const hoverMatch: Tests_CascadeDefensive_CascadeDefensive_EndsHoverClassMatch = part.match(endsHoverPattern);
+          const hoverMatch: Tests_CascadeDefensive_HoverMatch = part.match(endsHoverPattern);
 
           if (hoverMatch !== null) {
-            const hoverClass: Tests_CascadeDefensive_CascadeDefensive_EndsHoverClass = hoverMatch[1] ?? '';
+            const hoverClass: Tests_CascadeDefensive_HoverClass = hoverMatch[1] ?? '';
 
             if (hoverClass !== '') {
               guardedHover.add(hoverClass);
@@ -756,10 +754,10 @@ describe('cascade defensive', () => {
             continue;
           }
 
-          const focusMatch: Tests_CascadeDefensive_CascadeDefensive_EndsFocusClassMatch = part.match(endsFocusPattern);
+          const focusMatch: Tests_CascadeDefensive_FocusMatch = part.match(endsFocusPattern);
 
           if (focusMatch !== null) {
-            const focusClass: Tests_CascadeDefensive_CascadeDefensive_EndsFocusClass = focusMatch[1] ?? '';
+            const focusClass: Tests_CascadeDefensive_FocusClass = focusMatch[1] ?? '';
 
             if (focusClass !== '') {
               guardedFocus.add(focusClass);
@@ -771,11 +769,11 @@ describe('cascade defensive', () => {
 
     // Second pass - for each anchor class with a bare color declaration,
     // require both pseudo guards to exist somewhere in the styles tree.
-    const missingGuards: Tests_CascadeDefensive_CascadeDefensive_MissingGuards = [];
+    const missingGuards: Tests_CascadeDefensive_MissingGuards = [];
 
     for (const entry of bareColorClasses) {
-      const className: Tests_CascadeDefensive_CascadeDefensive_ClassName = entry[0];
-      const declaringFile: Tests_CascadeDefensive_CascadeDefensive_DeclaringFile = entry[1];
+      const className: Tests_CascadeDefensive_ClassName = entry[0];
+      const declaringFile: Tests_CascadeDefensive_DeclaringFile = entry[1];
 
       if (anchorClasses.has(className) === false) {
         continue;
@@ -790,7 +788,7 @@ describe('cascade defensive', () => {
       }
     }
 
-    const missingGuardsMessage: Tests_CascadeDefensive_CascadeDefensive_MissingGuardsMessage = [
+    const missingGuardsMessage: Tests_CascadeDefensive_MissingGuardsMessage = [
       'Anchor classes with bare color missing defensive hover/focus-visible color guards (the per-preset a:hover, a:focus-visible { color: var(--nova-color-primary-700) } clobber rule will recolor the link otherwise):',
       ...missingGuards,
     ].join('\n');

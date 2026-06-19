@@ -23,6 +23,8 @@ import type {
   Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_PrevName,
   Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Returns,
   Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Specifiers,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_Create_Options,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_Create_Program_Returns,
   Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_ImportNode,
   Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_IsTypeImport,
   Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_Returns,
@@ -30,7 +32,6 @@ import type {
   Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_SourceBase,
   Rules_Eslint_Formatting_RequireImportOrder_Runner_NodeBuiltins,
   Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/require-import-order.d.ts';
 
 /**
@@ -78,7 +79,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Formatting_RequireImportOrder_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -86,7 +87,7 @@ export class Runner {
       }
 
       return {
-        Program() {
+        Program(): Rules_Eslint_Formatting_RequireImportOrder_Runner_Create_Program_Returns {
           Runner.checkProgram(context);
 
           return;

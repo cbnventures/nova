@@ -102,21 +102,21 @@ The same shade-scale pipeline runs for `secondary`, which is emitted under the `
 
 The remaining four color categories (`text`, `border`, `warning`, `danger`) write a single base token per category plus a small set of derived tokens computed at the CSS layer via `color-mix`:
 
-| Property                     | Source                                                       |
-|------------------------------|--------------------------------------------------------------|
-| `--nova-color-text`          | `text.light` (and `text.dark` under `[data-theme="dark"]`)   |
-| `--nova-color-text-muted`    | `color-mix` of `--nova-color-text` and the background        |
-| `--nova-color-text-soft`     | `color-mix` of `--nova-color-text` and the background        |
-| `--nova-color-text-inverse`  | `text.dark` (always the dark-mode hex, used for inverse UI)  |
-| `--nova-color-border`        | `border.light` (and `border.dark` in dark mode)              |
-| `--nova-color-border-subtle` | `color-mix` of `--nova-color-border` and the background      |
-| `--nova-color-surface-raised`| `color-mix` of background and `--nova-color-text`            |
-| `--nova-color-warning-500`   | `warning.light` (and `warning.dark` in dark mode)            |
-| `--nova-color-warning-400`   | `color-mix` of `--nova-color-warning-500` and background     |
-| `--nova-color-warning-bg`    | `color-mix` of `--nova-color-warning-500` and transparent    |
-| `--nova-color-danger-500`    | `danger.light` (and `danger.dark` in dark mode)              |
-| `--nova-color-danger-400`    | `color-mix` of `--nova-color-danger-500` and background      |
-| `--nova-color-danger-bg`     | `color-mix` of `--nova-color-danger-500` and transparent     |
+| Property                      | Source                                                      |
+|-------------------------------|-------------------------------------------------------------|
+| `--nova-color-text`           | `text.light` (and `text.dark` under `[data-theme="dark"]`)  |
+| `--nova-color-text-muted`     | `color-mix` of `--nova-color-text` and the background       |
+| `--nova-color-text-soft`      | `color-mix` of `--nova-color-text` and the background       |
+| `--nova-color-text-inverse`   | `text.dark` (always the dark-mode hex, used for inverse UI) |
+| `--nova-color-border`         | `border.light` (and `border.dark` in dark mode)             |
+| `--nova-color-border-subtle`  | `color-mix` of `--nova-color-border` and the background     |
+| `--nova-color-surface-raised` | `color-mix` of background and `--nova-color-text`           |
+| `--nova-color-warning-500`    | `warning.light` (and `warning.dark` in dark mode)           |
+| `--nova-color-warning-400`    | `color-mix` of `--nova-color-warning-500` and background    |
+| `--nova-color-warning-bg`     | `color-mix` of `--nova-color-warning-500` and transparent   |
+| `--nova-color-danger-500`     | `danger.light` (and `danger.dark` in dark mode)             |
+| `--nova-color-danger-400`     | `color-mix` of `--nova-color-danger-500` and background     |
+| `--nova-color-danger-bg`      | `color-mix` of `--nova-color-danger-500` and transparent    |
 
 In total, a single resolved preset emits 22 brand shade tokens (11 primary + 11 secondary/accent) plus 13 non-brand color tokens under `:root`, for 35 color custom properties.
 

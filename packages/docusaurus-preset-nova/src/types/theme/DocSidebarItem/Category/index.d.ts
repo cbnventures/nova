@@ -11,6 +11,8 @@ import type {
  *
  * @since 0.15.0
  */
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_StateMap = Map<string, boolean>;
+
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item_Label = string;
 
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item_Href = string | undefined;
@@ -79,6 +81,8 @@ export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_CategoryK
 
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsActive = boolean;
 
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ActiveDescendant = Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Result;
+
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_StoredState = boolean | undefined;
 
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_InitialOpenValue = boolean;
@@ -97,6 +101,10 @@ export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_CollapseC
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ExpandCategoryAriaLabel = string;
 
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryAriaLabel = string;
+
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryClickEvent = React.MouseEvent<HTMLElement>;
+
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryClickTarget = Element;
 
 /**
  * Theme - Doc Sidebar Item - Category - Doc Sidebar Item Category - Contains Active Path.
@@ -126,9 +134,13 @@ export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiv
 
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Result = Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Match | undefined;
 
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Match_Label = string;
+
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Match_Href = string;
+
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Match = {
-  label: string;
-  href: string;
+  label: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Match_Label;
+  href: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Match_Href;
 };
 
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Item = Record<string, unknown>;
@@ -139,37 +151,19 @@ export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiv
 
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_ItemItems = PropSidebarItem[] | undefined;
 
-export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ActiveDescendant = Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Result;
-
 /**
  * Theme - Doc Sidebar Item - Category - Doc Sidebar Item Category - Handle Toggle.
  *
  * @since 0.15.0
  */
-export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ToggleEvent = SyntheticEvent<HTMLDetailsElement>;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_ToggleEvent = SyntheticEvent<HTMLDetailsElement>;
 
-export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_DetailsElement = HTMLDetailsElement;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_DetailsElement = HTMLDetailsElement;
 
-export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsOpen = boolean;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_IsOpen = boolean;
 
-export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ParentElement = HTMLElement | null;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_ParentElement = HTMLElement | null;
 
-export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_GrandparentElement = HTMLElement | null;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_GrandparentElement = HTMLElement | null;
 
-export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SiblingDetails = NodeListOf<HTMLDetailsElement>;
-
-/**
- * Theme - Doc Sidebar Item - Category - Doc Sidebar Item Category - Summary Click.
- *
- * @since 0.15.0
- */
-export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryClickEvent = React.MouseEvent<HTMLElement>;
-
-export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryClickTarget = Element;
-
-/**
- * Theme - Doc Sidebar Item - Category - State Map.
- *
- * @since 0.15.0
- */
-export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_StateMap = Map<string, boolean>;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_SiblingDetails = NodeListOf<HTMLDetailsElement>;

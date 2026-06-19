@@ -23,12 +23,18 @@ import type {
   Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Names,
   Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Node,
   Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Returns,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_NormalizedFilename,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_Options,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSAsExpression_Node,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSAsExpression_Returns,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSTypeAnnotation_Node,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSTypeAnnotation_Returns,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_VariableDeclarator_Node,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_VariableDeclarator_Returns,
   Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_Node,
   Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_Returns,
   Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_TypeParameterNames,
   Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleNormalizedFilename,
-  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleOptions,
 } from '../../../types/rules/eslint/typescript/no-inline-type-annotation.d.ts';
 
 /**
@@ -102,8 +108,8 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleOptions = defaultOptions[0];
-      const normalizedFilename: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleNormalizedFilename = context.filename.replaceAll('\\', '/');
+      const options: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_Options = defaultOptions[0];
+      const normalizedFilename: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_NormalizedFilename = context.filename.replaceAll('\\', '/');
 
       // Skip .d.ts files - inline types are allowed in type definition files.
       if (normalizedFilename.endsWith('.d.ts') === true) {
@@ -116,17 +122,17 @@ export class Runner {
       }
 
       return {
-        TSAsExpression(node) {
+        TSAsExpression(node: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSAsExpression_Node): Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSAsExpression_Returns {
           Runner.checkAsExpression(context, node);
 
           return;
         },
-        TSTypeAnnotation(node) {
+        TSTypeAnnotation(node: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSTypeAnnotation_Node): Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSTypeAnnotation_Returns {
           Runner.checkTypeAnnotation(context, node);
 
           return;
         },
-        VariableDeclarator(node) {
+        VariableDeclarator(node: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_VariableDeclarator_Node): Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_VariableDeclarator_Returns {
           Runner.checkVariableDeclarator(context, node);
 
           return;

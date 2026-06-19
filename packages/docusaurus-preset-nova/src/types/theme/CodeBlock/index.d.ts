@@ -79,12 +79,14 @@ export type Theme_CodeBlock_Index_CodeBlock_HandleCopy_Textarea = HTMLTextAreaEl
  *
  * @since 0.15.0
  */
+export type Theme_CodeBlock_Index_CodeBlock_ToggleCollapse_Returns = undefined;
 
 /**
  * Theme - Code Block - Code Block - Toggle Word Wrap.
  *
  * @since 0.15.0
  */
+export type Theme_CodeBlock_Index_CodeBlock_ToggleWordWrap_Returns = undefined;
 
 export type Theme_CodeBlock_Index_CodeBlock_WordWrapToggle = string;
 

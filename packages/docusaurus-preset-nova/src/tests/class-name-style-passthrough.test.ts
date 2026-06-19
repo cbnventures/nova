@@ -9,27 +9,31 @@ import { describe, it } from 'vitest';
 import { LIB_REGEX_PROPS_CLASS_NAME_INTERPOLATION } from '../lib/regex.js';
 
 import type {
-  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_ComponentKey,
-  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_DtsContent,
-  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_DtsPath,
+  Tests_ClassNameStylePassthrough_AllComponents,
+  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_EveryExemptComponentStillExistsOnDisk_Message,
+  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_EveryInScopeComponentDeclaresClassNameAndStyleInItsPropsType_Message,
+  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_EveryInScopeComponentForwardsPropsStyleToTheRootElement_Message,
+  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_EveryInScopeComponentMergesPropsClassNameWithTheCanonicalPattern_Message,
   Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_ExemptSet,
-  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_HasConditional,
-  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_HasInterpolation,
-  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_InScopeComponents,
-  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_Message,
-  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_TsxContent,
-  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_TsxPath,
-  Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_Violations,
+  Tests_ClassNameStylePassthrough_ComponentKey,
   Tests_ClassNameStylePassthrough_DiscoverComponents_BlocksFiles,
   Tests_ClassNameStylePassthrough_DiscoverComponents_BlocksRoot,
   Tests_ClassNameStylePassthrough_DiscoverComponents_Keyed,
   Tests_ClassNameStylePassthrough_DiscoverComponents_Returns,
   Tests_ClassNameStylePassthrough_DiscoverComponents_ThemeFiles,
   Tests_ClassNameStylePassthrough_DiscoverComponents_ThemeRoot,
+  Tests_ClassNameStylePassthrough_DtsContent,
+  Tests_ClassNameStylePassthrough_DtsPath,
   Tests_ClassNameStylePassthrough_ExemptComponents,
   Tests_ClassNameStylePassthrough_GetPackageRoot_CurrentFileDirectory,
   Tests_ClassNameStylePassthrough_GetPackageRoot_CurrentFilePath,
   Tests_ClassNameStylePassthrough_GetPackageRoot_Returns,
+  Tests_ClassNameStylePassthrough_HasConditional,
+  Tests_ClassNameStylePassthrough_HasInterpolation,
+  Tests_ClassNameStylePassthrough_PresentSet,
+  Tests_ClassNameStylePassthrough_TsxContent,
+  Tests_ClassNameStylePassthrough_TsxPath,
+  Tests_ClassNameStylePassthrough_Violations,
 } from '../types/tests/class-name-style-passthrough.test.d.ts';
 
 /**
@@ -141,10 +145,10 @@ describe('class name style passthrough', () => {
   const exemptSet: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_ExemptSet = new Set(exemptComponents);
 
   it('every exempt component still exists on disk', async () => {
-    const allComponents: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_InScopeComponents = await discoverComponents();
-    const presentSet: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_ExemptSet = new Set(allComponents);
-    const violations: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_Violations = exemptComponents.filter((entry) => presentSet.has(entry) === false);
-    const message: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_Message = [
+    const allComponents: Tests_ClassNameStylePassthrough_AllComponents = await discoverComponents();
+    const presentSet: Tests_ClassNameStylePassthrough_PresentSet = new Set(allComponents);
+    const violations: Tests_ClassNameStylePassthrough_Violations = exemptComponents.filter((entry) => presentSet.has(entry) === false);
+    const message: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_EveryExemptComponentStillExistsOnDisk_Message = [
       `Exempt list has ${violations.length} stale entries that no longer exist as components:`,
       ...violations.map((entry) => `  - ${entry}`),
     ].join('\n');
@@ -155,18 +159,18 @@ describe('class name style passthrough', () => {
   });
 
   it('every in-scope component declares className?: and style?: in its props type', async () => {
-    const allComponents: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_InScopeComponents = await discoverComponents();
-    const violations: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_Violations = [];
+    const allComponents: Tests_ClassNameStylePassthrough_AllComponents = await discoverComponents();
+    const violations: Tests_ClassNameStylePassthrough_Violations = [];
 
     for (const component of allComponents) {
-      const componentKey: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_ComponentKey = component;
+      const componentKey: Tests_ClassNameStylePassthrough_ComponentKey = component;
 
       if (exemptSet.has(componentKey) === true) {
         continue;
       }
 
-      const dtsPath: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_DtsPath = resolve(getPackageRoot(), 'src', 'types', `${componentKey}/index.d.ts`);
-      const dtsContent: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_DtsContent = await readFile(dtsPath, 'utf-8');
+      const dtsPath: Tests_ClassNameStylePassthrough_DtsPath = resolve(getPackageRoot(), 'src', 'types', `${componentKey}/index.d.ts`);
+      const dtsContent: Tests_ClassNameStylePassthrough_DtsContent = await readFile(dtsPath, 'utf-8');
 
       if (dtsContent.includes('className?:') === false) {
         violations.push(`  - ${componentKey}: types file is missing 'className?:' prop`);
@@ -177,7 +181,7 @@ describe('class name style passthrough', () => {
       }
     }
 
-    const message: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_Message = [
+    const message: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_EveryInScopeComponentDeclaresClassNameAndStyleInItsPropsType_Message = [
       `${violations.length} type-declaration violations:`,
       ...violations,
     ].join('\n');
@@ -188,27 +192,27 @@ describe('class name style passthrough', () => {
   });
 
   it('every in-scope component merges props.className with the canonical pattern', async () => {
-    const allComponents: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_InScopeComponents = await discoverComponents();
-    const violations: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_Violations = [];
+    const allComponents: Tests_ClassNameStylePassthrough_AllComponents = await discoverComponents();
+    const violations: Tests_ClassNameStylePassthrough_Violations = [];
 
     for (const component of allComponents) {
-      const componentKey: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_ComponentKey = component;
+      const componentKey: Tests_ClassNameStylePassthrough_ComponentKey = component;
 
       if (exemptSet.has(componentKey) === true) {
         continue;
       }
 
-      const tsxPath: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_TsxPath = resolve(getPackageRoot(), 'src', `${componentKey}/index.tsx`);
-      const tsxContent: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_TsxContent = await readFile(tsxPath, 'utf-8');
-      const hasConditional: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_HasConditional = tsxContent.includes('(props[\'className\'] !== undefined)');
-      const hasInterpolation: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_HasInterpolation = LIB_REGEX_PROPS_CLASS_NAME_INTERPOLATION.test(tsxContent);
+      const tsxPath: Tests_ClassNameStylePassthrough_TsxPath = resolve(getPackageRoot(), 'src', `${componentKey}/index.tsx`);
+      const tsxContent: Tests_ClassNameStylePassthrough_TsxContent = await readFile(tsxPath, 'utf-8');
+      const hasConditional: Tests_ClassNameStylePassthrough_HasConditional = tsxContent.includes('(props[\'className\'] !== undefined)');
+      const hasInterpolation: Tests_ClassNameStylePassthrough_HasInterpolation = LIB_REGEX_PROPS_CLASS_NAME_INTERPOLATION.test(tsxContent);
 
       if (hasConditional === false || hasInterpolation === false) {
         violations.push(`  - ${componentKey}: missing the canonical merge pattern '(props['className'] !== undefined) ? \`umbrella \${props['className']}\` : \\'umbrella\\''`);
       }
     }
 
-    const message: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_Message = [
+    const message: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_EveryInScopeComponentMergesPropsClassNameWithTheCanonicalPattern_Message = [
       `${violations.length} className merge violations:`,
       ...violations,
     ].join('\n');
@@ -219,25 +223,25 @@ describe('class name style passthrough', () => {
   });
 
   it('every in-scope component forwards props.style to the root element', async () => {
-    const allComponents: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_InScopeComponents = await discoverComponents();
-    const violations: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_Violations = [];
+    const allComponents: Tests_ClassNameStylePassthrough_AllComponents = await discoverComponents();
+    const violations: Tests_ClassNameStylePassthrough_Violations = [];
 
     for (const component of allComponents) {
-      const componentKey: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_ComponentKey = component;
+      const componentKey: Tests_ClassNameStylePassthrough_ComponentKey = component;
 
       if (exemptSet.has(componentKey) === true) {
         continue;
       }
 
-      const tsxPath: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_TsxPath = resolve(getPackageRoot(), 'src', `${componentKey}/index.tsx`);
-      const tsxContent: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_TsxContent = await readFile(tsxPath, 'utf-8');
+      const tsxPath: Tests_ClassNameStylePassthrough_TsxPath = resolve(getPackageRoot(), 'src', `${componentKey}/index.tsx`);
+      const tsxContent: Tests_ClassNameStylePassthrough_TsxContent = await readFile(tsxPath, 'utf-8');
 
       if (tsxContent.includes('props[\'style\']') === false) {
         violations.push(`  - ${componentKey}: missing 'props[\\'style\\']' forward to root element`);
       }
     }
 
-    const message: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_Message = [
+    const message: Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_EveryInScopeComponentForwardsPropsStyleToTheRootElement_Message = [
       `${violations.length} style forward violations:`,
       ...violations,
     ].join('\n');

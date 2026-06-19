@@ -41,6 +41,6 @@ export type Cli_Utility_RunRecipes_Runner_Run_TotalRecipes = number;
 
 export type Cli_Utility_RunRecipes_Runner_Run_CategoryDescription = string;
 
-export type Cli_Utility_RunRecipes_Runner_Run_EntryCategory = Cli_Recipe_RegistryCategory;
+export type Cli_Utility_RunRecipes_Runner_Run_EntryCategory = Cli_Recipe_RegistryCategory & string;
 
-export type Cli_Utility_RunRecipes_Runner_Run_EntryRecipes = Cli_Recipe_RegistryEntry[];
+export type Cli_Utility_RunRecipes_Runner_Run_EntryRecipes = readonly Cli_Recipe_RegistryEntry[];

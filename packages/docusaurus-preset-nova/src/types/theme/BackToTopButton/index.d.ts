@@ -36,6 +36,6 @@ export type Theme_BackToTopButton_Index_BackToTopButton_SetIsVisible = Dispatch<
  *
  * @since 0.15.0
  */
-export type Theme_BackToTopButton_Index_BackToTopButton_CurrentScrollPosition = number;
+export type Theme_BackToTopButton_Index_BackToTopButton_HandleScroll_CurrentScrollPosition = number;
 
 export type Theme_BackToTopButton_Index_BackToTopButton_ButtonAriaLabel = string;

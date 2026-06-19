@@ -10,6 +10,19 @@ import type {
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Context,
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Node,
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Returns,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_ConditionalExpression_Node,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_ConditionalExpression_Returns,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_DoWhileStatement_Node,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_DoWhileStatement_Returns,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_ForStatement_Node,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_ForStatement_Returns,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_IfStatement_Node,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_IfStatement_Returns,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_Options,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_UnaryExpression_Node,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_UnaryExpression_Returns,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_WhileStatement_Node,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_WhileStatement_Returns,
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Argument,
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Node,
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Returns,
@@ -20,7 +33,6 @@ import type {
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Returns,
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Test,
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/no-implicit-boolean.d.ts';
 
 /**
@@ -67,7 +79,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Conventions_NoImplicitBoolean_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -75,32 +87,32 @@ export class Runner {
       }
 
       return {
-        IfStatement(node) {
+        IfStatement(node: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_IfStatement_Node): Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_IfStatement_Returns {
           Runner.checkCondition(context, node);
 
           return;
         },
-        WhileStatement(node) {
+        WhileStatement(node: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_WhileStatement_Node): Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_WhileStatement_Returns {
           Runner.checkCondition(context, node);
 
           return;
         },
-        DoWhileStatement(node) {
+        DoWhileStatement(node: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_DoWhileStatement_Node): Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_DoWhileStatement_Returns {
           Runner.checkCondition(context, node);
 
           return;
         },
-        ForStatement(node) {
+        ForStatement(node: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_ForStatement_Node): Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_ForStatement_Returns {
           Runner.checkCondition(context, node);
 
           return;
         },
-        ConditionalExpression(node) {
+        ConditionalExpression(node: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_ConditionalExpression_Node): Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_ConditionalExpression_Returns {
           Runner.checkCondition(context, node);
 
           return;
         },
-        UnaryExpression(node) {
+        UnaryExpression(node: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_UnaryExpression_Node): Rules_Eslint_Conventions_NoImplicitBoolean_Runner_Create_UnaryExpression_Returns {
           Runner.checkNegation(context, node);
 
           return;

@@ -7,11 +7,24 @@ import {
 import { Runner as ApiNodeReleases } from '../../api/node-releases.js';
 
 import type {
-  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CallCount,
-  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_First,
-  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Result,
-  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Second,
-  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Today,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CachesResultAfterFirstFetch_CallCount,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CachesResultAfterFirstFetch_First,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CachesResultAfterFirstFetch_Second,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CachesUndefinedResultAfterFetchFailure_CallCount,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CachesUndefinedResultAfterFetchFailure_First,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CachesUndefinedResultAfterFetchFailure_Second,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ExcludesEntriesWhereEndOfLifeHasPassed_Result,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ExcludesEntriesWhereLTSHasNotStartedYet_Result,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_FiltersOutNonLTSEntries_Result,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ReturnsConstraintStringForValidResponse_Result,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ReturnsConstraintStringForValidResponse_Today,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ReturnsUndefinedOnHTTP404_Result,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ReturnsUndefinedOnMalformedJSON_Result,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ReturnsUndefinedOnNetworkError_Result,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ReturnsUndefinedWhenNoActiveLTSVersions_Result,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_SkipsKeysThatDoNotParseToAMajorVersionNumber_Result,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_SortsMajorVersionsAscending_Result,
+  Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_SortsMajorVersionsAscending_Today,
 } from '../../types/tests/api/node-releases.test.d.ts';
 
 /**
@@ -27,7 +40,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
   });
 
   it('returns constraint string for valid response', async () => {
-    const today: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Today = new Date().toISOString().slice(0, 10);
+    const today: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ReturnsConstraintStringForValidResponse_Today = new Date().toISOString().slice(0, 10);
 
     vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response(JSON.stringify({
       v18: {
@@ -44,7 +57,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
       },
     }))));
 
-    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Result = await ApiNodeReleases.fetchLtsVersions();
+    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ReturnsConstraintStringForValidResponse_Result = await ApiNodeReleases.fetchLtsVersions();
 
     strictEqual(result, '^18 || ^20 || ^22');
 
@@ -52,7 +65,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
   });
 
   it('caches result after first fetch', async () => {
-    let callCount: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CallCount = 0;
+    let callCount: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CachesResultAfterFirstFetch_CallCount = 0;
 
     vi.spyOn(global, 'fetch').mockImplementation(() => {
       callCount += 1;
@@ -65,8 +78,8 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
       })));
     });
 
-    const first: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_First = await ApiNodeReleases.fetchLtsVersions();
-    const second: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Second = await ApiNodeReleases.fetchLtsVersions();
+    const first: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CachesResultAfterFirstFetch_First = await ApiNodeReleases.fetchLtsVersions();
+    const second: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CachesResultAfterFirstFetch_Second = await ApiNodeReleases.fetchLtsVersions();
 
     strictEqual(first, '^20');
     strictEqual(second, '^20');
@@ -78,7 +91,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
   it('returns undefined on HTTP 404', async () => {
     vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response(null, { status: 404 })));
 
-    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Result = await ApiNodeReleases.fetchLtsVersions();
+    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ReturnsUndefinedOnHTTP404_Result = await ApiNodeReleases.fetchLtsVersions();
 
     strictEqual(result, undefined);
 
@@ -88,7 +101,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
   it('returns undefined on network error', async () => {
     vi.spyOn(global, 'fetch').mockImplementation(() => Promise.reject(new Error('network error')));
 
-    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Result = await ApiNodeReleases.fetchLtsVersions();
+    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ReturnsUndefinedOnNetworkError_Result = await ApiNodeReleases.fetchLtsVersions();
 
     strictEqual(result, undefined);
 
@@ -98,7 +111,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
   it('returns undefined on malformed JSON', async () => {
     vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response(JSON.stringify('not an object'))));
 
-    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Result = await ApiNodeReleases.fetchLtsVersions();
+    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ReturnsUndefinedOnMalformedJSON_Result = await ApiNodeReleases.fetchLtsVersions();
 
     strictEqual(result, undefined);
 
@@ -117,7 +130,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
       },
     }))));
 
-    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Result = await ApiNodeReleases.fetchLtsVersions();
+    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ReturnsUndefinedWhenNoActiveLTSVersions_Result = await ApiNodeReleases.fetchLtsVersions();
 
     strictEqual(result, undefined);
 
@@ -136,7 +149,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
       },
     }))));
 
-    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Result = await ApiNodeReleases.fetchLtsVersions();
+    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_SkipsKeysThatDoNotParseToAMajorVersionNumber_Result = await ApiNodeReleases.fetchLtsVersions();
 
     strictEqual(result, '^20');
 
@@ -144,7 +157,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
   });
 
   it('caches undefined result after fetch failure', async () => {
-    let callCount: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CallCount = 0;
+    let callCount: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CachesUndefinedResultAfterFetchFailure_CallCount = 0;
 
     vi.spyOn(global, 'fetch').mockImplementation(() => {
       callCount += 1;
@@ -152,8 +165,8 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
       return Promise.resolve(new Response(null, { status: 500 }));
     });
 
-    const first: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_First = await ApiNodeReleases.fetchLtsVersions();
-    const second: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Second = await ApiNodeReleases.fetchLtsVersions();
+    const first: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CachesUndefinedResultAfterFetchFailure_First = await ApiNodeReleases.fetchLtsVersions();
+    const second: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CachesUndefinedResultAfterFetchFailure_Second = await ApiNodeReleases.fetchLtsVersions();
 
     strictEqual(first, undefined);
     strictEqual(second, undefined);
@@ -174,7 +187,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
       },
     }))));
 
-    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Result = await ApiNodeReleases.fetchLtsVersions();
+    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ExcludesEntriesWhereLTSHasNotStartedYet_Result = await ApiNodeReleases.fetchLtsVersions();
 
     strictEqual(result, '^20');
 
@@ -193,7 +206,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
       },
     }))));
 
-    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Result = await ApiNodeReleases.fetchLtsVersions();
+    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_ExcludesEntriesWhereEndOfLifeHasPassed_Result = await ApiNodeReleases.fetchLtsVersions();
 
     strictEqual(result, '^20');
 
@@ -211,7 +224,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
       },
     }))));
 
-    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Result = await ApiNodeReleases.fetchLtsVersions();
+    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_FiltersOutNonLTSEntries_Result = await ApiNodeReleases.fetchLtsVersions();
 
     strictEqual(result, '^20');
 
@@ -219,7 +232,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
   });
 
   it('sorts major versions ascending', async () => {
-    const today: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Today = new Date().toISOString().slice(0, 10);
+    const today: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_SortsMajorVersionsAscending_Today = new Date().toISOString().slice(0, 10);
 
     vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response(JSON.stringify({
       v22: {
@@ -236,7 +249,7 @@ describe('ApiNodeReleases.fetchLtsVersions', async () => {
       },
     }))));
 
-    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Result = await ApiNodeReleases.fetchLtsVersions();
+    const result: Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_SortsMajorVersionsAscending_Result = await ApiNodeReleases.fetchLtsVersions();
 
     strictEqual(result, '^18 || ^20 || ^22');
 

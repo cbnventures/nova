@@ -1,7 +1,7 @@
 import stylisticPlugin from '@stylistic/eslint-plugin';
 import tseslint from 'typescript-eslint';
 
-import type { Presets_Eslint_LangTypescript_ConfigConfig } from '../../types/presets/eslint/lang-typescript.d.ts';
+import type { Presets_Eslint_LangTypescript_Config } from '../../types/presets/eslint/lang-typescript.d.ts';
 
 /**
  * Presets - ESLint - Lang TypeScript - Config.
@@ -11,7 +11,7 @@ import type { Presets_Eslint_LangTypescript_ConfigConfig } from '../../types/pre
  *
  * @since 0.11.0
  */
-const config: Presets_Eslint_LangTypescript_ConfigConfig = [
+const config: Presets_Eslint_LangTypescript_Config = [
   {
     name: 'nova/lang-typescript',
     files: [

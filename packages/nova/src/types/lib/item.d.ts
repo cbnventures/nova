@@ -60,18 +60,6 @@ export type Lib_Item_AllowedRoles = readonly [
 ];
 
 /**
- * Lib - Item - Bundler Keys.
- *
- * @since 0.11.0
- */
-export type Lib_Item_BundlerKeys = readonly [
-  'types',
-  'module',
-  'sideEffects',
-  'esnext',
-];
-
-/**
  * Lib - Item - Changelog Adjectives.
  *
  * @since 0.11.0
@@ -283,6 +271,83 @@ export type Lib_Item_ChangelogVerbs = readonly [
 ];
 
 /**
+ * Lib - Item - Generic Protocols.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Item_GenericProtocols = readonly [
+  'http:',
+  'https:',
+];
+
+/**
+ * Lib - Item - Sync Roles.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Item_SyncRoles = readonly Shared_NovaConfigWorkspace_Role[];
+
+/**
+ * Lib - Item - Valid Entity Roles.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Item_ValidEntityRoles = readonly Shared_NovaConfigEntityRole[];
+
+/**
+ * Lib - Item - Side Effects ESNext Roles.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Item_SideEffectsEsnextRoles = readonly Shared_NovaConfigWorkspace_Role[];
+
+/**
+ * Lib - Item - Types Module Roles.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Item_TypesModuleRoles = readonly Shared_NovaConfigWorkspace_Role[];
+
+/**
+ * Lib - Item - Email Fields.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Item_EmailFields = readonly [
+  'bugs',
+];
+
+/**
+ * Lib - Item - URL Fields.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Item_UrlFields = readonly [
+  'homepage',
+  'repository',
+  'bugs',
+  'license',
+  'logo',
+  'documentation',
+  'npm',
+  'docker',
+  'privacyPolicy',
+  'termsOfUse',
+];
+
+/**
+ * Lib - Item - Bundler Keys.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Item_BundlerKeys = readonly [
+  'types',
+  'module',
+  'sideEffects',
+  'esnext',
+];
+
+/**
  * Lib - Item - Corepack Keys.
  *
  * @since 0.11.0
@@ -298,25 +363,6 @@ export type Lib_Item_CorepackKeys = readonly [
  */
 export type Lib_Item_EcosystemKeys = readonly [
   'displayName',
-];
-
-/**
- * Lib - Item - Email Fields.
- *
- * @since 0.11.0
- */
-export type Lib_Item_EmailFields = readonly [
-  'bugs',
-];
-
-/**
- * Lib - Item - Generic Protocols.
- *
- * @since 0.11.0
- */
-export type Lib_Item_GenericProtocols = readonly [
-  'http:',
-  'https:',
 ];
 
 /**
@@ -378,6 +424,58 @@ export type Lib_Item_NpmKeys = readonly [
 ];
 
 /**
+ * Lib - Item - Sort Order Keys.
+ *
+ * @since 0.11.0
+ */
+export type Lib_Item_SortOrderKeys = readonly [
+  'name',
+  'displayName',
+  'version',
+  'description',
+  'keywords',
+  'license',
+  'homepage',
+  'bugs',
+  'author',
+  'contributors',
+  'funding',
+  'repository',
+  'exports',
+  'main',
+  'type',
+  'browser',
+  'imports',
+  'files',
+  'bin',
+  'man',
+  'directories',
+  'private',
+  'publishConfig',
+  'scripts',
+  'gypfile',
+  'config',
+  'workspaces',
+  'packageManager',
+  'engines',
+  'os',
+  'cpu',
+  'libc',
+  'devEngines',
+  'dependencies',
+  'devDependencies',
+  'peerDependencies',
+  'peerDependenciesMeta',
+  'bundleDependencies',
+  'optionalDependencies',
+  'overrides',
+  'types',
+  'module',
+  'sideEffects',
+  'esnext',
+];
+
+/**
  * Lib - Item - Pretty Names Abbreviation.
  *
  * @since 0.15.0
@@ -434,13 +532,6 @@ export type Lib_Item_RepositoryProtocols = readonly [
 ];
 
 /**
- * Lib - Item - Side Effects ESNext Roles.
- *
- * @since 0.11.0
- */
-export type Lib_Item_SideEffectsEsnextRoles = readonly Shared_NovaConfigWorkspace_Role[];
-
-/**
  * Lib - Item - Skip Directories.
  *
  * @since 0.11.0
@@ -452,94 +543,3 @@ export type Lib_Item_SkipDirectories = readonly [
   'out',
   'coverage',
 ];
-
-/**
- * Lib - Item - Sort Order Keys.
- *
- * @since 0.11.0
- */
-export type Lib_Item_SortOrderKeys = readonly [
-  'name',
-  'displayName',
-  'version',
-  'description',
-  'keywords',
-  'license',
-  'homepage',
-  'bugs',
-  'author',
-  'contributors',
-  'funding',
-  'repository',
-  'exports',
-  'main',
-  'type',
-  'browser',
-  'imports',
-  'files',
-  'bin',
-  'man',
-  'directories',
-  'private',
-  'publishConfig',
-  'scripts',
-  'gypfile',
-  'config',
-  'workspaces',
-  'packageManager',
-  'engines',
-  'os',
-  'cpu',
-  'libc',
-  'devEngines',
-  'dependencies',
-  'devDependencies',
-  'peerDependencies',
-  'peerDependenciesMeta',
-  'bundleDependencies',
-  'optionalDependencies',
-  'overrides',
-  'types',
-  'module',
-  'sideEffects',
-  'esnext',
-];
-
-/**
- * Lib - Item - Sync Roles.
- *
- * @since 0.11.0
- */
-export type Lib_Item_SyncRoles = readonly Shared_NovaConfigWorkspace_Role[];
-
-/**
- * Lib - Item - Types Module Roles.
- *
- * @since 0.11.0
- */
-export type Lib_Item_TypesModuleRoles = readonly Shared_NovaConfigWorkspace_Role[];
-
-/**
- * Lib - Item - URL Fields.
- *
- * @since 0.11.0
- */
-export type Lib_Item_UrlFields = readonly [
-  'homepage',
-  'repository',
-  'bugs',
-  'license',
-  'logo',
-  'documentation',
-  'npm',
-  'docker',
-  'privacyPolicy',
-  'termsOfUse',
-];
-
-/**
- * Lib - Item - Valid Entity Roles.
- *
- * @since 0.11.0
- */
-export type Lib_Item_ValidEntityRoles = readonly Shared_NovaConfigEntityRole[];

@@ -21,6 +21,10 @@ export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig = {
   [key: string]: unknown;
 };
 
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id = string;
+
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Content = string;
+
 export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar = {
   id: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id;
   content: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Content;
@@ -28,10 +32,6 @@ export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_Announcement
   textColor?: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_TextColor;
   isCloseable?: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_IsCloseable;
 } | undefined;
-
-export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id = string;
-
-export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Content = string;
 
 export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_BackgroundColor = string | undefined;
 

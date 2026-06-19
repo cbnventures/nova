@@ -30,37 +30,45 @@ import type {
   Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Replaced,
   Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Returns,
   Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Content,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Patterns,
   Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Returns,
   Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Trimmed,
   Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Content,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_ExcludeLine,
   Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Line,
   Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Lines,
   Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_MarkerIndex,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Patterns,
   Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Returns,
   Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_StartIndex,
   Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Trimmed,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Action,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ActionOutputKey,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ActionOutputValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddedContent,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputKey,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputValue,
-  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternValidateValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddValue,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AllPatterns,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Choices,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Content,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_CurrentContent,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_CurrentPatterns,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteChoices,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeletedContent,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectedPattern,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutput,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputKey,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputValue,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditChoices,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditedContent,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputKey,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputValue,
-  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditPatternValidateValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectedPattern,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutput,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputKey,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditValue,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ExistingPatterns,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_HasPendingChanges,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_IsDryRun,
@@ -75,17 +83,18 @@ import type {
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Reconstructed,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ReservedPatterns,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Returns,
-  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_SelectedPattern,
-  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_SelectOutput,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TargetPath,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TemplateContent,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TemplateDirectory,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TemplateFilePath,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedNewPattern,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedPatternName,
-  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedValue,
-  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UpdatedContent,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UserPatterns,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateAddPattern,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateAddPattern_Returns,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateAddPattern_TrimmedValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateEditPattern,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateEditPattern_Returns,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_AddMore,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Cancelled,
   Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Content,
@@ -120,9 +129,11 @@ import type {
   Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputResult,
   Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputValue,
   Cli_Generate_MustHaves_Gitignore_Runner_Run_Options,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_RegenerateResult,
   Cli_Generate_MustHaves_Gitignore_Runner_Run_ReplaceFileNotice,
   Cli_Generate_MustHaves_Gitignore_Runner_Run_Result,
   Cli_Generate_MustHaves_Gitignore_Runner_Run_Returns,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_SelectedMode,
   Cli_Generate_MustHaves_Gitignore_Runner_Run_TargetPath,
   Cli_Generate_MustHaves_Gitignore_Runner_Run_TemplateDirectory,
 } from '../../../types/cli/generate/must-haves/gitignore.d.ts';
@@ -219,7 +230,7 @@ export class Runner {
         }
 
         const modeOutputResult: Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputResult = modeOutput['result'];
-        const selectedMode: Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputValue = modeOutputResult.mode;
+        const selectedMode: Cli_Generate_MustHaves_Gitignore_Runner_Run_SelectedMode = modeOutputResult.mode;
 
         if (selectedMode === undefined) {
           return 'cancelled';
@@ -242,14 +253,14 @@ export class Runner {
         }
 
         // "Regenerate" selected - run regenerate flow.
-        const result: Cli_Generate_MustHaves_Gitignore_Runner_Run_Result = await Runner.promptRegenerate({
+        const regenerateResult: Cli_Generate_MustHaves_Gitignore_Runner_Run_RegenerateResult = await Runner.promptRegenerate({
           templateDirectory,
           currentDirectory,
           isDryRun,
           isReplaceFile,
         });
 
-        if (result === 'cancelled') {
+        if (regenerateResult === 'cancelled') {
           continue;
         }
 
@@ -374,7 +385,7 @@ export class Runner {
    * @since 0.15.0
    */
   private static parseAllPatterns(content: Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Content): Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Returns {
-    const patterns: Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Returns = [];
+    const patterns: Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Patterns = [];
 
     for (const line of content.split('\n')) {
       const trimmed: Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Trimmed = line.trim();
@@ -421,21 +432,21 @@ export class Runner {
 
     // Skip the marker line and the closing border line.
     const startIndex: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_StartIndex = markerIndex + 2;
-    const patterns: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Returns = [];
+    const patterns: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Patterns = [];
 
     for (let i = startIndex; i < lines.length; i += 1) {
-      const line: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Line = lines[i];
+      const excludeLine: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_ExcludeLine = lines[i];
 
-      if (line === undefined) {
+      if (excludeLine === undefined) {
         continue;
       }
 
-      const trimmed: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Trimmed = line.trim();
+      const trimmed: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Trimmed = excludeLine.trim();
 
       if (
         trimmed !== ''
         && trimmed.startsWith('#') === false
-        && LIB_REGEX_PATTERN_HASH_BORDER_LINE.test(line) === false
+        && LIB_REGEX_PATTERN_HASH_BORDER_LINE.test(excludeLine) === false
       ) {
         patterns.push(trimmed);
       }
@@ -666,31 +677,33 @@ export class Runner {
       if (action === 'add') {
         const existingPatterns: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ExistingPatterns = new Set(allPatterns);
 
+        const validateAddPattern: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateAddPattern = (addValue: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddValue): Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateAddPattern_Returns => {
+          if (typeof addValue !== 'string' || addValue.trim() === '') {
+            return 'Enter a pattern.';
+          }
+
+          const trimmedValue: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateAddPattern_TrimmedValue = addValue.trim();
+
+          if (trimmedValue.startsWith('#') === true) {
+            return 'Comments are not allowed.';
+          }
+
+          if (existingPatterns.has(trimmedValue) === true) {
+            return `"${trimmedValue}" already exists.`;
+          }
+
+          if (reservedPatterns.has(trimmedValue) === true) {
+            return `"${trimmedValue}" is a reserved pattern and cannot be added.`;
+          }
+
+          return true;
+        };
+
         const patternOutput: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_PatternOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputValue>({
           type: 'text',
           name: 'pattern',
           message: 'Pattern to ignore (e.g. logs/):',
-          validate: (value: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternValidateValue) => {
-            if (typeof value !== 'string' || value.trim() === '') {
-              return 'Enter a pattern.';
-            }
-
-            const trimmedValue: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedValue = value.trim();
-
-            if (trimmedValue.startsWith('#') === true) {
-              return 'Comments are not allowed.';
-            }
-
-            if (existingPatterns.has(trimmedValue) === true) {
-              return `"${trimmedValue}" already exists.`;
-            }
-
-            if (reservedPatterns.has(trimmedValue) === true) {
-              return `"${trimmedValue}" is a reserved pattern and cannot be added.`;
-            }
-
-            return true;
-          },
+          validate: validateAddPattern,
         });
 
         if (patternOutput['cancelled'] === true) {
@@ -704,9 +717,9 @@ export class Runner {
         }
 
         const trimmedPatternName: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedPatternName = patternName.trim();
-        const updatedContent: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UpdatedContent = Runner.addPattern(content, trimmedPatternName);
+        const addedContent: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddedContent = Runner.addPattern(content, trimmedPatternName);
 
-        reconstructed = updatedContent;
+        reconstructed = addedContent;
         hasPendingChanges = true;
 
         Logger.customize({
@@ -724,39 +737,41 @@ export class Runner {
           value: pattern,
         }));
 
-        const selectOutput: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_SelectOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputValue>({
+        const editSelectOutput: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputValue>({
           type: 'select',
           name: 'pattern',
           message: 'Select a pattern to edit.',
           choices: editChoices,
         });
 
-        if (selectOutput['cancelled'] === true) {
+        if (editSelectOutput['cancelled'] === true) {
           continue;
         }
 
-        const selectedPattern: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_SelectedPattern = selectOutput['result'].pattern;
+        const editSelectedPattern: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectedPattern = editSelectOutput['result'].pattern;
 
-        if (selectedPattern === undefined) {
+        if (editSelectedPattern === undefined) {
           continue;
         }
+
+        const validateEditPattern: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateEditPattern = (editValue: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditValue): Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateEditPattern_Returns => {
+          if (typeof editValue !== 'string' || editValue.trim() === '') {
+            return 'Enter a pattern.';
+          }
+
+          if (editValue.trim().startsWith('#') === true) {
+            return 'Comments are not allowed.';
+          }
+
+          return true;
+        };
 
         const newPatternOutput: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_NewPatternOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputValue>({
           type: 'text',
           name: 'newPattern',
-          message: `New pattern (current: "${selectedPattern}"):`,
-          initial: selectedPattern,
-          validate: (value: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditPatternValidateValue) => {
-            if (typeof value !== 'string' || value.trim() === '') {
-              return 'Enter a pattern.';
-            }
-
-            if (value.trim().startsWith('#') === true) {
-              return 'Comments are not allowed.';
-            }
-
-            return true;
-          },
+          message: `New pattern (current: "${editSelectedPattern}"):`,
+          initial: editSelectedPattern,
+          validate: validateEditPattern,
         });
 
         if (newPatternOutput['cancelled'] === true) {
@@ -770,15 +785,15 @@ export class Runner {
         }
 
         const trimmedNewPattern: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedNewPattern = newPattern.trim();
-        const updatedContent: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UpdatedContent = Runner.editPattern(content, selectedPattern, trimmedNewPattern);
+        const editedContent: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditedContent = Runner.editPattern(content, editSelectedPattern, trimmedNewPattern);
 
-        reconstructed = updatedContent;
+        reconstructed = editedContent;
         hasPendingChanges = true;
 
         Logger.customize({
           name: 'Runner.promptManageMenu',
           purpose: 'edit',
-        }).info(`Updated "${selectedPattern}" to "${newPattern.trim()}" in .gitignore.`);
+        }).info(`Updated "${editSelectedPattern}" to "${newPattern.trim()}" in .gitignore.`);
 
         continue;
       }
@@ -790,32 +805,32 @@ export class Runner {
           value: pattern,
         }));
 
-        const selectOutput: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputValue>({
+        const deleteSelectOutput: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputValue>({
           type: 'select',
           name: 'pattern',
           message: 'Select a pattern to delete.',
           choices: deleteChoices,
         });
 
-        if (selectOutput['cancelled'] === true) {
+        if (deleteSelectOutput['cancelled'] === true) {
           continue;
         }
 
-        const selectedPattern: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectedPattern = selectOutput['result'].pattern;
+        const deleteSelectedPattern: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectedPattern = deleteSelectOutput['result'].pattern;
 
-        if (selectedPattern === undefined) {
+        if (deleteSelectedPattern === undefined) {
           continue;
         }
 
-        const updatedContent: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UpdatedContent = Runner.deletePattern(content, selectedPattern);
+        const deletedContent: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeletedContent = Runner.deletePattern(content, deleteSelectedPattern);
 
-        reconstructed = updatedContent;
+        reconstructed = deletedContent;
         hasPendingChanges = true;
 
         Logger.customize({
           name: 'Runner.promptManageMenu',
           purpose: 'delete',
-        }).info(`Deleted "${selectedPattern}" from .gitignore.`);
+        }).info(`Deleted "${deleteSelectedPattern}" from .gitignore.`);
 
         continue;
       }

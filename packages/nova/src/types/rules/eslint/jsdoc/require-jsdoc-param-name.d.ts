@@ -1,5 +1,12 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
+import type { RuleContext, RuleFix, RuleFixer } from '@typescript-eslint/utils/ts-eslint';
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Param Name - Rule.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Param Name - Check Program.
@@ -42,20 +49,28 @@ export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Expecte
 export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FinalFixedValue = string;
 
 /**
- * Rules - ESLint - JSDoc - Require JSDoc Param Name - Param Pattern.
+ * Rules - ESLint - JSDoc - Require JSDoc Param Name - Check Program - Fix.
  *
  * @since 0.15.0
  */
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Fix_Fixer = RuleFixer;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Fix_Returns = RuleFix;
 
 /**
- * Rules - ESLint - JSDoc - Require JSDoc Param Name - Rule.
+ * Rules - ESLint - JSDoc - Require JSDoc Param Name - Create.
  *
  * @since 0.15.0
  */
-export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_Create_Options_IgnoreFiles = string[];
 
-export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleOptions_IgnoreFiles = string[];
-
-export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleOptions_IgnoreFiles;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_Create_Options_IgnoreFiles;
 }>;
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Param Name - Create - Program.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_Create_Program_Returns = void;

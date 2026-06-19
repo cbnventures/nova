@@ -15,17 +15,18 @@ import { afterAll, describe, it } from 'vitest';
 import { Runner as CliUtilityTranspile } from '../../../cli/utility/transpile.js';
 
 import type {
-  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_IndexPath,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_IndexPath,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_OutputExists,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_OutputJsPath,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_ProjectDirectory,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_TsconfigContents,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_TsconfigPath,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_ErrorsWhenNoTsconfigJsonFound_ProjectDirectory,
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_OriginalCwd,
-  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_OutputExists,
-  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_OutputJsPath,
-  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_ProjectDirectory,
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_SandboxDirectory,
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_SandboxRoot,
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TemporaryDirectory,
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TemporaryPrefix,
-  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TsconfigContents,
-  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TsconfigPath,
 } from '../../../types/tests/cli/utility/transpile.test.d.ts';
 
 /**
@@ -52,12 +53,12 @@ describe('CliUtilityTranspile.run', async () => {
   });
 
   it('emits compiled output for valid TypeScript', async () => {
-    const projectDirectory: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_ProjectDirectory = join(sandboxRoot, 'emit-valid-ts');
+    const projectDirectory: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_ProjectDirectory = join(sandboxRoot, 'emit-valid-ts');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const tsconfigPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TsconfigPath = join(projectDirectory, 'tsconfig.json');
-    const tsconfigContents: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TsconfigContents = JSON.stringify({
+    const tsconfigPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_TsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_TsconfigContents = JSON.stringify({
       compilerOptions: {
         strict: true,
         outDir: './build',
@@ -67,7 +68,7 @@ describe('CliUtilityTranspile.run', async () => {
 
     await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
 
-    const indexPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_IndexPath = join(projectDirectory, 'index.ts');
+    const indexPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_IndexPath = join(projectDirectory, 'index.ts');
 
     await writeFile(indexPath, 'const greeting: string = "hello";\nconsole.log(greeting);\n', 'utf-8');
 
@@ -79,8 +80,8 @@ describe('CliUtilityTranspile.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const outputJsPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_OutputJsPath = join(projectDirectory, 'build', 'index.js');
-    const outputExists: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_OutputExists = existsSync(outputJsPath);
+    const outputJsPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_OutputJsPath = join(projectDirectory, 'build', 'index.js');
+    const outputExists: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_OutputExists = existsSync(outputJsPath);
 
     ok(outputExists);
 
@@ -88,7 +89,7 @@ describe('CliUtilityTranspile.run', async () => {
   });
 
   it('errors when no tsconfig.json found', async () => {
-    const projectDirectory: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_ProjectDirectory = join(sandboxRoot, 'no-tsconfig');
+    const projectDirectory: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_ErrorsWhenNoTsconfigJsonFound_ProjectDirectory = join(sandboxRoot, 'no-tsconfig');
 
     await mkdir(projectDirectory, { recursive: true });
 

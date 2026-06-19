@@ -200,19 +200,19 @@ export type Shared_ItemPrettyNames = Record<string, string>;
  *
  * @since 0.15.0
  */
-export type Shared_JsdocHierarchyCreateOptionsAnchorDirectories = string[];
+export type Shared_JsdocHierarchyCreateOptions_AnchorDirectories = string[];
 
-export type Shared_JsdocHierarchyCreateOptionsIgnoreFiles = string[];
+export type Shared_JsdocHierarchyCreateOptions_IgnoreFiles = string[];
 
-export type Shared_JsdocHierarchyCreateOptionsKnownNames = Record<string, string>;
+export type Shared_JsdocHierarchyCreateOptions_KnownNames = Record<string, string>;
 
-export type Shared_JsdocHierarchyCreateOptionsStripDirectories = string[];
+export type Shared_JsdocHierarchyCreateOptions_StripDirectories = string[];
 
 export type Shared_JsdocHierarchyCreateOptions = Readonly<{
-  anchorDirectories: Shared_JsdocHierarchyCreateOptionsAnchorDirectories;
-  ignoreFiles: Shared_JsdocHierarchyCreateOptionsIgnoreFiles;
-  knownNames: Shared_JsdocHierarchyCreateOptionsKnownNames;
-  stripDirectories: Shared_JsdocHierarchyCreateOptionsStripDirectories;
+  anchorDirectories: Shared_JsdocHierarchyCreateOptions_AnchorDirectories;
+  ignoreFiles: Shared_JsdocHierarchyCreateOptions_IgnoreFiles;
+  knownNames: Shared_JsdocHierarchyCreateOptions_KnownNames;
+  stripDirectories: Shared_JsdocHierarchyCreateOptions_StripDirectories;
 }>;
 
 /**

@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 
 import type {
   Lib_UseDetailsDismiss_DetailsRef,
-  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown_Function,
-  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown_KeyboardEvent,
-  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_Function,
-  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseEvent,
-  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseTarget,
   Lib_UseDetailsDismiss_Returns,
+  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown,
+  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown,
+  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseTarget,
+  Lib_UseDetailsDismiss_UseDetailsDismiss_KeyboardEvent,
+  Lib_UseDetailsDismiss_UseDetailsDismiss_MouseEvent,
 } from '../types/lib/use-details-dismiss.d.ts';
 
 /**
@@ -25,8 +25,8 @@ import type {
  */
 export function useDetailsDismiss(detailsRef: Lib_UseDetailsDismiss_DetailsRef): Lib_UseDetailsDismiss_Returns {
   useEffect(() => {
-    const handleMouseDown: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_Function = (event: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseEvent) => {
-      const mouseTarget: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseTarget = event.target as Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseTarget;
+    const handleMouseDown: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown = (mouseEvent: Lib_UseDetailsDismiss_UseDetailsDismiss_MouseEvent) => {
+      const mouseTarget: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseTarget = mouseEvent.target as Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseTarget;
 
       if (
         detailsRef.current !== null
@@ -39,9 +39,9 @@ export function useDetailsDismiss(detailsRef: Lib_UseDetailsDismiss_DetailsRef):
       return undefined;
     };
 
-    const handleKeyDown: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown_Function = (event: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown_KeyboardEvent) => {
+    const handleKeyDown: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown = (keyboardEvent: Lib_UseDetailsDismiss_UseDetailsDismiss_KeyboardEvent) => {
       if (
-        event.key === 'Escape'
+        keyboardEvent.key === 'Escape'
         && detailsRef.current !== null
         && detailsRef.current.open === true
       ) {

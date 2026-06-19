@@ -16,8 +16,10 @@ import type {
   Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Returns,
   Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Variable,
   Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_VarName,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_Create_Options,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_Create_VariableDeclaration_Node,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_Create_VariableDeclaration_Returns,
   Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleOptions,
 } from '../../../types/rules/eslint/patterns/no-boolean-var-for-if.d.ts';
 
 /**
@@ -64,7 +66,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -72,7 +74,7 @@ export class Runner {
       }
 
       return {
-        VariableDeclaration(node) {
+        VariableDeclaration(node: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_Create_VariableDeclaration_Node): Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_Create_VariableDeclaration_Returns {
           Runner.checkVariableDeclaration(context, node);
 
           return;

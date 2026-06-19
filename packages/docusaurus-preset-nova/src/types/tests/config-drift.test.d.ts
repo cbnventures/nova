@@ -5,214 +5,237 @@ import type { Options_PluginOptions } from '../options.d.ts';
  *
  * @since 0.15.0
  */
-export type Tests_ConfigDrift_ValidatedResult = Options_PluginOptions;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Preset = Options_PluginOptions['preset'];
 
-export type Tests_ConfigDrift_JoiSchema_Validate = (value: unknown) => Tests_ConfigDrift_JoiSchemaValidateResult;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Overrides = Options_PluginOptions['overrides'];
 
-export type Tests_ConfigDrift_JoiSchema = {
-  validate: Tests_ConfigDrift_JoiSchema_Validate;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Plugins = Options_PluginOptions['plugins'];
+
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Analytics = Options_PluginOptions['analytics'];
+
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_ProgressBar = Options_PluginOptions['progressBar'];
+
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Search = Options_PluginOptions['search'];
+
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result = {
+  preset: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Preset;
+  overrides: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Overrides;
+  plugins: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Plugins;
+  analytics: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Analytics;
+  progressBar: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_ProgressBar;
+  search: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Search;
 };
 
-export type Tests_ConfigDrift_JoiSchemaValidateResult_Value = unknown;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_JoiSchema_Validate = (value: unknown) => Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Validated;
 
-export type Tests_ConfigDrift_JoiSchemaValidateResult = {
-  value: Tests_ConfigDrift_JoiSchemaValidateResult_Value;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_JoiSchema = {
+  validate: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_JoiSchema_Validate;
+};
+
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Validated_Value = unknown;
+
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Validated = {
+  value: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Validated_Value;
   error?: Error;
 };
 
-export type Tests_ConfigDrift_PresetValue = string;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_PresetValue = string;
 
-export type Tests_ConfigDrift_Overrides = Options_PluginOptions['overrides'];
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Overrides = Options_PluginOptions['overrides'];
 
-export type Tests_ConfigDrift_OverridesColorsPrimary = Options_PluginOptions['overrides']['colors']['primary'];
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesColorsPrimary = Options_PluginOptions['overrides']['colors']['primary'];
 
-export type Tests_ConfigDrift_OverridesColorsSecondary = Options_PluginOptions['overrides']['colors']['secondary'];
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesColorsSecondary = Options_PluginOptions['overrides']['colors']['secondary'];
 
-export type Tests_ConfigDrift_OverridesFontsDisplay = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesFontsDisplay = string | undefined;
 
-export type Tests_ConfigDrift_OverridesFontsBody = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesFontsBody = string | undefined;
 
-export type Tests_ConfigDrift_OverridesFontsCode = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesFontsCode = string | undefined;
 
-export type Tests_ConfigDrift_OverridesNavbar = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesNavbar = string | undefined;
 
-export type Tests_ConfigDrift_OverridesFooter = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesFooter = string | undefined;
 
-export type Tests_ConfigDrift_Plugins = Options_PluginOptions['plugins'];
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Plugins = Options_PluginOptions['plugins'];
 
-export type Tests_ConfigDrift_PluginsDocs = Record<string, unknown> | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_PluginsDocs = Record<string, unknown> | undefined;
 
-export type Tests_ConfigDrift_PluginsBlog = Record<string, unknown> | false | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_PluginsBlog = Record<string, unknown> | false | undefined;
 
-export type Tests_ConfigDrift_PluginsPages = Record<string, unknown> | false | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_PluginsPages = Record<string, unknown> | false | undefined;
 
-export type Tests_ConfigDrift_PluginsSitemap = Record<string, unknown> | false | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_PluginsSitemap = Record<string, unknown> | false | undefined;
 
-export type Tests_ConfigDrift_Analytics = Options_PluginOptions['analytics'];
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Analytics = Options_PluginOptions['analytics'];
 
-export type Tests_ConfigDrift_AnalyticsGtmContainerId = string;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_AnalyticsGtmContainerId = string;
 
-export type Tests_ConfigDrift_ProgressBar = boolean | Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_ProgressBar = boolean | Record<string, unknown>;
 
-export type Tests_ConfigDrift_Search = Options_PluginOptions['search'];
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Search = Options_PluginOptions['search'];
 
-export type Tests_ConfigDrift_SearchLanguage = string[];
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_SearchLanguage = string[];
 
-export type Tests_ConfigDrift_SearchIndexDocs = boolean;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_SearchIndexDocs = boolean;
 
-export type Tests_ConfigDrift_SearchIndexBlog = boolean;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_SearchIndexBlog = boolean;
 
-export type Tests_ConfigDrift_SearchIndexPages = boolean;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_SearchIndexPages = boolean;
 
-export type Tests_ConfigDrift_SearchHashed = boolean;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_SearchHashed = boolean;
 
-export type Tests_ConfigDrift_SearchResultLimits = number;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_SearchResultLimits = number;
 
-export type Tests_ConfigDrift_SearchHighlightSearchTermsOnTargetPage = boolean;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_SearchHighlight = boolean;
 
-export type Tests_ConfigDrift_SearchBarShortcutKeymap = string;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_SearchShortcut = string;
 
-export type Tests_ConfigDrift_SearchFuzzyMatchingDistance = number;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_SearchFuzzy = number;
 
-export type Tests_ConfigDrift_SearchIgnorePatterns = string[];
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_SearchIgnore = string[];
 
-export type Tests_ConfigDrift_SearchDocsRouteBasePath = string;
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_SearchDocsRoute = string;
 
 /**
  * Tests - Config Drift - ConfigDrift ValidateThemeConfig.
  *
  * @since 0.15.0
  */
-export type Tests_ConfigDrift_ThemeConfigValidatedResult = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Result = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigJoiSchema_Validate = (value: unknown) => Tests_ConfigDrift_ThemeConfigJoiSchemaValidateResult;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_JoiSchema_Validate = (value: unknown) => Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Validated;
 
-export type Tests_ConfigDrift_ThemeConfigJoiSchema = {
-  validate: Tests_ConfigDrift_ThemeConfigJoiSchema_Validate;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_JoiSchema = {
+  validate: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_JoiSchema_Validate;
 };
 
-export type Tests_ConfigDrift_ThemeConfigJoiSchemaValidateResult_Value = unknown;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Validated_Value = unknown;
 
-export type Tests_ConfigDrift_ThemeConfigJoiSchemaValidateResult = {
-  value: Tests_ConfigDrift_ThemeConfigJoiSchemaValidateResult_Value;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Validated = {
+  value: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Validated_Value;
   error?: Error;
 };
 
-export type Tests_ConfigDrift_ThemeConfigSite = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Site = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigSiteTitle = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteTitle = string;
 
-export type Tests_ConfigDrift_ThemeConfigSiteLogo = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogo = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigSiteLogoAlt = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoAlt = string;
 
-export type Tests_ConfigDrift_ThemeConfigSiteLogoSrc = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoSrc = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigSiteLogoSrcLight = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoSrcLight = string | undefined;
 
-export type Tests_ConfigDrift_ThemeConfigSiteLogoSrcDark = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoSrcDark = string | undefined;
 
-export type Tests_ConfigDrift_ThemeConfigSiteLogoHref = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoHref = string | undefined;
 
-export type Tests_ConfigDrift_ThemeConfigSiteLogoWordmark = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmark = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigSiteLogoWordmarkLight = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmarkLight = string | undefined;
 
-export type Tests_ConfigDrift_ThemeConfigSiteLogoWordmarkDark = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmarkDark = string | undefined;
 
-export type Tests_ConfigDrift_ThemeConfigSiteLogoTitle = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoTitle = string | undefined;
 
-export type Tests_ConfigDrift_ThemeConfigSiteImage = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteImage = string;
 
-export type Tests_ConfigDrift_ThemeConfigSiteMetadata = unknown[];
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteMetadata = unknown[];
 
-export type Tests_ConfigDrift_ThemeConfigColorMode = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ColorMode = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigColorModeDefaultMode = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ColorModeDefaultMode = string;
 
-export type Tests_ConfigDrift_ThemeConfigColorModeDisableSwitch = boolean;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ColorModeDisableSwitch = boolean;
 
-export type Tests_ConfigDrift_ThemeConfigNavbar = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Navbar = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigNavbarHideOnScroll = boolean;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_NavbarHideOnScroll = boolean;
 
-export type Tests_ConfigDrift_ThemeConfigNavbarItems = unknown[];
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_NavbarItems = unknown[];
 
-export type Tests_ConfigDrift_ThemeConfigDocs = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Docs = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigDocsVersionPersistence = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_DocsVersionPersistence = string;
 
-export type Tests_ConfigDrift_ThemeConfigDocsSidebar = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_DocsSidebar = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigDocsSidebarHideable = boolean;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_DocsSidebarHideable = boolean;
 
-export type Tests_ConfigDrift_ThemeConfigDocsSidebarAutoCollapseCategories = boolean;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_DocsSidebarAutoCollapse = boolean;
 
-export type Tests_ConfigDrift_ThemeConfigBlog = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Blog = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigBlogSidebar = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_BlogSidebar = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigBlogSidebarGroupByYear = boolean;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_BlogSidebarGroupByYear = boolean;
 
-export type Tests_ConfigDrift_ThemeConfigBlogLayout = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_BlogLayout = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigBlogLayoutHeading = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_BlogLayoutHeading = string;
 
-export type Tests_ConfigDrift_ThemeConfigBlogLayoutDescription = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_BlogLayoutDescription = string;
 
-export type Tests_ConfigDrift_ThemeConfigBlogShare = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_BlogShare = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigBlogSharePlatforms = string[];
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_BlogSharePlatforms = string[];
 
-export type Tests_ConfigDrift_ThemeConfigTableOfContents = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_TableOfContents = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigTableOfContentsMinHeadingLevel = number;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_TableOfContentsMinHeadingLevel = number;
 
-export type Tests_ConfigDrift_ThemeConfigTableOfContentsMaxHeadingLevel = number;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_TableOfContentsMaxHeadingLevel = number;
 
-export type Tests_ConfigDrift_ThemeConfigAnnouncementBar = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_AnnouncementBar = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigAnnouncementBarId = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_AnnouncementBarId = string;
 
-export type Tests_ConfigDrift_ThemeConfigAnnouncementBarContent = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_AnnouncementBarContent = string;
 
-export type Tests_ConfigDrift_ThemeConfigAnnouncementBarBackgroundColor = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_AnnouncementBarBackgroundColor = string | undefined;
 
-export type Tests_ConfigDrift_ThemeConfigAnnouncementBarTextColor = string | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_AnnouncementBarTextColor = string | undefined;
 
-export type Tests_ConfigDrift_ThemeConfigAnnouncementBarIsCloseable = boolean;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_AnnouncementBarIsCloseable = boolean;
 
-export type Tests_ConfigDrift_ThemeConfigErrorPages = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ErrorPages = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigErrorPagesNotFound = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ErrorPagesNotFound = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundTitle = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ErrorPagesNotFoundTitle = string;
 
-export type Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundDescription = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ErrorPagesNotFoundDescription = string;
 
-export type Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundBackHomeLabel = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ErrorPagesNotFoundBackHomeLabel = string;
 
-export type Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundBackHomeHref = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ErrorPagesNotFoundBackHomeHref = string;
 
-export type Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContent = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ErrorPagesErrorPageContent = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContentTitle = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ErrorPagesErrorPageContentTitle = string;
 
-export type Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContentRetryLabel = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ErrorPagesErrorPageContentRetryLabel = string;
 
-export type Tests_ConfigDrift_ThemeConfigErrorPagesError = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ErrorPagesError = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigErrorPagesErrorRetryLabel = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_ErrorPagesErrorRetryLabel = string;
 
-export type Tests_ConfigDrift_ThemeConfigFooter = Record<string, unknown>;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Footer = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ThemeConfigFooterCta = string | Tests_ConfigDrift_ThemeConfigFooterCtaObject | undefined;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_FooterCta = string | Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_FooterCtaObject | undefined;
 
-export type Tests_ConfigDrift_ThemeConfigFooterCtaObject_Label = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_FooterCtaObject_Label = string;
 
-export type Tests_ConfigDrift_ThemeConfigFooterCtaObject_Href = string;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_FooterCtaObject_Href = string;
 
-export type Tests_ConfigDrift_ThemeConfigFooterCtaObject = {
-  label: Tests_ConfigDrift_ThemeConfigFooterCtaObject_Label;
-  href: Tests_ConfigDrift_ThemeConfigFooterCtaObject_Href;
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_FooterCtaObject = {
+  label: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_FooterCtaObject_Label;
+  href: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_FooterCtaObject_Href;
 };
+
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_FooterCtaLabel = string;
+
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_FooterCtaHref = string;

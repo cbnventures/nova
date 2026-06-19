@@ -11,13 +11,13 @@ import type {
   Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Parent,
   Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Returns,
   Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Statements,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_Create_Options,
   Rules_Eslint_Conventions_RequireExplicitReturn_Runner_HasReturnValue_Node,
   Rules_Eslint_Conventions_RequireExplicitReturn_Runner_HasReturnValue_Returns,
   Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsExcludeArrowFunctions,
   Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsExcludeConstructors,
   Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsExcludeSetters,
   Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/require-explicit-return.d.ts';
 
 /**
@@ -76,7 +76,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_RequireExplicitReturn_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {

@@ -5,65 +5,65 @@ import { describe, it } from 'vitest';
 import { rehypeShiki } from '../../lib/rehype-shiki.js';
 
 import type {
-  Tests_Lib_RehypeShiki_AddRemoveCode,
-  Tests_Lib_RehypeShiki_AddRemoveExcludesAddMarker,
-  Tests_Lib_RehypeShiki_AddRemoveExcludesRemoveMarker,
-  Tests_Lib_RehypeShiki_AddRemoveIncludesAdd,
-  Tests_Lib_RehypeShiki_AddRemoveIncludesRemove,
-  Tests_Lib_RehypeShiki_AddRemoveOutputJson,
-  Tests_Lib_RehypeShiki_AddRemoveOutputNode,
-  Tests_Lib_RehypeShiki_AddRemoveTransformer,
-  Tests_Lib_RehypeShiki_AddRemoveTree,
-  Tests_Lib_RehypeShiki_DiffCode,
-  Tests_Lib_RehypeShiki_DiffIncludesAdd,
-  Tests_Lib_RehypeShiki_DiffIncludesRemove,
-  Tests_Lib_RehypeShiki_DiffOutputJson,
-  Tests_Lib_RehypeShiki_DiffOutputNode,
-  Tests_Lib_RehypeShiki_DiffTransformer,
-  Tests_Lib_RehypeShiki_DiffTree,
-  Tests_Lib_RehypeShiki_IncludesMarker,
-  Tests_Lib_RehypeShiki_IncludesShiki,
-  Tests_Lib_RehypeShiki_LangIncludesShiki,
-  Tests_Lib_RehypeShiki_LangOutputJson,
-  Tests_Lib_RehypeShiki_LangOutputNode,
-  Tests_Lib_RehypeShiki_LangTransformer,
-  Tests_Lib_RehypeShiki_LangTree,
-  Tests_Lib_RehypeShiki_MagicCode,
-  Tests_Lib_RehypeShiki_MagicExcludesComment,
-  Tests_Lib_RehypeShiki_MagicIncludesHighlighted,
-  Tests_Lib_RehypeShiki_MagicOutputJson,
-  Tests_Lib_RehypeShiki_MagicOutputNode,
-  Tests_Lib_RehypeShiki_MagicTransformer,
-  Tests_Lib_RehypeShiki_MagicTree,
-  Tests_Lib_RehypeShiki_MarkerIncludesAttribute,
-  Tests_Lib_RehypeShiki_MarkerOutputJson,
-  Tests_Lib_RehypeShiki_MarkerOutputNode,
-  Tests_Lib_RehypeShiki_MarkerTransformer,
-  Tests_Lib_RehypeShiki_MarkerTree,
-  Tests_Lib_RehypeShiki_MetadataIncludesLanguage,
-  Tests_Lib_RehypeShiki_MetadataIncludesLive,
-  Tests_Lib_RehypeShiki_MetadataIncludesMetastring,
-  Tests_Lib_RehypeShiki_MetadataIncludesShowLineNumbers,
-  Tests_Lib_RehypeShiki_MetadataIncludesTitle,
-  Tests_Lib_RehypeShiki_MetadataOutputJson,
-  Tests_Lib_RehypeShiki_MetadataOutputNode,
-  Tests_Lib_RehypeShiki_MetadataTransformer,
-  Tests_Lib_RehypeShiki_MetadataTree,
-  Tests_Lib_RehypeShiki_NoLangIncludesShiki,
-  Tests_Lib_RehypeShiki_NoLangOutputJson,
-  Tests_Lib_RehypeShiki_NoLangOutputNode,
-  Tests_Lib_RehypeShiki_NoLangTransformer,
-  Tests_Lib_RehypeShiki_NoLangTree,
-  Tests_Lib_RehypeShiki_OutputJson,
-  Tests_Lib_RehypeShiki_OutputNode,
-  Tests_Lib_RehypeShiki_RangeCode,
-  Tests_Lib_RehypeShiki_RangeIncludesHighlighted,
-  Tests_Lib_RehypeShiki_RangeOutputJson,
-  Tests_Lib_RehypeShiki_RangeOutputNode,
-  Tests_Lib_RehypeShiki_RangeTransformer,
-  Tests_Lib_RehypeShiki_RangeTree,
-  Tests_Lib_RehypeShiki_Transformer,
-  Tests_Lib_RehypeShiki_Tree,
+  Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_IncludesAttribute,
+  Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_OutputJson,
+  Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_OutputNode,
+  Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Transformer,
+  Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree,
+  Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_IncludesShiki,
+  Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_OutputJson,
+  Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_OutputNode,
+  Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Transformer,
+  Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree,
+  Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_IncludesShiki,
+  Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_OutputJson,
+  Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_OutputNode,
+  Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Transformer,
+  Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree,
+  Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_IncludesMarker,
+  Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_IncludesShiki,
+  Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_OutputJson,
+  Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_OutputNode,
+  Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Transformer,
+  Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_AddRemoveCode,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_ExcludesAddMarker,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_ExcludesRemoveMarker,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_IncludesAdd,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_IncludesRemove,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_OutputJson,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_OutputNode,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Transformer,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_DiffCode,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_IncludesAdd,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_IncludesRemove,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_OutputJson,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_OutputNode,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Transformer,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_IncludesHighlighted,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_OutputJson,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_OutputNode,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_RangeCode,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Transformer,
+  Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree,
+  Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_IncludesLanguage,
+  Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_IncludesLive,
+  Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_IncludesMetastring,
+  Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_IncludesShowLineNumbers,
+  Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_IncludesTitle,
+  Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_OutputJson,
+  Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_OutputNode,
+  Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Transformer,
+  Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree,
+  Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_ExcludesComment,
+  Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_IncludesHighlighted,
+  Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_MagicCode,
+  Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_OutputJson,
+  Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_OutputNode,
+  Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Transformer,
+  Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree,
 } from '../../types/tests/lib/rehype-shiki.test.d.ts';
 
 /**
@@ -73,7 +73,7 @@ import type {
  */
 describe('rehypeShiki', async () => {
   it('highlights code with shiki classes', async () => {
-    const tree: Tests_Lib_RehypeShiki_Tree = {
+    const tree: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree = {
       type: 'root',
       children: [{
         type: 'element',
@@ -93,17 +93,17 @@ describe('rehypeShiki', async () => {
       }],
     };
 
-    const transformer: Tests_Lib_RehypeShiki_Transformer = rehypeShiki({
+    const transformer: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Transformer = rehypeShiki({
       light: 'github-light',
       dark: 'github-dark',
     });
 
     await transformer(tree);
 
-    const outputNode: Tests_Lib_RehypeShiki_OutputNode = (tree['children'] ?? [])[0];
-    const outputJson: Tests_Lib_RehypeShiki_OutputJson = JSON.stringify(outputNode);
-    const includesShiki: Tests_Lib_RehypeShiki_IncludesShiki = outputJson.includes('shiki');
-    const includesMarker: Tests_Lib_RehypeShiki_IncludesMarker = outputJson.includes('data-rehype-shiki');
+    const outputNode: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_OutputNode = (tree['children'] ?? [])[0];
+    const outputJson: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_OutputJson = JSON.stringify(outputNode);
+    const includesShiki: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_IncludesShiki = outputJson.includes('shiki');
+    const includesMarker: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_IncludesMarker = outputJson.includes('data-rehype-shiki');
 
     ok(includesShiki);
     ok(includesMarker);
@@ -112,7 +112,7 @@ describe('rehypeShiki', async () => {
   });
 
   it('extracts language from className', async () => {
-    const tree: Tests_Lib_RehypeShiki_LangTree = {
+    const tree: Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree = {
       type: 'root',
       children: [{
         type: 'element',
@@ -132,16 +132,16 @@ describe('rehypeShiki', async () => {
       }],
     };
 
-    const transformer: Tests_Lib_RehypeShiki_LangTransformer = rehypeShiki({
+    const transformer: Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Transformer = rehypeShiki({
       light: 'github-light',
       dark: 'github-dark',
     });
 
     await transformer(tree);
 
-    const outputNode: Tests_Lib_RehypeShiki_LangOutputNode = (tree['children'] ?? [])[0];
-    const outputJson: Tests_Lib_RehypeShiki_LangOutputJson = JSON.stringify(outputNode);
-    const includesShiki: Tests_Lib_RehypeShiki_LangIncludesShiki = outputJson.includes('shiki');
+    const outputNode: Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_OutputNode = (tree['children'] ?? [])[0];
+    const outputJson: Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_OutputJson = JSON.stringify(outputNode);
+    const includesShiki: Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_IncludesShiki = outputJson.includes('shiki');
 
     ok(includesShiki);
 
@@ -149,7 +149,7 @@ describe('rehypeShiki', async () => {
   });
 
   it('handles code blocks without a language class', async () => {
-    const tree: Tests_Lib_RehypeShiki_NoLangTree = {
+    const tree: Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree = {
       type: 'root',
       children: [{
         type: 'element',
@@ -167,16 +167,16 @@ describe('rehypeShiki', async () => {
       }],
     };
 
-    const transformer: Tests_Lib_RehypeShiki_NoLangTransformer = rehypeShiki({
+    const transformer: Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Transformer = rehypeShiki({
       light: 'github-light',
       dark: 'github-dark',
     });
 
     await transformer(tree);
 
-    const outputNode: Tests_Lib_RehypeShiki_NoLangOutputNode = (tree['children'] ?? [])[0];
-    const outputJson: Tests_Lib_RehypeShiki_NoLangOutputJson = JSON.stringify(outputNode);
-    const includesShiki: Tests_Lib_RehypeShiki_NoLangIncludesShiki = outputJson.includes('shiki');
+    const outputNode: Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_OutputNode = (tree['children'] ?? [])[0];
+    const outputJson: Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_OutputJson = JSON.stringify(outputNode);
+    const includesShiki: Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_IncludesShiki = outputJson.includes('shiki');
 
     ok(includesShiki);
 
@@ -184,14 +184,14 @@ describe('rehypeShiki', async () => {
   });
 
   it('strips magic comments and marks highlighted lines', async () => {
-    const magicCode: Tests_Lib_RehypeShiki_MagicCode = [
+    const magicCode: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_MagicCode = [
       'const a = 1;',
       '// highlight-next-line',
       'const b = 2;',
       'const c = 3;',
     ].join('\n');
 
-    const tree: Tests_Lib_RehypeShiki_MagicTree = {
+    const tree: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree = {
       type: 'root',
       children: [{
         type: 'element',
@@ -211,17 +211,17 @@ describe('rehypeShiki', async () => {
       }],
     };
 
-    const transformer: Tests_Lib_RehypeShiki_MagicTransformer = rehypeShiki({
+    const transformer: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Transformer = rehypeShiki({
       light: 'github-light',
       dark: 'github-dark',
     });
 
     await transformer(tree);
 
-    const outputNode: Tests_Lib_RehypeShiki_MagicOutputNode = (tree['children'] ?? [])[0];
-    const outputJson: Tests_Lib_RehypeShiki_MagicOutputJson = JSON.stringify(outputNode);
-    const includesHighlighted: Tests_Lib_RehypeShiki_MagicIncludesHighlighted = outputJson.includes('data-highlighted');
-    const excludesComment: Tests_Lib_RehypeShiki_MagicExcludesComment = outputJson.includes('highlight-next-line') === false;
+    const outputNode: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_OutputNode = (tree['children'] ?? [])[0];
+    const outputJson: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_OutputJson = JSON.stringify(outputNode);
+    const includesHighlighted: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_IncludesHighlighted = outputJson.includes('data-highlighted');
+    const excludesComment: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_ExcludesComment = outputJson.includes('highlight-next-line') === false;
 
     ok(includesHighlighted);
     ok(excludesComment);
@@ -230,13 +230,13 @@ describe('rehypeShiki', async () => {
   });
 
   it('marks lines from metastring line range', async () => {
-    const rangeCode: Tests_Lib_RehypeShiki_RangeCode = [
+    const rangeCode: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_RangeCode = [
       'const a = 1;',
       'const b = 2;',
       'const c = 3;',
     ].join('\n');
 
-    const tree: Tests_Lib_RehypeShiki_RangeTree = {
+    const tree: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree = {
       type: 'root',
       children: [{
         type: 'element',
@@ -257,16 +257,16 @@ describe('rehypeShiki', async () => {
       }],
     };
 
-    const transformer: Tests_Lib_RehypeShiki_RangeTransformer = rehypeShiki({
+    const transformer: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Transformer = rehypeShiki({
       light: 'github-light',
       dark: 'github-dark',
     });
 
     await transformer(tree);
 
-    const outputNode: Tests_Lib_RehypeShiki_RangeOutputNode = (tree['children'] ?? [])[0];
-    const outputJson: Tests_Lib_RehypeShiki_RangeOutputJson = JSON.stringify(outputNode);
-    const includesHighlighted: Tests_Lib_RehypeShiki_RangeIncludesHighlighted = outputJson.includes('data-highlighted');
+    const outputNode: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_OutputNode = (tree['children'] ?? [])[0];
+    const outputJson: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_OutputJson = JSON.stringify(outputNode);
+    const includesHighlighted: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_IncludesHighlighted = outputJson.includes('data-highlighted');
 
     ok(includesHighlighted);
 
@@ -274,13 +274,13 @@ describe('rehypeShiki', async () => {
   });
 
   it('marks diff add and remove lines', async () => {
-    const diffCode: Tests_Lib_RehypeShiki_DiffCode = [
+    const diffCode: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_DiffCode = [
       '+added line',
       '-removed line',
       ' unchanged line',
     ].join('\n');
 
-    const tree: Tests_Lib_RehypeShiki_DiffTree = {
+    const tree: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree = {
       type: 'root',
       children: [{
         type: 'element',
@@ -300,17 +300,17 @@ describe('rehypeShiki', async () => {
       }],
     };
 
-    const transformer: Tests_Lib_RehypeShiki_DiffTransformer = rehypeShiki({
+    const transformer: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Transformer = rehypeShiki({
       light: 'github-light',
       dark: 'github-dark',
     });
 
     await transformer(tree);
 
-    const outputNode: Tests_Lib_RehypeShiki_DiffOutputNode = (tree['children'] ?? [])[0];
-    const outputJson: Tests_Lib_RehypeShiki_DiffOutputJson = JSON.stringify(outputNode);
-    const includesAdd: Tests_Lib_RehypeShiki_DiffIncludesAdd = outputJson.includes('data-diff-add');
-    const includesRemove: Tests_Lib_RehypeShiki_DiffIncludesRemove = outputJson.includes('data-diff-remove');
+    const outputNode: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_OutputNode = (tree['children'] ?? [])[0];
+    const outputJson: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_OutputJson = JSON.stringify(outputNode);
+    const includesAdd: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_IncludesAdd = outputJson.includes('data-diff-add');
+    const includesRemove: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_IncludesRemove = outputJson.includes('data-diff-remove');
 
     ok(includesAdd);
     ok(includesRemove);
@@ -319,7 +319,7 @@ describe('rehypeShiki', async () => {
   });
 
   it('preserves metastring metadata as data attributes on the output code element', async () => {
-    const tree: Tests_Lib_RehypeShiki_MetadataTree = {
+    const tree: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree = {
       type: 'root',
       children: [{
         type: 'element',
@@ -340,20 +340,20 @@ describe('rehypeShiki', async () => {
       }],
     };
 
-    const transformer: Tests_Lib_RehypeShiki_MetadataTransformer = rehypeShiki({
+    const transformer: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Transformer = rehypeShiki({
       light: 'github-light',
       dark: 'github-dark',
     });
 
     await transformer(tree);
 
-    const outputNode: Tests_Lib_RehypeShiki_MetadataOutputNode = (tree['children'] ?? [])[0];
-    const outputJson: Tests_Lib_RehypeShiki_MetadataOutputJson = JSON.stringify(outputNode);
-    const includesTitle: Tests_Lib_RehypeShiki_MetadataIncludesTitle = outputJson.includes('"data-title":"src/relay/handler.ts"');
-    const includesLanguage: Tests_Lib_RehypeShiki_MetadataIncludesLanguage = outputJson.includes('"data-language":"typescript"');
-    const includesShowLineNumbers: Tests_Lib_RehypeShiki_MetadataIncludesShowLineNumbers = outputJson.includes('"data-show-line-numbers":"true"');
-    const includesLive: Tests_Lib_RehypeShiki_MetadataIncludesLive = outputJson.includes('"data-live":"true"');
-    const includesMetastring: Tests_Lib_RehypeShiki_MetadataIncludesMetastring = outputJson.includes('"metastring":"showLineNumbers title=');
+    const outputNode: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_OutputNode = (tree['children'] ?? [])[0];
+    const outputJson: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_OutputJson = JSON.stringify(outputNode);
+    const includesTitle: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_IncludesTitle = outputJson.includes('"data-title":"src/relay/handler.ts"');
+    const includesLanguage: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_IncludesLanguage = outputJson.includes('"data-language":"typescript"');
+    const includesShowLineNumbers: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_IncludesShowLineNumbers = outputJson.includes('"data-show-line-numbers":"true"');
+    const includesLive: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_IncludesLive = outputJson.includes('"data-live":"true"');
+    const includesMetastring: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_IncludesMetastring = outputJson.includes('"metastring":"showLineNumbers title=');
 
     ok(includesTitle);
     ok(includesLanguage);
@@ -365,7 +365,7 @@ describe('rehypeShiki', async () => {
   });
 
   it('marks add and remove lines from add-start/remove-start magic comments and strips the markers', async () => {
-    const addRemoveCode: Tests_Lib_RehypeShiki_AddRemoveCode = [
+    const addRemoveCode: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_AddRemoveCode = [
       'const a = 1;',
       '// remove-start',
       'const removed = "old";',
@@ -376,7 +376,7 @@ describe('rehypeShiki', async () => {
       'const c = 3;',
     ].join('\n');
 
-    const tree: Tests_Lib_RehypeShiki_AddRemoveTree = {
+    const tree: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree = {
       type: 'root',
       children: [{
         type: 'element',
@@ -396,19 +396,19 @@ describe('rehypeShiki', async () => {
       }],
     };
 
-    const transformer: Tests_Lib_RehypeShiki_AddRemoveTransformer = rehypeShiki({
+    const transformer: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Transformer = rehypeShiki({
       light: 'github-light',
       dark: 'github-dark',
     });
 
     await transformer(tree);
 
-    const outputNode: Tests_Lib_RehypeShiki_AddRemoveOutputNode = (tree['children'] ?? [])[0];
-    const outputJson: Tests_Lib_RehypeShiki_AddRemoveOutputJson = JSON.stringify(outputNode);
-    const includesAdd: Tests_Lib_RehypeShiki_AddRemoveIncludesAdd = outputJson.includes('data-diff-add');
-    const includesRemove: Tests_Lib_RehypeShiki_AddRemoveIncludesRemove = outputJson.includes('data-diff-remove');
-    const excludesAddMarker: Tests_Lib_RehypeShiki_AddRemoveExcludesAddMarker = outputJson.includes('add-start') === false && outputJson.includes('add-end') === false;
-    const excludesRemoveMarker: Tests_Lib_RehypeShiki_AddRemoveExcludesRemoveMarker = outputJson.includes('remove-start') === false && outputJson.includes('remove-end') === false;
+    const outputNode: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_OutputNode = (tree['children'] ?? [])[0];
+    const outputJson: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_OutputJson = JSON.stringify(outputNode);
+    const includesAdd: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_IncludesAdd = outputJson.includes('data-diff-add');
+    const includesRemove: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_IncludesRemove = outputJson.includes('data-diff-remove');
+    const excludesAddMarker: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_ExcludesAddMarker = outputJson.includes('add-start') === false && outputJson.includes('add-end') === false;
+    const excludesRemoveMarker: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_ExcludesRemoveMarker = outputJson.includes('remove-start') === false && outputJson.includes('remove-end') === false;
 
     ok(includesAdd);
     ok(includesRemove);
@@ -419,7 +419,7 @@ describe('rehypeShiki', async () => {
   });
 
   it('adds data-rehype-shiki attribute to output', async () => {
-    const tree: Tests_Lib_RehypeShiki_MarkerTree = {
+    const tree: Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree = {
       type: 'root',
       children: [{
         type: 'element',
@@ -439,16 +439,16 @@ describe('rehypeShiki', async () => {
       }],
     };
 
-    const transformer: Tests_Lib_RehypeShiki_MarkerTransformer = rehypeShiki({
+    const transformer: Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Transformer = rehypeShiki({
       light: 'github-light',
       dark: 'github-dark',
     });
 
     await transformer(tree);
 
-    const outputNode: Tests_Lib_RehypeShiki_MarkerOutputNode = (tree['children'] ?? [])[0];
-    const outputJson: Tests_Lib_RehypeShiki_MarkerOutputJson = JSON.stringify(outputNode);
-    const includesAttribute: Tests_Lib_RehypeShiki_MarkerIncludesAttribute = outputJson.includes('data-rehype-shiki');
+    const outputNode: Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_OutputNode = (tree['children'] ?? [])[0];
+    const outputJson: Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_OutputJson = JSON.stringify(outputNode);
+    const includesAttribute: Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_IncludesAttribute = outputJson.includes('data-rehype-shiki');
 
     ok(includesAttribute);
 

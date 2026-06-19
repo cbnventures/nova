@@ -1,5 +1,12 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
+import type { RuleContext, RuleFix, RuleFixer } from '@typescript-eslint/utils/ts-eslint';
+
+/**
+ * Rules - ESLint - Patterns - No Assign Then Return - Rule.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
 /**
  * Rules - ESLint - Patterns - No Assign Then Return - Check Return.
@@ -29,14 +36,30 @@ export type Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Declarat
 export type Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_InitText = string;
 
 /**
- * Rules - ESLint - Patterns - No Assign Then Return - Rule.
+ * Rules - ESLint - Patterns - No Assign Then Return - Check Return - Fix.
  *
  * @since 0.14.0
  */
-export type Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Fix_Fixer = RuleFixer;
 
-export type Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleOptions_IgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Fix_Returns = RuleFix[];
 
-export type Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleOptions_IgnoreFiles;
+/**
+ * Rules - ESLint - Patterns - No Assign Then Return - Create.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Patterns_NoAssignThenReturn_Runner_Create_Options_IgnoreFiles = string[];
+
+export type Rules_Eslint_Patterns_NoAssignThenReturn_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_Create_Options_IgnoreFiles;
 }>;
+
+/**
+ * Rules - ESLint - Patterns - No Assign Then Return - Create - Return Statement.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Patterns_NoAssignThenReturn_Runner_Create_ReturnStatement_Node = TSESTree.ReturnStatement;
+
+export type Rules_Eslint_Patterns_NoAssignThenReturn_Runner_Create_ReturnStatement_Returns = void;

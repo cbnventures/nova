@@ -1,6 +1,6 @@
 import stylisticPlugin from '@stylistic/eslint-plugin';
 
-import type { Presets_Eslint_DxCodeStyle_ConfigConfig } from '../../types/presets/eslint/dx-code-style.d.ts';
+import type { Presets_Eslint_DxCodeStyle_Config } from '../../types/presets/eslint/dx-code-style.d.ts';
 
 /**
  * Presets - ESLint - DX Code Style - Config.
@@ -10,7 +10,7 @@ import type { Presets_Eslint_DxCodeStyle_ConfigConfig } from '../../types/preset
  *
  * @since 0.11.0
  */
-const config: Presets_Eslint_DxCodeStyle_ConfigConfig = [
+const config: Presets_Eslint_DxCodeStyle_Config = [
   {
     name: 'nova/dx-code-style',
     files: [

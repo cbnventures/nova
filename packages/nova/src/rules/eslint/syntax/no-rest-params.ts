@@ -8,6 +8,14 @@ import type {
   Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_FunctionName,
   Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Node,
   Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Returns,
+  Rules_Eslint_Syntax_NoRestParams_Runner_Create_AllowPatterns,
+  Rules_Eslint_Syntax_NoRestParams_Runner_Create_ArrowFunctionExpression_Node,
+  Rules_Eslint_Syntax_NoRestParams_Runner_Create_ArrowFunctionExpression_Returns,
+  Rules_Eslint_Syntax_NoRestParams_Runner_Create_FunctionDeclaration_Node,
+  Rules_Eslint_Syntax_NoRestParams_Runner_Create_FunctionDeclaration_Returns,
+  Rules_Eslint_Syntax_NoRestParams_Runner_Create_FunctionExpression_Node,
+  Rules_Eslint_Syntax_NoRestParams_Runner_Create_FunctionExpression_Returns,
+  Rules_Eslint_Syntax_NoRestParams_Runner_Create_Options,
   Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_ClassNode,
   Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Node,
   Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_ObjectNode,
@@ -21,10 +29,8 @@ import type {
   Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Patterns,
   Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Prefix,
   Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Returns,
-  Rules_Eslint_Syntax_NoRestParams_Runner_RuleAllowPatterns,
   Rules_Eslint_Syntax_NoRestParams_Runner_RuleDefaultOptionsAllow,
   Rules_Eslint_Syntax_NoRestParams_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Syntax_NoRestParams_Runner_RuleOptions,
 } from '../../../types/rules/eslint/syntax/no-rest-params.d.ts';
 
 /**
@@ -79,27 +85,27 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Syntax_NoRestParams_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Syntax_NoRestParams_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Syntax_NoRestParams_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
         return {};
       }
 
-      const allowPatterns: Rules_Eslint_Syntax_NoRestParams_Runner_RuleAllowPatterns = options['allow'];
+      const allowPatterns: Rules_Eslint_Syntax_NoRestParams_Runner_Create_AllowPatterns = options['allow'];
 
       return {
-        FunctionDeclaration(node) {
+        FunctionDeclaration(node: Rules_Eslint_Syntax_NoRestParams_Runner_Create_FunctionDeclaration_Node): Rules_Eslint_Syntax_NoRestParams_Runner_Create_FunctionDeclaration_Returns {
           Runner.checkFunction(context, node, allowPatterns);
 
           return;
         },
-        FunctionExpression(node) {
+        FunctionExpression(node: Rules_Eslint_Syntax_NoRestParams_Runner_Create_FunctionExpression_Node): Rules_Eslint_Syntax_NoRestParams_Runner_Create_FunctionExpression_Returns {
           Runner.checkFunction(context, node, allowPatterns);
 
           return;
         },
-        ArrowFunctionExpression(node) {
+        ArrowFunctionExpression(node: Rules_Eslint_Syntax_NoRestParams_Runner_Create_ArrowFunctionExpression_Node): Rules_Eslint_Syntax_NoRestParams_Runner_Create_ArrowFunctionExpression_Returns {
           Runner.checkFunction(context, node, allowPatterns);
 
           return;

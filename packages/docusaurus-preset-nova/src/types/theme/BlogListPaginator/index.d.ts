@@ -27,7 +27,7 @@ export type Theme_BlogListPaginator_Index_BlogListPaginator_Permalink = string;
 
 export type Theme_BlogListPaginator_Index_BlogListPaginator_BasePath = string;
 
-export type Theme_BlogListPaginator_Index_BlogListPaginator_PageNumbers = Theme_BlogListPaginator_Index_BlogListPaginator_PageNumbersEntry[];
+export type Theme_BlogListPaginator_Index_BlogListPaginator_PageNumbers = (number | '...')[];
 
 export type Theme_BlogListPaginator_Index_BlogListPaginator_NavAriaLabel = string;
 

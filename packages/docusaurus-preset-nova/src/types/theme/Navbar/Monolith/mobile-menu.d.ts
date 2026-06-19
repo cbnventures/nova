@@ -38,6 +38,28 @@ export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsClosingState = [Theme_
 
 export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_SetIsClosing = React.Dispatch<React.SetStateAction<Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsClosing>>;
 
+/**
+ * Theme - Navbar - Monolith - Mobile Menu - Mobile Menu - Handle Escape.
+ *
+ * @since 0.15.0
+ */
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeFunction = (event: Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent) => void;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent = KeyboardEvent;
+
+/**
+ * Theme - Navbar - Monolith - Mobile Menu - Mobile Menu - Handle Click Outside.
+ *
+ * @since 0.15.0
+ */
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideFunction = (event: Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent) => void;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent = React.MouseEvent<HTMLDivElement>;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseTarget = EventTarget | null;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_FocusTarget = HTMLButtonElement | null;
+
 export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_AriaLabel = string;
 
 export type Theme_Navbar_Monolith_MobileMenu_CloseMenuAriaLabel = string;
@@ -63,25 +85,3 @@ export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_LinkProps = Record<strin
 export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIsActive = boolean;
 
 export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_LinkSpread = Record<string, string>;
-
-/**
- * Theme - Navbar - Monolith - Mobile Menu - Mobile Menu - Handle Click Outside.
- *
- * @since 0.15.0
- */
-export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideFunction = (event: Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent) => void;
-
-export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent = React.MouseEvent<HTMLDivElement>;
-
-export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseTarget = EventTarget | null;
-
-/**
- * Theme - Navbar - Monolith - Mobile Menu - Mobile Menu - Handle Escape.
- *
- * @since 0.15.0
- */
-export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeFunction = (event: Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent) => void;
-
-export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent = KeyboardEvent;
-
-export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_FocusTarget = HTMLButtonElement | null;

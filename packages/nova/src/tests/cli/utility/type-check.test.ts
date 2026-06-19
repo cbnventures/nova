@@ -14,15 +14,20 @@ import { afterAll, describe, it } from 'vitest';
 import { Runner as CliUtilityTypeCheck } from '../../../cli/utility/type-check.js';
 
 import type {
-  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IndexPath,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ErrorsWhenNoTsconfigJsonFound_ProjectDirectory,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_OriginalCwd,
-  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ProjectDirectory,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ReportsNoErrorsForValidTypeScript_IndexPath,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ReportsNoErrorsForValidTypeScript_ProjectDirectory,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ReportsNoErrorsForValidTypeScript_TsconfigContents,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ReportsNoErrorsForValidTypeScript_TsconfigPath,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SandboxDirectory,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SandboxRoot,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_IndexPath,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_ProjectDirectory,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_TsconfigContents,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_TsconfigPath,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TemporaryDirectory,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TemporaryPrefix,
-  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigContents,
-  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigPath,
 } from '../../../types/tests/cli/utility/type-check.test.d.ts';
 
 /**
@@ -49,12 +54,12 @@ describe('CliUtilityTypeCheck.run', async () => {
   });
 
   it('reports no errors for valid TypeScript', async () => {
-    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ProjectDirectory = join(sandboxRoot, 'valid-ts');
+    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ReportsNoErrorsForValidTypeScript_ProjectDirectory = join(sandboxRoot, 'valid-ts');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const tsconfigPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigPath = join(projectDirectory, 'tsconfig.json');
-    const tsconfigContents: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigContents = JSON.stringify({
+    const tsconfigPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ReportsNoErrorsForValidTypeScript_TsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ReportsNoErrorsForValidTypeScript_TsconfigContents = JSON.stringify({
       compilerOptions: {
         strict: true,
         noEmit: true,
@@ -64,7 +69,7 @@ describe('CliUtilityTypeCheck.run', async () => {
 
     await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
 
-    const indexPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IndexPath = join(projectDirectory, 'index.ts');
+    const indexPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ReportsNoErrorsForValidTypeScript_IndexPath = join(projectDirectory, 'index.ts');
 
     await writeFile(indexPath, 'const greeting: string = "hello";\nconsole.log(greeting);\n', 'utf-8');
 
@@ -80,12 +85,12 @@ describe('CliUtilityTypeCheck.run', async () => {
   });
 
   it('sets exit code for invalid TypeScript', async () => {
-    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ProjectDirectory = join(sandboxRoot, 'invalid-ts');
+    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_ProjectDirectory = join(sandboxRoot, 'invalid-ts');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const tsconfigPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigPath = join(projectDirectory, 'tsconfig.json');
-    const tsconfigContents: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigContents = JSON.stringify({
+    const tsconfigPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_TsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_TsconfigContents = JSON.stringify({
       compilerOptions: {
         strict: true,
         noEmit: true,
@@ -95,7 +100,7 @@ describe('CliUtilityTypeCheck.run', async () => {
 
     await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
 
-    const indexPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IndexPath = join(projectDirectory, 'index.ts');
+    const indexPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_IndexPath = join(projectDirectory, 'index.ts');
 
     await writeFile(indexPath, 'const greeting: number = "hello";\n', 'utf-8');
 
@@ -111,7 +116,7 @@ describe('CliUtilityTypeCheck.run', async () => {
   });
 
   it('errors when no tsconfig.json found', async () => {
-    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ProjectDirectory = join(sandboxRoot, 'no-tsconfig');
+    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ErrorsWhenNoTsconfigJsonFound_ProjectDirectory = join(sandboxRoot, 'no-tsconfig');
 
     await mkdir(projectDirectory, { recursive: true });
 

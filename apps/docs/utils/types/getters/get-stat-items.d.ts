@@ -7,23 +7,23 @@ import type { PagesStatItems } from '@site/src/types/pages/index.d.ts';
  *
  * @since 0.15.0
  */
-export type GettersGetStatItemsCountFilesBasePath = string;
+export type Getters_GetStatItems_CountFiles_BasePath = string;
 
-export type GettersGetStatItemsCountFilesExtensions = string[];
+export type Getters_GetStatItems_CountFiles_Extensions = string[];
 
-export type GettersGetStatItemsCountFilesReturns = number;
+export type Getters_GetStatItems_CountFiles_Returns = number;
 
-export type GettersGetStatItemsCountFilesCount = number;
+export type Getters_GetStatItems_CountFiles_Count = number;
 
-export type GettersGetStatItemsCountFilesEntries = Dirent[];
+export type Getters_GetStatItems_CountFiles_Entries = Dirent[];
 
-export type GettersGetStatItemsCountFilesEntryName = string;
+export type Getters_GetStatItems_CountFiles_EntryName = string;
 
 /**
  * Getters - Get Stat Items - Fetch Stat Items.
  *
  * @since 0.15.0
  */
-export type GettersGetStatItemsFetchStatItemsReturns = PagesStatItems;
+export type Getters_GetStatItems_FetchStatItems_Returns = PagesStatItems;
 
-export type GettersGetStatItemsFetchStatItemsNovaSourcePath = string;
+export type Getters_GetStatItems_FetchStatItems_NovaSourcePath = string;

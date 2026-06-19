@@ -314,8 +314,8 @@ export default [
       '@cbnventures/nova/no-rest-params': [
         'error',
         {
-          allow: ['ToolkitLogger.*'],
-          ignoreFiles: [],
+          allow: [],
+          ignoreFiles: ['*/toolkit/logger.ts'],
         },
       ],
 

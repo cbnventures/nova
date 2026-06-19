@@ -4,14 +4,18 @@ import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
   Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Context,
+  Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Fix_Fixer,
+  Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Fix_Returns,
   Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Left,
   Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Node,
   Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_ObjectText,
   Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_PropertyText,
   Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Returns,
   Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_ValueText,
+  Rules_Eslint_Patterns_NoBracketAssignment_Runner_Create_AssignmentExpression_Node,
+  Rules_Eslint_Patterns_NoBracketAssignment_Runner_Create_AssignmentExpression_Returns,
+  Rules_Eslint_Patterns_NoBracketAssignment_Runner_Create_Options,
   Rules_Eslint_Patterns_NoBracketAssignment_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Patterns_NoBracketAssignment_Runner_RuleOptions,
 } from '../../../types/rules/eslint/patterns/no-bracket-assignment.d.ts';
 
 /**
@@ -59,7 +63,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Patterns_NoBracketAssignment_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Patterns_NoBracketAssignment_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Patterns_NoBracketAssignment_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -67,7 +71,7 @@ export class Runner {
       }
 
       return {
-        AssignmentExpression(node) {
+        AssignmentExpression(node: Rules_Eslint_Patterns_NoBracketAssignment_Runner_Create_AssignmentExpression_Node): Rules_Eslint_Patterns_NoBracketAssignment_Runner_Create_AssignmentExpression_Returns {
           Runner.checkAssignment(context, node);
 
           return;
@@ -104,7 +108,7 @@ export class Runner {
         context.report({
           node,
           messageId: 'useReflectSet',
-          fix(fixer) {
+          fix(fixer: Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Fix_Fixer): Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Fix_Returns {
             return fixer.replaceText(node, `Reflect.set(${objectText}, ${propertyText}, ${valueText})`);
           },
         });

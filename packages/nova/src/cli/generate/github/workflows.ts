@@ -34,19 +34,32 @@ import type {
   Cli_Generate_Github_Workflows_Runner_BuildArtifactName_Returns,
   Cli_Generate_Github_Workflows_Runner_BuildArtifactName_TargetId,
   Cli_Generate_Github_Workflows_Runner_BuildArtifactName_TargetType,
-  Cli_Generate_Github_Workflows_Runner_BuildCommand_Flags,
+  Cli_Generate_Github_Workflows_Runner_BuildCommand_NpmFlags,
   Cli_Generate_Github_Workflows_Runner_BuildCommand_Returns,
   Cli_Generate_Github_Workflows_Runner_BuildCommand_ScriptName,
+  Cli_Generate_Github_Workflows_Runner_BuildCommand_TurboFlags,
   Cli_Generate_Github_Workflows_Runner_BuildCommand_UseTurbo,
   Cli_Generate_Github_Workflows_Runner_BuildCommand_WorkspaceNames,
   Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_Entry,
+  Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_EntryTargetsMetadata,
   Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_Lines,
   Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_MetadataEntry,
   Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_OutputFileName,
   Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_Returns,
+  Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_SecretResolvedName,
+  Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_SetupTargetMetadata,
+  Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_SetupTargetType,
+  Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetSecretResolvedName,
+  Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetVariableMeta,
+  Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetVariableName,
+  Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetVarResolvedName,
+  Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_VariableMeta,
+  Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_VariableName,
+  Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_VarResolvedName,
   Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_JobsConditionLine,
   Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_Returns,
   Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerDataList,
+  Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_AllParts,
   Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_DispatchPart,
   Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_NonDispatchParts,
   Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_PublishInner,
@@ -54,6 +67,7 @@ import type {
   Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_Returns,
   Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerDataList,
   Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextExpressions,
+  Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextExpressionsWithFallback,
   Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextInner,
   Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextMatch,
   Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextParts,
@@ -80,14 +94,13 @@ import type {
   Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_ArtifactName,
   Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Metadata,
   Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_PathLines,
-  Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_ResolvedPath,
   Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Returns,
   Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_StepLines,
   Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Steps,
   Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_StrippedDir,
   Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetId,
-  Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadata,
   Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Targets,
+  Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetsMetadata,
   Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_Entry,
   Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_Path,
   Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_Returns,
@@ -99,40 +112,44 @@ import type {
   Cli_Generate_Github_Workflows_Runner_Run_BuildCommand,
   Cli_Generate_Github_Workflows_Runner_Run_CheckCommand,
   Cli_Generate_Github_Workflows_Runner_Run_Config,
+  Cli_Generate_Github_Workflows_Runner_Run_ConfigWorkspaces,
   Cli_Generate_Github_Workflows_Runner_Run_Content,
   Cli_Generate_Github_Workflows_Runner_Run_CurrentDirectory,
+  Cli_Generate_Github_Workflows_Runner_Run_CurrentEntryTarget,
   Cli_Generate_Github_Workflows_Runner_Run_DependsOnBaseContent,
   Cli_Generate_Github_Workflows_Runner_Run_DependsOnBasePath,
   Cli_Generate_Github_Workflows_Runner_Run_DependsOnEntries,
-  Cli_Generate_Github_Workflows_Runner_Run_DependsOnEntry,
   Cli_Generate_Github_Workflows_Runner_Run_DependsOnNameMatch,
   Cli_Generate_Github_Workflows_Runner_Run_DependsOnResolvedNames,
   Cli_Generate_Github_Workflows_Runner_Run_DependsOnTarget,
-  Cli_Generate_Github_Workflows_Runner_Run_DependsOnTargetKey,
-  Cli_Generate_Github_Workflows_Runner_Run_DependsOnTargetSuffix,
   Cli_Generate_Github_Workflows_Runner_Run_DependsOnWorkflowName,
   Cli_Generate_Github_Workflows_Runner_Run_DependsOnYamlArray,
   Cli_Generate_Github_Workflows_Runner_Run_DisplayPath,
   Cli_Generate_Github_Workflows_Runner_Run_DuplicateKey,
   Cli_Generate_Github_Workflows_Runner_Run_DuplicateSet,
+  Cli_Generate_Github_Workflows_Runner_Run_Entry,
+  Cli_Generate_Github_Workflows_Runner_Run_Entry2,
   Cli_Generate_Github_Workflows_Runner_Run_EntryLabel,
-  Cli_Generate_Github_Workflows_Runner_Run_EntryScope,
   Cli_Generate_Github_Workflows_Runner_Run_EntryScopes,
   Cli_Generate_Github_Workflows_Runner_Run_EntrySetupLines,
-  Cli_Generate_Github_Workflows_Runner_Run_EntryTarget,
   Cli_Generate_Github_Workflows_Runner_Run_EntryTargetForUniqueness,
   Cli_Generate_Github_Workflows_Runner_Run_EntryTargets,
   Cli_Generate_Github_Workflows_Runner_Run_EntryTargetsForValidation,
+  Cli_Generate_Github_Workflows_Runner_Run_EntryWorkflowKey,
+  Cli_Generate_Github_Workflows_Runner_Run_ExistingDirent,
   Cli_Generate_Github_Workflows_Runner_Run_ExistingEntries,
-  Cli_Generate_Github_Workflows_Runner_Run_ExistingEntry,
+  Cli_Generate_Github_Workflows_Runner_Run_FragmentTargetType,
+  Cli_Generate_Github_Workflows_Runner_Run_FragmentTargetWorkingDir,
   Cli_Generate_Github_Workflows_Runner_Run_GeneratedSet,
+  Cli_Generate_Github_Workflows_Runner_Run_GlobalUniquenessMap,
   Cli_Generate_Github_Workflows_Runner_Run_HasDependsOnError,
   Cli_Generate_Github_Workflows_Runner_Run_HasDuplicateError,
   Cli_Generate_Github_Workflows_Runner_Run_HasPublishValidationError,
+  Cli_Generate_Github_Workflows_Runner_Run_HasTargetFragmentError,
   Cli_Generate_Github_Workflows_Runner_Run_HasTriggerError,
   Cli_Generate_Github_Workflows_Runner_Run_HasTriggers,
   Cli_Generate_Github_Workflows_Runner_Run_IndentedFragment,
-  Cli_Generate_Github_Workflows_Runner_Run_IndentedFragmentLines,
+  Cli_Generate_Github_Workflows_Runner_Run_IndentedLines,
   Cli_Generate_Github_Workflows_Runner_Run_IndentedTriggerLines,
   Cli_Generate_Github_Workflows_Runner_Run_IndentedTriggerYaml,
   Cli_Generate_Github_Workflows_Runner_Run_IsAtProjectRoot,
@@ -140,8 +157,13 @@ import type {
   Cli_Generate_Github_Workflows_Runner_Run_IsDryRun,
   Cli_Generate_Github_Workflows_Runner_Run_IsOrphan,
   Cli_Generate_Github_Workflows_Runner_Run_IsReplaceFile,
+  Cli_Generate_Github_Workflows_Runner_Run_IsSameWorkflow,
   Cli_Generate_Github_Workflows_Runner_Run_JobsConditionLine,
-  Cli_Generate_Github_Workflows_Runner_Run_LiteralValue,
+  Cli_Generate_Github_Workflows_Runner_Run_LiteralEntry,
+  Cli_Generate_Github_Workflows_Runner_Run_LiteralMetadataEntry,
+  Cli_Generate_Github_Workflows_Runner_Run_LiteralSuffix,
+  Cli_Generate_Github_Workflows_Runner_Run_LiteralTemplateName,
+  Cli_Generate_Github_Workflows_Runner_Run_LiteralWorkflowKey,
   Cli_Generate_Github_Workflows_Runner_Run_MergedJobsCondition,
   Cli_Generate_Github_Workflows_Runner_Run_MergedPublishCondition,
   Cli_Generate_Github_Workflows_Runner_Run_MergedRunName,
@@ -158,9 +180,13 @@ import type {
   Cli_Generate_Github_Workflows_Runner_Run_ReplaceFileNotice,
   Cli_Generate_Github_Workflows_Runner_Run_ResolvedName,
   Cli_Generate_Github_Workflows_Runner_Run_ResolvedTargetFragments,
+  Cli_Generate_Github_Workflows_Runner_Run_ResolvedTriggerBlock,
+  Cli_Generate_Github_Workflows_Runner_Run_ResolvedValue,
   Cli_Generate_Github_Workflows_Runner_Run_ResolvedWorkspaceName,
   Cli_Generate_Github_Workflows_Runner_Run_ResolvedWorkspaceNames,
   Cli_Generate_Github_Workflows_Runner_Run_Returns,
+  Cli_Generate_Github_Workflows_Runner_Run_ScopePath,
+  Cli_Generate_Github_Workflows_Runner_Run_SettingValue,
   Cli_Generate_Github_Workflows_Runner_Run_SetupLines,
   Cli_Generate_Github_Workflows_Runner_Run_SetupMessage,
   Cli_Generate_Github_Workflows_Runner_Run_SkippedWorkflowKeys,
@@ -173,17 +199,17 @@ import type {
   Cli_Generate_Github_Workflows_Runner_Run_TargetFragmentResolvedContent,
   Cli_Generate_Github_Workflows_Runner_Run_TargetId,
   Cli_Generate_Github_Workflows_Runner_Run_TargetJobsConditionLine,
+  Cli_Generate_Github_Workflows_Runner_Run_TargetKey,
   Cli_Generate_Github_Workflows_Runner_Run_TargetMetadata,
   Cli_Generate_Github_Workflows_Runner_Run_TargetMetadataForUniqueness,
   Cli_Generate_Github_Workflows_Runner_Run_TargetMetadataForValidation,
   Cli_Generate_Github_Workflows_Runner_Run_TargetNeeds,
-  Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsJobId,
   Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsJobIds,
   Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsValue,
-  Cli_Generate_Github_Workflows_Runner_Run_TargetNeedWorkingDir,
   Cli_Generate_Github_Workflows_Runner_Run_TargetPath,
   Cli_Generate_Github_Workflows_Runner_Run_TargetsMetadata,
   Cli_Generate_Github_Workflows_Runner_Run_TargetsMetadataForValidation,
+  Cli_Generate_Github_Workflows_Runner_Run_TargetSuffix,
   Cli_Generate_Github_Workflows_Runner_Run_TargetTupleKey,
   Cli_Generate_Github_Workflows_Runner_Run_TargetTupleSet,
   Cli_Generate_Github_Workflows_Runner_Run_TargetType,
@@ -193,7 +219,11 @@ import type {
   Cli_Generate_Github_Workflows_Runner_Run_TemplateDirectory,
   Cli_Generate_Github_Workflows_Runner_Run_TemplateDirExists,
   Cli_Generate_Github_Workflows_Runner_Run_TemplateDirPath,
+  Cli_Generate_Github_Workflows_Runner_Run_TemplateLiteralValue,
   Cli_Generate_Github_Workflows_Runner_Run_TemplateName,
+  Cli_Generate_Github_Workflows_Runner_Run_TemplateVariableMeta,
+  Cli_Generate_Github_Workflows_Runner_Run_TemplateVariableName,
+  Cli_Generate_Github_Workflows_Runner_Run_TriggerBlockString,
   Cli_Generate_Github_Workflows_Runner_Run_TriggerData,
   Cli_Generate_Github_Workflows_Runner_Run_TriggerDataList,
   Cli_Generate_Github_Workflows_Runner_Run_TriggerFileExists,
@@ -208,29 +238,28 @@ import type {
   Cli_Generate_Github_Workflows_Runner_Run_TriggerRawContent,
   Cli_Generate_Github_Workflows_Runner_Run_Triggers,
   Cli_Generate_Github_Workflows_Runner_Run_TriggerYaml,
+  Cli_Generate_Github_Workflows_Runner_Run_UniquenessEntry,
   Cli_Generate_Github_Workflows_Runner_Run_UniquenessEntryTargets,
   Cli_Generate_Github_Workflows_Runner_Run_UniquenessErrors,
-  Cli_Generate_Github_Workflows_Runner_Run_UniquenessIsSameWorkflow,
   Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyComposite,
   Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyDetailEntries,
   Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyDetailEntry,
   Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyExisting,
   Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyForTarget,
-  Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyMap,
   Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyMapValue,
-  Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyResolvedValue,
   Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyResolvedValues,
-  Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeySettingValue,
-  Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyVariableMeta,
-  Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyVariableName,
-  Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyWorkflowKey,
   Cli_Generate_Github_Workflows_Runner_Run_UniquenessMetadataEntry,
+  Cli_Generate_Github_Workflows_Runner_Run_UniquenessSuffix,
   Cli_Generate_Github_Workflows_Runner_Run_UniquenessTargetsMetadata,
+  Cli_Generate_Github_Workflows_Runner_Run_UniquenessTemplateName,
+  Cli_Generate_Github_Workflows_Runner_Run_UniquenessWorkflowKey,
   Cli_Generate_Github_Workflows_Runner_Run_UploadArtifactStep,
   Cli_Generate_Github_Workflows_Runner_Run_UseTurbo,
+  Cli_Generate_Github_Workflows_Runner_Run_ValidationLiteralValue,
+  Cli_Generate_Github_Workflows_Runner_Run_ValidationVariableMeta,
+  Cli_Generate_Github_Workflows_Runner_Run_ValidationVariableName,
   Cli_Generate_Github_Workflows_Runner_Run_VariableMeta,
   Cli_Generate_Github_Workflows_Runner_Run_VariableName,
-  Cli_Generate_Github_Workflows_Runner_Run_WorkflowEntry,
   Cli_Generate_Github_Workflows_Runner_Run_Workflows,
   Cli_Generate_Github_Workflows_Runner_Run_WorkflowsDirectory,
   Cli_Generate_Github_Workflows_Runner_Run_WorkflowSuffix,
@@ -238,16 +267,19 @@ import type {
   Cli_Generate_Github_Workflows_Runner_SlugifyWorkingDir_Returns,
   Cli_Generate_Github_Workflows_Runner_SlugifyWorkingDir_Trimmed,
   Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Content,
+  Cli_Generate_Github_Workflows_Runner_SubstituteVariables_LiteralReplacement,
   Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Regex,
-  Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Replacement,
-  Cli_Generate_Github_Workflows_Runner_SubstituteVariables_ResolvedName,
   Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Result,
   Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Returns,
+  Cli_Generate_Github_Workflows_Runner_SubstituteVariables_SecretReplacement,
+  Cli_Generate_Github_Workflows_Runner_SubstituteVariables_SecretResolvedName,
   Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Settings,
   Cli_Generate_Github_Workflows_Runner_SubstituteVariables_SettingValue,
   Cli_Generate_Github_Workflows_Runner_SubstituteVariables_VariableMeta,
   Cli_Generate_Github_Workflows_Runner_SubstituteVariables_VariableName,
   Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Variables,
+  Cli_Generate_Github_Workflows_Runner_SubstituteVariables_VarReplacement,
+  Cli_Generate_Github_Workflows_Runner_SubstituteVariables_VarResolvedName,
 } from '../../../types/cli/generate/github/workflows.d.ts';
 
 /**
@@ -366,11 +398,11 @@ export class Runner {
     // (which would otherwise fall back to the variable NAME as the resolved
     // value when a literal setting is absent).
     for (const literalWorkflowEntry of workflows) {
-      const literalEntry: Cli_Generate_Github_Workflows_Runner_Run_WorkflowEntry = literalWorkflowEntry;
-      const literalTemplateName: Cli_Generate_Github_Workflows_Runner_Run_TemplateName = literalEntry['template'];
-      const literalSuffix: Cli_Generate_Github_Workflows_Runner_Run_WorkflowSuffix = literalEntry['suffix'];
-      const literalWorkflowKey: Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyWorkflowKey = (literalSuffix !== undefined) ? `${literalTemplateName}-${literalSuffix}` : literalTemplateName;
-      const literalMetadataEntry: Cli_Generate_Github_Workflows_Runner_Run_MetadataEntry = libWorkflowTemplatesMetadata.find(
+      const literalEntry: Cli_Generate_Github_Workflows_Runner_Run_LiteralEntry = literalWorkflowEntry;
+      const literalTemplateName: Cli_Generate_Github_Workflows_Runner_Run_LiteralTemplateName = literalEntry['template'];
+      const literalSuffix: Cli_Generate_Github_Workflows_Runner_Run_LiteralSuffix = literalEntry['suffix'];
+      const literalWorkflowKey: Cli_Generate_Github_Workflows_Runner_Run_LiteralWorkflowKey = (literalSuffix !== undefined) ? `${literalTemplateName}-${literalSuffix}` : literalTemplateName;
+      const literalMetadataEntry: Cli_Generate_Github_Workflows_Runner_Run_LiteralMetadataEntry = libWorkflowTemplatesMetadata.find(
         (m) => m['name'] === literalTemplateName,
       );
 
@@ -384,14 +416,14 @@ export class Runner {
       const missingLiterals: Cli_Generate_Github_Workflows_Runner_Run_MissingLiterals = [];
 
       for (const variableEntry of Object.entries(literalMetadataEntry['variables'])) {
-        const variableName: Cli_Generate_Github_Workflows_Runner_Run_VariableName = variableEntry[0];
-        const variableMeta: Cli_Generate_Github_Workflows_Runner_Run_VariableMeta = variableEntry[1];
+        const templateVariableName: Cli_Generate_Github_Workflows_Runner_Run_TemplateVariableName = variableEntry[0];
+        const templateVariableMeta: Cli_Generate_Github_Workflows_Runner_Run_TemplateVariableMeta = variableEntry[1];
 
-        if (variableMeta['format'] === 'literal') {
-          const literalValue: Cli_Generate_Github_Workflows_Runner_Run_LiteralValue = (literalEntry['settings'] !== undefined) ? literalEntry['settings'][variableName] : undefined;
+        if (templateVariableMeta['format'] === 'literal') {
+          const templateLiteralValue: Cli_Generate_Github_Workflows_Runner_Run_TemplateLiteralValue = (literalEntry['settings'] !== undefined) ? literalEntry['settings'][templateVariableName] : undefined;
 
-          if (typeof literalValue !== 'string' || literalValue.trim() === '') {
-            missingLiterals.push(variableName);
+          if (typeof templateLiteralValue !== 'string' || templateLiteralValue.trim() === '') {
+            missingLiterals.push(templateVariableName);
           }
         }
       }
@@ -409,15 +441,15 @@ export class Runner {
         }
 
         for (const variableEntry of Object.entries(targetMetadataForValidation['variables'])) {
-          const variableName: Cli_Generate_Github_Workflows_Runner_Run_VariableName = variableEntry[0];
-          const variableMeta: Cli_Generate_Github_Workflows_Runner_Run_VariableMeta = variableEntry[1];
+          const validationVariableName: Cli_Generate_Github_Workflows_Runner_Run_ValidationVariableName = variableEntry[0];
+          const validationVariableMeta: Cli_Generate_Github_Workflows_Runner_Run_ValidationVariableMeta = variableEntry[1];
 
-          if (variableMeta['format'] === 'literal') {
-            const literalValue: Cli_Generate_Github_Workflows_Runner_Run_LiteralValue = (literalEntry['settings'] !== undefined) ? literalEntry['settings'][variableName] : undefined;
+          if (validationVariableMeta['format'] === 'literal') {
+            const validationLiteralValue: Cli_Generate_Github_Workflows_Runner_Run_ValidationLiteralValue = (literalEntry['settings'] !== undefined) ? literalEntry['settings'][validationVariableName] : undefined;
 
-            if (typeof literalValue !== 'string' || literalValue.trim() === '') {
-              if (missingLiterals.includes(variableName) === false) {
-                missingLiterals.push(variableName);
+            if (typeof validationLiteralValue !== 'string' || validationLiteralValue.trim() === '') {
+              if (missingLiterals.includes(validationVariableName) === false) {
+                missingLiterals.push(validationVariableName);
               }
             }
           }
@@ -441,14 +473,14 @@ export class Runner {
     // silently racing at deploy time. Workflows already in skippedWorkflowKeys
     // (from Phase 1) are skipped here so unresolvable literals don't trigger
     // false collisions.
-    const globalUniquenessMap: Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyMap = new Map();
+    const globalUniquenessMap: Cli_Generate_Github_Workflows_Runner_Run_GlobalUniquenessMap = new Map();
     const uniquenessErrors: Cli_Generate_Github_Workflows_Runner_Run_UniquenessErrors = [];
 
     for (const uniquenessWorkflowEntry of workflows) {
-      const uniquenessEntry: Cli_Generate_Github_Workflows_Runner_Run_WorkflowEntry = uniquenessWorkflowEntry;
-      const uniquenessTemplateName: Cli_Generate_Github_Workflows_Runner_Run_TemplateName = uniquenessEntry['template'];
-      const uniquenessSuffix: Cli_Generate_Github_Workflows_Runner_Run_WorkflowSuffix = uniquenessEntry['suffix'];
-      const uniquenessWorkflowKey: Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyWorkflowKey = (uniquenessSuffix !== undefined) ? `${uniquenessTemplateName}-${uniquenessSuffix}` : uniquenessTemplateName;
+      const uniquenessEntry: Cli_Generate_Github_Workflows_Runner_Run_UniquenessEntry = uniquenessWorkflowEntry;
+      const uniquenessTemplateName: Cli_Generate_Github_Workflows_Runner_Run_UniquenessTemplateName = uniquenessEntry['template'];
+      const uniquenessSuffix: Cli_Generate_Github_Workflows_Runner_Run_UniquenessSuffix = uniquenessEntry['suffix'];
+      const uniquenessWorkflowKey: Cli_Generate_Github_Workflows_Runner_Run_UniquenessWorkflowKey = (uniquenessSuffix !== undefined) ? `${uniquenessTemplateName}-${uniquenessSuffix}` : uniquenessTemplateName;
 
       if (skippedWorkflowKeys.has(uniquenessWorkflowKey) === true) {
         continue;
@@ -485,10 +517,10 @@ export class Runner {
         const uniquenessKeyDetailEntries: Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyDetailEntries = [];
 
         for (const uniquenessKeyVariableName of uniquenessKeyForTarget) {
-          const variableName: Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyVariableName = uniquenessKeyVariableName;
-          const variableMeta: Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyVariableMeta = targetMetadataForUniqueness['variables'][variableName];
-          const settingValue: Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeySettingValue = (uniquenessEntry['settings'] !== undefined) ? uniquenessEntry['settings'][variableName] : undefined;
-          const resolvedValue: Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyResolvedValue = settingValue
+          const variableName: Cli_Generate_Github_Workflows_Runner_Run_VariableName = uniquenessKeyVariableName;
+          const variableMeta: Cli_Generate_Github_Workflows_Runner_Run_VariableMeta = targetMetadataForUniqueness['variables'][variableName];
+          const settingValue: Cli_Generate_Github_Workflows_Runner_Run_SettingValue = (uniquenessEntry['settings'] !== undefined) ? uniquenessEntry['settings'][variableName] : undefined;
+          const resolvedValue: Cli_Generate_Github_Workflows_Runner_Run_ResolvedValue = settingValue
             ?? (variableMeta !== undefined ? variableMeta['default'] : undefined)
             ?? variableName;
           const uniquenessKeyDetailEntry: Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyDetailEntry = `${variableName}=${resolvedValue}`;
@@ -511,7 +543,7 @@ export class Runner {
           skippedWorkflowKeys.add(uniquenessKeyExisting['workflowKey']);
           skippedWorkflowKeys.add(uniquenessWorkflowKey);
 
-          const isSameWorkflow: Cli_Generate_Github_Workflows_Runner_Run_UniquenessIsSameWorkflow = uniquenessKeyExisting['workflowKey'] === uniquenessWorkflowKey;
+          const isSameWorkflow: Cli_Generate_Github_Workflows_Runner_Run_IsSameWorkflow = uniquenessKeyExisting['workflowKey'] === uniquenessWorkflowKey;
 
           if (uniquenessKeyDetailEntries.length === 0) {
             if (isSameWorkflow === true) {
@@ -552,10 +584,10 @@ export class Runner {
     const setupLines: Cli_Generate_Github_Workflows_Runner_Run_SetupLines = [];
 
     for (const workflowEntry of workflows) {
-      const entry: Cli_Generate_Github_Workflows_Runner_Run_WorkflowEntry = workflowEntry;
+      const entry: Cli_Generate_Github_Workflows_Runner_Run_Entry = workflowEntry;
       const templateName: Cli_Generate_Github_Workflows_Runner_Run_TemplateName = entry['template'];
       const workflowSuffix: Cli_Generate_Github_Workflows_Runner_Run_WorkflowSuffix = entry['suffix'];
-      const entryWorkflowKey: Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyWorkflowKey = (workflowSuffix !== undefined) ? `${templateName}-${workflowSuffix}` : templateName;
+      const entryWorkflowKey: Cli_Generate_Github_Workflows_Runner_Run_EntryWorkflowKey = (workflowSuffix !== undefined) ? `${templateName}-${workflowSuffix}` : templateName;
 
       // Skip workflows flagged by the cross-workflow uniqueness pre-pass.
       // The error was already logged when the collision was detected; this
@@ -716,11 +748,11 @@ export class Runner {
           let hasDependsOnError: Cli_Generate_Github_Workflows_Runner_Run_HasDependsOnError = false;
 
           for (const dependsOnEntry of dependsOnEntries) {
-            const entry2: Cli_Generate_Github_Workflows_Runner_Run_DependsOnEntry = dependsOnEntry;
+            const entry2: Cli_Generate_Github_Workflows_Runner_Run_Entry2 = dependsOnEntry;
 
             // Find the target workflow by matching template-suffix composite.
             const dependsOnTarget: Cli_Generate_Github_Workflows_Runner_Run_DependsOnTarget = workflows.find((w) => {
-              const targetKey: Cli_Generate_Github_Workflows_Runner_Run_DependsOnTargetKey = (w['suffix'] !== undefined) ? `${w['template']}-${w['suffix']}` : w['template'];
+              const targetKey: Cli_Generate_Github_Workflows_Runner_Run_TargetKey = (w['suffix'] !== undefined) ? `${w['template']}-${w['suffix']}` : w['template'];
 
               return targetKey === entry2;
             });
@@ -748,7 +780,7 @@ export class Runner {
                 throw new Error('No name field found');
               }
 
-              const targetSuffix: Cli_Generate_Github_Workflows_Runner_Run_DependsOnTargetSuffix = dependsOnTarget['suffix'];
+              const targetSuffix: Cli_Generate_Github_Workflows_Runner_Run_TargetSuffix = dependsOnTarget['suffix'];
               dependsOnWorkflowName = dependsOnNameMatch[1].replaceAll('[__WORKFLOW_ID__]', (targetSuffix !== undefined) ? ` (${targetSuffix})` : '');
             } catch {
               Logger.customize({
@@ -776,8 +808,8 @@ export class Runner {
           // Replace [__DEPENDS_ON__] in trigger blocks.
           for (const triggerData of triggerDataList) {
             if (triggerData['dependsOn'] === true) {
-              const triggerBlockString: Cli_Generate_Github_Workflows_Runner_Run_TriggerYaml = JSON.stringify(triggerData['triggerBlock']);
-              const resolvedTriggerBlock: Cli_Generate_Github_Workflows_Runner_Run_TriggerParsed = JSON.parse(triggerBlockString.replaceAll('"[__DEPENDS_ON__]"', dependsOnYamlArray)) as Cli_Generate_Github_Workflows_Runner_Run_TriggerParsed;
+              const triggerBlockString: Cli_Generate_Github_Workflows_Runner_Run_TriggerBlockString = JSON.stringify(triggerData['triggerBlock']);
+              const resolvedTriggerBlock: Cli_Generate_Github_Workflows_Runner_Run_ResolvedTriggerBlock = JSON.parse(triggerBlockString.replaceAll('"[__DEPENDS_ON__]"', dependsOnYamlArray)) as Cli_Generate_Github_Workflows_Runner_Run_TriggerParsed;
 
               Reflect.set(triggerData, 'triggerBlock', resolvedTriggerBlock);
             }
@@ -852,7 +884,7 @@ export class Runner {
           continue;
         }
 
-        const configWorkspaces: Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_Workspaces = (config['workspaces'] ?? {}) as Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_Workspaces;
+        const configWorkspaces: Cli_Generate_Github_Workflows_Runner_Run_ConfigWorkspaces = (config['workspaces'] ?? {}) as Cli_Generate_Github_Workflows_Runner_Run_ConfigWorkspaces;
         const targetsMetadata: Cli_Generate_Github_Workflows_Runner_Run_TargetsMetadata = metadataEntry['targets'] ?? {};
 
         // Validate targets when the template supports them.
@@ -911,8 +943,8 @@ export class Runner {
 
         if (supportsScopes === true && entryScopes.length > 0) {
           for (const entryScope of entryScopes) {
-            const scopePath: Cli_Generate_Github_Workflows_Runner_Run_EntryScope = entryScope;
-            const resolvedWorkspaceName: Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_Returns = Runner.resolveWorkspaceName(configWorkspaces, scopePath);
+            const scopePath: Cli_Generate_Github_Workflows_Runner_Run_ScopePath = entryScope;
+            const resolvedWorkspaceName: Cli_Generate_Github_Workflows_Runner_Run_ResolvedWorkspaceName = Runner.resolveWorkspaceName(configWorkspaces, scopePath);
 
             if (resolvedWorkspaceName === undefined) {
               Logger.customize({
@@ -925,7 +957,7 @@ export class Runner {
               break;
             }
 
-            const resolvedName: Cli_Generate_Github_Workflows_Runner_Run_ResolvedWorkspaceName = resolvedWorkspaceName;
+            const resolvedName: Cli_Generate_Github_Workflows_Runner_Run_ResolvedName = resolvedWorkspaceName;
 
             resolvedWorkspaceNames.push(resolvedName);
           }
@@ -952,20 +984,20 @@ export class Runner {
 
           // Compose target fragments into merged jobs map.
           const resolvedTargetFragments: Cli_Generate_Github_Workflows_Runner_Run_ResolvedTargetFragments = [];
-          let hasTargetFragmentError: Cli_Generate_Github_Workflows_Runner_Run_HasPublishValidationError = false;
+          let hasTargetFragmentError: Cli_Generate_Github_Workflows_Runner_Run_HasTargetFragmentError = false;
 
           for (const entryTarget of entryTargets) {
-            const currentEntryTarget: Cli_Generate_Github_Workflows_Runner_Run_EntryTarget = entryTarget;
-            const targetType: Cli_Generate_Github_Workflows_Runner_Run_TargetType = currentEntryTarget['type'];
-            const targetWorkingDir: Cli_Generate_Github_Workflows_Runner_Run_TargetWorkingDir = currentEntryTarget['workingDir'];
-            const targetFragmentPath: Cli_Generate_Github_Workflows_Runner_Run_TargetFragmentPath = join(templateDirPath, 'targets', `${targetType}.yml`);
+            const currentEntryTarget: Cli_Generate_Github_Workflows_Runner_Run_CurrentEntryTarget = entryTarget;
+            const fragmentTargetType: Cli_Generate_Github_Workflows_Runner_Run_FragmentTargetType = currentEntryTarget['type'];
+            const fragmentTargetWorkingDir: Cli_Generate_Github_Workflows_Runner_Run_FragmentTargetWorkingDir = currentEntryTarget['workingDir'];
+            const targetFragmentPath: Cli_Generate_Github_Workflows_Runner_Run_TargetFragmentPath = join(templateDirPath, 'targets', `${fragmentTargetType}.yml`);
             const targetFragmentExists: Cli_Generate_Github_Workflows_Runner_Run_TargetFragmentExists = await pathExists(targetFragmentPath);
 
             if (targetFragmentExists !== true) {
               Logger.customize({
                 name: 'Runner.run',
                 purpose: 'validate',
-              }).error(`Target fragment ${chalk.cyan(`"${targetType}.yml"`)} not found for template ${chalk.cyan(`"${templateName}"`)}. Skipping.`);
+              }).error(`Target fragment ${chalk.cyan(`"${fragmentTargetType}.yml"`)} not found for template ${chalk.cyan(`"${templateName}"`)}. Skipping.`);
 
               hasTargetFragmentError = true;
 
@@ -980,7 +1012,7 @@ export class Runner {
               Logger.customize({
                 name: 'Runner.run',
                 purpose: 'read',
-              }).error(`Failed to read target fragment ${chalk.cyan(`"${targetType}.yml"`)}. Skipping.`);
+              }).error(`Failed to read target fragment ${chalk.cyan(`"${fragmentTargetType}.yml"`)}. Skipping.`);
 
               hasTargetFragmentError = true;
 
@@ -988,13 +1020,13 @@ export class Runner {
             }
 
             // Substitute target-specific placeholders before YAML parsing.
-            const targetId: Cli_Generate_Github_Workflows_Runner_Run_TargetId = Runner.slugifyWorkingDir(targetWorkingDir);
+            const targetId: Cli_Generate_Github_Workflows_Runner_Run_TargetId = Runner.slugifyWorkingDir(fragmentTargetWorkingDir);
             let targetFragmentResolvedContent: Cli_Generate_Github_Workflows_Runner_Run_TargetFragmentResolvedContent = targetFragmentRawContent;
 
             targetFragmentResolvedContent = targetFragmentResolvedContent.replaceAll('[__TARGET_ID__]', targetId);
-            targetFragmentResolvedContent = targetFragmentResolvedContent.replaceAll('[__WORKING_DIR__]', targetWorkingDir);
+            targetFragmentResolvedContent = targetFragmentResolvedContent.replaceAll('[__WORKING_DIR__]', fragmentTargetWorkingDir);
 
-            const artifactName: Cli_Generate_Github_Workflows_Runner_Run_ArtifactName = Runner.buildArtifactName(targetType, targetId);
+            const artifactName: Cli_Generate_Github_Workflows_Runner_Run_ArtifactName = Runner.buildArtifactName(fragmentTargetType, targetId);
 
             targetFragmentResolvedContent = targetFragmentResolvedContent.replaceAll('[__ARTIFACT_NAME__]', artifactName);
 
@@ -1003,9 +1035,9 @@ export class Runner {
             // workflow serializes nova -> preset, etc.
             const targetNeeds: Cli_Generate_Github_Workflows_Runner_Run_TargetNeeds = currentEntryTarget['needs'] ?? [];
             const targetNeedsJobIds: Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsJobIds = targetNeeds.map(
-              (targetNeedWorkingDir: Cli_Generate_Github_Workflows_Runner_Run_TargetNeedWorkingDir) => `publish-${targetType}-${Runner.slugifyWorkingDir(targetNeedWorkingDir)}`,
+              (targetNeedWorkingDir) => `publish-${fragmentTargetType}-${Runner.slugifyWorkingDir(targetNeedWorkingDir)}`,
             );
-            const targetNeedsValue: Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsValue = (targetNeedsJobIds.length === 0) ? '"build"' : `["build", ${targetNeedsJobIds.map((targetNeedsJobId: Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsJobId) => `"${targetNeedsJobId}"`).join(', ')}]`;
+            const targetNeedsValue: Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsValue = (targetNeedsJobIds.length === 0) ? '"build"' : `["build", ${targetNeedsJobIds.map((targetNeedsJobId) => `"${targetNeedsJobId}"`).join(', ')}]`;
 
             targetFragmentResolvedContent = targetFragmentResolvedContent.replace('[__NEEDS__]', targetNeedsValue);
 
@@ -1015,7 +1047,7 @@ export class Runner {
             targetFragmentResolvedContent = targetFragmentResolvedContent.replace('[__JOBS_CONDITION__]\n', targetJobsConditionLine);
 
             // Resolve target-specific variables by merging template-level + target-level.
-            const targetMetadata: Cli_Generate_Github_Workflows_Runner_Run_TargetMetadata = targetsMetadata[targetType];
+            const targetMetadata: Cli_Generate_Github_Workflows_Runner_Run_TargetMetadata = targetsMetadata[fragmentTargetType];
             const mergedVariables: Cli_Generate_Github_Workflows_Runner_Run_MergedVariables = {
               ...metadataEntry['variables'],
               ...(targetMetadata !== undefined) ? targetMetadata['variables'] : {},
@@ -1034,7 +1066,7 @@ export class Runner {
               Logger.customize({
                 name: 'Runner.run',
                 purpose: 'validate',
-              }).error(`Target fragment ${chalk.cyan(`"${targetType}.yml"`)} produced invalid YAML. Skipping.`);
+              }).error(`Target fragment ${chalk.cyan(`"${fragmentTargetType}.yml"`)} produced invalid YAML. Skipping.`);
 
               hasTargetFragmentError = true;
 
@@ -1042,7 +1074,7 @@ export class Runner {
             }
 
             // Indent every line by 2 spaces so the top-level job key sits under `jobs:`.
-            const indentedLines: Cli_Generate_Github_Workflows_Runner_Run_IndentedFragmentLines = targetFragmentResolvedContent.split('\n').map(
+            const indentedLines: Cli_Generate_Github_Workflows_Runner_Run_IndentedLines = targetFragmentResolvedContent.split('\n').map(
               (line) => (line === '') ? '' : `  ${line}`,
             );
             const indentedFragment: Cli_Generate_Github_Workflows_Runner_Run_IndentedFragment = indentedLines.join('\n');
@@ -1140,22 +1172,22 @@ export class Runner {
       }
 
       for (const existingEntry of existingEntries) {
-        const entry: Cli_Generate_Github_Workflows_Runner_Run_ExistingEntry = existingEntry;
+        const existingDirent: Cli_Generate_Github_Workflows_Runner_Run_ExistingDirent = existingEntry;
 
-        if (entry.isFile() !== true) {
+        if (existingDirent.isFile() !== true) {
           continue;
         }
 
-        const isOrphan: Cli_Generate_Github_Workflows_Runner_Run_IsOrphan = entry.name.startsWith('nova-') === true
-          && entry.name.endsWith('.yml') === true
-          && generatedSet.has(entry.name) === false;
-        const isBackup: Cli_Generate_Github_Workflows_Runner_Run_IsBackup = entry.name.includes('.nova-backup.') === true;
+        const isOrphan: Cli_Generate_Github_Workflows_Runner_Run_IsOrphan = existingDirent.name.startsWith('nova-') === true
+          && existingDirent.name.endsWith('.yml') === true
+          && generatedSet.has(existingDirent.name) === false;
+        const isBackup: Cli_Generate_Github_Workflows_Runner_Run_IsBackup = existingDirent.name.includes('.nova-backup.') === true;
 
         if (isOrphan !== true || isBackup === true) {
           continue;
         }
 
-        const orphanPath: Cli_Generate_Github_Workflows_Runner_Run_OrphanPath = join(workflowsDirectory, entry.name);
+        const orphanPath: Cli_Generate_Github_Workflows_Runner_Run_OrphanPath = join(workflowsDirectory, existingDirent.name);
 
         if (isReplaceFile === true) {
           await fs.unlink(orphanPath);
@@ -1163,14 +1195,14 @@ export class Runner {
           Logger.customize({
             name: 'Runner.run',
             purpose: 'cleanup',
-          }).info(`Deleted orphan ${chalk.cyan(`"${entry.name}"`)}.`);
+          }).info(`Deleted orphan ${chalk.cyan(`"${existingDirent.name}"`)}.`);
         } else {
           await renameFileWithDate(orphanPath);
 
           Logger.customize({
             name: 'Runner.run',
             purpose: 'cleanup',
-          }).info(`Backed up orphan ${chalk.cyan(`"${entry.name}"`)}.`);
+          }).info(`Backed up orphan ${chalk.cyan(`"${existingDirent.name}"`)}.`);
         }
       }
     }
@@ -1245,7 +1277,7 @@ export class Runner {
     // events like schedule where the earlier expression evaluates to '').
     const hasEmptyFallback: Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_HasEmptyFallback = contextExpressions.includes('\'\'') || contextExpressions.includes('""');
     const shouldAppendFallback: Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ShouldAppendFallback = needsManuallyFallback === true && hasEmptyFallback === false;
-    const contextExpressionsWithFallback: Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextExpressions = (shouldAppendFallback === true) ? [
+    const contextExpressionsWithFallback: Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextExpressionsWithFallback = (shouldAppendFallback === true) ? [
       ...contextExpressions,
       '\'manually\'',
     ] : contextExpressions;
@@ -1296,7 +1328,7 @@ export class Runner {
     }
 
     // Combine: non-dispatch parts || dispatch part.
-    const allParts: Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_PublishParts = [...nonDispatchParts];
+    const allParts: Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_AllParts = [...nonDispatchParts];
 
     if (dispatchPart !== '') {
       allParts.push(dispatchPart);
@@ -1409,56 +1441,56 @@ export class Runner {
 
     // Template-level non-auto secrets and vars.
     for (const variableEntry of Object.entries(metadataEntry['variables'])) {
-      const variableName: Cli_Generate_Github_Workflows_Runner_Run_VariableName = variableEntry[0];
-      const variableMeta: Cli_Generate_Github_Workflows_Runner_Run_VariableMeta = variableEntry[1];
+      const variableName: Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_VariableName = variableEntry[0];
+      const variableMeta: Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_VariableMeta = variableEntry[1];
 
       if (variableMeta['auto'] === true) {
         continue;
       }
 
       if (variableMeta['format'] === 'secret') {
-        const resolvedName: Cli_Generate_Github_Workflows_Runner_Run_ResolvedName = (entry['settings'] !== undefined && entry['settings'][variableName] !== undefined) ? entry['settings'][variableName] : (variableMeta['default'] ?? variableName);
+        const secretResolvedName: Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_SecretResolvedName = (entry['settings'] !== undefined && entry['settings'][variableName] !== undefined) ? entry['settings'][variableName] : (variableMeta['default'] ?? variableName);
 
-        lines.push(` - ${chalk.cyan(outputFileName)}: Secret ${chalk.yellow(resolvedName)}`);
+        lines.push(` - ${chalk.cyan(outputFileName)}: Secret ${chalk.yellow(secretResolvedName)}`);
       }
 
       if (variableMeta['format'] === 'var') {
-        const resolvedName: Cli_Generate_Github_Workflows_Runner_Run_ResolvedName = (entry['settings'] !== undefined && entry['settings'][variableName] !== undefined) ? entry['settings'][variableName] : (variableMeta['default'] ?? variableName);
+        const varResolvedName: Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_VarResolvedName = (entry['settings'] !== undefined && entry['settings'][variableName] !== undefined) ? entry['settings'][variableName] : (variableMeta['default'] ?? variableName);
 
-        lines.push(` - ${chalk.cyan(outputFileName)}: Variable ${chalk.yellow(resolvedName)}`);
+        lines.push(` - ${chalk.cyan(outputFileName)}: Variable ${chalk.yellow(varResolvedName)}`);
       }
     }
 
     // Target-level non-auto secrets and vars (for templates with targets).
     if (entry['targets'] !== undefined && metadataEntry['targets'] !== undefined) {
-      const entryTargetsMetadata: Cli_Generate_Github_Workflows_Runner_Run_TargetsMetadata = metadataEntry['targets'];
+      const entryTargetsMetadata: Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_EntryTargetsMetadata = metadataEntry['targets'];
 
       for (const setupTarget of entry['targets']) {
-        const setupTargetType: Cli_Generate_Github_Workflows_Runner_Run_TargetType = setupTarget['type'];
-        const setupTargetMetadata: Cli_Generate_Github_Workflows_Runner_Run_TargetMetadata = entryTargetsMetadata[setupTargetType];
+        const setupTargetType: Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_SetupTargetType = setupTarget['type'];
+        const setupTargetMetadata: Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_SetupTargetMetadata = entryTargetsMetadata[setupTargetType];
 
         if (setupTargetMetadata === undefined) {
           continue;
         }
 
         for (const targetVariableEntry of Object.entries(setupTargetMetadata['variables'])) {
-          const targetVariableName: Cli_Generate_Github_Workflows_Runner_Run_VariableName = targetVariableEntry[0];
-          const targetVariableMeta: Cli_Generate_Github_Workflows_Runner_Run_VariableMeta = targetVariableEntry[1];
+          const targetVariableName: Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetVariableName = targetVariableEntry[0];
+          const targetVariableMeta: Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetVariableMeta = targetVariableEntry[1];
 
           if (targetVariableMeta['auto'] === true) {
             continue;
           }
 
           if (targetVariableMeta['format'] === 'secret') {
-            const targetResolvedName: Cli_Generate_Github_Workflows_Runner_Run_ResolvedName = (entry['settings'] !== undefined && entry['settings'][targetVariableName] !== undefined) ? entry['settings'][targetVariableName] : (targetVariableMeta['default'] ?? targetVariableName);
+            const targetSecretResolvedName: Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetSecretResolvedName = (entry['settings'] !== undefined && entry['settings'][targetVariableName] !== undefined) ? entry['settings'][targetVariableName] : (targetVariableMeta['default'] ?? targetVariableName);
 
-            lines.push(` - ${chalk.cyan(outputFileName)}: Secret ${chalk.yellow(targetResolvedName)}`);
+            lines.push(` - ${chalk.cyan(outputFileName)}: Secret ${chalk.yellow(targetSecretResolvedName)}`);
           }
 
           if (targetVariableMeta['format'] === 'var') {
-            const targetResolvedName: Cli_Generate_Github_Workflows_Runner_Run_ResolvedName = (entry['settings'] !== undefined && entry['settings'][targetVariableName] !== undefined) ? entry['settings'][targetVariableName] : (targetVariableMeta['default'] ?? targetVariableName);
+            const targetVarResolvedName: Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetVarResolvedName = (entry['settings'] !== undefined && entry['settings'][targetVariableName] !== undefined) ? entry['settings'][targetVariableName] : (targetVariableMeta['default'] ?? targetVariableName);
 
-            lines.push(` - ${chalk.cyan(outputFileName)}: Variable ${chalk.yellow(targetResolvedName)}`);
+            lines.push(` - ${chalk.cyan(outputFileName)}: Variable ${chalk.yellow(targetVarResolvedName)}`);
           }
         }
       }
@@ -1494,27 +1526,27 @@ export class Runner {
       const settingValue: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_SettingValue = (settings !== undefined && settings[variableName] !== undefined) ? settings[variableName] : undefined;
 
       if (variableMeta['format'] === 'secret') {
-        const resolvedName: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_ResolvedName = settingValue
+        const secretResolvedName: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_SecretResolvedName = settingValue
           ?? variableMeta['default']
           ?? variableName;
-        const replacement: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Replacement = `\${{ secrets.${resolvedName} }}`;
+        const secretReplacement: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_SecretReplacement = `\${{ secrets.${secretResolvedName} }}`;
 
-        result = result.replace(regex, replacement);
+        result = result.replace(regex, secretReplacement);
       }
 
       if (variableMeta['format'] === 'var') {
-        const resolvedName: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_ResolvedName = settingValue
+        const varResolvedName: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_VarResolvedName = settingValue
           ?? variableMeta['default']
           ?? variableName;
-        const replacement: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Replacement = `\${{ vars.${resolvedName} }}`;
+        const varReplacement: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_VarReplacement = `\${{ vars.${varResolvedName} }}`;
 
-        result = result.replace(regex, replacement);
+        result = result.replace(regex, varReplacement);
       }
 
       if (variableMeta['format'] === 'literal') {
-        const replacement: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Replacement = (settingValue ?? '').replaceAll('\n', '\\n');
+        const literalReplacement: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_LiteralReplacement = (settingValue ?? '').replaceAll('\n', '\\n');
 
-        result = result.replace(regex, () => replacement);
+        result = result.replace(regex, () => literalReplacement);
       }
     }
 
@@ -1633,18 +1665,18 @@ export class Runner {
    */
   public static buildCommand(scriptName: Cli_Generate_Github_Workflows_Runner_BuildCommand_ScriptName, workspaceNames: Cli_Generate_Github_Workflows_Runner_BuildCommand_WorkspaceNames, useTurbo: Cli_Generate_Github_Workflows_Runner_BuildCommand_UseTurbo): Cli_Generate_Github_Workflows_Runner_BuildCommand_Returns {
     if (useTurbo === true) {
-      const flags: Cli_Generate_Github_Workflows_Runner_BuildCommand_Flags = workspaceNames.map(
+      const turboFlags: Cli_Generate_Github_Workflows_Runner_BuildCommand_TurboFlags = workspaceNames.map(
         (name) => `--filter=${name}`,
       );
 
-      return `npx turbo run ${scriptName} ${flags.join(' ')} --concurrency=2`;
+      return `npx turbo run ${scriptName} ${turboFlags.join(' ')} --concurrency=2`;
     }
 
-    const flags: Cli_Generate_Github_Workflows_Runner_BuildCommand_Flags = workspaceNames.map(
+    const npmFlags: Cli_Generate_Github_Workflows_Runner_BuildCommand_NpmFlags = workspaceNames.map(
       (name) => `-w ${name}`,
     );
 
-    return `npm run ${scriptName} ${flags.join(' ')}`;
+    return `npm run ${scriptName} ${npmFlags.join(' ')}`;
   }
 
   /**
@@ -1654,8 +1686,8 @@ export class Runner {
    * artifactPaths metadata. Each step has a unique artifact name keyed by
    * targetType + slugified workingDir so publish jobs can fetch only their own.
    *
-   * @param {Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Targets}        targets         - Targets.
-   * @param {Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadata} targetsMetadata - Targets metadata.
+   * @param {Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Targets}         targets         - Targets.
+   * @param {Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetsMetadata} targetsMetadata - Targets metadata.
    *
    * @private
    *
@@ -1663,7 +1695,7 @@ export class Runner {
    *
    * @since 0.16.3
    */
-  public static renderUploadArtifactSteps(targets: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Targets, targetsMetadata: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadata): Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Returns {
+  public static renderUploadArtifactSteps(targets: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Targets, targetsMetadata: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetsMetadata): Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Returns {
     const steps: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Steps = [];
 
     for (const target of targets) {
@@ -1682,7 +1714,7 @@ export class Runner {
       const artifactName: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_ArtifactName = Runner.buildArtifactName(target['type'], targetId);
 
       const pathLines: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_PathLines = metadata['artifactPaths'].map(
-        (template: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_ResolvedPath) => `            ${template.replaceAll('{workingDir}', strippedDir)}`,
+        (template) => `            ${template.replaceAll('{workingDir}', strippedDir)}`,
       );
 
       const stepLines: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_StepLines = [

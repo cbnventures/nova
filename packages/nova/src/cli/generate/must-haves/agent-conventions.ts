@@ -16,7 +16,10 @@ import { Logger } from '../../../toolkit/index.js';
 
 import type {
   Cli_Generate_MustHaves_AgentConventions_Runner_Run_Content,
+  Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionContent,
   Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionFiles,
+  Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionTargetPath,
+  Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionTemplatePath,
   Cli_Generate_MustHaves_AgentConventions_Runner_Run_CurrentDirectory,
   Cli_Generate_MustHaves_AgentConventions_Runner_Run_DisplayPath,
   Cli_Generate_MustHaves_AgentConventions_Runner_Run_IsAtProjectRoot,
@@ -148,8 +151,8 @@ export class Runner {
     }
 
     for (const conventionFile of conventionFiles) {
-      const templatePath: Cli_Generate_MustHaves_AgentConventions_Runner_Run_TemplatePath = join(templateDirectory, 'conventions', conventionFile);
-      const targetPath: Cli_Generate_MustHaves_AgentConventions_Runner_Run_TargetPath = join(currentDirectory, 'conventions', conventionFile);
+      const conventionTemplatePath: Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionTemplatePath = join(templateDirectory, 'conventions', conventionFile);
+      const conventionTargetPath: Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionTargetPath = join(currentDirectory, 'conventions', conventionFile);
       const displayPath: Cli_Generate_MustHaves_AgentConventions_Runner_Run_DisplayPath = `conventions/${conventionFile}`;
 
       if (isDryRun === true) {
@@ -157,9 +160,9 @@ export class Runner {
       }
 
       try {
-        const content: Cli_Generate_MustHaves_AgentConventions_Runner_Run_Content = await fs.readFile(templatePath, 'utf-8');
+        const conventionContent: Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionContent = await fs.readFile(conventionTemplatePath, 'utf-8');
 
-        await saveGeneratedFile(targetPath, content, isReplaceFile);
+        await saveGeneratedFile(conventionTargetPath, conventionContent, isReplaceFile);
       } catch {
         Logger.customize({
           name: 'Runner.run',

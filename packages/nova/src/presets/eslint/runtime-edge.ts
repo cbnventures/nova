@@ -1,4 +1,4 @@
-import type { Presets_Eslint_RuntimeEdge_ConfigConfig } from '../../types/presets/eslint/runtime-edge.d.ts';
+import type { Presets_Eslint_RuntimeEdge_Config } from '../../types/presets/eslint/runtime-edge.d.ts';
 
 /**
  * Presets - ESLint - Runtime Edge - Config.
@@ -8,6 +8,6 @@ import type { Presets_Eslint_RuntimeEdge_ConfigConfig } from '../../types/preset
  *
  * @since 0.11.0
  */
-const config: Presets_Eslint_RuntimeEdge_ConfigConfig = [{}];
+const config: Presets_Eslint_RuntimeEdge_Config = [{}];
 
 export default config;

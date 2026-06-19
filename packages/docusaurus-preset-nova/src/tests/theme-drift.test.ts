@@ -13,18 +13,6 @@ import { describe, it } from 'vitest';
 import { LIB_REGEX_DECLARE_MODULE_THEME } from '../lib/regex.js';
 
 import type {
-  Tests_ThemeDrift_ComponentsHaveDeclaredModulesComponentModules,
-  Tests_ThemeDrift_ComponentsHaveDeclaredModulesDeclaredModules,
-  Tests_ThemeDrift_ComponentsHaveDeclaredModulesDeclaredSet,
-  Tests_ThemeDrift_ComponentsHaveDeclaredModulesMessage,
-  Tests_ThemeDrift_ComponentsHaveDeclaredModulesMissing,
-  Tests_ThemeDrift_ComponentsHaveDeclaredModulesModule,
-  Tests_ThemeDrift_DeclaredModulesHaveComponentsComponentModules,
-  Tests_ThemeDrift_DeclaredModulesHaveComponentsComponentSet,
-  Tests_ThemeDrift_DeclaredModulesHaveComponentsDeclaredModules,
-  Tests_ThemeDrift_DeclaredModulesHaveComponentsMessage,
-  Tests_ThemeDrift_DeclaredModulesHaveComponentsMissing,
-  Tests_ThemeDrift_DeclaredModulesHaveComponentsModule,
   Tests_ThemeDrift_DiscoverThemeComponents_Files,
   Tests_ThemeDrift_DiscoverThemeComponents_IsVariant,
   Tests_ThemeDrift_DiscoverThemeComponents_ModuleName,
@@ -42,6 +30,18 @@ import type {
   Tests_ThemeDrift_GetPackageRoot_CurrentFileDirectory,
   Tests_ThemeDrift_GetPackageRoot_CurrentFilePath,
   Tests_ThemeDrift_GetPackageRoot_Returns,
+  Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_ComponentModule,
+  Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_ComponentModules,
+  Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_DeclaredModules,
+  Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_DeclaredSet,
+  Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_Message,
+  Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_Missing,
+  Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_ComponentModules,
+  Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_ComponentSet,
+  Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_DeclaredModule,
+  Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_DeclaredModules,
+  Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_Message,
+  Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_Missing,
   Tests_ThemeDrift_VariantDirectories,
 } from '../types/tests/theme-drift.test.d.ts';
 
@@ -149,20 +149,20 @@ async function discoverThemeComponents(): Tests_ThemeDrift_DiscoverThemeComponen
  */
 describe('theme drift', () => {
   it('every declared module has a component directory', async () => {
-    const declaredModules: Tests_ThemeDrift_DeclaredModulesHaveComponentsDeclaredModules = await extractDeclaredModules();
-    const componentModules: Tests_ThemeDrift_DeclaredModulesHaveComponentsComponentModules = await discoverThemeComponents();
-    const componentSet: Tests_ThemeDrift_DeclaredModulesHaveComponentsComponentSet = new Set(componentModules);
-    const missing: Tests_ThemeDrift_DeclaredModulesHaveComponentsMissing = [];
+    const declaredModules: Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_DeclaredModules = await extractDeclaredModules();
+    const componentModules: Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_ComponentModules = await discoverThemeComponents();
+    const componentSet: Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_ComponentSet = new Set(componentModules);
+    const missing: Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_Missing = [];
 
     for (const module of declaredModules) {
-      const declaredModule: Tests_ThemeDrift_DeclaredModulesHaveComponentsModule = module;
+      const declaredModule: Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_DeclaredModule = module;
 
       if (componentSet.has(declaredModule) === false) {
         missing.push(declaredModule);
       }
     }
 
-    const message: Tests_ThemeDrift_DeclaredModulesHaveComponentsMessage = [
+    const message: Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_Message = [
       'Declared modules missing component directories:',
       missing.join('\n'),
     ].join('\n');
@@ -173,20 +173,20 @@ describe('theme drift', () => {
   });
 
   it('every component directory has a declared module', async () => {
-    const declaredModules: Tests_ThemeDrift_ComponentsHaveDeclaredModulesDeclaredModules = await extractDeclaredModules();
-    const componentModules: Tests_ThemeDrift_ComponentsHaveDeclaredModulesComponentModules = await discoverThemeComponents();
-    const declaredSet: Tests_ThemeDrift_ComponentsHaveDeclaredModulesDeclaredSet = new Set(declaredModules);
-    const missing: Tests_ThemeDrift_ComponentsHaveDeclaredModulesMissing = [];
+    const declaredModules: Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_DeclaredModules = await extractDeclaredModules();
+    const componentModules: Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_ComponentModules = await discoverThemeComponents();
+    const declaredSet: Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_DeclaredSet = new Set(declaredModules);
+    const missing: Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_Missing = [];
 
     for (const module of componentModules) {
-      const componentModule: Tests_ThemeDrift_ComponentsHaveDeclaredModulesModule = module;
+      const componentModule: Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_ComponentModule = module;
 
       if (declaredSet.has(componentModule) === false) {
         missing.push(componentModule);
       }
     }
 
-    const message: Tests_ThemeDrift_ComponentsHaveDeclaredModulesMessage = [
+    const message: Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_Message = [
       'Component directories missing declared modules:',
       missing.join('\n'),
     ].join('\n');

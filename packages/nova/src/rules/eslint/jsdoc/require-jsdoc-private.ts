@@ -5,16 +5,22 @@ import { isIgnoredFile } from '../../../lib/utility.js';
 import type {
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Comments,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Context,
-  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_InsertPosition,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_Fixer,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_InsertPosition,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_PrivateTag,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_SinceIndex,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_IsPrivateIdentifier,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_IsPrivateKeyword,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_JsdocComment,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Node,
-  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_PrivateTag,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Returns,
-  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_SinceIndex,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_MethodDefinition_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_MethodDefinition_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_Options,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_PropertyDefinition_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_PropertyDefinition_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_RuleOptions,
 } from '../../../types/rules/eslint/jsdoc/require-jsdoc-private.d.ts';
 
 /**
@@ -62,7 +68,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -70,12 +76,12 @@ export class Runner {
       }
 
       return {
-        MethodDefinition(node) {
+        MethodDefinition(node: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_MethodDefinition_Node): Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_MethodDefinition_Returns {
           Runner.checkMember(context, node);
 
           return;
         },
-        PropertyDefinition(node) {
+        PropertyDefinition(node: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_PropertyDefinition_Node): Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_Create_PropertyDefinition_Returns {
           Runner.checkMember(context, node);
 
           return;
@@ -128,15 +134,15 @@ export class Runner {
     context.report({
       node: jsdocComment,
       messageId: 'requirePrivateTag',
-      fix(fixer) {
-        const sinceIndex: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_SinceIndex = jsdocComment.value.indexOf('@since');
+      fix(fixer: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_Fixer): Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_Returns {
+        const sinceIndex: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_SinceIndex = jsdocComment.value.indexOf('@since');
 
         if (sinceIndex === -1) {
           return null;
         }
 
-        const insertPosition: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_InsertPosition = jsdocComment.range[0] + 2 + sinceIndex;
-        const privateTag: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_PrivateTag = [
+        const insertPosition: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_InsertPosition = jsdocComment.range[0] + 2 + sinceIndex;
+        const privateTag: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Fix_PrivateTag = [
           '@private',
           '   *',
           '   * ',

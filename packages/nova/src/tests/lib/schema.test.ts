@@ -8,10 +8,31 @@ import {
 } from '../../lib/schema.js';
 
 import type {
-  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_EntryOrUndefined,
-  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Result,
-  Tests_Lib_Schema_SpdxLicenseEntryOrUndefined,
-  Tests_Lib_Schema_SpdxLicensesResult,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsEmptySchedule_Result,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsScheduleWithMultipleEntries_Result,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsScheduleWithMultipleEntries_V18,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsScheduleWithMultipleEntries_V19,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsScheduleWithMultipleEntries_V20,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsSingleEntry_Result,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsSingleEntry_V22,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_RejectsArray_Input,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_RejectsNull_Input,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_RejectsScheduleWithInvalidEntryValue_Input,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_RejectsScheduleWithNullEntryValue_Input,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_RejectsScheduleWithStringEntryValue_Input,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithEmptyLicensesArray_Result,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithMultipleLicenses_License0,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithMultipleLicenses_License1,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithMultipleLicenses_License2,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithMultipleLicenses_Result,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithSingleLicense_License0,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithSingleLicense_Result,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_RejectsNonObjectValue_Input,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_RejectsNull_Input,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_RejectsResponseMissingLicenses_Input,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_RejectsResponseWithInvalidLicenseEntry_Input,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_RejectsResponseWithMixedValidAndInvalidEntries_Input,
+  Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_RejectsResponseWithNonArrayLicenses_Input,
 } from '../../types/tests/lib/schema.test.d.ts';
 
 /**
@@ -21,7 +42,7 @@ import type {
  */
 describe('libSchemaNodeReleasesSchedule', async () => {
   it('accepts schedule with multiple entries', () => {
-    const result: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Result = libSchemaNodeReleasesSchedule.parse({
+    const result: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsScheduleWithMultipleEntries_Result = libSchemaNodeReleasesSchedule.parse({
       'v18': {
         lts: '2022-10-25',
         end: '2025-04-30',
@@ -35,9 +56,9 @@ describe('libSchemaNodeReleasesSchedule', async () => {
 
     strictEqual(Object.keys(result).length, 3);
 
-    const v18: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_EntryOrUndefined = result['v18'];
-    const v19: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_EntryOrUndefined = result['v19'];
-    const v20: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_EntryOrUndefined = result['v20'];
+    const v18: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsScheduleWithMultipleEntries_V18 = result['v18'];
+    const v19: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsScheduleWithMultipleEntries_V19 = result['v19'];
+    const v20: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsScheduleWithMultipleEntries_V20 = result['v20'];
 
     if (v18 === undefined) {
       fail('Expected v18 to be defined');
@@ -59,7 +80,7 @@ describe('libSchemaNodeReleasesSchedule', async () => {
   });
 
   it('accepts empty schedule', () => {
-    const result: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Result = libSchemaNodeReleasesSchedule.parse({});
+    const result: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsEmptySchedule_Result = libSchemaNodeReleasesSchedule.parse({});
 
     strictEqual(Object.keys(result).length, 0);
 
@@ -67,7 +88,7 @@ describe('libSchemaNodeReleasesSchedule', async () => {
   });
 
   it('accepts single entry', () => {
-    const result: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Result = libSchemaNodeReleasesSchedule.parse({
+    const result: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsSingleEntry_Result = libSchemaNodeReleasesSchedule.parse({
       'v22': {
         lts: '2024-10-29',
         end: '2027-04-30',
@@ -76,7 +97,7 @@ describe('libSchemaNodeReleasesSchedule', async () => {
 
     strictEqual(Object.keys(result).length, 1);
 
-    const v22: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_EntryOrUndefined = result['v22'];
+    const v22: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_AcceptsSingleEntry_V22 = result['v22'];
 
     if (v22 === undefined) {
       fail('Expected v22 to be defined');
@@ -88,10 +109,12 @@ describe('libSchemaNodeReleasesSchedule', async () => {
   });
 
   it('rejects schedule with invalid entry value', () => {
+    const input: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_RejectsScheduleWithInvalidEntryValue_Input = {
+      'v20': { lts: 123 },
+    };
+
     throws(() => {
-      libSchemaNodeReleasesSchedule.parse({
-        'v20': { lts: 123 },
-      });
+      libSchemaNodeReleasesSchedule.parse(input);
 
       return;
     });
@@ -100,10 +123,12 @@ describe('libSchemaNodeReleasesSchedule', async () => {
   });
 
   it('rejects schedule with null entry value', () => {
+    const input: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_RejectsScheduleWithNullEntryValue_Input = {
+      'v20': null,
+    };
+
     throws(() => {
-      libSchemaNodeReleasesSchedule.parse({
-        'v20': null,
-      });
+      libSchemaNodeReleasesSchedule.parse(input);
 
       return;
     });
@@ -112,10 +137,12 @@ describe('libSchemaNodeReleasesSchedule', async () => {
   });
 
   it('rejects schedule with string entry value', () => {
+    const input: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_RejectsScheduleWithStringEntryValue_Input = {
+      'v20': 'not-an-entry',
+    };
+
     throws(() => {
-      libSchemaNodeReleasesSchedule.parse({
-        'v20': 'not-an-entry',
-      });
+      libSchemaNodeReleasesSchedule.parse(input);
 
       return;
     });
@@ -124,8 +151,10 @@ describe('libSchemaNodeReleasesSchedule', async () => {
   });
 
   it('rejects null', () => {
+    const input: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_RejectsNull_Input = null;
+
     throws(() => {
-      libSchemaNodeReleasesSchedule.parse(null);
+      libSchemaNodeReleasesSchedule.parse(input);
 
       return;
     });
@@ -134,8 +163,10 @@ describe('libSchemaNodeReleasesSchedule', async () => {
   });
 
   it('rejects array', () => {
+    const input: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_RejectsArray_Input = [];
+
     throws(() => {
-      libSchemaNodeReleasesSchedule.parse([]);
+      libSchemaNodeReleasesSchedule.parse(input);
 
       return;
     });
@@ -153,7 +184,7 @@ describe('libSchemaNodeReleasesSchedule', async () => {
  */
 describe('libSchemaSpdxLicensesResponse', async () => {
   it('accepts response with multiple licenses', () => {
-    const result: Tests_Lib_Schema_SpdxLicensesResult = libSchemaSpdxLicensesResponse.parse({
+    const result: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithMultipleLicenses_Result = libSchemaSpdxLicensesResponse.parse({
       licenses: [
         { licenseId: 'MIT' },
         { licenseId: 'Apache-2.0' },
@@ -163,9 +194,9 @@ describe('libSchemaSpdxLicensesResponse', async () => {
 
     strictEqual(result['licenses'].length, 3);
 
-    const license0: Tests_Lib_Schema_SpdxLicenseEntryOrUndefined = result['licenses'][0];
-    const license1: Tests_Lib_Schema_SpdxLicenseEntryOrUndefined = result['licenses'][1];
-    const license2: Tests_Lib_Schema_SpdxLicenseEntryOrUndefined = result['licenses'][2];
+    const license0: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithMultipleLicenses_License0 = result['licenses'][0];
+    const license1: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithMultipleLicenses_License1 = result['licenses'][1];
+    const license2: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithMultipleLicenses_License2 = result['licenses'][2];
 
     if (license0 === undefined) {
       fail('Expected license at index 0');
@@ -187,7 +218,7 @@ describe('libSchemaSpdxLicensesResponse', async () => {
   });
 
   it('accepts response with empty licenses array', () => {
-    const result: Tests_Lib_Schema_SpdxLicensesResult = libSchemaSpdxLicensesResponse.parse({
+    const result: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithEmptyLicensesArray_Result = libSchemaSpdxLicensesResponse.parse({
       licenses: [],
     });
 
@@ -197,13 +228,13 @@ describe('libSchemaSpdxLicensesResponse', async () => {
   });
 
   it('accepts response with single license', () => {
-    const result: Tests_Lib_Schema_SpdxLicensesResult = libSchemaSpdxLicensesResponse.parse({
+    const result: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithSingleLicense_Result = libSchemaSpdxLicensesResponse.parse({
       licenses: [{ licenseId: 'ISC' }],
     });
 
     strictEqual(result['licenses'].length, 1);
 
-    const license0: Tests_Lib_Schema_SpdxLicenseEntryOrUndefined = result['licenses'][0];
+    const license0: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_AcceptsResponseWithSingleLicense_License0 = result['licenses'][0];
 
     if (license0 === undefined) {
       fail('Expected license at index 0');
@@ -215,8 +246,10 @@ describe('libSchemaSpdxLicensesResponse', async () => {
   });
 
   it('rejects response missing licenses', () => {
+    const input: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_RejectsResponseMissingLicenses_Input = {};
+
     throws(() => {
-      libSchemaSpdxLicensesResponse.parse({});
+      libSchemaSpdxLicensesResponse.parse(input);
 
       return;
     });
@@ -225,8 +258,10 @@ describe('libSchemaSpdxLicensesResponse', async () => {
   });
 
   it('rejects response with non-array licenses', () => {
+    const input: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_RejectsResponseWithNonArrayLicenses_Input = { licenses: 'not-array' };
+
     throws(() => {
-      libSchemaSpdxLicensesResponse.parse({ licenses: 'not-array' });
+      libSchemaSpdxLicensesResponse.parse(input);
 
       return;
     });
@@ -235,10 +270,12 @@ describe('libSchemaSpdxLicensesResponse', async () => {
   });
 
   it('rejects response with invalid license entry', () => {
+    const input: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_RejectsResponseWithInvalidLicenseEntry_Input = {
+      licenses: [{ licenseId: 123 }],
+    };
+
     throws(() => {
-      libSchemaSpdxLicensesResponse.parse({
-        licenses: [{ licenseId: 123 }],
-      });
+      libSchemaSpdxLicensesResponse.parse(input);
 
       return;
     });
@@ -247,13 +284,15 @@ describe('libSchemaSpdxLicensesResponse', async () => {
   });
 
   it('rejects response with mixed valid and invalid entries', () => {
+    const input: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_RejectsResponseWithMixedValidAndInvalidEntries_Input = {
+      licenses: [
+        { licenseId: 'MIT' },
+        { invalid: true },
+      ],
+    };
+
     throws(() => {
-      libSchemaSpdxLicensesResponse.parse({
-        licenses: [
-          { licenseId: 'MIT' },
-          { invalid: true },
-        ],
-      });
+      libSchemaSpdxLicensesResponse.parse(input);
 
       return;
     });
@@ -262,8 +301,10 @@ describe('libSchemaSpdxLicensesResponse', async () => {
   });
 
   it('rejects null', () => {
+    const input: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_RejectsNull_Input = null;
+
     throws(() => {
-      libSchemaSpdxLicensesResponse.parse(null);
+      libSchemaSpdxLicensesResponse.parse(input);
 
       return;
     });
@@ -272,8 +313,10 @@ describe('libSchemaSpdxLicensesResponse', async () => {
   });
 
   it('rejects non-object value', () => {
+    const input: Tests_Lib_Schema_LibSchemaSpdxLicensesResponse_RejectsNonObjectValue_Input = 42;
+
     throws(() => {
-      libSchemaSpdxLicensesResponse.parse(42);
+      libSchemaSpdxLicensesResponse.parse(input);
 
       return;
     });

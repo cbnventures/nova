@@ -7,6 +7,9 @@ import type {
   Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Identifier,
   Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Returns,
   Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Variable,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_Create_CallExpression_Object,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_Create_CallExpression_Property,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_Create_Options,
   Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Context,
   Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Identifier,
   Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Returns,
@@ -17,9 +20,6 @@ import type {
   Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_Property,
   Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_TypeGuard,
   Rules_Eslint_Nova_NoLoggerDev_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Nova_NoLoggerDev_Runner_RuleObject,
-  Rules_Eslint_Nova_NoLoggerDev_Runner_RuleOptions,
-  Rules_Eslint_Nova_NoLoggerDev_Runner_RuleProperty,
 } from '../../../types/rules/eslint/nova/no-logger-dev.d.ts';
 
 /**
@@ -68,7 +68,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Nova_NoLoggerDev_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Nova_NoLoggerDev_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Nova_NoLoggerDev_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -82,8 +82,8 @@ export class Runner {
             return;
           }
 
-          const object: Rules_Eslint_Nova_NoLoggerDev_Runner_RuleObject = node.callee.object;
-          const property: Rules_Eslint_Nova_NoLoggerDev_Runner_RuleProperty = node.callee.property;
+          const object: Rules_Eslint_Nova_NoLoggerDev_Runner_Create_CallExpression_Object = node.callee.object;
+          const property: Rules_Eslint_Nova_NoLoggerDev_Runner_Create_CallExpression_Property = node.callee.property;
 
           // Ensure the property explicitly reads ".dev" before flagging.
           if (property.type !== 'Identifier' || property.name !== 'dev') {

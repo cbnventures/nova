@@ -11,30 +11,71 @@ export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_TemporaryBas
 
 export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_SandboxRoot = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_RootDirectory = string;
+/**
+ * Tests - CLI - Scaffold - App - Workers - Run - Adds Workspace At Monorepo Root.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_ProjectDirectory = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ChildDirectory = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_PackageJson = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_RootPackageJson = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_PackageJsonPath = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_RootPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ChildPackageJson = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_WranglerTomlPath = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ChildPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_IndexTsPath = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ProjectDirectory = string;
+/**
+ * Tests - CLI - Scaffold - App - Workers - Run - Creates Monorepo In Empty Directory.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_CreatesMonorepoInEmptyDirectory_ProjectDirectory = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_Exists = boolean;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_DryRunOutputPath = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_CreatesMonorepoInEmptyDirectory_WranglerTomlPath = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_WorkspacePackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_CreatesMonorepoInEmptyDirectory_IndexTsPath = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_WranglerTomlPath = string;
+/**
+ * Tests - CLI - Scaffold - App - Workers - Run - Exits With Error For Standalone Project.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ExitsWithErrorForStandaloneProject_ProjectDirectory = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_IndexTsPath = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ExitsWithErrorForStandaloneProject_PackageJson = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_PackageJson = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ExitsWithErrorForStandaloneProject_PackageJsonPath = string;
 
-export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_PackageJsonPath = string;
+/**
+ * Tests - CLI - Scaffold - App - Workers - Run - Exits With Error When Inside Child Workspace.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ExitsWithErrorWhenInsideChildWorkspace_RootDirectory = string;
+
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ExitsWithErrorWhenInsideChildWorkspace_ChildDirectory = string;
+
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJson = string;
+
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJsonPath = string;
+
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJson = string;
+
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJsonPath = string;
+
+/**
+ * Tests - CLI - Scaffold - App - Workers - Run - Respects Dry Run.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_RespectsDryRun_ProjectDirectory = string;
+
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_RespectsDryRun_Exists = boolean;
+
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_RespectsDryRun_DryRunOutputPath = string;

@@ -26,13 +26,13 @@ import type {
   Cli_Recipe_Github_SyncFeatures_Runner_Run_IsDryRun,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_Options,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_Owner,
+  Cli_Recipe_Github_SyncFeatures_Runner_Run_Parsed,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_Permission,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_Recipes,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_Repo,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_Result,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_Returns,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewerPermission,
-  Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewerPermissionParsed,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewResult,
   Cli_Recipe_Github_SyncFeatures_Runner_Run_WorkingFile,
 } from '../../../types/cli/recipe/github/sync-features.d.ts';
@@ -162,7 +162,7 @@ export class Runner {
     let viewerPermission: Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewerPermission = undefined;
 
     try {
-      const parsed: Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewerPermissionParsed = JSON.parse(viewResult['textOut']) as Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewerPermissionParsed;
+      const parsed: Cli_Recipe_Github_SyncFeatures_Runner_Run_Parsed = JSON.parse(viewResult['textOut']) as Cli_Recipe_Github_SyncFeatures_Runner_Run_Parsed;
 
       viewerPermission = parsed['viewerPermission'];
     } catch {

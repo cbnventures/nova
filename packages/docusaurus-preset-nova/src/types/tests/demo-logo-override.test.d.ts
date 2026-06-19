@@ -25,8 +25,6 @@ export type Tests_DemoLogoOverride_DemoBytes = Buffer;
 
 export type Tests_DemoLogoOverride_ConfigUrl = string;
 
-export type Tests_DemoLogoOverride_ConfigModule = Record<string, unknown>;
-
 export type Tests_DemoLogoOverride_Config = Record<string, unknown>;
 
 export type Tests_DemoLogoOverride_ThemeConfig = Record<string, unknown>;
@@ -38,3 +36,10 @@ export type Tests_DemoLogoOverride_Logo = Record<string, unknown>;
 export type Tests_DemoLogoOverride_LogoSrc = Record<string, unknown>;
 
 export type Tests_DemoLogoOverride_LogoSrcLight = unknown;
+
+/**
+ * Tests - Demo Logo Override - Demo Logo Override (describe section).
+ *
+ * @since 0.18.0
+ */
+export type Tests_DemoLogoOverride_DemoLogoOverride_ModuleNamespace = Record<string, unknown>;

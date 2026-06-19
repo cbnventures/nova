@@ -6,19 +6,19 @@ import {
 } from './regex.js';
 
 import type {
-  Lib_RehypeShiki_CollectNodes_Child,
-  Lib_RehypeShiki_CollectNodes_Children,
   Lib_RehypeShiki_CollectNodes_Matches,
   Lib_RehypeShiki_CollectNodes_Returns,
   Lib_RehypeShiki_CollectNodes_TagName,
   Lib_RehypeShiki_CollectNodes_Tree,
+  Lib_RehypeShiki_CollectNodes_Walk_Child,
+  Lib_RehypeShiki_CollectNodes_Walk_Children,
   Lib_RehypeShiki_CollectNodes_Walk_Node,
   Lib_RehypeShiki_ExtractText_Children,
   Lib_RehypeShiki_ExtractText_Node,
   Lib_RehypeShiki_ExtractText_Parts,
   Lib_RehypeShiki_ExtractText_Returns,
-  Lib_RehypeShiki_ModuleHighlighterHighlighter,
-  Lib_RehypeShiki_ModuleHighlighterHighlighterPromise,
+  Lib_RehypeShiki_ModuleHighlighter,
+  Lib_RehypeShiki_ModuleHighlighterPromise,
   Lib_RehypeShiki_ParseLineRange_DashIndex,
   Lib_RehypeShiki_ParseLineRange_End,
   Lib_RehypeShiki_ParseLineRange_LineNumber,
@@ -35,7 +35,6 @@ import type {
   Lib_RehypeShiki_ProcessDiffLines_FirstChar,
   Lib_RehypeShiki_ProcessDiffLines_Lines,
   Lib_RehypeShiki_ProcessDiffLines_RemoveLines,
-  Lib_RehypeShiki_ProcessDiffLines_Result,
   Lib_RehypeShiki_ProcessDiffLines_Returns,
   Lib_RehypeShiki_ProcessMagicComments_AddedLines,
   Lib_RehypeShiki_ProcessMagicComments_Code,
@@ -55,22 +54,22 @@ import type {
   Lib_RehypeShiki_ProcessNode_CodeNode,
   Lib_RehypeShiki_ProcessNode_DiffAddLineNumbers,
   Lib_RehypeShiki_ProcessNode_DiffRemoveLineNumbers,
+  Lib_RehypeShiki_ProcessNode_DiffResult,
   Lib_RehypeShiki_ProcessNode_HastChildren,
-  Lib_RehypeShiki_ProcessNode_HastCodeElement,
-  Lib_RehypeShiki_ProcessNode_HastPreChildren,
-  Lib_RehypeShiki_ProcessNode_HastPreElement,
+  Lib_RehypeShiki_ProcessNode_HastRoot,
   Lib_RehypeShiki_ProcessNode_HastRootRecord,
-  Lib_RehypeShiki_ProcessNode_HighlightedHtml,
+  Lib_RehypeShiki_ProcessNode_HighlightedHast,
   Lib_RehypeShiki_ProcessNode_HighlightedLineNumbers,
   Lib_RehypeShiki_ProcessNode_Highlighter,
   Lib_RehypeShiki_ProcessNode_Index,
+  Lib_RehypeShiki_ProcessNode_InnerCode,
+  Lib_RehypeShiki_ProcessNode_InnerCodeProperties,
   Lib_RehypeShiki_ProcessNode_Lang,
   Lib_RehypeShiki_ProcessNode_LangClass,
-  Lib_RehypeShiki_ProcessNode_Line_Node,
-  Lib_RehypeShiki_ProcessNode_Line_Number,
-  Lib_RehypeShiki_ProcessNode_Line_Properties,
+  Lib_RehypeShiki_ProcessNode_Line_LineNode,
+  Lib_RehypeShiki_ProcessNode_Line_LineNumber,
+  Lib_RehypeShiki_ProcessNode_Line_LineProperties,
   Lib_RehypeShiki_ProcessNode_Live,
-  Lib_RehypeShiki_ProcessNode_MarkedHtml,
   Lib_RehypeShiki_ProcessNode_Metastring,
   Lib_RehypeShiki_ProcessNode_MetastringValue,
   Lib_RehypeShiki_ProcessNode_MetaValue,
@@ -78,16 +77,27 @@ import type {
   Lib_RehypeShiki_ProcessNode_Options,
   Lib_RehypeShiki_ProcessNode_Parent,
   Lib_RehypeShiki_ProcessNode_ParentChildren,
+  Lib_RehypeShiki_ProcessNode_PreChildren,
+  Lib_RehypeShiki_ProcessNode_PreElement,
+  Lib_RehypeShiki_ProcessNode_PreProperties,
+  Lib_RehypeShiki_ProcessNode_Processed,
   Lib_RehypeShiki_ProcessNode_ProcessedCode,
   Lib_RehypeShiki_ProcessNode_RawText,
   Lib_RehypeShiki_ProcessNode_ShowLineNumbers,
   Lib_RehypeShiki_ProcessNode_Title,
+  Lib_RehypeShiki_ProcessNode_TitleDoubleQuoted,
   Lib_RehypeShiki_ProcessNode_TitleMatch,
+  Lib_RehypeShiki_ProcessNode_TitleSingleQuoted,
   Lib_RehypeShiki_ProcessNode_TypedHighlighter,
   Lib_RehypeShiki_RehypeShiki_Options,
   Lib_RehypeShiki_RehypeShiki_Returns,
-  Lib_RehypeShiki_RehypeShiki_Transformer_BundledLanguageLoader,
+  Lib_RehypeShiki_RehypeShiki_Transformer_EntryClassNameRaw,
+  Lib_RehypeShiki_RehypeShiki_Transformer_EntryClassNames,
+  Lib_RehypeShiki_RehypeShiki_Transformer_EntryCodeNode,
+  Lib_RehypeShiki_RehypeShiki_Transformer_EntryLang,
+  Lib_RehypeShiki_RehypeShiki_Transformer_EntryShikiModule,
   Lib_RehypeShiki_RehypeShiki_Transformer_IsLanguageLoaded,
+  Lib_RehypeShiki_RehypeShiki_Transformer_LanguageLoader,
   Lib_RehypeShiki_RehypeShiki_Transformer_LoadedLanguages,
   Lib_RehypeShiki_RehypeShiki_Transformer_Nodes,
   Lib_RehypeShiki_RehypeShiki_Transformer_Returns,
@@ -113,10 +123,10 @@ function collectNodes(tree: Lib_RehypeShiki_CollectNodes_Tree, tagName: Lib_Rehy
   const matches: Lib_RehypeShiki_CollectNodes_Matches = [];
 
   function walk(node: Lib_RehypeShiki_CollectNodes_Walk_Node) {
-    const children: Lib_RehypeShiki_CollectNodes_Children = node['children'] ?? [];
+    const children: Lib_RehypeShiki_CollectNodes_Walk_Children = node['children'] ?? [];
 
     for (let i = 0; i < children.length; i += 1) {
-      const child: Lib_RehypeShiki_CollectNodes_Child = children[i];
+      const child: Lib_RehypeShiki_CollectNodes_Walk_Child = children[i];
 
       if (child === undefined) {
         continue;
@@ -408,7 +418,7 @@ function processNode(node: Lib_RehypeShiki_ProcessNode_Node, index: Lib_RehypeSh
     ?? '',
   );
 
-  const processed: Lib_RehypeShiki_ProcessMagicComments_Returns = processMagicComments(rawText);
+  const processed: Lib_RehypeShiki_ProcessNode_Processed = processMagicComments(rawText);
   const processedCode: Lib_RehypeShiki_ProcessNode_ProcessedCode = processed['code'];
 
   const highlightedLineNumbers: Lib_RehypeShiki_ProcessNode_HighlightedLineNumbers = [
@@ -420,7 +430,7 @@ function processNode(node: Lib_RehypeShiki_ProcessNode_Node, index: Lib_RehypeSh
   let diffRemoveLineNumbers: Lib_RehypeShiki_ProcessNode_DiffRemoveLineNumbers = [...processed['removedLines']];
 
   if (lang === 'diff') {
-    const diffResult: Lib_RehypeShiki_ProcessDiffLines_Result = processDiffLines(processedCode);
+    const diffResult: Lib_RehypeShiki_ProcessNode_DiffResult = processDiffLines(processedCode);
 
     diffAddLineNumbers = [
       ...diffAddLineNumbers,
@@ -434,7 +444,7 @@ function processNode(node: Lib_RehypeShiki_ProcessNode_Node, index: Lib_RehypeSh
 
   const typedHighlighter: Lib_RehypeShiki_ProcessNode_TypedHighlighter = highlighter as Lib_RehypeShiki_ProcessNode_TypedHighlighter;
 
-  let highlightedHast: Lib_RehypeShiki_ProcessNode_HighlightedHtml = undefined;
+  let highlightedHast: Lib_RehypeShiki_ProcessNode_HighlightedHast = undefined;
 
   try {
     highlightedHast = typedHighlighter.codeToHast(processedCode, {
@@ -445,8 +455,8 @@ function processNode(node: Lib_RehypeShiki_ProcessNode_Node, index: Lib_RehypeSh
       },
       defaultColor: false,
       transformers: [{
-        line(lineNode: Lib_RehypeShiki_ProcessNode_Line_Node, lineNumber: Lib_RehypeShiki_ProcessNode_Line_Number) {
-          const lineProperties: Lib_RehypeShiki_ProcessNode_Line_Properties = lineNode['properties'] ?? {};
+        line(lineNode: Lib_RehypeShiki_ProcessNode_Line_LineNode, lineNumber: Lib_RehypeShiki_ProcessNode_Line_LineNumber) {
+          const lineProperties: Lib_RehypeShiki_ProcessNode_Line_LineProperties = lineNode['properties'] ?? {};
 
           if (highlightedLineNumbers.includes(lineNumber) === true) {
             Reflect.set(lineProperties, 'data-highlighted', 'true');
@@ -472,25 +482,25 @@ function processNode(node: Lib_RehypeShiki_ProcessNode_Node, index: Lib_RehypeSh
     return;
   }
 
-  const hastRoot: Lib_RehypeShiki_ProcessNode_MarkedHtml = highlightedHast as Lib_RehypeShiki_ProcessNode_MarkedHtml;
+  const hastRoot: Lib_RehypeShiki_ProcessNode_HastRoot = highlightedHast as Lib_RehypeShiki_ProcessNode_HastRoot;
   const hastRootRecord: Lib_RehypeShiki_ProcessNode_HastRootRecord = hastRoot as Lib_RehypeShiki_ProcessNode_HastRootRecord;
   const hastChildren: Lib_RehypeShiki_ProcessNode_HastChildren = (hastRootRecord['children'] ?? []) as Lib_RehypeShiki_ProcessNode_HastChildren;
-  const preElement: Lib_RehypeShiki_ProcessNode_HastPreElement = hastChildren[0] as Lib_RehypeShiki_ProcessNode_HastPreElement;
+  const preElement: Lib_RehypeShiki_ProcessNode_PreElement = hastChildren[0] as Lib_RehypeShiki_ProcessNode_PreElement;
 
   if (preElement !== undefined) {
-    const preProperties: Lib_RehypeShiki_ProcessNode_Line_Properties = (preElement['properties'] ?? {}) as Lib_RehypeShiki_ProcessNode_Line_Properties;
+    const preProperties: Lib_RehypeShiki_ProcessNode_PreProperties = (preElement['properties'] ?? {}) as Lib_RehypeShiki_ProcessNode_PreProperties;
 
     Reflect.set(preProperties, 'data-rehype-shiki', 'true');
 
-    const preChildren: Lib_RehypeShiki_ProcessNode_HastPreChildren = (preElement['children'] ?? []) as Lib_RehypeShiki_ProcessNode_HastPreChildren;
-    const innerCode: Lib_RehypeShiki_ProcessNode_HastCodeElement = preChildren[0] as Lib_RehypeShiki_ProcessNode_HastCodeElement;
+    const preChildren: Lib_RehypeShiki_ProcessNode_PreChildren = (preElement['children'] ?? []) as Lib_RehypeShiki_ProcessNode_PreChildren;
+    const innerCode: Lib_RehypeShiki_ProcessNode_InnerCode = preChildren[0] as Lib_RehypeShiki_ProcessNode_InnerCode;
 
     if (
       innerCode !== undefined
       && innerCode['type'] === 'element'
       && innerCode['tagName'] === 'code'
     ) {
-      const innerCodeProperties: Lib_RehypeShiki_ProcessNode_Line_Properties = (innerCode['properties'] ?? {}) as Lib_RehypeShiki_ProcessNode_Line_Properties;
+      const innerCodeProperties: Lib_RehypeShiki_ProcessNode_InnerCodeProperties = (innerCode['properties'] ?? {}) as Lib_RehypeShiki_ProcessNode_InnerCodeProperties;
 
       Reflect.set(innerCodeProperties, 'data-language', lang);
 
@@ -498,8 +508,8 @@ function processNode(node: Lib_RehypeShiki_ProcessNode_Node, index: Lib_RehypeSh
         Reflect.set(innerCodeProperties, 'metastring', metastring);
 
         const titleMatch: Lib_RehypeShiki_ProcessNode_TitleMatch = metastring.match(LIB_REGEX_METASTRING_TITLE);
-        const titleDoubleQuoted: Lib_RehypeShiki_ProcessNode_Title = (titleMatch !== null) ? titleMatch[1] : undefined;
-        const titleSingleQuoted: Lib_RehypeShiki_ProcessNode_Title = (titleMatch !== null) ? titleMatch[2] : undefined;
+        const titleDoubleQuoted: Lib_RehypeShiki_ProcessNode_TitleDoubleQuoted = (titleMatch !== null) ? titleMatch[1] : undefined;
+        const titleSingleQuoted: Lib_RehypeShiki_ProcessNode_TitleSingleQuoted = (titleMatch !== null) ? titleMatch[2] : undefined;
         const title: Lib_RehypeShiki_ProcessNode_Title = titleDoubleQuoted ?? titleSingleQuoted;
 
         if (title !== undefined) {
@@ -544,8 +554,8 @@ function processNode(node: Lib_RehypeShiki_ProcessNode_Node, index: Lib_RehypeSh
  *
  * @since 0.15.0
  */
-let moduleHighlighter: Lib_RehypeShiki_ModuleHighlighterHighlighter = undefined;
-let moduleHighlighterPromise: Lib_RehypeShiki_ModuleHighlighterHighlighterPromise = undefined;
+let moduleHighlighter: Lib_RehypeShiki_ModuleHighlighter = undefined;
+let moduleHighlighterPromise: Lib_RehypeShiki_ModuleHighlighterPromise = undefined;
 
 /**
  * Lib - Rehype Shiki - Rehype Shiki.
@@ -598,12 +608,12 @@ export function rehypeShiki(options: Lib_RehypeShiki_RehypeShiki_Options): Lib_R
     const nodes: Lib_RehypeShiki_RehypeShiki_Transformer_Nodes = collectNodes(tree, 'pre');
 
     for (const entry of nodes) {
-      const entryCodeNode: Lib_RehypeShiki_ProcessNode_CodeNode = ((entry['node']['children'] ?? []) as Lib_RehypeShiki_ProcessNode_HastChildren)[0] as Lib_RehypeShiki_ProcessNode_CodeNode;
+      const entryCodeNode: Lib_RehypeShiki_RehypeShiki_Transformer_EntryCodeNode = ((entry['node']['children'] ?? []) as Lib_RehypeShiki_ProcessNode_HastChildren)[0] as Lib_RehypeShiki_ProcessNode_CodeNode;
 
       if (entryCodeNode !== undefined && entryCodeNode['tagName'] === 'code') {
-        const entryClassNameRaw: Lib_RehypeShiki_ProcessNode_ClassNameRaw = (entryCodeNode['properties'] ?? {})['className'];
-        const entryClassNames: Lib_RehypeShiki_ProcessNode_ClassNames = (Array.isArray(entryClassNameRaw) === true) ? entryClassNameRaw : [];
-        let entryLang: Lib_RehypeShiki_ProcessNode_Lang = 'text';
+        const entryClassNameRaw: Lib_RehypeShiki_RehypeShiki_Transformer_EntryClassNameRaw = (entryCodeNode['properties'] ?? {})['className'];
+        const entryClassNames: Lib_RehypeShiki_RehypeShiki_Transformer_EntryClassNames = (Array.isArray(entryClassNameRaw) === true) ? entryClassNameRaw : [];
+        let entryLang: Lib_RehypeShiki_RehypeShiki_Transformer_EntryLang = 'text';
 
         for (const className of entryClassNames) {
           if (className.startsWith('language-') === true) {
@@ -611,12 +621,12 @@ export function rehypeShiki(options: Lib_RehypeShiki_RehypeShiki_Options): Lib_R
           }
         }
 
-        const shikiModule: Lib_RehypeShiki_RehypeShiki_Transformer_ShikiModule = await import('shiki') as Lib_RehypeShiki_RehypeShiki_Transformer_ShikiModule;
+        const entryShikiModule: Lib_RehypeShiki_RehypeShiki_Transformer_EntryShikiModule = await import('shiki') as Lib_RehypeShiki_RehypeShiki_Transformer_EntryShikiModule;
         const loadedLanguages: Lib_RehypeShiki_RehypeShiki_Transformer_LoadedLanguages = (moduleHighlighter as Lib_RehypeShiki_ProcessNode_TypedHighlighter).getLoadedLanguages();
         const isLanguageLoaded: Lib_RehypeShiki_RehypeShiki_Transformer_IsLanguageLoaded = loadedLanguages.includes(entryLang);
 
-        if (isLanguageLoaded === false && shikiModule['bundledLanguages'][entryLang] !== undefined) {
-          const languageLoader: Lib_RehypeShiki_RehypeShiki_Transformer_BundledLanguageLoader = shikiModule['bundledLanguages'][entryLang];
+        if (isLanguageLoaded === false && entryShikiModule['bundledLanguages'][entryLang] !== undefined) {
+          const languageLoader: Lib_RehypeShiki_RehypeShiki_Transformer_LanguageLoader = entryShikiModule['bundledLanguages'][entryLang];
 
           await (moduleHighlighter as Lib_RehypeShiki_ProcessNode_TypedHighlighter).loadLanguage(languageLoader);
         }

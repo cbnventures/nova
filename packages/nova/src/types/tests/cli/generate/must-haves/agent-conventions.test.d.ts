@@ -11,22 +11,47 @@ export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAg
 
 export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_SandboxRoot = string;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_ProjectDirectory = string;
+/**
+ * Tests - CLI - Generate - Must Haves - Agent Conventions - Run - Generates Files From Template.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesFilesFromTemplate_ProjectDirectory = string;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_PackageJson = string;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesFilesFromTemplate_PackageJson = string;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_PackageJsonPath = string;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesFilesFromTemplate_PackageJsonPath = string;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_Exists = boolean;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesFilesFromTemplate_CursorrulesPath = string;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_ClaudeMdPath = string;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesFilesFromTemplate_ClaudeMdPath = string;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_CursorrulesPath = string;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesFilesFromTemplate_AgentsMdPath = string;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_AgentsMdPath = string;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesFilesFromTemplate_VisionMdPath = string;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_VisionMdPath = string;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesFilesFromTemplate_ProjectRulesMdPath = string;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_ProjectRulesMdPath = string;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesFilesFromTemplate_UniversalMdPath = string;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_UniversalMdPath = string;
+/**
+ * Tests - CLI - Generate - Must Haves - Agent Conventions - Run - Respects Dry Run.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_RespectsDryRun_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_RespectsDryRun_PackageJson = string;
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_RespectsDryRun_PackageJsonPath = string;
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_RespectsDryRun_Exists = boolean;
+
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_RespectsDryRun_ClaudeMdPath = string;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Agent Conventions - Run - Sets Exit Code When Not At Project Root.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_SetsExitCodeWhenNotAtProjectRoot_ProjectDirectory = string;

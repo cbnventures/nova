@@ -77,7 +77,7 @@ describe('presetsLanternPresetLantern', async () => {
 });
 
 /**
- * Tests - Presets - Lantern - Preset - Presets_Lantern_Preset_Lantern Navbar And Footer.
+ * Tests - Presets - Lantern - Preset - PresetsLanternPresetLantern Navbar And Footer.
  *
  * Verifies that the lantern preset includes the correct navbar
  * and footer variant identifiers for theme rendering.

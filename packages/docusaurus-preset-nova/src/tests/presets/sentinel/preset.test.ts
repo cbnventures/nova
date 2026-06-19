@@ -5,9 +5,13 @@ import { describe, it } from 'vitest';
 import { presetsSentinelPresetSentinel } from '../../../presets/sentinel/preset.js';
 
 import type {
-  Tests_Presets_Sentinel_Preset_Footer,
-  Tests_Presets_Sentinel_Preset_Navbar,
-  Tests_Presets_Sentinel_Preset_Sentinel,
+  Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinel_HasCorrectColorValues_Sentinel,
+  Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinel_HasCorrectDepthValues_Sentinel,
+  Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinel_HasCorrectFontNames_Sentinel,
+  Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinel_HasCorrectMotionValues_Sentinel,
+  Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinel_HasCorrectShapeValues_Sentinel,
+  Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinelNavbarAndFooter_HasCorrectFooterValue_Footer,
+  Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinelNavbarAndFooter_HasCorrectNavbarValue_Navbar,
 } from '../../../types/tests/presets/sentinel/preset.test.d.ts';
 
 /**
@@ -17,7 +21,7 @@ import type {
  */
 describe('presetsSentinelPresetSentinel', async () => {
   it('has correct color values', () => {
-    const sentinel: Tests_Presets_Sentinel_Preset_Sentinel = presetsSentinelPresetSentinel;
+    const sentinel: Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinel_HasCorrectColorValues_Sentinel = presetsSentinelPresetSentinel;
 
     deepStrictEqual(sentinel['colors']['primary'], {
       light: '#0d9488', dark: '#0d9488',
@@ -36,7 +40,7 @@ describe('presetsSentinelPresetSentinel', async () => {
   });
 
   it('has correct font names', () => {
-    const sentinel: Tests_Presets_Sentinel_Preset_Sentinel = presetsSentinelPresetSentinel;
+    const sentinel: Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinel_HasCorrectFontNames_Sentinel = presetsSentinelPresetSentinel;
 
     strictEqual(sentinel['fonts']['display'], 'Unbounded');
     strictEqual(sentinel['fonts']['body'], 'DM Sans');
@@ -46,7 +50,7 @@ describe('presetsSentinelPresetSentinel', async () => {
   });
 
   it('has correct shape values', () => {
-    const sentinel: Tests_Presets_Sentinel_Preset_Sentinel = presetsSentinelPresetSentinel;
+    const sentinel: Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinel_HasCorrectShapeValues_Sentinel = presetsSentinelPresetSentinel;
 
     strictEqual(sentinel['shape']['radius'], 'rounded');
     strictEqual(sentinel['shape']['density'], 'comfortable');
@@ -55,7 +59,7 @@ describe('presetsSentinelPresetSentinel', async () => {
   });
 
   it('has correct depth values', () => {
-    const sentinel: Tests_Presets_Sentinel_Preset_Sentinel = presetsSentinelPresetSentinel;
+    const sentinel: Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinel_HasCorrectDepthValues_Sentinel = presetsSentinelPresetSentinel;
 
     strictEqual(sentinel['depth']['cards'], 'flat');
     strictEqual(sentinel['depth']['codeBlocks'], 'bordered');
@@ -64,7 +68,7 @@ describe('presetsSentinelPresetSentinel', async () => {
   });
 
   it('has correct motion values', () => {
-    const sentinel: Tests_Presets_Sentinel_Preset_Sentinel = presetsSentinelPresetSentinel;
+    const sentinel: Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinel_HasCorrectMotionValues_Sentinel = presetsSentinelPresetSentinel;
 
     strictEqual(sentinel['motion']['speed'], 'subtle');
     strictEqual(sentinel['motion']['staggeredReveals'], false);
@@ -77,7 +81,7 @@ describe('presetsSentinelPresetSentinel', async () => {
 });
 
 /**
- * Tests - Presets - Sentinel - Preset - Presets_Sentinel_Preset_Sentinel Navbar And Footer.
+ * Tests - Presets - Sentinel - Preset - PresetsSentinelPresetSentinel Navbar And Footer.
  *
  * Verifies that the sentinel preset includes the correct navbar
  * and footer variant identifiers for theme rendering.
@@ -86,7 +90,7 @@ describe('presetsSentinelPresetSentinel', async () => {
  */
 describe('presetsSentinelPresetSentinel navbar and footer', async () => {
   it('has correct navbar value', () => {
-    const navbar: Tests_Presets_Sentinel_Preset_Navbar = presetsSentinelPresetSentinel['navbar'];
+    const navbar: Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinelNavbarAndFooter_HasCorrectNavbarValue_Navbar = presetsSentinelPresetSentinel['navbar'];
 
     strictEqual(navbar, 'canopy');
 
@@ -94,7 +98,7 @@ describe('presetsSentinelPresetSentinel navbar and footer', async () => {
   });
 
   it('has correct footer value', () => {
-    const footer: Tests_Presets_Sentinel_Preset_Footer = presetsSentinelPresetSentinel['footer'];
+    const footer: Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinelNavbarAndFooter_HasCorrectFooterValue_Footer = presetsSentinelPresetSentinel['footer'];
 
     strictEqual(footer, 'embassy');
 

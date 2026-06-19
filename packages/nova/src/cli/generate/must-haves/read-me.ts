@@ -64,6 +64,7 @@ import type {
   Cli_Generate_MustHaves_ReadMe_Runner_Run_GithubOwner,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_GithubRepo,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_GithubRepoName,
+  Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderOptions,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderSection,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_HomepageUrl,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_IntroductionSection,
@@ -91,8 +92,6 @@ import type {
   Cli_Generate_MustHaves_ReadMe_Runner_Run_Urls,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_WorkingFile,
 } from '../../../types/cli/generate/must-haves/read-me.d.ts';
-
-import type { Lib_Utility_SaveGeneratedFile_Header as LibUtilitySaveGeneratedFileHeader } from '../../../types/lib/utility.d.ts';
 
 /**
  * CLI - Generate - Must Haves - Read Me.
@@ -213,7 +212,7 @@ export class Runner {
       return 'completed';
     }
 
-    const headerOptions: LibUtilitySaveGeneratedFileHeader = {
+    const headerOptions: Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderOptions = {
       command: 'nova generate must-haves read-me',
       docsSlug: 'cli/generators/must-haves/read-me',
       mode: 'strict' as const,

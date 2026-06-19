@@ -5,6 +5,15 @@ import type {
 import type { Lib_ShikiThemes_ThemePair } from './shiki-themes.d.ts';
 
 /**
+ * Lib - Rehype Shiki.
+ *
+ * @since 0.15.0
+ */
+export type Lib_RehypeShiki_ModuleHighlighter = unknown;
+
+export type Lib_RehypeShiki_ModuleHighlighterPromise = Promise<unknown> | undefined;
+
+/**
  * Lib - Rehype Shiki - Collect Nodes.
  *
  * @since 0.15.0
@@ -15,13 +24,51 @@ export type Lib_RehypeShiki_CollectNodes_TagName = string;
 
 export type Lib_RehypeShiki_CollectNodes_Returns = Shared_HastNodeResult[];
 
-export type Lib_RehypeShiki_CollectNodes_Matches = Shared_HastNodeResult[];
+export type Lib_RehypeShiki_CollectNodes_Matches_Item_Node = Shared_HastNode;
 
+export type Lib_RehypeShiki_CollectNodes_Matches_Item_Index = number;
+
+export type Lib_RehypeShiki_CollectNodes_Matches_Item_Parent = Shared_HastNode;
+
+export type Lib_RehypeShiki_CollectNodes_Matches_Item = {
+  node: Lib_RehypeShiki_CollectNodes_Matches_Item_Node;
+  index: Lib_RehypeShiki_CollectNodes_Matches_Item_Index;
+  parent: Lib_RehypeShiki_CollectNodes_Matches_Item_Parent;
+};
+
+export type Lib_RehypeShiki_CollectNodes_Matches = Lib_RehypeShiki_CollectNodes_Matches_Item[];
+
+/**
+ * Lib - Rehype Shiki - Collect Nodes - Walk.
+ *
+ * @since 0.15.0
+ */
 export type Lib_RehypeShiki_CollectNodes_Walk_Node = Shared_HastNode;
 
-export type Lib_RehypeShiki_CollectNodes_Children = Shared_HastNode[];
+export type Lib_RehypeShiki_CollectNodes_Walk_Children_Item_Type = string;
 
-export type Lib_RehypeShiki_CollectNodes_Child = Shared_HastNode | undefined;
+export type Lib_RehypeShiki_CollectNodes_Walk_Children_Item_TagName = string | undefined;
+
+export type Lib_RehypeShiki_CollectNodes_Walk_Children_Item_Properties = Record<string, unknown>;
+
+export type Lib_RehypeShiki_CollectNodes_Walk_Children_Item_Children = Shared_HastNode[];
+
+export type Lib_RehypeShiki_CollectNodes_Walk_Children_Item_Value = string | undefined;
+
+export type Lib_RehypeShiki_CollectNodes_Walk_Children_Item_Data = Record<string, unknown> | undefined;
+
+export type Lib_RehypeShiki_CollectNodes_Walk_Children_Item = {
+  type: Lib_RehypeShiki_CollectNodes_Walk_Children_Item_Type;
+  tagName?: Lib_RehypeShiki_CollectNodes_Walk_Children_Item_TagName;
+  properties?: Lib_RehypeShiki_CollectNodes_Walk_Children_Item_Properties;
+  children?: Lib_RehypeShiki_CollectNodes_Walk_Children_Item_Children;
+  value?: Lib_RehypeShiki_CollectNodes_Walk_Children_Item_Value;
+  data?: Lib_RehypeShiki_CollectNodes_Walk_Children_Item_Data;
+};
+
+export type Lib_RehypeShiki_CollectNodes_Walk_Children = Lib_RehypeShiki_CollectNodes_Walk_Children_Item[];
+
+export type Lib_RehypeShiki_CollectNodes_Walk_Child = Shared_HastNode | undefined;
 
 /**
  * Lib - Rehype Shiki - Extract Text.
@@ -34,18 +81,30 @@ export type Lib_RehypeShiki_ExtractText_Returns = string;
 
 export type Lib_RehypeShiki_ExtractText_Parts = string[];
 
-export type Lib_RehypeShiki_ExtractText_Children = Shared_HastNode[];
+export type Lib_RehypeShiki_ExtractText_Children_Item_Type = string;
+
+export type Lib_RehypeShiki_ExtractText_Children_Item_TagName = string | undefined;
+
+export type Lib_RehypeShiki_ExtractText_Children_Item_Properties = Record<string, unknown>;
+
+export type Lib_RehypeShiki_ExtractText_Children_Item_Children = Shared_HastNode[];
+
+export type Lib_RehypeShiki_ExtractText_Children_Item_Value = string | undefined;
+
+export type Lib_RehypeShiki_ExtractText_Children_Item_Data = Record<string, unknown> | undefined;
+
+export type Lib_RehypeShiki_ExtractText_Children_Item = {
+  type: Lib_RehypeShiki_ExtractText_Children_Item_Type;
+  tagName?: Lib_RehypeShiki_ExtractText_Children_Item_TagName;
+  properties?: Lib_RehypeShiki_ExtractText_Children_Item_Properties;
+  children?: Lib_RehypeShiki_ExtractText_Children_Item_Children;
+  value?: Lib_RehypeShiki_ExtractText_Children_Item_Value;
+  data?: Lib_RehypeShiki_ExtractText_Children_Item_Data;
+};
+
+export type Lib_RehypeShiki_ExtractText_Children = Lib_RehypeShiki_ExtractText_Children_Item[];
 
 export type Lib_RehypeShiki_ExtractText_ChildText = string;
-
-/**
- * Lib - Rehype Shiki - Module Highlighter.
- *
- * @since 0.15.0
- */
-export type Lib_RehypeShiki_ModuleHighlighterHighlighter = unknown;
-
-export type Lib_RehypeShiki_ModuleHighlighterHighlighterPromise = Promise<unknown> | undefined;
 
 /**
  * Lib - Rehype Shiki - Parse Line Range.
@@ -179,6 +238,21 @@ export type Lib_RehypeShiki_ProcessNode_MetastringValue = unknown;
 
 export type Lib_RehypeShiki_ProcessNode_Metastring = string;
 
+export type Lib_RehypeShiki_ProcessNode_Processed_Code = string;
+
+export type Lib_RehypeShiki_ProcessNode_Processed_HighlightedLines = number[];
+
+export type Lib_RehypeShiki_ProcessNode_Processed_AddedLines = number[];
+
+export type Lib_RehypeShiki_ProcessNode_Processed_RemovedLines = number[];
+
+export type Lib_RehypeShiki_ProcessNode_Processed = {
+  code: Lib_RehypeShiki_ProcessNode_Processed_Code;
+  highlightedLines: Lib_RehypeShiki_ProcessNode_Processed_HighlightedLines;
+  addedLines: Lib_RehypeShiki_ProcessNode_Processed_AddedLines;
+  removedLines: Lib_RehypeShiki_ProcessNode_Processed_RemovedLines;
+};
+
 export type Lib_RehypeShiki_ProcessNode_ProcessedCode = string;
 
 export type Lib_RehypeShiki_ProcessNode_HighlightedLineNumbers = number[];
@@ -186,6 +260,15 @@ export type Lib_RehypeShiki_ProcessNode_HighlightedLineNumbers = number[];
 export type Lib_RehypeShiki_ProcessNode_DiffAddLineNumbers = number[];
 
 export type Lib_RehypeShiki_ProcessNode_DiffRemoveLineNumbers = number[];
+
+export type Lib_RehypeShiki_ProcessNode_DiffResult_AddLines = number[];
+
+export type Lib_RehypeShiki_ProcessNode_DiffResult_RemoveLines = number[];
+
+export type Lib_RehypeShiki_ProcessNode_DiffResult = {
+  addLines: Lib_RehypeShiki_ProcessNode_DiffResult_AddLines;
+  removeLines: Lib_RehypeShiki_ProcessNode_DiffResult_RemoveLines;
+};
 
 export type Lib_RehypeShiki_ProcessNode_TypedHighlighter_CodeToHtml = Function;
 
@@ -202,27 +285,29 @@ export type Lib_RehypeShiki_ProcessNode_TypedHighlighter = {
   loadLanguage: Lib_RehypeShiki_ProcessNode_TypedHighlighter_LoadLanguage;
 };
 
-export type Lib_RehypeShiki_ProcessNode_HighlightedHtml = unknown;
+export type Lib_RehypeShiki_ProcessNode_HighlightedHast = unknown;
 
-export type Lib_RehypeShiki_ProcessNode_Line_Node = Shared_HastNode;
-
-export type Lib_RehypeShiki_ProcessNode_Line_Number = number;
-
-export type Lib_RehypeShiki_ProcessNode_Line_Properties = Record<string, unknown>;
-
-export type Lib_RehypeShiki_ProcessNode_MarkedHtml = unknown;
+export type Lib_RehypeShiki_ProcessNode_HastRoot = unknown;
 
 export type Lib_RehypeShiki_ProcessNode_HastRootRecord = Record<string, unknown>;
 
 export type Lib_RehypeShiki_ProcessNode_HastChildren = unknown[];
 
-export type Lib_RehypeShiki_ProcessNode_HastPreElement = Record<string, unknown>;
+export type Lib_RehypeShiki_ProcessNode_PreElement = Record<string, unknown>;
 
-export type Lib_RehypeShiki_ProcessNode_HastPreChildren = unknown[];
+export type Lib_RehypeShiki_ProcessNode_PreProperties = Record<string, unknown>;
 
-export type Lib_RehypeShiki_ProcessNode_HastCodeElement = Record<string, unknown>;
+export type Lib_RehypeShiki_ProcessNode_PreChildren = unknown[];
+
+export type Lib_RehypeShiki_ProcessNode_InnerCode = Record<string, unknown>;
+
+export type Lib_RehypeShiki_ProcessNode_InnerCodeProperties = Record<string, unknown>;
 
 export type Lib_RehypeShiki_ProcessNode_TitleMatch = RegExpMatchArray | null;
+
+export type Lib_RehypeShiki_ProcessNode_TitleDoubleQuoted = string | undefined;
+
+export type Lib_RehypeShiki_ProcessNode_TitleSingleQuoted = string | undefined;
 
 export type Lib_RehypeShiki_ProcessNode_Title = string | undefined;
 
@@ -230,7 +315,39 @@ export type Lib_RehypeShiki_ProcessNode_ShowLineNumbers = boolean;
 
 export type Lib_RehypeShiki_ProcessNode_Live = boolean;
 
-export type Lib_RehypeShiki_ProcessNode_ParentChildren = Shared_HastNode[];
+export type Lib_RehypeShiki_ProcessNode_ParentChildren_Item_Type = string;
+
+export type Lib_RehypeShiki_ProcessNode_ParentChildren_Item_TagName = string | undefined;
+
+export type Lib_RehypeShiki_ProcessNode_ParentChildren_Item_Properties = Record<string, unknown>;
+
+export type Lib_RehypeShiki_ProcessNode_ParentChildren_Item_Children = Shared_HastNode[];
+
+export type Lib_RehypeShiki_ProcessNode_ParentChildren_Item_Value = string | undefined;
+
+export type Lib_RehypeShiki_ProcessNode_ParentChildren_Item_Data = Record<string, unknown> | undefined;
+
+export type Lib_RehypeShiki_ProcessNode_ParentChildren_Item = {
+  type: Lib_RehypeShiki_ProcessNode_ParentChildren_Item_Type;
+  tagName?: Lib_RehypeShiki_ProcessNode_ParentChildren_Item_TagName;
+  properties?: Lib_RehypeShiki_ProcessNode_ParentChildren_Item_Properties;
+  children?: Lib_RehypeShiki_ProcessNode_ParentChildren_Item_Children;
+  value?: Lib_RehypeShiki_ProcessNode_ParentChildren_Item_Value;
+  data?: Lib_RehypeShiki_ProcessNode_ParentChildren_Item_Data;
+};
+
+export type Lib_RehypeShiki_ProcessNode_ParentChildren = Lib_RehypeShiki_ProcessNode_ParentChildren_Item[];
+
+/**
+ * Lib - Rehype Shiki - Process Node - Line.
+ *
+ * @since 0.15.0
+ */
+export type Lib_RehypeShiki_ProcessNode_Line_LineNode = Shared_HastNode;
+
+export type Lib_RehypeShiki_ProcessNode_Line_LineNumber = number;
+
+export type Lib_RehypeShiki_ProcessNode_Line_LineProperties = Record<string, unknown>;
 
 /**
  * Lib - Rehype Shiki - Rehype Shiki.
@@ -261,10 +378,39 @@ export type Lib_RehypeShiki_RehypeShiki_Transformer_ShikiModule = {
   bundledLanguages: Lib_RehypeShiki_RehypeShiki_Transformer_ShikiModule_BundledLanguages;
 };
 
-export type Lib_RehypeShiki_RehypeShiki_Transformer_Nodes = Shared_HastNodeResult[];
+export type Lib_RehypeShiki_RehypeShiki_Transformer_Nodes_Item_Node = Shared_HastNode;
+
+export type Lib_RehypeShiki_RehypeShiki_Transformer_Nodes_Item_Index = number;
+
+export type Lib_RehypeShiki_RehypeShiki_Transformer_Nodes_Item_Parent = Shared_HastNode;
+
+export type Lib_RehypeShiki_RehypeShiki_Transformer_Nodes_Item = {
+  node: Lib_RehypeShiki_RehypeShiki_Transformer_Nodes_Item_Node;
+  index: Lib_RehypeShiki_RehypeShiki_Transformer_Nodes_Item_Index;
+  parent: Lib_RehypeShiki_RehypeShiki_Transformer_Nodes_Item_Parent;
+};
+
+export type Lib_RehypeShiki_RehypeShiki_Transformer_Nodes = Lib_RehypeShiki_RehypeShiki_Transformer_Nodes_Item[];
+
+export type Lib_RehypeShiki_RehypeShiki_Transformer_EntryCodeNode = Shared_HastNode | undefined;
+
+export type Lib_RehypeShiki_RehypeShiki_Transformer_EntryClassNameRaw = unknown;
+
+export type Lib_RehypeShiki_RehypeShiki_Transformer_EntryClassNames = string[];
+
+export type Lib_RehypeShiki_RehypeShiki_Transformer_EntryLang = string;
+
+export type Lib_RehypeShiki_RehypeShiki_Transformer_EntryShikiModule_CreateHighlighter = Function;
+
+export type Lib_RehypeShiki_RehypeShiki_Transformer_EntryShikiModule_BundledLanguages = Record<string, unknown>;
+
+export type Lib_RehypeShiki_RehypeShiki_Transformer_EntryShikiModule = {
+  createHighlighter: Lib_RehypeShiki_RehypeShiki_Transformer_EntryShikiModule_CreateHighlighter;
+  bundledLanguages: Lib_RehypeShiki_RehypeShiki_Transformer_EntryShikiModule_BundledLanguages;
+};
 
 export type Lib_RehypeShiki_RehypeShiki_Transformer_LoadedLanguages = string[];
 
 export type Lib_RehypeShiki_RehypeShiki_Transformer_IsLanguageLoaded = boolean;
 
-export type Lib_RehypeShiki_RehypeShiki_Transformer_BundledLanguageLoader = unknown;
+export type Lib_RehypeShiki_RehypeShiki_Transformer_LanguageLoader = unknown;

@@ -22,31 +22,83 @@ import { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 import * as utility from '../../../../lib/utility.js';
 
 import type {
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Exists,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasAnchorWrapping,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasBrokenLink,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasDocumentationSection,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasHeaderBlock,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasIntroductionSection,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasPictureBlock,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasStaleContent,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HeaderArg,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_IsProjectRootSpy,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_LoadSpy,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfig,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfigPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_IsProjectRootSpy,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_LoadSpy,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_SaveSpy,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_HasAnchorWrapping,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_HasPictureBlock,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_NovaConfig,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_NovaConfigPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_PackageJson,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_PackageJsonPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_ProjectDirectory,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_ReadmeContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_ReadmePath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_HasHeaderBlock,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_HasPictureBlock,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_NovaConfig,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_NovaConfigPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_PackageJson,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_PackageJsonPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_ProjectDirectory,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_ReadmeContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_ReadmePath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DryRunSkipsWorkspaceFanOutWrites_CliExists,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DryRunSkipsWorkspaceFanOutWrites_LibExists,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DryRunSkipsWorkspaceFanOutWrites_PresetExists,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DryRunSkipsWorkspaceFanOutWrites_ProjectDirectory,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DryRunSkipsWorkspaceFanOutWrites_RootExists,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DryRunSkipsWorkspaceFanOutWrites_WebExists,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_CliContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_DocsExists,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_LibContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_PresetContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_ProjectDirectory,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_RootContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_TemplateExists,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_WebContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_HasBrokenLink,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_HasDocumentationSection,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_NovaConfig,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_NovaConfigPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_PackageJson,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_PackageJsonPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_ProjectDirectory,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_ReadmeContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_ReadmePath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_HasHeaderBlock,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_NovaConfig,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_NovaConfigPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_PackageJson,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_PackageJsonPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_ProjectDirectory,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_ReadmeContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_ReadmePath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_HasIntroductionSection,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_NovaConfig,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_NovaConfigPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_PackageJson,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_PackageJsonPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_ProjectDirectory,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_ReadmeContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_ReadmePath,
   Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OriginalCwd,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJson,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJsonPath,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ProjectDirectory,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadContent,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmeContent,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmePath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_Calls,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_HeaderArg,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_IsProjectRootSpy,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_LoadSpy,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_SaveSpy,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_TargetCall,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_CliContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_LibContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_LibHasStaleContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_PresetContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_ProjectDirectory,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_StaleContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_WebContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_WebHasStaleContent,
   Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SandboxRoot,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SaveCalls,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SaveSpy,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_StaleContent,
-  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_TargetCall,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SetsExitCodeWhenNotAtProjectRoot_IsProjectRootSpy,
   Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_TemporaryDirectory,
   Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_TemporaryPrefix,
   Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_Name,
@@ -157,7 +209,7 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
   it('sets exit code when not at project root', async () => {
     process.exitCode = 0;
 
-    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(false);
+    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SetsExitCodeWhenNotAtProjectRoot_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(false);
 
     await CliGenerateMustHavesReadMe.run({});
 
@@ -171,9 +223,9 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
   });
 
   it('does not call saveGeneratedFile during dry-run', async () => {
-    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-    const loadSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ project: { name: { title: 'Test Project' } } });
-    const saveSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ project: { name: { title: 'Test Project' } } });
+    const saveSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateMustHavesReadMe.run({ dryRun: true });
 
@@ -189,19 +241,19 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
   });
 
   it('passes the correct header metadata to saveGeneratedFile', async () => {
-    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-    const loadSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ project: { name: { title: 'Test Project' } } });
-    const saveSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ project: { name: { title: 'Test Project' } } });
+    const saveSpy: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateMustHavesReadMe.run({ replaceFile: true });
 
-    const calls: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SaveCalls = saveSpy['mock']['calls'];
+    const calls: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_Calls = saveSpy['mock']['calls'];
 
-    const targetCall: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_TargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/README.md'));
+    const targetCall: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_TargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/README.md'));
 
     ok(targetCall !== undefined, 'Expected saveGeneratedFile to be called for README.md');
 
-    const headerArg: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HeaderArg = targetCall[3];
+    const headerArg: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_HeaderArg = targetCall[3];
 
     ok(headerArg !== undefined, 'Expected header argument to be defined');
 
@@ -219,16 +271,16 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
   });
 
   it('omits the Documentation section when urls.documentation is missing', async () => {
-    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ProjectDirectory = join(sandboxRoot, 'no-documentation-url');
+    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_ProjectDirectory = join(sandboxRoot, 'no-documentation-url');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
-    const packageJsonPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJson: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJsonPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const novaConfig: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfig = JSON.stringify({
+    const novaConfig: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_NovaConfig = JSON.stringify({
       project: {
         name: {
           title: 'Test Project',
@@ -238,7 +290,7 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
         homepage: 'https://example.com',
       },
     }, null, 2);
-    const novaConfigPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_NovaConfigPath = join(projectDirectory, 'nova.config.json');
 
     await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
 
@@ -246,10 +298,10 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
 
     await CliGenerateMustHavesReadMe.run({});
 
-    const readmePath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmePath = join(projectDirectory, 'README.md');
-    const readmeContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmeContent = await readFile(readmePath, 'utf-8');
-    const hasDocumentationSection: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasDocumentationSection = readmeContent.includes('## Documentation');
-    const hasBrokenLink: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasBrokenLink = readmeContent.includes('[](');
+    const readmePath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_ReadmePath = join(projectDirectory, 'README.md');
+    const readmeContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_ReadmeContent = await readFile(readmePath, 'utf-8');
+    const hasDocumentationSection: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_HasDocumentationSection = readmeContent.includes('## Documentation');
+    const hasBrokenLink: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheDocumentationSectionWhenUrlsDocumentationIsMissing_HasBrokenLink = readmeContent.includes('[](');
 
     strictEqual(hasDocumentationSection, false, 'Expected README.md to omit the Documentation section when urls.documentation is missing');
     strictEqual(hasBrokenLink, false, 'Expected README.md to have no broken markdown link [](...)');
@@ -258,23 +310,23 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
   });
 
   it('omits the Introduction section when project.description.long is missing', async () => {
-    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ProjectDirectory = join(sandboxRoot, 'no-description');
+    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_ProjectDirectory = join(sandboxRoot, 'no-description');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
-    const packageJsonPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJson: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJsonPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const novaConfig: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfig = JSON.stringify({
+    const novaConfig: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_NovaConfig = JSON.stringify({
       project: {
         name: {
           title: 'Test Project',
         },
       },
     }, null, 2);
-    const novaConfigPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_NovaConfigPath = join(projectDirectory, 'nova.config.json');
 
     await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
 
@@ -282,9 +334,9 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
 
     await CliGenerateMustHavesReadMe.run({});
 
-    const readmePath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmePath = join(projectDirectory, 'README.md');
-    const readmeContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmeContent = await readFile(readmePath, 'utf-8');
-    const hasIntroductionSection: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasIntroductionSection = readmeContent.includes('## Introduction');
+    const readmePath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_ReadmePath = join(projectDirectory, 'README.md');
+    const readmeContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_ReadmeContent = await readFile(readmePath, 'utf-8');
+    const hasIntroductionSection: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheIntroductionSectionWhenProjectDescriptionLongIsMissing_HasIntroductionSection = readmeContent.includes('## Introduction');
 
     strictEqual(hasIntroductionSection, false, 'Expected README.md to omit the Introduction section when description is missing');
 
@@ -292,16 +344,16 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
   });
 
   it('drops the picture block when urls.logo is missing', async () => {
-    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ProjectDirectory = join(sandboxRoot, 'no-logo');
+    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_ProjectDirectory = join(sandboxRoot, 'no-logo');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
-    const packageJsonPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJson: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJsonPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const novaConfig: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfig = JSON.stringify({
+    const novaConfig: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_NovaConfig = JSON.stringify({
       project: {
         name: {
           title: 'Test Project',
@@ -311,7 +363,7 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
         homepage: 'https://example.com',
       },
     }, null, 2);
-    const novaConfigPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_NovaConfigPath = join(projectDirectory, 'nova.config.json');
 
     await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
 
@@ -319,10 +371,10 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
 
     await CliGenerateMustHavesReadMe.run({});
 
-    const readmePath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmePath = join(projectDirectory, 'README.md');
-    const readmeContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmeContent = await readFile(readmePath, 'utf-8');
-    const hasPictureBlock: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasPictureBlock = readmeContent.includes('<picture>');
-    const hasHeaderBlock: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasHeaderBlock = readmeContent.includes('<div align="center">');
+    const readmePath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_ReadmePath = join(projectDirectory, 'README.md');
+    const readmeContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_ReadmeContent = await readFile(readmePath, 'utf-8');
+    const hasPictureBlock: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_HasPictureBlock = readmeContent.includes('<picture>');
+    const hasHeaderBlock: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsThePictureBlockWhenUrlsLogoIsMissing_HasHeaderBlock = readmeContent.includes('<div align="center">');
 
     strictEqual(hasPictureBlock, false, 'Expected README.md to omit the <picture> block when urls.logo is missing');
     strictEqual(hasHeaderBlock, true, 'Expected README.md to still include the header block with title');
@@ -331,16 +383,16 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
   });
 
   it('drops the anchor wrapping when urls.homepage is missing', async () => {
-    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ProjectDirectory = join(sandboxRoot, 'no-homepage');
+    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_ProjectDirectory = join(sandboxRoot, 'no-homepage');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
-    const packageJsonPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJson: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJsonPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const novaConfig: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfig = JSON.stringify({
+    const novaConfig: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_NovaConfig = JSON.stringify({
       project: {
         name: {
           title: 'Test Project',
@@ -350,7 +402,7 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
         logo: 'https://example.com/logo.png',
       },
     }, null, 2);
-    const novaConfigPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_NovaConfigPath = join(projectDirectory, 'nova.config.json');
 
     await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
 
@@ -358,10 +410,10 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
 
     await CliGenerateMustHavesReadMe.run({});
 
-    const readmePath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmePath = join(projectDirectory, 'README.md');
-    const readmeContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmeContent = await readFile(readmePath, 'utf-8');
-    const hasAnchorWrapping: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasAnchorWrapping = readmeContent.includes('<a href=');
-    const hasPictureBlock: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasPictureBlock = readmeContent.includes('<picture>');
+    const readmePath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_ReadmePath = join(projectDirectory, 'README.md');
+    const readmeContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_ReadmeContent = await readFile(readmePath, 'utf-8');
+    const hasAnchorWrapping: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_HasAnchorWrapping = readmeContent.includes('<a href=');
+    const hasPictureBlock: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DropsTheAnchorWrappingWhenUrlsHomepageIsMissing_HasPictureBlock = readmeContent.includes('<picture>');
 
     strictEqual(hasAnchorWrapping, false, 'Expected README.md to omit the <a> wrapping when urls.homepage is missing');
     strictEqual(hasPictureBlock, true, 'Expected README.md to still include the <picture> block with the logo');
@@ -370,23 +422,23 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
   });
 
   it('omits the entire header block when project.name.title is missing', async () => {
-    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ProjectDirectory = join(sandboxRoot, 'no-name');
+    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_ProjectDirectory = join(sandboxRoot, 'no-name');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
-    const packageJsonPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJson: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJsonPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const novaConfig: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfig = JSON.stringify({
+    const novaConfig: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_NovaConfig = JSON.stringify({
       project: {
         description: {
           long: 'A test project without a title.',
         },
       },
     }, null, 2);
-    const novaConfigPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_NovaConfigPath = join(projectDirectory, 'nova.config.json');
 
     await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
 
@@ -394,9 +446,9 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
 
     await CliGenerateMustHavesReadMe.run({});
 
-    const readmePath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmePath = join(projectDirectory, 'README.md');
-    const readmeContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmeContent = await readFile(readmePath, 'utf-8');
-    const hasHeaderBlock: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasHeaderBlock = readmeContent.includes('<div align="center">');
+    const readmePath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_ReadmePath = join(projectDirectory, 'README.md');
+    const readmeContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_ReadmeContent = await readFile(readmePath, 'utf-8');
+    const hasHeaderBlock: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OmitsTheEntireHeaderBlockWhenProjectNameTitleIsMissing_HasHeaderBlock = readmeContent.includes('<div align="center">');
 
     strictEqual(hasHeaderBlock, false, 'Expected README.md to omit the header block when project name is missing');
 
@@ -404,35 +456,35 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
   });
 
   it('fans out to consumer-facing roles', async () => {
-    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ProjectDirectory = await createRoleMatrixSandbox(sandboxRoot, 'role-matrix');
+    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_ProjectDirectory = await createRoleMatrixSandbox(sandboxRoot, 'role-matrix');
 
     process.chdir(projectDirectory);
 
     await CliGenerateMustHavesReadMe.run({});
 
     // Included roles (app, package, tool, config) — README present with content.
-    const rootContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadContent = await readFile(join(projectDirectory, 'README.md'), 'utf-8');
+    const rootContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_RootContent = await readFile(join(projectDirectory, 'README.md'), 'utf-8');
 
     strictEqual(rootContent.includes('Test Project') === true, true);
 
-    const webContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadContent = await readFile(join(projectDirectory, 'apps', 'web', 'README.md'), 'utf-8');
+    const webContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_WebContent = await readFile(join(projectDirectory, 'apps', 'web', 'README.md'), 'utf-8');
 
     strictEqual(webContent.includes('Test Project') === true, true);
 
-    const libContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadContent = await readFile(join(projectDirectory, 'packages', 'lib-a', 'README.md'), 'utf-8');
+    const libContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_LibContent = await readFile(join(projectDirectory, 'packages', 'lib-a', 'README.md'), 'utf-8');
 
     strictEqual(libContent.includes('Test Project') === true, true);
 
-    const cliContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadContent = await readFile(join(projectDirectory, 'packages', 'cli-a', 'README.md'), 'utf-8');
+    const cliContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_CliContent = await readFile(join(projectDirectory, 'packages', 'cli-a', 'README.md'), 'utf-8');
 
     strictEqual(cliContent.includes('Test Project') === true, true);
 
-    const presetContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadContent = await readFile(join(projectDirectory, 'packages', 'preset-a', 'README.md'), 'utf-8');
+    const presetContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_PresetContent = await readFile(join(projectDirectory, 'packages', 'preset-a', 'README.md'), 'utf-8');
 
     strictEqual(presetContent.includes('Test Project') === true, true);
 
     // Excluded roles (docs, template) — README absent.
-    let docsExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Exists = true;
+    let docsExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_DocsExists = true;
 
     try {
       await readFile(join(projectDirectory, 'apps', 'docs-site', 'README.md'), 'utf-8');
@@ -442,7 +494,7 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
 
     strictEqual(docsExists, false);
 
-    let templateExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Exists = true;
+    let templateExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_FansOutToConsumerFacingRoles_TemplateExists = true;
 
     try {
       await readFile(join(projectDirectory, 'packages', 'template-a', 'README.md'), 'utf-8');
@@ -456,14 +508,14 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
   });
 
   it('dry-run skips workspace fan-out writes', async () => {
-    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ProjectDirectory = await createRoleMatrixSandbox(sandboxRoot, 'dry-run-fan-out');
+    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DryRunSkipsWorkspaceFanOutWrites_ProjectDirectory = await createRoleMatrixSandbox(sandboxRoot, 'dry-run-fan-out');
 
     process.chdir(projectDirectory);
 
     await CliGenerateMustHavesReadMe.run({ dryRun: true });
 
     // Root file must be absent.
-    let rootExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Exists = true;
+    let rootExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DryRunSkipsWorkspaceFanOutWrites_RootExists = true;
 
     try {
       await readFile(join(projectDirectory, 'README.md'), 'utf-8');
@@ -474,7 +526,7 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
     strictEqual(rootExists, false);
 
     // Consumer workspace files must be absent.
-    let webExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Exists = true;
+    let webExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DryRunSkipsWorkspaceFanOutWrites_WebExists = true;
 
     try {
       await readFile(join(projectDirectory, 'apps', 'web', 'README.md'), 'utf-8');
@@ -484,7 +536,7 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
 
     strictEqual(webExists, false);
 
-    let libExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Exists = true;
+    let libExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DryRunSkipsWorkspaceFanOutWrites_LibExists = true;
 
     try {
       await readFile(join(projectDirectory, 'packages', 'lib-a', 'README.md'), 'utf-8');
@@ -494,7 +546,7 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
 
     strictEqual(libExists, false);
 
-    let cliExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Exists = true;
+    let cliExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DryRunSkipsWorkspaceFanOutWrites_CliExists = true;
 
     try {
       await readFile(join(projectDirectory, 'packages', 'cli-a', 'README.md'), 'utf-8');
@@ -504,7 +556,7 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
 
     strictEqual(cliExists, false);
 
-    let presetExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Exists = true;
+    let presetExists: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DryRunSkipsWorkspaceFanOutWrites_PresetExists = true;
 
     try {
       await readFile(join(projectDirectory, 'packages', 'preset-a', 'README.md'), 'utf-8');
@@ -518,9 +570,9 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
   });
 
   it('replaceFile mode overwrites existing fan-out files', async () => {
-    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ProjectDirectory = await createRoleMatrixSandbox(sandboxRoot, 'replace-fan-out');
+    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_ProjectDirectory = await createRoleMatrixSandbox(sandboxRoot, 'replace-fan-out');
 
-    const staleContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_StaleContent = 'STALE-CONTENT';
+    const staleContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_StaleContent = 'STALE-CONTENT';
 
     await writeFile(join(projectDirectory, 'apps', 'web', 'README.md'), staleContent, 'utf-8');
     await writeFile(join(projectDirectory, 'packages', 'lib-a', 'README.md'), staleContent, 'utf-8');
@@ -530,24 +582,24 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
     await CliGenerateMustHavesReadMe.run({ replaceFile: true });
 
     // Pre-existing files must have been replaced.
-    const webContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadContent = await readFile(join(projectDirectory, 'apps', 'web', 'README.md'), 'utf-8');
-    const webHasStaleContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasStaleContent = webContent.includes('STALE-CONTENT');
+    const webContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_WebContent = await readFile(join(projectDirectory, 'apps', 'web', 'README.md'), 'utf-8');
+    const webHasStaleContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_WebHasStaleContent = webContent.includes('STALE-CONTENT');
 
     strictEqual(webHasStaleContent, false);
     strictEqual(webContent.includes('Test Project') === true, true);
 
-    const libContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadContent = await readFile(join(projectDirectory, 'packages', 'lib-a', 'README.md'), 'utf-8');
-    const libHasStaleContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasStaleContent = libContent.includes('STALE-CONTENT');
+    const libContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_LibContent = await readFile(join(projectDirectory, 'packages', 'lib-a', 'README.md'), 'utf-8');
+    const libHasStaleContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_LibHasStaleContent = libContent.includes('STALE-CONTENT');
 
     strictEqual(libHasStaleContent, false);
     strictEqual(libContent.includes('Test Project') === true, true);
 
     // Other consumer workspaces must also have files written.
-    const cliContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadContent = await readFile(join(projectDirectory, 'packages', 'cli-a', 'README.md'), 'utf-8');
+    const cliContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_CliContent = await readFile(join(projectDirectory, 'packages', 'cli-a', 'README.md'), 'utf-8');
 
     strictEqual(cliContent.includes('Test Project') === true, true);
 
-    const presetContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadContent = await readFile(join(projectDirectory, 'packages', 'preset-a', 'README.md'), 'utf-8');
+    const presetContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_PresetContent = await readFile(join(projectDirectory, 'packages', 'preset-a', 'README.md'), 'utf-8');
 
     strictEqual(presetContent.includes('Test Project') === true, true);
 

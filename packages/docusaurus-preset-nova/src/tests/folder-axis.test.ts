@@ -12,16 +12,21 @@ import {
 } from '../lib/regex.js';
 
 import type {
-  Tests_FolderAxis_FolderAxis_BlockDirs,
-  Tests_FolderAxis_FolderAxis_BlockDirSet,
-  Tests_FolderAxis_FolderAxis_CasingMessage,
-  Tests_FolderAxis_FolderAxis_CasingViolations,
-  Tests_FolderAxis_FolderAxis_ExportedFolders,
-  Tests_FolderAxis_FolderAxis_MissingExports,
-  Tests_FolderAxis_FolderAxis_MissingExportsMessage,
-  Tests_FolderAxis_FolderAxis_StaleExports,
-  Tests_FolderAxis_FolderAxis_StaleExportsMessage,
-  Tests_FolderAxis_FolderAxis_ThemeDirs,
+  Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryIsReExportedFromIndexTs_BlockDirs,
+  Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryIsReExportedFromIndexTs_Exported,
+  Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryIsReExportedFromIndexTs_Message,
+  Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryIsReExportedFromIndexTs_Missing,
+  Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_BlockDirs,
+  Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_Message,
+  Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_Violations,
+  Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_BlockDirs,
+  Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_BlockDirSet,
+  Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Exported,
+  Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Message,
+  Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Stale,
+  Tests_FolderAxis_FolderAxis_EveryThemeDirectoryUsesPascalCase_Message,
+  Tests_FolderAxis_FolderAxis_EveryThemeDirectoryUsesPascalCase_ThemeDirs,
+  Tests_FolderAxis_FolderAxis_EveryThemeDirectoryUsesPascalCase_Violations,
   Tests_FolderAxis_GetPackageRoot_CurrentFileDirectory,
   Tests_FolderAxis_GetPackageRoot_CurrentFilePath,
   Tests_FolderAxis_GetPackageRoot_Returns,
@@ -145,9 +150,9 @@ function readBlocksIndexExports(): Tests_FolderAxis_ReadBlocksIndexExports_Retur
  */
 describe('folder axis', () => {
   it('every theme/ directory uses PascalCase', () => {
-    const themeDirs: Tests_FolderAxis_FolderAxis_ThemeDirs = listThemeDirectories();
-    const violations: Tests_FolderAxis_FolderAxis_CasingViolations = themeDirs.filter((name) => LIB_REGEX_PASCAL_CASE.test(name) === false);
-    const message: Tests_FolderAxis_FolderAxis_CasingMessage = [
+    const themeDirs: Tests_FolderAxis_FolderAxis_EveryThemeDirectoryUsesPascalCase_ThemeDirs = listThemeDirectories();
+    const violations: Tests_FolderAxis_FolderAxis_EveryThemeDirectoryUsesPascalCase_Violations = themeDirs.filter((name) => LIB_REGEX_PASCAL_CASE.test(name) === false);
+    const message: Tests_FolderAxis_FolderAxis_EveryThemeDirectoryUsesPascalCase_Message = [
       `theme/ has ${violations.length} non-PascalCase subfolders (theme components must use PascalCase to match @theme/X):`,
       ...violations.map((entry) => `  - ${entry}`),
     ].join('\n');
@@ -158,9 +163,9 @@ describe('folder axis', () => {
   });
 
   it('every blocks/ directory uses kebab-case', () => {
-    const blockDirs: Tests_FolderAxis_FolderAxis_BlockDirs = listBlockDirectories();
-    const violations: Tests_FolderAxis_FolderAxis_CasingViolations = blockDirs.filter((name) => LIB_REGEX_KEBAB_CASE.test(name) === false);
-    const message: Tests_FolderAxis_FolderAxis_CasingMessage = [
+    const blockDirs: Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_BlockDirs = listBlockDirectories();
+    const violations: Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_Violations = blockDirs.filter((name) => LIB_REGEX_KEBAB_CASE.test(name) === false);
+    const message: Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryUsesKebabCase_Message = [
       `blocks/ has ${violations.length} non-kebab-case subfolders (Nova blocks must use kebab-case to signal direct-import surfaces):`,
       ...violations.map((entry) => `  - ${entry}`),
     ].join('\n');
@@ -171,10 +176,10 @@ describe('folder axis', () => {
   });
 
   it('every blocks/ directory is re-exported from index.ts', () => {
-    const blockDirs: Tests_FolderAxis_FolderAxis_BlockDirs = listBlockDirectories();
-    const exported: Tests_FolderAxis_FolderAxis_ExportedFolders = readBlocksIndexExports();
-    const missing: Tests_FolderAxis_FolderAxis_MissingExports = blockDirs.filter((name) => exported.has(name) === false);
-    const message: Tests_FolderAxis_FolderAxis_MissingExportsMessage = [
+    const blockDirs: Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryIsReExportedFromIndexTs_BlockDirs = listBlockDirectories();
+    const exported: Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryIsReExportedFromIndexTs_Exported = readBlocksIndexExports();
+    const missing: Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryIsReExportedFromIndexTs_Missing = blockDirs.filter((name) => exported.has(name) === false);
+    const message: Tests_FolderAxis_FolderAxis_EveryBlocksDirectoryIsReExportedFromIndexTs_Message = [
       `blocks/ has ${missing.length} directories not re-exported from index.ts (consumers cannot reach them via the ./blocks subpath):`,
       ...missing.map((entry) => `  - ${entry}`),
     ].join('\n');
@@ -185,11 +190,11 @@ describe('folder axis', () => {
   });
 
   it('every blocks/index.ts export points to an existing directory', () => {
-    const blockDirs: Tests_FolderAxis_FolderAxis_BlockDirs = listBlockDirectories();
-    const exported: Tests_FolderAxis_FolderAxis_ExportedFolders = readBlocksIndexExports();
-    const blockDirSet: Tests_FolderAxis_FolderAxis_BlockDirSet = new Set(blockDirs);
-    const stale: Tests_FolderAxis_FolderAxis_StaleExports = Array.from(exported).filter((name) => blockDirSet.has(name) === false);
-    const message: Tests_FolderAxis_FolderAxis_StaleExportsMessage = [
+    const blockDirs: Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_BlockDirs = listBlockDirectories();
+    const exported: Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Exported = readBlocksIndexExports();
+    const blockDirSet: Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_BlockDirSet = new Set(blockDirs);
+    const stale: Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Stale = Array.from(exported).filter((name) => blockDirSet.has(name) === false);
+    const message: Tests_FolderAxis_FolderAxis_EveryBlocksIndexTsExportPointsToAnExistingDirectory_Message = [
       `blocks/index.ts has ${stale.length} exports without matching directories (barrel is stale):`,
       ...stale.map((entry) => `  - ${entry}`),
     ].join('\n');

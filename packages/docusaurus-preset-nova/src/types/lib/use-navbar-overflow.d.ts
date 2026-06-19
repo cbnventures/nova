@@ -9,14 +9,6 @@ import type {
  *
  * @since 0.18.0
  */
-export type Lib_UseNavbarOverflow_ParseLength_Input = string;
-
-export type Lib_UseNavbarOverflow_ParseLength_Returns = number;
-
-export type Lib_UseNavbarOverflow_ParseLength_Numeric = number;
-
-export type Lib_UseNavbarOverflow_ParseLength_RootFontSize = number;
-
 export type Lib_UseNavbarOverflow_InputItem = unknown;
 
 export type Lib_UseNavbarOverflow_Input_Items = readonly Lib_UseNavbarOverflow_InputItem[];
@@ -64,7 +56,11 @@ export type Lib_UseNavbarOverflow_Measuring = boolean;
 
 export type Lib_UseNavbarOverflow_SetMeasuring = Dispatch<SetStateAction<Lib_UseNavbarOverflow_Measuring>>;
 
-export type Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_Returns = undefined;
+export type Lib_UseNavbarOverflow_Container = HTMLDivElement;
+
+export type Lib_UseNavbarOverflow_BudgetRaw = string;
+
+export type Lib_UseNavbarOverflow_TriggerRaw = string;
 
 export type Lib_UseNavbarOverflow_BudgetPixels = number;
 
@@ -72,17 +68,15 @@ export type Lib_UseNavbarOverflow_TriggerPixels = number;
 
 export type Lib_UseNavbarOverflow_Gap = number;
 
-export type Lib_UseNavbarOverflow_ChildrenWidths = Lib_UseNavbarOverflow_ChildWidth[];
+export type Lib_UseNavbarOverflow_ChildWidth = number;
 
-export type Lib_UseNavbarOverflow_ChildElement = Element;
+export type Lib_UseNavbarOverflow_ChildrenWidths = Lib_UseNavbarOverflow_ChildWidth[];
 
 export type Lib_UseNavbarOverflow_Cumulative = number;
 
 export type Lib_UseNavbarOverflow_Count = number;
 
-export type Lib_UseNavbarOverflow_MaybeChildWidth = Lib_UseNavbarOverflow_ChildWidth | undefined;
-
-export type Lib_UseNavbarOverflow_ChildWidth = number;
+export type Lib_UseNavbarOverflow_Width = number;
 
 export type Lib_UseNavbarOverflow_Proposed = number;
 
@@ -95,3 +89,25 @@ export type Lib_UseNavbarOverflow_Cancelled = boolean;
 export type Lib_UseNavbarOverflow_Observer = ResizeObserver;
 
 export type Lib_UseNavbarOverflow_HasOverflow = boolean;
+
+/**
+ * Lib - Use Navbar Overflow - Parse Length.
+ *
+ * @since 0.18.0
+ */
+export type Lib_UseNavbarOverflow_ParseLength_Value = string;
+
+export type Lib_UseNavbarOverflow_ParseLength_Returns = number;
+
+export type Lib_UseNavbarOverflow_ParseLength_Numeric = number;
+
+export type Lib_UseNavbarOverflow_ParseLength_RootFontSize = number;
+
+/**
+ * Lib - Use Navbar Overflow - Use Navbar Overflow - Compute.
+ *
+ * @since 0.18.0
+ */
+export type Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_Returns = undefined;
+
+export type Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_ChildWidth = number | undefined;

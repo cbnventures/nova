@@ -5,10 +5,11 @@ import { describe, it } from 'vitest';
 import { fetchStatItems } from '../../getters/get-stat-items.js';
 
 import type {
-  TestsGettersGetStatItemsFetchStatItemsColors,
-  TestsGettersGetStatItemsFetchStatItemsLabels,
-  TestsGettersGetStatItemsFetchStatItemsParsedValue,
-  TestsGettersGetStatItemsFetchStatItemsResult,
+  Tests_Getters_GetStatItems_FetchStatItems_ReturnsFourStatItemsWithExpectedLabelsAndColors_Colors,
+  Tests_Getters_GetStatItems_FetchStatItems_ReturnsFourStatItemsWithExpectedLabelsAndColors_Labels,
+  Tests_Getters_GetStatItems_FetchStatItems_ReturnsFourStatItemsWithExpectedLabelsAndColors_Result,
+  Tests_Getters_GetStatItems_FetchStatItems_ReturnsPositiveCountsForEachStatCategory_ParsedValue,
+  Tests_Getters_GetStatItems_FetchStatItems_ReturnsPositiveCountsForEachStatCategory_Result,
 } from '../../types/tests/getters/get-stat-items.test.d.ts';
 
 /**
@@ -18,11 +19,11 @@ import type {
  */
 describe('fetchStatItems', () => {
   it('returns four stat items with expected labels and colors', () => {
-    const result: TestsGettersGetStatItemsFetchStatItemsResult = fetchStatItems();
+    const result: Tests_Getters_GetStatItems_FetchStatItems_ReturnsFourStatItemsWithExpectedLabelsAndColors_Result = fetchStatItems();
 
     strictEqual(result.length, 4);
 
-    const labels: TestsGettersGetStatItemsFetchStatItemsLabels = result.map((item) => item['label']);
+    const labels: Tests_Getters_GetStatItems_FetchStatItems_ReturnsFourStatItemsWithExpectedLabelsAndColors_Labels = result.map((item) => item['label']);
 
     deepStrictEqual(labels, [
       'Custom lint rules',
@@ -31,7 +32,7 @@ describe('fetchStatItems', () => {
       'Project scaffolds',
     ]);
 
-    const colors: TestsGettersGetStatItemsFetchStatItemsColors = result.map((item) => item['color']);
+    const colors: Tests_Getters_GetStatItems_FetchStatItems_ReturnsFourStatItemsWithExpectedLabelsAndColors_Colors = result.map((item) => item['color']);
 
     deepStrictEqual(colors, [
       'primary',
@@ -44,10 +45,10 @@ describe('fetchStatItems', () => {
   });
 
   it('returns positive counts for each stat category', () => {
-    const result: TestsGettersGetStatItemsFetchStatItemsResult = fetchStatItems();
+    const result: Tests_Getters_GetStatItems_FetchStatItems_ReturnsPositiveCountsForEachStatCategory_Result = fetchStatItems();
 
     for (const item of result) {
-      const parsedValue: TestsGettersGetStatItemsFetchStatItemsParsedValue = Number(item['value']);
+      const parsedValue: Tests_Getters_GetStatItems_FetchStatItems_ReturnsPositiveCountsForEachStatCategory_ParsedValue = Number(item['value']);
 
       strictEqual(Number.isNaN(parsedValue), false);
       strictEqual(parsedValue > 0, true);

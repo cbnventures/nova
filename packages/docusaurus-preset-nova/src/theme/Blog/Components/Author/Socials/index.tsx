@@ -2,13 +2,13 @@ import Link from '@docusaurus/Link';
 import { Icon } from '@iconify/react/offline';
 
 import type {
+  Theme_Blog_Components_Author_Socials_Index_Socials,
   Theme_Blog_Components_Author_Socials_Index_Socials_Entries,
   Theme_Blog_Components_Author_Socials_Index_Socials_IconConfig,
   Theme_Blog_Components_Author_Socials_Index_Socials_IconConfigMap,
   Theme_Blog_Components_Author_Socials_Index_Socials_Link,
   Theme_Blog_Components_Author_Socials_Index_Socials_Platform,
   Theme_Blog_Components_Author_Socials_Index_Socials_Props,
-  Theme_Blog_Components_Author_Socials_Index_Socials,
 } from '../../../../../types/theme/Blog/Components/Author/Socials/index.d.ts';
 
 /**

@@ -209,3 +209,15 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_Run_Content = string;
 export type Cli_Generate_MustHaves_ReadMe_Runner_Run_TargetPath = string;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_Run_ConsumerWorkspacePaths = string[];
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderOptions_Command = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderOptions_DocsSlug = string;
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderOptions_Mode = 'strict' | 'fillable';
+
+export type Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderOptions = {
+  command: Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderOptions_Command;
+  docsSlug: Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderOptions_DocsSlug;
+  mode: Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderOptions_Mode;
+};

@@ -60,6 +60,8 @@ export type Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Content = s
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Returns = string[];
 
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Patterns = string[];
+
 export type Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Trimmed = string;
 
 /**
@@ -78,6 +80,10 @@ export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_MarkerI
 export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Line = string | undefined;
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_StartIndex = number;
+
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Patterns = string[];
+
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_ExcludeLine = string | undefined;
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Trimmed = string;
 
@@ -157,21 +163,21 @@ export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Action = Cl
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ExistingPatterns = Set<string>;
 
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddValue = unknown;
+
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateAddPattern = (addValue: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddValue) => Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateAddPattern_Returns;
+
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputKey = 'pattern';
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputValue = string;
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_PatternOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputValue> | SharedPromptWithCancelReject;
 
-export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternValidateValue = unknown;
-
-export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedValue = string;
-
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_PatternName = string | undefined;
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedPatternName = string;
 
-export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UpdatedContent = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddedContent = string;
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditChoice_Title = string;
 
@@ -188,9 +194,13 @@ export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectO
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputValue = string | undefined;
 
-export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_SelectOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputValue> | SharedPromptWithCancelReject;
 
-export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_SelectedPattern = string | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectedPattern = string | undefined;
+
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditValue = unknown;
+
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateEditPattern = (editValue: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditValue) => Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateEditPattern_Returns;
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputKey = 'newPattern';
 
@@ -198,11 +208,11 @@ export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatt
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_NewPatternOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputValue> | SharedPromptWithCancelReject;
 
-export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditPatternValidateValue = unknown;
-
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_NewPattern = string | undefined;
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedNewPattern = string;
+
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditedContent = string;
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteChoice_Title = string;
 
@@ -222,6 +232,24 @@ export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelec
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputValue> | SharedPromptWithCancelReject;
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectedPattern = string | undefined;
+
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeletedContent = string;
+
+/**
+ * CLI - Generate - Must Haves - Gitignore - Prompt Manage Menu - Validate Add Pattern.
+ *
+ * @since 0.15.0
+ */
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateAddPattern_Returns = string | true;
+
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateAddPattern_TrimmedValue = string;
+
+/**
+ * CLI - Generate - Must Haves - Gitignore - Prompt Manage Menu - Validate Edit Pattern.
+ *
+ * @since 0.15.0
+ */
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ValidateEditPattern_Returns = string | true;
 
 /**
  * CLI - Generate - Must Haves - Gitignore - Prompt Regenerate.
@@ -341,6 +369,10 @@ export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutput = SharedPromp
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputResult = Record<Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputValue>;
 
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_SelectedMode = 'manage' | 'regenerate' | undefined;
+
 export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ManageResult = 'back' | 'exit';
+
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_RegenerateResult = 'completed' | 'cancelled';
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_Run_Result = 'completed' | 'cancelled';

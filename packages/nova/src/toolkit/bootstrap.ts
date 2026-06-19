@@ -6,53 +6,65 @@ import { LIB_REGEX_PATTERN_ENV_LINE } from '../lib/regex.js';
 import { Logger } from './index.js';
 
 import type {
-  Toolkit_Bootstrap_GetCacheDir_AppName,
-  Toolkit_Bootstrap_GetCacheDir_CachePath,
-  Toolkit_Bootstrap_GetCacheDir_HomeDirPath,
-  Toolkit_Bootstrap_GetCacheDir_Return,
-  Toolkit_Bootstrap_GetConfigDir_AppName,
-  Toolkit_Bootstrap_GetConfigDir_BasePath,
-  Toolkit_Bootstrap_GetConfigDir_DefaultPath,
-  Toolkit_Bootstrap_GetConfigDir_HomeDirPath,
-  Toolkit_Bootstrap_GetConfigDir_Return,
-  Toolkit_Bootstrap_GetDataDir_AppName,
-  Toolkit_Bootstrap_GetDataDir_DataPath,
-  Toolkit_Bootstrap_GetDataDir_HomeDirPath,
-  Toolkit_Bootstrap_GetDataDir_Return,
-  Toolkit_Bootstrap_GetProjectRoot_Content,
-  Toolkit_Bootstrap_GetProjectRoot_Dir,
-  Toolkit_Bootstrap_GetProjectRoot_FilePath,
-  Toolkit_Bootstrap_GetProjectRoot_FirstPackageDir,
-  Toolkit_Bootstrap_GetProjectRoot_Parent,
-  Toolkit_Bootstrap_GetProjectRoot_Parsed,
-  Toolkit_Bootstrap_GetProjectRoot_Return,
-  Toolkit_Bootstrap_LoadEnv_Content,
-  Toolkit_Bootstrap_LoadEnv_Directory,
-  Toolkit_Bootstrap_LoadEnv_FilePath,
-  Toolkit_Bootstrap_LoadEnv_Key,
-  Toolkit_Bootstrap_LoadEnv_Line,
-  Toolkit_Bootstrap_LoadEnv_Lines,
-  Toolkit_Bootstrap_LoadEnv_Match,
-  Toolkit_Bootstrap_LoadEnv_Return,
-  Toolkit_Bootstrap_LoadEnv_Value,
-  Toolkit_Bootstrap_ResolveDir_AppName,
-  Toolkit_Bootstrap_ResolveDir_Keyword,
-  Toolkit_Bootstrap_ResolveDir_Return,
-  Toolkit_Bootstrap_ResolveFileDir_AppName,
-  Toolkit_Bootstrap_ResolveFileDir_Directory,
-  Toolkit_Bootstrap_ResolveFileDir_Filename,
-  Toolkit_Bootstrap_ResolveFileDir_FilePath,
-  Toolkit_Bootstrap_ResolveFileDir_Location,
-  Toolkit_Bootstrap_ResolveFileDir_Return,
-  Toolkit_Bootstrap_ResolveFileDir_SearchOrder,
-  Toolkit_Bootstrap_ResolveFileDirs_AppName,
-  Toolkit_Bootstrap_ResolveFileDirs_Directory,
-  Toolkit_Bootstrap_ResolveFileDirs_Filename,
-  Toolkit_Bootstrap_ResolveFileDirs_FilePath,
-  Toolkit_Bootstrap_ResolveFileDirs_Location,
-  Toolkit_Bootstrap_ResolveFileDirs_Results,
-  Toolkit_Bootstrap_ResolveFileDirs_Return,
-  Toolkit_Bootstrap_ResolveFileDirs_SearchOrder,
+  Toolkit_Bootstrap_Runner_GetCacheDir_AppName,
+  Toolkit_Bootstrap_Runner_GetCacheDir_BasePath,
+  Toolkit_Bootstrap_Runner_GetCacheDir_CachePath,
+  Toolkit_Bootstrap_Runner_GetCacheDir_DarwinBasePath,
+  Toolkit_Bootstrap_Runner_GetCacheDir_DarwinCachePath,
+  Toolkit_Bootstrap_Runner_GetCacheDir_HomeDirPath,
+  Toolkit_Bootstrap_Runner_GetCacheDir_Returns,
+  Toolkit_Bootstrap_Runner_GetCacheDir_WindowsBasePath,
+  Toolkit_Bootstrap_Runner_GetCacheDir_WindowsCachePath,
+  Toolkit_Bootstrap_Runner_GetConfigDir_AppName,
+  Toolkit_Bootstrap_Runner_GetConfigDir_BasePath,
+  Toolkit_Bootstrap_Runner_GetConfigDir_DefaultPath,
+  Toolkit_Bootstrap_Runner_GetConfigDir_HomeDirPath,
+  Toolkit_Bootstrap_Runner_GetConfigDir_Returns,
+  Toolkit_Bootstrap_Runner_GetConfigDir_WindowsBasePath,
+  Toolkit_Bootstrap_Runner_GetConfigDir_WindowsDefaultPath,
+  Toolkit_Bootstrap_Runner_GetDataDir_AppName,
+  Toolkit_Bootstrap_Runner_GetDataDir_BasePath,
+  Toolkit_Bootstrap_Runner_GetDataDir_DarwinBasePath,
+  Toolkit_Bootstrap_Runner_GetDataDir_DarwinDataPath,
+  Toolkit_Bootstrap_Runner_GetDataDir_DataPath,
+  Toolkit_Bootstrap_Runner_GetDataDir_HomeDirPath,
+  Toolkit_Bootstrap_Runner_GetDataDir_Returns,
+  Toolkit_Bootstrap_Runner_GetDataDir_WindowsBasePath,
+  Toolkit_Bootstrap_Runner_GetDataDir_WindowsDataPath,
+  Toolkit_Bootstrap_Runner_GetProjectRoot_Content,
+  Toolkit_Bootstrap_Runner_GetProjectRoot_Dir,
+  Toolkit_Bootstrap_Runner_GetProjectRoot_FilePath,
+  Toolkit_Bootstrap_Runner_GetProjectRoot_FirstPackageDir,
+  Toolkit_Bootstrap_Runner_GetProjectRoot_Parent,
+  Toolkit_Bootstrap_Runner_GetProjectRoot_Parsed,
+  Toolkit_Bootstrap_Runner_GetProjectRoot_Returns,
+  Toolkit_Bootstrap_Runner_LoadEnv_Content,
+  Toolkit_Bootstrap_Runner_LoadEnv_Directory,
+  Toolkit_Bootstrap_Runner_LoadEnv_FilePath,
+  Toolkit_Bootstrap_Runner_LoadEnv_Key,
+  Toolkit_Bootstrap_Runner_LoadEnv_Lines,
+  Toolkit_Bootstrap_Runner_LoadEnv_Match,
+  Toolkit_Bootstrap_Runner_LoadEnv_Returns,
+  Toolkit_Bootstrap_Runner_LoadEnv_TrimmedLine,
+  Toolkit_Bootstrap_Runner_LoadEnv_Value,
+  Toolkit_Bootstrap_Runner_ResolveDir_AppName,
+  Toolkit_Bootstrap_Runner_ResolveDir_Keyword,
+  Toolkit_Bootstrap_Runner_ResolveDir_Returns,
+  Toolkit_Bootstrap_Runner_ResolveFileDir_AppName,
+  Toolkit_Bootstrap_Runner_ResolveFileDir_Directory,
+  Toolkit_Bootstrap_Runner_ResolveFileDir_Filename,
+  Toolkit_Bootstrap_Runner_ResolveFileDir_FilePath,
+  Toolkit_Bootstrap_Runner_ResolveFileDir_Returns,
+  Toolkit_Bootstrap_Runner_ResolveFileDir_SearchOrder,
+  Toolkit_Bootstrap_Runner_ResolveFileDir_TypedLocation,
+  Toolkit_Bootstrap_Runner_ResolveFileDirs_AppName,
+  Toolkit_Bootstrap_Runner_ResolveFileDirs_Directory,
+  Toolkit_Bootstrap_Runner_ResolveFileDirs_Filename,
+  Toolkit_Bootstrap_Runner_ResolveFileDirs_FilePath,
+  Toolkit_Bootstrap_Runner_ResolveFileDirs_Results,
+  Toolkit_Bootstrap_Runner_ResolveFileDirs_Returns,
+  Toolkit_Bootstrap_Runner_ResolveFileDirs_SearchOrder,
+  Toolkit_Bootstrap_Runner_ResolveFileDirs_TypedLocation,
 } from '../types/toolkit/bootstrap.d.ts';
 
 /**
@@ -64,7 +76,7 @@ import type {
  *
  * @since 0.14.0
  */
-class ToolkitBootstrap {
+class Runner {
   /**
    * Toolkit - Bootstrap - Get Config Dir.
    *
@@ -72,28 +84,28 @@ class ToolkitBootstrap {
    * application name. Uses XDG_CONFIG_HOME on macOS and Linux, APPDATA
    * on Windows. Creates the directory if it does not exist.
    *
-   * @param {Toolkit_Bootstrap_GetConfigDir_AppName} appName - App name.
+   * @param {Toolkit_Bootstrap_Runner_GetConfigDir_AppName} appName - App name.
    *
-   * @returns {Toolkit_Bootstrap_GetConfigDir_Return}
+   * @returns {Toolkit_Bootstrap_Runner_GetConfigDir_Returns}
    *
    * @since 0.14.0
    */
-  public static getConfigDir(appName: Toolkit_Bootstrap_GetConfigDir_AppName): Toolkit_Bootstrap_GetConfigDir_Return {
-    const homeDirPath: Toolkit_Bootstrap_GetConfigDir_HomeDirPath = homedir();
+  public static getConfigDir(appName: Toolkit_Bootstrap_Runner_GetConfigDir_AppName): Toolkit_Bootstrap_Runner_GetConfigDir_Returns {
+    const homeDirPath: Toolkit_Bootstrap_Runner_GetConfigDir_HomeDirPath = homedir();
 
     if (platform() === 'win32') {
-      const defaultPath: Toolkit_Bootstrap_GetConfigDir_DefaultPath = process.env['APPDATA'] ?? join(homeDirPath, 'AppData', 'Roaming');
-      const basePath: Toolkit_Bootstrap_GetConfigDir_BasePath = join(defaultPath, appName);
+      const windowsDefaultPath: Toolkit_Bootstrap_Runner_GetConfigDir_WindowsDefaultPath = process.env['APPDATA'] ?? join(homeDirPath, 'AppData', 'Roaming');
+      const windowsBasePath: Toolkit_Bootstrap_Runner_GetConfigDir_WindowsBasePath = join(windowsDefaultPath, appName);
 
-      if (existsSync(basePath) === false) {
-        mkdirSync(basePath, { recursive: true });
+      if (existsSync(windowsBasePath) === false) {
+        mkdirSync(windowsBasePath, { recursive: true });
       }
 
-      return basePath;
+      return windowsBasePath;
     }
 
-    const defaultPath: Toolkit_Bootstrap_GetConfigDir_DefaultPath = process.env['XDG_CONFIG_HOME'] ?? join(homeDirPath, '.config');
-    const basePath: Toolkit_Bootstrap_GetConfigDir_BasePath = join(defaultPath, appName);
+    const defaultPath: Toolkit_Bootstrap_Runner_GetConfigDir_DefaultPath = process.env['XDG_CONFIG_HOME'] ?? join(homeDirPath, '.config');
+    const basePath: Toolkit_Bootstrap_Runner_GetConfigDir_BasePath = join(defaultPath, appName);
 
     if (existsSync(basePath) === false) {
       mkdirSync(basePath, { recursive: true });
@@ -109,39 +121,39 @@ class ToolkitBootstrap {
    * name. Uses ~/Library/Application Support on macOS, XDG_DATA_HOME on
    * Linux, and APPDATA on Windows. Creates the directory if it does not exist.
    *
-   * @param {Toolkit_Bootstrap_GetDataDir_AppName} appName - App name.
+   * @param {Toolkit_Bootstrap_Runner_GetDataDir_AppName} appName - App name.
    *
-   * @returns {Toolkit_Bootstrap_GetDataDir_Return}
+   * @returns {Toolkit_Bootstrap_Runner_GetDataDir_Returns}
    *
    * @since 0.14.0
    */
-  public static getDataDir(appName: Toolkit_Bootstrap_GetDataDir_AppName): Toolkit_Bootstrap_GetDataDir_Return {
-    const homeDirPath: Toolkit_Bootstrap_GetDataDir_HomeDirPath = homedir();
+  public static getDataDir(appName: Toolkit_Bootstrap_Runner_GetDataDir_AppName): Toolkit_Bootstrap_Runner_GetDataDir_Returns {
+    const homeDirPath: Toolkit_Bootstrap_Runner_GetDataDir_HomeDirPath = homedir();
 
     if (platform() === 'win32') {
-      const dataPath: Toolkit_Bootstrap_GetDataDir_DataPath = process.env['APPDATA'] ?? join(homeDirPath, 'AppData', 'Roaming');
-      const basePath: Toolkit_Bootstrap_GetDataDir_DataPath = join(dataPath, appName);
+      const windowsDataPath: Toolkit_Bootstrap_Runner_GetDataDir_WindowsDataPath = process.env['APPDATA'] ?? join(homeDirPath, 'AppData', 'Roaming');
+      const windowsBasePath: Toolkit_Bootstrap_Runner_GetDataDir_WindowsBasePath = join(windowsDataPath, appName);
 
-      if (existsSync(basePath) === false) {
-        mkdirSync(basePath, { recursive: true });
+      if (existsSync(windowsBasePath) === false) {
+        mkdirSync(windowsBasePath, { recursive: true });
       }
 
-      return basePath;
+      return windowsBasePath;
     }
 
     if (platform() === 'darwin') {
-      const dataPath: Toolkit_Bootstrap_GetDataDir_DataPath = join(homeDirPath, 'Library', 'Application Support');
-      const basePath: Toolkit_Bootstrap_GetDataDir_DataPath = join(dataPath, appName);
+      const darwinDataPath: Toolkit_Bootstrap_Runner_GetDataDir_DarwinDataPath = join(homeDirPath, 'Library', 'Application Support');
+      const darwinBasePath: Toolkit_Bootstrap_Runner_GetDataDir_DarwinBasePath = join(darwinDataPath, appName);
 
-      if (existsSync(basePath) === false) {
-        mkdirSync(basePath, { recursive: true });
+      if (existsSync(darwinBasePath) === false) {
+        mkdirSync(darwinBasePath, { recursive: true });
       }
 
-      return basePath;
+      return darwinBasePath;
     }
 
-    const dataPath: Toolkit_Bootstrap_GetDataDir_DataPath = process.env['XDG_DATA_HOME'] ?? join(homeDirPath, '.local', 'share');
-    const basePath: Toolkit_Bootstrap_GetDataDir_DataPath = join(dataPath, appName);
+    const dataPath: Toolkit_Bootstrap_Runner_GetDataDir_DataPath = process.env['XDG_DATA_HOME'] ?? join(homeDirPath, '.local', 'share');
+    const basePath: Toolkit_Bootstrap_Runner_GetDataDir_BasePath = join(dataPath, appName);
 
     if (existsSync(basePath) === false) {
       mkdirSync(basePath, { recursive: true });
@@ -157,39 +169,39 @@ class ToolkitBootstrap {
    * name. Uses ~/Library/Caches on macOS, XDG_CACHE_HOME on Linux, and
    * LOCALAPPDATA\Temp on Windows. Creates the directory if it does not exist.
    *
-   * @param {Toolkit_Bootstrap_GetCacheDir_AppName} appName - App name.
+   * @param {Toolkit_Bootstrap_Runner_GetCacheDir_AppName} appName - App name.
    *
-   * @returns {Toolkit_Bootstrap_GetCacheDir_Return}
+   * @returns {Toolkit_Bootstrap_Runner_GetCacheDir_Returns}
    *
    * @since 0.14.0
    */
-  public static getCacheDir(appName: Toolkit_Bootstrap_GetCacheDir_AppName): Toolkit_Bootstrap_GetCacheDir_Return {
-    const homeDirPath: Toolkit_Bootstrap_GetCacheDir_HomeDirPath = homedir();
+  public static getCacheDir(appName: Toolkit_Bootstrap_Runner_GetCacheDir_AppName): Toolkit_Bootstrap_Runner_GetCacheDir_Returns {
+    const homeDirPath: Toolkit_Bootstrap_Runner_GetCacheDir_HomeDirPath = homedir();
 
     if (platform() === 'win32') {
-      const cachePath: Toolkit_Bootstrap_GetCacheDir_CachePath = join(process.env['LOCALAPPDATA'] ?? join(homeDirPath, 'AppData', 'Local'), 'Temp');
-      const basePath: Toolkit_Bootstrap_GetCacheDir_CachePath = join(cachePath, appName);
+      const windowsCachePath: Toolkit_Bootstrap_Runner_GetCacheDir_WindowsCachePath = join(process.env['LOCALAPPDATA'] ?? join(homeDirPath, 'AppData', 'Local'), 'Temp');
+      const windowsBasePath: Toolkit_Bootstrap_Runner_GetCacheDir_WindowsBasePath = join(windowsCachePath, appName);
 
-      if (existsSync(basePath) === false) {
-        mkdirSync(basePath, { recursive: true });
+      if (existsSync(windowsBasePath) === false) {
+        mkdirSync(windowsBasePath, { recursive: true });
       }
 
-      return basePath;
+      return windowsBasePath;
     }
 
     if (platform() === 'darwin') {
-      const cachePath: Toolkit_Bootstrap_GetCacheDir_CachePath = join(homeDirPath, 'Library', 'Caches');
-      const basePath: Toolkit_Bootstrap_GetCacheDir_CachePath = join(cachePath, appName);
+      const darwinCachePath: Toolkit_Bootstrap_Runner_GetCacheDir_DarwinCachePath = join(homeDirPath, 'Library', 'Caches');
+      const darwinBasePath: Toolkit_Bootstrap_Runner_GetCacheDir_DarwinBasePath = join(darwinCachePath, appName);
 
-      if (existsSync(basePath) === false) {
-        mkdirSync(basePath, { recursive: true });
+      if (existsSync(darwinBasePath) === false) {
+        mkdirSync(darwinBasePath, { recursive: true });
       }
 
-      return basePath;
+      return darwinBasePath;
     }
 
-    const cachePath: Toolkit_Bootstrap_GetCacheDir_CachePath = process.env['XDG_CACHE_HOME'] ?? join(homeDirPath, '.cache');
-    const basePath: Toolkit_Bootstrap_GetCacheDir_CachePath = join(cachePath, appName);
+    const cachePath: Toolkit_Bootstrap_Runner_GetCacheDir_CachePath = process.env['XDG_CACHE_HOME'] ?? join(homeDirPath, '.cache');
+    const basePath: Toolkit_Bootstrap_Runner_GetCacheDir_BasePath = join(cachePath, appName);
 
     if (existsSync(basePath) === false) {
       mkdirSync(basePath, { recursive: true });
@@ -205,31 +217,31 @@ class ToolkitBootstrap {
    * monorepo root (package.json with workspaces) or the nearest
    * package.json as a fallback.
    *
-   * @returns {Toolkit_Bootstrap_GetProjectRoot_Return}
+   * @returns {Toolkit_Bootstrap_Runner_GetProjectRoot_Returns}
    *
    * @since 0.14.0
    */
-  public static getProjectRoot(): Toolkit_Bootstrap_GetProjectRoot_Return {
-    let dir: Toolkit_Bootstrap_GetProjectRoot_Dir = process.cwd();
-    let firstPackageDir: Toolkit_Bootstrap_GetProjectRoot_FirstPackageDir = undefined;
+  public static getProjectRoot(): Toolkit_Bootstrap_Runner_GetProjectRoot_Returns {
+    let dir: Toolkit_Bootstrap_Runner_GetProjectRoot_Dir = process.cwd();
+    let firstPackageDir: Toolkit_Bootstrap_Runner_GetProjectRoot_FirstPackageDir = undefined;
 
     while (dir !== dirname(dir)) {
-      const filePath: Toolkit_Bootstrap_GetProjectRoot_FilePath = join(dir, 'package.json');
+      const filePath: Toolkit_Bootstrap_Runner_GetProjectRoot_FilePath = join(dir, 'package.json');
 
       if (existsSync(filePath) === true) {
         if (firstPackageDir === undefined) {
           firstPackageDir = dir;
         }
 
-        const content: Toolkit_Bootstrap_GetProjectRoot_Content = readFileSync(filePath, 'utf-8');
-        const parsed: Toolkit_Bootstrap_GetProjectRoot_Parsed = JSON.parse(content) as Toolkit_Bootstrap_GetProjectRoot_Parsed;
+        const content: Toolkit_Bootstrap_Runner_GetProjectRoot_Content = readFileSync(filePath, 'utf-8');
+        const parsed: Toolkit_Bootstrap_Runner_GetProjectRoot_Parsed = JSON.parse(content) as Toolkit_Bootstrap_Runner_GetProjectRoot_Parsed;
 
         if (parsed['workspaces'] !== undefined) {
           return dir;
         }
       }
 
-      const parent: Toolkit_Bootstrap_GetProjectRoot_Parent = dirname(dir);
+      const parent: Toolkit_Bootstrap_Runner_GetProjectRoot_Parent = dirname(dir);
 
       dir = parent;
     }
@@ -244,37 +256,37 @@ class ToolkitBootstrap {
    * pair in process.env. Does not override existing environment variables.
    * Supports optional quotes around values, ignoring comments and empty lines.
    *
-   * @param {Toolkit_Bootstrap_LoadEnv_Directory} directory - Directory.
+   * @param {Toolkit_Bootstrap_Runner_LoadEnv_Directory} directory - Directory.
    *
-   * @returns {Toolkit_Bootstrap_LoadEnv_Return}
+   * @returns {Toolkit_Bootstrap_Runner_LoadEnv_Returns}
    *
    * @since 0.14.0
    */
-  public static loadEnv(directory: Toolkit_Bootstrap_LoadEnv_Directory): Toolkit_Bootstrap_LoadEnv_Return {
-    const filePath: Toolkit_Bootstrap_LoadEnv_FilePath = join(directory, '.env');
+  public static loadEnv(directory: Toolkit_Bootstrap_Runner_LoadEnv_Directory): Toolkit_Bootstrap_Runner_LoadEnv_Returns {
+    const filePath: Toolkit_Bootstrap_Runner_LoadEnv_FilePath = join(directory, '.env');
 
     if (existsSync(filePath) === false) {
       return;
     }
 
-    const content: Toolkit_Bootstrap_LoadEnv_Content = readFileSync(filePath, 'utf-8');
-    const lines: Toolkit_Bootstrap_LoadEnv_Lines = content.split('\n');
+    const content: Toolkit_Bootstrap_Runner_LoadEnv_Content = readFileSync(filePath, 'utf-8');
+    const lines: Toolkit_Bootstrap_Runner_LoadEnv_Lines = content.split('\n');
 
     for (const line of lines) {
-      const trimmedLine: Toolkit_Bootstrap_LoadEnv_Line = line.trim();
+      const trimmedLine: Toolkit_Bootstrap_Runner_LoadEnv_TrimmedLine = line.trim();
 
       if (trimmedLine === '' || trimmedLine.startsWith('#') === true) {
         continue;
       }
 
-      const match: Toolkit_Bootstrap_LoadEnv_Match = trimmedLine.match(LIB_REGEX_PATTERN_ENV_LINE);
+      const match: Toolkit_Bootstrap_Runner_LoadEnv_Match = trimmedLine.match(LIB_REGEX_PATTERN_ENV_LINE);
 
       if (match === null) {
         continue;
       }
 
-      const key: Toolkit_Bootstrap_LoadEnv_Key = match[1] ?? '';
-      const value: Toolkit_Bootstrap_LoadEnv_Value = match[2] ?? '';
+      const key: Toolkit_Bootstrap_Runner_LoadEnv_Key = match[1] ?? '';
+      const value: Toolkit_Bootstrap_Runner_LoadEnv_Value = match[2] ?? '';
 
       if (process.env[key] === undefined) {
         Reflect.set(process.env, key, value);
@@ -296,19 +308,19 @@ class ToolkitBootstrap {
    * that contains the specified file. Returns undefined if the file is not
    * found in any directory.
    *
-   * @param {Toolkit_Bootstrap_ResolveFileDir_AppName}     appName     - App name.
-   * @param {Toolkit_Bootstrap_ResolveFileDir_Filename}    filename    - Filename.
-   * @param {Toolkit_Bootstrap_ResolveFileDir_SearchOrder} searchOrder - Search order.
+   * @param {Toolkit_Bootstrap_Runner_ResolveFileDir_AppName}     appName     - App name.
+   * @param {Toolkit_Bootstrap_Runner_ResolveFileDir_Filename}    filename    - Filename.
+   * @param {Toolkit_Bootstrap_Runner_ResolveFileDir_SearchOrder} searchOrder - Search order.
    *
-   * @returns {Toolkit_Bootstrap_ResolveFileDir_Return}
+   * @returns {Toolkit_Bootstrap_Runner_ResolveFileDir_Returns}
    *
    * @since 0.14.0
    */
-  public static resolveFileDir(appName: Toolkit_Bootstrap_ResolveFileDir_AppName, filename: Toolkit_Bootstrap_ResolveFileDir_Filename, searchOrder: Toolkit_Bootstrap_ResolveFileDir_SearchOrder): Toolkit_Bootstrap_ResolveFileDir_Return {
+  public static resolveFileDir(appName: Toolkit_Bootstrap_Runner_ResolveFileDir_AppName, filename: Toolkit_Bootstrap_Runner_ResolveFileDir_Filename, searchOrder: Toolkit_Bootstrap_Runner_ResolveFileDir_SearchOrder): Toolkit_Bootstrap_Runner_ResolveFileDir_Returns {
     for (const location of searchOrder) {
-      const typedLocation: Toolkit_Bootstrap_ResolveFileDir_Location = location;
-      const directory: Toolkit_Bootstrap_ResolveFileDir_Directory = ToolkitBootstrap.#resolveDir(appName, typedLocation);
-      const filePath: Toolkit_Bootstrap_ResolveFileDir_FilePath = join(directory, filename);
+      const typedLocation: Toolkit_Bootstrap_Runner_ResolveFileDir_TypedLocation = location;
+      const directory: Toolkit_Bootstrap_Runner_ResolveFileDir_Directory = Runner.#resolveDir(appName, typedLocation);
+      const filePath: Toolkit_Bootstrap_Runner_ResolveFileDir_FilePath = join(directory, filename);
 
       if (existsSync(filePath) === true) {
         return directory;
@@ -325,21 +337,21 @@ class ToolkitBootstrap {
    * that contain the specified file. Returns an empty array if the file
    * is not found in any directory.
    *
-   * @param {Toolkit_Bootstrap_ResolveFileDirs_AppName}     appName     - App name.
-   * @param {Toolkit_Bootstrap_ResolveFileDirs_Filename}    filename    - Filename.
-   * @param {Toolkit_Bootstrap_ResolveFileDirs_SearchOrder} searchOrder - Search order.
+   * @param {Toolkit_Bootstrap_Runner_ResolveFileDirs_AppName}     appName     - App name.
+   * @param {Toolkit_Bootstrap_Runner_ResolveFileDirs_Filename}    filename    - Filename.
+   * @param {Toolkit_Bootstrap_Runner_ResolveFileDirs_SearchOrder} searchOrder - Search order.
    *
-   * @returns {Toolkit_Bootstrap_ResolveFileDirs_Return}
+   * @returns {Toolkit_Bootstrap_Runner_ResolveFileDirs_Returns}
    *
    * @since 0.14.0
    */
-  public static resolveFileDirs(appName: Toolkit_Bootstrap_ResolveFileDirs_AppName, filename: Toolkit_Bootstrap_ResolveFileDirs_Filename, searchOrder: Toolkit_Bootstrap_ResolveFileDirs_SearchOrder): Toolkit_Bootstrap_ResolveFileDirs_Return {
-    const results: Toolkit_Bootstrap_ResolveFileDirs_Results = [];
+  public static resolveFileDirs(appName: Toolkit_Bootstrap_Runner_ResolveFileDirs_AppName, filename: Toolkit_Bootstrap_Runner_ResolveFileDirs_Filename, searchOrder: Toolkit_Bootstrap_Runner_ResolveFileDirs_SearchOrder): Toolkit_Bootstrap_Runner_ResolveFileDirs_Returns {
+    const results: Toolkit_Bootstrap_Runner_ResolveFileDirs_Results = [];
 
     for (const location of searchOrder) {
-      const typedLocation: Toolkit_Bootstrap_ResolveFileDirs_Location = location;
-      const directory: Toolkit_Bootstrap_ResolveFileDirs_Directory = ToolkitBootstrap.#resolveDir(appName, typedLocation);
-      const filePath: Toolkit_Bootstrap_ResolveFileDirs_FilePath = join(directory, filename);
+      const typedLocation: Toolkit_Bootstrap_Runner_ResolveFileDirs_TypedLocation = location;
+      const directory: Toolkit_Bootstrap_Runner_ResolveFileDirs_Directory = Runner.#resolveDir(appName, typedLocation);
+      const filePath: Toolkit_Bootstrap_Runner_ResolveFileDirs_FilePath = join(directory, filename);
 
       if (existsSync(filePath) === true && results.includes(directory) === false) {
         results.push(directory);
@@ -356,31 +368,31 @@ class ToolkitBootstrap {
    * keywords are cwd, config-dir, data-dir, cache-dir, home, and temp.
    * Absolute paths are returned as-is.
    *
-   * @param {Toolkit_Bootstrap_ResolveDir_AppName} appName - App name.
-   * @param {Toolkit_Bootstrap_ResolveDir_Keyword} keyword - Keyword.
+   * @param {Toolkit_Bootstrap_Runner_ResolveDir_AppName} appName - App name.
+   * @param {Toolkit_Bootstrap_Runner_ResolveDir_Keyword} keyword - Keyword.
    *
    * @private
    *
-   * @returns {Toolkit_Bootstrap_ResolveDir_Return}
+   * @returns {Toolkit_Bootstrap_Runner_ResolveDir_Returns}
    *
    * @since 0.14.0
    */
-  static #resolveDir(appName: Toolkit_Bootstrap_ResolveDir_AppName, keyword: Toolkit_Bootstrap_ResolveDir_Keyword): Toolkit_Bootstrap_ResolveDir_Return {
+  static #resolveDir(appName: Toolkit_Bootstrap_Runner_ResolveDir_AppName, keyword: Toolkit_Bootstrap_Runner_ResolveDir_Keyword): Toolkit_Bootstrap_Runner_ResolveDir_Returns {
     switch (keyword) {
       case 'cwd': {
         return process.cwd();
       }
 
       case 'config-dir': {
-        return ToolkitBootstrap.getConfigDir(appName);
+        return Runner.getConfigDir(appName);
       }
 
       case 'data-dir': {
-        return ToolkitBootstrap.getDataDir(appName);
+        return Runner.getDataDir(appName);
       }
 
       case 'cache-dir': {
-        return ToolkitBootstrap.getCacheDir(appName);
+        return Runner.getCacheDir(appName);
       }
 
       case 'home': {
@@ -388,7 +400,7 @@ class ToolkitBootstrap {
       }
 
       case 'project-root': {
-        return ToolkitBootstrap.getProjectRoot() ?? process.cwd();
+        return Runner.getProjectRoot() ?? process.cwd();
       }
 
       case 'temp': {
@@ -402,4 +414,4 @@ class ToolkitBootstrap {
   }
 }
 
-export default ToolkitBootstrap;
+export default Runner;

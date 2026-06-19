@@ -87,7 +87,7 @@ export type Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectedFiles = Set<
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_File = string | undefined;
 
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_Choices = Cli_Generate_Github_IssueTemplate_Runner_Run_Choice[];
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_BugReportFieldChoices = Cli_Generate_Github_IssueTemplate_Runner_Run_Choice[];
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_Cancelled = boolean;
 
@@ -118,6 +118,18 @@ export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalFileMappingValue =
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalFileMapping = Record<Cli_Generate_Github_IssueTemplate_Runner_Run_LegalFileMappingKey, Cli_Generate_Github_IssueTemplate_Runner_Run_LegalFileMappingValue>;
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_Files = string[];
+
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_HeaderOptions_Command = string;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_HeaderOptions_DocsSlug = string;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_HeaderOptions_Mode = 'strict' | 'fillable';
+
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_HeaderOptions = {
+  command: Cli_Generate_Github_IssueTemplate_Runner_Run_HeaderOptions_Command;
+  docsSlug: Cli_Generate_Github_IssueTemplate_Runner_Run_HeaderOptions_DocsSlug;
+  mode: Cli_Generate_Github_IssueTemplate_Runner_Run_HeaderOptions_Mode;
+};
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_TemplatePath = string;
 

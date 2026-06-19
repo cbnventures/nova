@@ -23,3 +23,5 @@ export type GetSwizzleConfigGetSwizzleConfigReturnsComponents = Record<string, G
 export type GetSwizzleConfigGetSwizzleConfigReturns = {
   components: GetSwizzleConfigGetSwizzleConfigReturnsComponents;
 };
+
+export type GetSwizzleConfig_GetSwizzleConfig_Returns = GetSwizzleConfigGetSwizzleConfigReturns;

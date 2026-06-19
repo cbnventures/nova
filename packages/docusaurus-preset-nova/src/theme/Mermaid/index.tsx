@@ -10,17 +10,17 @@ import {
 import type {
   Theme_Mermaid_Index_Mermaid_ColorMode,
   Theme_Mermaid_Index_Mermaid_ColorModeState,
-  Theme_Mermaid_Index_Mermaid_ContentClassName,
-  Theme_Mermaid_Index_Mermaid_ContentContainerRef,
-  Theme_Mermaid_Index_Mermaid_ContentProps,
-  Theme_Mermaid_Index_Mermaid_ContentRenderResult,
-  Theme_Mermaid_Index_Mermaid_ContentReturns,
   Theme_Mermaid_Index_Mermaid_CurrentTheme,
   Theme_Mermaid_Index_Mermaid_Observer,
   Theme_Mermaid_Index_Mermaid_Props,
   Theme_Mermaid_Index_Mermaid_Returns,
   Theme_Mermaid_Index_Mermaid_SetColorMode,
   Theme_Mermaid_Index_Mermaid_Theme,
+  Theme_Mermaid_Index_MermaidContent_ClassName,
+  Theme_Mermaid_Index_MermaidContent_ContainerRef,
+  Theme_Mermaid_Index_MermaidContent_Props,
+  Theme_Mermaid_Index_MermaidContent_RenderResult,
+  Theme_Mermaid_Index_MermaidContent_Returns,
 } from '../../types/theme/Mermaid/index.d.ts';
 
 /**
@@ -29,15 +29,15 @@ import type {
  * Renders a Mermaid diagram from the given text by injecting
  * the resulting SVG into a container div.
  *
- * @param {Theme_Mermaid_Index_Mermaid_ContentProps} props - Props.
+ * @param {Theme_Mermaid_Index_MermaidContent_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function MermaidContent(props: Theme_Mermaid_Index_Mermaid_ContentProps): Theme_Mermaid_Index_Mermaid_ContentReturns {
-  const renderResult: Theme_Mermaid_Index_Mermaid_ContentRenderResult = useMermaidRenderResult({ text: props['value'] });
-  const containerRef: Theme_Mermaid_Index_Mermaid_ContentContainerRef = useRef<HTMLDivElement | null>(null);
+function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_Mermaid_Index_MermaidContent_Returns {
+  const renderResult: Theme_Mermaid_Index_MermaidContent_RenderResult = useMermaidRenderResult({ text: props['value'] });
+  const containerRef: Theme_Mermaid_Index_MermaidContent_ContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (
@@ -55,7 +55,7 @@ function MermaidContent(props: Theme_Mermaid_Index_Mermaid_ContentProps): Theme_
     return null;
   }
 
-  const className: Theme_Mermaid_Index_Mermaid_ContentClassName = (props['className'] !== undefined) ? `${MERMAID_CONTAINER_CLASS_NAME} ${props['className']}` : MERMAID_CONTAINER_CLASS_NAME;
+  const className: Theme_Mermaid_Index_MermaidContent_ClassName = (props['className'] !== undefined) ? `${MERMAID_CONTAINER_CLASS_NAME} ${props['className']}` : MERMAID_CONTAINER_CLASS_NAME;
 
   return (
     <div

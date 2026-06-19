@@ -17,28 +17,28 @@ import {
 } from '@site/src/lib/regex.js';
 
 import type {
-  Tests_Terminology_TerminologyValidation_Anchor,
-  Tests_Terminology_TerminologyValidation_Attrs,
-  Tests_Terminology_TerminologyValidation_Children,
-  Tests_Terminology_TerminologyValidation_Content,
-  Tests_Terminology_TerminologyValidation_ContentDirs,
-  Tests_Terminology_TerminologyValidation_ContentPath,
-  Tests_Terminology_TerminologyValidation_Cwd,
-  Tests_Terminology_TerminologyValidation_Entries,
-  Tests_Terminology_TerminologyValidation_ExpectedBase,
-  Tests_Terminology_TerminologyValidation_Ext,
-  Tests_Terminology_TerminologyValidation_Failures,
-  Tests_Terminology_TerminologyValidation_FilePath,
-  Tests_Terminology_TerminologyValidation_HeadingCapture,
-  Tests_Terminology_TerminologyValidation_HeadingText,
-  Tests_Terminology_TerminologyValidation_MdFiles,
-  Tests_Terminology_TerminologyValidation_StrippedContent,
-  Tests_Terminology_TerminologyValidation_TerminologyContent,
-  Tests_Terminology_TerminologyValidation_TerminologyPath,
-  Tests_Terminology_TerminologyValidation_TitleMatch,
-  Tests_Terminology_TerminologyValidation_ToMatch,
-  Tests_Terminology_TerminologyValidation_ToValue,
-  Tests_Terminology_TerminologyValidation_ValidAnchors,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Anchor,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Attrs,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Children,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Content,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_ContentDirs,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_ContentPath,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Cwd,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Entries,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_ExpectedBase,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Ext,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Failures,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_FilePath,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_HeadingCapture,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_HeadingText,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_MdFiles,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_StrippedContent,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_TerminologyContent,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_TerminologyPath,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_TitleMatch,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_ToMatch,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_ToValue,
+  Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_ValidAnchors,
 } from '@site/src/types/tests/terminology.test.d.ts';
 
 /**
@@ -48,26 +48,26 @@ import type {
  */
 describe('Terminology validation', async () => {
   it('all Terminology components have valid attributes and anchors', async () => {
-    const cwd: Tests_Terminology_TerminologyValidation_Cwd = process.cwd();
-    const contentDirs: Tests_Terminology_TerminologyValidation_ContentDirs = [
+    const cwd: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Cwd = process.cwd();
+    const contentDirs: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_ContentDirs = [
       'docs',
       'blog',
     ];
-    const terminologyPath: Tests_Terminology_TerminologyValidation_TerminologyPath = join(cwd, 'docs', 'quickstart', 'terminology.mdx');
+    const terminologyPath: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_TerminologyPath = join(cwd, 'docs', 'quickstart', 'terminology.mdx');
 
     if (existsSync(terminologyPath) === false) {
       return;
     }
 
-    const terminologyContent: Tests_Terminology_TerminologyValidation_TerminologyContent = await readFile(terminologyPath, 'utf-8');
+    const terminologyContent: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_TerminologyContent = await readFile(terminologyPath, 'utf-8');
 
     // Build valid anchors from h2 headings in terminology.mdx.
-    const validAnchors: Tests_Terminology_TerminologyValidation_ValidAnchors = new Set();
+    const validAnchors: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_ValidAnchors = new Set();
 
     for (const headingMatch of terminologyContent.matchAll(new RegExp(PATTERN_HEADING_H2_LINE, 'gm'))) {
-      const headingCapture: Tests_Terminology_TerminologyValidation_HeadingCapture = headingMatch[1] ?? '';
+      const headingCapture: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_HeadingCapture = headingMatch[1] ?? '';
 
-      const headingText: Tests_Terminology_TerminologyValidation_HeadingText = headingCapture
+      const headingText: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_HeadingText = headingCapture
         .replace(new RegExp(PATTERN_HTML_TAGS, 'g'), '')
         .trim()
         .toLowerCase()
@@ -77,14 +77,14 @@ describe('Terminology validation', async () => {
       validAnchors.add(headingText);
     }
 
-    const mdFiles: Tests_Terminology_TerminologyValidation_MdFiles = [];
+    const mdFiles: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_MdFiles = [];
 
     for (const contentDir of contentDirs) {
-      const contentPath: Tests_Terminology_TerminologyValidation_ContentPath = resolve(cwd, contentDir);
-      const entries: Tests_Terminology_TerminologyValidation_Entries = await readdir(contentPath, { recursive: true });
+      const contentPath: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_ContentPath = resolve(cwd, contentDir);
+      const entries: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Entries = await readdir(contentPath, { recursive: true });
 
       for (const entry of entries) {
-        const ext: Tests_Terminology_TerminologyValidation_Ext = extname(entry);
+        const ext: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Ext = extname(entry);
 
         if (ext === '.md' || ext === '.mdx') {
           mdFiles.push(join(contentDir, entry));
@@ -92,18 +92,18 @@ describe('Terminology validation', async () => {
       }
     }
 
-    const failures: Tests_Terminology_TerminologyValidation_Failures = [];
+    const failures: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Failures = [];
 
     for (const mdFile of mdFiles) {
-      const filePath: Tests_Terminology_TerminologyValidation_FilePath = join(cwd, mdFile);
-      const content: Tests_Terminology_TerminologyValidation_Content = await readFile(filePath, 'utf-8');
-      const strippedContent: Tests_Terminology_TerminologyValidation_StrippedContent = content.replace(new RegExp(PATTERN_CODE_BLOCK, 'g'), '');
+      const filePath: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_FilePath = join(cwd, mdFile);
+      const content: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Content = await readFile(filePath, 'utf-8');
+      const strippedContent: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_StrippedContent = content.replace(new RegExp(PATTERN_CODE_BLOCK, 'g'), '');
 
       for (const terminologyMatch of strippedContent.matchAll(new RegExp(PATTERN_TERMINOLOGY_COMPONENT, 'g'))) {
-        const attrs: Tests_Terminology_TerminologyValidation_Attrs = terminologyMatch[1] ?? '';
-        const children: Tests_Terminology_TerminologyValidation_Children = (terminologyMatch[2] ?? '').trim();
-        const titleMatch: Tests_Terminology_TerminologyValidation_TitleMatch = new RegExp(PATTERN_TERMINOLOGY_TITLE_ATTR).exec(attrs);
-        const toMatch: Tests_Terminology_TerminologyValidation_ToMatch = new RegExp(PATTERN_TERMINOLOGY_TO_ATTR).exec(attrs);
+        const attrs: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Attrs = terminologyMatch[1] ?? '';
+        const children: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Children = (terminologyMatch[2] ?? '').trim();
+        const titleMatch: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_TitleMatch = new RegExp(PATTERN_TERMINOLOGY_TITLE_ATTR).exec(attrs);
+        const toMatch: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_ToMatch = new RegExp(PATTERN_TERMINOLOGY_TO_ATTR).exec(attrs);
 
         if (titleMatch === null || (titleMatch[1] ?? '').length === 0) {
           failures.push(`${mdFile}: <Terminology> missing or empty title attribute`);
@@ -123,8 +123,8 @@ describe('Terminology validation', async () => {
           continue;
         }
 
-        const toValue: Tests_Terminology_TerminologyValidation_ToValue = toMatch[1] ?? '';
-        const expectedBase: Tests_Terminology_TerminologyValidation_ExpectedBase = '/docs/quickstart/terminology';
+        const toValue: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_ToValue = toMatch[1] ?? '';
+        const expectedBase: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_ExpectedBase = '/docs/quickstart/terminology';
 
         if (toValue !== expectedBase && toValue.startsWith(`${expectedBase}#`) === false) {
           failures.push(`${mdFile}: <Terminology to="${toValue}"> does not point to ${expectedBase}`);
@@ -133,7 +133,7 @@ describe('Terminology validation', async () => {
         }
 
         if (toValue.startsWith(`${expectedBase}#`) === true) {
-          const anchor: Tests_Terminology_TerminologyValidation_Anchor = toValue.slice(`${expectedBase}#`.length);
+          const anchor: Tests_Terminology_TerminologyValidation_AllTerminologyComponentsHaveValidAttributesAndAnchors_Anchor = toValue.slice(`${expectedBase}#`.length);
 
           if (validAnchors.has(anchor) === false) {
             failures.push(`${mdFile}: <Terminology to="${toValue}"> references unknown anchor "#${anchor}"`);

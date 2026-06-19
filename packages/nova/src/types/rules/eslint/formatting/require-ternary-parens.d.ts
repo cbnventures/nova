@@ -1,5 +1,12 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
+import type { RuleContext, RuleFix, RuleFixer } from '@typescript-eslint/utils/ts-eslint';
+
+/**
+ * Rules - ESLint - Formatting - Require Ternary Parens - Rule.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
 /**
  * Rules - ESLint - Formatting - Require Ternary Parens - Check Conditional Expression.
@@ -19,14 +26,30 @@ export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditional
 export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_CharBefore = string | undefined;
 
 /**
- * Rules - ESLint - Formatting - Require Ternary Parens - Rule.
+ * Rules - ESLint - Formatting - Require Ternary Parens - Check Conditional Expression - Fix.
  *
  * @since 0.15.0
  */
-export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Fix_Fixer = RuleFixer;
 
-export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleOptions_IgnoreFiles = string[];
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Fix_Returns = RuleFix[];
 
-export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleOptions_IgnoreFiles;
+/**
+ * Rules - ESLint - Formatting - Require Ternary Parens - Create.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_Options_IgnoreFiles = string[];
+
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_Options_IgnoreFiles;
 }>;
+
+/**
+ * Rules - ESLint - Formatting - Require Ternary Parens - Create - Conditional Expression.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_ConditionalExpression_Node = TSESTree.ConditionalExpression;
+
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_ConditionalExpression_Returns = void;

@@ -98,10 +98,10 @@ export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFileWorkspaces
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_EligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceConfigFilter = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceConfig = SharedNovaConfigWorkspace;
 
-export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
 
-export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipeTuple = SharedNovaConfigWorkspaceRecipeTuple | undefined;
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Workspaces = SharedWorkspaceManifest[];

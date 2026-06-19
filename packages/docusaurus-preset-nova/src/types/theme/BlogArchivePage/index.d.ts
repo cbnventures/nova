@@ -30,14 +30,22 @@ export type Theme_BlogArchivePage_Index_BlogArchivePage_Props = {
 
 export type Theme_BlogArchivePage_Index_BlogArchivePage_DateTimeFormat = Intl.DateTimeFormat;
 
-export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroups = Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup[];
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearPost = PropBlogPostContent;
+
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Posts = Theme_BlogArchivePage_Index_BlogArchivePage_YearPost[];
+
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Year = string;
 
 export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup = {
   year: Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Year;
   posts: Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Posts;
 };
 
-export type Theme_BlogArchivePage_Index_BlogArchivePage_YearPost = PropBlogPostContent;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroups = Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup[];
+
+export type Theme_BlogArchivePage_Index_BlogArchivePage_Heading = string;
+
+export type Theme_BlogArchivePage_Index_BlogArchivePage_Description = string;
 
 export type Theme_BlogArchivePage_Index_BlogArchivePage_YearPostMetadata_Date = string;
 
@@ -54,19 +62,11 @@ export type Theme_BlogArchivePage_Index_BlogArchivePage_YearPostMetadata = {
 
 export type Theme_BlogArchivePage_Index_BlogArchivePage_FormattedDate = string;
 
-export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Posts = Theme_BlogArchivePage_Index_BlogArchivePage_YearPost[];
-
-export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Year = string;
-
 /**
  * Theme - Blog Archive Page - List Posts By Years.
  *
  * @since 0.15.0
  */
-export type Theme_BlogArchivePage_Index_BlogArchivePage_Heading = string;
-
-export type Theme_BlogArchivePage_Index_BlogArchivePage_Description = string;
-
 export type Theme_BlogArchivePage_Index_ListPostsByYears_BlogPosts = readonly Theme_BlogArchivePage_Index_BlogArchivePage_YearPost[];
 
 export type Theme_BlogArchivePage_Index_ListPostsByYears_PostsByYear = Map<Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Year, Theme_BlogArchivePage_Index_BlogArchivePage_YearPost[]>;

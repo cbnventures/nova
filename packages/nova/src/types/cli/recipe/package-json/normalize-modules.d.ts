@@ -33,6 +33,8 @@ export type Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageImports
 
 export type Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentPackageExports = unknown;
 
+export type Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentExportsBrowser = unknown;
+
 /**
  * CLI - Recipe - package.json - Normalize Modules - Run.
  *

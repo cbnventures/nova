@@ -8,8 +8,22 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_JsdocComment,
   Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Node,
   Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_ClassDeclaration_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_ClassDeclaration_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_FunctionDeclaration_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_FunctionDeclaration_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_MethodDefinition_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_MethodDefinition_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_Options,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_PropertyDefinition_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_PropertyDefinition_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_TSEnumDeclaration_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_TSEnumDeclaration_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_TSInterfaceDeclaration_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_TSInterfaceDeclaration_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_TSTypeAliasDeclaration_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_TSTypeAliasDeclaration_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_RuleOptions,
 } from '../../../types/rules/eslint/jsdoc/require-jsdoc-since.d.ts';
 
 /**
@@ -56,7 +70,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -64,37 +78,37 @@ export class Runner {
       }
 
       return {
-        ClassDeclaration(node) {
+        ClassDeclaration(node: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_ClassDeclaration_Node): Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_ClassDeclaration_Returns {
           Runner.checkNode(context, node);
 
           return;
         },
-        MethodDefinition(node) {
+        MethodDefinition(node: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_MethodDefinition_Node): Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_MethodDefinition_Returns {
           Runner.checkNode(context, node);
 
           return;
         },
-        PropertyDefinition(node) {
+        PropertyDefinition(node: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_PropertyDefinition_Node): Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_PropertyDefinition_Returns {
           Runner.checkNode(context, node);
 
           return;
         },
-        FunctionDeclaration(node) {
+        FunctionDeclaration(node: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_FunctionDeclaration_Node): Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_FunctionDeclaration_Returns {
           Runner.checkNode(context, node);
 
           return;
         },
-        TSTypeAliasDeclaration(node) {
+        TSTypeAliasDeclaration(node: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_TSTypeAliasDeclaration_Node): Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_TSTypeAliasDeclaration_Returns {
           Runner.checkNode(context, node);
 
           return;
         },
-        TSInterfaceDeclaration(node) {
+        TSInterfaceDeclaration(node: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_TSInterfaceDeclaration_Node): Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_TSInterfaceDeclaration_Returns {
           Runner.checkNode(context, node);
 
           return;
         },
-        TSEnumDeclaration(node) {
+        TSEnumDeclaration(node: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_TSEnumDeclaration_Node): Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_Create_TSEnumDeclaration_Returns {
           Runner.checkNode(context, node);
 
           return;

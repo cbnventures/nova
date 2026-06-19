@@ -29,9 +29,9 @@ export type Theme_BlogPostItems_Index_BlogPostItems_Props = {
   [key: string]: unknown;
 };
 
+export type Theme_BlogPostItems_Index_BlogPostItems_PropsItem_Content = PropBlogPostContent;
+
 export type Theme_BlogPostItems_Index_BlogPostItems_PropsItem = {
   content: Theme_BlogPostItems_Index_BlogPostItems_PropsItem_Content;
   [key: string]: unknown;
 };
-
-export type Theme_BlogPostItems_Index_BlogPostItems_PropsItem_Content = PropBlogPostContent;

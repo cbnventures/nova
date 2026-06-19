@@ -15,7 +15,7 @@ export type Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexP
   title: Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_Navigation_Previous_Title;
   permalink: Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_Navigation_Previous_Permalink;
   [key: string]: unknown;
-} | undefined;
+};
 
 export type Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_Navigation_Next_Title = string;
 

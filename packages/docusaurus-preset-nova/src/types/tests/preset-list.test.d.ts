@@ -73,24 +73,86 @@ export type Tests_PresetList_ListPresetDirectories_Names = string[];
  */
 export type Tests_PresetList_PresetList_SamplePreset = 'sample';
 
-export type Tests_PresetList_PresetList_PresetsRoot = string;
+/**
+ * Tests - Preset List - Preset List - Filesystem Preset Directories Match Presets Index Names Excluding Sample Scaffold.
+ *
+ * @since 0.18.0
+ */
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_PresetsRoot = string;
 
-export type Tests_PresetList_PresetList_Filesystem = readonly string[];
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_Filesystem = readonly string[];
 
-export type Tests_PresetList_PresetList_FilesystemSet = Set<string>;
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_FilesystemSet = Set<string>;
 
-export type Tests_PresetList_PresetList_ExpectedSet = Set<string>;
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_ExpectedSet = Set<string>;
 
-export type Tests_PresetList_PresetList_Missing = string[];
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_Missing = string[];
 
-export type Tests_PresetList_PresetList_Extra = string[];
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_Extra = string[];
 
-export type Tests_PresetList_PresetList_Message = string;
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_Message = string;
 
-export type Tests_PresetList_PresetList_SharedTypeFilePath = string;
+/**
+ * Tests - Preset List - Preset List - Filesystem Preset Directories Match Presets Index Presets Keys Excluding Sample Scaffold.
+ *
+ * @since 0.18.0
+ */
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_PresetsRoot = string;
 
-export type Tests_PresetList_PresetList_Literals = readonly string[];
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_Filesystem = readonly string[];
 
-export type Tests_PresetList_PresetList_TokenMapTestFilePath = string;
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_FilesystemSet = Set<string>;
 
-export type Tests_PresetList_PresetList_Presets = readonly string[];
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_ExpectedSet = Set<string>;
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_Missing = string[];
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_Extra = string[];
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_Message = string;
+
+/**
+ * Tests - Preset List - Preset List - Filesystem Preset Directories Match Shared Preset Name Union Literals Excluding Sample Scaffold.
+ *
+ * @since 0.18.0
+ */
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_PresetsRoot = string;
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Filesystem = readonly string[];
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_FilesystemSet = Set<string>;
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_SharedTypeFilePath = string;
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Literals = readonly string[];
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_ExpectedSet = Set<string>;
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Missing = string[];
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Extra = string[];
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Message = string;
+
+/**
+ * Tests - Preset List - Preset List - Filesystem Preset Directories Match Token Map Expectations Including Sample Scaffold.
+ *
+ * @since 0.18.0
+ */
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_PresetsRoot = string;
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Filesystem = readonly string[];
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_FilesystemSet = Set<string>;
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_TokenMapTestFilePath = string;
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Presets = readonly string[];
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_ExpectedSet = Set<string>;
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Missing = string[];
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Extra = string[];
+
+export type Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Message = string;

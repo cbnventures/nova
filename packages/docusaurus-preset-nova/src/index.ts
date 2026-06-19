@@ -22,65 +22,63 @@ import { dataAttributeQuery } from './scripts/data-attribute-query.js';
 import type {
   Index_Runner_Default_ActiveFooterPrefix,
   Index_Runner_Default_ActiveNavbarPrefix,
+  Index_Runner_Default_AllContentLoaded_Actions,
   Index_Runner_Default_AllContentLoaded_AllContent,
   Index_Runner_Default_AllContentLoaded_Args,
+  Index_Runner_Default_AllContentLoaded_AuthorImageUrl,
+  Index_Runner_Default_AllContentLoaded_AuthorKey,
+  Index_Runner_Default_AllContentLoaded_AuthorName,
+  Index_Runner_Default_AllContentLoaded_AuthorPage,
+  Index_Runner_Default_AllContentLoaded_AuthorPermalink,
+  Index_Runner_Default_AllContentLoaded_AuthorRaw,
+  Index_Runner_Default_AllContentLoaded_BlogAuthor,
+  Index_Runner_Default_AllContentLoaded_BlogAuthors,
+  Index_Runner_Default_AllContentLoaded_BlogDateValue,
+  Index_Runner_Default_AllContentLoaded_BlogDescriptionValue,
+  Index_Runner_Default_AllContentLoaded_BlogPermalinkValue,
   Index_Runner_Default_AllContentLoaded_BlogPluginContent,
   Index_Runner_Default_AllContentLoaded_BlogPluginData,
   Index_Runner_Default_AllContentLoaded_BlogPluginPosts,
+  Index_Runner_Default_AllContentLoaded_BlogPost,
+  Index_Runner_Default_AllContentLoaded_BlogPostAuthors,
   Index_Runner_Default_AllContentLoaded_BlogPostMetadata,
+  Index_Runner_Default_AllContentLoaded_BlogPosts,
+  Index_Runner_Default_AllContentLoaded_BlogSeenAuthorKeys,
+  Index_Runner_Default_AllContentLoaded_BlogSeenPostPermalinks,
+  Index_Runner_Default_AllContentLoaded_BlogTitleValue,
+  Index_Runner_Default_AllContentLoaded_CreditPhraseCount,
+  Index_Runner_Default_AllContentLoaded_CreditPhraseIndex,
+  Index_Runner_Default_AllContentLoaded_DescriptionValue,
+  Index_Runner_Default_AllContentLoaded_DocDescriptions,
   Index_Runner_Default_AllContentLoaded_DocsLoadedVersions,
   Index_Runner_Default_AllContentLoaded_DocsPluginContent,
   Index_Runner_Default_AllContentLoaded_DocsPluginData,
   Index_Runner_Default_AllContentLoaded_DocsVersionDocs,
+  Index_Runner_Default_AllContentLoaded_ErrorPageContentTitleCount,
+  Index_Runner_Default_AllContentLoaded_ErrorPageContentTitleIndex,
+  Index_Runner_Default_AllContentLoaded_NotFoundBundleCount,
+  Index_Runner_Default_AllContentLoaded_NotFoundBundleIndex,
+  Index_Runner_Default_AllContentLoaded_PermalinkValue,
   Index_Runner_Default_AnnouncementBar,
+  Index_Runner_Default_AssetsDirectory,
+  Index_Runner_Default_BlocksPath,
   Index_Runner_Default_ConfigurePostCss_PostCssOptions,
   Index_Runner_Default_ConfigurePostCss_RtlPlugin,
-  Index_Runner_Default_ConfigureWebpack_AssetsDirectory,
   Index_Runner_Default_ContentLoaded_Actions,
   Index_Runner_Default_ContentLoaded_Args,
-  Index_Runner_Default_ContentLoaded_BlogAuthor,
-  Index_Runner_Default_ContentLoaded_BlogAuthor_ImageURL,
-  Index_Runner_Default_ContentLoaded_BlogAuthor_Key,
-  Index_Runner_Default_ContentLoaded_BlogAuthor_Name,
-  Index_Runner_Default_ContentLoaded_BlogAuthorPage,
-  Index_Runner_Default_ContentLoaded_BlogAuthor_Permalink,
-  Index_Runner_Default_ContentLoaded_BlogAuthors,
-  Index_Runner_Default_ContentLoaded_BlogDateValue,
-  Index_Runner_Default_ContentLoaded_BlogDescriptionValue,
-  Index_Runner_Default_ContentLoaded_BlogFileAuthor,
-  Index_Runner_Default_ContentLoaded_BlogFileAuthors,
-  Index_Runner_Default_ContentLoaded_BlogPermalinkValue,
-  Index_Runner_Default_ContentLoaded_BlogPost,
-  Index_Runner_Default_ContentLoaded_BlogPosts,
-  Index_Runner_Default_ContentLoaded_BlogSeenAuthorKeys,
-  Index_Runner_Default_ContentLoaded_BlogSeenPostPermalinks,
-  Index_Runner_Default_ContentLoaded_BlogTitleValue,
-  Index_Runner_Default_ContentLoaded_CreditPhraseCount,
-  Index_Runner_Default_ContentLoaded_CreditPhraseIndexValue,
-  Index_Runner_Default_ContentLoaded_DescriptionValue,
-  Index_Runner_Default_ContentLoaded_DocDescriptions,
-  Index_Runner_Default_ContentLoaded_ErrorPageContentTitleCount,
-  Index_Runner_Default_ContentLoaded_ErrorPageContentTitleIndexValue,
-  Index_Runner_Default_ContentLoaded_NotFoundBundleCount,
-  Index_Runner_Default_ContentLoaded_NotFoundBundleIndexValue,
-  Index_Runner_Default_ContentLoaded_PermalinkValue,
   Index_Runner_Default_Context,
   Index_Runner_Default_CssAccessibilityPath,
-  Index_Runner_Default_CssBlockFileName,
   Index_Runner_Default_CssBlockFiles,
   Index_Runner_Default_CssBlocksDirectory,
   Index_Runner_Default_CssGridPath,
-  Index_Runner_Default_CssPresetBlockFileName,
   Index_Runner_Default_CssPresetBlockFiles,
   Index_Runner_Default_CssPresetBlocksDirectory,
   Index_Runner_Default_CssPresetDirectory,
   Index_Runner_Default_CssPresetPath,
   Index_Runner_Default_CssPresetThemeDirectory,
-  Index_Runner_Default_CssPresetThemeFileName,
   Index_Runner_Default_CssPresetThemeFiles,
   Index_Runner_Default_CssResetPath,
   Index_Runner_Default_CssThemeDirectory,
-  Index_Runner_Default_CssThemeFileName,
   Index_Runner_Default_CssThemeFiles,
   Index_Runner_Default_CssUtilitiesPath,
   Index_Runner_Default_CurrentDirectory,
@@ -89,27 +87,27 @@ import type {
   Index_Runner_Default_GeneratedCssDirectory,
   Index_Runner_Default_GeneratedCssPath,
   Index_Runner_Default_GetClientModules_ClientModules,
-  Index_Runner_Default_GetClientModules_NprogressCssPath,
+  Index_Runner_Default_GetClientModules_NprogressCssModule,
+  Index_Runner_Default_GetClientModules_StickyLayoutPath,
   Index_Runner_Default_GetDefaultCodeTranslationMessages_NovaTranslationsDirPath,
   Index_Runner_Default_GetDefaultCodeTranslationMessages_ThemeCommonMessages,
   Index_Runner_Default_GetDefaultCodeTranslationMessages_ThemeNovaMessages,
-  Index_Runner_Default_GetPathsToWatch_BlocksPath,
-  Index_Runner_Default_GetPathsToWatch_LibPath,
-  Index_Runner_Default_GetPathsToWatch_Paths,
   Index_Runner_Default_GoogleFontsUrl,
   Index_Runner_Default_I18nConfig,
-  Index_Runner_Default_InjectHtmlTags_AnnouncementBarInit,
-  Index_Runner_Default_InjectHtmlTags_ColorModeInit,
+  Index_Runner_Default_InjectHtmlTags_AnnouncementBarScript,
+  Index_Runner_Default_InjectHtmlTags_ColorModeScript,
   Index_Runner_Default_InjectHtmlTags_HeadTags,
   Index_Runner_Default_InjectHtmlTags_PreBodyScriptEntries,
   Index_Runner_Default_InjectHtmlTags_PreBodyTags,
   Index_Runner_Default_InjectHtmlTags_PresetVariantInit,
   Index_Runner_Default_IsRtl,
+  Index_Runner_Default_LibPath,
   Index_Runner_Default_LocaleConfig,
   Index_Runner_Default_LocaleConfigs,
   Index_Runner_Default_LocaleDirection,
   Index_Runner_Default_NprogressCssPath,
   Index_Runner_Default_Options,
+  Index_Runner_Default_PathsToWatch,
   Index_Runner_Default_PostBuild_Args,
   Index_Runner_Default_PostBuild_SearchConfigCast,
   Index_Runner_Default_PresetLogoContent,
@@ -124,7 +122,6 @@ import type {
   Index_Runner_Default_SiteConfig,
   Index_Runner_Default_SiteDirectory,
   Index_Runner_Default_SiteStorage,
-  Index_Runner_Default_StickyLayoutPath,
   Index_Runner_Default_ThemeConfig,
   Index_Runner_Default_ThemePath,
   Index_Runner_Default_TranslateThemeConfig_Params,
@@ -194,16 +191,16 @@ export class Runner {
 
     // Resolve preset logo to a data URI so it works as an <img src> at runtime.
     const presetLogoSrc: Index_Runner_Default_PresetLogoSrc = resolvedPreset['logo']['src'];
-    const assetsDirectory: Index_Runner_Default_ConfigureWebpack_AssetsDirectory = resolve(currentDirectory, '../../assets');
+    const assetsDirectory: Index_Runner_Default_AssetsDirectory = resolve(currentDirectory, '../../assets');
     const presetLogoPath: Index_Runner_Default_PresetLogoPath = resolve(assetsDirectory, presetLogoSrc.replace('@nova-assets/', ''));
     const presetLogoContent: Index_Runner_Default_PresetLogoContent = readFileSync(presetLogoPath, 'utf-8');
     const presetLogoDataUri: Index_Runner_Default_PresetLogoDataUri = `data:image/svg+xml;base64,${Buffer.from(presetLogoContent).toString('base64')}`;
 
     const themePath: Index_Runner_Default_ThemePath = `${currentDirectory}/theme`;
     const typeScriptThemePath: Index_Runner_Default_TypeScriptThemePath = resolve(currentDirectory, '../src/theme');
-    const blocksPath: Index_Runner_Default_GetPathsToWatch_BlocksPath = `${currentDirectory}/blocks`;
-    const libPath: Index_Runner_Default_GetPathsToWatch_LibPath = `${currentDirectory}/lib`;
-    const pathsToWatch: Index_Runner_Default_GetPathsToWatch_Paths = [
+    const blocksPath: Index_Runner_Default_BlocksPath = `${currentDirectory}/blocks`;
+    const libPath: Index_Runner_Default_LibPath = `${currentDirectory}/lib`;
+    const pathsToWatch: Index_Runner_Default_PathsToWatch = [
       blocksPath,
       libPath,
     ];
@@ -216,23 +213,23 @@ export class Runner {
 
     // Shared block and theme CSS files.
     const cssBlocksDirectory: Index_Runner_Default_CssBlocksDirectory = resolve(currentDirectory, 'styles/blocks');
-    const cssBlockFiles: Index_Runner_Default_CssBlockFiles = readdirSync(cssBlocksDirectory, { recursive: true }).filter((fileName: Index_Runner_Default_CssBlockFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: Index_Runner_Default_CssBlockFileName) => resolve(cssBlocksDirectory, String(fileName)));
+    const cssBlockFiles: Index_Runner_Default_CssBlockFiles = readdirSync(cssBlocksDirectory, { recursive: true }).filter((fileName) => String(fileName).endsWith('style.css')).sort().map((fileName) => resolve(cssBlocksDirectory, String(fileName)));
     const cssThemeDirectory: Index_Runner_Default_CssThemeDirectory = resolve(currentDirectory, 'styles/theme');
-    const cssThemeFiles: Index_Runner_Default_CssThemeFiles = readdirSync(cssThemeDirectory, { recursive: true }).filter((fileName: Index_Runner_Default_CssThemeFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: Index_Runner_Default_CssThemeFileName) => resolve(cssThemeDirectory, String(fileName)));
+    const cssThemeFiles: Index_Runner_Default_CssThemeFiles = readdirSync(cssThemeDirectory, { recursive: true }).filter((fileName) => String(fileName).endsWith('style.css')).sort().map((fileName) => resolve(cssThemeDirectory, String(fileName)));
 
     // Preset CSS files.
     const cssPresetDirectory: Index_Runner_Default_CssPresetDirectory = resolve(currentDirectory, `styles/presets/${presetName}`);
     const cssPresetPath: Index_Runner_Default_CssPresetPath = resolve(cssPresetDirectory, 'preset.css');
     const cssPresetBlocksDirectory: Index_Runner_Default_CssPresetBlocksDirectory = resolve(cssPresetDirectory, 'blocks');
-    const cssPresetBlockFiles: Index_Runner_Default_CssPresetBlockFiles = readdirSync(cssPresetBlocksDirectory, { recursive: true }).filter((fileName: Index_Runner_Default_CssPresetBlockFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: Index_Runner_Default_CssPresetBlockFileName) => resolve(cssPresetBlocksDirectory, String(fileName)));
+    const cssPresetBlockFiles: Index_Runner_Default_CssPresetBlockFiles = readdirSync(cssPresetBlocksDirectory, { recursive: true }).filter((fileName) => String(fileName).endsWith('style.css')).sort().map((fileName) => resolve(cssPresetBlocksDirectory, String(fileName)));
     const cssPresetThemeDirectory: Index_Runner_Default_CssPresetThemeDirectory = resolve(cssPresetDirectory, 'theme');
     const activeNavbarPrefix: Index_Runner_Default_ActiveNavbarPrefix = `Navbar/${resolvedPreset['navbar'].charAt(0).toUpperCase()}${resolvedPreset['navbar'].slice(1)}/`;
     const activeFooterPrefix: Index_Runner_Default_ActiveFooterPrefix = `Footer/${resolvedPreset['footer'].charAt(0).toUpperCase()}${resolvedPreset['footer'].slice(1)}/`;
     const cssPresetThemeFiles: Index_Runner_Default_CssPresetThemeFiles = readdirSync(cssPresetThemeDirectory, { recursive: true }).filter(
-      (fileName: Index_Runner_Default_CssPresetThemeFileName) => filterPresetThemeFile(String(fileName), activeNavbarPrefix, activeFooterPrefix),
+      (fileName) => filterPresetThemeFile(String(fileName), activeNavbarPrefix, activeFooterPrefix),
     ).sort(
-      (a: Index_Runner_Default_CssPresetThemeFileName, b: Index_Runner_Default_CssPresetThemeFileName) => comparePresetThemeFiles(String(a), String(b)),
-    ).map((fileName: Index_Runner_Default_CssPresetThemeFileName) => resolve(cssPresetThemeDirectory, String(fileName)));
+      (a, b) => comparePresetThemeFiles(String(a), String(b)),
+    ).map((fileName) => resolve(cssPresetThemeDirectory, String(fileName)));
 
     const i18nConfig: Index_Runner_Default_I18nConfig = context['i18n'] as Index_Runner_Default_I18nConfig;
     const currentLocale: Index_Runner_Default_CurrentLocale = i18nConfig['currentLocale'];
@@ -287,7 +284,7 @@ export class Runner {
        * extraction in addition to `getThemePath()`, so `translate()` calls in
        * `blocks/` and `lib/` get picked up by `docusaurus write-translations`.
        *
-       * @returns {Index_Runner_Default_GetPathsToWatch_Paths}
+       * @returns {Index_Runner_Default_PathsToWatch}
        *
        * @since 0.18.0
        */
@@ -307,7 +304,7 @@ export class Runner {
        * @since 0.15.0
        */
       getClientModules() {
-        const stickyLayoutPath: Index_Runner_Default_StickyLayoutPath = resolve(currentDirectory, 'lib/sticky-layout.js');
+        const stickyLayoutPath: Index_Runner_Default_GetClientModules_StickyLayoutPath = resolve(currentDirectory, 'lib/sticky-layout.js');
 
         const clientModules: Index_Runner_Default_GetClientModules_ClientModules = [
           cssResetPath,
@@ -324,7 +321,7 @@ export class Runner {
         ];
 
         if (progressBarConfig !== false) {
-          const nprogressCssModule: Index_Runner_Default_GetClientModules_NprogressCssPath = resolve(nprogressCssPath);
+          const nprogressCssModule: Index_Runner_Default_GetClientModules_NprogressCssModule = resolve(nprogressCssPath);
 
           clientModules.push(nprogressCssModule);
         }
@@ -370,7 +367,7 @@ export class Runner {
           },
         ];
 
-        const colorModeScript: Index_Runner_Default_InjectHtmlTags_ColorModeInit = colorModeInit({
+        const colorModeScript: Index_Runner_Default_InjectHtmlTags_ColorModeScript = colorModeInit({
           siteStorage,
           themeConfig,
         });
@@ -399,7 +396,7 @@ export class Runner {
         });
 
         if (announcementBar !== undefined) {
-          const announcementBarScript: Index_Runner_Default_InjectHtmlTags_AnnouncementBarInit = announcementBarInit({
+          const announcementBarScript: Index_Runner_Default_InjectHtmlTags_AnnouncementBarScript = announcementBarInit({
             siteStorage,
           });
 
@@ -533,18 +530,18 @@ export class Runner {
        * the serialized lunr index, document manifest, and worker script
        * to the build output directory.
        *
-       * @param {Index_Runner_Default_PostBuild_Args} postBuildArgs - Post build args.
+       * @param {Index_Runner_Default_PostBuild_Args} args - Args.
        *
        * @returns {Promise<void>}
        *
        * @since 0.15.0
        */
-      async postBuild(postBuildArgs: Index_Runner_Default_PostBuild_Args) {
+      async postBuild(args: Index_Runner_Default_PostBuild_Args) {
         if (searchConfig !== undefined && searchConfig !== false) {
           buildSearchIndex({
-            outDir: postBuildArgs['outDir'],
-            routesPaths: postBuildArgs['routesPaths'],
-            baseUrl: postBuildArgs['siteConfig']['baseUrl'],
+            outDir: args['outDir'],
+            routesPaths: args['routesPaths'],
+            baseUrl: args['siteConfig']['baseUrl'],
             searchConfig: searchConfig as Index_Runner_Default_PostBuild_SearchConfigCast,
           });
         }
@@ -558,14 +555,14 @@ export class Runner {
        * Registers the /search route pointing to the SearchPage theme
        * component when search is enabled in the plugin options.
        *
-       * @param {Index_Runner_Default_ContentLoaded_Args} contentLoadedArgs - Content loaded args.
+       * @param {Index_Runner_Default_ContentLoaded_Args} args - Args.
        *
        * @returns {Promise<void>}
        *
        * @since 0.15.0
        */
-      async contentLoaded(contentLoadedArgs: Index_Runner_Default_ContentLoaded_Args) {
-        const actions: Index_Runner_Default_ContentLoaded_Actions = contentLoadedArgs['actions'];
+      async contentLoaded(args: Index_Runner_Default_ContentLoaded_Args) {
+        const actions: Index_Runner_Default_ContentLoaded_Actions = args['actions'];
 
         if (searchConfig !== undefined && searchConfig !== false) {
           actions.addRoute({
@@ -585,19 +582,19 @@ export class Runner {
        * the in-memory content of the docs and blog plugins, then writes
        * the combined global data used by theme components.
        *
-       * @param {Index_Runner_Default_AllContentLoaded_Args} allContentLoadedArgs - All content loaded args.
+       * @param {Index_Runner_Default_AllContentLoaded_Args} args - Args.
        *
        * @returns {Promise<void>}
        *
        * @since 0.15.0
        */
-      async allContentLoaded(allContentLoadedArgs: Index_Runner_Default_AllContentLoaded_Args) {
-        const allContent: Index_Runner_Default_AllContentLoaded_AllContent = allContentLoadedArgs['allContent'];
-        const actions: Index_Runner_Default_ContentLoaded_Actions = allContentLoadedArgs['actions'] as Index_Runner_Default_ContentLoaded_Actions;
+      async allContentLoaded(args: Index_Runner_Default_AllContentLoaded_Args) {
+        const allContent: Index_Runner_Default_AllContentLoaded_AllContent = args['allContent'];
+        const actions: Index_Runner_Default_AllContentLoaded_Actions = args['actions'] as Index_Runner_Default_AllContentLoaded_Actions;
 
         // Build a permalink-to-description map from the docs plugin's
         // in-memory loaded versions.
-        const docDescriptions: Index_Runner_Default_ContentLoaded_DocDescriptions = {};
+        const docDescriptions: Index_Runner_Default_AllContentLoaded_DocDescriptions = {};
         const docsPluginData: Index_Runner_Default_AllContentLoaded_DocsPluginData = allContent['docusaurus-plugin-content-docs'];
         const docsPluginContent: Index_Runner_Default_AllContentLoaded_DocsPluginContent = (docsPluginData !== undefined) ? docsPluginData['default'] as Index_Runner_Default_AllContentLoaded_DocsPluginContent : undefined;
         const docsLoadedVersions: Index_Runner_Default_AllContentLoaded_DocsLoadedVersions = (docsPluginContent !== undefined && docsPluginContent['loadedVersions'] !== undefined) ? docsPluginContent['loadedVersions'] : [];
@@ -606,8 +603,8 @@ export class Runner {
           const docsVersionDocs: Index_Runner_Default_AllContentLoaded_DocsVersionDocs = (docsLoadedVersion['docs'] !== undefined) ? docsLoadedVersion['docs'] : [];
 
           for (const docEntry of docsVersionDocs) {
-            const permalinkValue: Index_Runner_Default_ContentLoaded_PermalinkValue = docEntry['permalink'] as Index_Runner_Default_ContentLoaded_PermalinkValue;
-            const descriptionValue: Index_Runner_Default_ContentLoaded_DescriptionValue = docEntry['description'] as Index_Runner_Default_ContentLoaded_DescriptionValue;
+            const permalinkValue: Index_Runner_Default_AllContentLoaded_PermalinkValue = docEntry['permalink'] as Index_Runner_Default_AllContentLoaded_PermalinkValue;
+            const descriptionValue: Index_Runner_Default_AllContentLoaded_DescriptionValue = docEntry['description'] as Index_Runner_Default_AllContentLoaded_DescriptionValue;
 
             if (
               permalinkValue !== undefined
@@ -621,10 +618,10 @@ export class Runner {
 
         // Build a blog posts array and unique authors list
         // from the blog plugin's in-memory posts.
-        const blogPosts: Index_Runner_Default_ContentLoaded_BlogPosts = [];
-        const blogSeenPostPermalinks: Index_Runner_Default_ContentLoaded_BlogSeenPostPermalinks = new Set();
-        const blogAuthors: Index_Runner_Default_ContentLoaded_BlogAuthors = [];
-        const blogSeenAuthorKeys: Index_Runner_Default_ContentLoaded_BlogSeenAuthorKeys = new Set();
+        const blogPosts: Index_Runner_Default_AllContentLoaded_BlogPosts = [];
+        const blogSeenPostPermalinks: Index_Runner_Default_AllContentLoaded_BlogSeenPostPermalinks = new Set();
+        const blogAuthors: Index_Runner_Default_AllContentLoaded_BlogAuthors = [];
+        const blogSeenAuthorKeys: Index_Runner_Default_AllContentLoaded_BlogSeenAuthorKeys = new Set();
 
         const blogPluginData: Index_Runner_Default_AllContentLoaded_BlogPluginData = allContent['docusaurus-plugin-content-blog'];
         const blogPluginContent: Index_Runner_Default_AllContentLoaded_BlogPluginContent = (blogPluginData !== undefined) ? blogPluginData['default'] as Index_Runner_Default_AllContentLoaded_BlogPluginContent : undefined;
@@ -632,10 +629,10 @@ export class Runner {
 
         for (const blogPluginPost of blogPluginPosts) {
           const blogPostMetadata: Index_Runner_Default_AllContentLoaded_BlogPostMetadata = (blogPluginPost['metadata'] !== undefined) ? blogPluginPost['metadata'] : {};
-          const blogTitleValue: Index_Runner_Default_ContentLoaded_BlogTitleValue = blogPostMetadata['title'] as Index_Runner_Default_ContentLoaded_BlogTitleValue;
-          const blogPermalinkValue: Index_Runner_Default_ContentLoaded_BlogPermalinkValue = blogPostMetadata['permalink'] as Index_Runner_Default_ContentLoaded_BlogPermalinkValue;
-          const blogDescriptionValue: Index_Runner_Default_ContentLoaded_BlogDescriptionValue = blogPostMetadata['description'] as Index_Runner_Default_ContentLoaded_BlogDescriptionValue;
-          const blogDateValue: Index_Runner_Default_ContentLoaded_BlogDateValue = blogPostMetadata['date'] as Index_Runner_Default_ContentLoaded_BlogDateValue;
+          const blogTitleValue: Index_Runner_Default_AllContentLoaded_BlogTitleValue = blogPostMetadata['title'] as Index_Runner_Default_AllContentLoaded_BlogTitleValue;
+          const blogPermalinkValue: Index_Runner_Default_AllContentLoaded_BlogPermalinkValue = blogPostMetadata['permalink'] as Index_Runner_Default_AllContentLoaded_BlogPermalinkValue;
+          const blogDescriptionValue: Index_Runner_Default_AllContentLoaded_BlogDescriptionValue = blogPostMetadata['description'] as Index_Runner_Default_AllContentLoaded_BlogDescriptionValue;
+          const blogDateValue: Index_Runner_Default_AllContentLoaded_BlogDateValue = blogPostMetadata['date'] as Index_Runner_Default_AllContentLoaded_BlogDateValue;
 
           if (
             blogTitleValue !== undefined
@@ -647,7 +644,7 @@ export class Runner {
           ) {
             blogSeenPostPermalinks.add(blogPermalinkValue);
 
-            const blogPost: Index_Runner_Default_ContentLoaded_BlogPost = {
+            const blogPost: Index_Runner_Default_AllContentLoaded_BlogPost = {
               title: blogTitleValue,
               description: blogDescriptionValue,
               permalink: blogPermalinkValue,
@@ -657,11 +654,11 @@ export class Runner {
             blogPosts.push(blogPost);
           }
 
-          const blogPostAuthors: Index_Runner_Default_ContentLoaded_BlogFileAuthors = (blogPostMetadata['authors'] !== undefined) ? blogPostMetadata['authors'] as Index_Runner_Default_ContentLoaded_BlogFileAuthors : [];
+          const blogPostAuthors: Index_Runner_Default_AllContentLoaded_BlogPostAuthors = (blogPostMetadata['authors'] !== undefined) ? blogPostMetadata['authors'] as Index_Runner_Default_AllContentLoaded_BlogPostAuthors : [];
 
           for (const blogPostAuthor of blogPostAuthors) {
-            const authorRaw: Index_Runner_Default_ContentLoaded_BlogFileAuthor = blogPostAuthor;
-            const authorKey: Index_Runner_Default_ContentLoaded_BlogAuthor_Key = authorRaw['key'] as Index_Runner_Default_ContentLoaded_BlogAuthor_Key;
+            const authorRaw: Index_Runner_Default_AllContentLoaded_AuthorRaw = blogPostAuthor;
+            const authorKey: Index_Runner_Default_AllContentLoaded_AuthorKey = authorRaw['key'] as Index_Runner_Default_AllContentLoaded_AuthorKey;
 
             if (authorKey === undefined || blogSeenAuthorKeys.has(authorKey) === true) {
               continue;
@@ -669,12 +666,12 @@ export class Runner {
 
             blogSeenAuthorKeys.add(authorKey);
 
-            const authorName: Index_Runner_Default_ContentLoaded_BlogAuthor_Name = authorRaw['name'] as Index_Runner_Default_ContentLoaded_BlogAuthor_Name;
-            const authorImageUrl: Index_Runner_Default_ContentLoaded_BlogAuthor_ImageURL = authorRaw['imageURL'] as Index_Runner_Default_ContentLoaded_BlogAuthor_ImageURL;
-            const authorPage: Index_Runner_Default_ContentLoaded_BlogAuthorPage = authorRaw['page'] as Index_Runner_Default_ContentLoaded_BlogAuthorPage;
-            const authorPermalink: Index_Runner_Default_ContentLoaded_BlogAuthor_Permalink = (authorPage !== undefined && authorPage !== null) ? authorPage['permalink'] as Index_Runner_Default_ContentLoaded_BlogAuthor_Permalink : undefined;
+            const authorName: Index_Runner_Default_AllContentLoaded_AuthorName = authorRaw['name'] as Index_Runner_Default_AllContentLoaded_AuthorName;
+            const authorImageUrl: Index_Runner_Default_AllContentLoaded_AuthorImageUrl = authorRaw['imageURL'] as Index_Runner_Default_AllContentLoaded_AuthorImageUrl;
+            const authorPage: Index_Runner_Default_AllContentLoaded_AuthorPage = authorRaw['page'] as Index_Runner_Default_AllContentLoaded_AuthorPage;
+            const authorPermalink: Index_Runner_Default_AllContentLoaded_AuthorPermalink = (authorPage !== undefined && authorPage !== null) ? authorPage['permalink'] as Index_Runner_Default_AllContentLoaded_AuthorPermalink : undefined;
 
-            const blogAuthor: Index_Runner_Default_ContentLoaded_BlogAuthor = {
+            const blogAuthor: Index_Runner_Default_AllContentLoaded_BlogAuthor = {
               imageURL: authorImageUrl,
               key: authorKey,
               name: authorName,
@@ -688,13 +685,13 @@ export class Runner {
         // Build-time random indices for surfaces that pick from a phrase pool.
         // Computed once per build so SSR HTML matches client hydration - no
         // visible flash from useEffect-time randomization.
-        const notFoundBundleCount: Index_Runner_Default_ContentLoaded_NotFoundBundleCount = 5;
-        const errorPageContentTitleCount: Index_Runner_Default_ContentLoaded_ErrorPageContentTitleCount = 5;
-        const creditPhraseCount: Index_Runner_Default_ContentLoaded_CreditPhraseCount = 10;
+        const notFoundBundleCount: Index_Runner_Default_AllContentLoaded_NotFoundBundleCount = 5;
+        const errorPageContentTitleCount: Index_Runner_Default_AllContentLoaded_ErrorPageContentTitleCount = 5;
+        const creditPhraseCount: Index_Runner_Default_AllContentLoaded_CreditPhraseCount = 10;
 
-        const notFoundBundleIndex: Index_Runner_Default_ContentLoaded_NotFoundBundleIndexValue = Math.floor(Math.random() * notFoundBundleCount);
-        const errorPageContentTitleIndex: Index_Runner_Default_ContentLoaded_ErrorPageContentTitleIndexValue = Math.floor(Math.random() * errorPageContentTitleCount);
-        const creditPhraseIndex: Index_Runner_Default_ContentLoaded_CreditPhraseIndexValue = Math.floor(Math.random() * creditPhraseCount);
+        const notFoundBundleIndex: Index_Runner_Default_AllContentLoaded_NotFoundBundleIndex = Math.floor(Math.random() * notFoundBundleCount);
+        const errorPageContentTitleIndex: Index_Runner_Default_AllContentLoaded_ErrorPageContentTitleIndex = Math.floor(Math.random() * errorPageContentTitleCount);
+        const creditPhraseIndex: Index_Runner_Default_AllContentLoaded_CreditPhraseIndex = Math.floor(Math.random() * creditPhraseCount);
 
         actions.setGlobalData({
           blogAuthors,

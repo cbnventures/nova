@@ -19,27 +19,41 @@ export type Theme_Tabs_Index_Tabs_IsBrowser = boolean;
 
 export type Theme_Tabs_Index_Tabs_ContainerRef = React.RefObject<HTMLDivElement | null>;
 
+export type Theme_Tabs_Index_Tabs_Result_SelectedValue = string;
+
+export type Theme_Tabs_Index_Tabs_Result_SelectValue = (value: string) => void;
+
+export type Theme_Tabs_Index_Tabs_Result_TabValues = readonly TabValue[];
+
+export type Theme_Tabs_Index_Tabs_Result_Lazy = boolean;
+
+export type Theme_Tabs_Index_Tabs_Result_Block = boolean;
+
 export type Theme_Tabs_Index_Tabs_Result = {
-  selectedValue: string;
-  selectValue: (value: string) => void;
-  tabValues: readonly TabValue[];
-  lazy: boolean;
-  block: boolean;
+  selectedValue: Theme_Tabs_Index_Tabs_Result_SelectedValue;
+  selectValue: Theme_Tabs_Index_Tabs_Result_SelectValue;
+  tabValues: Theme_Tabs_Index_Tabs_Result_TabValues;
+  lazy: Theme_Tabs_Index_Tabs_Result_Lazy;
+  block: Theme_Tabs_Index_Tabs_Result_Block;
 };
 
 export type Theme_Tabs_Index_Tabs_SanitizedChildren = ReactNode;
-
-export type Theme_Tabs_Index_Tabs_EffectCleanupReturns = undefined;
 
 /**
  * Theme - Tabs - Tab List.
  *
  * @since 0.15.0
  */
+export type Theme_Tabs_Index_TabList_TabsResult_SelectedValue = string;
+
+export type Theme_Tabs_Index_TabList_TabsResult_SelectValue = (value: string) => void;
+
+export type Theme_Tabs_Index_TabList_TabsResult_TabValues = readonly TabValue[];
+
 export type Theme_Tabs_Index_TabList_TabsResult = {
-  selectedValue: string;
-  selectValue: (value: string) => void;
-  tabValues: readonly TabValue[];
+  selectedValue: Theme_Tabs_Index_TabList_TabsResult_SelectedValue;
+  selectValue: Theme_Tabs_Index_TabList_TabsResult_SelectValue;
+  tabValues: Theme_Tabs_Index_TabList_TabsResult_TabValues;
 };
 
 export type Theme_Tabs_Index_TabList_TabValue = TabValue;
@@ -83,3 +97,5 @@ export type Theme_Tabs_Index_Tabs_HashDecodedId = string;
 export type Theme_Tabs_Index_Tabs_HashPanel = Element | null;
 
 export type Theme_Tabs_Index_Tabs_HashTabValue = string | undefined;
+
+export type Theme_Tabs_Index_Tabs_EffectCleanupReturns = undefined;

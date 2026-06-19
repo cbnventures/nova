@@ -5,291 +5,291 @@ import type { Lib_Search_Indexer_Document, Lib_Search_Indexer_Heading } from '..
  *
  * @since 0.15.0
  */
-export type Tests_Lib_Search_Indexer_CleanupTempDirs = string[];
+export type Tests_Lib_Search_Indexer_TempDirs = string[];
 
-export type Tests_Lib_Search_Indexer_CleanupTempDir = string;
+export type Tests_Lib_Search_Indexer_TypedTempDir = string;
 
 /**
- * Tests - Lib - Search - Indexer - BuildSearchIndex Extracts Body Text.
+ * Tests - Lib - Search - Indexer - BuildSearchIndexExtractsBodyText - ExtractsArticleTextAndStripsNavAndFooter.
  *
  * @since 0.15.0
  */
-export type Tests_Lib_Search_Indexer_ExtractBodySystemTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_SystemTempDir = string;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyTempPathPrefix = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_TempPathPrefix = string;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_TempDir = string;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyOutDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_OutDir = string;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyHtmlFilePath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_HtmlFilePath = string;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyParentDirectory = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_ParentDirectory = string;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyHtmlContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_HtmlContent = string;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyRoutesPaths = string[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_RoutesPaths = string[];
 
-export type Tests_Lib_Search_Indexer_ExtractBodyIndexUrl = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_IndexUrl = string;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyIndexPath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_IndexPath = string;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyIndexContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_IndexContent = string;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyPayload = Record<string, unknown>;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_Payload = Record<string, unknown>;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyDocuments = Lib_Search_Indexer_Document[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_Documents = Lib_Search_Indexer_Document[] & {};
 
-export type Tests_Lib_Search_Indexer_ExtractBodyFirstDocument = Lib_Search_Indexer_Document | undefined;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_FirstDocument = Lib_Search_Indexer_Document | undefined;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyIncludesArticle = boolean;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_IncludesArticle = boolean;
 
-export type Tests_Lib_Search_Indexer_ExtractBodyExcludesNav = boolean;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsBodyText_ExtractsArticleTextAndStripsNavAndFooter_ExcludesNav = boolean;
 
 /**
- * Tests - Lib - Search - Indexer - BuildSearchIndex Extracts Headings.
+ * Tests - Lib - Search - Indexer - BuildSearchIndexExtractsHeadings - ExtractsH2AndH3HeadingsWithIDs.
  *
  * @since 0.15.0
  */
-export type Tests_Lib_Search_Indexer_ExtractHeadingsSystemTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_SystemTempDir = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsTempPathPrefix = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_TempPathPrefix = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_TempDir = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsOutDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_OutDir = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsHtmlFilePath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_HtmlFilePath = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsParentDirectory = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_ParentDirectory = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsHtmlContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_HtmlContent = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsRoutesPaths = string[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_RoutesPaths = string[];
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsIndexUrl = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_IndexUrl = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsIndexPath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_IndexPath = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsIndexContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_IndexContent = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsPayload = Record<string, unknown>;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_Payload = Record<string, unknown>;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsDocuments = Lib_Search_Indexer_Document[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_Documents = Lib_Search_Indexer_Document[] & {};
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsFirstDocument = Lib_Search_Indexer_Document | undefined;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_FirstDocument = Lib_Search_Indexer_Document | undefined;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsFirstHeading = Lib_Search_Indexer_Heading | undefined;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_FirstHeading = Lib_Search_Indexer_Heading | undefined;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsFirstHeadingId = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_FirstHeadingId = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsFirstHeadingText = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_FirstHeadingText = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsFirstHeadingLevel = number;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_FirstHeadingLevel = number;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsSecondHeading = Lib_Search_Indexer_Heading | undefined;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_SecondHeading = Lib_Search_Indexer_Heading | undefined;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsSecondHeadingId = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_SecondHeadingId = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsSecondHeadingText = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_SecondHeadingText = string;
 
-export type Tests_Lib_Search_Indexer_ExtractHeadingsSecondHeadingLevel = number;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsHeadings_ExtractsH2AndH3HeadingsWithIDs_SecondHeadingLevel = number;
 
 /**
- * Tests - Lib - Search - Indexer - BuildSearchIndex Extracts Meta Description.
+ * Tests - Lib - Search - Indexer - BuildSearchIndexExtractsMetaDescription - ExtractsDescriptionFromMetaTag.
  *
  * @since 0.15.0
  */
-export type Tests_Lib_Search_Indexer_ExtractDescriptionSystemTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_SystemTempDir = string;
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionTempPathPrefix = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_TempPathPrefix = string;
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_TempDir = string;
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionOutDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_OutDir = string;
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionHtmlFilePath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_HtmlFilePath = string;
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionParentDirectory = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_ParentDirectory = string;
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionHtmlContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_HtmlContent = string;
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionRoutesPaths = string[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_RoutesPaths = string[];
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionIndexUrl = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_IndexUrl = string;
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionIndexPath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_IndexPath = string;
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionIndexContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_IndexContent = string;
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionPayload = Record<string, unknown>;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_Payload = Record<string, unknown>;
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionDocuments = Lib_Search_Indexer_Document[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_Documents = Lib_Search_Indexer_Document[] & {};
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionFirstDocument = Lib_Search_Indexer_Document | undefined;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_FirstDocument = Lib_Search_Indexer_Document | undefined;
 
-export type Tests_Lib_Search_Indexer_ExtractDescriptionFirstDocumentDescription = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsMetaDescription_ExtractsDescriptionFromMetaTag_FirstDocumentDescription = string;
 
 /**
- * Tests - Lib - Search - Indexer - BuildSearchIndex Extracts Title.
+ * Tests - Lib - Search - Indexer - BuildSearchIndexExtractsTitle - ExtractsTitleFromTheTitleTag.
  *
  * @since 0.15.0
  */
-export type Tests_Lib_Search_Indexer_ExtractTitleSystemTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_SystemTempDir = string;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleTempPathPrefix = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_TempPathPrefix = string;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_TempDir = string;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleOutDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_OutDir = string;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleHtmlFilePath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_HtmlFilePath = string;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleParentDirectory = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_ParentDirectory = string;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleHtmlContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_HtmlContent = string;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleRoutesPaths = string[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_RoutesPaths = string[];
 
-export type Tests_Lib_Search_Indexer_ExtractTitleManifestPath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_ManifestPath = string;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleManifestExists = boolean;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_ManifestExists = boolean;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleManifestContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_ManifestContent = string;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleManifest = Record<string, unknown>;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_Manifest = Record<string, unknown>;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleIndexUrl = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_IndexUrl = string;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleIndexPath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_IndexPath = string;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleIndexExists = boolean;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_IndexExists = boolean;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleIndexContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_IndexContent = string;
 
-export type Tests_Lib_Search_Indexer_ExtractTitlePayload = Record<string, unknown>;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_Payload = Record<string, unknown>;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleDocuments = Lib_Search_Indexer_Document[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_Documents = Lib_Search_Indexer_Document[] & {};
 
-export type Tests_Lib_Search_Indexer_ExtractTitleFirstDocument = Lib_Search_Indexer_Document | undefined;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_FirstDocument = Lib_Search_Indexer_Document | undefined;
 
-export type Tests_Lib_Search_Indexer_ExtractTitleFirstDocumentTitle = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexExtractsTitle_ExtractsTitleFromTheTitleTag_FirstDocumentTitle = string;
 
 /**
- * Tests - Lib - Search - Indexer - BuildSearchIndex Filters Ignored Patterns.
+ * Tests - Lib - Search - Indexer - BuildSearchIndexFiltersIgnoredPatterns - ExcludesPathsMatchingIgnorePatterns.
  *
  * @since 0.15.0
  */
-export type Tests_Lib_Search_Indexer_IgnorePatternsSystemTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_SystemTempDir = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsTempPathPrefix = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_TempPathPrefix = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_TempDir = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsOutDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_OutDir = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsHtmlFilePathDocs = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_HtmlFilePathDocs = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsHtmlFilePathAdmin = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_HtmlFilePathAdmin = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsParentDirectoryDocs = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_ParentDirectoryDocs = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsParentDirectoryAdmin = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_ParentDirectoryAdmin = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsHtmlContentDocs = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_HtmlContentDocs = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsHtmlContentAdmin = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_HtmlContentAdmin = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsRoutesPaths = string[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_RoutesPaths = string[];
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsIndexUrl = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_IndexUrl = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsIndexPath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_IndexPath = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsIndexContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_IndexContent = string;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsPayload = Record<string, unknown>;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_Payload = Record<string, unknown>;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsDocuments = Lib_Search_Indexer_Document[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_Documents = Lib_Search_Indexer_Document[] & {};
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsDocumentsLength = number;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_DocumentsLength = number;
 
-export type Tests_Lib_Search_Indexer_IgnorePatternsFirstDocumentPath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexFiltersIgnoredPatterns_ExcludesPathsMatchingIgnorePatterns_FirstDocumentPath = string;
 
 /**
- * Tests - Lib - Search - Indexer - BuildSearchIndex Produces Valid Lunr Index.
+ * Tests - Lib - Search - Indexer - BuildSearchIndexProducesValidLunrIndex - SerializesLunrIndexWithExpectedStructure.
  *
  * @since 0.15.0
  */
-export type Tests_Lib_Search_Indexer_LunrSerializationSystemTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_SystemTempDir = string;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationTempPathPrefix = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_TempPathPrefix = string;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_TempDir = string;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationOutDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_OutDir = string;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationHtmlFilePath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_HtmlFilePath = string;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationParentDirectory = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_ParentDirectory = string;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationHtmlContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_HtmlContent = string;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationRoutesPaths = string[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_RoutesPaths = string[];
 
-export type Tests_Lib_Search_Indexer_LunrSerializationIndexUrl = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_IndexUrl = string;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationIndexPath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_IndexPath = string;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationIndexContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_IndexContent = string;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationPayload = Record<string, unknown>;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_Payload = Record<string, unknown>;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationIndex = Record<string, unknown>;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_Index = Record<string, unknown>;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationHasVersion = boolean;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_HasVersion = boolean;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationHasFields = boolean;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_HasFields = boolean;
 
-export type Tests_Lib_Search_Indexer_LunrSerializationHasInvertedIndex = boolean;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexProducesValidLunrIndex_SerializesLunrIndexWithExpectedStructure_HasInvertedIndex = boolean;
 
 /**
- * Tests - Lib - Search - Indexer - BuildSearchIndex Respects IndexDocs Flag.
+ * Tests - Lib - Search - Indexer - BuildSearchIndexRespectsIndexDocsFlag - SkipsDocsRoutesWhenIndexDocsIsFalse.
  *
  * @since 0.15.0
  */
-export type Tests_Lib_Search_Indexer_IndexDocsFlagSystemTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_SystemTempDir = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagTempPathPrefix = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_TempPathPrefix = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagTempDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_TempDir = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagOutDir = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_OutDir = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagHtmlFilePathDocs = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_HtmlFilePathDocs = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagHtmlFilePathBlog = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_HtmlFilePathBlog = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagParentDirectoryDocs = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_ParentDirectoryDocs = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagParentDirectoryBlog = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_ParentDirectoryBlog = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagHtmlContentDocs = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_HtmlContentDocs = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagHtmlContentBlog = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_HtmlContentBlog = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagRoutesPaths = string[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_RoutesPaths = string[];
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagIndexUrl = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_IndexUrl = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagIndexPath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_IndexPath = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagIndexContent = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_IndexContent = string;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagPayload = Record<string, unknown>;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_Payload = Record<string, unknown>;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagDocuments = Lib_Search_Indexer_Document[];
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_Documents = Lib_Search_Indexer_Document[] & {};
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagDocumentsLength = number;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_DocumentsLength = number;
 
-export type Tests_Lib_Search_Indexer_IndexDocsFlagFirstDocumentPath = string;
+export type Tests_Lib_Search_Indexer_BuildSearchIndexRespectsIndexDocsFlag_SkipsDocsRoutesWhenIndexDocsIsFalse_FirstDocumentPath = string;

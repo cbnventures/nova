@@ -2,6 +2,13 @@ import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 /**
+ * Rules - ESLint - Nova - No Logger Dev - Rule.
+ *
+ * @since 0.12.0
+ */
+export type Rules_Eslint_Nova_NoLoggerDev_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+
+/**
  * Rules - ESLint - Nova - No Logger Dev - Came From Logger Customize.
  *
  * @since 0.12.0
@@ -13,6 +20,26 @@ export type Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Identif
 export type Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Returns = boolean;
 
 export type Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Variable = TSESLint.Scope.Variable | undefined;
+
+/**
+ * Rules - ESLint - Nova - No Logger Dev - Create.
+ *
+ * @since 0.12.0
+ */
+export type Rules_Eslint_Nova_NoLoggerDev_Runner_Create_Options_IgnoreFiles = string[];
+
+export type Rules_Eslint_Nova_NoLoggerDev_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Nova_NoLoggerDev_Runner_Create_Options_IgnoreFiles;
+}>;
+
+/**
+ * Rules - ESLint - Nova - No Logger Dev - Create - Call Expression.
+ *
+ * @since 0.12.0
+ */
+export type Rules_Eslint_Nova_NoLoggerDev_Runner_Create_CallExpression_Object = TSESTree.Expression;
+
+export type Rules_Eslint_Nova_NoLoggerDev_Runner_Create_CallExpression_Property = TSESTree.Expression | TSESTree.PrivateIdentifier;
 
 /**
  * Rules - ESLint - Nova - No Logger Dev - Find Variable.
@@ -41,20 +68,3 @@ export type Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_TypeGuard
 export type Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_Object = TSESTree.Expression;
 
 export type Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_Property = TSESTree.Expression | TSESTree.PrivateIdentifier;
-
-/**
- * Rules - ESLint - Nova - No Logger Dev - Rule.
- *
- * @since 0.12.0
- */
-export type Rules_Eslint_Nova_NoLoggerDev_Runner_RuleDefaultOptionsIgnoreFiles = string[];
-
-export type Rules_Eslint_Nova_NoLoggerDev_Runner_RuleOptions_IgnoreFiles = string[];
-
-export type Rules_Eslint_Nova_NoLoggerDev_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Nova_NoLoggerDev_Runner_RuleOptions_IgnoreFiles;
-}>;
-
-export type Rules_Eslint_Nova_NoLoggerDev_Runner_RuleObject = TSESTree.Expression;
-
-export type Rules_Eslint_Nova_NoLoggerDev_Runner_RuleProperty = TSESTree.Expression | TSESTree.PrivateIdentifier;

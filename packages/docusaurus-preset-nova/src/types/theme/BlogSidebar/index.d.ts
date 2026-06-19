@@ -41,6 +41,21 @@ export type Theme_BlogSidebar_Index_BlogSidebar_GroupByYear = boolean;
 
 export type Theme_BlogSidebar_Index_BlogSidebar_GlobalData = Record<string, unknown>;
 
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_ImageURL = string | undefined;
+
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Key = string;
+
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Name = string | undefined;
+
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Permalink = string | undefined;
+
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor = {
+  imageURL: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_ImageURL;
+  key: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Key;
+  name: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Name;
+  permalink: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Permalink;
+};
+
 export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthors = Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor[];
 
 export type Theme_BlogSidebar_Index_BlogSidebar_AriaLabel = string;
@@ -68,18 +83,3 @@ export type Theme_BlogSidebar_Index_BlogSidebar_ItemFullYear = number;
 export type Theme_BlogSidebar_Index_BlogSidebar_ItemYear = string;
 
 export type Theme_BlogSidebar_Index_BlogSidebar_ShowYearHeading = boolean;
-
-export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_ImageURL = string | undefined;
-
-export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Key = string;
-
-export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Name = string | undefined;
-
-export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Permalink = string | undefined;
-
-export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor = {
-  imageURL: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_ImageURL;
-  key: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Key;
-  name: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Name;
-  permalink: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Permalink;
-};

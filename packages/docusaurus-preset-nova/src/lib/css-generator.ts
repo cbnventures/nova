@@ -9,35 +9,14 @@ import type {
   Lib_CssGenerator_Runner_Generate_AccentLightScale,
   Lib_CssGenerator_Runner_Generate_BorderDark,
   Lib_CssGenerator_Runner_Generate_BorderLight,
-  Lib_CssGenerator_Runner_GenerateColorVariables_Lines,
-  Lib_CssGenerator_Runner_GenerateColorVariables_Returns,
-  Lib_CssGenerator_Runner_GenerateColorVariables_Scale,
-  Lib_CssGenerator_Runner_GenerateColorVariables_ScaleName,
-  Lib_CssGenerator_Runner_GenerateColorVariables_ShadeLevels,
   Lib_CssGenerator_Runner_Generate_DangerDark,
   Lib_CssGenerator_Runner_Generate_DangerLight,
   Lib_CssGenerator_Runner_Generate_DepthLines,
-  Lib_CssGenerator_Runner_GenerateDepthVariables_Depth,
-  Lib_CssGenerator_Runner_GenerateDepthVariables_Lines,
-  Lib_CssGenerator_Runner_GenerateDepthVariables_Returns,
   Lib_CssGenerator_Runner_Generate_FontLines,
-  Lib_CssGenerator_Runner_GenerateFontVariables_Fonts,
-  Lib_CssGenerator_Runner_GenerateFontVariables_Returns,
   Lib_CssGenerator_Runner_Generate_GridLines,
   Lib_CssGenerator_Runner_Generate_GridMediaBlocks,
-  Lib_CssGenerator_Runner_GenerateGridVariables_BaseLines,
-  Lib_CssGenerator_Runner_GenerateGridVariables_DensityGutter,
-  Lib_CssGenerator_Runner_GenerateGridVariables_DensityPadding,
-  Lib_CssGenerator_Runner_GenerateGridVariables_MediaBlocks,
-  Lib_CssGenerator_Runner_GenerateGridVariables_Returns,
-  Lib_CssGenerator_Runner_GenerateGridVariables_Shape,
   Lib_CssGenerator_Runner_Generate_Lines,
   Lib_CssGenerator_Runner_Generate_MotionLines,
-  Lib_CssGenerator_Runner_GenerateMotionVariables_Duration,
-  Lib_CssGenerator_Runner_GenerateMotionVariables_Hover,
-  Lib_CssGenerator_Runner_GenerateMotionVariables_Motion,
-  Lib_CssGenerator_Runner_GenerateMotionVariables_Returns,
-  Lib_CssGenerator_Runner_GenerateMotionVariables_Staggered,
   Lib_CssGenerator_Runner_Generate_Options,
   Lib_CssGenerator_Runner_Generate_PrimaryDarkColor,
   Lib_CssGenerator_Runner_Generate_PrimaryDarkLines,
@@ -47,15 +26,40 @@ import type {
   Lib_CssGenerator_Runner_Generate_PrimaryLightScale,
   Lib_CssGenerator_Runner_Generate_Returns,
   Lib_CssGenerator_Runner_Generate_ShapeLines,
+  Lib_CssGenerator_Runner_Generate_TextDark,
+  Lib_CssGenerator_Runner_Generate_TextLight,
+  Lib_CssGenerator_Runner_Generate_WarningDark,
+  Lib_CssGenerator_Runner_Generate_WarningLight,
+  Lib_CssGenerator_Runner_GenerateColorVariables_Lines,
+  Lib_CssGenerator_Runner_GenerateColorVariables_Returns,
+  Lib_CssGenerator_Runner_GenerateColorVariables_Scale,
+  Lib_CssGenerator_Runner_GenerateColorVariables_ScaleName,
+  Lib_CssGenerator_Runner_GenerateColorVariables_ShadeLevels,
+  Lib_CssGenerator_Runner_GenerateDepthVariables_Depth,
+  Lib_CssGenerator_Runner_GenerateDepthVariables_Lines,
+  Lib_CssGenerator_Runner_GenerateDepthVariables_Returns,
+  Lib_CssGenerator_Runner_GenerateFontVariables_Fonts,
+  Lib_CssGenerator_Runner_GenerateFontVariables_Returns,
+  Lib_CssGenerator_Runner_GenerateGridVariables_BaseLines,
+  Lib_CssGenerator_Runner_GenerateGridVariables_DensityGutter,
+  Lib_CssGenerator_Runner_GenerateGridVariables_DensityPadding,
+  Lib_CssGenerator_Runner_GenerateGridVariables_LargeGutter,
+  Lib_CssGenerator_Runner_GenerateGridVariables_LargePadding,
+  Lib_CssGenerator_Runner_GenerateGridVariables_MediaBlocks,
+  Lib_CssGenerator_Runner_GenerateGridVariables_MediumGutter,
+  Lib_CssGenerator_Runner_GenerateGridVariables_MediumPadding,
+  Lib_CssGenerator_Runner_GenerateGridVariables_Returns,
+  Lib_CssGenerator_Runner_GenerateGridVariables_Shape,
+  Lib_CssGenerator_Runner_GenerateMotionVariables_Duration,
+  Lib_CssGenerator_Runner_GenerateMotionVariables_Hover,
+  Lib_CssGenerator_Runner_GenerateMotionVariables_Motion,
+  Lib_CssGenerator_Runner_GenerateMotionVariables_Returns,
+  Lib_CssGenerator_Runner_GenerateMotionVariables_Staggered,
   Lib_CssGenerator_Runner_GenerateShapeVariables_DensityGapScale,
   Lib_CssGenerator_Runner_GenerateShapeVariables_DensityPaddingScale,
   Lib_CssGenerator_Runner_GenerateShapeVariables_RadiusValue,
   Lib_CssGenerator_Runner_GenerateShapeVariables_Returns,
   Lib_CssGenerator_Runner_GenerateShapeVariables_Shape,
-  Lib_CssGenerator_Runner_Generate_TextDark,
-  Lib_CssGenerator_Runner_Generate_TextLight,
-  Lib_CssGenerator_Runner_Generate_WarningDark,
-  Lib_CssGenerator_Runner_Generate_WarningLight,
 } from '../types/lib/css-generator.d.ts';
 
 /**
@@ -381,8 +385,8 @@ export class Runner {
       `  --nova-grid-padding: ${densityPadding};`,
     ];
 
-    let mediumGutter: Lib_CssGenerator_Runner_GenerateGridVariables_DensityGutter = '20px';
-    let mediumPadding: Lib_CssGenerator_Runner_GenerateGridVariables_DensityPadding = '20px';
+    let mediumGutter: Lib_CssGenerator_Runner_GenerateGridVariables_MediumGutter = '20px';
+    let mediumPadding: Lib_CssGenerator_Runner_GenerateGridVariables_MediumPadding = '20px';
 
     if (shape['density'] === 'compact') {
       mediumGutter = '16px';
@@ -392,8 +396,8 @@ export class Runner {
       mediumPadding = '24px';
     }
 
-    let largeGutter: Lib_CssGenerator_Runner_GenerateGridVariables_DensityGutter = '24px';
-    let largePadding: Lib_CssGenerator_Runner_GenerateGridVariables_DensityPadding = '24px';
+    let largeGutter: Lib_CssGenerator_Runner_GenerateGridVariables_LargeGutter = '24px';
+    let largePadding: Lib_CssGenerator_Runner_GenerateGridVariables_LargePadding = '24px';
 
     if (shape['density'] === 'compact') {
       largeGutter = '20px';

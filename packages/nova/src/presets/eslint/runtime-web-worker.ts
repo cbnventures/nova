@@ -1,4 +1,4 @@
-import type { Presets_Eslint_RuntimeWebWorker_ConfigConfig } from '../../types/presets/eslint/runtime-web-worker.d.ts';
+import type { Presets_Eslint_RuntimeWebWorker_Config } from '../../types/presets/eslint/runtime-web-worker.d.ts';
 
 /**
  * Presets - ESLint - Runtime Web Worker - Config.
@@ -8,6 +8,6 @@ import type { Presets_Eslint_RuntimeWebWorker_ConfigConfig } from '../../types/p
  *
  * @since 0.11.0
  */
-const config: Presets_Eslint_RuntimeWebWorker_ConfigConfig = [{}];
+const config: Presets_Eslint_RuntimeWebWorker_Config = [{}];
 
 export default config;

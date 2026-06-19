@@ -1,6 +1,6 @@
 import tseslint from 'typescript-eslint';
 
-import type { Presets_Eslint_LangJavascript_ConfigConfig } from '../../types/presets/eslint/lang-javascript.d.ts';
+import type { Presets_Eslint_LangJavascript_Config } from '../../types/presets/eslint/lang-javascript.d.ts';
 
 /**
  * Presets - ESLint - Lang JavaScript - Config.
@@ -10,7 +10,7 @@ import type { Presets_Eslint_LangJavascript_ConfigConfig } from '../../types/pre
  *
  * @since 0.11.0
  */
-const config: Presets_Eslint_LangJavascript_ConfigConfig = [
+const config: Presets_Eslint_LangJavascript_Config = [
   {
     name: 'nova/lang-javascript',
     files: [

@@ -11,19 +11,13 @@ import { presetsSentinelPresetSentinel } from '../../presets/sentinel/preset.js'
 import { presetsSignalPresetSignal } from '../../presets/signal/preset.js';
 
 import type {
-  Tests_Presets_Index_NamesIncludesEnvoy,
-  Tests_Presets_Index_NamesIncludesFoundry,
-  Tests_Presets_Index_NamesIncludesLantern,
-  Tests_Presets_Index_NamesIncludesMarshal,
-  Tests_Presets_Index_NamesIncludesSentinel,
-  Tests_Presets_Index_NamesIncludesSignal,
-  Tests_Presets_Index_NamesLength,
-  Tests_Presets_Index_PresetsEnvoy,
-  Tests_Presets_Index_PresetsFoundry,
-  Tests_Presets_Index_PresetsLantern,
-  Tests_Presets_Index_PresetsMarshal,
-  Tests_Presets_Index_PresetsSentinel,
-  Tests_Presets_Index_PresetsSignal,
+  Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_IncludesEnvoy,
+  Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_IncludesFoundry,
+  Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_IncludesLantern,
+  Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_IncludesMarshal,
+  Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_IncludesSentinel,
+  Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_IncludesSignal,
+  Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_Length,
 } from '../../types/tests/presets/index.test.d.ts';
 
 /**
@@ -33,13 +27,13 @@ import type {
  */
 describe('presetsIndexNames', async () => {
   it('contains all preset names', () => {
-    const includesEnvoy: Tests_Presets_Index_NamesIncludesEnvoy = presetsIndexNames.includes('envoy');
-    const includesFoundry: Tests_Presets_Index_NamesIncludesFoundry = presetsIndexNames.includes('foundry');
-    const includesLantern: Tests_Presets_Index_NamesIncludesLantern = presetsIndexNames.includes('lantern');
-    const includesMarshal: Tests_Presets_Index_NamesIncludesMarshal = presetsIndexNames.includes('marshal');
-    const includesSentinel: Tests_Presets_Index_NamesIncludesSentinel = presetsIndexNames.includes('sentinel');
-    const includesSignal: Tests_Presets_Index_NamesIncludesSignal = presetsIndexNames.includes('signal');
-    const length: Tests_Presets_Index_NamesLength = presetsIndexNames.length;
+    const includesEnvoy: Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_IncludesEnvoy = presetsIndexNames.includes('envoy');
+    const includesFoundry: Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_IncludesFoundry = presetsIndexNames.includes('foundry');
+    const includesLantern: Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_IncludesLantern = presetsIndexNames.includes('lantern');
+    const includesMarshal: Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_IncludesMarshal = presetsIndexNames.includes('marshal');
+    const includesSentinel: Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_IncludesSentinel = presetsIndexNames.includes('sentinel');
+    const includesSignal: Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_IncludesSignal = presetsIndexNames.includes('signal');
+    const length: Tests_Presets_Index_PresetsIndexNames_ContainsAllPresetNames_Length = presetsIndexNames.length;
 
     ok(includesEnvoy);
     ok(includesFoundry);
@@ -62,49 +56,37 @@ describe('presetsIndexNames', async () => {
  */
 describe('presetsIndexPresets', async () => {
   it('maps envoy name to envoy preset', () => {
-    const envoy: Tests_Presets_Index_PresetsEnvoy = presetsIndexPresets['envoy'];
-
-    strictEqual(envoy, presetsEnvoyPresetEnvoy);
+    strictEqual(presetsIndexPresets['envoy'], presetsEnvoyPresetEnvoy);
 
     return;
   });
 
   it('maps foundry name to foundry preset', () => {
-    const foundry: Tests_Presets_Index_PresetsFoundry = presetsIndexPresets['foundry'];
-
-    strictEqual(foundry, presetsFoundryPresetFoundry);
+    strictEqual(presetsIndexPresets['foundry'], presetsFoundryPresetFoundry);
 
     return;
   });
 
   it('maps lantern name to lantern preset', () => {
-    const lantern: Tests_Presets_Index_PresetsLantern = presetsIndexPresets['lantern'];
-
-    strictEqual(lantern, presetsLanternPresetLantern);
+    strictEqual(presetsIndexPresets['lantern'], presetsLanternPresetLantern);
 
     return;
   });
 
   it('maps marshal name to marshal preset', () => {
-    const marshal: Tests_Presets_Index_PresetsMarshal = presetsIndexPresets['marshal'];
-
-    strictEqual(marshal, presetsMarshalPresetMarshal);
+    strictEqual(presetsIndexPresets['marshal'], presetsMarshalPresetMarshal);
 
     return;
   });
 
   it('maps sentinel name to sentinel preset', () => {
-    const sentinel: Tests_Presets_Index_PresetsSentinel = presetsIndexPresets['sentinel'];
-
-    strictEqual(sentinel, presetsSentinelPresetSentinel);
+    strictEqual(presetsIndexPresets['sentinel'], presetsSentinelPresetSentinel);
 
     return;
   });
 
   it('maps signal name to signal preset', () => {
-    const signal: Tests_Presets_Index_PresetsSignal = presetsIndexPresets['signal'];
-
-    strictEqual(signal, presetsSignalPresetSignal);
+    strictEqual(presetsIndexPresets['signal'], presetsSignalPresetSignal);
 
     return;
   });

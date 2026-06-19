@@ -2,9 +2,9 @@ import { libSchemaSpdxLicensesResponse } from '../lib/schema.js';
 import { Logger } from '../toolkit/index.js';
 
 import type {
-  Api_SpdxLicenses_Runner_FetchLicenses_ErrorMessage,
-  Api_SpdxLicenses_Runner_FetchLicenses_HttpResponse,
+  Api_SpdxLicenses_Runner_FetchLicenses_Data,
   Api_SpdxLicenses_Runner_FetchLicenses_LicenseIds,
+  Api_SpdxLicenses_Runner_FetchLicenses_Message,
   Api_SpdxLicenses_Runner_FetchLicenses_Response,
   Api_SpdxLicenses_Runner_FetchLicenses_ResponseData,
   Api_SpdxLicenses_Runner_FetchLicenses_Returns,
@@ -63,7 +63,7 @@ export class Runner {
     }
 
     try {
-      const response: Api_SpdxLicenses_Runner_FetchLicenses_HttpResponse = await fetch('https://spdx.org/licenses/licenses.json');
+      const response: Api_SpdxLicenses_Runner_FetchLicenses_Response = await fetch('https://spdx.org/licenses/licenses.json');
 
       if (response.ok === false) {
         Logger.customize({
@@ -78,7 +78,7 @@ export class Runner {
 
       const responseData: Api_SpdxLicenses_Runner_FetchLicenses_ResponseData = await response.json<Api_SpdxLicenses_Runner_FetchLicenses_ResponseData>();
 
-      const data: Api_SpdxLicenses_Runner_FetchLicenses_Response = libSchemaSpdxLicensesResponse.parse(responseData);
+      const data: Api_SpdxLicenses_Runner_FetchLicenses_Data = libSchemaSpdxLicensesResponse.parse(responseData);
 
       const licenseIds: Api_SpdxLicenses_Runner_FetchLicenses_LicenseIds = data['licenses'].map((license) => license['licenseId']);
 
@@ -87,7 +87,7 @@ export class Runner {
 
       return Runner.#licenses;
     } catch (error) {
-      const message: Api_SpdxLicenses_Runner_FetchLicenses_ErrorMessage = [
+      const message: Api_SpdxLicenses_Runner_FetchLicenses_Message = [
         'Failed to fetch SPDX licenses.',
         error,
       ].join('\n');

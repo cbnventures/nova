@@ -56,7 +56,7 @@ export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsQuery = SharedWi
 
 export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsExePath = string;
 
-export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsWindowsAppVersion = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsAppVersion = string;
 
 export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsEntries = (readonly [string, string])[];
 

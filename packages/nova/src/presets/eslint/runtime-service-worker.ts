@@ -1,4 +1,4 @@
-import type { Presets_Eslint_RuntimeServiceWorker_ConfigConfig } from '../../types/presets/eslint/runtime-service-worker.d.ts';
+import type { Presets_Eslint_RuntimeServiceWorker_Config } from '../../types/presets/eslint/runtime-service-worker.d.ts';
 
 /**
  * Presets - ESLint - Runtime Service Worker - Config.
@@ -8,6 +8,6 @@ import type { Presets_Eslint_RuntimeServiceWorker_ConfigConfig } from '../../typ
  *
  * @since 0.11.0
  */
-const config: Presets_Eslint_RuntimeServiceWorker_ConfigConfig = [{}];
+const config: Presets_Eslint_RuntimeServiceWorker_Config = [{}];
 
 export default config;

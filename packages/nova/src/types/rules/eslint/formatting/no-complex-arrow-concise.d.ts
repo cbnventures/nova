@@ -2,6 +2,17 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 /**
+ * Rules - ESLint - Formatting - No Complex Arrow Concise - Rule.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+
+export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsMaxChainLength = number;
+
+export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsMaxNestedArrows = number;
+
+/**
  * Rules - ESLint - Formatting - No Complex Arrow Concise - Check Arrow Function.
  *
  * @since 0.15.0
@@ -47,28 +58,31 @@ export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArro
 export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Count = number;
 
 /**
- * Rules - ESLint - Formatting - No Complex Arrow Concise - Rule.
+ * Rules - ESLint - Formatting - No Complex Arrow Concise - Create.
  *
  * @since 0.15.0
  */
-export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_Options_IgnoreFiles = string[];
 
-export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsMaxChainLength = number;
+export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_Options_MaxNestedArrows = number;
 
-export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsMaxNestedArrows = number;
+export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_Options_MaxChainLength = number;
 
-export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleOptions_IgnoreFiles = string[];
-
-export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleOptions_MaxNestedArrows = number;
-
-export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleOptions_MaxChainLength = number;
-
-export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleOptions_IgnoreFiles;
-  maxNestedArrows: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleOptions_MaxNestedArrows;
-  maxChainLength: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleOptions_MaxChainLength;
+export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_Options_IgnoreFiles;
+  maxNestedArrows: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_Options_MaxNestedArrows;
+  maxChainLength: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_Options_MaxChainLength;
 }>;
 
-export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleMaxNestedArrows = number;
+export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_MaxNestedArrows = number;
 
-export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleMaxChainLength = number;
+export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_MaxChainLength = number;
+
+/**
+ * Rules - ESLint - Formatting - No Complex Arrow Concise - Create - Arrow Function Expression.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_ArrowFunctionExpression_Node = TSESTree.ArrowFunctionExpression;
+
+export type Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_Create_ArrowFunctionExpression_Returns = void;

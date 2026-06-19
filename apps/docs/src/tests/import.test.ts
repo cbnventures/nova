@@ -12,25 +12,26 @@ import {
 } from '@site/src/lib/regex.js';
 
 import type {
-  TestsImportImportValidationCodeBlock,
-  TestsImportImportValidationContent,
-  TestsImportImportValidationContentDirs,
-  TestsImportImportValidationContentPath,
-  TestsImportImportValidationCwd,
-  TestsImportImportValidationEntries,
-  TestsImportImportValidationExportKeys,
-  TestsImportImportValidationExports,
-  TestsImportImportValidationExt,
-  TestsImportImportValidationFailures,
-  TestsImportImportValidationFilePath,
-  TestsImportImportValidationMatchesWildcard,
-  TestsImportImportValidationMdFiles,
-  TestsImportImportValidationNovaPackage,
-  TestsImportImportValidationNovaPackagePath,
-  TestsImportImportValidationNovaPackageRaw,
-  TestsImportImportValidationPrefix,
-  TestsImportImportValidationSpecifier,
-  TestsImportImportValidationValidSpecifiers,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_CodeBlock,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Content,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ContentDirs,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ContentPath,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Cwd,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Entries,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ExportKeys,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Exports,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Ext,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Failures,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_FilePath,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ImportSpecifier,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_MatchesWildcard,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_MdFiles,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_NovaPackage,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_NovaPackagePath,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_NovaPackageRaw,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Prefix,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Specifier,
+  Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ValidSpecifiers,
 } from '@site/src/types/tests/import.test.d.ts';
 
 /**
@@ -40,23 +41,23 @@ import type {
  */
 describe('Import validation', async () => {
   it('all code block import paths match package.json exports', async () => {
-    const cwd: TestsImportImportValidationCwd = process.cwd();
-    const contentDirs: TestsImportImportValidationContentDirs = [
+    const cwd: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Cwd = process.cwd();
+    const contentDirs: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ContentDirs = [
       'docs',
       'blog',
     ];
-    const novaPackagePath: TestsImportImportValidationNovaPackagePath = resolve(cwd, '..', '..', 'packages', 'nova', 'package.json');
-    const novaPackageRaw: TestsImportImportValidationNovaPackageRaw = await readFile(novaPackagePath, 'utf-8');
-    const novaPackage: TestsImportImportValidationNovaPackage = JSON.parse(novaPackageRaw);
-    const exports: TestsImportImportValidationExports = novaPackage['exports'] as TestsImportImportValidationExports;
-    const exportKeys: TestsImportImportValidationExportKeys = Object.keys(exports);
+    const novaPackagePath: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_NovaPackagePath = resolve(cwd, '..', '..', 'packages', 'nova', 'package.json');
+    const novaPackageRaw: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_NovaPackageRaw = await readFile(novaPackagePath, 'utf-8');
+    const novaPackage: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_NovaPackage = JSON.parse(novaPackageRaw);
+    const exports: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Exports = novaPackage['exports'] as Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Exports;
+    const exportKeys: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ExportKeys = Object.keys(exports);
 
     // Build set of valid import specifiers.
-    const validSpecifiers: TestsImportImportValidationValidSpecifiers = new Set();
+    const validSpecifiers: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ValidSpecifiers = new Set();
 
     for (const exportKey of exportKeys) {
       // Convert "./rules/eslint" to "@cbnventures/nova/rules/eslint".
-      const specifier: TestsImportImportValidationSpecifier = exportKey.replace(new RegExp(PATTERN_EXPORT_DOT_SLASH), '@cbnventures/nova/');
+      const specifier: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Specifier = exportKey.replace(new RegExp(PATTERN_EXPORT_DOT_SLASH), '@cbnventures/nova/');
 
       // Handle wildcard patterns.
       if (specifier.includes('*') === true) {
@@ -71,14 +72,14 @@ describe('Import validation', async () => {
       validSpecifiers.add('@cbnventures/nova');
     }
 
-    const mdFiles: TestsImportImportValidationMdFiles = [];
+    const mdFiles: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_MdFiles = [];
 
     for (const contentDir of contentDirs) {
-      const contentPath: TestsImportImportValidationContentPath = resolve(cwd, contentDir);
-      const entries: TestsImportImportValidationEntries = await readdir(contentPath, { recursive: true });
+      const contentPath: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ContentPath = resolve(cwd, contentDir);
+      const entries: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Entries = await readdir(contentPath, { recursive: true });
 
       for (const entry of entries) {
-        const ext: TestsImportImportValidationExt = extname(entry);
+        const ext: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Ext = extname(entry);
 
         if (ext === '.md' || ext === '.mdx') {
           mdFiles.push(join(contentDir, entry));
@@ -86,32 +87,32 @@ describe('Import validation', async () => {
       }
     }
 
-    const failures: TestsImportImportValidationFailures = [];
+    const failures: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Failures = [];
 
     for (const mdFile of mdFiles) {
-      const filePath: TestsImportImportValidationFilePath = join(cwd, mdFile);
-      const content: TestsImportImportValidationContent = await readFile(filePath, 'utf-8');
+      const filePath: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_FilePath = join(cwd, mdFile);
+      const content: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Content = await readFile(filePath, 'utf-8');
 
       // Extract code blocks.
       for (const blockMatch of content.matchAll(new RegExp(PATTERN_CODE_BLOCK, 'g'))) {
-        const codeBlock: TestsImportImportValidationCodeBlock = blockMatch[1] ?? '';
+        const codeBlock: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_CodeBlock = blockMatch[1] ?? '';
 
         for (const importMatch of codeBlock.matchAll(new RegExp(PATTERN_IMPORT_SPECIFIER, 'g'))) {
-          const specifier: TestsImportImportValidationSpecifier = importMatch[1] ?? '';
+          const importSpecifier: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ImportSpecifier = importMatch[1] ?? '';
 
           // Check exact match first.
-          if (validSpecifiers.has(specifier) === true) {
+          if (validSpecifiers.has(importSpecifier) === true) {
             continue;
           }
 
           // Check wildcard patterns.
-          let matchesWildcard: TestsImportImportValidationMatchesWildcard = false;
+          let matchesWildcard: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_MatchesWildcard = false;
 
           for (const pattern of validSpecifiers) {
             if (pattern.includes('*') === true) {
-              const prefix: TestsImportImportValidationPrefix = pattern.replace(new RegExp(PATTERN_WILDCARD_SUFFIX), '');
+              const prefix: Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Prefix = pattern.replace(new RegExp(PATTERN_WILDCARD_SUFFIX), '');
 
-              if (specifier.startsWith(prefix) === true) {
+              if (importSpecifier.startsWith(prefix) === true) {
                 matchesWildcard = true;
 
                 break;
@@ -120,7 +121,7 @@ describe('Import validation', async () => {
           }
 
           if (matchesWildcard === false) {
-            failures.push(`${mdFile}: import "${specifier}" not found in package.json exports`);
+            failures.push(`${mdFile}: import "${importSpecifier}" not found in package.json exports`);
           }
         }
       }

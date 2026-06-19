@@ -2,6 +2,15 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 /**
+ * Rules - ESLint - Formatting - Require Multiline Condition Groups - Rule.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleDefaultOptionsGroupStyle = string;
+
+export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+
+/**
  * Rules - ESLint - Formatting - Require Multiline Condition Groups - Check Logical Expression.
  *
  * @since 0.15.0
@@ -43,22 +52,29 @@ export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Colle
 
 export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Returns = TSESTree.Node[];
 
+export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Operands = TSESTree.Node[];
+
 /**
- * Rules - ESLint - Formatting - Require Multiline Condition Groups - Rule.
+ * Rules - ESLint - Formatting - Require Multiline Condition Groups - Create.
  *
  * @since 0.15.0
  */
-export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleDefaultOptionsGroupStyle = string;
+export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_Options_IgnoreFiles = string[];
 
-export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_Options_GroupStyle = string;
 
-export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleOptions_IgnoreFiles = string[];
-
-export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleOptions_GroupStyle = string;
-
-export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleOptions_IgnoreFiles;
-  groupStyle: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleOptions_GroupStyle;
+export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_Options_IgnoreFiles;
+  groupStyle: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_Options_GroupStyle;
 }>;
 
-export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleGroupStyle = string;
+export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_GroupStyle = string;
+
+/**
+ * Rules - ESLint - Formatting - Require Multiline Condition Groups - Create - Logical Expression.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_LogicalExpression_Node = TSESTree.LogicalExpression;
+
+export type Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_LogicalExpression_Returns = void;

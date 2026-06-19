@@ -12,6 +12,9 @@ import { Runner as CliUtilityVersion } from '../../../cli/utility/version.js';
 
 import type {
   Tests_Cli_Utility_Version_CliUtilityVersionRun_OriginalCwd,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_RunsWithAllFlagWithoutError_Options,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_RunsWithEmptyOptionsWithoutError_Options,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_RunsWithNodeFlagWithoutError_Options,
   Tests_Cli_Utility_Version_CliUtilityVersionRun_SandboxRoot,
   Tests_Cli_Utility_Version_CliUtilityVersionRun_TemporaryDirectory,
   Tests_Cli_Utility_Version_CliUtilityVersionRun_TemporaryPrefix,
@@ -40,9 +43,11 @@ describe('CliUtilityVersion.run', async () => {
   });
 
   it('runs with --node flag without error', async () => {
-    await CliUtilityVersion.run({
+    const options: Tests_Cli_Utility_Version_CliUtilityVersionRun_RunsWithNodeFlagWithoutError_Options = {
       node: true,
-    });
+    };
+
+    await CliUtilityVersion.run(options);
 
     strictEqual(process.exitCode, undefined);
 
@@ -50,9 +55,11 @@ describe('CliUtilityVersion.run', async () => {
   });
 
   it('runs with --all flag without error', async () => {
-    await CliUtilityVersion.run({
+    const options: Tests_Cli_Utility_Version_CliUtilityVersionRun_RunsWithAllFlagWithoutError_Options = {
       all: true,
-    });
+    };
+
+    await CliUtilityVersion.run(options);
 
     strictEqual(process.exitCode, undefined);
 
@@ -60,7 +67,9 @@ describe('CliUtilityVersion.run', async () => {
   });
 
   it('runs with empty options without error', async () => {
-    await CliUtilityVersion.run({});
+    const options: Tests_Cli_Utility_Version_CliUtilityVersionRun_RunsWithEmptyOptionsWithoutError_Options = {};
+
+    await CliUtilityVersion.run(options);
 
     strictEqual(process.exitCode, undefined);
 

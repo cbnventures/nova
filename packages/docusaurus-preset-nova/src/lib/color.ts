@@ -1,6 +1,8 @@
 import { LIB_REGEX_HEX_COLOR } from './regex.js';
 
 import type {
+  Lib_Color_Hue,
+  Lib_Color_Lightness,
   Lib_Color_Runner_ComputeShade_AdjustedSaturation,
   Lib_Color_Runner_ComputeShade_Hue,
   Lib_Color_Runner_ComputeShade_Lightness,
@@ -40,8 +42,6 @@ import type {
   Lib_Color_Runner_HslToHex_Returns,
   Lib_Color_Runner_HslToHex_Saturation,
   Lib_Color_Runner_HslToHex_SecondaryChroma,
-  Lib_Color_Hue,
-  Lib_Color_Lightness,
   Lib_Color_Runner_RgbToHsl_Blue,
   Lib_Color_Runner_RgbToHsl_ChannelMax,
   Lib_Color_Runner_RgbToHsl_ChannelMin,

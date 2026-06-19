@@ -99,15 +99,15 @@ Each workspace's `name` (the value written to its `package.json`) must follow a 
 
 Patterns reference the project slug from `project.name.slug`. When the slug is not set, the prefix falls back to the literal role name.
 
-| Role       | Required pattern                                                                                                                                |
-|------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
-| `project`  | Exactly `"{slug}-project"`, or `"project"` when no slug is set.                                                                                 |
-| `docs`     | Exactly `"{slug}-docs"`, or `"docs"` when no slug is set.                                                                                       |
-| `config`   | `"{slug}-config-{descriptor}"`, or `"config-{descriptor}"` when no slug is set. The descriptor must match the simple slug pattern.              |
-| `app`      | `"{slug}-app-{descriptor}"`, or `"app-{descriptor}"` when no slug is set. The descriptor must match the simple slug pattern.                    |
-| `tool`     | `"{slug}-tool-{descriptor}"`, or `"tool-{descriptor}"` when no slug is set. The descriptor must match the simple slug pattern.                  |
-| `package`  | Any name matching the simple slug pattern (e.g., `"my-lib"`) or the scoped npm pattern (e.g., `"@scope/my-lib"`).                               |
-| `template` | Same as `package`: simple or scoped slug.                                                                                                       |
+| Role       | Required pattern                                                                                                                   |
+|------------|------------------------------------------------------------------------------------------------------------------------------------|
+| `project`  | Exactly `"{slug}-project"`, or `"project"` when no slug is set.                                                                    |
+| `docs`     | Exactly `"{slug}-docs"`, or `"docs"` when no slug is set.                                                                          |
+| `config`   | `"{slug}-config-{descriptor}"`, or `"config-{descriptor}"` when no slug is set. The descriptor must match the simple slug pattern. |
+| `app`      | `"{slug}-app-{descriptor}"`, or `"app-{descriptor}"` when no slug is set. The descriptor must match the simple slug pattern.       |
+| `tool`     | `"{slug}-tool-{descriptor}"`, or `"tool-{descriptor}"` when no slug is set. The descriptor must match the simple slug pattern.     |
+| `package`  | Any name matching the simple slug pattern (e.g., `"my-lib"`) or the scoped npm pattern (e.g., `"@scope/my-lib"`).                  |
+| `template` | Same as `package`: simple or scoped slug.                                                                                          |
 
 The patterns are:
 

@@ -17,23 +17,30 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_Lines,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_NewSummary,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_OldSummary,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_ReplacedLine,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_SummaryIndex,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Comments,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Context,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Expected,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Fix_Fixer,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Fix_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_FixedValue,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_JsdocComment,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Options,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_SummaryInfo,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Comments,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Context,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Expected,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Fix_Fixer,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Fix_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_FixedValue,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_JsdocComment,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_MethodName,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Options,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_SummaryInfo,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Comments,
@@ -41,15 +48,41 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_DescribeString,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_DescribeSuffix,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Expected,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_ExpectedPrefix,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_ExpectedWithSuffix,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Fix_Fixer,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Fix_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_FixedValue,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_JsdocComment,
-  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Name,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NamePathParts,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NameSuffix,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NodeName,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Options,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Parent,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_ParentNames,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_PathParts,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Suffix,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_SummaryInfo,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ClassDeclaration_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ClassDeclaration_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Diagnostic,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ExportNamedDeclaration_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ExportNamedDeclaration_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ExpressionStatement_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ExpressionStatement_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_FunctionDeclaration_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_FunctionDeclaration_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_MethodDefinition_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_MethodDefinition_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Options,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Program_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Program_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_UserEntries,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_UserKnownNames,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_VariableDeclaration_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_VariableDeclaration_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_Matches,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_PartAtSuffix,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_PathParts,
@@ -59,8 +92,11 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_SuffixStart,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_WordAtIndex,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_Words,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_CamelWords,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_DescribeString,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_DotIndex,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_HyphenatedName,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_HyphenatedWord,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_KnownName,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_LoweredWord,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_MethodPart,
@@ -68,44 +104,54 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_PrettyName,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_PrettyWords,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_SnakeKnownName,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_SnakeLoweredWord,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_SnakePrettyWords,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_SnakeWords,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_Words,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_AllParts,
-  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_AnchorIndex,
-  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_AnchorToken,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Filename,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_FilenameStem,
-  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_LastSegmentIndex,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_LastSlashIndex,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_NormalizedStem,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Options,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Parts,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_PrettyParts,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_PrettySegments,
-  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_RawSegments,
-  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_RelativePath,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_SafeExtensionPattern,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Segments,
-  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_SrcIndex,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_StemAllParts,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_StemPrettyParts,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_StemPrettySegments,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Filename,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_FirstSegment,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Options,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Parts,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Prefix,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_AnchorIndex,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_AnchorToken,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Filename,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_LastSegmentIndex,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Options,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_RawSegments,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_RelativePath,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_SrcIndex,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractDescribeString_FirstArg,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractDescribeString_IsDescribe,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractDescribeString_Node,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractDescribeString_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractNodeName_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractNodeName_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_FindSummaryInfo_CommentValue,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_FindSummaryInfo_Line,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_FindSummaryInfo_Lines,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_FindSummaryInfo_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_FindSummaryInfo_Trimmed,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_KnownNames,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Current,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Index,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_KnownName,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_KnownPair,
@@ -124,9 +170,6 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsKnownNames,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsStripDirectories,
-  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptions,
-  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptionsKnownNames,
-  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleUserEntries,
 } from '../../../types/rules/eslint/jsdoc/require-jsdoc-hierarchy.d.ts';
 
 /**
@@ -196,18 +239,18 @@ export class Runner {
       stripDirectories: ['types'] as Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsStripDirectories,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
         return {};
       }
 
-      const diagnostic: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Returns = Runner.deriveInvalidPrefixDiagnostic(context.filename, options);
+      const diagnostic: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Diagnostic = Runner.deriveInvalidPrefixDiagnostic(context.filename, options);
 
       if (diagnostic !== null) {
         return {
-          Program(node) {
+          Program(node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Program_Node): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Program_Returns {
             context.report({
               node,
               messageId: 'invalidIdentifierPrefix',
@@ -223,8 +266,8 @@ export class Runner {
       }
 
       // Merge built-in names with user-provided knownNames.
-      const userKnownNames: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptionsKnownNames = options['knownNames'];
-      const userEntries: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleUserEntries = Object.entries(userKnownNames);
+      const userKnownNames: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_UserKnownNames = options['knownNames'];
+      const userEntries: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_UserEntries = Object.entries(userKnownNames);
 
       if (userEntries.length > 0) {
         Runner.#mergedNames = new Map([
@@ -236,32 +279,32 @@ export class Runner {
       }
 
       return {
-        ClassDeclaration(node) {
+        ClassDeclaration(node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ClassDeclaration_Node): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ClassDeclaration_Returns {
           Runner.checkClass(context, node, options);
 
           return;
         },
-        ExportNamedDeclaration(node) {
+        ExportNamedDeclaration(node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ExportNamedDeclaration_Node): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ExportNamedDeclaration_Returns {
           Runner.checkNode(context, node, options);
 
           return;
         },
-        ExpressionStatement(node) {
+        ExpressionStatement(node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ExpressionStatement_Node): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ExpressionStatement_Returns {
           Runner.checkNode(context, node, options);
 
           return;
         },
-        FunctionDeclaration(node) {
+        FunctionDeclaration(node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_FunctionDeclaration_Node): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_FunctionDeclaration_Returns {
           Runner.checkNode(context, node, options);
 
           return;
         },
-        MethodDefinition(node) {
+        MethodDefinition(node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_MethodDefinition_Node): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_MethodDefinition_Returns {
           Runner.checkMethod(context, node, options);
 
           return;
         },
-        VariableDeclaration(node) {
+        VariableDeclaration(node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_VariableDeclaration_Node): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_VariableDeclaration_Returns {
           Runner.checkNode(context, node, options);
 
           return;
@@ -280,13 +323,13 @@ export class Runner {
    *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Context} context - Context.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Node}    node    - Node.
-   * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptions}        options - Options.
+   * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Options} options - Options.
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Returns}
    *
    * @since 0.15.0
    */
-  private static checkClass(context: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Context, node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Node, options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptions): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Returns {
+  private static checkClass(context: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Context, node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Node, options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Options): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Returns {
     const comments: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Comments = context.sourceCode.getCommentsBefore(node);
     let jsdocComment: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_JsdocComment = undefined;
 
@@ -324,7 +367,7 @@ export class Runner {
         data: {
           expected,
         },
-        fix(fixer) {
+        fix(fixer: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Fix_Fixer): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Fix_Returns {
           return fixer.replaceTextRange(jsdocComment.range, `/*${fixedValue}*/`);
         },
       });
@@ -343,13 +386,13 @@ export class Runner {
    *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Context} context - Context.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Node}    node    - Node.
-   * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptions}       options - Options.
+   * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Options} options - Options.
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Returns}
    *
    * @since 0.15.0
    */
-  private static checkNode(context: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Context, node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Node, options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptions): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Returns {
+  private static checkNode(context: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Context, node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Node, options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Options): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Returns {
     const comments: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Comments = context.sourceCode.getCommentsBefore(node);
     let jsdocComment: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_JsdocComment = undefined;
 
@@ -364,7 +407,7 @@ export class Runner {
     }
 
     // Skip if inside a class body. Collect parent function names for nested declarations.
-    const parentNames: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_PathParts = [];
+    const parentNames: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_ParentNames = [];
     let parent: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Parent = node.parent;
 
     while (parent !== undefined && parent !== null) {
@@ -410,20 +453,20 @@ export class Runner {
 
     // Fall back to node name extraction with dedup for variables.
     if (suffix === undefined) {
-      const nodeName: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Name = Runner.extractNodeName(node);
+      const nodeName: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NodeName = Runner.extractNodeName(node);
 
       if (nodeName !== undefined) {
-        const pathParts: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_PathParts = expected.slice(0, -1).split(' - ');
-        const nameSuffix: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_DescribeSuffix = Runner.deriveDescribeSuffix(nodeName, pathParts);
+        const namePathParts: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NamePathParts = expected.slice(0, -1).split(' - ');
+        const nameSuffix: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NameSuffix = Runner.deriveDescribeSuffix(nodeName, namePathParts);
 
         suffix = nameSuffix;
       }
     }
 
-    const expectedWithSuffix: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Expected = (suffix !== undefined) ? `${expected.slice(0, -1)} - ${suffix}.` : expected;
+    const expectedWithSuffix: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_ExpectedWithSuffix = (suffix !== undefined) ? `${expected.slice(0, -1)} - ${suffix}.` : expected;
 
     // For type alias declarations, allow sub-section hierarchies (e.g. "Logger - Debug." under "Logger.").
-    const expectedPrefix: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Expected = expected.slice(0, -1);
+    const expectedPrefix: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_ExpectedPrefix = expected.slice(0, -1);
 
     if (
       node.type === 'ExportNamedDeclaration'
@@ -444,7 +487,7 @@ export class Runner {
         data: {
           expected: expectedWithSuffix,
         },
-        fix(fixer) {
+        fix(fixer: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Fix_Fixer): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Fix_Returns {
           return fixer.replaceTextRange(jsdocComment.range, `/*${fixedValue}*/`);
         },
       });
@@ -461,13 +504,13 @@ export class Runner {
    *
    * @private
    *
-   * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Node} node - Node.
+   * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractNodeName_Node} node - Node.
    *
-   * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Name}
+   * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractNodeName_Returns}
    *
    * @since 0.15.0
    */
-  private static extractNodeName(node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Node): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Name {
+  private static extractNodeName(node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractNodeName_Node): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractNodeName_Returns {
     if (node.type === 'FunctionDeclaration' && node.id !== null) {
       return node.id.name;
     }
@@ -497,13 +540,13 @@ export class Runner {
    *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Context} context - Context.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Node}    node    - Node.
-   * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptions}         options - Options.
+   * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Options} options - Options.
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Returns}
    *
    * @since 0.15.0
    */
-  private static checkMethod(context: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Context, node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Node, options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptions): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Returns {
+  private static checkMethod(context: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Context, node: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Node, options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Options): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Returns {
     if (node.key.type !== 'Identifier' && node.kind !== 'constructor') {
       return;
     }
@@ -546,7 +589,7 @@ export class Runner {
         data: {
           expected,
         },
-        fix(fixer) {
+        fix(fixer: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Fix_Fixer): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Fix_Returns {
           return fixer.replaceTextRange(jsdocComment.range, `/*${fixedValue}*/`);
         },
       });
@@ -623,7 +666,7 @@ export class Runner {
       return commentValue;
     }
 
-    const replacedLine: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_Line = line.replace(oldSummary, newSummary);
+    const replacedLine: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_ReplacedLine = line.replace(oldSummary, newSummary);
 
     Reflect.set(lines, summaryIndex, replacedLine);
 
@@ -723,8 +766,8 @@ export class Runner {
           continue;
         }
 
-        const hyphenatedWord: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_LoweredWord = loweredWord.replaceAll('.', '-');
-        const hyphenatedName: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_KnownName = Runner.#mergedNames.get(hyphenatedWord);
+        const hyphenatedWord: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_HyphenatedWord = loweredWord.replaceAll('.', '-');
+        const hyphenatedName: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_HyphenatedName = Runner.#mergedNames.get(hyphenatedWord);
 
         if (hyphenatedName !== undefined) {
           prettyWords.push(hyphenatedName);
@@ -749,28 +792,28 @@ export class Runner {
       describeString === describeString.toUpperCase()
       && describeString.includes('_') === true
     ) {
-      const words: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_Words = describeString.split('_');
-      const prettyWords: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_PrettyWords = [];
+      const snakeWords: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_SnakeWords = describeString.split('_');
+      const snakePrettyWords: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_SnakePrettyWords = [];
 
-      for (const word of words) {
-        const loweredWord: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_LoweredWord = word.toLowerCase();
-        const knownName: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_KnownName = Runner.#mergedNames.get(loweredWord);
+      for (const word of snakeWords) {
+        const snakeLoweredWord: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_SnakeLoweredWord = word.toLowerCase();
+        const snakeKnownName: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_SnakeKnownName = Runner.#mergedNames.get(snakeLoweredWord);
 
-        if (knownName !== undefined) {
-          prettyWords.push(knownName);
+        if (snakeKnownName !== undefined) {
+          snakePrettyWords.push(snakeKnownName);
         } else {
-          prettyWords.push(word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+          snakePrettyWords.push(word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
         }
       }
 
-      return Runner.dedupAgainstPath(prettyWords, pathParts);
+      return Runner.dedupAgainstPath(snakePrettyWords, pathParts);
     }
 
     // camelCase/PascalCase - prettify and dedup against path.
     const prettyName: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_PrettyName = Runner.prettyMethodName(describeString);
-    const words: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_Words = prettyName.split(' ');
+    const camelWords: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_CamelWords = prettyName.split(' ');
 
-    return Runner.dedupAgainstPath(words, pathParts);
+    return Runner.dedupAgainstPath(camelWords, pathParts);
   }
 
   /**
@@ -921,7 +964,7 @@ export class Runner {
     let index: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Index = 0;
 
     while (index < words.length) {
-      const current: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Lowered = words[index] as Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Lowered;
+      const current: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Current = words[index] as Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Current;
 
       if (index + 1 < words.length) {
         const next: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Next = words[index + 1] as Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Next;
@@ -967,11 +1010,11 @@ export class Runner {
    * @since 0.17.1
    */
   private static derivePathParts(filename: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Filename, options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Options): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Returns {
-    let srcIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_SrcIndex = -1;
-    let anchorIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_AnchorIndex = -1;
+    let srcIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_SrcIndex = -1;
+    let anchorIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_AnchorIndex = -1;
 
     for (const dir of options['anchorDirectories']) {
-      const anchorToken: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_AnchorToken = `/${dir}/`;
+      const anchorToken: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_AnchorToken = `/${dir}/`;
 
       anchorIndex = filename.lastIndexOf(anchorToken);
 
@@ -986,9 +1029,9 @@ export class Runner {
       return [];
     }
 
-    const relativePath: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_RelativePath = filename.slice(srcIndex);
-    const rawSegments: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_RawSegments = relativePath.split('/');
-    const lastSegmentIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_LastSegmentIndex = rawSegments.length - 1;
+    const relativePath: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_RelativePath = filename.slice(srcIndex);
+    const rawSegments: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_RawSegments = relativePath.split('/');
+    const lastSegmentIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_LastSegmentIndex = rawSegments.length - 1;
 
     return rawSegments
       .map((part, index) => {
@@ -1070,17 +1113,17 @@ export class Runner {
       const filenameStem: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_FilenameStem = filename.slice(lastSlashIndex + 1).replace(safeExtensionPattern, '').replace(safeExtensionPattern, '').replace(safeExtensionPattern, '');
       const normalizedStem: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_NormalizedStem = normalizeRouteSegment(filenameStem);
 
-      const prettySegments: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_PrettySegments = segments.map((segment) => {
+      const stemPrettySegments: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_StemPrettySegments = segments.map((segment) => {
         return Runner.prettyMethodName(segment);
       });
 
-      const prettyParts: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_PrettyParts = [Runner.prettySegment(normalizedStem)];
-      const allParts: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_AllParts = [
-        ...prettyParts,
-        ...prettySegments,
+      const stemPrettyParts: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_StemPrettyParts = [Runner.prettySegment(normalizedStem)];
+      const stemAllParts: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_StemAllParts = [
+        ...stemPrettyParts,
+        ...stemPrettySegments,
       ];
 
-      return `${allParts.join(' - ')}.`;
+      return `${stemAllParts.join(' - ')}.`;
     }
 
     const prettySegments: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_PrettySegments = segments.map((segment) => {

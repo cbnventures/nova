@@ -11,13 +11,13 @@ import type {
   Theme_BlogArchivePage_Index_BlogArchivePage_FormattedDate,
   Theme_BlogArchivePage_Index_BlogArchivePage_Heading,
   Theme_BlogArchivePage_Index_BlogArchivePage_Props,
+  Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup,
+  Theme_BlogArchivePage_Index_BlogArchivePage_YearGroups,
+  Theme_BlogArchivePage_Index_BlogArchivePage_YearPost,
   Theme_BlogArchivePage_Index_ListPostsByYears_BlogPosts,
   Theme_BlogArchivePage_Index_ListPostsByYears_ExistingPosts,
   Theme_BlogArchivePage_Index_ListPostsByYears_PostsByYear,
   Theme_BlogArchivePage_Index_ListPostsByYears_Year,
-  Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup,
-  Theme_BlogArchivePage_Index_BlogArchivePage_YearGroups,
-  Theme_BlogArchivePage_Index_BlogArchivePage_YearPost,
 } from '../../types/theme/BlogArchivePage/index.d.ts';
 
 /**

@@ -9,6 +9,13 @@ import type {
   Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Node,
   Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Returns,
   Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_TypeName,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_Diagnostic,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_NormalizedFilename,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_Options,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_Program_Node,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_Program_Returns,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_TSTypeAliasDeclaration_Node,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_TSTypeAliasDeclaration_Returns,
   Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Filename,
   Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_OffendingSegment,
   Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Prefix,
@@ -24,8 +31,6 @@ import type {
   Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Returns,
   Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_TypesIndex,
   Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleNormalizedFilename,
-  Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleOptions,
 } from '../../../types/rules/eslint/typescript/require-type-naming.d.ts';
 
 /**
@@ -73,8 +78,8 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleOptions = defaultOptions[0];
-      const normalizedFilename: Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleNormalizedFilename = context.filename.replaceAll('\\', '/');
+      const options: Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_Options = defaultOptions[0];
+      const normalizedFilename: Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_NormalizedFilename = context.filename.replaceAll('\\', '/');
 
       // Only apply to .d.ts files.
       if (normalizedFilename.endsWith('.d.ts') === false) {
@@ -86,11 +91,11 @@ export class Runner {
         return {};
       }
 
-      const diagnostic: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Returns = Runner.deriveInvalidPrefixDiagnostic(context.filename);
+      const diagnostic: Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_Diagnostic = Runner.deriveInvalidPrefixDiagnostic(context.filename);
 
       if (diagnostic !== null) {
         return {
-          Program(node) {
+          Program(node: Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_Program_Node): Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_Program_Returns {
             context.report({
               node,
               messageId: 'invalidIdentifierPrefix',
@@ -106,7 +111,7 @@ export class Runner {
       }
 
       return {
-        TSTypeAliasDeclaration(node) {
+        TSTypeAliasDeclaration(node: Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_TSTypeAliasDeclaration_Node): Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_TSTypeAliasDeclaration_Returns {
           Runner.checkTypeAlias(context, node);
 
           return;

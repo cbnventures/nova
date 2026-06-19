@@ -11,6 +11,8 @@ export type Theme_SearchBar_SearchProvider_Props = {
   children: Theme_SearchBar_SearchProvider_Props_Children;
 };
 
+export type Theme_SearchBar_SearchProvider_SearchProvider_Returns = React.JSX.Element;
+
 export type Theme_SearchBar_SearchProvider_DocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
 
 export type Theme_SearchBar_SearchProvider_BaseUrl = string;

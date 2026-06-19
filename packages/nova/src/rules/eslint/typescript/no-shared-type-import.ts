@@ -11,10 +11,12 @@ import type {
   Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Returns,
   Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_SharedFiles,
   Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Source,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_ImportDeclaration_Node,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_ImportDeclaration_Returns,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_NormalizedFilename,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_Options,
   Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsSharedFiles,
-  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleNormalizedFilename,
-  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions,
 } from '../../../types/rules/eslint/typescript/no-shared-type-import.d.ts';
 
 /**
@@ -68,8 +70,8 @@ export class Runner {
       sharedFiles: [] as Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsSharedFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions = defaultOptions[0];
-      const normalizedFilename: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleNormalizedFilename = context.filename.replaceAll('\\', '/');
+      const options: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_Options = defaultOptions[0];
+      const normalizedFilename: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_NormalizedFilename = context.filename.replaceAll('\\', '/');
 
       // Skip .d.ts files - they are allowed to import shared types.
       if (normalizedFilename.endsWith('.d.ts') === true) {
@@ -82,7 +84,7 @@ export class Runner {
       }
 
       return {
-        ImportDeclaration(node) {
+        ImportDeclaration(node: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_ImportDeclaration_Node): Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_ImportDeclaration_Returns {
           Runner.checkImport(context, node, options['sharedFiles']);
 
           return;

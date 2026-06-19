@@ -1,5 +1,12 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
+import type { RuleContext, RuleFix, RuleFixer } from '@typescript-eslint/utils/ts-eslint';
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Param Alignment - Rule.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Param Alignment - Check Program.
@@ -34,8 +41,6 @@ export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Na
 
 export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_DashIndex = number;
 
-export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllTypeEndsSame = boolean;
-
 export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllNameStartsSame = boolean;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllDashesSame = boolean;
@@ -68,7 +73,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Pa
 
 export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedLine = string | undefined;
 
-export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Fix_Match = RegExpMatchArray | null;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixMatch = RegExpMatchArray | null;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeLength = number;
 
@@ -83,26 +88,28 @@ export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Re
 export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedValue = string;
 
 /**
- * Rules - ESLint - JSDoc - Require JSDoc Param Alignment - Fix Pattern.
+ * Rules - ESLint - JSDoc - Require JSDoc Param Alignment - Check Program - Fix.
  *
  * @since 0.15.0
  */
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Fix_Fixer = RuleFixer;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Fix_Returns = RuleFix;
 
 /**
- * Rules - ESLint - JSDoc - Require JSDoc Param Alignment - Param Pattern.
+ * Rules - ESLint - JSDoc - Require JSDoc Param Alignment - Create.
  *
  * @since 0.15.0
  */
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_Create_Options_IgnoreFiles = string[];
 
-/**
- * Rules - ESLint - JSDoc - Require JSDoc Param Alignment - Rule.
- *
- * @since 0.15.0
- */
-export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleDefaultOptionsIgnoreFiles = string[];
-
-export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleOptions_IgnoreFiles = string[];
-
-export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleOptions_IgnoreFiles;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_Create_Options_IgnoreFiles;
 }>;
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Param Alignment - Create - Program.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_Create_Program_Returns = void;

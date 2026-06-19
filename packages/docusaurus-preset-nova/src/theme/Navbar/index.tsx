@@ -23,15 +23,14 @@ import type {
   Theme_Navbar_Index_ActionItemType,
   Theme_Navbar_Index_ActionItemTypes,
   Theme_Navbar_Index_AllDocsData,
-  Theme_Navbar_Index_CurrentScrollPosition,
   Theme_Navbar_Index_GlobalData,
   Theme_Navbar_Index_HamburgerLabel,
   Theme_Navbar_Index_HideOnScroll,
   Theme_Navbar_Index_IsMenuOpen,
   Theme_Navbar_Index_IsMenuOpenState,
-  Theme_Navbar_Index_IsScrollingDown,
   Theme_Navbar_Index_LastScrollPositionRef,
-  Theme_Navbar_Index_MediaQuery,
+  Theme_Navbar_Index_Navbar_ApplySystemMode_MediaQuery,
+  Theme_Navbar_Index_Navbar_ApplySystemMode_SystemColorMode,
   Theme_Navbar_Index_Navbar_ClassName,
   Theme_Navbar_Index_Navbar_ColorModeChoice,
   Theme_Navbar_Index_Navbar_ColorModeDarkLabel,
@@ -40,6 +39,8 @@ import type {
   Theme_Navbar_Index_Navbar_ColorModeState,
   Theme_Navbar_Index_Navbar_ColorModeSystemLabel,
   Theme_Navbar_Index_Navbar_Config,
+  Theme_Navbar_Index_Navbar_HandleScroll_CurrentScrollPosition,
+  Theme_Navbar_Index_Navbar_HandleScroll_IsScrollingDown,
   Theme_Navbar_Index_Navbar_Hidden,
   Theme_Navbar_Index_Navbar_HiddenState,
   Theme_Navbar_Index_Navbar_Item,
@@ -77,7 +78,6 @@ import type {
   Theme_Navbar_Index_SiteLogo,
   Theme_Navbar_Index_SiteLogo_Src,
   Theme_Navbar_Index_SvgFilterDefinition,
-  Theme_Navbar_Index_SystemColorMode,
   Theme_Navbar_Index_ThemeChoice,
   Theme_Navbar_Index_UserLogo,
   Theme_Navbar_Index_UserLogoAlt,
@@ -273,8 +273,8 @@ function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
      * @since 0.15.0
      */
     function handleScroll() {
-      const currentScrollPosition: Theme_Navbar_Index_CurrentScrollPosition = window.scrollY;
-      const isScrollingDown: Theme_Navbar_Index_IsScrollingDown = currentScrollPosition > lastScrollPositionRef.current;
+      const currentScrollPosition: Theme_Navbar_Index_Navbar_HandleScroll_CurrentScrollPosition = window.scrollY;
+      const isScrollingDown: Theme_Navbar_Index_Navbar_HandleScroll_IsScrollingDown = currentScrollPosition > lastScrollPositionRef.current;
 
       if (isScrollingDown === true && currentScrollPosition > 60) {
         setNavbarHidden(true);
@@ -319,7 +319,7 @@ function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
      * @since 0.15.0
      */
     function applySystemMode() {
-      const systemColorMode: Theme_Navbar_Index_SystemColorMode = (window.matchMedia('(prefers-color-scheme: dark)').matches === true) ? 'dark' : 'light';
+      const systemColorMode: Theme_Navbar_Index_Navbar_ApplySystemMode_SystemColorMode = (window.matchMedia('(prefers-color-scheme: dark)').matches === true) ? 'dark' : 'light';
 
       document.documentElement.setAttribute('data-theme', systemColorMode);
 
@@ -328,7 +328,7 @@ function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
 
     applySystemMode();
 
-    const mediaQuery: Theme_Navbar_Index_MediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const mediaQuery: Theme_Navbar_Index_Navbar_ApplySystemMode_MediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     mediaQuery.addEventListener('change', applySystemMode);
 

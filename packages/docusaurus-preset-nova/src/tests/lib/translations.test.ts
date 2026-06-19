@@ -10,9 +10,42 @@ import { describe, it } from 'vitest';
 import { Runner as Translations } from '../../lib/translations.js';
 
 import type {
-  Tests_Lib_Translations_ApplyResult,
-  Tests_Lib_Translations_ApplyThemeConfig,
-  Tests_Lib_Translations_ExtractResult,
+  Tests_Lib_Translations_TranslationsApply_AppliesAnnouncementBarContentTranslation_Result,
+  Tests_Lib_Translations_TranslationsApply_AppliesBlogLayoutHeadingAndDescription_Result,
+  Tests_Lib_Translations_TranslationsApply_AppliesErrorPagesErrorPageContentTitleAndRetryLabel_Result,
+  Tests_Lib_Translations_TranslationsApply_AppliesErrorPagesErrorRetryLabel_Result,
+  Tests_Lib_Translations_TranslationsApply_AppliesErrorPagesNotFoundTitleDescriptionAndBackHomeLabel_Result,
+  Tests_Lib_Translations_TranslationsApply_AppliesFooterCtaLabelTranslationWhenCtaIsAnObject_Result,
+  Tests_Lib_Translations_TranslationsApply_AppliesFooterCtaTranslationWhenCtaIsABareString_Result,
+  Tests_Lib_Translations_TranslationsApply_AppliesFooterLayoutTitlesSectionLabelsAndCopyright_Result,
+  Tests_Lib_Translations_TranslationsApply_AppliesNavbarItemLabelTranslations_Result,
+  Tests_Lib_Translations_TranslationsApply_AppliesNestedDropdownChildLabelTranslations_Result,
+  Tests_Lib_Translations_TranslationsApply_DoesNotMutateTheInputThemeConfig_Result,
+  Tests_Lib_Translations_TranslationsApply_DoesNotMutateTheInputThemeConfig_ThemeConfig,
+  Tests_Lib_Translations_TranslationsApply_FallsBackToSourceStringWhenAnErrorPagesTranslationKeyIsMissing_Result,
+  Tests_Lib_Translations_TranslationsApply_FallsBackToSourceStringWhenTranslationKeyIsMissing_Result,
+  Tests_Lib_Translations_TranslationsApply_ReturnsThemeConfigUnchangedWhenTranslationFilesIsEmpty_Result,
+  Tests_Lib_Translations_TranslationsExtract_ExtractsAnnouncementBarContent_Result,
+  Tests_Lib_Translations_TranslationsExtract_ExtractsBlogLayoutHeadingAndDescription_Result,
+  Tests_Lib_Translations_TranslationsExtract_ExtractsErrorPagesErrorPageContentTitleAndRetryLabel_Result,
+  Tests_Lib_Translations_TranslationsExtract_ExtractsErrorPagesErrorRetryLabel_Result,
+  Tests_Lib_Translations_TranslationsExtract_ExtractsErrorPagesNotFoundTitleDescriptionAndBackHomeLabel_Result,
+  Tests_Lib_Translations_TranslationsExtract_ExtractsFooterCopyright_Result,
+  Tests_Lib_Translations_TranslationsExtract_ExtractsFooterCtaAsABareString_Result,
+  Tests_Lib_Translations_TranslationsExtract_ExtractsFooterCtaLabelWhenCtaIsAnObject_Result,
+  Tests_Lib_Translations_TranslationsExtract_ExtractsFooterLayoutSlotTitles_Result,
+  Tests_Lib_Translations_TranslationsExtract_ExtractsFooterSectionLinkLabels_Result,
+  Tests_Lib_Translations_TranslationsExtract_ExtractsNavbarItemLabelsIntoANavbarFile_Result,
+  Tests_Lib_Translations_TranslationsExtract_ExtractsNestedDropdownChildLabels_Result,
+  Tests_Lib_Translations_TranslationsExtract_PreservesHTMLInAnnouncementBarContentAsIs_Result,
+  Tests_Lib_Translations_TranslationsExtract_ReturnsAnEmptyArrayWhenNoTranslatableAreasArePopulated_Result,
+  Tests_Lib_Translations_TranslationsExtract_ReturnsAnEmptyArrayWhenThemeConfigIsEmpty_Result,
+  Tests_Lib_Translations_TranslationsExtract_ReturnsOneFilePerPopulatedAreaWhenAllFiveArePresent_Result,
+  Tests_Lib_Translations_TranslationsExtract_SkipsBlogWhenLayoutIsMissing_Result,
+  Tests_Lib_Translations_TranslationsExtract_SkipsErrorPagesWhenNoOverrideFieldsArePopulated_Result,
+  Tests_Lib_Translations_TranslationsExtract_SkipsFooterEntirelyWhenSetToFalse_Result,
+  Tests_Lib_Translations_TranslationsExtract_SkipsNavbarEntirelyWhenNoItemHasALabel_Result,
+  Tests_Lib_Translations_TranslationsExtract_SkipsNavbarItemsThatHaveNoLabelEGLocaleDropdown_Result,
 } from '../../types/tests/lib/translations.test.d.ts';
 
 /**
@@ -22,7 +55,7 @@ import type {
  */
 describe('Translations.extract', async () => {
   it('returns an empty array when themeConfig is empty', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({ themeConfig: {} });
+    const result: Tests_Lib_Translations_TranslationsExtract_ReturnsAnEmptyArrayWhenThemeConfigIsEmpty_Result = Translations.extract({ themeConfig: {} });
 
     deepStrictEqual(result, []);
 
@@ -30,7 +63,7 @@ describe('Translations.extract', async () => {
   });
 
   it('returns an empty array when no translatable areas are populated', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ReturnsAnEmptyArrayWhenNoTranslatableAreasArePopulated_Result = Translations.extract({
       themeConfig: {
         colorMode: { defaultMode: 'system' },
       },
@@ -42,7 +75,7 @@ describe('Translations.extract', async () => {
   });
 
   it('extracts navbar item labels into a navbar file', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ExtractsNavbarItemLabelsIntoANavbarFile_Result = Translations.extract({
       themeConfig: {
         navbar: {
           items: [
@@ -73,7 +106,7 @@ describe('Translations.extract', async () => {
   });
 
   it('extracts nested dropdown child labels', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ExtractsNestedDropdownChildLabels_Result = Translations.extract({
       themeConfig: {
         navbar: {
           items: [
@@ -119,7 +152,7 @@ describe('Translations.extract', async () => {
   });
 
   it('skips navbar items that have no label (e.g., localeDropdown)', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_SkipsNavbarItemsThatHaveNoLabelEGLocaleDropdown_Result = Translations.extract({
       themeConfig: {
         navbar: {
           items: [
@@ -147,7 +180,7 @@ describe('Translations.extract', async () => {
   });
 
   it('skips navbar entirely when no item has a label', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_SkipsNavbarEntirelyWhenNoItemHasALabel_Result = Translations.extract({
       themeConfig: {
         navbar: {
           items: [{
@@ -163,7 +196,7 @@ describe('Translations.extract', async () => {
   });
 
   it('extracts blog layout heading and description', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ExtractsBlogLayoutHeadingAndDescription_Result = Translations.extract({
       themeConfig: {
         blog: {
           layout: {
@@ -190,7 +223,7 @@ describe('Translations.extract', async () => {
   });
 
   it('skips blog when layout is missing', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_SkipsBlogWhenLayoutIsMissing_Result = Translations.extract({
       themeConfig: {
         blog: {
           sidebar: { groupByYear: true },
@@ -204,7 +237,7 @@ describe('Translations.extract', async () => {
   });
 
   it('extracts announcement bar content', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ExtractsAnnouncementBarContent_Result = Translations.extract({
       themeConfig: {
         announcementBar: {
           id: 'banner-1',
@@ -226,7 +259,7 @@ describe('Translations.extract', async () => {
   });
 
   it('preserves HTML in announcement bar content as-is', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_PreservesHTMLInAnnouncementBarContentAsIs_Result = Translations.extract({
       themeConfig: {
         announcementBar: {
           id: 'banner-1',
@@ -248,7 +281,7 @@ describe('Translations.extract', async () => {
   });
 
   it('extracts errorPages.notFound title, description, and backHomeLabel', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ExtractsErrorPagesNotFoundTitleDescriptionAndBackHomeLabel_Result = Translations.extract({
       themeConfig: {
         errorPages: {
           notFound: {
@@ -282,7 +315,7 @@ describe('Translations.extract', async () => {
   });
 
   it('extracts errorPages.errorPageContent title and retryLabel', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ExtractsErrorPagesErrorPageContentTitleAndRetryLabel_Result = Translations.extract({
       themeConfig: {
         errorPages: {
           errorPageContent: {
@@ -311,7 +344,7 @@ describe('Translations.extract', async () => {
   });
 
   it('extracts errorPages.error retryLabel', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ExtractsErrorPagesErrorRetryLabel_Result = Translations.extract({
       themeConfig: {
         errorPages: {
           error: { retryLabel: 'Restart' },
@@ -333,7 +366,7 @@ describe('Translations.extract', async () => {
   });
 
   it('skips errorPages when no override fields are populated', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_SkipsErrorPagesWhenNoOverrideFieldsArePopulated_Result = Translations.extract({
       themeConfig: {
         errorPages: {
           notFound: {},
@@ -349,7 +382,7 @@ describe('Translations.extract', async () => {
   });
 
   it('extracts footer layout slot titles', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ExtractsFooterLayoutSlotTitles_Result = Translations.extract({
       themeConfig: {
         footer: {
           layout: {
@@ -380,7 +413,7 @@ describe('Translations.extract', async () => {
   });
 
   it('extracts footer section link labels', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ExtractsFooterSectionLinkLabels_Result = Translations.extract({
       themeConfig: {
         footer: {
           sections: {
@@ -413,7 +446,7 @@ describe('Translations.extract', async () => {
   });
 
   it('extracts footer copyright', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ExtractsFooterCopyright_Result = Translations.extract({
       themeConfig: {
         footer: {
           copyright: 'Copyright 2025 Acme LLC.',
@@ -434,7 +467,7 @@ describe('Translations.extract', async () => {
   });
 
   it('extracts footer cta as a bare string', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ExtractsFooterCtaAsABareString_Result = Translations.extract({
       themeConfig: {
         footer: {
           cta: 'Ready to deploy?',
@@ -455,7 +488,7 @@ describe('Translations.extract', async () => {
   });
 
   it('extracts footer cta label when cta is an object', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ExtractsFooterCtaLabelWhenCtaIsAnObject_Result = Translations.extract({
       themeConfig: {
         footer: {
           cta: {
@@ -479,7 +512,7 @@ describe('Translations.extract', async () => {
   });
 
   it('skips footer entirely when set to false', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_SkipsFooterEntirelyWhenSetToFalse_Result = Translations.extract({
       themeConfig: {
         footer: false,
       },
@@ -491,7 +524,7 @@ describe('Translations.extract', async () => {
   });
 
   it('returns one file per populated area when all five are present', () => {
-    const result: Tests_Lib_Translations_ExtractResult = Translations.extract({
+    const result: Tests_Lib_Translations_TranslationsExtract_ReturnsOneFilePerPopulatedAreaWhenAllFiveArePresent_Result = Translations.extract({
       themeConfig: {
         navbar: { items: [{ label: 'Docs' }] },
         announcementBar: {
@@ -525,7 +558,7 @@ describe('Translations.extract', async () => {
  */
 describe('Translations.apply', async () => {
   it('returns themeConfig unchanged when translationFiles is empty', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_ReturnsThemeConfigUnchangedWhenTranslationFilesIsEmpty_Result = Translations.apply({
       themeConfig: {
         navbar: { items: [{ label: 'Docs' }] },
       },
@@ -540,11 +573,11 @@ describe('Translations.apply', async () => {
   });
 
   it('does not mutate the input themeConfig', () => {
-    const themeConfig: Tests_Lib_Translations_ApplyThemeConfig = {
+    const themeConfig: Tests_Lib_Translations_TranslationsApply_DoesNotMutateTheInputThemeConfig_ThemeConfig = {
       navbar: { items: [{ label: 'Docs' }] },
     };
 
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_DoesNotMutateTheInputThemeConfig_Result = Translations.apply({
       themeConfig,
       translationFiles: [{
         path: 'navbar',
@@ -566,7 +599,7 @@ describe('Translations.apply', async () => {
   });
 
   it('applies navbar item label translations', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_AppliesNavbarItemLabelTranslations_Result = Translations.apply({
       themeConfig: {
         navbar: {
           items: [
@@ -605,7 +638,7 @@ describe('Translations.apply', async () => {
   });
 
   it('falls back to source string when translation key is missing', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_FallsBackToSourceStringWhenTranslationKeyIsMissing_Result = Translations.apply({
       themeConfig: {
         navbar: {
           items: [
@@ -643,7 +676,7 @@ describe('Translations.apply', async () => {
   });
 
   it('applies nested dropdown child label translations', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_AppliesNestedDropdownChildLabelTranslations_Result = Translations.apply({
       themeConfig: {
         navbar: {
           items: [{
@@ -680,7 +713,7 @@ describe('Translations.apply', async () => {
   });
 
   it('applies blog layout heading and description', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_AppliesBlogLayoutHeadingAndDescription_Result = Translations.apply({
       themeConfig: {
         blog: {
           layout: {
@@ -711,7 +744,7 @@ describe('Translations.apply', async () => {
   });
 
   it('applies announcement bar content translation', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_AppliesAnnouncementBarContentTranslation_Result = Translations.apply({
       themeConfig: {
         announcementBar: {
           id: 'b',
@@ -737,7 +770,7 @@ describe('Translations.apply', async () => {
   });
 
   it('applies errorPages.notFound title, description, and backHomeLabel', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_AppliesErrorPagesNotFoundTitleDescriptionAndBackHomeLabel_Result = Translations.apply({
       themeConfig: {
         errorPages: {
           notFound: {
@@ -771,7 +804,7 @@ describe('Translations.apply', async () => {
   });
 
   it('applies errorPages.errorPageContent title and retryLabel', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_AppliesErrorPagesErrorPageContentTitleAndRetryLabel_Result = Translations.apply({
       themeConfig: {
         errorPages: {
           errorPageContent: {
@@ -802,7 +835,7 @@ describe('Translations.apply', async () => {
   });
 
   it('applies errorPages.error retryLabel', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_AppliesErrorPagesErrorRetryLabel_Result = Translations.apply({
       themeConfig: {
         errorPages: {
           error: { retryLabel: 'Restart' },
@@ -826,7 +859,7 @@ describe('Translations.apply', async () => {
   });
 
   it('falls back to source string when an errorPages translation key is missing', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_FallsBackToSourceStringWhenAnErrorPagesTranslationKeyIsMissing_Result = Translations.apply({
       themeConfig: {
         errorPages: {
           notFound: {
@@ -858,7 +891,7 @@ describe('Translations.apply', async () => {
   });
 
   it('applies footer layout titles, section labels, and copyright', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_AppliesFooterLayoutTitlesSectionLabelsAndCopyright_Result = Translations.apply({
       themeConfig: {
         footer: {
           layout: {
@@ -904,7 +937,7 @@ describe('Translations.apply', async () => {
   });
 
   it('applies footer cta translation when cta is a bare string', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_AppliesFooterCtaTranslationWhenCtaIsABareString_Result = Translations.apply({
       themeConfig: {
         footer: {
           cta: 'Ready to deploy?',
@@ -928,7 +961,7 @@ describe('Translations.apply', async () => {
   });
 
   it('applies footer cta.label translation when cta is an object', () => {
-    const result: Tests_Lib_Translations_ApplyResult = Translations.apply({
+    const result: Tests_Lib_Translations_TranslationsApply_AppliesFooterCtaLabelTranslationWhenCtaIsAnObject_Result = Translations.apply({
       themeConfig: {
         footer: {
           cta: {

@@ -1,4 +1,11 @@
 /**
+ * Tests - Theme Drift - Variant Directories.
+ *
+ * @since 0.15.0
+ */
+export type Tests_ThemeDrift_VariantDirectories = string[];
+
+/**
  * Tests - Theme Drift - Discover Theme Components.
  *
  * @since 0.15.0
@@ -48,37 +55,35 @@ export type Tests_ThemeDrift_GetPackageRoot_CurrentFilePath = string;
 export type Tests_ThemeDrift_GetPackageRoot_CurrentFileDirectory = string;
 
 /**
- * Tests - Theme Drift - Theme Drift.
+ * Tests - Theme Drift - Theme Drift - Every Component Directory Has A Declared Module.
  *
  * @since 0.15.0
  */
-export type Tests_ThemeDrift_DeclaredModulesHaveComponentsDeclaredModules = string[];
+export type Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_DeclaredModules = string[];
 
-export type Tests_ThemeDrift_DeclaredModulesHaveComponentsComponentModules = string[];
+export type Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_ComponentModules = string[];
 
-export type Tests_ThemeDrift_DeclaredModulesHaveComponentsComponentSet = Set<string>;
+export type Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_DeclaredSet = Set<string>;
 
-export type Tests_ThemeDrift_DeclaredModulesHaveComponentsMissing = string[];
+export type Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_Missing = string[];
 
-export type Tests_ThemeDrift_DeclaredModulesHaveComponentsModule = string;
+export type Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_ComponentModule = string;
 
-export type Tests_ThemeDrift_DeclaredModulesHaveComponentsMessage = string;
-
-export type Tests_ThemeDrift_ComponentsHaveDeclaredModulesDeclaredModules = string[];
-
-export type Tests_ThemeDrift_ComponentsHaveDeclaredModulesComponentModules = string[];
-
-export type Tests_ThemeDrift_ComponentsHaveDeclaredModulesDeclaredSet = Set<string>;
-
-export type Tests_ThemeDrift_ComponentsHaveDeclaredModulesMissing = string[];
-
-export type Tests_ThemeDrift_ComponentsHaveDeclaredModulesModule = string;
-
-export type Tests_ThemeDrift_ComponentsHaveDeclaredModulesMessage = string;
+export type Tests_ThemeDrift_ThemeDrift_EveryComponentDirectoryHasADeclaredModule_Message = string;
 
 /**
- * Tests - Theme Drift - Variant Directories.
+ * Tests - Theme Drift - Theme Drift - Every Declared Module Has A Component Directory.
  *
  * @since 0.15.0
  */
-export type Tests_ThemeDrift_VariantDirectories = string[];
+export type Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_DeclaredModules = string[];
+
+export type Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_ComponentModules = string[];
+
+export type Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_ComponentSet = Set<string>;
+
+export type Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_Missing = string[];
+
+export type Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_DeclaredModule = string;
+
+export type Tests_ThemeDrift_ThemeDrift_EveryDeclaredModuleHasAComponentDirectory_Message = string;

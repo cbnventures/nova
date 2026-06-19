@@ -140,12 +140,12 @@ All commands in "Recipes" are shaped as `nova recipe <category> <subcommand>` or
 #### GitHub
 _Category: `github` · Alias: `gh`_
 
-| Subcommand                                                       | Shorthand   | What It Does                                                                                              |
-|------------------------------------------------------------------|-------------|-----------------------------------------------------------------------------------------------------------|
-| _(none)_                                                         | —           | Run all GitHub recipes (`sync-features`, `sync-identity`, `sync-policies`) for the current repository.    |
-| [`sync-features`](/docs/cli/recipes/github/sync-features)        | `sync-feat` | Sync repository feature flags (issues, wiki, projects, discussions) to [GitHub](https://github.com/).     |
-| [`sync-identity`](/docs/cli/recipes/github/sync-identity)        | `sync-id`   | Sync repository identity (description, homepage URL, topics) to [GitHub](https://github.com/).            |
-| [`sync-policies`](/docs/cli/recipes/github/sync-policies)        | `sync-pol`  | Sync repository policies (visibility, merge methods, branch settings) to [GitHub](https://github.com/).   |
+| Subcommand                                                | Shorthand   | What It Does                                                                                            |
+|-----------------------------------------------------------|-------------|---------------------------------------------------------------------------------------------------------|
+| _(none)_                                                  | —           | Run all GitHub recipes (`sync-features`, `sync-identity`, `sync-policies`) for the current repository.  |
+| [`sync-features`](/docs/cli/recipes/github/sync-features) | `sync-feat` | Sync repository feature flags (issues, wiki, projects, discussions) to [GitHub](https://github.com/).   |
+| [`sync-identity`](/docs/cli/recipes/github/sync-identity) | `sync-id`   | Sync repository identity (description, homepage URL, topics) to [GitHub](https://github.com/).          |
+| [`sync-policies`](/docs/cli/recipes/github/sync-policies) | `sync-pol`  | Sync repository policies (visibility, merge methods, branch settings) to [GitHub](https://github.com/). |
 
 Running `nova recipe github` (alias `nova rcp gh`) without a subcommand executes all three GitHub recipes in sequence. Pass `-d` or `--dry-run` to preview the commands without invoking `gh`.
 

@@ -5,12 +5,16 @@ import { isIgnoredFile } from '../../../lib/utility.js';
 import type {
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_CharBefore,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Context,
+  Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Fix_Fixer,
+  Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Fix_Returns,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Node,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Returns,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_SourceText,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_TestStart,
+  Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_ConditionalExpression_Node,
+  Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_ConditionalExpression_Returns,
+  Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_Options,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/require-ternary-parens.d.ts';
 
 /**
@@ -58,7 +62,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -66,7 +70,7 @@ export class Runner {
       }
 
       return {
-        ConditionalExpression(node) {
+        ConditionalExpression(node: Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_ConditionalExpression_Node): Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_ConditionalExpression_Returns {
           Runner.checkConditionalExpression(context, node);
 
           return;
@@ -98,7 +102,7 @@ export class Runner {
       context.report({
         node,
         messageId: 'requireTernaryParens',
-        fix(fixer) {
+        fix(fixer: Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Fix_Fixer): Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Fix_Returns {
           return [
             fixer.insertTextBefore(node.test, '('),
             fixer.insertTextAfter(node.test, ')'),

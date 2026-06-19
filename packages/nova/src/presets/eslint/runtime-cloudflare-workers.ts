@@ -1,4 +1,4 @@
-import type { Presets_Eslint_RuntimeCloudflareWorkers_ConfigConfig } from '../../types/presets/eslint/runtime-cloudflare-workers.d.ts';
+import type { Presets_Eslint_RuntimeCloudflareWorkers_Config } from '../../types/presets/eslint/runtime-cloudflare-workers.d.ts';
 
 /**
  * Presets - ESLint - Runtime Cloudflare Workers - Config.
@@ -8,7 +8,7 @@ import type { Presets_Eslint_RuntimeCloudflareWorkers_ConfigConfig } from '../..
  *
  * @since 0.11.0
  */
-const config: Presets_Eslint_RuntimeCloudflareWorkers_ConfigConfig = [{
+const config: Presets_Eslint_RuntimeCloudflareWorkers_Config = [{
   name: 'nova/runtime-cloudflare-workers/ignored-files',
   ignores: [],
 }];

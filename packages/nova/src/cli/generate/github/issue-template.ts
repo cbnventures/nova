@@ -25,8 +25,8 @@ import { Logger } from '../../../toolkit/index.js';
 
 import type {
   Cli_Generate_Github_IssueTemplate_Runner_Run_Answers,
+  Cli_Generate_Github_IssueTemplate_Runner_Run_BugReportFieldChoices,
   Cli_Generate_Github_IssueTemplate_Runner_Run_Cancelled,
-  Cli_Generate_Github_IssueTemplate_Runner_Run_Choices,
   Cli_Generate_Github_IssueTemplate_Runner_Run_Content,
   Cli_Generate_Github_IssueTemplate_Runner_Run_CurrentDirectory,
   Cli_Generate_Github_IssueTemplate_Runner_Run_File,
@@ -37,6 +37,7 @@ import type {
   Cli_Generate_Github_IssueTemplate_Runner_Run_GithubRepo,
   Cli_Generate_Github_IssueTemplate_Runner_Run_GithubRepoName,
   Cli_Generate_Github_IssueTemplate_Runner_Run_GithubSponsor,
+  Cli_Generate_Github_IssueTemplate_Runner_Run_HeaderOptions,
   Cli_Generate_Github_IssueTemplate_Runner_Run_IsAtProjectRoot,
   Cli_Generate_Github_IssueTemplate_Runner_Run_IsDryRun,
   Cli_Generate_Github_IssueTemplate_Runner_Run_IsReplaceFile,
@@ -74,7 +75,6 @@ import type {
   Cli_Generate_Github_IssueTemplate_Runner_Run_We,
   Cli_Generate_Github_IssueTemplate_Runner_Run_WorkingFile,
 } from '../../../types/cli/generate/github/issue-template.d.ts';
-import type { Lib_Utility_SaveGeneratedFile_Header as LibUtilitySaveGeneratedFileHeader } from '../../../types/lib/utility.d.ts';
 
 /**
  * CLI - Generate - GitHub - Issue Template.
@@ -174,7 +174,7 @@ export class Runner {
       }
     }
 
-    const bugReportFieldChoices: Cli_Generate_Github_IssueTemplate_Runner_Run_Choices = [
+    const bugReportFieldChoices: Cli_Generate_Github_IssueTemplate_Runner_Run_BugReportFieldChoices = [
       {
         title: 'Node.js',
         description: 'Node.js version',
@@ -309,7 +309,7 @@ export class Runner {
       'SUPPORT-REQUEST.yml',
     ];
 
-    const headerOptions: LibUtilitySaveGeneratedFileHeader = {
+    const headerOptions: Cli_Generate_Github_IssueTemplate_Runner_Run_HeaderOptions = {
       command: 'nova generate github issue-template',
       docsSlug: 'cli/generators/github/issue-template',
       mode: 'strict',

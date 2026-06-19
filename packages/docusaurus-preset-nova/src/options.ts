@@ -4,14 +4,14 @@ import { LIB_REGEX_HEX_COLOR } from './lib/regex.js';
 import { presetsIndexNames, presetsIndexPresets } from './presets/index.js';
 
 import type {
-  Options_PluginOptions_Overrides_Colors_Border,
-  Options_PluginOptions_Overrides_Colors_Danger,
-  Options_PluginOptions_Overrides_Colors_Primary,
-  Options_PluginOptions_Overrides_Colors_Secondary,
-  Options_PluginOptions_Overrides_Colors_Text,
-  Options_PluginOptions_Overrides_Colors_Warning,
   Options_ResolvePreset_BasePreset,
   Options_ResolvePreset_Options,
+  Options_ResolvePreset_OverrideBorder,
+  Options_ResolvePreset_OverrideDanger,
+  Options_ResolvePreset_OverridePrimary,
+  Options_ResolvePreset_OverrideSecondary,
+  Options_ResolvePreset_OverrideText,
+  Options_ResolvePreset_OverrideWarning,
   Options_ResolvePreset_ResolvedColorsAccent,
   Options_ResolvePreset_ResolvedColorsBorder,
   Options_ResolvePreset_ResolvedColorsDanger,
@@ -276,37 +276,37 @@ export function resolvePreset(options: Options_ResolvePreset_Options): Options_R
 
   const resolvedLogo: Options_ResolvePreset_ResolvedLogo = basePreset['logo'];
 
-  const overridePrimary: Options_PluginOptions_Overrides_Colors_Primary = options['overrides']['colors']['primary'];
+  const overridePrimary: Options_ResolvePreset_OverridePrimary = options['overrides']['colors']['primary'];
   const resolvedColorsPrimary: Options_ResolvePreset_ResolvedColorsPrimary = {
     light: (overridePrimary !== undefined && overridePrimary['light'] !== undefined) ? overridePrimary['light'] : basePreset['colors']['primary']['light'],
     dark: (overridePrimary !== undefined && overridePrimary['dark'] !== undefined) ? overridePrimary['dark'] : basePreset['colors']['primary']['dark'],
   };
 
-  const overrideSecondary: Options_PluginOptions_Overrides_Colors_Secondary = options['overrides']['colors']['secondary'];
+  const overrideSecondary: Options_ResolvePreset_OverrideSecondary = options['overrides']['colors']['secondary'];
   const resolvedColorsAccent: Options_ResolvePreset_ResolvedColorsAccent = {
     light: (overrideSecondary !== undefined && overrideSecondary['light'] !== undefined) ? overrideSecondary['light'] : basePreset['colors']['accent']['light'],
     dark: (overrideSecondary !== undefined && overrideSecondary['dark'] !== undefined) ? overrideSecondary['dark'] : basePreset['colors']['accent']['dark'],
   };
 
-  const overrideText: Options_PluginOptions_Overrides_Colors_Text = options['overrides']['colors']['text'];
+  const overrideText: Options_ResolvePreset_OverrideText = options['overrides']['colors']['text'];
   const resolvedColorsText: Options_ResolvePreset_ResolvedColorsText = {
     light: (overrideText !== undefined && overrideText['light'] !== undefined) ? overrideText['light'] : basePreset['colors']['text']['light'],
     dark: (overrideText !== undefined && overrideText['dark'] !== undefined) ? overrideText['dark'] : basePreset['colors']['text']['dark'],
   };
 
-  const overrideBorder: Options_PluginOptions_Overrides_Colors_Border = options['overrides']['colors']['border'];
+  const overrideBorder: Options_ResolvePreset_OverrideBorder = options['overrides']['colors']['border'];
   const resolvedColorsBorder: Options_ResolvePreset_ResolvedColorsBorder = {
     light: (overrideBorder !== undefined && overrideBorder['light'] !== undefined) ? overrideBorder['light'] : basePreset['colors']['border']['light'],
     dark: (overrideBorder !== undefined && overrideBorder['dark'] !== undefined) ? overrideBorder['dark'] : basePreset['colors']['border']['dark'],
   };
 
-  const overrideWarning: Options_PluginOptions_Overrides_Colors_Warning = options['overrides']['colors']['warning'];
+  const overrideWarning: Options_ResolvePreset_OverrideWarning = options['overrides']['colors']['warning'];
   const resolvedColorsWarning: Options_ResolvePreset_ResolvedColorsWarning = {
     light: (overrideWarning !== undefined && overrideWarning['light'] !== undefined) ? overrideWarning['light'] : basePreset['colors']['warning']['light'],
     dark: (overrideWarning !== undefined && overrideWarning['dark'] !== undefined) ? overrideWarning['dark'] : basePreset['colors']['warning']['dark'],
   };
 
-  const overrideDanger: Options_PluginOptions_Overrides_Colors_Danger = options['overrides']['colors']['danger'];
+  const overrideDanger: Options_ResolvePreset_OverrideDanger = options['overrides']['colors']['danger'];
   const resolvedColorsDanger: Options_ResolvePreset_ResolvedColorsDanger = {
     light: (overrideDanger !== undefined && overrideDanger['light'] !== undefined) ? overrideDanger['light'] : basePreset['colors']['danger']['light'],
     dark: (overrideDanger !== undefined && overrideDanger['dark'] !== undefined) ? overrideDanger['dark'] : basePreset['colors']['danger']['dark'],

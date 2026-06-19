@@ -3,40 +3,42 @@
  *
  * @since 0.14.0
  */
-export type TestsImportImportValidationCwd = string;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Cwd = string;
 
-export type TestsImportImportValidationContentDirs = string[];
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ContentDirs = string[];
 
-export type TestsImportImportValidationNovaPackagePath = string;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_NovaPackagePath = string;
 
-export type TestsImportImportValidationNovaPackageRaw = string;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_NovaPackageRaw = string;
 
-export type TestsImportImportValidationNovaPackage = Record<string, unknown>;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_NovaPackage = Record<string, unknown>;
 
-export type TestsImportImportValidationExports = Record<string, unknown>;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Exports = Record<string, unknown>;
 
-export type TestsImportImportValidationExportKeys = string[];
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ExportKeys = string[];
 
-export type TestsImportImportValidationValidSpecifiers = Set<string>;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ValidSpecifiers = Set<string>;
 
-export type TestsImportImportValidationSpecifier = string;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Specifier = string;
 
-export type TestsImportImportValidationMdFiles = string[];
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_MdFiles = string[];
 
-export type TestsImportImportValidationContentPath = string;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ContentPath = string;
 
-export type TestsImportImportValidationEntries = string[];
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Entries = string[];
 
-export type TestsImportImportValidationExt = string;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Ext = string;
 
-export type TestsImportImportValidationFailures = string[];
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Failures = string[];
 
-export type TestsImportImportValidationFilePath = string;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_FilePath = string;
 
-export type TestsImportImportValidationContent = string;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Content = string;
 
-export type TestsImportImportValidationCodeBlock = string;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_CodeBlock = string;
 
-export type TestsImportImportValidationMatchesWildcard = boolean;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_ImportSpecifier = string;
 
-export type TestsImportImportValidationPrefix = string;
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_MatchesWildcard = boolean;
+
+export type Tests_Import_ImportValidation_AllCodeBlockImportPathsMatchPackageJsonExports_Prefix = string;

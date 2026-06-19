@@ -17,12 +17,14 @@ import type {
   Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Returns,
   Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Scope,
   Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Variable,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Identifier_Node,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Identifier_Returns,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options,
   Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsClasses,
   Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsFunctions,
   Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsTypes,
   Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsVariables,
-  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions,
 } from '../../../types/rules/eslint/patterns/no-use-before-define.d.ts';
 
 /**
@@ -85,7 +87,7 @@ export class Runner {
       variables: true as Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsVariables,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -93,7 +95,7 @@ export class Runner {
       }
 
       return {
-        Identifier(node) {
+        Identifier(node: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Identifier_Node): Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Identifier_Returns {
           Runner.checkIdentifier(context, node, options);
 
           return;

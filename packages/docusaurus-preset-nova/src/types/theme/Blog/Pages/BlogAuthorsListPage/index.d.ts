@@ -10,10 +10,14 @@ export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_Autho
 
 export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_AuthorTitle = string | undefined;
 
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_AuthorPage_Permalink = string;
+
 export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_AuthorPage = {
-  permalink: string;
+  permalink: Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_AuthorPage_Permalink;
   [key: string]: unknown;
-} | null | undefined;
+};
+
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_AuthorPageOrNull = Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_AuthorPage | null | undefined;
 
 export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_AuthorPermalink = string | undefined;
 

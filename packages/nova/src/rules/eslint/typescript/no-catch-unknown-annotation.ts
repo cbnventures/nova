@@ -4,12 +4,16 @@ import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
   Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Context,
+  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Fix_Fixer,
+  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Fix_Returns,
   Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Node,
   Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Param,
   Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Returns,
   Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_TypeAnnotation,
+  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_Create_CatchClause_Node,
+  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_Create_CatchClause_Returns,
+  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_Create_Options,
   Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_RuleOptions,
 } from '../../../types/rules/eslint/typescript/no-catch-unknown-annotation.d.ts';
 
 /**
@@ -57,7 +61,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -65,7 +69,7 @@ export class Runner {
       }
 
       return {
-        CatchClause(node) {
+        CatchClause(node: Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_Create_CatchClause_Node): Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_Create_CatchClause_Returns {
           Runner.checkCatchClause(context, node);
 
           return;
@@ -107,7 +111,7 @@ export class Runner {
       context.report({
         node: typeAnnotation,
         messageId: 'removeCatchAnnotation',
-        fix(fixer) {
+        fix(fixer: Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Fix_Fixer): Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Fix_Returns {
           return fixer.remove(typeAnnotation);
         },
       });

@@ -29,6 +29,7 @@ import type {
   Cli_Generate_MustHaves_Dotenv_Runner_DeleteEnvLine_Match,
   Cli_Generate_MustHaves_Dotenv_Runner_DeleteEnvLine_Returns,
   Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Content,
+  Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Entries,
   Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Key,
   Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Match,
   Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_RawValue,
@@ -51,7 +52,6 @@ import type {
   Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddTrimmedValue,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddUpdatedEnv,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddUpdatedSample,
-  Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddValidateValue,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_BufferEnv,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_BufferEnvSample,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Choices,
@@ -101,11 +101,14 @@ import type {
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Cancelled,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Content,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_CurrentDirectory,
+  Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_CustomSection,
+  Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_CustomSectionSample,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_DefaultValueOutput,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_DefaultValueOutputKey,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_DefaultValueOutputResult,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_DefaultValueOutputValue,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_EnvLines,
+  Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_EnvVars,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Files,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_IsDryRun,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_IsReplaceFile,
@@ -121,21 +124,19 @@ import type {
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_TemplateFileName,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_TemplatePath,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_TrimmedValue,
-  Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_ValidateValue,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptWithCancel_Cancelled,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptWithCancel_Questions,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptWithCancel_Result,
   Cli_Generate_MustHaves_Dotenv_Runner_PromptWithCancel_Returns,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_CurrentDirectory,
-  Cli_Generate_MustHaves_Dotenv_Runner_Run_CustomSection,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvPath,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvPathExists,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvSamplePath,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvSamplePathExists,
-  Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvVars,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_IsAtProjectRoot,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_IsDryRun,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_IsReplaceFile,
+  Cli_Generate_MustHaves_Dotenv_Runner_Run_LoopResult,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_ManageResult,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeChoices,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeOutput,
@@ -281,14 +282,14 @@ export class Runner {
         }
 
         // "Regenerate" selected - run regenerate flow.
-        const result: Cli_Generate_MustHaves_Dotenv_Runner_Run_Result = await Runner.promptRegenerate({
+        const loopResult: Cli_Generate_MustHaves_Dotenv_Runner_Run_LoopResult = await Runner.promptRegenerate({
           templateDirectory,
           currentDirectory,
           isDryRun,
           isReplaceFile,
         });
 
-        if (result === 'cancelled') {
+        if (loopResult === 'cancelled') {
           continue;
         }
 
@@ -332,7 +333,7 @@ export class Runner {
       '.env',
       '.env.sample',
     ];
-    const envVars: Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvVars = [];
+    const envVars: Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_EnvVars = [];
     let addMore: Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_AddMore = true;
     let cancelled: Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Cancelled = false;
 
@@ -341,7 +342,7 @@ export class Runner {
         type: 'text',
         name: 'key',
         message: 'Variable name (leave empty to finish):',
-        validate: (value: Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_ValidateValue) => {
+        validate: (value) => {
           if (typeof value !== 'string' || value.trim() === '') {
             return true;
           }
@@ -403,8 +404,8 @@ export class Runner {
     }
 
     // Build the custom variables lines.
-    let customSection: Cli_Generate_MustHaves_Dotenv_Runner_Run_CustomSection = '';
-    let customSectionSample: Cli_Generate_MustHaves_Dotenv_Runner_Run_CustomSection = '';
+    let customSection: Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_CustomSection = '';
+    let customSectionSample: Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_CustomSectionSample = '';
 
     if (envVars.length > 0) {
       const envLines: Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_EnvLines = [];
@@ -478,7 +479,7 @@ export class Runner {
    * @since 0.15.0
    */
   private static parseEnvFile(content: Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Content): Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Returns {
-    const entries: Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Returns = [];
+    const entries: Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Entries = [];
 
     for (const line of content.split('\n')) {
       const match: Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Match = line.match(LIB_REGEX_PATTERN_ENV_VAR_KEY);
@@ -715,70 +716,70 @@ export class Runner {
 
       // Add a variable.
       if (action === 'add') {
-        const existingKeys: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddExistingKeys = new Set(envEntries.map((entry) => entry['key']));
+        const addExistingKeys: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddExistingKeys = new Set(envEntries.map((entry) => entry['key']));
 
-        const keyOutput: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyOutputValue>({
+        const addKeyOutput: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyOutputValue>({
           type: 'text',
           name: 'key',
           message: 'Variable name (e.g. API_KEY):',
-          validate: (value: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddValidateValue) => {
+          validate: (value) => {
             if (typeof value !== 'string' || value.trim() === '') {
               return 'Enter a variable name.';
             }
 
-            const trimmedValue: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddTrimmedValue = value.trim();
+            const addTrimmedValue: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddTrimmedValue = value.trim();
 
-            if (LIB_REGEX_PATTERN_ENV_VAR_KEY_SCREAMING_SNAKE.test(trimmedValue) !== true) {
+            if (LIB_REGEX_PATTERN_ENV_VAR_KEY_SCREAMING_SNAKE.test(addTrimmedValue) !== true) {
               return 'Use SCREAMING_SNAKE_CASE (e.g. API_KEY).';
             }
 
-            if (existingKeys.has(trimmedValue) === true) {
-              return `"${trimmedValue}" already exists.`;
+            if (addExistingKeys.has(addTrimmedValue) === true) {
+              return `"${addTrimmedValue}" already exists.`;
             }
 
-            if (reservedKeys.has(trimmedValue) === true) {
-              return `"${trimmedValue}" is a reserved variable and cannot be added.`;
+            if (reservedKeys.has(addTrimmedValue) === true) {
+              return `"${addTrimmedValue}" is a reserved variable and cannot be added.`;
             }
 
             return true;
           },
         });
 
-        if (keyOutput['cancelled'] === true) {
+        if (addKeyOutput['cancelled'] === true) {
           continue;
         }
 
-        const keyName: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyName = keyOutput['result'].key;
+        const addKeyName: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyName = addKeyOutput['result'].key;
 
-        if (keyName === undefined) {
+        if (addKeyName === undefined) {
           continue;
         }
 
-        const defaultValueOutput: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValueOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValueOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValueOutputValue>({
+        const addDefaultValueOutput: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValueOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValueOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValueOutputValue>({
           type: 'text',
           name: 'defaultValue',
           message: 'Default value for .env.sample (leave empty for none):',
           initial: '',
         });
 
-        if (defaultValueOutput['cancelled'] === true) {
+        if (addDefaultValueOutput['cancelled'] === true) {
           continue;
         }
 
-        const defaultValue: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValue = defaultValueOutput['result'].defaultValue ?? '';
-        const trimmedKeyName: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddTrimmedKeyName = keyName.trim();
-        const trimmedDefaultValue: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddTrimmedDefaultValue = defaultValue.trim();
-        const updatedEnv: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddUpdatedEnv = Runner.addEnvLine(envContent, trimmedKeyName, '');
-        const updatedSample: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddUpdatedSample = Runner.addEnvLine(envSampleContent, trimmedKeyName, trimmedDefaultValue);
+        const addDefaultValue: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValue = addDefaultValueOutput['result'].defaultValue ?? '';
+        const addTrimmedKeyName: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddTrimmedKeyName = addKeyName.trim();
+        const addTrimmedDefaultValue: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddTrimmedDefaultValue = addDefaultValue.trim();
+        const addUpdatedEnv: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddUpdatedEnv = Runner.addEnvLine(envContent, addTrimmedKeyName, '');
+        const addUpdatedSample: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddUpdatedSample = Runner.addEnvLine(envSampleContent, addTrimmedKeyName, addTrimmedDefaultValue);
 
-        bufferEnv = updatedEnv;
-        bufferEnvSample = updatedSample;
+        bufferEnv = addUpdatedEnv;
+        bufferEnvSample = addUpdatedSample;
         hasPendingChanges = true;
 
         Logger.customize({
           name: 'Runner.promptManageMenu',
           purpose: 'add',
-        }).info(`Added "${keyName.trim()}" to both files.`);
+        }).info(`Added "${addKeyName.trim()}" to both files.`);
 
         continue;
       }
@@ -791,63 +792,63 @@ export class Runner {
           value: entry['key'],
         }));
 
-        const selectOutput: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectOutputValue>({
+        const editSelectOutput: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectOutputValue>({
           type: 'select',
           name: 'variable',
           message: 'Select a variable to edit.',
           choices: editChoices,
         });
 
-        if (selectOutput['cancelled'] === true) {
+        if (editSelectOutput['cancelled'] === true) {
           continue;
         }
 
-        const selectedKey: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectedKey = selectOutput['result'].variable;
+        const editSelectedKey: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectedKey = editSelectOutput['result'].variable;
 
-        if (selectedKey === undefined) {
+        if (editSelectedKey === undefined) {
           continue;
         }
 
         // Look up current values in both files.
-        const currentEnvEntry: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditCurrentEnvEntry = envEntries.find((entry) => entry['key'] === selectedKey);
-        const currentSampleEntry: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditCurrentSampleEntry = envSampleEntries.find((entry) => entry['key'] === selectedKey);
+        const editCurrentEnvEntry: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditCurrentEnvEntry = envEntries.find((entry) => entry['key'] === editSelectedKey);
+        const editCurrentSampleEntry: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditCurrentSampleEntry = envSampleEntries.find((entry) => entry['key'] === editSelectedKey);
 
-        const envValueOutput: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditEnvValueOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditEnvValueOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditEnvValueOutputValue>({
+        const editEnvValueOutput: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditEnvValueOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditEnvValueOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditEnvValueOutputValue>({
           type: 'text',
           name: 'value',
-          message: `New value for .env (${selectedKey}):`,
-          initial: (currentEnvEntry !== undefined) ? currentEnvEntry['value'] : '',
+          message: `New value for .env (${editSelectedKey}):`,
+          initial: (editCurrentEnvEntry !== undefined) ? editCurrentEnvEntry['value'] : '',
         });
 
-        if (envValueOutput['cancelled'] === true) {
+        if (editEnvValueOutput['cancelled'] === true) {
           continue;
         }
 
-        const newEnvValue: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditNewEnvValue = envValueOutput['result'].value ?? '';
+        const editNewEnvValue: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditNewEnvValue = editEnvValueOutput['result'].value ?? '';
 
-        const sampleValueOutput: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSampleValueOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSampleValueOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSampleValueOutputValue>({
+        const editSampleValueOutput: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSampleValueOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSampleValueOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSampleValueOutputValue>({
           type: 'text',
           name: 'defaultValue',
-          message: `New default value for .env.sample (${selectedKey}):`,
-          initial: (currentSampleEntry !== undefined) ? currentSampleEntry['value'] : '',
+          message: `New default value for .env.sample (${editSelectedKey}):`,
+          initial: (editCurrentSampleEntry !== undefined) ? editCurrentSampleEntry['value'] : '',
         });
 
-        if (sampleValueOutput['cancelled'] === true) {
+        if (editSampleValueOutput['cancelled'] === true) {
           continue;
         }
 
-        const newSampleValue: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditNewSampleValue = sampleValueOutput['result'].defaultValue ?? '';
-        const updatedEnv: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditUpdatedEnv = Runner.updateEnvLine(envContent, selectedKey, newEnvValue);
-        const updatedSample: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditUpdatedSample = Runner.updateEnvLine(envSampleContent, selectedKey, newSampleValue);
+        const editNewSampleValue: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditNewSampleValue = editSampleValueOutput['result'].defaultValue ?? '';
+        const editUpdatedEnv: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditUpdatedEnv = Runner.updateEnvLine(envContent, editSelectedKey, editNewEnvValue);
+        const editUpdatedSample: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditUpdatedSample = Runner.updateEnvLine(envSampleContent, editSelectedKey, editNewSampleValue);
 
-        bufferEnv = updatedEnv;
-        bufferEnvSample = updatedSample;
+        bufferEnv = editUpdatedEnv;
+        bufferEnvSample = editUpdatedSample;
         hasPendingChanges = true;
 
         Logger.customize({
           name: 'Runner.promptManageMenu',
           purpose: 'edit',
-        }).info(`Updated "${selectedKey}" in both files.`);
+        }).info(`Updated "${editSelectedKey}" in both files.`);
 
         continue;
       }
@@ -860,34 +861,34 @@ export class Runner {
           value: entry['key'],
         }));
 
-        const selectOutput: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectOutputValue>({
+        const deleteSelectOutput: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectOutputValue>({
           type: 'select',
           name: 'variable',
           message: 'Select a variable to delete.',
           choices: deleteChoices,
         });
 
-        if (selectOutput['cancelled'] === true) {
+        if (deleteSelectOutput['cancelled'] === true) {
           continue;
         }
 
-        const selectedKey: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectedKey = selectOutput['result'].variable;
+        const deleteSelectedKey: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectedKey = deleteSelectOutput['result'].variable;
 
-        if (selectedKey === undefined) {
+        if (deleteSelectedKey === undefined) {
           continue;
         }
 
-        const updatedEnv: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteUpdatedEnv = Runner.deleteEnvLine(envContent, selectedKey);
-        const updatedSample: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteUpdatedSample = Runner.deleteEnvLine(envSampleContent, selectedKey);
+        const deleteUpdatedEnv: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteUpdatedEnv = Runner.deleteEnvLine(envContent, deleteSelectedKey);
+        const deleteUpdatedSample: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteUpdatedSample = Runner.deleteEnvLine(envSampleContent, deleteSelectedKey);
 
-        bufferEnv = updatedEnv;
-        bufferEnvSample = updatedSample;
+        bufferEnv = deleteUpdatedEnv;
+        bufferEnvSample = deleteUpdatedSample;
         hasPendingChanges = true;
 
         Logger.customize({
           name: 'Runner.promptManageMenu',
           purpose: 'delete',
-        }).info(`Deleted "${selectedKey}" from both files.`);
+        }).info(`Deleted "${deleteSelectedKey}" from both files.`);
 
         continue;
       }

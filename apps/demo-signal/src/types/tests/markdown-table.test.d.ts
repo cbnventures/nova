@@ -5,48 +5,50 @@ import type { MarkdownTable } from '@cbnventures/nova/toolkit';
  *
  * @since 0.14.0
  */
-export type Tests_MarkdownTable_MarkdownTableValidation_Cwd = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_Cwd = string;
 
-export type Tests_MarkdownTable_MarkdownTableValidation_ContentDirs = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_ContentDirs = string[];
 
-export type Tests_MarkdownTable_MarkdownTableValidation_MdFiles = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_MdFiles = string[];
 
-export type Tests_MarkdownTable_MarkdownTableValidation_ContentPath = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_ContentPath = string;
 
-export type Tests_MarkdownTable_MarkdownTableValidation_Entries = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_Entries = string[];
 
-export type Tests_MarkdownTable_MarkdownTableValidation_Ext = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_Ext = string;
 
-export type Tests_MarkdownTable_MarkdownTableValidation_ParseCells = (row: string) => string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_ParseCells = (row: string) => string[];
 
-export type Tests_MarkdownTable_MarkdownTableValidation_Failures = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_Failures = string[];
 
-export type Tests_MarkdownTable_MarkdownTableValidation_FilePath = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_FilePath = string;
 
-export type Tests_MarkdownTable_MarkdownTableValidation_Content = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_Content = string;
 
-export type Tests_MarkdownTable_MarkdownTableValidation_Lines = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_Lines = string[];
 
-export type Tests_MarkdownTable_MarkdownTableValidation_Tables = string[][];
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_Tables = string[][];
 
-export type Tests_MarkdownTable_MarkdownTableValidation_CurrentTable = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_CurrentTable = string[];
 
-export type Tests_MarkdownTable_MarkdownTableValidation_InCodeBlock = boolean;
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_InCodeBlock = boolean;
 
-export type Tests_MarkdownTable_MarkdownTableValidation_TableLines = string[] | undefined;
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_TableLines = string[] | undefined;
 
-export type Tests_MarkdownTable_MarkdownTableValidation_HeaderLine = string | undefined;
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_HeaderLine = string | undefined;
 
-export type Tests_MarkdownTable_MarkdownTableValidation_DelimiterLine = string | undefined;
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_DelimiterLine = string | undefined;
 
-export type Tests_MarkdownTable_MarkdownTableValidation_Headers = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_Headers = string[];
 
-export type Tests_MarkdownTable_MarkdownTableValidation_DataRows = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_DataRows = string[];
 
-export type Tests_MarkdownTable_MarkdownTableValidation_Table = MarkdownTable;
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_Table = MarkdownTable;
 
-export type Tests_MarkdownTable_MarkdownTableValidation_ParsedCells = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_ParsedCells = string[];
 
-export type Tests_MarkdownTable_MarkdownTableValidation_Rendered = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_Rendered = string;
 
-export type Tests_MarkdownTable_MarkdownTableValidation_Original = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_Original = string;
+
+export type Tests_MarkdownTable_MarkdownTableValidation_AllDocumentationTablesMatchMarkdownTableOutput_ParseCells_Segments = string[];

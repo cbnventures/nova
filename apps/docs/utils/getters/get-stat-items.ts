@@ -4,14 +4,14 @@ import { resolve } from 'node:path';
 import { logger } from '@docusaurus/logger';
 
 import type {
-  GettersGetStatItemsCountFilesBasePath,
-  GettersGetStatItemsCountFilesCount,
-  GettersGetStatItemsCountFilesEntries,
-  GettersGetStatItemsCountFilesEntryName,
-  GettersGetStatItemsCountFilesExtensions,
-  GettersGetStatItemsCountFilesReturns,
-  GettersGetStatItemsFetchStatItemsNovaSourcePath,
-  GettersGetStatItemsFetchStatItemsReturns,
+  Getters_GetStatItems_CountFiles_BasePath,
+  Getters_GetStatItems_CountFiles_Count,
+  Getters_GetStatItems_CountFiles_Entries,
+  Getters_GetStatItems_CountFiles_EntryName,
+  Getters_GetStatItems_CountFiles_Extensions,
+  Getters_GetStatItems_CountFiles_Returns,
+  Getters_GetStatItems_FetchStatItems_NovaSourcePath,
+  Getters_GetStatItems_FetchStatItems_Returns,
 } from '../types/getters/get-stat-items.d.ts';
 
 /**
@@ -20,17 +20,17 @@ import type {
  * Recursively counts files matching the given extensions inside a directory,
  * excluding index files so only individual feature files are tallied.
  *
- * @param {GettersGetStatItemsCountFilesBasePath}   basePath   - Base path.
- * @param {GettersGetStatItemsCountFilesExtensions} extensions - Extensions.
+ * @param {Getters_GetStatItems_CountFiles_BasePath}   basePath   - Base path.
+ * @param {Getters_GetStatItems_CountFiles_Extensions} extensions - Extensions.
  *
- * @returns {GettersGetStatItemsCountFilesReturns}
+ * @returns {Getters_GetStatItems_CountFiles_Returns}
  *
  * @since 0.15.0
  */
-function countFiles(basePath: GettersGetStatItemsCountFilesBasePath, extensions: GettersGetStatItemsCountFilesExtensions): GettersGetStatItemsCountFilesReturns {
-  let count: GettersGetStatItemsCountFilesCount = 0;
+function countFiles(basePath: Getters_GetStatItems_CountFiles_BasePath, extensions: Getters_GetStatItems_CountFiles_Extensions): Getters_GetStatItems_CountFiles_Returns {
+  let count: Getters_GetStatItems_CountFiles_Count = 0;
 
-  const entries: GettersGetStatItemsCountFilesEntries = readdirSync(basePath, {
+  const entries: Getters_GetStatItems_CountFiles_Entries = readdirSync(basePath, {
     withFileTypes: true,
     recursive: true,
   });
@@ -40,7 +40,7 @@ function countFiles(basePath: GettersGetStatItemsCountFilesBasePath, extensions:
       continue;
     }
 
-    const entryName: GettersGetStatItemsCountFilesEntryName = entry.name;
+    const entryName: Getters_GetStatItems_CountFiles_EntryName = entry.name;
 
     // Skip index files.
     if (entryName.startsWith('index.') === true) {
@@ -62,12 +62,12 @@ function countFiles(basePath: GettersGetStatItemsCountFilesBasePath, extensions:
  * Counts rules, presets, recipes, and scaffolds from the nova package source
  * tree and returns stat items for the landing page numbers strip.
  *
- * @returns {GettersGetStatItemsFetchStatItemsReturns}
+ * @returns {Getters_GetStatItems_FetchStatItems_Returns}
  *
  * @since 0.15.0
  */
-export function fetchStatItems(): GettersGetStatItemsFetchStatItemsReturns {
-  const novaSourcePath: GettersGetStatItemsFetchStatItemsNovaSourcePath = resolve(process.cwd(), '../../packages/nova/src');
+export function fetchStatItems(): Getters_GetStatItems_FetchStatItems_Returns {
+  const novaSourcePath: Getters_GetStatItems_FetchStatItems_NovaSourcePath = resolve(process.cwd(), '../../packages/nova/src');
 
   logger.info(logger.interpolate`Counting stat items from ${logger.path(novaSourcePath)}...`);
 

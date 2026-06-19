@@ -1,6 +1,13 @@
 import type { CSSProperties } from 'react';
 
 /**
+ * Theme - Blog - Components - Author - Socials - Social Icon Configs.
+ *
+ * @since 0.18.0
+ */
+export type Theme_Blog_Components_Author_Socials_Index_Socials_IconConfigMap = Readonly<Record<string, Theme_Blog_Components_Author_Socials_Index_Socials_IconConfig>>;
+
+/**
  * Theme - Blog - Components - Author - Socials.
  *
  * @since 0.18.0
@@ -28,14 +35,11 @@ export type Theme_Blog_Components_Author_Socials_Index_Socials_Platform = string
 
 export type Theme_Blog_Components_Author_Socials_Index_Socials_Link = string;
 
-export type Theme_Blog_Components_Author_Socials_Index_Socials_IconConfig = {
-  icon: string;
-  label: string;
-};
+export type Theme_Blog_Components_Author_Socials_Index_Socials_IconConfig_Icon = string;
 
-/**
- * Theme - Blog - Components - Author - Socials - Social Icon Configs.
- *
- * @since 0.18.0
- */
-export type Theme_Blog_Components_Author_Socials_Index_Socials_IconConfigMap = Readonly<Record<string, Theme_Blog_Components_Author_Socials_Index_Socials_IconConfig>>;
+export type Theme_Blog_Components_Author_Socials_Index_Socials_IconConfig_Label = string;
+
+export type Theme_Blog_Components_Author_Socials_Index_Socials_IconConfig = {
+  icon: Theme_Blog_Components_Author_Socials_Index_Socials_IconConfig_Icon;
+  label: Theme_Blog_Components_Author_Socials_Index_Socials_IconConfig_Label;
+};

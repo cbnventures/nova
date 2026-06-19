@@ -109,20 +109,20 @@ export class Runner {
 
     // Filter workspaces that have the recipe enabled.
     const eligibleWorkspaces: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkspaceConfigFilter = workspace[1];
-      const workspaceRecipes: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkspaceRecipesFilter = workspaceConfig['recipes'];
+      const workspaceConfigFilter: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkspaceConfigFilter = workspace[1];
+      const workspaceRecipesFilter: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkspaceRecipesFilter = workspaceConfigFilter['recipes'];
 
-      if (workspaceRecipes === undefined) {
+      if (workspaceRecipesFilter === undefined) {
         return false;
       }
 
-      const recipeTuple: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_RecipeTupleFilter = workspaceRecipes['normalize-tooling'];
+      const recipeTupleFilter: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_RecipeTupleFilter = workspaceRecipesFilter['normalize-tooling'];
 
-      if (recipeTuple === undefined) {
+      if (recipeTupleFilter === undefined) {
         return false;
       }
 
-      return recipeTuple[0] === true;
+      return recipeTupleFilter[0] === true;
     });
 
     if (eligibleWorkspaces.length === 0) {

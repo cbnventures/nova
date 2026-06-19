@@ -1,5 +1,12 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
+import type { RuleContext, RuleFix, RuleFixer } from '@typescript-eslint/utils/ts-eslint';
+
+/**
+ * Rules - ESLint - Patterns - No Bracket Assignment - Rule.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Patterns_NoBracketAssignment_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
 /**
  * Rules - ESLint - Patterns - No Bracket Assignment - Check Assignment.
@@ -21,14 +28,30 @@ export type Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Pro
 export type Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_ValueText = string;
 
 /**
- * Rules - ESLint - Patterns - No Bracket Assignment - Rule.
+ * Rules - ESLint - Patterns - No Bracket Assignment - Check Assignment - Fix.
  *
  * @since 0.14.0
  */
-export type Rules_Eslint_Patterns_NoBracketAssignment_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Fix_Fixer = RuleFixer;
 
-export type Rules_Eslint_Patterns_NoBracketAssignment_Runner_RuleOptions_IgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Fix_Returns = RuleFix;
 
-export type Rules_Eslint_Patterns_NoBracketAssignment_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Patterns_NoBracketAssignment_Runner_RuleOptions_IgnoreFiles;
+/**
+ * Rules - ESLint - Patterns - No Bracket Assignment - Create.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Patterns_NoBracketAssignment_Runner_Create_Options_IgnoreFiles = string[];
+
+export type Rules_Eslint_Patterns_NoBracketAssignment_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Patterns_NoBracketAssignment_Runner_Create_Options_IgnoreFiles;
 }>;
+
+/**
+ * Rules - ESLint - Patterns - No Bracket Assignment - Create - Assignment Expression.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Patterns_NoBracketAssignment_Runner_Create_AssignmentExpression_Node = TSESTree.AssignmentExpression;
+
+export type Rules_Eslint_Patterns_NoBracketAssignment_Runner_Create_AssignmentExpression_Returns = void;

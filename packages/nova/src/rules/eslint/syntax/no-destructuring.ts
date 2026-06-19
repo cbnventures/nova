@@ -25,18 +25,19 @@ import type {
   Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Node,
   Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Parent,
   Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Returns,
-  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckAssignmentExpressions,
-  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckCallbackParams,
-  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckForOfLoops,
-  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckFunctionParams,
-  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckVariableDeclarations,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_Create_CheckAssignmentExpressions,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_Create_CheckCallbackParams,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_Create_CheckForOfLoops,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_Create_CheckFunctionParams,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_Create_CheckVariableDeclarations,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_Create_InsideCallback,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_Create_Options,
   Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsAssignmentExpressions,
   Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsCallbackParams,
   Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsForOfLoops,
   Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsFunctionParams,
   Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsVariableDeclarations,
-  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions,
 } from '../../../types/rules/eslint/syntax/no-destructuring.d.ts';
 
 /**
@@ -134,21 +135,21 @@ export class Runner {
       variableDeclarations: true as Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsVariableDeclarations,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Syntax_NoDestructuring_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
         return {};
       }
 
-      const checkCallbackParams: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckCallbackParams = options['callbackParams'];
-      const checkFunctionParams: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckFunctionParams = options['functionParams'];
-      const checkForOfLoops: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckForOfLoops = options['forOfLoops'];
-      const checkVariableDeclarations: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckVariableDeclarations = options['variableDeclarations'];
-      const checkAssignmentExpressions: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckAssignmentExpressions = options['assignmentExpressions'];
+      const checkCallbackParams: Rules_Eslint_Syntax_NoDestructuring_Runner_Create_CheckCallbackParams = options['callbackParams'];
+      const checkFunctionParams: Rules_Eslint_Syntax_NoDestructuring_Runner_Create_CheckFunctionParams = options['functionParams'];
+      const checkForOfLoops: Rules_Eslint_Syntax_NoDestructuring_Runner_Create_CheckForOfLoops = options['forOfLoops'];
+      const checkVariableDeclarations: Rules_Eslint_Syntax_NoDestructuring_Runner_Create_CheckVariableDeclarations = options['variableDeclarations'];
+      const checkAssignmentExpressions: Rules_Eslint_Syntax_NoDestructuring_Runner_Create_CheckAssignmentExpressions = options['assignmentExpressions'];
 
       // Per-lint tracking state for callback detection.
-      const insideCallback: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_InsideCallback = { value: false };
+      const insideCallback: Rules_Eslint_Syntax_NoDestructuring_Runner_Create_InsideCallback = { value: false };
 
       return {
         'ArrowFunctionExpression'(node) {

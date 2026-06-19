@@ -9,6 +9,34 @@ import type {
 } from '../shared.d.ts';
 
 /**
+ * Lib - Color - Hue.
+ *
+ * @since 0.15.0
+ */
+export type Lib_Color_Hue = Shared_HslColor_Hue;
+
+/**
+ * Lib - Color - Lightness.
+ *
+ * @since 0.15.0
+ */
+export type Lib_Color_Lightness = Shared_HslColor_Lightness;
+
+/**
+ * Lib - Color - Saturation.
+ *
+ * @since 0.15.0
+ */
+export type Lib_Color_Saturation = Shared_HslColor_Saturation;
+
+/**
+ * Lib - Color - Shade Config.
+ *
+ * @since 0.15.0
+ */
+export type Lib_Color_ShadeConfig = [Shared_ShadeLevel, number, number][];
+
+/**
  * Lib - Color - Compute Shade.
  *
  * @since 0.15.0
@@ -50,7 +78,17 @@ export type Lib_Color_Runner_Constructor_BlueSlice = string;
 
 export type Lib_Color_Runner_Constructor_Blue = number;
 
-export type Lib_Color_Runner_Constructor_Hsl = Shared_HslColor;
+export type Lib_Color_Runner_Constructor_Hsl_Hue = number;
+
+export type Lib_Color_Runner_Constructor_Hsl_Saturation = number;
+
+export type Lib_Color_Runner_Constructor_Hsl_Lightness = number;
+
+export type Lib_Color_Runner_Constructor_Hsl = {
+  hue: Lib_Color_Runner_Constructor_Hsl_Hue;
+  saturation: Lib_Color_Runner_Constructor_Hsl_Saturation;
+  lightness: Lib_Color_Runner_Constructor_Hsl_Lightness;
+};
 
 /**
  * Lib - Color - Generate Scale.
@@ -59,11 +97,11 @@ export type Lib_Color_Runner_Constructor_Hsl = Shared_HslColor;
  */
 export type Lib_Color_Runner_GenerateScale_Returns = Shared_ColorScale;
 
-export type Lib_Color_Runner_GenerateScale_Result = Shared_ColorScale;
+export type Lib_Color_Runner_GenerateScale_Result = Record<50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950, string>;
 
 export type Lib_Color_Runner_GenerateScale_ShadeConfigEntry = [Shared_ShadeLevel, number, number] | undefined;
 
-export type Lib_Color_Runner_GenerateScale_ShadeConfigLevel = Shared_ShadeLevel;
+export type Lib_Color_Runner_GenerateScale_ShadeConfigLevel = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
 
 export type Lib_Color_Runner_GenerateScale_ShadeConfigPosition = number;
 
@@ -115,20 +153,6 @@ export type Lib_Color_Runner_HslToHex_GreenHex = string;
 export type Lib_Color_Runner_HslToHex_BlueHex = string;
 
 /**
- * Lib - Color - Hue.
- *
- * @since 0.15.0
- */
-export type Lib_Color_Hue = Shared_HslColor_Hue;
-
-/**
- * Lib - Color - Lightness.
- *
- * @since 0.15.0
- */
-export type Lib_Color_Lightness = Shared_HslColor_Lightness;
-
-/**
  * Lib - Color - Rgb To Hsl.
  *
  * @since 0.15.0
@@ -162,17 +186,3 @@ export type Lib_Color_Runner_RgbToHsl_Saturation = number;
 export type Lib_Color_Runner_RgbToHsl_SaturationDenominator = number;
 
 export type Lib_Color_Runner_RgbToHsl_Hue = number;
-
-/**
- * Lib - Color - Saturation.
- *
- * @since 0.15.0
- */
-export type Lib_Color_Saturation = Shared_HslColor_Saturation;
-
-/**
- * Lib - Color - Shade Config.
- *
- * @since 0.15.0
- */
-export type Lib_Color_ShadeConfig = [Shared_ShadeLevel, number, number][];

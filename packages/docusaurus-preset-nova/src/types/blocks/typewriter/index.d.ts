@@ -7,6 +7,24 @@ import type {
  *
  * @since 0.15.0
  */
+export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_Children = ReactNode;
+
+export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_ClassName = string | undefined;
+
+export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_Style = CSSProperties | undefined;
+
+export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps = {
+  children: Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_Children;
+  className?: Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_ClassName;
+  style?: Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_Style;
+};
+
+export type Blocks_Typewriter_Index_BlocksTypewriter_WordProps_Children = string;
+
+export type Blocks_Typewriter_Index_BlocksTypewriter_WordProps = {
+  children: Blocks_Typewriter_Index_BlocksTypewriter_WordProps_Children;
+};
+
 export type Blocks_Typewriter_Index_BlocksTypewriter_Props_Children = ReactNode;
 
 export type Blocks_Typewriter_Index_BlocksTypewriter_Props_TypeSpeed = number | undefined;
@@ -80,16 +98,16 @@ export type Blocks_Typewriter_Index_BlocksTypewriter_MeasureIndex = number;
  *
  * @since 0.15.0
  */
-export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_Children = ReactNode;
+export type Blocks_Typewriter_Index_BlocksTypewriterPrefix_Props_Children = ReactNode;
 
-export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_ClassName = string | undefined;
+export type Blocks_Typewriter_Index_BlocksTypewriterPrefix_Props_ClassName = string | undefined;
 
-export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_Style = CSSProperties | undefined;
+export type Blocks_Typewriter_Index_BlocksTypewriterPrefix_Props_Style = CSSProperties | undefined;
 
-export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps = {
-  children: Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_Children;
-  className?: Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_ClassName;
-  style?: Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_Style;
+export type Blocks_Typewriter_Index_BlocksTypewriterPrefix_Props = {
+  children: Blocks_Typewriter_Index_BlocksTypewriterPrefix_Props_Children;
+  className?: Blocks_Typewriter_Index_BlocksTypewriterPrefix_Props_ClassName;
+  style?: Blocks_Typewriter_Index_BlocksTypewriterPrefix_Props_Style;
 };
 
 /**
@@ -97,8 +115,8 @@ export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps = {
  *
  * @since 0.15.0
  */
-export type Blocks_Typewriter_Index_BlocksTypewriter_WordProps_Children = string;
+export type Blocks_Typewriter_Index_BlocksTypewriterWord_Props_Children = string;
 
-export type Blocks_Typewriter_Index_BlocksTypewriter_WordProps = {
-  children: Blocks_Typewriter_Index_BlocksTypewriter_WordProps_Children;
+export type Blocks_Typewriter_Index_BlocksTypewriterWord_Props = {
+  children: Blocks_Typewriter_Index_BlocksTypewriterWord_Props_Children;
 };

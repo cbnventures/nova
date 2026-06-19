@@ -5,8 +5,6 @@ import { describe, it } from 'vitest';
 import { resolvePreset, validateOptions, validateThemeConfig } from '../options.js';
 
 import type {
-  Tests_Options_JoiSchema,
-  Tests_Options_JoiSchemaValidateResult,
   Tests_Options_PresetValue,
   Tests_Options_ResolvedColorsAccent,
   Tests_Options_ResolvedColorsPrimary,
@@ -14,27 +12,66 @@ import type {
   Tests_Options_ResolvedFontsDisplay,
   Tests_Options_ResolvedFooter,
   Tests_Options_ResolvedNavbar,
-  Tests_Options_ResolvePreset_Result,
-  Tests_Options_ThemeConfigJoiSchema,
-  Tests_Options_ThemeConfigJoiSchemaValidateResult,
-  Tests_Options_ThemeConfigValidatedBlog,
-  Tests_Options_ThemeConfigValidatedBlogLayout,
-  Tests_Options_ThemeConfigValidatedBlogLayoutDescription,
-  Tests_Options_ThemeConfigValidatedBlogLayoutHeading,
-  Tests_Options_ThemeConfigValidatedErrorPages,
-  Tests_Options_ThemeConfigValidatedErrorPagesError,
-  Tests_Options_ThemeConfigValidatedErrorPagesErrorPageContent,
-  Tests_Options_ThemeConfigValidatedErrorPagesErrorPageContentTitle,
-  Tests_Options_ThemeConfigValidatedErrorPagesErrorRetryLabel,
-  Tests_Options_ThemeConfigValidatedErrorPagesNotFound,
-  Tests_Options_ThemeConfigValidatedErrorPagesNotFoundTitle,
-  Tests_Options_ThemeConfigValidatedNavbar,
-  Tests_Options_ThemeConfigValidatedNavbarHideOnScroll,
+  Tests_Options_ResolvePreset_AppliesColorOverrideWhenProvided_Result,
+  Tests_Options_ResolvePreset_AppliesFontOverrideWhenProvided_Result,
+  Tests_Options_ResolvePreset_AppliesNavbarOverrideWhenProvided_Result,
+  Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_JoiSchema,
+  Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_Validated,
+  Tests_Options_ResolvePreset_ReturnsBasePresetWhenNoOverridesAreProvided_Result,
   Tests_Options_ThemeConfigValidatedResult,
-  Tests_Options_ThemeConfigValidatedSite,
-  Tests_Options_ThemeConfigValidatedSiteMetadata,
-  Tests_Options_ThemeConfigValidatedSiteTitle,
   Tests_Options_ValidatedResult,
+  Tests_Options_ValidateOptions_AcceptsValidPresetName_JoiSchema,
+  Tests_Options_ValidateOptions_AcceptsValidPresetName_Result,
+  Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated,
+  Tests_Options_ValidateOptions_RejectsInvalidHexColor_JoiSchema,
+  Tests_Options_ValidateOptions_RejectsInvalidHexColor_Validated,
+  Tests_Options_ValidateOptions_RejectsInvalidPresetName_JoiSchema,
+  Tests_Options_ValidateOptions_RejectsInvalidPresetName_Validated,
+  Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_JoiSchema,
+  Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_Validated,
+  Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_JoiSchema,
+  Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result,
+  Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Validated,
+  Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_ErrorPages,
+  Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_JoiSchema,
+  Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_Result,
+  Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_Validated,
+  Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_ErrorPages,
+  Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_JoiSchema,
+  Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_NotFound,
+  Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_NotFoundTitle,
+  Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_Result,
+  Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_Validated,
+  Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Blog,
+  Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_BlogLayout,
+  Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_BlogLayoutDescription,
+  Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_BlogLayoutHeading,
+  Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_JoiSchema,
+  Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Result,
+  Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Validated,
+  Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_Error,
+  Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorPageContent,
+  Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorPageContentTitle,
+  Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorPages,
+  Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorRetryLabel,
+  Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_JoiSchema,
+  Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_NotFound,
+  Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_NotFoundTitle,
+  Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_Result,
+  Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_Validated,
+  Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_JoiSchema,
+  Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Navbar,
+  Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_NavbarHideOnScroll,
+  Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Result,
+  Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Validated,
+  Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_JoiSchema,
+  Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Result,
+  Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Site,
+  Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteMetadata,
+  Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteTitle,
+  Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Validated,
+  Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_JoiSchema,
+  Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_Validated,
 } from '../types/tests/options.test.d.ts';
 
 /**
@@ -47,8 +84,8 @@ describe('validateOptions', async () => {
     throws(() => {
       validateOptions({
         validate: (schema, options) => {
-          const joiSchema: Tests_Options_JoiSchema = schema as Tests_Options_JoiSchema;
-          const validated: Tests_Options_JoiSchemaValidateResult = joiSchema.validate(options);
+          const joiSchema: Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_JoiSchema = schema as Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_JoiSchema;
+          const validated: Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_Validated = joiSchema.validate(options);
 
           if (validated['error'] !== undefined) {
             throw validated['error'];
@@ -66,10 +103,10 @@ describe('validateOptions', async () => {
   });
 
   it('returns defaults when only preset is provided', () => {
-    const result: Tests_Options_ValidatedResult = validateOptions({
+    const result: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result = validateOptions({
       validate: (schema, options) => {
-        const joiSchema: Tests_Options_JoiSchema = schema as Tests_Options_JoiSchema;
-        const validated: Tests_Options_JoiSchemaValidateResult = joiSchema.validate(options);
+        const joiSchema: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_JoiSchema = schema as Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_JoiSchema;
+        const validated: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Validated = joiSchema.validate(options);
 
         if (validated['error'] !== undefined) {
           throw validated['error'];
@@ -90,10 +127,10 @@ describe('validateOptions', async () => {
   });
 
   it('accepts valid preset name', () => {
-    const result: Tests_Options_ValidatedResult = validateOptions({
+    const result: Tests_Options_ValidateOptions_AcceptsValidPresetName_Result = validateOptions({
       validate: (schema, options) => {
-        const joiSchema: Tests_Options_JoiSchema = schema as Tests_Options_JoiSchema;
-        const validated: Tests_Options_JoiSchemaValidateResult = joiSchema.validate(options);
+        const joiSchema: Tests_Options_ValidateOptions_AcceptsValidPresetName_JoiSchema = schema as Tests_Options_ValidateOptions_AcceptsValidPresetName_JoiSchema;
+        const validated: Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated = joiSchema.validate(options);
 
         if (validated['error'] !== undefined) {
           throw validated['error'];
@@ -117,8 +154,8 @@ describe('validateOptions', async () => {
     throws(() => {
       validateOptions({
         validate: (schema, options) => {
-          const joiSchema: Tests_Options_JoiSchema = schema as Tests_Options_JoiSchema;
-          const validated: Tests_Options_JoiSchemaValidateResult = joiSchema.validate(options);
+          const joiSchema: Tests_Options_ValidateOptions_RejectsInvalidPresetName_JoiSchema = schema as Tests_Options_ValidateOptions_RejectsInvalidPresetName_JoiSchema;
+          const validated: Tests_Options_ValidateOptions_RejectsInvalidPresetName_Validated = joiSchema.validate(options);
 
           if (validated['error'] !== undefined) {
             throw validated['error'];
@@ -141,8 +178,8 @@ describe('validateOptions', async () => {
     throws(() => {
       validateOptions({
         validate: (schema, options) => {
-          const joiSchema: Tests_Options_JoiSchema = schema as Tests_Options_JoiSchema;
-          const validated: Tests_Options_JoiSchemaValidateResult = joiSchema.validate(options);
+          const joiSchema: Tests_Options_ValidateOptions_RejectsInvalidHexColor_JoiSchema = schema as Tests_Options_ValidateOptions_RejectsInvalidHexColor_JoiSchema;
+          const validated: Tests_Options_ValidateOptions_RejectsInvalidHexColor_Validated = joiSchema.validate(options);
 
           if (validated['error'] !== undefined) {
             throw validated['error'];
@@ -175,10 +212,10 @@ describe('validateOptions', async () => {
  */
 describe('validateThemeConfig', async () => {
   it('accepts site namespace with title and metadata', () => {
-    const result: Tests_Options_ThemeConfigValidatedResult = validateThemeConfig({
+    const result: Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Result = validateThemeConfig({
       validate: (schema, themeConfig) => {
-        const joiSchema: Tests_Options_ThemeConfigJoiSchema = schema as Tests_Options_ThemeConfigJoiSchema;
-        const validated: Tests_Options_ThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
+        const joiSchema: Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_JoiSchema = schema as Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_JoiSchema;
+        const validated: Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Validated = joiSchema.validate(themeConfig);
 
         if (validated['error'] !== undefined) {
           throw validated['error'];
@@ -197,9 +234,9 @@ describe('validateThemeConfig', async () => {
       },
     });
 
-    const site: Tests_Options_ThemeConfigValidatedSite = result['site'] as Tests_Options_ThemeConfigValidatedSite;
-    const siteTitle: Tests_Options_ThemeConfigValidatedSiteTitle = site['title'] as Tests_Options_ThemeConfigValidatedSiteTitle;
-    const siteMetadata: Tests_Options_ThemeConfigValidatedSiteMetadata = site['metadata'] as Tests_Options_ThemeConfigValidatedSiteMetadata;
+    const site: Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Site = result['site'] as Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Site;
+    const siteTitle: Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteTitle = site['title'] as Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteTitle;
+    const siteMetadata: Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteMetadata = site['metadata'] as Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteMetadata;
 
     strictEqual(siteTitle, 'Nova Docs');
     strictEqual(siteMetadata.length, 1);
@@ -208,10 +245,10 @@ describe('validateThemeConfig', async () => {
   });
 
   it('accepts blog layout instead of blogLayout', () => {
-    const result: Tests_Options_ThemeConfigValidatedResult = validateThemeConfig({
+    const result: Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Result = validateThemeConfig({
       validate: (schema, themeConfig) => {
-        const joiSchema: Tests_Options_ThemeConfigJoiSchema = schema as Tests_Options_ThemeConfigJoiSchema;
-        const validated: Tests_Options_ThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
+        const joiSchema: Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_JoiSchema = schema as Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_JoiSchema;
+        const validated: Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Validated = joiSchema.validate(themeConfig);
 
         if (validated['error'] !== undefined) {
           throw validated['error'];
@@ -229,10 +266,10 @@ describe('validateThemeConfig', async () => {
       },
     });
 
-    const blog: Tests_Options_ThemeConfigValidatedBlog = result['blog'] as Tests_Options_ThemeConfigValidatedBlog;
-    const blogLayout: Tests_Options_ThemeConfigValidatedBlogLayout = blog['layout'] as Tests_Options_ThemeConfigValidatedBlogLayout;
-    const blogLayoutHeading: Tests_Options_ThemeConfigValidatedBlogLayoutHeading = blogLayout['heading'] as Tests_Options_ThemeConfigValidatedBlogLayoutHeading;
-    const blogLayoutDescription: Tests_Options_ThemeConfigValidatedBlogLayoutDescription = blogLayout['description'] as Tests_Options_ThemeConfigValidatedBlogLayoutDescription;
+    const blog: Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Blog = result['blog'] as Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Blog;
+    const blogLayout: Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_BlogLayout = blog['layout'] as Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_BlogLayout;
+    const blogLayoutHeading: Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_BlogLayoutHeading = blogLayout['heading'] as Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_BlogLayoutHeading;
+    const blogLayoutDescription: Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_BlogLayoutDescription = blogLayout['description'] as Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_BlogLayoutDescription;
 
     strictEqual(blogLayoutHeading, 'Updates');
     strictEqual(blogLayoutDescription, 'Latest news.');
@@ -241,10 +278,10 @@ describe('validateThemeConfig', async () => {
   });
 
   it('accepts navbar hideOnScroll', () => {
-    const result: Tests_Options_ThemeConfigValidatedResult = validateThemeConfig({
+    const result: Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Result = validateThemeConfig({
       validate: (schema, themeConfig) => {
-        const joiSchema: Tests_Options_ThemeConfigJoiSchema = schema as Tests_Options_ThemeConfigJoiSchema;
-        const validated: Tests_Options_ThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
+        const joiSchema: Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_JoiSchema = schema as Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_JoiSchema;
+        const validated: Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Validated = joiSchema.validate(themeConfig);
 
         if (validated['error'] !== undefined) {
           throw validated['error'];
@@ -259,8 +296,8 @@ describe('validateThemeConfig', async () => {
       },
     });
 
-    const navbar: Tests_Options_ThemeConfigValidatedNavbar = result['navbar'] as Tests_Options_ThemeConfigValidatedNavbar;
-    const navbarHideOnScroll: Tests_Options_ThemeConfigValidatedNavbarHideOnScroll = navbar['hideOnScroll'] as Tests_Options_ThemeConfigValidatedNavbarHideOnScroll;
+    const navbar: Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Navbar = result['navbar'] as Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Navbar;
+    const navbarHideOnScroll: Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_NavbarHideOnScroll = navbar['hideOnScroll'] as Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_NavbarHideOnScroll;
 
     strictEqual(navbarHideOnScroll, true);
 
@@ -268,10 +305,10 @@ describe('validateThemeConfig', async () => {
   });
 
   it('accepts errorPages with all surfaces and fields populated', () => {
-    const result: Tests_Options_ThemeConfigValidatedResult = validateThemeConfig({
+    const result: Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_Result = validateThemeConfig({
       validate: (schema, themeConfig) => {
-        const joiSchema: Tests_Options_ThemeConfigJoiSchema = schema as Tests_Options_ThemeConfigJoiSchema;
-        const validated: Tests_Options_ThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
+        const joiSchema: Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_JoiSchema = schema as Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_JoiSchema;
+        const validated: Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_Validated = joiSchema.validate(themeConfig);
 
         if (validated['error'] !== undefined) {
           throw validated['error'];
@@ -298,13 +335,13 @@ describe('validateThemeConfig', async () => {
       },
     });
 
-    const errorPages: Tests_Options_ThemeConfigValidatedErrorPages = result['errorPages'] as Tests_Options_ThemeConfigValidatedErrorPages;
-    const notFound: Tests_Options_ThemeConfigValidatedErrorPagesNotFound = errorPages['notFound'] as Tests_Options_ThemeConfigValidatedErrorPagesNotFound;
-    const notFoundTitle: Tests_Options_ThemeConfigValidatedErrorPagesNotFoundTitle = notFound['title'] as Tests_Options_ThemeConfigValidatedErrorPagesNotFoundTitle;
-    const errorPageContent: Tests_Options_ThemeConfigValidatedErrorPagesErrorPageContent = errorPages['errorPageContent'] as Tests_Options_ThemeConfigValidatedErrorPagesErrorPageContent;
-    const errorPageContentTitle: Tests_Options_ThemeConfigValidatedErrorPagesErrorPageContentTitle = errorPageContent['title'] as Tests_Options_ThemeConfigValidatedErrorPagesErrorPageContentTitle;
-    const error: Tests_Options_ThemeConfigValidatedErrorPagesError = errorPages['error'] as Tests_Options_ThemeConfigValidatedErrorPagesError;
-    const errorRetryLabel: Tests_Options_ThemeConfigValidatedErrorPagesErrorRetryLabel = error['retryLabel'] as Tests_Options_ThemeConfigValidatedErrorPagesErrorRetryLabel;
+    const errorPages: Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorPages = result['errorPages'] as Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorPages;
+    const notFound: Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_NotFound = errorPages['notFound'] as Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_NotFound;
+    const notFoundTitle: Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_NotFoundTitle = notFound['title'] as Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_NotFoundTitle;
+    const errorPageContent: Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorPageContent = errorPages['errorPageContent'] as Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorPageContent;
+    const errorPageContentTitle: Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorPageContentTitle = errorPageContent['title'] as Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorPageContentTitle;
+    const error: Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_Error = errorPages['error'] as Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_Error;
+    const errorRetryLabel: Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorRetryLabel = error['retryLabel'] as Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorRetryLabel;
 
     strictEqual(notFoundTitle, 'Lost in deployment.');
     strictEqual(errorPageContentTitle, 'Pipeline interrupted.');
@@ -314,10 +351,10 @@ describe('validateThemeConfig', async () => {
   });
 
   it('accepts a partial errorPages config (single field)', () => {
-    const result: Tests_Options_ThemeConfigValidatedResult = validateThemeConfig({
+    const result: Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_Result = validateThemeConfig({
       validate: (schema, themeConfig) => {
-        const joiSchema: Tests_Options_ThemeConfigJoiSchema = schema as Tests_Options_ThemeConfigJoiSchema;
-        const validated: Tests_Options_ThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
+        const joiSchema: Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_JoiSchema = schema as Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_JoiSchema;
+        const validated: Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_Validated = joiSchema.validate(themeConfig);
 
         if (validated['error'] !== undefined) {
           throw validated['error'];
@@ -334,9 +371,9 @@ describe('validateThemeConfig', async () => {
       },
     });
 
-    const errorPages: Tests_Options_ThemeConfigValidatedErrorPages = result['errorPages'] as Tests_Options_ThemeConfigValidatedErrorPages;
-    const notFound: Tests_Options_ThemeConfigValidatedErrorPagesNotFound = errorPages['notFound'] as Tests_Options_ThemeConfigValidatedErrorPagesNotFound;
-    const notFoundTitle: Tests_Options_ThemeConfigValidatedErrorPagesNotFoundTitle = notFound['title'] as Tests_Options_ThemeConfigValidatedErrorPagesNotFoundTitle;
+    const errorPages: Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_ErrorPages = result['errorPages'] as Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_ErrorPages;
+    const notFound: Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_NotFound = errorPages['notFound'] as Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_NotFound;
+    const notFoundTitle: Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_NotFoundTitle = notFound['title'] as Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_NotFoundTitle;
 
     strictEqual(notFoundTitle, 'Signal lost.');
 
@@ -344,10 +381,10 @@ describe('validateThemeConfig', async () => {
   });
 
   it('accepts an empty errorPages object', () => {
-    const result: Tests_Options_ThemeConfigValidatedResult = validateThemeConfig({
+    const result: Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_Result = validateThemeConfig({
       validate: (schema, themeConfig) => {
-        const joiSchema: Tests_Options_ThemeConfigJoiSchema = schema as Tests_Options_ThemeConfigJoiSchema;
-        const validated: Tests_Options_ThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
+        const joiSchema: Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_JoiSchema = schema as Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_JoiSchema;
+        const validated: Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_Validated = joiSchema.validate(themeConfig);
 
         if (validated['error'] !== undefined) {
           throw validated['error'];
@@ -360,7 +397,7 @@ describe('validateThemeConfig', async () => {
       },
     });
 
-    const errorPages: Tests_Options_ThemeConfigValidatedErrorPages = result['errorPages'] as Tests_Options_ThemeConfigValidatedErrorPages;
+    const errorPages: Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_ErrorPages = result['errorPages'] as Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_ErrorPages;
 
     strictEqual(typeof errorPages, 'object');
 
@@ -371,8 +408,8 @@ describe('validateThemeConfig', async () => {
     throws(() => {
       validateThemeConfig({
         validate: (schema, themeConfig) => {
-          const joiSchema: Tests_Options_ThemeConfigJoiSchema = schema as Tests_Options_ThemeConfigJoiSchema;
-          const validated: Tests_Options_ThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
+          const joiSchema: Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_JoiSchema = schema as Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_JoiSchema;
+          const validated: Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_Validated = joiSchema.validate(themeConfig);
 
           if (validated['error'] !== undefined) {
             throw validated['error'];
@@ -405,7 +442,7 @@ describe('validateThemeConfig', async () => {
  */
 describe('resolvePreset', async () => {
   it('returns base preset when no overrides are provided', () => {
-    const result: Tests_Options_ResolvePreset_Result = resolvePreset({
+    const result: Tests_Options_ResolvePreset_ReturnsBasePresetWhenNoOverridesAreProvided_Result = resolvePreset({
       preset: 'foundry',
       overrides: {
         colors: {
@@ -447,7 +484,7 @@ describe('resolvePreset', async () => {
   });
 
   it('applies font override when provided', () => {
-    const result: Tests_Options_ResolvePreset_Result = resolvePreset({
+    const result: Tests_Options_ResolvePreset_AppliesFontOverrideWhenProvided_Result = resolvePreset({
       preset: 'foundry',
       overrides: {
         colors: {
@@ -487,7 +524,7 @@ describe('resolvePreset', async () => {
   });
 
   it('applies color override when provided', () => {
-    const result: Tests_Options_ResolvePreset_Result = resolvePreset({
+    const result: Tests_Options_ResolvePreset_AppliesColorOverrideWhenProvided_Result = resolvePreset({
       preset: 'foundry',
       overrides: {
         colors: {
@@ -535,7 +572,7 @@ describe('resolvePreset', async () => {
   });
 
   it('applies navbar override when provided', () => {
-    const result: Tests_Options_ResolvePreset_Result = resolvePreset({
+    const result: Tests_Options_ResolvePreset_AppliesNavbarOverrideWhenProvided_Result = resolvePreset({
       preset: 'foundry',
       overrides: {
         colors: {
@@ -580,8 +617,8 @@ describe('resolvePreset', async () => {
     throws(() => {
       validateOptions({
         validate: (schema, options) => {
-          const joiSchema: Tests_Options_JoiSchema = schema as Tests_Options_JoiSchema;
-          const validated: Tests_Options_JoiSchemaValidateResult = joiSchema.validate(options);
+          const joiSchema: Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_JoiSchema = schema as Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_JoiSchema;
+          const validated: Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_Validated = joiSchema.validate(options);
 
           if (validated['error'] !== undefined) {
             throw validated['error'];

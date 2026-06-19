@@ -4,8 +4,8 @@ import Layout from '@theme/Layout';
 import NotFoundContent from '@theme/NotFound/Content';
 
 import type {
-  Theme_NotFound_Index_NotFound_Title,
   Theme_NotFound_Index_NotFound_Props,
+  Theme_NotFound_Index_NotFound_Title,
 } from '../../types/theme/NotFound/index.d.ts';
 
 /**

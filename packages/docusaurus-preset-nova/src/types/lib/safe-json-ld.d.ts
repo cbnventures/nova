@@ -1,5 +1,5 @@
 /**
- * Lib - Safe JSON Ld - Serialize JSON Ld.
+ * Lib - Safe JSON LD.
  *
  * @since 0.18.0
  */

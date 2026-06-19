@@ -5,4 +5,4 @@ import type { Linter } from 'eslint';
  *
  * @since 0.11.0
  */
-export type Presets_Eslint_RuntimeNode_ConfigConfig = Linter.Config[];
+export type Presets_Eslint_RuntimeNode_Config = Linter.Config[];

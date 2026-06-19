@@ -89,8 +89,10 @@ export type Theme_BlogPostItem_Index_BlogPostItem_AuthorIndex = number;
 
 export type Theme_BlogPostItem_Index_BlogPostItem_AuthorImageUrl = string | undefined;
 
+export type Theme_BlogPostItem_Index_BlogPostItem_AuthorPage_Permalink = string;
+
 export type Theme_BlogPostItem_Index_BlogPostItem_AuthorPage = {
-  permalink: string;
+  permalink: Theme_BlogPostItem_Index_BlogPostItem_AuthorPage_Permalink;
   [key: string]: unknown;
 } | null | undefined;
 

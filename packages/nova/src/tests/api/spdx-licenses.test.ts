@@ -7,13 +7,18 @@ import {
 import { Runner as ApiSpdxLicenses } from '../../api/spdx-licenses.js';
 
 import type {
-  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_CallCount,
-  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_First,
-  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_HasApache,
-  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_HasIsc,
-  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_HasMit,
-  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_Result,
-  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_Second,
+  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_CachesResultAfterFirstFetch_CallCount,
+  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_CachesUndefinedResultAfterFetchFailure_CallCount,
+  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_CachesUndefinedResultAfterFetchFailure_First,
+  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_CachesUndefinedResultAfterFetchFailure_Second,
+  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsEmptySetForEmptyLicensesArray_Result,
+  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsSetOfLicenseIDsForValidResponse_HasApache,
+  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsSetOfLicenseIDsForValidResponse_HasIsc,
+  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsSetOfLicenseIDsForValidResponse_HasMit,
+  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsSetOfLicenseIDsForValidResponse_Result,
+  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsUndefinedOnHTTP500_Result,
+  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsUndefinedOnMalformedJSON_Result,
+  Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsUndefinedOnNetworkError_Result,
 } from '../../types/tests/api/spdx-licenses.test.d.ts';
 
 /**
@@ -37,13 +42,13 @@ describe('ApiSpdxLicenses.fetchLicenses', async () => {
       ],
     }))));
 
-    const result: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_Result = await ApiSpdxLicenses.fetchLicenses();
+    const result: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsSetOfLicenseIDsForValidResponse_Result = await ApiSpdxLicenses.fetchLicenses();
 
     ok(result instanceof Set);
     strictEqual(result.size, 3);
-    const hasMit: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_HasMit = result.has('MIT');
-    const hasApache: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_HasApache = result.has('Apache-2.0');
-    const hasIsc: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_HasIsc = result.has('ISC');
+    const hasMit: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsSetOfLicenseIDsForValidResponse_HasMit = result.has('MIT');
+    const hasApache: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsSetOfLicenseIDsForValidResponse_HasApache = result.has('Apache-2.0');
+    const hasIsc: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsSetOfLicenseIDsForValidResponse_HasIsc = result.has('ISC');
 
     ok(hasMit);
     ok(hasApache);
@@ -53,7 +58,7 @@ describe('ApiSpdxLicenses.fetchLicenses', async () => {
   });
 
   it('caches result after first fetch', async () => {
-    let callCount: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_CallCount = 0;
+    let callCount: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_CachesResultAfterFirstFetch_CallCount = 0;
 
     vi.spyOn(global, 'fetch').mockImplementation(() => {
       callCount += 1;
@@ -72,7 +77,7 @@ describe('ApiSpdxLicenses.fetchLicenses', async () => {
   });
 
   it('caches undefined result after fetch failure', async () => {
-    let callCount: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_CallCount = 0;
+    let callCount: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_CachesUndefinedResultAfterFetchFailure_CallCount = 0;
 
     vi.spyOn(global, 'fetch').mockImplementation(() => {
       callCount += 1;
@@ -80,8 +85,8 @@ describe('ApiSpdxLicenses.fetchLicenses', async () => {
       return Promise.resolve(new Response(null, { status: 500 }));
     });
 
-    const first: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_First = await ApiSpdxLicenses.fetchLicenses();
-    const second: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_Second = await ApiSpdxLicenses.fetchLicenses();
+    const first: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_CachesUndefinedResultAfterFetchFailure_First = await ApiSpdxLicenses.fetchLicenses();
+    const second: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_CachesUndefinedResultAfterFetchFailure_Second = await ApiSpdxLicenses.fetchLicenses();
 
     strictEqual(first, undefined);
     strictEqual(second, undefined);
@@ -93,7 +98,7 @@ describe('ApiSpdxLicenses.fetchLicenses', async () => {
   it('returns undefined on HTTP 500', async () => {
     vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response(null, { status: 500 })));
 
-    const result: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_Result = await ApiSpdxLicenses.fetchLicenses();
+    const result: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsUndefinedOnHTTP500_Result = await ApiSpdxLicenses.fetchLicenses();
 
     strictEqual(result, undefined);
 
@@ -103,7 +108,7 @@ describe('ApiSpdxLicenses.fetchLicenses', async () => {
   it('returns undefined on network error', async () => {
     vi.spyOn(global, 'fetch').mockImplementation(() => Promise.reject(new Error('network error')));
 
-    const result: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_Result = await ApiSpdxLicenses.fetchLicenses();
+    const result: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsUndefinedOnNetworkError_Result = await ApiSpdxLicenses.fetchLicenses();
 
     strictEqual(result, undefined);
 
@@ -113,7 +118,7 @@ describe('ApiSpdxLicenses.fetchLicenses', async () => {
   it('returns undefined on malformed JSON', async () => {
     vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response(JSON.stringify('not an object'))));
 
-    const result: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_Result = await ApiSpdxLicenses.fetchLicenses();
+    const result: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsUndefinedOnMalformedJSON_Result = await ApiSpdxLicenses.fetchLicenses();
 
     strictEqual(result, undefined);
 
@@ -125,7 +130,7 @@ describe('ApiSpdxLicenses.fetchLicenses', async () => {
       licenses: [],
     }))));
 
-    const result: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_Result = await ApiSpdxLicenses.fetchLicenses();
+    const result: Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_ReturnsEmptySetForEmptyLicensesArray_Result = await ApiSpdxLicenses.fetchLicenses();
 
     ok(result instanceof Set);
     strictEqual(result.size, 0);

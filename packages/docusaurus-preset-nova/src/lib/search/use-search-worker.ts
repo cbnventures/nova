@@ -4,10 +4,9 @@ import {
 } from 'react';
 
 import type {
-  Lib_Search_UseSearchWorker_CurrentWorker,
   Lib_Search_UseSearchWorker_Error,
-  Lib_Search_UseSearchWorker_ErrorMessages,
   Lib_Search_UseSearchWorker_ErrorState,
+  Lib_Search_UseSearchWorker_HandleMessage,
   Lib_Search_UseSearchWorker_IndexUrl,
   Lib_Search_UseSearchWorker_InitErrorMessage,
   Lib_Search_UseSearchWorker_IsReady,
@@ -16,24 +15,27 @@ import type {
   Lib_Search_UseSearchWorker_ManifestData,
   Lib_Search_UseSearchWorker_ManifestFetchError,
   Lib_Search_UseSearchWorker_ManifestResponse,
-  Lib_Search_UseSearchWorker_UseSearchWorker_Message_Data,
-  Lib_Search_UseSearchWorker_UseSearchWorker_Message_Event,
-  Lib_Search_UseSearchWorker_UseSearchWorker_Message_Hits,
-  Lib_Search_UseSearchWorker_UseSearchWorker_Message_Reason,
-  Lib_Search_UseSearchWorker_UseSearchWorker_Message_Type,
+  Lib_Search_UseSearchWorker_MessageEvent,
   Lib_Search_UseSearchWorker_Options,
+  Lib_Search_UseSearchWorker_PerformSearch,
   Lib_Search_UseSearchWorker_ProductionOnlyError,
+  Lib_Search_UseSearchWorker_Query,
   Lib_Search_UseSearchWorker_ResolvedIndexUrl,
   Lib_Search_UseSearchWorker_Results,
   Lib_Search_UseSearchWorker_ResultsState,
   Lib_Search_UseSearchWorker_Returns,
-  Lib_Search_UseSearchWorker_SearchFunction,
-  Lib_Search_UseSearchWorker_SearchLimit,
-  Lib_Search_UseSearchWorker_SearchQuery,
+  Lib_Search_UseSearchWorker_Search,
   Lib_Search_UseSearchWorker_SetError,
   Lib_Search_UseSearchWorker_SetIsReady,
   Lib_Search_UseSearchWorker_SetResults,
-  Lib_Search_UseSearchWorker_TranslatedError,
+  Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_ErrorMessages,
+  Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageData,
+  Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageHits,
+  Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageReason,
+  Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageType,
+  Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_TranslatedError,
+  Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_CurrentWorker,
+  Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_SearchLimit,
   Lib_Search_UseSearchWorker_WorkerInstance,
   Lib_Search_UseSearchWorker_WorkerRef,
 } from '../../types/lib/search/use-search-worker.d.ts';
@@ -68,6 +70,47 @@ export function useSearchWorker(options: Lib_Search_UseSearchWorker_Options): Li
 
   useEffect(() => {
     let workerInstance: Lib_Search_UseSearchWorker_WorkerInstance = undefined;
+
+    /**
+     * Lib - Search - Use Search Worker - Use Search Worker - Handle Message.
+     *
+     * Handles messages posted back from the search worker, dispatching ready,
+     * results, and error notifications to the corresponding React state setters.
+     *
+     * @since 0.15.0
+     */
+    const handleMessage: Lib_Search_UseSearchWorker_HandleMessage = (messageEvent: Lib_Search_UseSearchWorker_MessageEvent) => {
+      const messageData: Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageData = messageEvent['data'] as Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageData;
+      const messageType: Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageType = messageData['type'] as Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageType;
+
+      if (messageType === 'ready') {
+        setIsReady(true);
+      } else if (messageType === 'results') {
+        const messageHits: Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageHits = messageData['hits'] as Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageHits;
+
+        setResults(messageHits);
+        setError(undefined);
+      } else if (messageType === 'error') {
+        const messageReason: Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageReason = messageData['reason'] as Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageReason;
+        const errorMessages: Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_ErrorMessages = {
+          'SEARCH_UNKNOWN_INIT_ERROR': translate({
+            id: 'theme.search.unknownInitError',
+            message: 'Unknown error during init',
+            description: 'The error message when an unknown error occurs during search initialization',
+          }),
+          'SEARCH_INDEX_NOT_INITIALIZED': translate({
+            id: 'theme.search.indexNotInitialized',
+            message: 'Search index not initialized',
+            description: 'The error message when search is attempted before the index is ready',
+          }),
+        };
+        const translatedError: Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_TranslatedError = errorMessages[messageReason] ?? messageReason;
+
+        setError(translatedError);
+      }
+
+      return undefined;
+    };
 
     void (async () => {
       try {
@@ -106,38 +149,7 @@ export function useSearchWorker(options: Lib_Search_UseSearchWorker_Options): Li
         workerInstance = new Worker(options['workerUrl']);
         workerRef.current = workerInstance;
 
-        workerInstance.addEventListener('message', (messageEvent: Lib_Search_UseSearchWorker_UseSearchWorker_Message_Event) => {
-          const messageData: Lib_Search_UseSearchWorker_UseSearchWorker_Message_Data = messageEvent['data'] as Lib_Search_UseSearchWorker_UseSearchWorker_Message_Data;
-          const messageType: Lib_Search_UseSearchWorker_UseSearchWorker_Message_Type = messageData['type'] as Lib_Search_UseSearchWorker_UseSearchWorker_Message_Type;
-
-          if (messageType === 'ready') {
-            setIsReady(true);
-          } else if (messageType === 'results') {
-            const messageHits: Lib_Search_UseSearchWorker_UseSearchWorker_Message_Hits = messageData['hits'] as Lib_Search_UseSearchWorker_UseSearchWorker_Message_Hits;
-
-            setResults(messageHits);
-            setError(undefined);
-          } else if (messageType === 'error') {
-            const messageReason: Lib_Search_UseSearchWorker_UseSearchWorker_Message_Reason = messageData['reason'] as Lib_Search_UseSearchWorker_UseSearchWorker_Message_Reason;
-            const errorMessages: Lib_Search_UseSearchWorker_ErrorMessages = {
-              'SEARCH_UNKNOWN_INIT_ERROR': translate({
-                id: 'theme.search.unknownInitError',
-                message: 'Unknown error during init',
-                description: 'The error message when an unknown error occurs during search initialization',
-              }),
-              'SEARCH_INDEX_NOT_INITIALIZED': translate({
-                id: 'theme.search.indexNotInitialized',
-                message: 'Search index not initialized',
-                description: 'The error message when search is attempted before the index is ready',
-              }),
-            };
-            const translatedError: Lib_Search_UseSearchWorker_TranslatedError = errorMessages[messageReason] ?? messageReason;
-
-            setError(translatedError);
-          }
-
-          return;
-        });
+        workerInstance.addEventListener('message', handleMessage);
 
         workerInstance.postMessage({
           type: 'init',
@@ -171,14 +183,22 @@ export function useSearchWorker(options: Lib_Search_UseSearchWorker_Options): Li
     options['manifestUrl'],
   ]);
 
-  const search: Lib_Search_UseSearchWorker_SearchFunction = useCallback((query: Lib_Search_UseSearchWorker_SearchQuery) => {
-    const currentWorker: Lib_Search_UseSearchWorker_CurrentWorker = workerRef.current;
+  /**
+   * Lib - Search - Use Search Worker - Use Search Worker - Perform Search.
+   *
+   * Posts a search query to the worker once it is ready, applying a fixed
+   * result limit so the worker returns a bounded set of hits.
+   *
+   * @since 0.15.0
+   */
+  const performSearch: Lib_Search_UseSearchWorker_PerformSearch = (query: Lib_Search_UseSearchWorker_Query) => {
+    const currentWorker: Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_CurrentWorker = workerRef.current;
 
     if (currentWorker === undefined || isReady === false) {
-      return;
+      return undefined;
     }
 
-    const searchLimit: Lib_Search_UseSearchWorker_SearchLimit = 8;
+    const searchLimit: Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_SearchLimit = 8;
 
     currentWorker.postMessage({
       type: 'search',
@@ -186,8 +206,10 @@ export function useSearchWorker(options: Lib_Search_UseSearchWorker_Options): Li
       limit: searchLimit,
     });
 
-    return;
-  }, [isReady]);
+    return undefined;
+  };
+
+  const search: Lib_Search_UseSearchWorker_Search = useCallback(performSearch, [isReady]);
 
   return {
     search,

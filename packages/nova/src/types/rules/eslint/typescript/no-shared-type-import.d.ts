@@ -2,6 +2,15 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 /**
+ * Rules - ESLint - TypeScript - No Shared Type Import - Rule.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsSharedFiles = string[];
+
+/**
  * Rules - ESLint - TypeScript - No Shared Type Import - Check Import.
  *
  * @since 0.14.0
@@ -23,21 +32,26 @@ export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_IsShar
 export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_NormalizedSharedFile = string;
 
 /**
- * Rules - ESLint - TypeScript - No Shared Type Import - Rule.
+ * Rules - ESLint - TypeScript - No Shared Type Import - Create.
  *
  * @since 0.14.0
  */
-export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_Options_IgnoreFiles = string[];
 
-export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsSharedFiles = string[];
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_Options_SharedFiles = string[];
 
-export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions_IgnoreFiles = string[];
-
-export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions_SharedFiles = string[];
-
-export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions_IgnoreFiles;
-  sharedFiles: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions_SharedFiles;
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_Options_IgnoreFiles;
+  sharedFiles: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_Options_SharedFiles;
 }>;
 
-export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleNormalizedFilename = string;
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_NormalizedFilename = string;
+
+/**
+ * Rules - ESLint - TypeScript - No Shared Type Import - Create - Import Declaration.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_ImportDeclaration_Node = TSESTree.ImportDeclaration;
+
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_ImportDeclaration_Returns = void;

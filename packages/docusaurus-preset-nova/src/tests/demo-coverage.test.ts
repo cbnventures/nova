@@ -15,25 +15,26 @@ import { presetsIndexNames } from '../presets/index.js';
 
 import type {
   Tests_DemoCoverage_DemoCoverage_Config,
-  Tests_DemoCoverage_DemoCoverage_Demo,
-  Tests_DemoCoverage_DemoCoverage_Derived,
-  Tests_DemoCoverage_DemoCoverage_DerivedSet,
-  Tests_DemoCoverage_DemoCoverage_Leaf,
+  Tests_DemoCoverage_DemoCoverage_DemoContext,
+  Tests_DemoCoverage_DemoCoverage_DemoParam,
+  Tests_DemoCoverage_DemoCoverage_LeafPath,
   Tests_DemoCoverage_DemoCoverage_Message,
+  Tests_DemoCoverage_DemoCoverage_MissAt,
   Tests_DemoCoverage_DemoCoverage_Misses,
-  Tests_DemoCoverage_DemoCoverage_MissingInRegistry,
-  Tests_DemoCoverage_DemoCoverage_RegistryMessage,
-  Tests_DemoCoverage_DemoCoverage_RegistrySet,
-  Tests_DemoCoverage_DemoCoverage_StaleInRegistry,
-  Tests_DemoCoverage_DemoCoverage_Value,
-  Tests_DemoCoverage_DemoEntry,
+  Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_Derived,
+  Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_DerivedSet,
+  Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_MissingInRegistry,
+  Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_RegistryMessage,
+  Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_RegistrySet,
+  Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_StaleInRegistry,
+  Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_TypeFilePath,
   Tests_DemoCoverage_DemoRecord,
   Tests_DemoCoverage_Demos,
   Tests_DemoCoverage_DeriveRequiredLeafPaths_BlockBody,
   Tests_DemoCoverage_DeriveRequiredLeafPaths_BlockMatch,
   Tests_DemoCoverage_DeriveRequiredLeafPaths_BlockPattern,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_Entry,
   Tests_DemoCoverage_DeriveRequiredLeafPaths_EntryFields,
-  Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldEntry,
   Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldExpression,
   Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldMatch,
   Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldName,
@@ -48,6 +49,9 @@ import type {
   Tests_DemoCoverage_DeriveRequiredLeafPaths_TypeFilePath,
   Tests_DemoCoverage_DeriveRequiredLeafPaths_TypeName,
   Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkFieldEntry,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkFieldName,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkFieldType,
   Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkStack,
   Tests_DemoCoverage_GetPackageRoot_CurrentFileDirectory,
   Tests_DemoCoverage_GetPackageRoot_CurrentFilePath,
@@ -55,7 +59,7 @@ import type {
   Tests_DemoCoverage_GetRepoRoot_Returns,
   Tests_DemoCoverage_LoadDemoConfig_ConfigUrl,
   Tests_DemoCoverage_LoadDemoConfig_DemoPath,
-  Tests_DemoCoverage_LoadDemoConfig_Module,
+  Tests_DemoCoverage_LoadDemoConfig_ModuleNamespace,
   Tests_DemoCoverage_LoadDemoConfig_Returns,
   Tests_DemoCoverage_RequiredLeafPaths,
   Tests_DemoCoverage_ResolveLeaf_Config,
@@ -63,7 +67,7 @@ import type {
   Tests_DemoCoverage_ResolveLeaf_Index,
   Tests_DemoCoverage_ResolveLeaf_Path,
   Tests_DemoCoverage_ResolveLeaf_Returns,
-  Tests_DemoCoverage_ResolveLeaf_Segment,
+  Tests_DemoCoverage_ResolveLeaf_SegmentName,
   Tests_DemoCoverage_ResolveLeaf_Segments,
 } from '../types/tests/demo-coverage.test.d.ts';
 
@@ -202,7 +206,7 @@ async function deriveRequiredLeafPaths(typeFilePath: Tests_DemoCoverage_DeriveRe
   }];
 
   while (walkStack.length > 0) {
-    const entry: Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry = walkStack.pop() as Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry;
+    const entry: Tests_DemoCoverage_DeriveRequiredLeafPaths_Entry = walkStack.pop() as Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry;
     const entryFields: Tests_DemoCoverage_DeriveRequiredLeafPaths_EntryFields = objectTypes.get(entry['typeName']);
 
     if (entryFields === undefined) {
@@ -212,9 +216,9 @@ async function deriveRequiredLeafPaths(typeFilePath: Tests_DemoCoverage_DeriveRe
     }
 
     for (const fieldEntry of entryFields) {
-      const walkFieldEntry: Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldEntry = fieldEntry;
-      const walkFieldName: Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldName = walkFieldEntry[0];
-      const walkFieldType: Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldType = walkFieldEntry[1];
+      const walkFieldEntry: Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkFieldEntry = fieldEntry;
+      const walkFieldName: Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkFieldName = walkFieldEntry[0];
+      const walkFieldType: Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkFieldType = walkFieldEntry[1];
 
       walkStack.push({
         typeName: walkFieldType,
@@ -269,7 +273,7 @@ function getRepoRoot(): Tests_DemoCoverage_GetRepoRoot_Returns {
  */
 async function loadDemoConfig(demoPath: Tests_DemoCoverage_LoadDemoConfig_DemoPath): Tests_DemoCoverage_LoadDemoConfig_Returns {
   const configUrl: Tests_DemoCoverage_LoadDemoConfig_ConfigUrl = pathToFileURL(resolve(getRepoRoot(), demoPath)).href;
-  const moduleNamespace: Tests_DemoCoverage_LoadDemoConfig_Module = await import(configUrl);
+  const moduleNamespace: Tests_DemoCoverage_LoadDemoConfig_ModuleNamespace = await import(configUrl);
 
   return moduleNamespace['default'];
 }
@@ -294,7 +298,7 @@ function resolveLeaf(config: Tests_DemoCoverage_ResolveLeaf_Config, path: Tests_
   let cursor: Tests_DemoCoverage_ResolveLeaf_Cursor = config;
 
   for (let index: Tests_DemoCoverage_ResolveLeaf_Index = 0; index < segments.length; index += 1) {
-    const segmentName: Tests_DemoCoverage_ResolveLeaf_Segment = segments[index] ?? '';
+    const segmentName: Tests_DemoCoverage_ResolveLeaf_SegmentName = segments[index] ?? '';
 
     if (
       cursor === null
@@ -329,13 +333,13 @@ function resolveLeaf(config: Tests_DemoCoverage_ResolveLeaf_Config, path: Tests_
  */
 describe('demo coverage', () => {
   it('registry matches every leaf reachable from NovaThemeConfig', async () => {
-    const typeFilePath: Tests_DemoCoverage_DeriveRequiredLeafPaths_TypeFilePath = resolve(getPackageRoot(), 'nova-config.d.ts');
-    const derived: Tests_DemoCoverage_DemoCoverage_Derived = await deriveRequiredLeafPaths(typeFilePath);
-    const derivedSet: Tests_DemoCoverage_DemoCoverage_DerivedSet = new Set(derived);
-    const registrySet: Tests_DemoCoverage_DemoCoverage_RegistrySet = new Set(requiredLeafPaths);
-    const missingInRegistry: Tests_DemoCoverage_DemoCoverage_MissingInRegistry = derived.filter((leaf) => registrySet.has(leaf) === false);
-    const staleInRegistry: Tests_DemoCoverage_DemoCoverage_StaleInRegistry = requiredLeafPaths.filter((leaf) => derivedSet.has(leaf) === false);
-    const registryMessage: Tests_DemoCoverage_DemoCoverage_RegistryMessage = [
+    const typeFilePath: Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_TypeFilePath = resolve(getPackageRoot(), 'nova-config.d.ts');
+    const derived: Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_Derived = await deriveRequiredLeafPaths(typeFilePath);
+    const derivedSet: Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_DerivedSet = new Set(derived);
+    const registrySet: Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_RegistrySet = new Set(requiredLeafPaths);
+    const missingInRegistry: Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_MissingInRegistry = derived.filter((leaf) => registrySet.has(leaf) === false);
+    const staleInRegistry: Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_StaleInRegistry = requiredLeafPaths.filter((leaf) => derivedSet.has(leaf) === false);
+    const registryMessage: Tests_DemoCoverage_DemoCoverage_RegistryMatchesEveryLeafReachableFromNovaThemeConfig_RegistryMessage = [
       'Registry / NovaThemeConfig drift:',
       `  Missing in registry (in type but not registered): ${missingInRegistry.length}`,
       ...missingInRegistry.map((leaf) => `    + ${leaf}`),
@@ -349,16 +353,16 @@ describe('demo coverage', () => {
   });
 
   for (const demo of demos) {
-    const demoContext: Tests_DemoCoverage_DemoEntry = demo;
+    const demoContext: Tests_DemoCoverage_DemoCoverage_DemoContext = demo;
 
     it(`'${demoContext['name']}' demo sets every required NovaThemeConfig leaf`, async () => {
-      const demoParam: Tests_DemoCoverage_DemoCoverage_Demo = demoContext;
+      const demoParam: Tests_DemoCoverage_DemoCoverage_DemoParam = demoContext;
       const config: Tests_DemoCoverage_DemoCoverage_Config = await loadDemoConfig(demoParam['path']);
       const misses: Tests_DemoCoverage_DemoCoverage_Misses = [];
 
       for (const leaf of requiredLeafPaths) {
-        const leafPath: Tests_DemoCoverage_DemoCoverage_Leaf = leaf;
-        const missAt: Tests_DemoCoverage_DemoCoverage_Value = resolveLeaf(config, leafPath);
+        const leafPath: Tests_DemoCoverage_DemoCoverage_LeafPath = leaf;
+        const missAt: Tests_DemoCoverage_DemoCoverage_MissAt = resolveLeaf(config, leafPath);
 
         if (missAt !== null) {
           misses.push(`  - ${leafPath} (missing at: ${missAt})`);

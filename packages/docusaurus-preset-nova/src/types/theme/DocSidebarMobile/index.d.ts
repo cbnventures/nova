@@ -38,17 +38,14 @@ export type Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsClosing = React.D
 
 export type Theme_DocSidebarMobile_Index_DocSidebarMobile_PanelRef = RefObject<HTMLDivElement | null>;
 
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_SidebarItems = unknown[];
+/**
+ * Theme - Doc Sidebar Mobile - Doc Sidebar Mobile - Handle Escape.
+ *
+ * @since 0.15.0
+ */
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeFunction = (event: Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeKeyboardEvent) => void;
 
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Separator = ReactNode;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbItem = PropSidebarBreadcrumbsItem;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbIndex = number;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_OverlayClassName = string;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_AnimationEvent = React.AnimationEvent<HTMLDivElement>;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeKeyboardEvent = KeyboardEvent;
 
 /**
  * Theme - Doc Sidebar Mobile - Doc Sidebar Mobile - Handle Click Outside.
@@ -61,15 +58,6 @@ export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideMous
 
 export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideMouseTarget = EventTarget;
 
-/**
- * Theme - Doc Sidebar Mobile - Doc Sidebar Mobile - Handle Escape.
- *
- * @since 0.15.0
- */
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeFunction = (event: Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeKeyboardEvent) => void;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeKeyboardEvent = KeyboardEvent;
-
 export type Theme_DocSidebarMobile_Index_DocSidebarMobile_FocusTarget = HTMLButtonElement | null;
 
 export type Theme_DocSidebarMobile_Index_DocSidebarMobile_OpenAriaLabel = string;
@@ -79,3 +67,15 @@ export type Theme_DocSidebarMobile_Index_DocSidebarMobile_PanelAriaLabel = strin
 export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HeaderTitle = string;
 
 export type Theme_DocSidebarMobile_Index_DocSidebarMobile_CloseAriaLabel = string;
+
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_SidebarItems = unknown[];
+
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Separator = ReactNode;
+
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbItem = PropSidebarBreadcrumbsItem;
+
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbIndex = number;
+
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_OverlayClassName = string;
+
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_AnimationEvent = React.AnimationEvent<HTMLDivElement>;

@@ -21,8 +21,10 @@ export type Theme_TabItem_Index_TabItem_Props = {
   [key: string]: unknown;
 };
 
+export type Theme_TabItem_Index_TabItem_Tabs_SelectedValue = string;
+
 export type Theme_TabItem_Index_TabItem_Tabs = {
-  selectedValue: string;
+  selectedValue: Theme_TabItem_Index_TabItem_Tabs_SelectedValue;
 };
 
 export type Theme_TabItem_Index_TabItem_PanelId = string;

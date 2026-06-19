@@ -32,3 +32,10 @@ export type Theme_Footer_Credit_CreditText = string;
 export type Theme_Footer_Credit_CreditNovaLabel = string;
 
 export type Theme_Footer_Credit_CreditDocusaurusLabel = string;
+
+/**
+ * Theme - Footer - Credit - Footer Credit.
+ *
+ * @since 0.15.0
+ */
+export type Theme_Footer_Credit_FooterCredit_Returns = ReactNode;

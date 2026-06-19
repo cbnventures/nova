@@ -3,13 +3,13 @@ import Socials from '@theme/Blog/Components/Author/Socials';
 import Heading from '@theme/Heading';
 
 import type {
-  Theme_Blog_Components_Author_Index_Author_Props_Author,
   Theme_Blog_Components_Author_Index_Author_ImageUrl,
-  Theme_Blog_Components_Author_Index_Author_Name,
-  Theme_Blog_Components_Author_Index_Author_Title,
-  Theme_Blog_Components_Author_Index_Author_Props_Count,
   Theme_Blog_Components_Author_Index_Author_Link,
+  Theme_Blog_Components_Author_Index_Author_Name,
   Theme_Blog_Components_Author_Index_Author_Props,
+  Theme_Blog_Components_Author_Index_Author_Props_Author,
+  Theme_Blog_Components_Author_Index_Author_Props_Count,
+  Theme_Blog_Components_Author_Index_Author_Title,
 } from '../../../../types/theme/Blog/Components/Author/index.d.ts';
 
 /**

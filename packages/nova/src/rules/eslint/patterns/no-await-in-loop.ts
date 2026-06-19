@@ -9,6 +9,9 @@ import type {
   Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Node,
   Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options,
   Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Returns,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_Create_AwaitExpression_Node,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_Create_AwaitExpression_Returns,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_Create_Options,
   Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Current,
   Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_DisallowedLoopTypes,
   Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Node,
@@ -18,7 +21,6 @@ import type {
   Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowForOf,
   Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowWhile,
   Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions,
 } from '../../../types/rules/eslint/patterns/no-await-in-loop.d.ts';
 
 /**
@@ -100,7 +102,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -108,7 +110,7 @@ export class Runner {
       }
 
       return {
-        AwaitExpression(node) {
+        AwaitExpression(node: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_Create_AwaitExpression_Node): Rules_Eslint_Patterns_NoAwaitInLoop_Runner_Create_AwaitExpression_Returns {
           Runner.checkAwait(context, node, options);
 
           return;

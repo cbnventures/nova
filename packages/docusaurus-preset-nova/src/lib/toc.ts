@@ -1,8 +1,8 @@
 import type {
   Lib_Toc_FilterToc_FilteredChildren,
   Lib_Toc_FilterToc_IsInRange,
-  Lib_Toc_FilterToc_Item,
   Lib_Toc_FilterToc_Items,
+  Lib_Toc_FilterToc_KeptItem,
   Lib_Toc_FilterToc_MaxHeadingLevel,
   Lib_Toc_FilterToc_MinHeadingLevel,
   Lib_Toc_FilterToc_Results,
@@ -10,14 +10,12 @@ import type {
   Lib_Toc_LastIndexAtLevelSeed,
   Lib_Toc_LastIndexAtLevelSize,
   Lib_Toc_TreeifyToc_AncestorLevelIndexes,
-  Lib_Toc_TreeifyToc_CurrentIndex,
-  Lib_Toc_TreeifyToc_Heading,
   Lib_Toc_TreeifyToc_Headings,
-  Lib_Toc_TreeifyToc_Item_Children_Children_Children_Children_Children,
   Lib_Toc_TreeifyToc_Items,
   Lib_Toc_TreeifyToc_LastIndexAtLevel,
   Lib_Toc_TreeifyToc_MaxAncestorIndex,
   Lib_Toc_TreeifyToc_Parent,
+  Lib_Toc_TreeifyToc_ParentIndex,
   Lib_Toc_TreeifyToc_ParentIndexByHeading,
   Lib_Toc_TreeifyToc_ParentIndexValue,
   Lib_Toc_TreeifyToc_Returns,
@@ -32,7 +30,7 @@ import type {
  *
  * @since 0.15.0
  */
-const LIB_TOC_LAST_INDEX_AT_LEVEL_SEED: Lib_Toc_LastIndexAtLevelSeed = -1;
+const lastIndexAtLevelSeed: Lib_Toc_LastIndexAtLevelSeed = -1;
 
 /**
  * Lib - Toc - Last Index At Level Size.
@@ -43,7 +41,7 @@ const LIB_TOC_LAST_INDEX_AT_LEVEL_SEED: Lib_Toc_LastIndexAtLevelSeed = -1;
  *
  * @since 0.15.0
  */
-const LIB_TOC_LAST_INDEX_AT_LEVEL_SIZE: Lib_Toc_LastIndexAtLevelSize = 7;
+const lastIndexAtLevelSize: Lib_Toc_LastIndexAtLevelSize = 7;
 
 /**
  * Lib - Toc - Treeify Toc.
@@ -59,16 +57,16 @@ const LIB_TOC_LAST_INDEX_AT_LEVEL_SIZE: Lib_Toc_LastIndexAtLevelSize = 7;
  * @since 0.15.0
  */
 export function treeifyToc(items: Lib_Toc_TreeifyToc_Items): Lib_Toc_TreeifyToc_Returns {
-  const headings: Lib_Toc_TreeifyToc_Headings = items.map((item: Lib_Toc_TreeifyToc_Item_Children_Children_Children_Children_Children) => ({
+  const headings: Lib_Toc_TreeifyToc_Headings = items.map((item) => ({
     value: item['value'],
     id: item['id'],
     level: item['level'],
     children: [],
   }));
-  const parentIndexByHeading: Lib_Toc_TreeifyToc_ParentIndexByHeading = headings.map(() => LIB_TOC_LAST_INDEX_AT_LEVEL_SEED);
-  const lastIndexAtLevel: Lib_Toc_TreeifyToc_LastIndexAtLevel = Array<Lib_Toc_TreeifyToc_ParentIndexValue>(LIB_TOC_LAST_INDEX_AT_LEVEL_SIZE).fill(LIB_TOC_LAST_INDEX_AT_LEVEL_SEED);
+  const parentIndexByHeading: Lib_Toc_TreeifyToc_ParentIndexByHeading = headings.map(() => lastIndexAtLevelSeed);
+  const lastIndexAtLevel: Lib_Toc_TreeifyToc_LastIndexAtLevel = Array<Lib_Toc_TreeifyToc_ParentIndexValue>(lastIndexAtLevelSize).fill(lastIndexAtLevelSeed);
 
-  headings.forEach((heading: Lib_Toc_TreeifyToc_Heading, currentIndex: Lib_Toc_TreeifyToc_CurrentIndex) => {
+  headings.forEach((heading, currentIndex) => {
     const ancestorLevelIndexes: Lib_Toc_TreeifyToc_AncestorLevelIndexes = lastIndexAtLevel.slice(2, heading['level']);
     const maxAncestorIndex: Lib_Toc_TreeifyToc_MaxAncestorIndex = Math.max(...ancestorLevelIndexes);
 
@@ -80,8 +78,8 @@ export function treeifyToc(items: Lib_Toc_TreeifyToc_Items): Lib_Toc_TreeifyToc_
 
   const roots: Lib_Toc_TreeifyToc_Roots = [];
 
-  headings.forEach((heading: Lib_Toc_TreeifyToc_Heading, currentIndex: Lib_Toc_TreeifyToc_CurrentIndex) => {
-    const parentIndex: Lib_Toc_TreeifyToc_ParentIndexValue = parentIndexByHeading[currentIndex] as Lib_Toc_TreeifyToc_ParentIndexValue;
+  headings.forEach((heading, currentIndex) => {
+    const parentIndex: Lib_Toc_TreeifyToc_ParentIndex = parentIndexByHeading[currentIndex] as Lib_Toc_TreeifyToc_ParentIndex;
 
     if (parentIndex >= 0) {
       const parent: Lib_Toc_TreeifyToc_Parent = headings[parentIndex] as Lib_Toc_TreeifyToc_Parent;
@@ -122,7 +120,7 @@ export function filterToc(items: Lib_Toc_FilterToc_Items, minHeadingLevel: Lib_T
     const isInRange: Lib_Toc_FilterToc_IsInRange = item['level'] >= minHeadingLevel && item['level'] <= maxHeadingLevel;
 
     if (isInRange === true) {
-      const keptItem: Lib_Toc_FilterToc_Item = {
+      const keptItem: Lib_Toc_FilterToc_KeptItem = {
         value: item['value'],
         id: item['id'],
         level: item['level'],

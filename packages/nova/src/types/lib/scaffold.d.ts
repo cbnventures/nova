@@ -1,6 +1,10 @@
 import type { PromptObject } from 'prompts';
 
-import type { Shared_GeneratorRunResult, Shared_MonorepoContext, Shared_ScaffoldConfig } from '../shared.d.ts';
+import type {
+  Shared_GeneratorRunResult as SharedGeneratorRunResult,
+  Shared_MonorepoContext as SharedMonorepoContext,
+  Shared_ScaffoldConfig as SharedScaffoldConfig,
+} from '../shared.d.ts';
 
 /**
  * Lib - Scaffold - Collect Files.
@@ -82,7 +86,7 @@ export type Lib_Scaffold_CreateWorkspaceDirectory_WorkspaceDirectory = string;
  */
 export type Lib_Scaffold_DetectMonorepoContext_CurrentWorkingDirectory = string;
 
-export type Lib_Scaffold_DetectMonorepoContext_Returns = Promise<Shared_MonorepoContext>;
+export type Lib_Scaffold_DetectMonorepoContext_Returns = Promise<SharedMonorepoContext>;
 
 export type Lib_Scaffold_DetectMonorepoContext_Locations = string[];
 
@@ -101,7 +105,7 @@ export type Lib_Scaffold_LoadGenerator_Name = string;
 
 export type Lib_Scaffold_LoadGenerator_Returns = Promise<((options: {
   replaceFile: true;
-}) => Promise<Shared_GeneratorRunResult>) | undefined>;
+}) => Promise<SharedGeneratorRunResult>) | undefined>;
 
 export type Lib_Scaffold_LoadGenerator_EditorconfigModule = typeof import('../../cli/generate/must-haves/editorconfig.js');
 
@@ -154,16 +158,16 @@ export type Lib_Scaffold_PromptPostScaffoldGenerators_OriginalCwd = string;
 
 export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorModule = ((options: {
   replaceFile: true;
-}) => Promise<Shared_GeneratorRunResult>) | undefined;
+}) => Promise<SharedGeneratorRunResult>) | undefined;
 
-export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorResult = Shared_GeneratorRunResult;
+export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorResult = SharedGeneratorRunResult;
 
 /**
  * Lib - Scaffold - Prompt Scaffold Options.
  *
  * @since 0.15.0
  */
-export type Lib_Scaffold_PromptScaffoldOptions_Context = Shared_MonorepoContext;
+export type Lib_Scaffold_PromptScaffoldOptions_Context = SharedMonorepoContext;
 
 export type Lib_Scaffold_PromptScaffoldOptions_Defaults_Name = string | undefined;
 
@@ -180,25 +184,25 @@ export type Lib_Scaffold_PromptScaffoldOptions_Defaults = {
   workspaceName: Lib_Scaffold_PromptScaffoldOptions_Defaults_WorkspaceName;
 };
 
-export type Lib_Scaffold_PromptScaffoldOptions_Returns = Promise<Shared_ScaffoldConfig | undefined>;
+export type Lib_Scaffold_PromptScaffoldOptions_Returns = Promise<SharedScaffoldConfig | undefined>;
 
 export type Lib_Scaffold_PromptScaffoldOptions_CurrentDirectory = string;
 
 export type Lib_Scaffold_PromptScaffoldOptions_Cancelled = boolean;
 
-export type Lib_Scaffold_PromptScaffoldOptions_NameValue = string | undefined;
+export type Lib_Scaffold_PromptScaffoldOptions_MonorepoNameValue = string | undefined;
 
-export type Lib_Scaffold_PromptScaffoldOptions_OutputValue = string | undefined;
+export type Lib_Scaffold_PromptScaffoldOptions_MonorepoOutputValue = string | undefined;
 
-export type Lib_Scaffold_PromptScaffoldOptions_WorkspaceNameValue = string | undefined;
+export type Lib_Scaffold_PromptScaffoldOptions_MonorepoWorkspaceNameValue = string | undefined;
 
-export type Lib_Scaffold_PromptScaffoldOptions_Questions = PromptObject<string>[];
+export type Lib_Scaffold_PromptScaffoldOptions_MonorepoQuestions = PromptObject<string>[];
 
-export type Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers = Record<string, unknown>;
+export type Lib_Scaffold_PromptScaffoldOptions_MonorepoPromptsAnswers = Record<string, unknown>;
 
-export type Lib_Scaffold_PromptScaffoldOptions_ResolvedName = string;
+export type Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedName = string;
 
-export type Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName = string;
+export type Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedWorkspaceName = string;
 
 export type Lib_Scaffold_PromptScaffoldOptions_ResolvedOutputDirectory = string;
 
@@ -217,13 +221,36 @@ export type Lib_Scaffold_PromptScaffoldOptions_DirectoryChoice = string;
 
 export type Lib_Scaffold_PromptScaffoldOptions_OutputAnswers = Record<string, unknown>;
 
-export type Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput = string;
+export type Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedOutput = string;
+
+export type Lib_Scaffold_PromptScaffoldOptions_NameValue = string | undefined;
+
+export type Lib_Scaffold_PromptScaffoldOptions_OutputValue = string | undefined;
+
+export type Lib_Scaffold_PromptScaffoldOptions_WorkspaceNameValue = string | undefined;
+
+export type Lib_Scaffold_PromptScaffoldOptions_Questions = PromptObject<string>[];
+
+export type Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput = (initialPrev: Lib_Scaffold_PromptScaffoldOptions_InitialPrev, initialAnswers: Lib_Scaffold_PromptScaffoldOptions_InitialAnswers) => string;
 
 export type Lib_Scaffold_PromptScaffoldOptions_InitialPrev = string;
 
 export type Lib_Scaffold_PromptScaffoldOptions_InitialAnswers = Record<string, string>;
 
-export type Lib_Scaffold_PromptScaffoldOptions_ResolvedInitialWorkspaceName = string;
+export type Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers = Record<string, unknown>;
+
+export type Lib_Scaffold_PromptScaffoldOptions_ResolvedName = string;
+
+export type Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName = string;
+
+export type Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput = string;
+
+/**
+ * Lib - Scaffold - Prompt Scaffold Options - Resolve Initial Output.
+ *
+ * @since 0.15.0
+ */
+export type Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput_ResolvedInitialWorkspaceName = string;
 
 /**
  * Lib - Scaffold - Register Workspace In Config.
@@ -296,9 +323,9 @@ export type Lib_Scaffold_RunScaffold_CurrentDirectory = string;
 
 export type Lib_Scaffold_RunScaffold_IsDryRun = boolean;
 
-export type Lib_Scaffold_RunScaffold_Context = Shared_MonorepoContext;
+export type Lib_Scaffold_RunScaffold_Context = SharedMonorepoContext;
 
-export type Lib_Scaffold_RunScaffold_Config = Shared_ScaffoldConfig | undefined;
+export type Lib_Scaffold_RunScaffold_Config = SharedScaffoldConfig | undefined;
 
 export type Lib_Scaffold_RunScaffold_ModePrefix = string;
 

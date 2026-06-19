@@ -78,10 +78,10 @@ export type Cli_Recipe_Github_SyncIdentity_Runner_Run_ViewResult = SharedShellOu
 
 export type Cli_Recipe_Github_SyncIdentity_Runner_Run_ViewerPermission = string | undefined;
 
-export type Cli_Recipe_Github_SyncIdentity_Runner_Run_ViewerPermissionParsed_ViewerPermission = string | undefined;
+export type Cli_Recipe_Github_SyncIdentity_Runner_Run_Parsed_ViewerPermission = string | undefined;
 
-export type Cli_Recipe_Github_SyncIdentity_Runner_Run_ViewerPermissionParsed = {
-  viewerPermission?: Cli_Recipe_Github_SyncIdentity_Runner_Run_ViewerPermissionParsed_ViewerPermission;
+export type Cli_Recipe_Github_SyncIdentity_Runner_Run_Parsed = {
+  viewerPermission?: Cli_Recipe_Github_SyncIdentity_Runner_Run_Parsed_ViewerPermission;
 };
 
 export type Cli_Recipe_Github_SyncIdentity_Runner_Run_Permission = string[];

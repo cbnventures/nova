@@ -5,6 +5,25 @@ import type { CSSProperties, MouseEvent, RefObject } from 'react';
  *
  * @since 0.15.0
  */
+export type Theme_TocCollapsible_Index_TocListItemValue = string;
+
+export type Theme_TocCollapsible_Index_TocListItemId = string;
+
+export type Theme_TocCollapsible_Index_TocListItemLevel = number;
+
+export type Theme_TocCollapsible_Index_TocListItemChildren = Array<Theme_TocCollapsible_Index_TocListItem>;
+
+export type Theme_TocCollapsible_Index_TocListItem = {
+  value: Theme_TocCollapsible_Index_TocListItemValue;
+  id: Theme_TocCollapsible_Index_TocListItemId;
+  level: Theme_TocCollapsible_Index_TocListItemLevel;
+  children: Theme_TocCollapsible_Index_TocListItemChildren;
+};
+
+export type Theme_TocCollapsible_Index_TocListItems = Theme_TocCollapsible_Index_TocListItem[];
+
+export type Theme_TocCollapsible_Index_TocListOnLinkClick = () => void;
+
 export type Theme_TocCollapsible_Index_TocCollapsibleProps_Toc = Theme_TocCollapsible_Index_TocListItem[];
 
 export type Theme_TocCollapsible_Index_TocCollapsibleProps_ClassName = string | undefined;
@@ -54,6 +73,18 @@ export type Theme_TocCollapsible_Index_TocCollapsibleDialogAriaLabel = string;
 
 export type Theme_TocCollapsible_Index_TocCollapsibleCloseAriaLabel = string;
 
+export type Theme_TocCollapsible_Index_TocCollapsibleHandleEscapeFunction = (event: Theme_TocCollapsible_Index_TocCollapsibleHandleEscapeKeyboardEvent) => void;
+
+export type Theme_TocCollapsible_Index_TocCollapsibleHandleEscapeKeyboardEvent = KeyboardEvent;
+
+export type Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideFunction = (event: Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideMouseEvent) => void;
+
+export type Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideMouseEvent = MouseEvent<HTMLDivElement>;
+
+export type Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideMouseTarget = EventTarget;
+
+export type Theme_TocCollapsible_Index_TocCollapsibleFocusTarget = HTMLButtonElement | null;
+
 export type Theme_TocCollapsible_Index_TocCollapsibleTreeItems = Theme_TocCollapsible_Index_TocListItem[];
 
 export type Theme_TocCollapsible_Index_TocCollapsibleOverlayClassName = string;
@@ -61,47 +92,15 @@ export type Theme_TocCollapsible_Index_TocCollapsibleOverlayClassName = string;
 export type Theme_TocCollapsible_Index_TocCollapsibleAnimationEvent = React.AnimationEvent<HTMLDivElement>;
 
 /**
- * Theme - Toc Collapsible - Toc Collapsible - Handle Click Outside.
+ * Theme - Toc Collapsible - Toc Collapsible (TOCCollapsible).
  *
  * @since 0.15.0
  */
-export type Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideFunction = (event: Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideMouseEvent) => void;
-
-export type Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideMouseEvent = MouseEvent<HTMLDivElement>;
-
-export type Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideMouseTarget = EventTarget;
-
-/**
- * Theme - Toc Collapsible - Toc Collapsible - Handle Escape.
- *
- * @since 0.15.0
- */
-export type Theme_TocCollapsible_Index_TocCollapsibleHandleEscapeFunction = (event: Theme_TocCollapsible_Index_TocCollapsibleHandleEscapeKeyboardEvent) => void;
-
-export type Theme_TocCollapsible_Index_TocCollapsibleHandleEscapeKeyboardEvent = KeyboardEvent;
-
-export type Theme_TocCollapsible_Index_TocCollapsibleFocusTarget = HTMLButtonElement | null;
+export type Theme_TocCollapsible_Index_TOCCollapsible_Returns = React.JSX.Element | undefined;
 
 /**
  * Theme - Toc Collapsible - Toc List.
  *
  * @since 0.15.0
  */
-export type Theme_TocCollapsible_Index_TocListItems = Theme_TocCollapsible_Index_TocListItem[];
-
-export type Theme_TocCollapsible_Index_TocListOnLinkClick = () => void;
-
-export type Theme_TocCollapsible_Index_TocListItemValue = string;
-
-export type Theme_TocCollapsible_Index_TocListItemId = string;
-
-export type Theme_TocCollapsible_Index_TocListItemLevel = number;
-
-export type Theme_TocCollapsible_Index_TocListItemChildren = Theme_TocCollapsible_Index_TocListItem[];
-
-export type Theme_TocCollapsible_Index_TocListItem = {
-  value: Theme_TocCollapsible_Index_TocListItemValue;
-  id: Theme_TocCollapsible_Index_TocListItemId;
-  level: Theme_TocCollapsible_Index_TocListItemLevel;
-  children: Theme_TocCollapsible_Index_TocListItemChildren;
-};
+export type Theme_TocCollapsible_Index_TocList_Returns = React.JSX.Element | undefined;

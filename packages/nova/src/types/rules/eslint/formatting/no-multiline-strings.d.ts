@@ -8,6 +8,27 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  */
 
 /**
+ * Rules - ESLint - Formatting - No Multiline Strings - Escaped Newline Pattern.
+ *
+ * @since 0.15.0
+ */
+
+/**
+ * Rules - ESLint - Formatting - No Multiline Strings - Newline Character.
+ *
+ * @since 0.15.0
+ */
+
+/**
+ * Rules - ESLint - Formatting - No Multiline Strings - Rule.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsAllowEscapeSequences = boolean;
+
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+
+/**
  * Rules - ESLint - Formatting - No Multiline Strings - Check Literal.
  *
  * @since 0.15.0
@@ -51,10 +72,38 @@ export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiter
 };
 
 /**
- * Rules - ESLint - Formatting - No Multiline Strings - Escaped Newline Pattern.
+ * Rules - ESLint - Formatting - No Multiline Strings - Create.
  *
  * @since 0.15.0
  */
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Options_IgnoreFiles = string[];
+
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Options_AllowEscapeSequences = boolean;
+
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Options_IgnoreFiles;
+  allowEscapeSequences: Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Options_AllowEscapeSequences;
+}>;
+
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_AllowEscapeSequences = boolean;
+
+/**
+ * Rules - ESLint - Formatting - No Multiline Strings - Create - Literal.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Literal_Node = TSESTree.Literal;
+
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Literal_Returns = void;
+
+/**
+ * Rules - ESLint - Formatting - No Multiline Strings - Create - Template Literal.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_TemplateLiteral_Node = TSESTree.TemplateLiteral;
+
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_TemplateLiteral_Returns = void;
 
 /**
  * Rules - ESLint - Formatting - No Multiline Strings - Has Internal Escaped Newlines.
@@ -76,29 +125,3 @@ export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscaped
 export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Last = string | undefined;
 
 export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_StrippedLast = string;
-
-/**
- * Rules - ESLint - Formatting - No Multiline Strings - Newline Character.
- *
- * @since 0.15.0
- */
-
-/**
- * Rules - ESLint - Formatting - No Multiline Strings - Rule.
- *
- * @since 0.15.0
- */
-export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsAllowEscapeSequences = boolean;
-
-export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsIgnoreFiles = string[];
-
-export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions_IgnoreFiles = string[];
-
-export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions_AllowEscapeSequences = boolean;
-
-export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions_IgnoreFiles;
-  allowEscapeSequences: Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions_AllowEscapeSequences;
-}>;
-
-export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleAllowEscapeSequences = boolean;

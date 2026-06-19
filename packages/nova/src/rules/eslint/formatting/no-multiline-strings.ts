@@ -16,6 +16,12 @@ import type {
   Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_QuasiValue,
   Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Raw,
   Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Returns,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_AllowEscapeSequences,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Literal_Node,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Literal_Returns,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Options,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_TemplateLiteral_Node,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_TemplateLiteral_Returns,
   Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_First,
   Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Last,
   Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_LastIndex,
@@ -24,10 +30,8 @@ import type {
   Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_StrippedFirst,
   Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_StrippedLast,
   Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_WorkingParts,
-  Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleAllowEscapeSequences,
   Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsAllowEscapeSequences,
   Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/no-multiline-strings.d.ts';
 
 /**
@@ -140,8 +144,8 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions = defaultOptions[0];
-      const allowEscapeSequences: Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleAllowEscapeSequences = options['allowEscapeSequences'];
+      const options: Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Options = defaultOptions[0];
+      const allowEscapeSequences: Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_AllowEscapeSequences = options['allowEscapeSequences'];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -149,12 +153,12 @@ export class Runner {
       }
 
       return {
-        Literal(node) {
+        Literal(node: Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Literal_Node): Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_Literal_Returns {
           Runner.checkLiteral(context, node, allowEscapeSequences);
 
           return;
         },
-        TemplateLiteral(node) {
+        TemplateLiteral(node: Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_TemplateLiteral_Node): Rules_Eslint_Formatting_NoMultilineStrings_Runner_Create_TemplateLiteral_Returns {
           Runner.checkTemplateLiteral(context, node, allowEscapeSequences);
 
           return;

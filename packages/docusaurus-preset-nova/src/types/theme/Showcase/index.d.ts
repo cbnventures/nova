@@ -40,6 +40,8 @@ export type Theme_Showcase_Index_Showcase_Children = ReactNode;
 
 export type Theme_Showcase_Index_Showcase_ChildrenArray = ReturnType<typeof Children.toArray>;
 
+export type Theme_Showcase_Index_ShowcaseItem_Element = ReactElement<Theme_Showcase_Index_ItemProps>;
+
 export type Theme_Showcase_Index_ShowcaseItem_Elements = Theme_Showcase_Index_ShowcaseItem_Element[];
 
 export type Theme_Showcase_Index_Showcase_OpenMap = Record<number, boolean>;
@@ -65,8 +67,6 @@ export type Theme_Showcase_Index_Showcase_HandleItemToggle_Index = number;
 export type Theme_Showcase_Index_Showcase_HandleItemToggle_IsOpen = boolean;
 
 export type Theme_Showcase_Index_Showcase_HandleItemToggle_Previous = Theme_Showcase_Index_Showcase_OpenMap;
-
-export type Theme_Showcase_Index_ShowcaseItem_Element = ReactElement<Theme_Showcase_Index_ItemProps>;
 
 /**
  * Theme - Showcase - Item.

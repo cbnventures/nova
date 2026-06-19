@@ -42,6 +42,12 @@ export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_TargetPath = stri
 
 export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_Content = string;
 
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionTemplatePath = string;
+
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionTargetPath = string;
+
 export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_DisplayPath = string;
+
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionContent = string;
 
 export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_NextStepsMessage = string;

@@ -98,3 +98,10 @@ export type Theme_SearchBar_SearchResults_SnippetSegmentIndex = number;
 export type Theme_SearchBar_SearchResults_NoResultsFound = string;
 
 export type Theme_SearchBar_SearchResults_StatusAnnouncement = string;
+
+/**
+ * Theme - Search Bar - Search Results - Search Results - Search Results.
+ *
+ * @since 0.15.0
+ */
+export type Theme_SearchBar_SearchResults_SearchResults_Returns = React.JSX.Element;

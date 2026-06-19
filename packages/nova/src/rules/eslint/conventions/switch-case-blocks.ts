@@ -12,9 +12,13 @@ import type {
   Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_HasDefault,
   Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Node,
   Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Returns,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_Create_Options,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_Create_SwitchCase_Node,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_Create_SwitchCase_Returns,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_Create_SwitchStatement_Node,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_Create_SwitchStatement_Returns,
   Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleDefaultOptionsRequireDefault,
-  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/switch-case-blocks.d.ts';
 
 /**
@@ -66,7 +70,7 @@ export class Runner {
       requireDefault: true as Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleDefaultOptionsRequireDefault,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -74,12 +78,12 @@ export class Runner {
       }
 
       return {
-        SwitchCase(node) {
+        SwitchCase(node: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_Create_SwitchCase_Node): Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_Create_SwitchCase_Returns {
           Runner.checkCase(context, node);
 
           return;
         },
-        SwitchStatement(node) {
+        SwitchStatement(node: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_Create_SwitchStatement_Node): Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_Create_SwitchStatement_Returns {
           if (options['requireDefault'] === true) {
             Runner.checkSwitchStatement(context, node);
           }

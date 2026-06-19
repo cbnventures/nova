@@ -14,24 +14,32 @@ import { afterAll, describe, it } from 'vitest';
 import { Runner as CliScaffoldAppExpressjs } from '../../../../cli/scaffold/app/expressjs.js';
 
 import type {
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ChildDirectory,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ChildPackageJson,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ChildPackageJsonPath,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_DryRunOutputPath,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_Exists,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_IndexTsPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_IndexTsPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_PackageJson,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_PackageJsonPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_ProjectDirectory,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_TsconfigPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_IndexTsPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_ProjectDirectory,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_TsconfigPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorForStandaloneProject_PackageJson,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorForStandaloneProject_PackageJsonPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorForStandaloneProject_ProjectDirectory,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_ChildDirectory,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJson,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJsonPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootDirectory,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJson,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJsonPath,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_OriginalCwd,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_PackageJson,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_PackageJsonPath,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ProjectDirectory,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RootDirectory,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RootPackageJson,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RootPackageJsonPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RespectsDryRun_DryRunOutputPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RespectsDryRun_Exists,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RespectsDryRun_ProjectDirectory,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_SandboxRoot,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_TemporaryBase,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_TemporaryDirectory,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_TsconfigPath,
-  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_WorkspacePackageJsonPath,
 } from '../../../../types/tests/cli/scaffold/app/expressjs.test.d.ts';
 
 /**
@@ -57,21 +65,21 @@ describe.skip('CliScaffoldAppExpressjs.run', async () => {
   });
 
   it('exits with error when inside child workspace', async () => {
-    const rootDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RootDirectory = join(sandboxRoot, 'nested-root');
-    const childDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ChildDirectory = join(rootDirectory, 'apps', 'child');
+    const rootDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootDirectory = join(sandboxRoot, 'nested-root');
+    const childDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_ChildDirectory = join(rootDirectory, 'apps', 'child');
 
     await mkdir(childDirectory, { recursive: true });
 
-    const rootPackageJson: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RootPackageJson = JSON.stringify({
+    const rootPackageJson: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJson = JSON.stringify({
       name: 'root', workspaces: ['apps/*'],
     }, null, 2);
 
-    const rootPackageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RootPackageJsonPath = join(rootDirectory, 'package.json');
+    const rootPackageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJsonPath = join(rootDirectory, 'package.json');
 
     await writeFile(rootPackageJsonPath, `${rootPackageJson}\n`, 'utf-8');
 
-    const childPackageJson: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ChildPackageJson = JSON.stringify({ name: 'child' }, null, 2);
-    const childPackageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ChildPackageJsonPath = join(childDirectory, 'package.json');
+    const childPackageJson: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJson = JSON.stringify({ name: 'child' }, null, 2);
+    const childPackageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJsonPath = join(childDirectory, 'package.json');
 
     await writeFile(childPackageJsonPath, `${childPackageJson}\n`, 'utf-8');
 
@@ -85,7 +93,7 @@ describe.skip('CliScaffoldAppExpressjs.run', async () => {
   });
 
   it('respects dry-run', async () => {
-    const projectDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ProjectDirectory = join(sandboxRoot, 'dry-run');
+    const projectDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RespectsDryRun_ProjectDirectory = join(sandboxRoot, 'dry-run');
 
     await mkdir(projectDirectory, { recursive: true });
 
@@ -98,9 +106,9 @@ describe.skip('CliScaffoldAppExpressjs.run', async () => {
       output: './my-api',
     });
 
-    let exists: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_Exists = true;
+    let exists: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RespectsDryRun_Exists = true;
 
-    const dryRunOutputPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_DryRunOutputPath = join(projectDirectory, 'my-api');
+    const dryRunOutputPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RespectsDryRun_DryRunOutputPath = join(projectDirectory, 'my-api');
 
     try {
       await access(dryRunOutputPath);
@@ -114,7 +122,7 @@ describe.skip('CliScaffoldAppExpressjs.run', async () => {
   });
 
   it('creates monorepo in empty directory', async () => {
-    const projectDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ProjectDirectory = join(sandboxRoot, 'monorepo-test');
+    const projectDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_ProjectDirectory = join(sandboxRoot, 'monorepo-test');
 
     await mkdir(projectDirectory, { recursive: true });
 
@@ -127,9 +135,9 @@ describe.skip('CliScaffoldAppExpressjs.run', async () => {
     });
 
     // Verify workspace files were created.
-    const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_WorkspacePackageJsonPath = join(projectDirectory, 'my-api', 'apps', 'express', 'package.json');
-    const tsconfigPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_TsconfigPath = join(projectDirectory, 'my-api', 'apps', 'express', 'tsconfig.json');
-    const indexTsPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_IndexTsPath = join(projectDirectory, 'my-api', 'apps', 'express', 'src', 'index.ts');
+    const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath = join(projectDirectory, 'my-api', 'apps', 'express', 'package.json');
+    const tsconfigPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_TsconfigPath = join(projectDirectory, 'my-api', 'apps', 'express', 'tsconfig.json');
+    const indexTsPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_IndexTsPath = join(projectDirectory, 'my-api', 'apps', 'express', 'src', 'index.ts');
 
     await access(workspacePackageJsonPath);
 
@@ -141,12 +149,12 @@ describe.skip('CliScaffoldAppExpressjs.run', async () => {
   });
 
   it('exits with error for standalone project', async () => {
-    const projectDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ProjectDirectory = join(sandboxRoot, 'standalone');
+    const projectDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorForStandaloneProject_ProjectDirectory = join(sandboxRoot, 'standalone');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_PackageJson = JSON.stringify({ name: 'standalone' }, null, 2);
-    const packageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJson: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorForStandaloneProject_PackageJson = JSON.stringify({ name: 'standalone' }, null, 2);
+    const packageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorForStandaloneProject_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
@@ -160,14 +168,14 @@ describe.skip('CliScaffoldAppExpressjs.run', async () => {
   });
 
   it('adds workspace at monorepo root', async () => {
-    const projectDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ProjectDirectory = join(sandboxRoot, 'workspace-test');
+    const projectDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_ProjectDirectory = join(sandboxRoot, 'workspace-test');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_PackageJson = JSON.stringify({
+    const packageJson: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_PackageJson = JSON.stringify({
       name: 'root', workspaces: ['apps/*'],
     }, null, 2);
-    const packageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
@@ -180,9 +188,9 @@ describe.skip('CliScaffoldAppExpressjs.run', async () => {
     });
 
     // Verify workspace files were created.
-    const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_WorkspacePackageJsonPath = join(projectDirectory, 'apps', 'express', 'package.json');
-    const tsconfigPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_TsconfigPath = join(projectDirectory, 'apps', 'express', 'tsconfig.json');
-    const indexTsPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_IndexTsPath = join(projectDirectory, 'apps', 'express', 'src', 'index.ts');
+    const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath = join(projectDirectory, 'apps', 'express', 'package.json');
+    const tsconfigPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_TsconfigPath = join(projectDirectory, 'apps', 'express', 'tsconfig.json');
+    const indexTsPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_IndexTsPath = join(projectDirectory, 'apps', 'express', 'src', 'index.ts');
 
     await access(workspacePackageJsonPath);
 

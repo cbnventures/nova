@@ -14,11 +14,11 @@ import type {
   Blocks_BlogPreview_Index_BlocksBlogPreview_LimitedPosts,
   Blocks_BlogPreview_Index_BlocksBlogPreview_NoPosts,
   Blocks_BlogPreview_Index_BlocksBlogPreview_Props,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_ReadMore,
   Blocks_BlogPreview_Index_BlocksBlogPreview_ResolvedPosts,
   Blocks_BlogPreview_Index_BlocksBlogPreview_SectionClassName,
   Blocks_BlogPreview_Index_BlocksBlogPreview_SortDirection,
   Blocks_BlogPreview_Index_BlocksBlogPreview_SortedPosts,
-  Blocks_BlogPreview_Index_BlocksBlogPreview_ReadMore,
 } from '../../types/blocks/blog-preview/index.d.ts';
 
 /**

@@ -24,15 +24,15 @@ export type Theme_CodeBlock_LiveEditor_LiveEditor_Props = {
 export type Theme_CodeBlock_LiveEditor_LiveEditor_SandpackTemplate = 'vanilla' | 'vanilla-ts' | 'react' | 'react-ts' | 'vue' | 'svelte' | 'angular';
 
 /**
- * Theme - Code Block - Live Editor - Supported Languages.
- *
- * @since 0.15.0
- */
-export type Theme_CodeBlock_LiveEditor_SupportedLanguages = string[];
-
-/**
  * Theme - Code Block - Live Editor - Template Map.
  *
  * @since 0.15.0
  */
 export type Theme_CodeBlock_LiveEditor_TemplateMap = Record<string, string>;
+
+/**
+ * Theme - Code Block - Live Editor - Supported Languages.
+ *
+ * @since 0.15.0
+ */
+export type Theme_CodeBlock_LiveEditor_SupportedLanguages = string[];

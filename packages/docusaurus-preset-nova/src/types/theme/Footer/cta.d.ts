@@ -32,3 +32,5 @@ export type Theme_Footer_Cta_Contained = Theme_Footer_Cta_Props_Contained;
 export type Theme_Footer_Cta_CtaClassName = string;
 
 export type Theme_Footer_Cta_WrapperClassName = string;
+
+export type Theme_Footer_Cta_FooterCta_Returns = ReactNode;

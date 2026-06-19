@@ -3,4 +3,4 @@
  *
  * @since 0.15.0
  */
-export type Scripts_DataAttributeQuery_LinesLines = string[];
+export type Scripts_DataAttributeQuery_Lines = string[];

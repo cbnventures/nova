@@ -21,6 +21,7 @@ import { isFileIdentical, isPlainObject, renameFileWithDate } from './utility.js
 
 import type {
   Lib_NovaConfig_Runner_Config,
+  Lib_NovaConfig_Runner_Constructor_Config,
   Lib_NovaConfig_Runner_GetArrayOfHttpUrls_Field,
   Lib_NovaConfig_Runner_GetArrayOfHttpUrls_Items,
   Lib_NovaConfig_Runner_GetArrayOfHttpUrls_Returns,
@@ -42,11 +43,11 @@ import type {
   Lib_NovaConfig_Runner_GetGithubFeatures_Wiki,
   Lib_NovaConfig_Runner_GetGithubPolicies_AutoDeleteHeadBranch,
   Lib_NovaConfig_Runner_GetGithubPolicies_DefaultBranch,
+  Lib_NovaConfig_Runner_GetGithubPolicies_MergeMethods,
   Lib_NovaConfig_Runner_GetGithubPolicies_Result,
   Lib_NovaConfig_Runner_GetGithubPolicies_Returns,
   Lib_NovaConfig_Runner_GetGithubPolicies_Value,
   Lib_NovaConfig_Runner_GetGithubPolicies_Visibility,
-  Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods,
   Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Merge,
   Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Rebase,
   Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Result,
@@ -80,28 +81,32 @@ import type {
   Lib_NovaConfig_Runner_Load_ParsedFile,
   Lib_NovaConfig_Runner_Load_RawFile,
   Lib_NovaConfig_Runner_Load_Returns,
+  Lib_NovaConfig_Runner_Parse_Emails,
+  Lib_NovaConfig_Runner_Parse_Entities,
+  Lib_NovaConfig_Runner_Parse_Github,
+  Lib_NovaConfig_Runner_Parse_Project,
   Lib_NovaConfig_Runner_Parse_Result,
   Lib_NovaConfig_Runner_Parse_Returns,
+  Lib_NovaConfig_Runner_Parse_Urls,
   Lib_NovaConfig_Runner_Parse_Value,
-  Lib_NovaConfig_Runner_ParseEmails,
+  Lib_NovaConfig_Runner_Parse_Workflows,
+  Lib_NovaConfig_Runner_Parse_Workspaces,
   Lib_NovaConfig_Runner_ParseEmails_EmailFields,
   Lib_NovaConfig_Runner_ParseEmails_Emails,
   Lib_NovaConfig_Runner_ParseEmails_ParsedEmail,
   Lib_NovaConfig_Runner_ParseEmails_Returns,
   Lib_NovaConfig_Runner_ParseEmails_Value,
-  Lib_NovaConfig_Runner_ParseEntities,
   Lib_NovaConfig_Runner_ParseEntities_Email,
   Lib_NovaConfig_Runner_ParseEntities_Entities,
   Lib_NovaConfig_Runner_ParseEntities_Name,
+  Lib_NovaConfig_Runner_ParseEntities_NameA,
+  Lib_NovaConfig_Runner_ParseEntities_NameB,
   Lib_NovaConfig_Runner_ParseEntities_ParsedEntity,
   Lib_NovaConfig_Runner_ParseEntities_ParsedRoles,
   Lib_NovaConfig_Runner_ParseEntities_Returns,
   Lib_NovaConfig_Runner_ParseEntities_Roles,
-  Lib_NovaConfig_Runner_ParseEntities_SortNameA,
-  Lib_NovaConfig_Runner_ParseEntities_SortNameB,
   Lib_NovaConfig_Runner_ParseEntities_Url,
   Lib_NovaConfig_Runner_ParseEntities_Value,
-  Lib_NovaConfig_Runner_ParseGithub,
   Lib_NovaConfig_Runner_ParseGithub_Features,
   Lib_NovaConfig_Runner_ParseGithub_Owner,
   Lib_NovaConfig_Runner_ParseGithub_OwnerCandidate,
@@ -113,7 +118,6 @@ import type {
   Lib_NovaConfig_Runner_ParseGithub_Returns,
   Lib_NovaConfig_Runner_ParseGithub_Topics,
   Lib_NovaConfig_Runner_ParseGithub_Value,
-  Lib_NovaConfig_Runner_ParseProject,
   Lib_NovaConfig_Runner_ParseProject_AllowedLicenses,
   Lib_NovaConfig_Runner_ParseProject_AllowedPlatforms,
   Lib_NovaConfig_Runner_ParseProject_Description,
@@ -136,7 +140,6 @@ import type {
   Lib_NovaConfig_Runner_ParseProject_ValuePlatforms,
   Lib_NovaConfig_Runner_ParseProject_ValuePronouns,
   Lib_NovaConfig_Runner_ParseProject_ValueStartingYear,
-  Lib_NovaConfig_Runner_ParseUrls,
   Lib_NovaConfig_Runner_ParseUrls_FundSources,
   Lib_NovaConfig_Runner_ParseUrls_LoopIndex,
   Lib_NovaConfig_Runner_ParseUrls_ParsedUrl,
@@ -146,14 +149,14 @@ import type {
   Lib_NovaConfig_Runner_ParseUrls_UrlFieldsFundSourcesIndex,
   Lib_NovaConfig_Runner_ParseUrls_Urls,
   Lib_NovaConfig_Runner_ParseUrls_Value,
-  Lib_NovaConfig_Runner_ParseWorkflows,
+  Lib_NovaConfig_Runner_ParseWorkflows_CastItem,
   Lib_NovaConfig_Runner_ParseWorkflows_DependsOn,
-  Lib_NovaConfig_Runner_ParseWorkflows_Item,
   Lib_NovaConfig_Runner_ParseWorkflows_ParsedSettings,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDependsOn,
   Lib_NovaConfig_Runner_ParseWorkflows_RawScopes,
-  Lib_NovaConfig_Runner_ParseWorkflows_RawTarget,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawTargetNeeds,
   Lib_NovaConfig_Runner_ParseWorkflows_RawTargets,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawTargetValue,
   Lib_NovaConfig_Runner_ParseWorkflows_RawTriggers,
   Lib_NovaConfig_Runner_ParseWorkflows_Returns,
   Lib_NovaConfig_Runner_ParseWorkflows_Scopes,
@@ -161,23 +164,21 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkflows_SettingsKey,
   Lib_NovaConfig_Runner_ParseWorkflows_SettingsValue,
   Lib_NovaConfig_Runner_ParseWorkflows_SortedSettingsEntries,
-  Lib_NovaConfig_Runner_ParseWorkflows_SortSuffixA,
-  Lib_NovaConfig_Runner_ParseWorkflows_SortSuffixB,
-  Lib_NovaConfig_Runner_ParseWorkflows_SortTemplateCompare,
   Lib_NovaConfig_Runner_ParseWorkflows_Suffix,
+  Lib_NovaConfig_Runner_ParseWorkflows_SuffixA,
+  Lib_NovaConfig_Runner_ParseWorkflows_SuffixB,
   Lib_NovaConfig_Runner_ParseWorkflows_Target,
   Lib_NovaConfig_Runner_ParseWorkflows_TargetNeeds,
-  Lib_NovaConfig_Runner_ParseWorkflows_TargetRawNeeds,
   Lib_NovaConfig_Runner_ParseWorkflows_Targets,
   Lib_NovaConfig_Runner_ParseWorkflows_TargetType,
   Lib_NovaConfig_Runner_ParseWorkflows_TargetWorkingDir,
   Lib_NovaConfig_Runner_ParseWorkflows_Template,
+  Lib_NovaConfig_Runner_ParseWorkflows_TemplateCompare,
   Lib_NovaConfig_Runner_ParseWorkflows_Triggers,
   Lib_NovaConfig_Runner_ParseWorkflows_TriggerValue,
   Lib_NovaConfig_Runner_ParseWorkflows_Value,
   Lib_NovaConfig_Runner_ParseWorkflows_Workflow,
   Lib_NovaConfig_Runner_ParseWorkflows_Workflows,
-  Lib_NovaConfig_Runner_ParseWorkspaces,
   Lib_NovaConfig_Runner_ParseWorkspaces_AllowedPolicies,
   Lib_NovaConfig_Runner_ParseWorkspaces_AllowedRecipes,
   Lib_NovaConfig_Runner_ParseWorkspaces_DisplayNameCandidate,
@@ -185,12 +186,13 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Base,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Descriptor,
-  Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Name,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Returns,
-  Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Role,
   Lib_NovaConfig_Runner_ParseWorkspaces_MatchedRecipe,
+  Lib_NovaConfig_Runner_ParseWorkspaces_MatchedRole,
+  Lib_NovaConfig_Runner_ParseWorkspaces_Name,
   Lib_NovaConfig_Runner_ParseWorkspaces_NameCandidate,
   Lib_NovaConfig_Runner_ParseWorkspaces_Options,
+  Lib_NovaConfig_Runner_ParseWorkspaces_ParsedRecipes,
   Lib_NovaConfig_Runner_ParseWorkspaces_ParsedSettings,
   Lib_NovaConfig_Runner_ParseWorkspaces_Path,
   Lib_NovaConfig_Runner_ParseWorkspaces_Policy,
@@ -248,7 +250,9 @@ export class Runner {
    * @since 0.11.0
    */
   public constructor() {
-    this.#config = {};
+    const config: Lib_NovaConfig_Runner_Constructor_Config = {};
+
+    this.#config = config;
 
     return;
   }
@@ -357,13 +361,13 @@ export class Runner {
       return result;
     }
 
-    const project: Lib_NovaConfig_Runner_ParseProject = this.parseProject(value['project']);
-    const entities: Lib_NovaConfig_Runner_ParseEntities = this.parseEntities(value['entities']);
-    const emails: Lib_NovaConfig_Runner_ParseEmails = this.parseEmails(value['emails']);
-    const github: Lib_NovaConfig_Runner_ParseGithub = this.parseGithub(value['github']);
-    const workflows: Lib_NovaConfig_Runner_ParseWorkflows = this.parseWorkflows(value['workflows']);
-    const urls: Lib_NovaConfig_Runner_ParseUrls = this.parseUrls(value['urls']);
-    const workspaces: Lib_NovaConfig_Runner_ParseWorkspaces = this.parseWorkspaces(
+    const project: Lib_NovaConfig_Runner_Parse_Project = this.parseProject(value['project']);
+    const entities: Lib_NovaConfig_Runner_Parse_Entities = this.parseEntities(value['entities']);
+    const emails: Lib_NovaConfig_Runner_Parse_Emails = this.parseEmails(value['emails']);
+    const github: Lib_NovaConfig_Runner_Parse_Github = this.parseGithub(value['github']);
+    const workflows: Lib_NovaConfig_Runner_Parse_Workflows = this.parseWorkflows(value['workflows']);
+    const urls: Lib_NovaConfig_Runner_Parse_Urls = this.parseUrls(value['urls']);
+    const workspaces: Lib_NovaConfig_Runner_Parse_Workspaces = this.parseWorkspaces(
       value['workspaces'],
       (project !== undefined && project['name'] !== undefined) ? project['name']['slug'] : undefined,
     );
@@ -595,8 +599,8 @@ export class Runner {
     }
 
     entities.sort((a, b) => {
-      const nameA: Lib_NovaConfig_Runner_ParseEntities_SortNameA = a['name'] ?? '';
-      const nameB: Lib_NovaConfig_Runner_ParseEntities_SortNameB = b['name'] ?? '';
+      const nameA: Lib_NovaConfig_Runner_ParseEntities_NameA = a['name'] ?? '';
+      const nameB: Lib_NovaConfig_Runner_ParseEntities_NameB = b['name'] ?? '';
 
       return nameA.localeCompare(nameB);
     });
@@ -709,8 +713,8 @@ export class Runner {
      * Checks that a workspace name follows the naming pattern required by its role.
      * Singular roles need exact matches while others need a suffix.
      *
-     * @param {Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Role} role - Role.
-     * @param {Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Name} name - Name.
+     * @param {Lib_NovaConfig_Runner_ParseWorkspaces_Role} role - Role.
+     * @param {Lib_NovaConfig_Runner_ParseWorkspaces_Name} name - Name.
      *
      * @private
      *
@@ -718,7 +722,7 @@ export class Runner {
      *
      * @since 0.11.0
      */
-    const isNameAllowed: Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed = (role: Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Role, name: Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Name): Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Returns => {
+    const isNameAllowed: Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed = (role: Lib_NovaConfig_Runner_ParseWorkspaces_Role, name: Lib_NovaConfig_Runner_ParseWorkspaces_Name): Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Returns => {
       switch (role) {
         case 'project': {
           if (slug !== undefined) {
@@ -778,20 +782,20 @@ export class Runner {
         continue;
       }
 
-      const role: Lib_NovaConfig_Runner_ParseWorkspaces_Role = libItemAllowedRoles.find((itemAllowedRole) => itemAllowedRole === roleCandidate);
+      const matchedRole: Lib_NovaConfig_Runner_ParseWorkspaces_MatchedRole = libItemAllowedRoles.find((itemAllowedRole) => itemAllowedRole === roleCandidate);
 
-      if (role === undefined) {
+      if (matchedRole === undefined) {
         continue;
       }
 
-      const allowedPolicies: Lib_NovaConfig_Runner_ParseWorkspaces_AllowedPolicies = libItemAllowedPoliciesByRole[role];
+      const allowedPolicies: Lib_NovaConfig_Runner_ParseWorkspaces_AllowedPolicies = libItemAllowedPoliciesByRole[matchedRole];
       const policy: Lib_NovaConfig_Runner_ParseWorkspaces_Policy = allowedPolicies.find((allowedPolicy) => allowedPolicy === policyCandidate);
 
       if (policy === undefined) {
         continue;
       }
 
-      if (isNameAllowed(role, nameCandidate) === false) {
+      if (isNameAllowed(matchedRole, nameCandidate) === false) {
         continue;
       }
 
@@ -801,7 +805,7 @@ export class Runner {
 
       if (isPlainObject(recipesCandidate) === true) {
         const allowedRecipes: Lib_NovaConfig_Runner_ParseWorkspaces_AllowedRecipes = new Set(libItemAllowedRecipes);
-        const parsedRecipes: Lib_NovaConfig_Runner_ParseWorkspaces_Recipes = {};
+        const parsedRecipes: Lib_NovaConfig_Runner_ParseWorkspaces_ParsedRecipes = {};
 
         for (const recipesCandidateEntry of Object.entries(recipesCandidate)) {
           const recipeName: Lib_NovaConfig_Runner_ParseWorkspaces_RecipeName = recipesCandidateEntry[0];
@@ -858,7 +862,7 @@ export class Runner {
       }
 
       Reflect.set(workspaces, path, {
-        role,
+        role: matchedRole,
         policy,
         name: nameCandidate,
         ...(displayNameCandidate !== undefined) ? { displayName: displayNameCandidate } : {},
@@ -906,7 +910,7 @@ export class Runner {
     const workflows: Lib_NovaConfig_Runner_ParseWorkflows_Workflows = [];
 
     for (const item of value) {
-      const castItem: Lib_NovaConfig_Runner_ParseWorkflows_Item = item;
+      const castItem: Lib_NovaConfig_Runner_ParseWorkflows_CastItem = item;
 
       if (isPlainObject(castItem) === false) {
         continue;
@@ -949,7 +953,7 @@ export class Runner {
 
       if (Array.isArray(rawTargets) === true) {
         for (const rawTarget of rawTargets) {
-          const rawTargetValue: Lib_NovaConfig_Runner_ParseWorkflows_RawTarget = rawTarget;
+          const rawTargetValue: Lib_NovaConfig_Runner_ParseWorkflows_RawTargetValue = rawTarget;
 
           if (isPlainObject(rawTargetValue) === false) {
             continue;
@@ -962,7 +966,7 @@ export class Runner {
             continue;
           }
 
-          const rawTargetNeeds: Lib_NovaConfig_Runner_ParseWorkflows_TargetRawNeeds = rawTargetValue['needs'];
+          const rawTargetNeeds: Lib_NovaConfig_Runner_ParseWorkflows_RawTargetNeeds = rawTargetValue['needs'];
           const targetNeeds: Lib_NovaConfig_Runner_ParseWorkflows_TargetNeeds = (Array.isArray(rawTargetNeeds) === true) ? rawTargetNeeds.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as Lib_NovaConfig_Runner_ParseWorkflows_TargetNeeds : [];
 
           const target: Lib_NovaConfig_Runner_ParseWorkflows_Target = {
@@ -1028,14 +1032,14 @@ export class Runner {
 
     // Sort workflows by template, then by suffix.
     workflows.sort((a, b) => {
-      const templateCompare: Lib_NovaConfig_Runner_ParseWorkflows_SortTemplateCompare = a['template'].localeCompare(b['template']);
+      const templateCompare: Lib_NovaConfig_Runner_ParseWorkflows_TemplateCompare = a['template'].localeCompare(b['template']);
 
       if (templateCompare !== 0) {
         return templateCompare;
       }
 
-      const suffixA: Lib_NovaConfig_Runner_ParseWorkflows_SortSuffixA = a['suffix'] ?? '';
-      const suffixB: Lib_NovaConfig_Runner_ParseWorkflows_SortSuffixB = b['suffix'] ?? '';
+      const suffixA: Lib_NovaConfig_Runner_ParseWorkflows_SuffixA = a['suffix'] ?? '';
+      const suffixB: Lib_NovaConfig_Runner_ParseWorkflows_SuffixB = b['suffix'] ?? '';
 
       return suffixA.localeCompare(suffixB);
     });
@@ -1195,7 +1199,7 @@ export class Runner {
       result.defaultBranch = defaultBranch;
     }
 
-    const mergeMethods: Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods = this.getGithubPoliciesMergeMethods(value['mergeMethods']);
+    const mergeMethods: Lib_NovaConfig_Runner_GetGithubPolicies_MergeMethods = this.getGithubPoliciesMergeMethods(value['mergeMethods']);
 
     if (mergeMethods !== undefined) {
       result.mergeMethods = mergeMethods;

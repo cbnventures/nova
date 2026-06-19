@@ -4,12 +4,16 @@ import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
   Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Context,
+  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Fix_Fixer,
+  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Fix_Returns,
   Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Grandparent,
   Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Node,
   Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Parent,
   Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Returns,
+  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_Create_Options,
+  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_Create_VariableDeclarator_Node,
+  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_Create_VariableDeclarator_Returns,
   Rules_Eslint_Conventions_RequireUndefinedInit_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/require-undefined-init.d.ts';
 
 /**
@@ -57,7 +61,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Conventions_RequireUndefinedInit_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Conventions_RequireUndefinedInit_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_RequireUndefinedInit_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -65,7 +69,7 @@ export class Runner {
       }
 
       return {
-        VariableDeclarator(node) {
+        VariableDeclarator(node: Rules_Eslint_Conventions_RequireUndefinedInit_Runner_Create_VariableDeclarator_Node): Rules_Eslint_Conventions_RequireUndefinedInit_Runner_Create_VariableDeclarator_Returns {
           Runner.checkDeclarator(context, node);
 
           return;
@@ -121,7 +125,7 @@ export class Runner {
     context.report({
       node,
       messageId: 'requireUndefinedInit',
-      fix(fixer) {
+      fix(fixer: Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Fix_Fixer): Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Fix_Returns {
         return fixer.insertTextAfter(node.id, ' = undefined');
       },
     });

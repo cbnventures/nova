@@ -24,8 +24,6 @@ import type {
   Theme_Showcase_Index_Showcase_HandleItemToggle_IsOpen,
   Theme_Showcase_Index_Showcase_HandleItemToggle_Previous,
   Theme_Showcase_Index_Showcase_HandleToggleAll_NextOpen,
-  Theme_Showcase_Index_ShowcaseItem_Element,
-  Theme_Showcase_Index_ShowcaseItem_Elements,
   Theme_Showcase_Index_Showcase_LayoutDescription,
   Theme_Showcase_Index_Showcase_OpenMap,
   Theme_Showcase_Index_Showcase_OpenMapState,
@@ -34,6 +32,8 @@ import type {
   Theme_Showcase_Index_Showcase_SetOpenMap,
   Theme_Showcase_Index_Showcase_TitleLabel,
   Theme_Showcase_Index_Showcase_ToggleAllLabel,
+  Theme_Showcase_Index_ShowcaseItem_Element,
+  Theme_Showcase_Index_ShowcaseItem_Elements,
 } from '../../types/theme/Showcase/index.d.ts';
 
 /**

@@ -22,9 +22,9 @@ export type Theme_DocRoot_Layout_Index_DocRootLayout_Props = {
   [key: string]: unknown;
 };
 
+export type Theme_DocRoot_Layout_Index_DocRootLayout_Sidebar_Items = PropSidebarItem[];
+
 export type Theme_DocRoot_Layout_Index_DocRootLayout_Sidebar = {
   items: Theme_DocRoot_Layout_Index_DocRootLayout_Sidebar_Items;
   [key: string]: unknown;
 } | null;
-
-export type Theme_DocRoot_Layout_Index_DocRootLayout_Sidebar_Items = PropSidebarItem[];

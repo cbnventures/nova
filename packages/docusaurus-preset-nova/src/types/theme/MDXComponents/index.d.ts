@@ -21,9 +21,13 @@ export type Theme_MdxComponents_Index_MdxCode_ShowLineNumbers = boolean;
 
 export type Theme_MdxComponents_Index_MdxCode_Live = boolean;
 
+export type Theme_MdxComponents_Index_MdxCode_BlockSpread_ShowLineNumbers = boolean;
+
+export type Theme_MdxComponents_Index_MdxCode_BlockSpread_Live = boolean;
+
 export type Theme_MdxComponents_Index_MdxCode_BlockSpread = {
-  showLineNumbers: boolean;
-  live: boolean;
+  showLineNumbers: Theme_MdxComponents_Index_MdxCode_BlockSpread_ShowLineNumbers;
+  live: Theme_MdxComponents_Index_MdxCode_BlockSpread_Live;
   language?: string;
   title?: string;
   metastring?: string;

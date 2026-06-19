@@ -9,23 +9,27 @@ import type { Theme_Navbar_Index_Navbar_Item } from '../index.d.ts';
  */
 export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Alt = string;
 
-export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Src_Light = string | undefined;
+export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Src_Object_Light = string | undefined;
 
-export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Src_Dark = string | undefined;
+export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Src_Object_Dark = string | undefined;
 
-export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Src = {
-  light: Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Src_Light;
-  dark: Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Src_Dark;
-} | undefined;
+export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Src_Object = {
+  light: Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Src_Object_Light;
+  dark: Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Src_Object_Dark;
+};
 
-export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Wordmark_Light = string | undefined;
+export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Src = Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Src_Object | undefined;
 
-export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Wordmark_Dark = string | undefined;
+export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Wordmark_Object_Light = string | undefined;
 
-export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Wordmark = {
-  light: Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Wordmark_Light;
-  dark: Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Wordmark_Dark;
-} | undefined;
+export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Wordmark_Object_Dark = string | undefined;
+
+export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Wordmark_Object = {
+  light: Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Wordmark_Object_Light;
+  dark: Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Wordmark_Object_Dark;
+};
+
+export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Wordmark = Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Wordmark_Object | undefined;
 
 export type Theme_Navbar_Monolith_Index_Monolith_Props_SiteLogo_Title = string | undefined;
 
@@ -83,23 +87,27 @@ export type Theme_Navbar_Monolith_Index_Monolith_Returns = React.JSX.Element;
 
 export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Alt = string;
 
-export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Src_Light = string | undefined;
+export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Src_Object_Light = string | undefined;
 
-export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Src_Dark = string | undefined;
+export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Src_Object_Dark = string | undefined;
 
-export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Src = {
-  light: Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Src_Light;
-  dark: Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Src_Dark;
-} | undefined;
+export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Src_Object = {
+  light: Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Src_Object_Light;
+  dark: Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Src_Object_Dark;
+};
 
-export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Wordmark_Light = string | undefined;
+export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Src = Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Src_Object | undefined;
 
-export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Wordmark_Dark = string | undefined;
+export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Wordmark_Object_Light = string | undefined;
 
-export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Wordmark = {
-  light: Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Wordmark_Light;
-  dark: Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Wordmark_Dark;
-} | undefined;
+export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Wordmark_Object_Dark = string | undefined;
+
+export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Wordmark_Object = {
+  light: Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Wordmark_Object_Light;
+  dark: Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Wordmark_Object_Dark;
+};
+
+export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Wordmark = Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Wordmark_Object | undefined;
 
 export type Theme_Navbar_Monolith_Index_Monolith_SiteLogo_Title = string | undefined;
 

@@ -9,11 +9,11 @@ import { presetsIndexNames } from '../presets/index.js';
 
 import type {
   Tests_DemoLogoOverride_Config,
-  Tests_DemoLogoOverride_ConfigModule,
   Tests_DemoLogoOverride_ConfigUrl,
   Tests_DemoLogoOverride_CurrentFileDirectory,
   Tests_DemoLogoOverride_CurrentFilePath,
   Tests_DemoLogoOverride_DemoBytes,
+  Tests_DemoLogoOverride_DemoLogoOverride_ModuleNamespace,
   Tests_DemoLogoOverride_DemoLogoPath,
   Tests_DemoLogoOverride_Logo,
   Tests_DemoLogoOverride_LogoSrc,
@@ -78,7 +78,7 @@ describe('demo logo override', () => {
 
     it(`demo-${presetName} wires the override via site.logo.src.light in docusaurus.config.ts`, async () => {
       const configUrl: Tests_DemoLogoOverride_ConfigUrl = pathToFileURL(resolve(repoRoot, 'apps', `demo-${presetName}`, 'docusaurus.config.ts')).href;
-      const moduleNamespace: Tests_DemoLogoOverride_ConfigModule = await import(configUrl);
+      const moduleNamespace: Tests_DemoLogoOverride_DemoLogoOverride_ModuleNamespace = await import(configUrl);
       const config: Tests_DemoLogoOverride_Config = moduleNamespace['default'] as Tests_DemoLogoOverride_Config;
       const themeConfig: Tests_DemoLogoOverride_ThemeConfig = config['themeConfig'] as Tests_DemoLogoOverride_ThemeConfig;
       const site: Tests_DemoLogoOverride_Site = themeConfig['site'] as Tests_DemoLogoOverride_Site;

@@ -2,6 +2,21 @@ import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 /**
+ * Rules - ESLint - Patterns - No Use Before Define - Rule.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsClasses = boolean;
+
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsFunctions = boolean;
+
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsTypes = boolean;
+
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsVariables = boolean;
+
+/**
  * Rules - ESLint - Patterns - No Use Before Define - Check Identifier.
  *
  * @since 0.15.0
@@ -51,34 +66,33 @@ export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_DefNo
 export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_DefType = string;
 
 /**
- * Rules - ESLint - Patterns - No Use Before Define - Rule.
+ * Rules - ESLint - Patterns - No Use Before Define - Create.
  *
  * @since 0.15.0
  */
-export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsClasses = boolean;
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options_IgnoreFiles = string[];
 
-export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsFunctions = boolean;
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options_Variables = boolean;
 
-export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options_Functions = boolean;
 
-export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsTypes = boolean;
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options_Classes = boolean;
 
-export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsVariables = boolean;
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options_Types = boolean;
 
-export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions_IgnoreFiles = string[];
-
-export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions_Variables = boolean;
-
-export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions_Functions = boolean;
-
-export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions_Classes = boolean;
-
-export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions_Types = boolean;
-
-export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions_IgnoreFiles;
-  variables: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions_Variables;
-  functions: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions_Functions;
-  classes: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions_Classes;
-  types: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions_Types;
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options_IgnoreFiles;
+  variables: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options_Variables;
+  functions: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options_Functions;
+  classes: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options_Classes;
+  types: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Options_Types;
 }>;
+
+/**
+ * Rules - ESLint - Patterns - No Use Before Define - Create - Identifier.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Identifier_Node = TSESTree.Identifier;
+
+export type Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_Create_Identifier_Returns = void;

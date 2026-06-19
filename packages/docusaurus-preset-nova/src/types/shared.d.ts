@@ -20,8 +20,6 @@ export type Shared_HastNode_TagName = string | undefined;
 
 export type Shared_HastNode_Properties = Record<string, unknown>;
 
-export type Shared_HastNode_Children = Shared_HastNode[];
-
 export type Shared_HastNode_Value = string | undefined;
 
 export type Shared_HastNode_Data = Record<string, unknown> | undefined;
@@ -34,6 +32,8 @@ export type Shared_HastNode = {
   value?: Shared_HastNode_Value;
   data?: Shared_HastNode_Data;
 };
+
+export type Shared_HastNode_Children = Shared_HastNode[];
 
 /**
  * Shared - Hast Node Result.
@@ -346,20 +346,6 @@ export type Shared_SearchWorkerReadyResponse = {
 export type Shared_SearchWorkerResponse = Shared_SearchWorkerReadyResponse | Shared_SearchWorkerResultsResponse | Shared_SearchWorkerErrorResponse;
 
 /**
- * Shared - Search Worker Results Response.
- *
- * @since 0.15.0
- */
-export type Shared_SearchWorkerResultsResponse_Type = 'results';
-
-export type Shared_SearchWorkerResultsResponse_Hits = Shared_SearchWorkerSearchHit[];
-
-export type Shared_SearchWorkerResultsResponse = {
-  type: Shared_SearchWorkerResultsResponse_Type;
-  hits: Shared_SearchWorkerResultsResponse_Hits;
-};
-
-/**
  * Shared - Search Worker Search Hit.
  *
  * @since 0.15.0
@@ -389,6 +375,20 @@ export type Shared_SearchWorkerSearchHit = {
   snippet: Shared_SearchWorkerSearchHit_Snippet;
   snippetSegments: Shared_SearchWorkerSearchHit_SnippetSegments;
   score: Shared_SearchWorkerSearchHit_Score;
+};
+
+/**
+ * Shared - Search Worker Results Response.
+ *
+ * @since 0.15.0
+ */
+export type Shared_SearchWorkerResultsResponse_Type = 'results';
+
+export type Shared_SearchWorkerResultsResponse_Hits = Shared_SearchWorkerSearchHit[];
+
+export type Shared_SearchWorkerResultsResponse = {
+  type: Shared_SearchWorkerResultsResponse_Type;
+  hits: Shared_SearchWorkerResultsResponse_Hits;
 };
 
 /**
@@ -453,7 +453,7 @@ export type Shared_TocHeading_Id = string;
 
 export type Shared_TocHeading_Level = number;
 
-export type Shared_TocHeading_Children = Shared_TocHeading[];
+export type Shared_TocHeading_Children = Array<Shared_TocHeading>;
 
 export type Shared_TocHeading = {
   value: Shared_TocHeading_Value;

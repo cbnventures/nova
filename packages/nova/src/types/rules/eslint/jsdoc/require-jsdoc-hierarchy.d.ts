@@ -1,10 +1,30 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
+import type { RuleContext, RuleFix, RuleFixer } from '@typescript-eslint/utils/ts-eslint';
 
 import type {
   Shared_JsdocHierarchyCreateOptions as SharedJsdocHierarchyCreateOptions,
   Shared_JsdocHierarchyFindSummaryInfoResult as SharedJsdocHierarchyFindSummaryInfoResult,
 } from '../../../shared.d.ts';
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Rule.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsAnchorDirectories = string[];
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsKnownNames = Record<string, string>;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsStripDirectories = string[];
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Known Names.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_KnownNames = Map<string, string>;
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Build Fixed Comment.
@@ -25,6 +45,8 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_Li
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_Line = string | undefined;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_ReplacedLine = string;
+
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Check Class.
  *
@@ -33,6 +55,8 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_Li
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Context = Readonly<RuleContext<string, unknown[]>>;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Node = TSESTree.ClassDeclaration;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Options = SharedJsdocHierarchyCreateOptions;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Returns = void;
 
@@ -47,6 +71,15 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_SummaryIn
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_FixedValue = string;
 
 /**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Check Class - Fix.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Fix_Fixer = RuleFixer;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Fix_Returns = RuleFix;
+
+/**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Check Method.
  *
  * @since 0.15.0
@@ -54,6 +87,8 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_FixedValu
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Context = Readonly<RuleContext<string, unknown[]>>;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Node = TSESTree.MethodDefinition;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Options = SharedJsdocHierarchyCreateOptions;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Returns = void;
 
@@ -70,6 +105,15 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_SummaryI
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_FixedValue = string;
 
 /**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Check Method - Fix.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Fix_Fixer = RuleFixer;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Fix_Returns = RuleFix;
+
+/**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Check Node.
  *
  * @since 0.15.0
@@ -78,13 +122,15 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Context = 
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Node = TSESTree.Node;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Options = SharedJsdocHierarchyCreateOptions;
+
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Returns = void;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Comments = TSESTree.Comment[];
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_JsdocComment = TSESTree.Comment | undefined;
 
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_PathParts = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_ParentNames = string[];
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Parent = TSESTree.Node | null | undefined;
 
@@ -96,13 +142,115 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Suffix = s
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_DescribeString = string | undefined;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_PathParts = string[];
+
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_DescribeSuffix = string | undefined;
 
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Name = string | undefined;
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NodeName = string | undefined;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NamePathParts = string[];
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NameSuffix = string | undefined;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_ExpectedWithSuffix = string;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_ExpectedPrefix = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_FixedValue = string;
 
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_VarName = string;
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Check Node - Fix.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Fix_Fixer = RuleFixer;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Fix_Returns = RuleFix;
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Create.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Options = SharedJsdocHierarchyCreateOptions;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Diagnostic_Object_Segment = string;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Diagnostic_Object_Prefix = string;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Diagnostic_Object = Readonly<{
+  segment: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Diagnostic_Object_Segment;
+  prefix: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Diagnostic_Object_Prefix;
+}>;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Diagnostic = Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Diagnostic_Object | null;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_UserKnownNames = Record<string, string>;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_UserEntries = [string, string][];
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Create - Class Declaration.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ClassDeclaration_Node = TSESTree.ClassDeclaration;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ClassDeclaration_Returns = void;
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Create - Export Named Declaration.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ExportNamedDeclaration_Node = TSESTree.ExportNamedDeclaration;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ExportNamedDeclaration_Returns = void;
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Create - Expression Statement.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ExpressionStatement_Node = TSESTree.ExpressionStatement;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ExpressionStatement_Returns = void;
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Create - Function Declaration.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_FunctionDeclaration_Node = TSESTree.FunctionDeclaration;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_FunctionDeclaration_Returns = void;
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Create - Method Definition.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_MethodDefinition_Node = TSESTree.MethodDefinition;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_MethodDefinition_Returns = void;
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Create - Program.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Program_Node = TSESTree.Program;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Program_Returns = void;
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Create - Variable Declaration.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_VariableDeclaration_Node = TSESTree.VariableDeclaration;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_VariableDeclaration_Returns = void;
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Dedup Against Path.
@@ -146,29 +294,31 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_KnownName = string | undefined;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_HyphenatedWord = string;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_HyphenatedName = string | undefined;
+
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_DotIndex = number;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_MethodPart = string;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_SnakeWords = string[];
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_SnakePrettyWords = string[];
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_SnakeLoweredWord = string;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_SnakeKnownName = string | undefined;
+
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_PrettyName = string;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_CamelWords = string[];
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Derive Hierarchy.
  *
  * @since 0.15.0
  */
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_SrcIndex = number;
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_AnchorIndex = number;
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_AnchorToken = string;
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_RelativePath = string;
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_RawSegments = string[];
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_LastSegmentIndex = number;
-
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Filename = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Segments = string[];
@@ -187,6 +337,12 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_File
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_NormalizedStem = string;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_StemPrettySegments = string[];
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_StemPrettyParts = string[];
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_StemAllParts = string[];
+
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_PrettySegments = string[];
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_PrettyParts = string[];
@@ -198,6 +354,10 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_AllP
  *
  * @since 0.17.1
  */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Filename = string;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Options = SharedJsdocHierarchyCreateOptions;
+
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_ReturnsObject_Segment = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_ReturnsObject_Prefix = string;
@@ -208,10 +368,6 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixD
 };
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Returns = Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_ReturnsObject | null;
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Filename = string;
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Options = SharedJsdocHierarchyCreateOptions;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Parts = ReadonlyArray<string>;
 
@@ -229,6 +385,18 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_File
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Options = SharedJsdocHierarchyCreateOptions;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Returns = ReadonlyArray<string>;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_SrcIndex = number;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_AnchorIndex = number;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_AnchorToken = string;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_RelativePath = string;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_RawSegments = string[];
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_LastSegmentIndex = number;
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Extract Describe String.
@@ -248,6 +416,9 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractDescribeStrin
  *
  * @since 0.15.0
  */
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractNodeName_Node = TSESTree.Node;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractNodeName_Returns = string | undefined;
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Find Summary Info.
@@ -264,25 +435,6 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_FindSummaryInfo_Line
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_FindSummaryInfo_Trimmed = string;
 
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_FindSummaryInfo_ResultIndex = number;
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_FindSummaryInfo_ResultText = string;
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_FindSummaryInfo_Result = SharedJsdocHierarchyFindSummaryInfoResult;
-
-/**
- * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Known Names.
- *
- * @since 0.15.0
- */
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_KnownNames = Map<string, string>;
-
-/**
- * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Merged Names.
- *
- * @since 0.15.0
- */
-
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Pretty Method Name.
  *
@@ -298,13 +450,15 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Res
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Index = number;
 
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Lowered = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Current = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Next = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Pair = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_KnownPair = string | undefined;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Lowered = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_KnownName = string | undefined;
 
@@ -320,26 +474,3 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettySegment_Return
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettySegment_KnownName = string | undefined;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettySegment_WordName = string | undefined;
-
-/**
- * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Rule.
- *
- * @since 0.15.0
- */
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsAnchorDirectories = string[];
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsIgnoreFiles = string[];
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsKnownNames = Record<string, string>;
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsStripDirectories = string[];
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptions = SharedJsdocHierarchyCreateOptions;
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptionsKnownNames = Record<string, string>;
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleUserEntries = [string, string][];
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptionsAnchorDirectories = string[];
-
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleOptionsStripDirectories = string[];

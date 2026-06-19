@@ -73,17 +73,21 @@ export type Theme_MdxPage_Index_MdxPageTocSpread = Record<string, unknown>;
 
 export type Theme_MdxPage_Index_MdxPageEditMetaRowSpread = Record<string, unknown>;
 
+export type Theme_MdxPage_Index_MdxPageFirstH1State_Rendered = boolean;
+
+export type Theme_MdxPage_Index_MdxPageFirstH1State = {
+  rendered: Theme_MdxPage_Index_MdxPageFirstH1State_Rendered;
+};
+
 export type Theme_MdxPage_Index_MdxPageMdxComponents = MDXComponents;
 
 export type Theme_MdxPage_Index_MdxPageH1OverrideProps = ComponentProps<'h1'>;
 
+export type Theme_MdxPage_Index_MdxPageIsFirst = boolean;
+
 /**
- * Theme - MDX Page - MDX Page - First H State.
+ * Theme - MDX Page - MDX Page (component section).
  *
  * @since 0.15.0
  */
-export type Theme_MdxPage_Index_MdxPageFirstH1State = {
-  rendered: boolean;
-};
-
-export type Theme_MdxPage_Index_MdxPageIsFirst = boolean;
+export type Theme_MdxPage_Index_MDXPage_Returns = ReactNode;

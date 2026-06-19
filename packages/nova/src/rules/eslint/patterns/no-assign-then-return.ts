@@ -8,14 +8,18 @@ import type {
   Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Context,
   Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Declarations,
   Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Declarator,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Fix_Fixer,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Fix_Returns,
   Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_InitText,
   Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Node,
   Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_NodeIndex,
   Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Parent,
   Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_PrevStatement,
   Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Returns,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_Create_Options,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_Create_ReturnStatement_Node,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_Create_ReturnStatement_Returns,
   Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleOptions,
 } from '../../../types/rules/eslint/patterns/no-assign-then-return.d.ts';
 
 /**
@@ -63,7 +67,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -71,7 +75,7 @@ export class Runner {
       }
 
       return {
-        ReturnStatement(node) {
+        ReturnStatement(node: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_Create_ReturnStatement_Node): Rules_Eslint_Patterns_NoAssignThenReturn_Runner_Create_ReturnStatement_Returns {
           Runner.checkReturn(context, node);
 
           return;
@@ -160,7 +164,7 @@ export class Runner {
       context.report({
         node,
         messageId: 'returnDirectly',
-        fix(fixer) {
+        fix(fixer: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Fix_Fixer): Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Fix_Returns {
           return [
             fixer.remove(prevStatement),
             fixer.replaceText(argument, initText),

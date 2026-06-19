@@ -1,5 +1,14 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
+import type { RuleContext, RuleFix, RuleFixer } from '@typescript-eslint/utils/ts-eslint';
+
+/**
+ * Rules - ESLint - Patterns - No Bracket Method Call - Rule.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleDefaultOptionsAllowedMethods = string[];
+
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
 /**
  * Rules - ESLint - Patterns - No Bracket Method Call - Check Call Expression.
@@ -28,19 +37,33 @@ export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression
 export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_MethodName = string;
 
 /**
- * Rules - ESLint - Patterns - No Bracket Method Call - Rule.
+ * Rules - ESLint - Patterns - No Bracket Method Call - Check Call Expression - Fix.
  *
  * @since 0.15.0
  */
-export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleDefaultOptionsAllowedMethods = string[];
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Fix_Fixer = RuleFixer;
 
-export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Fix_Returns = RuleFix;
 
-export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleOptions_IgnoreFiles = string[];
+/**
+ * Rules - ESLint - Patterns - No Bracket Method Call - Create.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_Create_Options_IgnoreFiles = string[];
 
-export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleOptions_AllowedMethods = string[];
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_Create_Options_AllowedMethods = string[];
 
-export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleOptions_IgnoreFiles;
-  allowedMethods: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleOptions_AllowedMethods;
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_Create_Options_IgnoreFiles;
+  allowedMethods: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_Create_Options_AllowedMethods;
 }>;
+
+/**
+ * Rules - ESLint - Patterns - No Bracket Method Call - Create - Call Expression.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_Create_CallExpression_Node = TSESTree.CallExpression;
+
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_Create_CallExpression_Returns = void;

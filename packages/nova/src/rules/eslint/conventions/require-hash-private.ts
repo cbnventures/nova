@@ -6,9 +6,13 @@ import type {
   Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Context,
   Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Node,
   Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Returns,
+  Rules_Eslint_Conventions_RequireHashPrivate_Runner_Create_MethodDefinition_Node,
+  Rules_Eslint_Conventions_RequireHashPrivate_Runner_Create_MethodDefinition_Returns,
+  Rules_Eslint_Conventions_RequireHashPrivate_Runner_Create_Options,
+  Rules_Eslint_Conventions_RequireHashPrivate_Runner_Create_PropertyDefinition_Node,
+  Rules_Eslint_Conventions_RequireHashPrivate_Runner_Create_PropertyDefinition_Returns,
   Rules_Eslint_Conventions_RequireHashPrivate_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Conventions_RequireHashPrivate_Runner_RuleDefaultOptionsSkipMethods,
-  Rules_Eslint_Conventions_RequireHashPrivate_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/require-hash-private.d.ts';
 
 /**
@@ -59,7 +63,7 @@ export class Runner {
       skipMethods: true as Rules_Eslint_Conventions_RequireHashPrivate_Runner_RuleDefaultOptionsSkipMethods,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Conventions_RequireHashPrivate_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_RequireHashPrivate_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -67,13 +71,13 @@ export class Runner {
       }
 
       return {
-        PropertyDefinition(node) {
+        PropertyDefinition(node: Rules_Eslint_Conventions_RequireHashPrivate_Runner_Create_PropertyDefinition_Node): Rules_Eslint_Conventions_RequireHashPrivate_Runner_Create_PropertyDefinition_Returns {
           Runner.checkMember(context, node);
 
           return;
         },
         ...(options['skipMethods'] === true ? {} : {
-          MethodDefinition(node: Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Node) {
+          MethodDefinition(node: Rules_Eslint_Conventions_RequireHashPrivate_Runner_Create_MethodDefinition_Node): Rules_Eslint_Conventions_RequireHashPrivate_Runner_Create_MethodDefinition_Returns {
             Runner.checkMember(context, node);
 
             return;

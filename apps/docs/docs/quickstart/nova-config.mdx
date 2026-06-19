@@ -113,48 +113,48 @@ Canonical contact addresses referenced by tools and metadata.
 
 ## `github`
 
-Identifies the GitHub repository and configures repository-level metadata that the GitHub recipes synchronize. Consumed by [`nova generate github`](/docs/cli/generators/github) commands.
+Identifies the GitHub repository and configures repository-level metadata that the GitHub recipes synchronize. Consumed by the [`nova recipe github`](/docs/cli/recipes/github/sync-identity) commands.
 
-| Field      | Type       | Description                                                                                                                       |
-|------------|------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| `owner`    | `string`   | Repository owner (user or organization). Must match `/^[A-Za-z0-9-]+$/`.                                                          |
-| `repo`     | `string`   | Repository name. Must match `/^[A-Za-z0-9._-]+$/`.                                                                                |
-| `recipes`  | `object`   | Optional. Toggles for repository-level sync recipes. See [Recipes Fields](#recipes-fields) below.                                 |
-| `topics`   | `string[]` | Optional. Repository topics. An empty array is preserved and clears topics on sync.                                               |
-| `features` | `object`   | Optional. Toggles for repository features (issues, wiki, projects, discussions). See [Features Fields](#features-fields) below.   |
+| Field      | Type       | Description                                                                                                                                       |
+|------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| `owner`    | `string`   | Repository owner (user or organization). Must match `/^[A-Za-z0-9-]+$/`.                                                                          |
+| `repo`     | `string`   | Repository name. Must match `/^[A-Za-z0-9._-]+$/`.                                                                                                |
+| `recipes`  | `object`   | Optional. Toggles for repository-level sync recipes. See [Recipes Fields](#recipes-fields) below.                                                 |
+| `topics`   | `string[]` | Optional. Repository topics. An empty array is preserved and clears topics on sync.                                                               |
+| `features` | `object`   | Optional. Toggles for repository features (issues, wiki, projects, discussions). See [Features Fields](#features-fields) below.                   |
 | `policies` | `object`   | Optional. Repository policy settings (visibility, default branch, merge methods, branch deletion). See [Policies Fields](#policies-fields) below. |
 
 ### Recipes Fields
 
 Booleans that enable or disable each repository-level sync recipe.
 
-| Field            | Type      | Description                                                              |
-|------------------|-----------|--------------------------------------------------------------------------|
-| `sync-identity`  | `boolean` | Optional. Synchronizes repository description, homepage, and topics.     |
-| `sync-features`  | `boolean` | Optional. Synchronizes the repository feature toggles in `features`.     |
-| `sync-policies`  | `boolean` | Optional. Synchronizes the repository policy settings in `policies`.     |
+| Field           | Type      | Description                                                          |
+|-----------------|-----------|----------------------------------------------------------------------|
+| `sync-identity` | `boolean` | Optional. Synchronizes repository description, homepage, and topics. |
+| `sync-features` | `boolean` | Optional. Synchronizes the repository feature toggles in `features`. |
+| `sync-policies` | `boolean` | Optional. Synchronizes the repository policy settings in `policies`. |
 
 ### Features Fields
 
 Booleans controlling which repository features are enabled. Each field is optional; omitted fields leave the corresponding GitHub setting untouched.
 
-| Field         | Type      | Description                                |
-|---------------|-----------|--------------------------------------------|
-| `issues`      | `boolean` | Optional. Enables the Issues tab.          |
-| `wiki`        | `boolean` | Optional. Enables the Wiki tab.            |
-| `projects`    | `boolean` | Optional. Enables the Projects tab.        |
-| `discussions` | `boolean` | Optional. Enables the Discussions tab.     |
+| Field         | Type      | Description                            |
+|---------------|-----------|----------------------------------------|
+| `issues`      | `boolean` | Optional. Enables the Issues tab.      |
+| `wiki`        | `boolean` | Optional. Enables the Wiki tab.        |
+| `projects`    | `boolean` | Optional. Enables the Projects tab.    |
+| `discussions` | `boolean` | Optional. Enables the Discussions tab. |
 
 ### Policies Fields
 
 Repository policy settings. Each field is optional.
 
-| Field                  | Type      | Description                                                                                                |
-|------------------------|-----------|------------------------------------------------------------------------------------------------------------|
-| `visibility`           | `string`  | Optional. One of `"public"`, `"private"`, or `"internal"`.                                                 |
-| `defaultBranch`        | `string`  | Optional. Default branch name (e.g., `"main"`).                                                            |
-| `mergeMethods`         | `object`  | Optional. Per-method enablement: `merge`, `squash`, `rebase`. Each is a boolean.                           |
-| `autoDeleteHeadBranch` | `boolean` | Optional. When `true`, GitHub deletes the head branch after a pull request is merged.                      |
+| Field                  | Type      | Description                                                                           |
+|------------------------|-----------|---------------------------------------------------------------------------------------|
+| `visibility`           | `string`  | Optional. One of `"public"`, `"private"`, or `"internal"`.                            |
+| `defaultBranch`        | `string`  | Optional. Default branch name (e.g., `"main"`).                                       |
+| `mergeMethods`         | `object`  | Optional. Per-method enablement: `merge`, `squash`, `rebase`. Each is a boolean.      |
+| `autoDeleteHeadBranch` | `boolean` | Optional. When `true`, GitHub deletes the head branch after a pull request is merged. |
 
 ```json
 {
@@ -205,11 +205,11 @@ An array of GitHub Actions workflow entries consumed by [`nova generate github w
 
 Each entry in the `targets` array pins one publish destination to a workspace.
 
-| Field        | Type       | Description                                                                                                                                                              |
-|--------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Field        | Type       | Description                                                                                                                                                                                 |
+|--------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `type`       | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages-docusaurus"`, `"github-pages-docusaurus"`, `"aws-amplify-nextjs"`, `"vercel-nextjs"`. |
-| `workingDir` | `string`   | Path to the workspace that owns the target (e.g., `"./packages/nova"`).                                                                                                  |
-| `needs`      | `string[]` | Optional. Working directories of other same-type targets that must finish publishing before this one starts.                                                             |
+| `workingDir` | `string`   | Path to the workspace that owns the target (e.g., `"./packages/nova"`).                                                                                                                     |
+| `needs`      | `string[]` | Optional. Working directories of other same-type targets that must finish publishing before this one starts.                                                                                |
 
 ### Variable Formats
 
@@ -314,8 +314,8 @@ A map of relative paths to <Terminology title="package" to="/docs/quickstart/ter
 
 | Field         | Type     | Description                                                                                                                                                                                                                                       |
 |---------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`        | `string` | Package name for `package.json`. Must follow the naming pattern for its role. See [Workspace Rules](/docs/quickstart/workspace-rules#workspace-naming) for details.                                                                              |
-| `displayName` | `string` | Optional. Human-readable label used by Nova commands and tooling (e.g., status output, generated docs).                                                                                                                                          |
+| `name`        | `string` | Package name for `package.json`. Must follow the naming pattern for its role. See [Workspace Rules](/docs/quickstart/workspace-rules#workspace-naming) for details.                                                                               |
+| `displayName` | `string` | Optional. Human-readable label used by Nova commands and tooling (e.g., status output, generated docs).                                                                                                                                           |
 | `role`        | `string` | Workspace role: `"project"`, `"docs"`, `"config"`, `"app"`, `"package"`, `"tool"`, or `"template"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                          |
 | `policy`      | `string` | Workspace policy: `"freezable"`, `"trackable"`, or `"distributable"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                                                        |
 | `recipes`     | `object` | Optional. Enabled <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> and their settings, keyed by recipe name. Each value is a tuple: `[enabled]` or `[enabled, settings]`. |

@@ -37,6 +37,7 @@ import type {
   Lib_Utility_BuildGeneratedFileHeader_IsHashStyle,
   Lib_Utility_BuildGeneratedFileHeader_IsMarkdownStyle,
   Lib_Utility_BuildGeneratedFileHeader_Lines,
+  Lib_Utility_BuildGeneratedFileHeader_MarkdownLines,
   Lib_Utility_BuildGeneratedFileHeader_Options,
   Lib_Utility_BuildGeneratedFileHeader_Returns,
   Lib_Utility_BuildGeneratedFileHeader_RuleLine,
@@ -63,11 +64,10 @@ import type {
   Lib_Utility_CurrentTimestamp_Minute,
   Lib_Utility_CurrentTimestamp_Month,
   Lib_Utility_CurrentTimestamp_Now,
+  Lib_Utility_CurrentTimestamp_Number,
   Lib_Utility_CurrentTimestamp_PadLeft,
   Lib_Utility_CurrentTimestamp_PadLeft_CurrentWidth,
-  Lib_Utility_CurrentTimestamp_PadLeft_Number,
   Lib_Utility_CurrentTimestamp_PadLeft_Returns,
-  Lib_Utility_CurrentTimestamp_PadLeft_Width,
   Lib_Utility_CurrentTimestamp_RawDate,
   Lib_Utility_CurrentTimestamp_RawHours,
   Lib_Utility_CurrentTimestamp_RawMinutes,
@@ -81,14 +81,15 @@ import type {
   Lib_Utility_CurrentTimestamp_TimezoneMinutes,
   Lib_Utility_CurrentTimestamp_TimezoneOffsetMinutes,
   Lib_Utility_CurrentTimestamp_TimezoneSign,
+  Lib_Utility_CurrentTimestamp_Width,
   Lib_Utility_CurrentTimestamp_Year,
   Lib_Utility_DetectShell_CurrentPlatform,
   Lib_Utility_DetectShell_Returns,
-  Lib_Utility_DiscoverPathsWithFile_BackwardCurrentDirectory,
+  Lib_Utility_DiscoverPathsWithFile_CurrentDirectory,
   Lib_Utility_DiscoverPathsWithFile_Direction,
   Lib_Utility_DiscoverPathsWithFile_Entries,
   Lib_Utility_DiscoverPathsWithFile_FileName,
-  Lib_Utility_DiscoverPathsWithFile_ForwardCurrentDirectory,
+  Lib_Utility_DiscoverPathsWithFile_ForwardDirectory,
   Lib_Utility_DiscoverPathsWithFile_HasTargetFile,
   Lib_Utility_DiscoverPathsWithFile_Queue,
   Lib_Utility_DiscoverPathsWithFile_RealDirectory,
@@ -106,23 +107,25 @@ import type {
   Lib_Utility_ExecuteShell_ExecAsync,
   Lib_Utility_ExecuteShell_ExecResult,
   Lib_Utility_ExecuteShell_FullCommand,
+  Lib_Utility_ExecuteShell_Output,
+  Lib_Utility_ExecuteShell_PosixString,
   Lib_Utility_ExecuteShell_QuotePosix,
   Lib_Utility_ExecuteShell_QuotePosix_Pattern,
   Lib_Utility_ExecuteShell_QuotePosix_Returns,
-  Lib_Utility_ExecuteShell_QuotePosix_String,
   Lib_Utility_ExecuteShell_QuoteWindows,
   Lib_Utility_ExecuteShell_QuoteWindows_Pattern,
   Lib_Utility_ExecuteShell_QuoteWindows_Returns,
-  Lib_Utility_ExecuteShell_QuoteWindows_String,
   Lib_Utility_ExecuteShell_Returns,
   Lib_Utility_ExecuteShell_Shell,
   Lib_Utility_ExecuteShell_Stderr,
   Lib_Utility_ExecuteShell_Stdout,
-  Lib_Utility_ExecuteShell_SuccessOutput,
+  Lib_Utility_ExecuteShell_WindowsString,
   Lib_Utility_IsCommandExists_Bin,
   Lib_Utility_IsCommandExists_ChildProcess,
   Lib_Utility_IsCommandExists_Command,
   Lib_Utility_IsCommandExists_CommandArguments,
+  Lib_Utility_IsCommandExists_Error_Returns,
+  Lib_Utility_IsCommandExists_Exit_Returns,
   Lib_Utility_IsCommandExists_IsWin,
   Lib_Utility_IsCommandExists_Returns,
   Lib_Utility_IsExecuteShellError_Error,
@@ -328,8 +331,8 @@ export function currentTimestamp(): Lib_Utility_CurrentTimestamp_Returns {
    * Zero-pads a numeric component to the requested width, enforcing a minimum of
    * two digits for month, day, hour, minute, and second.
    *
-   * @param {Lib_Utility_CurrentTimestamp_PadLeft_Number} number - Number.
-   * @param {Lib_Utility_CurrentTimestamp_PadLeft_Width}  width  - Width.
+   * @param {Lib_Utility_CurrentTimestamp_Number} number - Number.
+   * @param {Lib_Utility_CurrentTimestamp_Width}  width  - Width.
    *
    * @private
    *
@@ -337,7 +340,7 @@ export function currentTimestamp(): Lib_Utility_CurrentTimestamp_Returns {
    *
    * @since 0.11.0
    */
-  const padLeft: Lib_Utility_CurrentTimestamp_PadLeft = (number: Lib_Utility_CurrentTimestamp_PadLeft_Number, width: Lib_Utility_CurrentTimestamp_PadLeft_Width = 2): Lib_Utility_CurrentTimestamp_PadLeft_Returns => {
+  const padLeft: Lib_Utility_CurrentTimestamp_PadLeft = (number: Lib_Utility_CurrentTimestamp_Number, width: Lib_Utility_CurrentTimestamp_Width = 2): Lib_Utility_CurrentTimestamp_PadLeft_Returns => {
     const currentWidth: Lib_Utility_CurrentTimestamp_PadLeft_CurrentWidth = (width < 2) ? 2 : width;
 
     return number.toString().padStart(currentWidth, '0');
@@ -425,7 +428,7 @@ export async function discoverPathsWithFile(fileName: Lib_Utility_DiscoverPathsW
   if (direction === 'backward') {
     const rootDirectory: Lib_Utility_DiscoverPathsWithFile_RootDirectory = parse(startDirectory).root;
 
-    let currentDirectory: Lib_Utility_DiscoverPathsWithFile_BackwardCurrentDirectory = startDirectory;
+    let currentDirectory: Lib_Utility_DiscoverPathsWithFile_CurrentDirectory = startDirectory;
 
     while (true) {
       const targetPath: Lib_Utility_DiscoverPathsWithFile_TargetPath = join(currentDirectory, fileName);
@@ -461,22 +464,22 @@ export async function discoverPathsWithFile(fileName: Lib_Utility_DiscoverPathsW
     const skipDirectories: Lib_Utility_DiscoverPathsWithFile_SkipDirectories = new Set(libItemSkipDirectories);
 
     while (queue.length > 0) {
-      const currentDirectory: Lib_Utility_DiscoverPathsWithFile_ForwardCurrentDirectory = queue.shift();
+      const forwardDirectory: Lib_Utility_DiscoverPathsWithFile_ForwardDirectory = queue.shift();
 
-      if (currentDirectory === undefined) {
+      if (forwardDirectory === undefined) {
         continue;
       }
 
       Logger.customize({
         name: 'discoverPathsWithFile',
         purpose: 'forward',
-      }).debug(`Current directory: "${currentDirectory}"`);
+      }).debug(`Current directory: "${forwardDirectory}"`);
 
       let realDirectory: Lib_Utility_DiscoverPathsWithFile_RealDirectory = undefined;
 
       try {
         // Resolve symlinks to avoid visiting the same location multiple times.
-        realDirectory = await fs.realpath(currentDirectory);
+        realDirectory = await fs.realpath(forwardDirectory);
       } catch {
         continue;
       }
@@ -562,7 +565,7 @@ export async function executeShell(command: Lib_Utility_ExecuteShell_Command): L
    * Escapes single quotes inside a command string so it can be safely wrapped in
    * single-quoted POSIX shell invocations for zsh, bash, and sh.
    *
-   * @param {Lib_Utility_ExecuteShell_QuotePosix_String} string - String.
+   * @param {Lib_Utility_ExecuteShell_PosixString} posixString - Posix string.
    *
    * @private
    *
@@ -570,10 +573,10 @@ export async function executeShell(command: Lib_Utility_ExecuteShell_Command): L
    *
    * @since 0.11.0
    */
-  const quotePosix: Lib_Utility_ExecuteShell_QuotePosix = (string: Lib_Utility_ExecuteShell_QuotePosix_String): Lib_Utility_ExecuteShell_QuotePosix_Returns => {
+  const quotePosix: Lib_Utility_ExecuteShell_QuotePosix = (posixString: Lib_Utility_ExecuteShell_PosixString): Lib_Utility_ExecuteShell_QuotePosix_Returns => {
     const pattern: Lib_Utility_ExecuteShell_QuotePosix_Pattern = new RegExp(LIB_REGEX_CHARACTER_SINGLE_QUOTE.source, 'g');
 
-    return string.replace(pattern, '\'\\\'\'');
+    return posixString.replace(pattern, '\'\\\'\'');
   };
 
   /**
@@ -582,7 +585,7 @@ export async function executeShell(command: Lib_Utility_ExecuteShell_Command): L
    * Escapes double quotes inside a command string so it can be
    * safely embedded in a cmd.exe /c invocation on Windows.
    *
-   * @param {Lib_Utility_ExecuteShell_QuoteWindows_String} string - String.
+   * @param {Lib_Utility_ExecuteShell_WindowsString} windowsString - Windows string.
    *
    * @private
    *
@@ -590,10 +593,10 @@ export async function executeShell(command: Lib_Utility_ExecuteShell_Command): L
    *
    * @since 0.11.0
    */
-  const quoteWindows: Lib_Utility_ExecuteShell_QuoteWindows = (string: Lib_Utility_ExecuteShell_QuoteWindows_String): Lib_Utility_ExecuteShell_QuoteWindows_Returns => {
+  const quoteWindows: Lib_Utility_ExecuteShell_QuoteWindows = (windowsString: Lib_Utility_ExecuteShell_WindowsString): Lib_Utility_ExecuteShell_QuoteWindows_Returns => {
     const pattern: Lib_Utility_ExecuteShell_QuoteWindows_Pattern = new RegExp(LIB_REGEX_CHARACTER_DOUBLE_QUOTE.source, 'g');
 
-    return string.replace(pattern, '"');
+    return windowsString.replace(pattern, '"');
   };
 
   // Windows.
@@ -655,7 +658,7 @@ export async function executeShell(command: Lib_Utility_ExecuteShell_Command): L
     const stdout: Lib_Utility_ExecuteShell_Stdout = execResult['stdout'];
     const stderr: Lib_Utility_ExecuteShell_Stderr = execResult['stderr'];
 
-    const output: Lib_Utility_ExecuteShell_SuccessOutput = {
+    const output: Lib_Utility_ExecuteShell_Output = {
       textOut: stdout.trim(),
       textError: stderr.trim(),
       code: 0,
@@ -673,7 +676,7 @@ export async function executeShell(command: Lib_Utility_ExecuteShell_Command): L
 
     return output;
   } catch (error) {
-    const output: Lib_Utility_ExecuteShell_ErrorOutput = {
+    const errorOutput: Lib_Utility_ExecuteShell_ErrorOutput = {
       textOut: '',
       textError: '',
       code: 1,
@@ -681,15 +684,15 @@ export async function executeShell(command: Lib_Utility_ExecuteShell_Command): L
 
     if (isExecuteShellError(error) === true) {
       if (error.stdout !== undefined) {
-        output.textOut = `${error.stdout}`;
+        errorOutput.textOut = `${error.stdout}`;
       }
 
       if (error.stderr !== undefined) {
-        output.textError = `${error.stderr}`;
+        errorOutput.textError = `${error.stderr}`;
       }
 
       if (error.code !== undefined) {
-        output.code = error.code;
+        errorOutput.code = error.code;
       }
     }
 
@@ -701,9 +704,9 @@ export async function executeShell(command: Lib_Utility_ExecuteShell_Command): L
     Logger.customize({
       name: 'executeShell',
       purpose: 'output',
-    }).debug(output);
+    }).debug(errorOutput);
 
-    return output;
+    return errorOutput;
   }
 }
 
@@ -736,12 +739,12 @@ export async function isCommandExists(command: Lib_Utility_IsCommandExists_Comma
     });
 
     // If the command is missing from PATH, Node emits an "error" (ENOENT).
-    childProcess.once('error', () => {
+    childProcess.once('error', (): Lib_Utility_IsCommandExists_Error_Returns => {
       return promiseResolve(false);
     });
 
     // If the command exists.
-    childProcess.once('exit', (code) => {
+    childProcess.once('exit', (code): Lib_Utility_IsCommandExists_Exit_Returns => {
       return promiseResolve(code === 0);
     });
 
@@ -1362,7 +1365,7 @@ export function buildGeneratedFileHeader(options: Lib_Utility_BuildGeneratedFile
   }
 
   if (isMarkdownStyle === true) {
-    const lines: Lib_Utility_BuildGeneratedFileHeader_Lines = [
+    const markdownLines: Lib_Utility_BuildGeneratedFileHeader_MarkdownLines = [
       '<!--',
       '  This file is generated by @cbnventures/nova.',
       `  ${ruleLine}`,
@@ -1374,7 +1377,7 @@ export function buildGeneratedFileHeader(options: Lib_Utility_BuildGeneratedFile
       '',
     ];
 
-    return lines.join('\n');
+    return markdownLines.join('\n');
   }
 
   throw new Error(`buildGeneratedFileHeader: unsupported targetPath '${options['targetPath']}'`);

@@ -18,7 +18,6 @@ import type {
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_ItemItems,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Items,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Result,
-  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_DetailsElement,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_DocsConfig,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ExpandCategoryAriaLabel,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_ActivePath,
@@ -28,19 +27,21 @@ import type {
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_ItemLabel,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Items,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Result,
-  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_GrandparentElement,
+  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_DetailsElement,
+  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_GrandparentElement,
+  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_IsOpen,
+  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_ParentElement,
+  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_SiblingDetails,
+  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_ToggleEvent,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Href,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_InitialOpenValue,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsActive,
-  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsOpen,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsOpenValue,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Label,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_NextLevel,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_OpenState,
-  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ParentElement,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SetIsOpenValue,
-  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SiblingDetails,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SidebarConfig,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_StateMap,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_StoredState,
@@ -49,7 +50,6 @@ import type {
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryClickTarget,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ThemeConfig,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ThemeConfigCast,
-  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ToggleEvent,
 } from '../../../types/theme/DocSidebarItem/Category/index.d.ts';
 
 /**
@@ -226,13 +226,13 @@ function DocSidebarItemCategory(props: Theme_DocSidebarItem_Category_Index_DocSi
    * Collapses all sibling details elements when the current category opens
    * and auto-collapse categories is enabled, producing accordion behavior.
    *
-   * @param {Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ToggleEvent} toggleEvent - Toggle event.
+   * @param {Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_ToggleEvent} toggleEvent - Toggle event.
    *
    * @since 0.15.0
    */
-  function handleToggle(toggleEvent: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ToggleEvent) {
-    const detailsElement: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_DetailsElement = toggleEvent.currentTarget;
-    const isOpen: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsOpen = detailsElement.open;
+  function handleToggle(toggleEvent: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_ToggleEvent) {
+    const detailsElement: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_DetailsElement = toggleEvent.currentTarget;
+    const isOpen: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_IsOpen = detailsElement.open;
 
     setIsOpenValue(isOpen);
 
@@ -246,21 +246,21 @@ function DocSidebarItemCategory(props: Theme_DocSidebarItem_Category_Index_DocSi
       return undefined;
     }
 
-    const parentElement: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ParentElement = detailsElement.parentElement;
+    const parentElement: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_ParentElement = detailsElement.parentElement;
 
     if (parentElement === null) {
       return undefined;
     }
 
-    const grandparentElement: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_GrandparentElement = parentElement.parentElement;
+    const grandparentElement: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_GrandparentElement = parentElement.parentElement;
 
     if (grandparentElement === null) {
       return undefined;
     }
 
-    const siblingDetails: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SiblingDetails = grandparentElement.querySelectorAll(':scope > li > details[open]') as Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SiblingDetails;
+    const siblingDetails: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_SiblingDetails = grandparentElement.querySelectorAll(':scope > li > details[open]') as Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_SiblingDetails;
 
-    siblingDetails.forEach((siblingDetail: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_DetailsElement) => {
+    siblingDetails.forEach((siblingDetail: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_DetailsElement) => {
       if (siblingDetail !== detailsElement) {
         siblingDetail.removeAttribute('open');
       }

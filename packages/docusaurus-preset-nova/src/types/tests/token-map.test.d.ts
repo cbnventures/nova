@@ -1,4 +1,16 @@
 /**
+ * Tests - Token Map - Expectations.
+ *
+ * @since 0.18.0
+ */
+export type Tests_TokenMap_Expectation = {
+  readonly file: string;
+  readonly tokens: readonly string[];
+};
+
+export type Tests_TokenMap_Expectations = readonly Tests_TokenMap_Expectation[];
+
+/**
  * Tests - Token Map - Admonition.
  *
  * @since 0.18.0
@@ -34,7 +46,7 @@ export type Tests_TokenMap_AssertTokensPresent_Content = string;
 
 export type Tests_TokenMap_AssertTokensPresent_Missing = string[];
 
-export type Tests_TokenMap_AssertTokensPresent_Token = string;
+export type Tests_TokenMap_AssertTokensPresent_TokenName = string;
 
 export type Tests_TokenMap_AssertTokensPresent_Pattern = RegExp;
 
@@ -113,18 +125,6 @@ export type Tests_TokenMap_Depth_Suffix = string;
 export type Tests_TokenMap_Depth_Suffixes = readonly Tests_TokenMap_Depth_Suffix[];
 
 export type Tests_TokenMap_Depth_Returns = readonly string[];
-
-/**
- * Tests - Token Map - Expectations.
- *
- * @since 0.18.0
- */
-export type Tests_TokenMap_Expectation = {
-  readonly file: string;
-  readonly tokens: readonly string[];
-};
-
-export type Tests_TokenMap_Expectations = readonly Tests_TokenMap_Expectation[];
 
 /**
  * Tests - Token Map - Get Package Root.

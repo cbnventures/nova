@@ -10,16 +10,6 @@ import {
 } from 'react';
 
 import type {
-  Theme_Tabs_Index_Tabs_ContainerRef,
-  Theme_Tabs_Index_Tabs_EffectCleanupReturns,
-  Theme_Tabs_Index_Tabs_HandleHashChange_Returns,
-  Theme_Tabs_Index_Tabs_HashDecodedId,
-  Theme_Tabs_Index_Tabs_HashPanel,
-  Theme_Tabs_Index_Tabs_HashTabValue,
-  Theme_Tabs_Index_Tabs_HashTarget,
-  Theme_Tabs_Index_Tabs_IsBrowser,
-  Theme_Tabs_Index_Tabs_Props,
-  Theme_Tabs_Index_Tabs_SanitizedChildren,
   Theme_Tabs_Index_TabList_AriaControls,
   Theme_Tabs_Index_TabList_HandleKeyDown_CurrentIndex,
   Theme_Tabs_Index_TabList_HandleKeyDown_Event,
@@ -32,7 +22,17 @@ import type {
   Theme_Tabs_Index_TabList_TabId,
   Theme_Tabs_Index_TabList_TabsResult,
   Theme_Tabs_Index_TabList_TabValue,
+  Theme_Tabs_Index_Tabs_ContainerRef,
+  Theme_Tabs_Index_Tabs_EffectCleanupReturns,
+  Theme_Tabs_Index_Tabs_HandleHashChange_Returns,
+  Theme_Tabs_Index_Tabs_HashDecodedId,
+  Theme_Tabs_Index_Tabs_HashPanel,
+  Theme_Tabs_Index_Tabs_HashTabValue,
+  Theme_Tabs_Index_Tabs_HashTarget,
+  Theme_Tabs_Index_Tabs_IsBrowser,
+  Theme_Tabs_Index_Tabs_Props,
   Theme_Tabs_Index_Tabs_Result,
+  Theme_Tabs_Index_Tabs_SanitizedChildren,
 } from '../../types/theme/Tabs/index.d.ts';
 
 /**

@@ -8,7 +8,7 @@ import type {
 } from '../types/lib/safe-json-ld.d.ts';
 
 /**
- * Lib - Safe JSON Ld - Serialize JSON Ld.
+ * Lib - Safe JSON LD - Serialize JSON LD.
  *
  * Stringifies a payload and escapes every `<` so an embedded `</script>` in
  * any string value cannot close an inline `<script type="application/ld+json">`

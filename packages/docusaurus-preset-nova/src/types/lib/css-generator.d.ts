@@ -5,7 +5,6 @@ import type {
   Shared_Preset_Fonts,
   Shared_Preset_Motion,
   Shared_Preset_Shape,
-  Shared_ShadeLevel,
 } from '../shared.d.ts';
 
 /**
@@ -29,13 +28,13 @@ export type Lib_CssGenerator_Runner_Generate_AccentLightColor = InstanceType<typ
 
 export type Lib_CssGenerator_Runner_Generate_AccentDarkColor = InstanceType<typeof import('../../lib/color.js').Runner>;
 
-export type Lib_CssGenerator_Runner_Generate_PrimaryLightScale = Shared_ColorScale;
+export type Lib_CssGenerator_Runner_Generate_PrimaryLightScale = Record<50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950, string>;
 
-export type Lib_CssGenerator_Runner_Generate_PrimaryDarkScale = Shared_ColorScale;
+export type Lib_CssGenerator_Runner_Generate_PrimaryDarkScale = Record<50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950, string>;
 
-export type Lib_CssGenerator_Runner_Generate_AccentLightScale = Shared_ColorScale;
+export type Lib_CssGenerator_Runner_Generate_AccentLightScale = Record<50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950, string>;
 
-export type Lib_CssGenerator_Runner_Generate_AccentDarkScale = Shared_ColorScale;
+export type Lib_CssGenerator_Runner_Generate_AccentDarkScale = Record<50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950, string>;
 
 export type Lib_CssGenerator_Runner_Generate_PrimaryLightLines = string[];
 
@@ -95,7 +94,7 @@ export type Lib_CssGenerator_Runner_GenerateColorVariables_Returns = string[];
 
 export type Lib_CssGenerator_Runner_GenerateColorVariables_Lines = string[];
 
-export type Lib_CssGenerator_Runner_GenerateColorVariables_ShadeLevels = Shared_ShadeLevel[];
+export type Lib_CssGenerator_Runner_GenerateColorVariables_ShadeLevels = (50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950)[];
 
 /**
  * Lib - CSS Generator - Generate Depth Variables.
@@ -140,6 +139,14 @@ export type Lib_CssGenerator_Runner_GenerateGridVariables_DensityGutter = string
 export type Lib_CssGenerator_Runner_GenerateGridVariables_DensityPadding = string;
 
 export type Lib_CssGenerator_Runner_GenerateGridVariables_BaseLines = string[];
+
+export type Lib_CssGenerator_Runner_GenerateGridVariables_MediumGutter = string;
+
+export type Lib_CssGenerator_Runner_GenerateGridVariables_MediumPadding = string;
+
+export type Lib_CssGenerator_Runner_GenerateGridVariables_LargeGutter = string;
+
+export type Lib_CssGenerator_Runner_GenerateGridVariables_LargePadding = string;
 
 export type Lib_CssGenerator_Runner_GenerateGridVariables_MediaBlocks = string[];
 

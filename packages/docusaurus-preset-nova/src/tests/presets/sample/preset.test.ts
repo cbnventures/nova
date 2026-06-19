@@ -5,9 +5,8 @@ import { describe, it } from 'vitest';
 import { presetsSamplePresetSample } from '../../../presets/sample/preset.js';
 
 import type {
-  Tests_Presets_Sample_Preset_Footer,
-  Tests_Presets_Sample_Preset_Navbar,
-  Tests_Presets_Sample_Preset_Sample,
+  Tests_Presets_Sample_Preset_PresetsSamplePresetSampleNavbarAndFooter_HasCorrectFooterValue_Footer,
+  Tests_Presets_Sample_Preset_PresetsSamplePresetSampleNavbarAndFooter_HasCorrectNavbarValue_Navbar,
 } from '../../../types/tests/presets/sample/preset.test.d.ts';
 
 /**
@@ -17,18 +16,16 @@ import type {
  */
 describe('presetsSamplePresetSample', async () => {
   it('has correct color values', () => {
-    const sample: Tests_Presets_Sample_Preset_Sample = presetsSamplePresetSample;
-
-    deepStrictEqual(sample['colors']['primary'], {
+    deepStrictEqual(presetsSamplePresetSample['colors']['primary'], {
       light: '#64748b', dark: '#64748b',
     });
-    deepStrictEqual(sample['colors']['accent'], {
+    deepStrictEqual(presetsSamplePresetSample['colors']['accent'], {
       light: '#94a3b8', dark: '#94a3b8',
     });
-    deepStrictEqual(sample['colors']['text'], {
+    deepStrictEqual(presetsSamplePresetSample['colors']['text'], {
       light: '#27272a', dark: '#e4e4e7',
     });
-    deepStrictEqual(sample['colors']['border'], {
+    deepStrictEqual(presetsSamplePresetSample['colors']['border'], {
       light: '#d4d4d8', dark: '#3f3f46',
     });
 
@@ -36,39 +33,31 @@ describe('presetsSamplePresetSample', async () => {
   });
 
   it('has correct font names', () => {
-    const sample: Tests_Presets_Sample_Preset_Sample = presetsSamplePresetSample;
-
-    strictEqual(sample['fonts']['display'], 'Source Serif 4');
-    strictEqual(sample['fonts']['body'], 'Source Sans 3');
-    strictEqual(sample['fonts']['code'], 'Source Code Pro');
+    strictEqual(presetsSamplePresetSample['fonts']['display'], 'Source Serif 4');
+    strictEqual(presetsSamplePresetSample['fonts']['body'], 'Source Sans 3');
+    strictEqual(presetsSamplePresetSample['fonts']['code'], 'Source Code Pro');
 
     return;
   });
 
   it('has correct shape values', () => {
-    const sample: Tests_Presets_Sample_Preset_Sample = presetsSamplePresetSample;
-
-    strictEqual(sample['shape']['radius'], 'rounded');
-    strictEqual(sample['shape']['density'], 'comfortable');
+    strictEqual(presetsSamplePresetSample['shape']['radius'], 'rounded');
+    strictEqual(presetsSamplePresetSample['shape']['density'], 'comfortable');
 
     return;
   });
 
   it('has correct depth values', () => {
-    const sample: Tests_Presets_Sample_Preset_Sample = presetsSamplePresetSample;
-
-    strictEqual(sample['depth']['cards'], 'flat');
-    strictEqual(sample['depth']['codeBlocks'], 'bordered');
+    strictEqual(presetsSamplePresetSample['depth']['cards'], 'flat');
+    strictEqual(presetsSamplePresetSample['depth']['codeBlocks'], 'bordered');
 
     return;
   });
 
   it('has correct motion values', () => {
-    const sample: Tests_Presets_Sample_Preset_Sample = presetsSamplePresetSample;
-
-    strictEqual(sample['motion']['speed'], 'subtle');
-    strictEqual(sample['motion']['staggeredReveals'], false);
-    strictEqual(sample['motion']['hoverEffects'], true);
+    strictEqual(presetsSamplePresetSample['motion']['speed'], 'subtle');
+    strictEqual(presetsSamplePresetSample['motion']['staggeredReveals'], false);
+    strictEqual(presetsSamplePresetSample['motion']['hoverEffects'], true);
 
     return;
   });
@@ -77,7 +66,7 @@ describe('presetsSamplePresetSample', async () => {
 });
 
 /**
- * Tests - Presets - Sample - Preset - Presets_Sample_Preset_Sample Navbar And Footer.
+ * Tests - Presets - Sample - Preset - PresetsSamplePresetSample Navbar And Footer.
  *
  * Verifies that the sample preset includes the correct navbar
  * and footer variant identifiers for theme rendering.
@@ -86,7 +75,7 @@ describe('presetsSamplePresetSample', async () => {
  */
 describe('presetsSamplePresetSample navbar and footer', async () => {
   it('has correct navbar value', () => {
-    const navbar: Tests_Presets_Sample_Preset_Navbar = presetsSamplePresetSample['navbar'];
+    const navbar: Tests_Presets_Sample_Preset_PresetsSamplePresetSampleNavbarAndFooter_HasCorrectNavbarValue_Navbar = presetsSamplePresetSample['navbar'];
 
     strictEqual(navbar, 'bridge');
 
@@ -94,7 +83,7 @@ describe('presetsSamplePresetSample navbar and footer', async () => {
   });
 
   it('has correct footer value', () => {
-    const footer: Tests_Presets_Sample_Preset_Footer = presetsSamplePresetSample['footer'];
+    const footer: Tests_Presets_Sample_Preset_PresetsSamplePresetSampleNavbarAndFooter_HasCorrectFooterValue_Footer = presetsSamplePresetSample['footer'];
 
     strictEqual(footer, 'commons');
 

@@ -9,10 +9,12 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Context,
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_DashIndex,
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_DashPositions,
-  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Fix_Match,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Fix_Fixer,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Fix_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedLine,
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedLines,
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedValue,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixMatch,
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Lines,
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Match,
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MatchDash,
@@ -31,8 +33,9 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeEndIndex,
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeLength,
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeWithBraces,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_Create_Options,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_Create_Program_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleOptions,
 } from '../../../types/rules/eslint/jsdoc/require-jsdoc-param-alignment.d.ts';
 
 /**
@@ -104,7 +107,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -112,7 +115,7 @@ export class Runner {
       }
 
       return {
-        Program() {
+        Program(): Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_Create_Program_Returns {
           Runner.checkProgram(context);
 
           return;
@@ -218,7 +221,7 @@ export class Runner {
             continue;
           }
 
-          const fixMatch: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Fix_Match = fixedLine.match(Runner.#fixPattern);
+          const fixMatch: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixMatch = fixedLine.match(Runner.#fixPattern);
 
           if (
             fixMatch !== null
@@ -252,9 +255,9 @@ export class Runner {
           const padAfterType: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_PadAfterType = maxTypeLength - typeWithBraces.length + 1;
           const padAfterName: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_PadAfterName = maxNameLength - entry['name'].length + 1;
 
-          const fixedLine: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_RebuiltLine = `${entry['prefix']}${typeWithBraces}${' '.repeat(padAfterType)}${entry['name']}${' '.repeat(padAfterName)}${entry['description']}`;
+          const rebuiltLine: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_RebuiltLine = `${entry['prefix']}${typeWithBraces}${' '.repeat(padAfterType)}${entry['name']}${' '.repeat(padAfterName)}${entry['description']}`;
 
-          Reflect.set(fixedLines, entry['index'], fixedLine);
+          Reflect.set(fixedLines, entry['index'], rebuiltLine);
         }
 
         const fixedValue: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedValue = fixedLines.join('\n');
@@ -262,7 +265,7 @@ export class Runner {
         context.report({
           node: comment,
           messageId: 'paramAlignment',
-          fix(fixer) {
+          fix(fixer: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Fix_Fixer): Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Fix_Returns {
             return fixer.replaceTextRange(comment.range, `/*${fixedValue}*/`);
           },
         });

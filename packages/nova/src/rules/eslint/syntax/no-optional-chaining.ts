@@ -6,8 +6,10 @@ import type {
   Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Context,
   Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Node,
   Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Returns,
+  Rules_Eslint_Syntax_NoOptionalChaining_Runner_Create_ChainExpression_Node,
+  Rules_Eslint_Syntax_NoOptionalChaining_Runner_Create_ChainExpression_Returns,
+  Rules_Eslint_Syntax_NoOptionalChaining_Runner_Create_Options,
   Rules_Eslint_Syntax_NoOptionalChaining_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Syntax_NoOptionalChaining_Runner_RuleOptions,
 } from '../../../types/rules/eslint/syntax/no-optional-chaining.d.ts';
 
 /**
@@ -54,7 +56,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Syntax_NoOptionalChaining_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Syntax_NoOptionalChaining_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Syntax_NoOptionalChaining_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -62,7 +64,7 @@ export class Runner {
       }
 
       return {
-        ChainExpression(node) {
+        ChainExpression(node: Rules_Eslint_Syntax_NoOptionalChaining_Runner_Create_ChainExpression_Node): Rules_Eslint_Syntax_NoOptionalChaining_Runner_Create_ChainExpression_Returns {
           Runner.checkChainExpression(context, node);
 
           return;

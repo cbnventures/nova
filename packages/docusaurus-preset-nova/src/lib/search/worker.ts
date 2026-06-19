@@ -1,5 +1,67 @@
 /// <reference path="../../types/worker-globals.d.ts" />
 
+import type {
+  Lib_Search_Worker_Event,
+  Lib_Search_Worker_HandleInit_ErrorMessage,
+  Lib_Search_Worker_HandleInit_LoadedIndex,
+  Lib_Search_Worker_HandleInit_Message,
+  Lib_Search_Worker_HandleInit_Parsed,
+  Lib_Search_Worker_HandleInit_Response,
+  Lib_Search_Worker_HandleInit_Returns,
+  Lib_Search_Worker_HandleMessage_MessageData,
+  Lib_Search_Worker_HandleSearch_Hits,
+  Lib_Search_Worker_HandleSearch_Message,
+  Lib_Search_Worker_HandleSearch_Returns,
+  Lib_Search_Worker_PerformSearch_A,
+  Lib_Search_Worker_PerformSearch_AllResults,
+  Lib_Search_Worker_PerformSearch_B,
+  Lib_Search_Worker_PerformSearch_ContextEnd,
+  Lib_Search_Worker_PerformSearch_ContextMatch,
+  Lib_Search_Worker_PerformSearch_ContextPattern,
+  Lib_Search_Worker_PerformSearch_ContextRadius,
+  Lib_Search_Worker_PerformSearch_ContextSnippet,
+  Lib_Search_Worker_PerformSearch_ContextStart,
+  Lib_Search_Worker_PerformSearch_Documents,
+  Lib_Search_Worker_PerformSearch_EscapedQuery,
+  Lib_Search_Worker_PerformSearch_EscapedTerm,
+  Lib_Search_Worker_PerformSearch_ExactResults,
+  Lib_Search_Worker_PerformSearch_ExistingScore,
+  Lib_Search_Worker_PerformSearch_FuzzyQuery,
+  Lib_Search_Worker_PerformSearch_FuzzyResults,
+  Lib_Search_Worker_PerformSearch_HighlightPattern,
+  Lib_Search_Worker_PerformSearch_Hits,
+  Lib_Search_Worker_PerformSearch_Index,
+  Lib_Search_Worker_PerformSearch_IsHighlight,
+  Lib_Search_Worker_PerformSearch_Limit,
+  Lib_Search_Worker_PerformSearch_MappedEntry,
+  Lib_Search_Worker_PerformSearch_MatchedDocument,
+  Lib_Search_Worker_PerformSearch_Query,
+  Lib_Search_Worker_PerformSearch_Ref,
+  Lib_Search_Worker_PerformSearch_RefTerm,
+  Lib_Search_Worker_PerformSearch_RefTerms,
+  Lib_Search_Worker_PerformSearch_Result,
+  Lib_Search_Worker_PerformSearch_Returns,
+  Lib_Search_Worker_PerformSearch_Score,
+  Lib_Search_Worker_PerformSearch_ScoreMap,
+  Lib_Search_Worker_PerformSearch_SegmentPart,
+  Lib_Search_Worker_PerformSearch_SegmentPartIndex,
+  Lib_Search_Worker_PerformSearch_SegmentParts,
+  Lib_Search_Worker_PerformSearch_SegmentPattern,
+  Lib_Search_Worker_PerformSearch_SlicedRefs,
+  Lib_Search_Worker_PerformSearch_SnippetSegments,
+  Lib_Search_Worker_PerformSearch_SortedRefs,
+  Lib_Search_Worker_PerformSearch_Term,
+  Lib_Search_Worker_PerformSearch_TermPatterns,
+  Lib_Search_Worker_PerformSearch_TermsMap,
+  Lib_Search_Worker_PerformSearch_TermsSet,
+  Lib_Search_Worker_PerformSearch_TrimmedQuery,
+  Lib_Search_Worker_PerformSearch_TypedIndex,
+  Lib_Search_Worker_PerformSearch_WildcardQuery,
+  Lib_Search_Worker_PerformSearch_WildcardResults,
+  Lib_Search_Worker_SearchDocuments,
+  Lib_Search_Worker_SearchIndex,
+} from '../../types/lib/search/worker.d.ts';
+
 declare const lunr: WorkerGlobals_LunrGlobal;
 
 importScripts('lunr.min.js');
@@ -12,7 +74,7 @@ importScripts('lunr.min.js');
  *
  * @since 0.15.0
  */
-let searchIndex: WorkerGlobals_SearchIndex = undefined;
+let searchIndex: Lib_Search_Worker_SearchIndex = undefined;
 
 /**
  * Lib - Search - Worker - Search Documents.
@@ -22,7 +84,7 @@ let searchIndex: WorkerGlobals_SearchIndex = undefined;
  *
  * @since 0.15.0
  */
-let searchDocuments: WorkerGlobals_SearchDocuments = [];
+let searchDocuments: Lib_Search_Worker_SearchDocuments = [];
 
 /**
  * Lib - Search - Worker - Handle Init.
@@ -35,10 +97,10 @@ let searchDocuments: WorkerGlobals_SearchDocuments = [];
  * @returns       Handle init.
  * @since 0.15.0
  */
-async function handleInit(message: WorkerGlobals_HandleInitMessage): WorkerGlobals_HandleInitReturns {
+async function handleInit(message: Lib_Search_Worker_HandleInit_Message): Lib_Search_Worker_HandleInit_Returns {
   try {
-    const response: WorkerGlobals_HandleInitResponse = await fetch(message['indexUrl']);
-    const parsed: WorkerGlobals_HandleInitParsed = await response.json() as WorkerGlobals_HandleInitParsed;
+    const response: Lib_Search_Worker_HandleInit_Response = await fetch(message['indexUrl']);
+    const parsed: Lib_Search_Worker_HandleInit_Parsed = await response.json() as Lib_Search_Worker_HandleInit_Parsed;
 
     if (
       parsed === null
@@ -49,14 +111,14 @@ async function handleInit(message: WorkerGlobals_HandleInitMessage): WorkerGloba
       throw new Error('SEARCH_INVALID_INDEX_DATA');
     }
 
-    const loadedIndex: WorkerGlobals_HandleInitLoadedIndex = lunr['Index'].load(parsed['index']);
+    const loadedIndex: Lib_Search_Worker_HandleInit_LoadedIndex = lunr['Index'].load(parsed['index']);
 
     searchIndex = loadedIndex;
     searchDocuments = parsed['documents'];
 
     self.postMessage({ type: 'ready' });
   } catch (error) {
-    const errorMessage: WorkerGlobals_HandleInitErrorMessage = (error instanceof Error) ? error['message'] : 'SEARCH_UNKNOWN_INIT_ERROR';
+    const errorMessage: Lib_Search_Worker_HandleInit_ErrorMessage = (error instanceof Error) ? error['message'] : 'SEARCH_UNKNOWN_INIT_ERROR';
 
     self.postMessage({
       type: 'error', reason: errorMessage,
@@ -76,7 +138,7 @@ async function handleInit(message: WorkerGlobals_HandleInitMessage): WorkerGloba
  * @param message - Message.
  * @since 0.15.0
  */
-function handleSearch(message: WorkerGlobals_HandleSearchMessage): WorkerGlobals_HandleSearchReturns {
+function handleSearch(message: Lib_Search_Worker_HandleSearch_Message): Lib_Search_Worker_HandleSearch_Returns {
   if (searchIndex === undefined) {
     self.postMessage({
       type: 'error', reason: 'SEARCH_INDEX_NOT_INITIALIZED',
@@ -85,7 +147,7 @@ function handleSearch(message: WorkerGlobals_HandleSearchMessage): WorkerGlobals
     return;
   }
 
-  const hits: WorkerGlobals_PerformSearchReturns = performSearch(searchIndex, searchDocuments, message['query'], message['limit']);
+  const hits: Lib_Search_Worker_HandleSearch_Hits = performSearch(searchIndex, searchDocuments, message['query'], message['limit']);
 
   self.postMessage({
     type: 'results', hits,
@@ -108,45 +170,45 @@ function handleSearch(message: WorkerGlobals_HandleSearchMessage): WorkerGlobals
  * @returns         Perform search.
  * @since 0.15.0
  */
-function performSearch(index: WorkerGlobals_PerformSearchIndex, documents: WorkerGlobals_PerformSearchDocuments, query: WorkerGlobals_PerformSearchQuery, limit: WorkerGlobals_PerformSearchLimit): WorkerGlobals_PerformSearchReturns {
-  const trimmedQuery: WorkerGlobals_PerformSearchTrimmedQuery = query.trim();
+function performSearch(index: Lib_Search_Worker_PerformSearch_Index, documents: Lib_Search_Worker_PerformSearch_Documents, query: Lib_Search_Worker_PerformSearch_Query, limit: Lib_Search_Worker_PerformSearch_Limit): Lib_Search_Worker_PerformSearch_Returns {
+  const trimmedQuery: Lib_Search_Worker_PerformSearch_TrimmedQuery = query.trim();
 
   if (trimmedQuery === '') {
     return [];
   }
 
-  const typedIndex: WorkerGlobals_PerformSearchTypedIndex = index as WorkerGlobals_PerformSearchTypedIndex;
+  const typedIndex: Lib_Search_Worker_PerformSearch_TypedIndex = index as Lib_Search_Worker_PerformSearch_TypedIndex;
 
-  const exactResults: WorkerGlobals_PerformSearchExactResults = typedIndex.search(trimmedQuery);
-  const wildcardQuery: WorkerGlobals_PerformSearchWildcardQuery = `${trimmedQuery}*`;
-  const wildcardResults: WorkerGlobals_PerformSearchWildcardResults = typedIndex.search(wildcardQuery);
-  const fuzzyQuery: WorkerGlobals_PerformSearchFuzzyQuery = `${trimmedQuery}~1`;
-  const fuzzyResults: WorkerGlobals_PerformSearchFuzzyResults = typedIndex.search(fuzzyQuery);
+  const exactResults: Lib_Search_Worker_PerformSearch_ExactResults = typedIndex.search(trimmedQuery);
+  const wildcardQuery: Lib_Search_Worker_PerformSearch_WildcardQuery = `${trimmedQuery}*`;
+  const wildcardResults: Lib_Search_Worker_PerformSearch_WildcardResults = typedIndex.search(wildcardQuery);
+  const fuzzyQuery: Lib_Search_Worker_PerformSearch_FuzzyQuery = `${trimmedQuery}~1`;
+  const fuzzyResults: Lib_Search_Worker_PerformSearch_FuzzyResults = typedIndex.search(fuzzyQuery);
 
-  const allResults: WorkerGlobals_PerformSearchAllResults = [
+  const allResults: Lib_Search_Worker_PerformSearch_AllResults = [
     ...exactResults,
     ...wildcardResults,
     ...fuzzyResults,
   ];
 
-  const scoreMap: WorkerGlobals_PerformSearchScoreMap = new Map();
-  const termsMap: WorkerGlobals_PerformSearchTermsMap = new Map();
+  const scoreMap: Lib_Search_Worker_PerformSearch_ScoreMap = new Map();
+  const termsMap: Lib_Search_Worker_PerformSearch_TermsMap = new Map();
 
   for (let i = 0; i < allResults.length; i += 1) {
-    const result: WorkerGlobals_PerformSearchResult = allResults[i];
+    const result: Lib_Search_Worker_PerformSearch_Result = allResults[i];
 
     if (result === undefined) {
       continue;
     }
 
-    const existingScore: WorkerGlobals_PerformSearchExistingScore = scoreMap.get(result['ref']);
+    const existingScore: Lib_Search_Worker_PerformSearch_ExistingScore = scoreMap.get(result['ref']);
 
     if (existingScore === undefined || result['score'] > existingScore) {
       scoreMap.set(result['ref'], result['score']);
     }
 
     // Collect matched terms from lunr matchData.
-    let termsSet: WorkerGlobals_PerformSearchMaybeTermsSet = termsMap.get(result['ref']);
+    let termsSet: Lib_Search_Worker_PerformSearch_TermsSet = termsMap.get(result['ref']);
 
     if (termsSet === undefined) {
       termsSet = new Set();
@@ -154,16 +216,16 @@ function performSearch(index: WorkerGlobals_PerformSearchIndex, documents: Worke
     }
 
     for (const matchedTerm of Object.keys(result['matchData']['metadata'])) {
-      const term: WorkerGlobals_PerformSearchMatchedTerm = matchedTerm;
+      const term: Lib_Search_Worker_PerformSearch_Term = matchedTerm;
 
       termsSet.add(term);
     }
   }
 
-  const sortedRefs: WorkerGlobals_PerformSearchSortedRefs = Array.from(scoreMap.entries())
+  const sortedRefs: Lib_Search_Worker_PerformSearch_SortedRefs = Array.from(scoreMap.entries())
     .sort((entryA, entryB) => {
-      const a: WorkerGlobals_PerformSearchEntry = entryA;
-      const b: WorkerGlobals_PerformSearchEntry = entryB;
+      const a: Lib_Search_Worker_PerformSearch_A = entryA;
+      const b: Lib_Search_Worker_PerformSearch_B = entryB;
 
       if (a === undefined || b === undefined) {
         return 0;
@@ -172,7 +234,7 @@ function performSearch(index: WorkerGlobals_PerformSearchIndex, documents: Worke
       return b[1] - a[1];
     })
     .map((entry) => {
-      const mappedEntry: WorkerGlobals_PerformSearchEntry = entry;
+      const mappedEntry: Lib_Search_Worker_PerformSearch_MappedEntry = entry;
 
       if (mappedEntry === undefined) {
         return '';
@@ -181,68 +243,68 @@ function performSearch(index: WorkerGlobals_PerformSearchIndex, documents: Worke
       return mappedEntry[0];
     });
 
-  const slicedRefs: WorkerGlobals_PerformSearchSlicedRefs = sortedRefs.slice(0, limit);
-  const hits: WorkerGlobals_PerformSearchHits = [];
+  const slicedRefs: Lib_Search_Worker_PerformSearch_SlicedRefs = sortedRefs.slice(0, limit);
+  const hits: Lib_Search_Worker_PerformSearch_Hits = [];
 
   for (let i = 0; i < slicedRefs.length; i += 1) {
-    const ref: WorkerGlobals_PerformSearchRef = slicedRefs[i];
+    const ref: Lib_Search_Worker_PerformSearch_Ref = slicedRefs[i];
 
     if (ref === undefined) {
       continue;
     }
 
-    const matchedDocument: WorkerGlobals_PerformSearchMatchedDocument = documents.find((document: WorkerGlobals_SharedDocument) => document['path'] === ref);
+    const matchedDocument: Lib_Search_Worker_PerformSearch_MatchedDocument = documents.find((document) => document['path'] === ref);
 
     if (matchedDocument === undefined) {
       continue;
     }
 
-    const score: WorkerGlobals_PerformSearchExistingScore = scoreMap.get(ref);
+    const score: Lib_Search_Worker_PerformSearch_Score = scoreMap.get(ref);
 
-    const termPatterns: WorkerGlobals_PerformSearchTermPatterns = [];
-    const refTerms: WorkerGlobals_PerformSearchMaybeTermsSet = termsMap.get(ref);
+    const termPatterns: Lib_Search_Worker_PerformSearch_TermPatterns = [];
+    const refTerms: Lib_Search_Worker_PerformSearch_RefTerms = termsMap.get(ref);
 
     if (refTerms !== undefined) {
       for (const matchedTerm of refTerms) {
-        const term: WorkerGlobals_PerformSearchMatchedTerm = matchedTerm;
-        const escapedTerm: WorkerGlobals_PerformSearchEscapedQuery = term.replace(new RegExp('[.*+?^${}()|[\\]\\\\]', 'g'), (match: WorkerGlobals_PerformSearchEscapeMatch) => `\\${match}`);
+        const refTerm: Lib_Search_Worker_PerformSearch_RefTerm = matchedTerm;
+        const escapedTerm: Lib_Search_Worker_PerformSearch_EscapedTerm = refTerm.replace(new RegExp('[.*+?^${}()|[\\]\\\\]', 'g'), (match) => `\\${match}`);
 
         termPatterns.push(`${escapedTerm}\\w*`);
       }
     }
 
-    const escapedQuery: WorkerGlobals_PerformSearchEscapedQuery = trimmedQuery.replace(new RegExp('[.*+?^${}()|[\\]\\\\]', 'g'), (match: WorkerGlobals_PerformSearchEscapeMatch) => `\\${match}`);
+    const escapedQuery: Lib_Search_Worker_PerformSearch_EscapedQuery = trimmedQuery.replace(new RegExp('[.*+?^${}()|[\\]\\\\]', 'g'), (match) => `\\${match}`);
 
     termPatterns.push(escapedQuery);
 
-    const highlightPattern: WorkerGlobals_PerformSearchHighlightPattern = termPatterns.join('|');
-    const segmentPattern: WorkerGlobals_PerformSearchSegmentPattern = new RegExp(`(${highlightPattern})`, 'gi');
+    const highlightPattern: Lib_Search_Worker_PerformSearch_HighlightPattern = termPatterns.join('|');
+    const segmentPattern: Lib_Search_Worker_PerformSearch_SegmentPattern = new RegExp(`(${highlightPattern})`, 'gi');
 
     // Generate a context-aware snippet from the body around the first match.
-    const contextRadius: WorkerGlobals_PerformSearchContextRadius = 80;
-    const contextPattern: WorkerGlobals_PerformSearchContextPattern = new RegExp(highlightPattern, 'gi');
-    const contextMatch: WorkerGlobals_PerformSearchContextMatch = contextPattern.exec(matchedDocument['body']);
-    let contextSnippet: WorkerGlobals_PerformSearchContextSnippet = matchedDocument['snippet'];
+    const contextRadius: Lib_Search_Worker_PerformSearch_ContextRadius = 80;
+    const contextPattern: Lib_Search_Worker_PerformSearch_ContextPattern = new RegExp(highlightPattern, 'gi');
+    const contextMatch: Lib_Search_Worker_PerformSearch_ContextMatch = contextPattern.exec(matchedDocument['body']);
+    let contextSnippet: Lib_Search_Worker_PerformSearch_ContextSnippet = matchedDocument['snippet'];
 
     if (contextMatch !== null) {
-      const contextStart: WorkerGlobals_PerformSearchContextStart = Math.max(0, contextMatch.index - contextRadius);
-      const contextEnd: WorkerGlobals_PerformSearchContextEnd = Math.min(matchedDocument['body'].length, contextMatch.index + contextMatch[0].length + contextRadius);
+      const contextStart: Lib_Search_Worker_PerformSearch_ContextStart = Math.max(0, contextMatch.index - contextRadius);
+      const contextEnd: Lib_Search_Worker_PerformSearch_ContextEnd = Math.min(matchedDocument['body'].length, contextMatch.index + contextMatch[0].length + contextRadius);
 
-      contextSnippet = ((contextStart > 0) ? '\u2026' : '') + matchedDocument['body'].slice(contextStart, contextEnd).trim() + ((contextEnd < matchedDocument['body'].length) ? '\u2026' : '');
+      contextSnippet = ((contextStart > 0) ? '…' : '') + matchedDocument['body'].slice(contextStart, contextEnd).trim() + ((contextEnd < matchedDocument['body'].length) ? '…' : '');
     }
 
-    const segmentParts: WorkerGlobals_PerformSearchSegmentParts = contextSnippet.split(segmentPattern);
-    const snippetSegments: WorkerGlobals_PerformSearchSnippetSegments = [];
+    const segmentParts: Lib_Search_Worker_PerformSearch_SegmentParts = contextSnippet.split(segmentPattern);
+    const snippetSegments: Lib_Search_Worker_PerformSearch_SnippetSegments = [];
 
     for (let j = 0; j < segmentParts.length; j += 1) {
-      const segmentPart: WorkerGlobals_PerformSearchSegmentPart = segmentParts[j] as WorkerGlobals_PerformSearchSegmentPart;
+      const segmentPart: Lib_Search_Worker_PerformSearch_SegmentPart = segmentParts[j] as Lib_Search_Worker_PerformSearch_SegmentPart;
 
       if (segmentPart === '') {
         continue;
       }
 
-      const segmentPartIndex: WorkerGlobals_PerformSearchSegmentPartIndex = j;
-      const isHighlight: WorkerGlobals_PerformSearchSegmentIsHighlight = segmentPartIndex % 2 === 1;
+      const segmentPartIndex: Lib_Search_Worker_PerformSearch_SegmentPartIndex = j;
+      const isHighlight: Lib_Search_Worker_PerformSearch_IsHighlight = segmentPartIndex % 2 === 1;
 
       snippetSegments.push({
         text: segmentPart,
@@ -263,24 +325,34 @@ function performSearch(index: WorkerGlobals_PerformSearchIndex, documents: Worke
 }
 
 /**
+ * Lib - Search - Worker - Handle Message.
+ *
+ * Dispatches an incoming worker message to the appropriate handler based on
+ * the message type field.
+ *
+ * @param event - Event.
+ * @since 0.15.0
+ */
+const handleMessage = (event: Lib_Search_Worker_Event) => {
+  const messageData: Lib_Search_Worker_HandleMessage_MessageData = event['data'];
+
+  if (messageData['type'] === 'init') {
+    void handleInit(messageData);
+  } else if (messageData['type'] === 'search') {
+    handleSearch(messageData);
+  }
+
+  return;
+};
+
+/**
  * Lib - Search - Worker.
  *
- * Registers the message event handler on the worker global scope that
- * dispatches incoming messages to the appropriate handler based on the
- * message type field.
+ * Registers the message event handler on the worker global scope so the
+ * worker can receive init and search messages from the main thread.
  *
  * @since 0.15.0
  */
 if (typeof self !== 'undefined') {
-  self.addEventListener('message', (event: WorkerGlobals_ListenerEvent) => {
-    const messageData: WorkerGlobals_ListenerMessageData = event['data'];
-
-    if (messageData['type'] === 'init') {
-      void handleInit(messageData);
-    } else if (messageData['type'] === 'search') {
-      handleSearch(messageData);
-    }
-
-    return;
-  });
+  self.addEventListener('message', handleMessage);
 }

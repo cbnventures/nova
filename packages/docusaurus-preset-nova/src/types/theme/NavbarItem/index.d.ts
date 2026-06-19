@@ -134,9 +134,16 @@ export type Theme_NavbarItem_DocSidebarNavbarItem_AriaCurrent = 'page' | undefin
  */
 export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DocsPluginId = string | undefined;
 
-export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItemsBefore = Theme_NavbarItem_DropdownNavbarItem_ChildItem[];
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItem_Label = string | undefined;
 
-export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItemsAfter = Theme_NavbarItem_DropdownNavbarItem_ChildItem[];
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItem = {
+  label?: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItem_Label;
+  [key: string]: unknown;
+};
+
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItemsBefore = Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItem[];
+
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItemsAfter = Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItem[];
 
 export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props = {
   docsPluginId?: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DocsPluginId;
@@ -212,6 +219,13 @@ export type Theme_NavbarItem_DocsVersionNavbarItem_Path = string;
  *
  * @since 0.15.0
  */
+export type Theme_NavbarItem_DropdownNavbarItem_ChildItem_Label = string | undefined;
+
+export type Theme_NavbarItem_DropdownNavbarItem_ChildItem = {
+  label?: Theme_NavbarItem_DropdownNavbarItem_ChildItem_Label;
+  [key: string]: unknown;
+};
+
 export type Theme_NavbarItem_DropdownNavbarItem_Props_Label = string | undefined;
 
 export type Theme_NavbarItem_DropdownNavbarItem_Props_Items = Theme_NavbarItem_DropdownNavbarItem_ChildItem[];
@@ -219,13 +233,6 @@ export type Theme_NavbarItem_DropdownNavbarItem_Props_Items = Theme_NavbarItem_D
 export type Theme_NavbarItem_DropdownNavbarItem_Props = {
   label?: Theme_NavbarItem_DropdownNavbarItem_Props_Label;
   items?: Theme_NavbarItem_DropdownNavbarItem_Props_Items;
-  [key: string]: unknown;
-};
-
-export type Theme_NavbarItem_DropdownNavbarItem_ChildItem_Label = string | undefined;
-
-export type Theme_NavbarItem_DropdownNavbarItem_ChildItem = {
-  label?: Theme_NavbarItem_DropdownNavbarItem_ChildItem_Label;
   [key: string]: unknown;
 };
 

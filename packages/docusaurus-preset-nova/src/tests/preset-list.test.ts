@@ -36,18 +36,39 @@ import type {
   Tests_PresetList_ListPresetDirectories_Names,
   Tests_PresetList_ListPresetDirectories_Returns,
   Tests_PresetList_ListPresetDirectories_Root,
-  Tests_PresetList_PresetList_ExpectedSet,
-  Tests_PresetList_PresetList_Extra,
-  Tests_PresetList_PresetList_Filesystem,
-  Tests_PresetList_PresetList_FilesystemSet,
-  Tests_PresetList_PresetList_Literals,
-  Tests_PresetList_PresetList_Message,
-  Tests_PresetList_PresetList_Missing,
-  Tests_PresetList_PresetList_Presets,
-  Tests_PresetList_PresetList_PresetsRoot,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_ExpectedSet,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_Extra,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_Filesystem,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_FilesystemSet,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_Message,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_Missing,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_PresetsRoot,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_ExpectedSet,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_Extra,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_Filesystem,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_FilesystemSet,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_Message,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_Missing,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_PresetsRoot,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_ExpectedSet,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Extra,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Filesystem,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_FilesystemSet,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Literals,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Message,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Missing,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_PresetsRoot,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_SharedTypeFilePath,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_ExpectedSet,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Extra,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Filesystem,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_FilesystemSet,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Message,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Missing,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Presets,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_PresetsRoot,
+  Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_TokenMapTestFilePath,
   Tests_PresetList_PresetList_SamplePreset,
-  Tests_PresetList_PresetList_SharedTypeFilePath,
-  Tests_PresetList_PresetList_TokenMapTestFilePath,
 } from '../types/tests/preset-list.test.d.ts';
 
 /**
@@ -174,13 +195,13 @@ describe('preset list', () => {
   const samplePreset: Tests_PresetList_PresetList_SamplePreset = 'sample';
 
   it('filesystem preset directories match presetsIndexNames (excluding sample scaffold)', async () => {
-    const presetsRoot: Tests_PresetList_PresetList_PresetsRoot = resolve(getPackageRoot(), 'src', 'styles', 'presets');
-    const filesystem: Tests_PresetList_PresetList_Filesystem = await listPresetDirectories(presetsRoot);
-    const filesystemSet: Tests_PresetList_PresetList_FilesystemSet = new Set(filesystem.filter((name) => name !== samplePreset));
-    const expectedSet: Tests_PresetList_PresetList_ExpectedSet = new Set(presetsIndexNames);
-    const missing: Tests_PresetList_PresetList_Missing = [...filesystemSet].filter((name) => expectedSet.has(name) === false);
-    const extra: Tests_PresetList_PresetList_Extra = [...expectedSet].filter((name) => filesystemSet.has(name) === false);
-    const message: Tests_PresetList_PresetList_Message = [
+    const presetsRoot: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_PresetsRoot = resolve(getPackageRoot(), 'src', 'styles', 'presets');
+    const filesystem: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_Filesystem = await listPresetDirectories(presetsRoot);
+    const filesystemSet: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_FilesystemSet = new Set(filesystem.filter((name) => name !== samplePreset));
+    const expectedSet: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_ExpectedSet = new Set(presetsIndexNames);
+    const missing: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_Missing = [...filesystemSet].filter((name) => expectedSet.has(name) === false);
+    const extra: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_Extra = [...expectedSet].filter((name) => filesystemSet.has(name) === false);
+    const message: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexNamesExcludingSampleScaffold_Message = [
       'presetsIndexNames drift vs filesystem (sample excluded):',
       `  On disk but not in presetsIndexNames: ${missing.length}`,
       ...missing.map((name) => `    + ${name}`),
@@ -194,13 +215,13 @@ describe('preset list', () => {
   });
 
   it('filesystem preset directories match presetsIndexPresets keys (excluding sample scaffold)', async () => {
-    const presetsRoot: Tests_PresetList_PresetList_PresetsRoot = resolve(getPackageRoot(), 'src', 'styles', 'presets');
-    const filesystem: Tests_PresetList_PresetList_Filesystem = await listPresetDirectories(presetsRoot);
-    const filesystemSet: Tests_PresetList_PresetList_FilesystemSet = new Set(filesystem.filter((name) => name !== samplePreset));
-    const expectedSet: Tests_PresetList_PresetList_ExpectedSet = new Set(Object.keys(presetsIndexPresets));
-    const missing: Tests_PresetList_PresetList_Missing = [...filesystemSet].filter((name) => expectedSet.has(name) === false);
-    const extra: Tests_PresetList_PresetList_Extra = [...expectedSet].filter((name) => filesystemSet.has(name) === false);
-    const message: Tests_PresetList_PresetList_Message = [
+    const presetsRoot: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_PresetsRoot = resolve(getPackageRoot(), 'src', 'styles', 'presets');
+    const filesystem: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_Filesystem = await listPresetDirectories(presetsRoot);
+    const filesystemSet: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_FilesystemSet = new Set(filesystem.filter((name) => name !== samplePreset));
+    const expectedSet: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_ExpectedSet = new Set(Object.keys(presetsIndexPresets));
+    const missing: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_Missing = [...filesystemSet].filter((name) => expectedSet.has(name) === false);
+    const extra: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_Extra = [...expectedSet].filter((name) => filesystemSet.has(name) === false);
+    const message: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchPresetsIndexPresetsKeysExcludingSampleScaffold_Message = [
       'presetsIndexPresets drift vs filesystem (sample excluded):',
       `  On disk but not in presetsIndexPresets: ${missing.length}`,
       ...missing.map((name) => `    + ${name}`),
@@ -214,15 +235,15 @@ describe('preset list', () => {
   });
 
   it('filesystem preset directories match Shared_PresetName union literals (excluding sample scaffold)', async () => {
-    const presetsRoot: Tests_PresetList_PresetList_PresetsRoot = resolve(getPackageRoot(), 'src', 'styles', 'presets');
-    const filesystem: Tests_PresetList_PresetList_Filesystem = await listPresetDirectories(presetsRoot);
-    const filesystemSet: Tests_PresetList_PresetList_FilesystemSet = new Set(filesystem.filter((name) => name !== samplePreset));
-    const sharedTypeFilePath: Tests_PresetList_PresetList_SharedTypeFilePath = resolve(getPackageRoot(), 'src', 'types', 'shared.d.ts');
-    const literals: Tests_PresetList_PresetList_Literals = await extractSharedPresetNameLiterals(sharedTypeFilePath);
-    const expectedSet: Tests_PresetList_PresetList_ExpectedSet = new Set(literals);
-    const missing: Tests_PresetList_PresetList_Missing = [...filesystemSet].filter((name) => expectedSet.has(name) === false);
-    const extra: Tests_PresetList_PresetList_Extra = [...expectedSet].filter((name) => filesystemSet.has(name) === false);
-    const message: Tests_PresetList_PresetList_Message = [
+    const presetsRoot: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_PresetsRoot = resolve(getPackageRoot(), 'src', 'styles', 'presets');
+    const filesystem: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Filesystem = await listPresetDirectories(presetsRoot);
+    const filesystemSet: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_FilesystemSet = new Set(filesystem.filter((name) => name !== samplePreset));
+    const sharedTypeFilePath: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_SharedTypeFilePath = resolve(getPackageRoot(), 'src', 'types', 'shared.d.ts');
+    const literals: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Literals = await extractSharedPresetNameLiterals(sharedTypeFilePath);
+    const expectedSet: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_ExpectedSet = new Set(literals);
+    const missing: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Missing = [...filesystemSet].filter((name) => expectedSet.has(name) === false);
+    const extra: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Extra = [...expectedSet].filter((name) => filesystemSet.has(name) === false);
+    const message: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchSharedPresetNameUnionLiteralsExcludingSampleScaffold_Message = [
       'Shared_PresetName drift vs filesystem (sample excluded):',
       `  On disk but not in Shared_PresetName: ${missing.length}`,
       ...missing.map((name) => `    + ${name}`),
@@ -236,15 +257,15 @@ describe('preset list', () => {
   });
 
   it('filesystem preset directories match token-map expectations (including sample scaffold)', async () => {
-    const presetsRoot: Tests_PresetList_PresetList_PresetsRoot = resolve(getPackageRoot(), 'src', 'styles', 'presets');
-    const filesystem: Tests_PresetList_PresetList_Filesystem = await listPresetDirectories(presetsRoot);
-    const filesystemSet: Tests_PresetList_PresetList_FilesystemSet = new Set(filesystem);
-    const tokenMapTestFilePath: Tests_PresetList_PresetList_TokenMapTestFilePath = resolve(getPackageRoot(), 'src', 'tests', 'token-map.test.ts');
-    const presets: Tests_PresetList_PresetList_Presets = await extractTokenMapPresets(tokenMapTestFilePath);
-    const expectedSet: Tests_PresetList_PresetList_ExpectedSet = new Set(presets);
-    const missing: Tests_PresetList_PresetList_Missing = [...filesystemSet].filter((name) => expectedSet.has(name) === false);
-    const extra: Tests_PresetList_PresetList_Extra = [...expectedSet].filter((name) => filesystemSet.has(name) === false);
-    const message: Tests_PresetList_PresetList_Message = [
+    const presetsRoot: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_PresetsRoot = resolve(getPackageRoot(), 'src', 'styles', 'presets');
+    const filesystem: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Filesystem = await listPresetDirectories(presetsRoot);
+    const filesystemSet: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_FilesystemSet = new Set(filesystem);
+    const tokenMapTestFilePath: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_TokenMapTestFilePath = resolve(getPackageRoot(), 'src', 'tests', 'token-map.test.ts');
+    const presets: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Presets = await extractTokenMapPresets(tokenMapTestFilePath);
+    const expectedSet: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_ExpectedSet = new Set(presets);
+    const missing: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Missing = [...filesystemSet].filter((name) => expectedSet.has(name) === false);
+    const extra: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Extra = [...expectedSet].filter((name) => filesystemSet.has(name) === false);
+    const message: Tests_PresetList_PresetList_FilesystemPresetDirectoriesMatchTokenMapExpectationsIncludingSampleScaffold_Message = [
       'token-map drift vs filesystem (sample included):',
       `  On disk but not in token-map expectations: ${missing.length}`,
       ...missing.map((name) => `    + ${name}`),

@@ -10,6 +10,7 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentExportsBrowser,
   Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentPackageExports,
   Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_FileContents,
   Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Manifest,
@@ -100,20 +101,20 @@ export class Runner {
 
     // Filter workspaces that have the recipe enabled.
     const eligibleWorkspaces: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_WorkspaceConfigFilter = workspace[1];
-      const workspaceRecipes: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_WorkspaceRecipesFilter = workspaceConfig['recipes'];
+      const workspaceConfigFilter: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_WorkspaceConfigFilter = workspace[1];
+      const workspaceRecipesFilter: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_WorkspaceRecipesFilter = workspaceConfigFilter['recipes'];
 
-      if (workspaceRecipes === undefined) {
+      if (workspaceRecipesFilter === undefined) {
         return false;
       }
 
-      const recipeTuple: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_RecipeTupleFilter = workspaceRecipes['normalize-modules'];
+      const recipeTupleFilter: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_RecipeTupleFilter = workspaceRecipesFilter['normalize-modules'];
 
-      if (recipeTuple === undefined) {
+      if (recipeTupleFilter === undefined) {
         return false;
       }
 
-      return recipeTuple[0] === true;
+      return recipeTupleFilter[0] === true;
     });
 
     if (eligibleWorkspaces.length === 0) {
@@ -336,16 +337,16 @@ export class Runner {
     } else if (
       manifest['role'] === 'package' // Workspace role is "package".
     ) {
-      const currentPackageExports: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentPackageExports = fileContents['exports'];
+      const currentExportsBrowser: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentExportsBrowser = fileContents['exports'];
 
       if (
         typeof packageBrowser === 'string' // Package "browser" is a string.
         && (
-          isPlainObject(currentPackageExports) === true // Package "exports" is an object.
-          && isPlainObject(currentPackageExports['.']) === true // Package "exports['.']" is an object.
-          && typeof currentPackageExports['.']['browser'] === 'string' // Package "exports['.'].browser" is a string.
+          isPlainObject(currentExportsBrowser) === true // Package "exports" is an object.
+          && isPlainObject(currentExportsBrowser['.']) === true // Package "exports['.']" is an object.
+          && typeof currentExportsBrowser['.']['browser'] === 'string' // Package "exports['.'].browser" is a string.
         )
-        && packageBrowser !== currentPackageExports['.']['browser'] // Package "browser" differs from "exports['.'].browser".
+        && packageBrowser !== currentExportsBrowser['.']['browser'] // Package "browser" differs from "exports['.'].browser".
       ) {
         Logger.customize({
           name: 'Runner.handle',
@@ -354,22 +355,22 @@ export class Runner {
       } else if (
         typeof packageBrowser === 'string' // Package "browser" is a string.
         && (
-          isPlainObject(currentPackageExports) === true // Package "exports" is an object.
-          && isPlainObject(currentPackageExports['.']) === true // Package "exports['.']" is an object.
+          isPlainObject(currentExportsBrowser) === true // Package "exports" is an object.
+          && isPlainObject(currentExportsBrowser['.']) === true // Package "exports['.']" is an object.
         )
-        && typeof currentPackageExports['.']['browser'] !== 'string' // Package "exports['.'].browser" is not a string.
+        && typeof currentExportsBrowser['.']['browser'] !== 'string' // Package "exports['.'].browser" is not a string.
       ) {
         Logger.customize({
           name: 'Runner.handle',
           purpose: 'browser',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "exports['.'].browser" from "browser" ...`);
 
-        Reflect.set(currentPackageExports['.'], 'browser', packageBrowser);
+        Reflect.set(currentExportsBrowser['.'], 'browser', packageBrowser);
       } else if (
         (
-          isPlainObject(currentPackageExports) === true // Package "exports" is an object.
-          && isPlainObject(currentPackageExports['.']) === true // Package "exports['.']" is an object.
-          && typeof currentPackageExports['.']['browser'] === 'string' // Package "exports['.'].browser" is a string.
+          isPlainObject(currentExportsBrowser) === true // Package "exports" is an object.
+          && isPlainObject(currentExportsBrowser['.']) === true // Package "exports['.']" is an object.
+          && typeof currentExportsBrowser['.']['browser'] === 'string' // Package "exports['.'].browser" is a string.
         )
         && typeof packageBrowser !== 'string' // Package "browser" is not a string.
         && isPlainObject(packageBrowser) === false // Package "browser" is not a plain object.
@@ -379,19 +380,19 @@ export class Runner {
           purpose: 'browser',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "browser" from "exports['.'].browser" ...`);
 
-        Reflect.set(fileContents, 'browser', currentPackageExports['.']['browser']);
+        Reflect.set(fileContents, 'browser', currentExportsBrowser['.']['browser']);
       } else if (
         typeof packageBrowser === 'string' // Package "browser" is a string.
-        && isPlainObject(currentPackageExports) === true // Package "exports" is an object.
-        && typeof currentPackageExports['.'] === 'string' // Package "exports['.']" is a string.
+        && isPlainObject(currentExportsBrowser) === true // Package "exports" is an object.
+        && typeof currentExportsBrowser['.'] === 'string' // Package "exports['.']" is a string.
       ) {
         Logger.customize({
           name: 'Runner.handle',
           purpose: 'browser',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Normalizing "exports['.']" from string to object ...`);
 
-        Reflect.set(currentPackageExports, '.', {
-          default: currentPackageExports['.'],
+        Reflect.set(currentExportsBrowser, '.', {
+          default: currentExportsBrowser['.'],
           browser: packageBrowser,
         });
       }

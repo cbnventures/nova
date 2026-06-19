@@ -9,9 +9,11 @@ import type {
   Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Node,
   Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Returns,
   Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Value,
+  Rules_Eslint_Safety_NoScriptUrl_Runner_Create_Literal_Node,
+  Rules_Eslint_Safety_NoScriptUrl_Runner_Create_Literal_Returns,
+  Rules_Eslint_Safety_NoScriptUrl_Runner_Create_Options,
   Rules_Eslint_Safety_NoScriptUrl_Runner_RuleDefaultOptionsAllowedPatterns,
   Rules_Eslint_Safety_NoScriptUrl_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Safety_NoScriptUrl_Runner_RuleOptions,
 } from '../../../types/rules/eslint/safety/no-script-url.d.ts';
 
 /**
@@ -66,7 +68,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Safety_NoScriptUrl_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Safety_NoScriptUrl_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Safety_NoScriptUrl_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -74,7 +76,7 @@ export class Runner {
       }
 
       return {
-        Literal(node) {
+        Literal(node: Rules_Eslint_Safety_NoScriptUrl_Runner_Create_Literal_Node): Rules_Eslint_Safety_NoScriptUrl_Runner_Create_Literal_Returns {
           Runner.checkLiteral(context, node, options['allowedPatterns']);
 
           return;

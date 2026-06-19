@@ -8,6 +8,7 @@ import type {
   Blocks_InstallStrip_Index_BlocksInstallStrip_CopyAriaLabel,
   Blocks_InstallStrip_Index_BlocksInstallStrip_CopyButtonText,
   Blocks_InstallStrip_Index_BlocksInstallStrip_CopyText,
+  Blocks_InstallStrip_Index_BlocksInstallStrip_HandleCopy_Returns,
   Blocks_InstallStrip_Index_BlocksInstallStrip_Icon,
   Blocks_InstallStrip_Index_BlocksInstallStrip_Props,
   Blocks_InstallStrip_Index_BlocksInstallStrip_Props_CopyTarget,
@@ -59,7 +60,7 @@ function BlocksInstallStrip(props: Blocks_InstallStrip_Index_BlocksInstallStrip_
    *
    * @since 0.15.0
    */
-  function handleCopy() {
+  function handleCopy(): Blocks_InstallStrip_Index_BlocksInstallStrip_HandleCopy_Returns {
     void navigator.clipboard.writeText(props['command']);
 
     setCopied(true);

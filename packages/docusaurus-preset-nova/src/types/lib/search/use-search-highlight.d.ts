@@ -49,3 +49,18 @@ export type Lib_Search_UseSearchHighlight_TargetElement = Element | null;
 export type Lib_Search_UseSearchHighlight_Instance = Lib_Search_UseSearchHighlight_MarkInstance;
 
 export type Lib_Search_UseSearchHighlight_CurrentMark = unknown;
+
+/**
+ * Lib - Search - Use Search Highlight - Use Search Highlight - Typed Mark.
+ *
+ * @since 0.15.0
+ */
+export type Lib_Search_UseSearchHighlight_UseSearchHighlight_TypedMark_Mark = (term: string) => void;
+
+export type Lib_Search_UseSearchHighlight_UseSearchHighlight_TypedMark_Unmark = () => void;
+
+export type Lib_Search_UseSearchHighlight_UseSearchHighlight_TypedMark = {
+  mark: Lib_Search_UseSearchHighlight_UseSearchHighlight_TypedMark_Mark;
+  unmark: Lib_Search_UseSearchHighlight_UseSearchHighlight_TypedMark_Unmark;
+  [key: string]: unknown;
+};

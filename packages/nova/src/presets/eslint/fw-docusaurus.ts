@@ -1,4 +1,4 @@
-import type { Presets_Eslint_FwDocusaurus_ConfigConfig } from '../../types/presets/eslint/fw-docusaurus.d.ts';
+import type { Presets_Eslint_FwDocusaurus_Config } from '../../types/presets/eslint/fw-docusaurus.d.ts';
 
 /**
  * Presets - ESLint - FW Docusaurus - Config.
@@ -8,7 +8,7 @@ import type { Presets_Eslint_FwDocusaurus_ConfigConfig } from '../../types/prese
  *
  * @since 0.11.0
  */
-const config: Presets_Eslint_FwDocusaurus_ConfigConfig = [{
+const config: Presets_Eslint_FwDocusaurus_Config = [{
   name: 'nova/fw-docusaurus/ignored-files',
   ignores: ['./.docusaurus/**'],
 }];

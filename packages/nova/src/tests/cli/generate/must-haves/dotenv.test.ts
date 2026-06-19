@@ -6,27 +6,28 @@ import {
   vi,
 } from 'vitest';
 
-vi.mock('prompts', () => (
-  {
+vi.mock('prompts', () => {
+  return {
     default: vi.fn().mockResolvedValue(
       {
         key: '',
       },
     ),
-  }
-));
+  };
+});
 
 import { Runner as CliGenerateMustHavesDotenv } from '../../../../cli/generate/must-haves/dotenv.js';
 import * as utility from '../../../../lib/utility.js';
 
 import type {
-  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_EnvHeaderArg,
-  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_EnvTargetCall,
-  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_IsProjectRootSpy,
-  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SampleHeaderArg,
-  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SampleTargetCall,
-  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SaveCalls,
-  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SaveSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_Calls,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_EnvHeaderArg,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_EnvTargetCall,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_IsProjectRootSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_SampleHeaderArg,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_SampleTargetCall,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_SaveSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SetsExitCodeWhenNotAtProjectRoot_IsProjectRootSpy,
 } from '../../../../types/tests/cli/generate/must-haves/dotenv.test.d.ts';
 
 /**
@@ -38,7 +39,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
   it('sets exit code when not at project root', async () => {
     process.exitCode = 0;
 
-    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(false);
+    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SetsExitCodeWhenNotAtProjectRoot_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(false);
 
     await CliGenerateMustHavesDotenv.run({});
 
@@ -52,18 +53,18 @@ describe('CliGenerateMustHavesDotenv.run', () => {
   });
 
   it('passes the correct header metadata to saveGeneratedFile for both files', async () => {
-    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-    const saveSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const saveSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateMustHavesDotenv.run({ replaceFile: true });
 
-    const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SaveCalls = saveSpy['mock']['calls'];
+    const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_Calls = saveSpy['mock']['calls'];
 
-    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env'));
+    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env'));
 
     ok(envTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env');
 
-    const envHeaderArg: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_EnvHeaderArg = envTargetCall[3];
+    const envHeaderArg: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_EnvHeaderArg = envTargetCall[3];
 
     ok(envHeaderArg !== undefined, 'Expected header argument to be defined for .env');
 
@@ -71,11 +72,11 @@ describe('CliGenerateMustHavesDotenv.run', () => {
     strictEqual(envHeaderArg['docsSlug'], 'cli/generators/must-haves/dotenv');
     strictEqual(envHeaderArg['mode'], 'fillable');
 
-    const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env.sample'));
+    const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env.sample'));
 
     ok(sampleTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env.sample');
 
-    const sampleHeaderArg: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SampleHeaderArg = sampleTargetCall[3];
+    const sampleHeaderArg: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForBothFiles_SampleHeaderArg = sampleTargetCall[3];
 
     ok(sampleHeaderArg !== undefined, 'Expected header argument to be defined for .env.sample');
 

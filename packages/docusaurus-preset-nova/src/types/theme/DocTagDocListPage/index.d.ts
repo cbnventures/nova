@@ -17,6 +17,22 @@ export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_AllTagsPath = st
 
 export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Unlisted = boolean | undefined;
 
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Id = string;
+
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Title = string;
+
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Description = string | undefined;
+
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Permalink = string;
+
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc = {
+  id: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Id;
+  title: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Title;
+  description?: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Description;
+  permalink: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Permalink;
+  [key: string]: unknown;
+};
+
 export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Items = Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc[];
 
 export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag = {
@@ -54,22 +70,6 @@ export type Theme_DocTagDocListPage_Index_DocTagDocListPage_ViewAllTags = string
 export type Theme_DocTagDocListPage_Index_DocTagDocListPage_ReadDocLabel = string;
 
 export type Theme_DocTagDocListPage_Index_DocTagDocListPage_MetadataSpread = Record<string, unknown>;
-
-export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Id = string;
-
-export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Title = string;
-
-export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Description = string | undefined;
-
-export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Permalink = string;
-
-export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc = {
-  id: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Id;
-  title: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Title;
-  description?: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Description;
-  permalink: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Permalink;
-  [key: string]: unknown;
-};
 
 export type Theme_DocTagDocListPage_Index_DocTagDocListPage_ItemSectionLabel = string;
 

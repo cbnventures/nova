@@ -6,9 +6,7 @@ import type { Shared_GeneratorRunResult as SharedGeneratorRunResult } from '../.
  * @since 0.16.3
  */
 export type Cli_Generate_Github_Workflows_Runner_BuildArtifactName_TargetType = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildArtifactName_TargetId = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildArtifactName_Returns = string;
 
 /**
@@ -17,16 +15,11 @@ export type Cli_Generate_Github_Workflows_Runner_BuildArtifactName_Returns = str
  * @since 0.16.0
  */
 export type Cli_Generate_Github_Workflows_Runner_BuildCommand_ScriptName = 'check' | 'build';
-
 export type Cli_Generate_Github_Workflows_Runner_BuildCommand_WorkspaceNames = string[];
-
 export type Cli_Generate_Github_Workflows_Runner_BuildCommand_UseTurbo = boolean;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildCommand_Returns = string;
-
-export type Cli_Generate_Github_Workflows_Runner_BuildCommand_Flag = string;
-
-export type Cli_Generate_Github_Workflows_Runner_BuildCommand_Flags = Cli_Generate_Github_Workflows_Runner_BuildCommand_Flag[];
+export type Cli_Generate_Github_Workflows_Runner_BuildCommand_TurboFlags = string[];
+export type Cli_Generate_Github_Workflows_Runner_BuildCommand_NpmFlags = string[];
 
 /**
  * CLI - Generate - GitHub - Workflows - Build Entry Setup Lines.
@@ -34,32 +27,32 @@ export type Cli_Generate_Github_Workflows_Runner_BuildCommand_Flags = Cli_Genera
  * @since 0.16.2
  */
 export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_Entry = import('../../../shared.d.ts').Shared_NovaConfigWorkflow;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_MetadataEntry = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Entry | undefined;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_OutputFileName = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_Returns = string[];
-
 export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_Lines = string[];
+export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_VariableName = string;
+export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_VariableMeta = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Variable;
+export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_SecretResolvedName = string;
+export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_VarResolvedName = string;
+export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_EntryTargetsMetadata = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Targets;
+export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_SetupTargetType = string;
+export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_SetupTargetMetadata = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Target | undefined;
+export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetVariableName = string;
+export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetVariableMeta = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Variable;
+export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetSecretResolvedName = string;
+export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetVarResolvedName = string;
 
 /**
  * CLI - Generate - GitHub - Workflows - Build Merged Jobs Condition.
  *
  * @since 0.21.0
  */
-export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerDataList = Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData[];
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData_RunName = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData_PublishCondition = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData_TriggerBlock = Record<string, unknown>;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData_DependsOn = boolean | undefined;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData_JobsCondition = string | undefined;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData = {
   runName: Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData_RunName;
   publishCondition: Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData_PublishCondition;
@@ -67,9 +60,8 @@ export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_Trigge
   dependsOn: Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData_DependsOn;
   jobsCondition: Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData_JobsCondition;
 };
-
+export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerDataList = Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData[];
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_Returns = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_JobsConditionLine = string;
 
 /**
@@ -77,18 +69,11 @@ export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_JobsCo
  *
  * @since 0.21.0
  */
-export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerDataList = Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData[];
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData_RunName = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData_PublishCondition = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData_TriggerBlock = Record<string, unknown>;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData_DependsOn = boolean | undefined;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData_JobsCondition = string | undefined;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData = {
   runName: Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData_RunName;
   publishCondition: Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData_PublishCondition;
@@ -96,34 +81,24 @@ export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_Tri
   dependsOn: Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData_DependsOn;
   jobsCondition: Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData_JobsCondition;
 };
-
+export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerDataList = Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData[];
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_Returns = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_NonDispatchParts = string[];
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_DispatchPart = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_PublishInner = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_PublishParts = string[];
+export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_AllParts = string[];
 
 /**
  * CLI - Generate - GitHub - Workflows - Build Merged Run Name.
  *
  * @since 0.21.0
  */
-export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerDataList = Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData[];
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData_RunName = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData_PublishCondition = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData_TriggerBlock = Record<string, unknown>;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData_DependsOn = boolean | undefined;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData_JobsCondition = string | undefined;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData = {
   runName: Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData_RunName;
   publishCondition: Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData_PublishCondition;
@@ -131,29 +106,19 @@ export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData 
   dependsOn: Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData_DependsOn;
   jobsCondition: Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData_JobsCondition;
 };
-
+export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerDataList = Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData[];
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_NeedsManuallyFallback = boolean;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_Returns = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextExpressions = string[];
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextMatch = RegExpMatchArray | null;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextInner = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextParts = string[];
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_RunNameMatch = RegExpMatchArray | null;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_RunNamePrefix = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_RunNameSuffix = string;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_HasEmptyFallback = boolean;
-
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ShouldAppendFallback = boolean;
-
+export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextExpressionsWithFallback = string[];
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_MergedContextExpression = string;
 
 /**
@@ -162,19 +127,12 @@ export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_MergedContex
  * @since 0.21.0
  */
 export type Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_Workflows = import('../../../shared.d.ts').Shared_NovaConfigWorkflow[];
-
 export type Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_Returns = boolean;
-
 export type Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_EntryKey = string;
-
 export type Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_Visited = Set<string>;
-
 export type Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_Queue = string[];
-
 export type Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_CurrentId = string;
-
 export type Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_CurrentEntry = import('../../../shared.d.ts').Shared_NovaConfigWorkflow | undefined;
-
 export type Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_Key = string;
 
 /**
@@ -183,9 +141,7 @@ export type Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_Key = s
  * @since 0.16.0
  */
 export type Cli_Generate_Github_Workflows_Runner_DetectTurbo_ProjectDirectory = string;
-
 export type Cli_Generate_Github_Workflows_Runner_DetectTurbo_Returns = Promise<boolean>;
-
 export type Cli_Generate_Github_Workflows_Runner_DetectTurbo_TurboConfigPath = string;
 
 /**
@@ -193,43 +149,27 @@ export type Cli_Generate_Github_Workflows_Runner_DetectTurbo_TurboConfigPath = s
  *
  * @since 0.16.3
  */
-export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Targets = Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetEntry[];
-
-export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntryArtifactPath = string;
-
-export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntry_ArtifactPaths = Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntryArtifactPath[];
-
-export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntry = {
-  artifactPaths: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntry_ArtifactPaths;
-};
-
-export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadata = Record<string, Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntry>;
-
-export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Returns = string;
-
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetEntry_Type = string;
-
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetEntry_WorkingDir = string;
-
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetEntry = {
   type: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetEntry_Type;
   workingDir: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetEntry_WorkingDir;
 };
-
+export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Targets = Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetEntry[];
+export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntryArtifactPath = string;
+export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntry_ArtifactPaths = Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntryArtifactPath[];
+export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntry = {
+  artifactPaths: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntry_ArtifactPaths;
+};
+export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetsMetadata = Record<string, Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntry>;
+export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Returns = string;
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Steps = string[];
-
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Metadata = Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetMetadataEntry | undefined;
-
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_StrippedDir = string;
-
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetId = string;
-
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_ArtifactName = string;
-
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_PathLines = string[];
-
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_ResolvedPath = string;
-
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_StepLines = string[];
 
 /**
@@ -240,13 +180,9 @@ export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_StepL
 export type Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_WorkspacesEntry = {
   name?: string;
 };
-
 export type Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_Workspaces = Record<string, Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_WorkspacesEntry>;
-
-export type Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_Returns = string | undefined;
-
 export type Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_Path = string;
-
+export type Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_Returns = string | undefined;
 export type Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_Entry = Cli_Generate_Github_Workflows_Runner_ResolveWorkspaceName_WorkspacesEntry | undefined;
 
 /**
@@ -289,25 +225,25 @@ export type Cli_Generate_Github_Workflows_Runner_Run_HasDuplicateError = boolean
 
 export type Cli_Generate_Github_Workflows_Runner_Run_DuplicateKey = string;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_SkippedWorkflowKeys = Set<Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyWorkflowKey>;
+export type Cli_Generate_Github_Workflows_Runner_Run_SkippedWorkflowKeys = Set<Cli_Generate_Github_Workflows_Runner_Run_LiteralWorkflowKey>;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_WorkflowEntry = import('../../../shared.d.ts').Shared_NovaConfigWorkflow;
+export type Cli_Generate_Github_Workflows_Runner_Run_LiteralEntry = import('../../../shared.d.ts').Shared_NovaConfigWorkflow;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_TemplateName = string;
+export type Cli_Generate_Github_Workflows_Runner_Run_LiteralTemplateName = string;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_WorkflowSuffix = string | undefined;
+export type Cli_Generate_Github_Workflows_Runner_Run_LiteralSuffix = string | undefined;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyWorkflowKey = string;
+export type Cli_Generate_Github_Workflows_Runner_Run_LiteralWorkflowKey = string;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_MetadataEntry = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Entry | undefined;
+export type Cli_Generate_Github_Workflows_Runner_Run_LiteralMetadataEntry = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Entry | undefined;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_MissingLiterals = string[];
 
-export type Cli_Generate_Github_Workflows_Runner_Run_VariableName = string;
+export type Cli_Generate_Github_Workflows_Runner_Run_TemplateVariableName = string;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_VariableMeta = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Variable;
+export type Cli_Generate_Github_Workflows_Runner_Run_TemplateVariableMeta = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Variable;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_LiteralValue = string | undefined;
+export type Cli_Generate_Github_Workflows_Runner_Run_TemplateLiteralValue = string | undefined;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_TargetsMetadataForValidation = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Targets;
 
@@ -317,9 +253,23 @@ export type Cli_Generate_Github_Workflows_Runner_Run_TargetTypeForValidation = s
 
 export type Cli_Generate_Github_Workflows_Runner_Run_TargetMetadataForValidation = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Target | undefined;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyMap = Map<string, Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyMapValue>;
+export type Cli_Generate_Github_Workflows_Runner_Run_ValidationVariableName = string;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_ValidationVariableMeta = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Variable;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_ValidationLiteralValue = string | undefined;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_GlobalUniquenessMap = Map<string, Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyMapValue>;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessErrors = string[];
+
+export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessEntry = import('../../../shared.d.ts').Shared_NovaConfigWorkflow;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessTemplateName = string;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessSuffix = string | undefined;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessWorkflowKey = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessMetadataEntry = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Entry | undefined;
 
@@ -335,27 +285,29 @@ export type Cli_Generate_Github_Workflows_Runner_Run_TargetMetadataForUniqueness
 
 export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyForTarget = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Target_UniquenessKey | undefined;
 
+export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyResolvedValue = string;
+
 export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyResolvedValues = Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyResolvedValue[];
+
+export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyDetailEntry = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyDetailEntries = Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyDetailEntry[];
 
-export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyVariableName = string;
+export type Cli_Generate_Github_Workflows_Runner_Run_VariableName = string;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyVariableMeta = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Variable | undefined;
+export type Cli_Generate_Github_Workflows_Runner_Run_VariableMeta = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Variable | undefined;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeySettingValue = string | undefined;
+export type Cli_Generate_Github_Workflows_Runner_Run_SettingValue = string | undefined;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyResolvedValue = string;
-
-export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyDetailEntry = string;
+export type Cli_Generate_Github_Workflows_Runner_Run_ResolvedValue = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyComposite = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyExisting = Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyMapValue | undefined;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessIsSameWorkflow = boolean;
+export type Cli_Generate_Github_Workflows_Runner_Run_IsSameWorkflow = boolean;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyMapValue_WorkflowKey = Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyWorkflowKey;
+export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyMapValue_WorkflowKey = Cli_Generate_Github_Workflows_Runner_Run_UniquenessWorkflowKey;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_UniquenessKeyMapValue_TargetType = Cli_Generate_Github_Workflows_Runner_Run_TargetTypeForUniqueness;
 
@@ -372,6 +324,18 @@ export type Cli_Generate_Github_Workflows_Runner_Run_GeneratedSet = Set<string>;
 export type Cli_Generate_Github_Workflows_Runner_Run_OutputFileNames = Set<string>;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_SetupLines = string[];
+
+export type Cli_Generate_Github_Workflows_Runner_Run_Entry = import('../../../shared.d.ts').Shared_NovaConfigWorkflow;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_WorkflowEntry = import('../../../shared.d.ts').Shared_NovaConfigWorkflow;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_TemplateName = string;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_WorkflowSuffix = string | undefined;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_EntryWorkflowKey = string;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_MetadataEntry = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Entry | undefined;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_TemplateDirPath = string;
 
@@ -390,6 +354,24 @@ export type Cli_Generate_Github_Workflows_Runner_Run_Content = string;
 export type Cli_Generate_Github_Workflows_Runner_Run_Triggers = import('../../../shared.d.ts').Shared_NovaConfigWorkflowTrigger[];
 
 export type Cli_Generate_Github_Workflows_Runner_Run_HasTriggerError = boolean;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_TriggerData_RunName = Cli_Generate_Github_Workflows_Runner_Run_TriggerParsedRunName;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_TriggerData_PublishCondition = Cli_Generate_Github_Workflows_Runner_Run_TriggerParsedPublishCondition;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_TriggerData_TriggerBlock = Cli_Generate_Github_Workflows_Runner_Run_TriggerParsedTriggerBlock;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_TriggerData_DependsOn = Cli_Generate_Github_Workflows_Runner_Run_TriggerParsedDependsOn;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_TriggerData_JobsCondition = Cli_Generate_Github_Workflows_Runner_Run_TriggerParsedJobsCondition;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_TriggerData = {
+  runName: Cli_Generate_Github_Workflows_Runner_Run_TriggerData_RunName;
+  publishCondition: Cli_Generate_Github_Workflows_Runner_Run_TriggerData_PublishCondition;
+  triggerBlock: Cli_Generate_Github_Workflows_Runner_Run_TriggerData_TriggerBlock;
+  dependsOn: Cli_Generate_Github_Workflows_Runner_Run_TriggerData_DependsOn;
+  jobsCondition: Cli_Generate_Github_Workflows_Runner_Run_TriggerData_JobsCondition;
+};
 
 export type Cli_Generate_Github_Workflows_Runner_Run_TriggerDataList = Cli_Generate_Github_Workflows_Runner_Run_TriggerData[];
 
@@ -413,24 +395,6 @@ export type Cli_Generate_Github_Workflows_Runner_Run_TriggerParsedDependsOn = bo
 
 export type Cli_Generate_Github_Workflows_Runner_Run_TriggerParsedJobsCondition = string | undefined;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_TriggerData_RunName = Cli_Generate_Github_Workflows_Runner_Run_TriggerParsedRunName;
-
-export type Cli_Generate_Github_Workflows_Runner_Run_TriggerData_PublishCondition = Cli_Generate_Github_Workflows_Runner_Run_TriggerParsedPublishCondition;
-
-export type Cli_Generate_Github_Workflows_Runner_Run_TriggerData_TriggerBlock = Cli_Generate_Github_Workflows_Runner_Run_TriggerParsedTriggerBlock;
-
-export type Cli_Generate_Github_Workflows_Runner_Run_TriggerData_DependsOn = Cli_Generate_Github_Workflows_Runner_Run_TriggerParsedDependsOn;
-
-export type Cli_Generate_Github_Workflows_Runner_Run_TriggerData_JobsCondition = Cli_Generate_Github_Workflows_Runner_Run_TriggerParsedJobsCondition;
-
-export type Cli_Generate_Github_Workflows_Runner_Run_TriggerData = {
-  runName: Cli_Generate_Github_Workflows_Runner_Run_TriggerData_RunName;
-  publishCondition: Cli_Generate_Github_Workflows_Runner_Run_TriggerData_PublishCondition;
-  triggerBlock: Cli_Generate_Github_Workflows_Runner_Run_TriggerData_TriggerBlock;
-  dependsOn: Cli_Generate_Github_Workflows_Runner_Run_TriggerData_DependsOn;
-  jobsCondition: Cli_Generate_Github_Workflows_Runner_Run_TriggerData_JobsCondition;
-};
-
 export type Cli_Generate_Github_Workflows_Runner_Run_NeedsDependsOn = boolean;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_DependsOnEntries = string[];
@@ -441,11 +405,11 @@ export type Cli_Generate_Github_Workflows_Runner_Run_DependsOnResolvedNames = st
 
 export type Cli_Generate_Github_Workflows_Runner_Run_HasDependsOnError = boolean;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_DependsOnEntry = string;
+export type Cli_Generate_Github_Workflows_Runner_Run_Entry2 = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_DependsOnTarget = import('../../../shared.d.ts').Shared_NovaConfigWorkflow | undefined;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_DependsOnTargetKey = string;
+export type Cli_Generate_Github_Workflows_Runner_Run_TargetKey = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_DependsOnBasePath = string;
 
@@ -455,13 +419,17 @@ export type Cli_Generate_Github_Workflows_Runner_Run_DependsOnBaseContent = stri
 
 export type Cli_Generate_Github_Workflows_Runner_Run_DependsOnNameMatch = RegExpExecArray | null;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_DependsOnTargetSuffix = string;
+export type Cli_Generate_Github_Workflows_Runner_Run_TargetSuffix = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_DependsOnYamlArray = string;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_TriggerYaml = string;
+export type Cli_Generate_Github_Workflows_Runner_Run_TriggerBlockString = string;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_ResolvedTriggerBlock = Record<string, unknown>;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_MergedTriggerBlock = Record<string, unknown>;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_TriggerYaml = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_IndentedTriggerLines = string[];
 
@@ -487,6 +455,12 @@ export type Cli_Generate_Github_Workflows_Runner_Run_EntryTargets = import('../.
 
 export type Cli_Generate_Github_Workflows_Runner_Run_HasPublishValidationError = boolean;
 
+export type Cli_Generate_Github_Workflows_Runner_Run_ConfigWorkspacesEntry = {
+  name?: string;
+};
+
+export type Cli_Generate_Github_Workflows_Runner_Run_ConfigWorkspaces = Record<string, Cli_Generate_Github_Workflows_Runner_Run_ConfigWorkspacesEntry>;
+
 export type Cli_Generate_Github_Workflows_Runner_Run_TargetsMetadata = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Targets;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_TargetTupleSet = Set<string>;
@@ -499,9 +473,11 @@ export type Cli_Generate_Github_Workflows_Runner_Run_TargetTupleKey = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_ResolvedWorkspaceNames = string[];
 
-export type Cli_Generate_Github_Workflows_Runner_Run_EntryScope = import('../../../shared.d.ts').Shared_NovaConfigWorkflowScope;
+export type Cli_Generate_Github_Workflows_Runner_Run_ScopePath = import('../../../shared.d.ts').Shared_NovaConfigWorkflowScope;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_ResolvedWorkspaceName = string;
+export type Cli_Generate_Github_Workflows_Runner_Run_ResolvedWorkspaceName = string | undefined;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_ResolvedName = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_UseTurbo = boolean;
 
@@ -515,7 +491,13 @@ export type Cli_Generate_Github_Workflows_Runner_Run_ResolvedTargetFragment = st
 
 export type Cli_Generate_Github_Workflows_Runner_Run_ResolvedTargetFragments = Cli_Generate_Github_Workflows_Runner_Run_ResolvedTargetFragment[];
 
-export type Cli_Generate_Github_Workflows_Runner_Run_EntryTarget = import('../../../shared.d.ts').Shared_NovaConfigWorkflowTarget;
+export type Cli_Generate_Github_Workflows_Runner_Run_HasTargetFragmentError = boolean;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_CurrentEntryTarget = import('../../../shared.d.ts').Shared_NovaConfigWorkflowTarget;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_FragmentTargetType = string;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_FragmentTargetWorkingDir = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_TargetFragmentPath = string;
 
@@ -531,11 +513,9 @@ export type Cli_Generate_Github_Workflows_Runner_Run_ArtifactName = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_TargetNeeds = import('../../../shared.d.ts').Shared_NovaConfigWorkflowTarget_Needs;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsJobIds = Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsJobId[];
-
-export type Cli_Generate_Github_Workflows_Runner_Run_TargetNeedWorkingDir = string;
-
 export type Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsJobId = string;
+
+export type Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsJobIds = Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsJobId[];
 
 export type Cli_Generate_Github_Workflows_Runner_Run_TargetNeedsValue = string;
 
@@ -545,7 +525,7 @@ export type Cli_Generate_Github_Workflows_Runner_Run_TargetMetadata = import('..
 
 export type Cli_Generate_Github_Workflows_Runner_Run_MergedVariables = import('../../../lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Variables;
 
-export type Cli_Generate_Github_Workflows_Runner_Run_IndentedFragmentLines = string[];
+export type Cli_Generate_Github_Workflows_Runner_Run_IndentedLines = string[];
 
 export type Cli_Generate_Github_Workflows_Runner_Run_IndentedFragment = string;
 
@@ -561,7 +541,7 @@ export type Cli_Generate_Github_Workflows_Runner_Run_TargetPath = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_ExistingEntries = import('fs').Dirent[];
 
-export type Cli_Generate_Github_Workflows_Runner_Run_ExistingEntry = import('fs').Dirent;
+export type Cli_Generate_Github_Workflows_Runner_Run_ExistingDirent = import('fs').Dirent;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_IsOrphan = boolean;
 
@@ -570,8 +550,6 @@ export type Cli_Generate_Github_Workflows_Runner_Run_IsBackup = boolean;
 export type Cli_Generate_Github_Workflows_Runner_Run_OrphanPath = string;
 
 export type Cli_Generate_Github_Workflows_Runner_Run_SetupMessage = string;
-
-export type Cli_Generate_Github_Workflows_Runner_Run_ResolvedName = string;
 
 /**
  * CLI - Generate - GitHub - Workflows - Slugify Working Dir.
@@ -607,6 +585,12 @@ export type Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Regex = Reg
 
 export type Cli_Generate_Github_Workflows_Runner_SubstituteVariables_SettingValue = string | undefined;
 
-export type Cli_Generate_Github_Workflows_Runner_SubstituteVariables_ResolvedName = string;
+export type Cli_Generate_Github_Workflows_Runner_SubstituteVariables_SecretResolvedName = string;
 
-export type Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Replacement = string;
+export type Cli_Generate_Github_Workflows_Runner_SubstituteVariables_SecretReplacement = string;
+
+export type Cli_Generate_Github_Workflows_Runner_SubstituteVariables_VarResolvedName = string;
+
+export type Cli_Generate_Github_Workflows_Runner_SubstituteVariables_VarReplacement = string;
+
+export type Cli_Generate_Github_Workflows_Runner_SubstituteVariables_LiteralReplacement = string;

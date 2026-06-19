@@ -6,6 +6,27 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
+export type Theme_Footer_Ledger_Index_SectionLink_Label = string;
+
+export type Theme_Footer_Ledger_Index_SectionLink_Href = string;
+
+export type Theme_Footer_Ledger_Index_SectionLink = {
+  label: Theme_Footer_Ledger_Index_SectionLink_Label;
+  href: Theme_Footer_Ledger_Index_SectionLink_Href;
+};
+
+export type Theme_Footer_Ledger_Index_SocialLink_Icon = string | IconifyIcon;
+
+export type Theme_Footer_Ledger_Index_SocialLink_Href = string;
+
+export type Theme_Footer_Ledger_Index_SocialLink_Label = string;
+
+export type Theme_Footer_Ledger_Index_SocialLink = {
+  icon: Theme_Footer_Ledger_Index_SocialLink_Icon;
+  href: Theme_Footer_Ledger_Index_SocialLink_Href;
+  label: Theme_Footer_Ledger_Index_SocialLink_Label;
+};
+
 export type Theme_Footer_Ledger_Index_Section = Theme_Footer_Ledger_Index_SectionLink[];
 
 export type Theme_Footer_Ledger_Index_Sections = Record<string, Theme_Footer_Ledger_Index_Section>;
@@ -97,26 +118,5 @@ export type Theme_Footer_Ledger_Index_Ledger_FirstLayoutSlot = Theme_Footer_Ledg
 export type Theme_Footer_Ledger_Index_Ledger_FirstSectionKey = string | undefined;
 
 export type Theme_Footer_Ledger_Index_Ledger_FirstSectionLinks = Theme_Footer_Ledger_Index_SectionLink[];
-
-export type Theme_Footer_Ledger_Index_SectionLink_Label = string;
-
-export type Theme_Footer_Ledger_Index_SectionLink_Href = string;
-
-export type Theme_Footer_Ledger_Index_SectionLink = {
-  label: Theme_Footer_Ledger_Index_SectionLink_Label;
-  href: Theme_Footer_Ledger_Index_SectionLink_Href;
-};
-
-export type Theme_Footer_Ledger_Index_SocialLink_Icon = string | IconifyIcon;
-
-export type Theme_Footer_Ledger_Index_SocialLink_Href = string;
-
-export type Theme_Footer_Ledger_Index_SocialLink_Label = string;
-
-export type Theme_Footer_Ledger_Index_SocialLink = {
-  icon: Theme_Footer_Ledger_Index_SocialLink_Icon;
-  href: Theme_Footer_Ledger_Index_SocialLink_Href;
-  label: Theme_Footer_Ledger_Index_SocialLink_Label;
-};
 
 export type Theme_Footer_Ledger_Index_Ledger_SocialLinkLabel = string;

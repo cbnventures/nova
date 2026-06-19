@@ -72,18 +72,18 @@ async function listSharedThemeFiles(): Tests_OverlayCompleteness_ListSharedTheme
  * @since 0.18.0
  */
 describe('overlay completeness', () => {
-  for (const presetName of presetsIndexNames) {
-    const presetNameContext: Tests_OverlayCompleteness_OverlayCompleteness_PresetName = presetName;
+  for (const presetNameEntry of presetsIndexNames) {
+    const presetName: Tests_OverlayCompleteness_OverlayCompleteness_PresetName = presetNameEntry;
 
-    it(`'${presetNameContext}' preset has an overlay for every shared theme component`, async () => {
+    it(`'${presetName}' preset has an overlay for every shared theme component`, async () => {
       const sharedFiles: Tests_OverlayCompleteness_OverlayCompleteness_SharedFiles = await listSharedThemeFiles();
-      const presetThemeDir: Tests_OverlayCompleteness_OverlayCompleteness_PresetThemeDir = resolve(getPackageRoot(), 'src', 'styles', 'presets', presetNameContext, 'theme');
+      const presetThemeDir: Tests_OverlayCompleteness_OverlayCompleteness_PresetThemeDir = resolve(getPackageRoot(), 'src', 'styles', 'presets', presetName, 'theme');
       const presetFiles: Tests_OverlayCompleteness_OverlayCompleteness_PresetFiles = await glob('**/style.css', { cwd: presetThemeDir });
       const presetFilesSet: Tests_OverlayCompleteness_OverlayCompleteness_PresetFilesSet = new Set(presetFiles);
       const missing: Tests_OverlayCompleteness_OverlayCompleteness_Missing = sharedFiles.filter((file) => presetFilesSet.has(file) === false);
       const message: Tests_OverlayCompleteness_OverlayCompleteness_Message = [
-        `'${presetNameContext}' preset is missing overlays for ${missing.length} shared theme components:`,
-        ...missing.map((file) => `  - presets/${presetNameContext}/theme/${file}`),
+        `'${presetName}' preset is missing overlays for ${missing.length} shared theme components:`,
+        ...missing.map((file) => `  - presets/${presetName}/theme/${file}`),
       ].join('\n');
 
       strictEqual(missing.length, 0, message);

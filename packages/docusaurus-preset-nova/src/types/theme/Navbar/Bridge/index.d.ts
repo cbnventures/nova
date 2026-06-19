@@ -9,23 +9,27 @@ import type { Theme_Navbar_Index_Navbar_Item } from '../index.d.ts';
  */
 export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Alt = string;
 
-export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Light = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Value_Light = string | undefined;
 
-export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Dark = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Value_Dark = string | undefined;
 
-export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src = {
-  light: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Light;
-  dark: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Dark;
-} | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Value = {
+  light: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Value_Light;
+  dark: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Value_Dark;
+};
 
-export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Light = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src = Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Value | undefined;
 
-export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Dark = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Value_Light = string | undefined;
 
-export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark = {
-  light: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Light;
-  dark: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Dark;
-} | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Value_Dark = string | undefined;
+
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Value = {
+  light: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Value_Light;
+  dark: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Value_Dark;
+};
+
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark = Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Value | undefined;
 
 export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Title = string | undefined;
 
@@ -83,23 +87,27 @@ export type Theme_Navbar_Bridge_Index_Bridge_Returns = React.JSX.Element;
 
 export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Alt = string;
 
-export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Light = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Value_Light = string | undefined;
 
-export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Dark = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Value_Dark = string | undefined;
 
-export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src = {
-  light: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Light;
-  dark: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Dark;
-} | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Value = {
+  light: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Value_Light;
+  dark: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Value_Dark;
+};
 
-export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Light = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src = Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Value | undefined;
 
-export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Dark = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Value_Light = string | undefined;
 
-export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark = {
-  light: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Light;
-  dark: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Dark;
-} | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Value_Dark = string | undefined;
+
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Value = {
+  light: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Value_Light;
+  dark: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Value_Dark;
+};
+
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark = Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Value | undefined;
 
 export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Title = string | undefined;
 

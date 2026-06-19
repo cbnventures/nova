@@ -6,8 +6,10 @@ import type {
   Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Context,
   Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Node,
   Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Returns,
+  Rules_Eslint_Typescript_NoExplicitAny_Runner_Create_Options,
+  Rules_Eslint_Typescript_NoExplicitAny_Runner_Create_TSAnyKeyword_Node,
+  Rules_Eslint_Typescript_NoExplicitAny_Runner_Create_TSAnyKeyword_Returns,
   Rules_Eslint_Typescript_NoExplicitAny_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Typescript_NoExplicitAny_Runner_RuleOptions,
 } from '../../../types/rules/eslint/typescript/no-explicit-any.d.ts';
 
 /**
@@ -56,7 +58,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Typescript_NoExplicitAny_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Typescript_NoExplicitAny_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Typescript_NoExplicitAny_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -64,7 +66,7 @@ export class Runner {
       }
 
       return {
-        TSAnyKeyword(node) {
+        TSAnyKeyword(node: Rules_Eslint_Typescript_NoExplicitAny_Runner_Create_TSAnyKeyword_Node): Rules_Eslint_Typescript_NoExplicitAny_Runner_Create_TSAnyKeyword_Returns {
           Runner.checkAnyKeyword(context, node);
 
           return;

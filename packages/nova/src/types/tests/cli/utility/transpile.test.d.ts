@@ -13,14 +13,26 @@ export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_SandboxDirectory 
 
 export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_SandboxRoot = string;
 
-export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_ProjectDirectory = string;
+/**
+ * Tests - CLI - Utility - Transpile - Run - Emits Compiled Output For Valid TypeScript.
+ *
+ * @since 0.14.0
+ */
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_ProjectDirectory = string;
 
-export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TsconfigPath = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_TsconfigPath = string;
 
-export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TsconfigContents = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_TsconfigContents = string;
 
-export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_IndexPath = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_IndexPath = string;
 
-export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_OutputJsPath = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_OutputJsPath = string;
 
-export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_OutputExists = boolean;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_OutputExists = boolean;
+
+/**
+ * Tests - CLI - Utility - Transpile - Run - Errors When No Tsconfig Json Found.
+ *
+ * @since 0.14.0
+ */
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_ErrorsWhenNoTsconfigJsonFound_ProjectDirectory = string;

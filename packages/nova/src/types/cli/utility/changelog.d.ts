@@ -3,17 +3,17 @@ import type { PromptObject } from 'prompts';
 import type { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 
 import type {
-  Shared_ChangelogEntry,
-  Shared_ChangelogEntry_Bump,
-  Shared_ChangelogEntry_Category,
-  Shared_ChangelogEntry_Message,
-  Shared_ChangelogEntry_Package,
-  Shared_ChangelogOptions,
-  Shared_NovaConfig_Workspaces,
-  Shared_NovaConfigConfig,
-  Shared_NovaConfigWorkspace,
-  Shared_PromptWithCancelReject,
-  Shared_PromptWithCancelResolved,
+  Shared_ChangelogEntry as SharedChangelogEntry,
+  Shared_ChangelogEntry_Bump as SharedChangelogEntryBump,
+  Shared_ChangelogEntry_Category as SharedChangelogEntryCategory,
+  Shared_ChangelogEntry_Message as SharedChangelogEntryMessage,
+  Shared_ChangelogEntry_Package as SharedChangelogEntryPackage,
+  Shared_ChangelogOptions as SharedChangelogOptions,
+  Shared_NovaConfig_Workspaces as SharedNovaConfigWorkspaces,
+  Shared_NovaConfigConfig as SharedNovaConfigConfig,
+  Shared_NovaConfigWorkspace as SharedNovaConfigWorkspace,
+  Shared_PromptWithCancelReject as SharedPromptWithCancelReject,
+  Shared_PromptWithCancelResolved as SharedPromptWithCancelResolved,
 } from '../../shared.d.ts';
 
 /**
@@ -34,13 +34,13 @@ export type Cli_Utility_Changelog_Runner_GenerateFileName_Verb = string | undefi
  *
  * @since 0.13.0
  */
-export type Cli_Utility_Changelog_Runner_ParseEntries_Returns = Promise<Shared_ChangelogEntry[]>;
+export type Cli_Utility_Changelog_Runner_ParseEntries_Returns = Promise<SharedChangelogEntry[]>;
 
 export type Cli_Utility_Changelog_Runner_ParseEntries_CurrentDirectory = string;
 
 export type Cli_Utility_Changelog_Runner_ParseEntries_ChangelogDirectory = string;
 
-export type Cli_Utility_Changelog_Runner_ParseEntries_Entries = Shared_ChangelogEntry[];
+export type Cli_Utility_Changelog_Runner_ParseEntries_Entries = SharedChangelogEntry[];
 
 export type Cli_Utility_Changelog_Runner_ParseEntries_EntryFiles = string[] | undefined;
 
@@ -54,11 +54,11 @@ export type Cli_Utility_Changelog_Runner_ParseEntries_Lines = string[];
 
 export type Cli_Utility_Changelog_Runner_ParseEntries_EndIndex = number;
 
-export type Cli_Utility_Changelog_Runner_ParseEntries_EntryPackage = Shared_ChangelogEntry_Package | undefined;
+export type Cli_Utility_Changelog_Runner_ParseEntries_EntryPackage = SharedChangelogEntryPackage | undefined;
 
-export type Cli_Utility_Changelog_Runner_ParseEntries_EntryCategory = Shared_ChangelogEntry_Category | undefined;
+export type Cli_Utility_Changelog_Runner_ParseEntries_EntryCategory = SharedChangelogEntryCategory | undefined;
 
-export type Cli_Utility_Changelog_Runner_ParseEntries_EntryBump = Shared_ChangelogEntry_Bump | undefined;
+export type Cli_Utility_Changelog_Runner_ParseEntries_EntryBump = SharedChangelogEntryBump | undefined;
 
 export type Cli_Utility_Changelog_Runner_ParseEntries_Line = string | undefined;
 
@@ -77,7 +77,7 @@ export type Cli_Utility_Changelog_Runner_ParseEntries_Message = string;
  */
 export type Cli_Utility_Changelog_Runner_PromptWithCancel_Questions<Keys extends string> = PromptObject<Keys> | PromptObject<Keys>[];
 
-export type Cli_Utility_Changelog_Runner_PromptWithCancel_Returns<Keys extends string, Result> = Promise<Shared_PromptWithCancelResolved<Keys, Result> | Shared_PromptWithCancelReject>;
+export type Cli_Utility_Changelog_Runner_PromptWithCancel_Returns<Keys extends string, Result> = Promise<SharedPromptWithCancelResolved<Keys, Result> | SharedPromptWithCancelReject>;
 
 export type Cli_Utility_Changelog_Runner_PromptWithCancel_Cancelled = boolean;
 
@@ -88,7 +88,7 @@ export type Cli_Utility_Changelog_Runner_PromptWithCancel_Result<Keys extends st
  *
  * @since 0.13.0
  */
-export type Cli_Utility_Changelog_Runner_Record_Options = Shared_ChangelogOptions;
+export type Cli_Utility_Changelog_Runner_Record_Options = SharedChangelogOptions;
 
 export type Cli_Utility_Changelog_Runner_Record_Returns = Promise<void>;
 
@@ -96,79 +96,77 @@ export type Cli_Utility_Changelog_Runner_Record_IsDryRun = boolean;
 
 export type Cli_Utility_Changelog_Runner_Record_NovaConfig = LibNovaConfig;
 
-export type Cli_Utility_Changelog_Runner_Record_Config = Shared_NovaConfigConfig;
+export type Cli_Utility_Changelog_Runner_Record_Config = SharedNovaConfigConfig;
 
-export type Cli_Utility_Changelog_Runner_Record_Workspaces = Shared_NovaConfig_Workspaces;
+export type Cli_Utility_Changelog_Runner_Record_Workspaces = SharedNovaConfigWorkspaces;
 
-export type Cli_Utility_Changelog_Runner_Record_EligibleWorkspaces = [string, Shared_NovaConfigWorkspace][];
+export type Cli_Utility_Changelog_Runner_Record_EligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type Cli_Utility_Changelog_Runner_Record_FilterWorkspaceConfig = Shared_NovaConfigWorkspace;
+export type Cli_Utility_Changelog_Runner_Record_FilterWorkspaceConfig = SharedNovaConfigWorkspace;
 
-export type Cli_Utility_Changelog_Runner_Record_FilterWorkspaceConfigPolicy = Shared_NovaConfigWorkspace['policy'];
+export type Cli_Utility_Changelog_Runner_Record_FilterWorkspaceConfigPolicy = SharedNovaConfigWorkspace['policy'];
 
-export type Cli_Utility_Changelog_Runner_Record_SelectedPackage = Shared_ChangelogEntry_Package | undefined;
+export type Cli_Utility_Changelog_Runner_Record_SelectedPackage = SharedChangelogEntryPackage | undefined;
 
-export type Cli_Utility_Changelog_Runner_Record_SelectedCategory = Shared_ChangelogEntry_Category | undefined;
+export type Cli_Utility_Changelog_Runner_Record_SelectedCategory = SharedChangelogEntryCategory | undefined;
 
-export type Cli_Utility_Changelog_Runner_Record_SelectedBump = Shared_ChangelogEntry_Bump | undefined;
+export type Cli_Utility_Changelog_Runner_Record_SelectedBump = SharedChangelogEntryBump | undefined;
 
-export type Cli_Utility_Changelog_Runner_Record_SelectedMessage = Shared_ChangelogEntry_Message | undefined;
+export type Cli_Utility_Changelog_Runner_Record_SelectedMessage = SharedChangelogEntryMessage | undefined;
 
-export type Cli_Utility_Changelog_Runner_Record_ValidPackageEntry = [string, Shared_NovaConfigWorkspace] | undefined;
+export type Cli_Utility_Changelog_Runner_Record_ValidPackageEntry = [string, SharedNovaConfigWorkspace] | undefined;
 
-export type Cli_Utility_Changelog_Runner_Record_FindEligibleWorkspaceConfig = Shared_NovaConfigWorkspace;
+export type Cli_Utility_Changelog_Runner_Record_FindEligibleWorkspaceConfig = SharedNovaConfigWorkspace;
 
 export type Cli_Utility_Changelog_Runner_Record_FindEligibleWorkspaceConfigName = string;
 
 export type Cli_Utility_Changelog_Runner_Record_ValidPackage = string | undefined;
 
-export type Cli_Utility_Changelog_Runner_Record_ValidCategory = Shared_ChangelogEntry_Category | undefined;
+export type Cli_Utility_Changelog_Runner_Record_ValidCategory = SharedChangelogEntryCategory | undefined;
 
-export type Cli_Utility_Changelog_Runner_Record_ValidBump = Shared_ChangelogEntry_Bump | undefined;
+export type Cli_Utility_Changelog_Runner_Record_ValidBump = SharedChangelogEntryBump | undefined;
 
 export type Cli_Utility_Changelog_Runner_Record_ValidMessage = string;
 
 export type Cli_Utility_Changelog_Runner_Record_PackageOutputKey = 'package';
 
-export type Cli_Utility_Changelog_Runner_Record_PackageOutputValue = Shared_ChangelogEntry_Package;
+export type Cli_Utility_Changelog_Runner_Record_PackageOutputValue = SharedChangelogEntryPackage;
 
-export type Cli_Utility_Changelog_Runner_Record_PackageOutput = Shared_PromptWithCancelResolved<Cli_Utility_Changelog_Runner_Record_PackageOutputKey, Cli_Utility_Changelog_Runner_Record_PackageOutputValue> | Shared_PromptWithCancelReject;
+export type Cli_Utility_Changelog_Runner_Record_PackageOutput = SharedPromptWithCancelResolved<Cli_Utility_Changelog_Runner_Record_PackageOutputKey, Cli_Utility_Changelog_Runner_Record_PackageOutputValue> | SharedPromptWithCancelReject;
 
-export type Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfig = Shared_NovaConfigWorkspace;
+export type Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfig = SharedNovaConfigWorkspace;
 
 export type Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfigName = string;
 
-export type Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfigRole = Shared_NovaConfigWorkspace['role'];
+export type Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfigRole = SharedNovaConfigWorkspace['role'];
 
-export type Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfigPolicy = Shared_NovaConfigWorkspace['policy'];
+export type Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfigPolicy = SharedNovaConfigWorkspace['policy'];
 
 export type Cli_Utility_Changelog_Runner_Record_PackageOutputResult = Record<Cli_Utility_Changelog_Runner_Record_PackageOutputKey, Cli_Utility_Changelog_Runner_Record_PackageOutputValue>;
 
 export type Cli_Utility_Changelog_Runner_Record_CategoryOutputKey = 'category';
 
-export type Cli_Utility_Changelog_Runner_Record_CategoryOutputValue = Shared_ChangelogEntry_Category;
+export type Cli_Utility_Changelog_Runner_Record_CategoryOutputValue = SharedChangelogEntryCategory;
 
-export type Cli_Utility_Changelog_Runner_Record_CategoryOutput = Shared_PromptWithCancelResolved<Cli_Utility_Changelog_Runner_Record_CategoryOutputKey, Cli_Utility_Changelog_Runner_Record_CategoryOutputValue> | Shared_PromptWithCancelReject;
+export type Cli_Utility_Changelog_Runner_Record_CategoryOutput = SharedPromptWithCancelResolved<Cli_Utility_Changelog_Runner_Record_CategoryOutputKey, Cli_Utility_Changelog_Runner_Record_CategoryOutputValue> | SharedPromptWithCancelReject;
 
 export type Cli_Utility_Changelog_Runner_Record_CategoryOutputResult = Record<Cli_Utility_Changelog_Runner_Record_CategoryOutputKey, Cli_Utility_Changelog_Runner_Record_CategoryOutputValue>;
 
 export type Cli_Utility_Changelog_Runner_Record_MessageOutputKey = 'message';
 
-export type Cli_Utility_Changelog_Runner_Record_MessageOutputValue = Shared_ChangelogEntry_Message;
+export type Cli_Utility_Changelog_Runner_Record_MessageOutputValue = SharedChangelogEntryMessage;
 
-export type Cli_Utility_Changelog_Runner_Record_MessageOutput = Shared_PromptWithCancelResolved<Cli_Utility_Changelog_Runner_Record_MessageOutputKey, Cli_Utility_Changelog_Runner_Record_MessageOutputValue> | Shared_PromptWithCancelReject;
-
-export type Cli_Utility_Changelog_Runner_Record_MessageValidateValue = unknown;
+export type Cli_Utility_Changelog_Runner_Record_MessageOutput = SharedPromptWithCancelResolved<Cli_Utility_Changelog_Runner_Record_MessageOutputKey, Cli_Utility_Changelog_Runner_Record_MessageOutputValue> | SharedPromptWithCancelReject;
 
 export type Cli_Utility_Changelog_Runner_Record_MessageOutputResult = Record<Cli_Utility_Changelog_Runner_Record_MessageOutputKey, Cli_Utility_Changelog_Runner_Record_MessageOutputValue>;
 
-export type Cli_Utility_Changelog_Runner_Record_SuggestedBump = Shared_ChangelogEntry_Bump;
+export type Cli_Utility_Changelog_Runner_Record_SuggestedBump = SharedChangelogEntryBump;
 
 export type Cli_Utility_Changelog_Runner_Record_BumpOutputKey = 'bump';
 
-export type Cli_Utility_Changelog_Runner_Record_BumpOutputValue = Shared_ChangelogEntry_Bump;
+export type Cli_Utility_Changelog_Runner_Record_BumpOutputValue = SharedChangelogEntryBump;
 
-export type Cli_Utility_Changelog_Runner_Record_BumpOutput = Shared_PromptWithCancelResolved<Cli_Utility_Changelog_Runner_Record_BumpOutputKey, Cli_Utility_Changelog_Runner_Record_BumpOutputValue> | Shared_PromptWithCancelReject;
+export type Cli_Utility_Changelog_Runner_Record_BumpOutput = SharedPromptWithCancelResolved<Cli_Utility_Changelog_Runner_Record_BumpOutputKey, Cli_Utility_Changelog_Runner_Record_BumpOutputValue> | SharedPromptWithCancelReject;
 
 export type Cli_Utility_Changelog_Runner_Record_BumpOutputResult = Record<Cli_Utility_Changelog_Runner_Record_BumpOutputKey, Cli_Utility_Changelog_Runner_Record_BumpOutputValue>;
 
@@ -191,7 +189,7 @@ export type Cli_Utility_Changelog_Runner_Record_ReadmeContent = string;
  *
  * @since 0.13.0
  */
-export type Cli_Utility_Changelog_Runner_Release_Options = Shared_ChangelogOptions;
+export type Cli_Utility_Changelog_Runner_Release_Options = SharedChangelogOptions;
 
 export type Cli_Utility_Changelog_Runner_Release_Returns = Promise<void>;
 
@@ -199,21 +197,21 @@ export type Cli_Utility_Changelog_Runner_Release_IsDryRun = boolean;
 
 export type Cli_Utility_Changelog_Runner_Release_IsNonInteractive = boolean;
 
-export type Cli_Utility_Changelog_Runner_Release_Entries = Shared_ChangelogEntry[];
+export type Cli_Utility_Changelog_Runner_Release_Entries = SharedChangelogEntry[];
 
-export type Cli_Utility_Changelog_Runner_Release_Groups = Map<Shared_ChangelogEntry_Package, Shared_ChangelogEntry[]>;
+export type Cli_Utility_Changelog_Runner_Release_Groups = Map<SharedChangelogEntryPackage, SharedChangelogEntry[]>;
 
-export type Cli_Utility_Changelog_Runner_Release_Existing = Shared_ChangelogEntry[];
+export type Cli_Utility_Changelog_Runner_Release_Existing = SharedChangelogEntry[];
 
 export type Cli_Utility_Changelog_Runner_Release_NovaConfig = LibNovaConfig;
 
-export type Cli_Utility_Changelog_Runner_Release_Config = Shared_NovaConfigConfig;
+export type Cli_Utility_Changelog_Runner_Release_Config = SharedNovaConfigConfig;
 
-export type Cli_Utility_Changelog_Runner_Release_Workspaces = Shared_NovaConfig_Workspaces;
+export type Cli_Utility_Changelog_Runner_Release_Workspaces = SharedNovaConfigWorkspaces;
 
-export type Cli_Utility_Changelog_Runner_Release_BumpPriority = Record<Shared_ChangelogEntry_Bump, number>;
+export type Cli_Utility_Changelog_Runner_Release_BumpPriority = Record<SharedChangelogEntryBump, number>;
 
-export type Cli_Utility_Changelog_Runner_Release_Release_PackageName = Shared_ChangelogEntry_Package;
+export type Cli_Utility_Changelog_Runner_Release_Release_PackageName = SharedChangelogEntryPackage;
 
 export type Cli_Utility_Changelog_Runner_Release_Release_PackageDirectory = string;
 
@@ -221,9 +219,9 @@ export type Cli_Utility_Changelog_Runner_Release_Release_CurrentVersion = string
 
 export type Cli_Utility_Changelog_Runner_Release_Release_NewVersion = string;
 
-export type Cli_Utility_Changelog_Runner_Release_Release_HighestBump = Shared_ChangelogEntry_Bump;
+export type Cli_Utility_Changelog_Runner_Release_Release_HighestBump = SharedChangelogEntryBump;
 
-export type Cli_Utility_Changelog_Runner_Release_Release_Entries = Shared_ChangelogEntry[];
+export type Cli_Utility_Changelog_Runner_Release_Release_Entries = SharedChangelogEntry[];
 
 export type Cli_Utility_Changelog_Runner_Release_Release = {
   packageName: Cli_Utility_Changelog_Runner_Release_Release_PackageName;
@@ -236,13 +234,13 @@ export type Cli_Utility_Changelog_Runner_Release_Release = {
 
 export type Cli_Utility_Changelog_Runner_Release_Releases = Cli_Utility_Changelog_Runner_Release_Release[];
 
-export type Cli_Utility_Changelog_Runner_Release_PackageName = Shared_ChangelogEntry_Package;
+export type Cli_Utility_Changelog_Runner_Release_PackageName = SharedChangelogEntryPackage;
 
-export type Cli_Utility_Changelog_Runner_Release_PackageEntries = Shared_ChangelogEntry[];
+export type Cli_Utility_Changelog_Runner_Release_PackageEntries = SharedChangelogEntry[];
 
-export type Cli_Utility_Changelog_Runner_Release_WorkspaceEntry = [string, Shared_NovaConfigWorkspace] | undefined;
+export type Cli_Utility_Changelog_Runner_Release_WorkspaceEntry = [string, SharedNovaConfigWorkspace] | undefined;
 
-export type Cli_Utility_Changelog_Runner_Release_FindWorkspaceConfig = Shared_NovaConfigWorkspace;
+export type Cli_Utility_Changelog_Runner_Release_FindWorkspaceConfig = SharedNovaConfigWorkspace;
 
 export type Cli_Utility_Changelog_Runner_Release_FindWorkspaceConfigName = string;
 
@@ -260,7 +258,7 @@ export type Cli_Utility_Changelog_Runner_Release_ParsedPackageJson = Record<stri
 
 export type Cli_Utility_Changelog_Runner_Release_CurrentVersion = string | undefined;
 
-export type Cli_Utility_Changelog_Runner_Release_HighestBump = Shared_ChangelogEntry_Bump;
+export type Cli_Utility_Changelog_Runner_Release_HighestBump = SharedChangelogEntryBump;
 
 export type Cli_Utility_Changelog_Runner_Release_VersionParts = number[];
 
@@ -280,31 +278,31 @@ export type Cli_Utility_Changelog_Runner_Release_SummaryReleaseCurrentVersion = 
 
 export type Cli_Utility_Changelog_Runner_Release_SummaryReleaseNewVersion = string;
 
-export type Cli_Utility_Changelog_Runner_Release_SummaryReleaseHighestBump = Shared_ChangelogEntry_Bump;
+export type Cli_Utility_Changelog_Runner_Release_SummaryReleaseHighestBump = SharedChangelogEntryBump;
 
-export type Cli_Utility_Changelog_Runner_Release_SummaryReleaseEntries = Shared_ChangelogEntry[];
+export type Cli_Utility_Changelog_Runner_Release_SummaryReleaseEntries = SharedChangelogEntry[];
 
-export type Cli_Utility_Changelog_Runner_Release_CategoryEntries = Shared_ChangelogEntry[];
+export type Cli_Utility_Changelog_Runner_Release_CategoryEntries = SharedChangelogEntry[];
 
 export type Cli_Utility_Changelog_Runner_Release_CategoryLabel = string;
 
-export type Cli_Utility_Changelog_Runner_Release_CategoryEntryMessage = Shared_ChangelogEntry_Message;
+export type Cli_Utility_Changelog_Runner_Release_CategoryEntryMessage = SharedChangelogEntryMessage;
 
 export type Cli_Utility_Changelog_Runner_Release_ConfirmOutputKey = 'confirm';
 
 export type Cli_Utility_Changelog_Runner_Release_ConfirmOutputValue = boolean;
 
-export type Cli_Utility_Changelog_Runner_Release_ConfirmOutput = Shared_PromptWithCancelResolved<Cli_Utility_Changelog_Runner_Release_ConfirmOutputKey, Cli_Utility_Changelog_Runner_Release_ConfirmOutputValue> | Shared_PromptWithCancelReject;
+export type Cli_Utility_Changelog_Runner_Release_ConfirmOutput = SharedPromptWithCancelResolved<Cli_Utility_Changelog_Runner_Release_ConfirmOutputKey, Cli_Utility_Changelog_Runner_Release_ConfirmOutputValue> | SharedPromptWithCancelReject;
 
 export type Cli_Utility_Changelog_Runner_Release_ConfirmOutputResult = Record<Cli_Utility_Changelog_Runner_Release_ConfirmOutputKey, Cli_Utility_Changelog_Runner_Release_ConfirmOutputValue>;
 
-export type Cli_Utility_Changelog_Runner_Release_ApplyReleasePackageName = Shared_ChangelogEntry_Package;
+export type Cli_Utility_Changelog_Runner_Release_ApplyReleasePackageName = SharedChangelogEntryPackage;
 
 export type Cli_Utility_Changelog_Runner_Release_ApplyReleasePackageDirectory = string;
 
 export type Cli_Utility_Changelog_Runner_Release_ApplyReleaseNewVersion = string;
 
-export type Cli_Utility_Changelog_Runner_Release_ApplyReleaseEntries = Shared_ChangelogEntry[];
+export type Cli_Utility_Changelog_Runner_Release_ApplyReleaseEntries = SharedChangelogEntry[];
 
 export type Cli_Utility_Changelog_Runner_Release_ApplyPackageJsonPath = string;
 
@@ -321,7 +319,7 @@ export type Cli_Utility_Changelog_Runner_Release_ApplyUpdatedContents = string;
  *
  * @since 0.13.0
  */
-export type Cli_Utility_Changelog_Runner_Run_Options = Shared_ChangelogOptions;
+export type Cli_Utility_Changelog_Runner_Run_Options = SharedChangelogOptions;
 
 export type Cli_Utility_Changelog_Runner_Run_Returns = Promise<void>;
 
@@ -331,9 +329,18 @@ export type Cli_Utility_Changelog_Runner_Run_ModeOutputKey = 'action';
 
 export type Cli_Utility_Changelog_Runner_Run_ModeOutputValue = 'record' | 'release';
 
-export type Cli_Utility_Changelog_Runner_Run_ModeOutput = Shared_PromptWithCancelResolved<Cli_Utility_Changelog_Runner_Run_ModeOutputKey, Cli_Utility_Changelog_Runner_Run_ModeOutputValue> | Shared_PromptWithCancelReject;
+export type Cli_Utility_Changelog_Runner_Run_ModeOutput = SharedPromptWithCancelResolved<Cli_Utility_Changelog_Runner_Run_ModeOutputKey, Cli_Utility_Changelog_Runner_Run_ModeOutputValue> | SharedPromptWithCancelReject;
 
 export type Cli_Utility_Changelog_Runner_Run_ModeOutputResult = Record<Cli_Utility_Changelog_Runner_Run_ModeOutputKey, Cli_Utility_Changelog_Runner_Run_ModeOutputValue>;
+
+/**
+ * CLI - Utility - Changelog - Validate Message.
+ *
+ * @since 0.13.0
+ */
+export type Cli_Utility_Changelog_Runner_ValidateMessage_MessageValue = unknown;
+
+export type Cli_Utility_Changelog_Runner_ValidateMessage_Returns = string | true;
 
 /**
  * CLI - Utility - Changelog - Write Changelog.
@@ -342,11 +349,11 @@ export type Cli_Utility_Changelog_Runner_Run_ModeOutputResult = Record<Cli_Utili
  */
 export type Cli_Utility_Changelog_Runner_WriteChangelog_PackageDirectory = string;
 
-export type Cli_Utility_Changelog_Runner_WriteChangelog_PackageName = Shared_ChangelogEntry_Package;
+export type Cli_Utility_Changelog_Runner_WriteChangelog_PackageName = SharedChangelogEntryPackage;
 
 export type Cli_Utility_Changelog_Runner_WriteChangelog_Version = string;
 
-export type Cli_Utility_Changelog_Runner_WriteChangelog_Entries = Shared_ChangelogEntry[];
+export type Cli_Utility_Changelog_Runner_WriteChangelog_Entries = SharedChangelogEntry[];
 
 export type Cli_Utility_Changelog_Runner_WriteChangelog_Returns = Promise<void>;
 
@@ -356,15 +363,15 @@ export type Cli_Utility_Changelog_Runner_WriteChangelog_Today = Date;
 
 export type Cli_Utility_Changelog_Runner_WriteChangelog_DateString = string;
 
-export type Cli_Utility_Changelog_Runner_WriteChangelog_ByCategory = Map<Shared_ChangelogEntry_Category, Shared_ChangelogEntry_Message[]>;
+export type Cli_Utility_Changelog_Runner_WriteChangelog_ByCategory = Map<SharedChangelogEntryCategory, SharedChangelogEntryMessage[]>;
 
-export type Cli_Utility_Changelog_Runner_WriteChangelog_Existing = Shared_ChangelogEntry_Message[];
+export type Cli_Utility_Changelog_Runner_WriteChangelog_Existing = SharedChangelogEntryMessage[];
 
-export type Cli_Utility_Changelog_Runner_WriteChangelog_CategoryOrder = Shared_ChangelogEntry_Category[];
+export type Cli_Utility_Changelog_Runner_WriteChangelog_CategoryOrder = SharedChangelogEntryCategory[];
 
 export type Cli_Utility_Changelog_Runner_WriteChangelog_SectionParts = string[];
 
-export type Cli_Utility_Changelog_Runner_WriteChangelog_Messages = Shared_ChangelogEntry_Message[] | undefined;
+export type Cli_Utility_Changelog_Runner_WriteChangelog_Messages = SharedChangelogEntryMessage[] | undefined;
 
 export type Cli_Utility_Changelog_Runner_WriteChangelog_NewSection = string;
 
@@ -379,3 +386,5 @@ export type Cli_Utility_Changelog_Runner_WriteChangelog_AfterHeading = string;
 export type Cli_Utility_Changelog_Runner_WriteChangelog_TrimmedAfterHeading = string;
 
 export type Cli_Utility_Changelog_Runner_WriteChangelog_PrependedContent = string;
+
+export type Cli_Utility_Changelog_Runner_WriteChangelog_PrependedWithHeadingContent = string;

@@ -1,4 +1,4 @@
-import type { Presets_Eslint_DxIgnore_ConfigConfig } from '../../types/presets/eslint/dx-ignore.d.ts';
+import type { Presets_Eslint_DxIgnore_Config } from '../../types/presets/eslint/dx-ignore.d.ts';
 
 /**
  * Presets - ESLint - DX Ignore - Config.
@@ -8,7 +8,7 @@ import type { Presets_Eslint_DxIgnore_ConfigConfig } from '../../types/presets/e
  *
  * @since 0.11.0
  */
-const config: Presets_Eslint_DxIgnore_ConfigConfig = [
+const config: Presets_Eslint_DxIgnore_Config = [
   {
     name: 'nova/dx-ignore/build-output',
     ignores: [

@@ -1,6 +1,20 @@
 import type { CSSProperties, ReactNode } from 'react';
 
 /**
+ * Theme - Admonition - Icons.
+ *
+ * @since 0.15.0
+ */
+export type Theme_Admonition_Index_Admonition_Icons = Record<string, string>;
+
+/**
+ * Theme - Admonition - Type Labels.
+ *
+ * @since 0.18.0
+ */
+export type Theme_Admonition_Index_Admonition_TypeLabels = Record<string, string>;
+
+/**
  * Theme - Admonition.
  *
  * @since 0.15.0
@@ -27,17 +41,3 @@ export type Theme_Admonition_Index_Admonition_Props = {
 export type Theme_Admonition_Index_Admonition_Title = ReactNode;
 
 export type Theme_Admonition_Index_Admonition_IconName = string;
-
-/**
- * Theme - Admonition - Icons.
- *
- * @since 0.15.0
- */
-export type Theme_Admonition_Index_Admonition_Icons = Record<string, string>;
-
-/**
- * Theme - Admonition - Type Labels.
- *
- * @since 0.18.0
- */
-export type Theme_Admonition_Index_Admonition_TypeLabels = Record<string, string>;

@@ -15,6 +15,23 @@ export type PagesCustomFields = {
 };
 
 /**
+ * Pages - Index - Home.
+ *
+ * @since 0.15.0
+ */
+export type Pages_Index_Home_Context = PagesContext;
+
+export type Pages_Index_Home_SiteConfig = PagesSiteConfig;
+
+export type Pages_Index_Home_CustomFields = PagesCustomFields;
+
+export type Pages_Index_Home_StatItems = PagesStatItems;
+
+export type Pages_Index_Home_FeatureItems = PagesFeatureItems;
+
+export type Pages_Index_Home_IncludedItems = PagesIncludedItems;
+
+/**
  * Pages - Home - Blog Posts.
  *
  * @since 0.15.0

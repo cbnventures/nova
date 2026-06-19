@@ -1,9 +1,10 @@
 import { createContext, useContext } from 'react';
 
 import type {
-  Theme_SearchBar_SearchContext_Context,
   Theme_SearchBar_SearchContext_MaybeValue,
   Theme_SearchBar_SearchContext_Returns,
+  Theme_SearchBar_SearchContext_SearchContext,
+  Theme_SearchBar_SearchContext_UseSearchContext_Context,
 } from '../../types/theme/SearchBar/search-context.d.ts';
 
 /**
@@ -15,7 +16,7 @@ import type {
  *
  * @since 0.15.0
  */
-const searchContext: Theme_SearchBar_SearchContext_Context = createContext<Theme_SearchBar_SearchContext_MaybeValue>(undefined);
+const searchContext: Theme_SearchBar_SearchContext_SearchContext = createContext<Theme_SearchBar_SearchContext_MaybeValue>(undefined);
 
 /**
  * Theme - Search Bar - Search Context - Use Search Context.
@@ -29,7 +30,7 @@ const searchContext: Theme_SearchBar_SearchContext_Context = createContext<Theme
  * @since 0.15.0
  */
 export function useSearchContext(): Theme_SearchBar_SearchContext_Returns {
-  const context: Theme_SearchBar_SearchContext_MaybeValue = useContext(searchContext);
+  const context: Theme_SearchBar_SearchContext_UseSearchContext_Context = useContext(searchContext);
 
   if (context === undefined) {
     throw new Error('useSearchContext must be used within a SearchProvider');

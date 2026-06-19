@@ -15,15 +15,15 @@ export type Theme_DocVersionBanner_Index_DocVersionBanner_Props = {
   [key: string]: unknown;
 };
 
+export type Theme_DocVersionBanner_Index_DocVersionBanner_Version_IsLast = boolean;
+
+export type Theme_DocVersionBanner_Index_DocVersionBanner_Version_Label = string;
+
 export type Theme_DocVersionBanner_Index_DocVersionBanner_Version = {
   isLast: Theme_DocVersionBanner_Index_DocVersionBanner_Version_IsLast;
   label: Theme_DocVersionBanner_Index_DocVersionBanner_Version_Label;
   [key: string]: unknown;
 };
-
-export type Theme_DocVersionBanner_Index_DocVersionBanner_Version_IsLast = boolean;
-
-export type Theme_DocVersionBanner_Index_DocVersionBanner_Version_Label = string;
 
 export type Theme_DocVersionBanner_Index_DocVersionBanner_Message = string;
 

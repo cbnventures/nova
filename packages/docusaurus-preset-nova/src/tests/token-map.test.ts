@@ -19,7 +19,7 @@ import type {
   Tests_TokenMap_AssertTokensPresent_Pattern,
   Tests_TokenMap_AssertTokensPresent_RelativeFile,
   Tests_TokenMap_AssertTokensPresent_Returns,
-  Tests_TokenMap_AssertTokensPresent_Token,
+  Tests_TokenMap_AssertTokensPresent_TokenName,
   Tests_TokenMap_AssertTokensPresent_Tokens,
   Tests_TokenMap_BlogDescription_Preset,
   Tests_TokenMap_BlogDescription_Returns,
@@ -94,7 +94,7 @@ async function assertTokensPresent(relativeFile: Tests_TokenMap_AssertTokensPres
   const missing: Tests_TokenMap_AssertTokensPresent_Missing = [];
 
   for (const token of tokens) {
-    const tokenName: Tests_TokenMap_AssertTokensPresent_Token = token;
+    const tokenName: Tests_TokenMap_AssertTokensPresent_TokenName = token;
     const pattern: Tests_TokenMap_AssertTokensPresent_Pattern = new RegExp(`--${tokenName}\\s*:`, 'g');
     const matches: Tests_TokenMap_AssertTokensPresent_Matches = content.match(pattern);
 

@@ -5,81 +5,84 @@ import { describe, it } from 'vitest';
 import { Runner as CssGenerator } from '../../lib/css-generator.js';
 
 import type {
-  Tests_Lib_CssGenerator_ColorIncludesFifty,
-  Tests_Lib_CssGenerator_ColorIncludesNineFifty,
-  Tests_Lib_CssGenerator_ColorIncludesNineHundred,
-  Tests_Lib_CssGenerator_ColorResult,
-  Tests_Lib_CssGenerator_ComfortableGridIncludesGutterSixteen,
-  Tests_Lib_CssGenerator_ComfortableGridIncludesPaddingSixteen,
-  Tests_Lib_CssGenerator_ComfortableGridLargeBlock,
-  Tests_Lib_CssGenerator_ComfortableGridLargeIncludesGutterTwentyFour,
-  Tests_Lib_CssGenerator_ComfortableGridLargeIncludesPaddingTwentyFour,
-  Tests_Lib_CssGenerator_ComfortableGridMediumBlock,
-  Tests_Lib_CssGenerator_ComfortableGridMediumIncludesGutterTwenty,
-  Tests_Lib_CssGenerator_ComfortableGridMediumIncludesPaddingTwenty,
-  Tests_Lib_CssGenerator_ComfortableGridMediumSections,
-  Tests_Lib_CssGenerator_ComfortableGridResult,
-  Tests_Lib_CssGenerator_ComfortableGridRootBlock,
-  Tests_Lib_CssGenerator_ComfortableGridSections,
-  Tests_Lib_CssGenerator_CompactGridIncludesGutterTwelve,
-  Tests_Lib_CssGenerator_CompactGridIncludesPaddingTwelve,
-  Tests_Lib_CssGenerator_CompactGridLargeBlock,
-  Tests_Lib_CssGenerator_CompactGridLargeIncludesGutterTwenty,
-  Tests_Lib_CssGenerator_CompactGridLargeIncludesPaddingTwenty,
-  Tests_Lib_CssGenerator_CompactGridMediumBlock,
-  Tests_Lib_CssGenerator_CompactGridMediumIncludesGutterSixteen,
-  Tests_Lib_CssGenerator_CompactGridMediumIncludesPaddingSixteen,
-  Tests_Lib_CssGenerator_CompactGridMediumSections,
-  Tests_Lib_CssGenerator_CompactGridResult,
-  Tests_Lib_CssGenerator_CompactGridRootBlock,
-  Tests_Lib_CssGenerator_CompactGridSections,
-  Tests_Lib_CssGenerator_ElevatedIncludesShadow,
-  Tests_Lib_CssGenerator_ElevatedResult,
-  Tests_Lib_CssGenerator_ExpressiveMotionIncludesThreeHundred,
-  Tests_Lib_CssGenerator_ExpressiveMotionResult,
-  Tests_Lib_CssGenerator_FlatIncludesNone,
-  Tests_Lib_CssGenerator_FlatResult,
-  Tests_Lib_CssGenerator_GlassIncludesBlur,
-  Tests_Lib_CssGenerator_GlassResult,
-  Tests_Lib_CssGenerator_GridIntegrationIncludesGutter,
-  Tests_Lib_CssGenerator_GridIntegrationIncludesMedia,
-  Tests_Lib_CssGenerator_GridIntegrationIncludesRoot,
-  Tests_Lib_CssGenerator_GridIntegrationResult,
-  Tests_Lib_CssGenerator_GridMediaIncludesFourEighty,
-  Tests_Lib_CssGenerator_GridMediaIncludesSevenSixtyEight,
-  Tests_Lib_CssGenerator_GridMediaResult,
-  Tests_Lib_CssGenerator_IncludesAccent,
-  Tests_Lib_CssGenerator_IncludesBorder,
-  Tests_Lib_CssGenerator_IncludesDepth,
-  Tests_Lib_CssGenerator_IncludesFont,
-  Tests_Lib_CssGenerator_IncludesMotion,
-  Tests_Lib_CssGenerator_IncludesMotionEasing,
-  Tests_Lib_CssGenerator_IncludesPrimary,
-  Tests_Lib_CssGenerator_IncludesRoot,
-  Tests_Lib_CssGenerator_IncludesShape,
-  Tests_Lib_CssGenerator_IncludesSurface,
-  Tests_Lib_CssGenerator_IncludesText,
-  Tests_Lib_CssGenerator_MotionEasingIncludesCurve,
-  Tests_Lib_CssGenerator_MotionEasingResult,
-  Tests_Lib_CssGenerator_NoneMotionIncludesZero,
-  Tests_Lib_CssGenerator_NoneMotionResult,
-  Tests_Lib_CssGenerator_PillIncludesLargeRadius,
-  Tests_Lib_CssGenerator_PillResult,
-  Tests_Lib_CssGenerator_Result,
-  Tests_Lib_CssGenerator_SharpIncludesZero,
-  Tests_Lib_CssGenerator_SharpResult,
-  Tests_Lib_CssGenerator_SpaciousGridIncludesGutterTwenty,
-  Tests_Lib_CssGenerator_SpaciousGridIncludesPaddingTwenty,
-  Tests_Lib_CssGenerator_SpaciousGridLargeBlock,
-  Tests_Lib_CssGenerator_SpaciousGridLargeIncludesGutterThirtyTwo,
-  Tests_Lib_CssGenerator_SpaciousGridLargeIncludesPaddingThirtyTwo,
-  Tests_Lib_CssGenerator_SpaciousGridMediumBlock,
-  Tests_Lib_CssGenerator_SpaciousGridMediumIncludesGutterTwentyFour,
-  Tests_Lib_CssGenerator_SpaciousGridMediumIncludesPaddingTwentyFour,
-  Tests_Lib_CssGenerator_SpaciousGridMediumSections,
-  Tests_Lib_CssGenerator_SpaciousGridResult,
-  Tests_Lib_CssGenerator_SpaciousGridRootBlock,
-  Tests_Lib_CssGenerator_SpaciousGridSections,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_IncludesAllElevenShadeLevelsForEachColor_IncludesFifty,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_IncludesAllElevenShadeLevelsForEachColor_IncludesNineFifty,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_IncludesAllElevenShadeLevelsForEachColor_IncludesNineHundred,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_IncludesAllElevenShadeLevelsForEachColor_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesAccent,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesBorder,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesDepth,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesFont,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesMotion,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesMotionEasing,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesPrimary,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesRoot,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesShape,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesSurface,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesText,
+  Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesElevatedCardDepthWithShadow_IncludesShadow,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesElevatedCardDepthWithShadow_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesFlatCardDepthWithNoShadow_IncludesNone,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesFlatCardDepthWithNoShadow_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesGlassCardDepthWithBackdropBlur_IncludesBlur,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesGlassCardDepthWithBackdropBlur_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IncludesResponsiveMediaQueryBlocks_IncludesFourEighty,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IncludesResponsiveMediaQueryBlocks_IncludesSevenSixtyEight,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IncludesResponsiveMediaQueryBlocks_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IntegrationGenerateOutputContainsRootBlockAndPostRootMediaQueries_IncludesGutter,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IntegrationGenerateOutputContainsRootBlockAndPostRootMediaQueries_IncludesMedia,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IntegrationGenerateOutputContainsRootBlockAndPostRootMediaQueries_IncludesRoot,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IntegrationGenerateOutputContainsRootBlockAndPostRootMediaQueries_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces12pxGutterAndPaddingForCompactDensity_IncludesGutterTwelve,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces12pxGutterAndPaddingForCompactDensity_IncludesPaddingTwelve,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces12pxGutterAndPaddingForCompactDensity_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces12pxGutterAndPaddingForCompactDensity_RootBlock,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces12pxGutterAndPaddingForCompactDensity_Sections,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces16pxGutterAndPaddingForComfortableDensity_IncludesGutterSixteen,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces16pxGutterAndPaddingForComfortableDensity_IncludesPaddingSixteen,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces16pxGutterAndPaddingForComfortableDensity_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces16pxGutterAndPaddingForComfortableDensity_RootBlock,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces16pxGutterAndPaddingForComfortableDensity_Sections,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces20pxGutterAndPaddingForSpaciousDensity_IncludesGutterTwenty,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces20pxGutterAndPaddingForSpaciousDensity_IncludesPaddingTwenty,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces20pxGutterAndPaddingForSpaciousDensity_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces20pxGutterAndPaddingForSpaciousDensity_RootBlock,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces20pxGutterAndPaddingForSpaciousDensity_Sections,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_IncludesLargeGutterTwentyFour,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_IncludesLargePaddingTwentyFour,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_IncludesMediumGutterTwenty,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_IncludesMediumPaddingTwenty,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_LargeBlock,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_MediumBlock,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_Sections,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_IncludesLargeGutterTwenty,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_IncludesLargePaddingTwenty,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_IncludesMediumGutterSixteen,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_IncludesMediumPaddingSixteen,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_LargeBlock,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_MediumBlock,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_Sections,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_IncludesLargeGutterThirtyTwo,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_IncludesLargePaddingThirtyTwo,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_IncludesMediumGutterTwentyFour,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_IncludesMediumPaddingTwentyFour,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_LargeBlock,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_MediumBlock,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_Sections,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_Produces300msDurationForExpressiveSpeed_IncludesThreeHundred,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_Produces300msDurationForExpressiveSpeed_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_ProducesCanonicalNovaEaseCurveForMotionEasing_IncludesCurve,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_ProducesCanonicalNovaEaseCurveForMotionEasing_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_ProducesZeroDurationForNoneSpeed_IncludesZero,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_ProducesZeroDurationForNoneSpeed_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateShapeVariables_Produces9999pxRadiusForPillShape_IncludesLargeRadius,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateShapeVariables_Produces9999pxRadiusForPillShape_Result,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateShapeVariables_ProducesZeroRadiusForSharpShape_IncludesZero,
+  Tests_Lib_CssGenerator_CssGeneratorGenerateShapeVariables_ProducesZeroRadiusForSharpShape_Result,
 } from '../../types/tests/lib/css-generator.test.d.ts';
 
 /**
@@ -89,7 +92,7 @@ import type {
  */
 describe('CssGenerator generate', async () => {
   it('produces CSS with all variable categories', () => {
-    const result: Tests_Lib_CssGenerator_Result = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -142,17 +145,17 @@ describe('CssGenerator generate', async () => {
       },
     });
 
-    const includesRoot: Tests_Lib_CssGenerator_IncludesRoot = result.includes(':root {');
-    const includesPrimary: Tests_Lib_CssGenerator_IncludesPrimary = result.includes('--nova-color-primary-');
-    const includesAccent: Tests_Lib_CssGenerator_IncludesAccent = result.includes('--nova-color-accent-');
-    const includesText: Tests_Lib_CssGenerator_IncludesText = result.includes('--nova-color-text:');
-    const includesBorder: Tests_Lib_CssGenerator_IncludesBorder = result.includes('--nova-color-border:');
-    const includesSurface: Tests_Lib_CssGenerator_IncludesSurface = result.includes('--nova-color-surface-raised:');
-    const includesFont: Tests_Lib_CssGenerator_IncludesFont = result.includes('--nova-font-display:');
-    const includesShape: Tests_Lib_CssGenerator_IncludesShape = result.includes('--nova-shape-radius:');
-    const includesDepth: Tests_Lib_CssGenerator_IncludesDepth = result.includes('--nova-depth-card-');
-    const includesMotion: Tests_Lib_CssGenerator_IncludesMotion = result.includes('--nova-motion-duration:');
-    const includesMotionEasing: Tests_Lib_CssGenerator_IncludesMotionEasing = result.includes('--nova-motion-easing:');
+    const includesRoot: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesRoot = result.includes(':root {');
+    const includesPrimary: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesPrimary = result.includes('--nova-color-primary-');
+    const includesAccent: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesAccent = result.includes('--nova-color-accent-');
+    const includesText: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesText = result.includes('--nova-color-text:');
+    const includesBorder: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesBorder = result.includes('--nova-color-border:');
+    const includesSurface: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesSurface = result.includes('--nova-color-surface-raised:');
+    const includesFont: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesFont = result.includes('--nova-font-display:');
+    const includesShape: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesShape = result.includes('--nova-shape-radius:');
+    const includesDepth: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesDepth = result.includes('--nova-depth-card-');
+    const includesMotion: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesMotion = result.includes('--nova-motion-duration:');
+    const includesMotionEasing: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_IncludesMotionEasing = result.includes('--nova-motion-easing:');
 
     ok(includesRoot);
     ok(includesPrimary);
@@ -170,7 +173,7 @@ describe('CssGenerator generate', async () => {
   });
 
   it('includes all eleven shade levels for each color', () => {
-    const result: Tests_Lib_CssGenerator_ColorResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerate_IncludesAllElevenShadeLevelsForEachColor_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -223,9 +226,9 @@ describe('CssGenerator generate', async () => {
       },
     });
 
-    const includesFifty: Tests_Lib_CssGenerator_ColorIncludesFifty = result.includes('--nova-color-primary-50:');
-    const includesNineHundred: Tests_Lib_CssGenerator_ColorIncludesNineHundred = result.includes('--nova-color-primary-900:');
-    const includesNineFifty: Tests_Lib_CssGenerator_ColorIncludesNineFifty = result.includes('--nova-color-primary-950:');
+    const includesFifty: Tests_Lib_CssGenerator_CssGeneratorGenerate_IncludesAllElevenShadeLevelsForEachColor_IncludesFifty = result.includes('--nova-color-primary-50:');
+    const includesNineHundred: Tests_Lib_CssGenerator_CssGeneratorGenerate_IncludesAllElevenShadeLevelsForEachColor_IncludesNineHundred = result.includes('--nova-color-primary-900:');
+    const includesNineFifty: Tests_Lib_CssGenerator_CssGeneratorGenerate_IncludesAllElevenShadeLevelsForEachColor_IncludesNineFifty = result.includes('--nova-color-primary-950:');
 
     ok(includesFifty);
     ok(includesNineHundred);
@@ -244,7 +247,7 @@ describe('CssGenerator generate', async () => {
  */
 describe('CssGenerator generate depth variables', async () => {
   it('produces flat card depth with no shadow', () => {
-    const result: Tests_Lib_CssGenerator_FlatResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesFlatCardDepthWithNoShadow_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -297,7 +300,7 @@ describe('CssGenerator generate depth variables', async () => {
       },
     });
 
-    const includesNone: Tests_Lib_CssGenerator_FlatIncludesNone = result.includes('--nova-depth-card-shadow: none;');
+    const includesNone: Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesFlatCardDepthWithNoShadow_IncludesNone = result.includes('--nova-depth-card-shadow: none;');
 
     ok(includesNone);
 
@@ -305,7 +308,7 @@ describe('CssGenerator generate depth variables', async () => {
   });
 
   it('produces elevated card depth with shadow', () => {
-    const result: Tests_Lib_CssGenerator_ElevatedResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesElevatedCardDepthWithShadow_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -358,7 +361,7 @@ describe('CssGenerator generate depth variables', async () => {
       },
     });
 
-    const includesShadow: Tests_Lib_CssGenerator_ElevatedIncludesShadow = result.includes('--nova-depth-card-shadow: 0 4px 6px');
+    const includesShadow: Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesElevatedCardDepthWithShadow_IncludesShadow = result.includes('--nova-depth-card-shadow: 0 4px 6px');
 
     ok(includesShadow);
 
@@ -366,7 +369,7 @@ describe('CssGenerator generate depth variables', async () => {
   });
 
   it('produces glass card depth with backdrop blur', () => {
-    const result: Tests_Lib_CssGenerator_GlassResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesGlassCardDepthWithBackdropBlur_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -419,7 +422,7 @@ describe('CssGenerator generate depth variables', async () => {
       },
     });
 
-    const includesBlur: Tests_Lib_CssGenerator_GlassIncludesBlur = result.includes('--nova-depth-card-backdrop: blur(5px);');
+    const includesBlur: Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesGlassCardDepthWithBackdropBlur_IncludesBlur = result.includes('--nova-depth-card-backdrop: blur(5px);');
 
     ok(includesBlur);
 
@@ -436,7 +439,7 @@ describe('CssGenerator generate depth variables', async () => {
  */
 describe('CssGenerator generate grid variables', async () => {
   it('produces 12px gutter and padding for compact density', () => {
-    const result: Tests_Lib_CssGenerator_CompactGridResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces12pxGutterAndPaddingForCompactDensity_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -489,11 +492,11 @@ describe('CssGenerator generate grid variables', async () => {
       },
     });
 
-    const sections: Tests_Lib_CssGenerator_CompactGridSections = result.split('@media');
-    const rootBlock: Tests_Lib_CssGenerator_CompactGridRootBlock = String(sections[0]);
+    const sections: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces12pxGutterAndPaddingForCompactDensity_Sections = result.split('@media');
+    const rootBlock: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces12pxGutterAndPaddingForCompactDensity_RootBlock = String(sections[0]);
 
-    const includesGutterTwelve: Tests_Lib_CssGenerator_CompactGridIncludesGutterTwelve = rootBlock.includes('--nova-grid-gutter: 12px;');
-    const includesPaddingTwelve: Tests_Lib_CssGenerator_CompactGridIncludesPaddingTwelve = rootBlock.includes('--nova-grid-padding: 12px;');
+    const includesGutterTwelve: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces12pxGutterAndPaddingForCompactDensity_IncludesGutterTwelve = rootBlock.includes('--nova-grid-gutter: 12px;');
+    const includesPaddingTwelve: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces12pxGutterAndPaddingForCompactDensity_IncludesPaddingTwelve = rootBlock.includes('--nova-grid-padding: 12px;');
 
     ok(includesGutterTwelve);
     ok(includesPaddingTwelve);
@@ -502,7 +505,7 @@ describe('CssGenerator generate grid variables', async () => {
   });
 
   it('produces 16px gutter and padding for comfortable density', () => {
-    const result: Tests_Lib_CssGenerator_ComfortableGridResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces16pxGutterAndPaddingForComfortableDensity_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -555,11 +558,11 @@ describe('CssGenerator generate grid variables', async () => {
       },
     });
 
-    const sections: Tests_Lib_CssGenerator_ComfortableGridSections = result.split('@media');
-    const rootBlock: Tests_Lib_CssGenerator_ComfortableGridRootBlock = String(sections[0]);
+    const sections: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces16pxGutterAndPaddingForComfortableDensity_Sections = result.split('@media');
+    const rootBlock: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces16pxGutterAndPaddingForComfortableDensity_RootBlock = String(sections[0]);
 
-    const includesGutterSixteen: Tests_Lib_CssGenerator_ComfortableGridIncludesGutterSixteen = rootBlock.includes('--nova-grid-gutter: 16px;');
-    const includesPaddingSixteen: Tests_Lib_CssGenerator_ComfortableGridIncludesPaddingSixteen = rootBlock.includes('--nova-grid-padding: 16px;');
+    const includesGutterSixteen: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces16pxGutterAndPaddingForComfortableDensity_IncludesGutterSixteen = rootBlock.includes('--nova-grid-gutter: 16px;');
+    const includesPaddingSixteen: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces16pxGutterAndPaddingForComfortableDensity_IncludesPaddingSixteen = rootBlock.includes('--nova-grid-padding: 16px;');
 
     ok(includesGutterSixteen);
     ok(includesPaddingSixteen);
@@ -568,7 +571,7 @@ describe('CssGenerator generate grid variables', async () => {
   });
 
   it('produces 20px gutter and padding for spacious density', () => {
-    const result: Tests_Lib_CssGenerator_SpaciousGridResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces20pxGutterAndPaddingForSpaciousDensity_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -621,11 +624,11 @@ describe('CssGenerator generate grid variables', async () => {
       },
     });
 
-    const sections: Tests_Lib_CssGenerator_SpaciousGridSections = result.split('@media');
-    const rootBlock: Tests_Lib_CssGenerator_SpaciousGridRootBlock = String(sections[0]);
+    const sections: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces20pxGutterAndPaddingForSpaciousDensity_Sections = result.split('@media');
+    const rootBlock: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces20pxGutterAndPaddingForSpaciousDensity_RootBlock = String(sections[0]);
 
-    const includesGutterTwenty: Tests_Lib_CssGenerator_SpaciousGridIncludesGutterTwenty = rootBlock.includes('--nova-grid-gutter: 20px;');
-    const includesPaddingTwenty: Tests_Lib_CssGenerator_SpaciousGridIncludesPaddingTwenty = rootBlock.includes('--nova-grid-padding: 20px;');
+    const includesGutterTwenty: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces20pxGutterAndPaddingForSpaciousDensity_IncludesGutterTwenty = rootBlock.includes('--nova-grid-gutter: 20px;');
+    const includesPaddingTwenty: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces20pxGutterAndPaddingForSpaciousDensity_IncludesPaddingTwenty = rootBlock.includes('--nova-grid-padding: 20px;');
 
     ok(includesGutterTwenty);
     ok(includesPaddingTwenty);
@@ -634,7 +637,7 @@ describe('CssGenerator generate grid variables', async () => {
   });
 
   it('produces correct medium and large breakpoint values for compact density', () => {
-    const result: Tests_Lib_CssGenerator_CompactGridResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -687,14 +690,14 @@ describe('CssGenerator generate grid variables', async () => {
       },
     });
 
-    const sections: Tests_Lib_CssGenerator_CompactGridMediumSections = result.split('@media');
-    const mediumBlock: Tests_Lib_CssGenerator_CompactGridMediumBlock = String(sections[1]);
-    const largeBlock: Tests_Lib_CssGenerator_CompactGridLargeBlock = String(sections[2]);
+    const sections: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_Sections = result.split('@media');
+    const mediumBlock: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_MediumBlock = String(sections[1]);
+    const largeBlock: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_LargeBlock = String(sections[2]);
 
-    const includesMediumGutterSixteen: Tests_Lib_CssGenerator_CompactGridMediumIncludesGutterSixteen = mediumBlock.includes('--nova-grid-gutter: 16px;');
-    const includesMediumPaddingSixteen: Tests_Lib_CssGenerator_CompactGridMediumIncludesPaddingSixteen = mediumBlock.includes('--nova-grid-padding: 16px;');
-    const includesLargeGutterTwenty: Tests_Lib_CssGenerator_CompactGridLargeIncludesGutterTwenty = largeBlock.includes('--nova-grid-gutter: 20px;');
-    const includesLargePaddingTwenty: Tests_Lib_CssGenerator_CompactGridLargeIncludesPaddingTwenty = largeBlock.includes('--nova-grid-padding: 20px;');
+    const includesMediumGutterSixteen: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_IncludesMediumGutterSixteen = mediumBlock.includes('--nova-grid-gutter: 16px;');
+    const includesMediumPaddingSixteen: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_IncludesMediumPaddingSixteen = mediumBlock.includes('--nova-grid-padding: 16px;');
+    const includesLargeGutterTwenty: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_IncludesLargeGutterTwenty = largeBlock.includes('--nova-grid-gutter: 20px;');
+    const includesLargePaddingTwenty: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_IncludesLargePaddingTwenty = largeBlock.includes('--nova-grid-padding: 20px;');
 
     ok(includesMediumGutterSixteen);
     ok(includesMediumPaddingSixteen);
@@ -705,7 +708,7 @@ describe('CssGenerator generate grid variables', async () => {
   });
 
   it('produces correct medium and large breakpoint values for comfortable density', () => {
-    const result: Tests_Lib_CssGenerator_ComfortableGridResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -758,14 +761,14 @@ describe('CssGenerator generate grid variables', async () => {
       },
     });
 
-    const sections: Tests_Lib_CssGenerator_ComfortableGridMediumSections = result.split('@media');
-    const mediumBlock: Tests_Lib_CssGenerator_ComfortableGridMediumBlock = String(sections[1]);
-    const largeBlock: Tests_Lib_CssGenerator_ComfortableGridLargeBlock = String(sections[2]);
+    const sections: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_Sections = result.split('@media');
+    const mediumBlock: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_MediumBlock = String(sections[1]);
+    const largeBlock: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_LargeBlock = String(sections[2]);
 
-    const includesMediumGutterTwenty: Tests_Lib_CssGenerator_ComfortableGridMediumIncludesGutterTwenty = mediumBlock.includes('--nova-grid-gutter: 20px;');
-    const includesMediumPaddingTwenty: Tests_Lib_CssGenerator_ComfortableGridMediumIncludesPaddingTwenty = mediumBlock.includes('--nova-grid-padding: 20px;');
-    const includesLargeGutterTwentyFour: Tests_Lib_CssGenerator_ComfortableGridLargeIncludesGutterTwentyFour = largeBlock.includes('--nova-grid-gutter: 24px;');
-    const includesLargePaddingTwentyFour: Tests_Lib_CssGenerator_ComfortableGridLargeIncludesPaddingTwentyFour = largeBlock.includes('--nova-grid-padding: 24px;');
+    const includesMediumGutterTwenty: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_IncludesMediumGutterTwenty = mediumBlock.includes('--nova-grid-gutter: 20px;');
+    const includesMediumPaddingTwenty: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_IncludesMediumPaddingTwenty = mediumBlock.includes('--nova-grid-padding: 20px;');
+    const includesLargeGutterTwentyFour: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_IncludesLargeGutterTwentyFour = largeBlock.includes('--nova-grid-gutter: 24px;');
+    const includesLargePaddingTwentyFour: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_IncludesLargePaddingTwentyFour = largeBlock.includes('--nova-grid-padding: 24px;');
 
     ok(includesMediumGutterTwenty);
     ok(includesMediumPaddingTwenty);
@@ -776,7 +779,7 @@ describe('CssGenerator generate grid variables', async () => {
   });
 
   it('produces correct medium and large breakpoint values for spacious density', () => {
-    const result: Tests_Lib_CssGenerator_SpaciousGridResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -829,14 +832,14 @@ describe('CssGenerator generate grid variables', async () => {
       },
     });
 
-    const sections: Tests_Lib_CssGenerator_SpaciousGridMediumSections = result.split('@media');
-    const mediumBlock: Tests_Lib_CssGenerator_SpaciousGridMediumBlock = String(sections[1]);
-    const largeBlock: Tests_Lib_CssGenerator_SpaciousGridLargeBlock = String(sections[2]);
+    const sections: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_Sections = result.split('@media');
+    const mediumBlock: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_MediumBlock = String(sections[1]);
+    const largeBlock: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_LargeBlock = String(sections[2]);
 
-    const includesMediumGutterTwentyFour: Tests_Lib_CssGenerator_SpaciousGridMediumIncludesGutterTwentyFour = mediumBlock.includes('--nova-grid-gutter: 24px;');
-    const includesMediumPaddingTwentyFour: Tests_Lib_CssGenerator_SpaciousGridMediumIncludesPaddingTwentyFour = mediumBlock.includes('--nova-grid-padding: 24px;');
-    const includesLargeGutterThirtyTwo: Tests_Lib_CssGenerator_SpaciousGridLargeIncludesGutterThirtyTwo = largeBlock.includes('--nova-grid-gutter: 32px;');
-    const includesLargePaddingThirtyTwo: Tests_Lib_CssGenerator_SpaciousGridLargeIncludesPaddingThirtyTwo = largeBlock.includes('--nova-grid-padding: 32px;');
+    const includesMediumGutterTwentyFour: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_IncludesMediumGutterTwentyFour = mediumBlock.includes('--nova-grid-gutter: 24px;');
+    const includesMediumPaddingTwentyFour: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_IncludesMediumPaddingTwentyFour = mediumBlock.includes('--nova-grid-padding: 24px;');
+    const includesLargeGutterThirtyTwo: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_IncludesLargeGutterThirtyTwo = largeBlock.includes('--nova-grid-gutter: 32px;');
+    const includesLargePaddingThirtyTwo: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_IncludesLargePaddingThirtyTwo = largeBlock.includes('--nova-grid-padding: 32px;');
 
     ok(includesMediumGutterTwentyFour);
     ok(includesMediumPaddingTwentyFour);
@@ -847,7 +850,7 @@ describe('CssGenerator generate grid variables', async () => {
   });
 
   it('includes responsive media query blocks', () => {
-    const result: Tests_Lib_CssGenerator_GridMediaResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IncludesResponsiveMediaQueryBlocks_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -900,8 +903,8 @@ describe('CssGenerator generate grid variables', async () => {
       },
     });
 
-    const includesFourEighty: Tests_Lib_CssGenerator_GridMediaIncludesFourEighty = result.includes('@media (min-width: 480px)');
-    const includesSevenSixtyEight: Tests_Lib_CssGenerator_GridMediaIncludesSevenSixtyEight = result.includes('@media (min-width: 768px)');
+    const includesFourEighty: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IncludesResponsiveMediaQueryBlocks_IncludesFourEighty = result.includes('@media (min-width: 480px)');
+    const includesSevenSixtyEight: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IncludesResponsiveMediaQueryBlocks_IncludesSevenSixtyEight = result.includes('@media (min-width: 768px)');
 
     ok(includesFourEighty);
     ok(includesSevenSixtyEight);
@@ -910,7 +913,7 @@ describe('CssGenerator generate grid variables', async () => {
   });
 
   it('integration: generate output contains root block and post-root media queries', () => {
-    const result: Tests_Lib_CssGenerator_GridIntegrationResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IntegrationGenerateOutputContainsRootBlockAndPostRootMediaQueries_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -963,9 +966,9 @@ describe('CssGenerator generate grid variables', async () => {
       },
     });
 
-    const includesRoot: Tests_Lib_CssGenerator_GridIntegrationIncludesRoot = result.includes(':root {');
-    const includesMedia: Tests_Lib_CssGenerator_GridIntegrationIncludesMedia = result.includes('@media (min-width:');
-    const includesGutter: Tests_Lib_CssGenerator_GridIntegrationIncludesGutter = result.includes('--nova-grid-gutter:');
+    const includesRoot: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IntegrationGenerateOutputContainsRootBlockAndPostRootMediaQueries_IncludesRoot = result.includes(':root {');
+    const includesMedia: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IntegrationGenerateOutputContainsRootBlockAndPostRootMediaQueries_IncludesMedia = result.includes('@media (min-width:');
+    const includesGutter: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IntegrationGenerateOutputContainsRootBlockAndPostRootMediaQueries_IncludesGutter = result.includes('--nova-grid-gutter:');
 
     ok(includesRoot);
     ok(includesMedia);
@@ -984,7 +987,7 @@ describe('CssGenerator generate grid variables', async () => {
  */
 describe('CssGenerator generate motion variables', async () => {
   it('produces zero duration for none speed', () => {
-    const result: Tests_Lib_CssGenerator_NoneMotionResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_ProducesZeroDurationForNoneSpeed_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -1037,7 +1040,7 @@ describe('CssGenerator generate motion variables', async () => {
       },
     });
 
-    const includesZero: Tests_Lib_CssGenerator_NoneMotionIncludesZero = result.includes('--nova-motion-duration: 0ms;');
+    const includesZero: Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_ProducesZeroDurationForNoneSpeed_IncludesZero = result.includes('--nova-motion-duration: 0ms;');
 
     ok(includesZero);
 
@@ -1045,7 +1048,7 @@ describe('CssGenerator generate motion variables', async () => {
   });
 
   it('produces 300ms duration for expressive speed', () => {
-    const result: Tests_Lib_CssGenerator_ExpressiveMotionResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_Produces300msDurationForExpressiveSpeed_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -1098,7 +1101,7 @@ describe('CssGenerator generate motion variables', async () => {
       },
     });
 
-    const includesThreeHundred: Tests_Lib_CssGenerator_ExpressiveMotionIncludesThreeHundred = result.includes('--nova-motion-duration: 300ms;');
+    const includesThreeHundred: Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_Produces300msDurationForExpressiveSpeed_IncludesThreeHundred = result.includes('--nova-motion-duration: 300ms;');
 
     ok(includesThreeHundred);
 
@@ -1106,7 +1109,7 @@ describe('CssGenerator generate motion variables', async () => {
   });
 
   it('produces canonical Nova ease curve for motion easing', () => {
-    const result: Tests_Lib_CssGenerator_MotionEasingResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_ProducesCanonicalNovaEaseCurveForMotionEasing_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -1159,7 +1162,7 @@ describe('CssGenerator generate motion variables', async () => {
       },
     });
 
-    const includesCurve: Tests_Lib_CssGenerator_MotionEasingIncludesCurve = result.includes('--nova-motion-easing: cubic-bezier(0.22, 1, 0.36, 1);');
+    const includesCurve: Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_ProducesCanonicalNovaEaseCurveForMotionEasing_IncludesCurve = result.includes('--nova-motion-easing: cubic-bezier(0.22, 1, 0.36, 1);');
 
     ok(includesCurve);
 
@@ -1176,7 +1179,7 @@ describe('CssGenerator generate motion variables', async () => {
  */
 describe('CssGenerator generate shape variables', async () => {
   it('produces zero radius for sharp shape', () => {
-    const result: Tests_Lib_CssGenerator_SharpResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateShapeVariables_ProducesZeroRadiusForSharpShape_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -1229,7 +1232,7 @@ describe('CssGenerator generate shape variables', async () => {
       },
     });
 
-    const includesZero: Tests_Lib_CssGenerator_SharpIncludesZero = result.includes('--nova-shape-radius: 0;');
+    const includesZero: Tests_Lib_CssGenerator_CssGeneratorGenerateShapeVariables_ProducesZeroRadiusForSharpShape_IncludesZero = result.includes('--nova-shape-radius: 0;');
 
     ok(includesZero);
 
@@ -1237,7 +1240,7 @@ describe('CssGenerator generate shape variables', async () => {
   });
 
   it('produces 9999px radius for pill shape', () => {
-    const result: Tests_Lib_CssGenerator_PillResult = CssGenerator.generate({
+    const result: Tests_Lib_CssGenerator_CssGeneratorGenerateShapeVariables_Produces9999pxRadiusForPillShape_Result = CssGenerator.generate({
       preset: {
         logo: {
           title: 'Test',
@@ -1290,7 +1293,7 @@ describe('CssGenerator generate shape variables', async () => {
       },
     });
 
-    const includesLargeRadius: Tests_Lib_CssGenerator_PillIncludesLargeRadius = result.includes('--nova-shape-radius: 9999px;');
+    const includesLargeRadius: Tests_Lib_CssGenerator_CssGeneratorGenerateShapeVariables_Produces9999pxRadiusForPillShape_IncludesLargeRadius = result.includes('--nova-shape-radius: 9999px;');
 
     ok(includesLargeRadius);
 

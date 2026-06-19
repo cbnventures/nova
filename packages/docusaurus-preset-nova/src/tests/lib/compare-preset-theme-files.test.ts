@@ -4,7 +4,16 @@ import { describe, it } from 'vitest';
 
 import { comparePresetThemeFiles } from '../../lib/compare-preset-theme-files.js';
 
-import type { Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Result } from '../../types/tests/lib/compare-preset-theme-files.test.d.ts';
+import type {
+  Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_KeepsAdmonitionBeforeNavbarWrapperCrossComponentAlphaOrder_Result,
+  Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_ReturnsZeroWhenComparingIdenticalPaths_Result,
+  Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsAFooterVariantSubfolderAfterTheFooterWrapper_Result,
+  Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsANavbarVariantSubfolderAfterTheNavbarWrapper_Result,
+  Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsNavbarVariantSubfoldersAlphabeticallyAmongThemselves_Result,
+  Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsNonNavbarNonFooterPathsAlphabetically_Result,
+  Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsTheFooterWrapperBeforeAnyFooterVariantSubfolder_Result,
+  Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsTheNavbarWrapperBeforeAnyNavbarVariantSubfolder_Result,
+} from '../../types/tests/lib/compare-preset-theme-files.test.d.ts';
 
 /**
  * Tests - Lib - Compare Preset Theme Files - Compare Preset Theme Files.
@@ -13,7 +22,7 @@ import type { Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Result }
  */
 describe('comparePresetThemeFiles', async () => {
   it('sorts the Navbar wrapper before any Navbar variant subfolder', () => {
-    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Result = comparePresetThemeFiles('Navbar/style.css', 'Navbar/Bridge/style.css');
+    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsTheNavbarWrapperBeforeAnyNavbarVariantSubfolder_Result = comparePresetThemeFiles('Navbar/style.css', 'Navbar/Bridge/style.css');
 
     ok(result < 0);
 
@@ -21,7 +30,7 @@ describe('comparePresetThemeFiles', async () => {
   });
 
   it('sorts a Navbar variant subfolder after the Navbar wrapper', () => {
-    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Result = comparePresetThemeFiles('Navbar/Bridge/style.css', 'Navbar/style.css');
+    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsANavbarVariantSubfolderAfterTheNavbarWrapper_Result = comparePresetThemeFiles('Navbar/Bridge/style.css', 'Navbar/style.css');
 
     ok(result > 0);
 
@@ -29,7 +38,7 @@ describe('comparePresetThemeFiles', async () => {
   });
 
   it('sorts the Footer wrapper before any Footer variant subfolder', () => {
-    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Result = comparePresetThemeFiles('Footer/style.css', 'Footer/Commons/style.css');
+    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsTheFooterWrapperBeforeAnyFooterVariantSubfolder_Result = comparePresetThemeFiles('Footer/style.css', 'Footer/Commons/style.css');
 
     ok(result < 0);
 
@@ -37,7 +46,7 @@ describe('comparePresetThemeFiles', async () => {
   });
 
   it('sorts a Footer variant subfolder after the Footer wrapper', () => {
-    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Result = comparePresetThemeFiles('Footer/Commons/style.css', 'Footer/style.css');
+    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsAFooterVariantSubfolderAfterTheFooterWrapper_Result = comparePresetThemeFiles('Footer/Commons/style.css', 'Footer/style.css');
 
     ok(result > 0);
 
@@ -45,7 +54,7 @@ describe('comparePresetThemeFiles', async () => {
   });
 
   it('sorts Navbar variant subfolders alphabetically among themselves', () => {
-    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Result = comparePresetThemeFiles('Navbar/Bridge/style.css', 'Navbar/Canopy/style.css');
+    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsNavbarVariantSubfoldersAlphabeticallyAmongThemselves_Result = comparePresetThemeFiles('Navbar/Bridge/style.css', 'Navbar/Canopy/style.css');
 
     ok(result < 0);
 
@@ -53,7 +62,7 @@ describe('comparePresetThemeFiles', async () => {
   });
 
   it('sorts non-Navbar non-Footer paths alphabetically', () => {
-    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Result = comparePresetThemeFiles('Admonition/style.css', 'DocItem/Content/style.css');
+    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_SortsNonNavbarNonFooterPathsAlphabetically_Result = comparePresetThemeFiles('Admonition/style.css', 'DocItem/Content/style.css');
 
     ok(result < 0);
 
@@ -61,7 +70,7 @@ describe('comparePresetThemeFiles', async () => {
   });
 
   it('returns zero when comparing identical paths', () => {
-    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Result = comparePresetThemeFiles('Navbar/style.css', 'Navbar/style.css');
+    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_ReturnsZeroWhenComparingIdenticalPaths_Result = comparePresetThemeFiles('Navbar/style.css', 'Navbar/style.css');
 
     ok(result === 0);
 
@@ -69,7 +78,7 @@ describe('comparePresetThemeFiles', async () => {
   });
 
   it('keeps Admonition before Navbar wrapper (cross-component alpha order)', () => {
-    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Result = comparePresetThemeFiles('Admonition/style.css', 'Navbar/style.css');
+    const result: Tests_Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_KeepsAdmonitionBeforeNavbarWrapperCrossComponentAlphaOrder_Result = comparePresetThemeFiles('Admonition/style.css', 'Navbar/style.css');
 
     ok(result < 0);
 

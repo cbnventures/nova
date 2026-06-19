@@ -13,19 +13,19 @@ export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Src_Light = string
 
 export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Src_Dark = string | undefined;
 
-export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Src = {
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Src = undefined | {
   light: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Src_Light;
   dark: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Src_Dark;
-} | undefined;
+};
 
 export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Wordmark_Light = string | undefined;
 
 export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Wordmark = {
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Wordmark = undefined | {
   light: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Wordmark_Light;
   dark: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Wordmark_Dark;
-} | undefined;
+};
 
 export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Title = string | undefined;
 
@@ -87,19 +87,19 @@ export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Src_Light = string | und
 
 export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Src_Dark = string | undefined;
 
-export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Src = {
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Src = undefined | {
   light: Theme_Navbar_Compass_Index_Compass_SiteLogo_Src_Light;
   dark: Theme_Navbar_Compass_Index_Compass_SiteLogo_Src_Dark;
-} | undefined;
+};
 
 export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Wordmark_Light = string | undefined;
 
 export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Wordmark = {
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Wordmark = undefined | {
   light: Theme_Navbar_Compass_Index_Compass_SiteLogo_Wordmark_Light;
   dark: Theme_Navbar_Compass_Index_Compass_SiteLogo_Wordmark_Dark;
-} | undefined;
+};
 
 export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Title = string | undefined;
 

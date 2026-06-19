@@ -72,7 +72,6 @@ import type {
   Cli_Utility_Changelog_Runner_Record_MessageOutputKey,
   Cli_Utility_Changelog_Runner_Record_MessageOutputResult,
   Cli_Utility_Changelog_Runner_Record_MessageOutputValue,
-  Cli_Utility_Changelog_Runner_Record_MessageValidateValue,
   Cli_Utility_Changelog_Runner_Record_Options,
   Cli_Utility_Changelog_Runner_Record_PackageOutput,
   Cli_Utility_Changelog_Runner_Record_PackageOutputKey,
@@ -149,6 +148,8 @@ import type {
   Cli_Utility_Changelog_Runner_Run_ModeOutputValue,
   Cli_Utility_Changelog_Runner_Run_Options,
   Cli_Utility_Changelog_Runner_Run_Returns,
+  Cli_Utility_Changelog_Runner_ValidateMessage_MessageValue,
+  Cli_Utility_Changelog_Runner_ValidateMessage_Returns,
   Cli_Utility_Changelog_Runner_WriteChangelog_AfterHeading,
   Cli_Utility_Changelog_Runner_WriteChangelog_ByCategory,
   Cli_Utility_Changelog_Runner_WriteChangelog_CategoryOrder,
@@ -164,6 +165,7 @@ import type {
   Cli_Utility_Changelog_Runner_WriteChangelog_PackageHeading,
   Cli_Utility_Changelog_Runner_WriteChangelog_PackageName,
   Cli_Utility_Changelog_Runner_WriteChangelog_PrependedContent,
+  Cli_Utility_Changelog_Runner_WriteChangelog_PrependedWithHeadingContent,
   Cli_Utility_Changelog_Runner_WriteChangelog_Returns,
   Cli_Utility_Changelog_Runner_WriteChangelog_SectionParts,
   Cli_Utility_Changelog_Runner_WriteChangelog_Today,
@@ -312,10 +314,10 @@ export class Runner {
 
     // Filter to non-freezable workspaces.
     const eligibleWorkspaces: Cli_Utility_Changelog_Runner_Record_EligibleWorkspaces = Object.entries(workspaces).filter((workspace) => {
-      const workspaceConfig: Cli_Utility_Changelog_Runner_Record_FilterWorkspaceConfig = workspace[1];
-      const workspaceConfigPolicy: Cli_Utility_Changelog_Runner_Record_FilterWorkspaceConfigPolicy = workspaceConfig['policy'];
+      const filterWorkspaceConfig: Cli_Utility_Changelog_Runner_Record_FilterWorkspaceConfig = workspace[1];
+      const filterWorkspaceConfigPolicy: Cli_Utility_Changelog_Runner_Record_FilterWorkspaceConfigPolicy = filterWorkspaceConfig['policy'];
 
-      return workspaceConfigPolicy !== 'freezable';
+      return filterWorkspaceConfigPolicy !== 'freezable';
     });
 
     if (eligibleWorkspaces.length === 0) {
@@ -343,10 +345,10 @@ export class Runner {
     ) {
       // Validate package.
       const validPackageEntry: Cli_Utility_Changelog_Runner_Record_ValidPackageEntry = eligibleWorkspaces.find((eligibleWorkspace) => {
-        const eligibleWorkspaceConfig: Cli_Utility_Changelog_Runner_Record_FindEligibleWorkspaceConfig = eligibleWorkspace[1];
-        const eligibleWorkspaceConfigName: Cli_Utility_Changelog_Runner_Record_FindEligibleWorkspaceConfigName = eligibleWorkspaceConfig['name'];
+        const findEligibleWorkspaceConfig: Cli_Utility_Changelog_Runner_Record_FindEligibleWorkspaceConfig = eligibleWorkspace[1];
+        const findEligibleWorkspaceConfigName: Cli_Utility_Changelog_Runner_Record_FindEligibleWorkspaceConfigName = findEligibleWorkspaceConfig['name'];
 
-        return eligibleWorkspaceConfigName === options['package'];
+        return findEligibleWorkspaceConfigName === options['package'];
       });
       const validPackage: Cli_Utility_Changelog_Runner_Record_ValidPackage = (validPackageEntry !== undefined) ? validPackageEntry[1]['name'] : undefined;
 
@@ -422,15 +424,15 @@ export class Runner {
           name: 'package',
           message: 'Select a package.',
           choices: eligibleWorkspaces.map((eligibleWorkspace) => {
-            const eligibleWorkspaceConfig: Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfig = eligibleWorkspace[1];
-            const eligibleWorkspaceConfigName: Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfigName = eligibleWorkspaceConfig['name'];
-            const eligibleWorkspaceConfigRole: Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfigRole = eligibleWorkspaceConfig['role'];
-            const eligibleWorkspaceConfigPolicy: Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfigPolicy = eligibleWorkspaceConfig['policy'];
+            const mapEligibleWorkspaceConfig: Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfig = eligibleWorkspace[1];
+            const mapEligibleWorkspaceConfigName: Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfigName = mapEligibleWorkspaceConfig['name'];
+            const mapEligibleWorkspaceConfigRole: Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfigRole = mapEligibleWorkspaceConfig['role'];
+            const mapEligibleWorkspaceConfigPolicy: Cli_Utility_Changelog_Runner_Record_MapEligibleWorkspaceConfigPolicy = mapEligibleWorkspaceConfig['policy'];
 
             return {
-              title: eligibleWorkspaceConfigName,
-              description: `${eligibleWorkspaceConfigRole} · ${eligibleWorkspaceConfigPolicy}`,
-              value: eligibleWorkspaceConfigName,
+              title: mapEligibleWorkspaceConfigName,
+              description: `${mapEligibleWorkspaceConfigRole} · ${mapEligibleWorkspaceConfigPolicy}`,
+              value: mapEligibleWorkspaceConfigName,
             };
           }),
         });
@@ -494,13 +496,7 @@ export class Runner {
         type: 'text',
         name: 'message',
         message: 'Describe the change.',
-        validate: (value: Cli_Utility_Changelog_Runner_Record_MessageValidateValue) => {
-          if (typeof value !== 'string' || value.trim() === '') {
-            return 'Enter a description.';
-          }
-
-          return true;
-        },
+        validate: Runner['validateMessage'],
       });
 
       if (messageOutput['cancelled'] === true) {
@@ -672,10 +668,10 @@ export class Runner {
 
       // Find workspace path.
       const workspaceEntry: Cli_Utility_Changelog_Runner_Release_WorkspaceEntry = Object.entries(workspaces).find((workspace) => {
-        const workspaceConfig: Cli_Utility_Changelog_Runner_Release_FindWorkspaceConfig = workspace[1];
-        const workspaceConfigName: Cli_Utility_Changelog_Runner_Release_FindWorkspaceConfigName = workspaceConfig['name'];
+        const findWorkspaceConfig: Cli_Utility_Changelog_Runner_Release_FindWorkspaceConfig = workspace[1];
+        const findWorkspaceConfigName: Cli_Utility_Changelog_Runner_Release_FindWorkspaceConfigName = findWorkspaceConfig['name'];
 
-        return workspaceConfigName === packageName;
+        return findWorkspaceConfigName === packageName;
       });
 
       if (workspaceEntry === undefined) {
@@ -806,16 +802,16 @@ export class Runner {
     ];
 
     for (const release of releases) {
-      const releasePackageName: Cli_Utility_Changelog_Runner_Release_SummaryReleasePackageName = release['packageName'];
-      const releaseCurrentVersion: Cli_Utility_Changelog_Runner_Release_SummaryReleaseCurrentVersion = release['currentVersion'];
-      const releaseNewVersion: Cli_Utility_Changelog_Runner_Release_SummaryReleaseNewVersion = release['newVersion'];
-      const releaseHighestBump: Cli_Utility_Changelog_Runner_Release_SummaryReleaseHighestBump = release['highestBump'];
-      const releaseEntries: Cli_Utility_Changelog_Runner_Release_SummaryReleaseEntries = release['entries'];
+      const summaryReleasePackageName: Cli_Utility_Changelog_Runner_Release_SummaryReleasePackageName = release['packageName'];
+      const summaryReleaseCurrentVersion: Cli_Utility_Changelog_Runner_Release_SummaryReleaseCurrentVersion = release['currentVersion'];
+      const summaryReleaseNewVersion: Cli_Utility_Changelog_Runner_Release_SummaryReleaseNewVersion = release['newVersion'];
+      const summaryReleaseHighestBump: Cli_Utility_Changelog_Runner_Release_SummaryReleaseHighestBump = release['highestBump'];
+      const summaryReleaseEntries: Cli_Utility_Changelog_Runner_Release_SummaryReleaseEntries = release['entries'];
 
-      process.stdout.write(`\n  ${chalk.bold(releasePackageName)}: ${releaseCurrentVersion} → ${chalk.green(releaseNewVersion)} (${releaseHighestBump})\n`);
+      process.stdout.write(`\n  ${chalk.bold(summaryReleasePackageName)}: ${summaryReleaseCurrentVersion} → ${chalk.green(summaryReleaseNewVersion)} (${summaryReleaseHighestBump})\n`);
 
       for (const category of categoryOrder) {
-        const categoryEntries: Cli_Utility_Changelog_Runner_Release_CategoryEntries = releaseEntries.filter((releaseEntry) => releaseEntry['category'] === category);
+        const categoryEntries: Cli_Utility_Changelog_Runner_Release_CategoryEntries = summaryReleaseEntries.filter((releaseEntry) => releaseEntry['category'] === category);
 
         if (categoryEntries.length === 0) {
           continue;
@@ -876,47 +872,47 @@ export class Runner {
 
     // Apply changes.
     for (const release of releases) {
-      const releasePackageName: Cli_Utility_Changelog_Runner_Release_ApplyReleasePackageName = release['packageName'];
-      const releasePackageDirectory: Cli_Utility_Changelog_Runner_Release_ApplyReleasePackageDirectory = release['packageDirectory'];
-      const releaseNewVersion: Cli_Utility_Changelog_Runner_Release_ApplyReleaseNewVersion = release['newVersion'];
-      const releaseEntries: Cli_Utility_Changelog_Runner_Release_ApplyReleaseEntries = release['entries'];
-      const packageJsonPath: Cli_Utility_Changelog_Runner_Release_ApplyPackageJsonPath = join(releasePackageDirectory, 'package.json');
+      const applyReleasePackageName: Cli_Utility_Changelog_Runner_Release_ApplyReleasePackageName = release['packageName'];
+      const applyReleasePackageDirectory: Cli_Utility_Changelog_Runner_Release_ApplyReleasePackageDirectory = release['packageDirectory'];
+      const applyReleaseNewVersion: Cli_Utility_Changelog_Runner_Release_ApplyReleaseNewVersion = release['newVersion'];
+      const applyReleaseEntries: Cli_Utility_Changelog_Runner_Release_ApplyReleaseEntries = release['entries'];
+      const applyPackageJsonPath: Cli_Utility_Changelog_Runner_Release_ApplyPackageJsonPath = join(applyReleasePackageDirectory, 'package.json');
 
       // Read and update "package.json".
-      const packageJson: Cli_Utility_Changelog_Runner_Release_PackageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
+      const packageJson: Cli_Utility_Changelog_Runner_Release_PackageJson = JSON.parse(await fs.readFile(applyPackageJsonPath, 'utf-8'));
 
       if (
         packageJson === null
         || typeof packageJson !== 'object'
         || typeof packageJson['version'] !== 'string'
       ) {
-        throw new Error(`Invalid package.json at "${packageJsonPath}": missing or non-string "version" field.`);
+        throw new Error(`Invalid package.json at "${applyPackageJsonPath}": missing or non-string "version" field.`);
       }
 
-      Reflect.set(packageJson, 'version', releaseNewVersion);
+      Reflect.set(packageJson, 'version', applyReleaseNewVersion);
 
-      const updatedPackageJson: Cli_Utility_Changelog_Runner_Release_ApplyUpdatedPackageJson = JSON.stringify(packageJson, null, 2);
-      const updatedContents: Cli_Utility_Changelog_Runner_Release_ApplyUpdatedContents = `${updatedPackageJson}\n`;
+      const applyUpdatedPackageJson: Cli_Utility_Changelog_Runner_Release_ApplyUpdatedPackageJson = JSON.stringify(packageJson, null, 2);
+      const applyUpdatedContents: Cli_Utility_Changelog_Runner_Release_ApplyUpdatedContents = `${applyUpdatedPackageJson}\n`;
 
-      await fs.writeFile(packageJsonPath, updatedContents, 'utf-8');
+      await fs.writeFile(applyPackageJsonPath, applyUpdatedContents, 'utf-8');
 
       Logger.customize({
         name: 'Runner.release',
         purpose: 'bumpVersion',
-      }).info(`Updated "${packageJsonPath}" version to ${releaseNewVersion}.`);
+      }).info(`Updated "${applyPackageJsonPath}" version to ${applyReleaseNewVersion}.`);
 
       // Write "CHANGELOG.md".
       await Runner.writeChangelog(
-        releasePackageDirectory,
-        releasePackageName,
-        releaseNewVersion,
-        releaseEntries,
+        applyReleasePackageDirectory,
+        applyReleasePackageName,
+        applyReleaseNewVersion,
+        applyReleaseEntries,
       );
 
       Logger.customize({
         name: 'Runner.release',
         purpose: 'writeChangelog',
-      }).info(`Updated "CHANGELOG.md" for ${releasePackageName}.`);
+      }).info(`Updated "CHANGELOG.md" for ${applyReleasePackageName}.`);
     }
 
     // Clean up consumed entry files.
@@ -1152,7 +1148,7 @@ export class Runner {
       await fs.writeFile(changelogPath, prependedContent, 'utf-8');
     } else {
       // Prepend with package heading.
-      const prependedContent: Cli_Utility_Changelog_Runner_WriteChangelog_PrependedContent = [
+      const prependedWithHeadingContent: Cli_Utility_Changelog_Runner_WriteChangelog_PrependedWithHeadingContent = [
         packageHeading,
         '',
         newSection,
@@ -1160,7 +1156,7 @@ export class Runner {
         existingContent,
       ].join('\n');
 
-      await fs.writeFile(changelogPath, prependedContent, 'utf-8');
+      await fs.writeFile(changelogPath, prependedWithHeadingContent, 'utf-8');
     }
 
     return;
@@ -1221,5 +1217,27 @@ export class Runner {
     const verb: Cli_Utility_Changelog_Runner_GenerateFileName_Verb = libItemChangelogVerbs[Math.floor(Math.random() * libItemChangelogVerbs.length)];
 
     return `${adjective}-${noun}-${verb}`;
+  }
+
+  /**
+   * CLI - Utility - Changelog - Validate Message.
+   *
+   * Rejects empty or non-string descriptions for the interactive message prompt.
+   * Returns true when the value is acceptable, otherwise an error string.
+   *
+   * @param {Cli_Utility_Changelog_Runner_ValidateMessage_MessageValue} messageValue - Message value.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_ValidateMessage_Returns}
+   *
+   * @since 0.13.0
+   */
+  private static validateMessage(messageValue: Cli_Utility_Changelog_Runner_ValidateMessage_MessageValue): Cli_Utility_Changelog_Runner_ValidateMessage_Returns {
+    if (typeof messageValue !== 'string' || messageValue.trim() === '') {
+      return 'Enter a description.';
+    }
+
+    return true;
   }
 }

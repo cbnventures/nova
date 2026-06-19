@@ -17,11 +17,14 @@ import type {
   Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Returns,
   Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_TokensBetween,
   Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Node,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Operands,
   Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Returns,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_GroupStyle,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_LogicalExpression_Node,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_LogicalExpression_Returns,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_Options,
   Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleDefaultOptionsGroupStyle,
   Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleGroupStyle,
-  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/require-multiline-condition-groups.d.ts';
 
 /**
@@ -78,8 +81,8 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleOptions = defaultOptions[0];
-      const groupStyle: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleGroupStyle = options['groupStyle'];
+      const options: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_Options = defaultOptions[0];
+      const groupStyle: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_GroupStyle = options['groupStyle'];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -87,7 +90,7 @@ export class Runner {
       }
 
       return {
-        LogicalExpression(node) {
+        LogicalExpression(node: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_LogicalExpression_Node): Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_Create_LogicalExpression_Returns {
           Runner.checkLogicalExpression(context, node, groupStyle);
 
           return;
@@ -216,7 +219,7 @@ export class Runner {
    * @since 0.15.0
    */
   private static collectGroupOperands(node: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Node): Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Returns {
-    const operands: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Returns = [];
+    const operands: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Operands = [];
 
     if (node.left.type === 'LogicalExpression' && node.left.operator === node.operator) {
       operands.push(...Runner.collectGroupOperands(node.left));

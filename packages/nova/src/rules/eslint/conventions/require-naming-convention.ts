@@ -28,7 +28,7 @@ import type {
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassProperty_Node,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassProperty_Returns,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Context,
-  Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Enum,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_EnumCasing,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_EnumMember,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_MemberName,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Name,
@@ -37,18 +37,19 @@ import type {
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Context,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_ExpectedCasing,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_ExpectedContext,
-  Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Function,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_FunctionCasing,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_IsUppercaseStart,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Name,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Node,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Parameter,
-  Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_ReactComponent,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_ReactComponentCasing,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Returns,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Context,
-  Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Interface,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_InterfaceCasing,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Name,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Node,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Returns,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_AssignmentName,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Context,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Name,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Node,
@@ -67,12 +68,33 @@ import type {
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Name,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Node,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Parent,
-  Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Reference,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Ref,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Returns,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Scope,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_ScopeVariable,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Variable,
-  Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Node,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_ArrowFunctionExpression_Node,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_ArrowFunctionExpression_Returns,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_ClassDeclaration_Node,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_ClassDeclaration_Returns,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_FunctionDeclaration_Node,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_FunctionDeclaration_Returns,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_FunctionExpression_Node,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_FunctionExpression_Returns,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_MethodDefinition_Node,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_MethodDefinition_Returns,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_Options,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_PropertyDefinition_Node,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_PropertyDefinition_Returns,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_TSEnumDeclaration_Node,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_TSEnumDeclaration_Returns,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_TSInterfaceDeclaration_Node,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_TSInterfaceDeclaration_Returns,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_TSTypeAliasDeclaration_Node,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_TSTypeAliasDeclaration_Returns,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_VariableDeclarator_Node,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_VariableDeclarator_Returns,
+  Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Init,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Returns,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsClassDeclaration,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsClassMethod,
@@ -88,7 +110,6 @@ import type {
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsReactComponent,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsTypeAlias,
   Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsVariable,
-  Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/require-naming-convention.d.ts';
 
 /**
@@ -161,7 +182,7 @@ export class Runner {
       variable: 'camelCase' as Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsVariable,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -169,52 +190,52 @@ export class Runner {
       }
 
       return {
-        VariableDeclarator(node) {
+        VariableDeclarator(node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_VariableDeclarator_Node): Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_VariableDeclarator_Returns {
           Runner.checkVariableDeclarator(context, node, options['variable'], options['constant'], options['constructorVariable']);
 
           return;
         },
-        FunctionDeclaration(node) {
+        FunctionDeclaration(node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_FunctionDeclaration_Node): Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_FunctionDeclaration_Returns {
           Runner.checkFunctionDeclaration(context, node, options['function'], options['reactComponent'], options['parameter']);
 
           return;
         },
-        FunctionExpression(node) {
+        FunctionExpression(node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_FunctionExpression_Node): Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_FunctionExpression_Returns {
           Runner.checkParameter(context, node, options['parameter']);
 
           return;
         },
-        ArrowFunctionExpression(node) {
+        ArrowFunctionExpression(node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_ArrowFunctionExpression_Node): Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_ArrowFunctionExpression_Returns {
           Runner.checkParameter(context, node, options['parameter']);
 
           return;
         },
-        ClassDeclaration(node) {
+        ClassDeclaration(node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_ClassDeclaration_Node): Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_ClassDeclaration_Returns {
           Runner.checkClassDeclaration(context, node, options['classDeclaration']);
 
           return;
         },
-        PropertyDefinition(node) {
+        PropertyDefinition(node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_PropertyDefinition_Node): Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_PropertyDefinition_Returns {
           Runner.checkClassProperty(context, node, options['classProperty']);
 
           return;
         },
-        MethodDefinition(node) {
+        MethodDefinition(node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_MethodDefinition_Node): Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_MethodDefinition_Returns {
           Runner.checkClassMethod(context, node, options['classMethod']);
 
           return;
         },
-        TSTypeAliasDeclaration(node) {
+        TSTypeAliasDeclaration(node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_TSTypeAliasDeclaration_Node): Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_TSTypeAliasDeclaration_Returns {
           Runner.checkTypeAliasDeclaration(context, node, options['typeAlias']);
 
           return;
         },
-        TSInterfaceDeclaration(node) {
+        TSInterfaceDeclaration(node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_TSInterfaceDeclaration_Node): Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_TSInterfaceDeclaration_Returns {
           Runner.checkInterfaceDeclaration(context, node, options['interface']);
 
           return;
         },
-        TSEnumDeclaration(node) {
+        TSEnumDeclaration(node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_TSEnumDeclaration_Node): Rules_Eslint_Conventions_RequireNamingConvention_Runner_Create_TSEnumDeclaration_Returns {
           Runner.checkEnumDeclaration(context, node, options['enum'], options['enumMember']);
 
           return;
@@ -388,14 +409,14 @@ export class Runner {
    *
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Context}    context    - Context.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Node}       node       - Node.
-   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Enum}       enumCasing - Enum casing.
+   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_EnumCasing} enumCasing - Enum casing.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_EnumMember} enumMember - Enum member.
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Returns}
    *
    * @since 0.15.0
    */
-  private static checkEnumDeclaration(context: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Context, node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Node, enumCasing: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Enum, enumMember: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_EnumMember): Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Returns {
+  private static checkEnumDeclaration(context: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Context, node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Node, enumCasing: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_EnumCasing, enumMember: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_EnumMember): Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Returns {
     const name: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Name = node.id.name;
 
     if (Runner.checkCasing(name, enumCasing) === false) {
@@ -439,17 +460,17 @@ export class Runner {
    *
    * @private
    *
-   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Context}        context              - Context.
-   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Node}           node                 - Node.
-   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Function}       functionCasing       - Function casing.
-   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_ReactComponent} reactComponentCasing - React component casing.
-   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Parameter}      parameter            - Parameter.
+   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Context}              context              - Context.
+   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Node}                 node                 - Node.
+   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_FunctionCasing}       functionCasing       - Function casing.
+   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_ReactComponentCasing} reactComponentCasing - React component casing.
+   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Parameter}            parameter            - Parameter.
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Returns}
    *
    * @since 0.15.0
    */
-  private static checkFunctionDeclaration(context: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Context, node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Node, functionCasing: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Function, reactComponentCasing: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_ReactComponent, parameter: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Parameter): Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Returns {
+  private static checkFunctionDeclaration(context: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Context, node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Node, functionCasing: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_FunctionCasing, reactComponentCasing: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_ReactComponentCasing, parameter: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Parameter): Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Returns {
     if (node.id === null) {
       return;
     }
@@ -487,15 +508,15 @@ export class Runner {
    *
    * @private
    *
-   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Context}   context         - Context.
-   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Node}      node            - Node.
-   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Interface} interfaceCasing - Interface casing.
+   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Context}         context         - Context.
+   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Node}            node            - Node.
+   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_InterfaceCasing} interfaceCasing - Interface casing.
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Returns}
    *
    * @since 0.15.0
    */
-  private static checkInterfaceDeclaration(context: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Context, node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Node, interfaceCasing: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Interface): Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Returns {
+  private static checkInterfaceDeclaration(context: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Context, node: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Node, interfaceCasing: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_InterfaceCasing): Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Returns {
     const name: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Name = node.id.name;
 
     if (Runner.checkCasing(name, interfaceCasing) === false) {
@@ -549,14 +570,14 @@ export class Runner {
 
       // Handle assignment patterns (default params).
       if (param.type === 'AssignmentPattern' && param.left.type === 'Identifier') {
-        const name: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Name = param.left.name;
+        const assignmentName: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_AssignmentName = param.left.name;
 
-        if (Runner.checkCasing(name, parameter) === false) {
+        if (Runner.checkCasing(assignmentName, parameter) === false) {
           context.report({
             node: param.left,
             messageId: 'wrongCasing',
             data: {
-              name,
+              name: assignmentName,
               expected: parameter,
               context: 'a parameter',
             },
@@ -674,7 +695,7 @@ export class Runner {
 
     if (scopeVariable !== undefined) {
       for (const reference of scopeVariable.references) {
-        const ref: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Reference = reference;
+        const ref: Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Ref = reference;
 
         if (
           ref.identifier.parent !== undefined
@@ -726,13 +747,13 @@ export class Runner {
    *
    * @private
    *
-   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Node} init - Init.
+   * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Init} init - Init.
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Returns}
    *
    * @since 0.15.0
    */
-  private static isImmutableValue(init: Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Node): Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Returns {
+  private static isImmutableValue(init: Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Init): Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Returns {
     if (init === null || init === undefined) {
       return false;
     }

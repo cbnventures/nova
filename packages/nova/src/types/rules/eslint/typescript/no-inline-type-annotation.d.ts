@@ -2,10 +2,11 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 /**
- * Rules - ESLint - TypeScript - No Inline Type Annotation - Callback Methods.
+ * Rules - ESLint - TypeScript - No Inline Type Annotation - Rule.
  *
  * @since 0.14.0
  */
+export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
 /**
  * Rules - ESLint - TypeScript - No Inline Type Annotation - Check As Expression.
@@ -68,6 +69,46 @@ export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosi
 export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Current = TSESTree.Node | null | undefined;
 
 /**
+ * Rules - ESLint - TypeScript - No Inline Type Annotation - Create.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_Options_IgnoreFiles = string[];
+
+export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_Options_IgnoreFiles;
+}>;
+
+export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_NormalizedFilename = string;
+
+/**
+ * Rules - ESLint - TypeScript - No Inline Type Annotation - Create - TS As Expression.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSAsExpression_Node = TSESTree.TSAsExpression;
+
+export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSAsExpression_Returns = void;
+
+/**
+ * Rules - ESLint - TypeScript - No Inline Type Annotation - Create - TS Type Annotation.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSTypeAnnotation_Node = TSESTree.TSTypeAnnotation;
+
+export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSTypeAnnotation_Returns = void;
+
+/**
+ * Rules - ESLint - TypeScript - No Inline Type Annotation - Create - Variable Declarator.
+ *
+ * @since 0.14.0
+ */
+export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_VariableDeclarator_Node = TSESTree.VariableDeclarator;
+
+export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_VariableDeclarator_Returns = void;
+
+/**
  * Rules - ESLint - TypeScript - No Inline Type Annotation - Has Only Type Parameter Arguments.
  *
  * @since 0.14.0
@@ -77,18 +118,3 @@ export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypePar
 export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_TypeParameterNames = Set<string>;
 
 export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_Returns = boolean;
-
-/**
- * Rules - ESLint - TypeScript - No Inline Type Annotation - Rule.
- *
- * @since 0.14.0
- */
-export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleDefaultOptionsIgnoreFiles = string[];
-
-export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleOptions_IgnoreFiles = string[];
-
-export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleOptions_IgnoreFiles;
-}>;
-
-export type Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleNormalizedFilename = string;

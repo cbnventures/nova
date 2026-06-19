@@ -5,8 +5,8 @@ import Heading from '@theme/Heading';
 import Layout from '@theme/Layout';
 
 import type {
-  Theme_BlogLayout_Index_BlogLayout_BlogConfig,
   Theme_BlogLayout_Index_BlogLayout,
+  Theme_BlogLayout_Index_BlogLayout_BlogConfig,
   Theme_BlogLayout_Index_BlogLayout_HasSidebar,
   Theme_BlogLayout_Index_BlogLayout_HasToc,
   Theme_BlogLayout_Index_BlogLayout_MainClassName,

@@ -9,6 +9,8 @@ import type {
   Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Options,
   Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Returns,
   Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Stem,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_Create_Options,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_Create_Program_Returns,
   Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_AllExtensions,
   Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Basename,
   Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_ExtraExtensions,
@@ -17,7 +19,6 @@ import type {
   Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Returns,
   Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleDefaultOptionsExtraExtensions,
   Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/require-kebab-case-filename.d.ts';
 
 /**
@@ -97,7 +98,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -105,7 +106,7 @@ export class Runner {
       }
 
       return {
-        Program() {
+        Program(): Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_Create_Program_Returns {
           Runner.checkProgram(context, options);
 
           return;

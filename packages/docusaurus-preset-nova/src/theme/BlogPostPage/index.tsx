@@ -14,6 +14,7 @@ import { createElement } from 'react';
 
 import type {
   Theme_BlogPostPage_Index_BlogPostPage_BlogPostContent,
+  Theme_BlogPostPage_Index_BlogPostPage_Props,
   Theme_BlogPostPage_Index_BlogPostPageContent_BlogPost,
   Theme_BlogPostPage_Index_BlogPostPageContent_CanRenderToc,
   Theme_BlogPostPage_Index_BlogPostPageContent_HideTableOfContents,
@@ -25,7 +26,6 @@ import type {
   Theme_BlogPostPage_Index_BlogPostPageContent_TocMaxHeadingLevel,
   Theme_BlogPostPage_Index_BlogPostPageContent_TocMinHeadingLevel,
   Theme_BlogPostPage_Index_BlogPostPageContent_TocSpread,
-  Theme_BlogPostPage_Index_BlogPostPage_Props,
 } from '../../types/theme/BlogPostPage/index.d.ts';
 
 /**

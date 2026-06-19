@@ -7,9 +7,11 @@ import type {
   Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Node,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Options,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Returns,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Literal_Node,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Literal_Returns,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Options,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleDefaultOptionsRegexFile,
-  Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleOptions,
 } from '../../../types/rules/eslint/regex/no-regex-literals.d.ts';
 
 /**
@@ -62,7 +64,7 @@ export class Runner {
       regexFile: '' as Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleDefaultOptionsRegexFile,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -75,7 +77,7 @@ export class Runner {
       }
 
       return {
-        Literal(node) {
+        Literal(node: Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Literal_Node): Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Literal_Returns {
           Runner.checkLiteral(context, node, options);
 
           return;

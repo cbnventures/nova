@@ -35,6 +35,28 @@ export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsClosing = React
 
 export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelRef = RefObject<HTMLDivElement | null>;
 
+/**
+ * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile - Handle Escape.
+ *
+ * @since 0.15.0
+ */
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeFunction = (event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeKeyboardEvent) => void;
+
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeKeyboardEvent = KeyboardEvent;
+
+/**
+ * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile - Handle Click Outside.
+ *
+ * @since 0.15.0
+ */
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideFunction = (event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseEvent) => void;
+
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseEvent = MouseEvent<HTMLDivElement>;
+
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseTarget = EventTarget;
+
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_FocusTarget = HTMLButtonElement | null;
+
 export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_TriggerLabel = string;
 
 export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OpenAriaLabel = string;
@@ -48,25 +70,3 @@ export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_CloseAriaLabel = str
 export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OverlayClassName = string;
 
 export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_AnimationEvent = React.AnimationEvent<HTMLDivElement>;
-
-/**
- * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile - Handle Click Outside.
- *
- * @since 0.15.0
- */
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideFunction = (event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseEvent) => void;
-
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseEvent = MouseEvent<HTMLDivElement>;
-
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseTarget = EventTarget;
-
-/**
- * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile - Handle Escape.
- *
- * @since 0.15.0
- */
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeFunction = (event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeKeyboardEvent) => void;
-
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeKeyboardEvent = KeyboardEvent;
-
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_FocusTarget = HTMLButtonElement | null;

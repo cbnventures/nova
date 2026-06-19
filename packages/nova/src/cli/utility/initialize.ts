@@ -76,13 +76,14 @@ import type {
   Cli_Utility_Initialize_Runner_PromptEmails_Config,
   Cli_Utility_Initialize_Runner_PromptEmails_Emails,
   Cli_Utility_Initialize_Runner_PromptEmails_EmailsBugsInput,
+  Cli_Utility_Initialize_Runner_PromptEmails_EmailsBugsValue,
   Cli_Utility_Initialize_Runner_PromptEmails_ExistingEmails,
   Cli_Utility_Initialize_Runner_PromptEmails_QuestionsOutput,
   Cli_Utility_Initialize_Runner_PromptEmails_QuestionsOutputKey,
   Cli_Utility_Initialize_Runner_PromptEmails_QuestionsOutputResult,
   Cli_Utility_Initialize_Runner_PromptEmails_QuestionsOutputValue,
   Cli_Utility_Initialize_Runner_PromptEmails_Returns,
-  Cli_Utility_Initialize_Runner_PromptEmails_ValidateValue,
+  Cli_Utility_Initialize_Runner_PromptEmails_ValidateEmailsBugs,
   Cli_Utility_Initialize_Runner_PromptEntities_Choices,
   Cli_Utility_Initialize_Runner_PromptEntities_ClonedEntity,
   Cli_Utility_Initialize_Runner_PromptEntities_Config,
@@ -104,16 +105,19 @@ import type {
   Cli_Utility_Initialize_Runner_PromptEntities_MenuOutputKey,
   Cli_Utility_Initialize_Runner_PromptEntities_MenuOutputResult,
   Cli_Utility_Initialize_Runner_PromptEntities_MenuOutputResultValue,
-  Cli_Utility_Initialize_Runner_PromptEntities_NormalizedEntities,
-  Cli_Utility_Initialize_Runner_PromptEntities_NormalizedEntity,
+  Cli_Utility_Initialize_Runner_PromptEntities_NameA,
+  Cli_Utility_Initialize_Runner_PromptEntities_NameB,
   Cli_Utility_Initialize_Runner_PromptEntities_NormalizedRoles,
   Cli_Utility_Initialize_Runner_PromptEntities_NormalizedRolesReduce,
+  Cli_Utility_Initialize_Runner_PromptEntities_RemoveEntityEmail,
+  Cli_Utility_Initialize_Runner_PromptEntities_RemoveEntityIndex,
+  Cli_Utility_Initialize_Runner_PromptEntities_RemoveEntityName,
   Cli_Utility_Initialize_Runner_PromptEntities_Result,
   Cli_Utility_Initialize_Runner_PromptEntities_Returns,
   Cli_Utility_Initialize_Runner_PromptEntities_ShouldRemove,
-  Cli_Utility_Initialize_Runner_PromptEntities_SortNameA,
-  Cli_Utility_Initialize_Runner_PromptEntities_SortNameB,
   Cli_Utility_Initialize_Runner_PromptEntities_Sync,
+  Cli_Utility_Initialize_Runner_PromptEntities_Sync_NormalizedEntities,
+  Cli_Utility_Initialize_Runner_PromptEntities_Sync_NormalizedEntity,
   Cli_Utility_Initialize_Runner_PromptEntities_Sync_Returns,
   Cli_Utility_Initialize_Runner_PromptEntitiesDeleteForm_ConfirmOutput,
   Cli_Utility_Initialize_Runner_PromptEntitiesDeleteForm_ConfirmOutputKey,
@@ -123,9 +127,12 @@ import type {
   Cli_Utility_Initialize_Runner_PromptEntitiesDeleteForm_Returns,
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_Entity,
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_EntityEmailInput,
+  Cli_Utility_Initialize_Runner_PromptEntitiesForm_EntityEmailValue,
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_EntityNameInput,
+  Cli_Utility_Initialize_Runner_PromptEntitiesForm_EntityNameValue,
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_EntityRolesInput,
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_EntityUrlInput,
+  Cli_Utility_Initialize_Runner_PromptEntitiesForm_EntityUrlValue,
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_ExistingEmail,
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_ExistingName,
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_ExistingRoles,
@@ -137,7 +144,9 @@ import type {
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_QuestionsOutputValue,
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_ResolvedEntity,
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_Returns,
-  Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidateValue,
+  Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidateEntityEmail,
+  Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidateEntityName,
+  Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidateEntityUrl,
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidRoles,
   Cli_Utility_Initialize_Runner_PromptFlow_Category,
   Cli_Utility_Initialize_Runner_PromptFlow_CategoryHandler,
@@ -151,86 +160,104 @@ import type {
   Cli_Utility_Initialize_Runner_PromptFlow_SelectMenuOutputKey,
   Cli_Utility_Initialize_Runner_PromptFlow_SelectMenuOutputResult,
   Cli_Utility_Initialize_Runner_PromptGithub_AutoDeleteInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_AutoDeleteOutput,
+  Cli_Utility_Initialize_Runner_PromptGithub_AutoDeleteOutputResult,
   Cli_Utility_Initialize_Runner_PromptGithub_Config,
+  Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchChoiceValue,
   Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchInitial,
-  Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchRaw,
+  Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchOutput,
+  Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchOutputResult,
+  Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchTextOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchTitle,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingAutoDelete,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingDefaultBranch,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingFeatures,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingGithub,
+  Cli_Utility_Initialize_Runner_PromptGithub_ExistingMergeMethods,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingMergeMethodsObj,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingPolicies,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingRecipes,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingTopics,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingVisibility,
-  Cli_Utility_Initialize_Runner_PromptGithub_FeatureDiscussionsInitial,
-  Cli_Utility_Initialize_Runner_PromptGithub_FeatureIssuesInitial,
-  Cli_Utility_Initialize_Runner_PromptGithub_FeatureProjectsInitial,
-  Cli_Utility_Initialize_Runner_PromptGithub_FeaturesInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_FeaturesDiscussionsInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_FeaturesDiscussionsValue,
+  Cli_Utility_Initialize_Runner_PromptGithub_FeaturesIssuesInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_FeaturesIssuesValue,
   Cli_Utility_Initialize_Runner_PromptGithub_FeaturesOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_FeaturesOutputKey,
   Cli_Utility_Initialize_Runner_PromptGithub_FeaturesOutputResult,
+  Cli_Utility_Initialize_Runner_PromptGithub_FeaturesProjectsInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_FeaturesProjectsValue,
   Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSkip,
   Cli_Utility_Initialize_Runner_PromptGithub_FeaturesValue,
-  Cli_Utility_Initialize_Runner_PromptGithub_FeatureWikiInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_FeaturesWikiInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_FeaturesWikiValue,
   Cli_Utility_Initialize_Runner_PromptGithub_Github,
-  Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodMergeInitial,
-  Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodRebaseInitial,
-  Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodSquashInitial,
-  Cli_Utility_Initialize_Runner_PromptGithub_OwnerInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubConfig,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubFeaturesInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubOwnerInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubOwnerValue,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesAutoDeleteValue,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesDefaultBranchValue,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesMergeMethodsInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesVisibilityValue,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubRecipesInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubRepoInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubRepoValue,
+  Cli_Utility_Initialize_Runner_PromptGithub_GithubTopicsInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_MergeInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodsMergeValue,
+  Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodsOutput,
+  Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodsOutputResult,
+  Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodsRebaseValue,
+  Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodsSquashValue,
   Cli_Utility_Initialize_Runner_PromptGithub_OwnerOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_OwnerOutputResult,
-  Cli_Utility_Initialize_Runner_PromptGithub_OwnerTrimmed,
-  Cli_Utility_Initialize_Runner_PromptGithub_PoliciesAutoDeleteHeadBranchOutput,
+  Cli_Utility_Initialize_Runner_PromptGithub_ParsedTopics,
   Cli_Utility_Initialize_Runner_PromptGithub_PoliciesAutoDeleteHeadBranchOutputKey,
-  Cli_Utility_Initialize_Runner_PromptGithub_PoliciesAutoDeleteHeadBranchOutputResult,
   Cli_Utility_Initialize_Runner_PromptGithub_PoliciesAutoDeleteHeadBranchSkip,
   Cli_Utility_Initialize_Runner_PromptGithub_PoliciesAutoDeleteHeadBranchValue,
-  Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchOutputKey,
-  Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchOutputResult,
   Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchSkip,
   Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchValue,
-  Cli_Utility_Initialize_Runner_PromptGithub_PoliciesInput,
-  Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsInput,
-  Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsOutputKey,
-  Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsOutputResult,
   Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsSkip,
   Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsValue,
-  Cli_Utility_Initialize_Runner_PromptGithub_PoliciesVisibilityOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_PoliciesVisibilityOutputKey,
-  Cli_Utility_Initialize_Runner_PromptGithub_PoliciesVisibilityOutputResult,
   Cli_Utility_Initialize_Runner_PromptGithub_PoliciesVisibilitySkip,
   Cli_Utility_Initialize_Runner_PromptGithub_PoliciesVisibilityValue,
-  Cli_Utility_Initialize_Runner_PromptGithub_RecipesInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_RawDefaultBranch,
+  Cli_Utility_Initialize_Runner_PromptGithub_RawTopics,
+  Cli_Utility_Initialize_Runner_PromptGithub_RebaseInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_RecipesOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_RecipesOutputKey,
   Cli_Utility_Initialize_Runner_PromptGithub_RecipesOutputResult,
   Cli_Utility_Initialize_Runner_PromptGithub_RecipesOutputValue,
-  Cli_Utility_Initialize_Runner_PromptGithub_RepoInput,
   Cli_Utility_Initialize_Runner_PromptGithub_RepoOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_RepoOutputResult,
-  Cli_Utility_Initialize_Runner_PromptGithub_RepoTrimmed,
   Cli_Utility_Initialize_Runner_PromptGithub_Returns,
+  Cli_Utility_Initialize_Runner_PromptGithub_SquashInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_SyncFeaturesInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_SyncIdentityInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_SyncPoliciesInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_TopicsHasExisting,
   Cli_Utility_Initialize_Runner_PromptGithub_TopicsInitial,
-  Cli_Utility_Initialize_Runner_PromptGithub_TopicsInput,
   Cli_Utility_Initialize_Runner_PromptGithub_TopicsOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_TopicsOutputKey,
   Cli_Utility_Initialize_Runner_PromptGithub_TopicsOutputResult,
-  Cli_Utility_Initialize_Runner_PromptGithub_TopicsParsed,
   Cli_Utility_Initialize_Runner_PromptGithub_TopicsSkip,
-  Cli_Utility_Initialize_Runner_PromptGithub_TopicsText,
+  Cli_Utility_Initialize_Runner_PromptGithub_TopicsTextOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_TopicsTitle,
   Cli_Utility_Initialize_Runner_PromptGithub_TopicsValue,
-  Cli_Utility_Initialize_Runner_PromptGithub_ValidateValue,
+  Cli_Utility_Initialize_Runner_PromptGithub_ValidateGithubOwner,
+  Cli_Utility_Initialize_Runner_PromptGithub_ValidateGithubOwner_Trimmed,
+  Cli_Utility_Initialize_Runner_PromptGithub_ValidateGithubRepo,
+  Cli_Utility_Initialize_Runner_PromptGithub_ValidateGithubRepo_Trimmed,
   Cli_Utility_Initialize_Runner_PromptGithub_VisibilityInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_VisibilityOrder,
+  Cli_Utility_Initialize_Runner_PromptGithub_VisibilityOutput,
+  Cli_Utility_Initialize_Runner_PromptGithub_VisibilityOutputResult,
   Cli_Utility_Initialize_Runner_PromptProject_Config,
   Cli_Utility_Initialize_Runner_PromptProject_CurrentLabel,
   Cli_Utility_Initialize_Runner_PromptProject_CurrentSlug,
@@ -251,8 +278,7 @@ import type {
   Cli_Utility_Initialize_Runner_PromptProject_LicenseOutput,
   Cli_Utility_Initialize_Runner_PromptProject_LicenseOutputKey,
   Cli_Utility_Initialize_Runner_PromptProject_LicenseOutputResult,
-  Cli_Utility_Initialize_Runner_PromptProject_Name2,
-  Cli_Utility_Initialize_Runner_PromptProject_Parsed,
+  Cli_Utility_Initialize_Runner_PromptProject_Name,
   Cli_Utility_Initialize_Runner_PromptProject_PlatformChoices,
   Cli_Utility_Initialize_Runner_PromptProject_PlatformsOutput,
   Cli_Utility_Initialize_Runner_PromptProject_PlatformsOutputKey,
@@ -262,16 +288,22 @@ import type {
   Cli_Utility_Initialize_Runner_PromptProject_Project,
   Cli_Utility_Initialize_Runner_PromptProject_ProjectDescription,
   Cli_Utility_Initialize_Runner_PromptProject_ProjectDescriptionLongInput,
+  Cli_Utility_Initialize_Runner_PromptProject_ProjectDescriptionLongValue,
   Cli_Utility_Initialize_Runner_PromptProject_ProjectDescriptionShortInput,
+  Cli_Utility_Initialize_Runner_PromptProject_ProjectDescriptionShortValue,
   Cli_Utility_Initialize_Runner_PromptProject_ProjectKeywords,
   Cli_Utility_Initialize_Runner_PromptProject_ProjectKeywordsInput,
+  Cli_Utility_Initialize_Runner_PromptProject_ProjectKeywordsValue,
   Cli_Utility_Initialize_Runner_PromptProject_ProjectLegalNameInput,
   Cli_Utility_Initialize_Runner_PromptProject_ProjectLicenseInput,
   Cli_Utility_Initialize_Runner_PromptProject_ProjectName,
   Cli_Utility_Initialize_Runner_PromptProject_ProjectNameSlugInput,
+  Cli_Utility_Initialize_Runner_PromptProject_ProjectNameSlugValue,
   Cli_Utility_Initialize_Runner_PromptProject_ProjectNameTitleInput,
+  Cli_Utility_Initialize_Runner_PromptProject_ProjectNameTitleValue,
   Cli_Utility_Initialize_Runner_PromptProject_ProjectPlatformsInput,
   Cli_Utility_Initialize_Runner_PromptProject_ProjectPronounsInput,
+  Cli_Utility_Initialize_Runner_PromptProject_ProjectStartingYearValue,
   Cli_Utility_Initialize_Runner_PromptProject_PronounsOutput,
   Cli_Utility_Initialize_Runner_PromptProject_PronounsOutputKey,
   Cli_Utility_Initialize_Runner_PromptProject_PronounsOutputResult,
@@ -288,8 +320,14 @@ import type {
   Cli_Utility_Initialize_Runner_PromptProject_StartingYearOutputResult,
   Cli_Utility_Initialize_Runner_PromptProject_StartingYearParsed,
   Cli_Utility_Initialize_Runner_PromptProject_StartingYearRaw,
-  Cli_Utility_Initialize_Runner_PromptProject_Trimmed,
-  Cli_Utility_Initialize_Runner_PromptProject_ValidateValue,
+  Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectDescriptionLong,
+  Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectDescriptionShort,
+  Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectKeywords,
+  Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectNameSlug,
+  Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectNameTitle,
+  Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear,
+  Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear_Parsed,
+  Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear_Trimmed,
   Cli_Utility_Initialize_Runner_PromptUrls_Config,
   Cli_Utility_Initialize_Runner_PromptUrls_ExistingUrls,
   Cli_Utility_Initialize_Runner_PromptUrls_QuestionsOutput,
@@ -299,17 +337,38 @@ import type {
   Cli_Utility_Initialize_Runner_PromptUrls_Returns,
   Cli_Utility_Initialize_Runner_PromptUrls_Urls,
   Cli_Utility_Initialize_Runner_PromptUrls_UrlsBugsInput,
+  Cli_Utility_Initialize_Runner_PromptUrls_UrlsBugsValue,
   Cli_Utility_Initialize_Runner_PromptUrls_UrlsDockerInput,
+  Cli_Utility_Initialize_Runner_PromptUrls_UrlsDockerValue,
   Cli_Utility_Initialize_Runner_PromptUrls_UrlsDocumentationInput,
+  Cli_Utility_Initialize_Runner_PromptUrls_UrlsDocumentationValue,
   Cli_Utility_Initialize_Runner_PromptUrls_UrlsFundSourcesInput,
+  Cli_Utility_Initialize_Runner_PromptUrls_UrlsFundSourcesValue,
   Cli_Utility_Initialize_Runner_PromptUrls_UrlsHomepageInput,
+  Cli_Utility_Initialize_Runner_PromptUrls_UrlsHomepageValue,
   Cli_Utility_Initialize_Runner_PromptUrls_UrlsLicenseInput,
+  Cli_Utility_Initialize_Runner_PromptUrls_UrlsLicenseValue,
   Cli_Utility_Initialize_Runner_PromptUrls_UrlsLogoInput,
+  Cli_Utility_Initialize_Runner_PromptUrls_UrlsLogoValue,
   Cli_Utility_Initialize_Runner_PromptUrls_UrlsNpmInput,
+  Cli_Utility_Initialize_Runner_PromptUrls_UrlsNpmValue,
   Cli_Utility_Initialize_Runner_PromptUrls_UrlsPrivacyPolicyInput,
+  Cli_Utility_Initialize_Runner_PromptUrls_UrlsPrivacyPolicyValue,
   Cli_Utility_Initialize_Runner_PromptUrls_UrlsRepositoryInput,
+  Cli_Utility_Initialize_Runner_PromptUrls_UrlsRepositoryValue,
   Cli_Utility_Initialize_Runner_PromptUrls_UrlsTermsOfUseInput,
-  Cli_Utility_Initialize_Runner_PromptUrls_ValidateValue,
+  Cli_Utility_Initialize_Runner_PromptUrls_UrlsTermsOfUseValue,
+  Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsBugs,
+  Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsDocker,
+  Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsDocumentation,
+  Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsFundSources,
+  Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsHomepage,
+  Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsLicense,
+  Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsLogo,
+  Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsNpm,
+  Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsPrivacyPolicy,
+  Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsRepository,
+  Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsTermsOfUse,
   Cli_Utility_Initialize_Runner_PromptWithCancel_Cancelled,
   Cli_Utility_Initialize_Runner_PromptWithCancel_Questions,
   Cli_Utility_Initialize_Runner_PromptWithCancel_Result,
@@ -323,25 +382,30 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkflows_MenuOutputKey,
   Cli_Utility_Initialize_Runner_PromptWorkflows_MenuOutputResult,
   Cli_Utility_Initialize_Runner_PromptWorkflows_MenuOutputResultValue,
-  Cli_Utility_Initialize_Runner_PromptWorkflows_MenuSuffix,
-  Cli_Utility_Initialize_Runner_PromptWorkflows_MenuTemplate,
-  Cli_Utility_Initialize_Runner_PromptWorkflows_MenuTriggers,
-  Cli_Utility_Initialize_Runner_PromptWorkflows_MenuWorkflow,
   Cli_Utility_Initialize_Runner_PromptWorkflows_OutputFileName,
   Cli_Utility_Initialize_Runner_PromptWorkflows_RemoveSuffix,
   Cli_Utility_Initialize_Runner_PromptWorkflows_RemoveTemplate,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_RemoveWorkflowIndex,
   Cli_Utility_Initialize_Runner_PromptWorkflows_Result,
   Cli_Utility_Initialize_Runner_PromptWorkflows_Returns,
   Cli_Utility_Initialize_Runner_PromptWorkflows_ShouldRemove,
-  Cli_Utility_Initialize_Runner_PromptWorkflows_SortSuffixA,
-  Cli_Utility_Initialize_Runner_PromptWorkflows_SortSuffixB,
-  Cli_Utility_Initialize_Runner_PromptWorkflows_SortTemplateA,
-  Cli_Utility_Initialize_Runner_PromptWorkflows_SortTemplateB,
-  Cli_Utility_Initialize_Runner_PromptWorkflows_SortTemplateCompare,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_Suffix,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_SuffixA,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_SuffixB,
   Cli_Utility_Initialize_Runner_PromptWorkflows_Sync,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_Sync_NormalizedWorkflow,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_Sync_NormalizedWorkflows,
   Cli_Utility_Initialize_Runner_PromptWorkflows_Sync_Returns,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_Template,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_TemplateA,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_TemplateB,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_TemplateCompare,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_Triggers,
   Cli_Utility_Initialize_Runner_PromptWorkflows_TriggersLabel,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_Workflow,
   Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowIndex,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowLabel,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowResult,
   Cli_Utility_Initialize_Runner_PromptWorkflows_Workflows,
   Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowToEdit,
   Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowToRemove,
@@ -351,9 +415,14 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkflowsDeleteForm_ConfirmOutputValue,
   Cli_Utility_Initialize_Runner_PromptWorkflowsDeleteForm_Label,
   Cli_Utility_Initialize_Runner_PromptWorkflowsDeleteForm_Returns,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_AvailableTargetTypes,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_CompositeKey,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Config,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_CurrentTarget,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_CurrentTargetType,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_CurrentTargetWorkingDir,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnChoices,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnKey,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutput,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputKey,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputResult,
@@ -363,20 +432,23 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExampleResolved,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExampleWorkingDir,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingDependsOn,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingKey,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingScopes,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingSuffix,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingTargets,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingTemplate,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingTriggers,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExtraScopes,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExtraWorkspaceKeys,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_FoundIndex,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_InitialValue,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_IsDuplicate,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_LockedPaths,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_MatchedMetadata,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_MergedVariableEntries,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_MergedVariables,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Mode,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_NewTarget,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Parts,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_PromptMessage,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ResolvedWorkflow,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Returns,
@@ -405,18 +477,15 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SuffixOutputKey,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SuffixOutputResult,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SuffixOutputResultValue,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetAvailableTypes,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetEditIndex,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetEntry,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetIsDuplicate,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuAction,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuChoices,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuCurrentTarget,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuCurrentTargetType,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuCurrentTargetWorkingDir,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuOutput,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuOutputKey,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuOutputResult,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuOutputResultValue,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMetadata,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetNeedsChoices,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetNeedsOutput,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetNeedsOutputKey,
@@ -426,18 +495,20 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetToEdit,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetToEditExistingNeeds,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetToRemoveIndex,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetType,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetTypeChoices,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetTypeInitial,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetTypeOutput,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetTypeOutputKey,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetTypeOutputResult,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetTypeOutputResultValue,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVariableEntries,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVariableKey,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVarEntries,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVariableNameKey,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVariableNames,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVariables,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVariableValue,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVarKey,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVarValue,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetWorkingDir,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetWorkingDirChoices,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetWorkingDirInitial,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetWorkingDirOutput,
@@ -459,17 +530,18 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TriggersOutputKey,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TriggersOutputResult,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TriggersOutputResultValue,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Trimmed,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_VariableConfig,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_VariableDescriptionParts,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_VariableEntries,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_VariableName,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_VariableNameToTargetWorkingDir,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Workflow,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Workflows,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_WorkspaceKeys,
-  Cli_Utility_Initialize_Runner_PromptWorkspaces,
   Cli_Utility_Initialize_Runner_PromptWorkspaces_Choices,
   Cli_Utility_Initialize_Runner_PromptWorkspaces_Config,
   Cli_Utility_Initialize_Runner_PromptWorkspaces_CurrentWorkingDirectory,
+  Cli_Utility_Initialize_Runner_PromptWorkspaces_FormResult,
   Cli_Utility_Initialize_Runner_PromptWorkspaces_MenuOutput,
   Cli_Utility_Initialize_Runner_PromptWorkspaces_MenuOutputKey,
   Cli_Utility_Initialize_Runner_PromptWorkspaces_MenuOutputResult,
@@ -481,19 +553,34 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkspaces_Workspace,
   Cli_Utility_Initialize_Runner_PromptWorkspaces_WorkspacePath,
   Cli_Utility_Initialize_Runner_PromptWorkspaces_WorkspacePaths,
+  Cli_Utility_Initialize_Runner_PromptWorkspaces_Workspaces,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_AllowedPolicies,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_AllowedRoles,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_CleanupSelectedSettings,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_CleanupSettings,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_CleanupSettingsPrompt,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DependenciesSelectedSettings,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DependenciesSettings,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DependenciesSettingsPrompt,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePrompt,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePromptKey,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePromptValue,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNameValidateValue,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_EnvironmentSelectedSettings,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_EnvironmentSettings,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_EnvironmentSettingsPrompt,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingPolicyIndex,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingRecipes,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingRoleIndex,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingSettings,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingTuple,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingTupleRaw,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_IdentitySelectedSettings,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_IdentitySettings,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_IdentitySettingsPrompt,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Options,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_OwnershipSelectedSettings,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_OwnershipSettings,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_OwnershipSettingsPrompt,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Policy,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_PolicyEntry,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_PolicyPrompt,
@@ -501,7 +588,6 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_PolicyPromptValue,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Recipes,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSelected,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettings,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptKey,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptValue,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipesPrompt,
@@ -515,19 +601,19 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_PromptKey,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_PromptValue,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_Returns,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_Role,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_ValidateValue,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Result,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_ValidateWorkspaceName,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_WorkspaceNameValue,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Returns,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Role,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RolePrompt,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RolePromptKey,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RolePromptValue,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedPolicy,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedRecipes,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedRole,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedSettings,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SettingsPrompt,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ValidateWorkspaceDisplayName,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_WorkspaceDisplayNameInput,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_WorkspaceDisplayNameValue,
   Cli_Utility_Initialize_Runner_Run_CurrentDirectory,
   Cli_Utility_Initialize_Runner_Run_IsDryRun,
   Cli_Utility_Initialize_Runner_Run_IsProjectRoot,
@@ -774,41 +860,57 @@ export class Runner {
     const projectDescription: Cli_Utility_Initialize_Runner_PromptProject_ProjectDescription = (existingProjectDescription !== undefined) ? { ...existingProjectDescription } : {};
     const projectKeywords: Cli_Utility_Initialize_Runner_PromptProject_ProjectKeywords = (existingProjectKeywords !== undefined) ? [...existingProjectKeywords] : [];
 
+    const validateProjectNameTitle: Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectNameTitle = (projectNameTitleValue: Cli_Utility_Initialize_Runner_PromptProject_ProjectNameTitleValue) => {
+      return Runner.normalizeText(projectNameTitleValue, Infinity)['result'];
+    };
+    const validateProjectNameSlug: Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectNameSlug = (projectNameSlugValue: Cli_Utility_Initialize_Runner_PromptProject_ProjectNameSlugValue) => {
+      return Runner.normalizeProjectSlug(projectNameSlugValue)['result'];
+    };
+    const validateProjectDescriptionShort: Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectDescriptionShort = (projectDescriptionShortValue: Cli_Utility_Initialize_Runner_PromptProject_ProjectDescriptionShortValue) => {
+      return Runner.normalizeText(projectDescriptionShortValue, Infinity)['result'];
+    };
+    const validateProjectDescriptionLong: Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectDescriptionLong = (projectDescriptionLongValue: Cli_Utility_Initialize_Runner_PromptProject_ProjectDescriptionLongValue) => {
+      return Runner.normalizeText(projectDescriptionLongValue, Infinity)['result'];
+    };
+    const validateProjectKeywords: Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectKeywords = (projectKeywordsValue: Cli_Utility_Initialize_Runner_PromptProject_ProjectKeywordsValue) => {
+      return Runner.normalizeTextArray(projectKeywordsValue, 50)['result'];
+    };
+
     const questionsOutput: Cli_Utility_Initialize_Runner_PromptProject_QuestionsOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptProject_QuestionsOutputKey, Cli_Utility_Initialize_Runner_PromptProject_QuestionsOutputResult>([
       {
         type: 'text',
         name: 'projectNameTitle',
         message: 'Project title (display name)',
         initial: projectName['title'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptProject_ValidateValue) => Runner.normalizeText(value, Infinity)['result'],
+        validate: validateProjectNameTitle,
       },
       {
         type: 'text',
         name: 'projectNameSlug',
         message: 'Project slug (package name)',
         initial: projectName['slug'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptProject_ValidateValue) => Runner.normalizeProjectSlug(value)['result'],
+        validate: validateProjectNameSlug,
       },
       {
         type: 'text',
         name: 'projectDescriptionShort',
         message: 'Short description',
         initial: projectDescription['short'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptProject_ValidateValue) => Runner.normalizeText(value, Infinity)['result'],
+        validate: validateProjectDescriptionShort,
       },
       {
         type: 'text',
         name: 'projectDescriptionLong',
         message: 'Long description',
         initial: projectDescription['long'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptProject_ValidateValue) => Runner.normalizeText(value, Infinity)['result'],
+        validate: validateProjectDescriptionLong,
       },
       {
         type: 'text',
         name: 'projectKeywords',
         message: 'Keywords (comma separated)',
         initial: (projectKeywords.length > 0) ? projectKeywords.join(', ') : '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptProject_ValidateValue) => Runner.normalizeTextArray(value, 50)['result'],
+        validate: validateProjectKeywords,
       },
     ]);
 
@@ -816,13 +918,13 @@ export class Runner {
       return 'back';
     }
 
-    const questionsOutputResult: Cli_Utility_Initialize_Runner_PromptProject_QuestionsOutputResultValue = questionsOutput['result'];
+    const questionsOutputResultValue: Cli_Utility_Initialize_Runner_PromptProject_QuestionsOutputResultValue = questionsOutput['result'];
 
-    const projectNameTitleInput: Cli_Utility_Initialize_Runner_PromptProject_ProjectNameTitleInput = Runner.normalizeText(questionsOutputResult.projectNameTitle, Infinity)['sanitized'];
-    const projectNameSlugInput: Cli_Utility_Initialize_Runner_PromptProject_ProjectNameSlugInput = Runner.normalizeProjectSlug(questionsOutputResult.projectNameSlug)['sanitized'];
-    const projectDescriptionShortInput: Cli_Utility_Initialize_Runner_PromptProject_ProjectDescriptionShortInput = Runner.normalizeText(questionsOutputResult.projectDescriptionShort, Infinity)['sanitized'];
-    const projectDescriptionLongInput: Cli_Utility_Initialize_Runner_PromptProject_ProjectDescriptionLongInput = Runner.normalizeText(questionsOutputResult.projectDescriptionLong, Infinity)['sanitized'];
-    const projectKeywordsInput: Cli_Utility_Initialize_Runner_PromptProject_ProjectKeywordsInput = Runner.normalizeTextArray(questionsOutputResult.projectKeywords, 50)['sanitized'];
+    const projectNameTitleInput: Cli_Utility_Initialize_Runner_PromptProject_ProjectNameTitleInput = Runner.normalizeText(questionsOutputResultValue.projectNameTitle, Infinity)['sanitized'];
+    const projectNameSlugInput: Cli_Utility_Initialize_Runner_PromptProject_ProjectNameSlugInput = Runner.normalizeProjectSlug(questionsOutputResultValue.projectNameSlug)['sanitized'];
+    const projectDescriptionShortInput: Cli_Utility_Initialize_Runner_PromptProject_ProjectDescriptionShortInput = Runner.normalizeText(questionsOutputResultValue.projectDescriptionShort, Infinity)['sanitized'];
+    const projectDescriptionLongInput: Cli_Utility_Initialize_Runner_PromptProject_ProjectDescriptionLongInput = Runner.normalizeText(questionsOutputResultValue.projectDescriptionLong, Infinity)['sanitized'];
+    const projectKeywordsInput: Cli_Utility_Initialize_Runner_PromptProject_ProjectKeywordsInput = Runner.normalizeTextArray(questionsOutputResultValue.projectKeywords, 50)['sanitized'];
 
     // Project - Name - Title.
     if (projectNameTitleInput !== undefined) {
@@ -1002,30 +1104,32 @@ export class Runner {
     }
 
     // Project - Starting year.
+    const validateProjectStartingYear: Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear = (projectStartingYearValue: Cli_Utility_Initialize_Runner_PromptProject_ProjectStartingYearValue) => {
+      const trimmed: Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear_Trimmed = String(projectStartingYearValue ?? '').trim();
+
+      if (trimmed === '') {
+        return true;
+      }
+
+      const parsed: Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear_Parsed = Number(trimmed);
+
+      if (
+        Number.isNaN(parsed) === true
+        || Number.isInteger(parsed) === false
+        || parsed < 1970
+      ) {
+        return 'Must be an integer >= 1970';
+      }
+
+      return true;
+    };
+
     const startingYearOutput: Cli_Utility_Initialize_Runner_PromptProject_StartingYearOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptProject_StartingYearOutputKey, Cli_Utility_Initialize_Runner_PromptProject_StartingYearOutputResult>({
       type: 'text',
       name: 'projectStartingYear',
       message: 'Starting year (e.g. 2025)',
       initial: (existingProjectStartingYear !== undefined) ? String(existingProjectStartingYear) : '',
-      validate: (value: Cli_Utility_Initialize_Runner_PromptProject_ValidateValue) => {
-        const trimmed: Cli_Utility_Initialize_Runner_PromptProject_Trimmed = String(value ?? '').trim();
-
-        if (trimmed === '') {
-          return true;
-        }
-
-        const parsed: Cli_Utility_Initialize_Runner_PromptProject_Parsed = Number(trimmed);
-
-        if (
-          Number.isNaN(parsed) === true
-          || Number.isInteger(parsed) === false
-          || parsed < 1970
-        ) {
-          return 'Must be an integer >= 1970';
-        }
-
-        return true;
-      },
+      validate: validateProjectStartingYear,
     });
 
     if (startingYearOutput['cancelled'] === true) {
@@ -1157,7 +1261,7 @@ export class Runner {
           continue;
         }
 
-        const name: Cli_Utility_Initialize_Runner_PromptProject_Name2 = workspace['name'];
+        const name: Cli_Utility_Initialize_Runner_PromptProject_Name = workspace['name'];
 
         // If user added a slug, removed the slug, or changed the slug.
         if (previousSlug === '' && currentSlug !== '') {
@@ -1232,8 +1336,8 @@ export class Runner {
     const sync: Cli_Utility_Initialize_Runner_PromptEntities_Sync = (): Cli_Utility_Initialize_Runner_PromptEntities_Sync_Returns => {
       if (entities.length > 0) {
         // Entities.
-        const normalizedEntities: Cli_Utility_Initialize_Runner_PromptEntities_NormalizedEntities = entities.map((entity) => {
-          const normalizedEntity: Cli_Utility_Initialize_Runner_PromptEntities_NormalizedEntity = { ...entity };
+        const normalizedEntities: Cli_Utility_Initialize_Runner_PromptEntities_Sync_NormalizedEntities = entities.map((entity) => {
+          const normalizedEntity: Cli_Utility_Initialize_Runner_PromptEntities_Sync_NormalizedEntity = { ...entity };
 
           // Entities - Roles.
           if (Array.isArray(entity['roles']) === true && entity['roles'].length > 0) {
@@ -1255,8 +1359,8 @@ export class Runner {
 
     while (true) {
       entities.sort((a, b) => {
-        const nameA: Cli_Utility_Initialize_Runner_PromptEntities_SortNameA = (a !== undefined && a['name'] !== undefined) ? a['name'] : '';
-        const nameB: Cli_Utility_Initialize_Runner_PromptEntities_SortNameB = (b !== undefined && b['name'] !== undefined) ? b['name'] : '';
+        const nameA: Cli_Utility_Initialize_Runner_PromptEntities_NameA = (a !== undefined && a['name'] !== undefined) ? a['name'] : '';
+        const nameB: Cli_Utility_Initialize_Runner_PromptEntities_NameB = (b !== undefined && b['name'] !== undefined) ? b['name'] : '';
 
         return nameA.localeCompare(nameB);
       });
@@ -1357,12 +1461,12 @@ export class Runner {
         return 'back';
       }
 
-      const menuOutputResult: Cli_Utility_Initialize_Runner_PromptEntities_MenuOutputResultValue = menuOutput['result'];
+      const menuOutputResultValue: Cli_Utility_Initialize_Runner_PromptEntities_MenuOutputResultValue = menuOutput['result'];
 
       // If user wants to go back to the main menu.
       if (
-        menuOutputResult.action === undefined
-        || menuOutputResult.action['kind'] === 'back'
+        menuOutputResultValue.action === undefined
+        || menuOutputResultValue.action['kind'] === 'back'
       ) {
         // Sync changes back to config.
         sync();
@@ -1371,7 +1475,7 @@ export class Runner {
       }
 
       // If user wants to add an entity.
-      if (menuOutputResult.action['kind'] === 'add') {
+      if (menuOutputResultValue.action['kind'] === 'add') {
         const result: Cli_Utility_Initialize_Runner_PromptEntities_Result = await Runner.promptEntitiesForm(undefined, 'create');
 
         if (result['action'] === 'back') {
@@ -1395,8 +1499,8 @@ export class Runner {
       }
 
       // If user wants to edit an entity.
-      if (menuOutputResult.action['kind'] === 'edit') {
-        const entityIndex: Cli_Utility_Initialize_Runner_PromptEntities_EntityIndex = menuOutputResult.action['index'];
+      if (menuOutputResultValue.action['kind'] === 'edit') {
+        const entityIndex: Cli_Utility_Initialize_Runner_PromptEntities_EntityIndex = menuOutputResultValue.action['index'];
 
         // If entity index was out-of-bounds.
         if (entityIndex < 0 || entityIndex >= entities.length) {
@@ -1428,29 +1532,29 @@ export class Runner {
       }
 
       // If user wants to remove an entity.
-      if (menuOutputResult.action['kind'] === 'remove') {
-        const entityIndex: Cli_Utility_Initialize_Runner_PromptEntities_EntityIndex = menuOutputResult.action['index'];
+      if (menuOutputResultValue.action['kind'] === 'remove') {
+        const removeEntityIndex: Cli_Utility_Initialize_Runner_PromptEntities_RemoveEntityIndex = menuOutputResultValue.action['index'];
 
         // If entity index was out-of-bounds.
-        if (entityIndex < 0 || entityIndex >= entities.length) {
+        if (removeEntityIndex < 0 || removeEntityIndex >= entities.length) {
           continue;
         }
 
-        const entityToRemove: Cli_Utility_Initialize_Runner_PromptEntities_EntityToRemove = entities[entityIndex];
+        const entityToRemove: Cli_Utility_Initialize_Runner_PromptEntities_EntityToRemove = entities[removeEntityIndex];
 
         // If entity to remove does not exist.
         if (entityToRemove === undefined) {
           continue;
         }
 
-        const entityName: Cli_Utility_Initialize_Runner_PromptEntities_EntityName = (typeof entityToRemove['name'] === 'string') ? entityToRemove['name'].trim() : '';
-        const entityEmail: Cli_Utility_Initialize_Runner_PromptEntities_EntityEmail = (typeof entityToRemove['email'] === 'string') ? entityToRemove['email'].trim() : '';
-        let entityLabel: Cli_Utility_Initialize_Runner_PromptEntities_EntityLabel = `Entity ${entityIndex + 1}`;
+        const removeEntityName: Cli_Utility_Initialize_Runner_PromptEntities_RemoveEntityName = (typeof entityToRemove['name'] === 'string') ? entityToRemove['name'].trim() : '';
+        const removeEntityEmail: Cli_Utility_Initialize_Runner_PromptEntities_RemoveEntityEmail = (typeof entityToRemove['email'] === 'string') ? entityToRemove['email'].trim() : '';
+        let entityLabel: Cli_Utility_Initialize_Runner_PromptEntities_EntityLabel = `Entity ${removeEntityIndex + 1}`;
 
-        if (entityName !== '') {
-          entityLabel = entityName;
-        } else if (entityEmail !== '') {
-          entityLabel = entityEmail;
+        if (removeEntityName !== '') {
+          entityLabel = removeEntityName;
+        } else if (removeEntityEmail !== '') {
+          entityLabel = removeEntityEmail;
         }
 
         const shouldRemove: Cli_Utility_Initialize_Runner_PromptEntities_ShouldRemove = await Runner.promptEntitiesDeleteForm(entityLabel);
@@ -1460,7 +1564,7 @@ export class Runner {
         }
 
         // Delete the entity.
-        entities.splice(entityIndex, 1);
+        entities.splice(removeEntityIndex, 1);
 
         // Sync changes back to config.
         sync();
@@ -1504,27 +1608,37 @@ export class Runner {
       existingRoles = entity['roles'].filter((role) => validRoles.includes(role));
     }
 
+    const validateEntityName: Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidateEntityName = (entityNameValue: Cli_Utility_Initialize_Runner_PromptEntitiesForm_EntityNameValue) => {
+      return Runner.normalizeText(entityNameValue, Infinity)['result'];
+    };
+    const validateEntityEmail: Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidateEntityEmail = (entityEmailValue: Cli_Utility_Initialize_Runner_PromptEntitiesForm_EntityEmailValue) => {
+      return Runner.normalizeEmail(entityEmailValue)['result'];
+    };
+    const validateEntityUrl: Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidateEntityUrl = (entityUrlValue: Cli_Utility_Initialize_Runner_PromptEntitiesForm_EntityUrlValue) => {
+      return Runner.normalizeUrl(entityUrlValue, 'generic')['result'];
+    };
+
     const questionsOutput: Cli_Utility_Initialize_Runner_PromptEntitiesForm_QuestionsOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptEntitiesForm_QuestionsOutputKey, Cli_Utility_Initialize_Runner_PromptEntitiesForm_QuestionsOutputValue<Cli_Utility_Initialize_Runner_PromptEntitiesForm_QuestionsOutputKey>>([
       {
         type: 'text',
         name: 'entityName',
         message: 'Entity name',
         initial: existingName,
-        validate: (value: Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidateValue) => Runner.normalizeText(value, Infinity)['result'],
+        validate: validateEntityName,
       },
       {
         type: 'text',
         name: 'entityEmail',
         message: 'Entity email address',
         initial: existingEmail,
-        validate: (value: Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidateValue) => Runner.normalizeEmail(value)['result'],
+        validate: validateEntityEmail,
       },
       {
         type: 'text',
         name: 'entityUrl',
         message: 'Entity website',
         initial: existingUrl,
-        validate: (value: Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidateValue) => Runner.normalizeUrl(value, 'generic')['result'],
+        validate: validateEntityUrl,
       },
       {
         type: 'multiselect',
@@ -1636,12 +1750,16 @@ export class Runner {
 
     const emails: Cli_Utility_Initialize_Runner_PromptEmails_Emails = (existingEmails !== undefined) ? { ...existingEmails } : {};
 
+    const validateEmailsBugs: Cli_Utility_Initialize_Runner_PromptEmails_ValidateEmailsBugs = (emailsBugsValue: Cli_Utility_Initialize_Runner_PromptEmails_EmailsBugsValue) => {
+      return Runner.normalizeEmail(emailsBugsValue)['result'];
+    };
+
     const questionsOutput: Cli_Utility_Initialize_Runner_PromptEmails_QuestionsOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptEmails_QuestionsOutputKey, Cli_Utility_Initialize_Runner_PromptEmails_QuestionsOutputValue>([{
       type: 'text',
       name: 'emailsBugs',
       message: 'Issue tracker email',
       initial: emails['bugs'] ?? '',
-      validate: (value: Cli_Utility_Initialize_Runner_PromptEmails_ValidateValue) => Runner.normalizeEmail(value)['result'],
+      validate: validateEmailsBugs,
     }]);
 
     if (questionsOutput['cancelled'] === true) {
@@ -1696,20 +1814,22 @@ export class Runner {
     const github: Cli_Utility_Initialize_Runner_PromptGithub_Github = (existingGithub !== undefined) ? { ...existingGithub } : {};
 
     // Prompt 1: owner (required).
+    const validateGithubOwner: Cli_Utility_Initialize_Runner_PromptGithub_ValidateGithubOwner = (githubOwnerValue: Cli_Utility_Initialize_Runner_PromptGithub_GithubOwnerValue) => {
+      const trimmed: Cli_Utility_Initialize_Runner_PromptGithub_ValidateGithubOwner_Trimmed = (typeof githubOwnerValue === 'string') ? githubOwnerValue.trim() : '';
+
+      if (trimmed === '') {
+        return 'Owner is required.';
+      }
+
+      return true;
+    };
+
     const ownerOutput: Cli_Utility_Initialize_Runner_PromptGithub_OwnerOutput = await Runner.promptWithCancel<'githubOwner', string>({
       type: 'text',
       name: 'githubOwner',
       message: 'GitHub owner (organization or user)',
       initial: (github['owner'] !== undefined) ? github['owner'] : '',
-      validate: (value: Cli_Utility_Initialize_Runner_PromptGithub_ValidateValue) => {
-        const trimmed: Cli_Utility_Initialize_Runner_PromptGithub_OwnerTrimmed = (typeof value === 'string') ? value.trim() : '';
-
-        if (trimmed === '') {
-          return 'Owner is required.';
-        }
-
-        return true;
-      },
+      validate: validateGithubOwner,
     });
 
     if (ownerOutput['cancelled'] === true) {
@@ -1717,23 +1837,25 @@ export class Runner {
     }
 
     const ownerOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_OwnerOutputResult = ownerOutput['result'];
-    const githubOwnerInput: Cli_Utility_Initialize_Runner_PromptGithub_OwnerInput = ownerOutputResult.githubOwner.trim();
+    const githubOwnerInput: Cli_Utility_Initialize_Runner_PromptGithub_GithubOwnerInput = ownerOutputResult.githubOwner.trim();
 
     // Prompt 2: repo (required).
+    const validateGithubRepo: Cli_Utility_Initialize_Runner_PromptGithub_ValidateGithubRepo = (githubRepoValue: Cli_Utility_Initialize_Runner_PromptGithub_GithubRepoValue) => {
+      const trimmed: Cli_Utility_Initialize_Runner_PromptGithub_ValidateGithubRepo_Trimmed = (typeof githubRepoValue === 'string') ? githubRepoValue.trim() : '';
+
+      if (trimmed === '') {
+        return 'Repository name is required.';
+      }
+
+      return true;
+    };
+
     const repoOutput: Cli_Utility_Initialize_Runner_PromptGithub_RepoOutput = await Runner.promptWithCancel<'githubRepo', string>({
       type: 'text',
       name: 'githubRepo',
       message: 'GitHub repository name',
       initial: (github['repo'] !== undefined) ? github['repo'] : '',
-      validate: (value: Cli_Utility_Initialize_Runner_PromptGithub_ValidateValue) => {
-        const trimmed: Cli_Utility_Initialize_Runner_PromptGithub_RepoTrimmed = (typeof value === 'string') ? value.trim() : '';
-
-        if (trimmed === '') {
-          return 'Repository name is required.';
-        }
-
-        return true;
-      },
+      validate: validateGithubRepo,
     });
 
     if (repoOutput['cancelled'] === true) {
@@ -1741,7 +1863,7 @@ export class Runner {
     }
 
     const repoOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_RepoOutputResult = repoOutput['result'];
-    const githubRepoInput: Cli_Utility_Initialize_Runner_PromptGithub_RepoInput = repoOutputResult.githubRepo.trim();
+    const githubRepoInput: Cli_Utility_Initialize_Runner_PromptGithub_GithubRepoInput = repoOutputResult.githubRepo.trim();
 
     // Prompts 3–5: recipe toggles (required booleans).
     const existingRecipes: Cli_Utility_Initialize_Runner_PromptGithub_ExistingRecipes = github['recipes'];
@@ -1777,7 +1899,7 @@ export class Runner {
 
     const recipesOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_RecipesOutputResult = recipesOutput['result'];
 
-    const githubRecipesInput: Cli_Utility_Initialize_Runner_PromptGithub_RecipesInput = {
+    const githubRecipesInput: Cli_Utility_Initialize_Runner_PromptGithub_GithubRecipesInput = {
       'sync-identity': recipesOutputResult.githubRecipeSyncIdentity,
       'sync-features': recipesOutputResult.githubRecipeSyncFeatures,
       'sync-policies': recipesOutputResult.githubRecipeSyncPolicies,
@@ -1813,7 +1935,7 @@ export class Runner {
     }
 
     const topicsOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_TopicsOutputResult = topicsOutput['result'];
-    let githubTopicsInput: Cli_Utility_Initialize_Runner_PromptGithub_TopicsInput = undefined;
+    let githubTopicsInput: Cli_Utility_Initialize_Runner_PromptGithub_GithubTopicsInput = undefined;
 
     if (topicsOutputResult.githubTopics !== 'skip') {
       if (existingTopics !== undefined && existingTopics.length > 0) {
@@ -1821,7 +1943,7 @@ export class Runner {
         githubTopicsInput = existingTopics;
       } else {
         // Prompt for text input.
-        const topicsTextOutput: Cli_Utility_Initialize_Runner_PromptGithub_OwnerOutput = await Runner.promptWithCancel<'githubOwner', string>({
+        const topicsTextOutput: Cli_Utility_Initialize_Runner_PromptGithub_TopicsTextOutput = await Runner.promptWithCancel<'githubOwner', string>({
           type: 'text',
           name: 'githubOwner',
           message: 'Topics (comma-separated)',
@@ -1832,8 +1954,8 @@ export class Runner {
           return 'back';
         }
 
-        const rawTopics: Cli_Utility_Initialize_Runner_PromptGithub_TopicsText = topicsTextOutput['result'].githubOwner;
-        const parsedTopics: Cli_Utility_Initialize_Runner_PromptGithub_TopicsParsed = rawTopics.split(',').map((t) => t.trim()).filter((t) => t !== '');
+        const rawTopics: Cli_Utility_Initialize_Runner_PromptGithub_RawTopics = topicsTextOutput['result'].githubOwner;
+        const parsedTopics: Cli_Utility_Initialize_Runner_PromptGithub_ParsedTopics = rawTopics.split(',').map((t) => t.trim()).filter((t) => t !== '');
 
         if (parsedTopics.length > 0) {
           githubTopicsInput = parsedTopics;
@@ -1844,25 +1966,25 @@ export class Runner {
     // Prompts 7–10: features (optional booleans — skip omits field).
     const existingFeatures: Cli_Utility_Initialize_Runner_PromptGithub_ExistingFeatures = github['features'];
 
-    let featuresIssuesInitial: Cli_Utility_Initialize_Runner_PromptGithub_FeatureIssuesInitial = 0;
+    let featuresIssuesInitial: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesIssuesInitial = 0;
 
     if (existingFeatures !== undefined && existingFeatures['issues'] !== undefined) {
       featuresIssuesInitial = (existingFeatures['issues'] === true) ? 1 : 2;
     }
 
-    let featuresWikiInitial: Cli_Utility_Initialize_Runner_PromptGithub_FeatureWikiInitial = 0;
+    let featuresWikiInitial: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesWikiInitial = 0;
 
     if (existingFeatures !== undefined && existingFeatures['wiki'] !== undefined) {
       featuresWikiInitial = (existingFeatures['wiki'] === true) ? 1 : 2;
     }
 
-    let featuresProjectsInitial: Cli_Utility_Initialize_Runner_PromptGithub_FeatureProjectsInitial = 0;
+    let featuresProjectsInitial: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesProjectsInitial = 0;
 
     if (existingFeatures !== undefined && existingFeatures['projects'] !== undefined) {
       featuresProjectsInitial = (existingFeatures['projects'] === true) ? 1 : 2;
     }
 
-    let featuresDiscussionsInitial: Cli_Utility_Initialize_Runner_PromptGithub_FeatureDiscussionsInitial = 0;
+    let featuresDiscussionsInitial: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesDiscussionsInitial = 0;
 
     if (existingFeatures !== undefined && existingFeatures['discussions'] !== undefined) {
       featuresDiscussionsInitial = (existingFeatures['discussions'] === true) ? 1 : 2;
@@ -1957,12 +2079,12 @@ export class Runner {
 
     const featuresOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesOutputResult = featuresOutput['result'];
 
-    let githubFeaturesInput: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesInput = undefined;
+    let githubFeaturesInput: Cli_Utility_Initialize_Runner_PromptGithub_GithubFeaturesInput = undefined;
 
-    const featuresIssuesValue: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesValue = featuresOutputResult.githubFeaturesIssues;
-    const featuresWikiValue: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesValue = featuresOutputResult.githubFeaturesWiki;
-    const featuresProjectsValue: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesValue = featuresOutputResult.githubFeaturesProjects;
-    const featuresDiscussionsValue: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesValue = featuresOutputResult.githubFeaturesDiscussions;
+    const featuresIssuesValue: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesIssuesValue = featuresOutputResult.githubFeaturesIssues;
+    const featuresWikiValue: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesWikiValue = featuresOutputResult.githubFeaturesWiki;
+    const featuresProjectsValue: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesProjectsValue = featuresOutputResult.githubFeaturesProjects;
+    const featuresDiscussionsValue: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesDiscussionsValue = featuresOutputResult.githubFeaturesDiscussions;
 
     if (
       featuresIssuesValue !== 'skip'
@@ -1989,7 +2111,7 @@ export class Runner {
     ];
     const visibilityInitial: Cli_Utility_Initialize_Runner_PromptGithub_VisibilityInitial = (existingVisibility !== undefined) ? (visibilityOrder.indexOf(existingVisibility) + 1) : 0;
 
-    const visibilityOutput: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesVisibilityOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGithub_PoliciesVisibilityOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_PoliciesVisibilityValue>({
+    const visibilityOutput: Cli_Utility_Initialize_Runner_PromptGithub_VisibilityOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGithub_PoliciesVisibilityOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_PoliciesVisibilityValue>({
       type: 'select',
       name: 'githubPoliciesVisibility',
       message: 'GitHub policies.visibility (sync this field?)',
@@ -2018,16 +2140,16 @@ export class Runner {
       return 'back';
     }
 
-    const visibilityOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesVisibilityOutputResult = visibilityOutput['result'];
-    const githubPoliciesVisibilityValue: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesVisibilityValue = visibilityOutputResult.githubPoliciesVisibility;
+    const visibilityOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_VisibilityOutputResult = visibilityOutput['result'];
+    const githubPoliciesVisibilityValue: Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesVisibilityValue = visibilityOutputResult.githubPoliciesVisibility;
 
     // Prompt 12: policies.defaultBranch (optional text — skip omits field).
     const existingDefaultBranch: Cli_Utility_Initialize_Runner_PromptGithub_ExistingDefaultBranch = (existingPolicies !== undefined) ? existingPolicies['defaultBranch'] : undefined;
     const defaultBranchTitle: Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchTitle = (existingDefaultBranch !== undefined) ? `Keep existing: ${existingDefaultBranch}` : 'Enter default branch name';
-    const defaultBranchChoiceValue: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchValue = (existingDefaultBranch !== undefined) ? existingDefaultBranch : 'enter';
+    const defaultBranchChoiceValue: Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchChoiceValue = (existingDefaultBranch !== undefined) ? existingDefaultBranch : 'enter';
     const defaultBranchInitial: Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchInitial = (existingDefaultBranch !== undefined) ? 1 : 0;
 
-    const defaultBranchOutput: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchValue>({
+    const defaultBranchOutput: Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchValue>({
       type: 'select',
       name: 'githubPoliciesDefaultBranch',
       message: 'GitHub policies.defaultBranch (sync this field?)',
@@ -2048,12 +2170,12 @@ export class Runner {
       return 'back';
     }
 
-    const defaultBranchOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchOutputResult = defaultBranchOutput['result'];
-    let githubPoliciesDefaultBranchValue: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesDefaultBranchValue = defaultBranchOutputResult.githubPoliciesDefaultBranch;
+    const defaultBranchOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchOutputResult = defaultBranchOutput['result'];
+    let githubPoliciesDefaultBranchValue: Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesDefaultBranchValue = defaultBranchOutputResult.githubPoliciesDefaultBranch;
 
     if (githubPoliciesDefaultBranchValue === 'enter') {
       // Prompt for text input.
-      const defaultBranchTextOutput: Cli_Utility_Initialize_Runner_PromptGithub_RepoOutput = await Runner.promptWithCancel<'githubRepo', string>({
+      const defaultBranchTextOutput: Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchTextOutput = await Runner.promptWithCancel<'githubRepo', string>({
         type: 'text',
         name: 'githubRepo',
         message: 'Default branch name',
@@ -2064,34 +2186,34 @@ export class Runner {
         return 'back';
       }
 
-      const rawDefaultBranch: Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchRaw = defaultBranchTextOutput['result'].githubRepo.trim();
+      const rawDefaultBranch: Cli_Utility_Initialize_Runner_PromptGithub_RawDefaultBranch = defaultBranchTextOutput['result'].githubRepo.trim();
 
       githubPoliciesDefaultBranchValue = (rawDefaultBranch !== '') ? rawDefaultBranch : 'skip';
     }
 
     // Prompts 13–15: policies.mergeMethods (optional booleans — skip omits field).
-    const existingMergeMethods: Cli_Utility_Initialize_Runner_PromptGithub_ExistingPolicies = github['policies'];
+    const existingMergeMethods: Cli_Utility_Initialize_Runner_PromptGithub_ExistingMergeMethods = github['policies'];
     const existingMergeMethodsObj: Cli_Utility_Initialize_Runner_PromptGithub_ExistingMergeMethodsObj = (existingMergeMethods !== undefined) ? existingMergeMethods['mergeMethods'] : undefined;
 
-    let mergeInitial: Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodMergeInitial = 0;
+    let mergeInitial: Cli_Utility_Initialize_Runner_PromptGithub_MergeInitial = 0;
 
     if (existingMergeMethodsObj !== undefined && existingMergeMethodsObj['merge'] !== undefined) {
       mergeInitial = (existingMergeMethodsObj['merge'] === true) ? 1 : 2;
     }
 
-    let squashInitial: Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodSquashInitial = 0;
+    let squashInitial: Cli_Utility_Initialize_Runner_PromptGithub_SquashInitial = 0;
 
     if (existingMergeMethodsObj !== undefined && existingMergeMethodsObj['squash'] !== undefined) {
       squashInitial = (existingMergeMethodsObj['squash'] === true) ? 1 : 2;
     }
 
-    let rebaseInitial: Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodRebaseInitial = 0;
+    let rebaseInitial: Cli_Utility_Initialize_Runner_PromptGithub_RebaseInitial = 0;
 
     if (existingMergeMethodsObj !== undefined && existingMergeMethodsObj['rebase'] !== undefined) {
       rebaseInitial = (existingMergeMethodsObj['rebase'] === true) ? 1 : 2;
     }
 
-    const mergeMethodsOutput: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsValue>([
+    const mergeMethodsOutput: Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodsOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsValue>([
       {
         type: 'select',
         name: 'githubPoliciesMergeMethodsMerge',
@@ -2158,13 +2280,13 @@ export class Runner {
       return 'back';
     }
 
-    const mergeMethodsOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsOutputResult = mergeMethodsOutput['result'];
+    const mergeMethodsOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodsOutputResult = mergeMethodsOutput['result'];
 
-    let githubPoliciesMergeMethodsInput: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsInput = undefined;
+    let githubPoliciesMergeMethodsInput: Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesMergeMethodsInput = undefined;
 
-    const mergeMethodsMergeValue: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsValue = mergeMethodsOutputResult.githubPoliciesMergeMethodsMerge;
-    const mergeMethodsSquashValue: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsValue = mergeMethodsOutputResult.githubPoliciesMergeMethodsSquash;
-    const mergeMethodsRebaseValue: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesMergeMethodsValue = mergeMethodsOutputResult.githubPoliciesMergeMethodsRebase;
+    const mergeMethodsMergeValue: Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodsMergeValue = mergeMethodsOutputResult.githubPoliciesMergeMethodsMerge;
+    const mergeMethodsSquashValue: Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodsSquashValue = mergeMethodsOutputResult.githubPoliciesMergeMethodsSquash;
+    const mergeMethodsRebaseValue: Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodsRebaseValue = mergeMethodsOutputResult.githubPoliciesMergeMethodsRebase;
 
     if (
       mergeMethodsMergeValue !== 'skip'
@@ -2186,7 +2308,7 @@ export class Runner {
       autoDeleteInitial = (existingAutoDelete === true) ? 1 : 2;
     }
 
-    const autoDeleteOutput: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesAutoDeleteHeadBranchOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGithub_PoliciesAutoDeleteHeadBranchOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_PoliciesAutoDeleteHeadBranchValue>({
+    const autoDeleteOutput: Cli_Utility_Initialize_Runner_PromptGithub_AutoDeleteOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGithub_PoliciesAutoDeleteHeadBranchOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_PoliciesAutoDeleteHeadBranchValue>({
       type: 'select',
       name: 'githubPoliciesAutoDeleteHeadBranch',
       message: 'GitHub policies.autoDeleteHeadBranch (sync this field?)',
@@ -2211,11 +2333,11 @@ export class Runner {
       return 'back';
     }
 
-    const autoDeleteOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesAutoDeleteHeadBranchOutputResult = autoDeleteOutput['result'];
-    const githubPoliciesAutoDeleteValue: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesAutoDeleteHeadBranchValue = autoDeleteOutputResult.githubPoliciesAutoDeleteHeadBranch;
+    const autoDeleteOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_AutoDeleteOutputResult = autoDeleteOutput['result'];
+    const githubPoliciesAutoDeleteValue: Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesAutoDeleteValue = autoDeleteOutputResult.githubPoliciesAutoDeleteHeadBranch;
 
     // Build the policies object (only if at least one non-skip field exists).
-    let githubPoliciesInput: Cli_Utility_Initialize_Runner_PromptGithub_PoliciesInput = undefined;
+    let githubPoliciesInput: Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesInput = undefined;
 
     if (
       githubPoliciesVisibilityValue !== 'skip'
@@ -2232,7 +2354,7 @@ export class Runner {
     }
 
     // Build the github config object in schema declaration order.
-    const githubConfig: Cli_Utility_Initialize_Runner_PromptGithub_Github = {
+    const githubConfig: Cli_Utility_Initialize_Runner_PromptGithub_GithubConfig = {
       owner: githubOwnerInput,
       repo: githubRepoInput,
       recipes: githubRecipesInput,
@@ -2273,83 +2395,117 @@ export class Runner {
 
     const urls: Cli_Utility_Initialize_Runner_PromptUrls_Urls = (existingUrls !== undefined) ? { ...existingUrls } : {};
 
+    const validateUrlsHomepage: Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsHomepage = (urlsHomepageValue: Cli_Utility_Initialize_Runner_PromptUrls_UrlsHomepageValue) => {
+      return Runner.normalizeUrl(urlsHomepageValue, 'generic')['result'];
+    };
+    const validateUrlsRepository: Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsRepository = (urlsRepositoryValue: Cli_Utility_Initialize_Runner_PromptUrls_UrlsRepositoryValue) => {
+      return Runner.normalizeUrl(urlsRepositoryValue, 'repository')['result'];
+    };
+    const validateUrlsBugs: Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsBugs = (urlsBugsValue: Cli_Utility_Initialize_Runner_PromptUrls_UrlsBugsValue) => {
+      return Runner.normalizeUrl(urlsBugsValue, 'generic')['result'];
+    };
+    const validateUrlsLicense: Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsLicense = (urlsLicenseValue: Cli_Utility_Initialize_Runner_PromptUrls_UrlsLicenseValue) => {
+      return Runner.normalizeUrl(urlsLicenseValue, 'generic')['result'];
+    };
+    const validateUrlsLogo: Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsLogo = (urlsLogoValue: Cli_Utility_Initialize_Runner_PromptUrls_UrlsLogoValue) => {
+      return Runner.normalizeUrl(urlsLogoValue, 'generic')['result'];
+    };
+    const validateUrlsDocumentation: Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsDocumentation = (urlsDocumentationValue: Cli_Utility_Initialize_Runner_PromptUrls_UrlsDocumentationValue) => {
+      return Runner.normalizeUrl(urlsDocumentationValue, 'generic')['result'];
+    };
+    const validateUrlsNpm: Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsNpm = (urlsNpmValue: Cli_Utility_Initialize_Runner_PromptUrls_UrlsNpmValue) => {
+      return Runner.normalizeUrl(urlsNpmValue, 'generic')['result'];
+    };
+    const validateUrlsDocker: Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsDocker = (urlsDockerValue: Cli_Utility_Initialize_Runner_PromptUrls_UrlsDockerValue) => {
+      return Runner.normalizeUrl(urlsDockerValue, 'generic')['result'];
+    };
+    const validateUrlsFundSources: Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsFundSources = (urlsFundSourcesValue: Cli_Utility_Initialize_Runner_PromptUrls_UrlsFundSourcesValue) => {
+      return Runner.normalizeUrlArray(urlsFundSourcesValue, 'generic')['result'];
+    };
+    const validateUrlsPrivacyPolicy: Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsPrivacyPolicy = (urlsPrivacyPolicyValue: Cli_Utility_Initialize_Runner_PromptUrls_UrlsPrivacyPolicyValue) => {
+      return Runner.normalizeUrl(urlsPrivacyPolicyValue, 'generic')['result'];
+    };
+    const validateUrlsTermsOfUse: Cli_Utility_Initialize_Runner_PromptUrls_ValidateUrlsTermsOfUse = (urlsTermsOfUseValue: Cli_Utility_Initialize_Runner_PromptUrls_UrlsTermsOfUseValue) => {
+      return Runner.normalizeUrl(urlsTermsOfUseValue, 'generic')['result'];
+    };
+
     const questionsOutput: Cli_Utility_Initialize_Runner_PromptUrls_QuestionsOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptUrls_QuestionsOutputKey, Cli_Utility_Initialize_Runner_PromptUrls_QuestionsOutputValue>([
       {
         type: 'text',
         name: 'urlsHomepage',
         message: 'Homepage URL',
         initial: urls['homepage'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptUrls_ValidateValue) => Runner.normalizeUrl(value, 'generic')['result'],
+        validate: validateUrlsHomepage,
       },
       {
         type: 'text',
         name: 'urlsRepository',
         message: 'Repository URL',
         initial: urls['repository'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptUrls_ValidateValue) => Runner.normalizeUrl(value, 'repository')['result'],
+        validate: validateUrlsRepository,
       },
       {
         type: 'text',
         name: 'urlsBugs',
         message: 'Issue tracker URL',
         initial: urls['bugs'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptUrls_ValidateValue) => Runner.normalizeUrl(value, 'generic')['result'],
+        validate: validateUrlsBugs,
       },
       {
         type: 'text',
         name: 'urlsLicense',
         message: 'License URL',
         initial: urls['license'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptUrls_ValidateValue) => Runner.normalizeUrl(value, 'generic')['result'],
+        validate: validateUrlsLicense,
       },
       {
         type: 'text',
         name: 'urlsLogo',
         message: 'Logo URL',
         initial: urls['logo'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptUrls_ValidateValue) => Runner.normalizeUrl(value, 'generic')['result'],
+        validate: validateUrlsLogo,
       },
       {
         type: 'text',
         name: 'urlsDocumentation',
         message: 'Documentation URL',
         initial: urls['documentation'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptUrls_ValidateValue) => Runner.normalizeUrl(value, 'generic')['result'],
+        validate: validateUrlsDocumentation,
       },
       {
         type: 'text',
         name: 'urlsNpm',
         message: 'npm package URL',
         initial: urls['npm'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptUrls_ValidateValue) => Runner.normalizeUrl(value, 'generic')['result'],
+        validate: validateUrlsNpm,
       },
       {
         type: 'text',
         name: 'urlsDocker',
         message: 'Docker Hub URL',
         initial: urls['docker'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptUrls_ValidateValue) => Runner.normalizeUrl(value, 'generic')['result'],
+        validate: validateUrlsDocker,
       },
       {
         type: 'text',
         name: 'urlsFundSources',
         message: 'Funding URLs (comma separated)',
         initial: (Array.isArray(urls['fundSources']) === true) ? urls['fundSources'].join(', ') : '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptUrls_ValidateValue) => Runner.normalizeUrlArray(value, 'generic')['result'],
+        validate: validateUrlsFundSources,
       },
       {
         type: 'text',
         name: 'urlsPrivacyPolicy',
         message: 'Privacy policy URL',
         initial: urls['privacyPolicy'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptUrls_ValidateValue) => Runner.normalizeUrl(value, 'generic')['result'],
+        validate: validateUrlsPrivacyPolicy,
       },
       {
         type: 'text',
         name: 'urlsTermsOfUse',
         message: 'Terms of use URL',
         initial: urls['termsOfUse'] ?? '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptUrls_ValidateValue) => Runner.normalizeUrl(value, 'generic')['result'],
+        validate: validateUrlsTermsOfUse,
       },
     ]);
 
@@ -2516,8 +2672,8 @@ export class Runner {
      */
     const sync: Cli_Utility_Initialize_Runner_PromptWorkflows_Sync = (): Cli_Utility_Initialize_Runner_PromptWorkflows_Sync_Returns => {
       if (workflows.length > 0) {
-        const normalizedWorkflows: Cli_Utility_Initialize_Runner_PromptWorkflows_Workflows = workflows.map((workflow) => {
-          const normalizedWorkflow: Cli_Utility_Initialize_Runner_PromptWorkflows_ClonedWorkflow = { ...workflow };
+        const normalizedWorkflows: Cli_Utility_Initialize_Runner_PromptWorkflows_Sync_NormalizedWorkflows = workflows.map((workflow) => {
+          const normalizedWorkflow: Cli_Utility_Initialize_Runner_PromptWorkflows_Sync_NormalizedWorkflow = { ...workflow };
 
           // Workflows - Triggers.
           if (Array.isArray(workflow['triggers']) === true && workflow['triggers'].length > 0) {
@@ -2551,16 +2707,16 @@ export class Runner {
 
     while (true) {
       workflows.sort((a, b) => {
-        const templateA: Cli_Utility_Initialize_Runner_PromptWorkflows_SortTemplateA = (a !== undefined && typeof a['template'] === 'string') ? a['template'] : '';
-        const templateB: Cli_Utility_Initialize_Runner_PromptWorkflows_SortTemplateB = (b !== undefined && typeof b['template'] === 'string') ? b['template'] : '';
-        const templateCompare: Cli_Utility_Initialize_Runner_PromptWorkflows_SortTemplateCompare = templateA.localeCompare(templateB);
+        const templateA: Cli_Utility_Initialize_Runner_PromptWorkflows_TemplateA = (a !== undefined && typeof a['template'] === 'string') ? a['template'] : '';
+        const templateB: Cli_Utility_Initialize_Runner_PromptWorkflows_TemplateB = (b !== undefined && typeof b['template'] === 'string') ? b['template'] : '';
+        const templateCompare: Cli_Utility_Initialize_Runner_PromptWorkflows_TemplateCompare = templateA.localeCompare(templateB);
 
         if (templateCompare !== 0) {
           return templateCompare;
         }
 
-        const suffixA: Cli_Utility_Initialize_Runner_PromptWorkflows_SortSuffixA = (a !== undefined && typeof a['suffix'] === 'string') ? a['suffix'] : '';
-        const suffixB: Cli_Utility_Initialize_Runner_PromptWorkflows_SortSuffixB = (b !== undefined && typeof b['suffix'] === 'string') ? b['suffix'] : '';
+        const suffixA: Cli_Utility_Initialize_Runner_PromptWorkflows_SuffixA = (a !== undefined && typeof a['suffix'] === 'string') ? a['suffix'] : '';
+        const suffixB: Cli_Utility_Initialize_Runner_PromptWorkflows_SuffixB = (b !== undefined && typeof b['suffix'] === 'string') ? b['suffix'] : '';
 
         return suffixA.localeCompare(suffixB);
       });
@@ -2569,15 +2725,15 @@ export class Runner {
 
       // Add the "EDIT" and "REMOVE" menu choices for each workflow.
       for (let i = 0; i < workflows.length; i += 1) {
-        const workflow: Cli_Utility_Initialize_Runner_PromptWorkflows_MenuWorkflow = workflows[i];
+        const workflow: Cli_Utility_Initialize_Runner_PromptWorkflows_Workflow = workflows[i];
 
         if (workflow === undefined) {
           continue;
         }
 
-        const template: Cli_Utility_Initialize_Runner_PromptWorkflows_MenuTemplate = (typeof workflow['template'] === 'string') ? workflow['template'].trim() : '';
-        const suffix: Cli_Utility_Initialize_Runner_PromptWorkflows_MenuSuffix = (typeof workflow['suffix'] === 'string') ? workflow['suffix'].trim() : '';
-        const triggers: Cli_Utility_Initialize_Runner_PromptWorkflows_MenuTriggers = (Array.isArray(workflow['triggers']) === true) ? workflow['triggers'] : [];
+        const template: Cli_Utility_Initialize_Runner_PromptWorkflows_Template = (typeof workflow['template'] === 'string') ? workflow['template'].trim() : '';
+        const suffix: Cli_Utility_Initialize_Runner_PromptWorkflows_Suffix = (typeof workflow['suffix'] === 'string') ? workflow['suffix'].trim() : '';
+        const triggers: Cli_Utility_Initialize_Runner_PromptWorkflows_Triggers = (Array.isArray(workflow['triggers']) === true) ? workflow['triggers'] : [];
 
         let label: Cli_Utility_Initialize_Runner_PromptWorkflows_Label = `Workflow ${i + 1}`;
 
@@ -2637,12 +2793,12 @@ export class Runner {
         return 'back';
       }
 
-      const menuOutputResult: Cli_Utility_Initialize_Runner_PromptWorkflows_MenuOutputResultValue = menuOutput['result'];
+      const menuOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflows_MenuOutputResultValue = menuOutput['result'];
 
       // If user wants to go back to the main menu.
       if (
-        menuOutputResult.action === undefined
-        || menuOutputResult.action['kind'] === 'back'
+        menuOutputResultValue.action === undefined
+        || menuOutputResultValue.action['kind'] === 'back'
       ) {
         // Sync changes back to config.
         sync();
@@ -2651,7 +2807,7 @@ export class Runner {
       }
 
       // If user wants to add a workflow.
-      if (menuOutputResult.action['kind'] === 'add') {
+      if (menuOutputResultValue.action['kind'] === 'add') {
         const result: Cli_Utility_Initialize_Runner_PromptWorkflows_Result = await Runner.promptWorkflowsForm(undefined, 'create', workflows, config);
 
         if (result['action'] === 'back') {
@@ -2675,8 +2831,8 @@ export class Runner {
       }
 
       // If user wants to edit a workflow.
-      if (menuOutputResult.action['kind'] === 'edit') {
-        const workflowIndex: Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowIndex = menuOutputResult.action['index'];
+      if (menuOutputResultValue.action['kind'] === 'edit') {
+        const workflowIndex: Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowIndex = menuOutputResultValue.action['index'];
 
         // If workflow index was out-of-bounds.
         if (workflowIndex < 0 || workflowIndex >= workflows.length) {
@@ -2685,7 +2841,7 @@ export class Runner {
 
         const workflowToEdit: Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowToEdit = workflows[workflowIndex];
 
-        const workflowResult: Cli_Utility_Initialize_Runner_PromptWorkflows_Result = await Runner.promptWorkflowsForm(workflowToEdit, 'update', workflows, config);
+        const workflowResult: Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowResult = await Runner.promptWorkflowsForm(workflowToEdit, 'update', workflows, config);
 
         if (workflowResult['action'] === 'back') {
           continue;
@@ -2708,29 +2864,29 @@ export class Runner {
       }
 
       // If user wants to remove a workflow.
-      if (menuOutputResult.action['kind'] === 'remove') {
-        const workflowIndex: Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowIndex = menuOutputResult.action['index'];
+      if (menuOutputResultValue.action['kind'] === 'remove') {
+        const removeWorkflowIndex: Cli_Utility_Initialize_Runner_PromptWorkflows_RemoveWorkflowIndex = menuOutputResultValue.action['index'];
 
         // If workflow index was out-of-bounds.
-        if (workflowIndex < 0 || workflowIndex >= workflows.length) {
+        if (removeWorkflowIndex < 0 || removeWorkflowIndex >= workflows.length) {
           continue;
         }
 
-        const workflowToRemove: Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowToRemove = workflows[workflowIndex];
+        const workflowToRemove: Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowToRemove = workflows[removeWorkflowIndex];
 
         // If workflow to remove does not exist.
         if (workflowToRemove === undefined) {
           continue;
         }
 
-        const template: Cli_Utility_Initialize_Runner_PromptWorkflows_RemoveTemplate = (typeof workflowToRemove['template'] === 'string') ? workflowToRemove['template'].trim() : '';
-        const suffix: Cli_Utility_Initialize_Runner_PromptWorkflows_RemoveSuffix = (typeof workflowToRemove['suffix'] === 'string') ? workflowToRemove['suffix'].trim() : '';
-        let workflowLabel: Cli_Utility_Initialize_Runner_PromptWorkflows_Label = `Workflow ${workflowIndex + 1}`;
+        const removeTemplate: Cli_Utility_Initialize_Runner_PromptWorkflows_RemoveTemplate = (typeof workflowToRemove['template'] === 'string') ? workflowToRemove['template'].trim() : '';
+        const removeSuffix: Cli_Utility_Initialize_Runner_PromptWorkflows_RemoveSuffix = (typeof workflowToRemove['suffix'] === 'string') ? workflowToRemove['suffix'].trim() : '';
+        let workflowLabel: Cli_Utility_Initialize_Runner_PromptWorkflows_WorkflowLabel = `Workflow ${removeWorkflowIndex + 1}`;
 
-        if (template !== '' && suffix !== '') {
-          workflowLabel = `${template}-${suffix}`;
-        } else if (template !== '') {
-          workflowLabel = template;
+        if (removeTemplate !== '' && removeSuffix !== '') {
+          workflowLabel = `${removeTemplate}-${removeSuffix}`;
+        } else if (removeTemplate !== '') {
+          workflowLabel = removeTemplate;
         }
 
         const shouldRemove: Cli_Utility_Initialize_Runner_PromptWorkflows_ShouldRemove = await Runner.promptWorkflowsDeleteForm(workflowLabel);
@@ -2740,7 +2896,7 @@ export class Runner {
         }
 
         // Delete the workflow.
-        workflows.splice(workflowIndex, 1);
+        workflows.splice(removeWorkflowIndex, 1);
 
         // Sync changes back to config.
         sync();
@@ -2814,8 +2970,8 @@ export class Runner {
       };
     }
 
-    const templateOutputResult: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TemplateOutputResultValue = templateOutput['result'];
-    const selectedTemplate: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTemplate = templateOutputResult.template;
+    const templateOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TemplateOutputResultValue = templateOutput['result'];
+    const selectedTemplate: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTemplate = templateOutputResultValue.template;
 
     // Prompt for suffix with duplicate validation.
     const suffixOutput: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SuffixOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SuffixOutputKey, Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SuffixOutputResult>({
@@ -2824,7 +2980,7 @@ export class Runner {
       message: 'Workflow suffix (used in filename and workflow name)',
       initial: existingSuffix,
       validate: (value) => {
-        const trimmed: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedSuffix = (typeof value === 'string') ? value.trim() : '';
+        const trimmed: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Trimmed = (typeof value === 'string') ? value.trim() : '';
 
         if (trimmed === '') {
           return 'Suffix is required.';
@@ -2837,7 +2993,7 @@ export class Runner {
             return false;
           }
 
-          const existingKey: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_CompositeKey = `${w['template']}-${w['suffix'] ?? ''}`;
+          const existingKey: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingKey = `${w['template']}-${w['suffix'] ?? ''}`;
 
           return existingKey === compositeKey;
         });
@@ -2856,8 +3012,8 @@ export class Runner {
       };
     }
 
-    const suffixOutputResult: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SuffixOutputResultValue = suffixOutput['result'];
-    const selectedSuffix: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedSuffix = (typeof suffixOutputResult.suffix === 'string') ? suffixOutputResult.suffix.trim() : '';
+    const suffixOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SuffixOutputResultValue = suffixOutput['result'];
+    const selectedSuffix: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedSuffix = (typeof suffixOutputResultValue.suffix === 'string') ? suffixOutputResultValue.suffix.trim() : '';
 
     // Discover available triggers from the template's triggers/ folder.
     const triggersDir: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TriggersDir = join(resolveTemplatePath(import.meta.url, 'generators/github/workflows'), selectedTemplate, 'triggers');
@@ -2890,8 +3046,8 @@ export class Runner {
         };
       }
 
-      const triggersOutputResult: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TriggersOutputResultValue = triggersOutput['result'];
-      selectedTriggers = (Array.isArray(triggersOutputResult.triggers) === true) ? triggersOutputResult.triggers : [];
+      const triggersOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TriggersOutputResultValue = triggersOutput['result'];
+      selectedTriggers = (Array.isArray(triggersOutputResultValue.triggers) === true) ? triggersOutputResultValue.triggers : [];
 
       // Validate that at most one schedule-* variant was selected.
       const scheduleVariants: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ScheduleVariants = selectedTriggers.filter((trigger) => trigger.startsWith('schedule-'));
@@ -2921,12 +3077,12 @@ export class Runner {
           && w['template'].trim() !== '',
         )
         .map((w) => {
-          const compositeKey: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_CompositeKey = (typeof w['suffix'] === 'string' && w['suffix'].trim() !== '') ? `${w['template']}-${w['suffix']}` : w['template'];
+          const dependsOnKey: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnKey = (typeof w['suffix'] === 'string' && w['suffix'].trim() !== '') ? `${w['template']}-${w['suffix']}` : w['template'];
 
           return {
-            title: compositeKey,
-            value: compositeKey,
-            selected: existingDependsOn.includes(compositeKey),
+            title: dependsOnKey,
+            value: dependsOnKey,
+            selected: existingDependsOn.includes(dependsOnKey),
           };
         });
 
@@ -2944,8 +3100,8 @@ export class Runner {
           };
         }
 
-        const dependsOnOutputResult: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputResultValue = dependsOnOutput['result'];
-        selectedDependsOn = (Array.isArray(dependsOnOutputResult.dependsOn) === true && dependsOnOutputResult.dependsOn.length > 0) ? dependsOnOutputResult.dependsOn : undefined;
+        const dependsOnOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputResultValue = dependsOnOutput['result'];
+        selectedDependsOn = (Array.isArray(dependsOnOutputResultValue.dependsOn) === true && dependsOnOutputResultValue.dependsOn.length > 0) ? dependsOnOutputResultValue.dependsOn : undefined;
       }
     }
 
@@ -2960,20 +3116,20 @@ export class Runner {
 
     if (matchedMetadata !== undefined && matchedMetadata['supportsTargets'] === true) {
       const targetsMetadata: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetsMetadata = matchedMetadata['targets'] ?? {};
-      const availableTargetTypes: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetAvailableTypes = Object.keys(targetsMetadata);
+      const availableTargetTypes: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_AvailableTargetTypes = Object.keys(targetsMetadata);
 
       while (true) {
         const targetMenuChoices: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuChoices = [];
 
         for (let i = 0; i < selectedTargets.length; i += 1) {
-          const currentTarget: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuCurrentTarget = selectedTargets[i];
+          const currentTarget: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_CurrentTarget = selectedTargets[i];
 
           if (currentTarget === undefined) {
             continue;
           }
 
-          const currentTargetType: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuCurrentTargetType = currentTarget['type'];
-          const currentTargetWorkingDir: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuCurrentTargetWorkingDir = currentTarget['workingDir'];
+          const currentTargetType: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_CurrentTargetType = currentTarget['type'];
+          const currentTargetWorkingDir: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_CurrentTargetWorkingDir = currentTarget['workingDir'];
 
           targetMenuChoices.push({
             title: `${chalk.yellow.bold('[EDIT]')} ${currentTargetType} → ${currentTargetWorkingDir}`,
@@ -3019,8 +3175,8 @@ export class Runner {
           };
         }
 
-        const targetMenuOutputResult: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuOutputResultValue = targetMenuOutput['result'];
-        const targetMenuAction: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuOutputResult = targetMenuOutputResult.targetAction;
+        const targetMenuOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuOutputResultValue = targetMenuOutput['result'];
+        const targetMenuAction: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMenuAction = targetMenuOutputResultValue.targetAction;
 
         // Done: exit target loop.
         if (targetMenuAction['kind'] === 'done') {
@@ -3062,8 +3218,8 @@ export class Runner {
             continue;
           }
 
-          const targetTypeOutputResult: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetTypeOutputResultValue = targetTypeOutput['result'];
-          const selectedTargetType: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTargetType = targetTypeOutputResult.targetType;
+          const targetTypeOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetTypeOutputResultValue = targetTypeOutput['result'];
+          const selectedTargetType: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTargetType = targetTypeOutputResultValue.targetType;
 
           const targetWorkingDirInitial: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetWorkingDirInitial = (targetToEdit !== undefined) ? workspaceKeys.indexOf(targetToEdit['workingDir']) : 0;
           const targetWorkingDirChoices: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetWorkingDirChoices = workspaceKeys.map((workspaceKey) => ({
@@ -3083,8 +3239,8 @@ export class Runner {
             continue;
           }
 
-          const targetWorkingDirOutputResult: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetWorkingDirOutputResultValue = targetWorkingDirOutput['result'];
-          const selectedTargetWorkingDir: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir = targetWorkingDirOutputResult.targetWorkingDir;
+          const targetWorkingDirOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetWorkingDirOutputResultValue = targetWorkingDirOutput['result'];
+          const selectedTargetWorkingDir: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir = targetWorkingDirOutputResultValue.targetWorkingDir;
 
           // Validate tuple uniqueness. When editing, exclude the current entry.
           const targetIsDuplicate: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetIsDuplicate = selectedTargets.some((selectedTarget, selectedTargetIndex) => {
@@ -3134,12 +3290,12 @@ export class Runner {
               continue;
             }
 
-            const targetNeedsOutputResult: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetNeedsOutputResultValue = targetNeedsOutput['result'];
+            const targetNeedsOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetNeedsOutputResultValue = targetNeedsOutput['result'];
 
-            selectedTargetNeeds = (Array.isArray(targetNeedsOutputResult.targetNeeds) === true && targetNeedsOutputResult.targetNeeds.length > 0) ? targetNeedsOutputResult.targetNeeds : undefined;
+            selectedTargetNeeds = (Array.isArray(targetNeedsOutputResultValue.targetNeeds) === true && targetNeedsOutputResultValue.targetNeeds.length > 0) ? targetNeedsOutputResultValue.targetNeeds : undefined;
           }
 
-          const newTarget: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetEntry = {
+          const newTarget: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_NewTarget = {
             type: selectedTargetType,
             workingDir: selectedTargetWorkingDir,
           };
@@ -3190,8 +3346,8 @@ export class Runner {
           };
         }
 
-        const scopesOutputResult: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ScopesOutputResultValue = scopesOutput['result'];
-        const extraScopes: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ScopesOutputResult = (Array.isArray(scopesOutputResult.scopes) === true) ? scopesOutputResult.scopes : [];
+        const scopesOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ScopesOutputResultValue = scopesOutput['result'];
+        const extraScopes: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExtraScopes = (Array.isArray(scopesOutputResultValue.scopes) === true) ? scopesOutputResultValue.scopes : [];
 
         for (const extraScope of extraScopes) {
           if (selectedScopes.includes(extraScope) === false) {
@@ -3210,16 +3366,16 @@ export class Runner {
       const variableNameToTargetWorkingDir: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_VariableNameToTargetWorkingDir = {};
 
       for (const selectedTarget of selectedTargets) {
-        const targetType: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTargetType = selectedTarget['type'];
-        const targetWorkingDir: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir = selectedTarget['workingDir'];
-        const targetMetadata: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetsMetadata = matchedMetadata['targets'] ?? {};
+        const targetType: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetType = selectedTarget['type'];
+        const targetWorkingDir: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetWorkingDir = selectedTarget['workingDir'];
+        const targetMetadata: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetMetadata = matchedMetadata['targets'] ?? {};
         const targetVariables: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVariables = (targetMetadata[targetType] !== undefined) ? targetMetadata[targetType]['variables'] : {};
 
-        const targetVarEntries: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVariableEntries = Object.entries(targetVariables);
+        const targetVarEntries: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVarEntries = Object.entries(targetVariables);
 
         for (const entry of targetVarEntries) {
-          const targetVarKey: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVariableKey = entry[0];
-          const targetVarValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVariableValue = entry[1];
+          const targetVarKey: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVarKey = entry[0];
+          const targetVarValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TargetVarValue = entry[1];
 
           if (mergedVariables[targetVarKey] === undefined) {
             Reflect.set(mergedVariables, targetVarKey, targetVarValue);
@@ -3238,7 +3394,7 @@ export class Runner {
         }
       }
 
-      const variableEntries: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_MergedVariableEntries = Object.entries(mergedVariables);
+      const variableEntries: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_VariableEntries = Object.entries(mergedVariables);
 
       for (const variableEntry of variableEntries) {
         const variableName: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_VariableName = variableEntry[0];
@@ -3261,7 +3417,7 @@ export class Runner {
         }
 
         // Append description and example if available.
-        const parts: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_VariableDescriptionParts = [];
+        const parts: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Parts = [];
 
         if (typeof variableConfig['description'] === 'string') {
           parts.push(variableConfig['description']);
@@ -3308,8 +3464,8 @@ export class Runner {
           };
         }
 
-        const settingsOutputResult: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SettingsOutputResultValue = settingsOutput['result'];
-        const settingValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SettingValue = (typeof settingsOutputResult.settingValue === 'string') ? settingsOutputResult.settingValue.trim().replaceAll('\\n', '\n') : '';
+        const settingsOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SettingsOutputResultValue = settingsOutput['result'];
+        const settingValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SettingValue = (typeof settingsOutputResultValue.settingValue === 'string') ? settingsOutputResultValue.settingValue.trim().replaceAll('\\n', '\n') : '';
 
         if (settingValue !== '') {
           Reflect.set(settings, variableName, settingValue);
@@ -3403,7 +3559,7 @@ export class Runner {
    * @since 0.11.0
    */
   private static async promptWorkspaces(config: Cli_Utility_Initialize_Runner_PromptWorkspaces_Config): Cli_Utility_Initialize_Runner_PromptWorkspaces_Returns {
-    const workspaces: Cli_Utility_Initialize_Runner_PromptWorkspaces = (config['workspaces'] !== undefined) ? { ...(config['workspaces']) } : {};
+    const workspaces: Cli_Utility_Initialize_Runner_PromptWorkspaces_Workspaces = (config['workspaces'] !== undefined) ? { ...(config['workspaces']) } : {};
 
     // The "run" command already guarantees we run in the project root (called "checkPath"), so we can traverse forward directly.
     const rawWorkspacePaths: Cli_Utility_Initialize_Runner_PromptWorkspaces_RawWorkspacePaths = await discoverPathsWithFile('package.json', 'forward');
@@ -3475,7 +3631,7 @@ export class Runner {
 
       const workspacePath: Cli_Utility_Initialize_Runner_PromptWorkspaces_WorkspacePath = menuOutputResult.workspacePath;
 
-      const formResult: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Result = await Runner.promptWorkspacesForm({
+      const formResult: Cli_Utility_Initialize_Runner_PromptWorkspaces_FormResult = await Runner.promptWorkspacesForm({
         workspacePath,
         existingWorkspace: workspaces[workspacePath],
         projectSlug: (config['project'] !== undefined && config['project']['name'] !== undefined) ? config['project']['name']['slug'] : undefined,
@@ -3571,13 +3727,13 @@ export class Runner {
      * Derives the package name from the selected role. Fixed roles like project and docs get an
      * automatic name; other roles prompt for a descriptor.
      *
-     * @param {Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_Role} role - Role.
+     * @param {Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Role} role - Role.
      *
      * @returns {Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_Returns}
      *
      * @since 0.11.0
      */
-    const resolveName: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName = async (role: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_Role): Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_Returns => {
+    const resolveName: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName = async (role: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Role): Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_Returns => {
       // "project" (Project root) and "docs" always get a fixed name.
       if (role === 'project' || role === 'docs') {
         if (options['projectSlug'] === undefined) {
@@ -3590,12 +3746,16 @@ export class Runner {
       const base: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_Base = (options['projectSlug'] !== undefined) ? `${options['projectSlug']}-${role}` : role;
 
       // If current workspace is not "project" or "docs", the workspace name would have a fixed prefix or simple slug.
+      const validateWorkspaceName: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_ValidateWorkspaceName = (workspaceNameValue: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_WorkspaceNameValue) => {
+        return Runner.normalizeWorkspaceName(workspaceNameValue, role, base)['result'];
+      };
+
       const namePrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_NamePrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_PromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_PromptValue>({
         type: 'text',
         name: 'workspaceName',
         message: 'Workspace package name',
         initial: (options['existingWorkspace'] !== undefined) ? options['existingWorkspace']['name'] ?? '' : '',
-        validate: (value: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_ValidateValue) => Runner.normalizeWorkspaceName(value, role, base)['result'],
+        validate: validateWorkspaceName,
       });
 
       if (namePrompt['cancelled'] === true) {
@@ -3666,12 +3826,16 @@ export class Runner {
     }
 
     // Optional human-readable display name. Surfaces in tooling that reads package.json's displayName.
+    const validateWorkspaceDisplayName: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ValidateWorkspaceDisplayName = (workspaceDisplayNameValue: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_WorkspaceDisplayNameValue) => {
+      return Runner.normalizeText(workspaceDisplayNameValue, Infinity)['result'];
+    };
+
     const displayNamePrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePromptValue>({
       type: 'text',
       name: 'workspaceDisplayName',
       message: 'Workspace display name (optional)',
       initial: (options['existingWorkspace'] !== undefined) ? options['existingWorkspace']['displayName'] ?? '' : '',
-      validate: (value: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNameValidateValue) => Runner.normalizeText(value, Infinity)['result'],
+      validate: validateWorkspaceDisplayName,
     });
 
     if (displayNamePrompt['cancelled'] === true) {
@@ -3719,7 +3883,7 @@ export class Runner {
       const existingSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingSettings = (existingTuple !== undefined && existingTuple.length > 1) ? existingTuple[1] : undefined;
 
       if (recipe === 'sync-identity' && selectedPolicy === 'distributable') {
-        const settingsPrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SettingsPrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptValue>({
+        const identitySettingsPrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_IdentitySettingsPrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptValue>({
           type: 'multiselect',
           name: 'workspaceRecipeSettings',
           message: 'sync-identity: Select properties to sync',
@@ -3737,30 +3901,30 @@ export class Runner {
           ],
         });
 
-        if (settingsPrompt['cancelled'] === true) {
+        if (identitySettingsPrompt['cancelled'] === true) {
           return {
             action: 'back',
           };
         }
 
-        const selectedSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedSettings = settingsPrompt['result'].workspaceRecipeSettings;
+        const identitySelectedSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_IdentitySelectedSettings = identitySettingsPrompt['result'].workspaceRecipeSettings;
 
-        if (selectedSettings.length > 0) {
-          const settings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettings = {};
+        if (identitySelectedSettings.length > 0) {
+          const identitySettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_IdentitySettings = {};
 
-          for (const setting of selectedSettings) {
-            Reflect.set(settings, setting, true);
+          for (const setting of identitySelectedSettings) {
+            Reflect.set(identitySettings, setting, true);
           }
 
           Reflect.set(recipes, recipe, [
             true,
-            settings,
+            identitySettings,
           ]);
         } else {
           Reflect.set(recipes, recipe, [true]);
         }
       } else if (recipe === 'sync-ownership' && selectedPolicy === 'distributable') {
-        const settingsPrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SettingsPrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptValue>({
+        const ownershipSettingsPrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_OwnershipSettingsPrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptValue>({
           type: 'multiselect',
           name: 'workspaceRecipeSettings',
           message: 'sync-ownership: Select properties to sync',
@@ -3798,30 +3962,30 @@ export class Runner {
           ],
         });
 
-        if (settingsPrompt['cancelled'] === true) {
+        if (ownershipSettingsPrompt['cancelled'] === true) {
           return {
             action: 'back',
           };
         }
 
-        const selectedSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedSettings = settingsPrompt['result'].workspaceRecipeSettings;
+        const ownershipSelectedSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_OwnershipSelectedSettings = ownershipSettingsPrompt['result'].workspaceRecipeSettings;
 
-        if (selectedSettings.length > 0) {
-          const settings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettings = {};
+        if (ownershipSelectedSettings.length > 0) {
+          const ownershipSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_OwnershipSettings = {};
 
-          for (const setting of selectedSettings) {
-            Reflect.set(settings, setting, true);
+          for (const setting of ownershipSelectedSettings) {
+            Reflect.set(ownershipSettings, setting, true);
           }
 
           Reflect.set(recipes, recipe, [
             true,
-            settings,
+            ownershipSettings,
           ]);
         } else {
           Reflect.set(recipes, recipe, [true]);
         }
       } else if (recipe === 'sync-environment') {
-        const settingsPrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SettingsPrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptValue>({
+        const environmentSettingsPrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_EnvironmentSettingsPrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptValue>({
           type: 'multiselect',
           name: 'workspaceRecipeSettings',
           message: 'sync-environment: Select settings',
@@ -3832,30 +3996,30 @@ export class Runner {
           }],
         });
 
-        if (settingsPrompt['cancelled'] === true) {
+        if (environmentSettingsPrompt['cancelled'] === true) {
           return {
             action: 'back',
           };
         }
 
-        const selectedSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedSettings = settingsPrompt['result'].workspaceRecipeSettings;
+        const environmentSelectedSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_EnvironmentSelectedSettings = environmentSettingsPrompt['result'].workspaceRecipeSettings;
 
-        if (selectedSettings.length > 0) {
-          const settings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettings = {};
+        if (environmentSelectedSettings.length > 0) {
+          const environmentSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_EnvironmentSettings = {};
 
-          for (const setting of selectedSettings) {
-            Reflect.set(settings, setting, true);
+          for (const setting of environmentSelectedSettings) {
+            Reflect.set(environmentSettings, setting, true);
           }
 
           Reflect.set(recipes, recipe, [
             true,
-            settings,
+            environmentSettings,
           ]);
         } else {
           Reflect.set(recipes, recipe, [true]);
         }
       } else if (recipe === 'cleanup') {
-        const settingsPrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SettingsPrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptValue>({
+        const cleanupSettingsPrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_CleanupSettingsPrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptValue>({
           type: 'multiselect',
           name: 'workspaceRecipeSettings',
           message: 'cleanup: Select settings',
@@ -3873,30 +4037,30 @@ export class Runner {
           ],
         });
 
-        if (settingsPrompt['cancelled'] === true) {
+        if (cleanupSettingsPrompt['cancelled'] === true) {
           return {
             action: 'back',
           };
         }
 
-        const selectedSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedSettings = settingsPrompt['result'].workspaceRecipeSettings;
+        const cleanupSelectedSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_CleanupSelectedSettings = cleanupSettingsPrompt['result'].workspaceRecipeSettings;
 
-        if (selectedSettings.length > 0) {
-          const settings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettings = {};
+        if (cleanupSelectedSettings.length > 0) {
+          const cleanupSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_CleanupSettings = {};
 
-          for (const setting of selectedSettings) {
-            Reflect.set(settings, setting, true);
+          for (const setting of cleanupSelectedSettings) {
+            Reflect.set(cleanupSettings, setting, true);
           }
 
           Reflect.set(recipes, recipe, [
             true,
-            settings,
+            cleanupSettings,
           ]);
         } else {
           Reflect.set(recipes, recipe, [true]);
         }
       } else if (recipe === 'normalize-dependencies') {
-        const settingsPrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SettingsPrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptValue>({
+        const dependenciesSettingsPrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DependenciesSettingsPrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettingsPromptValue>({
           type: 'multiselect',
           name: 'workspaceRecipeSettings',
           message: 'normalize-dependencies: Select settings',
@@ -3914,24 +4078,24 @@ export class Runner {
           ],
         });
 
-        if (settingsPrompt['cancelled'] === true) {
+        if (dependenciesSettingsPrompt['cancelled'] === true) {
           return {
             action: 'back',
           };
         }
 
-        const selectedSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedSettings = settingsPrompt['result'].workspaceRecipeSettings;
+        const dependenciesSelectedSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DependenciesSelectedSettings = dependenciesSettingsPrompt['result'].workspaceRecipeSettings;
 
-        if (selectedSettings.length > 0) {
-          const settings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipeSettings = {};
+        if (dependenciesSelectedSettings.length > 0) {
+          const dependenciesSettings: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DependenciesSettings = {};
 
-          for (const setting of selectedSettings) {
-            Reflect.set(settings, setting, true);
+          for (const setting of dependenciesSelectedSettings) {
+            Reflect.set(dependenciesSettings, setting, true);
           }
 
           Reflect.set(recipes, recipe, [
             true,
-            settings,
+            dependenciesSettings,
           ]);
         } else {
           Reflect.set(recipes, recipe, [true]);

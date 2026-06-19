@@ -4,9 +4,8 @@ import type { Presets_Signal_Preset_Signal } from '../../types/presets/signal/pr
  * Presets - Signal - Preset - Signal.
  *
  * Branded-short-links documentation site preset pairing a red (Tailwind
- * red-600 `#dc2626`) primary with amber (Tailwind amber-500 `#f59e0b`)
- * accent. Space Grotesk display font, Inter body font, and JetBrains Mono
- * code font with sharp shapes and flat card depth.
+ * red-600 `#dc2626`) primary with amber (Tailwind amber-500 `#f59e0b`) accent,
+ * Space Grotesk display font, Inter body font, JetBrains Mono code font.
  *
  * @since 0.15.0
  */

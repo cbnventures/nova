@@ -36,14 +36,98 @@ import {
 } from '../../lib/regex.js';
 
 import type {
-  Tests_Lib_Regex_PatternDoubleQuotedStringCaptureMatches,
-  Tests_Lib_Regex_PatternLeadingNonDigitsMatches,
-  Tests_Lib_Regex_PatternRangeCaptureRemainderMatches,
-  Tests_Lib_Regex_PatternRegistryQueryLineMatches,
-  Tests_Lib_Regex_PatternRustcVersionLineMatches,
-  Tests_Lib_Regex_PatternSemverMatches,
-  Tests_Lib_Regex_PatternSemverMatchGroups,
-  Tests_Lib_Regex_VersionRangePatterns_Matches,
+  Tests_Lib_Regex_ANSIPatterns_LIBREGEXPATTERNANSIDoesNotMatchPlainText_Subject,
+  Tests_Lib_Regex_ANSIPatterns_LIBREGEXPATTERNANSIMatchesEscapeCode_Subject,
+  Tests_Lib_Regex_ANSIPatterns_LIBREGEXPATTERNANSISTARTDoesNotMatchEscapeInMiddle_Subject,
+  Tests_Lib_Regex_ANSIPatterns_LIBREGEXPATTERNANSISTARTMatchesEscapeAtStart_Subject,
+  Tests_Lib_Regex_CharacterPatterns_LIBREGEXCHARACTERDOUBLEQUOTEDoesNotMatchSingleQuote_Subject,
+  Tests_Lib_Regex_CharacterPatterns_LIBREGEXCHARACTERDOUBLEQUOTEMatchesDoubleQuote_Subject,
+  Tests_Lib_Regex_CharacterPatterns_LIBREGEXCHARACTERPIPEDoesNotMatchPlainText_Subject,
+  Tests_Lib_Regex_CharacterPatterns_LIBREGEXCHARACTERPIPEMatchesPipe_Subject,
+  Tests_Lib_Regex_CharacterPatterns_LIBREGEXCHARACTERSINGLEQUOTEDoesNotMatchDoubleQuote_Subject,
+  Tests_Lib_Regex_CharacterPatterns_LIBREGEXCHARACTERSINGLEQUOTEMatchesSingleQuote_Subject,
+  Tests_Lib_Regex_LIBREGEXLINEBREAKCRLFORLF_DoesNotMatchPlainText_Subject,
+  Tests_Lib_Regex_LIBREGEXLINEBREAKCRLFORLF_MatchesCRLF_Subject,
+  Tests_Lib_Regex_LIBREGEXLINEBREAKCRLFORLF_MatchesLF_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_DoesNotMatchALowercaseStart_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_DoesNotMatchATrailingUnderscore_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_DoesNotMatchDoubleUnderscores_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_MatchesASinglePascalCaseChunk_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_MatchesMultiplePascalCaseChunksJoinedByUnderscores_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNDIGITS_DoesNotMatchNonDigitString_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNDIGITS_MatchesDigitsInString_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNDOUBLEQUOTEDSTRINGCAPTURE_CapturesContentBetweenDoubleQuotes_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNDOUBLEQUOTEDSTRINGCAPTURE_CapturesContentBetweenDoubleQuotes_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNDOUBLEQUOTEDSTRINGCAPTURE_DoesNotMatchSingleQuotedString_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNDOUBLEQUOTEDSTRINGCAPTURE_DoesNotMatchUnquotedString_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNEMAILSIMPLE_DoesNotMatchMissingAtSign_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNEMAILSIMPLE_DoesNotMatchMissingDomain_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNEMAILSIMPLE_MatchesEmailWithSubdomain_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNEMAILSIMPLE_MatchesStandardEmail_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNERRORPREFIX_DoesNotMatchWarningPrefix_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNERRORPREFIX_MatchesErrorPrefix_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNEWLINES_DoesNotMatchTextWithoutLeadingNewlines_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNEWLINES_MatchesLeadingNewlines_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNONDIGITS_MatchesLeadingNonDigitCharacters_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNONDIGITS_MatchesLeadingNonDigitCharacters_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNONDIGITS_ReturnsEmptyMatchWhenStringStartsWithDigit_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNONDIGITS_ReturnsEmptyMatchWhenStringStartsWithDigit_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNLEADINGV_DoesNotMatchStringWithoutLeadingV_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNLEADINGV_MatchesLeadingV_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_DoesNotMatchScopedPackage_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_MatchesNameAtVersion_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNNOVAPREFIX_DoesNotMatchUnrelatedString_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNNOVAPREFIX_MatchesNovaPrefix_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterCaretPrefix_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterCaretPrefix_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterGreaterEqualPrefix_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterGreaterEqualPrefix_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterGreaterThanPrefix_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterGreaterThanPrefix_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterLessEqualPrefix_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterLessEqualPrefix_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterLessThanPrefix_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterLessThanPrefix_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterTildePrefix_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterTildePrefix_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_DoesNotMatchAlreadyPinnedVersion_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_DoesNotMatchFileProtocol_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_DoesNotMatchLatest_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_DoesNotMatchWildcard_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNREGISTRYQUERYLINE_DoesNotMatchEmptyLine_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNREGISTRYQUERYLINE_MatchesWindowsRegistryLine_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNREGISTRYQUERYLINE_MatchesWindowsRegistryLine_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNRUSTCVERSIONLINE_DoesNotMatchUnrelatedVersionString_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNRUSTCVERSIONLINE_MatchesRustcVersionOutput_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNRUSTCVERSIONLINE_MatchesRustcVersionOutput_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_DoesNotMatchTwoPartVersion_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverEmbeddedInText_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverEmbeddedInText_MatchGroups,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverEmbeddedInText_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverWithBuildMetadata_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverWithBuildMetadata_MatchGroups,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverWithBuildMetadata_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverWithPrerelease_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverWithPrerelease_MatchGroups,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverWithPrerelease_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSimpleSemver_Matches,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSimpleSemver_MatchGroups,
+  Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSimpleSemver_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNWHITESPACE_DoesNotMatchNonWhitespaceString_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNWHITESPACE_MatchesSpaces_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNWHITESPACE_MatchesTabs_Subject,
+  Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSCOPEDDoesNotMatchUnscopedName_Subject,
+  Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSCOPEDDoesNotMatchUppercaseScope_Subject,
+  Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSCOPEDMatchesScopedPackage_Subject,
+  Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSIMPLEDoesNotMatchScopedName_Subject,
+  Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSIMPLEDoesNotMatchUppercase_Subject,
+  Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSIMPLEMatchesSimpleSlug_Subject,
+  Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSIMPLEMatchesSingleWord_Subject,
+  Tests_Lib_Regex_VersionRangePatterns_LIBREGEXPATTERNRANGEGREATEREQUALMAJORCapturesMajorFromRange_Matches,
+  Tests_Lib_Regex_VersionRangePatterns_LIBREGEXPATTERNRANGEGREATEREQUALMAJORDoesNotMatchCaretRange_Subject,
+  Tests_Lib_Regex_VersionRangePatterns_LIBREGEXPATTERNRANGEMAJORCapturesMajorFromBareNumber_Matches,
+  Tests_Lib_Regex_VersionRangePatterns_LIBREGEXPATTERNRANGEMAJORCapturesMajorFromCaretRange_Matches,
+  Tests_Lib_Regex_VersionRangePatterns_LIBREGEXPATTERNRANGEMAJORCapturesMajorFromTildeRange_Matches,
 } from '../../types/tests/lib/regex.test.d.ts';
 
 /**
@@ -53,37 +137,49 @@ import type {
  */
 describe('character patterns', async () => {
   it('LIB_REGEX_CHARACTER_DOUBLE_QUOTE matches double quote', () => {
-    match('"hello"', LIB_REGEX_CHARACTER_DOUBLE_QUOTE);
+    const subject: Tests_Lib_Regex_CharacterPatterns_LIBREGEXCHARACTERDOUBLEQUOTEMatchesDoubleQuote_Subject = '"hello"';
+
+    match(subject, LIB_REGEX_CHARACTER_DOUBLE_QUOTE);
 
     return;
   });
 
   it('LIB_REGEX_CHARACTER_DOUBLE_QUOTE does not match single quote', () => {
-    doesNotMatch('\'hello\'', LIB_REGEX_CHARACTER_DOUBLE_QUOTE);
+    const subject: Tests_Lib_Regex_CharacterPatterns_LIBREGEXCHARACTERDOUBLEQUOTEDoesNotMatchSingleQuote_Subject = '\'hello\'';
+
+    doesNotMatch(subject, LIB_REGEX_CHARACTER_DOUBLE_QUOTE);
 
     return;
   });
 
   it('LIB_REGEX_CHARACTER_PIPE matches pipe', () => {
-    match('a | b', LIB_REGEX_CHARACTER_PIPE);
+    const subject: Tests_Lib_Regex_CharacterPatterns_LIBREGEXCHARACTERPIPEMatchesPipe_Subject = 'a | b';
+
+    match(subject, LIB_REGEX_CHARACTER_PIPE);
 
     return;
   });
 
   it('LIB_REGEX_CHARACTER_PIPE does not match plain text', () => {
-    doesNotMatch('hello', LIB_REGEX_CHARACTER_PIPE);
+    const subject: Tests_Lib_Regex_CharacterPatterns_LIBREGEXCHARACTERPIPEDoesNotMatchPlainText_Subject = 'hello';
+
+    doesNotMatch(subject, LIB_REGEX_CHARACTER_PIPE);
 
     return;
   });
 
   it('LIB_REGEX_CHARACTER_SINGLE_QUOTE matches single quote', () => {
-    match('it\'s', LIB_REGEX_CHARACTER_SINGLE_QUOTE);
+    const subject: Tests_Lib_Regex_CharacterPatterns_LIBREGEXCHARACTERSINGLEQUOTEMatchesSingleQuote_Subject = 'it\'s';
+
+    match(subject, LIB_REGEX_CHARACTER_SINGLE_QUOTE);
 
     return;
   });
 
   it('LIB_REGEX_CHARACTER_SINGLE_QUOTE does not match double quote', () => {
-    doesNotMatch('"hello"', LIB_REGEX_CHARACTER_SINGLE_QUOTE);
+    const subject: Tests_Lib_Regex_CharacterPatterns_LIBREGEXCHARACTERSINGLEQUOTEDoesNotMatchDoubleQuote_Subject = '"hello"';
+
+    doesNotMatch(subject, LIB_REGEX_CHARACTER_SINGLE_QUOTE);
 
     return;
   });
@@ -98,19 +194,25 @@ describe('character patterns', async () => {
  */
 describe('LIB_REGEX_LINEBREAK_CRLF_OR_LF', async () => {
   it('matches LF', () => {
-    match('line1\nline2', LIB_REGEX_LINEBREAK_CRLF_OR_LF);
+    const subject: Tests_Lib_Regex_LIBREGEXLINEBREAKCRLFORLF_MatchesLF_Subject = 'line1\nline2';
+
+    match(subject, LIB_REGEX_LINEBREAK_CRLF_OR_LF);
 
     return;
   });
 
   it('matches CRLF', () => {
-    match('line1\r\nline2', LIB_REGEX_LINEBREAK_CRLF_OR_LF);
+    const subject: Tests_Lib_Regex_LIBREGEXLINEBREAKCRLFORLF_MatchesCRLF_Subject = 'line1\r\nline2';
+
+    match(subject, LIB_REGEX_LINEBREAK_CRLF_OR_LF);
 
     return;
   });
 
   it('does not match plain text', () => {
-    doesNotMatch('no linebreak', LIB_REGEX_LINEBREAK_CRLF_OR_LF);
+    const subject: Tests_Lib_Regex_LIBREGEXLINEBREAKCRLFORLF_DoesNotMatchPlainText_Subject = 'no linebreak';
+
+    doesNotMatch(subject, LIB_REGEX_LINEBREAK_CRLF_OR_LF);
 
     return;
   });
@@ -125,25 +227,33 @@ describe('LIB_REGEX_LINEBREAK_CRLF_OR_LF', async () => {
  */
 describe('ANSI patterns', async () => {
   it('LIB_REGEX_PATTERN_ANSI matches escape code', () => {
-    match('\x1b[31mred\x1b[0m', LIB_REGEX_PATTERN_ANSI);
+    const subject: Tests_Lib_Regex_ANSIPatterns_LIBREGEXPATTERNANSIMatchesEscapeCode_Subject = '\x1b[31mred\x1b[0m';
+
+    match(subject, LIB_REGEX_PATTERN_ANSI);
 
     return;
   });
 
   it('LIB_REGEX_PATTERN_ANSI does not match plain text', () => {
-    doesNotMatch('plain text', LIB_REGEX_PATTERN_ANSI);
+    const subject: Tests_Lib_Regex_ANSIPatterns_LIBREGEXPATTERNANSIDoesNotMatchPlainText_Subject = 'plain text';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_ANSI);
 
     return;
   });
 
   it('LIB_REGEX_PATTERN_ANSI_START matches escape at start', () => {
-    match('\x1b[31mred', LIB_REGEX_PATTERN_ANSI_START);
+    const subject: Tests_Lib_Regex_ANSIPatterns_LIBREGEXPATTERNANSISTARTMatchesEscapeAtStart_Subject = '\x1b[31mred';
+
+    match(subject, LIB_REGEX_PATTERN_ANSI_START);
 
     return;
   });
 
   it('LIB_REGEX_PATTERN_ANSI_START does not match escape in middle', () => {
-    doesNotMatch('text\x1b[31m', LIB_REGEX_PATTERN_ANSI_START);
+    const subject: Tests_Lib_Regex_ANSIPatterns_LIBREGEXPATTERNANSISTARTDoesNotMatchEscapeInMiddle_Subject = 'text\x1b[31m';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_ANSI_START);
 
     return;
   });
@@ -158,31 +268,41 @@ describe('ANSI patterns', async () => {
  */
 describe('LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE', async () => {
   it('matches a single PascalCase chunk', () => {
-    match('Foo', LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_MatchesASinglePascalCaseChunk_Subject = 'Foo';
+
+    match(subject, LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
 
     return;
   });
 
   it('matches multiple PascalCase chunks joined by underscores', () => {
-    match('Tests_TypeDeclarations_Foo_Bar', LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_MatchesMultiplePascalCaseChunksJoinedByUnderscores_Subject = 'Tests_TypeDeclarations_Foo_Bar';
+
+    match(subject, LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
 
     return;
   });
 
   it('does not match a lowercase start', () => {
-    doesNotMatch('foo_Bar', LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_DoesNotMatchALowercaseStart_Subject = 'foo_Bar';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
 
     return;
   });
 
   it('does not match double underscores', () => {
-    doesNotMatch('Foo__Bar', LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_DoesNotMatchDoubleUnderscores_Subject = 'Foo__Bar';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
 
     return;
   });
 
   it('does not match a trailing underscore', () => {
-    doesNotMatch('Foo_', LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_DoesNotMatchATrailingUnderscore_Subject = 'Foo_';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
 
     return;
   });
@@ -197,13 +317,17 @@ describe('LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE', async () => {
  */
 describe('LIB_REGEX_PATTERN_DIGITS', async () => {
   it('matches digits in string', () => {
-    match('abc123', LIB_REGEX_PATTERN_DIGITS);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNDIGITS_MatchesDigitsInString_Subject = 'abc123';
+
+    match(subject, LIB_REGEX_PATTERN_DIGITS);
 
     return;
   });
 
   it('does not match non-digit string', () => {
-    doesNotMatch('abcdef', LIB_REGEX_PATTERN_DIGITS);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNDIGITS_DoesNotMatchNonDigitString_Subject = 'abcdef';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_DIGITS);
 
     return;
   });
@@ -218,7 +342,8 @@ describe('LIB_REGEX_PATTERN_DIGITS', async () => {
  */
 describe('LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE', async () => {
   it('captures content between double quotes', () => {
-    const matches: Tests_Lib_Regex_PatternDoubleQuotedStringCaptureMatches = '"hello world"'.match(LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNDOUBLEQUOTEDSTRINGCAPTURE_CapturesContentBetweenDoubleQuotes_Subject = '"hello world"';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNDOUBLEQUOTEDSTRINGCAPTURE_CapturesContentBetweenDoubleQuotes_Matches = subject.match(LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -230,13 +355,17 @@ describe('LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE', async () => {
   });
 
   it('does not match unquoted string', () => {
-    doesNotMatch('hello world', LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNDOUBLEQUOTEDSTRINGCAPTURE_DoesNotMatchUnquotedString_Subject = 'hello world';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
 
     return;
   });
 
   it('does not match single-quoted string', () => {
-    doesNotMatch('\'hello world\'', LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNDOUBLEQUOTEDSTRINGCAPTURE_DoesNotMatchSingleQuotedString_Subject = '\'hello world\'';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
 
     return;
   });
@@ -251,25 +380,33 @@ describe('LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE', async () => {
  */
 describe('LIB_REGEX_PATTERN_EMAIL_SIMPLE', async () => {
   it('matches standard email', () => {
-    match('user@example.com', LIB_REGEX_PATTERN_EMAIL_SIMPLE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNEMAILSIMPLE_MatchesStandardEmail_Subject = 'user@example.com';
+
+    match(subject, LIB_REGEX_PATTERN_EMAIL_SIMPLE);
 
     return;
   });
 
   it('matches email with subdomain', () => {
-    match('user@mail.example.com', LIB_REGEX_PATTERN_EMAIL_SIMPLE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNEMAILSIMPLE_MatchesEmailWithSubdomain_Subject = 'user@mail.example.com';
+
+    match(subject, LIB_REGEX_PATTERN_EMAIL_SIMPLE);
 
     return;
   });
 
   it('does not match missing at sign', () => {
-    doesNotMatch('userexample.com', LIB_REGEX_PATTERN_EMAIL_SIMPLE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNEMAILSIMPLE_DoesNotMatchMissingAtSign_Subject = 'userexample.com';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_EMAIL_SIMPLE);
 
     return;
   });
 
   it('does not match missing domain', () => {
-    doesNotMatch('user@', LIB_REGEX_PATTERN_EMAIL_SIMPLE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNEMAILSIMPLE_DoesNotMatchMissingDomain_Subject = 'user@';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_EMAIL_SIMPLE);
 
     return;
   });
@@ -284,13 +421,17 @@ describe('LIB_REGEX_PATTERN_EMAIL_SIMPLE', async () => {
  */
 describe('LIB_REGEX_PATTERN_ERROR_PREFIX', async () => {
   it('matches error prefix', () => {
-    match('error: something went wrong', LIB_REGEX_PATTERN_ERROR_PREFIX);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNERRORPREFIX_MatchesErrorPrefix_Subject = 'error: something went wrong';
+
+    match(subject, LIB_REGEX_PATTERN_ERROR_PREFIX);
 
     return;
   });
 
   it('does not match warning prefix', () => {
-    doesNotMatch('warning: something', LIB_REGEX_PATTERN_ERROR_PREFIX);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNERRORPREFIX_DoesNotMatchWarningPrefix_Subject = 'warning: something';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_ERROR_PREFIX);
 
     return;
   });
@@ -305,13 +446,17 @@ describe('LIB_REGEX_PATTERN_ERROR_PREFIX', async () => {
  */
 describe('LIB_REGEX_PATTERN_LEADING_NEWLINES', async () => {
   it('matches leading newlines', () => {
-    match('\n\ncontent', LIB_REGEX_PATTERN_LEADING_NEWLINES);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNEWLINES_MatchesLeadingNewlines_Subject = '\n\ncontent';
+
+    match(subject, LIB_REGEX_PATTERN_LEADING_NEWLINES);
 
     return;
   });
 
   it('does not match text without leading newlines', () => {
-    doesNotMatch('content\n', LIB_REGEX_PATTERN_LEADING_NEWLINES);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNEWLINES_DoesNotMatchTextWithoutLeadingNewlines_Subject = 'content\n';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_LEADING_NEWLINES);
 
     return;
   });
@@ -326,7 +471,8 @@ describe('LIB_REGEX_PATTERN_LEADING_NEWLINES', async () => {
  */
 describe('LIB_REGEX_PATTERN_LEADING_NON_DIGITS', async () => {
   it('matches leading non-digit characters', () => {
-    const matches: Tests_Lib_Regex_PatternLeadingNonDigitsMatches = 'abc123'.match(LIB_REGEX_PATTERN_LEADING_NON_DIGITS);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNONDIGITS_MatchesLeadingNonDigitCharacters_Subject = 'abc123';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNONDIGITS_MatchesLeadingNonDigitCharacters_Matches = subject.match(LIB_REGEX_PATTERN_LEADING_NON_DIGITS);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -338,7 +484,8 @@ describe('LIB_REGEX_PATTERN_LEADING_NON_DIGITS', async () => {
   });
 
   it('returns empty match when string starts with digit', () => {
-    const matches: Tests_Lib_Regex_PatternLeadingNonDigitsMatches = '123abc'.match(LIB_REGEX_PATTERN_LEADING_NON_DIGITS);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNONDIGITS_ReturnsEmptyMatchWhenStringStartsWithDigit_Subject = '123abc';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNONDIGITS_ReturnsEmptyMatchWhenStringStartsWithDigit_Matches = subject.match(LIB_REGEX_PATTERN_LEADING_NON_DIGITS);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -359,13 +506,17 @@ describe('LIB_REGEX_PATTERN_LEADING_NON_DIGITS', async () => {
  */
 describe('LIB_REGEX_PATTERN_LEADING_V', async () => {
   it('matches leading v', () => {
-    match('v20', LIB_REGEX_PATTERN_LEADING_V);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNLEADINGV_MatchesLeadingV_Subject = 'v20';
+
+    match(subject, LIB_REGEX_PATTERN_LEADING_V);
 
     return;
   });
 
   it('does not match string without leading v', () => {
-    doesNotMatch('20', LIB_REGEX_PATTERN_LEADING_V);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNLEADINGV_DoesNotMatchStringWithoutLeadingV_Subject = '20';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_LEADING_V);
 
     return;
   });
@@ -380,13 +531,17 @@ describe('LIB_REGEX_PATTERN_LEADING_V', async () => {
  */
 describe('LIB_REGEX_PATTERN_NAME_AT_VERSION', async () => {
   it('matches name at version', () => {
-    match('node@20', LIB_REGEX_PATTERN_NAME_AT_VERSION);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_MatchesNameAtVersion_Subject = 'node@20';
+
+    match(subject, LIB_REGEX_PATTERN_NAME_AT_VERSION);
 
     return;
   });
 
   it('does not match scoped package', () => {
-    doesNotMatch('@scope/package', LIB_REGEX_PATTERN_NAME_AT_VERSION);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_DoesNotMatchScopedPackage_Subject = '@scope/package';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_NAME_AT_VERSION);
 
     return;
   });
@@ -401,13 +556,17 @@ describe('LIB_REGEX_PATTERN_NAME_AT_VERSION', async () => {
  */
 describe('LIB_REGEX_PATTERN_NOVA_PREFIX', async () => {
   it('matches nova prefix', () => {
-    match('nova-project', LIB_REGEX_PATTERN_NOVA_PREFIX);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNNOVAPREFIX_MatchesNovaPrefix_Subject = 'nova-project';
+
+    match(subject, LIB_REGEX_PATTERN_NOVA_PREFIX);
 
     return;
   });
 
   it('does not match unrelated string', () => {
-    doesNotMatch('other-project', LIB_REGEX_PATTERN_NOVA_PREFIX);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNNOVAPREFIX_DoesNotMatchUnrelatedString_Subject = 'other-project';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_NOVA_PREFIX);
 
     return;
   });
@@ -422,7 +581,8 @@ describe('LIB_REGEX_PATTERN_NOVA_PREFIX', async () => {
  */
 describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
   it('captures remainder after caret prefix', () => {
-    const matches: Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = '^1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterCaretPrefix_Subject = '^1.2.3';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterCaretPrefix_Matches = subject.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -434,7 +594,8 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
   });
 
   it('captures remainder after tilde prefix', () => {
-    const matches: Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = '~1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterTildePrefix_Subject = '~1.2.3';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterTildePrefix_Matches = subject.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -445,8 +606,9 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
     return;
   });
 
-  it('captures remainder after >= prefix', () => {
-    const matches: Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = '>=1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('captures remainder after greater-equal prefix', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterGreaterEqualPrefix_Subject = '>=1.2.3';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterGreaterEqualPrefix_Matches = subject.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -457,8 +619,9 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
     return;
   });
 
-  it('captures remainder after > prefix', () => {
-    const matches: Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = '>1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('captures remainder after greater-than prefix', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterGreaterThanPrefix_Subject = '>1.2.3';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterGreaterThanPrefix_Matches = subject.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -469,8 +632,9 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
     return;
   });
 
-  it('captures remainder after <= prefix', () => {
-    const matches: Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = '<=2.0.0'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('captures remainder after less-equal prefix', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterLessEqualPrefix_Subject = '<=2.0.0';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterLessEqualPrefix_Matches = subject.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -481,8 +645,9 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
     return;
   });
 
-  it('captures remainder after < prefix', () => {
-    const matches: Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = '<2.0.0'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('captures remainder after less-than prefix', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterLessThanPrefix_Subject = '<2.0.0';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterLessThanPrefix_Matches = subject.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -494,25 +659,33 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
   });
 
   it('does not match already-pinned version', () => {
-    doesNotMatch('1.2.3', LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_DoesNotMatchAlreadyPinnedVersion_Subject = '1.2.3';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     return;
   });
 
   it('does not match file protocol', () => {
-    doesNotMatch('file:../local', LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_DoesNotMatchFileProtocol_Subject = 'file:../local';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     return;
   });
 
   it('does not match wildcard', () => {
-    doesNotMatch('*', LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_DoesNotMatchWildcard_Subject = '*';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     return;
   });
 
   it('does not match latest', () => {
-    doesNotMatch('latest', LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_DoesNotMatchLatest_Subject = 'latest';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     return;
   });
@@ -527,7 +700,7 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
  */
 describe('version range patterns', async () => {
   it('LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR captures major from >= range', () => {
-    const matches: Tests_Lib_Regex_VersionRangePatterns_Matches = '>=18'.match(LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR);
+    const matches: Tests_Lib_Regex_VersionRangePatterns_LIBREGEXPATTERNRANGEGREATEREQUALMAJORCapturesMajorFromRange_Matches = '>=18'.match(LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -539,13 +712,15 @@ describe('version range patterns', async () => {
   });
 
   it('LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR does not match caret range', () => {
-    doesNotMatch('^18', LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR);
+    const subject: Tests_Lib_Regex_VersionRangePatterns_LIBREGEXPATTERNRANGEGREATEREQUALMAJORDoesNotMatchCaretRange_Subject = '^18';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR);
 
     return;
   });
 
   it('LIB_REGEX_PATTERN_RANGE_MAJOR captures major from caret range', () => {
-    const matches: Tests_Lib_Regex_VersionRangePatterns_Matches = '^20'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
+    const matches: Tests_Lib_Regex_VersionRangePatterns_LIBREGEXPATTERNRANGEMAJORCapturesMajorFromCaretRange_Matches = '^20'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -557,7 +732,7 @@ describe('version range patterns', async () => {
   });
 
   it('LIB_REGEX_PATTERN_RANGE_MAJOR captures major from tilde range', () => {
-    const matches: Tests_Lib_Regex_VersionRangePatterns_Matches = '~18'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
+    const matches: Tests_Lib_Regex_VersionRangePatterns_LIBREGEXPATTERNRANGEMAJORCapturesMajorFromTildeRange_Matches = '~18'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -569,7 +744,7 @@ describe('version range patterns', async () => {
   });
 
   it('LIB_REGEX_PATTERN_RANGE_MAJOR captures major from bare number', () => {
-    const matches: Tests_Lib_Regex_VersionRangePatterns_Matches = '22'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
+    const matches: Tests_Lib_Regex_VersionRangePatterns_LIBREGEXPATTERNRANGEMAJORCapturesMajorFromBareNumber_Matches = '22'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -590,7 +765,8 @@ describe('version range patterns', async () => {
  */
 describe('LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE', async () => {
   it('matches Windows registry line', () => {
-    const matches: Tests_Lib_Regex_PatternRegistryQueryLineMatches = '    ProductName    REG_SZ    Windows 10 Pro'.match(LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNREGISTRYQUERYLINE_MatchesWindowsRegistryLine_Subject = '    ProductName    REG_SZ    Windows 10 Pro';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNREGISTRYQUERYLINE_MatchesWindowsRegistryLine_Matches = subject.match(LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -604,7 +780,9 @@ describe('LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE', async () => {
   });
 
   it('does not match empty line', () => {
-    doesNotMatch('', LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNREGISTRYQUERYLINE_DoesNotMatchEmptyLine_Subject = '';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE);
 
     return;
   });
@@ -619,7 +797,8 @@ describe('LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE', async () => {
  */
 describe('LIB_REGEX_PATTERN_RUSTC_VERSION_LINE', async () => {
   it('matches rustc version output', () => {
-    const matches: Tests_Lib_Regex_PatternRustcVersionLineMatches = 'rustc 1.75.0 (82e1608df 2023-12-21)'.match(LIB_REGEX_PATTERN_RUSTC_VERSION_LINE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNRUSTCVERSIONLINE_MatchesRustcVersionOutput_Subject = 'rustc 1.75.0 (82e1608df 2023-12-21)';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNRUSTCVERSIONLINE_MatchesRustcVersionOutput_Matches = subject.match(LIB_REGEX_PATTERN_RUSTC_VERSION_LINE);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -633,7 +812,9 @@ describe('LIB_REGEX_PATTERN_RUSTC_VERSION_LINE', async () => {
   });
 
   it('does not match unrelated version string', () => {
-    doesNotMatch('node v20.10.0', LIB_REGEX_PATTERN_RUSTC_VERSION_LINE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNRUSTCVERSIONLINE_DoesNotMatchUnrelatedVersionString_Subject = 'node v20.10.0';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_RUSTC_VERSION_LINE);
 
     return;
   });
@@ -648,13 +829,14 @@ describe('LIB_REGEX_PATTERN_RUSTC_VERSION_LINE', async () => {
  */
 describe('LIB_REGEX_PATTERN_SEMVER', async () => {
   it('matches simple semver', () => {
-    const matches: Tests_Lib_Regex_PatternSemverMatches = '1.2.3'.match(LIB_REGEX_PATTERN_SEMVER);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSimpleSemver_Subject = '1.2.3';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSimpleSemver_Matches = subject.match(LIB_REGEX_PATTERN_SEMVER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
-    const matchGroups: Tests_Lib_Regex_PatternSemverMatchGroups = matches.groups;
+    const matchGroups: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSimpleSemver_MatchGroups = matches.groups;
 
     if (matchGroups === undefined) {
       fail('Expected match groups');
@@ -666,13 +848,14 @@ describe('LIB_REGEX_PATTERN_SEMVER', async () => {
   });
 
   it('matches semver with prerelease', () => {
-    const matches: Tests_Lib_Regex_PatternSemverMatches = '1.0.0-beta.1'.match(LIB_REGEX_PATTERN_SEMVER);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverWithPrerelease_Subject = '1.0.0-beta.1';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverWithPrerelease_Matches = subject.match(LIB_REGEX_PATTERN_SEMVER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
-    const matchGroups: Tests_Lib_Regex_PatternSemverMatchGroups = matches.groups;
+    const matchGroups: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverWithPrerelease_MatchGroups = matches.groups;
 
     if (matchGroups === undefined) {
       fail('Expected match groups');
@@ -684,13 +867,14 @@ describe('LIB_REGEX_PATTERN_SEMVER', async () => {
   });
 
   it('matches semver with build metadata', () => {
-    const matches: Tests_Lib_Regex_PatternSemverMatches = '1.0.0+build.123'.match(LIB_REGEX_PATTERN_SEMVER);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverWithBuildMetadata_Subject = '1.0.0+build.123';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverWithBuildMetadata_Matches = subject.match(LIB_REGEX_PATTERN_SEMVER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
-    const matchGroups: Tests_Lib_Regex_PatternSemverMatchGroups = matches.groups;
+    const matchGroups: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverWithBuildMetadata_MatchGroups = matches.groups;
 
     if (matchGroups === undefined) {
       fail('Expected match groups');
@@ -702,13 +886,14 @@ describe('LIB_REGEX_PATTERN_SEMVER', async () => {
   });
 
   it('matches semver embedded in text', () => {
-    const matches: Tests_Lib_Regex_PatternSemverMatches = 'version 2.5.10 released'.match(LIB_REGEX_PATTERN_SEMVER);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverEmbeddedInText_Subject = 'version 2.5.10 released';
+    const matches: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverEmbeddedInText_Matches = subject.match(LIB_REGEX_PATTERN_SEMVER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
-    const matchGroups: Tests_Lib_Regex_PatternSemverMatchGroups = matches.groups;
+    const matchGroups: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSemverEmbeddedInText_MatchGroups = matches.groups;
 
     if (matchGroups === undefined) {
       fail('Expected match groups');
@@ -720,7 +905,9 @@ describe('LIB_REGEX_PATTERN_SEMVER', async () => {
   });
 
   it('does not match two-part version', () => {
-    doesNotMatch('1.2', LIB_REGEX_PATTERN_SEMVER);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_DoesNotMatchTwoPartVersion_Subject = '1.2';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_SEMVER);
 
     return;
   });
@@ -735,43 +922,57 @@ describe('LIB_REGEX_PATTERN_SEMVER', async () => {
  */
 describe('slug patterns', async () => {
   it('LIB_REGEX_PATTERN_SLUG_SIMPLE matches simple slug', () => {
-    match('my-package', LIB_REGEX_PATTERN_SLUG_SIMPLE);
+    const subject: Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSIMPLEMatchesSimpleSlug_Subject = 'my-package';
+
+    match(subject, LIB_REGEX_PATTERN_SLUG_SIMPLE);
 
     return;
   });
 
   it('LIB_REGEX_PATTERN_SLUG_SIMPLE matches single word', () => {
-    match('nova', LIB_REGEX_PATTERN_SLUG_SIMPLE);
+    const subject: Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSIMPLEMatchesSingleWord_Subject = 'nova';
+
+    match(subject, LIB_REGEX_PATTERN_SLUG_SIMPLE);
 
     return;
   });
 
   it('LIB_REGEX_PATTERN_SLUG_SIMPLE does not match uppercase', () => {
-    doesNotMatch('MyPackage', LIB_REGEX_PATTERN_SLUG_SIMPLE);
+    const subject: Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSIMPLEDoesNotMatchUppercase_Subject = 'MyPackage';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_SLUG_SIMPLE);
 
     return;
   });
 
   it('LIB_REGEX_PATTERN_SLUG_SIMPLE does not match scoped name', () => {
-    doesNotMatch('@scope/name', LIB_REGEX_PATTERN_SLUG_SIMPLE);
+    const subject: Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSIMPLEDoesNotMatchScopedName_Subject = '@scope/name';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_SLUG_SIMPLE);
 
     return;
   });
 
   it('LIB_REGEX_PATTERN_SLUG_SCOPED matches scoped package', () => {
-    match('@cbnventures/nova', LIB_REGEX_PATTERN_SLUG_SCOPED);
+    const subject: Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSCOPEDMatchesScopedPackage_Subject = '@cbnventures/nova';
+
+    match(subject, LIB_REGEX_PATTERN_SLUG_SCOPED);
 
     return;
   });
 
   it('LIB_REGEX_PATTERN_SLUG_SCOPED does not match unscoped name', () => {
-    doesNotMatch('nova', LIB_REGEX_PATTERN_SLUG_SCOPED);
+    const subject: Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSCOPEDDoesNotMatchUnscopedName_Subject = 'nova';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_SLUG_SCOPED);
 
     return;
   });
 
   it('LIB_REGEX_PATTERN_SLUG_SCOPED does not match uppercase scope', () => {
-    doesNotMatch('@Scope/name', LIB_REGEX_PATTERN_SLUG_SCOPED);
+    const subject: Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSCOPEDDoesNotMatchUppercaseScope_Subject = '@Scope/name';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_SLUG_SCOPED);
 
     return;
   });
@@ -786,19 +987,25 @@ describe('slug patterns', async () => {
  */
 describe('LIB_REGEX_PATTERN_WHITESPACE', async () => {
   it('matches spaces', () => {
-    match('hello world', LIB_REGEX_PATTERN_WHITESPACE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNWHITESPACE_MatchesSpaces_Subject = 'hello world';
+
+    match(subject, LIB_REGEX_PATTERN_WHITESPACE);
 
     return;
   });
 
   it('matches tabs', () => {
-    match('hello\tworld', LIB_REGEX_PATTERN_WHITESPACE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNWHITESPACE_MatchesTabs_Subject = 'hello\tworld';
+
+    match(subject, LIB_REGEX_PATTERN_WHITESPACE);
 
     return;
   });
 
   it('does not match non-whitespace string', () => {
-    doesNotMatch('helloworld', LIB_REGEX_PATTERN_WHITESPACE);
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNWHITESPACE_DoesNotMatchNonWhitespaceString_Subject = 'helloworld';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_WHITESPACE);
 
     return;
   });

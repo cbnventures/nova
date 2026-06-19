@@ -1,5 +1,5 @@
 /**
- * Tests - CLI - Generate - GitHub - Workflows - Run.
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run.
  *
  * @since 0.15.0
  */
@@ -11,66 +11,577 @@ export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_Te
 
 export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SandboxRoot = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ProjectDirectory = string;
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Build Entry Setup Lines Includes Target Level Secrets And Variables For Publish Template.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_BuildEntrySetupLinesIncludesTargetLevelSecretsAndVariablesForPublishTemplate_Entry = import('../../../../cli/generate/github/workflows.d.ts').Cli_Generate_Github_Workflows_Runner_Run_WorkflowEntry;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PackageJson = Record<string, unknown>;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_BuildEntrySetupLinesIncludesTargetLevelSecretsAndVariablesForPublishTemplate_PublishMetadata = import('../../../../cli/generate/github/workflows.d.ts').Cli_Generate_Github_Workflows_Runner_Run_MetadataEntry;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PackageJsonPath = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_BuildEntrySetupLinesIncludesTargetLevelSecretsAndVariablesForPublishTemplate_SetupLines = string[];
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GitignorePath = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_BuildEntrySetupLinesIncludesTargetLevelSecretsAndVariablesForPublishTemplate_StripAnsiPattern = RegExp;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_NovaConfig = Record<string, unknown>;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_BuildEntrySetupLinesIncludesTargetLevelSecretsAndVariablesForPublishTemplate_Joined = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_NovaConfigPath = string;
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Cleans Up Orphan Nova Yml Files.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CleansUpOrphanNovaYmlFiles_ProjectDirectory = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_Exists = boolean;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CleansUpOrphanNovaYmlFiles_PackageJson = Record<string, unknown>;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_WorkflowsDirectory = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CleansUpOrphanNovaYmlFiles_PackageJsonPath = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_WorkflowPath = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CleansUpOrphanNovaYmlFiles_GitignorePath = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_Content = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CleansUpOrphanNovaYmlFiles_WorkflowsDirectory = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_Entries = string[];
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CleansUpOrphanNovaYmlFiles_NovaConfig = Record<string, unknown>;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_OrphanFiles = string[];
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CleansUpOrphanNovaYmlFiles_NovaConfigPath = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_BackupFiles = string[];
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CleansUpOrphanNovaYmlFiles_Entries = string[];
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ContentLines = string[];
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CleansUpOrphanNovaYmlFiles_OrphanFiles = string[];
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CoreJobIndex = number;
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Does Not Clean Up Nova Backup Files.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_DoesNotCleanUpNovaBackupFiles_ProjectDirectory = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CoreNeedsLine = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_DoesNotCleanUpNovaBackupFiles_PackageJson = Record<string, unknown>;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PresetJobIndex = number;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_DoesNotCleanUpNovaBackupFiles_PackageJsonPath = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PresetNeedsLine = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_DoesNotCleanUpNovaBackupFiles_GitignorePath = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PathOccurrences = number;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_DoesNotCleanUpNovaBackupFiles_WorkflowsDirectory = string;
 
-export type Tests_Cli_Generate_Github_Workflows_BuildEntrySetupLinesEntry = import('../../../../cli/generate/github/workflows.d.ts').Cli_Generate_Github_Workflows_Runner_Run_WorkflowEntry;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_DoesNotCleanUpNovaBackupFiles_NovaConfig = Record<string, unknown>;
 
-export type Tests_Cli_Generate_Github_Workflows_BuildEntrySetupLinesPublishMetadata = import('../../../../cli/generate/github/workflows.d.ts').Cli_Generate_Github_Workflows_Runner_Run_MetadataEntry;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_DoesNotCleanUpNovaBackupFiles_NovaConfigPath = string;
 
-export type Tests_Cli_Generate_Github_Workflows_BuildEntrySetupLinesSetupLines = string[];
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_DoesNotCleanUpNovaBackupFiles_Entries = string[];
 
-export type Tests_Cli_Generate_Github_Workflows_BuildEntrySetupLinesStripAnsiPattern = RegExp;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_DoesNotCleanUpNovaBackupFiles_BackupFiles = string[];
 
-export type Tests_Cli_Generate_Github_Workflows_BuildEntrySetupLinesJoined = string;
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Generates Download Artifact Step With Workspace Build Path For Docusaurus Deploy Targets.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesDownloadArtifactStepWithWorkspaceBuildPathForDocusaurusDeployTargets_ProjectDirectory = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesDownloadArtifactStepWithWorkspaceBuildPathForDocusaurusDeployTargets_RootPackageJson = Record<string, unknown>;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesDownloadArtifactStepWithWorkspaceBuildPathForDocusaurusDeployTargets_DocsPackageJson = Record<string, unknown>;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesDownloadArtifactStepWithWorkspaceBuildPathForDocusaurusDeployTargets_NovaConfig = Record<string, unknown>;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined][];
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesDownloadArtifactStepWithWorkspaceBuildPathForDocusaurusDeployTargets_WorkflowPath = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_TargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesDownloadArtifactStepWithWorkspaceBuildPathForDocusaurusDeployTargets_Content = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_HeaderArg = import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesDownloadArtifactStepWithWorkspaceBuildPathForDocusaurusDeployTargets_PathOccurrences = number;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PlaceholderPattern = RegExp;
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Generates Per Target Upload Steps And Per Target Download Names For AMulti Target Publish Workflow.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesPerTargetUploadStepsAndPerTargetDownloadNamesForAMultiTargetPublishWorkflow_ProjectDirectory = string;
 
-export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_OnMatches = RegExpMatchArray | null;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesPerTargetUploadStepsAndPerTargetDownloadNamesForAMultiTargetPublishWorkflow_RootPackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesPerTargetUploadStepsAndPerTargetDownloadNamesForAMultiTargetPublishWorkflow_LibPackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesPerTargetUploadStepsAndPerTargetDownloadNamesForAMultiTargetPublishWorkflow_DocsPackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesPerTargetUploadStepsAndPerTargetDownloadNamesForAMultiTargetPublishWorkflow_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesPerTargetUploadStepsAndPerTargetDownloadNamesForAMultiTargetPublishWorkflow_WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesPerTargetUploadStepsAndPerTargetDownloadNamesForAMultiTargetPublishWorkflow_Content = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Generates Unified Publish Workflow With Npm Github Packages Targets And Build Artifact.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesUnifiedPublishWorkflowWithNpmGithubPackagesTargetsAndBuildArtifact_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesUnifiedPublishWorkflowWithNpmGithubPackagesTargetsAndBuildArtifact_RootPackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesUnifiedPublishWorkflowWithNpmGithubPackagesTargetsAndBuildArtifact_PkgJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesUnifiedPublishWorkflowWithNpmGithubPackagesTargetsAndBuildArtifact_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesUnifiedPublishWorkflowWithNpmGithubPackagesTargetsAndBuildArtifact_WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesUnifiedPublishWorkflowWithNpmGithubPackagesTargetsAndBuildArtifact_Exists = boolean;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesUnifiedPublishWorkflowWithNpmGithubPackagesTargetsAndBuildArtifact_Content = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Generates Workflow File For Github Action Target With Non Default Overrides.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileForGithubActionTargetWithNonDefaultOverrides_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileForGithubActionTargetWithNonDefaultOverrides_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileForGithubActionTargetWithNonDefaultOverrides_WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileForGithubActionTargetWithNonDefaultOverrides_Content = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Generates Workflow File For Github Action Target With User Supplied Literals.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileForGithubActionTargetWithUserSuppliedLiterals_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileForGithubActionTargetWithUserSuppliedLiterals_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileForGithubActionTargetWithUserSuppliedLiterals_WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileForGithubActionTargetWithUserSuppliedLiterals_Content = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileForGithubActionTargetWithUserSuppliedLiterals_PlaceholderPattern = RegExp;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Generates Workflow File With Literal Substitution.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithLiteralSubstitution_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithLiteralSubstitution_PackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithLiteralSubstitution_PackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithLiteralSubstitution_MyPackagePackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithLiteralSubstitution_MyPackagePackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithLiteralSubstitution_GitignorePath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithLiteralSubstitution_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithLiteralSubstitution_NovaConfigPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithLiteralSubstitution_WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithLiteralSubstitution_Content = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Generates Workflow File With Secret Remapping.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithSecretRemapping_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithSecretRemapping_PackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithSecretRemapping_PackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithSecretRemapping_CorePackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithSecretRemapping_CorePackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithSecretRemapping_GitignorePath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithSecretRemapping_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithSecretRemapping_NovaConfigPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithSecretRemapping_WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowFileWithSecretRemapping_Content = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Generates Workflows For Two Github Action Targets With Distinct RELEASEBRANCHNAMEValues.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowsForTwoGithubActionTargetsWithDistinctRELEASEBRANCHNAMEValues_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowsForTwoGithubActionTargetsWithDistinctRELEASEBRANCHNAMEValues_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowsForTwoGithubActionTargetsWithDistinctRELEASEBRANCHNAMEValues_AlphaWorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowsForTwoGithubActionTargetsWithDistinctRELEASEBRANCHNAMEValues_BetaWorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowsForTwoGithubActionTargetsWithDistinctRELEASEBRANCHNAMEValues_AlphaContent = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowsForTwoGithubActionTargetsWithDistinctRELEASEBRANCHNAMEValues_BetaContent = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Generates Workflow With Github Action And Github Pages Docusaurus Coexisting.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithGithubActionAndGithubPagesDocusaurusCoexisting_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithGithubActionAndGithubPagesDocusaurusCoexisting_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithGithubActionAndGithubPagesDocusaurusCoexisting_WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithGithubActionAndGithubPagesDocusaurusCoexisting_Content = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithGithubActionAndGithubPagesDocusaurusCoexisting_OnMatches = RegExpMatchArray | null;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Generates Workflow With Multiple Triggers.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithMultipleTriggers_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithMultipleTriggers_PackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithMultipleTriggers_PackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithMultipleTriggers_DocsPackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithMultipleTriggers_DocsPackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithMultipleTriggers_GitignorePath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithMultipleTriggers_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithMultipleTriggers_NovaConfigPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithMultipleTriggers_WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithMultipleTriggers_Content = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Generates Workflow With Workflow Run Success Trigger And Depends On.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_PackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_PackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_CorePackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_CorePackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_UtilsPackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_UtilsPackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_GitignorePath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_NovaConfigPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_PrimaryPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_PrimaryContent = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_SecondaryPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GeneratesWorkflowWithWorkflowRunSuccessTriggerAndDependsOn_SecondaryContent = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Passes The Correct Header Metadata To Save Generated File For Each Generated Workflow.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForEachGeneratedWorkflow_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForEachGeneratedWorkflow_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForEachGeneratedWorkflow_SaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForEachGeneratedWorkflow_Calls = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined][];
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForEachGeneratedWorkflow_TargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFileForEachGeneratedWorkflow_HeaderArg = import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Rejects Depends On Referencing Non Existent Workflow.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDependsOnReferencingNonExistentWorkflow_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDependsOnReferencingNonExistentWorkflow_PackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDependsOnReferencingNonExistentWorkflow_PackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDependsOnReferencingNonExistentWorkflow_GitignorePath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDependsOnReferencingNonExistentWorkflow_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDependsOnReferencingNonExistentWorkflow_NovaConfigPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDependsOnReferencingNonExistentWorkflow_Exists = boolean;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDependsOnReferencingNonExistentWorkflow_WorkflowPath = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Rejects Duplicate Template Suffix Combinations.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDuplicateTemplateSuffixCombinations_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDuplicateTemplateSuffixCombinations_PackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDuplicateTemplateSuffixCombinations_PackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDuplicateTemplateSuffixCombinations_GitignorePath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDuplicateTemplateSuffixCombinations_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDuplicateTemplateSuffixCombinations_NovaConfigPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDuplicateTemplateSuffixCombinations_Exists = boolean;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsDuplicateTemplateSuffixCombinations_WorkflowsDirectory = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Rejects Workflows When Two Aws Amplify Nextjs Targets Across Separate Workflows Share The Same AMPLIFYAPPIDAnd AMPLIFYBRANCHNAME.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoAwsAmplifyNextjsTargetsAcrossSeparateWorkflowsShareTheSameAMPLIFYAPPIDAndAMPLIFYBRANCHNAME_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoAwsAmplifyNextjsTargetsAcrossSeparateWorkflowsShareTheSameAMPLIFYAPPIDAndAMPLIFYBRANCHNAME_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoAwsAmplifyNextjsTargetsAcrossSeparateWorkflowsShareTheSameAMPLIFYAPPIDAndAMPLIFYBRANCHNAME_AlphaWorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoAwsAmplifyNextjsTargetsAcrossSeparateWorkflowsShareTheSameAMPLIFYAPPIDAndAMPLIFYBRANCHNAME_BetaWorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoAwsAmplifyNextjsTargetsAcrossSeparateWorkflowsShareTheSameAMPLIFYAPPIDAndAMPLIFYBRANCHNAME_AlphaExists = boolean;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoAwsAmplifyNextjsTargetsAcrossSeparateWorkflowsShareTheSameAMPLIFYAPPIDAndAMPLIFYBRANCHNAME_BetaExists = boolean;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Rejects Workflows When Two Cloudflare Pages Docusaurus Targets Across Separate Workflows Share The Same CLOUDFLAREPROJECTNAME.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoCloudflarePagesDocusaurusTargetsAcrossSeparateWorkflowsShareTheSameCLOUDFLAREPROJECTNAME_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoCloudflarePagesDocusaurusTargetsAcrossSeparateWorkflowsShareTheSameCLOUDFLAREPROJECTNAME_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoCloudflarePagesDocusaurusTargetsAcrossSeparateWorkflowsShareTheSameCLOUDFLAREPROJECTNAME_AlphaWorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoCloudflarePagesDocusaurusTargetsAcrossSeparateWorkflowsShareTheSameCLOUDFLAREPROJECTNAME_BetaWorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoCloudflarePagesDocusaurusTargetsAcrossSeparateWorkflowsShareTheSameCLOUDFLAREPROJECTNAME_AlphaExists = boolean;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoCloudflarePagesDocusaurusTargetsAcrossSeparateWorkflowsShareTheSameCLOUDFLAREPROJECTNAME_BetaExists = boolean;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Rejects Workflows When Two Github Action Targets Across Separate Workflows Collide On The Same RELEASEBRANCHNAME.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoGithubActionTargetsAcrossSeparateWorkflowsCollideOnTheSameRELEASEBRANCHNAME_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoGithubActionTargetsAcrossSeparateWorkflowsCollideOnTheSameRELEASEBRANCHNAME_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoGithubActionTargetsAcrossSeparateWorkflowsCollideOnTheSameRELEASEBRANCHNAME_AlphaWorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoGithubActionTargetsAcrossSeparateWorkflowsCollideOnTheSameRELEASEBRANCHNAME_BetaWorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoGithubActionTargetsAcrossSeparateWorkflowsCollideOnTheSameRELEASEBRANCHNAME_AlphaExists = boolean;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoGithubActionTargetsAcrossSeparateWorkflowsCollideOnTheSameRELEASEBRANCHNAME_BetaExists = boolean;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Rejects Workflows When Two Github Pages Docusaurus Targets Are Declared Across Separate Workflows Singleton.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoGithubPagesDocusaurusTargetsAreDeclaredAcrossSeparateWorkflowsSingleton_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoGithubPagesDocusaurusTargetsAreDeclaredAcrossSeparateWorkflowsSingleton_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoGithubPagesDocusaurusTargetsAreDeclaredAcrossSeparateWorkflowsSingleton_Docs1WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoGithubPagesDocusaurusTargetsAreDeclaredAcrossSeparateWorkflowsSingleton_Docs2WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoGithubPagesDocusaurusTargetsAreDeclaredAcrossSeparateWorkflowsSingleton_Docs1Exists = boolean;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoGithubPagesDocusaurusTargetsAreDeclaredAcrossSeparateWorkflowsSingleton_Docs2Exists = boolean;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Rejects Workflows When Two Vercel Nextjs Targets Across Separate Workflows Share The Same VERCELORGIDAnd VERCELPROJECTID.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoVercelNextjsTargetsAcrossSeparateWorkflowsShareTheSameVERCELORGIDAndVERCELPROJECTID_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoVercelNextjsTargetsAcrossSeparateWorkflowsShareTheSameVERCELORGIDAndVERCELPROJECTID_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoVercelNextjsTargetsAcrossSeparateWorkflowsShareTheSameVERCELORGIDAndVERCELPROJECTID_AlphaWorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoVercelNextjsTargetsAcrossSeparateWorkflowsShareTheSameVERCELORGIDAndVERCELPROJECTID_BetaWorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoVercelNextjsTargetsAcrossSeparateWorkflowsShareTheSameVERCELORGIDAndVERCELPROJECTID_AlphaExists = boolean;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowsWhenTwoVercelNextjsTargetsAcrossSeparateWorkflowsShareTheSameVERCELORGIDAndVERCELPROJECTID_BetaExists = boolean;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Rejects Workflow When Two Github Action Targets Collide On The Same RELEASEBRANCHNAME.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowWhenTwoGithubActionTargetsCollideOnTheSameRELEASEBRANCHNAME_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowWhenTwoGithubActionTargetsCollideOnTheSameRELEASEBRANCHNAME_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowWhenTwoGithubActionTargetsCollideOnTheSameRELEASEBRANCHNAME_WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_RejectsWorkflowWhenTwoGithubActionTargetsCollideOnTheSameRELEASEBRANCHNAME_WorkflowExists = boolean;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Reproduces Nova Publish Workflow From Config Entry.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ReproducesNovaPublishWorkflowFromConfigEntry_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ReproducesNovaPublishWorkflowFromConfigEntry_RootPackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ReproducesNovaPublishWorkflowFromConfigEntry_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ReproducesNovaPublishWorkflowFromConfigEntry_Content = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Returns Early When Workflows Config Is Missing.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ReturnsEarlyWhenWorkflowsConfigIsMissing_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ReturnsEarlyWhenWorkflowsConfigIsMissing_PackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ReturnsEarlyWhenWorkflowsConfigIsMissing_PackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ReturnsEarlyWhenWorkflowsConfigIsMissing_GitignorePath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ReturnsEarlyWhenWorkflowsConfigIsMissing_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ReturnsEarlyWhenWorkflowsConfigIsMissing_NovaConfigPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ReturnsEarlyWhenWorkflowsConfigIsMissing_Exists = boolean;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ReturnsEarlyWhenWorkflowsConfigIsMissing_WorkflowsDirectory = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Serializes Dependent Publish Targets Via Needs.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SerializesDependentPublishTargetsViaNeeds_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SerializesDependentPublishTargetsViaNeeds_RootPackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SerializesDependentPublishTargetsViaNeeds_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SerializesDependentPublishTargetsViaNeeds_Content = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SerializesDependentPublishTargetsViaNeeds_Lines = string[];
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SerializesDependentPublishTargetsViaNeeds_CoreJobIndex = number;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SerializesDependentPublishTargetsViaNeeds_CoreNeedsLine = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SerializesDependentPublishTargetsViaNeeds_PresetJobIndex = number;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SerializesDependentPublishTargetsViaNeeds_PresetNeedsLine = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Sets Exit Code When Not At Project Root.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SetsExitCodeWhenNotAtProjectRoot_ProjectDirectory = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Skips Workflow When ATarget Level Literal Is Missing From Settings.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWhenATargetLevelLiteralIsMissingFromSettings_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWhenATargetLevelLiteralIsMissingFromSettings_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWhenATargetLevelLiteralIsMissingFromSettings_WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWhenATargetLevelLiteralIsMissingFromSettings_WorkflowExists = boolean;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Skips Workflow When Two Github Pages Docusaurus Targets Coexist Singleton.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWhenTwoGithubPagesDocusaurusTargetsCoexistSingleton_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWhenTwoGithubPagesDocusaurusTargetsCoexistSingleton_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWhenTwoGithubPagesDocusaurusTargetsCoexistSingleton_WorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWhenTwoGithubPagesDocusaurusTargetsCoexistSingleton_WorkflowExists = boolean;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Skips Workflow With Missing Required Literal Settings.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWithMissingRequiredLiteralSettings_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWithMissingRequiredLiteralSettings_PackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWithMissingRequiredLiteralSettings_PackageJsonPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWithMissingRequiredLiteralSettings_GitignorePath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWithMissingRequiredLiteralSettings_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWithMissingRequiredLiteralSettings_NovaConfigPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWithMissingRequiredLiteralSettings_Exists = boolean;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SkipsWorkflowWithMissingRequiredLiteralSettings_WorkflowPath = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows - Cli Generate Github Workflows Run - Supports Multi Action Repos Via Prefixed Tags Primary V1 Secondary V1.
+ *
+ * @since 0.15.0
+ */
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SupportsMultiActionReposViaPrefixedTagsPrimaryV1SecondaryV1_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SupportsMultiActionReposViaPrefixedTagsPrimaryV1SecondaryV1_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SupportsMultiActionReposViaPrefixedTagsPrimaryV1SecondaryV1_PrimaryWorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SupportsMultiActionReposViaPrefixedTagsPrimaryV1SecondaryV1_SecondaryWorkflowPath = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SupportsMultiActionReposViaPrefixedTagsPrimaryV1SecondaryV1_PrimaryExists = boolean;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SupportsMultiActionReposViaPrefixedTagsPrimaryV1SecondaryV1_SecondaryExists = boolean;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SupportsMultiActionReposViaPrefixedTagsPrimaryV1SecondaryV1_PrimaryContent = string;
+
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SupportsMultiActionReposViaPrefixedTagsPrimaryV1SecondaryV1_SecondaryContent = string;

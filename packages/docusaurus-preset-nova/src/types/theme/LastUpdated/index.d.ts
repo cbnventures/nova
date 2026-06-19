@@ -6,6 +6,8 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
+export type Theme_LastUpdated_Index_LastUpdated_AtDate = string;
+
 export type Theme_LastUpdated_Index_LastUpdated_Props_LastUpdatedAt = number | undefined;
 
 export type Theme_LastUpdated_Index_LastUpdated_Props_LastUpdatedBy = string | undefined;
@@ -26,6 +28,10 @@ export type Theme_LastUpdated_Index_LastUpdated_Context = DocusaurusContext;
 
 export type Theme_LastUpdated_Index_LastUpdated_CurrentLocale = string;
 
+export type Theme_LastUpdated_Index_LastUpdated_Label = string;
+
+export type Theme_LastUpdated_Index_LastUpdated_ByUser = string;
+
 /**
  * Theme - Last Updated - Last Updated Date.
  *
@@ -38,9 +44,3 @@ export type Theme_LastUpdated_Index_LastUpdatedDate_Locale = string;
 export type Theme_LastUpdated_Index_LastUpdatedDate_Date = Date;
 
 export type Theme_LastUpdated_Index_LastUpdatedDate_FormattedDate = string;
-
-export type Theme_LastUpdated_Index_LastUpdated_AtDate = string;
-
-export type Theme_LastUpdated_Index_LastUpdated_Label = string;
-
-export type Theme_LastUpdated_Index_LastUpdated_ByUser = string;

@@ -15,6 +15,7 @@ import type {
   Lib_Search_UseSearchHighlight_Returns,
   Lib_Search_UseSearchHighlight_SearchParams,
   Lib_Search_UseSearchHighlight_TargetElement,
+  Lib_Search_UseSearchHighlight_UseSearchHighlight_TypedMark,
 } from '../../types/lib/search/use-search-highlight.d.ts';
 
 /**
@@ -81,7 +82,7 @@ export function useSearchHighlight(options: Lib_Search_UseSearchHighlight_Option
       const currentMark: Lib_Search_UseSearchHighlight_CurrentMark = markRef.current;
 
       if (currentMark !== undefined) {
-        const typedMark: Lib_Search_UseSearchHighlight_Instance = currentMark as Lib_Search_UseSearchHighlight_Instance;
+        const typedMark: Lib_Search_UseSearchHighlight_UseSearchHighlight_TypedMark = currentMark as Lib_Search_UseSearchHighlight_UseSearchHighlight_TypedMark;
 
         typedMark.unmark();
         markRef.current = undefined;

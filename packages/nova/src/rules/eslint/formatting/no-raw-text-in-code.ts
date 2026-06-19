@@ -7,8 +7,10 @@ import type {
   Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Node,
   Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Parent,
   Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Returns,
+  Rules_Eslint_Formatting_NoRawTextInCode_Runner_Create_JSXText_Node,
+  Rules_Eslint_Formatting_NoRawTextInCode_Runner_Create_JSXText_Returns,
+  Rules_Eslint_Formatting_NoRawTextInCode_Runner_Create_Options,
   Rules_Eslint_Formatting_NoRawTextInCode_Runner_RuleDefaultOptionsIgnoreFiles,
-  Rules_Eslint_Formatting_NoRawTextInCode_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/no-raw-text-in-code.d.ts';
 
 /**
@@ -55,7 +57,7 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Formatting_NoRawTextInCode_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: Rules_Eslint_Formatting_NoRawTextInCode_Runner_RuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Formatting_NoRawTextInCode_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -63,7 +65,7 @@ export class Runner {
       }
 
       return {
-        JSXText(node) {
+        JSXText(node: Rules_Eslint_Formatting_NoRawTextInCode_Runner_Create_JSXText_Node): Rules_Eslint_Formatting_NoRawTextInCode_Runner_Create_JSXText_Returns {
           Runner.checkJSXText(context, node);
 
           return;

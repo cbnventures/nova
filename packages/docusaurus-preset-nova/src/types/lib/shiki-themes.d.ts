@@ -14,9 +14,16 @@ export type Lib_ShikiThemes_ThemePair = {
  */
 export type Lib_ShikiThemes_GetShikiThemes_PresetName = string;
 
-export type Lib_ShikiThemes_GetShikiThemes_Returns = Lib_ShikiThemes_ThemePair;
+export type Lib_ShikiThemes_GetShikiThemes_Returns_Light = string;
 
-export type Lib_ShikiThemes_GetShikiThemes_Result = Lib_ShikiThemes_ThemePair | undefined;
+export type Lib_ShikiThemes_GetShikiThemes_Returns_Dark = string;
+
+export type Lib_ShikiThemes_GetShikiThemes_Returns = {
+  light: Lib_ShikiThemes_GetShikiThemes_Returns_Light;
+  dark: Lib_ShikiThemes_GetShikiThemes_Returns_Dark;
+};
+
+export type Lib_ShikiThemes_GetShikiThemes_Result = Lib_ShikiThemes_GetShikiThemes_Returns | undefined;
 
 /**
  * Lib - Shiki Themes - Shiki Theme Map.

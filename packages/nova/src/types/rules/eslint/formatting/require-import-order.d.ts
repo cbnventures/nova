@@ -2,6 +2,20 @@ import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 /**
+ * Rules - ESLint - Formatting - Require Import Order - Rule.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleDefaultOptionsIgnoreFiles = string[];
+
+/**
+ * Rules - ESLint - Formatting - Require Import Order - Node Builtins.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_RequireImportOrder_Runner_NodeBuiltins = Set<string>;
+
+/**
  * Rules - ESLint - Formatting - Require Import Order - Check Program.
  *
  * @since 0.15.0
@@ -56,6 +70,24 @@ export type Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Pr
 export type Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_CurrentName = string;
 
 /**
+ * Rules - ESLint - Formatting - Require Import Order - Create.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_RequireImportOrder_Runner_Create_Options_IgnoreFiles = string[];
+
+export type Rules_Eslint_Formatting_RequireImportOrder_Runner_Create_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Formatting_RequireImportOrder_Runner_Create_Options_IgnoreFiles;
+}>;
+
+/**
+ * Rules - ESLint - Formatting - Require Import Order - Create - Program.
+ *
+ * @since 0.15.0
+ */
+export type Rules_Eslint_Formatting_RequireImportOrder_Runner_Create_Program_Returns = void;
+
+/**
  * Rules - ESLint - Formatting - Require Import Order - Get Group.
  *
  * @since 0.15.0
@@ -69,23 +101,3 @@ export type Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_Source = 
 export type Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_SourceBase = string;
 
 export type Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_IsTypeImport = boolean;
-
-/**
- * Rules - ESLint - Formatting - Require Import Order - Node Builtins.
- *
- * @since 0.15.0
- */
-export type Rules_Eslint_Formatting_RequireImportOrder_Runner_NodeBuiltins = Set<string>;
-
-/**
- * Rules - ESLint - Formatting - Require Import Order - Rule.
- *
- * @since 0.15.0
- */
-export type Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleDefaultOptionsIgnoreFiles = string[];
-
-export type Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleOptions_IgnoreFiles = string[];
-
-export type Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleOptions = Readonly<{
-  ignoreFiles: Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleOptions_IgnoreFiles;
-}>;
