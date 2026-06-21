@@ -113,8 +113,7 @@ It is recommended to return the expression directly.
         rules: {
           '@cbnventures/nova/no-assign-then-return': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -131,9 +130,9 @@ It is recommended to return the expression directly.
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description            |
-|---------------|------------|---------|------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -147,3 +146,5 @@ npx eslint --fix . --rule '@cbnventures/nova/no-assign-then-return: error'
 
 - **Warning fires but the variable name is descriptive** — It is recommended to return the expression directly. If a descriptive name is important, consider adding a comment above the return statement instead.
 - **Only `const` declarations are checked** — Reassignable variables (`let`) are skipped because they might be modified between declaration and return.
+- **Destructuring is not flagged** — Declarations that destructure (e.g. `const { active } = obj; return active;` or `const [first] = arr; return first;`) are skipped; only a plain `const name = expr;` followed by `return name;` is reported.
+- **Only single-declarator `const` statements are checked** — A `const` declaring multiple variables (e.g. `const a = x(), result = y(); return result;`) is skipped, since removing it would drop the other declarations.

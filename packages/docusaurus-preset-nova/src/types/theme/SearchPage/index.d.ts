@@ -25,6 +25,31 @@ export type Theme_SearchPage_Index_SearchPage_WorkerUrl = string;
 
 export type Theme_SearchPage_Index_SearchPage_ManifestUrl = string;
 
+export type Theme_SearchPage_Index_SearchPage_PluginData_Search_SearchResultLimits = number;
+
+export type Theme_SearchPage_Index_SearchPage_PluginData_Search_FuzzyMatchingDistance = number;
+
+export type Theme_SearchPage_Index_SearchPage_PluginData_Search_HighlightSearchTermsOnTargetPage = boolean;
+
+export type Theme_SearchPage_Index_SearchPage_PluginData_Search = {
+  searchResultLimits?: Theme_SearchPage_Index_SearchPage_PluginData_Search_SearchResultLimits;
+  fuzzyMatchingDistance?: Theme_SearchPage_Index_SearchPage_PluginData_Search_FuzzyMatchingDistance;
+  highlightSearchTermsOnTargetPage?: Theme_SearchPage_Index_SearchPage_PluginData_Search_HighlightSearchTermsOnTargetPage;
+} | undefined;
+
+export type Theme_SearchPage_Index_SearchPage_PluginData = {
+  search?: Theme_SearchPage_Index_SearchPage_PluginData_Search;
+  [key: string]: unknown;
+};
+
+export type Theme_SearchPage_Index_SearchPage_SearchSettings = Theme_SearchPage_Index_SearchPage_PluginData_Search;
+
+export type Theme_SearchPage_Index_SearchPage_SearchResultLimits = number;
+
+export type Theme_SearchPage_Index_SearchPage_FuzzyMatchingDistance = number;
+
+export type Theme_SearchPage_Index_SearchPage_HighlightSearchTerms = boolean;
+
 export type Theme_SearchPage_Index_SearchPage_SearchWorker = import('../../lib/search/use-search-worker.d.ts').Lib_Search_UseSearchWorker_Returns;
 
 export type Theme_SearchPage_Index_SearchPage_SearchParams = URLSearchParams;

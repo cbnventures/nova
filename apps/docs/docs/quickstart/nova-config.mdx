@@ -191,15 +191,15 @@ Repository policy settings. Each field is optional.
 
 An array of GitHub Actions workflow entries consumed by [`nova generate github workflows`](/docs/cli/generators/github/workflows). Each entry maps to one generated `.yml` file.
 
-| Field        | Type       | Description                                                                                                      |
-|--------------|------------|------------------------------------------------------------------------------------------------------------------|
-| `template`   | `string`   | Name of a bundled workflow template: `"publish"`, `"lock-inactive-issues"`, or `"check-sponsor-gated-issues"`.   |
-| `suffix`     | `string`   | Label appended to the output filename and workflow name. Required when the same template appears more than once. |
-| `triggers`   | `string[]` | Trigger names from the template's `triggers/` folder. Use an empty array for templates with baked-in triggers.   |
-| `depends-on` | `string[]` | Optional. Workflow references as `"{template}-{suffix}"`. Required for `workflow-run-*` triggers.                |
-| `scopes`     | `string[]` | Optional. Workspace paths (keys from `workspaces`) that the `check` / `build` step should filter to.             |
-| `targets`    | `object[]` | Optional. Publish destinations for the `publish` template. Each target has `type`, `workingDir`, and `needs`.    |
-| `settings`   | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.    |
+| Field        | Type       | Description                                                                                                    |
+|--------------|------------|----------------------------------------------------------------------------------------------------------------|
+| `template`   | `string`   | Name of a bundled workflow template: `"publish"`, `"lock-inactive-issues"`, or `"check-sponsor-gated-issues"`. |
+| `suffix`     | `string`   | Required label appended to the output filename and workflow name. Must be unique within the same template.     |
+| `triggers`   | `string[]` | Trigger names from the template's `triggers/` folder. Use an empty array for templates with baked-in triggers. |
+| `depends-on` | `string[]` | Optional. Workflow references as `"{template}-{suffix}"`. Required for `workflow-run-*` triggers.              |
+| `scopes`     | `string[]` | Optional. Workspace paths (keys from `workspaces`) that the `check` / `build` step should filter to.           |
+| `targets`    | `object[]` | Optional. Publish destinations for the `publish` template. Each target has `type`, `workingDir`, and `needs`.  |
+| `settings`   | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.  |
 
 ### Target Fields
 

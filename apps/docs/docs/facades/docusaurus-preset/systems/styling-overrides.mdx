@@ -1,0 +1,96 @@
+---
+id: "styling-overrides"
+title: "Styling and Overrides"
+description: "Override Nova's design tokens or target its CSS class hooks from your own stylesheet to customize a site's appearance."
+sidebar_position: 2
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "css overrides"
+  - "design tokens"
+  - "custom css"
+  - "client modules"
+  - "class hooks"
+  - "theming"
+  - "custom stylesheet"
+tags:
+  - "facades"
+  - "systems"
+  - "css"
+  - "overrides"
+  - "theming"
+---
+
+Customize a Nova site's appearance by overriding its design tokens or targeting the theme's CSS class hooks from your own stylesheet.
+
+## Summary
+
+Nova exposes two override surfaces: **design tokens** (CSS custom properties) and **class hooks** (the `nova-*` class names on every themed element).
+
+Tokens are the recommended path because one value change cascades everywhere. Class hooks handle the cases a token cannot reach.
+
+Your stylesheet loads after the entire preset layer, so overrides win at equal specificity without `!important`.
+
+## Add a Custom Stylesheet
+
+Nova does not expose a `theme.customCss` option. Register your stylesheet with the core Docusaurus `clientModules` array instead, which imports it globally on every page.
+
+```ts title="docusaurus.config.ts"
+const config = {
+  clientModules: [
+    './src/css/custom.css',
+  ],
+};
+```
+
+Paths are resolved from the site root. The file loads after Nova's own styles — see [Load Order and Specificity](#load-order-and-specificity).
+
+## Override Design Tokens
+
+This is the recommended approach. Redefine any `--nova-*` custom property inside a `:root` block, and the theme picks up the new value wherever that token is used.
+
+```css title="src/css/custom.css"
+/* Change the brand color and corner radius for every preset. */
+:root {
+  --nova-color-primary-600: #2563eb;
+  --nova-shape-radius: 0.25rem;
+}
+
+/* Dark-mode tokens live under the dark data-theme selector. */
+:root[data-theme='dark'] {
+  --nova-color-primary-600: #3b82f6;
+}
+```
+
+- Because the theme reads these variables at use time, a redefinition takes effect regardless of stylesheet order.
+- The full token catalog — colors, fonts, shape, depth, motion, and grid — is listed in [CSS Architecture](/docs/facades/docusaurus-preset/systems/css-architecture#css-custom-properties), and color derivation is covered in [Color Pipeline](/docs/facades/docusaurus-preset/systems/color-pipeline).
+
+## Target Class Hooks
+
+When no token exists for what you want to change, target the element's `nova-*` class directly. Every block and swizzled theme component carries a descriptive class named after its role.
+
+```css title="src/css/custom.css"
+/* Restyle elements that have no dedicated token. */
+.nova-hero {
+  padding-block: 4rem;
+}
+
+.nova-admonition-icon {
+  opacity: 0.6;
+}
+```
+
+- Class names follow the pattern `nova-<component>-<element>` (for example, `nova-blog-post-item-footer`). Inspect an element in your browser devtools to find the exact hook.
+- For block-level tweaks, the Nova block components also accept `className` and `style` props — see a block page such as [Install Strip](/docs/facades/docusaurus-preset/blocks/install-strip).
+
+:::warning
+Class names describe the theme's structure and can change between releases. Prefer a token override wherever one exists, and reserve class targeting for what tokens cannot express.
+:::
+
+## Load Order and Specificity
+
+Your stylesheet is a site-level client module, which Docusaurus appends after every preset and theme stylesheet, including Nova's preset layer. A rule at the same specificity therefore overrides Nova's default without `!important`.
+
+:::info
+The preset layer already loads last among Nova's own stylesheets so it can override block and theme styles cleanly. Your custom stylesheet then loads after that. See [CSS Load Order](/docs/facades/docusaurus-preset/systems/css-architecture#css-load-order).
+:::

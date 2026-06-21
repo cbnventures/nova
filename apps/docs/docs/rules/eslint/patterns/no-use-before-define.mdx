@@ -30,7 +30,7 @@ All categories are checked by default. Set individual options to `false` to allo
 ## Why Use This Rule?
 
 1. Prevents confusing references to variables that have not been declared yet in the read order.
-2. Allows functions and classes to reference each other freely for alphabetical organization.
+2. Lets you disable individual categories so functions and classes can reference each other freely for alphabetical organization.
 3. Catches temporal dead zone errors at lint time instead of at runtime.
 
 ## Examples
@@ -39,40 +39,17 @@ All categories are checked by default. Set individual options to `false` to allo
   <TabItem value="correct" label="Correct" default>
 
     ```ts
-    // Function called before definition — allowed.
-    function apple() {
-      banana();
+    // Variable declared before use.
+    const y = 5;
+    const x = y + 1;
 
-      return;
-    }
+    // Variable assigned before it is read.
+    let name = 'Alice';
+    console.log(name);
 
-    function banana() {
-      cherry();
-
-      return;
-    }
-
-    function cherry() {
-      return 'done';
-    }
-
-    // Class referenced before definition — allowed.
-    class Animal {
-      public createDog() {
-        return new Dog();
-      }
-    }
-
-    class Dog extends Animal {}
-
-    // Type used before definition — allowed.
-    type Input = {
-      result: Output;
-    };
-
-    type Output = {
-      value: string;
-    };
+    // Array declared before being indexed.
+    const items = [1, 2];
+    const first = items[0];
     ```
 
   </TabItem>
@@ -163,8 +140,7 @@ All categories are checked by default. Set individual options to `false` to allo
         rules: {
           '@cbnventures/nova/no-use-before-define': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -181,13 +157,13 @@ All categories are checked by default. Set individual options to `false` to allo
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description                                  |
-|---------------|------------|---------|----------------------------------------------|
-| `classes`     | `boolean`  | `true`  | Check class declarations.                    |
-| `functions`   | `boolean`  | `true`  | Check function declarations.                 |
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.                       |
-| `types`       | `boolean`  | `true`  | Check type alias and interface declarations. |
-| `variables`   | `boolean`  | `true`  | Check const and let declarations.            |
+| Option        | Type       | Default | Description                                                                                                                                  |
+|---------------|------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| `classes`     | `boolean`  | `true`  | Check class declarations.                                                                                                                    |
+| `functions`   | `boolean`  | `true`  | Check function declarations.                                                                                                                 |
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported.    |
+| `types`       | `boolean`  | `true`  | Check identifiers used in type-annotation positions (`TSTypeReference`). Set to `false` to allow forward references to types in annotations. |
+| `variables`   | `boolean`  | `true`  | Check const and let declarations.                                                                                                            |
 
 ## Autofix
 
@@ -197,3 +173,4 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 
 - **Function forward references are flagged** — Set `functions` to `false` if you want to allow function forward references for alphabetical organization.
 - **All categories are checked by default** — Set `classes`, `functions`, or `types` to `false` individually to allow forward references for specific categories.
+- **Imported identifiers are never flagged** — Import bindings (named, default, and namespace imports) are always exempt from this rule and cannot be re-enabled via options.

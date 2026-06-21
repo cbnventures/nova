@@ -1,0 +1,115 @@
+---
+id: "showcase"
+title: "Showcase"
+description: "Compound page component that wraps demonstrated blocks in a titled intro card and controlled Expand or Collapse All disclosures."
+sidebar_position: 3
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "showcase"
+  - "block showcase"
+  - "compound component"
+  - "disclosure"
+  - "expand collapse all"
+  - "details"
+  - "page component"
+tags:
+  - "facades"
+  - "authoring"
+  - "component"
+  - "showcase"
+  - "page"
+---
+
+Build a block showcase page that wraps each demonstrated block in a titled, controlled disclosure with a single Expand or Collapse All toggle.
+
+## Summary
+
+The `@theme/Showcase` component is a compound component with a single child slot, `Showcase.Item`. Each `Showcase.Item` declares one demonstrated block with a `title` and the block itself as children.
+
+`Showcase` renders a full Docusaurus `Layout`, an intro card with a heading, your `description`, and an Expand or Collapse All button, then one controlled disclosure per `Showcase.Item`. The toggle button label reflects the actual open state of every item, including manual toggles.
+
+## Why Use This Component?
+
+- Renders the full page chrome through Docusaurus `Layout` so the showcase keeps the site navbar, footer, and SEO meta.
+- Wraps each block in a controlled disclosure so visitors can expand only the blocks they want to inspect.
+- Drives a single Expand or Collapse All button from the live open state, so the label stays accurate after manual toggles.
+- Filters its children to `Showcase.Item` elements, so stray markup between items is ignored rather than rendered.
+
+## Usage
+
+`Showcase` is a theme page component, not a block. Import it from `@theme/Showcase` and render it from a page under `src/pages`.
+
+```tsx title="src/pages/showcase.tsx"
+import { Hero, InstallStrip } from '@cbnventures/docusaurus-preset-nova/blocks';
+import { translate } from '@docusaurus/Translate';
+import Showcase from '@theme/Showcase';
+
+function ShowcasePage() {
+  return (
+    <Showcase
+      layoutDescription={translate({
+        id: 'showcase.layout.description',
+        message: 'Block showcase demonstrating every block from docusaurus-preset-nova.',
+        description: 'Showcase page layout description (meta description for SEO)',
+      })}
+      description={translate({
+        id: 'showcase.description',
+        message: 'Every block from the preset, rendered with sample data.',
+        description: 'Showcase page sub-description below the title',
+      })}
+    >
+      <Showcase.Item title="Hero (minimal)">
+        <Hero
+          heading="Deliver without ceremony."
+          tagline="A short demonstration of the Hero block."
+          ctaLabel="Get Started"
+          ctaLink="/docs/overview/"
+        />
+      </Showcase.Item>
+
+      <Showcase.Item title="InstallStrip">
+        <InstallStrip command="npx create-app" copyTarget="icon" />
+      </Showcase.Item>
+    </Showcase>
+  );
+}
+
+export default ShowcasePage;
+```
+
+Each `Showcase.Item` becomes a separate disclosure. The `title` renders as the disclosure summary heading, and the item's children render as the disclosure body when expanded.
+
+```tsx title="src/pages/showcase.tsx"
+<Showcase.Item title="Stats (without heading)">
+  <Stats
+    items={[
+      { value: '8', label: 'Translators' },
+      { value: '0', label: 'Dependencies' },
+    ]}
+  />
+</Showcase.Item>
+```
+
+## Props
+
+### Showcase
+
+| Prop                | Type        | Default | Description                                                                                |
+|---------------------|-------------|---------|--------------------------------------------------------------------------------------------|
+| `layoutDescription` | `string`    | —       | Passed to the Docusaurus `Layout` as the page meta description for SEO. Required.          |
+| `description`       | `string`    | —       | Sub-description rendered in the intro card below the heading. Required.                    |
+| `children`          | `ReactNode` | —       | `Showcase.Item` elements. Non-`Item` children are filtered out and not rendered. Required. |
+
+### Showcase.Item
+
+| Prop       | Type        | Default | Description                                                                    |
+|------------|-------------|---------|--------------------------------------------------------------------------------|
+| `title`    | `string`    | —       | Disclosure summary heading rendered as an `h2`. Required.                      |
+| `children` | `ReactNode` | —       | Block to demonstrate, rendered as the disclosure body when expanded. Required. |
+
+## Troubleshooting
+
+- **A child does not appear** — Only `Showcase.Item` children are rendered. Markup placed directly under `Showcase` that is not a `Showcase.Item` is filtered out.
+- **The toggle button shows the wrong label** — The button reads Collapse All only when every item is open; expanding all items manually flips it to Collapse All, and closing any one flips it back to Expand All.
+- **Items start collapsed on load** — That is the default. Every item begins closed until expanded individually or through the Expand All button.

@@ -61,12 +61,12 @@ Scaffold a **Cloudflare Workers** workspace with TypeScript.
 
 ## Options
 
-| Flag                      | Description                            |
-|---------------------------|----------------------------------------|
-| `-d, --dry-run`           | Preview changes without writing files. |
-| `--name <name>`           | Project or workspace name.             |
-| `--workspace-name <name>` | Workspace directory name.              |
-| `--output <dir>`          | Output directory.                      |
+| Flag                      | Description                    |
+|---------------------------|--------------------------------|
+| `-d, --dry-run`           | Run without writing any files. |
+| `--name <name>`           | Project or workspace name.     |
+| `--workspace-name <name>` | Workspace directory name.      |
+| `--output <dir>`          | Output directory.              |
 
 ## Output Structure
 
@@ -83,6 +83,14 @@ Scaffold a **Cloudflare Workers** workspace with TypeScript.
 │           └── index.ts
 └── packages/
 ```
+
+## Config Fields
+
+| Field                | Description                                                                                                                                                        |
+|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `project.name.slug`  | Read in workspace mode to derive the registered workspace name; registration is skipped with a warning if absent. In monorepo mode, written from the project name. |
+| `project.name.title` | Written in monorepo mode, title-cased from the project slug.                                                                                                       |
+| `workspaces`         | A `workspaces` entry is written for the new workspace: `name` (`{projectSlug}-app-{workspaceName}`), `role` (`app`), and `policy` (`freezable`).                   |
 
 ## How It Works
 

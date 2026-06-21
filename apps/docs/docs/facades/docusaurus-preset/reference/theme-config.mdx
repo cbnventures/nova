@@ -44,22 +44,26 @@ themeConfig: {
 
 ## Site
 
-| Option                   | Type                                       | Default     | Description                                       |
-|--------------------------|--------------------------------------------|-------------|---------------------------------------------------|
-| `site.title`             | `string`                                   | `''`        | Site title for browser tab and SEO.               |
-| `site.logo`              | `object`                                   | `{}`        | Logo configuration.                               |
-| `site.logo.alt`          | `string`                                   | `''`        | Logo alt text.                                    |
-| `site.logo.src`          | `string`                                   | `''`        | Logo icon image source path.                      |
-| `site.logo.srcDark`      | `string \| undefined`                      | `undefined` | Logo icon source for dark mode.                   |
-| `site.logo.href`         | `string \| undefined`                      | `undefined` | Logo click URL.                                   |
-| `site.logo.target`       | `string \| undefined`                      | `undefined` | Logo link `target` attribute (e.g. `'_blank'`).   |
-| `site.logo.rel`          | `string \| undefined`                      | `undefined` | Logo link `rel` attribute (e.g. `'noopener'`).    |
-| `site.logo.ariaLabel`    | `string \| undefined`                      | `undefined` | Logo link accessible label.                       |
-| `site.logo.wordmark`     | `string \| undefined`                      | `undefined` | Wordmark image source path (full logo with text). |
-| `site.logo.wordmarkDark` | `string \| undefined`                      | `undefined` | Wordmark source for dark mode.                    |
-| `site.logo.title`        | `string \| undefined`                      | `undefined` | Brand title text shown in navbar.                 |
-| `site.image`             | `string`                                   | `''`        | Default social/SEO image path.                    |
-| `site.metadata`          | `Array<{ name: string, content: string }>` | `[]`        | Additional meta tags.                             |
+| Option                     | Type                                       | Default     | Description                                         |
+|----------------------------|--------------------------------------------|-------------|-----------------------------------------------------|
+| `site.logo`                | `object`                                   | `{}`        | Logo configuration.                                 |
+| `site.logo.alt`            | `string \| undefined`                      | `undefined` | Logo alt text.                                      |
+| `site.logo.src`            | `object`                                   | `{}`        | Logo icon image source paths (light/dark variants). |
+| `site.logo.src.light`      | `string \| undefined`                      | `undefined` | Light mode logo icon source path.                   |
+| `site.logo.src.dark`       | `string \| undefined`                      | `undefined` | Dark mode logo icon source path.                    |
+| `site.logo.href`           | `string \| undefined`                      | `undefined` | Logo click URL.                                     |
+| `site.logo.target`         | `string \| undefined`                      | `undefined` | Logo link `target` attribute (e.g. `'_blank'`).     |
+| `site.logo.rel`            | `string \| undefined`                      | `undefined` | Logo link `rel` attribute (e.g. `'noopener'`).      |
+| `site.logo.ariaLabel`      | `string \| undefined`                      | `undefined` | Logo link accessible label.                         |
+| `site.logo.wordmark`       | `object`                                   | `{}`        | Wordmark image source paths (full logo with text).  |
+| `site.logo.wordmark.light` | `string \| undefined`                      | `undefined` | Light mode wordmark image source path.              |
+| `site.logo.wordmark.dark`  | `string \| undefined`                      | `undefined` | Dark mode wordmark image source path.               |
+| `site.image`               | `string`                                   | `''`        | Default social/SEO image path.                      |
+| `site.metadata`            | `Array<{ name: string, content: string }>` | `[]`        | Additional meta tags.                               |
+
+:::info Brand title
+The navbar brand text is your site's top-level `title` (set in `docusaurus.config.ts`). For a custom brand that differs from the site title, supply a wordmark image (`site.logo.wordmark`) — it replaces the text.
+:::
 
 ## Color Mode
 
@@ -70,25 +74,26 @@ themeConfig: {
 
 ## Navbar
 
-| Option                | Type                  | Default     | Description                          |
-|-----------------------|-----------------------|-------------|--------------------------------------|
-| `navbar.title`        | `string \| undefined` | `undefined` | Text label next to the logo.         |
-| `navbar.hideOnScroll` | `boolean`             | `false`     | Hide the navbar when scrolling down. |
-| `navbar.items`        | `NavbarItem[]`        | `[]`        | Navigation items. See below.         |
+| Option                | Type           | Default | Description                          |
+|-----------------------|----------------|---------|--------------------------------------|
+| `navbar.hideOnScroll` | `boolean`      | `false` | Hide the navbar when scrolling down. |
+| `navbar.items`        | `NavbarItem[]` | `[]`    | Navigation items. See below.         |
 
 ### Navbar Items
 
 Each item in the `navbar.items` array follows this structure:
 
-| Property    | Type                        | Description                                                      |
-|-------------|-----------------------------|------------------------------------------------------------------|
-| `label`     | `string`                    | Display text.                                                    |
-| `position`  | `'left' \| 'right'`         | Side of the navbar.                                              |
-| `type`      | `'docSidebar' \| undefined` | `'docSidebar'` links to a sidebar, `undefined` for direct links. |
-| `sidebarId` | `string \| undefined`       | Sidebar ID when `type` is `'docSidebar'`.                        |
-| `to`        | `string \| undefined`       | Internal URL when `type` is `undefined`.                         |
-| `href`      | `string \| undefined`       | External URL when `type` is `undefined`.                         |
-| `icon`      | `string \| undefined`       | Iconify icon identifier (e.g., `'lucide:rocket'`).               |
+| Property    | Type                  | Description                                                    |
+|-------------|-----------------------|----------------------------------------------------------------|
+| `label`     | `string`              | Display text.                                                  |
+| `position`  | `'left' \| 'right'`   | Side of the navbar.                                            |
+| `type`      | `string \| undefined` | Docusaurus navbar item kind (see note). Omit for a plain link. |
+| `sidebarId` | `string \| undefined` | Sidebar ID when `type` is `'docSidebar'`.                      |
+| `to`        | `string \| undefined` | Internal URL when `type` is `undefined`.                       |
+| `href`      | `string \| undefined` | External URL when `type` is `undefined`.                       |
+| `icon`      | `string \| undefined` | Iconify icon identifier (e.g., `'lucide:rocket'`).             |
+
+The `type` field accepts any of Docusaurus's standard navbar item kinds — `'doc'`, `'docSidebar'`, `'dropdown'`, `'localeDropdown'`, `'docsVersion'`, `'docsVersionDropdown'`, `'html'`, and `'search'` — and Nova renders them as standard Docusaurus navbar items — except `localeDropdown`, which Nova restyles with an abbreviated locale label. The `sidebarId`, `to`, and `href` columns above cover the common `'docSidebar'` and plain-link cases; other kinds take their own fields per the [Docusaurus navbar documentation](https://docusaurus.io/docs/api/themes/configuration#navbar).
 
 ## Docs
 
@@ -108,7 +113,7 @@ Each item in the `navbar.items` array follows this structure:
 | `blog.share.platforms`     | `string[]` | `[]`     | Share button platforms. Accepts `x`, `facebook`, `linkedin`, `reddit`, `copy`. |
 
 :::info[Blog Header Rendering]
-`blog.layout.heading` and `blog.layout.description` populate the page-level header that `<BlogLayout>` renders above the blog content on the index, archive, and author pages. Swizzle consumers can pass `<BlogLayout showHeader>` to opt into the header on a custom page, or pass a `header` ReactNode prop to override the default heading + description entirely.
+`blog.layout.heading` and `blog.layout.description` populate the page-level header that `<BlogLayout>` renders above the blog content on the blog index page. Other built-in blog pages (archive, author) render their own headers instead, and swizzle consumers can pass `<BlogLayout showHeader>` to opt into the header on a custom page, or pass a `header` ReactNode prop to override the default heading + description entirely.
 :::
 
 ## Table of Contents

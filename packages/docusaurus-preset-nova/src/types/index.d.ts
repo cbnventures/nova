@@ -378,6 +378,23 @@ export type Index_Runner_Default_AllContentLoaded_ErrorPageContentTitleIndex = n
 
 export type Index_Runner_Default_AllContentLoaded_CreditPhraseIndex = number;
 
+export type Index_Runner_Default_AllContentLoaded_SearchSettings_Value_SearchResultLimits = number;
+
+export type Index_Runner_Default_AllContentLoaded_SearchSettings_Value_FuzzyMatchingDistance = number;
+
+export type Index_Runner_Default_AllContentLoaded_SearchSettings_Value_SearchBarShortcutKeymap = string;
+
+export type Index_Runner_Default_AllContentLoaded_SearchSettings_Value_HighlightSearchTermsOnTargetPage = boolean;
+
+export type Index_Runner_Default_AllContentLoaded_SearchSettings_Value = {
+  searchResultLimits: Index_Runner_Default_AllContentLoaded_SearchSettings_Value_SearchResultLimits;
+  fuzzyMatchingDistance: Index_Runner_Default_AllContentLoaded_SearchSettings_Value_FuzzyMatchingDistance;
+  searchBarShortcutKeymap: Index_Runner_Default_AllContentLoaded_SearchSettings_Value_SearchBarShortcutKeymap;
+  highlightSearchTermsOnTargetPage: Index_Runner_Default_AllContentLoaded_SearchSettings_Value_HighlightSearchTermsOnTargetPage;
+};
+
+export type Index_Runner_Default_AllContentLoaded_SearchSettings = Index_Runner_Default_AllContentLoaded_SearchSettings_Value | undefined;
+
 /**
  * Index - Docusaurus Theme Nova - Default - Configure Post Css.
  *

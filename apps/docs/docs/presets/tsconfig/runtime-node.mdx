@@ -1,12 +1,64 @@
 ---
 id: "runtime-node"
 title: "Runtime - Node"
-description: "x"
+description: "Add Node ESM module resolution and the ESNext lib to a Nova TSConfig chain for code that runs on the Node.js runtime."
 keywords:
-  - "x"
+  - "nova"
+  - "runtime-node"
+  - "tsconfig preset"
+  - "node runtime"
+  - "nodenext module resolution"
+  - "esnext lib"
+  - "node esm"
+  - "server side typescript"
 tags:
   - "presets"
-  - "x"
+  - "tsconfig"
+  - "runtime"
+  - "node"
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+Add the Node <Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology> module resolution and `ESNext` lib that code running on Node.js needs, layered on top of the Nova baseline and strict presets.
+
+## Why Use This Preset?
+
+1. Pairs `module` and `moduleResolution` as `NodeNext` so imports resolve the same way TypeScript and Node do at runtime.
+2. Loads the `ESNext` lib alone, with no DOM globals, so browser-only APIs stay out of server code.
+3. Uses Node's current module detection so emitted ESM and CommonJS match how Node treats each file.
+4. Drops in as the environment layer after the essentials and strict presets so you only declare where the code runs.
+
+## Usage
+
+Add the preset as the last entry in the `extends` array of your `tsconfig.json`, after the essentials and strict layers.
+
+```json title="tsconfig.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-node.json"
+  ]
+}
+```
+
+## What This Preset Configures
+
+The preset sets the following `compilerOptions`, overriding the matching values from the layers below it.
+
+| Setting            | Value      | Description                                                          |
+|--------------------|------------|----------------------------------------------------------------------|
+| `lib`              | `ESNext`   | Loads the latest built-in JavaScript types with no DOM globals.      |
+| `module`           | `NodeNext` | Emits modules using Node's current ESM and CommonJS detection.       |
+| `moduleResolution` | `NodeNext` | Resolves imports the way Node does, matched to the `module` setting. |
+
+:::info
+The `lib` array replaces the parent value rather than merging with it, so this preset restates `ESNext` even though the baseline already sets it.
+:::
+
+## Related
+
+- Review the layering order in **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.
+- See how presets compose end to end in the **[Presets Overview](/docs/presets/)**.
+- Pair it with the matching **[Runtime - Node ESLint preset](/docs/presets/eslint/runtime-node)**.

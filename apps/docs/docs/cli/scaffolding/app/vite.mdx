@@ -24,7 +24,7 @@ Scaffold a **Vite** workspace with TypeScript.
 
 - Installs Vite with TypeScript so you get fast dev server startup and hot module replacement out of the box.
 - Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
-- Wires up `vite`, `vite build`, and `vite preview` scripts so the workspace runs without extra configuration.
+- Wires up `vite`, `tsc && vite build`, and `vite preview` scripts so the workspace runs without extra configuration.
 
 ## Requirements
 
@@ -60,12 +60,12 @@ Scaffold a **Vite** workspace with TypeScript.
 
 ## Options
 
-| Flag                      | Description                            |
-|---------------------------|----------------------------------------|
-| `-d, --dry-run`           | Preview changes without writing files. |
-| `--name <name>`           | Project or workspace name.             |
-| `--workspace-name <name>` | Workspace directory name.              |
-| `--output <dir>`          | Output directory.                      |
+| Flag                      | Description                    |
+|---------------------------|--------------------------------|
+| `-d, --dry-run`           | Run without writing any files. |
+| `--name <name>`           | Project or workspace name.     |
+| `--workspace-name <name>` | Workspace directory name.      |
+| `--output <dir>`          | Output directory.              |
 
 ## Output Structure
 
@@ -83,6 +83,14 @@ Scaffold a **Vite** workspace with TypeScript.
 │           └── main.ts
 └── packages/
 ```
+
+## Config Fields
+
+| Field                | Description                                                                                                                                                        |
+|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `project.name.slug`  | Read in workspace mode to derive the registered workspace name; registration is skipped with a warning if absent. In monorepo mode, written from the project name. |
+| `project.name.title` | Written in monorepo mode, title-cased from the project slug.                                                                                                       |
+| `workspaces`         | A `workspaces` entry is written for the new workspace: `name` (`{projectSlug}-app-{workspaceName}`), `role` (`app`), and `policy` (`freezable`).                   |
 
 ## How It Works
 

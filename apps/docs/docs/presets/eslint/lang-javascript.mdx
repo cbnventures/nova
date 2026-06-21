@@ -1,12 +1,69 @@
 ---
 id: "lang-javascript"
 title: "Language - JavaScript"
-description: "x"
+description: "Enable the typescript-eslint parser for JavaScript and JSX files so Nova custom rules run on plain JS with full AST support."
 keywords:
-  - "x"
+  - "nova"
+  - "lang-javascript"
+  - "eslint preset"
+  - "javascript linting"
+  - "typescript-eslint parser"
+  - "jsx"
+  - "flat config"
+  - "language layer"
+  - "no-unused-vars"
 tags:
   - "presets"
-  - "x"
+  - "eslint"
+  - "javascript"
+  - "language"
+  - "parser"
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+Parse JavaScript and JSX files with the typescript-eslint parser so Nova's custom rules run on plain JavaScript sources with full AST support.
+
+## Why Use This Preset?
+
+1. Routes every `.js`, `.jsx`, `.cjs`, and `.mjs` file through the typescript-eslint parser so Nova's custom rules get full AST coverage on plain JavaScript.
+2. Sets `ecmaVersion: 'latest'` and `sourceType: 'module'` so modern JavaScript syntax parses without extra configuration.
+3. Enables `project: true` so type-aware linting works across your JavaScript files.
+4. Disables `@typescript-eslint/no-unused-vars` on JavaScript files so the standard rule reports unused variables without duplication.
+
+## Usage
+
+Add `langJavascript` to the **language** layer of your <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>, after the ignores and code-style layers.
+
+```ts title="eslint.config.ts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  langJavascript,
+} from '@cbnventures/nova/presets/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langJavascript,
+];
+```
+
+## What This Preset Configures
+
+The preset registers the typescript-eslint parser as the language parser and adds one rule override, both scoped to the `.js`, `.jsx`, `.cjs`, and `.mjs` script extensions. The base entry only wires up parsing, so the single authored rule turns a TypeScript-aware check off rather than reporting an error.
+
+### Parser setup
+
+Registers the typescript-eslint parser with `sourceType: 'module'`, `ecmaVersion: 'latest'`, and `project: true` so modern JavaScript and JSX parse with full type-aware AST support.
+
+### Overrides
+
+| Rule                                | What it enforces                                                                  |
+|-------------------------------------|-----------------------------------------------------------------------------------|
+| `@typescript-eslint/no-unused-vars` | Disabled on JavaScript files since the standard rule already handles unused vars. |
+
+## Related
+
+- Review the layering order in **[ESLint Best Practices](/docs/presets/eslint/best-practices)**.
+- See how presets compose end to end in the **[Presets Overview](/docs/presets/)**.

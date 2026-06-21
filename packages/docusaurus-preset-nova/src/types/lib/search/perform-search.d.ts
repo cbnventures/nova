@@ -26,6 +26,8 @@ export type Lib_Search_PerformSearch_PerformSearch_Query = string;
 
 export type Lib_Search_PerformSearch_PerformSearch_Limit = number;
 
+export type Lib_Search_PerformSearch_PerformSearch_FuzzyDistance = number;
+
 export type Lib_Search_PerformSearch_PerformSearch_Returns_Item_Path = string;
 
 export type Lib_Search_PerformSearch_PerformSearch_Returns_Item_Title = string;

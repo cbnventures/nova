@@ -106,12 +106,14 @@ import { Stats } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 ## Options
 
-| Prop          | Type                                                                     | Default     | Description                                             |
-|---------------|--------------------------------------------------------------------------|-------------|---------------------------------------------------------|
-| `items`       | `Array<{ value: string, label: string, color?: 'primary' \| 'accent' }>` | —           | Metric items. Required.                                 |
-| `heading`     | `string \| undefined`                                                    | `undefined` | Optional section heading above the grid.                |
-| `description` | `string \| undefined`                                                    | `undefined` | Optional description paragraph below the heading.       |
-| `surface`     | `'alt' \| undefined`                                                     | `undefined` | Set to `'alt'` to use the alternate surface background. |
+| Prop          | Type                                                                     | Default     | Description                                                     |
+|---------------|--------------------------------------------------------------------------|-------------|-----------------------------------------------------------------|
+| `items`       | `Array<{ value: string, label: string, color?: 'primary' \| 'accent' }>` | —           | Metric items. Required.                                         |
+| `heading`     | `string \| undefined`                                                    | `undefined` | Optional section heading above the grid.                        |
+| `description` | `string \| undefined`                                                    | `undefined` | Optional description paragraph below the heading.               |
+| `surface`     | `'alt' \| undefined`                                                     | `undefined` | Set to `'alt'` to use the alternate surface background.         |
+| `className`   | `string \| undefined`                                                    | `undefined` | Additional class names merged with the base `nova-stats` class. |
+| `style`       | `CSSProperties \| undefined`                                             | `undefined` | Inline style overrides applied to the root element.             |
 
 ## Troubleshooting
 

@@ -1,6 +1,7 @@
 import { useAllDocsData } from '@docusaurus/plugin-content-docs/client';
 import { useColorMode, useThemeConfig } from '@docusaurus/theme-common';
 import { translate } from '@docusaurus/Translate';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { usePluginData } from '@docusaurus/useGlobalData';
 import { Icon } from '@iconify/react/offline';
 import {
@@ -39,6 +40,7 @@ import type {
   Theme_Navbar_Index_Navbar_ColorModeState,
   Theme_Navbar_Index_Navbar_ColorModeSystemLabel,
   Theme_Navbar_Index_Navbar_Config,
+  Theme_Navbar_Index_Navbar_DocusaurusContext,
   Theme_Navbar_Index_Navbar_HandleScroll_CurrentScrollPosition,
   Theme_Navbar_Index_Navbar_HandleScroll_IsScrollingDown,
   Theme_Navbar_Index_Navbar_Hidden,
@@ -49,6 +51,7 @@ import type {
   Theme_Navbar_Index_Navbar_Props,
   Theme_Navbar_Index_Navbar_SetColorMode,
   Theme_Navbar_Index_Navbar_SiteConfig,
+  Theme_Navbar_Index_Navbar_SiteTitle,
   Theme_Navbar_Index_Navbar_ThemeConfig,
   Theme_Navbar_Index_Navbar_ThemeConfigCast,
   Theme_Navbar_Index_Navbar_Variant,
@@ -56,7 +59,6 @@ import type {
   Theme_Navbar_Index_PresetLogo,
   Theme_Navbar_Index_PresetLogoAlt,
   Theme_Navbar_Index_PresetLogoSrc,
-  Theme_Navbar_Index_PresetLogoTitle,
   Theme_Navbar_Index_ResolvedItem,
   Theme_Navbar_Index_ResolvedItemAllDocs,
   Theme_Navbar_Index_ResolvedItemDocCandidate,
@@ -86,7 +88,6 @@ import type {
   Theme_Navbar_Index_UserLogoRel,
   Theme_Navbar_Index_UserLogoSrc,
   Theme_Navbar_Index_UserLogoTarget,
-  Theme_Navbar_Index_UserLogoTitle,
   Theme_Navbar_Index_UserLogoWordmark,
   Theme_Navbar_Index_VariantProps,
   Theme_Navbar_Index_VariantProps_ActiveItemLabel,
@@ -105,6 +106,8 @@ import type {
  */
 function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
   const themeConfig: Theme_Navbar_Index_Navbar_ThemeConfig = useThemeConfig() as Theme_Navbar_Index_Navbar_ThemeConfigCast as Theme_Navbar_Index_Navbar_ThemeConfig;
+  const docusaurusContext: Theme_Navbar_Index_Navbar_DocusaurusContext = useDocusaurusContext();
+  const siteTitle: Theme_Navbar_Index_Navbar_SiteTitle = docusaurusContext['siteConfig']['title'];
   const siteConfig: Theme_Navbar_Index_Navbar_SiteConfig = themeConfig['site'] as Theme_Navbar_Index_Navbar_SiteConfig;
   const navbarConfig: Theme_Navbar_Index_Navbar_Config = themeConfig['navbar'] as Theme_Navbar_Index_Navbar_Config;
   const colorModeState: Theme_Navbar_Index_Navbar_ColorModeState = useColorMode();
@@ -116,14 +119,12 @@ function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
 
   const userLogoSrc: Theme_Navbar_Index_UserLogoSrc = (userLogo !== undefined) ? userLogo['src'] as Theme_Navbar_Index_UserLogoSrc : undefined;
   const userLogoWordmark: Theme_Navbar_Index_UserLogoWordmark = (userLogo !== undefined) ? userLogo['wordmark'] as Theme_Navbar_Index_UserLogoWordmark : undefined;
-  const userLogoTitle: Theme_Navbar_Index_UserLogoTitle = (userLogo !== undefined) ? userLogo['title'] as Theme_Navbar_Index_UserLogoTitle : undefined;
   const userLogoAlt: Theme_Navbar_Index_UserLogoAlt = (userLogo !== undefined) ? userLogo['alt'] as Theme_Navbar_Index_UserLogoAlt : undefined;
   const userLogoHref: Theme_Navbar_Index_UserLogoHref = (userLogo !== undefined) ? userLogo['href'] as Theme_Navbar_Index_UserLogoHref : undefined;
   const userLogoTarget: Theme_Navbar_Index_UserLogoTarget = (userLogo !== undefined) ? userLogo['target'] as Theme_Navbar_Index_UserLogoTarget : undefined;
   const userLogoRel: Theme_Navbar_Index_UserLogoRel = (userLogo !== undefined) ? userLogo['rel'] as Theme_Navbar_Index_UserLogoRel : undefined;
   const userLogoAriaLabel: Theme_Navbar_Index_UserLogoAriaLabel = (userLogo !== undefined) ? userLogo['ariaLabel'] as Theme_Navbar_Index_UserLogoAriaLabel : undefined;
   const presetLogoSrc: Theme_Navbar_Index_PresetLogoSrc = (presetLogo !== undefined) ? presetLogo['src'] : undefined;
-  const presetLogoTitle: Theme_Navbar_Index_PresetLogoTitle = (presetLogo !== undefined) ? presetLogo['title'] : undefined;
   const presetLogoAlt: Theme_Navbar_Index_PresetLogoAlt = (presetLogo !== undefined) ? presetLogo['alt'] : undefined;
 
   let resolvedSiteLogoSrc: Theme_Navbar_Index_SiteLogo_Src = undefined;
@@ -140,7 +141,7 @@ function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
   const siteLogo: Theme_Navbar_Index_SiteLogo = {
     src: resolvedSiteLogoSrc,
     wordmark: userLogoWordmark,
-    title: userLogoTitle ?? presetLogoTitle,
+    title: siteTitle,
     alt: userLogoAlt
       ?? presetLogoAlt
       ?? '',

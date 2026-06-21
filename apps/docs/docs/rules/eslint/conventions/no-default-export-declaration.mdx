@@ -104,8 +104,8 @@ Named exports (`export function foo`) and anonymous arrow defaults (`export defa
         rules: {
           '@cbnventures/nova/no-default-export-declaration': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
+              'src/generated/config.ts',
             ],
           }],
         },
@@ -138,3 +138,4 @@ npx eslint --fix . --rule '@cbnventures/nova/no-default-export-declaration: erro
 
 - **Named exports are not flagged** — `export function foo()` is a named export, not a default export. Only `export default function` and `export default class` are reported.
 - **Anonymous arrow default is not flagged** — `export default () => {}` has no declaration name to separate, so it is allowed.
+- **Anonymous function/class defaults are not flagged** — `export default function () {}` and `export default class {}` have no declaration name to separate, so they are allowed. Only named declarations like `export default function Foo()` are reported.

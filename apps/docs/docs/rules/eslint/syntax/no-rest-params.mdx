@@ -148,8 +148,7 @@ Spread syntax in function calls and array literals is not affected.
         rules: {
           '@cbnventures/nova/no-rest-params': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -166,10 +165,10 @@ Spread syntax in function calls and array literals is not affected.
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description                                                                                                                                                 |
-|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `allow`       | `string[]` | `[]`    | Function or method names to exempt from the rule. Supports exact match (`'Logger.info'`), wildcard (`'Logger.*'`), and standalone function names (`'log'`). |
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.                                                                                                                                      |
+| Option        | Type       | Default | Description                                                                                                                                                                                                                                                                                        |
+|---------------|------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `allow`       | `string[]` | `[]`    | Function or method names to exempt from the rule. Supports exact match (`'Logger.info'`), wildcard (`'Logger.*'`), and standalone function names (`'log'`); object-literal methods resolve to `objectVar.method` (and to `EnclosingClass.method` when the object is returned from a class method). |
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported.                                                                                                                                                          |
 
 ## Autofix
 

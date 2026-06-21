@@ -23,7 +23,9 @@ Require explicit comparisons in conditions instead of relying on truthy/falsy co
 
 ## Summary
 
-The `no-implicit-boolean` rule reports bare identifiers, member expressions, call expressions, and their negations (`!value`, `!fn()`) when used as conditions in `if`, `while`, `do...while`, `for`, and ternary statements.
+The `no-implicit-boolean` rule reports bare identifiers, member expressions, call expressions, await expressions, and their negations (`!value`, `!fn()`, `!await fn()`) when used as conditions in `if`, `while`, `do...while`, `for`, and ternary statements.
+
+Negations (`!value`, `!fn()`, `!await fn()`) are also flagged when they appear outside conditions, such as in assignments or return statements (e.g. `const x = !value;`).
 
 For logical expressions (`&&`, `||`), each operand is checked independently.
 
@@ -113,8 +115,7 @@ For logical expressions (`&&`, `||`), each operand is checked independently.
         rules: {
           '@cbnventures/nova/no-implicit-boolean': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -131,9 +132,9 @@ For logical expressions (`&&`, `||`), each operand is checked independently.
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description            |
-|---------------|------------|---------|------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -144,3 +145,4 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 - **Warning fires on `!Array.isArray(x)`** — Use `Array.isArray(x) === false` instead. All negations of identifiers, member expressions, and call expressions are flagged.
 - **Warning fires on `if (value && other)`** — Each operand in a logical expression is checked independently. Both `value` and `other` need explicit comparisons.
 - **Warning fires on a ternary condition** — Ternary conditions are checked the same as `if` conditions. Use an explicit comparison like `(isDryRun === true) ? a : b`.
+- **Warning fires on `!value` outside an if/while** — Negations of identifiers, member, call, and await expressions are checked anywhere they appear, not just in conditions.

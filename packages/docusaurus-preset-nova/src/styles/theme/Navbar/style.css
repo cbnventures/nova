@@ -112,6 +112,31 @@
 
 /**
  * ============================
+ * Navbar - Items Overflow Measure Clip
+ *
+ * Zero-size, overflow-clipped wrapper around the measure clone. The clone is
+ * position: absolute + white-space: nowrap with max-width: none, so on
+ * viewports narrower than the full item row it would extend the document's
+ * scroll width (mobile horizontal scroll). Wrapping it in a 0x0
+ * overflow: hidden box keeps the clone laid out at its natural width - so
+ * children stay measurable via getBoundingClientRect - while removing it
+ * from the page's scrollable area. The clone itself is left untouched.
+ * ============================
+ */
+
+.nova-navbar-items-measure-clip {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 0;
+  height: 0;
+
+  overflow: hidden;
+}
+
+/**
+ * ============================
  * Navbar - Items Overflow Initial-Measure Guard
  *
  * Applied to the VISIBLE items cluster by Bridge / Compass / Canopy while

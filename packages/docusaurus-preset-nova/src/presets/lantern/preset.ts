@@ -11,7 +11,6 @@ import type { Presets_Lantern_Preset_Lantern } from '../../types/presets/lantern
  */
 export const presetsLanternPresetLantern: Presets_Lantern_Preset_Lantern = {
   logo: {
-    title: 'Lantern',
     alt: 'Lantern',
     src: '@nova-assets/presets/lantern/logo.svg',
   },

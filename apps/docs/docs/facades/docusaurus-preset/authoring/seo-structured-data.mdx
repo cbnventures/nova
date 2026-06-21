@@ -1,0 +1,91 @@
+---
+id: "seo-structured-data"
+title: "SEO and Structured Data"
+description: "Automatically inject schema.org JSON-LD into the document head so search engines render rich blog and breadcrumb snippets."
+sidebar_position: 4
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "structured data"
+  - "json-ld"
+  - "schema.org"
+  - "seo"
+  - "rich snippets"
+  - "breadcrumb schema"
+  - "blog schema"
+tags:
+  - "facades"
+  - "seo"
+  - "structured-data"
+  - "json-ld"
+  - "schema-org"
+---
+
+Inject schema.org JSON-LD into the document head so search engines understand your blog and doc structure and render rich snippets.
+
+## Summary
+
+- Emits a `Blog` JSON-LD script on blog listing pages so engines understand the post collection.
+- Emits a `BreadcrumbList` JSON-LD script on documentation pages, derived from the sidebar breadcrumb trail.
+- Runs automatically with no configuration. The preset swizzles the relevant theme components and adds the script tags for you.
+- Hardens the serialized output against script-tag breakout before it reaches the page.
+
+## Why Use This?
+
+- Adds structured data with zero setup so you do not have to hand-write JSON-LD or wire a plugin.
+- Helps Google render breadcrumbs directly in search results from your existing doc sidebar.
+- Improves blog rich-snippet eligibility by describing the post collection in machine-readable form.
+- Keeps the inline script safe from breakout so user-supplied titles and descriptions cannot inject markup.
+
+## How It Works
+
+The preset overrides two Docusaurus theme components and adds a JSON-LD `<script>` to the page head in each.
+
+### Blog Listing Pages
+
+The `BlogListPage` theme component renders a `BlogListPageStructuredData` child. It builds the schema from Docusaurus's `useBlogListPageStructuredData` hook (passed the page `sidebar`, `metadata`, and `items`) and writes a `Blog` schema into `<head>`:
+
+```html
+<script type="application/ld+json">
+  { "@context": "https://schema.org", "@type": "Blog", ... }
+</script>
+```
+
+This describes the paginated index of all posts so engines understand the blog's collection structure.
+
+### Documentation Pages
+
+The `DocBreadcrumbs` theme component renders a `DocBreadcrumbsStructuredData` child. It builds the schema from Docusaurus's `useBreadcrumbsStructuredData` hook (passed the page `breadcrumbs`) and writes a `BreadcrumbList` schema into `<head>`:
+
+```html
+<script type="application/ld+json">
+  { "@context": "https://schema.org", "@type": "BreadcrumbList", ... }
+</script>
+```
+
+The trail mirrors the sidebar breadcrumb path, so the breadcrumbs that already appear above each doc become eligible to show in search results.
+
+### Safe Serialization
+
+Both schemas pass through a shared serializer before they are written to the page. The serializer stringifies the schema and escapes every `<` to the unicode sequence `<`, so an embedded `</script>` in any string value (such as a post title or description) cannot close the inline `<script type="application/ld+json">` element early.
+
+```ts
+// Each "<" becomes the escaped unicode sequence "<".
+serializeJsonLd({ headline: 'A </script> in a title' });
+// => {"headline":"A </script> in a title"}
+```
+
+## Configuration
+
+This feature is always on and exposes no options. The schemas are emitted whenever a blog listing page or a doc page renders, so there is nothing to enable in `docusaurus.config.ts`.
+
+## Verifying the Output
+
+- **View source** — open a blog listing page or any doc page and search the page source for `application/ld+json`.
+- **Rich Results Test** — paste the page URL into Google's Rich Results Test to confirm the `Blog` or `BreadcrumbList` schema is detected.
+
+## Troubleshooting
+
+- **No `BreadcrumbList` on a doc page** — the schema is tied to the breadcrumb trail, so a page with breadcrumbs disabled emits nothing.
+- **No `Blog` schema on a single post** — the `Blog` schema is added to the blog listing (index) page, not to individual post pages.
+- **An escaped `<` in the JSON-LD** — this is expected. The serializer escapes `<` so an embedded `</script>` cannot break out of the inline script.

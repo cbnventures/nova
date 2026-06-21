@@ -9,6 +9,7 @@ import type {
   Lib_Search_Worker_HandleInit_Response,
   Lib_Search_Worker_HandleInit_Returns,
   Lib_Search_Worker_HandleMessage_MessageData,
+  Lib_Search_Worker_HandleSearch_FuzzyDistance,
   Lib_Search_Worker_HandleSearch_Hits,
   Lib_Search_Worker_HandleSearch_Message,
   Lib_Search_Worker_HandleSearch_Returns,
@@ -26,6 +27,7 @@ import type {
   Lib_Search_Worker_PerformSearch_EscapedTerm,
   Lib_Search_Worker_PerformSearch_ExactResults,
   Lib_Search_Worker_PerformSearch_ExistingScore,
+  Lib_Search_Worker_PerformSearch_FuzzyDistance,
   Lib_Search_Worker_PerformSearch_FuzzyQuery,
   Lib_Search_Worker_PerformSearch_FuzzyResults,
   Lib_Search_Worker_PerformSearch_HighlightPattern,
@@ -147,7 +149,8 @@ function handleSearch(message: Lib_Search_Worker_HandleSearch_Message): Lib_Sear
     return;
   }
 
-  const hits: Lib_Search_Worker_HandleSearch_Hits = performSearch(searchIndex, searchDocuments, message['query'], message['limit']);
+  const fuzzyDistance: Lib_Search_Worker_HandleSearch_FuzzyDistance = message['fuzzyDistance'] ?? 1;
+  const hits: Lib_Search_Worker_HandleSearch_Hits = performSearch(searchIndex, searchDocuments, message['query'], message['limit'], fuzzyDistance);
 
   self.postMessage({
     type: 'results', hits,
@@ -163,14 +166,15 @@ function handleSearch(message: Lib_Search_Worker_HandleSearch_Message): Lib_Sear
  * fuzzy), merges and deduplicates the results by path keeping the highest
  * score, sorts by descending score, caps at the limit, then maps refs to metadata.
  *
- * @param index     - Index.
- * @param documents - Documents.
- * @param query     - Query.
- * @param limit     - Limit.
- * @returns         Perform search.
+ * @param index         - Index.
+ * @param documents     - Documents.
+ * @param query         - Query.
+ * @param limit         - Limit.
+ * @param fuzzyDistance - Fuzzy distance.
+ * @returns             Perform search.
  * @since 0.15.0
  */
-function performSearch(index: Lib_Search_Worker_PerformSearch_Index, documents: Lib_Search_Worker_PerformSearch_Documents, query: Lib_Search_Worker_PerformSearch_Query, limit: Lib_Search_Worker_PerformSearch_Limit): Lib_Search_Worker_PerformSearch_Returns {
+function performSearch(index: Lib_Search_Worker_PerformSearch_Index, documents: Lib_Search_Worker_PerformSearch_Documents, query: Lib_Search_Worker_PerformSearch_Query, limit: Lib_Search_Worker_PerformSearch_Limit, fuzzyDistance: Lib_Search_Worker_PerformSearch_FuzzyDistance): Lib_Search_Worker_PerformSearch_Returns {
   const trimmedQuery: Lib_Search_Worker_PerformSearch_TrimmedQuery = query.trim();
 
   if (trimmedQuery === '') {
@@ -182,7 +186,7 @@ function performSearch(index: Lib_Search_Worker_PerformSearch_Index, documents: 
   const exactResults: Lib_Search_Worker_PerformSearch_ExactResults = typedIndex.search(trimmedQuery);
   const wildcardQuery: Lib_Search_Worker_PerformSearch_WildcardQuery = `${trimmedQuery}*`;
   const wildcardResults: Lib_Search_Worker_PerformSearch_WildcardResults = typedIndex.search(wildcardQuery);
-  const fuzzyQuery: Lib_Search_Worker_PerformSearch_FuzzyQuery = `${trimmedQuery}~1`;
+  const fuzzyQuery: Lib_Search_Worker_PerformSearch_FuzzyQuery = `${trimmedQuery}~${fuzzyDistance}`;
   const fuzzyResults: Lib_Search_Worker_PerformSearch_FuzzyResults = typedIndex.search(fuzzyQuery);
 
   const allResults: Lib_Search_Worker_PerformSearch_AllResults = [

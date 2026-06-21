@@ -63,7 +63,7 @@ Create `.env` and `.env.sample` files pre-populated with Nova-related environmen
 
 | Flag                 | Description                                                            |
 |----------------------|------------------------------------------------------------------------|
-| `-d, --dry-run`      | Preview the target file path without writing anything to disk.         |
+| `-d, --dry-run`      | Run without writing any files.                                         |
 | `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
 
 ## Output Files
@@ -83,7 +83,7 @@ When `.env` and `.env.sample` do not exist yet, the generator creates them from 
 
 When `.env` or `.env.sample` already exists, you are prompted to choose between:
 
-- **Manage existing variables** — Opens a menu where you can add, edit, or delete environment variables in both files. Template variables (shipped with Nova) are read-only and cannot be deleted. Changes are saved to both `.env` and `.env.sample` simultaneously.
+- **Manage existing variables** — Opens a menu where you can add, edit, or delete environment variables in both files. Template variables (shipped with Nova) can be edited but cannot be deleted. Changes are saved to both `.env` and `.env.sample` simultaneously.
 - **Regenerate from template** — Replaces the files with a fresh copy from the template (a `.nova-backup` copy is created unless `--replace-file` is set).
 
 ### Manage Menu

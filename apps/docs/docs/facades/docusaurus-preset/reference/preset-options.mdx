@@ -36,18 +36,22 @@ presets: [[
     analytics: { /* ... */ },
     search: { /* ... */ },
     progressBar: true,
+    iconSafelist: ['logos:slack'],
+    maxBundleFileSize: 3,
   },
 ]],
 ```
 
-| Option        | Type                                                                       | Default | Description                                             |
-|---------------|----------------------------------------------------------------------------|---------|---------------------------------------------------------|
-| `preset`      | `'envoy' \| 'foundry' \| 'lantern' \| 'marshal' \| 'sentinel' \| 'signal'` | —       | Which visual preset to use. Required.                   |
-| `overrides`   | `object`                                                                   | `{}`    | Override individual preset values. See Overrides below. |
-| `plugins`     | `object`                                                                   | `{}`    | Plugin configuration. See Plugin Options reference.     |
-| `analytics`   | `object`                                                                   | `{}`    | Analytics integrations. See Analytics below.            |
-| `search`      | `object \| false`                                                          | `false` | Search configuration. `false` disables search entirely. |
-| `progressBar` | `boolean \| object`                                                        | `false` | Enable the NProgress loading bar.                       |
+| Option              | Type                                                                       | Default | Description                                             |
+|---------------------|----------------------------------------------------------------------------|---------|---------------------------------------------------------|
+| `preset`            | `'envoy' \| 'foundry' \| 'lantern' \| 'marshal' \| 'sentinel' \| 'signal'` | —       | Which visual preset to use. Required.                   |
+| `overrides`         | `object`                                                                   | `{}`    | Override individual preset values. See Overrides below. |
+| `plugins`           | `object`                                                                   | `{}`    | Plugin configuration. See Plugin Options reference.     |
+| `analytics`         | `object`                                                                   | `{}`    | Analytics integrations. See Analytics below.            |
+| `search`            | `object \| false`                                                          | `false` | Search configuration. `false` disables search entirely. |
+| `progressBar`       | `boolean \| object`                                                        | `false` | Enable the NProgress loading bar.                       |
+| `iconSafelist`      | `string[]`                                                                 | `[]`    | Icon names to always bundle. See Icon Safelist below.   |
+| `maxBundleFileSize` | `number \| false`                                                          | `3`     | Max MiB per JS bundle file. See Bundle Size below.      |
 
 ## Overrides
 
@@ -107,3 +111,29 @@ See **[Search](/docs/facades/docusaurus-preset/systems/search)** for the full op
 | Option        | Type                | Default | Description                                |
 |---------------|---------------------|---------|--------------------------------------------|
 | `progressBar` | `boolean \| object` | `false` | Set to `true` to enable the NProgress bar. |
+
+## Icon Safelist
+
+The preset bundles only the icons it finds by scanning your `docs`, `blog`, and `src` files plus the resolved `themeConfig` at build time. Any icon referenced with a static `prefix:name` string — in MDX, component props, or config — is discovered automatically and tree-shaken into the build, so there is nothing to install and the client never ships icons you don't use.
+
+Use `iconSafelist` for the one case the scan can't see: an icon identifier assembled dynamically at runtime (for example, built from a variable). List those identifiers so they are always bundled.
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'envoy',
+  iconSafelist: ['logos:slack', 'mdi:rocket-launch'],
+}
+```
+
+## Bundle Size
+
+A production build (`docusaurus build`) fails if any emitted JavaScript file is larger than `maxBundleFileSize` mebibytes (MiB) (default `3`). This catches a bundle-size regression — an accidentally eager import, an un-tree-shaken dependency — at build time, long before it slows real page loads or trips a host's per-file limit. The error names the offending files.
+
+Raise the limit if a site has a genuinely large legitimate chunk, or set it to `false` to turn the check off entirely.
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'envoy',
+  maxBundleFileSize: 5, // mebibytes (MiB); or false to disable
+}
+```

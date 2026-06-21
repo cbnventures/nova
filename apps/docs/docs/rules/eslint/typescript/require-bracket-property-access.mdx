@@ -53,18 +53,12 @@ The rule inspects TypeScript's type information to distinguish project-defined t
     // Dot notation is allowed for method calls.
     console.log('hello');
 
-    // Dot notation is allowed for class instance members.
+    // Dot notation is allowed for class instances.
     class Service {
       url = '';
-
-      fetch() {
-        return this.url;
-      }
     }
-
-    // Dot notation is allowed for enums.
-    enum Status { Ok, Fail }
-    const s = Status.Ok;
+    const service = new Service();
+    const url = service.url;
     ```
 
   </TabItem>
@@ -153,8 +147,7 @@ The rule inspects TypeScript's type information to distinguish project-defined t
         rules: {
           '@cbnventures/nova/require-bracket-property-access': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -171,10 +164,10 @@ The rule inspects TypeScript's type information to distinguish project-defined t
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option              | Type       | Default | Description                                  |
-|---------------------|------------|---------|----------------------------------------------|
-| `allowedProperties` | `string[]` | `[]`    | Property names to always allow dot notation. |
-| `ignoreFiles`       | `string[]` | `[]`    | File patterns to skip.                       |
+| Option              | Type       | Default | Description                                                                                                                               |
+|---------------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `allowedProperties` | `string[]` | `[]`    | Property names to always allow dot notation.                                                                                              |
+| `ignoreFiles`       | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -187,5 +180,6 @@ npx eslint --fix . --rule '@cbnventures/nova/require-bracket-property-access: er
 ## Troubleshooting
 
 - **Error fires on a third-party type** — The rule resolves type origins by inspecting TypeScript's type information. If the type is defined in your project but wraps a third-party type, the rule may still flag it. Use the `allowedProperties` option to exclude specific property names.
-- **Error fires on a class instance property** — Class instance members accessed via `this` or a typed instance variable are excluded. If the rule still fires, check that the type is declared as a `class` and not a plain `type` or `interface`.
+- **Error fires on a class instance property** — Class instance members accessed via a typed instance variable are excluded. If the rule still fires, check that the type is declared as a `class` and not a plain `type` or `interface`.
 - **Left-side assignments are not flagged** — Assignment targets like `obj.prop = value` are handled by the separate `no-bracket-assignment` rule.
+- **Rule does nothing in `.js`/`.mjs` files** — The rule relies on TypeScript type information. Files parsed without TypeScript parser services (plain `.js`/`.mjs`, or any file not covered by a typed ESLint config) are skipped entirely.

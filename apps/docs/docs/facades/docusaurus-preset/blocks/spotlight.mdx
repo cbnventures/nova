@@ -49,8 +49,10 @@ import CodeBlock from '@theme/CodeBlock';
 
 ## Options
 
-| Prop       | Type                 | Default     | Description                                             |
-|------------|----------------------|-------------|---------------------------------------------------------|
-| `heading`  | `string`             | —           | Section heading text. Required.                         |
-| `children` | `ReactNode`          | —           | Freeform content below the heading. Required.           |
-| `surface`  | `'alt' \| undefined` | `undefined` | Set to `'alt'` to use the alternate surface background. |
+| Prop        | Type                         | Default     | Description                                                         |
+|-------------|------------------------------|-------------|---------------------------------------------------------------------|
+| `heading`   | `string`                     | —           | Section heading text. Required.                                     |
+| `children`  | `ReactNode`                  | —           | Freeform content below the heading. Required.                       |
+| `surface`   | `'alt' \| undefined`         | `undefined` | Set to `'alt'` to use the alternate surface background.             |
+| `className` | `string \| undefined`        | `undefined` | Additional class names merged with the base `nova-spotlight` class. |
+| `style`     | `CSSProperties \| undefined` | `undefined` | Inline style overrides applied to the root element.                 |

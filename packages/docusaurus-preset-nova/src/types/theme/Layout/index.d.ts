@@ -30,4 +30,19 @@ export type Theme_Layout_Index_Layout_Props = {
   [key: string]: unknown;
 };
 
+export type Theme_Layout_Index_Layout_PluginData_Search_HighlightSearchTermsOnTargetPage = boolean;
+
+export type Theme_Layout_Index_Layout_PluginData_Search = {
+  highlightSearchTermsOnTargetPage?: Theme_Layout_Index_Layout_PluginData_Search_HighlightSearchTermsOnTargetPage;
+} | undefined;
+
+export type Theme_Layout_Index_Layout_PluginData = {
+  search?: Theme_Layout_Index_Layout_PluginData_Search;
+  [key: string]: unknown;
+};
+
+export type Theme_Layout_Index_Layout_SearchSettings = Theme_Layout_Index_Layout_PluginData_Search;
+
+export type Theme_Layout_Index_Layout_HighlightSearchTerms = boolean;
+
 export type Theme_Layout_Index_Layout_MetadataSpread = Record<string, unknown>;

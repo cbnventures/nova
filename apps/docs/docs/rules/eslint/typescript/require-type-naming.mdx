@@ -111,8 +111,7 @@ A separate `invalidIdentifierPrefix` diagnostic fires when the first path segmen
         rules: {
           '@cbnventures/nova/require-type-naming': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -129,9 +128,9 @@ A separate `invalidIdentifierPrefix` diagnostic fires when the first path segmen
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description            |
-|---------------|------------|---------|------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -139,8 +138,10 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 
 ## Troubleshooting
 
-- **Warning fires but the prefix looks correct** — Check that the file path segments after `types/` match exactly. The rule splits on `/`, PascalCases each segment (kebab-case parts collapse together, e.g., `my-utility` becomes `MyUtility`), and joins the segments with underscores.
+- **Warning fires but the prefix looks correct** — Check that the file path segments after `types/` match exactly. The rule splits on `/`, PascalCases each segment (kebab-case parts collapse together, e.g., `my-utility` becomes `MyUtility`), and joins the segments with underscores. For a path segment that is already PascalCase (e.g., `MDXComponents`), each internal word is re-cased to first-letter-upper, rest-lower, so all-caps abbreviations are normalized: `MDXComponents` produces `MdxComponents`, not `MDXComponents`.
 - **Rule does not fire on `.ts` files** — This is expected. The rule only applies to files ending in `.d.ts`. Code files are not checked.
+- **Rule does not fire on a `.d.ts` file outside a `types/` directory** — This is expected. The prefix is derived only from path segments after a `/types/` directory; if the file path contains no `/types/` segment, no prefix can be derived and the file is not checked.
+- **`index.d.ts` files use the directory prefix** — A path segment named `index` is dropped when deriving the prefix, so `types/cli/utility/index.d.ts` expects the prefix `Cli_Utility` (the same as the directory), not `Cli_Utility_Index`.
 - **Test type files use a different prefix** — Files ending in `.test.d.ts` have the `.test` portion stripped before deriving the prefix, so they use the same prefix as their non-test counterpart.
 - **`invalidIdentifierPrefix` reported on the file itself** — The first path segment after `types/` begins with a digit, so the derived prefix would not be a legal TypeScript identifier. Rename the directory to start with a letter and the rule will resume normal prefix enforcement.
 

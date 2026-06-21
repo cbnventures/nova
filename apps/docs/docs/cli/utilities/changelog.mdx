@@ -98,7 +98,7 @@ You can run this command in two ways:
 | `-c, --category <category>` | Category: `updated`, `fixed`, `added`, `removed`.                          |
 | `-b, --bump <type>`         | Bump type: `major`, `minor`, `patch`.                                      |
 | `-m, --message <message>`   | Change description.                                                        |
-| `-d, --dry-run`             | Preview changes without writing files.                                     |
+| `-d, --dry-run`             | Run without writing any files.                                             |
 
 ## How It Works
 
@@ -127,7 +127,7 @@ The command exits with code **1** when validation fails (invalid flags, missing 
 
 Each recorded change is stored as an individual `.md` file in `.changelog/`:
 
-```markdown title=".changelog/brave-cats-run.md"
+```markdown title=".changelog/brave-cats-jump.md"
 ---
 package: "@cbnventures/nova"
 category: added

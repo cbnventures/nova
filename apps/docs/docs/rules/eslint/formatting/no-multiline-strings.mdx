@@ -102,7 +102,7 @@ Boundary `\n` at the start or end of a string is allowed — this is simple padd
   </TabItem>
   <TabItem value="allow-escape-sequences" label="Allow Escape Sequences">
 
-    Allow strings that use escape sequences like `\n` for line breaks:
+    Allow internal `\n` escape sequences in strings (backslash line continuation and visual newlines in template literals are still flagged):
 
     ```ts
     import { NoMultilineStrings } from '@cbnventures/nova/rules/eslint';
@@ -145,8 +145,7 @@ Boundary `\n` at the start or end of a string is allowed — this is simple padd
         rules: {
           '@cbnventures/nova/no-multiline-strings': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -163,10 +162,10 @@ Boundary `\n` at the start or end of a string is allowed — this is simple padd
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option                 | Type       | Default | Description                                              |
-|------------------------|------------|---------|----------------------------------------------------------|
-| `allowEscapeSequences` | `boolean`  | `false` | Skip checking internal `\n` escape sequences in strings. |
-| `ignoreFiles`          | `string[]` | `[]`    | File patterns to skip.                                   |
+| Option                 | Type       | Default | Description                                                                                                                               |
+|------------------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `allowEscapeSequences` | `boolean`  | `false` | Skip checking internal `\n` escape sequences in strings.                                                                                  |
+| `ignoreFiles`          | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -177,3 +176,4 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 - **Warning fires on `'\n'` in a join call** — The `'\n'` argument to `.join()` is a single-character string, not a multiline string. The rule should not flag it. If it does, check that the warning is on the correct node.
 - **Warning fires on boundary `\n` padding** — Only `\n` between content is flagged. Boundary `\n` at the start or end of a string (e.g., `'\nhello\n'`) is allowed. If the string also contains internal `\n`, the entire string is flagged.
 - **Template literal with expressions is flagged** — Only the newline content matters, not the expressions. A template literal like `` `${a}\n${b}` `` with internal `\n` between quasis is flagged. Boundary `\n` at the start of the first quasi or end of the last quasi is allowed.
+- **Multiline tagged template literal is not flagged** — Tagged template expressions (e.g. `` css`...` ``, `` gql`...` ``) are deliberately exempt; the rule only inspects untagged string and template literals, so newlines inside a tagged template are never reported.

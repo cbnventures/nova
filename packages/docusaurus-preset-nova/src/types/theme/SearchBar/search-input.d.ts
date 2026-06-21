@@ -1,6 +1,30 @@
 import type { Shared_SearchWorkerSearchHit } from '../../shared.d.ts';
 
 /**
+ * Theme - Search Bar - Search Input - Parse Shortcut Keymap.
+ *
+ * @since 0.18.1
+ */
+export type Theme_SearchBar_SearchInput_ParseShortcutKeymap_Keymap = string;
+
+export type Theme_SearchBar_SearchInput_ParseShortcutKeymap_Returns_Key = string;
+
+export type Theme_SearchBar_SearchInput_ParseShortcutKeymap_Returns_Modifiers = string[];
+
+export type Theme_SearchBar_SearchInput_ParseShortcutKeymap_Returns = {
+  key: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Returns_Key;
+  modifiers: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Returns_Modifiers;
+};
+
+export type Theme_SearchBar_SearchInput_ParseShortcutKeymap_Function = (keymap: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Keymap) => Theme_SearchBar_SearchInput_ParseShortcutKeymap_Returns;
+
+export type Theme_SearchBar_SearchInput_ParseShortcutKeymap_Tokens = string[];
+
+export type Theme_SearchBar_SearchInput_ParseShortcutKeymap_Key = string;
+
+export type Theme_SearchBar_SearchInput_ParseShortcutKeymap_Modifiers = string[];
+
+/**
  * Theme - Search Bar - Search Input - Search Input.
  *
  * @since 0.15.0
@@ -25,6 +49,21 @@ export type Theme_SearchBar_SearchInput_HandleQueryChange = import('./search-con
 
 export type Theme_SearchBar_SearchInput_InputRef = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value_InputRef;
 
+export type Theme_SearchBar_SearchInput_PluginData_Search_SearchBarShortcutKeymap = string;
+
+export type Theme_SearchBar_SearchInput_PluginData_Search = {
+  searchBarShortcutKeymap?: Theme_SearchBar_SearchInput_PluginData_Search_SearchBarShortcutKeymap;
+} | undefined;
+
+export type Theme_SearchBar_SearchInput_PluginData = {
+  search?: Theme_SearchBar_SearchInput_PluginData_Search;
+  [key: string]: unknown;
+};
+
+export type Theme_SearchBar_SearchInput_SearchSettings = Theme_SearchBar_SearchInput_PluginData_Search;
+
+export type Theme_SearchBar_SearchInput_ShortcutKeymap = string;
+
 export type Theme_SearchBar_SearchInput_IsActive = boolean;
 
 export type Theme_SearchBar_SearchInput_PreviousIsActiveRef = React.RefObject<boolean>;
@@ -41,9 +80,19 @@ export type Theme_SearchBar_SearchInput_SearchInput_OnSwapEnd_Function = (event:
 
 export type Theme_SearchBar_SearchInput_SearchInput_HandleKeyDown_Function = (event: Theme_SearchBar_SearchInput_KeyboardEvent) => void;
 
+export type Theme_SearchBar_SearchInput_ParsedKeymap = Theme_SearchBar_SearchInput_ParseShortcutKeymap_Returns;
+
+export type Theme_SearchBar_SearchInput_ShortcutKey = string;
+
+export type Theme_SearchBar_SearchInput_ShortcutModifiers = string[];
+
 export type Theme_SearchBar_SearchInput_KeyboardEvent = KeyboardEvent;
 
 export type Theme_SearchBar_SearchInput_IsMac = boolean;
+
+export type Theme_SearchBar_SearchInput_ModifiersMatch = boolean;
+
+export type Theme_SearchBar_SearchInput_Modifier = string;
 
 export type Theme_SearchBar_SearchInput_IsShortcutMatch = boolean;
 

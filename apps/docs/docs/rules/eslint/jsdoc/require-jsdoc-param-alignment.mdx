@@ -122,8 +122,7 @@ The rule checks that all parameter names start at the same column and all dashes
         rules: {
           '@cbnventures/nova/require-jsdoc-param-alignment': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -140,9 +139,9 @@ The rule checks that all parameter names start at the same column and all dashes
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description            |
-|---------------|------------|---------|------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -156,3 +155,4 @@ npx eslint --fix . --rule '@cbnventures/nova/require-jsdoc-param-alignment: erro
 
 - **Warning fires but alignment looks correct visually** — The rule checks character positions, not visual width. If you use a non-monospace font in your editor, the columns may appear aligned but differ in character count. Switch to a monospace font to verify.
 - **Single-param blocks are not checked** — The rule only fires when a JSDoc block has two or more `@param` tags. Single-parameter blocks are skipped because there is nothing to align against.
+- **Rule never fires on my multi-param block** — Only `@param` lines written as `@param {Type} name - description` are counted; a line is ignored unless it has all three of a `{type}` in braces, a name, and a `-` dash. A block needs at least two such lines to be checked, so two `@param` tags that lack a type or lack a dash are not aligned.

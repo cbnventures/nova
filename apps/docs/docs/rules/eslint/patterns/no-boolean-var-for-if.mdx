@@ -112,8 +112,7 @@ Variables used more than once or in a different context are not affected.
         rules: {
           '@cbnventures/nova/no-boolean-var-for-if': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -130,9 +129,9 @@ Variables used more than once or in a different context are not affected.
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description            |
-|---------------|------------|---------|------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -143,3 +142,4 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 - **Warning does not fire when the variable is used twice** — The rule uses scope analysis and only flags variables that are read exactly once. If the variable is referenced in multiple places, it is not flagged.
 - **Warning does not fire on a non-logical initializer** — Only `LogicalExpression` initializers (`&&`, `||`, `??`) trigger the rule. Simple comparisons or function calls are not affected.
 - **Warning fires on a `const` with `let`** — The rule only checks `const` declarations. `let` declarations are not affected.
+- **Warning does not fire on a multi-variable declaration** — The rule only checks single-declarator `const` statements. A declaration that declares more than one variable (e.g. `const a = x && y, b = 2;`) is not flagged.

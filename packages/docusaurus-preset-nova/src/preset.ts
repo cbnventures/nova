@@ -6,11 +6,13 @@ import { getShikiThemes } from './lib/shiki-themes.js';
 import type {
   Preset_Preset_BlogPlugin,
   Preset_Preset_BlogRehypePlugins,
+  Preset_Preset_BundleGuardPlugin,
   Preset_Preset_Context,
   Preset_Preset_CurrentDirectory,
   Preset_Preset_DocsPlugin,
   Preset_Preset_DocsRehypePlugins,
   Preset_Preset_GtmPlugin,
+  Preset_Preset_IconsPlugin,
   Preset_Preset_MergedBlogBeforeDefaultRehypePlugins,
   Preset_Preset_MergedBlogOptions,
   Preset_Preset_MergedDocsBeforeDefaultRehypePlugins,
@@ -141,6 +143,30 @@ function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options)
   const mermaidTooltipPlugin: Preset_Preset_MermaidTooltipPlugin = resolve(currentDirectory, 'plugins/mermaid-tooltip/index.js');
 
   plugins.push(mermaidTooltipPlugin);
+
+  // Icon scan plugin (always included). Discovers every Iconify identifier the
+  // site references and generates a client module registering only those icons,
+  // so whole Iconify collections are never bundled into the browser entry.
+  const iconsPlugin: Preset_Preset_IconsPlugin = [
+    resolve(currentDirectory, 'plugins/icons/index.js'),
+    {
+      iconSafelist: options['iconSafelist'],
+    },
+  ];
+
+  plugins.push(iconsPlugin);
+
+  // Bundle size guard (always included). Fails the production build if any
+  // emitted JavaScript bundle file exceeds the configured size limit, so a
+  // bundle-size regression is caught before it ships.
+  const bundleGuardPlugin: Preset_Preset_BundleGuardPlugin = [
+    resolve(currentDirectory, 'plugins/bundle-guard/index.js'),
+    {
+      maxBundleFileSize: options['maxBundleFileSize'],
+    },
+  ];
+
+  plugins.push(bundleGuardPlugin);
 
   // Google Tag Manager plugin (if gtm option provided).
   if (options['analytics']['gtm'] !== undefined) {

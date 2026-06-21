@@ -1,6 +1,7 @@
 import Head from '@docusaurus/Head';
 import { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { usePluginData } from '@docusaurus/useGlobalData';
 import Layout from '@theme/Layout';
 import {
   useCallback, useEffect, useRef, useState,
@@ -14,7 +15,9 @@ import type {
   Theme_SearchPage_Index_SearchPage_DebounceTimerRef,
   Theme_SearchPage_Index_SearchPage_DispatchedQueryRef,
   Theme_SearchPage_Index_SearchPage_DocusaurusContext,
+  Theme_SearchPage_Index_SearchPage_FuzzyMatchingDistance,
   Theme_SearchPage_Index_SearchPage_HandleInputChangeFunction,
+  Theme_SearchPage_Index_SearchPage_HighlightSearchTerms,
   Theme_SearchPage_Index_SearchPage_InitialQuery,
   Theme_SearchPage_Index_SearchPage_InputChangeEvent,
   Theme_SearchPage_Index_SearchPage_InputValue,
@@ -22,6 +25,7 @@ import type {
   Theme_SearchPage_Index_SearchPage_ManifestUrl,
   Theme_SearchPage_Index_SearchPage_NewUrl,
   Theme_SearchPage_Index_SearchPage_NoResults,
+  Theme_SearchPage_Index_SearchPage_PluginData,
   Theme_SearchPage_Index_SearchPage_Props,
   Theme_SearchPage_Index_SearchPage_Query,
   Theme_SearchPage_Index_SearchPage_QueryState,
@@ -33,6 +37,8 @@ import type {
   Theme_SearchPage_Index_SearchPage_SearchedQueryState,
   Theme_SearchPage_Index_SearchPage_Searching,
   Theme_SearchPage_Index_SearchPage_SearchParams,
+  Theme_SearchPage_Index_SearchPage_SearchResultLimits,
+  Theme_SearchPage_Index_SearchPage_SearchSettings,
   Theme_SearchPage_Index_SearchPage_SearchWorker,
   Theme_SearchPage_Index_SearchPage_SetQuery,
   Theme_SearchPage_Index_SearchPage_SetSearchedQuery,
@@ -62,8 +68,14 @@ function SearchPage(props: Theme_SearchPage_Index_SearchPage_Props) {
   const workerUrl: Theme_SearchPage_Index_SearchPage_WorkerUrl = `${baseUrl}search-worker.js`;
   const manifestUrl: Theme_SearchPage_Index_SearchPage_ManifestUrl = `${baseUrl}search-manifest.json`;
 
+  const novaPluginData: Theme_SearchPage_Index_SearchPage_PluginData = usePluginData('docusaurus-theme-nova') as Theme_SearchPage_Index_SearchPage_PluginData;
+  const searchSettings: Theme_SearchPage_Index_SearchPage_SearchSettings = novaPluginData['search'];
+  const searchResultLimits: Theme_SearchPage_Index_SearchPage_SearchResultLimits = (searchSettings !== undefined) ? searchSettings['searchResultLimits'] ?? 8 : 8;
+  const fuzzyMatchingDistance: Theme_SearchPage_Index_SearchPage_FuzzyMatchingDistance = (searchSettings !== undefined) ? searchSettings['fuzzyMatchingDistance'] ?? 1 : 1;
+  const highlightSearchTerms: Theme_SearchPage_Index_SearchPage_HighlightSearchTerms = (searchSettings !== undefined) ? searchSettings['highlightSearchTermsOnTargetPage'] ?? true : true;
+
   const searchWorker: Theme_SearchPage_Index_SearchPage_SearchWorker = useSearchWorker({
-    workerUrl, manifestUrl,
+    workerUrl, manifestUrl, searchResultLimits, fuzzyMatchingDistance,
   });
 
   const searchParams: Theme_SearchPage_Index_SearchPage_SearchParams = (typeof window !== 'undefined') ? new URLSearchParams(window.location.search) : new URLSearchParams();
@@ -80,7 +92,7 @@ function SearchPage(props: Theme_SearchPage_Index_SearchPage_Props) {
   const debounceTimerRef: Theme_SearchPage_Index_SearchPage_DebounceTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const dispatchedQueryRef: Theme_SearchPage_Index_SearchPage_DispatchedQueryRef = useRef<string>('');
 
-  useSearchHighlight({ enabled: true });
+  useSearchHighlight({ enabled: highlightSearchTerms });
 
   // Trigger search when worker becomes ready and query is pre-filled.
   useEffect(() => {

@@ -128,8 +128,7 @@ If the stem does not match, the rule reports on the first line of the file.
         rules: {
           '@cbnventures/nova/require-kebab-case-filename': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -146,10 +145,10 @@ If the stem does not match, the rule reports on the first line of the file.
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option            | Type       | Default | Description                                              |
-|-------------------|------------|---------|----------------------------------------------------------|
-| `extraExtensions` | `string[]` | `[]`    | Compound extensions to strip before validating the stem. |
-| `ignoreFiles`     | `string[]` | `[]`    | File patterns to skip.                                   |
+| Option            | Type       | Default | Description                                                                                                                               |
+|-------------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `extraExtensions` | `string[]` | `[]`    | Compound extensions to strip before validating the stem.                                                                                  |
+| `ignoreFiles`     | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -157,6 +156,6 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 
 ## Troubleshooting
 
-- **Warning fires on a generated file** — Add the file pattern to `ignoreFiles` (e.g., `['**/generated/**']`).
+- **Warning fires on a generated file** — Add the file name to `ignoreFiles` (e.g., `['*.gen.ts']`).
 - **Warning fires on a file with compound extensions** — The rule strips known extensions (`.d.ts`, `.test.ts`, `.tsx`, etc.) before checking. If your extension is not recognized, the full name including the extra extension is checked against kebab-case.
-- **Want to allow PascalCase for React components** — Add the component file patterns to `ignoreFiles` (e.g., `['**/components/**']`).
+- **Want to allow PascalCase for React components** — Add the component file names to `ignoreFiles` (e.g., `['*.tsx']`).

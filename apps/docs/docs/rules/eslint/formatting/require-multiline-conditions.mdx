@@ -159,8 +159,7 @@ This covers every context — `if`, `while`, `do...while`, `for`, ternary, `retu
         rules: {
           '@cbnventures/nova/require-multiline-conditions': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -177,10 +176,10 @@ This covers every context — `if`, `while`, `do...while`, `for`, ternary, `retu
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description                                                                     |
-|---------------|------------|---------|---------------------------------------------------------------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.                                                          |
-| `maxInline`   | `number`   | `2`     | Maximum number of operands allowed on a single line before requiring multiline. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+| `maxInline`   | `number`   | `2`     | Maximum number of operands allowed on a single line before requiring multiline.                                                           |
 
 ## Autofix
 

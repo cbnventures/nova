@@ -59,6 +59,7 @@ import type {
   Index_Runner_Default_AllContentLoaded_NotFoundBundleCount,
   Index_Runner_Default_AllContentLoaded_NotFoundBundleIndex,
   Index_Runner_Default_AllContentLoaded_PermalinkValue,
+  Index_Runner_Default_AllContentLoaded_SearchSettings,
   Index_Runner_Default_AnnouncementBar,
   Index_Runner_Default_AssetsDirectory,
   Index_Runner_Default_BlocksPath,
@@ -693,6 +694,17 @@ export class Runner {
         const errorPageContentTitleIndex: Index_Runner_Default_AllContentLoaded_ErrorPageContentTitleIndex = Math.floor(Math.random() * errorPageContentTitleCount);
         const creditPhraseIndex: Index_Runner_Default_AllContentLoaded_CreditPhraseIndex = Math.floor(Math.random() * creditPhraseCount);
 
+        // Surface the resolved search settings to the client so the runtime
+        // search components can honor the configured limits, fuzzy distance,
+        // shortcut keymap, and highlight toggle. Leave undefined when search
+        // is disabled so consumers fall back to their built-in defaults.
+        const searchSettings: Index_Runner_Default_AllContentLoaded_SearchSettings = (searchConfig !== undefined && searchConfig !== false) ? {
+          searchResultLimits: searchConfig['searchResultLimits'] ?? 8,
+          fuzzyMatchingDistance: searchConfig['fuzzyMatchingDistance'] ?? 1,
+          searchBarShortcutKeymap: searchConfig['searchBarShortcutKeymap'] ?? 'mod+k',
+          highlightSearchTermsOnTargetPage: searchConfig['highlightSearchTermsOnTargetPage'] ?? true,
+        } : undefined;
+
         actions.setGlobalData({
           blogAuthors,
           blogPosts,
@@ -701,13 +713,13 @@ export class Runner {
           footerVariant: resolvedPreset['footer'],
           presetCta: resolvedPreset['cta'],
           presetLogo: {
-            title: resolvedPreset['logo']['title'],
             alt: resolvedPreset['logo']['alt'],
             src: presetLogoDataUri,
           },
           notFoundBundleIndex,
           errorPageContentTitleIndex,
           creditPhraseIndex,
+          search: searchSettings,
         });
 
         return;

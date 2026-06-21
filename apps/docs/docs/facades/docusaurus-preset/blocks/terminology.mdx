@@ -27,7 +27,7 @@ Inline glossary block that expands abbreviations on hover. Wrap any text to add 
 
 ## Summary
 
-The Terminology block renders an `<abbr>` (or `<Link>` when `to` is provided) with `aria-label` and `title` attributes set to the expanded abbreviation. On hover, browsers display the tooltip natively.
+The Terminology block renders an `<abbr>` with a `title` attribute set to the expanded abbreviation (or a `<Link>` with both `title` and `aria-label` when `to` is provided). On hover, browsers display the tooltip natively.
 
 The optional `color` prop adds a visual accent to distinguish glossary terms from regular text.
 
@@ -35,7 +35,7 @@ The optional `color` prop adds a visual accent to distinguish glossary terms fro
 
 - **Abbreviation expansion** without leaving the page or breaking reading flow.
 - **Linked glossary** — optionally navigate to a terminology page on click.
-- **Accessible** — uses native `title` and `aria-label` attributes for screen readers.
+- **Accessible** — uses the native `title` attribute for screen readers, plus `aria-label` on the linked variant.
 - **Preset-aware** — the color accent uses the active preset's primary color.
 
 ## Usage
@@ -81,12 +81,14 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 ## Options
 
-| Prop       | Type                   | Default     | Description                                                       |
-|------------|------------------------|-------------|-------------------------------------------------------------------|
-| `children` | `ReactNode`            | —           | The text to wrap with a tooltip. Required.                        |
-| `title`    | `string`               | —           | Expanded abbreviation shown on hover. Required.                   |
-| `to`       | `string \| undefined`  | `undefined` | Link target. When set, renders as a `<Link>` instead of `<abbr>`. |
-| `color`    | `boolean \| undefined` | `undefined` | Set to `true` to add a color accent to the text.                  |
+| Prop        | Type                         | Default     | Description                                                           |
+|-------------|------------------------------|-------------|-----------------------------------------------------------------------|
+| `children`  | `ReactNode`                  | —           | The text to wrap with a tooltip. Required.                            |
+| `title`     | `string`                     | —           | Expanded abbreviation shown on hover. Required.                       |
+| `to`        | `string \| undefined`        | `undefined` | Link target. When set, renders as a `<Link>` instead of `<abbr>`.     |
+| `color`     | `boolean \| undefined`       | `undefined` | Set to `true` to add a color accent to the text.                      |
+| `className` | `string \| undefined`        | `undefined` | Additional class names merged with the base `nova-terminology` class. |
+| `style`     | `CSSProperties \| undefined` | `undefined` | Inline style overrides applied to the root element.                   |
 
 ## Troubleshooting
 

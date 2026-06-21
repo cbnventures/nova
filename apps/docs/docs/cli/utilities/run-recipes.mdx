@@ -19,11 +19,18 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Run all enabled <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> in sequence.
+Run all configured <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> in sequence.
 
 ## Summary
 
-The `run-recipes` command discovers and executes all registered <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> in sequence. This is the single command that replaces chaining individual <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> commands.
+The `run-recipes` command discovers and executes all registered <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> in sequence. This is the single command that replaces chaining individual <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> commands. There is no category flag, so every invocation runs all recipes across both the `github` and `package-json` categories.
+
+## Recipe Categories
+
+| Category       | Recipes                                                                                                                                                                          |
+|----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `github`       | `sync-features`, `sync-identity`, `sync-policies`                                                                                                                                |
+| `package-json` | `sync-identity`, `sync-ownership`, `normalize-modules`, `normalize-artifacts`, `sync-environment`, `normalize-dependencies`, `normalize-bundler`, `normalize-tooling`, `cleanup` |
 
 ## Why Use This Command?
 
@@ -66,5 +73,5 @@ The `run-recipes` command discovers and executes all registered <Terminology tit
 
 | Flag                 | Description                                                            |
 |----------------------|------------------------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-d, --dry-run`      | Run without writing any files.                                         |
 | `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

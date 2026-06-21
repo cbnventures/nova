@@ -17,17 +17,20 @@ import type {
   Tests_Lib_Search_Worker_LastScore,
   Tests_Lib_Search_Worker_MapHitPath_Hit,
   Tests_Lib_Search_Worker_MapHitPath_Returns,
+  Tests_Lib_Search_Worker_NarrowResults,
   Tests_Lib_Search_Worker_Paths,
   Tests_Lib_Search_Worker_PerformSearchDeduplication_ReturnsUniquePathsWithNoDuplicates_Index,
   Tests_Lib_Search_Worker_PerformSearchEmptyQuery_ReturnsAnEmptyArrayForAnEmptyQuery_Index,
   Tests_Lib_Search_Worker_PerformSearchExact_ReturnsMatchingDocumentsForAnExactQuery_Index,
   Tests_Lib_Search_Worker_PerformSearchFuzzy_MatchesNearMissQueriesViaFuzzyStrategy_Index,
+  Tests_Lib_Search_Worker_PerformSearchFuzzyDistance_WidensFuzzyMatchingAsTheDistanceIncreases_Index,
   Tests_Lib_Search_Worker_PerformSearchLimit_CapsResultsAtTheSpecifiedLimit_Index,
   Tests_Lib_Search_Worker_PerformSearchScoreSorting_ReturnsResultsSortedByScoreDescending_Index,
   Tests_Lib_Search_Worker_PerformSearchWildcard_MatchesPrefixQueriesViaWildcardStrategy_Index,
   Tests_Lib_Search_Worker_Results,
   Tests_Lib_Search_Worker_TestData,
   Tests_Lib_Search_Worker_UniquePaths,
+  Tests_Lib_Search_Worker_WiderResults,
 } from '../../../types/tests/lib/search/worker.test.d.ts';
 
 /**
@@ -115,7 +118,7 @@ describe('performSearch exact', async () => {
     const testData: Tests_Lib_Search_Worker_TestData = buildTestIndex();
     const index: Tests_Lib_Search_Worker_PerformSearchExact_ReturnsMatchingDocumentsForAnExactQuery_Index = testData['index'];
     const documents: Tests_Lib_Search_Worker_Documents = testData['documents'];
-    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, 'introduction', 10);
+    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, 'introduction', 10, 1);
 
     ok(results.length > 0);
 
@@ -144,7 +147,7 @@ describe('performSearch wildcard', async () => {
     const testData: Tests_Lib_Search_Worker_TestData = buildTestIndex();
     const index: Tests_Lib_Search_Worker_PerformSearchWildcard_MatchesPrefixQueriesViaWildcardStrategy_Index = testData['index'];
     const documents: Tests_Lib_Search_Worker_Documents = testData['documents'];
-    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, 'config', 10);
+    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, 'config', 10, 1);
 
     ok(results.length > 0);
 
@@ -164,9 +167,31 @@ describe('performSearch fuzzy', async () => {
     const testData: Tests_Lib_Search_Worker_TestData = buildTestIndex();
     const index: Tests_Lib_Search_Worker_PerformSearchFuzzy_MatchesNearMissQueriesViaFuzzyStrategy_Index = testData['index'];
     const documents: Tests_Lib_Search_Worker_Documents = testData['documents'];
-    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, 'tutoril', 10);
+    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, 'tutoril', 10, 1);
 
     ok(results.length > 0);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Search - Worker - PerformSearch Fuzzy Distance.
+ *
+ * @since 0.18.1
+ */
+describe('performSearch fuzzy distance', async () => {
+  it('widens fuzzy matching as the distance increases', () => {
+    const testData: Tests_Lib_Search_Worker_TestData = buildTestIndex();
+    const index: Tests_Lib_Search_Worker_PerformSearchFuzzyDistance_WidensFuzzyMatchingAsTheDistanceIncreases_Index = testData['index'];
+    const documents: Tests_Lib_Search_Worker_Documents = testData['documents'];
+    const narrowResults: Tests_Lib_Search_Worker_NarrowResults = performSearch(index, documents, 'tutorail', 10, 1);
+    const widerResults: Tests_Lib_Search_Worker_WiderResults = performSearch(index, documents, 'tutorail', 10, 2);
+
+    ok(widerResults.length >= narrowResults.length);
+    ok(widerResults.length > 0);
 
     return;
   });
@@ -184,7 +209,7 @@ describe('performSearch deduplication', async () => {
     const testData: Tests_Lib_Search_Worker_TestData = buildTestIndex();
     const index: Tests_Lib_Search_Worker_PerformSearchDeduplication_ReturnsUniquePathsWithNoDuplicates_Index = testData['index'];
     const documents: Tests_Lib_Search_Worker_Documents = testData['documents'];
-    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, 'configuration', 10);
+    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, 'configuration', 10, 1);
     const paths: Tests_Lib_Search_Worker_Paths = results.map(mapHitPath);
     const uniquePaths: Tests_Lib_Search_Worker_UniquePaths = new Set(paths);
 
@@ -206,7 +231,7 @@ describe('performSearch score sorting', async () => {
     const testData: Tests_Lib_Search_Worker_TestData = buildTestIndex();
     const index: Tests_Lib_Search_Worker_PerformSearchScoreSorting_ReturnsResultsSortedByScoreDescending_Index = testData['index'];
     const documents: Tests_Lib_Search_Worker_Documents = testData['documents'];
-    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, 'guide', 10);
+    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, 'guide', 10, 1);
 
     if (results.length >= 2
       && results[0] !== undefined
@@ -238,7 +263,7 @@ describe('performSearch limit', async () => {
     const testData: Tests_Lib_Search_Worker_TestData = buildTestIndex();
     const index: Tests_Lib_Search_Worker_PerformSearchLimit_CapsResultsAtTheSpecifiedLimit_Index = testData['index'];
     const documents: Tests_Lib_Search_Worker_Documents = testData['documents'];
-    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, 'guide', 1);
+    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, 'guide', 1, 1);
 
     ok(results.length <= 1);
 
@@ -258,7 +283,7 @@ describe('performSearch empty query', async () => {
     const testData: Tests_Lib_Search_Worker_TestData = buildTestIndex();
     const index: Tests_Lib_Search_Worker_PerformSearchEmptyQuery_ReturnsAnEmptyArrayForAnEmptyQuery_Index = testData['index'];
     const documents: Tests_Lib_Search_Worker_Documents = testData['documents'];
-    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, '', 10);
+    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, '', 10, 1);
 
     deepStrictEqual(results, []);
 

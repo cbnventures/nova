@@ -11,7 +11,6 @@ import type { Presets_Sample_Preset_Sample } from '../../types/presets/sample/pr
  */
 export const presetsSamplePresetSample: Presets_Sample_Preset_Sample = {
   logo: {
-    title: 'Sample',
     alt: 'Sample',
     src: '@nova-assets/presets/sample/logo.svg',
   },

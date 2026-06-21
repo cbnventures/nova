@@ -1,12 +1,215 @@
 ---
 id: "dx-code-style"
 title: "DX - Code Style"
-description: "x"
+description: "Enforce a strict, project-wide code style for JS and TS with a stylistic formatting baseline plus focused groups of core ESLint rules."
 keywords:
-  - "x"
+  - "nova"
+  - "dx code style"
+  - "eslint preset"
+  - "code style"
+  - "stylistic"
+  - "formatting"
+  - "control flow"
+  - "code safety"
+  - "javascript"
+  - "typescript"
 tags:
   - "presets"
-  - "x"
+  - "eslint"
+  - "code-style"
+  - "stylistic"
+  - "formatting"
 ---
 
-Coming soon
+Enforce a consistent code style across every JavaScript and TypeScript file by combining a `@stylistic` formatting baseline with focused groups of core ESLint rules for control flow, safety, and conventions.
+
+## Why Use This Preset?
+
+1. Applies the `@stylistic` recommended baseline so formatting stays uniform without a separate formatter in the pipeline.
+2. Groups rules by theme (arrows, objects, operators, safety, and more) so the intent of each ruleset is visible and easy to inspect.
+3. Targets all script extensions (`.js`, `.ts`, `.jsx`, `.tsx`, `.cjs`, `.cts`, `.mjs`, `.mts`) so mixed-module projects share one style.
+4. Catches unsafe patterns like `eval`, implied-eval calls, and throwing non-`Error` values so common runtime footguns are flagged early.
+5. Sits at the code-style layer so it composes cleanly above ignores and below your language and runtime presets.
+
+## Usage
+
+Import `dxCodeStyle` from the ESLint presets entry point and spread it into the default-export array of `eslint.config.ts`, right after `dxIgnore` in the code-style layer.
+
+```ts title="eslint.config.ts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  langTypescript,
+  runtimeNode,
+} from '@cbnventures/nova/presets/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...runtimeNode,
+];
+```
+
+## What This Preset Configures
+
+The preset registers the `@stylistic` plugin and applies its recommended ruleset as a baseline, then layers themed groups of core ESLint and `@stylistic` rules on top. Every group targets all eight script extensions (`.js`, `.ts`, `.jsx`, `.tsx`, `.cjs`, `.cts`, `.mjs`, `.mts`), and every rule reports as an `error`.
+
+### Stylistic baseline
+
+Registers the `@stylistic` plugin and spreads its recommended ruleset for formatting and spacing across all files.
+
+### Arrows
+
+| Rule                      | What it enforces                                                                               |
+|---------------------------|------------------------------------------------------------------------------------------------|
+| `@stylistic/arrow-parens` | Requires parentheses around arrow parameters so `if (a => b)` isn't mistaken for a comparison. |
+
+### Braces, commas, semicolons
+
+| Rule                      | What it enforces                                                                                  |
+|---------------------------|---------------------------------------------------------------------------------------------------|
+| `@stylistic/brace-style`  | Enforces 1tbs brace style with no single-line bodies so opening braces sit on the statement line. |
+| `@stylistic/comma-dangle` | Requires trailing commas in multiline code so adding lines doesn't break diffs.                   |
+| `@stylistic/semi`         | Requires semicolons so automatic semicolon insertion never silently changes parsing.              |
+| `curly`                   | Enforces curly braces on all control structures so single-line bodies don't grow into bugs.       |
+
+### Cleanup
+
+| Rule                      | What it enforces                                                                               |
+|---------------------------|------------------------------------------------------------------------------------------------|
+| `no-array-constructor`    | Bans the `Array` constructor so a single-number argument doesn't create a sparse array.        |
+| `no-console`              | Bans raw `console` output so all logging flows through the Logger toolkit battery.             |
+| `no-multi-assign`         | Disallows chained assignments so each assignment stays visible and types aren't shared.        |
+| `no-process-exit`         | Disallows `process.exit()` so error handling follows structured patterns.                      |
+| `no-restricted-exports`   | Bans exporting `default` and `then` so modules don't become thenable or break dynamic import.  |
+| `no-useless-computed-key` | Disallows computed keys for static strings so object keys don't look dynamic when they aren't. |
+| `no-useless-concat`       | Disallows concatenating two string literals since they should just be one literal.             |
+| `no-useless-rename`       | Disallows renaming imports, exports, or destructured values to the same name.                  |
+| `prefer-object-spread`    | Requires spread syntax over `Object.assign()` so the new object's shape is visible inline.     |
+| `radix`                   | Requires the radix argument in `parseInt()` so the base is always explicit.                    |
+
+### Control flow
+
+| Rule                  | What it enforces                                                                             |
+|-----------------------|----------------------------------------------------------------------------------------------|
+| `guard-for-in`        | Requires a `hasOwnProperty` check in `for-in` loops so inherited properties aren't iterated. |
+| `no-else-return`      | Disallows `else` after a `return` (including `else if`) so an indentation level is removed.  |
+| `no-lone-blocks`      | Disallows standalone blocks so nesting without a control statement doesn't mislead readers.  |
+| `no-lonely-if`        | Disallows a lone `if` inside an `else` so it reads as a flat `else if` branch.               |
+| `no-unreachable-loop` | Disallows loops that always exit after one iteration so the loop construct isn't misleading. |
+
+### Conventions
+
+| Rule                 | What it enforces                                                                                  |
+|----------------------|---------------------------------------------------------------------------------------------------|
+| `default-case-last`  | Requires the `default` clause to be the last case in a `switch` so the fallback is at the bottom. |
+| `new-cap`            | Requires constructors to start with a capital letter so `new` calls are visually distinct.        |
+| `spaced-comment`     | Requires a space after `//` and `/*` so comment text is never jammed against the delimiter.       |
+| `symbol-description` | Requires a description when creating a `Symbol` so debug output shows a meaningful label.         |
+
+### Functions and classes
+
+| Rule                           | What it enforces                                                                                        |
+|--------------------------------|---------------------------------------------------------------------------------------------------------|
+| `array-callback-return`        | Requires returns in array method callbacks so missing returns don't produce `undefined`.                |
+| `default-param-last`           | Requires default-valued parameters to be last so callers can omit trailing arguments.                   |
+| `grouped-accessor-pairs`       | Requires getter and setter for the same property to be adjacent so the pair stays together.             |
+| `max-classes-per-file`         | Limits files to one class so each file has a single responsibility.                                     |
+| `no-constructor-return`        | Disallows returning a value inside constructors so the instance is always returned.                     |
+| `no-extra-bind`                | Disallows `.bind()` on functions that never use `this` so bind is reserved for real context.            |
+| `no-loop-func`                 | Disallows functions in loops that reference loop variables so closure-over-mutation bugs are prevented. |
+| `no-new`                       | Disallows `new` for side effects without storing the result.                                            |
+| `no-return-assign`             | Disallows assignments inside `return` statements so the assignment isn't overlooked.                    |
+| `no-useless-catch`             | Disallows `catch` clauses that just rethrow so `try`/`catch` only appears when handling.                |
+| `no-useless-constructor`       | Disallows constructors that do nothing or just call `super()` unchanged.                                |
+| `prefer-promise-reject-errors` | Requires `Promise.reject()` to receive an `Error` so rejections carry a stack trace.                    |
+| `prefer-spread`                | Requires spread syntax over `.apply()` so a direct call reads clearly.                                  |
+
+### Arrays
+
+| Rule                               | What it enforces                                                           |
+|------------------------------------|----------------------------------------------------------------------------|
+| `@stylistic/array-bracket-newline` | Forces line breaks inside brackets once there are two or more elements.    |
+| `@stylistic/array-element-newline` | Forces each element onto its own line once there are two or more elements. |
+
+### Objects
+
+| Rule                              | What it enforces                                                                                                                       |
+|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `@stylistic/object-curly-newline` | Forces curly-brace line breaks by node type so each property gets its own line in larger literals, patterns, imports, and type bodies. |
+| `object-shorthand`                | Requires property shorthand so object literals don't repeat names.                                                                     |
+
+### Operators
+
+| Rule                            | What it enforces                                                                                    |
+|---------------------------------|-----------------------------------------------------------------------------------------------------|
+| `@stylistic/no-mixed-operators` | Requires parentheses when mixing operators of different precedence so evaluation order is explicit. |
+| `eqeqeq`                        | Requires strict equality (`===`, `!==`) so type coercion is never hidden.                           |
+| `no-bitwise`                    | Disallows bitwise operators so a stray `&` or `\|` is caught instead of `&&` or `\|\|`.             |
+| `no-cond-assign`                | Disallows assignment in conditional expressions so `=` for `===` is caught.                         |
+| `no-delete-var`                 | Disallows deleting variables since bindings are managed through scope.                              |
+| `no-param-reassign`             | Disallows reassigning parameters (including their properties) so mutations stay visible.            |
+| `no-plusplus`                   | Forbids `++` and `--` so increments are written as explicit assignments.                            |
+| `no-self-compare`               | Disallows comparing a variable to itself so copy-paste bugs like `x === x` are caught.              |
+| `no-sequences`                  | Disallows the comma operator so side effects aren't hidden inside expressions.                      |
+| `no-unsafe-negation`            | Prevents confusing negation so `!a in b` isn't mistaken for `!(a in b)`.                            |
+| `no-void`                       | Disallows the `void` operator (except as a statement) so `undefined` is written directly.           |
+| `operator-assignment`           | Requires shorthand operator assignments (`+=`, `-=`, `*=`) so the target is written once.           |
+| `yoda`                          | Disallows Yoda conditions so comparisons read variable-first, literal-second.                       |
+
+### Quotes
+
+| Rule                     | What it enforces                                                                    |
+|--------------------------|-------------------------------------------------------------------------------------|
+| `@stylistic/quote-props` | Enforces quoting all or none of an object's keys so quoting stays consistent.       |
+| `@stylistic/quotes`      | Requires single quotes so double quotes stay reserved for HTML/JSX attributes.      |
+| `prefer-template`        | Requires template literals over string concatenation when expressions are involved. |
+
+### Safety
+
+| Rule                         | What it enforces                                                                                      |
+|------------------------------|-------------------------------------------------------------------------------------------------------|
+| `no-caller`                  | Disallows `arguments.caller` and `arguments.callee` so code avoids features removed from strict mode. |
+| `no-eval`                    | Disallows `eval()` so arbitrary strings are never executed as code.                                   |
+| `no-extend-native`           | Disallows extending native built-in prototypes so built-in behavior stays predictable.                |
+| `no-implied-eval`            | Disallows string arguments to `setTimeout`/`setInterval` so hidden eval-like execution is prevented.  |
+| `no-iterator`                | Disallows the `__iterator__` property so code uses the standard `Symbol.iterator` protocol.           |
+| `no-new-func`                | Disallows the `Function` constructor so code is not compiled from strings like `eval`.                |
+| `no-new-wrappers`            | Disallows primitive wrapper constructors so values stay primitives, not objects.                      |
+| `no-octal-escape`            | Disallows octal escape sequences so strings use standard Unicode or hex escapes.                      |
+| `no-promise-executor-return` | Disallows returning a value inside a Promise executor so a missing resolve/reject isn't hidden.       |
+| `no-proto`                   | Disallows the `__proto__` property so prototype access uses the standard methods.                     |
+| `no-throw-literal`           | Disallows throwing anything that isn't an `Error` so stack traces are always available.               |
+
+### Ternary
+
+| Rule                           | What it enforces                                                                  |
+|--------------------------------|-----------------------------------------------------------------------------------|
+| `@stylistic/multiline-ternary` | Disallows line breaks in ternaries (JSX exempt) so a split ternary is refactored. |
+| `no-nested-ternary`            | Disallows nested ternaries so readers aren't forced to track precedence.          |
+| `no-unneeded-ternary`          | Disallows ternaries that can be simplified, like `x ? true : false`.              |
+
+### Text characters
+
+| Rule                      | What it enforces                                                                                                            |
+|---------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| `no-irregular-whitespace` | Disallows irregular Unicode whitespace in strings, templates, and JSX text so invisible characters don't cause subtle bugs. |
+
+### Variables
+
+| Rule                    | What it enforces                                                                         |
+|-------------------------|------------------------------------------------------------------------------------------|
+| `no-label-var`          | Disallows labels that share a name with a variable so identifiers stay unambiguous.      |
+| `no-labels`             | Disallows labeled statements so control flow uses functions or early returns.            |
+| `no-shadow`             | Disallows declarations that shadow an outer-scope variable so each name has one binding. |
+| `no-unused-expressions` | Disallows expressions that are evaluated but never used so dead code doesn't accumulate. |
+| `no-unused-vars`        | Disallows unused variables, ignoring `_`-prefixed args and rest siblings.                |
+| `no-var`                | Disallows `var` so bindings are always block-scoped.                                     |
+| `one-var`               | Requires one variable declaration per statement so diffs stay clean.                     |
+| `prefer-const`          | Requires `const` for variables that are never reassigned so stable bindings are obvious. |
+
+## Related
+
+- Review the layering order in **[ESLint Best Practices](/docs/presets/eslint/best-practices)**.
+- See how presets compose end to end in the **[Presets Overview](/docs/presets/)**.

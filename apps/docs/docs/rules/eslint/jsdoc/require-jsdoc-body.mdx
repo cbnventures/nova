@@ -146,8 +146,7 @@ The `require-jsdoc-body` rule reports any JSDoc block that is missing a body par
         rules: {
           '@cbnventures/nova/require-jsdoc-body': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -164,13 +163,13 @@ The `require-jsdoc-body` rule reports any JSDoc block that is missing a body par
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option            | Type       | Default | Description                                    |
-|-------------------|------------|---------|------------------------------------------------|
-| `ignoreFiles`     | `string[]` | `[]`    | File patterns to skip.                         |
-| `maxLines`        | `number`   | `3`     | Maximum number of lines allowed in the body.   |
-| `maxWidth`        | `number`   | `80`    | Maximum character width allowed per body line. |
-| `minLines`        | `number`   | `2`     | Minimum number of lines required in the body.  |
-| `skipDirectories` | `string[]` | `[]`    | Directory names to skip.                       |
+| Option            | Type       | Default | Description                                                                                                                               |
+|-------------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles`     | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+| `maxLines`        | `number`   | `3`     | Maximum number of lines allowed in the body.                                                                                              |
+| `maxWidth`        | `number`   | `80`    | Maximum character width allowed per body line.                                                                                            |
+| `minLines`        | `number`   | `2`     | Minimum number of lines required in the body.                                                                                             |
+| `skipDirectories` | `string[]` | `[]`    | Directory names to skip.                                                                                                                  |
 
 ## Autofix
 
@@ -182,3 +181,5 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 - **Body too short or too long** — Adjust `minLines` and `maxLines` to match your project's documentation standards.
 - **Line too wide** — The `maxWidth` option defaults to `80` characters per body line. Wrap long sentences to stay within the limit.
 - **Want to skip specific files** — Use the `ignoreFiles` option to exclude files that do not need body paragraphs.
+- **Rule appears to do nothing** — If `maxLines` is set lower than `minLines`, the rule disables itself for the whole file (no warnings are emitted). Ensure `maxLines` is greater than or equal to `minLines`.
+- **Tags-only or empty JSDoc blocks are not flagged** — The rule only checks blocks that have a summary line. A JSDoc block with no summary (empty, or containing only tags like `@since`) is skipped.

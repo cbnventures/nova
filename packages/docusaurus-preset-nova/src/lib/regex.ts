@@ -197,6 +197,39 @@ export const LIB_REGEX_NOVA_THEME_CONFIG_OBJECT_TYPE = /export type (NovaThemeCo
 export const LIB_REGEX_TYPE_DECLARATION_FIELD = /^\s+(\w+)\??:\s*([^;]+);/;
 
 /**
+ * Lib - Regex - Nova Preset Overrides Object Type.
+ *
+ * Captures the type-name and body of every `export type NovaPresetOverrides... = { ... }`
+ * object-shape declaration. Used by the config-drift overrides-parity check to
+ * derive the public consumer leaf paths.
+ *
+ * @since 0.18.1
+ */
+export const LIB_REGEX_NOVA_PRESET_OVERRIDES_OBJECT_TYPE = /export type (NovaPresetOverrides\w*)\s*=\s*\{([\s\S]*?)\}/;
+
+/**
+ * Lib - Regex - Nova Preset Overrides Partial Alias.
+ *
+ * Captures the wrapper and wrapped target type-names of every
+ * `export type NovaPresetOverrides... = Partial<NovaPresetOverrides...>` alias
+ * so the config-drift overrides-parity walk can resolve Partial wrappers.
+ *
+ * @since 0.18.1
+ */
+export const LIB_REGEX_NOVA_PRESET_OVERRIDES_PARTIAL_ALIAS = /export type (NovaPresetOverrides\w*)\s*=\s*Partial<(NovaPresetOverrides\w*)>/;
+
+/**
+ * Lib - Regex - Nova Preset Overrides Type Reference.
+ *
+ * Captures the leading `NovaPresetOverrides...` identifier from a type
+ * expression so the config-drift overrides-parity walk can distinguish
+ * object-type and Partial-wrapper references from union/primitive aliases.
+ *
+ * @since 0.18.1
+ */
+export const LIB_REGEX_NOVA_PRESET_OVERRIDES_TYPE_REFERENCE = /^(NovaPresetOverrides\w*)/;
+
+/**
  * Lib - Regex - Nova Theme Config Type Reference.
  *
  * Captures the leading `NovaThemeConfig...` identifier from a type expression
@@ -368,3 +401,14 @@ export const LIB_REGEX_KEBAB_CASE = /^[a-z][a-z0-9-]*$/;
  * @since 0.18.0
  */
 export const LIB_REGEX_BLOCKS_INDEX_EXPORT = /^export \{ default as (\w+) \} from '\.\/([a-z][a-z0-9-]*)\/index\.js';$/;
+
+/**
+ * Lib - Regex - Icon Candidate.
+ *
+ * Captures the collection prefix and icon name from an Iconify `prefix:name`
+ * identifier so the icon scan plugin can discover every icon a site
+ * references in its content and theme configuration.
+ *
+ * @since 0.18.1
+ */
+export const LIB_REGEX_ICON_CANDIDATE = /([a-z][a-z0-9-]*):([a-z0-9][a-z0-9-]*)/;

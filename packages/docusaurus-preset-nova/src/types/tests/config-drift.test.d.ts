@@ -1,6 +1,38 @@
 import type { Options_PluginOptions } from '../options.d.ts';
 
 /**
+ * Tests - Config Drift - ConfigDrift OverridesSchemaParity.
+ *
+ * @since 0.18.1
+ */
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_TypeFilePath = string;
+
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_PublicLeaves = readonly string[];
+
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description = {
+  type?: string;
+  keys?: Record<string, Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description>;
+};
+
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_JoiSchema_Describe = () => Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description;
+
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_JoiSchema = {
+  describe: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_JoiSchema_Describe;
+};
+
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_SchemaLeaves = readonly string[];
+
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_PublicSet = Set<string>;
+
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_SchemaSet = Set<string>;
+
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_MissingInSchema = string[];
+
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_StaleInSchema = string[];
+
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_ParityMessage = string;
+
+/**
  * Tests - Config Drift - ConfigDrift ValidateOptions.
  *
  * @since 0.15.0
@@ -17,6 +49,10 @@ export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulate
 
 export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Search = Options_PluginOptions['search'];
 
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_IconSafelist = Options_PluginOptions['iconSafelist'];
+
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_MaxBundleFileSize = Options_PluginOptions['maxBundleFileSize'];
+
 export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result = {
   preset: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Preset;
   overrides: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Overrides;
@@ -24,6 +60,8 @@ export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulate
   analytics: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Analytics;
   progressBar: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_ProgressBar;
   search: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_Search;
+  iconSafelist: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_IconSafelist;
+  maxBundleFileSize: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Result_MaxBundleFileSize;
 };
 
 export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_JoiSchema_Validate = (value: unknown) => Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Validated;
@@ -97,6 +135,10 @@ export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulate
 
 export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_SearchDocsRoute = string;
 
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_IconSafelist = Options_PluginOptions['iconSafelist'];
+
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_MaxBundleFileSize = Options_PluginOptions['maxBundleFileSize'];
+
 /**
  * Tests - Config Drift - ConfigDrift ValidateThemeConfig.
  *
@@ -119,8 +161,6 @@ export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopu
 
 export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Site = Record<string, unknown>;
 
-export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteTitle = string;
-
 export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogo = Record<string, unknown>;
 
 export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoAlt = string;
@@ -138,8 +178,6 @@ export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopu
 export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmarkLight = string | undefined;
 
 export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmarkDark = string | undefined;
-
-export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoTitle = string | undefined;
 
 export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteImage = string;
 
@@ -239,3 +277,115 @@ export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopu
 export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_FooterCtaLabel = string;
 
 export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_FooterCtaHref = string;
+
+/**
+ * Tests - Config Drift - Derive Public Override Leaf Paths.
+ *
+ * @since 0.18.1
+ */
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_TypeFilePath = string;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Returns = Promise<readonly string[]>;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FileText = string;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_ObjectTypes = Map<string, Map<string, string>>;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_PartialAliases = Map<string, string>;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_BlockPattern = RegExp;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_BlockMatch = RegExpExecArray | null;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_TypeName = string;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_BlockBody = string;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Fields = Map<string, string>;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldPattern = RegExp;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldMatch = RegExpExecArray | null;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldName = string;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldExpression = string;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldTypeMatch = RegExpMatchArray | null;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldType = string;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_PartialPattern = RegExp;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_PartialMatch = RegExpExecArray | null;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Leaves = string[];
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkEntry_TypeName = string;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkEntry_Path = string[];
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkEntry = {
+  typeName: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkEntry_TypeName;
+  path: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkEntry_Path;
+};
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkStack = Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkEntry[];
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Entry = Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkEntry;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_ResolvedType = string;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_EntryFields = Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Fields | undefined;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkFieldEntry = readonly [string, string];
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkFieldName = string;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldTypeReference = string;
+
+export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkFieldType = string;
+
+/**
+ * Tests - Config Drift - Derive Schema Override Leaf Paths.
+ *
+ * @since 0.18.1
+ */
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode = {
+  type?: string;
+  keys?: Record<string, Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode>;
+};
+
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_Returns = readonly string[];
+
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_OverridesNode = Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode | undefined;
+
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_Leaves = string[];
+
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_WalkEntry_Node = Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode;
+
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_WalkEntry_Path = string[];
+
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_WalkEntry = {
+  node: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_WalkEntry_Node;
+  path: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_WalkEntry_Path;
+};
+
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_WalkStack = Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_WalkEntry[];
+
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_Entry = Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_WalkEntry;
+
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_EntryKeys = Record<string, Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode> | undefined;
+
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_ChildNode = Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode;
+
+/**
+ * Tests - Config Drift - Get Package Root.
+ *
+ * @since 0.18.1
+ */
+export type Tests_ConfigDrift_GetPackageRoot_Returns = string;
+
+export type Tests_ConfigDrift_GetPackageRoot_CurrentFilePath = string;
+
+export type Tests_ConfigDrift_GetPackageRoot_CurrentFileDirectory = string;

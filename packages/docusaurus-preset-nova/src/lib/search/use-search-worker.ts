@@ -35,6 +35,7 @@ import type {
   Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_MessageType,
   Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_TranslatedError,
   Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_CurrentWorker,
+  Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_FuzzyDistance,
   Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_SearchLimit,
   Lib_Search_UseSearchWorker_WorkerInstance,
   Lib_Search_UseSearchWorker_WorkerRef,
@@ -186,8 +187,9 @@ export function useSearchWorker(options: Lib_Search_UseSearchWorker_Options): Li
   /**
    * Lib - Search - Use Search Worker - Use Search Worker - Perform Search.
    *
-   * Posts a search query to the worker once it is ready, applying a fixed
-   * result limit so the worker returns a bounded set of hits.
+   * Posts a search query to the worker once it is ready, applying the
+   * configured result limit and fuzzy matching distance so the worker
+   * returns a bounded set of hits.
    *
    * @since 0.15.0
    */
@@ -198,12 +200,14 @@ export function useSearchWorker(options: Lib_Search_UseSearchWorker_Options): Li
       return undefined;
     }
 
-    const searchLimit: Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_SearchLimit = 8;
+    const searchLimit: Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_SearchLimit = options['searchResultLimits'] ?? 8;
+    const fuzzyDistance: Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_FuzzyDistance = options['fuzzyMatchingDistance'] ?? 1;
 
     currentWorker.postMessage({
       type: 'search',
       query,
       limit: searchLimit,
+      fuzzyDistance,
     });
 
     return undefined;

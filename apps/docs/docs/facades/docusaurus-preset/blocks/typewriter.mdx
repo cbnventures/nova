@@ -79,19 +79,23 @@ import { Typewriter } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 ### Typewriter (main)
 
-| Prop            | Type                   | Default | Description                                            |
-|-----------------|------------------------|---------|--------------------------------------------------------|
-| `children`      | `ReactNode`            | —       | Prefix and Word sub-components. Required.              |
-| `typeSpeed`     | `number \| undefined`  | `80`    | Milliseconds between each typed character.             |
-| `deleteSpeed`   | `number \| undefined`  | `50`    | Milliseconds between each deleted character.           |
-| `pauseDuration` | `number \| undefined`  | `3000`  | Milliseconds to pause after typing a word.             |
-| `loop`          | `boolean \| undefined` | `true`  | Whether to loop back to the first word after the last. |
+| Prop            | Type                         | Default     | Description                                                          |
+|-----------------|------------------------------|-------------|----------------------------------------------------------------------|
+| `children`      | `ReactNode`                  | —           | Prefix and Word sub-components. Required.                            |
+| `typeSpeed`     | `number \| undefined`        | `80`        | Milliseconds between each typed character.                           |
+| `deleteSpeed`   | `number \| undefined`        | `50`        | Milliseconds between each deleted character.                         |
+| `pauseDuration` | `number \| undefined`        | `3000`      | Milliseconds to pause after typing a word.                           |
+| `loop`          | `boolean \| undefined`       | `true`      | Whether to loop back to the first word after the last.               |
+| `className`     | `string \| undefined`        | `undefined` | Additional class names merged with the base `nova-typewriter` class. |
+| `style`         | `CSSProperties \| undefined` | `undefined` | Inline style overrides applied to the root element.                  |
 
 ### Typewriter.Prefix
 
-| Prop       | Type        | Default | Description                    |
-|------------|-------------|---------|--------------------------------|
-| `children` | `ReactNode` | —       | Static text before the cursor. |
+| Prop        | Type                         | Default     | Description                                                                 |
+|-------------|------------------------------|-------------|-----------------------------------------------------------------------------|
+| `children`  | `ReactNode`                  | —           | Static text before the animated word.                                       |
+| `className` | `string \| undefined`        | `undefined` | Additional class names merged with the base `nova-typewriter-prefix` class. |
+| `style`     | `CSSProperties \| undefined` | `undefined` | Inline style overrides applied to the root element.                         |
 
 ### Typewriter.Word
 

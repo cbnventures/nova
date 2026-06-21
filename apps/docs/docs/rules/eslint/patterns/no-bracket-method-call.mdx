@@ -136,8 +136,7 @@ Bracket property access (reads without a call) and dynamic bracket calls (where 
         rules: {
           '@cbnventures/nova/no-bracket-method-call': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -154,10 +153,10 @@ Bracket property access (reads without a call) and dynamic bracket calls (where 
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option           | Type       | Default | Description                                                      |
-|------------------|------------|---------|------------------------------------------------------------------|
-| `allowedMethods` | `string[]` | `[]`    | Method names that are allowed to be called via bracket notation. |
-| `ignoreFiles`    | `string[]` | `[]`    | File patterns to skip.                                           |
+| Option           | Type       | Default | Description                                                                                                                               |
+|------------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `allowedMethods` | `string[]` | `[]`    | Method names that are allowed to be called via bracket notation.                                                                          |
+| `ignoreFiles`    | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 

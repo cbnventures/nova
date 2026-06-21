@@ -1,7 +1,7 @@
 ---
 id: "lantern"
 title: "Lantern"
-description: "Warm amber and indigo preset with Fraunces, Manrope, and IBM Plex Mono fonts, rounded shapes, and elevated card depth — for whole-house monitoring docs."
+description: "Warm amber and indigo preset with Fraunces, Manrope, and IBM Plex Mono fonts, rounded shapes, and warm paper cards — for whole-house monitoring docs."
 sidebar_position: 3
 keywords:
   - "nova"
@@ -13,8 +13,8 @@ keywords:
   - "manrope"
   - "ibm plex mono"
   - "rounded shapes"
-  - "elevated cards"
-  - "bridge navbar"
+  - "paper cards"
+  - "compass navbar"
   - "commons footer"
 tags:
   - "facades"
@@ -34,14 +34,14 @@ import lanternDark from './_assets_/lantern-dark.png';
 
 # Lantern
 
-Warm amber and indigo tones paired with Fraunces display headings, Manrope body text, and IBM Plex Mono for code blocks. Rounded shapes with comfortable spacing and elevated cards with soft shadows.
+Warm amber and indigo tones paired with Fraunces display headings, Manrope body text, and IBM Plex Mono for code blocks. Rounded shapes with comfortable spacing and warm cream paper cards with asymmetric corners that lift and gain an amber glow on hover.
 
 ## Why Use This Preset?
 
 - Warm amber palette so home-monitoring and smart-home toolkit documentation feels inviting and domestic rather than clinical.
 - Fraunces display headings paired with Manrope body text so the typography balances warmth with structured readability.
-- Elevated cards with staggered reveals so content sections feel layered and polished across device dashboards and setup guides.
-- Bridge navbar carries Lantern's amber-underline-glow signature — a subtle eaves-like accent that frames navigation without overpowering it.
+- Warm cream paper cards that lift and gain an amber glow on hover, with mobile navigation revealing in a gentle staggered fade, keeping device dashboards and setup guides tactile and polished.
+- Compass navbar sets a sticky warm cream bar with the italic Fraunces wordmark on the left, mono uppercase navigation labels beside it, and amber-tinted utility actions on the right.
 
 ## Preview
 
@@ -51,7 +51,7 @@ Warm amber and indigo tones paired with Fraunces display headings, Manrope body 
 
 ## Summary
 
-Lantern is designed for whole-house monitoring and home-automation documentation. The warm amber palette communicates familiarity while the elevated card depth adds visual hierarchy. Motion is set to normal speed with staggered reveals and hover effects enabled.
+Lantern is designed for whole-house monitoring and home-automation documentation. The warm amber palette communicates familiarity while bordered paper cards and generous section spacing establish visual hierarchy. Motion is set to normal speed with staggered reveals and hover effects enabled.
 
 ## Configuration
 
@@ -76,7 +76,7 @@ The full default configuration for the Lantern preset:
   // fonts.display:           'Fraunces'
   // fonts.body:              'Manrope'
   // fonts.code:              'IBM Plex Mono'
-  // navbar:                  'bridge'
+  // navbar:                  'compass'
   // footer:                  'commons'
 }
 ```
@@ -129,12 +129,12 @@ Font families are set as CSS custom properties. Google Fonts are loaded automati
 
 ## Navbar and Footer
 
-Lantern uses the **Bridge** navbar and **Commons** footer.
+Lantern uses the **Compass** navbar and **Commons** footer.
 
-| Slot   | Variant   | Description                                                                        |
-|--------|-----------|------------------------------------------------------------------------------------|
-| Navbar | `bridge`  | Horizontal navigation bar carrying Lantern's amber-underline-glow eaves signature. |
-| Footer | `commons` | Multi-column footer with sections, social links, and copyright.                    |
+| Slot   | Variant   | Description                                                                                     |
+|--------|-----------|-------------------------------------------------------------------------------------------------|
+| Navbar | `compass` | Brand on the left, navigation links beside it, with search and color-mode actions on the right. |
+| Footer | `commons` | Multi-column footer with sections, social links, and copyright.                                 |
 
 Override the variant in the preset options:
 

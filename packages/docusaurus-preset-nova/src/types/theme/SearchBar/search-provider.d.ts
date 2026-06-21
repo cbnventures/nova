@@ -21,6 +21,26 @@ export type Theme_SearchBar_SearchProvider_WorkerUrl = string;
 
 export type Theme_SearchBar_SearchProvider_ManifestUrl = string;
 
+export type Theme_SearchBar_SearchProvider_PluginData_Search_SearchResultLimits = number;
+
+export type Theme_SearchBar_SearchProvider_PluginData_Search_FuzzyMatchingDistance = number;
+
+export type Theme_SearchBar_SearchProvider_PluginData_Search = {
+  searchResultLimits?: Theme_SearchBar_SearchProvider_PluginData_Search_SearchResultLimits;
+  fuzzyMatchingDistance?: Theme_SearchBar_SearchProvider_PluginData_Search_FuzzyMatchingDistance;
+} | undefined;
+
+export type Theme_SearchBar_SearchProvider_PluginData = {
+  search?: Theme_SearchBar_SearchProvider_PluginData_Search;
+  [key: string]: unknown;
+};
+
+export type Theme_SearchBar_SearchProvider_SearchSettings = Theme_SearchBar_SearchProvider_PluginData_Search;
+
+export type Theme_SearchBar_SearchProvider_SearchResultLimits = number;
+
+export type Theme_SearchBar_SearchProvider_FuzzyMatchingDistance = number;
+
 export type Theme_SearchBar_SearchProvider_SearchWorker = import('../../lib/search/use-search-worker.d.ts').Lib_Search_UseSearchWorker_Returns;
 
 export type Theme_SearchBar_SearchProvider_QueryState = [Theme_SearchBar_SearchProvider_Query, Theme_SearchBar_SearchProvider_SetQuery];

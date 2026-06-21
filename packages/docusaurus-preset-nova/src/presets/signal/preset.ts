@@ -11,7 +11,6 @@ import type { Presets_Signal_Preset_Signal } from '../../types/presets/signal/pr
  */
 export const presetsSignalPresetSignal: Presets_Signal_Preset_Signal = {
   logo: {
-    title: 'Signal',
     alt: 'Signal',
     src: '@nova-assets/presets/signal/logo.svg',
   },

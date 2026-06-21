@@ -128,8 +128,7 @@ This covers every context — `if`, `while`, `do...while`, `for`, ternary, `retu
         rules: {
           '@cbnventures/nova/require-multiline-condition-groups': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -146,10 +145,10 @@ This covers every context — `if`, `while`, `do...while`, `for`, ternary, `retu
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default                  | Description                                                                                       |
-|---------------|------------|--------------------------|---------------------------------------------------------------------------------------------------|
-| `groupStyle`  | `string`   | `"operator-before-open"` | Controls where the outer operator sits relative to the closing/opening parens of adjacent groups. |
-| `ignoreFiles` | `string[]` | `[]`                     | File patterns to skip.                                                                            |
+| Option        | Type       | Default                  | Description                                                                                                                               |
+|---------------|------------|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `groupStyle`  | `string`   | `"operator-before-open"` | Controls where the outer operator sits relative to the closing/opening parens of adjacent groups.                                         |
+| `ignoreFiles` | `string[]` | `[]`                     | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ### `groupStyle` Values
 

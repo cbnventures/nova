@@ -106,7 +106,6 @@ const demos: Tests_DemoCoverage_Demos = presetsIndexNames.map((name) => ({
  * @since 0.18.0
  */
 const requiredLeafPaths: Tests_DemoCoverage_RequiredLeafPaths = [
-  'themeConfig.site.title',
   'themeConfig.site.logo.alt',
   'themeConfig.site.logo.src.light',
   'themeConfig.site.logo.src.dark',
@@ -116,7 +115,6 @@ const requiredLeafPaths: Tests_DemoCoverage_RequiredLeafPaths = [
   'themeConfig.site.logo.ariaLabel',
   'themeConfig.site.logo.wordmark.light',
   'themeConfig.site.logo.wordmark.dark',
-  'themeConfig.site.logo.title',
   'themeConfig.site.image',
   'themeConfig.site.metadata',
   'themeConfig.colorMode.defaultMode',

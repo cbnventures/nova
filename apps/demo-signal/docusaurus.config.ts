@@ -247,7 +247,6 @@ const config: DocusaurusNovaConfig = {
   themeConfig: {
     // Site.
     site: {
-      title: 'Signal',
       logo: {
         alt: undefined,
         src: {
@@ -262,7 +261,6 @@ const config: DocusaurusNovaConfig = {
           light: undefined,
           dark: undefined,
         },
-        title: undefined,
       },
       image: '/thumbnails/brand.png',
       metadata: [

@@ -48,6 +48,10 @@ export type Tests_Lib_Search_Worker_Results = Tests_Lib_Search_Worker_Hit[];
 
 export type Tests_Lib_Search_Worker_FirstHit = Tests_Lib_Search_Worker_Hit | undefined;
 
+export type Tests_Lib_Search_Worker_NarrowResults = Tests_Lib_Search_Worker_Hit[];
+
+export type Tests_Lib_Search_Worker_WiderResults = Tests_Lib_Search_Worker_Hit[];
+
 export type Tests_Lib_Search_Worker_Paths = string[];
 
 export type Tests_Lib_Search_Worker_UniquePaths = Set<string>;
@@ -133,6 +137,13 @@ export type Tests_Lib_Search_Worker_PerformSearchExact_ReturnsMatchingDocumentsF
  * @since 0.15.0
  */
 export type Tests_Lib_Search_Worker_PerformSearchFuzzy_MatchesNearMissQueriesViaFuzzyStrategy_Index = unknown;
+
+/**
+ * Tests - Lib - Search - Worker - PerformSearch Fuzzy Distance - Widens Fuzzy Matching As The Distance Increases.
+ *
+ * @since 0.18.1
+ */
+export type Tests_Lib_Search_Worker_PerformSearchFuzzyDistance_WidensFuzzyMatchingAsTheDistanceIncreases_Index = unknown;
 
 /**
  * Tests - Lib - Search - Worker - PerformSearch Limit - Caps Results At The Specified Limit.

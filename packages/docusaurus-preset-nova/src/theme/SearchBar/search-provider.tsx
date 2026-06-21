@@ -1,4 +1,5 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { usePluginData } from '@docusaurus/useGlobalData';
 import {
   useCallback, useEffect, useRef, useState,
 } from 'react';
@@ -15,18 +16,22 @@ import type {
   Theme_SearchBar_SearchProvider_DebounceTimerRef,
   Theme_SearchBar_SearchProvider_DispatchedQueryRef,
   Theme_SearchBar_SearchProvider_DocusaurusContext,
+  Theme_SearchBar_SearchProvider_FuzzyMatchingDistance,
   Theme_SearchBar_SearchProvider_HandleQueryChangeFunction,
   Theme_SearchBar_SearchProvider_HandleQueryChangeValue,
   Theme_SearchBar_SearchProvider_InputRef,
   Theme_SearchBar_SearchProvider_IsOpen,
   Theme_SearchBar_SearchProvider_IsOpenState,
   Theme_SearchBar_SearchProvider_ManifestUrl,
+  Theme_SearchBar_SearchProvider_PluginData,
   Theme_SearchBar_SearchProvider_Props,
   Theme_SearchBar_SearchProvider_Props_Children,
   Theme_SearchBar_SearchProvider_Query,
   Theme_SearchBar_SearchProvider_QueryState,
   Theme_SearchBar_SearchProvider_SearchedQuery,
   Theme_SearchBar_SearchProvider_SearchedQueryState,
+  Theme_SearchBar_SearchProvider_SearchResultLimits,
+  Theme_SearchBar_SearchProvider_SearchSettings,
   Theme_SearchBar_SearchProvider_SearchWorker,
   Theme_SearchBar_SearchProvider_SetActiveIndex,
   Theme_SearchBar_SearchProvider_SetIsOpen,
@@ -57,8 +62,13 @@ function SearchProvider(props: Theme_SearchBar_SearchProvider_Props) {
   const workerUrl: Theme_SearchBar_SearchProvider_WorkerUrl = `${baseUrl}search-worker.js`;
   const manifestUrl: Theme_SearchBar_SearchProvider_ManifestUrl = `${baseUrl}search-manifest.json`;
 
+  const novaPluginData: Theme_SearchBar_SearchProvider_PluginData = usePluginData('docusaurus-theme-nova') as Theme_SearchBar_SearchProvider_PluginData;
+  const searchSettings: Theme_SearchBar_SearchProvider_SearchSettings = novaPluginData['search'];
+  const searchResultLimits: Theme_SearchBar_SearchProvider_SearchResultLimits = (searchSettings !== undefined) ? searchSettings['searchResultLimits'] ?? 8 : 8;
+  const fuzzyMatchingDistance: Theme_SearchBar_SearchProvider_FuzzyMatchingDistance = (searchSettings !== undefined) ? searchSettings['fuzzyMatchingDistance'] ?? 1 : 1;
+
   const searchWorker: Theme_SearchBar_SearchProvider_SearchWorker = useSearchWorker({
-    workerUrl, manifestUrl,
+    workerUrl, manifestUrl, searchResultLimits, fuzzyMatchingDistance,
   });
 
   const queryState: Theme_SearchBar_SearchProvider_QueryState = useState<Theme_SearchBar_SearchProvider_Query>('');

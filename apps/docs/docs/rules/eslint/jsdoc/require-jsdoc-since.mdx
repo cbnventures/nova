@@ -122,8 +122,7 @@ This ensures every declaration records the version in which it was introduced, m
         rules: {
           '@cbnventures/nova/require-jsdoc-since': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -140,9 +139,9 @@ This ensures every declaration records the version in which it was introduced, m
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description            |
-|---------------|------------|---------|------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -151,5 +150,5 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 ## Troubleshooting
 
 - **Warning fires on declarations without JSDoc** — The rule only checks declarations that already have a JSDoc block. If a declaration has no JSDoc comment at all, the rule does not report it.
-- **Checked node types** — The rule checks classes, methods, properties, functions, type aliases, interfaces, and enums. Other node types like variable declarations are not checked.
+- **Checked node types** — The rule checks classes, methods, properties, function declarations, type aliases, interfaces, and enums. Function expressions and arrow functions assigned to variables (`const foo = () => {}`) are not checked, nor are variable declarations.
 - **The `@since` value format is not validated** — The rule only checks for the presence of `@since`. It does not enforce a specific version format (e.g., semver).

@@ -153,8 +153,7 @@ By default, methods are skipped (`skipMethods: true`) and only properties are ch
         rules: {
           '@cbnventures/nova/require-hash-private': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -171,10 +170,10 @@ By default, methods are skipped (`skipMethods: true`) and only properties are ch
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description                                 |
-|---------------|------------|---------|---------------------------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.                      |
-| `skipMethods` | `boolean`  | `true`  | Skip method definitions from being checked. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+| `skipMethods` | `boolean`  | `true`  | Skip method definitions from being checked.                                                                                               |
 
 ## Autofix
 

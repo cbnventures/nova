@@ -14,7 +14,7 @@ keywords:
   - "rounded shapes"
   - "flat cards"
   - "canopy navbar"
-  - "ledger footer"
+  - "commons footer"
 tags:
   - "facades"
   - "preset"
@@ -39,8 +39,8 @@ Documentary green and seal-red tones paired with IBM Plex Serif display headings
 
 - Documentary green palette with seal-red accents so repository-automation and stewardship-toolkit documentation projects an official, record-keeping authority.
 - IBM Plex Serif headings paired with IBM Plex Sans body text so the typography reads like a well-maintained ledger — structured, legible, and consistent.
-- Canopy navbar carries Marshal's letterhead-styled identity — a centered serif wordmark with a "RECEIVED" stamp treatment that frames every page as an official record.
-- Ledger footer carries a colophon-styled centered rule so the document close feels deliberate and complete.
+- Canopy navbar centers an IBM Plex Serif wordmark above the navigation on a sticky aged-paper bar, with a seal-red tint marking the active item, so the masthead reads like the header of an official document.
+- Commons footer carries a multi-column layout with sections, social links, and copyright so the document close feels deliberate and complete.
 
 ## Preview
 
@@ -76,7 +76,7 @@ The full default configuration for the Marshal preset:
   // fonts.body:              'IBM Plex Sans'
   // fonts.code:              'IBM Plex Mono'
   // navbar:                  'canopy'
-  // footer:                  'ledger'
+  // footer:                  'commons'
 }
 ```
 
@@ -128,12 +128,12 @@ Font families are set as CSS custom properties. Google Fonts are loaded automati
 
 ## Navbar and Footer
 
-Marshal uses the **Canopy** navbar and **Ledger** footer.
+Marshal uses the **Canopy** navbar and **Commons** footer.
 
-| Slot   | Variant  | Description                                                                                   |
-|--------|----------|-----------------------------------------------------------------------------------------------|
-| Navbar | `canopy` | Letterhead-styled navigation with a centered serif wordmark and a "RECEIVED" stamp treatment. |
-| Footer | `ledger` | Colophon-styled footer with a centered rule closing each page like an official document.      |
+| Slot   | Variant   | Description                                                                              |
+|--------|-----------|------------------------------------------------------------------------------------------|
+| Navbar | `canopy`  | Centered IBM Plex Serif wordmark on an aged-paper bar, with a seal-red active-item tint. |
+| Footer | `commons` | Multi-column footer with sections, social links, and copyright.                          |
 
 Override the variant in the preset options:
 

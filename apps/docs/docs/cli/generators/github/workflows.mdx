@@ -69,7 +69,7 @@ The generator reads each entry, validates triggers and targets, substitutes vari
 
 | Flag                 | Description                                                            |
 |----------------------|------------------------------------------------------------------------|
-| `-d, --dry-run`      | Preview the target file path without writing anything to disk.         |
+| `-d, --dry-run`      | Run without writing any files.                                         |
 | `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
 
 ## Config-Driven Workflow Entries
@@ -191,27 +191,45 @@ Each target becomes its own publish job. Jobs run in parallel off a shared `buil
 
 The generator currently bundles three templates, each with its own trigger set.
 
-| Template                     | Description                                   | Notes                                                                                |
-|------------------------------|-----------------------------------------------|--------------------------------------------------------------------------------------|
-| `publish`                    | Build once and publish to one or more targets | Requires `targets`. Each target declares its own secret / variable setup.            |
-| `lock-inactive-issues`       | Lock stale issues and pull requests           | No manual setup needed (uses automatic `GITHUB_TOKEN`). Pick a cadence via triggers. |
-| `check-sponsor-gated-issues` | Gate issues by GitHub sponsor status          | Requires `PERSONAL_ACCESS_TOKEN` secret plus several literal settings.               |
+| Template                     | Description                                   | Notes                                                                                                                                                             |
+|------------------------------|-----------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `publish`                    | Build once and publish to one or more targets | Requires `targets`. Each target declares its own secret / variable setup.                                                                                         |
+| `lock-inactive-issues`       | Lock stale issues and pull requests           | No manual setup needed (uses automatic `GITHUB_TOKEN`). Pick a cadence via triggers.                                                                              |
+| `check-sponsor-gated-issues` | Gate issues by GitHub sponsor status          | Requires a `PERSONAL_ACCESS_TOKEN` secret plus several `var`-format settings (see [check-sponsor-gated-issues Variables](#check-sponsor-gated-issues-variables)). |
+
+#### `check-sponsor-gated-issues` Variables
+
+This template declares the following variables. `GITHUB_TOKEN` is supplied automatically, so the only `secret` you create manually is `PERSONAL_ACCESS_TOKEN`. The remaining values are `var`-format, not `literal` - they resolve to `${{ vars.NAME }}` references and are configured as GitHub repository variables.
+
+| Variable                       | Format   | Description                                                                       |
+|--------------------------------|----------|-----------------------------------------------------------------------------------|
+| `GITHUB_TOKEN`                 | `secret` | Automatic token supplied by GitHub Actions (no manual setup).                     |
+| `PERSONAL_ACCESS_TOKEN`        | `secret` | Personal access token with `read:org` and `read:user` scopes for sponsor lookups. |
+| `ISSUE_LABELS`                 | `var`    | Comma-separated labels to apply when gating issues.                               |
+| `ISSUE_LIMIT_COMMENTER`        | `var`    | Whether to limit comments to the issue opener and repo owners.                    |
+| `ISSUE_LOCK_ON_CLOSE`          | `var`    | Whether to lock issues when closed.                                               |
+| `ISSUE_MESSAGE_NOT_SPONSOR`    | `var`    | Message shown to non-sponsors when they open an issue.                            |
+| `ISSUE_MESSAGE_WELCOME`        | `var`    | Welcome message shown to sponsors when they open an issue.                        |
+| `IS_ORGANIZATION`              | `var`    | Whether the repository owner is an organization.                                  |
+| `SPONSOR_ACTIVE_ONLY`          | `var`    | Whether to require active sponsorship status.                                     |
+| `SPONSOR_EXEMPT_FILE_LOCATION` | `var`    | Path to a file listing users exempt from sponsor requirements.                    |
+| `SPONSOR_MINIMUM`              | `var`    | Minimum monthly sponsorship amount in dollars.                                    |
 
 ### Available Target Types
 
 The `publish` template supports the following `type` values for each entry in `targets`. Each type has its own template under `targets/` and declares its own secrets and variables.
 
-| Type                          | Description                                         |
-|-------------------------------|-----------------------------------------------------|
-| `npm`                         | Publish a package to npm                            |
-| `github-action`               | Publish a JavaScript GitHub Action via orphan tags  |
-| `github-packages`             | Publish a package to GitHub Packages                |
-| `docker-hub`                  | Publish a Docker image to Docker Hub                |
-| `ghcr`                        | Publish a Docker image to GitHub Container Registry |
-| `cloudflare-pages-docusaurus` | Deploy a Docusaurus site to Cloudflare Pages        |
-| `github-pages-docusaurus`     | Deploy a Docusaurus site to GitHub Pages            |
-| `aws-amplify-nextjs`          | Deploy a Next.js app to AWS Amplify                 |
-| `vercel-nextjs`               | Deploy a Next.js app to Vercel                      |
+| Type                          | Description                                         | Secrets / Variables                                                                                                                                                                                                                                                                                                                                     |
+|-------------------------------|-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `npm`                         | Publish a package to npm                            | `NPM_TOKEN` (`secret`) - npm access token for publishing. Skip creating this secret in GitHub if using OIDC trusted publishing.                                                                                                                                                                                                                         |
+| `github-action`               | Publish a JavaScript GitHub Action via orphan tags  | None to configure on GitHub. Its `ACTION_ENTRY_POINT`, `ACTION_OUTPUT_PATH`, `ACTION_YML_PATH`, and `RELEASE_BRANCH_NAME` are `literal` settings (see [Publishing GitHub Actions](#publishing-github-actions)).                                                                                                                                         |
+| `github-packages`             | Publish a package to GitHub Packages                | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                                                                                                                                    |
+| `docker-hub`                  | Publish a Docker image to Docker Hub                | `DOCKERHUB_TOKEN` (`secret`) - Docker Hub access token for publishing images. `DOCKERHUB_USERNAME` (`var`) - Docker Hub username or organization name.                                                                                                                                                                                                  |
+| `ghcr`                        | Publish a Docker image to GitHub Container Registry | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                                                                                                                                    |
+| `cloudflare-pages-docusaurus` | Deploy a Docusaurus site to Cloudflare Pages        | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Pages deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID. `CLOUDFLARE_PROJECT_NAME` (`var`) - Cloudflare Pages project name.                                                                                                                                 |
+| `github-pages-docusaurus`     | Deploy a Docusaurus site to GitHub Pages            | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                                                                                                                                    |
+| `aws-amplify-nextjs`          | Deploy a Next.js app to AWS Amplify                 | `AWS_ACCESS_KEY_ID` (`secret`) - AWS access key ID for Amplify deployments. `AWS_SECRET_ACCESS_KEY` (`secret`) - AWS secret access key for Amplify deployments. `AMPLIFY_APP_ID` (`var`) - Amplify application ID. `AMPLIFY_BRANCH_NAME` (`var`) - Amplify branch name to deploy to. `AWS_REGION` (`var`) - AWS region where the Amplify app is hosted. |
+| `vercel-nextjs`               | Deploy a Next.js app to Vercel                      | `VERCEL_TOKEN` (`secret`) - Vercel access token with deploy permissions. `VERCEL_ORG_ID` (`var`) - Vercel organization ID. `VERCEL_PROJECT_ID` (`var`) - Vercel project ID.                                                                                                                                                                             |
 
 ### Available Triggers
 
@@ -235,7 +253,7 @@ Each template supports a specific set of triggers. The generator reads the avail
 | `workflow-run-failure` | Yes                   |
 | `workflow-run-any`     | Yes                   |
 
-All templates also include `workflow_dispatch` (manual trigger with dry-run option) automatically.
+The `publish` and `lock-inactive-issues` templates also include `workflow_dispatch` (manual trigger with dry-run option) automatically.
 
 ## Variable Formats
 
@@ -277,7 +295,7 @@ Before generating each file, the generator checks:
 5. Circular `depends-on` references are detected and rejected.
 6. Each target's `type` has a matching target template.
 7. Each target's `workingDir` exists as a workspace key.
-8. Each entry in a target's `needs` array references a same-type target defined in the same workflow.
+8. Each target's `type` and `workingDir` pair is unique within the entry.
 9. All `literal`-format variables have a corresponding entry in `settings`.
 10. No two entries produce the same output filename.
 
@@ -358,7 +376,7 @@ All four override settings are **required**. Defaults aren't auto-applied — `n
 
 When a GitHub Release is published:
 
-1. The base `build` job runs the workspace's build command (`turbo run build` if a `turbo.json` is present at repo root, otherwise `npm run build`), producing output in the workspace's `build/` directory.
+1. The base `build` job runs the workspace's build command (`npx turbo run build` if a `turbo.json` is present at repo root, otherwise `npm run build`), producing output in the workspace's `build/` directory.
 2. The `publish-github-action-*` job spins up a separate git workspace at `$RUNNER_TEMP/release`, initialized with the release branch name.
 3. If the release branch already exists remotely, the workspace fetches and resets to it. Otherwise it stays as a fresh orphan branch.
 4. The release tree is staged: `action.yml`, the optional files above, and the built output copied into `action/` (renaming `build/` → `action/`).

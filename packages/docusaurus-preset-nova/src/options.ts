@@ -120,6 +120,13 @@ const pluginOptionsSchema = Joi.object({
       }).unknown(true),
     )
     .default(false),
+  iconSafelist: Joi.array().items(Joi.string()).default([]),
+  maxBundleFileSize: Joi.alternatives()
+    .try(
+      Joi.number().positive(),
+      Joi.boolean().valid(false),
+    )
+    .default(3),
 });
 
 /**
@@ -133,7 +140,6 @@ const pluginOptionsSchema = Joi.object({
  */
 const themeConfigSchema = Joi.object({
   site: Joi.object({
-    title: Joi.string().allow('').default(''),
     logo: Joi.object({
       alt: Joi.string().optional(),
       src: Joi.object({
@@ -148,7 +154,6 @@ const themeConfigSchema = Joi.object({
         light: Joi.string().optional(),
         dark: Joi.string().optional(),
       }).default(),
-      title: Joi.string().optional(),
     }).default(),
     image: Joi.string().allow('').default(''),
     metadata: Joi.array().default([]),

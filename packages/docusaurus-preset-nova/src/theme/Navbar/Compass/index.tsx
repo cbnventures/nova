@@ -105,16 +105,18 @@ function Compass(props: Theme_Navbar_Compass_Index_Compass_Props): Theme_Navbar_
             <Logo siteLogo={siteLogo} />
           </Link>
         </div>
-        <div ref={measureRef} className="nova-navbar-compass-items nova-navbar-items-measure" aria-hidden="true">
-          {
-            items.map((navItem: Theme_Navbar_Index_Navbar_Item) => (
-              <NavbarItem
-                key={navItem['label']}
-                {...navItem as Theme_Navbar_Compass_Index_Compass_NavbarItemSpread}
-                isActiveItem={navItem['label'] === activeItemLabel}
-              />
-            ))
-          }
+        <div className="nova-navbar-items-measure-clip">
+          <div ref={measureRef} className="nova-navbar-compass-items nova-navbar-items-measure" aria-hidden="true">
+            {
+              items.map((navItem: Theme_Navbar_Index_Navbar_Item) => (
+                <NavbarItem
+                  key={navItem['label']}
+                  {...navItem as Theme_Navbar_Compass_Index_Compass_NavbarItemSpread}
+                  isActiveItem={navItem['label'] === activeItemLabel}
+                />
+              ))
+            }
+          </div>
         </div>
         <div className={(measuring === true) ? 'nova-navbar-compass-items nova-navbar-items-measuring' : 'nova-navbar-compass-items'}>
           {

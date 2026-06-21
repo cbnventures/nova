@@ -194,6 +194,10 @@ export type Options_PluginOptions_Plugins = {
   sitemap: Options_PluginOptions_Plugins_Sitemap;
 };
 
+export type Options_PluginOptions_IconSafelist = string[];
+
+export type Options_PluginOptions_MaxBundleFileSize = number | false;
+
 export type Options_PluginOptions = {
   preset: Options_PluginOptions_Preset;
   overrides: Options_PluginOptions_Overrides;
@@ -201,6 +205,8 @@ export type Options_PluginOptions = {
   analytics: Options_PluginOptions_Analytics;
   progressBar: Options_PluginOptions_ProgressBar;
   search: Options_PluginOptions_Search;
+  iconSafelist: Options_PluginOptions_IconSafelist;
+  maxBundleFileSize: Options_PluginOptions_MaxBundleFileSize;
 };
 
 /**
@@ -423,14 +429,11 @@ export type Options_ResolvePreset_BasePreset = {
   cta: Options_ResolvePreset_BasePreset_Cta;
 };
 
-export type Options_ResolvePreset_ResolvedLogo_Title = string;
-
 export type Options_ResolvePreset_ResolvedLogo_Alt = string;
 
 export type Options_ResolvePreset_ResolvedLogo_Src = string;
 
 export type Options_ResolvePreset_ResolvedLogo = {
-  title: Options_ResolvePreset_ResolvedLogo_Title;
   alt: Options_ResolvePreset_ResolvedLogo_Alt;
   src: Options_ResolvePreset_ResolvedLogo_Src;
 };
@@ -753,6 +756,10 @@ export type Options_ValidateOptions_Returns_Search_Config = {
 
 export type Options_ValidateOptions_Returns_Search = Options_ValidateOptions_Returns_Search_Config | false;
 
+export type Options_ValidateOptions_Returns_IconSafelist = string[];
+
+export type Options_ValidateOptions_Returns_MaxBundleFileSize = number | false;
+
 export type Options_ValidateOptions_Returns = {
   preset: Options_ValidateOptions_Returns_Preset;
   overrides: Options_ValidateOptions_Returns_Overrides;
@@ -760,6 +767,8 @@ export type Options_ValidateOptions_Returns = {
   analytics: Options_ValidateOptions_Returns_Analytics;
   progressBar: Options_ValidateOptions_Returns_ProgressBar;
   search: Options_ValidateOptions_Returns_Search;
+  iconSafelist: Options_ValidateOptions_Returns_IconSafelist;
+  maxBundleFileSize: Options_ValidateOptions_Returns_MaxBundleFileSize;
 };
 
 export type Options_ValidateOptions_Validate = (schema: unknown, options: unknown) => Options_ValidateOptions_Returns;

@@ -53,8 +53,8 @@ describe('preset', async () => {
     const pluginCount: Tests_Preset_Preset_ReturnsDocsBlogPagesSitemapSvgrPluginsAndNovaThemeByDefault_PluginCount = result['plugins'].length;
     const themeCount: Tests_Preset_Preset_ReturnsDocsBlogPagesSitemapSvgrPluginsAndNovaThemeByDefault_ThemeCount = result['themes'].length;
 
-    // Docs, blog, pages, sitemap, svgr, mermaid-tooltip.
-    strictEqual(pluginCount, 6);
+    // Docs, blog, pages, sitemap, svgr, mermaid-tooltip, icons, bundle-guard.
+    strictEqual(pluginCount, 8);
 
     // Nova theme (Mermaid is now integrated natively).
     strictEqual(themeCount, 1);
@@ -84,8 +84,8 @@ describe('preset', async () => {
 
     const pluginCount: Tests_Preset_Preset_ExcludesBlogPluginWhenBlogIsFalse_PluginCount = result['plugins'].length;
 
-    // Docs, pages, sitemap, svgr, mermaid-tooltip (no blog).
-    strictEqual(pluginCount, 5);
+    // Docs, pages, sitemap, svgr, mermaid-tooltip, icons, bundle-guard (no blog).
+    strictEqual(pluginCount, 7);
 
     return;
   });
@@ -112,8 +112,8 @@ describe('preset', async () => {
 
     const pluginCount: Tests_Preset_Preset_ExcludesPagesPluginWhenPagesIsFalse_PluginCount = result['plugins'].length;
 
-    // Docs, blog, sitemap, svgr, mermaid-tooltip (no pages).
-    strictEqual(pluginCount, 5);
+    // Docs, blog, sitemap, svgr, mermaid-tooltip, icons, bundle-guard (no pages).
+    strictEqual(pluginCount, 7);
 
     return;
   });
@@ -140,8 +140,8 @@ describe('preset', async () => {
 
     const pluginCount: Tests_Preset_Preset_ExcludesSitemapPluginWhenSitemapIsFalse_PluginCount = result['plugins'].length;
 
-    // Docs, blog, pages, svgr, mermaid-tooltip (no sitemap).
-    strictEqual(pluginCount, 5);
+    // Docs, blog, pages, svgr, mermaid-tooltip, icons, bundle-guard (no sitemap).
+    strictEqual(pluginCount, 7);
 
     return;
   });
@@ -168,8 +168,8 @@ describe('preset', async () => {
 
     const pluginCount: Tests_Preset_Preset_IncludesGtmPluginWhenGtmIsProvided_PluginCount = result['plugins'].length;
 
-    // Docs, blog, pages, sitemap, svgr, mermaid-tooltip, gtm.
-    strictEqual(pluginCount, 7);
+    // Docs, blog, pages, sitemap, svgr, mermaid-tooltip, icons, bundle-guard, gtm.
+    strictEqual(pluginCount, 9);
 
     return;
   });
@@ -196,8 +196,8 @@ describe('preset', async () => {
 
     const pluginCount: Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_PluginCount = result['plugins'].length;
 
-    // Docs, blog, pages, sitemap, svgr, mermaid-tooltip (no gtm).
-    strictEqual(pluginCount, 6);
+    // Docs, blog, pages, sitemap, svgr, mermaid-tooltip, icons, bundle-guard (no gtm).
+    strictEqual(pluginCount, 8);
 
     return;
   });

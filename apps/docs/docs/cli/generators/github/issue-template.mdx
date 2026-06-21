@@ -67,7 +67,7 @@ An interactive multi-select prompt lets you choose which bug report fields to in
 
 | Flag                 | Description                                                            |
 |----------------------|------------------------------------------------------------------------|
-| `-d, --dry-run`      | Preview the target file path without writing anything to disk.         |
+| `-d, --dry-run`      | Run without writing any files.                                         |
 | `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
 
 ## Config Fields
@@ -99,20 +99,20 @@ Press **space** to toggle individual fields, then **enter** to confirm your sele
 
 ### Available Bug Report Fields
 
-| Field       | Template File     | Collects                                            |
-|-------------|-------------------|-----------------------------------------------------|
-| Node.js     | `nodejs.yml`      | Node.js version.                                    |
-| Apple       | `apple.yml`       | Device type and OS version.                         |
-| Android     | `android.yml`     | Device model and Android version.                   |
-| C# / .NET   | `csharp.yml`      | .NET version and operating system.                  |
-| PHP         | `php.yml`         | PHP version.                                        |
-| Python      | `python.yml`      | Python version.                                     |
-| Homebridge  | `homebridge.yml`  | Plugin and Homebridge version.                      |
-| pfSense     | `pfsense.yml`     | pfSense version.                                    |
-| Synology    | `synology.yml`    | Synology DSM version.                               |
-| Docker      | `docker.yml`      | Docker version, host OS, architecture, and command. |
-| Web Browser | `web.yml`         | Browser name and version.                           |
-| Screenshots | `screenshots.yml` | Screenshot upload field.                            |
+| Field       | Template File     | Collects                                                |
+|-------------|-------------------|---------------------------------------------------------|
+| Node.js     | `nodejs.yml`      | Node.js version.                                        |
+| Apple       | `apple.yml`       | Device type and OS version.                             |
+| Android     | `android.yml`     | Device model and Android version.                       |
+| C# / .NET   | `csharp.yml`      | .NET version and operating system.                      |
+| PHP         | `php.yml`         | PHP version.                                            |
+| Python      | `python.yml`      | Python version.                                         |
+| Homebridge  | `homebridge.yml`  | Plugin and Homebridge version.                          |
+| pfSense     | `pfsense.yml`     | pfSense version.                                        |
+| Synology    | `synology.yml`    | Synology DSM version.                                   |
+| Docker      | `docker.yml`      | Docker version, host OS, architecture, and run command. |
+| Web Browser | `web.yml`         | Browser name and version.                               |
+| Screenshots | `screenshots.yml` | Screenshot upload field.                                |
 
 ### File Generation
 

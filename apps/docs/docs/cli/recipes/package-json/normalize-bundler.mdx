@@ -35,8 +35,8 @@ It merges the deprecated `typings` field into `types`, and normalizes `module`, 
 For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects bundler convention fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
 
 - **`typings` → `types` merge (Conditional)** — If both fields exist, the existing `types` value is kept and `typings` is deleted. If only `typings` exists, it is renamed to `types`.
-- **`types` (Conditional)** — Removed if the workspace role does not allow it (only `package` and `tool` roles retain this field).
-- **`module` (Conditional)** — Removed if the workspace role does not allow it (only `package` and `tool` roles retain this field).
+- **`types` (Conditional)** — Removed if the workspace role does not allow it (only `config`, `package`, and `tool` roles retain this field).
+- **`module` (Conditional)** — Removed if the workspace role does not allow it (only `config`, `package`, and `tool` roles retain this field).
 - **`sideEffects` (Conditional)** — Removed if the workspace role does not allow it (only `package` roles retain this field).
 - **`esnext` (Conditional)** — Removed if the workspace role does not allow it (only `package` roles retain this field).
 
@@ -63,5 +63,5 @@ For each eligible <Terminology title="package" to="/docs/quickstart/terminology#
 
 | Flag                 | Description                                                            |
 |----------------------|------------------------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-d, --dry-run`      | Run without writing any files.                                         |
 | `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

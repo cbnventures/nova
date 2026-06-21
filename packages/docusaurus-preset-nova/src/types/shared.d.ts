@@ -225,14 +225,11 @@ export type Shared_Preset_Cta = {
   contained: Shared_Preset_Cta_Contained;
 };
 
-export type Shared_Preset_Logo_Title = string;
-
 export type Shared_Preset_Logo_Alt = string;
 
 export type Shared_Preset_Logo_Src = string;
 
 export type Shared_Preset_Logo = {
-  title: Shared_Preset_Logo_Title;
   alt: Shared_Preset_Logo_Alt;
   src: Shared_Preset_Logo_Src;
 };
@@ -402,10 +399,13 @@ export type Shared_SearchWorkerSearchMessage_Query = string;
 
 export type Shared_SearchWorkerSearchMessage_Limit = number;
 
+export type Shared_SearchWorkerSearchMessage_FuzzyDistance = number;
+
 export type Shared_SearchWorkerSearchMessage = {
   type: Shared_SearchWorkerSearchMessage_Type;
   query: Shared_SearchWorkerSearchMessage_Query;
   limit: Shared_SearchWorkerSearchMessage_Limit;
+  fuzzyDistance: Shared_SearchWorkerSearchMessage_FuzzyDistance;
 };
 
 /**
@@ -461,3 +461,88 @@ export type Shared_TocHeading = {
   level: Shared_TocHeading_Level;
   children: Shared_TocHeading_Children;
 };
+
+/**
+ * Shared - Iconify Icon Entry.
+ *
+ * @since 0.18.1
+ */
+export type Shared_IconifyIconEntry = Record<string, unknown>;
+
+/**
+ * Shared - Iconify Alias Entry.
+ *
+ * @since 0.18.1
+ */
+export type Shared_IconifyAliasEntry_Parent = string;
+
+export type Shared_IconifyAliasEntry = {
+  parent: Shared_IconifyAliasEntry_Parent;
+  [key: string]: unknown;
+};
+
+/**
+ * Shared - Iconify Collection.
+ *
+ * @since 0.18.1
+ */
+export type Shared_IconifyCollection_Prefix = string;
+
+export type Shared_IconifyCollection_Icons = Record<string, Shared_IconifyIconEntry>;
+
+export type Shared_IconifyCollection_Aliases = Record<string, Shared_IconifyAliasEntry>;
+
+export type Shared_IconifyCollection_Width = number;
+
+export type Shared_IconifyCollection_Height = number;
+
+export type Shared_IconifyCollection = {
+  prefix: Shared_IconifyCollection_Prefix;
+  icons: Shared_IconifyCollection_Icons;
+  aliases?: Shared_IconifyCollection_Aliases;
+  width?: Shared_IconifyCollection_Width;
+  height?: Shared_IconifyCollection_Height;
+  [key: string]: unknown;
+};
+
+/**
+ * Shared - Iconify Collections Index.
+ *
+ * @since 0.18.1
+ */
+export type Shared_IconifyCollectionsIndex = Record<string, unknown>;
+
+/**
+ * Shared - Icon Slice.
+ *
+ * @since 0.18.1
+ */
+export type Shared_IconSlice_Icons = Set<string>;
+
+export type Shared_IconSlice_Aliases = Set<string>;
+
+export type Shared_IconSlice = {
+  icons: Shared_IconSlice_Icons;
+  aliases: Shared_IconSlice_Aliases;
+};
+
+/**
+ * Shared - Icon Slices.
+ *
+ * @since 0.18.1
+ */
+export type Shared_IconSlices = Map<string, Shared_IconSlice>;
+
+/**
+ * Shared - Icon Loaded Collections.
+ *
+ * @since 0.18.1
+ */
+export type Shared_IconLoadedCollections = Map<string, Shared_IconifyCollection | undefined>;
+
+/**
+ * Shared - Icon Sliced Collection.
+ *
+ * @since 0.18.1
+ */
+export type Shared_IconSlicedCollection = Record<string, unknown>;

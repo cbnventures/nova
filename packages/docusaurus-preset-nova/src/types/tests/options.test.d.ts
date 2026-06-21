@@ -422,8 +422,6 @@ export type Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMe
 
 export type Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Site = Record<string, unknown>;
 
-export type Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteTitle = string;
-
 export type Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteMetadata = unknown[];
 
 /**

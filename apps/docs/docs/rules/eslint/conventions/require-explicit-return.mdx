@@ -208,8 +208,7 @@ Functions that already return a value and concise arrow functions (no block body
         rules: {
           '@cbnventures/nova/require-explicit-return': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -226,12 +225,12 @@ Functions that already return a value and concise arrow functions (no block body
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option                  | Type       | Default | Description                      |
-|-------------------------|------------|---------|----------------------------------|
-| `excludeArrowFunctions` | `boolean`  | `false` | Skip arrow function expressions. |
-| `excludeConstructors`   | `boolean`  | `false` | Skip class constructors.         |
-| `excludeSetters`        | `boolean`  | `false` | Skip setter methods.             |
-| `ignoreFiles`           | `string[]` | `[]`    | File patterns to skip.           |
+| Option                  | Type       | Default | Description                                                                                                                               |
+|-------------------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `excludeArrowFunctions` | `boolean`  | `false` | Skip arrow function expressions.                                                                                                          |
+| `excludeConstructors`   | `boolean`  | `false` | Skip class constructors.                                                                                                                  |
+| `excludeSetters`        | `boolean`  | `false` | Skip setter methods.                                                                                                                      |
+| `ignoreFiles`           | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -239,5 +238,6 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 
 ## Troubleshooting
 
-- **Warning fires on a function that returns a value in some branches** — The rule scans the entire function body for any `return` with a value. If found, the function is treated as non-void and the rule does not fire. Mixed-return functions (some branches return a value, others do not) are skipped.
+- **Warning fires on a function that returns a value in some branches** — The rule scans the function body (but not nested inner functions) for any `return` with a value. If found, the function is treated as non-void and the rule does not fire. Mixed-return functions (some branches return a value, others do not) are skipped. A value-returning `return` inside a nested callback or inner function does not exempt the outer function.
 - **Concise arrows are not flagged** — Arrow functions without a block body (e.g., `(n) => n * 2`) have an implicit return value and are not void.
+- **Empty function bodies are not flagged** — A function with no statements (e.g., `function noop() {}`) is skipped, so no `return;` is required.

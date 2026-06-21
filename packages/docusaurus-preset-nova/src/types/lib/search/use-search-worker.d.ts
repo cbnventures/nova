@@ -9,9 +9,15 @@ export type Lib_Search_UseSearchWorker_Options_WorkerUrl = string;
 
 export type Lib_Search_UseSearchWorker_Options_ManifestUrl = string;
 
+export type Lib_Search_UseSearchWorker_Options_SearchResultLimits = number;
+
+export type Lib_Search_UseSearchWorker_Options_FuzzyMatchingDistance = number;
+
 export type Lib_Search_UseSearchWorker_Options = {
   workerUrl: Lib_Search_UseSearchWorker_Options_WorkerUrl;
   manifestUrl: Lib_Search_UseSearchWorker_Options_ManifestUrl;
+  searchResultLimits?: Lib_Search_UseSearchWorker_Options_SearchResultLimits;
+  fuzzyMatchingDistance?: Lib_Search_UseSearchWorker_Options_FuzzyMatchingDistance;
 };
 
 /**
@@ -144,3 +150,5 @@ export type Lib_Search_UseSearchWorker_UseSearchWorker_HandleMessage_TranslatedE
 export type Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_CurrentWorker = Worker | undefined;
 
 export type Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_SearchLimit = number;
+
+export type Lib_Search_UseSearchWorker_UseSearchWorker_PerformSearch_FuzzyDistance = number;

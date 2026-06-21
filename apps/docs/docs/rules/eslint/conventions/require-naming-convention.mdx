@@ -27,7 +27,7 @@ Enforce context-aware naming conventions because consistent casing per identifie
 
 The `require-naming-convention` rule checks identifier names against the expected casing for their declaration context.
 
-`UPPER_SNAKE_CASE` is reserved for `const` declarations with immutable values (primitives and regex literals). Arrays, objects, instances, and function return values use `camelCase` even when declared with `const`.
+`UPPER_SNAKE_CASE` is reserved for `const` declarations with immutable values (primitives and regex literals). Arrays, objects, instances, and function return values use `camelCase` even when declared with `const`. A `const` with an immutable value may use either `UPPER_SNAKE_CASE` or `camelCase` — both are accepted (so `const apiUrl = 'x'` is fine).
 
 Type aliases default to `UnderscorePascalCase` — segments are individually PascalCased and joined with underscores (for example, `Tests_TypeDeclarations_ExtractObjectTypes_ObjectType`). This pairs with the `require-type-naming` rule, which derives prefixes from the file path in the same format.
 
@@ -82,11 +82,10 @@ Type aliases default to `UnderscorePascalCase` — segments are individually Pas
     ```ts
     const max_retries = 3;
     let MAX_RETRIES = 3;
-    function MyFunction() {}
+    function get_data() {}
     class myClass {}
 
-    // Glued PascalCase — type aliases must use UnderscorePascalCase.
-    type TestsTypeDeclarationsExtractObjectTypesObjectType = {};
+    // lowercase start — type aliases must begin with an uppercase letter.
     type myType = string;
     ```
 
@@ -165,8 +164,7 @@ Type aliases default to `UnderscorePascalCase` — segments are individually Pas
         rules: {
           '@cbnventures/nova/require-naming-convention': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -183,27 +181,27 @@ Type aliases default to `UnderscorePascalCase` — segments are individually Pas
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option                | Type       | Default                | Description                             |
-|-----------------------|------------|------------------------|-----------------------------------------|
-| `classDeclaration`    | `string`   | `PascalCase`           | Casing for class names.                 |
-| `classMethod`         | `string`   | `camelCase`            | Casing for class methods.               |
-| `classProperty`       | `string`   | `camelCase`            | Casing for class properties.            |
-| `constructorVariable` | `string`   | `PascalCase`           | Casing for variables used with `new`.   |
-| `constant`            | `string`   | `UPPER_SNAKE_CASE`     | Casing for const with immutable values. |
-| `enum`                | `string`   | `PascalCase`           | Casing for enum declarations.           |
-| `enumMember`          | `string`   | `PascalCase`           | Casing for enum members.                |
-| `function`            | `string`   | `camelCase`            | Casing for function declarations.       |
-| `ignoreFiles`         | `string[]` | `[]`                   | File patterns to skip.                  |
-| `interface`           | `string`   | `PascalCase`           | Casing for interfaces.                  |
-| `parameter`           | `string`   | `camelCase`            | Casing for function parameters.         |
-| `reactComponent`      | `string`   | `PascalCase`           | Casing for React component functions.   |
-| `typeAlias`           | `string`   | `UnderscorePascalCase` | Casing for type aliases.                |
-| `variable`            | `string`   | `camelCase`            | Casing for let/var variables.           |
+| Option                | Type       | Default                | Description                                                                                                                               |
+|-----------------------|------------|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `classDeclaration`    | `string`   | `PascalCase`           | Casing for class names.                                                                                                                   |
+| `classMethod`         | `string`   | `camelCase`            | Casing for class methods.                                                                                                                 |
+| `classProperty`       | `string`   | `camelCase`            | Casing for class properties.                                                                                                              |
+| `constructorVariable` | `string`   | `PascalCase`           | Casing for variables used with `new`.                                                                                                     |
+| `constant`            | `string`   | `UPPER_SNAKE_CASE`     | Casing for const with immutable values.                                                                                                   |
+| `enum`                | `string`   | `PascalCase`           | Casing for enum declarations.                                                                                                             |
+| `enumMember`          | `string`   | `PascalCase`           | Casing for enum members.                                                                                                                  |
+| `function`            | `string`   | `camelCase`            | Casing for function declarations.                                                                                                         |
+| `ignoreFiles`         | `string[]` | `[]`                   | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+| `interface`           | `string`   | `PascalCase`           | Casing for interfaces.                                                                                                                    |
+| `parameter`           | `string`   | `camelCase`            | Casing for function parameters.                                                                                                           |
+| `reactComponent`      | `string`   | `PascalCase`           | Casing for React component functions.                                                                                                     |
+| `typeAlias`           | `string`   | `UnderscorePascalCase` | Casing for type aliases.                                                                                                                  |
+| `variable`            | `string`   | `camelCase`            | Casing for let/var variables.                                                                                                             |
 
 Accepted casing values: `camelCase`, `PascalCase`, `UnderscorePascalCase`, `UPPER_SNAKE_CASE`.
 
 :::caution Migration in 0.18.0
-The default for `typeAlias` changed from `PascalCase` to `UnderscorePascalCase` in 0.18.0 so type aliases align with the prefixes produced by `require-type-naming`. Existing glued names like `CliUtilityChangelog` now fail; rename them to the underscore form (`Cli_Utility_Changelog`) or override the option back to `PascalCase` to defer the change.
+The default for `typeAlias` changed from `PascalCase` to `UnderscorePascalCase` in 0.18.0 so type aliases align with the prefixes produced by `require-type-naming`. `UnderscorePascalCase` is a superset of `PascalCase`, so glued names like `CliUtilityChangelog` still pass this rule — the underscore-segmented prefix is enforced separately by `require-type-naming`.
 :::
 
 ## Autofix
@@ -212,5 +210,7 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 
 ## Troubleshooting
 
-- **`const` array is flagged for camelCase** — `UPPER_SNAKE_CASE` is only for `const` with immutable values (primitives and regex literals). Arrays, objects, and function return values use `camelCase` even when declared with `const`.
-- **Leading underscore is flagged** — Leading underscores (e.g., `_unused`) are permitted for unused variable prefixes and are not checked against casing rules.
+- **`const` array is flagged for camelCase** — `UPPER_SNAKE_CASE` is only for `const` with immutable values (primitives and regex literals). Arrays, objects, and function return values use `camelCase` even when declared with `const`. A `const` with an immutable value may also use `camelCase` — both casings are accepted for it.
+- **A non-component function with an uppercase name is treated as a React component** — the rule classifies any function declaration whose name starts with an uppercase letter as a React component and applies the `reactComponent` casing; lowercase-first names use the `function` casing.
+- **Arrow-function and function-expression assignments are not checked** — `const handler = () => {}` is skipped by the variable check (it is not treated as a constant or plain variable for casing).
+- **Leading underscore is flagged** — A single leading underscore (e.g., `_unused`) is tolerated by the `camelCase` pattern for unused-variable prefixes; the rest of the name is still checked, and only `camelCase` contexts allow it.

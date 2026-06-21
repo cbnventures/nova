@@ -50,8 +50,6 @@ export type Theme_Navbar_Index_UserLogoWordmark_Value = {
 
 export type Theme_Navbar_Index_UserLogoWordmark = Theme_Navbar_Index_UserLogoWordmark_Value | undefined;
 
-export type Theme_Navbar_Index_UserLogoTitle = string | undefined;
-
 export type Theme_Navbar_Index_UserLogoAlt = string | undefined;
 
 export type Theme_Navbar_Index_UserLogoHref = string | undefined;
@@ -63,8 +61,6 @@ export type Theme_Navbar_Index_UserLogoRel = string | undefined;
 export type Theme_Navbar_Index_UserLogoAriaLabel = string | undefined;
 
 export type Theme_Navbar_Index_PresetLogoSrc = string | undefined;
-
-export type Theme_Navbar_Index_PresetLogoTitle = string | undefined;
 
 export type Theme_Navbar_Index_PresetLogoAlt = string | undefined;
 
@@ -225,10 +221,11 @@ export type Theme_Navbar_Index_Navbar_ThemeConfigCast = unknown;
 
 export type Theme_Navbar_Index_Navbar_ThemeConfig = Record<string, unknown>;
 
-export type Theme_Navbar_Index_Navbar_SiteConfig_Title = string;
+export type Theme_Navbar_Index_Navbar_DocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
+
+export type Theme_Navbar_Index_Navbar_SiteTitle = string;
 
 export type Theme_Navbar_Index_Navbar_SiteConfig = {
-  title: Theme_Navbar_Index_Navbar_SiteConfig_Title;
   [key: string]: unknown;
 };
 
@@ -273,8 +270,6 @@ export type Theme_Navbar_Index_Navbar_ColorModeState = {
 export type Theme_Navbar_Index_Navbar_ColorModeChoice = Theme_Navbar_Index_Navbar_ColorMode | null;
 
 export type Theme_Navbar_Index_Navbar_SetColorMode = (colorMode: Theme_Navbar_Index_Navbar_ColorModeChoice) => void;
-
-export type Theme_Navbar_Index_Navbar_SiteTitle = string;
 
 export type Theme_Navbar_Index_Navbar_Items = Theme_Navbar_Index_Navbar_Item[];
 

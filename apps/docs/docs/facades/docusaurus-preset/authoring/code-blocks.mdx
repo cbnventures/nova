@@ -1,0 +1,157 @@
+---
+id: "code-blocks"
+title: "Code Blocks"
+description: "Author fenced code blocks with live editors, line numbers, titles, line highlighting, and auto-collapse via meta flags."
+sidebar_position: 1
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "code blocks"
+  - "code fence meta"
+  - "live editor"
+  - "sandpack"
+  - "line numbers"
+  - "line highlighting"
+  - "syntax highlighting"
+  - "shiki"
+tags:
+  - "facades"
+  - "authoring"
+  - "code blocks"
+  - "shiki"
+  - "sandpack"
+---
+
+Author fenced code blocks with extra capabilities by adding meta flags after the language on the opening fence.
+
+## Summary
+
+The preset replaces the default code block with a Shiki-highlighted block that reads meta flags from the fence info string.
+
+- **`live`** mounts an interactive Sandpack editor in place of the static block.
+- **`showLineNumbers`** renders a gutter of line numbers.
+- **`title="..."`** renders a title bar above the block.
+- **`{1,3-5}`** highlights individual lines and line ranges.
+- Blocks longer than 25 lines auto-collapse, with **`noCollapse`** as an escape hatch.
+
+## Why Use This?
+
+- Adds a runnable editor so readers can edit and preview snippets without leaving the page.
+- Renders titles, line numbers, and line highlights so you can point at exact lines.
+- Auto-collapses long blocks so pages stay scannable without losing the full source.
+- Reads the same meta vocabulary Docusaurus authors already know, so existing fences keep working.
+
+## Usage
+
+Meta flags go on the opening fence, after the language identifier. Combine as many as apply.
+
+### Live Editor
+
+Add `live` to a fenced block that has a language to swap the static block for a Sandpack editor with live preview.
+
+````markdown
+```tsx live
+function Counter() {
+  const [count, setCount] = React.useState(0);
+
+  return <button onClick={() => setCount(count + 1)}>Count: {count}</button>;
+}
+```
+````
+
+The `live` flag only takes effect when the fence also declares a language. The language is mapped to a Sandpack template, and a language without a matching template falls back to the `vanilla` template. The code is loaded into `/App.tsx`, the console is hidden behind a toggle button, and the editor renders at a fixed height.
+
+The following languages map to a Sandpack template:
+
+| Language     | Sandpack template |
+|--------------|-------------------|
+| `js`         | `vanilla`         |
+| `javascript` | `vanilla`         |
+| `ts`         | `vanilla-ts`      |
+| `typescript` | `vanilla-ts`      |
+| `jsx`        | `react`           |
+| `tsx`        | `react-ts`        |
+| `vue`        | `vue`             |
+| `svelte`     | `svelte`          |
+| `angular`    | `angular`         |
+
+### Line Numbers
+
+Add `showLineNumbers` to render a line-number gutter alongside the code.
+
+````markdown
+```ts showLineNumbers
+const config = loadConfig();
+const items = config.items;
+const total = items.length;
+```
+````
+
+### Title
+
+Add `title="..."` to render a title bar above the block. Both double and single quotes are accepted.
+
+````markdown
+```ts title="src/cli/index.ts"
+const program = new Command();
+```
+````
+
+### Line Highlighting
+
+Add a `{...}` range to highlight specific lines. Use commas for individual lines and a dash for a range.
+
+````markdown
+```ts {1,3-5}
+const config = loadConfig();
+const items = config.items;
+const total = items.length;
+const visible = items.slice(0, 10);
+const hidden = total - visible.length;
+```
+````
+
+The example above highlights line 1 plus lines 3 through 5.
+
+### Auto-Collapse
+
+Blocks longer than 25 lines collapse by default and render a Show more / Show less toggle. Add `noCollapse` to keep a long block fully expanded.
+
+````markdown
+```ts noCollapse
+// A long block of more than 25 lines stays fully expanded
+// because noCollapse is present on the fence.
+```
+````
+
+### Combining Flags
+
+Meta flags can be combined on a single fence in any order.
+
+````markdown
+```tsx title="src/components/Counter.tsx" showLineNumbers {2}
+function Counter() {
+  const [count, setCount] = React.useState(0);
+
+  return <button onClick={() => setCount(count + 1)}>Count: {count}</button>;
+}
+```
+````
+
+## Options
+
+| Meta flag         | Form              | Effect                                                                                   |
+|-------------------|-------------------|------------------------------------------------------------------------------------------|
+| `live`            | `live`            | Mounts a Sandpack live editor. Requires a language; unsupported languages use `vanilla`. |
+| `showLineNumbers` | `showLineNumbers` | Renders a line-number gutter.                                                            |
+| `title`           | `title="..."`     | Renders a title bar above the block. Single or double quotes.                            |
+| Line range        | `{1,3-5}`         | Highlights individual lines (comma-separated) and ranges (dash). One-based line numbers. |
+| `noCollapse`      | `noCollapse`      | Disables auto-collapse on blocks longer than 25 lines.                                   |
+
+## Troubleshooting
+
+- **`live` does nothing** — The fence has no language. The live editor only mounts when a language identifier is present after the opening backticks.
+- **Live editor falls back to plain output** — The language has no matching Sandpack template. Use one of the languages listed in the table above, or expect the `vanilla` template.
+- **Long block is collapsed** — Blocks over 25 lines collapse by default. Add `noCollapse` to keep it expanded, or click Show more to reveal the rest.
+- **Highlight range not applied** — Check the `{...}` syntax. Use commas between individual lines and a single dash for a range, for example `{1,3-5}`.
+- **Title bar missing** — Confirm the value is quoted, for example `title="src/index.ts"`. An unquoted value is not recognized.

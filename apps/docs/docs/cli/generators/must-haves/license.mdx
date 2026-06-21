@@ -67,16 +67,16 @@ Create a `LICENSE` file populated with the chosen license type, author legal nam
 
 | Flag                 | Description                                                            |
 |----------------------|------------------------------------------------------------------------|
-| `-d, --dry-run`      | Preview the target file path without writing anything to disk.         |
+| `-d, --dry-run`      | Run without writing any files.                                         |
 | `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
 
 ## Config Fields
 
-| Field                  | Description                                                                              |
-|------------------------|------------------------------------------------------------------------------------------|
-| `project.legalName`    | The legal name used in the copyright notice.                                             |
-| `project.license`      | SPDX license identifier. If not set, you are prompted to select a license interactively. |
-| `project.startingYear` | The year the project was first published (defaults to now).                              |
+| Field                  | Description                                                                          |
+|------------------------|--------------------------------------------------------------------------------------|
+| `project.legalName`    | The legal name used in the copyright notice.                                         |
+| `project.license`      | SPDX license identifier. Required; the command exits with an error if it is not set. |
+| `project.startingYear` | The year the project was first published (defaults to now).                          |
 
 ## Supported Licenses
 
@@ -99,6 +99,7 @@ Create a `LICENSE` file populated with the chosen license type, author legal nam
 
 ## Output Files
 
-| File      | Description                                             |
-|-----------|---------------------------------------------------------|
-| `LICENSE` | License file populated with author name and year range. |
+| File                  | Description                                                                                                                                       |
+|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| `LICENSE`             | License file populated with author name and year range.                                                                                           |
+| `<workspace>/LICENSE` | A copy of the same license placed in each consumer-facing workspace (roles `app`, `package`, `tool`, and `config`), excluding the root workspace. |

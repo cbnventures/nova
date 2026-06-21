@@ -1,5 +1,21 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.19.0 - 2026-06-21
+
+### UPDATED
+- Replaces the six bundled `@iconify-json/*` collections with a build-time scan that resolves every `prefix:name` identifier a site references against the complete Iconify dataset and bundles only the icons actually used. Any Iconify icon still works by name with no per-collection install — the difference is that the client now carries the used subset instead of every icon of every collection.
+- The navbar brand text now comes from the top-level `docusaurus.config.title`. Removes the redundant `themeConfig.site.title` (which was never read), `themeConfig.site.logo.title`, and the never-read `themeConfig.navbar.title`. Migration: delete those three keys from your config; for a brand that differs from the site title, use a wordmark image (`site.logo.wordmark`).
+
+### FIXED
+- Corrects the published `./types/config` declaration for `overrides.colors`, which had drifted from the validated schema: it now exposes the six light/dark categories (`primary`, `secondary`, `text`, `border`, `warning`, `danger`) the schema actually accepts, replacing the stale `primary`/`accent`/`neutral` string shape, and drops the `shape`/`depth`/`motion` override keys that were never part of the schema. Consumers typing their config against `NovaPresetOverrides` now get accurate completions and errors.
+- Fixes a horizontal-scroll / blank-space-on-the-right bug on viewports narrower than the navbar item row (e.g. mobile) for the Bridge, Compass, and Canopy variants. The hidden item-measurement clone is now wrapped in a zero-size clipped container so it can no longer stretch the document width, while still measuring correctly for the `More` overflow collapse.
+- Honors four search options that were validated but previously ignored: `searchResultLimits`, `fuzzyMatchingDistance`, `searchBarShortcutKeymap`, and `highlightSearchTermsOnTargetPage` now take effect. Defaults are unchanged, so existing sites behave identically unless they set these values.
+- Stops embedding entire Iconify collections (~22,900 icons) in the client entry, which had grown `main.js` past Cloudflare Pages' 25 MiB per-file limit and broke the docs deploy in 0.18.0. The generated registry now holds only referenced icons, so the icon payload is a small fraction of its former size.
+
+### ADDED
+- Adds the `iconSafelist` preset option for icon identifiers built dynamically at runtime that the build-time scan cannot discover in source — listed names are always bundled.
+- Adds a build-time bundle size guard — a production build now fails if any emitted JavaScript file exceeds the `maxBundleFileSize` preset option (default 3 MiB, or `false` to disable), catching bundle-size regressions before they ship rather than at deploy time.
+
 ## 0.18.0 - 2026-06-19
 
 ### UPDATED

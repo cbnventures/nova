@@ -23,7 +23,7 @@ Block `javascript:` URLs except explicitly allowed patterns because script URLs 
 
 ## Summary
 
-The `no-script-url` rule reports any string literal whose value starts with `javascript:` unless it matches one of the allowed patterns.
+The `no-script-url` rule reports any string literal whose value, lowercased, starts with `javascript:` unless it matches one of the allowed patterns.
 
 ## Why Use This Rule?
 
@@ -125,8 +125,7 @@ The `no-script-url` rule reports any string literal whose value starts with `jav
         rules: {
           '@cbnventures/nova/no-script-url': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -143,10 +142,10 @@ The `no-script-url` rule reports any string literal whose value starts with `jav
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option            | Type       | Default | Description                        |
-|-------------------|------------|---------|------------------------------------|
-| `allowedPatterns` | `string[]` | `[]`    | Exact `javascript:` URLs to allow. |
-| `ignoreFiles`     | `string[]` | `[]`    | File patterns to skip.             |
+| Option            | Type       | Default | Description                                                                                                                                                                 |
+|-------------------|------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `allowedPatterns` | `string[]` | `[]`    | Exact `javascript:` URLs to allow. Matching is case-insensitive (the literal value and each pattern are compared after lowercasing), and must equal the full literal value. |
+| `ignoreFiles`     | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported.                                   |
 
 ## Autofix
 

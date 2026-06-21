@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.19.0 - 2026-06-21
+
+### UPDATED
+- Clarifies the `--dry-run` option help text across all commands
+
 ## 0.18.0 - 2026-06-19
 
 ### UPDATED

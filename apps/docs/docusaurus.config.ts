@@ -224,7 +224,6 @@ const config: DocusaurusNovaConfig = {
   themeConfig: {
     // Site.
     site: {
-      title: 'Nova',
       logo: {
         alt: 'Nova',
         src: {
@@ -236,7 +235,6 @@ const config: DocusaurusNovaConfig = {
           light: undefined,
           dark: undefined,
         },
-        title: 'Nova',
       },
       image: '/thumbnails/brand.png',
       metadata: [
@@ -259,7 +257,6 @@ const config: DocusaurusNovaConfig = {
 
     // Navbar.
     navbar: {
-      title: 'Nova',
       hideOnScroll: false,
       items: [
         {

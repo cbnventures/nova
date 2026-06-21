@@ -10,7 +10,6 @@ import type { Presets_Sentinel_Preset_Sentinel } from '../../types/presets/senti
  */
 export const presetsSentinelPresetSentinel: Presets_Sentinel_Preset_Sentinel = {
   logo: {
-    title: 'Sentinel',
     alt: 'Sentinel',
     src: '@nova-assets/presets/sentinel/logo.svg',
   },

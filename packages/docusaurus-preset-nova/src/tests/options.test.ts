@@ -68,7 +68,6 @@ import type {
   Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Result,
   Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Site,
   Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteMetadata,
-  Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteTitle,
   Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Validated,
   Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_JoiSchema,
   Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_Validated,
@@ -225,7 +224,6 @@ describe('validateThemeConfig', async () => {
       },
       themeConfig: {
         site: {
-          title: 'Nova Docs',
           metadata: [{
             name: 'robots',
             content: 'noindex',
@@ -235,10 +233,8 @@ describe('validateThemeConfig', async () => {
     });
 
     const site: Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Site = result['site'] as Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Site;
-    const siteTitle: Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteTitle = site['title'] as Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteTitle;
     const siteMetadata: Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteMetadata = site['metadata'] as Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_SiteMetadata;
 
-    strictEqual(siteTitle, 'Nova Docs');
     strictEqual(siteMetadata.length, 1);
 
     return;

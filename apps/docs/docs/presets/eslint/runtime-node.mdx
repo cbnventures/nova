@@ -1,12 +1,78 @@
 ---
 id: "runtime-node"
 title: "Runtime - Node"
-description: "x"
+description: "Lint Node.js code with eslint-plugin-n, ban raw console and process.exit, and relax hashbang checks on CLI entry points."
 keywords:
-  - "x"
+  - "nova"
+  - "runtime node"
+  - "eslint preset"
+  - "eslint-plugin-n"
+  - "node runtime"
+  - "environment layer"
+  - "no-console"
+  - "no-process-exit"
+  - "hashbang"
 tags:
   - "presets"
-  - "x"
+  - "eslint"
+  - "runtime"
+  - "node"
 ---
 
-Coming soon
+Lint Node.js code with the recommended `eslint-plugin-n` ruleset, guard against raw `console` and `process.exit`, and relax hashbang enforcement on source-level CLI entry points.
+
+## Why Use This Preset?
+
+1. Applies `eslint-plugin-n`'s recommended rules so your Node.js code catches missing dependencies, unsupported APIs, and bad imports.
+2. Bans raw `console` output so logging flows through the Logger toolkit battery instead.
+3. Disallows `process.exit()` so error handling stays structured rather than terminating abruptly.
+4. Warns on synchronous APIs so you avoid blocking the event loop.
+5. Turns off hashbang enforcement for source-level CLI entry points, since the `bin` field points to the build output rather than the source file.
+
+## Usage
+
+Import `runtimeNode` from the ESLint presets entry and spread it into your flat config after the language layer, in the documented layer order.
+
+```ts title="eslint.config.ts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  langTypescript,
+  runtimeNode,
+} from '@cbnventures/nova/presets/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...runtimeNode,
+];
+```
+
+## What This Preset Configures
+
+The preset registers `eslint-plugin-n` and applies its recommended Node.js ruleset, then adds project-specific rules and one scoped exception. Each group targets every script extension, except the CLI hashbang exception, which applies only to CLI entry points.
+
+### Recommended rules
+
+Registers `eslint-plugin-n` and spreads its recommended ruleset for Node.js, catching missing dependencies, unsupported APIs, and bad imports.
+
+### Bad habits
+
+| Rule              | What it enforces                                                                   |
+|-------------------|------------------------------------------------------------------------------------|
+| `no-console`      | Bans raw `console` output so logging flows through the Logger battery.             |
+| `no-process-exit` | Disallows `process.exit()` so error handling stays structured.                     |
+| `no-sync`         | Warns on synchronous APIs like `fs.readFileSync` so the event loop is not blocked. |
+
+### CLI hashbang
+
+| Rule         | What it enforces                                                                                                                   |
+|--------------|------------------------------------------------------------------------------------------------------------------------------------|
+| `n/hashbang` | Disabled on `src/bin/index.*` and `src/cli/index.*`, since the `bin` field points to the build output rather than the source file. |
+
+## Related
+
+- Review the layering order in **[ESLint Best Practices](/docs/presets/eslint/best-practices)**.
+- See how presets compose end to end in the **[Presets Overview](/docs/presets/)**.
+- Pair it with the matching **[Runtime - Node TSConfig preset](/docs/presets/tsconfig/runtime-node)**.

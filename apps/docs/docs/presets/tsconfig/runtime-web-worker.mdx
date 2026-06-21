@@ -1,12 +1,66 @@
 ---
 id: "runtime-web-worker"
 title: "Runtime - Web Worker"
-description: "x"
+description: "Configure TypeScript for web workers with WebWorker libraries, ESNext modules, automatic module detection, and bundler resolution."
 keywords:
-  - "x"
+  - "nova"
+  - "web worker"
+  - "tsconfig preset"
+  - "runtime"
+  - "webworker lib"
+  - "bundler resolution"
+  - "moduleDetection"
+  - "verbatimModuleSyntax"
+  - "background thread"
+  - "esnext modules"
 tags:
   - "presets"
-  - "x"
+  - "tsconfig"
+  - "runtime"
+  - "web-worker"
 ---
 
-Coming soon
+Configure TypeScript for dedicated web workers by loading the `WebWorker` libraries with `ESNext` modules, automatic module detection, and bundler resolution.
+
+## Why Use This Preset?
+
+1. Adds the `WebWorker` and `WebWorker.Iterable` libraries so worker globals and async iterables type-check correctly off the main thread.
+2. Sets `ESNext` modules with `Bundler` resolution so imports match how your bundler ships the worker.
+3. Sets `moduleDetection` to `auto` so TypeScript decides per file whether each is a module or a classic script.
+4. Sets `verbatimModuleSyntax` to `false` so the compiler is free to elide type-only imports rather than preserving them verbatim.
+5. Layers cleanly after `dx-essentials` and `dx-strict`, adding only the worker-specific type surface on top of your strictness baseline.
+
+## Usage
+
+Add the preset to the `extends` array of your `tsconfig.json`, after the essentials and strict layers.
+
+```json title="tsconfig.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-web-worker.json"
+  ]
+}
+```
+
+## What This Preset Configures
+
+This preset sets the following `compilerOptions`.
+
+| Setting                | Value                                           | Description                                                                 |
+|------------------------|-------------------------------------------------|-----------------------------------------------------------------------------|
+| `lib`                  | `["ESNext", "WebWorker", "WebWorker.Iterable"]` | Exposes the latest ECMAScript APIs plus worker globals and async iterables. |
+| `module`               | `ESNext`                                        | Emits modern ECMAScript module syntax for the bundler to consume.           |
+| `moduleDetection`      | `auto`                                          | Lets TypeScript decide per file whether it is a module or a classic script. |
+| `moduleResolution`     | `Bundler`                                       | Resolves imports the way a bundler does, matching how the worker ships.     |
+| `verbatimModuleSyntax` | `false`                                         | Allows the compiler to elide type-only imports instead of preserving them.  |
+
+:::info
+The `lib` array replaces the parent's value rather than merging with it, so this preset omits the DOM library that the main browser thread relies on but a worker context does not provide.
+:::
+
+## Related
+
+- Review the layering order in **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.
+- See how presets compose end to end in the **[Presets Overview](/docs/presets/)**.

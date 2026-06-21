@@ -6,20 +6,86 @@ import type {
   RouteConfig,
 } from '@docusaurus/types';
 
-// Primary brand color - hex format (e.g., "#DC2626").
-export type NovaPresetOverridesColorsPrimary = string | undefined;
+// Primary brand color - light mode hex (e.g., "#DC2626").
+export type NovaPresetOverridesColorsPrimaryLight = string | undefined;
 
-// Accent color for highlights and CTAs - hex format (e.g., "#FFBA33").
-export type NovaPresetOverridesColorsAccent = string | undefined;
+// Primary brand color - dark mode hex (e.g., "#F87171").
+export type NovaPresetOverridesColorsPrimaryDark = string | undefined;
 
-// Neutral color for borders and muted text - hex format (e.g., "#78716C").
-export type NovaPresetOverridesColorsNeutral = string | undefined;
+// Primary brand color override - light/dark hex pair.
+export type NovaPresetOverridesColorsPrimary = {
+  light: NovaPresetOverridesColorsPrimaryLight;
+  dark: NovaPresetOverridesColorsPrimaryDark;
+};
 
-// Brand color overrides.
+// Secondary accent color - light mode hex (e.g., "#FBBF24").
+export type NovaPresetOverridesColorsSecondaryLight = string | undefined;
+
+// Secondary accent color - dark mode hex (e.g., "#FBBF24").
+export type NovaPresetOverridesColorsSecondaryDark = string | undefined;
+
+// Secondary accent color override - light/dark hex pair.
+export type NovaPresetOverridesColorsSecondary = {
+  light: NovaPresetOverridesColorsSecondaryLight;
+  dark: NovaPresetOverridesColorsSecondaryDark;
+};
+
+// Body text color - light mode hex (e.g., "#1C1917").
+export type NovaPresetOverridesColorsTextLight = string | undefined;
+
+// Body text color - dark mode hex (e.g., "#E7E5E4").
+export type NovaPresetOverridesColorsTextDark = string | undefined;
+
+// Body text color override - light/dark hex pair.
+export type NovaPresetOverridesColorsText = {
+  light: NovaPresetOverridesColorsTextLight;
+  dark: NovaPresetOverridesColorsTextDark;
+};
+
+// Border and divider color - light mode hex (e.g., "#D6D3D1").
+export type NovaPresetOverridesColorsBorderLight = string | undefined;
+
+// Border and divider color - dark mode hex (e.g., "#44403C").
+export type NovaPresetOverridesColorsBorderDark = string | undefined;
+
+// Border and divider color override - light/dark hex pair.
+export type NovaPresetOverridesColorsBorder = {
+  light: NovaPresetOverridesColorsBorderLight;
+  dark: NovaPresetOverridesColorsBorderDark;
+};
+
+// Warning admonition color - light mode hex (e.g., "#F59E0B").
+export type NovaPresetOverridesColorsWarningLight = string | undefined;
+
+// Warning admonition color - dark mode hex (e.g., "#FBBF24").
+export type NovaPresetOverridesColorsWarningDark = string | undefined;
+
+// Warning admonition color override - light/dark hex pair.
+export type NovaPresetOverridesColorsWarning = {
+  light: NovaPresetOverridesColorsWarningLight;
+  dark: NovaPresetOverridesColorsWarningDark;
+};
+
+// Danger/error admonition color - light mode hex (e.g., "#EF4444").
+export type NovaPresetOverridesColorsDangerLight = string | undefined;
+
+// Danger/error admonition color - dark mode hex (e.g., "#F87171").
+export type NovaPresetOverridesColorsDangerDark = string | undefined;
+
+// Danger/error admonition color override - light/dark hex pair.
+export type NovaPresetOverridesColorsDanger = {
+  light: NovaPresetOverridesColorsDangerLight;
+  dark: NovaPresetOverridesColorsDangerDark;
+};
+
+// Brand color overrides - each category is a light/dark hex pair.
 export type NovaPresetOverridesColors = {
   primary: NovaPresetOverridesColorsPrimary;
-  accent: NovaPresetOverridesColorsAccent;
-  neutral: NovaPresetOverridesColorsNeutral;
+  secondary: NovaPresetOverridesColorsSecondary;
+  text: NovaPresetOverridesColorsText;
+  border: NovaPresetOverridesColorsBorder;
+  warning: NovaPresetOverridesColorsWarning;
+  danger: NovaPresetOverridesColorsDanger;
 };
 
 // Display/heading font family (e.g., "Sora", "Plus Jakarta Sans").
@@ -38,60 +104,11 @@ export type NovaPresetOverridesFonts = {
   code: NovaPresetOverridesFontsCode;
 };
 
-// Border radius style.
-export type NovaPresetOverridesShapeRadius = 'sharp' | 'rounded' | 'pill' | undefined;
-
-// Spacing density - affects padding and margins.
-export type NovaPresetOverridesShapeDensity = 'compact' | 'comfortable' | 'spacious' | undefined;
-
-// Shape and spacing overrides.
-export type NovaPresetOverridesShape = {
-  radius: NovaPresetOverridesShapeRadius;
-  density: NovaPresetOverridesShapeDensity;
-};
-
-// Card surface style.
-export type NovaPresetOverridesDepthCards = 'flat' | 'elevated' | 'glass' | undefined;
-
-// Code block surface style.
-export type NovaPresetOverridesDepthCodeBlocks = 'flat' | 'bordered' | 'elevated' | undefined;
-
-// Surface depth overrides.
-export type NovaPresetOverridesDepth = {
-  cards: NovaPresetOverridesDepthCards;
-  codeBlocks: NovaPresetOverridesDepthCodeBlocks;
-};
-
-// Animation speed.
-export type NovaPresetOverridesMotionSpeed = 'none' | 'subtle' | 'normal' | 'expressive' | undefined;
-
-// Stagger reveal animations on page load.
-export type NovaPresetOverridesMotionStaggeredReveals = boolean | undefined;
-
-// Enable hover effects on interactive elements.
-export type NovaPresetOverridesMotionHoverEffects = boolean | undefined;
-
-// Animation and motion overrides.
-export type NovaPresetOverridesMotion = {
-  speed: NovaPresetOverridesMotionSpeed;
-  staggeredReveals: NovaPresetOverridesMotionStaggeredReveals;
-  hoverEffects: NovaPresetOverridesMotionHoverEffects;
-};
-
-// Override preset brand colors (e.g., { primary: "#DC2626" }).
+// Override preset brand colors (e.g., { primary: { light: "#DC2626" } }).
 export type NovaPresetOverridesColorsPartial = Partial<NovaPresetOverridesColors> | undefined;
 
 // Override preset font families (e.g., { display: "Sora" }).
 export type NovaPresetOverridesFontsPartial = Partial<NovaPresetOverridesFonts> | undefined;
-
-// Override preset border radius and spacing density.
-export type NovaPresetOverridesShapePartial = Partial<NovaPresetOverridesShape> | undefined;
-
-// Override preset card and code block depth styling.
-export type NovaPresetOverridesDepthPartial = Partial<NovaPresetOverridesDepth> | undefined;
-
-// Override preset animation speed and effects.
-export type NovaPresetOverridesMotionPartial = Partial<NovaPresetOverridesMotion> | undefined;
 
 // Navbar variant override.
 export type NovaPresetOverridesNavbar = 'bridge' | 'canopy' | 'monolith' | 'compass' | undefined;
@@ -99,13 +116,10 @@ export type NovaPresetOverridesNavbar = 'bridge' | 'canopy' | 'monolith' | 'comp
 // Footer variant override.
 export type NovaPresetOverridesFooter = 'commons' | 'embassy' | 'ledger' | 'launchpad' | undefined;
 
-// Preset visual overrides - colors, fonts, shape, depth, motion, and layout variants.
+// Preset visual overrides - colors, fonts, and navbar/footer layout variants.
 export type NovaPresetOverrides = {
   colors?: NovaPresetOverridesColorsPartial;
   fonts?: NovaPresetOverridesFontsPartial;
-  shape?: NovaPresetOverridesShapePartial;
-  depth?: NovaPresetOverridesDepthPartial;
-  motion?: NovaPresetOverridesMotionPartial;
   navbar?: NovaPresetOverridesNavbar;
   footer?: NovaPresetOverridesFooter;
 };
@@ -774,7 +788,13 @@ export type NovaPresetOptionsProgressBar = NovaPresetProgressBar | undefined;
 // Local search configuration, or false to disable search entirely. Defaults to false.
 export type NovaPresetOptionsSearch = NovaPresetSearch | undefined;
 
-// Nova preset options - identity, overrides, plugins, analytics, progress bar, and search.
+// Icon identifiers to always bundle, for names built dynamically that the build-time scan cannot see. Defaults to [].
+export type NovaPresetOptionsIconSafelist = string[] | undefined;
+
+// Maximum size in MiB any emitted JavaScript bundle file may reach before the build fails, or false to disable. Defaults to 3.
+export type NovaPresetOptionsMaxBundleFileSize = number | false | undefined;
+
+// Nova preset options - identity, overrides, plugins, analytics, progress bar, search, icon safelist, and bundle size guard.
 export type NovaPresetOptions = {
   preset: NovaPresetName;
   overrides?: NovaPresetOptionsOverrides;
@@ -782,6 +802,8 @@ export type NovaPresetOptions = {
   analytics?: NovaPresetOptionsAnalytics;
   progressBar?: NovaPresetOptionsProgressBar;
   search?: NovaPresetOptionsSearch;
+  iconSafelist?: NovaPresetOptionsIconSafelist;
+  maxBundleFileSize?: NovaPresetOptionsMaxBundleFileSize;
 };
 
 // Meta tag name attribute (e.g., "twitter:card", "og:description").
@@ -795,9 +817,6 @@ export type NovaThemeConfigSiteMetadataEntry = {
   name: NovaThemeConfigSiteMetadataEntryName;
   content: NovaThemeConfigSiteMetadataEntryContent;
 };
-
-// Site title shown in the browser tab and SEO (e.g., "Nova", "Foundry"). Defaults to "".
-export type NovaThemeConfigSiteTitle = string | undefined;
 
 // Alt text for the logo image (e.g., "Nova"). Defaults to "".
 export type NovaThemeConfigSiteLogoAlt = string | undefined;
@@ -838,9 +857,6 @@ export type NovaThemeConfigSiteLogoWordmark = {
   dark?: NovaThemeConfigSiteLogoWordmarkDark;
 } | undefined;
 
-// Brand title text shown in the navbar (e.g., "Envoy"). Not used for SEO.
-export type NovaThemeConfigSiteLogoTitle = string | undefined;
-
 // Site logo configuration.
 export type NovaThemeConfigSiteLogo = {
   alt?: NovaThemeConfigSiteLogoAlt;
@@ -850,7 +866,6 @@ export type NovaThemeConfigSiteLogo = {
   rel?: NovaThemeConfigSiteLogoRel;
   ariaLabel?: NovaThemeConfigSiteLogoAriaLabel;
   wordmark?: NovaThemeConfigSiteLogoWordmark;
-  title?: NovaThemeConfigSiteLogoTitle;
 } | undefined;
 
 // Default social sharing image - URL path from static dir (e.g., "/thumbnails/brand.png"). Defaults to "".
@@ -859,9 +874,8 @@ export type NovaThemeConfigSiteImage = string | undefined;
 // HTML <meta> tags for SEO (e.g., [{ name: "twitter:card", content: "summary_large_image" }]). Defaults to [].
 export type NovaThemeConfigSiteMetadata = NovaThemeConfigSiteMetadataEntry[] | undefined;
 
-// Site identity - title, logo, image, and metadata.
+// Site identity - logo, image, and metadata.
 export type NovaThemeConfigSite = {
-  title?: NovaThemeConfigSiteTitle;
   logo?: NovaThemeConfigSiteLogo;
   image?: NovaThemeConfigSiteImage;
   metadata?: NovaThemeConfigSiteMetadata;

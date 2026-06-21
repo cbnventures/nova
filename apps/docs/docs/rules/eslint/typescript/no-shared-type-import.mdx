@@ -137,8 +137,7 @@ This enforces a layered type architecture where shared types flow through domain
           '@cbnventures/nova/no-shared-type-import': ['error', {
             sharedFiles: ['shared.d.ts'],
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -155,10 +154,10 @@ This enforces a layered type architecture where shared types flow through domain
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description                                                                       |
-|---------------|------------|---------|-----------------------------------------------------------------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.                                                            |
-| `sharedFiles` | `string[]` | `[]`    | File paths or suffixes that identify shared type files (e.g., `['shared.d.ts']`). |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+| `sharedFiles` | `string[]` | `[]`    | File paths or suffixes that identify shared type files (e.g., `['shared.d.ts']`).                                                         |
 
 Each entry in `sharedFiles` is matched against the end of the import source path. For example, `'shared.d.ts'` matches any import whose source ends with `/shared.d.ts`.
 

@@ -135,8 +135,7 @@ A member is considered private if it uses the `private` keyword or a `#` private
         rules: {
           '@cbnventures/nova/require-jsdoc-private': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -153,9 +152,9 @@ A member is considered private if it uses the `private` keyword or a `#` private
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description            |
-|---------------|------------|---------|------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -165,7 +164,10 @@ This rule provides automatic fixes. Run ESLint with the `--fix` flag:
 npx eslint --fix . --rule '@cbnventures/nova/require-jsdoc-private: error'
 ```
 
+The fix inserts the `@private` tag immediately before the `@since` tag. If the JSDoc block has no `@since` tag, no automatic fix is applied and the member must be fixed manually.
+
 ## Troubleshooting
 
 - **Warning does not fire for members without JSDoc** — The rule only checks members that already have a JSDoc block. If a private member has no JSDoc comment, the rule does not report it.
 - **Public members with `@private` are not flagged** — This rule only checks that private members have the tag. It does not check for mismatched tags on public members.
+- **Autofix does not insert `@private`** — The fix anchors on `@since`; if the JSDoc block has no `@since` tag, add one or insert `@private` by hand.

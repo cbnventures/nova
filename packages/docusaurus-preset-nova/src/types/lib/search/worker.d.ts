@@ -39,6 +39,7 @@ export type Lib_Search_Worker_Event = MessageEvent<{
   type: 'search';
   query: string;
   limit: number;
+  fuzzyDistance: number;
 }>;
 
 /**
@@ -112,6 +113,8 @@ export type Lib_Search_Worker_HandleSearch_Message = Shared_SearchWorkerSearchMe
 
 export type Lib_Search_Worker_HandleSearch_Returns = void;
 
+export type Lib_Search_Worker_HandleSearch_FuzzyDistance = number;
+
 export type Lib_Search_Worker_HandleSearch_Hits = Array<{
   path: string;
   title: string;
@@ -137,6 +140,8 @@ export type Lib_Search_Worker_PerformSearch_Documents = Shared_SearchWorkerDocum
 export type Lib_Search_Worker_PerformSearch_Query = string;
 
 export type Lib_Search_Worker_PerformSearch_Limit = number;
+
+export type Lib_Search_Worker_PerformSearch_FuzzyDistance = number;
 
 export type Lib_Search_Worker_PerformSearch_TrimmedQuery = string;
 

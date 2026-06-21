@@ -3,6 +3,7 @@ import {
   PageMetadata,
   SkipToContentFallbackId,
 } from '@docusaurus/theme-common';
+import { usePluginData } from '@docusaurus/useGlobalData';
 import AnnouncementBar from '@theme/AnnouncementBar';
 import BackToTopButton from '@theme/BackToTopButton';
 import ErrorPageContent from '@theme/ErrorPageContent';
@@ -14,8 +15,11 @@ import SkipToContent from '@theme/SkipToContent';
 import { useSearchHighlight } from '../../lib/search/use-search-highlight.js';
 
 import type {
+  Theme_Layout_Index_Layout_HighlightSearchTerms,
   Theme_Layout_Index_Layout_MetadataSpread,
+  Theme_Layout_Index_Layout_PluginData,
   Theme_Layout_Index_Layout_Props,
+  Theme_Layout_Index_Layout_SearchSettings,
 } from '../../types/theme/Layout/index.d.ts';
 
 /**
@@ -32,7 +36,11 @@ import type {
  * @since 0.15.0
  */
 function Layout(props: Theme_Layout_Index_Layout_Props) {
-  useSearchHighlight({ enabled: true });
+  const novaPluginData: Theme_Layout_Index_Layout_PluginData = usePluginData('docusaurus-theme-nova') as Theme_Layout_Index_Layout_PluginData;
+  const searchSettings: Theme_Layout_Index_Layout_SearchSettings = novaPluginData['search'];
+  const highlightSearchTerms: Theme_Layout_Index_Layout_HighlightSearchTerms = (searchSettings !== undefined) ? searchSettings['highlightSearchTermsOnTargetPage'] ?? true : true;
+
+  useSearchHighlight({ enabled: highlightSearchTerms });
 
   const metadataSpread: Theme_Layout_Index_Layout_MetadataSpread = {};
 

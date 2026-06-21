@@ -23,7 +23,7 @@ Require `= undefined` when declaring uninitialized variables because an explicit
 
 ## Summary
 
-The `require-undefined-init` rule reports any `let` declaration that has no initializer. The opposite of ESLint's built-in `no-undef-init`.
+The `require-undefined-init` rule reports any `let` declaration that has no initializer, except `for-in` and `for-of` loop variables (see Troubleshooting). The opposite of ESLint's built-in `no-undef-init`.
 
 `const` declarations always require an initializer by the language, so they are not checked.
 
@@ -44,7 +44,7 @@ The `require-undefined-init` rule reports any `let` declaration that has no init
     let user = undefined;
 
     // Already has a value — not affected.
-    let name = 'default';
+    let greeting = 'default';
     const items = [];
     ```
 
@@ -106,8 +106,7 @@ The `require-undefined-init` rule reports any `let` declaration that has no init
         rules: {
           '@cbnventures/nova/require-undefined-init': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -124,9 +123,9 @@ The `require-undefined-init` rule reports any `let` declaration that has no init
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description            |
-|---------------|------------|---------|------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -140,3 +139,4 @@ npx eslint --fix . --rule '@cbnventures/nova/require-undefined-init: error'
 
 - **Conflicts with `no-undef-init`** — This rule is the inverse of the built-in `no-undef-init`. Disable `no-undef-init` when using this rule.
 - **`const` declarations are not checked** — `const` requires an initializer by the JavaScript language specification. Only `let` is checked.
+- **`for-in` / `for-of` loop variables are not checked** — A `let` binding used as the loop variable in `for (let key in obj)` or `for (let item of arr)` is exempt, since adding `= undefined` there would be invalid syntax.

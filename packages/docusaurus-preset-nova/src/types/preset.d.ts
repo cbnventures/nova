@@ -48,6 +48,10 @@ export type Preset_Preset_OptionsSearch = Record<string, unknown> | false | unde
 
 export type Preset_Preset_OptionsProgressBar = boolean | undefined;
 
+export type Preset_Preset_OptionsIconSafelist = string[] | undefined;
+
+export type Preset_Preset_OptionsMaxBundleFileSize = number | false | undefined;
+
 export type Preset_Preset_Options = {
   preset: Preset_Preset_OptionsPreset;
   overrides: Preset_Preset_OptionsOverrides;
@@ -55,6 +59,8 @@ export type Preset_Preset_Options = {
   analytics: Preset_Preset_OptionsAnalytics;
   search: Preset_Preset_OptionsSearch;
   progressBar: Preset_Preset_OptionsProgressBar;
+  iconSafelist?: Preset_Preset_OptionsIconSafelist;
+  maxBundleFileSize?: Preset_Preset_OptionsMaxBundleFileSize;
   [key: string]: unknown;
 };
 
@@ -119,6 +125,10 @@ export type Preset_Preset_SitemapPlugin = Preset_Preset_Plugin;
 export type Preset_Preset_SvgrPlugin = Preset_Preset_Plugin;
 
 export type Preset_Preset_MermaidTooltipPlugin = string;
+
+export type Preset_Preset_IconsPlugin = Preset_Preset_Plugin;
+
+export type Preset_Preset_BundleGuardPlugin = Preset_Preset_Plugin;
 
 export type Preset_Preset_GtmPlugin = Preset_Preset_Plugin;
 

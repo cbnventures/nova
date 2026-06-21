@@ -2,7 +2,7 @@
 id: "search"
 title: "Search"
 description: "Built-in full-text search with fuzzy matching, multi-language support, and non-blocking index queries."
-sidebar_position: 3
+sidebar_position: 4
 keywords:
   - "nova"
   - "docusaurus facades"
@@ -63,7 +63,7 @@ flowchart TD
 ### Runtime Search
 
 1. **Web Worker** — a dedicated worker loads the serialized index on first query.
-2. **Query execution** — the search engine processes the query with fuzzy matching (configurable distance 0–2).
+2. **Query execution** — the search engine runs exact, wildcard, and fuzzy match strategies against the index and merges the results.
 3. **Result rendering** — results are returned to the main thread. Matching terms are highlighted on the target page when `highlightSearchTermsOnTargetPage` is enabled.
 
 ## Configuration

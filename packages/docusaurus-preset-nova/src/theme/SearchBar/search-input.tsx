@@ -1,4 +1,5 @@
 import { translate } from '@docusaurus/Translate';
+import { usePluginData } from '@docusaurus/useGlobalData';
 import { Icon } from '@iconify/react/offline';
 import {
   useCallback, useEffect, useLayoutEffect, useRef,
@@ -26,8 +27,17 @@ import type {
   Theme_SearchBar_SearchInput_IsOpen,
   Theme_SearchBar_SearchInput_IsShortcutMatch,
   Theme_SearchBar_SearchInput_KeyboardEvent,
+  Theme_SearchBar_SearchInput_Modifier,
+  Theme_SearchBar_SearchInput_ModifiersMatch,
   Theme_SearchBar_SearchInput_NextIndex,
+  Theme_SearchBar_SearchInput_ParsedKeymap,
+  Theme_SearchBar_SearchInput_ParseShortcutKeymap_Function,
+  Theme_SearchBar_SearchInput_ParseShortcutKeymap_Key,
+  Theme_SearchBar_SearchInput_ParseShortcutKeymap_Keymap,
+  Theme_SearchBar_SearchInput_ParseShortcutKeymap_Modifiers,
+  Theme_SearchBar_SearchInput_ParseShortcutKeymap_Tokens,
   Theme_SearchBar_SearchInput_Placeholder,
+  Theme_SearchBar_SearchInput_PluginData,
   Theme_SearchBar_SearchInput_PreviousIndex,
   Theme_SearchBar_SearchInput_PreviousIsActiveRef,
   Theme_SearchBar_SearchInput_Props,
@@ -38,16 +48,44 @@ import type {
   Theme_SearchBar_SearchInput_SearchInput_HandleKeyDown_CallbackFunction,
   Theme_SearchBar_SearchInput_SearchInput_HandleKeyDown_Function,
   Theme_SearchBar_SearchInput_SearchInput_OnSwapEnd_Function,
+  Theme_SearchBar_SearchInput_SearchSettings,
   Theme_SearchBar_SearchInput_SelectedResult,
   Theme_SearchBar_SearchInput_SetActiveIndex,
   Theme_SearchBar_SearchInput_SetIsOpen,
+  Theme_SearchBar_SearchInput_ShortcutKey,
+  Theme_SearchBar_SearchInput_ShortcutKeymap,
+  Theme_SearchBar_SearchInput_ShortcutModifiers,
 } from '../../types/theme/SearchBar/search-input.d.ts';
+
+/**
+ * Theme - Search Bar - Search Input - Parse Shortcut Keymap.
+ *
+ * Splits a keymap string (such as "mod+k") into its key and modifier
+ * tokens. Tokens are trimmed and lowercased; the last token is treated
+ * as the key and any preceding tokens are treated as modifiers.
+ *
+ * @param {Theme_SearchBar_SearchInput_ParseShortcutKeymap_Keymap} keymap - Keymap.
+ *
+ * @returns {Theme_SearchBar_SearchInput_ParseShortcutKeymap_Returns}
+ *
+ * @since 0.18.1
+ */
+const parseShortcutKeymap: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Function = (keymap: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Keymap) => {
+  const tokens: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Tokens = keymap.split('+').map((token) => token.trim().toLowerCase()).filter((token) => token !== '');
+  const key: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Key = (tokens.length > 0) ? tokens[tokens.length - 1] ?? '' : '';
+  const modifiers: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Modifiers = tokens.slice(0, -1);
+
+  return {
+    key,
+    modifiers,
+  };
+};
 
 /**
  * Theme - Search Bar - Search Input - Search Input.
  *
  * Renders the search text field with a clear button, registers the
- * global Cmd+K / Ctrl+K shortcut, and handles keyboard navigation
+ * configured global keyboard shortcut, and handles keyboard navigation
  * for cycling through search results via arrow keys.
  *
  * @param {Theme_SearchBar_SearchInput_Props} _props - _props.
@@ -66,6 +104,10 @@ function SearchInput(_props: Theme_SearchBar_SearchInput_Props) {
   const results: Theme_SearchBar_SearchInput_Results = searchContext['results'];
   const handleQueryChange: Theme_SearchBar_SearchInput_HandleQueryChange = searchContext['handleQueryChange'];
   const inputRef: Theme_SearchBar_SearchInput_InputRef = searchContext['inputRef'];
+
+  const novaPluginData: Theme_SearchBar_SearchInput_PluginData = usePluginData('docusaurus-theme-nova') as Theme_SearchBar_SearchInput_PluginData;
+  const searchSettings: Theme_SearchBar_SearchInput_SearchSettings = novaPluginData['search'];
+  const shortcutKeymap: Theme_SearchBar_SearchInput_ShortcutKeymap = (searchSettings !== undefined) ? searchSettings['searchBarShortcutKeymap'] ?? 'mod+k' : 'mod+k';
 
   const isActive: Theme_SearchBar_SearchInput_IsActive = (query !== '');
   const previousIsActiveRef: Theme_SearchBar_SearchInput_PreviousIsActiveRef = useRef<boolean>(isActive);
@@ -144,11 +186,45 @@ function SearchInput(_props: Theme_SearchBar_SearchInput_Props) {
     };
   }, [isActive]);
 
-  // Global keyboard shortcut (Cmd+K / Ctrl+K).
+  // Global keyboard shortcut parsed from the configured keymap (default
+  // "mod+k", where "mod" resolves to Cmd on Mac and Ctrl elsewhere).
   useEffect(() => {
+    const parsedKeymap: Theme_SearchBar_SearchInput_ParsedKeymap = parseShortcutKeymap(shortcutKeymap);
+    const shortcutKey: Theme_SearchBar_SearchInput_ShortcutKey = parsedKeymap['key'];
+    const shortcutModifiers: Theme_SearchBar_SearchInput_ShortcutModifiers = parsedKeymap['modifiers'];
+
     const handleKeyDown: Theme_SearchBar_SearchInput_SearchInput_HandleKeyDown_Function = (event: Theme_SearchBar_SearchInput_KeyboardEvent) => {
       const isMac: Theme_SearchBar_SearchInput_IsMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-      const isShortcutMatch: Theme_SearchBar_SearchInput_IsShortcutMatch = (isMac === true) ? (event.metaKey === true && event.key === 'k') : (event.ctrlKey === true && event.key === 'k');
+      const modifiersMatch: Theme_SearchBar_SearchInput_ModifiersMatch = shortcutModifiers.every((requiredModifier) => {
+        const modifier: Theme_SearchBar_SearchInput_Modifier = requiredModifier;
+
+        if (modifier === 'mod') {
+          return (isMac === true) ? event.metaKey === true : event.ctrlKey === true;
+        }
+
+        if (modifier === 'ctrl' || modifier === 'control') {
+          return event.ctrlKey === true;
+        }
+
+        if (
+          modifier === 'meta'
+          || modifier === 'cmd'
+          || modifier === 'command'
+        ) {
+          return event.metaKey === true;
+        }
+
+        if (modifier === 'alt' || modifier === 'option') {
+          return event.altKey === true;
+        }
+
+        if (modifier === 'shift') {
+          return event.shiftKey === true;
+        }
+
+        return false;
+      });
+      const isShortcutMatch: Theme_SearchBar_SearchInput_IsShortcutMatch = (event.key.toLowerCase() === shortcutKey && modifiersMatch === true);
 
       if (isShortcutMatch === true) {
         event.preventDefault();
@@ -170,7 +246,7 @@ function SearchInput(_props: Theme_SearchBar_SearchInput_Props) {
 
       return;
     };
-  }, []);
+  }, [shortcutKeymap]);
 
   // Input change handler. Drives `isOpen` synchronously off the field
   // value so the dropdown mounts/unmounts in the same tick as `query`

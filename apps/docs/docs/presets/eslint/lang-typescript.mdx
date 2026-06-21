@@ -1,12 +1,106 @@
 ---
 id: "lang-typescript"
 title: "Language - TypeScript"
-description: "x"
+description: "Enable the typescript-eslint parser and type-aware rules across all TypeScript files for consistent classes, safe overrides, and tidy declarations."
 keywords:
-  - "x"
+  - "nova"
+  - "lang typescript"
+  - "eslint preset"
+  - "typescript-eslint"
+  - "type-aware linting"
+  - "language layer"
+  - "class members"
+  - "type declarations"
+  - "flat config"
 tags:
   - "presets"
-  - "x"
+  - "eslint"
+  - "language"
+  - "typescript"
+  - "type-aware"
 ---
 
-Coming soon
+Enable the `typescript-eslint` parser and type-aware rules across your TypeScript files so classes, overrides, and declaration files stay consistent.
+
+## Why Use This Preset?
+
+1. Parses every `.ts`, `.tsx`, `.cts`, and `.mts` file with the `typescript-eslint` parser so type-aware rules can run with full project type information.
+2. Swaps core ESLint rules for their TS-aware equivalents so TypeScript syntax like type imports and non-null assertions is not falsely flagged.
+3. Enforces explicit class member accessibility and `readonly` private fields so class intent is visible without relying on implicit defaults.
+4. Formats `.d.ts` declaration files with consistent delimiters and operator line breaks so generated and hand-written types read the same way.
+
+## Usage
+
+Import `langTypescript` from the ESLint presets and spread it into your flat config after the code-style layer, in the documented layer order.
+
+```ts title="eslint.config.ts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  langTypescript,
+  runtimeNode,
+} from '@cbnventures/nova/presets/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...runtimeNode,
+];
+```
+
+## What This Preset Configures
+
+The preset registers the `typescript-eslint` parser and plugin plus the `@stylistic` plugin, then applies type-aware rules across your TypeScript files. The source-level groups target `.ts`, `.tsx`, `.cts`, and `.mts` files, while the declaration group targets `.d.ts` files only.
+
+### Recommended overrides
+
+Registers the `typescript-eslint` parser and plugin with project-aware options, spreads its ESLint-recommended overrides so core rules behave correctly on TypeScript syntax, then adds one authored rule.
+
+| Rule                                               | What it enforces                                                                                    |
+|----------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `@typescript-eslint/no-unnecessary-type-assertion` | Bans `as` casts that do not change the expression's type so only compiler-forced assertions remain. |
+
+### Classes
+
+| Rule                                               | What it enforces                                                                         |
+|----------------------------------------------------|------------------------------------------------------------------------------------------|
+| `@typescript-eslint/explicit-member-accessibility` | Requires an explicit `public`, `protected`, or `private` modifier on every class member. |
+| `@typescript-eslint/prefer-readonly`               | Requires `readonly` on private fields assigned in the constructor and never reassigned.  |
+
+### ESLint overrides
+
+| Rule                                              | What it enforces                                                                                            |
+|---------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| `default-param-last`                              | Disabled in favor of the TS-aware version so default params in overloaded signatures are not misflagged.    |
+| `@typescript-eslint/default-param-last`           | Requires default parameters to come last, accounting for overloaded signatures.                             |
+| `no-array-constructor`                            | Disabled in favor of the TS-aware version so generic array types like `Array<string>` are not misflagged.   |
+| `@typescript-eslint/no-array-constructor`         | Disallows the `Array` constructor while allowing generic array types.                                       |
+| `no-implied-eval`                                 | Disabled in favor of the TS-aware version so type-safe calls like `window.setTimeout(fn, 0)` are allowed.   |
+| `@typescript-eslint/no-implied-eval`              | Disallows implied `eval()` while allowing type-safe timer calls.                                            |
+| `no-loop-func`                                    | Disabled in favor of the TS-aware version so closures over `let`/`const` loop variables are not misflagged. |
+| `@typescript-eslint/no-loop-func`                 | Disallows unsafe function declarations inside loops, accounting for block-scoped variables.                 |
+| `no-shadow`                                       | Disabled in favor of the TS-aware version so type imports, enums, and namespaces are not flagged.           |
+| `@typescript-eslint/no-shadow`                    | Disallows variable shadowing while ignoring type imports, enums, and namespaces.                            |
+| `no-throw-literal`                                | Disabled in favor of the TS-aware version so thrown values are checked against the `Error` hierarchy.       |
+| `@typescript-eslint/only-throw-error`             | Requires thrown values to be `Error` instances rather than literals.                                        |
+| `no-unused-expressions`                           | Disabled in favor of the TS-aware version so non-null assertions and type casts are not misflagged.         |
+| `@typescript-eslint/no-unused-expressions`        | Disallows unused expressions while allowing TypeScript-specific ones.                                       |
+| `no-unused-vars`                                  | Disabled in favor of the TS-aware version so variables used only in type positions are not misflagged.      |
+| `@typescript-eslint/no-unused-vars`               | Flags unused variables, ignoring `_`-prefixed args and rest siblings (`args: 'after-used'`).                |
+| `no-useless-constructor`                          | Disabled in favor of the TS-aware version so parameter properties and visibility modifiers are allowed.     |
+| `@typescript-eslint/no-useless-constructor`       | Disallows redundant constructors while allowing parameter properties and visibility modifiers.              |
+| `prefer-promise-reject-errors`                    | Disabled in favor of the TS-aware version so rejection values are checked against the `Error` hierarchy.    |
+| `@typescript-eslint/prefer-promise-reject-errors` | Requires `Promise.reject()` to be called with an `Error` instance.                                          |
+
+### Type declarations
+
+| Rule                                | What it enforces                                                                                             |
+|-------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| `@stylistic/member-delimiter-style` | Requires semicolons between multiline type members; single-line types omit them since there is no ambiguity. |
+| `@stylistic/operator-linebreak`     | Places line breaks before union and intersection operators, keeping `=` after the type name.                 |
+
+## Related
+
+- Review the layering order in **[ESLint Best Practices](/docs/presets/eslint/best-practices)**.
+- See how presets compose end to end in the **[Presets Overview](/docs/presets/)**.

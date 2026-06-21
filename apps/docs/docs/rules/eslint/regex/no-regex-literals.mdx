@@ -124,8 +124,7 @@ The `no-regex-literals` rule reports any regex literal expression (e.g., `/^v/`,
         rules: {
           '@cbnventures/nova/no-regex-literals': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -142,10 +141,10 @@ The `no-regex-literals` rule reports any regex literal expression (e.g., `/^v/`,
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description                        |
-|---------------|------------|---------|------------------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.             |
-| `regexFile`   | `string`   | `''`    | Path to centralized patterns file. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+| `regexFile`   | `string`   | `''`    | Path to centralized patterns file.                                                                                                        |
 
 ## Autofix
 
@@ -154,4 +153,5 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 ## Troubleshooting
 
 - **Error fires inside the patterns file** — Add the filename to the `ignoreFiles` option so the rule skips that file.
+- **Already set the `regexFile` option?** — That file is skipped automatically, so you do not also need to list it in `ignoreFiles`. Use `ignoreFiles` only for additional files.
 - **Want to use `new RegExp()` inline instead?** — The rule only targets regex literals (`/pattern/`). Constructing a `RegExp` from an imported pattern string is allowed.

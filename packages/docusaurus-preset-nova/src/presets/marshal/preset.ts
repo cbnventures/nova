@@ -11,7 +11,6 @@ import type { Presets_Marshal_Preset_Marshal } from '../../types/presets/marshal
  */
 export const presetsMarshalPresetMarshal: Presets_Marshal_Preset_Marshal = {
   logo: {
-    title: 'Marshal',
     alt: 'Marshal',
     src: '@nova-assets/presets/marshal/logo.svg',
   },

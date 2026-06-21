@@ -142,8 +142,7 @@ Simple concise arrows are not affected.
         rules: {
           '@cbnventures/nova/no-complex-arrow-concise': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -160,11 +159,11 @@ Simple concise arrows are not affected.
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option            | Type       | Default | Description                                               |
-|-------------------|------------|---------|-----------------------------------------------------------|
-| `ignoreFiles`     | `string[]` | `[]`    | File patterns to skip.                                    |
-| `maxChainLength`  | `number`   | `2`     | Max chained method calls before block body is required.   |
-| `maxNestedArrows` | `number`   | `1`     | Max nested arrow callbacks before block body is required. |
+| Option            | Type       | Default | Description                                                                                                                               |
+|-------------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles`     | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+| `maxChainLength`  | `number`   | `2`     | Max chained method calls before block body is required.                                                                                   |
+| `maxNestedArrows` | `number`   | `1`     | Max nested arrow callbacks before block body is required.                                                                                 |
 
 ## Autofix
 

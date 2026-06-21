@@ -1,8 +1,8 @@
 ---
 id: "adding-a-preset"
 title: "Adding a Preset"
-description: "Cookbook for contributing a new preset using the sample scaffold — copy the template, fill in the eight schema slots, register, document, and verify."
-sidebar_position: 4
+description: "Cookbook for contributing a new preset using the sample scaffold — copy the template, fill in the nine schema slots, register, document, and verify."
+sidebar_position: 5
 keywords:
   - "nova"
   - "docusaurus facades"
@@ -41,11 +41,11 @@ It is **not** a user-selectable preset. It is intentionally excluded from `Share
 
 The reason it exists in the source tree at all is to serve as a **copy-pastable scaffold**. Without it, anyone adding a new preset has to pattern-match against whichever existing preset happens to be most fleshed-out, which causes new presets to inherit unintended visual characteristics from their reference. Copying from `sample/` instead gives you the full surface area to fill in (every Nova block, every Docusaurus theme component) without inheriting any visual identity.
 
-The scaffold mirrors the full surface of the shared structural CSS — **all 10 Nova block directories** and **all 96 Docusaurus theme component directories** that have a `style.css` of their own. Each stub is empty by design; you decide whether to leave it empty (the surface inherits only the shared structural base) or fill it with preset-specific identity.
+The scaffold mirrors the full surface of the shared structural CSS — **all 10 Nova block directories** and **all 105 Docusaurus theme component directories** that have a `style.css` of their own. Each stub is empty by design; you decide whether to leave it empty (the surface inherits only the shared structural base) or fill it with preset-specific identity.
 
-## The eight schema slots
+## The nine schema slots
 
-A preset is configured through one object that matches the `Shared_Preset` type. Every preset declares values for these eight slots:
+A preset is configured through one object that matches the `Shared_Preset` type. Every preset declares values for these nine slots:
 
 | Slot     | Type                                                                                                | Purpose                                                                                                                                                                                                                                                      |
 |----------|-----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -57,8 +57,9 @@ A preset is configured through one object that matches the `Shared_Preset` type.
 | `motion` | `{ speed, staggeredReveals, hoverEffects }`                                                         | Controls animation cadence and whether decorative motion is enabled.                                                                                                                                                                                         |
 | `navbar` | `'bridge' \| 'canopy' \| 'compass' \| 'monolith'`                                                   | Which navbar layout variant to activate.                                                                                                                                                                                                                     |
 | `footer` | `'commons' \| 'embassy' \| 'ledger' \| 'launchpad'`                                                 | Which footer layout variant to activate.                                                                                                                                                                                                                     |
+| `cta`    | `{ contained }`                                                                                     | Whether the footer CTA banner is width-constrained via `nova-container` (`true`) or runs full-bleed (`false`).                                                                                                                                               |
 
-Note: the preset's internal `colors.accent` key is exposed to consumers under the name `colors.secondary` in `overrides`. Inside the preset source you use `accent`; consumers writing `docusaurus.config.ts` use `secondary`. The consumer-facing override API only covers `colors`, `fonts`, `navbar`, and `footer` — your preset's `shape`, `depth`, and `motion` settings are part of its identity and cannot be overridden by consumers.
+Note: the preset's internal `colors.accent` key is exposed to consumers under the name `colors.secondary` in `overrides`. Inside the preset source you use `accent`; consumers writing `docusaurus.config.ts` use `secondary`. The consumer-facing override API only covers `colors`, `fonts`, `navbar`, and `footer` — your preset's `shape`, `depth`, `motion`, and `cta` settings are part of its identity and cannot be overridden by consumers.
 
 ## Cookbook
 
@@ -97,7 +98,7 @@ import type { Shared_Preset } from '../../shared.d.ts';
 export type Presets_Foo_Preset_Foo = Shared_Preset;
 ```
 
-### 3. Fill in the eight slots
+### 3. Fill in the nine slots
 
 Edit `src/presets/<name>/preset.ts` and replace every value with your preset's identity:
 
@@ -136,6 +137,9 @@ export const presetsFooPresetFoo: Presets_Foo_Preset_Foo = {
   },
   navbar: 'bridge' | 'canopy' | 'compass' | 'monolith',
   footer: 'commons' | 'embassy' | 'ledger' | 'launchpad',
+  cta: {
+    contained: true | false,  // footer CTA width-constrained (nova-container) vs full-bleed
+  },
 };
 ```
 
@@ -213,7 +217,7 @@ Add expectations for your preset to:
 - `src/tests/lib/shiki-themes.test.ts` (Shiki theme pair lookup)
 - `src/types/tests/presets/index.test.d.ts` (type aliases for the test assertions)
 
-Run `npm run test` to confirm.
+Run `npm run check:test` to confirm.
 
 ### 7. Document the preset
 

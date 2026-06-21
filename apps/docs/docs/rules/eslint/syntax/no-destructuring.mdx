@@ -66,7 +66,7 @@ Each check can be independently toggled.
     // Callback — destructured parameter.
     items.map(({ name }) => name);
 
-    // for...of — destructuring without Object.entries().
+    // for...of — destructured loop variable.
     for (const [key, value] of grouped) {}
 
     // Variable — destructured declaration.
@@ -154,8 +154,7 @@ Each check can be independently toggled.
         rules: {
           '@cbnventures/nova/no-destructuring': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -172,14 +171,14 @@ Each check can be independently toggled.
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option                  | Type       | Default | Description                                                 |
-|-------------------------|------------|---------|-------------------------------------------------------------|
-| `assignmentExpressions` | `boolean`  | `true`  | Ban destructuring in assignment expressions.                |
-| `callbackParams`        | `boolean`  | `true`  | Ban destructuring in callback parameters of array methods.  |
-| `forOfLoops`            | `boolean`  | `true`  | Ban destructuring in `for...of` loops.                      |
-| `functionParams`        | `boolean`  | `true`  | Ban destructuring in standalone function/method parameters. |
-| `ignoreFiles`           | `string[]` | `[]`    | File patterns to skip.                                      |
-| `variableDeclarations`  | `boolean`  | `true`  | Ban destructuring in `const`/`let`/`var` declarations.      |
+| Option                  | Type       | Default | Description                                                                                                                                                                                                                                                 |
+|-------------------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `assignmentExpressions` | `boolean`  | `true`  | Ban destructuring in assignment expressions.                                                                                                                                                                                                                |
+| `callbackParams`        | `boolean`  | `true`  | Ban destructuring in callback parameters of these array methods only: `map`, `filter`, `find`, `forEach`, `some`, `every`, `reduce`, `flatMap`, `sort`, `findIndex`, `findLast`, `findLastIndex`. Callbacks to other methods are not covered by this check. |
+| `forOfLoops`            | `boolean`  | `true`  | Ban destructuring in `for...of` loops.                                                                                                                                                                                                                      |
+| `functionParams`        | `boolean`  | `true`  | Ban destructuring in standalone function/method parameters.                                                                                                                                                                                                 |
+| `ignoreFiles`           | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported.                                                                                                                   |
+| `variableDeclarations`  | `boolean`  | `true`  | Ban destructuring in `const`/`let`/`var` declarations.                                                                                                                                                                                                      |
 
 ## Autofix
 
@@ -189,3 +188,4 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 
 - **Warning fires on `Object.entries()` destructuring** — The `forOfLoops` check applies to all `for...of` destructuring. Access entries by index instead, or set `forOfLoops: false`.
 - **Want to allow destructuring in variable declarations only** — Set `variableDeclarations: false` while keeping the other checks enabled.
+- **Destructuring in a callback to a non-array-method (e.g. `.then()`, `.addEventListener()`, a custom function) is not flagged** — `callbackParams` only covers a fixed list of array methods, and `functionParams` deliberately skips any function passed as a call argument. There is currently no option that flags these.

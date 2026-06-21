@@ -1,12 +1,83 @@
 ---
 id: "dx-ignore"
 title: "DX - Ignore"
-description: "x"
+description: "Exclude build output, source maps, and generated files from ESLint so linting only targets hand-written source code."
 keywords:
-  - "x"
+  - "nova"
+  - "dx ignore"
+  - "eslint ignores"
+  - "build output"
+  - "generated files"
+  - "source maps"
+  - "flat config"
+  - "next.js"
 tags:
   - "presets"
-  - "x"
+  - "eslint"
+  - "ignores"
+  - "dx"
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+Exclude build output, source maps, and generated files from ESLint so linting only targets the source code you actually write.
+
+## Why Use This Preset?
+
+1. Skips `dist`, `build`, `out`, and `.output` directories so compiled artifacts never trigger lint failures.
+2. Drops `**/*.map` source maps and `generated`/`__generated__` folders so machine-written code stays out of your reports.
+3. Ignores Next.js `.next` output and the generated `next-env.d.ts` so framework scaffolding does not add noise.
+4. Sits first in the layer order so every later <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> inherits a clean file set.
+
+## Usage
+
+Spread `dxIgnore` first in your <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>, ahead of the code style, language, and runtime layers.
+
+```ts title="eslint.config.ts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  langTypescript,
+  runtimeNode,
+} from '@cbnventures/nova/presets/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...runtimeNode,
+];
+```
+
+## What This Preset Configures
+
+The preset registers no plugins, parsers, or rules — it defines three named ignore groups, each scoped with glob patterns. Because they only exclude files, the groups apply globally rather than targeting a specific set of script extensions.
+
+### Build output
+
+| Pattern         | Excludes                                 |
+|-----------------|------------------------------------------|
+| `**/dist/**`    | The `dist` compiled output directory.    |
+| `**/build/**`   | The `build` compiled output directory.   |
+| `**/out/**`     | The `out` compiled output directory.     |
+| `**/.output/**` | The `.output` compiled output directory. |
+
+### Generated
+
+| Pattern               | Excludes                                      |
+|-----------------------|-----------------------------------------------|
+| `**/*.map`            | Source map files emitted alongside output.    |
+| `**/generated/**`     | The `generated` folder of machine output.     |
+| `**/__generated__/**` | The `__generated__` folder of machine output. |
+
+### Next
+
+| Pattern            | Excludes                                    |
+|--------------------|---------------------------------------------|
+| `**/.next/**`      | The Next.js `.next` build cache.            |
+| `**/next-env.d.ts` | The generated Next.js `next-env.d.ts` file. |
+
+## Related
+
+- Review the layering order in **[ESLint Best Practices](/docs/presets/eslint/best-practices)**.
+- See how presets compose end to end in the **[Presets Overview](/docs/presets/)**.

@@ -24,7 +24,7 @@ Require named type aliases instead of inline type annotations in code files so e
 
 ## Summary
 
-The `no-inline-type-annotation` rule reports any type annotation or `as` assertion that is not a plain `TSTypeReference` without concrete type arguments.
+The `no-inline-type-annotation` rule reports any type annotation or `as` assertion that is not a plain `TSTypeReference` without concrete type arguments. It also reports `const`/`let` declarations inside function or method bodies that have no type annotation, requiring a named type instead of relying on inference; top-level (module-scope) declarations are not required to carry an annotation.
 
 Arrays, unions, intersections, object literals, tuples, generics, function types, and primitive keywords are all flagged — both in the `: Type` annotation position and the `as Type` assertion position.
 
@@ -127,8 +127,7 @@ The rule skips `.d.ts` files where inline types are expected.
         rules: {
           '@cbnventures/nova/no-inline-type-annotation': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -145,9 +144,9 @@ The rule skips `.d.ts` files where inline types are expected.
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description            |
-|---------------|------------|---------|------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -159,3 +158,7 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 - **Simple type references like `: MyType` are allowed** — Only plain `TSTypeReference` without type arguments passes. Generics like `: Map<K, V>` are still flagged because the type arguments are inline.
 - **`as const` is allowed** — The `as const` assertion is a plain type reference with no type arguments, so it passes.
 - **`as SomeType<T>` is allowed when `T` is a type parameter** — Generic type arguments that reference enclosing type parameters are considered dynamic dependencies and are not flagged.
+- **Type predicates like `value is MyType` are allowed** — `TSTypePredicate` annotations (type-guard return types) are not flagged.
+- **Destructuring declarations are allowed without an annotation** — `const { a, b } = obj` and array destructuring are skipped by the inference check; only plain identifier declarations are required to be annotated.
+- **Loop variables are allowed without an annotation** — `for...of`, `for`, and `for...in` loop variables are skipped by the inference check.
+- **Unannotated `const`/`let` inside `.map`/`.filter`/`.reduce` (etc.) callbacks is allowed** — variables declared inside arrow callbacks passed to `map`, `filter`, `find`, `findIndex`, `some`, `every`, `reduce`, `flatMap`, `forEach`, `sort`, or `from` are skipped, since their types are driven by the iterated collection.

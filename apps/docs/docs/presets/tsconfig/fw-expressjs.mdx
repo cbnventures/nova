@@ -1,12 +1,73 @@
 ---
 id: "fw-expressjs"
 title: "Framework - Express.js"
-description: "x"
+description: "Configure TypeScript for Express.js servers with Node ESM module resolution and the latest ECMAScript library."
 keywords:
-  - "x"
+  - "nova"
+  - "express"
+  - "expressjs"
+  - "tsconfig preset"
+  - "framework layer"
+  - "nodenext"
+  - "esm modules"
+  - "node runtime"
 tags:
   - "presets"
-  - "x"
+  - "tsconfig"
+  - "framework"
+  - "express"
 ---
 
-Coming soon
+Configure TypeScript for an Express.js server so module resolution matches how Node.js loads your code.
+
+## Why Use This Preset?
+
+1. Sets `NodeNext` module and resolution so imports follow Node.js ECMAScript module rules.
+2. Targets the latest ECMAScript library so server code can use current language APIs.
+3. Keeps the configuration server-focused without pulling in DOM types you do not need.
+4. Layers cleanly after `dx-essentials` and `dx-strict` so framework settings stay in their own reviewable layer.
+
+## Usage
+
+Add the preset to the `extends` array of your `tsconfig.json`, after the essentials and strict layers.
+
+```json title="tsconfig.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/fw-expressjs.json"
+  ],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./build",
+    "rootDir": "./src",
+    "types": [
+      "@types/node",
+      "@types/express"
+    ]
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./build/**",
+    "./node_modules/**"
+  ]
+}
+```
+
+## What This Preset Configures
+
+This preset sets the following `compilerOptions`.
+
+| Setting            | Value        | Description                                                          |
+|--------------------|--------------|----------------------------------------------------------------------|
+| `lib`              | `["ESNext"]` | Provides the latest ECMAScript APIs without browser DOM types.       |
+| `module`           | `"NodeNext"` | Emits ECMAScript module syntax following Node.js module semantics.   |
+| `moduleResolution` | `"NodeNext"` | Resolves imports using Node.js ESM resolution, paired with `module`. |
+
+## Related
+
+- Review the layering order in **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.
+- See how presets compose end to end in the **[Presets Overview](/docs/presets/)**.

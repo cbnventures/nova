@@ -115,8 +115,7 @@ Use `Logger.debug` instead if you want to keep the log.
         rules: {
           '@cbnventures/nova/no-logger-dev': ['warn', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -133,9 +132,9 @@ Use `Logger.debug` instead if you want to keep the log.
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description            |
-|---------------|------------|---------|------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -144,4 +143,6 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 ## Troubleshooting
 
 - **Warning fires on a `.dev()` call that isn't Logger** — The rule only flags calls on identifiers named `Logger` or variables traced back to `Logger.customize()`. Other objects with a `.dev()` method are ignored.
+- **Bracket access is not flagged** — The rule only matches dot access (`Logger.dev(...)`). Computed forms like `Logger['dev'](...)` are intentionally ignored and will not be reported.
+- **Only direct assignments are traced** — A variable is flagged only when it is declared and initialized directly from `Logger.customize(...)` (e.g. `const log = Logger.customize(...)`). Aliases of aliases, later re-assignments, function parameters, and destructured loggers are not tracked.
 - **Want to keep the log?** — Replace `Logger.dev` with `Logger.debug`. Debug logs are gated by `LOG_LEVEL` and stay silent in production by default.

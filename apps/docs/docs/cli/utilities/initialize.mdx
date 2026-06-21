@@ -88,7 +88,7 @@ You can run this command in two ways:
 
 | Flag                 | Description                                                                 |
 |----------------------|-----------------------------------------------------------------------------|
-| `-d, --dry-run`      | Preview the entire wizard without writing `nova.config.json` to disk.       |
+| `-d, --dry-run`      | Run without writing any files.                                              |
 | `-r, --replace-file` | Overwrite the existing `nova.config.json` instead of creating a dated copy. |
 
 ## Flow Overview
@@ -119,7 +119,7 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 
 ### URLs
 
-- **Purpose**: Configure canonical links with validation/normalization before persisting: homepage, repository, bugs, license, logo, docs, github, npm, funding, privacy policy, and terms of use.
+- **Purpose**: Configure canonical links with validation/normalization before persisting: homepage, repository, bugs, license, logo, docs, npm, docker, funding, privacy policy, and terms of use.
 - **Nice to know**: Repository accepts `git:`, `git+https:`, `git+ssh:`, `git+http:` plus `http://`, `https://`; all other URLs are `http://`, `https://` only. Privacy policy and terms of use URLs appear in generated GitHub issue templates.
 - **Things to watch**: Funding sources are entered comma-separated and saved as a list after validation.
 
@@ -138,6 +138,12 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 :::note Multiline values
 The interactive prompt is single-line. To include line breaks in a setting value (e.g., issue messages with paragraphs), type `\n` where you want a newline. The wizard converts `\n` sequences to actual line breaks when saving. Alternatively, edit `nova.config.json` directly.
 :::
+
+### GitHub
+
+- **Purpose**: Configure GitHub repository settings, recipes, and policies: owner, repository name, sync recipes, topics, features, and merge/branch policies.
+- **Nice to know**: Recipes toggle which repository settings get synced (`sync-identity`, `sync-features`, `sync-policies`). Features cover the repository toggles for issues, wiki, projects, and discussions, while policies cover visibility (public, private, internal), default branch, allowed merge methods (merge, squash, rebase), and automatic head-branch deletion.
+- **Things to watch**: Owner and repository name are required (non-empty) and trimmed before they're saved.
 
 ## Saving and Canceling
 
@@ -196,6 +202,35 @@ The interactive prompt is single-line. To include line breaks in a setting value
   "emails": {
     "bugs": "bugs@example.com"
   },
+  "github": {
+    "owner": "example",
+    "repo": "example-project",
+    "recipes": {
+      "sync-identity": true,
+      "sync-features": true,
+      "sync-policies": true
+    },
+    "topics": [
+      "nova",
+      "tooling"
+    ],
+    "features": {
+      "issues": true,
+      "wiki": false,
+      "projects": false,
+      "discussions": false
+    },
+    "policies": {
+      "visibility": "public",
+      "defaultBranch": "main",
+      "mergeMethods": {
+        "merge": false,
+        "squash": true,
+        "rebase": false
+      },
+      "autoDeleteHeadBranch": true
+    }
+  },
   "urls": {
     "homepage": "https://example.com",
     "repository": "https://github.com/example/example-project",
@@ -203,8 +238,8 @@ The interactive prompt is single-line. To include line breaks in a setting value
     "license": "https://github.com/example/example-project/blob/main/LICENSE",
     "logo": "https://example.com/assets/logo.svg",
     "documentation": "https://docs.example.com/project",
-    "github": "https://github.com/example/example-project",
     "npm": "https://www.npmjs.com/package/example-project",
+    "docker": "https://hub.docker.com/r/example/example-project",
     "fundSources": [
       "https://github.com/sponsors/example",
       "https://opencollective.com/example"

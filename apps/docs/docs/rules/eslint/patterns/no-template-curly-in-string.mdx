@@ -102,8 +102,7 @@ The `no-template-curly-in-string` rule reports any regular string literal (`"...
         rules: {
           '@cbnventures/nova/no-template-curly-in-string': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -120,9 +119,9 @@ The `no-template-curly-in-string` rule reports any regular string literal (`"...
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description            |
-|---------------|------------|---------|------------------------|
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -132,3 +131,4 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 
 - **Test files are flagged** — Add the test file patterns to the `ignoreFiles` option so the rule skips them.
 - **Template literals are flagged** — Only regular strings (`"..."` and `'...'`) are checked. Template literals with backticks are never flagged.
+- **Strings passed to `new RegExp()` are not flagged** — The first argument to `new RegExp(...)` is skipped, since `${...}` there is valid regex syntax (quantifiers/literals), not a missing-backtick mistake.

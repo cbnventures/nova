@@ -11,7 +11,6 @@ import type { Presets_Envoy_Preset_Envoy } from '../../types/presets/envoy/prese
  */
 export const presetsEnvoyPresetEnvoy: Presets_Envoy_Preset_Envoy = {
   logo: {
-    title: 'Envoy',
     alt: 'Envoy',
     src: '@nova-assets/presets/envoy/logo.svg',
   },

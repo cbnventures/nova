@@ -11,7 +11,6 @@ import type { Presets_Foundry_Preset_Foundry } from '../../types/presets/foundry
  */
 export const presetsFoundryPresetFoundry: Presets_Foundry_Preset_Foundry = {
   logo: {
-    title: 'Foundry',
     alt: 'Foundry',
     src: '@nova-assets/presets/foundry/logo.svg',
   },

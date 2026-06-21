@@ -95,7 +95,6 @@ describe('CssGenerator generate', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerate_ProducesCSSWithAllVariableCategories_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -176,7 +175,6 @@ describe('CssGenerator generate', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerate_IncludesAllElevenShadeLevelsForEachColor_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -250,7 +248,6 @@ describe('CssGenerator generate depth variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesFlatCardDepthWithNoShadow_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -311,7 +308,6 @@ describe('CssGenerator generate depth variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesElevatedCardDepthWithShadow_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -372,7 +368,6 @@ describe('CssGenerator generate depth variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateDepthVariables_ProducesGlassCardDepthWithBackdropBlur_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -442,7 +437,6 @@ describe('CssGenerator generate grid variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces12pxGutterAndPaddingForCompactDensity_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -508,7 +502,6 @@ describe('CssGenerator generate grid variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces16pxGutterAndPaddingForComfortableDensity_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -574,7 +567,6 @@ describe('CssGenerator generate grid variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_Produces20pxGutterAndPaddingForSpaciousDensity_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -640,7 +632,6 @@ describe('CssGenerator generate grid variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForCompactDensity_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -711,7 +702,6 @@ describe('CssGenerator generate grid variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForComfortableDensity_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -782,7 +772,6 @@ describe('CssGenerator generate grid variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_ProducesCorrectMediumAndLargeBreakpointValuesForSpaciousDensity_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -853,7 +842,6 @@ describe('CssGenerator generate grid variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IncludesResponsiveMediaQueryBlocks_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -916,7 +904,6 @@ describe('CssGenerator generate grid variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateGridVariables_IntegrationGenerateOutputContainsRootBlockAndPostRootMediaQueries_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -990,7 +977,6 @@ describe('CssGenerator generate motion variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_ProducesZeroDurationForNoneSpeed_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -1051,7 +1037,6 @@ describe('CssGenerator generate motion variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_Produces300msDurationForExpressiveSpeed_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -1112,7 +1097,6 @@ describe('CssGenerator generate motion variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateMotionVariables_ProducesCanonicalNovaEaseCurveForMotionEasing_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -1182,7 +1166,6 @@ describe('CssGenerator generate shape variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateShapeVariables_ProducesZeroRadiusForSharpShape_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },
@@ -1243,7 +1226,6 @@ describe('CssGenerator generate shape variables', async () => {
     const result: Tests_Lib_CssGenerator_CssGeneratorGenerateShapeVariables_Produces9999pxRadiusForPillShape_Result = CssGenerator.generate({
       preset: {
         logo: {
-          title: 'Test',
           alt: 'Test',
           src: '/test/logo.svg',
         },

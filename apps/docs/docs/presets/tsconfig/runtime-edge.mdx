@@ -1,12 +1,63 @@
 ---
 id: "runtime-edge"
 title: "Runtime - Edge"
-description: "x"
+description: "Add DOM-compatible type definitions and bundler module resolution to a Nova TSConfig chain for code that runs on edge runtimes."
 keywords:
-  - "x"
+  - "nova"
+  - "runtime-edge"
+  - "tsconfig preset"
+  - "edge runtime"
+  - "dom types"
+  - "bundler module resolution"
+  - "esnext module"
+  - "web standard apis"
 tags:
   - "presets"
-  - "x"
+  - "tsconfig"
+  - "runtime"
+  - "edge"
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+Add the DOM-compatible type definitions and bundler module resolution that edge runtimes expect, layered on top of the Nova baseline and strict presets.
+
+## Why Use This Preset?
+
+1. Loads the `DOM` and `DOM.Iterable` libs so the Web-standard globals edge runtimes expose type-check without manual wiring.
+2. Sets `moduleResolution` to `Bundler` so imports resolve the way a <Terminology title="build artifact tool" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>bundler</Terminology> resolves them rather than the way Node does.
+3. Uses `ESNext` modules so the platform's bundler controls the final output format instead of TypeScript downleveling it.
+4. Drops in as the environment layer after the essentials and strict presets so you only declare where the code runs.
+
+## Usage
+
+Add the preset as the last entry in the `extends` array of your `tsconfig.json`, after the essentials and strict layers.
+
+```json title="tsconfig.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-edge.json"
+  ]
+}
+```
+
+## What This Preset Configures
+
+The preset sets the following `compilerOptions`, overriding the matching values from the layers below it.
+
+| Setting            | Value                           | Description                                                               |
+|--------------------|---------------------------------|---------------------------------------------------------------------------|
+| `lib`              | `DOM`, `DOM.Iterable`, `ESNext` | Loads DOM globals, DOM iterable types, and the latest JavaScript types.   |
+| `module`           | `ESNext`                        | Emits modern ESM and leaves the final format to your bundler.             |
+| `moduleResolution` | `Bundler`                       | Resolves imports the way a bundler does, matched to the `module` setting. |
+
+:::info
+The `lib` array replaces the parent value rather than merging with it, so this preset restates `ESNext` alongside the DOM libs.
+:::
+
+## Related
+
+- Review the layering order in **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.
+- See how presets compose end to end in the **[Presets Overview](/docs/presets/)**.

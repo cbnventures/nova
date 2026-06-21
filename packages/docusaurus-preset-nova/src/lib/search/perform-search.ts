@@ -15,6 +15,7 @@ import type {
   Lib_Search_PerformSearch_PerformSearch_EscapedTerm,
   Lib_Search_PerformSearch_PerformSearch_ExactResults,
   Lib_Search_PerformSearch_PerformSearch_ExistingScore,
+  Lib_Search_PerformSearch_PerformSearch_FuzzyDistance,
   Lib_Search_PerformSearch_PerformSearch_FuzzyQuery,
   Lib_Search_PerformSearch_PerformSearch_FuzzyResults,
   Lib_Search_PerformSearch_PerformSearch_HighlightPattern,
@@ -56,14 +57,15 @@ import type {
  * and fuzzy), deduplicates by path keeping the highest score, sorts by
  * descending score, caps at the limit, then maps refs to metadata.
  *
- * @param index     - Index.
- * @param documents - Documents.
- * @param query     - Query.
- * @param limit     - Limit.
- * @returns         Perform search.
+ * @param index         - Index.
+ * @param documents     - Documents.
+ * @param query         - Query.
+ * @param limit         - Limit.
+ * @param fuzzyDistance - Fuzzy distance.
+ * @returns             Perform search.
  * @since 0.15.0
  */
-export function performSearch(index: Lib_Search_PerformSearch_PerformSearch_Index, documents: Lib_Search_PerformSearch_PerformSearch_Documents, query: Lib_Search_PerformSearch_PerformSearch_Query, limit: Lib_Search_PerformSearch_PerformSearch_Limit): Lib_Search_PerformSearch_PerformSearch_Returns {
+export function performSearch(index: Lib_Search_PerformSearch_PerformSearch_Index, documents: Lib_Search_PerformSearch_PerformSearch_Documents, query: Lib_Search_PerformSearch_PerformSearch_Query, limit: Lib_Search_PerformSearch_PerformSearch_Limit, fuzzyDistance: Lib_Search_PerformSearch_PerformSearch_FuzzyDistance): Lib_Search_PerformSearch_PerformSearch_Returns {
   const trimmedQuery: Lib_Search_PerformSearch_PerformSearch_TrimmedQuery = query.trim();
 
   if (trimmedQuery === '') {
@@ -75,7 +77,7 @@ export function performSearch(index: Lib_Search_PerformSearch_PerformSearch_Inde
   const exactResults: Lib_Search_PerformSearch_PerformSearch_ExactResults = typedIndex.search(trimmedQuery);
   const wildcardQuery: Lib_Search_PerformSearch_PerformSearch_WildcardQuery = `${trimmedQuery}*`;
   const wildcardResults: Lib_Search_PerformSearch_PerformSearch_WildcardResults = typedIndex.search(wildcardQuery);
-  const fuzzyQuery: Lib_Search_PerformSearch_PerformSearch_FuzzyQuery = `${trimmedQuery}~1`;
+  const fuzzyQuery: Lib_Search_PerformSearch_PerformSearch_FuzzyQuery = `${trimmedQuery}~${fuzzyDistance}`;
   const fuzzyResults: Lib_Search_PerformSearch_PerformSearch_FuzzyResults = typedIndex.search(fuzzyQuery);
 
   const allResults: Lib_Search_PerformSearch_PerformSearch_AllResults = [

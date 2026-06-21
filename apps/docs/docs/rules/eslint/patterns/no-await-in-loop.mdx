@@ -139,8 +139,7 @@ Use the configuration options to allow specific loop types (e.g., `for...of` for
         rules: {
           '@cbnventures/nova/no-await-in-loop': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -157,13 +156,13 @@ Use the configuration options to allow specific loop types (e.g., `for...of` for
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description                                          |
-|---------------|------------|---------|------------------------------------------------------|
-| `allowFor`    | `boolean`  | `false` | Allow `await` inside C-style `for` loops.            |
-| `allowForIn`  | `boolean`  | `false` | Allow `await` inside `for...in` loops.               |
-| `allowForOf`  | `boolean`  | `false` | Allow `await` inside `for...of` loops.               |
-| `allowWhile`  | `boolean`  | `false` | Allow `await` inside `while` and `do...while` loops. |
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.                               |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `allowFor`    | `boolean`  | `false` | Allow `await` inside C-style `for` loops.                                                                                                 |
+| `allowForIn`  | `boolean`  | `false` | Allow `await` inside `for...in` loops.                                                                                                    |
+| `allowForOf`  | `boolean`  | `false` | Allow `await` inside `for...of` loops.                                                                                                    |
+| `allowWhile`  | `boolean`  | `false` | Allow `await` inside `while` and `do...while` loops.                                                                                      |
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -173,3 +172,4 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 
 - **Await in `for...of` is flagged** — By default, `allowForOf` is `false`. Set it to `true` if you want to allow `await` in `for...of` loops.
 - **Warning fires outside a loop** — The rule only checks `await` inside loop bodies. If the warning appears elsewhere, the `await` may be inside a nested loop you did not notice.
+- **Await inside a nested function in a loop is not flagged** — The rule stops searching at function boundaries (function declarations, function expressions, and arrow functions). An `await` inside a callback or inner async function declared within a loop is treated as a new async scope and is intentionally not reported.

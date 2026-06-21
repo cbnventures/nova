@@ -224,7 +224,7 @@ class CLI {
       .command('funding')
       .usage('[options]')
       .description('Create a .github/FUNDING.yml file for sponsor links')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliGenerateGithubFunding['run']);
@@ -237,7 +237,7 @@ class CLI {
       .alias('issue')
       .usage('[options]')
       .description('Create .github/ISSUE_TEMPLATE files for issue forms')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliGenerateGithubIssueTemplate['run']);
@@ -249,7 +249,7 @@ class CLI {
       .command('workflows')
       .usage('[options]')
       .description('Create .github/workflows files for CI/CD automation')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliGenerateGithubWorkflows['run']);
@@ -270,7 +270,7 @@ class CLI {
       .alias('agent')
       .usage('[options]')
       .description('Create agent convention files for coding assistants')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliGenerateMustHavesAgentConventions['run']);
@@ -283,7 +283,7 @@ class CLI {
       .alias('env')
       .usage('[options]')
       .description('Create a .env file for managing local environment secrets')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliGenerateMustHavesDotenv['run']);
@@ -295,7 +295,7 @@ class CLI {
       .command('editorconfig')
       .usage('[options]')
       .description('Create a .editorconfig file for consistent coding styles')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliGenerateMustHavesEditorconfig['run']);
@@ -307,7 +307,7 @@ class CLI {
       .command('gitignore')
       .usage('[options]')
       .description('Create a .gitignore file for excluding files from Git commits')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliGenerateMustHavesGitignore['run']);
@@ -320,7 +320,7 @@ class CLI {
       .alias('lic')
       .usage('[options]')
       .description('Create a LICENSE file for project license agreements')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliGenerateMustHavesLicense['run']);
@@ -333,7 +333,7 @@ class CLI {
       .alias('read')
       .usage('[options]')
       .description('Create a baseline README.md file for your project')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliGenerateMustHavesReadMe['run']);
@@ -370,7 +370,7 @@ class CLI {
       .alias('clean')
       .usage('[options]')
       .description('Remove unsupported keys and reorder remaining keys')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipePackageJsonCleanup['run']);
@@ -383,7 +383,7 @@ class CLI {
       .alias('norm-art')
       .usage('[options]')
       .description('Normalize files, bin, man, directories, private, and publishConfig fields')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipePackageJsonNormalizeArtifacts['run']);
@@ -396,7 +396,7 @@ class CLI {
       .alias('norm-bun')
       .usage('[options]')
       .description('Normalize types, module, sideEffects, and esnext fields')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipePackageJsonNormalizeBundler['run']);
@@ -409,7 +409,7 @@ class CLI {
       .alias('norm-dep')
       .usage('[options]')
       .description('Normalize dependency fields with optional version pinning')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipePackageJsonNormalizeDependencies['run']);
@@ -422,7 +422,7 @@ class CLI {
       .alias('norm-mod')
       .usage('[options]')
       .description('Normalize exports, main, type, browser, and imports fields')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipePackageJsonNormalizeModules['run']);
@@ -435,7 +435,7 @@ class CLI {
       .alias('norm-tool')
       .usage('[options]')
       .description('Normalize scripts, gypfile, config, and workspaces fields')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipePackageJsonNormalizeTooling['run']);
@@ -448,7 +448,7 @@ class CLI {
       .alias('sync-env')
       .usage('[options]')
       .description('Sync engines, os, cpu, libc, devEngines, and packageManager fields')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipePackageJsonSyncEnvironment['run']);
@@ -461,7 +461,7 @@ class CLI {
       .alias('sync-id')
       .usage('[options]')
       .description('Sync name, version, description, keywords, and license fields')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipePackageJsonSyncIdentity['run']);
@@ -474,7 +474,7 @@ class CLI {
       .alias('sync-own')
       .usage('[options]')
       .description('Sync homepage, bugs, author, contributors, funding, and repository fields')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipePackageJsonSyncOwnership['run']);
@@ -489,7 +489,7 @@ class CLI {
       .description('Run all GitHub recipes')
       .commandsGroup('Subcommands:')
       .helpCommand(false)
-      .option('-d, --dry-run', 'Preview changes without executing gh commands')
+      .option('-d, --dry-run', 'Run without executing any GitHub commands')
       .action(async (options) => {
         await this.executeCommand<Cli_Index_CLI_RegisterCommands_RunRecipesOptions>({
           ...(options as Cli_Index_CLI_RegisterCommands_RecipeGithubOptions),
@@ -504,7 +504,7 @@ class CLI {
       .alias('sync-feat')
       .usage('[options]')
       .description('Sync repository feature flags (issues, wiki, projects, discussions) to GitHub')
-      .option('-d, --dry-run', 'Preview changes without executing gh commands')
+      .option('-d, --dry-run', 'Run without executing any GitHub commands')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipeGithubSyncFeatures['run']);
 
@@ -516,7 +516,7 @@ class CLI {
       .alias('sync-id')
       .usage('[options]')
       .description('Sync repository identity (description, homepage URL, topics) to GitHub')
-      .option('-d, --dry-run', 'Preview changes without executing gh commands')
+      .option('-d, --dry-run', 'Run without executing any GitHub commands')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipeGithubSyncIdentity['run']);
 
@@ -528,7 +528,7 @@ class CLI {
       .alias('sync-pol')
       .usage('[options]')
       .description('Sync repository policies (visibility, merge methods, branch settings) to GitHub')
-      .option('-d, --dry-run', 'Preview changes without executing gh commands')
+      .option('-d, --dry-run', 'Run without executing any GitHub commands')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipeGithubSyncPolicies['run']);
 
@@ -563,7 +563,7 @@ class CLI {
       .alias('express')
       .usage('[options]')
       .description('Scaffold an Express.js workspace')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('--name <name>', 'Project or workspace name')
       .option('--workspace-name <name>', 'Workspace directory name')
       .option('--output <dir>', 'Output directory')
@@ -578,7 +578,7 @@ class CLI {
       .alias('next')
       .usage('[options]')
       .description('Scaffold a Next.js workspace')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('--name <name>', 'Project or workspace name')
       .option('--workspace-name <name>', 'Workspace directory name')
       .option('--output <dir>', 'Output directory')
@@ -592,7 +592,7 @@ class CLI {
       .command('vite')
       .usage('[options]')
       .description('Scaffold a Vite workspace')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('--name <name>', 'Project or workspace name')
       .option('--workspace-name <name>', 'Workspace directory name')
       .option('--output <dir>', 'Output directory')
@@ -606,7 +606,7 @@ class CLI {
       .command('workers')
       .usage('[options]')
       .description('Scaffold a Cloudflare Workers workspace')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('--name <name>', 'Project or workspace name')
       .option('--workspace-name <name>', 'Workspace directory name')
       .option('--output <dir>', 'Output directory')
@@ -627,7 +627,7 @@ class CLI {
       .command('docusaurus')
       .usage('[options]')
       .description('Scaffold a Docusaurus documentation workspace')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('--name <name>', 'Project or workspace name')
       .option('--workspace-name <name>', 'Workspace directory name')
       .option('--output <dir>', 'Output directory')
@@ -649,7 +649,7 @@ class CLI {
       .command('base')
       .usage('[options]')
       .description('Scaffold a base monorepo project without a framework workspace')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('--name <name>', 'Project name')
       .option('--output <dir>', 'Output directory')
       .action(async (options) => {
@@ -685,7 +685,7 @@ class CLI {
       .option('-c, --category <category>', 'Category (updated, fixed, added, removed)')
       .option('-b, --bump <type>', 'Bump type (major, minor, patch)')
       .option('-m, --message <message>', 'Change description')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliUtilityChangelog['run']);
 
@@ -697,7 +697,7 @@ class CLI {
       .alias('init')
       .usage('[options]')
       .description('Generate a new Nova config for this project')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliUtilityInitialize['run']);
@@ -710,7 +710,7 @@ class CLI {
       .alias('run-rcp')
       .usage('[options]')
       .description('Run all configured recipes')
-      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliUtilityRunRecipes['run']);

@@ -156,8 +156,7 @@ The `switch-case-blocks` rule requires every non-empty `switch` case to wrap its
         rules: {
           '@cbnventures/nova/switch-case-blocks': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -174,10 +173,10 @@ The `switch-case-blocks` rule requires every non-empty `switch` case to wrap its
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option           | Type       | Default | Description                                |
-|------------------|------------|---------|--------------------------------------------|
-| `ignoreFiles`    | `string[]` | `[]`    | File patterns to skip.                     |
-| `requireDefault` | `boolean`  | `true`  | Require a `default` case in switch blocks. |
+| Option           | Type       | Default | Description                                                                                                                               |
+|------------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles`    | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+| `requireDefault` | `boolean`  | `true`  | Require a `default` case in switch blocks.                                                                                                |
 
 ## Autofix
 
@@ -186,4 +185,5 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 ## Troubleshooting
 
 - **False positive on an empty case** — Empty cases (no statements at all) are allowed for intentional fallthrough. If the case has any statement, it needs a block.
+- **Still flagged after adding a block** — The block must be the case's only statement. A case with a block plus a sibling statement outside it (e.g. a trailing `break` after the closing brace) is still reported; move every statement, including `break`, inside the braces.
 - **Conflicts with another formatter** — Some formatters strip braces from single-statement cases. Configure the formatter to preserve block statements inside switch cases.

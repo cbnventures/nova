@@ -1,12 +1,79 @@
 ---
 id: "fw-docusaurus"
 title: "Framework - Docusaurus"
-description: "x"
+description: "Configure TypeScript for Docusaurus sites with bundler resolution, DOM libs, preserved JSX, and no TypeScript emit."
 keywords:
-  - "x"
+  - "nova"
+  - "docusaurus"
+  - "tsconfig preset"
+  - "framework layer"
+  - "bundler resolution"
+  - "jsx preserve"
+  - "isolated modules"
+  - "noemit"
+  - "dom lib"
 tags:
   - "presets"
-  - "x"
+  - "tsconfig"
+  - "framework"
+  - "docusaurus"
 ---
 
-Coming soon
+Configure TypeScript for a Docusaurus site so the compiler matches the bundler that builds your docs.
+
+## Why Use This Preset?
+
+1. Sets bundler-style module resolution so imports resolve the way Docusaurus expects.
+2. Includes DOM libraries so browser globals and React component code type-check correctly.
+3. Preserves JSX so Docusaurus and its toolchain handle the transform, not `tsc`.
+4. Disables TypeScript emit so the bundler owns output and `tsc` stays a type-checker.
+5. Layers cleanly after `dx-essentials` and `dx-strict` so framework settings stay in their own reviewable layer.
+
+## Usage
+
+Add the preset to the `extends` array of your `tsconfig.json`, after the essentials and strict layers.
+
+```json title="tsconfig.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/fw-docusaurus.json"
+  ],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@site/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./.docusaurus/**",
+    "./build/**",
+    "./node_modules/**"
+  ]
+}
+```
+
+## What This Preset Configures
+
+This preset sets the following `compilerOptions`.
+
+| Setting            | Value                               | Description                                                                         |
+|--------------------|-------------------------------------|-------------------------------------------------------------------------------------|
+| `isolatedModules`  | `true`                              | Enforces per-file compilation so the bundler can transpile each file independently. |
+| `jsx`              | `"preserve"`                        | Leaves JSX untouched so the Docusaurus toolchain performs the transform.            |
+| `lib`              | `["DOM", "DOM.Iterable", "ESNext"]` | Provides browser DOM globals plus the latest ECMAScript APIs.                       |
+| `module`           | `"ESNext"`                          | Emits modern ECMAScript module syntax for the bundler to consume.                   |
+| `moduleResolution` | `"Bundler"`                         | Resolves imports the way a bundler does, matching Docusaurus.                       |
+| `noEmit`           | `true`                              | Stops `tsc` from writing JavaScript, leaving output to the bundler.                 |
+
+## Related
+
+- Review the layering order in **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.
+- See how presets compose end to end in the **[Presets Overview](/docs/presets/)**.
+- Pair it with the matching **[Framework - Docusaurus ESLint preset](/docs/presets/eslint/fw-docusaurus)**.

@@ -38,6 +38,15 @@ For each eligible <Terminology title="package" to="/docs/quickstart/terminology#
 - **`config` (Conditional)** — Removed if the field is present but empty.
 - **`workspaces` (Required)** — Removed if the workspace role is not `project`. If the role is `project` and the field is missing, it is added as an empty array `[]`.
 
+## Config Fields
+
+A workspace is only processed when its `nova.config.json` entry opts in. The recipe filters out any workspace that does not enable `normalize-tooling`, and skips entirely when no workspace enables it.
+
+| Field                                       | Description                                                                                                                      |
+|---------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| `workspaces[].recipes`                      | Per-workspace recipe map in `nova.config.json`. A workspace with no `recipes` map is skipped.                                    |
+| `workspaces[].recipes['normalize-tooling']` | Recipe tuple enabling this recipe for the workspace. The first tuple element must be `true`; otherwise the workspace is skipped. |
+
 ## Usage
 
 <Tabs groupId="install-state">
@@ -61,5 +70,5 @@ For each eligible <Terminology title="package" to="/docs/quickstart/terminology#
 
 | Flag                 | Description                                                            |
 |----------------------|------------------------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-d, --dry-run`      | Run without writing any files.                                         |
 | `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

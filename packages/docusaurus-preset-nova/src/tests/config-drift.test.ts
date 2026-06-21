@@ -1,13 +1,35 @@
 import { deepStrictEqual, strictEqual } from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { describe, it } from 'vitest';
 
+import {
+  LIB_REGEX_NOVA_PRESET_OVERRIDES_OBJECT_TYPE,
+  LIB_REGEX_NOVA_PRESET_OVERRIDES_PARTIAL_ALIAS,
+  LIB_REGEX_NOVA_PRESET_OVERRIDES_TYPE_REFERENCE,
+  LIB_REGEX_TYPE_DECLARATION_FIELD,
+} from '../lib/regex.js';
 import { validateOptions, validateThemeConfig } from '../options.js';
 
+import type { Options_ValidateOptions_Returns } from '../types/options.d.ts';
 import type {
+  Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description,
+  Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_JoiSchema,
+  Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_MissingInSchema,
+  Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_ParityMessage,
+  Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_PublicLeaves,
+  Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_PublicSet,
+  Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_SchemaLeaves,
+  Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_SchemaSet,
+  Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_StaleInSchema,
+  Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_TypeFilePath,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Analytics,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_AnalyticsGtmContainerId,
+  Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_IconSafelist,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_JoiSchema,
+  Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_MaxBundleFileSize,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Overrides,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesColorsPrimary,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesColorsSecondary,
@@ -88,16 +110,54 @@ import type {
   Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoSrc,
   Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoSrcDark,
   Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoSrcLight,
-  Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoTitle,
   Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmark,
   Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmarkDark,
   Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmarkLight,
   Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteMetadata,
-  Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteTitle,
   Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_TableOfContents,
   Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_TableOfContentsMaxHeadingLevel,
   Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_TableOfContentsMinHeadingLevel,
   Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Validated,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_BlockBody,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_BlockMatch,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_BlockPattern,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Entry,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_EntryFields,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldExpression,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldMatch,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldName,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldPattern,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Fields,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldType,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldTypeMatch,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldTypeReference,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FileText,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Leaves,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_ObjectTypes,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_PartialAliases,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_PartialMatch,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_PartialPattern,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_ResolvedType,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Returns,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_TypeFilePath,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_TypeName,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkEntry,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkFieldEntry,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkFieldName,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkFieldType,
+  Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkStack,
+  Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_ChildNode,
+  Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_Entry,
+  Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_EntryKeys,
+  Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_Leaves,
+  Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_OverridesNode,
+  Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_Returns,
+  Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode,
+  Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_WalkEntry,
+  Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_WalkStack,
+  Tests_ConfigDrift_GetPackageRoot_CurrentFileDirectory,
+  Tests_ConfigDrift_GetPackageRoot_CurrentFilePath,
+  Tests_ConfigDrift_GetPackageRoot_Returns,
 } from '../types/tests/config-drift.test.d.ts';
 
 /**
@@ -183,6 +243,11 @@ describe('configDrift validateOptions', async () => {
           ignorePatterns: ['/api/'],
           docsRouteBasePath: 'docs',
         },
+        iconSafelist: [
+          'logos:github',
+          'mdi:home',
+        ],
+        maxBundleFileSize: 5,
       },
     });
 
@@ -265,6 +330,17 @@ describe('configDrift validateOptions', async () => {
       strictEqual(searchDocsRoute, 'docs');
     }
 
+    const iconSafelist: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_IconSafelist = result['iconSafelist'];
+
+    deepStrictEqual(iconSafelist, [
+      'logos:github',
+      'mdi:home',
+    ]);
+
+    const maxBundleFileSize: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_MaxBundleFileSize = result['maxBundleFileSize'];
+
+    strictEqual(maxBundleFileSize, 5);
+
     return;
   });
 
@@ -295,7 +371,6 @@ describe('configDrift validateThemeConfig', async () => {
       },
       themeConfig: {
         site: {
-          title: 'Nova Docs',
           logo: {
             alt: 'Nova Logo',
             src: {
@@ -307,7 +382,6 @@ describe('configDrift validateThemeConfig', async () => {
               light: '/img/wordmark.svg',
               dark: '/img/wordmark-dark.svg',
             },
-            title: 'Nova',
           },
           image: '/img/social-card.png',
           metadata: [{
@@ -384,7 +458,6 @@ describe('configDrift validateThemeConfig', async () => {
     });
 
     const site: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Site = result['site'] as Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Site;
-    const siteTitle: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteTitle = site['title'] as Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteTitle;
     const siteLogo: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogo = site['logo'] as Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogo;
     const siteLogoAlt: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoAlt = siteLogo['alt'] as Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoAlt;
     const siteLogoSrc: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoSrc = siteLogo['src'] as Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoSrc;
@@ -394,18 +467,15 @@ describe('configDrift validateThemeConfig', async () => {
     const siteLogoWordmark: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmark = siteLogo['wordmark'] as Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmark;
     const siteLogoWordmarkLight: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmarkLight = siteLogoWordmark['light'] as Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmarkLight;
     const siteLogoWordmarkDark: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmarkDark = siteLogoWordmark['dark'] as Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoWordmarkDark;
-    const siteLogoTitle: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoTitle = siteLogo['title'] as Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteLogoTitle;
     const siteImage: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteImage = site['image'] as Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteImage;
     const siteMetadata: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteMetadata = site['metadata'] as Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_SiteMetadata;
 
-    strictEqual(siteTitle, 'Nova Docs');
     strictEqual(siteLogoAlt, 'Nova Logo');
     strictEqual(siteLogoSrcLight, '/img/logo.svg');
     strictEqual(siteLogoSrcDark, '/img/logo-dark.svg');
     strictEqual(siteLogoHref, '/');
     strictEqual(siteLogoWordmarkLight, '/img/wordmark.svg');
     strictEqual(siteLogoWordmarkDark, '/img/wordmark-dark.svg');
-    strictEqual(siteLogoTitle, 'Nova');
     strictEqual(siteImage, '/img/social-card.png');
     strictEqual(siteMetadata.length, 1);
 
@@ -500,6 +570,220 @@ describe('configDrift validateThemeConfig', async () => {
 
     strictEqual(footerCtaLabel, 'Get Started');
     strictEqual(footerCtaHref, '/docs/intro');
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Config Drift - Get Package Root.
+ *
+ * Resolves the docusaurus-preset-nova package root from the
+ * current test file location.
+ *
+ * @since 0.18.1
+ */
+function getPackageRoot(): Tests_ConfigDrift_GetPackageRoot_Returns {
+  const currentFilePath: Tests_ConfigDrift_GetPackageRoot_CurrentFilePath = fileURLToPath(import.meta.url);
+  const currentFileDirectory: Tests_ConfigDrift_GetPackageRoot_CurrentFileDirectory = dirname(currentFilePath);
+
+  return resolve(currentFileDirectory, '..', '..');
+}
+
+/**
+ * Tests - Config Drift - Derive Public Override Leaf Paths.
+ *
+ * Parses `nova-config.d.ts` as text to discover every consumer
+ * leaf path reachable from `NovaPresetOverrides` and returns the
+ * dotted-path list (rooted at `overrides`). The walk follows each
+ * field's leading `NovaPresetOverrides...` type reference: when the
+ * reference is a `Partial<NovaPresetOverrides...>` wrapper it is
+ * resolved to its wrapped target; when the resolved reference is an
+ * object type it recurses; otherwise the field terminates as a leaf
+ * (covering the navbar/footer union aliases and the per-color and
+ * per-font primitive aliases). The result is compared against the
+ * live Joi `overrides` schema so neither side can drift silently.
+ *
+ * @since 0.18.1
+ */
+async function derivePublicOverrideLeafPaths(typeFilePath: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_TypeFilePath): Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Returns {
+  const fileText: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FileText = await readFile(typeFilePath, 'utf-8');
+  const objectTypes: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_ObjectTypes = new Map();
+  const partialAliases: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_PartialAliases = new Map();
+  const blockPattern: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_BlockPattern = new RegExp(LIB_REGEX_NOVA_PRESET_OVERRIDES_OBJECT_TYPE.source, 'g');
+
+  let blockMatch: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_BlockMatch = blockPattern.exec(fileText);
+
+  while (blockMatch !== null) {
+    const typeName: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_TypeName = blockMatch[1] ?? '';
+    const blockBody: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_BlockBody = blockMatch[2] ?? '';
+    const fields: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Fields = new Map();
+    const fieldPattern: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldPattern = new RegExp(LIB_REGEX_TYPE_DECLARATION_FIELD.source, 'gm');
+
+    let fieldMatch: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldMatch = fieldPattern.exec(blockBody);
+
+    while (fieldMatch !== null) {
+      const fieldName: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldName = fieldMatch[1] ?? '';
+      const fieldExpression: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldExpression = (fieldMatch[2] ?? '').trim();
+      const fieldTypeMatch: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldTypeMatch = fieldExpression.match(LIB_REGEX_NOVA_PRESET_OVERRIDES_TYPE_REFERENCE);
+      const fieldType: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldType = (fieldTypeMatch !== null && fieldTypeMatch[1] !== undefined) ? fieldTypeMatch[1] : fieldExpression;
+
+      fields.set(fieldName, fieldType);
+
+      fieldMatch = fieldPattern.exec(blockBody);
+    }
+
+    objectTypes.set(typeName, fields);
+
+    blockMatch = blockPattern.exec(fileText);
+  }
+
+  const partialPattern: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_PartialPattern = new RegExp(LIB_REGEX_NOVA_PRESET_OVERRIDES_PARTIAL_ALIAS.source, 'g');
+
+  let partialMatch: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_PartialMatch = partialPattern.exec(fileText);
+
+  while (partialMatch !== null) {
+    partialAliases.set(partialMatch[1] ?? '', partialMatch[2] ?? '');
+
+    partialMatch = partialPattern.exec(fileText);
+  }
+
+  const leaves: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Leaves = [];
+  const walkStack: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkStack = [{
+    typeName: 'NovaPresetOverrides',
+    path: ['overrides'],
+  }];
+
+  while (walkStack.length > 0) {
+    const entry: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Entry = walkStack.pop() as Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkEntry;
+    const resolvedType: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_ResolvedType = partialAliases.get(entry['typeName']) ?? entry['typeName'];
+    const entryFields: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_EntryFields = objectTypes.get(resolvedType);
+
+    if (entryFields === undefined) {
+      leaves.push(entry['path'].join('.'));
+
+      continue;
+    }
+
+    for (const fieldEntry of entryFields) {
+      const walkFieldEntry: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkFieldEntry = fieldEntry;
+      const walkFieldName: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkFieldName = walkFieldEntry[0];
+      const fieldTypeReference: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FieldTypeReference = walkFieldEntry[1];
+      const walkFieldType: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkFieldType = partialAliases.get(fieldTypeReference) ?? fieldTypeReference;
+
+      walkStack.push({
+        typeName: walkFieldType,
+        path: [
+          ...entry['path'],
+          walkFieldName,
+        ],
+      });
+    }
+  }
+
+  return leaves;
+}
+
+/**
+ * Tests - Config Drift - Derive Schema Override Leaf Paths.
+ *
+ * Walks the live Joi schema description's `overrides` node and
+ * returns every dotted leaf path (rooted at `overrides`, matching
+ * the public-type rooting). A description node WITH a `keys`
+ * property is an object - the walk recurses into each child key,
+ * appending the key name to the path; a node WITHOUT `keys` is a
+ * leaf and the accumulated path is recorded.
+ *
+ * @since 0.18.1
+ */
+function deriveSchemaOverrideLeafPaths(rootNode: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode): Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_Returns {
+  const overridesNode: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_OverridesNode = (rootNode['keys'] ?? {})['overrides'];
+  const leaves: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_Leaves = [];
+
+  if (overridesNode === undefined) {
+    return leaves;
+  }
+
+  const walkStack: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_WalkStack = [{
+    node: overridesNode,
+    path: ['overrides'],
+  }];
+
+  while (walkStack.length > 0) {
+    const entry: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_Entry = walkStack.pop() as Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_WalkEntry;
+    const entryKeys: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_EntryKeys = entry['node']['keys'];
+
+    if (entryKeys === undefined) {
+      leaves.push(entry['path'].join('.'));
+
+      continue;
+    }
+
+    for (const childKey of Object.keys(entryKeys)) {
+      const childNode: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_ChildNode = entryKeys[childKey] as Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_ChildNode;
+
+      walkStack.push({
+        node: childNode,
+        path: [
+          ...entry['path'],
+          childKey,
+        ],
+      });
+    }
+  }
+
+  return leaves;
+}
+
+/**
+ * Tests - Config Drift - ConfigDrift OverridesSchemaParity.
+ *
+ * Guards against silent drift between the consumer-facing
+ * `NovaPresetOverrides` type in `nova-config.d.ts` and the Joi
+ * `overrides` validation schema in `src/options.ts`. The public
+ * leaf set is derived by parsing the `.d.ts` text; the schema leaf
+ * set is derived from the live Joi `.describe()` output. Both sets
+ * are rooted at `overrides` and must be identical - any field added
+ * to one side without the other trips the bidirectional assertion.
+ *
+ * @since 0.18.1
+ */
+describe('configDrift overridesSchemaParity', () => {
+  it('public overrides type matches the joi overrides schema', async () => {
+    const typeFilePath: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_TypeFilePath = resolve(getPackageRoot(), 'nova-config.d.ts');
+    const publicLeaves: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_PublicLeaves = await derivePublicOverrideLeafPaths(typeFilePath);
+
+    let description: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description = {};
+
+    validateOptions({
+      validate: (schema) => {
+        const joiSchema: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_JoiSchema = schema as Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_JoiSchema;
+
+        description = joiSchema.describe();
+
+        return schema as Options_ValidateOptions_Returns;
+      },
+      options: {
+        preset: 'sentinel',
+      },
+    });
+
+    const schemaLeaves: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_SchemaLeaves = deriveSchemaOverrideLeafPaths(description);
+    const publicSet: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_PublicSet = new Set(publicLeaves);
+    const schemaSet: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_SchemaSet = new Set(schemaLeaves);
+    const missingInSchema: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_MissingInSchema = publicLeaves.filter((leaf) => schemaSet.has(leaf) === false);
+    const staleInSchema: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_StaleInSchema = schemaLeaves.filter((leaf) => publicSet.has(leaf) === false);
+    const parityMessage: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_ParityMessage = [
+      'NovaPresetOverrides type / Joi overrides schema drift:',
+      `  In public type but not the schema: ${missingInSchema.length}`,
+      ...missingInSchema.map((leaf) => `    + ${leaf}`),
+      `  In schema but not the public type: ${staleInSchema.length}`,
+      ...staleInSchema.map((leaf) => `    - ${leaf}`),
+    ].join('\n');
+
+    strictEqual(missingInSchema.length + staleInSchema.length, 0, parityMessage);
 
     return;
   });

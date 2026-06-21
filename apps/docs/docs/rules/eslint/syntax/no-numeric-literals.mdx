@@ -136,8 +136,7 @@ Regular decimal literals are not affected.
         rules: {
           '@cbnventures/nova/no-numeric-literals': ['error', {
             ignoreFiles: [
-              '**/*.test.ts',
-              './src/generated/**',
+              '*.test.ts',
             ],
           }],
         },
@@ -154,12 +153,12 @@ Regular decimal literals are not affected.
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option        | Type       | Default | Description                 |
-|---------------|------------|---------|-----------------------------|
-| `allowBinary` | `boolean`  | `false` | Allow binary literals.      |
-| `allowHex`    | `boolean`  | `false` | Allow hexadecimal literals. |
-| `allowOctal`  | `boolean`  | `false` | Allow octal literals.       |
-| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.      |
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `allowBinary` | `boolean`  | `false` | Allow binary literals.                                                                                                                    |
+| `allowHex`    | `boolean`  | `false` | Allow hexadecimal literals.                                                                                                               |
+| `allowOctal`  | `boolean`  | `false` | Allow octal literals.                                                                                                                     |
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
 ## Autofix
 
@@ -168,4 +167,5 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 ## Troubleshooting
 
 - **Decimal numbers are not flagged** — Only `0b`, `0o`, and `0x` prefixed literals are banned. Regular decimals like `42` and `3.14` are fine.
+- **BigInt literals are not flagged** — Non-decimal forms with a BigInt `n` suffix (e.g. `0xFFn`, `0b1010n`, `0o755n`) are skipped because the rule only inspects numeric (non-BigInt) literals.
 - **`parseInt` without radix** — Pair this rule with the built-in `radix` rule to ensure `parseInt()` always receives an explicit base argument.

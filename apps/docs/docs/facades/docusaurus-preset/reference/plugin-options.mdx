@@ -46,35 +46,35 @@ Set `blog`, `pages`, or `sitemap` to `false` to disable them. The `docs` plugin 
 
 ## Docs Plugin
 
-| Option                      | Type                  | Default         | Description                              |
-|-----------------------------|-----------------------|-----------------|------------------------------------------|
-| `docs.id`                   | `string`              | `'default'`     | Plugin instance ID.                      |
-| `docs.path`                 | `string`              | `'docs'`        | Path to the docs directory.              |
-| `docs.routeBasePath`        | `string`              | `'docs'`        | URL base path for docs pages.            |
-| `docs.sidebarPath`          | `string`              | `'sidebars.ts'` | Path to the sidebars config file.        |
-| `docs.editUrl`              | `string \| undefined` | `undefined`     | Base URL for "Edit this page" links.     |
-| `docs.breadcrumbs`          | `boolean`             | `true`          | Show breadcrumb navigation.              |
-| `docs.showLastUpdateTime`   | `boolean`             | `false`         | Show last updated timestamp.             |
-| `docs.showLastUpdateAuthor` | `boolean`             | `false`         | Show last update author.                 |
-| `docs.tags`                 | `string \| false`     | `'tags'`        | Tags base path. `false` to disable tags. |
-| `docs.remarkPlugins`        | `array`               | `[]`            | Custom remark plugins.                   |
-| `docs.rehypePlugins`        | `array`               | `[]`            | Custom rehype plugins.                   |
+| Option                      | Type                      | Default         | Description                                     |
+|-----------------------------|---------------------------|-----------------|-------------------------------------------------|
+| `docs.id`                   | `string`                  | `'default'`     | Plugin instance ID.                             |
+| `docs.path`                 | `string`                  | `'docs'`        | Path to the docs directory.                     |
+| `docs.routeBasePath`        | `string`                  | `'docs'`        | URL base path for docs pages.                   |
+| `docs.sidebarPath`          | `string`                  | `'sidebars.ts'` | Path to the sidebars config file.               |
+| `docs.editUrl`              | `string \| function`      | `undefined`     | Base URL for "Edit this page" links.            |
+| `docs.breadcrumbs`          | `boolean`                 | `true`          | Show breadcrumb navigation.                     |
+| `docs.showLastUpdateTime`   | `boolean`                 | `false`         | Show last updated timestamp.                    |
+| `docs.showLastUpdateAuthor` | `boolean`                 | `false`         | Show last update author.                        |
+| `docs.tags`                 | `string \| false \| null` | `'tags.yml'`    | Path to the tags file. `false` to disable tags. |
+| `docs.remarkPlugins`        | `array`                   | `[]`            | Custom remark plugins.                          |
+| `docs.rehypePlugins`        | `array`                   | `[]`            | Custom rehype plugins.                          |
 
 ## Blog Plugin
 
-| Option                 | Type              | Default         | Description                              |
-|------------------------|-------------------|-----------------|------------------------------------------|
-| `blog.id`              | `string`          | `'default'`     | Plugin instance ID.                      |
-| `blog.path`            | `string`          | `'blog'`        | Path to the blog directory.              |
-| `blog.routeBasePath`   | `string`          | `'blog'`        | URL base path for blog pages.            |
-| `blog.blogTitle`       | `string`          | `'Blog'`        | Blog page title.                         |
-| `blog.blogDescription` | `string`          | `''`            | Blog page meta description.              |
-| `blog.postsPerPage`    | `number \| 'ALL'` | `10`            | Posts per listing page.                  |
-| `blog.showReadingTime` | `boolean`         | `true`          | Show estimated reading time.             |
-| `blog.authorsMapPath`  | `string`          | `'authors.yml'` | Path to the authors map file.            |
-| `blog.tags`            | `string \| false` | `'tags'`        | Tags base path. `false` to disable tags. |
-| `blog.remarkPlugins`   | `array`           | `[]`            | Custom remark plugins.                   |
-| `blog.rehypePlugins`   | `array`           | `[]`            | Custom rehype plugins.                   |
+| Option                 | Type                      | Default         | Description                                     |
+|------------------------|---------------------------|-----------------|-------------------------------------------------|
+| `blog.id`              | `string`                  | `'default'`     | Plugin instance ID.                             |
+| `blog.path`            | `string`                  | `'blog'`        | Path to the blog directory.                     |
+| `blog.routeBasePath`   | `string`                  | `'blog'`        | URL base path for blog pages.                   |
+| `blog.blogTitle`       | `string`                  | `'Blog'`        | Blog page title.                                |
+| `blog.blogDescription` | `string`                  | `'Blog'`        | Blog page meta description.                     |
+| `blog.postsPerPage`    | `number \| 'ALL'`         | `10`            | Posts per listing page.                         |
+| `blog.showReadingTime` | `boolean`                 | `true`          | Show estimated reading time.                    |
+| `blog.authorsMapPath`  | `string`                  | `'authors.yml'` | Path to the authors map file.                   |
+| `blog.tags`            | `string \| false \| null` | `'tags.yml'`    | Path to the tags file. `false` to disable tags. |
+| `blog.remarkPlugins`   | `array`                   | `[]`            | Custom remark plugins.                          |
+| `blog.rehypePlugins`   | `array`                   | `[]`            | Custom rehype plugins.                          |
 
 ## Pages Plugin
 
@@ -86,10 +86,10 @@ Set `blog`, `pages`, or `sitemap` to `false` to disable them. The `docs` plugin 
 
 ## Sitemap Plugin
 
-| Option                   | Type                           | Default         | Description                                 |
-|--------------------------|--------------------------------|-----------------|---------------------------------------------|
-| `sitemap.filename`       | `string`                       | `'sitemap.xml'` | Sitemap output filename.                    |
-| `sitemap.ignorePatterns` | `string[]`                     | `[]`            | Route patterns to exclude from the sitemap. |
-| `sitemap.lastmod`        | `'date' \| 'datetime' \| null` | `null`          | Last modified format.                       |
-| `sitemap.changefreq`     | `string \| null`               | `null`          | Default change frequency hint.              |
-| `sitemap.priority`       | `number \| null`               | `null`          | Default priority hint (0.0–1.0).            |
+| Option                   | Type                                                                                      | Default         | Description                                                                                             |
+|--------------------------|-------------------------------------------------------------------------------------------|-----------------|---------------------------------------------------------------------------------------------------------|
+| `sitemap.filename`       | `string`                                                                                  | `'sitemap.xml'` | Sitemap output filename.                                                                                |
+| `sitemap.ignorePatterns` | `string[]`                                                                                | `[]`            | Route patterns to exclude from the sitemap.                                                             |
+| `sitemap.lastmod`        | `'date' \| 'datetime' \| null`                                                            | `null`          | Last modified format.                                                                                   |
+| `sitemap.changefreq`     | `'hourly' \| 'daily' \| 'weekly' \| 'monthly' \| 'yearly' \| 'always' \| 'never' \| null` | `'weekly'`      | Default change frequency hint — sitemaps.org values; `'weekly'` is the upstream sitemap plugin default. |
+| `sitemap.priority`       | `number \| null`                                                                          | `0.5`           | Default priority hint (0.0–1.0); `0.5` is the upstream sitemap plugin default.                          |

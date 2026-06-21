@@ -1,12 +1,79 @@
 ---
 id: "dx-essentials"
 title: "DX - Essentials"
-description: "x"
+description: "Set the baseline TypeScript compiler options for Nova projects with Node ESM resolution, declaration output, and source maps."
 keywords:
-  - "x"
+  - "nova"
+  - "dx-essentials"
+  - "tsconfig preset"
+  - "baseline compiler options"
+  - "nodenext module resolution"
+  - "declaration files"
+  - "source maps"
+  - "esnext target"
+  - "verbatim module syntax"
 tags:
   - "presets"
-  - "x"
+  - "tsconfig"
+  - "baseline"
+  - "essentials"
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+Set the baseline TypeScript compiler options that every Nova <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> chain starts from, tuned for Node <Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology> with declaration output and source maps.
+
+## Why Use This Preset?
+
+1. Pairs `module` and `moduleResolution` as `NodeNext` so imports resolve the same way TypeScript and Node do at runtime.
+2. Emits declaration files and declaration maps so consumers get types and can jump to your source.
+3. Targets `ESNext` with the `ESNext` lib so you can use the latest language features without manual lib wiring.
+4. Forces every file into module mode and verbatim module syntax so emit stays predictable across bundlers and runtimes.
+5. Acts as the first `extends` entry so later layers only override what they need.
+
+## Usage
+
+Add the preset as the first entry in the `extends` array of your `tsconfig.json`, then layer strict and environment presets on top.
+
+```json title="tsconfig.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-node.json"
+  ]
+}
+```
+
+## What This Preset Configures
+
+The preset sets the following `compilerOptions`. Path, layout, and `include` and `exclude` settings stay in your app's `tsconfig.json`.
+
+| Setting                        | Value      | Description                                                                  |
+|--------------------------------|------------|------------------------------------------------------------------------------|
+| `allowJs`                      | `false`    | Compiles TypeScript only, keeping plain JavaScript out of the program.       |
+| `allowSyntheticDefaultImports` | `true`     | Allows default imports from modules with no default export.                  |
+| `declaration`                  | `true`     | Emits a `.d.ts` declaration file for each compiled module.                   |
+| `declarationMap`               | `true`     | Emits a source map for each declaration so editors map types back to source. |
+| `esModuleInterop`              | `true`     | Adds interop helpers so CommonJS modules import cleanly as ESM.              |
+| `lib`                          | `ESNext`   | Loads the latest built-in JavaScript type definitions.                       |
+| `module`                       | `NodeNext` | Emits modules using Node's current ESM and CommonJS detection.               |
+| `moduleDetection`              | `force`    | Treats every file as a module, even without an import or export.             |
+| `moduleResolution`             | `NodeNext` | Resolves imports the way Node does, matched to the `module` setting.         |
+| `noErrorTruncation`            | `true`     | Prints full type text in errors instead of cutting it short.                 |
+| `preserveWatchOutput`          | `true`     | Keeps prior watch output on screen instead of clearing the console.          |
+| `removeComments`               | `true`     | Strips comments from emitted JavaScript.                                     |
+| `resolveJsonModule`            | `true`     | Lets you `import` a `.json` file and read its typed contents.                |
+| `skipLibCheck`                 | `true`     | Skips type checking of declaration files for faster baseline builds.         |
+| `sourceMap`                    | `true`     | Emits a source map for each compiled file.                                   |
+| `target`                       | `ESNext`   | Emits the latest JavaScript syntax without downleveling.                     |
+| `verbatimModuleSyntax`         | `true`     | Emits import and export statements exactly as written.                       |
+
+:::info
+`skipLibCheck` is `true` here for a fast baseline. The [DX - Strict](/docs/presets/tsconfig/dx-strict) layer flips it to `false` when you chain it on top.
+:::
+
+## Related
+
+- Review the layering order in **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.
+- See how presets compose end to end in the **[Presets Overview](/docs/presets/)**.
