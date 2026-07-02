@@ -48,7 +48,7 @@ import type {
  *
  * @returns {Tests_Icons_CreateFixtureSite_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function createFixtureSite(files: Tests_Icons_CreateFixtureSite_Files): Tests_Icons_CreateFixtureSite_Returns {
   const directory: Tests_Icons_CreateFixtureSite_Directory = mkdtempSync(join(tmpdir(), 'nova-icons-'));
@@ -74,7 +74,7 @@ function createFixtureSite(files: Tests_Icons_CreateFixtureSite_Files): Tests_Ic
  *
  * @returns {Tests_Icons_ParseRegisteredIdentifiers_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function parseRegisteredIdentifiers(source: Tests_Icons_ParseRegisteredIdentifiers_Source): Tests_Icons_ParseRegisteredIdentifiers_Returns {
   const addCollectionPrefix: Tests_Icons_ParseRegisteredIdentifiers_AddCollectionPrefix = 'addCollection(';
@@ -113,7 +113,7 @@ function parseRegisteredIdentifiers(source: Tests_Icons_ParseRegisteredIdentifie
 /**
  * Tests - Icons - Generate Icon Module.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 describe('generateIconModule', async () => {
   it('registers the entire preset base set', () => {

@@ -1,6 +1,6 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
-import { LIB_REGEX_PATTERN_CAMEL_CASE_WORDS } from '../../../lib/regex.js';
+import { LIB_REGEX_PATTERN_CAMEL_CASE_WORDS, LIB_REGEX_PATTERN_LEADING_DIGIT } from '../../../lib/regex.js';
 import { isIgnoredFile, normalizeRouteSegment } from '../../../lib/utility.js';
 
 import type {
@@ -133,7 +133,7 @@ export class Runner {
    *
    * @returns {Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Returns}
    *
-   * @since 0.17.1
+   * @since 0.17.0
    */
   private static normalizedPathSegments(filename: Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Filename): Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Returns {
     const normalizedFilename: Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_NormalizedFilename = filename.replaceAll('\\', '/');
@@ -216,7 +216,7 @@ export class Runner {
    *
    * @returns {Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Returns}
    *
-   * @since 0.17.1
+   * @since 0.17.0
    */
   private static deriveInvalidPrefixDiagnostic(filename: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Filename): Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Returns {
     const segments: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Segments = Runner.normalizedPathSegments(filename);
@@ -227,7 +227,7 @@ export class Runner {
 
     const offendingSegment: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_OffendingSegment = segments[0] ?? '';
 
-    if (new RegExp('^[0-9]').test(offendingSegment) === false) {
+    if (LIB_REGEX_PATTERN_LEADING_DIGIT.test(offendingSegment) === false) {
       return null;
     }
 

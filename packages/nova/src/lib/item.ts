@@ -1,4 +1,5 @@
 import type {
+  Lib_Item_AllowedAgents,
   Lib_Item_AllowedPoliciesByRole,
   Lib_Item_AllowedRecipes,
   Lib_Item_AllowedRoles,
@@ -23,6 +24,7 @@ import type {
   Lib_Item_PrettyNamesKeyword,
   Lib_Item_PrettyNamesType,
   Lib_Item_RepositoryProtocols,
+  Lib_Item_ReservedDotenvKeys,
   Lib_Item_SideEffectsEsnextRoles,
   Lib_Item_SkipDirectories,
   Lib_Item_SortOrderKeys,
@@ -98,6 +100,33 @@ export const libItemAllowedRoles: Lib_Item_AllowedRoles = [
   'package',
   'tool',
   'template',
+];
+
+/**
+ * Lib - Item - Allowed Agents.
+ *
+ * Canonical list of AI-tool ids the agent-conventions generator supports. Nova-config
+ * validates the "agents" field against this set and the initialize prompt uses it.
+ *
+ * @since 0.20.0
+ */
+export const libItemAllowedAgents: Lib_Item_AllowedAgents = [
+  'claude-code',
+  'codex',
+];
+
+/**
+ * Lib - Item - Reserved Dotenv Keys.
+ *
+ * Env-var keys the bundled dotenv template already manages. Nova-config rejects any
+ * workspace variable declaring one of these so the template stays the sole owner.
+ *
+ * @since 0.20.0
+ */
+export const libItemReservedDotenvKeys: Lib_Item_ReservedDotenvKeys = [
+  'NODE_ENV',
+  'LOG_LEVEL',
+  'LOG_TIME',
 ];
 
 /**

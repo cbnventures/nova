@@ -6,7 +6,7 @@ import type { Lib_Constants_DocsBaseUrl, Lib_Constants_GhMinVersion } from '../t
  * Canonical origin of the Nova documentation site. Imported anywhere
  * generated content or user-facing strings need to point at the docs.
  *
- * @since 0.16.3
+ * @since 0.16.0
  */
 export const LIB_CONSTANTS_DOCS_BASE_URL: Lib_Constants_DocsBaseUrl = 'https://nova.cbnventures.io';
 

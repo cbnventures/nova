@@ -180,7 +180,7 @@ describe('performSearch fuzzy', async () => {
 /**
  * Tests - Lib - Search - Worker - PerformSearch Fuzzy Distance.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 describe('performSearch fuzzy distance', async () => {
   it('widens fuzzy matching as the distance increases', () => {

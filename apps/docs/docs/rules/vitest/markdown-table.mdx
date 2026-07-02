@@ -1,0 +1,94 @@
+---
+id: "markdown-table"
+title: "Markdown Table Suite"
+description: "Require documentation tables to match canonical MarkdownTable output with the registerMarkdownTableSuite conformance suite."
+keywords:
+  - "nova"
+  - "vitest"
+  - "markdown table"
+  - "table formatting"
+  - "column alignment"
+  - "docs quality"
+  - "conformance"
+  - "register suite"
+tags:
+  - "rules"
+  - "vitest"
+  - "markdown table"
+  - "testing"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require documentation tables to match canonical `MarkdownTable` output with `registerMarkdownTableSuite`.
+
+## Summary
+
+- Extracts every Markdown table from the configured content directories.
+- Renders each table through the **[MarkdownTable](/docs/toolkit/formatters/markdown-table)** formatter and compares it byte-for-byte against the original.
+- Skips tables inside code fences and tables that use alignment markers, and handles escaped pipes.
+
+## Why Use This Suite?
+
+1. Keeps every table consistently padded and aligned without hand-formatting each one.
+2. Catches a hand-edited table that no longer matches the canonical output during the test run.
+3. Reuses the real formatter as the source of truth so docs and tooling never disagree.
+
+## Examples
+
+<Tabs groupId="markdown-table-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```markdown
+    <!-- The exact MarkdownTable render: delimiter dashes fill each column, flush to the pipes. -->
+    | Name | Value |
+    |------|-------|
+    | a    | b     |
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```markdown
+    <!-- Not padded, so it differs from the canonical MarkdownTable render. -->
+    | Name | Value |
+    | --- | --- |
+    | a | b |
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Usage
+
+```ts title="src/tests/markdown-table.test.ts"
+import { registerMarkdownTableSuite } from '@cbnventures/nova/rules/vitest';
+
+registerMarkdownTableSuite({
+  enable: 'all',
+});
+```
+
+The suite has a single check, so toggling is all-or-nothing. The defaults scan `docs` and `blog` for `.md` and `.mdx` files.
+
+## Configuration
+
+| Field            | Type                   | Default            | Description                                                               |
+|------------------|------------------------|--------------------|---------------------------------------------------------------------------|
+| `contentDirs`    | `string[]`             | `['docs', 'blog']` | Directories, relative to `rootDir`, scanned recursively for tables.       |
+| `rootDir`        | `string`               | `process.cwd()`    | Base directory the `contentDirs` resolve against.                         |
+| `fileExtensions` | `string[]`             | `['.md', '.mdx']`  | Extensions that count as Markdown content.                                |
+| `enable`         | `'all' \| ToggleKey[]` | required           | Which checks run. Use `'all'` for every check, or a list to freeze a set. |
+
+## Toggle Keys
+
+| Toggle Key                          | Description                                                        |
+|-------------------------------------|--------------------------------------------------------------------|
+| `tables-match-markdowntable-output` | Requires each table to match the canonical `MarkdownTable` render. |
+
+## Troubleshooting
+
+- **A missing content directory throws** — The suite skips directories that do not exist. Confirm the path is correct if a configured directory is expected to be present.
+- **A table fails the comparison** — Re-render it through the `MarkdownTable` formatter and replace the hand-edited version with the canonical output.
+- **A pipe inside a cell breaks the table** — Escape the pipe so it is treated as content rather than a column separator.

@@ -23,9 +23,11 @@ Create `.env` and `.env.sample` files pre-populated with Nova-related environmen
 
 ## Why Use This Command?
 
+- Generates `.env` and `.env.sample` for every workspace that declares a `dotenv` block, so each app or package in a monorepo gets its own files.
 - Pre-populates Nova CLI logger settings and Node.js defaults so contributors know which variables are available.
 - Keeps sensitive values out of version control while documenting the expected shape.
-- Supports adding custom environment variables interactively with default values.
+- Reads each workspace's custom environment variables from `nova.config.json` so the same keys and defaults apply on every run.
+- Preserves the values already filled into an existing `.env`, so regenerating never overwrites a real secret.
 
 ## Requirements
 
@@ -66,40 +68,39 @@ Create `.env` and `.env.sample` files pre-populated with Nova-related environmen
 | `-d, --dry-run`      | Run without writing any files.                                         |
 | `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
 
+## Config Fields
+
+Declare a `dotenv` block on any workspace under `workspaces` in `nova.config.json`. The root workspace uses the `./` path, and a workspace without a `dotenv` block is skipped.
+
+| Field                                | Description                                                                                      |
+|--------------------------------------|--------------------------------------------------------------------------------------------------|
+| `workspaces.<path>.dotenv.variables` | Custom variables (`key` and `defaultValue`) appended to that workspace's generated `.env` files. |
+
+The `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` keys are reserved. The template manages them, so declaring any of them under `dotenv.variables` is rejected when the config loads, with a warning naming the reserved key.
+
 ## Output Files
 
-| File          | Description                                              |
-|---------------|----------------------------------------------------------|
-| `.env`        | Environment variable placeholders for local development. |
-| `.env.sample` | Shareable template with empty values for contributors.   |
+The command writes these files into each workspace directory that declares a `dotenv` block.
+
+| File          | Description                                                      |
+|---------------|------------------------------------------------------------------|
+| `.env`        | Local environment values, preserving any already filled in.      |
+| `.env.sample` | Shareable template documenting each key with its config default. |
 
 ## How It Works
 
-### New Files
+The command is non-interactive. It reads `nova.config.json`, then generates `.env` and `.env.sample` for every workspace that declares a `dotenv` block, writing both files into each workspace directory without prompting. When no workspace declares a `dotenv` block, it writes nothing and reports that there is nothing to generate.
 
-When `.env` and `.env.sample` do not exist yet, the generator creates them from the built-in template with Nova-specific defaults. You are then prompted to add your own environment variables one at a time.
+To change a workspace's variables, edit its `dotenv` block directly in `nova.config.json`.
 
-### Existing Files
+This command writes the double-quoted values; the [Dotenv Suite](/docs/rules/vitest/dotenv) verifies them, so a hand-edited file that drifts from the convention is caught during testing.
 
-When `.env` or `.env.sample` already exists, you are prompted to choose between:
+### Template Output
 
-- **Manage existing variables** — Opens a menu where you can add, edit, or delete environment variables in both files. Template variables (shipped with Nova) can be edited but cannot be deleted. Changes are saved to both `.env` and `.env.sample` simultaneously.
-- **Regenerate from template** — Replaces the files with a fresh copy from the template (a `.nova-backup` copy is created unless `--replace-file` is set).
+Each generated file starts from a built-in template that ships three reserved keys with sensible defaults and an inline comment listing their valid values: `NODE_ENV` (`development` | `production` | `test`, default `development`), `LOG_LEVEL` (`debug` | `info` | `warn` | `error` | `auto`, default `auto`, where `auto` derives the level from `NODE_ENV`), and `LOG_TIME` (`true` | `false`, default `false`). Each variable under `dotenv.variables` is appended as `KEY=""` to `.env` and `KEY="<defaultValue>"` to `.env.sample`.
 
-### Manage Menu
+When a `dotenv` block declares no `variables`, the generator emits the template only.
 
-When managing existing variables, the following actions are available:
+### Value Preservation
 
-- **Add a variable** — Prompts for a key in `SCREAMING_SNAKE_CASE` (e.g. `API_KEY`) and a default value for `.env.sample`. The `.env` file always uses empty values. Duplicate and reserved keys are blocked.
-- **Edit a variable** — Select a variable, then enter new values for `.env` and `.env.sample` separately.
-- **Delete a variable** — Select a non-reserved variable to remove from both files.
-- **Save & Exit** — Exit the manage menu.
-- **Back** — Return to the mode selection menu.
-
-### Regenerate Prompts
-
-When regenerating (or creating new files), the generator prompts you to add custom environment variables:
-
-1. **Variable name** — Enter the key (e.g. `API_KEY`). Must be `SCREAMING_SNAKE_CASE`. Leave empty to finish.
-2. **Default value** — Enter a default value for `.env.sample` (leave empty for none). The `.env` file always uses empty values.
-3. Repeat until you leave the variable name empty.
+For `.env`, the generator reads any existing file in the workspace first and keeps the values already filled in for every declared key — including the reserved `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` keys. Only newly-added keys are written blank as `KEY=""`, so regenerating after editing the config never overwrites a real secret. The `.env.sample` file is always rebuilt from the config defaults, since it holds no secrets.

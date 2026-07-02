@@ -31,6 +31,32 @@ export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Options = Rea
 export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Returns = void;
 
 /**
+ * Rules - ESLint - Regex - No Regex Literals - Check Reg Exp Constructor.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Context = Readonly<RuleContext<string, readonly unknown[]>>;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Node = TSESTree.NewExpression | TSESTree.CallExpression;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Options_IgnoreFiles = string[];
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Options_RegexFile = string;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Options_IgnoreFiles;
+  regexFile: Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Options_RegexFile;
+}>;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Returns = void;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_FirstArgument = TSESTree.Node | undefined;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_IsStringLiteral = boolean;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_IsStaticTemplate = boolean;
+
+/**
  * Rules - ESLint - Regex - No Regex Literals - Create.
  *
  * @since 0.13.0
@@ -45,6 +71,15 @@ export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Options = Readonly<
 }>;
 
 /**
+ * Rules - ESLint - Regex - No Regex Literals - Create - Call Expression.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_CallExpression_Node = TSESTree.CallExpression;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_CallExpression_Returns = void;
+
+/**
  * Rules - ESLint - Regex - No Regex Literals - Create - Literal.
  *
  * @since 0.13.0
@@ -52,3 +87,12 @@ export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Options = Readonly<
 export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Literal_Node = TSESTree.Literal;
 
 export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Literal_Returns = void;
+
+/**
+ * Rules - ESLint - Regex - No Regex Literals - Create - New Expression.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_NewExpression_Node = TSESTree.NewExpression;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_NewExpression_Returns = void;

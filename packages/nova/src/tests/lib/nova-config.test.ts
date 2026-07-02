@@ -14,9 +14,15 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { afterAll, describe, it } from 'vitest';
+import {
+  afterAll,
+  describe,
+  it,
+  vi,
+} from 'vitest';
 
 import { Runner as LibNovaConfig } from '../../lib/nova-config.js';
+import * as toolkit from '../../toolkit/index.js';
 
 import type {
   Tests_Lib_NovaConfig_ParseGithubViaLoad_AcceptsValidOwnerAndRepoWithHyphensDotsAndUnderscores_Config,
@@ -136,8 +142,55 @@ import type {
   Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SandboxPrefix,
   Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SandboxRoot,
   Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_TemporaryDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigAgents_OriginalCwd,
+  Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigAgents_SandboxPrefix,
+  Tests_Lib_NovaConfig_SharedNovaConfigAgents_SandboxRoot,
+  Tests_Lib_NovaConfig_SharedNovaConfigAgents_TemporaryDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigConstructor_CreatesInstanceWithoutErrors_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigConstructor_InstanceHasExpectedPublicMethods_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_OriginalCwd,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedWarnCalls,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_HasReservedKeyWarning,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_LoggerCustomizeReturn,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_LoggerCustomizeSpy,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_SandboxPrefix,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_SandboxRoot,
+  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_TemporaryDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_LoadedGithub,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_OriginalCwd,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_SandboxPrefix,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_SandboxRoot,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_TemporaryDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_OriginalCwd,
+  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_SandboxPrefix,
+  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_SandboxRoot,
+  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_TemporaryDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadAcceptsAllSupportedLicenses_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadAcceptsAllSupportedLicenses_ConfigContents,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadAcceptsAllSupportedLicenses_ConfigPath,
@@ -305,8 +358,33 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_ConfigContents,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedWarnCalls,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_HasDroppedWorkspaceWarning,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_LoggerCustomizeReturn,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_LoggerCustomizeSpy,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedWarnCalls,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_HasDroppedWorkspaceWarning,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_LoggerCustomizeReturn,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_LoggerCustomizeSpy,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedWarnCalls,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_HasDroppedWorkspaceWarning,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_LoggerCustomizeReturn,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_LoggerCustomizeSpy,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_ProjectDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadReturnsEmptyObjectWhenConfigFileIsMissing_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadReturnsEmptyObjectWhenConfigFileIsMissing_Loaded,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadReturnsEmptyObjectWhenConfigFileIsMissing_ProjectDirectory,
@@ -826,10 +904,129 @@ describe('Shared_NovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
+    const customizedLoggerMock: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock = {
+      debug: vi.fn(),
+      dev: vi.fn(),
+      info: vi.fn(),
+      warn: vi.fn(),
+      error: vi.fn(),
+    };
+
+    const loggerCustomizeSpy: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_LoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_LoggerCustomizeReturn);
+
     const config: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_Config = new LibNovaConfig();
     const loaded: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_Loaded = await config.load();
 
     strictEqual(loaded['workspaces'], undefined);
+
+    const customizedWarnCalls: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedWarnCalls = customizedLoggerMock['warn']['mock']['calls'];
+
+    const hasDroppedWorkspaceWarning: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_HasDroppedWorkspaceWarning = customizedWarnCalls.some((call) => (
+      typeof call[0] === 'string'
+      && call[0].includes('Workspace "."') === true
+      && call[0].includes('unrecognized role') === true
+    ));
+
+    strictEqual(hasDroppedWorkspaceWarning, true);
+
+    loggerCustomizeSpy.mockRestore();
+
+    return;
+  });
+
+  it('load rejects workspace with missing role', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_ProjectDirectory = join(sandboxRoot, 'missing-role');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_ConfigContents = JSON.stringify({
+      workspaces: {
+        '.': {
+          name: 'test',
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const customizedLoggerMock: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock = {
+      debug: vi.fn(),
+      dev: vi.fn(),
+      info: vi.fn(),
+      warn: vi.fn(),
+      error: vi.fn(),
+    };
+
+    const loggerCustomizeSpy: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_LoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_LoggerCustomizeReturn);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_Loaded = await config.load();
+
+    strictEqual(loaded['workspaces'], undefined);
+
+    const customizedWarnCalls: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedWarnCalls = customizedLoggerMock['warn']['mock']['calls'];
+
+    const hasDroppedWorkspaceWarning: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_HasDroppedWorkspaceWarning = customizedWarnCalls.some((call) => (
+      typeof call[0] === 'string'
+      && call[0].includes('Workspace "."') === true
+      && call[0].includes('has no role') === true
+    ));
+
+    strictEqual(hasDroppedWorkspaceWarning, true);
+
+    loggerCustomizeSpy.mockRestore();
+
+    return;
+  });
+
+  it('load rejects workspace with missing policy', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_ProjectDirectory = join(sandboxRoot, 'missing-policy');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_ConfigContents = JSON.stringify({
+      workspaces: {
+        '.': {
+          name: 'test-project',
+          role: 'project',
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const customizedLoggerMock: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock = {
+      debug: vi.fn(),
+      dev: vi.fn(),
+      info: vi.fn(),
+      warn: vi.fn(),
+      error: vi.fn(),
+    };
+
+    const loggerCustomizeSpy: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_LoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_LoggerCustomizeReturn);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_Loaded = await config.load();
+
+    strictEqual(loaded['workspaces'], undefined);
+
+    const customizedWarnCalls: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedWarnCalls = customizedLoggerMock['warn']['mock']['calls'];
+
+    const hasDroppedWorkspaceWarning: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_HasDroppedWorkspaceWarning = customizedWarnCalls.some((call) => (
+      typeof call[0] === 'string'
+      && call[0].includes('Workspace "."') === true
+      && call[0].includes('has no policy') === true
+    ));
+
+    strictEqual(hasDroppedWorkspaceWarning, true);
+
+    loggerCustomizeSpy.mockRestore();
 
     return;
   });
@@ -2367,7 +2564,7 @@ describe('parseWorkflows (via load)', async () => {
 /**
  * Tests - Lib - Nova Config - ParseGithub (via Load).
  *
- * @since 0.22.0
+ * @since 0.20.0
  */
 describe('parseGithub (via load)', async () => {
   const originalCwd: Tests_Lib_NovaConfig_ParseGithubViaLoad_OriginalCwd = process.cwd();
@@ -2731,6 +2928,340 @@ describe('parseGithub (via load)', async () => {
 
     strictEqual(loadedGithub['owner'], 'cbn-ventures');
     strictEqual(loadedGithub['repo'], 'nova.docs_v2');
+
+    return;
+  });
+
+  return;
+});
+
+describe('Shared_NovaConfig gitignore', async () => {
+  const originalCwd: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_TemporaryDirectory = tmpdir();
+  const sandboxPrefix: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_SandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_SandboxRoot = await mkdtemp(sandboxPrefix);
+
+  afterAll(async () => {
+    process.chdir(originalCwd);
+
+    await rm(sandboxRoot, {
+      recursive: true,
+      force: true,
+    });
+
+    return;
+  });
+
+  it('filters empty strings from projectExcludes', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ProjectDirectory = join(sandboxRoot, 'gitignore-filters');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ConfigContents = JSON.stringify({
+      gitignore: {
+        projectExcludes: [
+          'wrangler.toml',
+          '!worker-configuration.d.ts',
+          '',
+        ],
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_Loaded = await config.load();
+
+    deepStrictEqual(loaded['gitignore'], {
+      projectExcludes: [
+        'wrangler.toml',
+        '!worker-configuration.d.ts',
+      ],
+    });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Nova Config - Shared_NovaConfig Agents.
+ *
+ * @since 0.20.0
+ */
+describe('Shared_NovaConfig agents', async () => {
+  const originalCwd: Tests_Lib_NovaConfig_SharedNovaConfigAgents_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Lib_NovaConfig_SharedNovaConfigAgents_TemporaryDirectory = tmpdir();
+  const sandboxPrefix: Tests_Lib_NovaConfig_SharedNovaConfigAgents_SandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Lib_NovaConfig_SharedNovaConfigAgents_SandboxRoot = await mkdtemp(sandboxPrefix);
+
+  afterAll(async () => {
+    process.chdir(originalCwd);
+
+    await rm(sandboxRoot, {
+      recursive: true,
+      force: true,
+    });
+
+    return;
+  });
+
+  it('parses agents and drops unknown ids', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_ProjectDirectory = join(sandboxRoot, 'agents-drops-unknown');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_ConfigContents = JSON.stringify({
+      agents: [
+        'codex',
+        'cursor',
+        'claude-code',
+      ],
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_Loaded = await config.load();
+
+    deepStrictEqual(loaded['agents'], [
+      'claude-code',
+      'codex',
+    ]);
+
+    return;
+  });
+
+  return;
+});
+
+describe('Shared_NovaConfig dotenv', async () => {
+  const originalCwd: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_TemporaryDirectory = tmpdir();
+  const sandboxPrefix: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_SandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_SandboxRoot = await mkdtemp(sandboxPrefix);
+
+  afterAll(async () => {
+    process.chdir(originalCwd);
+
+    await rm(sandboxRoot, {
+      recursive: true,
+      force: true,
+    });
+
+    return;
+  });
+
+  it('drops invalid keys and defaults missing values', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ProjectDirectory = join(sandboxRoot, 'dotenv-variables');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ConfigContents = JSON.stringify({
+      project: {
+        name: {
+          slug: 'demo',
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'demo-project',
+          role: 'project',
+          policy: 'freezable',
+          dotenv: {
+            variables: [
+              {
+                key: 'API_KEY',
+                defaultValue: 'abc',
+              },
+              {
+                key: 'NO_DEFAULT',
+              },
+              {
+                key: 'lower_case',
+                defaultValue: 'x',
+              },
+            ],
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_Loaded = await config.load();
+
+    deepStrictEqual(loaded['workspaces'], {
+      './': {
+        role: 'project',
+        policy: 'freezable',
+        name: 'demo-project',
+        dotenv: {
+          variables: [
+            {
+              key: 'API_KEY',
+              defaultValue: 'abc',
+            },
+            {
+              key: 'NO_DEFAULT',
+              defaultValue: '',
+            },
+          ],
+        },
+      },
+    });
+
+    return;
+  });
+
+  it('rejects reserved keys', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ProjectDirectory = join(sandboxRoot, 'dotenv-reserved-keys');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ConfigContents = JSON.stringify({
+      project: {
+        name: {
+          slug: 'demo',
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'demo-project',
+          role: 'project',
+          policy: 'freezable',
+          dotenv: {
+            variables: [
+              {
+                key: 'NODE_ENV',
+                defaultValue: 'production',
+              },
+              {
+                key: 'API_KEY',
+                defaultValue: 'abc',
+              },
+            ],
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const customizedLoggerMock: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock = {
+      debug: vi.fn(),
+      dev: vi.fn(),
+      info: vi.fn(),
+      warn: vi.fn(),
+      error: vi.fn(),
+    };
+
+    const loggerCustomizeSpy: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_LoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_LoggerCustomizeReturn);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_Loaded = await config.load();
+
+    deepStrictEqual(loaded['workspaces'], {
+      './': {
+        role: 'project',
+        policy: 'freezable',
+        name: 'demo-project',
+        dotenv: {
+          variables: [{
+            key: 'API_KEY',
+            defaultValue: 'abc',
+          }],
+        },
+      },
+    });
+
+    const customizedWarnCalls: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedWarnCalls = customizedLoggerMock['warn']['mock']['calls'];
+
+    const hasReservedKeyWarning: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_HasReservedKeyWarning = customizedWarnCalls.some((call) => (
+      typeof call[0] === 'string'
+      && call[0].includes('NODE_ENV') === true
+      && call[0].includes('reserved') === true
+    ));
+
+    strictEqual(hasReservedKeyWarning, true);
+
+    loggerCustomizeSpy.mockRestore();
+
+    return;
+  });
+
+  return;
+});
+
+describe('Shared_NovaConfig github issue template', async () => {
+  const originalCwd: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_TemporaryDirectory = tmpdir();
+  const sandboxPrefix: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_SandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_SandboxRoot = await mkdtemp(sandboxPrefix);
+
+  afterAll(async () => {
+    process.chdir(originalCwd);
+
+    await rm(sandboxRoot, {
+      recursive: true,
+      force: true,
+    });
+
+    return;
+  });
+
+  it('filters empty bug report fields', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ProjectDirectory = join(sandboxRoot, 'github-issue-template-filters');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigContents = JSON.stringify({
+      github: {
+        owner: 'cbnventures',
+        issueTemplate: {
+          bugReportFields: [
+            'nodejs.yml',
+            'docker.yml',
+            '',
+          ],
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Loaded = await config.load();
+
+    const loadedGithub: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_LoadedGithub = loaded['github'];
+
+    if (loadedGithub === undefined) {
+      fail('Expected github to be defined');
+    }
+
+    deepStrictEqual(loadedGithub['issueTemplate'], {
+      bugReportFields: [
+        'nodejs.yml',
+        'docker.yml',
+      ],
+    });
 
     return;
   });

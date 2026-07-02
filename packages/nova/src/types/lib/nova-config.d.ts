@@ -1,13 +1,18 @@
 import type {
   Shared_NovaConfig,
+  Shared_NovaConfig_Agents,
   Shared_NovaConfig_Emails,
   Shared_NovaConfig_Entities,
   Shared_NovaConfig_Github,
   Shared_NovaConfig_Github_Features,
+  Shared_NovaConfig_Github_IssueTemplate,
+  Shared_NovaConfig_Github_IssueTemplate_BugReportFields,
   Shared_NovaConfig_Github_Policies,
   Shared_NovaConfig_Github_Policies_MergeMethods,
   Shared_NovaConfig_Github_Recipes,
   Shared_NovaConfig_Github_Topics,
+  Shared_NovaConfig_Gitignore,
+  Shared_NovaConfig_Gitignore_ProjectExcludes,
   Shared_NovaConfig_Project,
   Shared_NovaConfig_Project_Description,
   Shared_NovaConfig_Project_License,
@@ -17,15 +22,18 @@ import type {
   Shared_NovaConfig_Workflows,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigConfig,
+  Shared_NovaConfigDotenvVariable,
+  Shared_NovaConfigDotenvVariable_DefaultValue,
+  Shared_NovaConfigDotenvVariable_Key,
   Shared_NovaConfigEntityRole,
   Shared_NovaConfigProjectPlatform,
   Shared_NovaConfigWorkflowTarget,
   Shared_NovaConfigWorkspace,
+  Shared_NovaConfigWorkspace_Dotenv,
   Shared_NovaConfigWorkspace_Name,
   Shared_NovaConfigWorkspace_Policy,
   Shared_NovaConfigWorkspace_Recipes,
   Shared_NovaConfigWorkspace_Role,
-  Shared_NovaConfigWorkspaceRecipeName,
   Shared_NovaConfigWorkspaceRecipeTuple,
   Shared_UrlProtocol,
 } from '../shared.d.ts';
@@ -91,7 +99,7 @@ export type Lib_NovaConfig_Runner_GetEmail_Email = string | undefined;
 /**
  * Lib - Nova Config - Get GitHub Features.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_NovaConfig_Runner_GetGithubFeatures_Value = unknown;
 
@@ -110,9 +118,24 @@ export type Lib_NovaConfig_Runner_GetGithubFeatures_Projects = boolean | undefin
 export type Lib_NovaConfig_Runner_GetGithubFeatures_Discussions = boolean | undefined;
 
 /**
+ * Lib - Nova Config - Get GitHub Issue Template.
+ *
+ * @since 0.20.0
+ */
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Value = unknown;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Returns = Shared_NovaConfig_Github_IssueTemplate | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result = {
+  bugReportFields?: Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
+};
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportFields | undefined;
+
+/**
  * Lib - Nova Config - Get GitHub Policies.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_NovaConfig_Runner_GetGithubPolicies_Value = unknown;
 
@@ -133,7 +156,7 @@ export type Lib_NovaConfig_Runner_GetGithubPolicies_AutoDeleteHeadBranch = boole
 /**
  * Lib - Nova Config - Get GitHub Policies Merge Methods.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Value = unknown;
 
@@ -152,7 +175,7 @@ export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Rebase = boolean
 /**
  * Lib - Nova Config - Get GitHub Recipes.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_NovaConfig_Runner_GetGithubRecipes_Value = unknown;
 
@@ -171,7 +194,7 @@ export type Lib_NovaConfig_Runner_GetGithubRecipes_SyncPolicies = boolean | unde
 /**
  * Lib - Nova Config - Get GitHub Topics.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_NovaConfig_Runner_GetGithubTopics_Value = unknown;
 
@@ -245,7 +268,7 @@ export type Lib_NovaConfig_Runner_Parse_Value = unknown;
 export type Lib_NovaConfig_Runner_Parse_Returns = Shared_NovaConfig;
 
 export type Lib_NovaConfig_Runner_Parse_Result = {
-  project?: Shared_NovaConfig_Project; entities?: Shared_NovaConfig_Entities; emails?: Shared_NovaConfig_Emails; github?: Shared_NovaConfig_Github; workflows?: Shared_NovaConfig_Workflows; urls?: Shared_NovaConfig_Urls; workspaces?: Shared_NovaConfig_Workspaces;
+  project?: Shared_NovaConfig_Project; entities?: Shared_NovaConfig_Entities; emails?: Shared_NovaConfig_Emails; github?: Shared_NovaConfig_Github; workflows?: Shared_NovaConfig_Workflows; urls?: Shared_NovaConfig_Urls; workspaces?: Shared_NovaConfig_Workspaces; gitignore?: Shared_NovaConfig_Gitignore; agents?: Shared_NovaConfig_Agents;
 };
 
 export type Lib_NovaConfig_Runner_Parse_Project = Shared_NovaConfig_Project | undefined;
@@ -261,6 +284,53 @@ export type Lib_NovaConfig_Runner_Parse_Workflows = Shared_NovaConfig_Workflows 
 export type Lib_NovaConfig_Runner_Parse_Urls = Shared_NovaConfig_Urls | undefined;
 
 export type Lib_NovaConfig_Runner_Parse_Workspaces = Shared_NovaConfig_Workspaces | undefined;
+
+export type Lib_NovaConfig_Runner_Parse_Gitignore = Shared_NovaConfig_Gitignore | undefined;
+
+export type Lib_NovaConfig_Runner_Parse_Agents = Shared_NovaConfig_Agents | undefined;
+
+/**
+ * Lib - Nova Config - Parse Agents.
+ *
+ * @since 0.20.0
+ */
+export type Lib_NovaConfig_Runner_ParseAgents_Value = unknown;
+
+export type Lib_NovaConfig_Runner_ParseAgents_Returns = Shared_NovaConfig_Agents | undefined;
+
+export type Lib_NovaConfig_Runner_ParseAgents_Agents = ('claude-code' | 'codex')[];
+
+/**
+ * Lib - Nova Config - Parse Dotenv.
+ *
+ * @since 0.20.0
+ */
+export type Lib_NovaConfig_Runner_ParseDotenv_Value = unknown;
+
+export type Lib_NovaConfig_Runner_ParseDotenv_Returns = Shared_NovaConfigDotenvVariable[] | undefined;
+
+export type Lib_NovaConfig_Runner_ParseDotenv_RawVariables = unknown;
+
+export type Lib_NovaConfig_Runner_ParseDotenv_Variables_Key = string;
+
+export type Lib_NovaConfig_Runner_ParseDotenv_Variables_DefaultValue = string;
+
+export type Lib_NovaConfig_Runner_ParseDotenv_Variables = {
+  key: Lib_NovaConfig_Runner_ParseDotenv_Variables_Key;
+  defaultValue: Lib_NovaConfig_Runner_ParseDotenv_Variables_DefaultValue;
+}[];
+
+export type Lib_NovaConfig_Runner_ParseDotenv_VariablesByKey = Map<string, Shared_NovaConfigDotenvVariable>;
+
+export type Lib_NovaConfig_Runner_ParseDotenv_RawVariable = unknown;
+
+export type Lib_NovaConfig_Runner_ParseDotenv_Key = Shared_NovaConfigDotenvVariable_Key | undefined;
+
+export type Lib_NovaConfig_Runner_ParseDotenv_IsReservedKey = boolean;
+
+export type Lib_NovaConfig_Runner_ParseDotenv_DefaultValueCandidate = Shared_NovaConfigDotenvVariable_DefaultValue | undefined;
+
+export type Lib_NovaConfig_Runner_ParseDotenv_DefaultValue = string;
 
 /**
  * Lib - Nova Config - Parse Emails.
@@ -313,14 +383,14 @@ export type Lib_NovaConfig_Runner_ParseEntities_NameB = string;
 /**
  * Lib - Nova Config - Parse GitHub.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_NovaConfig_Runner_ParseGithub_Value = unknown;
 
 export type Lib_NovaConfig_Runner_ParseGithub_Returns = Shared_NovaConfig_Github | undefined;
 
 export type Lib_NovaConfig_Runner_ParseGithub_Result = {
-  owner?: string; repo?: string; recipes?: Shared_NovaConfig_Github_Recipes; topics?: string[]; features?: Shared_NovaConfig_Github_Features; policies?: Shared_NovaConfig_Github_Policies;
+  owner?: string; repo?: string; recipes?: Shared_NovaConfig_Github_Recipes; topics?: string[]; features?: Shared_NovaConfig_Github_Features; policies?: Shared_NovaConfig_Github_Policies; issueTemplate?: Shared_NovaConfig_Github_IssueTemplate;
 };
 
 export type Lib_NovaConfig_Runner_ParseGithub_OwnerCandidate = string | undefined;
@@ -338,6 +408,23 @@ export type Lib_NovaConfig_Runner_ParseGithub_Topics = Shared_NovaConfig_Github_
 export type Lib_NovaConfig_Runner_ParseGithub_Features = Shared_NovaConfig_Github_Features | undefined;
 
 export type Lib_NovaConfig_Runner_ParseGithub_Policies = Shared_NovaConfig_Github_Policies | undefined;
+
+export type Lib_NovaConfig_Runner_ParseGithub_IssueTemplate = Shared_NovaConfig_Github_IssueTemplate | undefined;
+
+/**
+ * Lib - Nova Config - Parse Gitignore.
+ *
+ * @since 0.20.0
+ */
+export type Lib_NovaConfig_Runner_ParseGitignore_Value = unknown;
+
+export type Lib_NovaConfig_Runner_ParseGitignore_Returns = Shared_NovaConfig_Gitignore | undefined;
+
+export type Lib_NovaConfig_Runner_ParseGitignore_Result = {
+  projectExcludes?: Shared_NovaConfig_Gitignore_ProjectExcludes;
+};
+
+export type Lib_NovaConfig_Runner_ParseGitignore_ProjectExcludes = Shared_NovaConfig_Gitignore_ProjectExcludes | undefined;
 
 /**
  * Lib - Nova Config - Parse Project.
@@ -422,7 +509,7 @@ export type Lib_NovaConfig_Runner_ParseUrls_ParsedUrl = string | undefined;
 /**
  * Lib - Nova Config - Parse Workflows.
  *
- * @since 0.20.0
+ * @since 0.18.0
  */
 export type Lib_NovaConfig_Runner_ParseWorkflows_Value = unknown;
 
@@ -525,6 +612,15 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_SuffixA = string;
 export type Lib_NovaConfig_Runner_ParseWorkflows_SuffixB = string;
 
 /**
+ * Lib - Nova Config - Parse Workspace Dotenv.
+ *
+ * @since 0.20.0
+ */
+export type Lib_NovaConfig_Runner_ParseWorkspaceDotenv_Value = unknown;
+
+export type Lib_NovaConfig_Runner_ParseWorkspaceDotenv_Returns = Shared_NovaConfigWorkspace_Dotenv | undefined;
+
+/**
  * Lib - Nova Config - Parse Workspaces.
  *
  * @since 0.11.0
@@ -567,17 +663,11 @@ export type Lib_NovaConfig_Runner_ParseWorkspaces_Recipes = Shared_NovaConfigWor
 
 export type Lib_NovaConfig_Runner_ParseWorkspaces_RecipesCandidate = unknown;
 
-export type Lib_NovaConfig_Runner_ParseWorkspaces_AllowedRecipes = Set<Shared_NovaConfigWorkspaceRecipeName>;
-
 export type Lib_NovaConfig_Runner_ParseWorkspaces_ParsedRecipes = {
   [key: string]: Shared_NovaConfigWorkspaceRecipeTuple;
 };
 
-export type Lib_NovaConfig_Runner_ParseWorkspaces_RecipeName = string;
-
 export type Lib_NovaConfig_Runner_ParseWorkspaces_RecipeTuple = unknown;
-
-export type Lib_NovaConfig_Runner_ParseWorkspaces_MatchedRecipe = Shared_NovaConfigWorkspaceRecipeName | undefined;
 
 export type Lib_NovaConfig_Runner_ParseWorkspaces_Enabled = unknown;
 
@@ -588,6 +678,8 @@ export type Lib_NovaConfig_Runner_ParseWorkspaces_ParsedSettings = Record<string
 export type Lib_NovaConfig_Runner_ParseWorkspaces_SettingKey = string;
 
 export type Lib_NovaConfig_Runner_ParseWorkspaces_SettingValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseWorkspaces_Dotenv = Shared_NovaConfigWorkspace_Dotenv | undefined;
 
 export type Lib_NovaConfig_Runner_ParseWorkspaces_WorkspaceKeys = string[];
 

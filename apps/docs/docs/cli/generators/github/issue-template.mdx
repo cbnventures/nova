@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 
 Create issue form templates under `.github/ISSUE_TEMPLATE/` including `config.yml`, `BUG-REPORT.yml`, `FEATURE-REQUEST.yml`, and `SUPPORT-REQUEST.yml`.
 
-An interactive multi-select prompt lets you choose which bug report fields to include — fields that match your configured dev platforms are pre-selected.
+The bug report fields come from `nova.config.json`, falling back to the fields that match your configured dev platforms when none are set.
 
 ## Why Use This Command?
 
@@ -34,7 +34,7 @@ An interactive multi-select prompt lets you choose which bug report fields to in
 
 - **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
 - **Project root** — Run the command from the directory containing the top-level `package.json`.
-- <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> — A valid config file must exist at the project root with the fields listed below.
+- <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> (optional) — When present, its fields customize the generated templates. When absent, defaults are used and platform-specific fields are omitted.
 
 ## Usage
 
@@ -72,13 +72,14 @@ An interactive multi-select prompt lets you choose which bug report fields to in
 
 ## Config Fields
 
-| Field                | Description                                                     |
-|----------------------|-----------------------------------------------------------------|
-| `project.pronouns`   | Pronoun style (`personal` or `business`) for template language. |
-| `project.platforms`  | Dev platforms used to pre-select matching bug report fields.    |
-| `urls.fundSources`   | Fund source URLs used to derive the GitHub sponsor username.    |
-| `urls.privacyPolicy` | Privacy policy URL included in issue template footers.          |
-| `urls.termsOfUse`    | Terms of use URL included in issue template footers.            |
+| Field                                  | Description                                                              |
+|----------------------------------------|--------------------------------------------------------------------------|
+| `project.pronouns`                     | Pronoun style (`personal` or `business`) for template language.          |
+| `project.platforms`                    | Dev platforms used to derive bug report fields when none are configured. |
+| `github.issueTemplate.bugReportFields` | Bug report field files to include. Overrides the platform-derived set.   |
+| `urls.fundSources`                     | Fund source URLs used to derive the GitHub sponsor username.             |
+| `urls.privacyPolicy`                   | Privacy policy URL included in issue template footers.                   |
+| `urls.termsOfUse`                      | Terms of use URL included in issue template footers.                     |
 
 ## Output Files
 
@@ -91,11 +92,13 @@ An interactive multi-select prompt lets you choose which bug report fields to in
 
 ## How It Works
 
-### Interactive Selection
+### Field Selection
 
-A multi-select prompt lists every available bug report field. Fields that match your configured `project.platforms` are pre-selected for convenience.
+The command is non-interactive. It reads the bug report fields from `github.issueTemplate.bugReportFields` in `nova.config.json`.
 
-Press **space** to toggle individual fields, then **enter** to confirm your selection. If no fields are selected, the generator produces templates without platform-specific fields.
+When that field is absent, the generator derives the set from `project.platforms` instead. If neither yields any fields, the templates are produced without platform-specific fields.
+
+To change which fields are included, edit them through [`nova utility initialize`](/docs/cli/utilities/initialize#github) under the **GitHub** category.
 
 ### Available Bug Report Fields
 

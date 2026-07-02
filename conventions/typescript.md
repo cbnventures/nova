@@ -5,7 +5,7 @@ Quotes: Single. Indentation: 2-space. File naming: kebab-case (e.g., `markdown-t
 ## Documentation Style
 
 - Comment syntax: `/** */`
-- Padding tag: `@since 1.0.0` (JSDoc)
+- Padding tag: `@since UNRELEASED` (JSDoc) — tag new or changed API with `@since UNRELEASED`; the release process stamps the real version automatically, so never hand-write a version number.
 - Param format: `@param {TypeName} name - Name.` (description matches the parameter name, capitalized, with a trailing period)
 - Return format: `@returns {TypeName}`
 - Include `@private` tag for private members.
@@ -42,54 +42,58 @@ Quotes: Single. Indentation: 2-space. File naming: kebab-case (e.g., `markdown-t
 
 ### Doc Comment Hierarchy
 
-Class doc uses pretty name derived from directory path with ` - ` separators. All path segments are included. Member docs chain from the class pretty name. Files named `index` skip the filename — the directory path is the identity. Known names (brands, abbreviations, compounds) are preserved: e.g., `eslint` → `ESLint`, `package-json` → `package.json`, `nextjs` → `Next.js`.
+Class doc uses pretty name derived from the file's path segments (directories AND filename) joined with ` - `. Every segment is included verbatim. The single exception: when the filename is `index`, only the directories are used — the directory IS the identity (e.g., `src/toolkit/index.ts` → `Toolkit`, not `Toolkit - Index`). Member docs chain from the class pretty name. Known names (brands, abbreviations, compounds) are preserved: e.g., `eslint` → `ESLint`, `package-json` → `package.json`, `nextjs` → `Next.js`.
+
+Note on JSDoc vs type-name divergence on `index`: JSDoc display names strip `index`; type-name prefixes do NOT (`src/cli/index.ts` → JSDoc `CLI`, type prefix `Cli_Index`). The type-naming system treats the path as identity verbatim — see "Named Type Naming" below.
 
 ### Full Documentation Example
 
+The example below is for the file `src/cli/utility/changelog.ts`. The class is named `Runner` (per the "Class Name Is `Runner`" rule below), but type-name prefixes still derive from the file path — every type name starts with `Cli_Utility_Changelog_Runner_*`.
+
 ```ts
 /**
- * CLI - Utility - Runner.
+ * CLI - Utility - Changelog.
  *
- * @since 1.0.0
+ * @since UNRELEASED
  */
-export class CliUtilityRunner {
+export class Runner {
   /**
-   * CLI - Utility - Runner - Run.
+   * CLI - Utility - Changelog - Run.
    *
-   * @param {Cli_Utility_Runner_Run_Options} options - Options.
+   * @param {Cli_Utility_Changelog_Runner_Run_Options} options - Options.
    *
-   * @returns {Cli_Utility_Runner_Run_Returns}
+   * @returns {Cli_Utility_Changelog_Runner_Run_Returns}
    *
-   * @since 1.0.0
+   * @since UNRELEASED
    */
-  public static async run(options: Cli_Utility_Runner_Run_Options): Cli_Utility_Runner_Run_Returns {
+  public static async run(options: Cli_Utility_Changelog_Runner_Run_Options): Cli_Utility_Changelog_Runner_Run_Returns {
   }
 
   /**
-   * CLI - Utility - Runner - Fetch Data.
+   * CLI - Utility - Changelog - Fetch Data.
    *
    * @private
    *
-   * @returns {Cli_Utility_Runner_FetchData_Returns}
+   * @returns {Cli_Utility_Changelog_Runner_FetchData_Returns}
    *
-   * @since 1.0.0
+   * @since UNRELEASED
    */
-  private static async fetchData(): Cli_Utility_Runner_FetchData_Returns {
+  private static async fetchData(): Cli_Utility_Changelog_Runner_FetchData_Returns {
   }
 
   /**
-   * CLI - Utility - Runner - Format Line.
+   * CLI - Utility - Changelog - Format Line.
    *
-   * @param {Cli_Utility_Runner_FormatLine_Prefix}  prefix  - Prefix.
-   * @param {Cli_Utility_Runner_FormatLine_Message} message - Message.
+   * @param {Cli_Utility_Changelog_Runner_FormatLine_Prefix}  prefix  - Prefix.
+   * @param {Cli_Utility_Changelog_Runner_FormatLine_Message} message - Message.
    *
    * @private
    *
-   * @returns {Cli_Utility_Runner_FormatLine_Returns}
+   * @returns {Cli_Utility_Changelog_Runner_FormatLine_Returns}
    *
-   * @since 1.0.0
+   * @since UNRELEASED
    */
-  private static formatLine(prefix: Cli_Utility_Runner_FormatLine_Prefix, message: Cli_Utility_Runner_FormatLine_Message): Cli_Utility_Runner_FormatLine_Returns {
+  private static formatLine(prefix: Cli_Utility_Changelog_Runner_FormatLine_Prefix, message: Cli_Utility_Changelog_Runner_FormatLine_Message): Cli_Utility_Changelog_Runner_FormatLine_Returns {
   }
 }
 ```
@@ -97,6 +101,8 @@ export class CliUtilityRunner {
 ## Type System
 
 ### No Inline Types in Code Files
+
+> Inline examples in this section (and elsewhere in this doc) use a short prefix like `Runner_*`, `Validator_*`, `Syncer_*`, `MarkdownTable_*`, `Fetcher_*` for brevity — read it as the full form `{PathPrefix}_Runner_*` (e.g., `Cli_Utility_Foo_Runner_*` for `cli/utility/foo.ts`). Real `.d.ts` files always include the full path prefix. The "Named Type Naming" section below covers the full pattern.
 
 Every `const`/`let` declaration in a method body uses a named alias from a `.d.ts` file. No exceptions — even when TypeScript can infer the type, the explicit named annotation is required for traceability. This applies to all forms: array literals, Sets, Records, Maps, union types, generics, and inferred primitives.
 
@@ -179,7 +185,7 @@ The reason for first-come-first-serve ordering: the `.d.ts` file reads as a para
 
 The **only** valid forward references: return-position type aliases — `Returns`, `TypeGuard`, and the singular `Return` — referencing a type defined later in the same section. The return-position alias still comes first because it's used first (in the signature). This covers two patterns: the alias referencing a body variable the method returns, and the alias referencing a return object type whose properties are defined after it. All other types must be defined before use.
 
-> Inline examples below use a `Runner_*` shorthand for brevity — read it as the full Mode 2 form `{PathPrefix}_Runner_*` (e.g., `Cli_Utility_Foo_Runner_*` for `cli/utility/foo.ts`). Real `.d.ts` files always include the full path prefix.
+(Reminder: examples use `Runner_*` shorthand — see the note at the top of "No Inline Types in Code Files" for the full `{PathPrefix}_Runner_*` form.)
 
 ```ts
 /** Runner - Execute. */
@@ -207,6 +213,26 @@ export type Runner_DetectPlatform_Platform = {                               // 
 ### Named Type Naming
 
 Pattern: `{PathPrefix}_{ClassName}_{MethodName}_{VariableName}` — chunks joined by underscores, each chunk PascalCase. The path prefix is derived from the file path: every path segment becomes one chunk (PascalCase, with hyphenated names like `package-json` flattened to `PackageJson` within the chunk). No segments are stripped — the path is the identity verbatim. The type naming system does NOT use brand casing (e.g., `Cli` not `CLI`, `Api` not `API`, `Eslint` not `ESLint`). Brand casing is reserved for JSDoc hierarchy display only.
+
+**Pattern slots are conditional, not always present.** Each of the four slots is only filled when applicable to the source file:
+
+- `{PathPrefix}` — **always present** (derived from the file path).
+- `{ClassName}` — present only when the source file has a class declaration. Uniformly the literal `Runner` (see "Class Name Is `Runner`" below).
+- `{MethodName}` — present only when the source has methods, functions, or function-typed `const`s. Top-level types defined outside any function/method skip this slot.
+- `{VariableName}` — present only when the type names a specific variable, parameter, property, or return value. Types that describe the section itself (not a specific identifier within it) skip this slot.
+
+Examples spanning the slot combinations:
+
+```
+// All four slots — class + method + body variable
+src/api/node-releases.ts → Api_NodeReleases_Runner_FetchLtsVersions_ResponseData
+
+// No class slot — file has functions only, no class declaration
+src/tests/type-declarations.ts → Tests_TypeDeclarations_ExtractObjectTypes_ObjectType
+
+// Only path prefix + variable — top-level type, no class, no method
+src/lib/constants.ts → Lib_Constants_DocsBaseUrl
+```
 
 ```
 src/cli/utility/changelog.ts           → Cli_Utility_Changelog
@@ -256,39 +282,64 @@ private static categorize(items: Cli_Foo_Runner_Categorize_Items): ...
 
 **Source-identifier-based section detection.** The section a type belongs to is derived from source-code identifiers (class/method/function names, `(string, fn)` call arguments), NOT from JSDoc summary comments. JSDoc remains as documentation but plays no role in section computation — comments drift, identifiers can't. The meta-test parses the source file's AST to determine which section each line belongs to; types in `.d.ts` must use the corresponding section prefix.
 
-### Identifier Names Cannot Equal File Name (C1, C2, C3)
+### Class Name Is `Runner`
 
-Top-level class, function, and function-typed `const` names must NOT equal the file name (PascalCased, with hyphens flattened). Forces meaningful identifiers and prevents type-name doubling like `Cli_Utility_Changelog_Changelog_*`.
+Files that declare a single primary class use the literal name `Runner` for that class. The class name is purely a placeholder slot in the type-naming pattern — its semantic meaning comes from the file path, not from the identifier.
+
+Why generic? Three reasons:
+
+1. **The path already carries the meaning.** A file at `src/api/node-releases.ts` is unambiguously about Node releases. Naming the class `ApiNodeReleases` doubles the information already present in the import path — and bloats every type name with `Api_NodeReleases_ApiNodeReleases_*`.
+2. **Type names stay short and consistent.** With `Runner` as a fixed slot, the pattern reads as `{PathPrefix}_Runner_{MethodName}_{VariableName}` for every class file. No surprises, no per-file naming negotiation.
+3. **Refactoring is cheaper.** Renaming the file (or moving it) updates the path prefix mechanically; the class identifier never has to change.
 
 ```ts
-// cli/utility/changelog.ts — file name "changelog" → "Changelog"
-export class Changelog {}                          // BAD — class name == file name
-export class Runner {}                             // GOOD
+// src/api/node-releases.ts
+// BAD — class name duplicates the file path
+export class ApiNodeReleases {
+  public static async fetchLtsVersions(...): ... { }
+}
 
+// GOOD — class is `Runner`, path conveys meaning
+export class Runner {
+  public static async fetchLtsVersions(...): ... { }
+}
+```
+
+Consumers import the generic name and rely on the path for context:
+
+```ts
+// some-consumer.ts
+import { Runner } from '../api/node-releases.js';
+
+const versions = await Runner.fetchLtsVersions();
+```
+
+If a consumer wants to import the class under a domain-specific local name, use an import alias or a barrel re-export:
+
+```ts
+// Option A — import alias at the call site
+import { Runner as NodeReleases } from '@/api/node-releases.js';
+
+// Option B — barrel re-export
+// src/api/index.ts
+export { Runner as NodeReleases } from './node-releases.js';
+// consumer
+import { NodeReleases } from '@/api/index.js';
+```
+
+This also satisfies the older "Identifier Names Cannot Equal File Name" rule (no `Changelog` class in `changelog.ts`) — `Runner` never equals a file name, so type-name doubling like `Cli_Utility_Changelog_Changelog_*` cannot occur.
+
+### Function and Const Names Cannot Equal File Name (C2, C3)
+
+Top-level function and function-typed `const` names must NOT equal the file name (PascalCased, with hyphens flattened). Forces meaningful identifiers and prevents type-name doubling like `Lib_Utility_Utility_*`.
+
+```ts
 // lib/utility.ts — file name "utility" → "Utility"
 export function utility(): ... {}                  // BAD — function name == file name
 export function getCurrentTimestamp(): ... {}      // GOOD
 
 const utility: ... = () => {};                     // BAD — const name == file name
 const formatRow: ... = () => {};                   // GOOD
-
-// toolkit/markdown-table.ts — flattened file name "MarkdownTable"
-export class MarkdownTable {}                      // BAD — class name == flattened file name
-export class Runner {}                             // GOOD
-```
-
-If consumers want to import a class as `MarkdownTable`, use a barrel re-export:
-
-```ts
-// toolkit/markdown-table.ts — internal class is `Runner`
-export class Runner { public addRow(...) {} }
-
-// toolkit/index.ts — barrel
-export { Runner as MarkdownTable } from './markdown-table.js';
-
-// some-consumer.ts
-import { MarkdownTable } from '@/toolkit/index.js';
-const table = new MarkdownTable(...);
 ```
 
 ### Filename and Path Segment Rules (EC19, EC20, EC21)
@@ -310,25 +361,25 @@ foo bar.ts      → BAD (space)
 
 ### Named Type Alias per Param and Return
 
-Each function parameter and return value gets its own named type alias.
+Each function parameter and return value gets its own named type alias. The full type-name prefix includes the `Runner` class slot when the source file declares a class (see "Class Name Is `Runner`").
 
 ```ts
 // types/toolkit/markdown-table.d.ts
-export type Toolkit_MarkdownTable_Constructor_Headers = string[];
-export type Toolkit_MarkdownTable_AddRow_Row = string[];
-export type Toolkit_MarkdownTable_AddRow_Returns = void;
+export type Toolkit_MarkdownTable_Runner_Constructor_Headers = string[];
+export type Toolkit_MarkdownTable_Runner_AddRow_Row = string[];
+export type Toolkit_MarkdownTable_Runner_AddRow_Returns = void;
 
 // toolkit/markdown-table.ts
 /**
  * Toolkit - Markdown Table - Add row.
  *
- * @param {Toolkit_MarkdownTable_AddRow_Row} row - Row.
+ * @param {Toolkit_MarkdownTable_Runner_AddRow_Row} row - Row.
  *
- * @returns {Toolkit_MarkdownTable_AddRow_Returns}
+ * @returns {Toolkit_MarkdownTable_Runner_AddRow_Returns}
  *
- * @since 1.0.0
+ * @since UNRELEASED
  */
-public addRow(row: Toolkit_MarkdownTable_AddRow_Row): Toolkit_MarkdownTable_AddRow_Returns { ... }
+public addRow(row: Toolkit_MarkdownTable_Runner_AddRow_Row): Toolkit_MarkdownTable_Runner_AddRow_Returns { ... }
 ```
 
 ### `satisfies` vs `:` Type Annotation
@@ -444,28 +495,75 @@ Files listed in the meta-test's `testConfig.standaloneTypeFiles` (typically `sha
 
 **S1. PascalCase identifiers, no brand casing.** Top-level type names are PascalCase glued; nested property types use `Parent_Property` form. Brand casing (3+ consecutive uppercase letters) is forbidden — `Url` not `URL`, `Api` not `API`.
 
-**S2. No path-prefix-style names.** Type names must not start with a known source-file top-level segment (e.g., `Cli_`, `Lib_`, `Tests_`). Standalone types are domain concepts, not path-derived.
-
-**S3. Object property types follow `Parent_Property` form.** When a property uses a local type, the property type name must start with the parent object's name plus an underscore. Add an intermediate alias if needed.
+**S2. Path prefix is kept like every other file.** Standalone files are NOT exempt from the path-prefix rule — `shared.d.ts` types start with `Shared_`, `fetch-response.d.ts` types start with `FetchResponse_`, and so on. The path is the identity verbatim, the same as for domain `.d.ts` files. (The earlier rule that stripped the prefix for standalone files has been removed.)
 
 ```ts
 // shared.d.ts
-export type EntryCategory = 'added' | 'updated' | 'fixed' | 'removed';
-export type EntryBump = 'major' | 'minor' | 'patch';
+// BAD (old behavior) — prefix stripped
+export type BorderCharacters = { ... };
 
-export type EntryItem_Category = EntryCategory;
-export type EntryItem_PackageName = string;
-export type EntryItem = {
-  category: EntryItem_Category;
-  packageName: EntryItem_PackageName;
+// GOOD — prefix kept, same as every other file
+export type Shared_BorderCharacters = { ... };
+```
+
+**S3. Object property types follow `Parent_Property` form, composed with the path prefix.** When a property uses a local type, the property type name must start with the parent object's name plus an underscore. The `Parent_Property` form **composes with** the path prefix rather than replacing it — the prefix stays in front, the `Parent_Property` chain extends behind it. Add an intermediate alias if needed.
+
+```ts
+// shared.d.ts
+// BAD (old behavior) — standalone file stripped the prefix
+export type BorderCharacters_TopLeft = string;
+export type BorderCharacters = {
+  topLeft: BorderCharacters_TopLeft;
+};
+
+// GOOD — prefix kept, Parent_Property chains behind it
+export type Shared_BorderCharacters_TopLeft = string;
+export type Shared_BorderCharacters = {
+  topLeft: Shared_BorderCharacters_TopLeft;
+};
+
+// Deeper chains compose the same way
+export type Shared_ApiFormResponse_Info_Message = string;
+export type Shared_ApiFormResponse_Info = {
+  message: Shared_ApiFormResponse_Info_Message;
+};
+export type Shared_ApiFormResponse = {
+  info: Shared_ApiFormResponse_Info;
+};
+```
+
+External API payloads commonly use snake_case or kebab-case keys. The property type name PascalCases the key — underscores and hyphens flatten, exactly like file paths. The literal key in the object type stays quoted in its original form so it serializes correctly:
+
+```ts
+// shared.d.ts — external API response (e.g., Cloudflare Turnstile)
+export type Shared_TurnstileResponse_ChallengeTs = string;     // snake_case key 'challenge_ts'
+export type Shared_TurnstileResponse_ErrorCodes = string[];    // kebab-case key 'error-codes'
+export type Shared_TurnstileResponse = {
+  'challenge_ts': Shared_TurnstileResponse_ChallengeTs;
+  'error-codes': Shared_TurnstileResponse_ErrorCodes;
+};
+```
+
+Top-level enum-like aliases also keep the prefix:
+
+```ts
+// shared.d.ts
+export type Shared_EntryCategory = 'added' | 'updated' | 'fixed' | 'removed';
+export type Shared_EntryBump = 'major' | 'minor' | 'patch';
+
+export type Shared_EntryItem_Category = Shared_EntryCategory;
+export type Shared_EntryItem_PackageName = string;
+export type Shared_EntryItem = {
+  category: Shared_EntryItem_Category;
+  packageName: Shared_EntryItem_PackageName;
 };
 ```
 
 **S4. Array element types defined before the array.** Same as E3 in domain `.d.ts` files.
 
 ```ts
-export type EntryItem_Tag = string;
-export type EntryItem_Tags = EntryItem_Tag[];
+export type Shared_EntryItem_Tag = string;
+export type Shared_EntryItem_Tags = Shared_EntryItem_Tag[];
 ```
 
 ### No Redundant Intermediate Type Aliases
@@ -834,20 +932,22 @@ Two shapes, chosen by whether the module holds per-instance state:
 | **Static-only** | Stateless utilities, API clients | None                   | `static #field`   | `public static` / `private static` |
 | **Instance**    | Per-caller isolated state        | `public constructor()` | `readonly #field` | `public` / `private` instance      |
 
-Static-only (stateless utilities):
+Static-only (stateless utilities) — file `src/cli/utility/changelog.ts`:
 ```ts
-export class CliUtilityChangelog {
+export class Runner {
   public static async run(options: ...): ... { }
   private static async record(options: ...): ... { }
   private static generateFileName(): ... { }
 }
-// Called as: CliUtilityChangelog.run(options)
+// Called as (consumer aliases at import site for a domain-specific local name):
+// import { Runner as CliUtilityChangelog } from '@/cli/utility/changelog.js';
+// CliUtilityChangelog.run(options);
 ```
 
-Instance (per-caller state):
+Instance (per-caller state) — file `src/toolkit/markdown-table.ts`:
 ```ts
-export default class MarkdownTable {
-  readonly #headers: MarkdownTable_Constructor_Headers;
+export default class Runner {
+  readonly #headers: Toolkit_MarkdownTable_Runner_Constructor_Headers;
 
   public constructor(headers: ..., options?: ...) {
     this.#headers = headers;
@@ -855,7 +955,9 @@ export default class MarkdownTable {
 
   public addRow(row: ...): ... { }
 }
-// Called as: new MarkdownTable(headers).addRow(row)
+// Called as (consumer aliases the default import to a domain-specific local name):
+// import MarkdownTable from '@/toolkit/markdown-table.js';
+// new MarkdownTable(headers).addRow(row);
 ```
 
 ### `#` Private Fields over `private` Keyword

@@ -9,7 +9,7 @@ publish-github-action-[__TARGET_ID__]:
 [__JOBS_CONDITION__]
   steps:
     - name: "Checkout repository"
-      uses: "actions/checkout@v6"
+      uses: "actions/checkout@v7"
       with:
         persist-credentials: false
 

@@ -1,5 +1,9 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
+import {
+  LIB_REGEX_PATTERN_JSDOC_PARAM_ALIGNMENT_FIX,
+  LIB_REGEX_PATTERN_JSDOC_PARAM_ALIGNMENT_PARAM,
+} from '../../../lib/regex.js';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
@@ -57,7 +61,7 @@ export class Runner {
    *
    * @since 0.15.0
    */
-  static readonly #paramPattern = new RegExp('@param\\s+(\\{[^}]*\\})\\s+(\\w+)\\s+(-)');
+  static readonly #paramPattern = LIB_REGEX_PATTERN_JSDOC_PARAM_ALIGNMENT_PARAM;
 
   /**
    * Rules - ESLint - JSDoc - Require JSDoc Param Alignment - Fix Pattern.
@@ -69,7 +73,7 @@ export class Runner {
    *
    * @since 0.15.0
    */
-  static readonly #fixPattern = new RegExp('^(\\s*\\*\\s*@param\\s+)\\{([^}]+)\\}\\s+(\\[?\\w+\\]?)\\s+(- .+)$');
+  static readonly #fixPattern = LIB_REGEX_PATTERN_JSDOC_PARAM_ALIGNMENT_FIX;
 
   /**
    * Rules - ESLint - JSDoc - Require JSDoc Param Alignment - Rule.

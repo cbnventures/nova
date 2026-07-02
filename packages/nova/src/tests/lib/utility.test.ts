@@ -27,6 +27,11 @@ import {
 import { afterAll, describe, it } from 'vitest';
 
 import {
+  LIB_REGEX_PATTERN_BRACKETED_TIMESTAMP,
+  LIB_REGEX_PATTERN_NOVA_BACKUP_FILENAME,
+  LIB_REGEX_PATTERN_TEST_LITERAL,
+} from '../../lib/regex.js';
+import {
   buildGeneratedFileHeader,
   compareSemver,
   currentTimestamp,
@@ -550,7 +555,7 @@ describe('isPlainObject', async () => {
   });
 
   it('returns false for RegExp instance', () => {
-    const result: Tests_Lib_Utility_IsPlainObject_ReturnsFalseForRegExpInstance_Result = isPlainObject(new RegExp('test'));
+    const result: Tests_Lib_Utility_IsPlainObject_ReturnsFalseForRegExpInstance_Result = isPlainObject(LIB_REGEX_PATTERN_TEST_LITERAL);
 
     strictEqual(result, false);
 
@@ -860,7 +865,7 @@ describe('currentTimestamp', async () => {
 
   it('matches expected timestamp format', () => {
     const result: Tests_Lib_Utility_CurrentTimestamp_MatchesExpectedTimestampFormat_Result = currentTimestamp();
-    const pattern: Tests_Lib_Utility_CurrentTimestamp_MatchesExpectedTimestampFormat_Pattern = new RegExp('^\\[\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3} [+-]\\d{2}\\d{2}]$');
+    const pattern: Tests_Lib_Utility_CurrentTimestamp_MatchesExpectedTimestampFormat_Pattern = LIB_REGEX_PATTERN_BRACKETED_TIMESTAMP;
 
     match(result, pattern);
 
@@ -1163,7 +1168,7 @@ describe('renameFileWithDate', async () => {
     const renamedFile: Tests_Lib_Utility_RenameFileWithDate_RenamesAFileWithADateStampedName_RenamedFile = files.find((file) => file.startsWith('rename-test.'));
 
     ok(renamedFile !== undefined, 'Renamed file should exist');
-    const matchesBackupPattern: Tests_Lib_Utility_RenameFileWithDate_RenamesAFileWithADateStampedName_MatchesBackupPattern = new RegExp('^rename-test\\.\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.nova-backup\\.txt$').test(renamedFile);
+    const matchesBackupPattern: Tests_Lib_Utility_RenameFileWithDate_RenamesAFileWithADateStampedName_MatchesBackupPattern = LIB_REGEX_PATTERN_NOVA_BACKUP_FILENAME.test(renamedFile);
 
     ok(matchesBackupPattern);
 
@@ -1883,7 +1888,7 @@ describe('parseWindowsRegistryText', async () => {
 /**
  * Tests - Lib - Utility - Build Generated File Header.
  *
- * @since 0.16.3
+ * @since 0.16.0
  */
 describe('buildGeneratedFileHeader', () => {
   it('produces a #-prefixed strict banner for a .yml path', () => {
@@ -2044,7 +2049,7 @@ describe('buildGeneratedFileHeader', () => {
 /**
  * Tests - Lib - Utility - SaveGeneratedFile (with Header).
  *
- * @since 0.16.3
+ * @since 0.20.0
  */
 describe('saveGeneratedFile (with header)', async () => {
   const originalCwd: Tests_Lib_Utility_SaveGeneratedFileWithHeader_OriginalCwd = process.cwd();
@@ -2140,7 +2145,7 @@ describe('saveGeneratedFile (with header)', async () => {
 /**
  * Tests - Lib - Utility - Normalize Route Segment.
  *
- * @since 0.17.1
+ * @since 0.17.0
  */
 describe('normalizeRouteSegment', () => {
   const cases: Tests_Lib_Utility_NormalizeRouteSegment_Cases = [

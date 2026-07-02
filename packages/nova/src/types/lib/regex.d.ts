@@ -62,6 +62,13 @@ export type Lib_Regex_PatternAnsi = RegExp;
 export type Lib_Regex_PatternAnsiStart = RegExp;
 
 /**
+ * Lib - Regex - Pattern Blog Date Prefix.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternBlogDatePrefix = RegExp;
+
+/**
  * Lib - Regex - Pattern Camel Case Boundary.
  *
  * @since 0.11.0
@@ -102,6 +109,27 @@ export type Lib_Regex_PatternCasingUnderscorePascalCase = RegExp;
  * @since 0.11.0
  */
 export type Lib_Regex_PatternCasingUpperSnakeCase = RegExp;
+
+/**
+ * Lib - Regex - Pattern Code Block.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternCodeBlock = RegExp;
+
+/**
+ * Lib - Regex - Pattern Description Line.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternDescriptionLine = RegExp;
+
+/**
+ * Lib - Regex - Pattern Deprecated Unreleased.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternDeprecatedUnreleased = RegExp;
 
 /**
  * Lib - Regex - Pattern Digits.
@@ -160,11 +188,25 @@ export type Lib_Regex_PatternEnvVarKeyScreamingSnakeInline = RegExp;
 export type Lib_Regex_PatternErrorPrefix = RegExp;
 
 /**
+ * Lib - Regex - Pattern Exact Semver.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternExactSemver = RegExp;
+
+/**
  * Lib - Regex - Pattern Example Value Inline.
  *
  * @since 0.11.0
  */
 export type Lib_Regex_PatternExampleValueInline = RegExp;
+
+/**
+ * Lib - Regex - Pattern Export Dot Slash.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternExportDotSlash = RegExp;
 
 /**
  * Lib - Regex - Pattern Extension.
@@ -181,9 +223,16 @@ export type Lib_Regex_PatternExtension = RegExp;
 export type Lib_Regex_PatternExtensionTestSuffix = RegExp;
 
 /**
+ * Lib - Regex - Pattern File Extension Md.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternFileExtensionMd = RegExp;
+
+/**
  * Lib - Regex - Pattern Gh Version.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternGhVersion = RegExp;
 
@@ -209,6 +258,48 @@ export type Lib_Regex_PatternGithubRepo = RegExp;
 export type Lib_Regex_PatternHashBorderLine = RegExp;
 
 /**
+ * Lib - Regex - Pattern Heading H2 Line.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternHeadingH2Line = RegExp;
+
+/**
+ * Lib - Regex - Pattern Heading Line.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternHeadingLine = RegExp;
+
+/**
+ * Lib - Regex - Pattern HTML Tags.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternHtmlTags = RegExp;
+
+/**
+ * Lib - Regex - Pattern ID Line.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternIdLine = RegExp;
+
+/**
+ * Lib - Regex - Pattern Import Specifier.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternImportSpecifier = RegExp;
+
+/**
+ * Lib - Regex - Pattern Index Suffix.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternIndexSuffix = RegExp;
+
+/**
  * Lib - Regex - Pattern Java Version Line.
  *
  * @since 0.11.0
@@ -216,11 +307,32 @@ export type Lib_Regex_PatternHashBorderLine = RegExp;
 export type Lib_Regex_PatternJavaVersionLine = RegExp;
 
 /**
+ * Lib - Regex - Pattern JSDoc Deprecated Tag Capture.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternJsdocDeprecatedTagCapture = RegExp;
+
+/**
  * Lib - Regex - Pattern JSDoc Line Prefix.
  *
  * @since 0.11.0
  */
 export type Lib_Regex_PatternJsdocLinePrefix = RegExp;
+
+/**
+ * Lib - Regex - Pattern JSDoc Since Tag Capture.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternJsdocSinceTagCapture = RegExp;
+
+/**
+ * Lib - Regex - Pattern JSDoc Tag Scan.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternJsdocTagScan = RegExp;
 
 /**
  * Lib - Regex - Pattern Kebab Case Filename.
@@ -260,7 +372,7 @@ export type Lib_Regex_PatternLeadingNonDigits = RegExp;
 /**
  * Lib - Regex - Pattern Leading Or Trailing Hyphen.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternLeadingOrTrailingHyphen = RegExp;
 
@@ -272,6 +384,13 @@ export type Lib_Regex_PatternLeadingOrTrailingHyphen = RegExp;
 export type Lib_Regex_PatternLeadingV = RegExp;
 
 /**
+ * Lib - Regex - Pattern Markdown Link.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternMarkdownLink = RegExp;
+
+/**
  * Lib - Regex - Pattern Name At Version.
  *
  * @since 0.11.0
@@ -281,9 +400,16 @@ export type Lib_Regex_PatternNameAtVersion = RegExp;
 /**
  * Lib - Regex - Pattern Non Topic Char.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternNonTopicChar = RegExp;
+
+/**
+ * Lib - Regex - Pattern Non Word Chars.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternNonWordChars = RegExp;
 
 /**
  * Lib - Regex - Pattern Nova Prefix.
@@ -316,7 +442,7 @@ export type Lib_Regex_PatternRangeMajor = RegExp;
 /**
  * Lib - Regex - Pattern Rate Limit Reset.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternRateLimitReset = RegExp;
 
@@ -342,11 +468,25 @@ export type Lib_Regex_PatternRustcVersionLine = RegExp;
 export type Lib_Regex_PatternSemver = RegExp;
 
 /**
+ * Lib - Regex - Pattern Semver Leading.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternSemverLeading = RegExp;
+
+/**
  * Lib - Regex - Pattern Semver Strict.
  *
  * @since 0.11.0
  */
 export type Lib_Regex_PatternSemverStrict = RegExp;
+
+/**
+ * Lib - Regex - Pattern Since Unreleased.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternSinceUnreleased = RegExp;
 
 /**
  * Lib - Regex - Pattern Setup Bullet Line Capture.
@@ -370,6 +510,13 @@ export type Lib_Regex_PatternSetupHeaderLine = RegExp;
 export type Lib_Regex_PatternSetupInstructionsBlock = RegExp;
 
 /**
+ * Lib - Regex - Pattern Slug Line.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternSlugLine = RegExp;
+
+/**
  * Lib - Regex - Pattern Slug Scoped.
  *
  * @since 0.11.0
@@ -384,16 +531,37 @@ export type Lib_Regex_PatternSlugScoped = RegExp;
 export type Lib_Regex_PatternSlugSimple = RegExp;
 
 /**
+ * Lib - Regex - Pattern Terminology Component.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternTerminologyComponent = RegExp;
+
+/**
+ * Lib - Regex - Pattern Terminology Title Attr.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternTerminologyTitleAttr = RegExp;
+
+/**
+ * Lib - Regex - Pattern Terminology To Attr.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternTerminologyToAttr = RegExp;
+
+/**
  * Lib - Regex - Pattern Topic Flag.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternTopicFlag = RegExp;
 
 /**
  * Lib - Regex - Pattern Topic TypeScript.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternTopicTypescript = RegExp;
 
@@ -428,84 +596,91 @@ export type Lib_Regex_PatternWhitespace = RegExp;
 /**
  * Lib - Regex - Pattern Whitespace Or Underscore.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternWhitespaceOrUnderscore = RegExp;
 
 /**
+ * Lib - Regex - Pattern Wildcard Suffix.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Regex_PatternWildcardSuffix = RegExp;
+
+/**
  * Lib - Regex - Pattern Workflow Context Expression.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternWorkflowContextExpression = RegExp;
 
 /**
  * Lib - Regex - Pattern Workflow Context Separator.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternWorkflowContextSeparator = RegExp;
 
 /**
  * Lib - Regex - Pattern Workflow Context Wrapper End.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternWorkflowContextWrapperEnd = RegExp;
 
 /**
  * Lib - Regex - Pattern Workflow Context Wrapper Start.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternWorkflowContextWrapperStart = RegExp;
 
 /**
  * Lib - Regex - Pattern Workflow Name.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternWorkflowName = RegExp;
 
 /**
  * Lib - Regex - Pattern Workflow On Block.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternWorkflowOnBlock = RegExp;
 
 /**
  * Lib - Regex - Pattern Workflow Placeholder.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternWorkflowPlaceholder = RegExp;
 
 /**
  * Lib - Regex - Pattern Workflow Run Name Capture.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternWorkflowRunNameCapture = RegExp;
 
 /**
  * Lib - Regex - Pattern Workflow Secret Reference.
  *
- * @since 0.20.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternWorkflowSecretReference = RegExp;
 
 /**
  * Lib - Regex - Pattern Workflow Var Reference.
  *
- * @since 0.20.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternWorkflowVarReference = RegExp;
 
 /**
  * Lib - Regex - Pattern Yml Extension.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Lib_Regex_PatternYmlExtension = RegExp;
 

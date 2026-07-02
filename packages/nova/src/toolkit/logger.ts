@@ -56,7 +56,9 @@ import type {
   Toolkit_Logger_Runner_ScopeLabel_Segments,
   Toolkit_Logger_Runner_ShouldLog_CurrentLogLevel,
   Toolkit_Logger_Runner_ShouldLog_DefaultLogLevel,
+  Toolkit_Logger_Runner_ShouldLog_IsAutoLogLevel,
   Toolkit_Logger_Runner_ShouldLog_IsBrowser,
+  Toolkit_Logger_Runner_ShouldLog_IsUserSelectableLevel,
   Toolkit_Logger_Runner_ShouldLog_Level,
   Toolkit_Logger_Runner_ShouldLog_NodeEnv,
   Toolkit_Logger_Runner_ShouldLog_PreferredLogLevel,
@@ -300,7 +302,13 @@ class Runner {
       defaultLogLevel = 'info';
     }
 
-    const preferredLogLevel: Toolkit_Logger_Runner_ShouldLog_PreferredLogLevel = (Object.keys(weights).includes(currentLogLevel) === true) ? (currentLogLevel as Toolkit_Logger_Runner_ShouldLog_PreferredLogLevelCurrentLogLevel) : defaultLogLevel;
+    // An "auto" (or unset) LOG_LEVEL explicitly selects the NODE_ENV-derived default.
+    const isAutoLogLevel: Toolkit_Logger_Runner_ShouldLog_IsAutoLogLevel = currentLogLevel === '' || currentLogLevel === 'auto';
+
+    // The "dev" weight only backs Logger.dev()'s always-on output; it is not a user-selectable LOG_LEVEL, so an explicit "dev" falls back to the default.
+    const isUserSelectableLevel: Toolkit_Logger_Runner_ShouldLog_IsUserSelectableLevel = Object.keys(weights).includes(currentLogLevel) === true && currentLogLevel !== 'dev';
+
+    const preferredLogLevel: Toolkit_Logger_Runner_ShouldLog_PreferredLogLevel = (isAutoLogLevel === false && isUserSelectableLevel === true) ? (currentLogLevel as Toolkit_Logger_Runner_ShouldLog_PreferredLogLevelCurrentLogLevel) : defaultLogLevel;
 
     return weights[level] >= weights[preferredLogLevel];
   }

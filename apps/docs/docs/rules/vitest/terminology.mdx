@@ -1,0 +1,114 @@
+---
+id: "terminology"
+title: "Terminology Suite"
+description: "Validate Terminology glossary components against a source glossary page with the registerTerminologySuite conformance suite."
+keywords:
+  - "nova"
+  - "vitest"
+  - "terminology"
+  - "glossary"
+  - "jsx component"
+  - "anchor validation"
+  - "docs quality"
+  - "conformance"
+  - "register suite"
+tags:
+  - "rules"
+  - "vitest"
+  - "terminology"
+  - "testing"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Validate glossary components against a source glossary page with `registerTerminologySuite`.
+
+## Summary
+
+- Scans content directories for glossary component usages and checks each one's attributes.
+- Confirms every component links to the glossary page and resolves to a real anchor on it.
+- Treats the glossary page headings as the valid-anchor set and skips quietly when the page is absent.
+
+## Why Use This Suite?
+
+1. Guarantees every glossary reference points at a definition that actually exists.
+2. Catches a renamed glossary heading before it leaves a dangling term link.
+3. Adapts to any project through configurable component name, glossary path, and route base.
+
+## Examples
+
+<Tabs groupId="terminology-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```mdx
+    {/* Every usage has a title, a to that points at the base (optionally with a resolving anchor), and non-empty children. */}
+    Read the <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Terminology> policy first.
+
+    Then review the <Terminology title="fundamentals" to="/docs/quickstart/terminology#fundamentals">basics</Terminology> section.
+
+    You can also link to the <Terminology title="glossary" to="/docs/quickstart/terminology">glossary</Terminology> root.
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```mdx
+    {/* fails terminology-title-attr-present: no title attribute */}
+    Missing title here: <Terminology to="/docs/quickstart/terminology#fundamentals">LTS</Terminology>
+
+    {/* fails terminology-to-attr-present: no to attribute */}
+    Missing to here: <Terminology title="fundamentals">basics</Terminology>
+
+    {/* fails terminology-children-nonempty: no wrapped text */}
+    Empty children here: <Terminology title="glossary" to="/docs/quickstart/terminology"></Terminology>
+
+    {/* fails terminology-to-points-to-base: to does not equal or prefix the expected base */}
+    Wrong base here: <Terminology title="external" to="/docs/other/page">elsewhere</Terminology>
+
+    {/* fails terminology-anchor-resolves: anchor is not a heading on the glossary page */}
+    Dangling anchor here: <Terminology title="long term support" to="/docs/quickstart/terminology#nonexistent-term">LTS</Terminology>
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Usage
+
+```ts title="src/tests/terminology.test.ts"
+import { registerTerminologySuite } from '@cbnventures/nova/rules/vitest';
+
+registerTerminologySuite({
+  enable: 'all',
+});
+```
+
+The suite no-ops when the glossary page is absent, so a project without a glossary stays green. Point `terminologyPath`, `expectedBase`, and `componentName` at your own glossary, route, and component when they differ.
+
+## Configuration
+
+| Field             | Type                   | Default                                     | Description                                                                            |
+|-------------------|------------------------|---------------------------------------------|----------------------------------------------------------------------------------------|
+| `contentDirs`     | `string[]`             | `['docs', 'blog']`                          | Directories, relative to `rootDir`, scanned for component usages.                      |
+| `terminologyPath` | `string`               | `<rootDir>/docs/quickstart/terminology.mdx` | Glossary page (resolved against `rootDir`) whose headings define the valid-anchor set. |
+| `expectedBase`    | `string`               | `'/docs/quickstart/terminology'`            | Route every component must equal or prefix with an anchor.                             |
+| `rootDir`         | `string`               | `process.cwd()`                             | Base directory the content and glossary paths resolve against.                         |
+| `componentName`   | `string`               | `'Terminology'`                             | Name of the JSX component to validate.                                                 |
+| `enable`          | `'all' \| ToggleKey[]` | required                                    | Which checks run. Use `'all'` for every check, or a list to freeze a set.              |
+
+## Toggle Keys
+
+| Toggle Key                         | Description                                                                                                                             |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| `terminology-title-attr-present`   | Requires each component to declare a `title` attribute.                                                                                 |
+| `terminology-to-attr-present`      | Requires each component to declare a `to` attribute.                                                                                    |
+| `terminology-children-nonempty`    | Requires each component to wrap non-empty text.                                                                                         |
+| `terminology-to-points-to-base`    | Requires the `to` attribute to equal or prefix the expected base.                                                                       |
+| `terminology-anchor-resolves`      | Requires the `to` anchor to match a heading on the glossary page.                                                                       |
+| `terminology-component-validation` | Umbrella marker: registers one test confirming validation is active (asserts the glossary page exists); no-ops when the page is absent. |
+
+## Troubleshooting
+
+- **The suite finds nothing to check** — The glossary page is absent, so the suite no-ops. Set `terminologyPath` to your glossary page to enable the checks.
+- **A differently named component is ignored** — Set `componentName` to your component so the suite matches it.
+- **An anchor fails to resolve** — Update the component anchor to match a heading on the glossary page named by `terminologyPath`.

@@ -116,14 +116,14 @@ Custom rules for JavaScript and TypeScript projects.
 
 #### JSDoc
 
-| Rule                                                                                    | Synopsis                                                                           |
-|-----------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
-| [Require JSDoc Body](/docs/rules/eslint/jsdoc/require-jsdoc-body)                       | Require a body paragraph in JSDoc blocks that explains why the declaration exists. |
-| [Require JSDoc Hierarchy](/docs/rules/eslint/jsdoc/require-jsdoc-hierarchy)             | Require summary lines to follow hierarchy chain from file path.                    |
-| [Require JSDoc Param Alignment](/docs/rules/eslint/jsdoc/require-jsdoc-param-alignment) | Require vertical alignment of `@param` types, names, and dashes.                   |
-| [Require JSDoc Param Name](/docs/rules/eslint/jsdoc/require-jsdoc-param-name)           | Require `@param` descriptions to match param name.                                 |
-| [Require JSDoc Private](/docs/rules/eslint/jsdoc/require-jsdoc-private)                 | Require `@private` tag for private class members.                                  |
-| [Require JSDoc Since](/docs/rules/eslint/jsdoc/require-jsdoc-since)                     | Require `@since` tag in every JSDoc block.                                         |
+| Rule                                                                                    | Synopsis                                                                                |
+|-----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| [Require JSDoc Body](/docs/rules/eslint/jsdoc/require-jsdoc-body)                       | Require a body paragraph in JSDoc blocks that explains why the declaration exists.      |
+| [Require JSDoc Hierarchy](/docs/rules/eslint/jsdoc/require-jsdoc-hierarchy)             | Require summary lines to follow hierarchy chain from file path.                         |
+| [Require JSDoc Param Alignment](/docs/rules/eslint/jsdoc/require-jsdoc-param-alignment) | Require vertical alignment of `@param` types, names, and dashes.                        |
+| [Require JSDoc Param Name](/docs/rules/eslint/jsdoc/require-jsdoc-param-name)           | Require `@param` descriptions to match param name.                                      |
+| [Require JSDoc Private](/docs/rules/eslint/jsdoc/require-jsdoc-private)                 | Require `@private` tag for private class members.                                       |
+| [Require JSDoc Since](/docs/rules/eslint/jsdoc/require-jsdoc-since)                     | Require a valid `@since` tag (a released version or `UNRELEASED`) in every JSDoc block. |
 
 #### Nova
 
@@ -175,5 +175,18 @@ Custom rules for JavaScript and TypeScript projects.
 | [No Shared Type Import](/docs/rules/eslint/typescript/no-shared-type-import)                     | Prevent code files from importing shared type files directly.                |
 | [Require Bracket Property Access](/docs/rules/eslint/typescript/require-bracket-property-access) | Require bracket notation instead of dot notation on project-defined objects. |
 | [Require Type Naming](/docs/rules/eslint/typescript/require-type-naming)                         | Require type alias names to start with the class name prefix from file path. |
+
+### Vitest
+
+Importable conformance suites that enforce Nova's docs and type conventions through the test runner.
+
+| Suite                                                     | Synopsis                                                                           |
+|-----------------------------------------------------------|------------------------------------------------------------------------------------|
+| [Overview](/docs/rules/vitest/)                           | Adopt the conformance kit and learn the off-by-default `enable` API.               |
+| [Type Declarations](/docs/rules/vitest/type-declarations) | Audit `.d.ts` mirror files against their sources for structure, order, and naming. |
+| [Frontmatter](/docs/rules/vitest/frontmatter)             | Require valid frontmatter fields on every Markdown and MDX content file.           |
+| [Link](/docs/rules/vitest/link)                           | Verify internal documentation links and anchors resolve to real targets.           |
+| [Markdown Table](/docs/rules/vitest/markdown-table)       | Require tables to match canonical `MarkdownTable` output.                          |
+| [Terminology](/docs/rules/vitest/terminology)             | Validate `<Terminology>` components against a glossary page.                       |
 
 > Using Nova presets? See **[Presets](/docs/presets/)** for composable ESLint and TSConfig layers.

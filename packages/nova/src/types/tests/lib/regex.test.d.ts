@@ -90,6 +90,20 @@ export type Tests_Lib_Regex_LIBREGEXLINEBREAKCRLFORLF_MatchesCRLF_Subject = stri
 export type Tests_Lib_Regex_LIBREGEXLINEBREAKCRLFORLF_MatchesLF_Subject = string;
 
 /**
+ * Tests - Lib - Regex - LIBREGEXPATTERNBLOGDATEPREFIX - DoesNotMatchPlainFilename.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNBLOGDATEPREFIX_DoesNotMatchPlainFilename_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNBLOGDATEPREFIX - MatchesDatePrefixedFilename.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNBLOGDATEPREFIX_MatchesDatePrefixedFilename_Subject = string;
+
+/**
  * Tests - Lib - Regex - LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE - DoesNotMatchALowercaseStart.
  *
  * @since 0.13.0
@@ -123,6 +137,34 @@ export type Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_MatchesASi
  * @since 0.13.0
  */
 export type Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_MatchesMultiplePascalCaseChunksJoinedByUnderscores_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNCODEBLOCK - DoesNotMatchPlainText.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNCODEBLOCK_DoesNotMatchPlainText_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNCODEBLOCK - MatchesFencedCodeBlock.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNCODEBLOCK_MatchesFencedCodeBlock_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNDESCRIPTIONLINE - DoesNotMatchTitleLine.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNDESCRIPTIONLINE_DoesNotMatchTitleLine_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNDESCRIPTIONLINE - MatchesDescriptionLine.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNDESCRIPTIONLINE_MatchesDescriptionLine_Subject = string;
 
 /**
  * Tests - Lib - Regex - LIBREGEXPATTERNDIGITS - DoesNotMatchNonDigitString.
@@ -204,6 +246,118 @@ export type Tests_Lib_Regex_LIBREGEXPATTERNERRORPREFIX_DoesNotMatchWarningPrefix
 export type Tests_Lib_Regex_LIBREGEXPATTERNERRORPREFIX_MatchesErrorPrefix_Subject = string;
 
 /**
+ * Tests - Lib - Regex - LIBREGEXPATTERNEXPORTDOTSLASH - DoesNotMatchPlainPath.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNEXPORTDOTSLASH_DoesNotMatchPlainPath_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNEXPORTDOTSLASH - MatchesLeadingDotSlash.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNEXPORTDOTSLASH_MatchesLeadingDotSlash_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNFILEEXTENSIONMD - DoesNotMatchTypeScriptFile.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNFILEEXTENSIONMD_DoesNotMatchTypeScriptFile_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNFILEEXTENSIONMD - MatchesMdxFile.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNFILEEXTENSIONMD_MatchesMdxFile_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNHEADINGH2LINE - DoesNotMatchH1Line.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNHEADINGH2LINE_DoesNotMatchH1Line_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNHEADINGH2LINE - MatchesH2Line.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNHEADINGH2LINE_MatchesH2Line_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNHEADINGLINE - DoesNotMatchPlainText.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNHEADINGLINE_DoesNotMatchPlainText_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNHEADINGLINE - MatchesHeadingLine.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNHEADINGLINE_MatchesHeadingLine_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNHTMLTAGS - DoesNotMatchPlainText.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNHTMLTAGS_DoesNotMatchPlainText_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNHTMLTAGS - MatchesHTMLTag.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNHTMLTAGS_MatchesHTMLTag_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNIDLINE - DoesNotMatchTitleLine.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNIDLINE_DoesNotMatchTitleLine_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNIDLINE - MatchesIdLine.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNIDLINE_MatchesIdLine_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNIMPORTSPECIFIER - DoesNotMatchExternalPackage.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNIMPORTSPECIFIER_DoesNotMatchExternalPackage_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNIMPORTSPECIFIER - MatchesNovaImport.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNIMPORTSPECIFIER_MatchesNovaImport_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNINDEXSUFFIX - DoesNotMatchPathWithoutIndex.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNINDEXSUFFIX_DoesNotMatchPathWithoutIndex_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNINDEXSUFFIX - MatchesIndexSuffix.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNINDEXSUFFIX_MatchesIndexSuffix_Subject = string;
+
+/**
  * Tests - Lib - Regex - LIBREGEXPATTERNLEADINGNEWLINES - DoesNotMatchTextWithoutLeadingNewlines.
  *
  * @since 0.13.0
@@ -250,6 +404,20 @@ export type Tests_Lib_Regex_LIBREGEXPATTERNLEADINGV_DoesNotMatchStringWithoutLea
 export type Tests_Lib_Regex_LIBREGEXPATTERNLEADINGV_MatchesLeadingV_Subject = string;
 
 /**
+ * Tests - Lib - Regex - LIBREGEXPATTERNMARKDOWNLINK - DoesNotMatchPlainText.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNMARKDOWNLINK_DoesNotMatchPlainText_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNMARKDOWNLINK - MatchesMarkdownLink.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNMARKDOWNLINK_MatchesMarkdownLink_Subject = string;
+
+/**
  * Tests - Lib - Regex - LIBREGEXPATTERNNAMEATVERSION - DoesNotMatchScopedPackage.
  *
  * @since 0.13.0
@@ -262,6 +430,20 @@ export type Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_DoesNotMatchScopedPacka
  * @since 0.13.0
  */
 export type Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_MatchesNameAtVersion_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNNONWORDCHARS - DoesNotMatchWordCharacters.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNNONWORDCHARS_DoesNotMatchWordCharacters_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNNONWORDCHARS - MatchesPunctuation.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNNONWORDCHARS_MatchesPunctuation_Subject = string;
 
 /**
  * Tests - Lib - Regex - LIBREGEXPATTERNNOVAPREFIX - DoesNotMatchUnrelatedString.
@@ -443,6 +625,62 @@ export type Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSimpleSemver_Matches = 
 export type Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSimpleSemver_MatchGroups = Record<string, string> | undefined;
 
 /**
+ * Tests - Lib - Regex - LIBREGEXPATTERNSLUGLINE - DoesNotMatchTitleLine.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNSLUGLINE_DoesNotMatchTitleLine_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNSLUGLINE - MatchesSlugLine.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNSLUGLINE_MatchesSlugLine_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNTERMINOLOGYCOMPONENT - DoesNotMatchPlainText.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYCOMPONENT_DoesNotMatchPlainText_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNTERMINOLOGYCOMPONENT - MatchesTerminologyElement.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYCOMPONENT_MatchesTerminologyElement_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNTERMINOLOGYTITLEATTR - DoesNotMatchMissingTitle.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYTITLEATTR_DoesNotMatchMissingTitle_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNTERMINOLOGYTITLEATTR - MatchesTitleAttribute.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYTITLEATTR_MatchesTitleAttribute_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNTERMINOLOGYTOATTR - DoesNotMatchMissingTo.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYTOATTR_DoesNotMatchMissingTo_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNTERMINOLOGYTOATTR - MatchesToAttribute.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYTOATTR_MatchesToAttribute_Subject = string;
+
+/**
  * Tests - Lib - Regex - LIBREGEXPATTERNWHITESPACE - DoesNotMatchNonWhitespaceString.
  *
  * @since 0.13.0
@@ -462,6 +700,20 @@ export type Tests_Lib_Regex_LIBREGEXPATTERNWHITESPACE_MatchesSpaces_Subject = st
  * @since 0.13.0
  */
 export type Tests_Lib_Regex_LIBREGEXPATTERNWHITESPACE_MatchesTabs_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNWILDCARDSUFFIX - DoesNotMatchPlainPath.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNWILDCARDSUFFIX_DoesNotMatchPlainPath_Subject = string;
+
+/**
+ * Tests - Lib - Regex - LIBREGEXPATTERNWILDCARDSUFFIX - MatchesWildcardSuffix.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNWILDCARDSUFFIX_MatchesWildcardSuffix_Subject = string;
 
 /**
  * Tests - Lib - Regex - SlugPatterns - LIBREGEXPATTERNSLUGSCOPEDDoesNotMatchUnscopedName.

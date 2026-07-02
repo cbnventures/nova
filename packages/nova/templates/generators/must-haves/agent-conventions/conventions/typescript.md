@@ -5,7 +5,7 @@ Quotes: Single. Indentation: 2-space. File naming: kebab-case (e.g., `markdown-t
 ## Documentation Style
 
 - Comment syntax: `/** */`
-- Padding tag: `@since 1.0.0` (JSDoc)
+- Padding tag: `@since UNRELEASED` (JSDoc) — tag new or changed API with `@since UNRELEASED`; the release process stamps the real version automatically, so never hand-write a version number.
 - Param format: `@param {TypeName} name - Name.` (description matches the parameter name, capitalized, with a trailing period)
 - Return format: `@returns {TypeName}`
 - Include `@private` tag for private members.
@@ -54,7 +54,7 @@ The example below is for the file `src/cli/utility/changelog.ts`. The class is n
 /**
  * CLI - Utility - Changelog.
  *
- * @since 1.0.0
+ * @since UNRELEASED
  */
 export class Runner {
   /**
@@ -64,7 +64,7 @@ export class Runner {
    *
    * @returns {Cli_Utility_Changelog_Runner_Run_Returns}
    *
-   * @since 1.0.0
+   * @since UNRELEASED
    */
   public static async run(options: Cli_Utility_Changelog_Runner_Run_Options): Cli_Utility_Changelog_Runner_Run_Returns {
   }
@@ -76,7 +76,7 @@ export class Runner {
    *
    * @returns {Cli_Utility_Changelog_Runner_FetchData_Returns}
    *
-   * @since 1.0.0
+   * @since UNRELEASED
    */
   private static async fetchData(): Cli_Utility_Changelog_Runner_FetchData_Returns {
   }
@@ -91,7 +91,7 @@ export class Runner {
    *
    * @returns {Cli_Utility_Changelog_Runner_FormatLine_Returns}
    *
-   * @since 1.0.0
+   * @since UNRELEASED
    */
   private static formatLine(prefix: Cli_Utility_Changelog_Runner_FormatLine_Prefix, message: Cli_Utility_Changelog_Runner_FormatLine_Message): Cli_Utility_Changelog_Runner_FormatLine_Returns {
   }
@@ -377,7 +377,7 @@ export type Toolkit_MarkdownTable_Runner_AddRow_Returns = void;
  *
  * @returns {Toolkit_MarkdownTable_Runner_AddRow_Returns}
  *
- * @since 1.0.0
+ * @since UNRELEASED
  */
 public addRow(row: Toolkit_MarkdownTable_Runner_AddRow_Row): Toolkit_MarkdownTable_Runner_AddRow_Returns { ... }
 ```

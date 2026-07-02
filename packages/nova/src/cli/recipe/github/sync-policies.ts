@@ -13,6 +13,7 @@ import { handleGhFailure } from './handle-gh-failure.js';
 
 import type {
   Cli_Recipe_Github_SyncPolicies_Runner_Run_AuthStatus,
+  Cli_Recipe_Github_SyncPolicies_Runner_Run_BranchResult,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_Command,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_CurrentDirectory,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_Flags,
@@ -45,7 +46,7 @@ import type {
  * Pushes github.policies.{visibility, defaultBranch, mergeMethods.{merge, squash, rebase},
  * autoDeleteHeadBranch} from nova.config.json to a GitHub repository using the gh CLI.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export class Runner {
   /**
@@ -58,7 +59,7 @@ export class Runner {
    *
    * @returns {Cli_Recipe_Github_SyncPolicies_Runner_Run_Returns}
    *
-   * @since 0.22.0
+   * @since 0.18.0
    */
   public static async run(options: Cli_Recipe_Github_SyncPolicies_Runner_Run_Options): Cli_Recipe_Github_SyncPolicies_Runner_Run_Returns {
     const currentDirectory: Cli_Recipe_Github_SyncPolicies_Runner_Run_CurrentDirectory = process.cwd();
@@ -215,10 +216,17 @@ export class Runner {
 
     if (policies['visibility'] !== undefined) {
       flags.push(`--visibility=${policies['visibility']}`);
+      flags.push('--accept-visibility-change-consequences');
     }
 
     if (policies['defaultBranch'] !== undefined) {
-      flags.push(`--default-branch=${shellQuote(policies['defaultBranch'])}`);
+      const branchResult: Cli_Recipe_Github_SyncPolicies_Runner_Run_BranchResult = await executeShell(`gh api repos/${owner}/${repo}/branches/${shellQuote(policies['defaultBranch'])}`);
+
+      if (branchResult['code'] === 0) {
+        flags.push(`--default-branch=${shellQuote(policies['defaultBranch'])}`);
+      } else {
+        Logger.warn(`Skipping "--default-branch" for sync-policies. The branch "${policies['defaultBranch']}" does not exist on ${owner}/${repo} yet.`);
+      }
     }
 
     const mergeMethods: Cli_Recipe_Github_SyncPolicies_Runner_Run_MergeMethods = policies['mergeMethods'];

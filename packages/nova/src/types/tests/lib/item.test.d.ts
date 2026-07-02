@@ -240,3 +240,24 @@ export type Tests_Lib_Item_PrettyNameMaps_LibItemPrettyNamesColumnTitleValuesAre
 export type Tests_Lib_Item_PrettyNameMaps_LibItemPrettyNamesTypeValuesAreNonEmptyStrings_Key = string;
 
 export type Tests_Lib_Item_PrettyNameMaps_LibItemPrettyNamesTypeValuesAreNonEmptyStrings_Value = string;
+
+/**
+ * Tests - Lib - Item - Reserved Dotenv Keys - libItemReservedDotenvKeys Exactly Matches The Bundled Dotenv Template Keys.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_FilePath = string;
+
+export type Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_CurrentDirectory = string;
+
+export type Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_TemplatePath = string;
+
+export type Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_Template = string;
+
+export type Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_TemplateLines = string[];
+
+export type Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_TemplateKeys = Set<string>;
+
+export type Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_KeyMatch = RegExpMatchArray | null;
+
+export type Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_ReservedKeys = Set<string>;

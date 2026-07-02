@@ -138,7 +138,7 @@ import type {
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - Run.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 describe('CliRecipeGithubSyncFeatures.run', () => {
   afterEach(() => {

@@ -3,7 +3,7 @@ import type { Options_PluginOptions } from '../options.d.ts';
 /**
  * Tests - Config Drift - ConfigDrift OverridesSchemaParity.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_TypeFilePath = string;
 
@@ -281,7 +281,7 @@ export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopu
 /**
  * Tests - Config Drift - Derive Public Override Leaf Paths.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_TypeFilePath = string;
 
@@ -349,7 +349,7 @@ export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkFieldType = stri
 /**
  * Tests - Config Drift - Derive Schema Override Leaf Paths.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode = {
   type?: string;
@@ -382,7 +382,7 @@ export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_ChildNode = Tests_Co
 /**
  * Tests - Config Drift - Get Package Root.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Tests_ConfigDrift_GetPackageRoot_Returns = string;
 

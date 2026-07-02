@@ -15,7 +15,7 @@ import type {
 /**
  * Lib - Utility - Build Generated File Header.
  *
- * @since 0.16.3
+ * @since 0.16.0
  */
 export type Lib_Utility_BuildGeneratedFileHeader_Options_Command = string;
 
@@ -480,7 +480,7 @@ export type Lib_Utility_LoadWorkspaceManifests_LoadErrorMessage = string;
 /**
  * Lib - Utility - Normalize Route Segment.
  *
- * @since 0.17.1
+ * @since 0.17.0
  */
 export type Lib_Utility_NormalizeRouteSegment_Segment = string;
 

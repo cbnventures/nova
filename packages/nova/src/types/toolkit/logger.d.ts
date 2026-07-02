@@ -180,6 +180,10 @@ export type Toolkit_Logger_Runner_ShouldLog_CurrentLogLevel = string;
 
 export type Toolkit_Logger_Runner_ShouldLog_DefaultLogLevel = Shared_LogLevel | undefined;
 
+export type Toolkit_Logger_Runner_ShouldLog_IsAutoLogLevel = boolean;
+
+export type Toolkit_Logger_Runner_ShouldLog_IsUserSelectableLevel = boolean;
+
 export type Toolkit_Logger_Runner_ShouldLog_PreferredLogLevelCurrentLogLevel = Shared_LogLevel;
 
 export type Toolkit_Logger_Runner_ShouldLog_PreferredLogLevel = Toolkit_Logger_Runner_ShouldLog_PreferredLogLevelCurrentLogLevel;

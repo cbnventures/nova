@@ -19,10 +19,13 @@ import type {
   Shared_NovaConfig_Entities as SharedNovaConfigEntities,
   Shared_NovaConfig_Github as SharedNovaConfigGithub,
   Shared_NovaConfig_Github_Features as SharedNovaConfigGithubFeatures,
+  Shared_NovaConfig_Github_IssueTemplate as SharedNovaConfigGithubIssueTemplate,
+  Shared_NovaConfig_Github_IssueTemplate_BugReportFields as SharedNovaConfigGithubIssueTemplateBugReportFields,
   Shared_NovaConfig_Github_Policies as SharedNovaConfigGithubPolicies,
   Shared_NovaConfig_Github_Policies_MergeMethods as SharedNovaConfigGithubPoliciesMergeMethods,
   Shared_NovaConfig_Github_Recipes as SharedNovaConfigGithubRecipes,
   Shared_NovaConfig_Github_Topics as SharedNovaConfigGithubTopics,
+  Shared_NovaConfig_Gitignore as SharedNovaConfigGitignore,
   Shared_NovaConfig_Project_Description as SharedNovaConfigProjectDescription,
   Shared_NovaConfig_Project_Keywords as SharedNovaConfigProjectKeywords,
   Shared_NovaConfig_Project_LegalName as SharedNovaConfigProjectLegalName,
@@ -35,6 +38,7 @@ import type {
   Shared_NovaConfig_Urls as SharedNovaConfigUrls,
   Shared_NovaConfig_Workflows as SharedNovaConfigWorkflows,
   Shared_NovaConfig_Workspaces as SharedNovaConfigWorkspaces,
+  Shared_NovaConfigAgent as SharedNovaConfigAgent,
   Shared_NovaConfigCategory as SharedNovaConfigCategory,
   Shared_NovaConfigEntity as SharedNovaConfigEntity,
   Shared_NovaConfigEntity_Roles as SharedNovaConfigEntityRoles,
@@ -50,6 +54,7 @@ import type {
   Shared_NovaConfigWorkflowTarget_Needs as SharedNovaConfigWorkflowTargetNeeds,
   Shared_NovaConfigWorkflowTrigger as SharedNovaConfigWorkflowTrigger,
   Shared_NovaConfigWorkspace as SharedNovaConfigWorkspace,
+  Shared_NovaConfigWorkspace_Dotenv as SharedNovaConfigWorkspaceDotenv,
   Shared_NovaConfigWorkspace_Policy as SharedNovaConfigWorkspacePolicy,
   Shared_NovaConfigWorkspace_Recipes as SharedNovaConfigWorkspaceRecipes,
   Shared_NovaConfigWorkspace_Role as SharedNovaConfigWorkspaceRole,
@@ -77,6 +82,27 @@ export type Cli_Utility_Initialize_Runner_CheckPath_LessThanOneMessage = string;
 export type Cli_Utility_Initialize_Runner_CheckPath_GreaterThanOneMessage = string;
 
 export type Cli_Utility_Initialize_Runner_CheckPath_NotProjectRootDirectoryMessage = string;
+
+/**
+ * CLI - Utility - Initialize - Import Gitignore Excludes.
+ *
+ * @since 0.20.0
+ */
+export type Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Returns = Promise<string[]>;
+
+export type Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_GitignorePath = string;
+
+export type Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Exists = boolean;
+
+export type Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Raw = string;
+
+export type Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Lines = string[];
+
+export type Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_MarkerIndex = number;
+
+export type Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Result = string[];
+
+export type Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Trimmed = string;
 
 /**
  * CLI - Utility - Initialize - Is Non Empty Literal Input.
@@ -226,6 +252,41 @@ export type Cli_Utility_Initialize_Runner_NormalizeWorkspaceName_TrimmedValue = 
 export type Cli_Utility_Initialize_Runner_NormalizeWorkspaceName_ExpectedPrefix = string;
 
 export type Cli_Utility_Initialize_Runner_NormalizeWorkspaceName_Descriptor = string;
+
+/**
+ * CLI - Utility - Initialize - Prompt Agents.
+ *
+ * @since 0.20.0
+ */
+export type Cli_Utility_Initialize_Runner_PromptAgents_Config = SharedNovaConfig;
+
+export type Cli_Utility_Initialize_Runner_PromptAgents_Returns = Promise<Extract<SharedDialogAction, 'back'>>;
+
+export type Cli_Utility_Initialize_Runner_PromptAgents_Existing = ('claude-code' | 'codex')[];
+
+export type Cli_Utility_Initialize_Runner_PromptAgents_Choice_Title = string;
+
+export type Cli_Utility_Initialize_Runner_PromptAgents_Choice_Value = SharedNovaConfigAgent;
+
+export type Cli_Utility_Initialize_Runner_PromptAgents_Choice_Selected = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptAgents_Choice = {
+  title: Cli_Utility_Initialize_Runner_PromptAgents_Choice_Title;
+  value: Cli_Utility_Initialize_Runner_PromptAgents_Choice_Value;
+  selected: Cli_Utility_Initialize_Runner_PromptAgents_Choice_Selected;
+};
+
+export type Cli_Utility_Initialize_Runner_PromptAgents_Choices = Cli_Utility_Initialize_Runner_PromptAgents_Choice[];
+
+export type Cli_Utility_Initialize_Runner_PromptAgents_AgentsOutputKey = 'agents';
+
+export type Cli_Utility_Initialize_Runner_PromptAgents_AgentsOutputResult = ('claude-code' | 'codex')[];
+
+export type Cli_Utility_Initialize_Runner_PromptAgents_AgentsOutput = SharedPromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptAgents_AgentsOutputKey, Cli_Utility_Initialize_Runner_PromptAgents_AgentsOutputResult> | SharedPromptWithCancelReject;
+
+export type Cli_Utility_Initialize_Runner_PromptAgents_AgentsInput = ('claude-code' | 'codex')[];
+
+export type Cli_Utility_Initialize_Runner_PromptAgents_Agents = ('claude-code' | 'codex')[];
 
 /**
  * CLI - Utility - Initialize - Prompt Emails.
@@ -696,6 +757,20 @@ export type Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesAutoDeleteV
 
 export type Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesInput = SharedNovaConfigGithubPolicies | undefined;
 
+export type Cli_Utility_Initialize_Runner_PromptGithub_ExistingGithubForIssueTemplate = SharedNovaConfigGithubIssueTemplate | undefined;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_ExistingBugReportFields = SharedNovaConfigGithubIssueTemplateBugReportFields;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsOutputKey = 'bugReportFields';
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsResult = SharedNovaConfigGithubIssueTemplateBugReportFields;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateOutput = SharedPromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsResult> | SharedPromptWithCancelReject;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_BugReportFields = SharedNovaConfigGithubIssueTemplateBugReportFields;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateInput = SharedNovaConfigGithubIssueTemplate | undefined;
+
 export type Cli_Utility_Initialize_Runner_PromptGithub_GithubConfig = Partial<SharedNovaConfigGithub>;
 
 /**
@@ -711,6 +786,124 @@ export type Cli_Utility_Initialize_Runner_PromptGithub_ValidateGithubOwner_Trimm
  * @since 0.16.0
  */
 export type Cli_Utility_Initialize_Runner_PromptGithub_ValidateGithubRepo_Trimmed = string;
+
+/**
+ * CLI - Utility - Initialize - Prompt Gitignore.
+ *
+ * @since 0.20.0
+ */
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Config = SharedNovaConfig;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Returns = Promise<Extract<SharedDialogAction, 'back'>>;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Existing = SharedNovaConfigGitignore | undefined;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Excludes = string[];
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Imported = string[];
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Sync = () => Cli_Utility_Initialize_Runner_PromptGitignore_Sync_Returns;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Choice_Title = string;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Choice_Description = string;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueAdd_Kind = 'add';
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueAdd = {
+  kind: Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueAdd_Kind;
+};
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueEdit_Kind = 'edit';
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueEdit_Index = number;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueEdit = {
+  kind: Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueEdit_Kind;
+  index: Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueEdit_Index;
+};
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueRemove_Kind = 'remove';
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueRemove_Index = number;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueRemove = {
+  kind: Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueRemove_Kind;
+  index: Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueRemove_Index;
+};
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueBack_Kind = 'back';
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueBack = {
+  kind: Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueBack_Kind;
+};
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Choice_Value =
+  Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueAdd
+  | Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueEdit
+  | Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueRemove
+  | Cli_Utility_Initialize_Runner_PromptGitignore_ChoiceValueBack;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Choice = {
+  title: Cli_Utility_Initialize_Runner_PromptGitignore_Choice_Title;
+  description: Cli_Utility_Initialize_Runner_PromptGitignore_Choice_Description;
+  value: Cli_Utility_Initialize_Runner_PromptGitignore_Choice_Value;
+};
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Choices = Cli_Utility_Initialize_Runner_PromptGitignore_Choice[];
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Pattern = string | undefined;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputKey = 'action';
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputResult = Cli_Utility_Initialize_Runner_PromptGitignore_Choice_Value;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutput = SharedPromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputKey, Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputResult> | SharedPromptWithCancelReject;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputResultValue = Record<Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputKey, Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputResult>;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputKey = 'pattern';
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputValue = string;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_AddOutput = SharedPromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputKey, Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputValue> | SharedPromptWithCancelReject;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputResultValue = Record<Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputKey, Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputValue>;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_AddPattern = string;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_EditIndex = number;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_PatternToEdit = string | undefined;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputKey = 'pattern';
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputValue = string;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_EditOutput = SharedPromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputKey, Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputValue> | SharedPromptWithCancelReject;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputResultValue = Record<Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputKey, Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputValue>;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_EditPattern = string;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_RemoveIndex = number;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_PatternToRemove = string | undefined;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputKey = 'confirm';
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputValue = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutput = SharedPromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputKey, Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputValue> | SharedPromptWithCancelReject;
+
+export type Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputResultValue = Record<Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputKey, Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputValue>;
+
+/**
+ * CLI - Utility - Initialize - Prompt Gitignore - Sync.
+ *
+ * @since 0.20.0
+ */
+export type Cli_Utility_Initialize_Runner_PromptGitignore_Sync_Returns = void;
 
 /**
  * CLI - Utility - Initialize - Prompt Project.
@@ -1725,6 +1918,8 @@ export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePrompt
 export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_WorkspaceDisplayNameInput = SharedNormalizedResultSanitized<string>;
 
 export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
+
+export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingDotenv = SharedNovaConfigWorkspaceDotenv | undefined;
 
 export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipesPromptKey = 'workspaceRecipes';
 

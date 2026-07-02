@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/docusaurus-preset-nova",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",
@@ -87,7 +87,7 @@
     "node": "^20 || ^22 || ^24"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.19.0",
+    "@cbnventures/nova": "0.20.0",
     "@codesandbox/sandpack-react": "2.20.0",
     "@docusaurus/plugin-content-blog": "3.10.0",
     "@docusaurus/plugin-content-docs": "3.10.0",

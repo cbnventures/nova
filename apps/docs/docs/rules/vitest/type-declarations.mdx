@@ -1,0 +1,156 @@
+---
+id: "type-declarations"
+title: "Type Declarations Suite"
+description: "Audit TypeScript declaration mirror files against their sources for structure, ordering, naming, and coverage with registerTypeDeclarationSuite."
+keywords:
+  - "nova"
+  - "vitest"
+  - "type declarations"
+  - "d.ts"
+  - "type mirror"
+  - "inspector rules"
+  - "naming convention"
+  - "conformance"
+  - "register suite"
+tags:
+  - "rules"
+  - "vitest"
+  - "type declarations"
+  - "testing"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Audit `.d.ts` mirror files against their source files for structure, ordering, naming, and coverage with `registerTypeDeclarationSuite`.
+
+## Summary
+
+- Scans a package for source files and their `<root>/types/**/*.d.ts` mirrors.
+- Runs ten inspector checks covering section order, identifier naming, source-to-mirror symmetry, and coverage.
+- Scans the current working directory by default, which is the consumer root when run from `node_modules`.
+
+## Why Use This Suite?
+
+1. Keeps declaration mirrors in lockstep with their sources so types never silently drift from the code.
+2. Enforces one naming and ordering convention, so any contributor can find a type by name and trust that its mirror is current.
+3. Catches missing or stale mirror entries during the test run instead of at publish time.
+
+## Examples
+
+<Tabs groupId="type-declarations-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    A clean source file plus its mirror that passes all ten checks: kebab-case path, no identifier equal to the file name, every body var and return typed through a path-derived alias, alphabetical sections, an object property prefixed with its parent type, and full source-to-mirror coverage.
+
+    ```ts title="src/widget.ts"
+    import type {
+      Widget_Assemble_Config,
+      Widget_Assemble_Returns,
+      Widget_Render_Label,
+      Widget_Render_Returns,
+    } from './types/widget.d.ts';
+
+    export function assemble(config: Widget_Assemble_Config): Widget_Assemble_Returns {
+      return config;
+    }
+
+    export function render(): Widget_Render_Returns {
+      const label: Widget_Render_Label = 'ready';
+
+      return label;
+    }
+    ```
+
+    ```ts title="src/types/widget.d.ts"
+    export type Widget_Assemble_Config_Mode = string;
+    export type Widget_Assemble_Config = {
+      mode: Widget_Assemble_Config_Mode;
+    };
+    export type Widget_Assemble_Returns = Widget_Assemble_Config;
+    export type Widget_Render_Returns = string;
+    export type Widget_Render_Label = string;
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    One source file and its mirror that trip eight of the ten checks. Each violating line is annotated with the exact toggle key it fails.
+
+    ```ts title="src/Bad_Widget.ts"
+    import type {
+      BadWidget_Compose_Returns,
+      BadWidget_Arrange_Returns,
+    } from './types/Bad_Widget.d.ts';
+
+    // The "Bad_Widget" path segment fails inspector-filename-validation (underscores are rejected).
+    export const BadWidget = () => { // fails inspector-identifier-vs-filename: const name equals the file name "BadWidget"
+      return 'made';
+    };
+
+    export function arrange(): BadWidget_Arrange_Returns {
+      return 'arranged';
+    }
+
+    export function compose(): BadWidget_Compose_Returns {
+      const item: string = 'composed'; // fails inspector-variable-type-symmetry: inline `string` instead of a BadWidget_Compose_Item alias
+
+      return item;
+    }
+    ```
+
+    ```ts title="src/types/Bad_Widget.d.ts"
+    export type BadWidget_Compose_Returns = string; // fails inspector-section-alphabetical: "BadWidget_Compose" section precedes "BadWidget_Arrange"
+    export type BadWidget_Compose_Item = {
+      count: number; // fails inspector-object-property-types: property type must start with "BadWidget_Compose_Item"
+    };
+    export type BadWidget_Compose_Linked = BadWidget_Arrange_Returns; // fails inspector-cross-section-references: references the "BadWidget_Arrange" section
+    export type BadWidget_Arrange_Returns = string;
+    export type BadWidget_Ghost_Value = string; // fails inspector-section-coverage: no "BadWidget_Ghost" section exists in the source
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Usage
+
+```ts title="src/tests/type-declarations.test.ts"
+import { registerTypeDeclarationSuite } from '@cbnventures/nova/rules/vitest';
+
+registerTypeDeclarationSuite({
+  enable: 'all',
+  typeRoots: ['src'],
+});
+```
+
+The `packageRoot` defaults to `process.cwd()`, so the suite audits the project Vitest runs in. Pass `standaloneTypeFiles` for declaration files that have no source mirror.
+
+## Configuration
+
+| Field                 | Type                                                       | Default                  | Description                                                                                           |
+|-----------------------|------------------------------------------------------------|--------------------------|-------------------------------------------------------------------------------------------------------|
+| `packageRoot`         | `string`                                                   | `process.cwd()`          | Absolute root the suite scans and computes display paths against.                                     |
+| `typeRoots`           | `string[]`                                                 | `['src']`                | Top-level directories holding sources and their `<root>/types/**/*.d.ts` mirrors.                     |
+| `standaloneTypeFiles` | `string[]`                                                 | `[]`                     | Suffix-matched declaration paths exempt from the source-mirror rules and checked as standalone files. |
+| `mapping`             | `{ sourceToDts(file): string; dtsToSource(file): string }` | derived from `typeRoots` | Custom source-to-mirror path mapping; defaults to one derived from `typeRoots`.                       |
+| `enable`              | `'all' \| ToggleKey[]`                                     | required                 | Which checks run. Use `'all'` for every check, or a list to freeze an exact set.                      |
+
+## Toggle Keys
+
+| Toggle Key                               | Description                                                                                                                                      |
+|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| `inspector-cross-section-references`     | A declaration section may only reference types from its own section or imported names; cross-section references must move to a shared type file. |
+| `inspector-section-alphabetical`         | Requires sections inside a declaration file to be alphabetically ordered.                                                                        |
+| `inspector-first-come-first-serve-order` | Requires declaration order to follow first appearance in the source file.                                                                        |
+| `inspector-object-property-types`        | Requires each object-type property to use a named type that starts with the parent type's name and is defined earlier in the file.               |
+| `inspector-section-coverage`             | Requires every source section to have matching mirror types, and every mirror section to map back to a real source section.                      |
+| `inspector-variable-type-symmetry`       | Requires a source file's body vars, params, and return types to follow the Mode 2 naming rules and be mirrored in the paired declaration.        |
+| `inspector-identifier-vs-filename`       | Forbids a top-level class, function, or function-typed const from sharing the file's name.                                                       |
+| `inspector-filename-validation`          | Requires each source and declaration path segment to be kebab-case or PascalCase after stripping recognized suffixes.                            |
+| `inspector-standalone-type-files`        | Validates declaration files listed in `standaloneTypeFiles` against the standalone ruleset.                                                      |
+
+## Troubleshooting
+
+- **The suite audits the wrong project** — Confirm Vitest runs from the project root so `packageRoot` resolves to `process.cwd()`. Set `packageRoot` explicitly when running from elsewhere.
+- **`inspector-variable-type-symmetry` can't resolve the paired declaration** — The rule maps each source file to its `.d.ts` to validate body-var, param, and return naming; if your source directory is not named `src`, set `typeRoots` to your actual roots, or pass a custom `mapping`.
+- **A standalone declaration is flagged as missing a source** — Add its suffix-matched path to `standaloneTypeFiles` so it is checked as a standalone file instead.

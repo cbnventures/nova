@@ -1,0 +1,134 @@
+---
+id: "overview"
+title: "Vitest Conformance Kit"
+sidebar_label: "Overview"
+description: "Importable Vitest conformance suites that hold your project's docs and types to the same conventions Nova enforces on itself."
+sidebar_position: 1
+keywords:
+  - "nova"
+  - "vitest"
+  - "conformance kit"
+  - "meta-tests"
+  - "docs quality"
+  - "type declarations"
+  - "frontmatter"
+  - "internal links"
+  - "markdown tables"
+  - "terminology"
+  - "testing"
+  - "register suite"
+  - "toggle keys"
+tags:
+  - "rules"
+  - "overview"
+  - "vitest"
+  - "testing"
+  - "conformance"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Overview
+
+Enforce the docs and type conventions Nova holds itself to — frontmatter, internal links, table formatting, glossary references, and type declarations — in your own project through importable **Nova Vitest** suites.
+
+## Install
+
+If the package is not in your repo yet, go to **[Setup and Configure](/docs/quickstart/setup#choose-your-path)** and choose **Install into project**.
+
+:::warning
+**Nova** must be installed **in your project** before importing the suites. This is because Node.js resolves imports from your project's `node_modules` folder.
+:::
+
+:::info
+Each suite imports `describe` and `it` from <Terminology title="next-generation test runner" to="/docs/quickstart/terminology#testing" color={true}>Vitest</Terminology>. Your project must already use Vitest as its test runner.
+:::
+
+## Purpose and Scope
+
+<Tabs groupId="vitest-purpose">
+  <TabItem value="what" label="What" default>
+    <ul>
+      <li><strong>Importable test suites</strong> that scan a project for Nova's docs and type conventions.</li>
+      <li><strong>One register function per suite</strong> so a test file collapses to a short import-and-invoke.</li>
+      <li><strong>Versioned delivery</strong> so a convention upgrade arrives as a pinned-version bump.</li>
+      <li>The same checks Nova runs on its own docs and packages, so your project meets a known-good standard.</li>
+    </ul>
+  </TabItem>
+  <TabItem value="when" label="When">
+    <ul>
+      <li>When several repositories share the same docs and type conventions.</li>
+      <li>When you want one known-good definition of "correct" for docs and types.</li>
+      <li>When a convention change should propagate by bumping a dependency.</li>
+      <li>When you prefer opting in to specific checks over running an opaque bundle.</li>
+    </ul>
+  </TabItem>
+  <TabItem value="where" label="Where">
+    <ul>
+      <li>In any project that already runs <Terminology title="next-generation test runner" to="/docs/quickstart/terminology#testing" color={true}>Vitest</Terminology>.</li>
+      <li>In local development, <Terminology title="continuous integration" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, and pre-publish checks.</li>
+      <li>In Docusaurus docs sites for the four docs-quality suites.</li>
+      <li>In any package for the type-declaration suite.</li>
+    </ul>
+  </TabItem>
+</Tabs>
+
+## Why Use This Kit?
+
+- Holds your project to the same standards Nova enforces on itself, so docs stay navigable and searchable and types stay safe to refactor.
+- Catches issues at test time — missing frontmatter, broken links, malformed tables, or type mirrors that have drifted from their source — before they reach a build or a reader.
+- Keeps every consumer in step: when Nova refines a convention, you adopt the improvement by bumping one dependency.
+- Ships its own types so config objects are checked by your editor as you write them.
+
+## Adoption
+
+Each test file collapses to a short import-and-invoke. The suite logic lives in the package; your wrapper supplies the configuration.
+
+```ts title="src/tests/frontmatter.test.ts"
+import { registerFrontmatterSuite } from '@cbnventures/nova/rules/vitest';
+
+registerFrontmatterSuite({
+  enable: 'all',
+  requiredFields: ['id', 'title', 'description', 'keywords', 'tags'],
+});
+```
+
+Every suite scans the current working directory by default, which is the project root when Vitest runs the normal `vitest run`. Override the root only when your layout differs.
+
+## Enable API
+
+Every register function takes an `enable` field that selects which checks run. The field is required so a bare call is a compile error, never a silent no-op.
+
+- `enable: 'all'` runs every check the suite defines, including checks added in future versions.
+- `enable: ['key-one', 'key-two']` runs exactly the listed checks and ignores the rest.
+
+Checks are off by default and opt-in, so enabling a check on one project never forces it on another. A frozen list keeps a project's behavior stable even when Nova ships new checks.
+
+```ts title="src/tests/link.test.ts"
+import { registerLinkSuite } from '@cbnventures/nova/rules/vitest';
+
+// Run a frozen subset instead of every check.
+registerLinkSuite({
+  enable: [
+    'link-internal-doc-target-exists',
+    'link-self-anchor-exists',
+  ],
+});
+```
+
+## Suites
+
+Each suite ships a `register*Suite(config)` function with its own config shape and <Terminology title="opt-in identifiers that select which checks run" to="/docs/quickstart/terminology#testing" color={true}>toggle keys</Terminology>.
+
+| Suite                                                     | Synopsis                                                                           |
+|-----------------------------------------------------------|------------------------------------------------------------------------------------|
+| [Dotenv](/docs/rules/vitest/dotenv)                       | Enforce double-quoted values in .env and .env.sample files.                        |
+| [Frontmatter](/docs/rules/vitest/frontmatter)             | Require valid frontmatter fields on every Markdown and MDX content file.           |
+| [Link](/docs/rules/vitest/link)                           | Verify internal documentation links and anchors resolve to real targets.           |
+| [Markdown Table](/docs/rules/vitest/markdown-table)       | Require tables to match canonical `MarkdownTable` output.                          |
+| [Terminology](/docs/rules/vitest/terminology)             | Validate `<Terminology>` components against a glossary page.                       |
+| [Type Declarations](/docs/rules/vitest/type-declarations) | Audit `.d.ts` mirror files against their sources for structure, order, and naming. |
+
+> Using Nova's custom ESLint rules too? See **[Rules](/docs/rules/)** for the lint-time delivery of Nova's conventions.

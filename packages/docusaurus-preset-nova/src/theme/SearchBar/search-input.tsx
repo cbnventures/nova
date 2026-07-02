@@ -68,7 +68,7 @@ import type {
  *
  * @returns {Theme_SearchBar_SearchInput_ParseShortcutKeymap_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 const parseShortcutKeymap: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Function = (keymap: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Keymap) => {
   const tokens: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Tokens = keymap.split('+').map((token) => token.trim().toLowerCase()).filter((token) => token !== '');

@@ -1,6 +1,6 @@
 import { doesNotThrow, strictEqual } from 'node:assert/strict';
 
-import { describe, it } from 'vitest';
+import { describe, it, vi } from 'vitest';
 
 import { Logger } from '../../toolkit/index.js';
 
@@ -10,6 +10,16 @@ import type {
   Tests_Toolkit_Logger_LoggerCustomize_ReturnsObjectWithAllLogMethodsWhenGivenNameAndPurpose_Scoped,
   Tests_Toolkit_Logger_LoggerCustomize_ReturnsObjectWithAllLogMethodsWhenGivenNameTypeAndPurpose_Scoped,
   Tests_Toolkit_Logger_LoggerCustomize_ScopedMethodsDoNotThrow_Scoped,
+  Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitDevLevelIsIgnored_Captured,
+  Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitDevLevelIsIgnored_Shown,
+  Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitLevelOverridesAuto_Captured,
+  Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitLevelOverridesAuto_Shown,
+  Tests_Toolkit_Logger_LoggerLevelSelection_AutoBehaviorAppliesForAnEmptyLogLevel_Captured,
+  Tests_Toolkit_Logger_LoggerLevelSelection_AutoBehaviorAppliesForAnEmptyLogLevel_Shown,
+  Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesDebugInDevelopment_Captured,
+  Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesDebugInDevelopment_Shown,
+  Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesInfoInProduction_Captured,
+  Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesInfoInProduction_Shown,
   Tests_Toolkit_Logger_LoggerOutputLevels_AcceptsMultipleArguments_Message,
   Tests_Toolkit_Logger_LoggerOutputLevels_DebugDoesNotThrow_Message,
   Tests_Toolkit_Logger_LoggerOutputLevels_ErrorDoesNotThrow_Message,
@@ -219,6 +229,140 @@ describe('Logger output levels', async () => {
     doesNotThrow(() => {
       return Logger.info();
     });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Toolkit - Logger - Logger Level Selection.
+ *
+ * @since 0.20.0
+ */
+describe('Logger level selection', async () => {
+  it('auto derives debug in development', () => {
+    vi.stubEnv('NODE_ENV', 'development');
+    vi.stubEnv('LOG_LEVEL', 'auto');
+
+    const captured: Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesDebugInDevelopment_Captured = [];
+
+    vi.spyOn(process.stdout, 'write').mockImplementation((chunk) => {
+      captured.push(String(chunk));
+
+      return true;
+    });
+
+    Logger.debug('probe-line');
+
+    vi.restoreAllMocks();
+
+    vi.unstubAllEnvs();
+
+    const shown: Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesDebugInDevelopment_Shown = captured.some((entry) => entry.includes('probe-line'));
+
+    strictEqual(shown, true);
+
+    return;
+  });
+
+  it('auto derives info in production', () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    vi.stubEnv('LOG_LEVEL', 'auto');
+
+    const captured: Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesInfoInProduction_Captured = [];
+
+    vi.spyOn(process.stdout, 'write').mockImplementation((chunk) => {
+      captured.push(String(chunk));
+
+      return true;
+    });
+
+    Logger.debug('probe-line');
+
+    vi.restoreAllMocks();
+
+    vi.unstubAllEnvs();
+
+    const shown: Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesInfoInProduction_Shown = captured.some((entry) => entry.includes('probe-line'));
+
+    strictEqual(shown, false);
+
+    return;
+  });
+
+  it('auto behavior applies for an empty log level', () => {
+    vi.stubEnv('NODE_ENV', 'development');
+    vi.stubEnv('LOG_LEVEL', '');
+
+    const captured: Tests_Toolkit_Logger_LoggerLevelSelection_AutoBehaviorAppliesForAnEmptyLogLevel_Captured = [];
+
+    vi.spyOn(process.stdout, 'write').mockImplementation((chunk) => {
+      captured.push(String(chunk));
+
+      return true;
+    });
+
+    Logger.debug('probe-line');
+
+    vi.restoreAllMocks();
+
+    vi.unstubAllEnvs();
+
+    const shown: Tests_Toolkit_Logger_LoggerLevelSelection_AutoBehaviorAppliesForAnEmptyLogLevel_Shown = captured.some((entry) => entry.includes('probe-line'));
+
+    strictEqual(shown, true);
+
+    return;
+  });
+
+  it('an explicit dev level is ignored', () => {
+    vi.stubEnv('NODE_ENV', 'development');
+    vi.stubEnv('LOG_LEVEL', 'dev');
+
+    const captured: Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitDevLevelIsIgnored_Captured = [];
+
+    vi.spyOn(process.stdout, 'write').mockImplementation((chunk) => {
+      captured.push(String(chunk));
+
+      return true;
+    });
+
+    Logger.debug('probe-line');
+
+    vi.restoreAllMocks();
+
+    vi.unstubAllEnvs();
+
+    const shown: Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitDevLevelIsIgnored_Shown = captured.some((entry) => entry.includes('probe-line'));
+
+    strictEqual(shown, true);
+
+    return;
+  });
+
+  it('an explicit level overrides auto', () => {
+    vi.stubEnv('NODE_ENV', 'development');
+    vi.stubEnv('LOG_LEVEL', 'error');
+
+    const captured: Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitLevelOverridesAuto_Captured = [];
+
+    vi.spyOn(process.stdout, 'write').mockImplementation((chunk) => {
+      captured.push(String(chunk));
+
+      return true;
+    });
+
+    Logger.debug('probe-line');
+
+    vi.restoreAllMocks();
+
+    vi.unstubAllEnvs();
+
+    const shown: Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitLevelOverridesAuto_Shown = captured.some((entry) => entry.includes('probe-line'));
+
+    strictEqual(shown, false);
 
     return;
   });

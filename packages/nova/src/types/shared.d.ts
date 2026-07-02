@@ -496,6 +496,14 @@ export type Shared_NovaConfig_Github_Policies = {
   autoDeleteHeadBranch?: boolean;
 };
 
+export type Shared_NovaConfig_Github_IssueTemplate_BugReportField = string;
+
+export type Shared_NovaConfig_Github_IssueTemplate_BugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportField[];
+
+export type Shared_NovaConfig_Github_IssueTemplate = {
+  bugReportFields?: Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
+};
+
 export type Shared_NovaConfig_Github = {
   owner?: Shared_NovaConfig_Github_Owner;
   repo?: Shared_NovaConfig_Github_Repo;
@@ -503,6 +511,7 @@ export type Shared_NovaConfig_Github = {
   topics?: Shared_NovaConfig_Github_Topics;
   features?: Shared_NovaConfig_Github_Features;
   policies?: Shared_NovaConfig_Github_Policies;
+  issueTemplate?: Shared_NovaConfig_Github_IssueTemplate;
 };
 
 export type Shared_NovaConfig_Urls_Homepage = string;
@@ -582,6 +591,7 @@ export type Shared_NovaConfigWorkspace = {
   role: Shared_NovaConfigWorkspace_Role;
   policy: Shared_NovaConfigWorkspace_Policy;
   recipes?: Shared_NovaConfigWorkspace_Recipes;
+  dotenv?: Shared_NovaConfigWorkspace_Dotenv;
 };
 
 export type Shared_NovaConfig_Workspaces = {
@@ -638,6 +648,33 @@ export type Shared_NovaConfigWorkflow = {
 
 export type Shared_NovaConfig_Workflows = Shared_NovaConfigWorkflow[];
 
+export type Shared_NovaConfigGitignoreProjectExclude = string;
+
+export type Shared_NovaConfig_Gitignore_ProjectExcludes = Shared_NovaConfigGitignoreProjectExclude[];
+
+export type Shared_NovaConfig_Gitignore = {
+  projectExcludes?: Shared_NovaConfig_Gitignore_ProjectExcludes;
+};
+
+export type Shared_NovaConfigDotenvVariable_Key = string;
+
+export type Shared_NovaConfigDotenvVariable_DefaultValue = string;
+
+export type Shared_NovaConfigDotenvVariable = {
+  key: Shared_NovaConfigDotenvVariable_Key;
+  defaultValue: Shared_NovaConfigDotenvVariable_DefaultValue;
+};
+
+export type Shared_NovaConfigWorkspace_Dotenv_Variables = Shared_NovaConfigDotenvVariable[];
+
+export type Shared_NovaConfigWorkspace_Dotenv = {
+  variables?: Shared_NovaConfigWorkspace_Dotenv_Variables;
+};
+
+export type Shared_NovaConfigAgent = 'claude-code' | 'codex';
+
+export type Shared_NovaConfig_Agents = Shared_NovaConfigAgent[];
+
 export type Shared_NovaConfig = {
   project?: Shared_NovaConfig_Project;
   entities?: Shared_NovaConfig_Entities;
@@ -646,6 +683,8 @@ export type Shared_NovaConfig = {
   workflows?: Shared_NovaConfig_Workflows;
   urls?: Shared_NovaConfig_Urls;
   workspaces?: Shared_NovaConfig_Workspaces;
+  gitignore?: Shared_NovaConfig_Gitignore;
+  agents?: Shared_NovaConfig_Agents;
 };
 
 export type Shared_NovaConfigConfig = Shared_NovaConfig;
@@ -655,7 +694,7 @@ export type Shared_NovaConfigConfig = Shared_NovaConfig;
  *
  * @since 0.11.0
  */
-export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'workspaces' | 'workflows';
+export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'workspaces' | 'workflows' | 'gitignore' | 'agents';
 
 /**
  * Shared - Prompt With Cancel.
@@ -742,6 +781,34 @@ export type Shared_ShellOutput = {
 export type Shared_TextAlign = 'left' | 'center' | 'right';
 
 /**
+ * Shared - Type Declaration Dts Mapping.
+ *
+ * @since 0.18.0
+ */
+export type Shared_TypeDeclarationDtsMapping_SourceToDts = (file: string) => string;
+
+export type Shared_TypeDeclarationDtsMapping_DtsToSource = (file: string) => string;
+
+export type Shared_TypeDeclarationDtsMapping = {
+  sourceToDts: Shared_TypeDeclarationDtsMapping_SourceToDts;
+  dtsToSource: Shared_TypeDeclarationDtsMapping_DtsToSource;
+};
+
+/**
+ * Shared - Type Declaration Engine Config.
+ *
+ * @since 0.18.0
+ */
+export type Shared_TypeDeclarationEngineConfig_PackageRoot = string;
+
+export type Shared_TypeDeclarationEngineConfig_TypeRoots = string[];
+
+export type Shared_TypeDeclarationEngineConfig = {
+  packageRoot?: Shared_TypeDeclarationEngineConfig_PackageRoot;
+  typeRoots?: Shared_TypeDeclarationEngineConfig_TypeRoots;
+};
+
+/**
  * Shared - URL Protocol.
  *
  * @since 0.11.0
@@ -783,7 +850,7 @@ export type Shared_WindowsRegistryKeys = {
 /**
  * Shared - Workflow Template Permission.
  *
- * @since 0.20.0
+ * @since 0.18.0
  */
 export type Shared_WorkflowTemplatePermissionRead = 'read';
 
@@ -800,7 +867,7 @@ export type Shared_WorkflowTemplatePermissions = {
 /**
  * Shared - Workflow Template Target.
  *
- * @since 0.20.0
+ * @since 0.18.0
  */
 export type Shared_WorkflowTemplateTarget_Description = string;
 
@@ -828,7 +895,7 @@ export type Shared_WorkflowTemplateTargets = {
 /**
  * Shared - Workflow Template Variable.
  *
- * @since 0.20.0
+ * @since 0.18.0
  */
 export type Shared_WorkflowTemplateVariableFormatSecret = 'secret';
 

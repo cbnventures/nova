@@ -296,6 +296,8 @@ export type Cli_Utility_Changelog_Runner_Release_ConfirmOutput = SharedPromptWit
 
 export type Cli_Utility_Changelog_Runner_Release_ConfirmOutputResult = Record<Cli_Utility_Changelog_Runner_Release_ConfirmOutputKey, Cli_Utility_Changelog_Runner_Release_ConfirmOutputValue>;
 
+export type Cli_Utility_Changelog_Runner_Release_ReleasedVersions = Map<string, string>;
+
 export type Cli_Utility_Changelog_Runner_Release_ApplyReleasePackageName = SharedChangelogEntryPackage;
 
 export type Cli_Utility_Changelog_Runner_Release_ApplyReleasePackageDirectory = string;
@@ -332,6 +334,96 @@ export type Cli_Utility_Changelog_Runner_Run_ModeOutputValue = 'record' | 'relea
 export type Cli_Utility_Changelog_Runner_Run_ModeOutput = SharedPromptWithCancelResolved<Cli_Utility_Changelog_Runner_Run_ModeOutputKey, Cli_Utility_Changelog_Runner_Run_ModeOutputValue> | SharedPromptWithCancelReject;
 
 export type Cli_Utility_Changelog_Runner_Run_ModeOutputResult = Record<Cli_Utility_Changelog_Runner_Run_ModeOutputKey, Cli_Utility_Changelog_Runner_Run_ModeOutputValue>;
+
+/**
+ * CLI - Utility - Changelog - Stamp Unreleased.
+ *
+ * @since 0.20.0
+ */
+export type Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_Returns = Promise<void>;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_IsPrerelease = boolean;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_SrcDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles = string[];
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_RawPaths = string[];
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_RelativePaths = string[];
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_Rp = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirError = unknown;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirErrorCode = unknown;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_SincePattern = RegExp;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_DeprecatedPattern = RegExp;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_Fp = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_OriginalContent = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_HasSince = boolean;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_HasDeprecated = boolean;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_UpdatedContent = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_SurvivingFiles = string[];
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckFp = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckContent = string;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_StillHasSince = boolean;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_StillHasDeprecated = boolean;
+
+/**
+ * CLI - Utility - Changelog - Sync Package References.
+ *
+ * @since 0.20.0
+ */
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_ReleasedVersions = Map<string, string>;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_Workspaces = SharedNovaConfigWorkspaces;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_IsDryRun = boolean;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_Returns = Promise<void>;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_CurrentDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidatePaths = Set<string>;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_WorkspaceDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_TemplatesDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_TemplateEntries = string[];
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_Sections = string[];
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_ActionVerb = string;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateRaw = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateParsed = Record<string, unknown> | undefined;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateChanged = boolean;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_SectionObject = unknown;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_DependencyNewVersion = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_SyncPackageReferences_DependencyValue = unknown;
 
 /**
  * CLI - Utility - Changelog - Validate Message.

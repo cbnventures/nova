@@ -50,7 +50,7 @@ export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_Diagnostic =
 /**
  * Rules - ESLint - TypeScript - Require Type Naming - Create - Program.
  *
- * @since 0.17.1
+ * @since 0.19.0
  */
 export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_Program_Node = TSESTree.Program;
 
@@ -68,7 +68,7 @@ export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_Create_TSTypeAliasD
 /**
  * Rules - ESLint - TypeScript - Require Type Naming - Derive Invalid Prefix Diagnostic.
  *
- * @since 0.17.1
+ * @since 0.17.0
  */
 export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Filename = string;
 
@@ -105,7 +105,7 @@ export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Words 
 /**
  * Rules - ESLint - TypeScript - Require Type Naming - Normalized Path Segments.
  *
- * @since 0.17.1
+ * @since 0.17.0
  */
 export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Filename = string;
 

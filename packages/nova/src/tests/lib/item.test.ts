@@ -1,4 +1,7 @@
-import { ok, strictEqual } from 'node:assert/strict';
+import { deepStrictEqual, ok, strictEqual } from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { describe, it } from 'vitest';
 
@@ -21,8 +24,10 @@ import {
   libItemPrettyNamesCategory,
   libItemPrettyNamesColumnTitle,
   libItemPrettyNamesType,
+  libItemReservedDotenvKeys,
   libItemSortOrderKeys,
 } from '../../lib/item.js';
+import { LIB_REGEX_PATTERN_ENV_VAR_KEY } from '../../lib/regex.js';
 
 import type {
   Tests_Lib_Item_AllowedRolesAndPolicies_LibItemAllowedPoliciesByRoleCoversAllRoles_Roles,
@@ -79,6 +84,14 @@ import type {
   Tests_Lib_Item_PrettyNameMaps_LibItemPrettyNamesColumnTitleValuesAreNonEmptyStrings_Value,
   Tests_Lib_Item_PrettyNameMaps_LibItemPrettyNamesTypeValuesAreNonEmptyStrings_Key,
   Tests_Lib_Item_PrettyNameMaps_LibItemPrettyNamesTypeValuesAreNonEmptyStrings_Value,
+  Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_CurrentDirectory,
+  Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_FilePath,
+  Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_KeyMatch,
+  Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_ReservedKeys,
+  Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_Template,
+  Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_TemplateKeys,
+  Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_TemplateLines,
+  Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_TemplatePath,
 } from '../../types/tests/lib/item.test.d.ts';
 
 /**
@@ -401,6 +414,38 @@ describe('pretty name maps', async () => {
 
       ok(value.length > 0, `Empty value for type key "${key}"`);
     }
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Item - Reserved Dotenv Keys.
+ *
+ * @since 0.20.0
+ */
+describe('reserved dotenv keys', async () => {
+  it('libItemReservedDotenvKeys exactly matches the bundled dotenv template keys', async () => {
+    const filePath: Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_FilePath = fileURLToPath(import.meta.url);
+    const currentDirectory: Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_CurrentDirectory = dirname(filePath);
+    const templatePath: Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_TemplatePath = join(currentDirectory, '..', '..', '..', 'templates', 'generators', 'must-haves', 'dotenv', 'env');
+    const template: Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_Template = await readFile(templatePath, 'utf-8');
+    const templateLines: Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_TemplateLines = template.split('\n');
+    const templateKeys: Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_TemplateKeys = new Set();
+
+    for (const templateLine of templateLines) {
+      const keyMatch: Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_KeyMatch = templateLine.match(LIB_REGEX_PATTERN_ENV_VAR_KEY);
+
+      if (keyMatch !== null) {
+        templateKeys.add(keyMatch[1] ?? '');
+      }
+    }
+
+    const reservedKeys: Tests_Lib_Item_ReservedDotenvKeys_LibItemReservedDotenvKeysExactlyMatchesTheBundledDotenvTemplateKeys_ReservedKeys = new Set(libItemReservedDotenvKeys);
+
+    deepStrictEqual(templateKeys, reservedKeys);
 
     return;
   });

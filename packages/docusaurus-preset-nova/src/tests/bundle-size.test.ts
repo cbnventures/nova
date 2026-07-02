@@ -19,7 +19,7 @@ import type {
 /**
  * Tests - Bundle Size - Find Oversized Files.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 describe('findOversizedFiles', async () => {
   it('returns oversized js files recursively', () => {

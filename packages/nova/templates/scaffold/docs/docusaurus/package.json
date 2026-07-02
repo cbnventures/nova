@@ -5,16 +5,20 @@
   "scripts": {
     "start": "docusaurus start --port 3000",
     "build": "docusaurus build",
-    "serve": "docusaurus serve --port 3000"
+    "serve": "docusaurus serve --port 3000",
+    "test": "vitest run"
   },
   "dependencies": {
-    "@cbnventures/docusaurus-preset-nova": "^0.1.0",
-    "@docusaurus/core": "^3.7.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "@cbnventures/docusaurus-preset-nova": "0.20.0",
+    "@docusaurus/core": "3.7.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "@docusaurus/types": "^3.7.0",
-    "typescript": "^5.8.3"
+    "@cbnventures/nova": "0.20.0",
+    "@docusaurus/types": "3.7.0",
+    "glob": "13.0.6",
+    "typescript": "5.8.3",
+    "vitest": "4.1.3"
   }
 }

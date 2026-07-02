@@ -583,7 +583,7 @@ describe('configDrift validateThemeConfig', async () => {
  * Resolves the docusaurus-preset-nova package root from the
  * current test file location.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function getPackageRoot(): Tests_ConfigDrift_GetPackageRoot_Returns {
   const currentFilePath: Tests_ConfigDrift_GetPackageRoot_CurrentFilePath = fileURLToPath(import.meta.url);
@@ -606,7 +606,7 @@ function getPackageRoot(): Tests_ConfigDrift_GetPackageRoot_Returns {
  * per-font primitive aliases). The result is compared against the
  * live Joi `overrides` schema so neither side can drift silently.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 async function derivePublicOverrideLeafPaths(typeFilePath: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_TypeFilePath): Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Returns {
   const fileText: Tests_ConfigDrift_DerivePublicOverrideLeafPaths_FileText = await readFile(typeFilePath, 'utf-8');
@@ -696,7 +696,7 @@ async function derivePublicOverrideLeafPaths(typeFilePath: Tests_ConfigDrift_Der
  * appending the key name to the path; a node WITHOUT `keys` is a
  * leaf and the accumulated path is recorded.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function deriveSchemaOverrideLeafPaths(rootNode: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode): Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_Returns {
   const overridesNode: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_OverridesNode = (rootNode['keys'] ?? {})['overrides'];
@@ -748,7 +748,7 @@ function deriveSchemaOverrideLeafPaths(rootNode: Tests_ConfigDrift_DeriveSchemaO
  * are rooted at `overrides` and must be identical - any field added
  * to one side without the other trips the bidirectional assertion.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 describe('configDrift overridesSchemaParity', () => {
   it('public overrides type matches the joi overrides schema', async () => {

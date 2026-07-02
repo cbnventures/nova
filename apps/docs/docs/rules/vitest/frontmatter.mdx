@@ -1,0 +1,139 @@
+---
+id: "frontmatter"
+title: "Frontmatter Suite"
+description: "Require valid frontmatter fields on every Markdown and MDX content file with the registerFrontmatterSuite conformance suite."
+keywords:
+  - "nova"
+  - "vitest"
+  - "frontmatter"
+  - "markdown"
+  - "mdx"
+  - "required fields"
+  - "docs quality"
+  - "conformance"
+  - "register suite"
+tags:
+  - "rules"
+  - "vitest"
+  - "frontmatter"
+  - "testing"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require valid frontmatter on every Markdown and MDX content file with `registerFrontmatterSuite`.
+
+## Summary
+
+- Recursively scans the configured content directories for `.md` and `.mdx` files.
+- Checks that frontmatter is present, closed, and declares every required field.
+- Separates blog posts from docs so each gets its own required-field set.
+
+## Why Use This Suite?
+
+1. Guarantees every page ships with the SEO fields a docs site needs to rank and render.
+2. Catches missing or placeholder frontmatter during the test run, before a broken page reaches the build.
+3. Applies the same required-field standard across every docs project, so metadata never varies from one repository to the next.
+
+## Examples
+
+<Tabs groupId="frontmatter-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```markdown title="docs/overview.md"
+    ---
+    id: "overview"
+    title: "Overview"
+    description: "What the project does and why it exists."
+    keywords:
+      - "overview"
+      - "getting started"
+    tags:
+      - "overview"
+    ---
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    Assumes `placeholderSentinel: "TODO"` is configured, so the `TODO` markers below are treated as placeholders. The `id` field is parsed unquoted, but block-sequence `keywords` and `tags` entries keep their literal text, so the placeholder marker is written without quotes.
+
+    ```markdown title="docs/overview.md"
+    ---
+    id: "guide"          # fails id-matches-filename: id differs from the filename "overview"
+                         # fails required-fields-present-docs: "title" is missing
+    description: "TODO"  # fails description-not-placeholder: equals the placeholderSentinel
+    keywords:
+      - TODO             # fails keywords-not-placeholder: only entry is the placeholderSentinel
+    tags:                # fails tags-not-empty: a block sequence with no entries
+    ---
+    ```
+
+    A file that never opens a frontmatter fence trips a separate check:
+
+    ```markdown title="docs/no-fence.md"
+    # No Frontmatter Here   # fails frontmatter-present: the file does not open with "---"
+    ```
+
+    A file that opens a fence but never closes it trips another:
+
+    ```markdown title="docs/unclosed.md"
+    ---                     # fails frontmatter-closed: no closing "---" delimiter
+    id: "unclosed"
+    title: "Unclosed"
+
+    # Body starts but the fence above was never closed.
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Usage
+
+```ts title="src/tests/frontmatter.test.ts"
+import { registerFrontmatterSuite } from '@cbnventures/nova/rules/vitest';
+
+registerFrontmatterSuite({
+  enable: 'all',
+  requiredFields: ['id', 'title', 'description', 'keywords', 'tags'],
+});
+```
+
+The `requiredFields` list has no default, so you must declare which keys every non-blog page needs. Pass `placeholderSentinel` and `placeholderBodyPrefix` only if your authoring flow uses placeholder markers.
+
+## Configuration
+
+| Field                   | Type                   | Default                        | Description                                                                      |
+|-------------------------|------------------------|--------------------------------|----------------------------------------------------------------------------------|
+| `requiredFields`        | `string[]`             | required                       | Frontmatter keys every non-blog page must declare.                               |
+| `requiredBlogFields`    | `string[]`             | `['title', 'authors', 'tags']` | Frontmatter keys every blog post must declare.                                   |
+| `contentDirs`           | `string[]`             | `['docs', 'blog']`             | Directories, relative to `rootDir`, scanned recursively for content files.       |
+| `blogDir`               | `string`               | `'blog'`                       | Which content directory is the blog, selecting the blog required-field set.      |
+| `indexSlug`             | `string \| null`       | `null`                         | Expected `id` for index pages; `null` disables the index-to-slug remap.          |
+| `placeholderSentinel`   | `string`               | disabled                       | Single-value marker that fails description, keywords, and tags checks.           |
+| `placeholderBodyPrefix` | `string`               | disabled                       | Body prefix that downgrades a file's issues from failures to warnings.           |
+| `rootDir`               | `string`               | `process.cwd()`                | Base directory the `contentDirs` resolve against.                                |
+| `enable`                | `'all' \| ToggleKey[]` | required                       | Which checks run. Use `'all'` for every check, or a list to freeze an exact set. |
+
+## Toggle Keys
+
+| Toggle Key                        | Description                                                              |
+|-----------------------------------|--------------------------------------------------------------------------|
+| `frontmatter-present`             | Requires a file to open with a frontmatter block.                        |
+| `frontmatter-closed`              | Requires the frontmatter block to have a closing delimiter.              |
+| `required-fields-present-docs`    | Requires every key in `requiredFields` on non-blog pages.                |
+| `required-fields-present-blog`    | Requires every key in `requiredBlogFields` on blog posts.                |
+| `id-matches-filename`             | Requires the `id` field to match the file name, honoring `indexSlug`.    |
+| `description-not-placeholder`     | Requires `description` to differ from the placeholder sentinel.          |
+| `keywords-not-placeholder`        | Requires `keywords` entries to differ from the placeholder sentinel.     |
+| `keywords-not-empty`              | Requires the `keywords` list to contain at least one entry.              |
+| `tags-not-placeholder`            | Requires `tags` entries to differ from the placeholder sentinel.         |
+| `tags-not-empty`                  | Requires the `tags` list to contain at least one entry.                  |
+| `placeholder-pages-warn-not-fail` | Downgrades issues on placeholder pages to warnings when a prefix is set. |
+
+## Troubleshooting
+
+- **A missing content directory throws** — The suite skips directories that do not exist. Confirm the path is correct if a configured directory is expected to be present.
+- **Placeholder checks never fire** — `placeholderSentinel` is disabled by default. Set it to your marker value to enable the placeholder checks.
+- **Index pages fail `id-matches-filename`** — Set `indexSlug` to the expected id so index files map to your chosen slug.

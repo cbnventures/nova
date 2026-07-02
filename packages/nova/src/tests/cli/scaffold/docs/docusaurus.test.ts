@@ -15,12 +15,14 @@ import { Runner as CliScaffoldDocsDocusaurus } from '../../../../cli/scaffold/do
 
 import type {
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_DocusaurusConfigPath,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_FrontmatterTestPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_IntroMdPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_PackageJson,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_PackageJsonPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_ProjectDirectory,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_DocusaurusConfigPath,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_FrontmatterTestPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_IntroMdPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_ProjectDirectory,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath,
@@ -138,12 +140,15 @@ describe.skip('CliScaffoldDocsDocusaurus.run', async () => {
     const workspacePackageJsonPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'package.json');
     const docusaurusConfigPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_DocusaurusConfigPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'docusaurus.config.ts');
     const introMdPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_IntroMdPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'docs', 'intro.md');
+    const frontmatterTestPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_FrontmatterTestPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'src', 'tests', 'frontmatter.test.ts');
 
     await access(workspacePackageJsonPath);
 
     await access(docusaurusConfigPath);
 
     await access(introMdPath);
+
+    await access(frontmatterTestPath);
 
     return;
   });
@@ -191,12 +196,15 @@ describe.skip('CliScaffoldDocsDocusaurus.run', async () => {
     const workspacePackageJsonPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath = join(projectDirectory, 'apps', 'docusaurus', 'package.json');
     const docusaurusConfigPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_DocusaurusConfigPath = join(projectDirectory, 'apps', 'docusaurus', 'docusaurus.config.ts');
     const introMdPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_IntroMdPath = join(projectDirectory, 'apps', 'docusaurus', 'docs', 'intro.md');
+    const frontmatterTestPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_FrontmatterTestPath = join(projectDirectory, 'apps', 'docusaurus', 'src', 'tests', 'frontmatter.test.ts');
 
     await access(workspacePackageJsonPath);
 
     await access(docusaurusConfigPath);
 
     await access(introMdPath);
+
+    await access(frontmatterTestPath);
 
     return;
   });

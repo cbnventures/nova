@@ -1,7 +1,7 @@
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - All Four Features Defined Calls Gh Repo Edit With All Four Enable Flags.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_AllFourFeaturesDefinedCallsGhRepoEditWithAllFourEnableFlags_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -18,7 +18,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Dry Run True Runs Precheck Calls But Skips Gh Repo Edit Call.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_DryRunTrueRunsPrecheckCallsButSkipsGhRepoEditCall_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -39,7 +39,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Features Block Exists But All Fields Undefined Logs Warn And Makes No Gh Repo Edit Call.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_FeaturesBlockExistsButAllFieldsUndefinedLogsWarnAndMakesNoGhRepoEditCall_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -62,7 +62,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Features Block Missing Logs Warn And Makes No Gh Repo Edit Call.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_FeaturesBlockMissingLogsWarnAndMakesNoGhRepoEditCall_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -85,7 +85,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Gh Not Authenticated Logs Error And Sets Exit Code1.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_GhNotAuthenticatedLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -104,7 +104,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Gh Not On PATH Logs Error And Sets Exit Code1.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_GhNotOnPATHLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -123,7 +123,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Gh Repo Edit Returns Code1 Sets Exit Code1 And Logs Error.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_GhRepoEditReturnsCode1SetsExitCode1AndLogsError_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -136,7 +136,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Gh Repo Edit With Rate Limit In Stderr Logs Rate Limit Specific Error.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -170,7 +170,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Gh Version Below Minimum Logs Error And Sets Exit Code1.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -189,7 +189,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - GitHub Block Missing Logs Warn And Returns Without Exit Code.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -206,7 +206,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Only Issues Defined Calls Gh Repo Edit With Only Enable Issues Flag.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_OnlyIssuesDefinedCallsGhRepoEditWithOnlyEnableIssuesFlag_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -223,7 +223,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Only Wiki And Discussions Defined Calls Gh Repo Edit With Only Those Two Flags.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_OnlyWikiAndDiscussionsDefinedCallsGhRepoEditWithOnlyThoseTwoFlags_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -240,7 +240,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Owner Or Repo Missing Logs Warn And Returns Without Exit Code.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -257,7 +257,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Recipe Disabled Returns Silently Without Execute Shell Mutation Calls.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -268,7 +268,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Repo View Returns READ Permission Logs Error And Sets Exit Code1.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -287,7 +287,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Sets Exit Code1 When Gh Repo View Returns Malformed J S O N.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -321,7 +321,7 @@ export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Features - CLI Recipe GitHub Sync Features Run - Sets Exit Code1 When Gh Repo View Returns Valid JSON Without Viewer Permission.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 

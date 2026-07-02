@@ -1,0 +1,89 @@
+---
+id: "dotenv"
+title: "Dotenv Suite"
+description: "Require every value in .env and .env.sample files to be wrapped in double quotes with the registerDotenvSuite conformance suite."
+keywords:
+  - "nova"
+  - "vitest"
+  - "dotenv"
+  - "env"
+  - "conformance"
+tags:
+  - "rules"
+  - "vitest"
+  - "dotenv"
+  - "testing"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require every value in `.env` and `.env.sample` files to be wrapped in double quotes with `registerDotenvSuite`.
+
+## Summary
+
+- Scans the env files you list and reads each declared value.
+- Flags any value that is single-quoted, unquoted, or left bare instead of double-quoted.
+- Skips comments and blank lines, and accepts balanced multi-line double-quoted values.
+
+## Why Use This Suite?
+
+1. Keeps a single source of truth alongside the dotenv generator, which already writes every value double-quoted.
+2. Catches a hand-edited file that has drifted away from the convention during the test run.
+3. Holds the same quoting standard across the monorepo, so env files never vary from one project to the next.
+
+## Examples
+
+<Tabs groupId="dotenv-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ini
+    NODE_ENV="development"
+    LOG_LEVEL=""
+    PEM="-----BEGIN-----
+    middle
+    -----END-----"
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ini
+    API_KEY='abc123'   # fails values-double-quoted: uses single quotes
+    NODE_ENV=development  # fails values-double-quoted: value is unquoted
+    LOG_LEVEL=          # fails values-double-quoted: bare empty value, use LOG_LEVEL=""
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Usage
+
+```ts title="src/tests/dotenv.test.ts"
+import { registerDotenvSuite } from '@cbnventures/nova/rules/vitest';
+
+registerDotenvSuite({
+  enable: 'all',
+});
+```
+
+The defaults resolve `envPaths` against `rootDir`, scanning `.env` and `.env.sample` from the project root. In a monorepo, Vitest runs in the workspace directory but the `.env` can live at the repo root, so set `rootDir` to the repo root and list every env file in `envPaths`.
+
+## Configuration
+
+| Field      | Type                   | Default                   | Description                                               |
+|------------|------------------------|---------------------------|-----------------------------------------------------------|
+| `rootDir`  | `string`               | `process.cwd()`           | Base directory the `envPaths` resolve against.            |
+| `envPaths` | `string[]`             | `['.env', '.env.sample']` | Files scanned for violations; missing ones are skipped.   |
+| `enable`   | `'all' \| ToggleKey[]` | required                  | Which checks run. Use `'all'` for every check, or a list. |
+
+## Toggle Keys
+
+| Toggle Key             | Description                                                         |
+|------------------------|---------------------------------------------------------------------|
+| `values-double-quoted` | Requires every value in the targeted env files to be double-quoted. |
+
+## Troubleshooting
+
+- **Root `.env` not checked** — Set `rootDir` to the repo root and list the file in `envPaths`, since Vitest runs in the workspace directory.
+- **`.dev.vars` flagged** — Only the entries in `envPaths` are checked, so a `.dev.vars` file is never targeted unless you add it.

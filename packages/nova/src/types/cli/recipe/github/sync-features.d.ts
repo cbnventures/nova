@@ -8,7 +8,7 @@ import type {
 /**
  * CLI - Recipe - GitHub - Sync Features - Run.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Options_DryRun = true;
 

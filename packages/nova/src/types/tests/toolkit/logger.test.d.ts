@@ -44,6 +44,51 @@ export type Tests_Toolkit_Logger_LoggerCustomize_ScopedMethodsDoNotThrow_Scoped 
 };
 
 /**
+ * Tests - Toolkit - Logger - Logger Level Selection - An Explicit Dev Level Is Ignored.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitDevLevelIsIgnored_Captured = string[];
+
+export type Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitDevLevelIsIgnored_Shown = boolean;
+
+/**
+ * Tests - Toolkit - Logger - Logger Level Selection - An Explicit Level Overrides Auto.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitLevelOverridesAuto_Captured = string[];
+
+export type Tests_Toolkit_Logger_LoggerLevelSelection_AnExplicitLevelOverridesAuto_Shown = boolean;
+
+/**
+ * Tests - Toolkit - Logger - Logger Level Selection - Auto Behavior Applies For An Empty Log Level.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Toolkit_Logger_LoggerLevelSelection_AutoBehaviorAppliesForAnEmptyLogLevel_Captured = string[];
+
+export type Tests_Toolkit_Logger_LoggerLevelSelection_AutoBehaviorAppliesForAnEmptyLogLevel_Shown = boolean;
+
+/**
+ * Tests - Toolkit - Logger - Logger Level Selection - Auto Derives Debug In Development.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesDebugInDevelopment_Captured = string[];
+
+export type Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesDebugInDevelopment_Shown = boolean;
+
+/**
+ * Tests - Toolkit - Logger - Logger Level Selection - Auto Derives Info In Production.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesInfoInProduction_Captured = string[];
+
+export type Tests_Toolkit_Logger_LoggerLevelSelection_AutoDerivesInfoInProduction_Shown = boolean;
+
+/**
  * Tests - Toolkit - Logger - Logger Output Levels - Accepts Multiple Arguments.
  *
  * @since 0.13.0

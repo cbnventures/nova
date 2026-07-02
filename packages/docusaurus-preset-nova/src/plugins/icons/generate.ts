@@ -116,7 +116,7 @@ const scanExtensions = [
  *
  * @returns {Plugins_Icons_Generate_GenerateIconModule_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export function generateIconModule(options: Plugins_Icons_Generate_GenerateIconModule_Options): Plugins_Icons_Generate_GenerateIconModule_Returns {
   const candidates: Plugins_Icons_Generate_GenerateIconModule_Candidates = collectCandidates(options['siteDir'], options['themeConfig'], options['safelist']);
@@ -172,7 +172,7 @@ export function generateIconModule(options: Plugins_Icons_Generate_GenerateIconM
  *
  * @returns {Plugins_Icons_Generate_CollectCandidates_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function collectCandidates(siteDir: Plugins_Icons_Generate_CollectCandidates_SiteDir, themeConfig: Plugins_Icons_Generate_CollectCandidates_ThemeConfig, safelist: Plugins_Icons_Generate_CollectCandidates_Safelist): Plugins_Icons_Generate_CollectCandidates_Returns {
   const candidates: Plugins_Icons_Generate_CollectCandidates_Candidates = [];
@@ -195,7 +195,7 @@ function collectCandidates(siteDir: Plugins_Icons_Generate_CollectCandidates_Sit
  *
  * @returns {Plugins_Icons_Generate_CollectThemeConfigCandidates_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function collectThemeConfigCandidates(value: Plugins_Icons_Generate_CollectThemeConfigCandidates_Value): Plugins_Icons_Generate_CollectThemeConfigCandidates_Returns {
   const results: Plugins_Icons_Generate_CollectThemeConfigCandidates_Results = [];
@@ -239,7 +239,7 @@ function collectThemeConfigCandidates(value: Plugins_Icons_Generate_CollectTheme
  *
  * @returns {Plugins_Icons_Generate_ExtractCandidatesFromText_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function extractCandidatesFromText(text: Plugins_Icons_Generate_ExtractCandidatesFromText_Text): Plugins_Icons_Generate_ExtractCandidatesFromText_Returns {
   const pattern: Plugins_Icons_Generate_ExtractCandidatesFromText_Pattern = new RegExp(LIB_REGEX_ICON_CANDIDATE.source, 'g');
@@ -263,7 +263,7 @@ function extractCandidatesFromText(text: Plugins_Icons_Generate_ExtractCandidate
  *
  * @returns {Plugins_Icons_Generate_CollectContentCandidates_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function collectContentCandidates(siteDir: Plugins_Icons_Generate_CollectContentCandidates_SiteDir): Plugins_Icons_Generate_CollectContentCandidates_Returns {
   const results: Plugins_Icons_Generate_CollectContentCandidates_Results = [];
@@ -297,7 +297,7 @@ function collectContentCandidates(siteDir: Plugins_Icons_Generate_CollectContent
  *
  * @returns {Plugins_Icons_Generate_WalkDirectory_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function walkDirectory(directory: Plugins_Icons_Generate_WalkDirectory_Directory): Plugins_Icons_Generate_WalkDirectory_Returns {
   const results: Plugins_Icons_Generate_WalkDirectory_Results = [];
@@ -329,7 +329,7 @@ function walkDirectory(directory: Plugins_Icons_Generate_WalkDirectory_Directory
  *
  * @returns {Plugins_Icons_Generate_GetIconifyPackageDirectory_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function getIconifyPackageDirectory(): Plugins_Icons_Generate_GetIconifyPackageDirectory_Returns {
   return dirname(require.resolve('@iconify/json/package.json'));
@@ -343,7 +343,7 @@ function getIconifyPackageDirectory(): Plugins_Icons_Generate_GetIconifyPackageD
  *
  * @returns {Plugins_Icons_Generate_LoadCollectionsIndex_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function loadCollectionsIndex(): Plugins_Icons_Generate_LoadCollectionsIndex_Returns {
   const indexPath: Plugins_Icons_Generate_LoadCollectionsIndex_IndexPath = join(getIconifyPackageDirectory(), 'collections.json');
@@ -363,7 +363,7 @@ function loadCollectionsIndex(): Plugins_Icons_Generate_LoadCollectionsIndex_Ret
  *
  * @returns {Plugins_Icons_Generate_LoadCollection_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function loadCollection(prefix: Plugins_Icons_Generate_LoadCollection_Prefix, loadedCollections: Plugins_Icons_Generate_LoadCollection_LoadedCollections): Plugins_Icons_Generate_LoadCollection_Returns {
   if (loadedCollections.has(prefix) === true) {
@@ -396,7 +396,7 @@ function loadCollection(prefix: Plugins_Icons_Generate_LoadCollection_Prefix, lo
  *
  * @returns {Plugins_Icons_Generate_GetOrCreateSlice_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function getOrCreateSlice(slices: Plugins_Icons_Generate_GetOrCreateSlice_Slices, prefix: Plugins_Icons_Generate_GetOrCreateSlice_Prefix): Plugins_Icons_Generate_GetOrCreateSlice_Returns {
   const existing: Plugins_Icons_Generate_GetOrCreateSlice_Existing = slices.get(prefix);
@@ -428,7 +428,7 @@ function getOrCreateSlice(slices: Plugins_Icons_Generate_GetOrCreateSlice_Slices
  *
  * @returns {Plugins_Icons_Generate_ResolveName_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function resolveName(collection: Plugins_Icons_Generate_ResolveName_Collection, name: Plugins_Icons_Generate_ResolveName_Name, slice: Plugins_Icons_Generate_ResolveName_Slice): Plugins_Icons_Generate_ResolveName_Returns {
   if (collection['icons'][name] !== undefined) {
@@ -469,7 +469,7 @@ function resolveName(collection: Plugins_Icons_Generate_ResolveName_Collection, 
  *
  * @returns {Plugins_Icons_Generate_BuildModuleSource_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function buildModuleSource(slices: Plugins_Icons_Generate_BuildModuleSource_Slices, loadedCollections: Plugins_Icons_Generate_BuildModuleSource_LoadedCollections): Plugins_Icons_Generate_BuildModuleSource_Returns {
   const lines: Plugins_Icons_Generate_BuildModuleSource_Lines = [];
@@ -507,7 +507,7 @@ function buildModuleSource(slices: Plugins_Icons_Generate_BuildModuleSource_Slic
  *
  * @returns {Plugins_Icons_Generate_BuildSlicedCollection_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function buildSlicedCollection(prefix: Plugins_Icons_Generate_BuildSlicedCollection_Prefix, slice: Plugins_Icons_Generate_BuildSlicedCollection_Slice, collection: Plugins_Icons_Generate_BuildSlicedCollection_Collection): Plugins_Icons_Generate_BuildSlicedCollection_Returns {
   const icons: Plugins_Icons_Generate_BuildSlicedCollection_Icons = {};

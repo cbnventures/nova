@@ -2144,7 +2144,7 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     }
 
     // Cross-workflow validation rejects both colliding workflows so neither
-    // emits a partial output for a destination nova cannot disambiguate.
+    // emits a partial output for a destination Nova cannot disambiguate.
     strictEqual(alphaExists, false, 'Alpha workflow should NOT be generated when two github-action targets across workflows share the same RELEASE_BRANCH_NAME.');
     strictEqual(betaExists, false, 'Beta workflow should NOT be generated when two github-action targets across workflows share the same RELEASE_BRANCH_NAME.');
 
@@ -2319,7 +2319,7 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     }
 
     // Cross-workflow validation rejects both colliding workflows so neither
-    // emits a partial output for a destination nova cannot disambiguate.
+    // emits a partial output for a destination Nova cannot disambiguate.
     strictEqual(alphaExists, false, 'Alpha workflow should NOT be generated when two aws-amplify-nextjs targets across workflows share the same AMPLIFY_APP_ID and AMPLIFY_BRANCH_NAME.');
     strictEqual(betaExists, false, 'Beta workflow should NOT be generated when two aws-amplify-nextjs targets across workflows share the same AMPLIFY_APP_ID and AMPLIFY_BRANCH_NAME.');
 
@@ -2406,7 +2406,7 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     }
 
     // Cross-workflow validation rejects both colliding workflows so neither
-    // emits a partial output for a destination nova cannot disambiguate.
+    // emits a partial output for a destination Nova cannot disambiguate.
     strictEqual(alphaExists, false, 'Alpha workflow should NOT be generated when two cloudflare-pages-docusaurus targets across workflows share the same CLOUDFLARE_PROJECT_NAME.');
     strictEqual(betaExists, false, 'Beta workflow should NOT be generated when two cloudflare-pages-docusaurus targets across workflows share the same CLOUDFLARE_PROJECT_NAME.');
 
@@ -2495,7 +2495,7 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     }
 
     // Cross-workflow validation rejects both colliding workflows so neither
-    // emits a partial output for a destination nova cannot disambiguate.
+    // emits a partial output for a destination Nova cannot disambiguate.
     strictEqual(alphaExists, false, 'Alpha workflow should NOT be generated when two vercel-nextjs targets across workflows share the same VERCEL_ORG_ID and VERCEL_PROJECT_ID.');
     strictEqual(betaExists, false, 'Beta workflow should NOT be generated when two vercel-nextjs targets across workflows share the same VERCEL_ORG_ID and VERCEL_PROJECT_ID.');
 

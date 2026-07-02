@@ -1,7 +1,7 @@
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - All Fields Defined Calls Gh Repo Edit With All Six Flags.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_AllFieldsDefinedCallsGhRepoEditWithAllSixFlags_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -16,9 +16,32 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_AllFieldsDefinedCallsGhRepoEditWithAllSixFlags_EditCall = unknown[] | undefined;
 
 /**
+ * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Default Branch Set But Branch Does Not Exist Skips Default Branch Flag And Logs Warn.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_IsCommandExistsSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_ExecuteShellSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_LoggerWarnSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_Calls = unknown[][];
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_EditCall = unknown[] | undefined;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_WarnCalls = unknown[][];
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_HasBranchMissingWarn = boolean;
+
+/**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Dry Run True Runs Precheck Calls But Skips Gh Repo Edit Call.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DryRunTrueRunsPrecheckCallsButSkipsGhRepoEditCall_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -39,7 +62,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Gh Not Authenticated Logs Error And Sets Exit Code1.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhNotAuthenticatedLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -58,7 +81,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Gh Not On PATH Logs Error And Sets Exit Code1.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhNotOnPATHLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -77,7 +100,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Gh Repo Edit Returns Code1 Sets Exit Code1 And Logs Error.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhRepoEditReturnsCode1SetsExitCode1AndLogsError_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -90,7 +113,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Gh Repo Edit With Rate Limit In Stderr Logs Rate Limit Specific Error.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -124,7 +147,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Gh Version Below Minimum Logs Error And Sets Exit Code1.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -141,9 +164,32 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_HasVersionError = boolean;
 
 /**
+ * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Gh Version Output Unparseable Logs Error And Sets Exit Code1.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsCommandExistsSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ExecuteShellSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoggerErrorSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ErrorCalls = unknown[][];
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_HasUnparseableError = boolean;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_Calls = unknown[][];
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_MutationCall = unknown[] | undefined;
+
+/**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - GitHub Block Missing Logs Warn And Returns Without Exit Code.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -160,7 +206,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Merge Methods Block Exists But All Three Fields Undefined Emits No Enable Merge Flags.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_MergeMethodsBlockExistsButAllThreeFieldsUndefinedEmitsNoEnableMergeFlags_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -177,7 +223,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Merge Methods Block Missing Entirely Emits No Enable Merge Flags.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_MergeMethodsBlockMissingEntirelyEmitsNoEnableMergeFlags_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -194,7 +240,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Only Merge Methods Squash Set Calls Gh Repo Edit With Only Enable Squash Merge Flag.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_OnlyMergeMethodsSquashSetCallsGhRepoEditWithOnlyEnableSquashMergeFlag_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -211,7 +257,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Only Visibility Set Calls Gh Repo Edit With Only Visibility Flag.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_OnlyVisibilitySetCallsGhRepoEditWithOnlyVisibilityFlag_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -228,7 +274,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Owner Or Repo Missing Logs Warn And Returns Without Exit Code.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -245,7 +291,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Policies Block Exists But All Fields Undefined Logs Warn And Makes No Gh Repo Edit Call.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_PoliciesBlockExistsButAllFieldsUndefinedLogsWarnAndMakesNoGhRepoEditCall_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -268,7 +314,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Policies Block Missing Logs Warn And Makes No Gh Repo Edit Call.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_PoliciesBlockMissingLogsWarnAndMakesNoGhRepoEditCall_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -291,7 +337,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Recipe Disabled Returns Silently Without Execute Shell Mutation Calls.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -300,9 +346,32 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_ExecuteShellSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
 /**
+ * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Repo View Non Zero Exit Logs Error And Sets Exit Code1.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsCommandExistsSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ExecuteShellSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoggerErrorSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ErrorCalls = unknown[][];
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_HasAccessError = boolean;
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_Calls = unknown[][];
+
+export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_MutationCall = unknown[] | undefined;
+
+/**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Repo View Returns READ Permission Logs Error And Sets Exit Code1.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -321,7 +390,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Sets Exit Code1 When Gh Repo View Returns Malformed J S O N.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -355,7 +424,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Sets Exit Code1 When Gh Repo View Returns Valid JSON Without Viewer Permission.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -393,7 +462,7 @@ export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - CLI Recipe GitHub Sync Policies Run - Top Level Plus Nested Mix Emits Only Matching Flags.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_TopLevelPlusNestedMixEmitsOnlyMatchingFlags_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 

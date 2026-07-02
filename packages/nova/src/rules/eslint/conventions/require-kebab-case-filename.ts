@@ -26,6 +26,7 @@ import type {
  *
  * Requires all TypeScript file names to use kebab-case. Strips known
  * compound extensions like .test.ts and .d.ts before validating the stem.
+ * Mission is house naming style; path-token validity is inspector-filename-validation.
  *
  * @since 0.15.0
  */

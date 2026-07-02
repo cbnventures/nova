@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import { join, resolve } from 'path';
+import { basename, join, resolve } from 'path';
 
 import chalk from 'chalk';
 import prompts from 'prompts';
@@ -15,7 +15,12 @@ import {
   libItemChangelogVerbs,
 } from '../../lib/item.js';
 import { Runner as LibNovaConfig } from '../../lib/nova-config.js';
-import { LIB_REGEX_PATTERN_LEADING_NEWLINES } from '../../lib/regex.js';
+import {
+  LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED,
+  LIB_REGEX_PATTERN_EXACT_SEMVER,
+  LIB_REGEX_PATTERN_LEADING_NEWLINES,
+  LIB_REGEX_PATTERN_SINCE_UNRELEASED,
+} from '../../lib/regex.js';
 import { Logger } from '../../toolkit/index.js';
 
 import type {
@@ -127,6 +132,7 @@ import type {
   Cli_Utility_Changelog_Runner_Release_PackageJsonRaw,
   Cli_Utility_Changelog_Runner_Release_PackageName,
   Cli_Utility_Changelog_Runner_Release_ParsedPackageJson,
+  Cli_Utility_Changelog_Runner_Release_ReleasedVersions,
   Cli_Utility_Changelog_Runner_Release_Releases,
   Cli_Utility_Changelog_Runner_Release_Returns,
   Cli_Utility_Changelog_Runner_Release_SummaryReleaseCurrentVersion,
@@ -148,6 +154,46 @@ import type {
   Cli_Utility_Changelog_Runner_Run_ModeOutputValue,
   Cli_Utility_Changelog_Runner_Run_Options,
   Cli_Utility_Changelog_Runner_Run_Returns,
+  Cli_Utility_Changelog_Runner_StampUnreleased_CheckContent,
+  Cli_Utility_Changelog_Runner_StampUnreleased_CheckFp,
+  Cli_Utility_Changelog_Runner_StampUnreleased_DeprecatedPattern,
+  Cli_Utility_Changelog_Runner_StampUnreleased_Fp,
+  Cli_Utility_Changelog_Runner_StampUnreleased_HasDeprecated,
+  Cli_Utility_Changelog_Runner_StampUnreleased_HasSince,
+  Cli_Utility_Changelog_Runner_StampUnreleased_IsPrerelease,
+  Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion,
+  Cli_Utility_Changelog_Runner_StampUnreleased_OriginalContent,
+  Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory,
+  Cli_Utility_Changelog_Runner_StampUnreleased_RawPaths,
+  Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirError,
+  Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirErrorCode,
+  Cli_Utility_Changelog_Runner_StampUnreleased_RelativePaths,
+  Cli_Utility_Changelog_Runner_StampUnreleased_Returns,
+  Cli_Utility_Changelog_Runner_StampUnreleased_Rp,
+  Cli_Utility_Changelog_Runner_StampUnreleased_SincePattern,
+  Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles,
+  Cli_Utility_Changelog_Runner_StampUnreleased_SrcDirectory,
+  Cli_Utility_Changelog_Runner_StampUnreleased_StillHasDeprecated,
+  Cli_Utility_Changelog_Runner_StampUnreleased_StillHasSince,
+  Cli_Utility_Changelog_Runner_StampUnreleased_SurvivingFiles,
+  Cli_Utility_Changelog_Runner_StampUnreleased_UpdatedContent,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_ActionVerb,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateChanged,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateParsed,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidatePaths,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateRaw,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_CurrentDirectory,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_DependencyNewVersion,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_DependencyValue,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_IsDryRun,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_ReleasedVersions,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_Returns,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_SectionObject,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_Sections,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_TemplateEntries,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_TemplatesDirectory,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_WorkspaceDirectory,
+  Cli_Utility_Changelog_Runner_SyncPackageReferences_Workspaces,
   Cli_Utility_Changelog_Runner_ValidateMessage_MessageValue,
   Cli_Utility_Changelog_Runner_ValidateMessage_Returns,
   Cli_Utility_Changelog_Runner_WriteChangelog_AfterHeading,
@@ -861,6 +907,16 @@ export class Runner {
       }
     }
 
+    // Map each released package name to its new version for the reference sync.
+    const releasedVersions: Cli_Utility_Changelog_Runner_Release_ReleasedVersions = new Map();
+
+    for (const release of releases) {
+      releasedVersions.set(release['packageName'], release['newVersion']);
+    }
+
+    // Sync exact-pinned references to co-released packages (logs the plan; writes only when not a dry run).
+    await Runner.syncPackageReferences(releasedVersions, workspaces, isDryRun);
+
     if (isDryRun === true) {
       Logger.customize({
         name: 'Runner.release',
@@ -913,6 +969,9 @@ export class Runner {
         name: 'Runner.release',
         purpose: 'writeChangelog',
       }).info(`Updated "CHANGELOG.md" for ${applyReleasePackageName}.`);
+
+      // Stamp @since UNRELEASED / @deprecated UNRELEASED tokens in source files.
+      await Runner.stampUnreleased(applyReleasePackageDirectory, applyReleaseNewVersion);
     }
 
     // Clean up consumed entry files.
@@ -925,6 +984,237 @@ export class Runner {
       purpose: 'complete',
       padTop: 1,
     }).info('Release complete.');
+
+    return;
+  }
+
+  /**
+   * CLI - Utility - Changelog - Sync Package References.
+   *
+   * Rewrites every exact-pinned dependency on a co-released package to the new version across
+   * workspace and template `package.json` files, so a release leaves no version drift behind.
+   *
+   * @param {Cli_Utility_Changelog_Runner_SyncPackageReferences_ReleasedVersions} releasedVersions - Released versions.
+   * @param {Cli_Utility_Changelog_Runner_SyncPackageReferences_Workspaces}       workspaces       - Workspaces.
+   * @param {Cli_Utility_Changelog_Runner_SyncPackageReferences_IsDryRun}         isDryRun         - Is dry run.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_SyncPackageReferences_Returns}
+   *
+   * @since 0.20.0
+   */
+  private static async syncPackageReferences(releasedVersions: Cli_Utility_Changelog_Runner_SyncPackageReferences_ReleasedVersions, workspaces: Cli_Utility_Changelog_Runner_SyncPackageReferences_Workspaces, isDryRun: Cli_Utility_Changelog_Runner_SyncPackageReferences_IsDryRun): Cli_Utility_Changelog_Runner_SyncPackageReferences_Returns {
+    const currentDirectory: Cli_Utility_Changelog_Runner_SyncPackageReferences_CurrentDirectory = process.cwd();
+
+    // Collect candidate "package.json" paths: every workspace plus its template tree.
+    const candidatePaths: Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidatePaths = new Set();
+
+    for (const workspacePath of Object.keys(workspaces)) {
+      const workspaceDirectory: Cli_Utility_Changelog_Runner_SyncPackageReferences_WorkspaceDirectory = resolve(currentDirectory, workspacePath);
+
+      candidatePaths.add(join(workspaceDirectory, 'package.json'));
+
+      const templatesDirectory: Cli_Utility_Changelog_Runner_SyncPackageReferences_TemplatesDirectory = join(workspaceDirectory, 'templates');
+      let templateEntries: Cli_Utility_Changelog_Runner_SyncPackageReferences_TemplateEntries = [];
+
+      try {
+        templateEntries = await fs.readdir(templatesDirectory, {
+          recursive: true,
+        });
+      } catch {
+        templateEntries = [];
+      }
+
+      for (const templateEntry of templateEntries) {
+        if (basename(templateEntry) === 'package.json') {
+          candidatePaths.add(join(templatesDirectory, templateEntry));
+        }
+      }
+    }
+
+    const sections: Cli_Utility_Changelog_Runner_SyncPackageReferences_Sections = [
+      'dependencies',
+      'devDependencies',
+      'peerDependencies',
+    ];
+    const actionVerb: Cli_Utility_Changelog_Runner_SyncPackageReferences_ActionVerb = (isDryRun === true) ? 'Would sync' : 'Synced';
+
+    for (const candidatePath of candidatePaths) {
+      let candidateRaw: Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateRaw = undefined;
+
+      try {
+        candidateRaw = await fs.readFile(candidatePath, 'utf-8');
+      } catch {
+        continue;
+      }
+
+      let candidateParsed: Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateParsed = undefined;
+
+      try {
+        candidateParsed = JSON.parse(candidateRaw);
+      } catch {
+        continue;
+      }
+
+      if (candidateParsed === undefined) {
+        continue;
+      }
+
+      let candidateChanged: Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateChanged = false;
+
+      for (const section of sections) {
+        const sectionObject: Cli_Utility_Changelog_Runner_SyncPackageReferences_SectionObject = candidateParsed[section];
+
+        if (sectionObject === null || typeof sectionObject !== 'object') {
+          continue;
+        }
+
+        for (const dependencyKey of Object.keys(sectionObject)) {
+          const dependencyNewVersion: Cli_Utility_Changelog_Runner_SyncPackageReferences_DependencyNewVersion = releasedVersions.get(dependencyKey);
+
+          if (dependencyNewVersion === undefined) {
+            continue;
+          }
+
+          const dependencyValue: Cli_Utility_Changelog_Runner_SyncPackageReferences_DependencyValue = Reflect.get(sectionObject, dependencyKey);
+
+          if (
+            typeof dependencyValue !== 'string'
+            || LIB_REGEX_PATTERN_EXACT_SEMVER.test(dependencyValue) === false
+            || dependencyValue === dependencyNewVersion
+          ) {
+            continue;
+          }
+
+          Logger.customize({
+            name: 'Runner.syncPackageReferences',
+            purpose: 'syncReferences',
+          }).info(`${actionVerb} ${section}.${dependencyKey} in "${candidatePath}": ${dependencyValue} -> ${dependencyNewVersion}.`);
+
+          if (isDryRun === false) {
+            Reflect.set(sectionObject, dependencyKey, dependencyNewVersion);
+
+            candidateChanged = true;
+          }
+        }
+      }
+
+      if (candidateChanged === true) {
+        await fs.writeFile(candidatePath, `${JSON.stringify(candidateParsed, null, 2)}\n`, 'utf-8');
+      }
+    }
+
+    return;
+  }
+
+  /**
+   * CLI - Utility - Changelog - Stamp Unreleased.
+   *
+   * Replaces every `@since UNRELEASED` and `@deprecated UNRELEASED` sentinel in the
+   * package's src/ tree with the real version, then self-checks for survivors.
+   *
+   * @param {Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory} packageDirectory - Package directory.
+   * @param {Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion}       newVersion       - New version.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_StampUnreleased_Returns}
+   *
+   * @since 0.20.0
+   */
+  private static async stampUnreleased(packageDirectory: Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory, newVersion: Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion): Cli_Utility_Changelog_Runner_StampUnreleased_Returns {
+    const isPrerelease: Cli_Utility_Changelog_Runner_StampUnreleased_IsPrerelease = newVersion.includes('-');
+
+    if (isPrerelease === true) {
+      return;
+    }
+
+    const srcDirectory: Cli_Utility_Changelog_Runner_StampUnreleased_SrcDirectory = join(packageDirectory, 'src');
+
+    const sourceFiles: Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles = [];
+
+    try {
+      const rawPaths: Cli_Utility_Changelog_Runner_StampUnreleased_RawPaths = await fs.readdir(srcDirectory, {
+        recursive: true,
+        encoding: 'utf-8',
+      });
+      const relativePaths: Cli_Utility_Changelog_Runner_StampUnreleased_RelativePaths = rawPaths;
+
+      for (const relativePath of relativePaths) {
+        const rp: Cli_Utility_Changelog_Runner_StampUnreleased_Rp = relativePath;
+
+        if (rp.endsWith('.ts') === true || rp.endsWith('.tsx') === true) {
+          sourceFiles.push(join(srcDirectory, rp));
+        }
+      }
+    } catch (error) {
+      const readdirError: Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirError = error;
+      const readdirErrorCode: Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirErrorCode = (readdirError instanceof Error && 'code' in readdirError) ? readdirError.code : undefined;
+
+      // A missing "src" directory is a legitimate no-op; any other failure must surface.
+      if (readdirErrorCode === 'ENOENT') {
+        return;
+      }
+
+      Logger.customize({
+        name: 'Runner.stampUnreleased',
+        purpose: 'readdir',
+      }).error(`Unable to read source directory "${srcDirectory}".`);
+
+      process.exitCode = 1;
+
+      return;
+    }
+
+    const sincePattern: Cli_Utility_Changelog_Runner_StampUnreleased_SincePattern = new RegExp(LIB_REGEX_PATTERN_SINCE_UNRELEASED.source, 'g');
+    const deprecatedPattern: Cli_Utility_Changelog_Runner_StampUnreleased_DeprecatedPattern = new RegExp(LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED.source, 'g');
+
+    for (const filePath of sourceFiles) {
+      const fp: Cli_Utility_Changelog_Runner_StampUnreleased_Fp = filePath;
+      const originalContent: Cli_Utility_Changelog_Runner_StampUnreleased_OriginalContent = await fs.readFile(fp, 'utf-8');
+
+      const hasSince: Cli_Utility_Changelog_Runner_StampUnreleased_HasSince = LIB_REGEX_PATTERN_SINCE_UNRELEASED.test(originalContent);
+      const hasDeprecated: Cli_Utility_Changelog_Runner_StampUnreleased_HasDeprecated = LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED.test(originalContent);
+
+      if (hasSince === false && hasDeprecated === false) {
+        continue;
+      }
+
+      const updatedContent: Cli_Utility_Changelog_Runner_StampUnreleased_UpdatedContent = originalContent
+        .replace(sincePattern, `$1@since ${newVersion}`)
+        .replace(deprecatedPattern, `$1@deprecated ${newVersion}`);
+
+      await fs.writeFile(fp, updatedContent, 'utf-8');
+    }
+
+    // Self-check: verify no UNRELEASED sentinel survived stamping. This reuses the same
+    // star-line-anchored patterns as the stamp, so it catches every multi-line JSDoc
+    // sentinel the stamp should have rewritten. Nova always writes multi-line JSDoc; a
+    // one-line `/** @since UNRELEASED */` is intentionally out of scope here, since an
+    // unanchored check would false-positive on string-literal fixtures the stamp preserves.
+    const survivingFiles: Cli_Utility_Changelog_Runner_StampUnreleased_SurvivingFiles = [];
+
+    for (const filePath of sourceFiles) {
+      const checkFp: Cli_Utility_Changelog_Runner_StampUnreleased_CheckFp = filePath;
+      const checkContent: Cli_Utility_Changelog_Runner_StampUnreleased_CheckContent = await fs.readFile(checkFp, 'utf-8');
+
+      const stillHasSince: Cli_Utility_Changelog_Runner_StampUnreleased_StillHasSince = LIB_REGEX_PATTERN_SINCE_UNRELEASED.test(checkContent);
+      const stillHasDeprecated: Cli_Utility_Changelog_Runner_StampUnreleased_StillHasDeprecated = LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED.test(checkContent);
+
+      if (stillHasSince === true || stillHasDeprecated === true) {
+        survivingFiles.push(checkFp);
+      }
+    }
+
+    if (survivingFiles.length > 0) {
+      Logger.customize({
+        name: 'Runner.stampUnreleased',
+        purpose: 'selfCheck',
+      }).error(`UNRELEASED sentinel survived stamping in: ${survivingFiles.join(', ')}`);
+
+      process.exitCode = 1;
+    }
 
     return;
   }

@@ -23,7 +23,7 @@ import type {
  *
  * @returns {Lib_BundleSize_FindOversizedFiles_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export function findOversizedFiles(directory: Lib_BundleSize_FindOversizedFiles_Directory, maxBytes: Lib_BundleSize_FindOversizedFiles_MaxBytes): Lib_BundleSize_FindOversizedFiles_Returns {
   const results: Lib_BundleSize_FindOversizedFiles_Results = [];

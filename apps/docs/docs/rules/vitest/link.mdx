@@ -1,0 +1,115 @@
+---
+id: "link"
+title: "Link Suite"
+description: "Verify that internal documentation links and anchors resolve to real targets with the registerLinkSuite conformance suite."
+keywords:
+  - "nova"
+  - "vitest"
+  - "internal links"
+  - "anchors"
+  - "broken links"
+  - "docusaurus"
+  - "docs quality"
+  - "conformance"
+  - "register suite"
+tags:
+  - "rules"
+  - "vitest"
+  - "links"
+  - "testing"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Verify that internal documentation links and anchors resolve to real targets with `registerLinkSuite`.
+
+## Summary
+
+- Scans content directories for internal Markdown links and the anchors they point to.
+- Resolves each link against the docs and blog route conventions, including index and frontmatter-id aliases.
+- Skips external URLs and links inside code fences so only real internal targets are checked.
+
+## Why Use This Suite?
+
+1. Catches broken internal links during the test run, before a strict build fails on them.
+2. Validates heading anchors so a renamed section never leaves a dangling deep link.
+3. Understands Docusaurus routing — index pages, frontmatter-id aliases, and blog routes — so valid links pass and only genuinely broken ones fail.
+
+## Examples
+
+<Tabs groupId="link-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```markdown
+    ## Overview
+
+    See the [setup guide](/docs/quickstart/setup) and its [install section](/docs/quickstart/setup#install).
+
+    Read the [launch post](/blog/launch) and its [highlights](/blog/launch#highlights).
+
+    Jump to the [overview](#overview) on this page.
+
+    Visit [the website](https://example.com) for more.
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```markdown
+    ## Overview
+
+    See the [missing page](/docs/quickstart/does-not-exist).      <!-- fails link-internal-doc-target-exists -->
+
+    See the [bad doc anchor](/docs/quickstart/setup#no-such-heading).  <!-- fails link-internal-doc-anchor-exists -->
+
+    Read the [missing post](/blog/never-published).               <!-- fails link-internal-blog-target-exists -->
+
+    See the [bad blog anchor](/blog/launch#no-such-section).       <!-- fails link-internal-blog-anchor-exists -->
+
+    Jump to the [dead anchor](#not-a-real-heading) on this page.   <!-- fails link-self-anchor-exists -->
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Usage
+
+```ts title="src/tests/link.test.ts"
+import { registerLinkSuite } from '@cbnventures/nova/rules/vitest';
+
+registerLinkSuite({
+  enable: 'all',
+});
+```
+
+The defaults match a standard Docusaurus layout with `docs` and `blog` directories. A docs-only site can drop the blog by omitting `contentDirs.blog`.
+
+## Configuration
+
+| Field                     | Type                              | Default                          | Description                                                               |
+|---------------------------|-----------------------------------|----------------------------------|---------------------------------------------------------------------------|
+| `projectRoot`             | `string`                          | `process.cwd()`                  | Consumer root containing the content directories.                         |
+| `contentDirs`             | `{ docs: string; blog?: string }` | `{ docs: 'docs', blog: 'blog' }` | Content directories to scan and how they map to route prefixes.           |
+| `docsRouteBasePath`       | `string`                          | `'docs'`                         | URL route prefix for docs links.                                          |
+| `blogRouteBasePath`       | `string`                          | `'blog'`                         | URL route prefix for blog links.                                          |
+| `categoryRouteSkipPrefix` | `string`                          | `'category/'`                    | Auto-generated category route prefix to skip during target validation.    |
+| `fileExtensions`          | `string[]`                        | `['.md', '.mdx']`                | Extensions that count as Markdown content.                                |
+| `enable`                  | `'all' \| ToggleKey[]`            | required                         | Which checks run. Use `'all'` for every check, or a list to freeze a set. |
+
+## Toggle Keys
+
+| Toggle Key                           | Description                                                         |
+|--------------------------------------|---------------------------------------------------------------------|
+| `link-internal-doc-target-exists`    | Requires an internal docs link to resolve to a real docs page.      |
+| `link-internal-doc-anchor-exists`    | Requires a docs link anchor to match a heading on the target page.  |
+| `link-internal-blog-target-exists`   | Requires an internal blog link to resolve to a real blog post.      |
+| `link-internal-blog-anchor-exists`   | Requires a blog link anchor to match a heading on the target post.  |
+| `link-self-anchor-exists`            | Requires a same-page anchor to match a heading in the current file. |
+| `link-skip-external-and-code-blocks` | Excludes external URLs and code-fence content from link validation. |
+
+## Troubleshooting
+
+- **External links are flagged** — Confirm `link-skip-external-and-code-blocks` is enabled. It is the shared filter every other check depends on.
+- **A blog-less site fails on blog checks** — Omit `contentDirs.blog` so the blog checks have nothing to scan.
+- **Anchors fail after a heading rename** — Update the link anchor to match the new heading slug, which follows Docusaurus heading-id rules.

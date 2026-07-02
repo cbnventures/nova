@@ -6,26 +6,18 @@ import {
   vi,
 } from 'vitest';
 
-vi.mock('prompts', () => {
-  return {
-    default: vi.fn().mockResolvedValue(
-      {
-        entry: '',
-      },
-    ),
-  };
-});
-
 import { Runner as CliGenerateMustHavesGitignore } from '../../../../cli/generate/must-haves/gitignore.js';
+import { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 import * as utility from '../../../../lib/utility.js';
 
 import type {
-  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_Calls,
-  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_HeaderArg,
-  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_IsProjectRootSpy,
-  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_SaveSpy,
-  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_TargetCall,
   Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_SetsExitCodeWhenNotAtProjectRoot_IsProjectRootSpy,
+  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_Calls,
+  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_HeaderArg,
+  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_IsProjectRootSpy,
+  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_LoadSpy,
+  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_SaveSpy,
+  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_TargetCall,
 } from '../../../../types/tests/cli/generate/must-haves/gitignore.test.d.ts';
 
 /**
@@ -50,19 +42,22 @@ describe('CliGenerateMustHavesGitignore.run', () => {
     return;
   });
 
-  it('passes the correct header metadata to saveGeneratedFile', async () => {
-    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-    const saveSpy: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+  it('writes config projectExcludes and header metadata', async () => {
+    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ gitignore: { projectExcludes: ['wrangler.toml'] } });
+    const saveSpy: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateMustHavesGitignore.run({ replaceFile: true });
 
-    const calls: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_Calls = saveSpy['mock']['calls'];
+    const calls: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_Calls = saveSpy['mock']['calls'];
 
-    const targetCall: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_TargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.gitignore'));
+    const targetCall: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_TargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.gitignore'));
 
     ok(targetCall !== undefined, 'Expected saveGeneratedFile to be called for .gitignore');
 
-    const headerArg: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_HeaderArg = targetCall[3];
+    ok(targetCall[1].includes('wrangler.toml'), 'Expected generated content to include the config projectExcludes entry');
+
+    const headerArg: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_HeaderArg = targetCall[3];
 
     ok(headerArg !== undefined, 'Expected header argument to be defined');
 
@@ -71,6 +66,8 @@ describe('CliGenerateMustHavesGitignore.run', () => {
     strictEqual(headerArg['mode'], 'strict');
 
     isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
 
     saveSpy.mockRestore();
 

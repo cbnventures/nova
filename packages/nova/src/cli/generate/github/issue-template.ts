@@ -1,7 +1,6 @@
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
-import prompts from 'prompts';
 import { parse as parseYaml } from 'yaml';
 
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
@@ -24,9 +23,7 @@ import { isProjectRoot, resolveTemplatePath, saveGeneratedFile } from '../../../
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  Cli_Generate_Github_IssueTemplate_Runner_Run_Answers,
-  Cli_Generate_Github_IssueTemplate_Runner_Run_BugReportFieldChoices,
-  Cli_Generate_Github_IssueTemplate_Runner_Run_Cancelled,
+  Cli_Generate_Github_IssueTemplate_Runner_Run_ConfigBugReportFields,
   Cli_Generate_Github_IssueTemplate_Runner_Run_Content,
   Cli_Generate_Github_IssueTemplate_Runner_Run_CurrentDirectory,
   Cli_Generate_Github_IssueTemplate_Runner_Run_File,
@@ -41,6 +38,7 @@ import type {
   Cli_Generate_Github_IssueTemplate_Runner_Run_IsAtProjectRoot,
   Cli_Generate_Github_IssueTemplate_Runner_Run_IsDryRun,
   Cli_Generate_Github_IssueTemplate_Runner_Run_IsReplaceFile,
+  Cli_Generate_Github_IssueTemplate_Runner_Run_IssueTemplate,
   Cli_Generate_Github_IssueTemplate_Runner_Run_LegalAgreementsDirectory,
   Cli_Generate_Github_IssueTemplate_Runner_Run_LegalContent,
   Cli_Generate_Github_IssueTemplate_Runner_Run_LegalFile,
@@ -89,7 +87,7 @@ export class Runner {
    * CLI - Generate - GitHub - Issue Template - Run.
    *
    * Called by the CLI index via executeCommand. Reads nova.config.json for pronouns, URLs, and
-   * platforms to pre-select bug report field templates.
+   * bug report fields, falling back to platform-derived fields when none are configured.
    *
    * @param {Cli_Generate_Github_IssueTemplate_Runner_Run_Options} options - Options.
    *
@@ -135,6 +133,8 @@ export class Runner {
     const our: Cli_Generate_Github_IssueTemplate_Runner_Run_Our = (pronouns === 'personal') ? 'my' : 'our';
     const urls: Cli_Generate_Github_IssueTemplate_Runner_Run_Urls = workingFile['urls'];
     const github: Cli_Generate_Github_IssueTemplate_Runner_Run_Github = workingFile['github'];
+    const issueTemplate: Cli_Generate_Github_IssueTemplate_Runner_Run_IssueTemplate = (github !== undefined) ? github['issueTemplate'] : undefined;
+    const configBugReportFields: Cli_Generate_Github_IssueTemplate_Runner_Run_ConfigBugReportFields = (issueTemplate !== undefined) ? (issueTemplate['bugReportFields'] ?? []) : [];
     const githubOwner: Cli_Generate_Github_IssueTemplate_Runner_Run_GithubOwner = (github !== undefined) ? (github['owner'] ?? '') : '';
     const githubRepoName: Cli_Generate_Github_IssueTemplate_Runner_Run_GithubRepoName = (github !== undefined) ? (github['repo'] ?? '') : '';
     const githubRepo: Cli_Generate_Github_IssueTemplate_Runner_Run_GithubRepo = (githubOwner !== '' && githubRepoName !== '') ? `${githubOwner}/${githubRepoName}` : '';
@@ -150,7 +150,7 @@ export class Runner {
       }
     }
 
-    // Pre-select bug report fields based on dev platforms (UX hint only).
+    // Derive bug report fields from dev platforms (fallback when none configured).
     const platforms: Cli_Generate_Github_IssueTemplate_Runner_Run_Platforms = (project !== undefined) ? (project['platforms'] ?? []) : [];
     const preSelectMapping: Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMapping = {
       nodejs: 'nodejs.yml',
@@ -174,108 +174,13 @@ export class Runner {
       }
     }
 
-    const bugReportFieldChoices: Cli_Generate_Github_IssueTemplate_Runner_Run_BugReportFieldChoices = [
-      {
-        title: 'Node.js',
-        description: 'Node.js version',
-        value: 'nodejs.yml',
-        selected: preSelectedFiles.has('nodejs.yml'),
-      },
-      {
-        title: 'Apple',
-        description: 'Device type and OS version',
-        value: 'apple.yml',
-        selected: preSelectedFiles.has('apple.yml'),
-      },
-      {
-        title: 'Android',
-        description: 'Device model and Android version',
-        value: 'android.yml',
-        selected: preSelectedFiles.has('android.yml'),
-      },
-      {
-        title: 'C# / .NET',
-        description: '.NET version and operating system',
-        value: 'csharp.yml',
-        selected: preSelectedFiles.has('csharp.yml'),
-      },
-      {
-        title: 'PHP',
-        description: 'PHP version',
-        value: 'php.yml',
-        selected: preSelectedFiles.has('php.yml'),
-      },
-      {
-        title: 'Python',
-        description: 'Python version',
-        value: 'python.yml',
-        selected: preSelectedFiles.has('python.yml'),
-      },
-      {
-        title: 'Homebridge',
-        description: 'Plugin and Homebridge version',
-        value: 'homebridge.yml',
-        selected: false,
-      },
-      {
-        title: 'pfSense',
-        description: 'pfSense version',
-        value: 'pfsense.yml',
-        selected: false,
-      },
-      {
-        title: 'Synology',
-        description: 'Synology DSM version',
-        value: 'synology.yml',
-        selected: false,
-      },
-      {
-        title: 'Docker',
-        description: 'Docker version, host OS, architecture, and run command',
-        value: 'docker.yml',
-        selected: false,
-      },
-      {
-        title: 'Web Browser',
-        description: 'Browser name and version',
-        value: 'web.yml',
-        selected: false,
-      },
-      {
-        title: 'Screenshots',
-        description: 'Screenshot upload field',
-        value: 'screenshots.yml',
-        selected: false,
-      },
-    ];
-
-    let cancelled: Cli_Generate_Github_IssueTemplate_Runner_Run_Cancelled = false;
-
-    const answers: Cli_Generate_Github_IssueTemplate_Runner_Run_Answers = await prompts({
-      type: 'multiselect',
-      name: 'bugReportFields',
-      message: 'Select bug report fields (space to select, enter to confirm)',
-      choices: bugReportFieldChoices,
-      hint: '- Space to select. Return to submit',
-    }, {
-      onCancel: () => false,
-    });
-
-    if (answers['bugReportFields'] === undefined) {
-      cancelled = true;
-    }
-
-    if (cancelled === true) {
-      return 'cancelled';
-    }
-
-    const selectedFiles: Cli_Generate_Github_IssueTemplate_Runner_Run_SelectedFiles = answers['bugReportFields'] as Cli_Generate_Github_IssueTemplate_Runner_Run_SelectedFiles;
+    const selectedFiles: Cli_Generate_Github_IssueTemplate_Runner_Run_SelectedFiles = (configBugReportFields.length > 0) ? configBugReportFields : [...preSelectedFiles];
 
     if (selectedFiles.length === 0) {
       Logger.customize({
         name: 'Runner.run',
         purpose: 'skip',
-      }).info('No bug report fields selected. Generating templates without platform fields.');
+      }).info('No bug report fields configured. Generating templates without platform fields.');
     }
 
     const templateDirectory: Cli_Generate_Github_IssueTemplate_Runner_Run_TemplateDirectory = resolveTemplatePath(import.meta.url, 'generators/github/issue-template');

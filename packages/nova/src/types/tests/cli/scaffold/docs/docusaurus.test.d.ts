@@ -28,6 +28,8 @@ export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_Adds
 
 export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_IntroMdPath = string;
 
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_FrontmatterTestPath = string;
+
 /**
  * Tests - CLI - Scaffold - Docs - Docusaurus - Run - Creates Monorepo In Empty Directory.
  *
@@ -40,6 +42,8 @@ export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_Crea
 export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_DocusaurusConfigPath = string;
 
 export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_IntroMdPath = string;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_FrontmatterTestPath = string;
 
 /**
  * Tests - CLI - Scaffold - Docs - Docusaurus - Run - Exits With Error For Standalone Project.

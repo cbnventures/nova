@@ -1,7 +1,7 @@
 /**
  * Tests - Nova Version Drift - Nova Version Drift.
  *
- * @since 0.17.1
+ * @since 0.17.0
  */
 export type Tests_NovaVersionDrift_NovaVersionDrift_Manifest = {
   version?: string;
@@ -27,13 +27,13 @@ export type Tests_NovaVersionDrift_NovaVersionDrift_NovaVersion = string;
 /**
  * Tests - Nova Version Drift - Nova Version Drift - Matches The Neighboring Cbnventures Nova Package Version.
  *
- * @since 0.17.1
+ * @since 0.19.0
  */
 export type Tests_NovaVersionDrift_NovaVersionDrift_MatchesTheNeighboringCbnventuresNovaPackageVersion_PresetNovaDependency = string;
 
 /**
  * Tests - Nova Version Drift - Nova Version Drift - Preset Version Matches The Neighboring Cbnventures Nova Version.
  *
- * @since 0.17.1
+ * @since 0.19.0
  */
 export type Tests_NovaVersionDrift_NovaVersionDrift_PresetVersionMatchesTheNeighboringCbnventuresNovaVersion_PresetVersion = string;

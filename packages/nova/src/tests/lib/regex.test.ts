@@ -14,15 +14,28 @@ import {
   LIB_REGEX_LINEBREAK_CRLF_OR_LF,
   LIB_REGEX_PATTERN_ANSI,
   LIB_REGEX_PATTERN_ANSI_START,
+  LIB_REGEX_PATTERN_BLOG_DATE_PREFIX,
   LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE,
+  LIB_REGEX_PATTERN_CODE_BLOCK,
+  LIB_REGEX_PATTERN_DESCRIPTION_LINE,
   LIB_REGEX_PATTERN_DIGITS,
   LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE,
   LIB_REGEX_PATTERN_EMAIL_SIMPLE,
   LIB_REGEX_PATTERN_ERROR_PREFIX,
+  LIB_REGEX_PATTERN_EXPORT_DOT_SLASH,
+  LIB_REGEX_PATTERN_FILE_EXTENSION_MD,
+  LIB_REGEX_PATTERN_HEADING_H2_LINE,
+  LIB_REGEX_PATTERN_HEADING_LINE,
+  LIB_REGEX_PATTERN_HTML_TAGS,
+  LIB_REGEX_PATTERN_ID_LINE,
+  LIB_REGEX_PATTERN_IMPORT_SPECIFIER,
+  LIB_REGEX_PATTERN_INDEX_SUFFIX,
   LIB_REGEX_PATTERN_LEADING_NEWLINES,
   LIB_REGEX_PATTERN_LEADING_NON_DIGITS,
   LIB_REGEX_PATTERN_LEADING_V,
+  LIB_REGEX_PATTERN_MARKDOWN_LINK,
   LIB_REGEX_PATTERN_NAME_AT_VERSION,
+  LIB_REGEX_PATTERN_NON_WORD_CHARS,
   LIB_REGEX_PATTERN_NOVA_PREFIX,
   LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER,
   LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR,
@@ -30,9 +43,14 @@ import {
   LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE,
   LIB_REGEX_PATTERN_RUSTC_VERSION_LINE,
   LIB_REGEX_PATTERN_SEMVER,
+  LIB_REGEX_PATTERN_SLUG_LINE,
   LIB_REGEX_PATTERN_SLUG_SCOPED,
   LIB_REGEX_PATTERN_SLUG_SIMPLE,
+  LIB_REGEX_PATTERN_TERMINOLOGY_COMPONENT,
+  LIB_REGEX_PATTERN_TERMINOLOGY_TITLE_ATTR,
+  LIB_REGEX_PATTERN_TERMINOLOGY_TO_ATTR,
   LIB_REGEX_PATTERN_WHITESPACE,
+  LIB_REGEX_PATTERN_WILDCARD_SUFFIX,
 } from '../../lib/regex.js';
 
 import type {
@@ -49,11 +67,17 @@ import type {
   Tests_Lib_Regex_LIBREGEXLINEBREAKCRLFORLF_DoesNotMatchPlainText_Subject,
   Tests_Lib_Regex_LIBREGEXLINEBREAKCRLFORLF_MatchesCRLF_Subject,
   Tests_Lib_Regex_LIBREGEXLINEBREAKCRLFORLF_MatchesLF_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNBLOGDATEPREFIX_DoesNotMatchPlainFilename_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNBLOGDATEPREFIX_MatchesDatePrefixedFilename_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_DoesNotMatchALowercaseStart_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_DoesNotMatchATrailingUnderscore_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_DoesNotMatchDoubleUnderscores_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_MatchesASinglePascalCaseChunk_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNCASINGUNDERSCOREPASCALCASE_MatchesMultiplePascalCaseChunksJoinedByUnderscores_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNCODEBLOCK_DoesNotMatchPlainText_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNCODEBLOCK_MatchesFencedCodeBlock_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNDESCRIPTIONLINE_DoesNotMatchTitleLine_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNDESCRIPTIONLINE_MatchesDescriptionLine_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNDIGITS_DoesNotMatchNonDigitString_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNDIGITS_MatchesDigitsInString_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNDOUBLEQUOTEDSTRINGCAPTURE_CapturesContentBetweenDoubleQuotes_Matches,
@@ -66,6 +90,22 @@ import type {
   Tests_Lib_Regex_LIBREGEXPATTERNEMAILSIMPLE_MatchesStandardEmail_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNERRORPREFIX_DoesNotMatchWarningPrefix_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNERRORPREFIX_MatchesErrorPrefix_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNEXPORTDOTSLASH_DoesNotMatchPlainPath_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNEXPORTDOTSLASH_MatchesLeadingDotSlash_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNFILEEXTENSIONMD_DoesNotMatchTypeScriptFile_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNFILEEXTENSIONMD_MatchesMdxFile_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNHEADINGH2LINE_DoesNotMatchH1Line_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNHEADINGH2LINE_MatchesH2Line_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNHEADINGLINE_DoesNotMatchPlainText_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNHEADINGLINE_MatchesHeadingLine_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNHTMLTAGS_DoesNotMatchPlainText_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNHTMLTAGS_MatchesHTMLTag_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNIDLINE_DoesNotMatchTitleLine_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNIDLINE_MatchesIdLine_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNIMPORTSPECIFIER_DoesNotMatchExternalPackage_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNIMPORTSPECIFIER_MatchesNovaImport_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNINDEXSUFFIX_DoesNotMatchPathWithoutIndex_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNINDEXSUFFIX_MatchesIndexSuffix_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNEWLINES_DoesNotMatchTextWithoutLeadingNewlines_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNEWLINES_MatchesLeadingNewlines_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNONDIGITS_MatchesLeadingNonDigitCharacters_Matches,
@@ -74,8 +114,12 @@ import type {
   Tests_Lib_Regex_LIBREGEXPATTERNLEADINGNONDIGITS_ReturnsEmptyMatchWhenStringStartsWithDigit_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNLEADINGV_DoesNotMatchStringWithoutLeadingV_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNLEADINGV_MatchesLeadingV_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNMARKDOWNLINK_DoesNotMatchPlainText_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNMARKDOWNLINK_MatchesMarkdownLink_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_DoesNotMatchScopedPackage_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_MatchesNameAtVersion_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNNONWORDCHARS_DoesNotMatchWordCharacters_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNNONWORDCHARS_MatchesPunctuation_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNNOVAPREFIX_DoesNotMatchUnrelatedString_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNNOVAPREFIX_MatchesNovaPrefix_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNRANGECAPTUREREMAINDER_CapturesRemainderAfterCaretPrefix_Matches,
@@ -113,9 +157,19 @@ import type {
   Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSimpleSemver_Matches,
   Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSimpleSemver_MatchGroups,
   Tests_Lib_Regex_LIBREGEXPATTERNSEMVER_MatchesSimpleSemver_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNSLUGLINE_DoesNotMatchTitleLine_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNSLUGLINE_MatchesSlugLine_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYCOMPONENT_DoesNotMatchPlainText_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYCOMPONENT_MatchesTerminologyElement_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYTITLEATTR_DoesNotMatchMissingTitle_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYTITLEATTR_MatchesTitleAttribute_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYTOATTR_DoesNotMatchMissingTo_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYTOATTR_MatchesToAttribute_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNWHITESPACE_DoesNotMatchNonWhitespaceString_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNWHITESPACE_MatchesSpaces_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNWHITESPACE_MatchesTabs_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNWILDCARDSUFFIX_DoesNotMatchPlainPath_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNWILDCARDSUFFIX_MatchesWildcardSuffix_Subject,
   Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSCOPEDDoesNotMatchUnscopedName_Subject,
   Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSCOPEDDoesNotMatchUppercaseScope_Subject,
   Tests_Lib_Regex_SlugPatterns_LIBREGEXPATTERNSLUGSCOPEDMatchesScopedPackage_Subject,
@@ -1006,6 +1060,456 @@ describe('LIB_REGEX_PATTERN_WHITESPACE', async () => {
     const subject: Tests_Lib_Regex_LIBREGEXPATTERNWHITESPACE_DoesNotMatchNonWhitespaceString_Subject = 'helloworld';
 
     doesNotMatch(subject, LIB_REGEX_PATTERN_WHITESPACE);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Blog Date Prefix.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_BLOG_DATE_PREFIX', async () => {
+  it('matches date-prefixed filename', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNBLOGDATEPREFIX_MatchesDatePrefixedFilename_Subject = '2026-06-23-my-post';
+
+    match(subject, LIB_REGEX_PATTERN_BLOG_DATE_PREFIX);
+
+    return;
+  });
+
+  it('does not match plain filename', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNBLOGDATEPREFIX_DoesNotMatchPlainFilename_Subject = 'my-post';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_BLOG_DATE_PREFIX);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Code Block.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_CODE_BLOCK', async () => {
+  it('matches fenced code block', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNCODEBLOCK_MatchesFencedCodeBlock_Subject = '```ts\nconst a = 1;\n```';
+
+    match(subject, LIB_REGEX_PATTERN_CODE_BLOCK);
+
+    return;
+  });
+
+  it('does not match plain text', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNCODEBLOCK_DoesNotMatchPlainText_Subject = 'just some text';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_CODE_BLOCK);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Description Line.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_DESCRIPTION_LINE', async () => {
+  it('matches description line', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNDESCRIPTIONLINE_MatchesDescriptionLine_Subject = 'description: A short summary';
+
+    match(subject, LIB_REGEX_PATTERN_DESCRIPTION_LINE);
+
+    return;
+  });
+
+  it('does not match title line', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNDESCRIPTIONLINE_DoesNotMatchTitleLine_Subject = 'title: A short summary';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_DESCRIPTION_LINE);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Export Dot Slash.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_EXPORT_DOT_SLASH', async () => {
+  it('matches leading dot slash', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNEXPORTDOTSLASH_MatchesLeadingDotSlash_Subject = './toolkit';
+
+    match(subject, LIB_REGEX_PATTERN_EXPORT_DOT_SLASH);
+
+    return;
+  });
+
+  it('does not match plain path', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNEXPORTDOTSLASH_DoesNotMatchPlainPath_Subject = 'toolkit';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_EXPORT_DOT_SLASH);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern File Extension Md.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_FILE_EXTENSION_MD', async () => {
+  it('matches mdx file', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNFILEEXTENSIONMD_MatchesMdxFile_Subject = 'overview.mdx';
+
+    match(subject, LIB_REGEX_PATTERN_FILE_EXTENSION_MD);
+
+    return;
+  });
+
+  it('does not match TypeScript file', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNFILEEXTENSIONMD_DoesNotMatchTypeScriptFile_Subject = 'overview.ts';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_FILE_EXTENSION_MD);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Heading H2 Line.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_HEADING_H2_LINE', async () => {
+  it('matches H2 line', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNHEADINGH2LINE_MatchesH2Line_Subject = '## Section Title';
+
+    match(subject, LIB_REGEX_PATTERN_HEADING_H2_LINE);
+
+    return;
+  });
+
+  it('does not match H1 line', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNHEADINGH2LINE_DoesNotMatchH1Line_Subject = '# Section Title';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_HEADING_H2_LINE);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Heading Line.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_HEADING_LINE', async () => {
+  it('matches heading line', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNHEADINGLINE_MatchesHeadingLine_Subject = '### Deep Heading';
+
+    match(subject, LIB_REGEX_PATTERN_HEADING_LINE);
+
+    return;
+  });
+
+  it('does not match plain text', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNHEADINGLINE_DoesNotMatchPlainText_Subject = 'not a heading';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_HEADING_LINE);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern HTML Tags.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_HTML_TAGS', async () => {
+  it('matches HTML tag', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNHTMLTAGS_MatchesHTMLTag_Subject = 'Title <br> end';
+
+    match(subject, LIB_REGEX_PATTERN_HTML_TAGS);
+
+    return;
+  });
+
+  it('does not match plain text', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNHTMLTAGS_DoesNotMatchPlainText_Subject = 'plain title';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_HTML_TAGS);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern ID Line.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_ID_LINE', async () => {
+  it('matches id line', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNIDLINE_MatchesIdLine_Subject = 'id: overview';
+
+    match(subject, LIB_REGEX_PATTERN_ID_LINE);
+
+    return;
+  });
+
+  it('does not match title line', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNIDLINE_DoesNotMatchTitleLine_Subject = 'title: overview';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_ID_LINE);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Import Specifier.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_IMPORT_SPECIFIER', async () => {
+  it('matches nova import', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNIMPORTSPECIFIER_MatchesNovaImport_Subject = 'import { foo } from \'@cbnventures/nova/toolkit\';';
+
+    match(subject, LIB_REGEX_PATTERN_IMPORT_SPECIFIER);
+
+    return;
+  });
+
+  it('does not match external package', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNIMPORTSPECIFIER_DoesNotMatchExternalPackage_Subject = 'import { foo } from \'react\';';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_IMPORT_SPECIFIER);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Index Suffix.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_INDEX_SUFFIX', async () => {
+  it('matches index suffix', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNINDEXSUFFIX_MatchesIndexSuffix_Subject = 'guides/getting-started/index';
+
+    match(subject, LIB_REGEX_PATTERN_INDEX_SUFFIX);
+
+    return;
+  });
+
+  it('does not match path without index', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNINDEXSUFFIX_DoesNotMatchPathWithoutIndex_Subject = 'guides/getting-started';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_INDEX_SUFFIX);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Markdown Link.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_MARKDOWN_LINK', async () => {
+  it('matches markdown link', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNMARKDOWNLINK_MatchesMarkdownLink_Subject = 'See [the docs](/docs/overview) here';
+
+    match(subject, LIB_REGEX_PATTERN_MARKDOWN_LINK);
+
+    return;
+  });
+
+  it('does not match plain text', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNMARKDOWNLINK_DoesNotMatchPlainText_Subject = 'no links here';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_MARKDOWN_LINK);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Non Word Chars.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_NON_WORD_CHARS', async () => {
+  it('matches punctuation', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNNONWORDCHARS_MatchesPunctuation_Subject = 'hello!world';
+
+    match(subject, LIB_REGEX_PATTERN_NON_WORD_CHARS);
+
+    return;
+  });
+
+  it('does not match word characters', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNNONWORDCHARS_DoesNotMatchWordCharacters_Subject = 'hello world-foo';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_NON_WORD_CHARS);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Slug Line.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_SLUG_LINE', async () => {
+  it('matches slug line', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNSLUGLINE_MatchesSlugLine_Subject = 'slug: /custom-path';
+
+    match(subject, LIB_REGEX_PATTERN_SLUG_LINE);
+
+    return;
+  });
+
+  it('does not match title line', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNSLUGLINE_DoesNotMatchTitleLine_Subject = 'title: Custom Path';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_SLUG_LINE);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Terminology Component.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_TERMINOLOGY_COMPONENT', async () => {
+  it('matches terminology element', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYCOMPONENT_MatchesTerminologyElement_Subject = '<Terminology to="/x" title="X">term</Terminology>';
+
+    match(subject, LIB_REGEX_PATTERN_TERMINOLOGY_COMPONENT);
+
+    return;
+  });
+
+  it('does not match plain text', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYCOMPONENT_DoesNotMatchPlainText_Subject = 'just a plain term';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_TERMINOLOGY_COMPONENT);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Terminology Title Attr.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_TERMINOLOGY_TITLE_ATTR', async () => {
+  it('matches title attribute', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYTITLEATTR_MatchesTitleAttribute_Subject = 'title="Glossary Term"';
+
+    match(subject, LIB_REGEX_PATTERN_TERMINOLOGY_TITLE_ATTR);
+
+    return;
+  });
+
+  it('does not match missing title', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYTITLEATTR_DoesNotMatchMissingTitle_Subject = 'to="/x"';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_TERMINOLOGY_TITLE_ATTR);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Terminology To Attr.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_TERMINOLOGY_TO_ATTR', async () => {
+  it('matches to attribute', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYTOATTR_MatchesToAttribute_Subject = 'to="/docs/quickstart/terminology#term"';
+
+    match(subject, LIB_REGEX_PATTERN_TERMINOLOGY_TO_ATTR);
+
+    return;
+  });
+
+  it('does not match missing to', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNTERMINOLOGYTOATTR_DoesNotMatchMissingTo_Subject = 'title="X"';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_TERMINOLOGY_TO_ATTR);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Regex - Pattern Wildcard Suffix.
+ *
+ * @since 0.20.0
+ */
+describe('LIB_REGEX_PATTERN_WILDCARD_SUFFIX', async () => {
+  it('matches wildcard suffix', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNWILDCARDSUFFIX_MatchesWildcardSuffix_Subject = './rules/eslint/*';
+
+    match(subject, LIB_REGEX_PATTERN_WILDCARD_SUFFIX);
+
+    return;
+  });
+
+  it('does not match plain path', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNWILDCARDSUFFIX_DoesNotMatchPlainPath_Subject = './rules/eslint';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_WILDCARD_SUFFIX);
 
     return;
   });

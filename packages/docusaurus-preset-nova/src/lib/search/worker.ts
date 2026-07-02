@@ -1,5 +1,7 @@
 /// <reference path="../../types/worker-globals.d.ts" />
 
+import { LIB_REGEX_PATTERN_REGEX_SPECIAL_CHARS } from '../regex.js';
+
 import type {
   Lib_Search_Worker_Event,
   Lib_Search_Worker_HandleInit_ErrorMessage,
@@ -271,13 +273,13 @@ function performSearch(index: Lib_Search_Worker_PerformSearch_Index, documents: 
     if (refTerms !== undefined) {
       for (const matchedTerm of refTerms) {
         const refTerm: Lib_Search_Worker_PerformSearch_RefTerm = matchedTerm;
-        const escapedTerm: Lib_Search_Worker_PerformSearch_EscapedTerm = refTerm.replace(new RegExp('[.*+?^${}()|[\\]\\\\]', 'g'), (match) => `\\${match}`);
+        const escapedTerm: Lib_Search_Worker_PerformSearch_EscapedTerm = refTerm.replace(new RegExp(LIB_REGEX_PATTERN_REGEX_SPECIAL_CHARS.source, 'g'), (match) => `\\${match}`);
 
         termPatterns.push(`${escapedTerm}\\w*`);
       }
     }
 
-    const escapedQuery: Lib_Search_Worker_PerformSearch_EscapedQuery = trimmedQuery.replace(new RegExp('[.*+?^${}()|[\\]\\\\]', 'g'), (match) => `\\${match}`);
+    const escapedQuery: Lib_Search_Worker_PerformSearch_EscapedQuery = trimmedQuery.replace(new RegExp(LIB_REGEX_PATTERN_REGEX_SPECIAL_CHARS.source, 'g'), (match) => `\\${match}`);
 
     termPatterns.push(escapedQuery);
 

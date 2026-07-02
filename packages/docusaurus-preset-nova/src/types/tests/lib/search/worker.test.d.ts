@@ -141,7 +141,7 @@ export type Tests_Lib_Search_Worker_PerformSearchFuzzy_MatchesNearMissQueriesVia
 /**
  * Tests - Lib - Search - Worker - PerformSearch Fuzzy Distance - Widens Fuzzy Matching As The Distance Increases.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Tests_Lib_Search_Worker_PerformSearchFuzzyDistance_WidensFuzzyMatchingAsTheDistanceIncreases_Index = unknown;
 

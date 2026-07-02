@@ -7,7 +7,7 @@ import type {
 /**
  * CLI - Recipe - GitHub - Sync Identity - Normalize Topics.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Cli_Recipe_Github_SyncIdentity_Runner_NormalizeTopics_Keywords = string[] | undefined;
 
@@ -36,7 +36,7 @@ export type Cli_Recipe_Github_SyncIdentity_Runner_NormalizeTopics_Keyword = stri
 /**
  * CLI - Recipe - GitHub - Sync Identity - Run.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Cli_Recipe_Github_SyncIdentity_Runner_Run_Options_DryRun = true;
 

@@ -25,7 +25,7 @@ import type {
  * @cbnventures/nova package. Both publish together, so the preset's
  * declared dependency must always match nova's current version.
  *
- * @since 0.17.1
+ * @since 0.17.0
  */
 describe('nova version drift', () => {
   const packageDirectory: Tests_NovaVersionDrift_NovaVersionDrift_PackageDirectory = join(fileURLToPath(import.meta.url), '..', '..', '..');

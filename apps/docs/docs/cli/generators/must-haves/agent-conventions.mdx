@@ -1,14 +1,13 @@
 ---
 id: "agent-conventions"
 title: "Agent Conventions"
-description: "Generate agent convention files for coding assistants like Claude and Cursor."
+description: "Generate agent convention files for the AI tools you select, like Claude Code and Codex."
 keywords:
   - "nova"
   - "nova generate"
   - "agent conventions"
-  - "claude"
-  - "cursor"
-  - "cursorrules"
+  - "claude code"
+  - "codex"
   - "agents"
   - "project rules"
   - "vision"
@@ -24,10 +23,37 @@ import TabItem from '@theme/TabItem';
 
 Create agent convention files that guide coding assistants with project-specific rules, coding standards, and architectural context.
 
+## Selecting AI Tools
+
+The generator only emits files for the AI tools your repository selects. Selection lives in the top-level `agents` field of `nova.config.json`:
+
+```json
+{
+  "agents": ["claude-code", "codex"]
+}
+```
+
+Each id maps to a single tool file:
+
+| Agent id      | File emitted |
+|---------------|--------------|
+| `claude-code` | `CLAUDE.md`  |
+| `codex`       | `AGENTS.md`  |
+
+The shared files — `VISION.md`, `PROJECT_RULES.md`, and every `conventions/*.md` — are tool-agnostic and are written whenever at least one agent is selected.
+
+You can edit `agents` by hand or manage it interactively through the **AI Tools** category of [`nova utility initialize`](/docs/cli/utilities/initialize), which requires at least one selection.
+
+:::warning
+
+When `agents` is absent or empty, the generator writes nothing and warns `No AI agents selected. Nothing to generate.` Select at least one tool before running the command.
+
+:::
+
 ## Why Use This Command?
 
 - Gives coding assistants consistent instructions so generated code follows your project conventions.
-- Produces a full set of files (`.cursorrules`, `AGENTS.md`, `CLAUDE.md`, `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md`) in one step.
+- Emits only the tool files you select — `CLAUDE.md` for Claude Code, `AGENTS.md` for Codex — alongside the shared `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md`.
 - Convention files cover universal rules, documentation style, plus per-language guides for TypeScript, CSS, Swift, Java, Kotlin, C#, PHP, Python, Shell, and Docker.
 
 ## Requirements
@@ -71,13 +97,17 @@ Create agent convention files that guide coding assistants with project-specific
 
 ## Output Files
 
-The generator creates 17 files total:
+The exact set depends on which agents you select. Each selected tool contributes its own file:
+
+| File        | Written when `agents` includes | Purpose                          |
+|-------------|--------------------------------|----------------------------------|
+| `CLAUDE.md` | `claude-code`                  | Claude Code project instructions |
+| `AGENTS.md` | `codex`                        | Codex project instructions       |
+
+The following shared files are written whenever at least one agent is selected:
 
 | File                           | Purpose                                  |
 |--------------------------------|------------------------------------------|
-| `.cursorrules`                 | Cursor-specific project instructions     |
-| `AGENTS.md`                    | Top-level agent instructions             |
-| `CLAUDE.md`                    | Claude-specific project instructions     |
 | `VISION.md`                    | Project vision and glossary              |
 | `PROJECT_RULES.md`             | Project identity and structure rules     |
 | `conventions/universal.md`     | Universal workflow and style conventions |
@@ -93,6 +123,14 @@ The generator creates 17 files total:
 | `conventions/swift.md`         | Swift conventions                        |
 | `conventions/typescript.md`    | TypeScript and JavaScript conventions    |
 
+The language convention files (such as `conventions/typescript.md`) instruct authors to tag new or changed API with `@since UNRELEASED` rather than a hard-coded version number. The real version is stamped automatically when you run `nova utility changelog --release` at release time.
+
+:::info
+
+Never write a concrete version in `@since` or `@deprecated` by hand. Using `@since UNRELEASED` keeps the tag accurate until the release tooling fills it in.
+
+:::
+
 ## Vision and Rules Workshop
 
 After the generator creates your files, `VISION.md` and `PROJECT_RULES.md` will contain empty scaffolds.
@@ -105,7 +143,7 @@ This will take 1-2 hours. You're defining what this project is and isn't. Grab a
 
 :::
 
-Copy the prompt below and paste it into your AI coding assistant (e.g., Claude Code, Cursor, etc.). The agent will guide you through 80 questions.
+Copy the prompt below and paste it into your AI coding assistant (e.g., Claude Code, Codex, etc.). The agent will guide you through 80 questions.
 
 <div className="code-scroll">
 

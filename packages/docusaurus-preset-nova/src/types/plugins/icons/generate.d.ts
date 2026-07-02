@@ -12,7 +12,7 @@ import type {
 /**
  * Plugins - Icons - Generate - Build Module Source.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_BuildModuleSource_Slices = Shared_IconSlices;
 
@@ -31,7 +31,7 @@ export type Plugins_Icons_Generate_BuildModuleSource_Collection = Shared_Iconify
 /**
  * Plugins - Icons - Generate - Build Sliced Collection.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_BuildSlicedCollection_Prefix = string;
 
@@ -56,7 +56,7 @@ export type Plugins_Icons_Generate_BuildSlicedCollection_Sliced = Record<string,
 /**
  * Plugins - Icons - Generate - Collect Candidates.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_CollectCandidates_SiteDir = string;
 
@@ -71,7 +71,7 @@ export type Plugins_Icons_Generate_CollectCandidates_Candidates = string[];
 /**
  * Plugins - Icons - Generate - Collect Content Candidates.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_CollectContentCandidates_SiteDir = string;
 
@@ -88,7 +88,7 @@ export type Plugins_Icons_Generate_CollectContentCandidates_Text = string;
 /**
  * Plugins - Icons - Generate - Collect Theme Config Candidates.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_CollectThemeConfigCandidates_Value = unknown;
 
@@ -105,7 +105,7 @@ export type Plugins_Icons_Generate_CollectThemeConfigCandidates_Record = Record<
 /**
  * Plugins - Icons - Generate - Extract Candidates From Text.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_ExtractCandidatesFromText_Text = string;
 
@@ -120,7 +120,7 @@ export type Plugins_Icons_Generate_ExtractCandidatesFromText_Matches = IterableI
 /**
  * Plugins - Icons - Generate - Generate Icon Module.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_GenerateIconModule_OptionsSiteDir = string;
 
@@ -161,14 +161,14 @@ export type Plugins_Icons_Generate_GenerateIconModule_Resolved = boolean;
 /**
  * Plugins - Icons - Generate - Get Iconify Package Directory.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_GetIconifyPackageDirectory_Returns = string;
 
 /**
  * Plugins - Icons - Generate - Get Or Create Slice.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_GetOrCreateSlice_Slices = Shared_IconSlices;
 
@@ -190,7 +190,7 @@ export type Plugins_Icons_Generate_GetOrCreateSlice_Slice = {
 /**
  * Plugins - Icons - Generate - Load Collection.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_LoadCollection_Prefix = string;
 
@@ -207,7 +207,7 @@ export type Plugins_Icons_Generate_LoadCollection_Collection = Shared_IconifyCol
 /**
  * Plugins - Icons - Generate - Load Collections Index.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_LoadCollectionsIndex_Returns = Shared_IconifyCollectionsIndex;
 
@@ -218,7 +218,7 @@ export type Plugins_Icons_Generate_LoadCollectionsIndex_Raw = string;
 /**
  * Plugins - Icons - Generate - Resolve Name.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_ResolveName_Collection = Shared_IconifyCollection;
 
@@ -235,7 +235,7 @@ export type Plugins_Icons_Generate_ResolveName_AliasEntry = Shared_IconifyAliasE
 /**
  * Plugins - Icons - Generate - Walk Directory.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_Icons_Generate_WalkDirectory_Directory = string;
 

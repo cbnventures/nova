@@ -47,9 +47,8 @@ These files contain critical project information — architectural decisions, id
 
 ## Restricted Files
 
-These files are managed externally and kept in sync across environments. Modifying them locally will cause drift and merge conflicts.
+These files are managed by Nova's agent-conventions generator (`nova generate must-haves agent-conventions`) and kept in sync across environments. Do not edit them locally; the generator overwrites them on its next run, so local changes are lost and cause drift.
 
-- `.cursorrules`
 - `CLAUDE.md`
 - `AGENTS.md`
 - `conventions/*.md`

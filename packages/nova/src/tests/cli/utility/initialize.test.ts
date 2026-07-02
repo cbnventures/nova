@@ -1,4 +1,4 @@
-import { ok, strictEqual } from 'node:assert/strict';
+import { deepStrictEqual, ok, strictEqual } from 'node:assert/strict';
 import {
   mkdir,
   mkdtemp,
@@ -37,6 +37,14 @@ import type {
   Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_RawName,
   Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Response,
   Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_ScriptedAnswers,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_Form,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_FormOptions,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_FormResult,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_Name,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_Question,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_RawName,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_Response,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_ScriptedAnswers,
   Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Answer,
   Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_CapturedQuestions,
   Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_DisplayNameIndex,
@@ -282,6 +290,65 @@ describe('prompt workspaces form display name capture', () => {
     const initial: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Initial = displayNameQuestion['initial'];
 
     strictEqual(initial, 'Foo');
+
+    return;
+  });
+
+  it('preserves existingWorkspace.dotenv through the form', async () => {
+    const scriptedAnswers: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_ScriptedAnswers = {
+      workspaceRole: 'app',
+      workspacePolicy: 'freezable',
+      workspaceDisplayName: 'Foo',
+      workspaceName: 'app-demo',
+      workspaceRecipes: [],
+    };
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      const question: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_Question = (Array.isArray(questions) === true) ? questions[0] as Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_Question : questions;
+      const rawName: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_RawName = question['name'];
+      const name: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_Name = (typeof rawName === 'string') ? rawName : '';
+      const response: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_Response = {};
+
+      if (Reflect.has(scriptedAnswers, name) === true) {
+        Reflect.set(response, name, Reflect.get(scriptedAnswers, name));
+      }
+
+      return Promise.resolve(response);
+    });
+
+    const form: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_Form = Reflect.get(CliUtilityInitialize, 'promptWorkspacesForm') as Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_Form;
+
+    const formOptions: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_FormOptions = {
+      workspacePath: './packages/demo-app',
+
+      // Inlined literal avoids a typed body var aliasing the foreign existingWorkspace option type (rule 7.2).
+      existingWorkspace: {
+        name: 'app-demo',
+        displayName: 'Foo',
+        role: 'app',
+        policy: 'freezable',
+        dotenv: {
+          variables: [{
+            key: 'API_KEY',
+            defaultValue: '',
+          }],
+        },
+      },
+      projectSlug: undefined,
+    };
+
+    const formResult: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PreservesExistingWorkspaceDotenvThroughTheForm_FormResult = await form(formOptions);
+
+    strictEqual(formResult['action'], 'apply');
+
+    if (formResult['action'] === 'apply') {
+      deepStrictEqual(formResult['workspace']['dotenv'], {
+        variables: [{
+          key: 'API_KEY',
+          defaultValue: '',
+        }],
+      });
+    }
 
     return;
   });

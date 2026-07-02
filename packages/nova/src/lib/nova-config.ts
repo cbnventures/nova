@@ -1,17 +1,21 @@
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
+import { Logger } from '../toolkit/index.js';
 import {
+  libItemAllowedAgents,
   libItemAllowedPoliciesByRole,
   libItemAllowedRecipes,
   libItemAllowedRoles,
   libItemEmailFields,
   libItemGenericProtocols,
   libItemRepositoryProtocols,
+  libItemReservedDotenvKeys,
   libItemUrlFields,
 } from './item.js';
 import {
   LIB_REGEX_PATTERN_EMAIL_SIMPLE,
+  LIB_REGEX_PATTERN_ENV_VAR_KEY_SCREAMING_SNAKE,
   LIB_REGEX_PATTERN_GITHUB_OWNER,
   LIB_REGEX_PATTERN_GITHUB_REPO,
   LIB_REGEX_PATTERN_SLUG_SCOPED,
@@ -41,6 +45,10 @@ import type {
   Lib_NovaConfig_Runner_GetGithubFeatures_Returns,
   Lib_NovaConfig_Runner_GetGithubFeatures_Value,
   Lib_NovaConfig_Runner_GetGithubFeatures_Wiki,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplate_Returns,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplate_Value,
   Lib_NovaConfig_Runner_GetGithubPolicies_AutoDeleteHeadBranch,
   Lib_NovaConfig_Runner_GetGithubPolicies_DefaultBranch,
   Lib_NovaConfig_Runner_GetGithubPolicies_MergeMethods,
@@ -81,9 +89,11 @@ import type {
   Lib_NovaConfig_Runner_Load_ParsedFile,
   Lib_NovaConfig_Runner_Load_RawFile,
   Lib_NovaConfig_Runner_Load_Returns,
+  Lib_NovaConfig_Runner_Parse_Agents,
   Lib_NovaConfig_Runner_Parse_Emails,
   Lib_NovaConfig_Runner_Parse_Entities,
   Lib_NovaConfig_Runner_Parse_Github,
+  Lib_NovaConfig_Runner_Parse_Gitignore,
   Lib_NovaConfig_Runner_Parse_Project,
   Lib_NovaConfig_Runner_Parse_Result,
   Lib_NovaConfig_Runner_Parse_Returns,
@@ -91,6 +101,19 @@ import type {
   Lib_NovaConfig_Runner_Parse_Value,
   Lib_NovaConfig_Runner_Parse_Workflows,
   Lib_NovaConfig_Runner_Parse_Workspaces,
+  Lib_NovaConfig_Runner_ParseAgents_Agents,
+  Lib_NovaConfig_Runner_ParseAgents_Returns,
+  Lib_NovaConfig_Runner_ParseAgents_Value,
+  Lib_NovaConfig_Runner_ParseDotenv_DefaultValue,
+  Lib_NovaConfig_Runner_ParseDotenv_DefaultValueCandidate,
+  Lib_NovaConfig_Runner_ParseDotenv_IsReservedKey,
+  Lib_NovaConfig_Runner_ParseDotenv_Key,
+  Lib_NovaConfig_Runner_ParseDotenv_RawVariable,
+  Lib_NovaConfig_Runner_ParseDotenv_RawVariables,
+  Lib_NovaConfig_Runner_ParseDotenv_Returns,
+  Lib_NovaConfig_Runner_ParseDotenv_Value,
+  Lib_NovaConfig_Runner_ParseDotenv_Variables,
+  Lib_NovaConfig_Runner_ParseDotenv_VariablesByKey,
   Lib_NovaConfig_Runner_ParseEmails_EmailFields,
   Lib_NovaConfig_Runner_ParseEmails_Emails,
   Lib_NovaConfig_Runner_ParseEmails_ParsedEmail,
@@ -108,6 +131,7 @@ import type {
   Lib_NovaConfig_Runner_ParseEntities_Url,
   Lib_NovaConfig_Runner_ParseEntities_Value,
   Lib_NovaConfig_Runner_ParseGithub_Features,
+  Lib_NovaConfig_Runner_ParseGithub_IssueTemplate,
   Lib_NovaConfig_Runner_ParseGithub_Owner,
   Lib_NovaConfig_Runner_ParseGithub_OwnerCandidate,
   Lib_NovaConfig_Runner_ParseGithub_Policies,
@@ -118,6 +142,10 @@ import type {
   Lib_NovaConfig_Runner_ParseGithub_Returns,
   Lib_NovaConfig_Runner_ParseGithub_Topics,
   Lib_NovaConfig_Runner_ParseGithub_Value,
+  Lib_NovaConfig_Runner_ParseGitignore_ProjectExcludes,
+  Lib_NovaConfig_Runner_ParseGitignore_Result,
+  Lib_NovaConfig_Runner_ParseGitignore_Returns,
+  Lib_NovaConfig_Runner_ParseGitignore_Value,
   Lib_NovaConfig_Runner_ParseProject_AllowedLicenses,
   Lib_NovaConfig_Runner_ParseProject_AllowedPlatforms,
   Lib_NovaConfig_Runner_ParseProject_Description,
@@ -179,15 +207,16 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkflows_Value,
   Lib_NovaConfig_Runner_ParseWorkflows_Workflow,
   Lib_NovaConfig_Runner_ParseWorkflows_Workflows,
+  Lib_NovaConfig_Runner_ParseWorkspaceDotenv_Returns,
+  Lib_NovaConfig_Runner_ParseWorkspaceDotenv_Value,
   Lib_NovaConfig_Runner_ParseWorkspaces_AllowedPolicies,
-  Lib_NovaConfig_Runner_ParseWorkspaces_AllowedRecipes,
   Lib_NovaConfig_Runner_ParseWorkspaces_DisplayNameCandidate,
+  Lib_NovaConfig_Runner_ParseWorkspaces_Dotenv,
   Lib_NovaConfig_Runner_ParseWorkspaces_Enabled,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Base,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Descriptor,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Returns,
-  Lib_NovaConfig_Runner_ParseWorkspaces_MatchedRecipe,
   Lib_NovaConfig_Runner_ParseWorkspaces_MatchedRole,
   Lib_NovaConfig_Runner_ParseWorkspaces_Name,
   Lib_NovaConfig_Runner_ParseWorkspaces_NameCandidate,
@@ -197,7 +226,6 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkspaces_Path,
   Lib_NovaConfig_Runner_ParseWorkspaces_Policy,
   Lib_NovaConfig_Runner_ParseWorkspaces_PolicyCandidate,
-  Lib_NovaConfig_Runner_ParseWorkspaces_RecipeName,
   Lib_NovaConfig_Runner_ParseWorkspaces_Recipes,
   Lib_NovaConfig_Runner_ParseWorkspaces_RecipesCandidate,
   Lib_NovaConfig_Runner_ParseWorkspaces_RecipeTuple,
@@ -260,8 +288,9 @@ export class Runner {
   /**
    * Lib - Nova Config - Load.
    *
-   * Reads nova.config.json from the working directory and runs the salvage-first
-   * parser so invalid fields are silently dropped rather than causing failures.
+   * Reads nova.config.json and runs the salvage-first parser so invalid fields are
+   * dropped rather than causing failures. Dropped workspaces and reserved dotenv-key
+   * collisions warn; other salvaged fields are dropped silently.
    *
    * @returns {Lib_NovaConfig_Runner_Load_Returns}
    *
@@ -371,6 +400,8 @@ export class Runner {
       value['workspaces'],
       (project !== undefined && project['name'] !== undefined) ? project['name']['slug'] : undefined,
     );
+    const gitignore: Lib_NovaConfig_Runner_Parse_Gitignore = this.parseGitignore(value['gitignore']);
+    const agents: Lib_NovaConfig_Runner_Parse_Agents = this.parseAgents(value['agents']);
 
     if (project !== undefined) {
       result.project = project;
@@ -398,6 +429,14 @@ export class Runner {
 
     if (workspaces !== undefined) {
       result.workspaces = workspaces;
+    }
+
+    if (gitignore !== undefined) {
+      result.gitignore = gitignore;
+    }
+
+    if (agents !== undefined) {
+      result.agents = agents;
     }
 
     return result;
@@ -770,6 +809,11 @@ export class Runner {
       const options: Lib_NovaConfig_Runner_ParseWorkspaces_Options = valueEntry[1];
 
       if (isPlainObject(options) === false) {
+        Logger.customize({
+          name: 'Runner.parseWorkspaces',
+          purpose: 'workspaces',
+        }).warn(`Workspace "${path}" is not an object. Skipping ...`);
+
         continue;
       }
 
@@ -779,12 +823,40 @@ export class Runner {
       const policyCandidate: Lib_NovaConfig_Runner_ParseWorkspaces_PolicyCandidate = this.getNonEmptyString(options['policy']);
 
       if (nameCandidate === undefined) {
+        Logger.customize({
+          name: 'Runner.parseWorkspaces',
+          purpose: 'workspaces',
+        }).warn(`Workspace "${path}" has no valid name. Skipping ...`);
+
+        continue;
+      }
+
+      if (roleCandidate === undefined) {
+        Logger.customize({
+          name: 'Runner.parseWorkspaces',
+          purpose: 'workspaces',
+        }).warn(`Workspace "${path}" has no role. Skipping ...`);
+
         continue;
       }
 
       const matchedRole: Lib_NovaConfig_Runner_ParseWorkspaces_MatchedRole = libItemAllowedRoles.find((itemAllowedRole) => itemAllowedRole === roleCandidate);
 
       if (matchedRole === undefined) {
+        Logger.customize({
+          name: 'Runner.parseWorkspaces',
+          purpose: 'workspaces',
+        }).warn(`Workspace "${path}" has an unrecognized role "${roleCandidate}". Skipping ...`);
+
+        continue;
+      }
+
+      if (policyCandidate === undefined) {
+        Logger.customize({
+          name: 'Runner.parseWorkspaces',
+          purpose: 'workspaces',
+        }).warn(`Workspace "${path}" has no policy. Skipping ...`);
+
         continue;
       }
 
@@ -792,10 +864,20 @@ export class Runner {
       const policy: Lib_NovaConfig_Runner_ParseWorkspaces_Policy = allowedPolicies.find((allowedPolicy) => allowedPolicy === policyCandidate);
 
       if (policy === undefined) {
+        Logger.customize({
+          name: 'Runner.parseWorkspaces',
+          purpose: 'workspaces',
+        }).warn(`Workspace "${path}" policy "${policyCandidate}" is not allowed for role "${matchedRole}". Skipping ...`);
+
         continue;
       }
 
       if (isNameAllowed(matchedRole, nameCandidate) === false) {
+        Logger.customize({
+          name: 'Runner.parseWorkspaces',
+          purpose: 'workspaces',
+        }).warn(`Workspace "${path}" name "${nameCandidate}" does not match the required pattern for role "${matchedRole}". Skipping ...`);
+
         continue;
       }
 
@@ -804,20 +886,12 @@ export class Runner {
       const recipesCandidate: Lib_NovaConfig_Runner_ParseWorkspaces_RecipesCandidate = options['recipes'];
 
       if (isPlainObject(recipesCandidate) === true) {
-        const allowedRecipes: Lib_NovaConfig_Runner_ParseWorkspaces_AllowedRecipes = new Set(libItemAllowedRecipes);
         const parsedRecipes: Lib_NovaConfig_Runner_ParseWorkspaces_ParsedRecipes = {};
 
-        for (const recipesCandidateEntry of Object.entries(recipesCandidate)) {
-          const recipeName: Lib_NovaConfig_Runner_ParseWorkspaces_RecipeName = recipesCandidateEntry[0];
-          const recipeTuple: Lib_NovaConfig_Runner_ParseWorkspaces_RecipeTuple = recipesCandidateEntry[1];
-
-          const matchedRecipe: Lib_NovaConfig_Runner_ParseWorkspaces_MatchedRecipe = [...allowedRecipes].find(
-            (allowedRecipe) => allowedRecipe === recipeName,
-          );
-
-          if (matchedRecipe === undefined) {
-            continue;
-          }
+        // Rebuild in the canonical libItemAllowedRecipes order so the serialized config
+        // mirrors the interactive menu regardless of the input recipe key order.
+        for (const allowedRecipe of libItemAllowedRecipes) {
+          const recipeTuple: Lib_NovaConfig_Runner_ParseWorkspaces_RecipeTuple = Reflect.get(recipesCandidate, allowedRecipe);
 
           if (Array.isArray(recipeTuple) === false || recipeTuple.length === 0) {
             continue;
@@ -844,15 +918,15 @@ export class Runner {
             }
 
             if (Object.keys(parsedSettings).length > 0) {
-              Reflect.set(parsedRecipes, matchedRecipe, [
+              Reflect.set(parsedRecipes, allowedRecipe, [
                 enabled,
                 parsedSettings,
               ]);
             } else {
-              Reflect.set(parsedRecipes, matchedRecipe, [enabled]);
+              Reflect.set(parsedRecipes, allowedRecipe, [enabled]);
             }
           } else {
-            Reflect.set(parsedRecipes, matchedRecipe, [enabled]);
+            Reflect.set(parsedRecipes, allowedRecipe, [enabled]);
           }
         }
 
@@ -861,12 +935,15 @@ export class Runner {
         }
       }
 
+      const dotenv: Lib_NovaConfig_Runner_ParseWorkspaces_Dotenv = this.parseWorkspaceDotenv(options['dotenv']);
+
       Reflect.set(workspaces, path, {
         role: matchedRole,
         policy,
         name: nameCandidate,
         ...(displayNameCandidate !== undefined) ? { displayName: displayNameCandidate } : {},
         ...(recipes !== undefined) ? { recipes } : {},
+        ...(dotenv !== undefined) ? { dotenv } : {},
       });
     }
 
@@ -900,7 +977,7 @@ export class Runner {
    *
    * @returns {Lib_NovaConfig_Runner_ParseWorkflows_Returns}
    *
-   * @since 0.20.0
+   * @since 0.18.0
    */
   private parseWorkflows(value: Lib_NovaConfig_Runner_ParseWorkflows_Value): Lib_NovaConfig_Runner_ParseWorkflows_Returns {
     if (Array.isArray(value) === false) {
@@ -1060,7 +1137,7 @@ export class Runner {
    *
    * @returns {Lib_NovaConfig_Runner_ParseGithub_Returns}
    *
-   * @since 0.22.0
+   * @since 0.18.0
    */
   private parseGithub(value: Lib_NovaConfig_Runner_ParseGithub_Value): Lib_NovaConfig_Runner_ParseGithub_Returns {
     if (isPlainObject(value) === false) {
@@ -1107,7 +1184,170 @@ export class Runner {
       result.policies = policies;
     }
 
+    const issueTemplate: Lib_NovaConfig_Runner_ParseGithub_IssueTemplate = this.getGithubIssueTemplate(value['issueTemplate']);
+
+    if (issueTemplate !== undefined) {
+      result.issueTemplate = issueTemplate;
+    }
+
     return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Parse Gitignore.
+   *
+   * Parses the gitignore block from the config, extracting the projectExcludes
+   * list of additional ignore patterns. Returns undefined when the block is absent
+   * or not a plain object.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseGitignore_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseGitignore_Returns}
+   *
+   * @since 0.20.0
+   */
+  private parseGitignore(value: Lib_NovaConfig_Runner_ParseGitignore_Value): Lib_NovaConfig_Runner_ParseGitignore_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_ParseGitignore_Result = {};
+    const projectExcludes: Lib_NovaConfig_Runner_ParseGitignore_ProjectExcludes = this.getArrayOfNonEmptyStrings(value['projectExcludes']);
+
+    if (projectExcludes !== undefined) {
+      result.projectExcludes = projectExcludes;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Parse Agents.
+   *
+   * Parses the top-level "agents" field into a list of AI-tool ids, validating each
+   * entry against libItemAllowedAgents and dropping unknown ids. Returns undefined when
+   * the input is not an array or holds no valid ids.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseAgents_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseAgents_Returns}
+   *
+   * @since 0.20.0
+   */
+  private parseAgents(value: Lib_NovaConfig_Runner_ParseAgents_Value): Lib_NovaConfig_Runner_ParseAgents_Returns {
+    if (Array.isArray(value) === false) {
+      return undefined;
+    }
+
+    const agents: Lib_NovaConfig_Runner_ParseAgents_Agents = [];
+
+    // Rebuild in the canonical libItemAllowedAgents order so the serialized config
+    // stays stable regardless of the input order and drops unknown ids.
+    for (const allowedAgent of libItemAllowedAgents) {
+      if (value.some((item) => item === allowedAgent) === true) {
+        agents.push(allowedAgent);
+      }
+    }
+
+    return (agents.length > 0) ? agents : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Parse Dotenv.
+   *
+   * Parses the dotenv block from the config, extracting the variables list of
+   * key and defaultValue pairs. A variable needs a non-empty SCREAMING_SNAKE key
+   * and defaults defaultValue to an empty string when absent.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseDotenv_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseDotenv_Returns}
+   *
+   * @since 0.20.0
+   */
+  private parseDotenv(value: Lib_NovaConfig_Runner_ParseDotenv_Value): Lib_NovaConfig_Runner_ParseDotenv_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const rawVariables: Lib_NovaConfig_Runner_ParseDotenv_RawVariables = value['variables'];
+
+    if (Array.isArray(rawVariables) === false) {
+      return undefined;
+    }
+
+    const variables: Lib_NovaConfig_Runner_ParseDotenv_Variables = [];
+
+    // Dedupe by key, last-wins, so a key declared twice yields a single clean entry.
+    const variablesByKey: Lib_NovaConfig_Runner_ParseDotenv_VariablesByKey = new Map();
+
+    for (const rawVariableItem of rawVariables) {
+      const rawVariable: Lib_NovaConfig_Runner_ParseDotenv_RawVariable = rawVariableItem;
+
+      if (isPlainObject(rawVariable) === false) {
+        continue;
+      }
+
+      const key: Lib_NovaConfig_Runner_ParseDotenv_Key = this.getNonEmptyString(rawVariable['key']);
+
+      if (key === undefined || LIB_REGEX_PATTERN_ENV_VAR_KEY_SCREAMING_SNAKE.test(key) === false) {
+        continue;
+      }
+
+      // Reserved keys are owned by the dotenv template, so a config declaration is dropped.
+      const isReservedKey: Lib_NovaConfig_Runner_ParseDotenv_IsReservedKey = libItemReservedDotenvKeys.some((reservedKey) => reservedKey === key);
+
+      if (isReservedKey === true) {
+        Logger.customize({
+          name: 'Runner.parseDotenv',
+          purpose: 'variables',
+        }).warn(`Dotenv variable "${key}" is reserved and managed by the dotenv template. It cannot be declared.`);
+
+        continue;
+      }
+
+      const defaultValueCandidate: Lib_NovaConfig_Runner_ParseDotenv_DefaultValueCandidate = (typeof rawVariable['defaultValue'] === 'string') ? rawVariable['defaultValue'] : undefined;
+      const defaultValue: Lib_NovaConfig_Runner_ParseDotenv_DefaultValue = defaultValueCandidate ?? '';
+
+      variablesByKey.set(key, {
+        key,
+        defaultValue,
+      });
+    }
+
+    variables.push(...variablesByKey.values());
+
+    return (variables.length > 0) ? variables : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Parse Workspace Dotenv.
+   *
+   * Parses a workspace dotenv block into its variables list, reusing parseDotenv
+   * for per-variable validation. Returns undefined when the input is not a plain object.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseWorkspaceDotenv_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseWorkspaceDotenv_Returns}
+   *
+   * @since 0.20.0
+   */
+  private parseWorkspaceDotenv(value: Lib_NovaConfig_Runner_ParseWorkspaceDotenv_Value): Lib_NovaConfig_Runner_ParseWorkspaceDotenv_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    return {
+      variables: this.parseDotenv(value) ?? [],
+    };
   }
 
   /**
@@ -1122,7 +1362,7 @@ export class Runner {
    *
    * @returns {Lib_NovaConfig_Runner_GetGithubFeatures_Returns}
    *
-   * @since 0.22.0
+   * @since 0.18.0
    */
   private getGithubFeatures(value: Lib_NovaConfig_Runner_GetGithubFeatures_Value): Lib_NovaConfig_Runner_GetGithubFeatures_Returns {
     if (isPlainObject(value) === false) {
@@ -1159,6 +1399,35 @@ export class Runner {
   }
 
   /**
+   * Lib - Nova Config - Get GitHub Issue Template.
+   *
+   * Parses the github.issueTemplate block for the bugReportFields list of form
+   * field file names. Returns undefined when the input is not a plain object.
+   *
+   * @param {Lib_NovaConfig_Runner_GetGithubIssueTemplate_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetGithubIssueTemplate_Returns}
+   *
+   * @since 0.20.0
+   */
+  private getGithubIssueTemplate(value: Lib_NovaConfig_Runner_GetGithubIssueTemplate_Value): Lib_NovaConfig_Runner_GetGithubIssueTemplate_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result = {};
+    const bugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields = this.getArrayOfNonEmptyStrings(value['bugReportFields']);
+
+    if (bugReportFields !== undefined) {
+      result.bugReportFields = bugReportFields;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
    * Lib - Nova Config - Get GitHub Policies.
    *
    * Parses the github.policies block for visibility, defaultBranch, mergeMethods,
@@ -1170,7 +1439,7 @@ export class Runner {
    *
    * @returns {Lib_NovaConfig_Runner_GetGithubPolicies_Returns}
    *
-   * @since 0.22.0
+   * @since 0.18.0
    */
   private getGithubPolicies(value: Lib_NovaConfig_Runner_GetGithubPolicies_Value): Lib_NovaConfig_Runner_GetGithubPolicies_Returns {
     if (isPlainObject(value) === false) {
@@ -1226,7 +1495,7 @@ export class Runner {
    *
    * @returns {Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Returns}
    *
-   * @since 0.22.0
+   * @since 0.18.0
    */
   private getGithubPoliciesMergeMethods(value: Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Value): Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Returns {
     if (isPlainObject(value) === false) {
@@ -1268,7 +1537,7 @@ export class Runner {
    *
    * @returns {Lib_NovaConfig_Runner_GetGithubRecipes_Returns}
    *
-   * @since 0.22.0
+   * @since 0.18.0
    */
   private getGithubRecipes(value: Lib_NovaConfig_Runner_GetGithubRecipes_Value): Lib_NovaConfig_Runner_GetGithubRecipes_Returns {
     if (isPlainObject(value) === false) {
@@ -1311,7 +1580,7 @@ export class Runner {
    *
    * @returns {Lib_NovaConfig_Runner_GetGithubTopics_Returns}
    *
-   * @since 0.22.0
+   * @since 0.18.0
    */
   private getGithubTopics(value: Lib_NovaConfig_Runner_GetGithubTopics_Value): Lib_NovaConfig_Runner_GetGithubTopics_Returns {
     if (Array.isArray(value) === false) {

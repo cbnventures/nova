@@ -4,6 +4,7 @@ import { join } from 'path';
 import chalk from 'chalk';
 
 import { LIB_CONSTANTS_DOCS_BASE_URL } from '../../../lib/constants.js';
+import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import { LIB_REGEX_PATTERN_LEADING_DOT } from '../../../lib/regex.js';
 import {
   isFileIdentical,
@@ -15,6 +16,7 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
+  Cli_Generate_MustHaves_AgentConventions_Runner_Run_Agents,
   Cli_Generate_MustHaves_AgentConventions_Runner_Run_Content,
   Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionContent,
   Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionFiles,
@@ -35,6 +37,7 @@ import type {
   Cli_Generate_MustHaves_AgentConventions_Runner_Run_TemplateFileName,
   Cli_Generate_MustHaves_AgentConventions_Runner_Run_TemplatePath,
   Cli_Generate_MustHaves_AgentConventions_Runner_Run_UserEditedFiles,
+  Cli_Generate_MustHaves_AgentConventions_Runner_Run_WorkingFile,
 } from '../../../types/cli/generate/must-haves/agent-conventions.d.ts';
 
 /**
@@ -87,12 +90,24 @@ export class Runner {
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
+    const workingFile: Cli_Generate_MustHaves_AgentConventions_Runner_Run_WorkingFile = await new LibNovaConfig().load();
+    const agents: Cli_Generate_MustHaves_AgentConventions_Runner_Run_Agents = workingFile['agents'] ?? [];
+
+    // Emit nothing unless at least one AI tool is selected; every file is gated on the selection.
+    if (agents.length === 0) {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'agents',
+      }).warn('No AI agents selected. Nothing to generate.');
+
+      return 'completed';
+    }
+
     const templateDirectory: Cli_Generate_MustHaves_AgentConventions_Runner_Run_TemplateDirectory = resolveTemplatePath(import.meta.url, 'generators/must-haves/agent-conventions');
 
     const rootFiles: Cli_Generate_MustHaves_AgentConventions_Runner_Run_RootFiles = [
-      '.cursorrules',
-      'AGENTS.md',
-      'CLAUDE.md',
+      ...(agents.includes('claude-code') === true) ? ['CLAUDE.md'] : [],
+      ...(agents.includes('codex') === true) ? ['AGENTS.md'] : [],
       'VISION.md',
       'PROJECT_RULES.md',
     ];

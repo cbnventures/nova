@@ -66,7 +66,7 @@ import type {
  * Pushes description, homepage URL, and topics from nova.config.json
  * to a GitHub repository using the gh CLI.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export class Runner {
   /**
@@ -79,7 +79,7 @@ export class Runner {
    *
    * @returns {Cli_Recipe_Github_SyncIdentity_Runner_Run_Returns}
    *
-   * @since 0.22.0
+   * @since 0.18.0
    */
   public static async run(options: Cli_Recipe_Github_SyncIdentity_Runner_Run_Options): Cli_Recipe_Github_SyncIdentity_Runner_Run_Returns {
     const currentDirectory: Cli_Recipe_Github_SyncIdentity_Runner_Run_CurrentDirectory = process.cwd();
@@ -274,7 +274,7 @@ export class Runner {
 
     // gh api PUT for topics.
     if (topics !== undefined) {
-      const topicFlags: Cli_Recipe_Github_SyncIdentity_Runner_Run_TopicFlags = topics.map((topic) => `-f names[]=${shellQuote(topic)}`).join(' ');
+      const topicFlags: Cli_Recipe_Github_SyncIdentity_Runner_Run_TopicFlags = (topics.length === 0) ? `-f ${shellQuote('names[]')}` : topics.map((topic) => `-f ${shellQuote(`names[]=${topic}`)}`).join(' ');
       const topicsCommand: Cli_Recipe_Github_SyncIdentity_Runner_Run_TopicsCommand = `gh api -X PUT /repos/${owner}/${repo}/topics ${topicFlags}`.trim();
 
       Logger.customize({
@@ -316,7 +316,7 @@ export class Runner {
    *
    * @returns {Cli_Recipe_Github_SyncIdentity_Runner_NormalizeTopics_Returns}
    *
-   * @since 0.22.0
+   * @since 0.18.0
    */
   private static normalizeTopics(keywords: Cli_Recipe_Github_SyncIdentity_Runner_NormalizeTopics_Keywords): Cli_Recipe_Github_SyncIdentity_Runner_NormalizeTopics_Returns {
     if (keywords === undefined) {

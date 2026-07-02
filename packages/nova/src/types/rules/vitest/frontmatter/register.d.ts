@@ -1,0 +1,63 @@
+import type {
+  Rules_Vitest_Index_FrontmatterSuiteConfig,
+  Rules_Vitest_Index_FrontmatterToggleKey,
+} from '../index.d.ts';
+
+/**
+ * Rules - Vitest - Frontmatter - Register - Register Frontmatter Suite.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Config = Rules_Vitest_Index_FrontmatterSuiteConfig;
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Returns = void;
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_RequiredFields = string[];
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_RequiredBlogFields = string[];
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_ContentDirs = string[];
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_BlogDir = string;
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_IndexSlug = string | null;
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_PlaceholderSentinel = string | undefined;
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_PlaceholderBodyPrefix = string | undefined;
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_RootDir = string;
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Enable = 'all' | Rules_Vitest_Index_FrontmatterToggleKey[];
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Files = string[];
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_RequiredFields = string[];
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_RequiredBlogFields = string[];
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_ContentDirs = string[];
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_BlogDir = string;
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_IndexSlug = string | null;
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_PlaceholderSentinel = string | undefined;
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_PlaceholderBodyPrefix = string | undefined;
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_RootDir = string;
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_Files = string[];
+
+export type Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved = {
+  requiredFields: Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_RequiredFields;
+  requiredBlogFields: Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_RequiredBlogFields;
+  contentDirs: Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_ContentDirs;
+  blogDir: Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_BlogDir;
+  indexSlug: Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_IndexSlug;
+  placeholderSentinel: Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_PlaceholderSentinel;
+  placeholderBodyPrefix: Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_PlaceholderBodyPrefix;
+  rootDir: Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_RootDir;
+  files: Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_Resolved_Files;
+};

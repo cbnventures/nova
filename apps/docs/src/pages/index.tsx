@@ -106,7 +106,7 @@ function Home() {
     {
       icon: 'lucide:bot',
       title: 'Your AI Agents Follow Rules Too',
-      description: 'Generate convention files for Claude Code, Cursor, and other agents. Project rules, coding standards, directives — from the CLI.',
+      description: 'Generate convention files for Claude Code, Codex, and other agents. Project rules, coding standards, directives — from the CLI.',
     },
   ];
 

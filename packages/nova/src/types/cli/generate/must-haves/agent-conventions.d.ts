@@ -1,4 +1,7 @@
-import type { Shared_GeneratorRunResult as SharedGeneratorRunResult } from '../../../shared.d.ts';
+import type {
+  Shared_GeneratorRunResult as SharedGeneratorRunResult,
+  Shared_NovaConfig as SharedNovaConfig,
+} from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - Must Haves - Agent Conventions - Run.
@@ -25,6 +28,10 @@ export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_IsDryRun = boolea
 export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_IsReplaceFile = boolean;
 
 export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_ReplaceFileNotice = string;
+
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_WorkingFile = SharedNovaConfig;
+
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_Agents = ('claude-code' | 'codex')[];
 
 export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_TemplateDirectory = string;
 

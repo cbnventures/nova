@@ -27,7 +27,14 @@ import {
   LIB_REGEX_LINEBREAK_CRLF_OR_LF,
   LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE,
   LIB_REGEX_PATTERN_LEADING_DOT,
+  LIB_REGEX_PATTERN_NON_ROUTE_SEGMENT_CHARACTER,
   LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE,
+  LIB_REGEX_PATTERN_ROUTE_CATCH_ALL_SEGMENT,
+  LIB_REGEX_PATTERN_ROUTE_DYNAMIC_SEGMENT,
+  LIB_REGEX_PATTERN_ROUTE_GROUP_SEGMENT,
+  LIB_REGEX_PATTERN_ROUTE_OPTIONAL_CATCH_ALL_SEGMENT,
+  LIB_REGEX_PATTERN_ROUTE_PARALLEL_SEGMENT,
+  LIB_REGEX_PATTERN_ROUTE_SEGMENT_WORD_CHARACTER,
 } from './regex.js';
 
 import type {
@@ -1059,15 +1066,15 @@ export async function loadWorkspaceManifests(options: Lib_Utility_LoadWorkspaceM
  *
  * @returns {Lib_Utility_NormalizeRouteSegment_Returns}
  *
- * @since 0.17.1
+ * @since 0.17.0
  */
 export function normalizeRouteSegment(segment: Lib_Utility_NormalizeRouteSegment_Segment): Lib_Utility_NormalizeRouteSegment_Returns {
   const patterns: Lib_Utility_NormalizeRouteSegment_Patterns = [
-    new RegExp('^\\[\\[\\.\\.\\.(.+)\\]\\]$'),
-    new RegExp('^\\[\\.\\.\\.(.+)\\]$'),
-    new RegExp('^\\[(.+)\\]$'),
-    new RegExp('^\\((.+)\\)$'),
-    new RegExp('^@(.+)$'),
+    LIB_REGEX_PATTERN_ROUTE_OPTIONAL_CATCH_ALL_SEGMENT,
+    LIB_REGEX_PATTERN_ROUTE_CATCH_ALL_SEGMENT,
+    LIB_REGEX_PATTERN_ROUTE_DYNAMIC_SEGMENT,
+    LIB_REGEX_PATTERN_ROUTE_GROUP_SEGMENT,
+    LIB_REGEX_PATTERN_ROUTE_PARALLEL_SEGMENT,
   ];
 
   let inner: Lib_Utility_NormalizeRouteSegment_Inner = segment;
@@ -1082,9 +1089,9 @@ export function normalizeRouteSegment(segment: Lib_Utility_NormalizeRouteSegment
     }
   }
 
-  const scrubbed: Lib_Utility_NormalizeRouteSegment_Scrubbed = inner.replace(new RegExp('[^A-Za-z0-9_-]', 'g'), '-');
+  const scrubbed: Lib_Utility_NormalizeRouteSegment_Scrubbed = inner.replace(new RegExp(LIB_REGEX_PATTERN_NON_ROUTE_SEGMENT_CHARACTER.source, 'g'), '-');
 
-  if (new RegExp('[A-Za-z0-9_]').test(scrubbed) === false) {
+  if (LIB_REGEX_PATTERN_ROUTE_SEGMENT_WORD_CHARACTER.test(scrubbed) === false) {
     return '';
   }
 
@@ -1332,7 +1339,7 @@ export function resolveTemplatePath(importMetaUrl: Lib_Utility_ResolveTemplatePa
  *
  * @returns {Lib_Utility_BuildGeneratedFileHeader_Returns}
  *
- * @since 0.16.3
+ * @since 0.16.0
  */
 export function buildGeneratedFileHeader(options: Lib_Utility_BuildGeneratedFileHeader_Options): Lib_Utility_BuildGeneratedFileHeader_Returns {
   const baseName: Lib_Utility_BuildGeneratedFileHeader_BaseName = basename(options['targetPath']);

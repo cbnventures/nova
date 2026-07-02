@@ -2,6 +2,7 @@ import type {
   Shared_ChangelogEntry_Bump,
   Shared_ChangelogEntry_Category,
   Shared_ItemPrettyNames,
+  Shared_NovaConfigAgent,
   Shared_NovaConfigEntityRole,
   Shared_NovaConfigWorkspace_Policy,
   Shared_NovaConfigWorkspace_Role,
@@ -57,6 +58,24 @@ export type Lib_Item_AllowedRoles = readonly [
   'package',
   'tool',
   'template',
+];
+
+/**
+ * Lib - Item - Allowed Agents.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Item_AllowedAgents = readonly Shared_NovaConfigAgent[];
+
+/**
+ * Lib - Item - Reserved Dotenv Keys.
+ *
+ * @since 0.20.0
+ */
+export type Lib_Item_ReservedDotenvKeys = readonly [
+  'NODE_ENV',
+  'LOG_LEVEL',
+  'LOG_TIME',
 ];
 
 /**

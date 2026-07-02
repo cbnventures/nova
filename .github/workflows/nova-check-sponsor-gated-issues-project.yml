@@ -45,7 +45,7 @@ jobs:
       issues: "write"
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v6"
+        uses: "actions/checkout@v7"
 
       - name: "Check support issues"
         uses: "mrjackyliang/sponsor-gated-support@v1.0.1"

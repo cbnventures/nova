@@ -1,71 +1,3 @@
-import type {
-  GetAccessorDeclaration,
-  MethodDeclaration,
-  Node,
-  SetAccessorDeclaration,
-  SourceFile,
-  StringLiteral,
-} from 'typescript';
-
-/**
- * Tests - Type Declarations.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_TestConfig_StandaloneTypeFiles = string[];
-
-export type Tests_TypeDeclarations_TestConfig_TypeRoots = string[];
-
-export type Tests_TypeDeclarations_TestConfig = {
-  standaloneTypeFiles: Tests_TypeDeclarations_TestConfig_StandaloneTypeFiles;
-  typeRoots: Tests_TypeDeclarations_TestConfig_TypeRoots;
-};
-
-export type Tests_TypeDeclarations_SourceFileCache = Map<string, Tests_TypeDeclarations_CachedEntry>;
-
-export type Tests_TypeDeclarations_CachedEntry_Content = string;
-
-export type Tests_TypeDeclarations_CachedEntry_SourceFile = SourceFile;
-
-export type Tests_TypeDeclarations_CachedEntry = {
-  content: Tests_TypeDeclarations_CachedEntry_Content;
-  sourceFile: Tests_TypeDeclarations_CachedEntry_SourceFile;
-};
-
-/**
- * Tests - Type Declarations - Build Dts Sections.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_BuildDtsSections_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_BuildDtsSections_DtsLines = string[];
-
-export type Tests_TypeDeclarations_BuildDtsSections_Section_Prefix = string;
-
-export type Tests_TypeDeclarations_BuildDtsSections_Section_TypeLines = string[];
-
-export type Tests_TypeDeclarations_BuildDtsSections_Section = {
-  prefix: Tests_TypeDeclarations_BuildDtsSections_Section_Prefix;
-  typeLines: Tests_TypeDeclarations_BuildDtsSections_Section_TypeLines;
-};
-
-export type Tests_TypeDeclarations_BuildDtsSections_Returns = Tests_TypeDeclarations_BuildDtsSections_Section[];
-
-export type Tests_TypeDeclarations_BuildDtsSections_SourceSections = Set<string>;
-
-export type Tests_TypeDeclarations_BuildDtsSections_SortedSections = string[];
-
-export type Tests_TypeDeclarations_BuildDtsSections_SectionMap = Map<string, Tests_TypeDeclarations_BuildDtsSections_Section>;
-
-export type Tests_TypeDeclarations_BuildDtsSections_SectionOrder = string[];
-
-export type Tests_TypeDeclarations_BuildDtsSections_Match = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_BuildDtsSections_TypeName = string;
-
-export type Tests_TypeDeclarations_BuildDtsSections_OwningSection = string;
-
 /**
  * Tests - Type Declarations - Build Dts Sections Comprehensive - Falls Back To Class Prefix For Unmatched Types.
  *
@@ -147,58 +79,6 @@ export type Tests_TypeDeclarations_BuildDtsSectionsComprehensive_UsesLongestPref
 export type Tests_TypeDeclarations_BuildDtsSectionsComprehensive_UsesLongestPrefixMatch_Sections = Tests_TypeDeclarations_BuildDtsSectionsComprehensive_UsesLongestPrefixMatch_Section[];
 
 /**
- * Tests - Type Declarations - Build Source Section Map.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_BuildSourceSectionMap_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Content = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_FilePath = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Returns = Map<number, string>;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_SourceFile = SourceFile;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_SectionMap = Map<number, string>;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_MaxDepth = number;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_PascalCaseReturns = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_CurrentDepth = number;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_TagAllChildrenReturns = void;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_VisitReturns = void;
-
-/**
- * Tests - Type Declarations - Build Source Section Map - Get Line.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_BuildSourceSectionMap_GetLine_Node = Node;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_GetLine_Returns = number;
-
-/**
- * Tests - Type Declarations - Build Source Section Map - Pascal Case.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_BuildSourceSectionMap_PascalCase_Name = string;
-
-/**
- * Tests - Type Declarations - Build Source Section Map - Tag All Children.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_BuildSourceSectionMap_TagAllChildren_Node = Node;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_TagAllChildren_Section = string;
-
-/**
  * Tests - Type Declarations - Build Source Section Map - Tags Describe Block Contents With The Describe Derived Section.
  *
  * @since 0.18.0
@@ -249,43 +129,6 @@ export type Tests_TypeDeclarations_BuildSourceSectionMap_TagsNestedConstArrowFun
 export type Tests_TypeDeclarations_BuildSourceSectionMap_TagsNestedConstArrowFunctionBodyLinesWithTheSubSectionWhileKeepingTheConstDeclarationInTheParentSection_ClassPrefix = string;
 
 export type Tests_TypeDeclarations_BuildSourceSectionMap_TagsNestedConstArrowFunctionBodyLinesWithTheSubSectionWhileKeepingTheConstDeclarationInTheParentSection_SectionMap = Map<number, string>;
-
-/**
- * Tests - Type Declarations - Build Source Section Map - Visit.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_Node = Node;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_Section = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_NewSection = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_Accessor = MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_RawMethodName = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_CleanMethodName = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_NewSection2 = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_NewSection3 = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_NewSection4 = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_HasInitializer = boolean;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_SubSection = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_CallbackArg = Node | undefined;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_Arg = Node | undefined;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_StringArg = StringLiteral;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_Chunk = string;
-
-export type Tests_TypeDeclarations_BuildSourceSectionMap_Visit_NewSection5 = string;
 
 /**
  * Tests - Type Declarations - Build Source Section Map Comprehensive - Anonymous Class Declaration Default Export Without Name Does NOTAdd Chunk.
@@ -502,44 +345,6 @@ export type Tests_TypeDeclarations_BuildSourceSectionMapComprehensive_VariableIn
 export type Tests_TypeDeclarations_BuildSourceSectionMapComprehensive_VitestBenchSuiteCallsAddChunksGenericallyEC34_SectionMap = Map<number, string>;
 
 /**
- * Tests - Type Declarations - Check Type Name Uniqueness.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_Declaration_Name = string;
-
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_Declaration_TypeName = string;
-
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_Declaration_LineNumber = number;
-
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_Declaration = {
-  name: Tests_TypeDeclarations_CheckTypeNameUniqueness_Declaration_Name;
-  typeName: Tests_TypeDeclarations_CheckTypeNameUniqueness_Declaration_TypeName;
-  lineNumber: Tests_TypeDeclarations_CheckTypeNameUniqueness_Declaration_LineNumber;
-};
-
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_Declarations = Tests_TypeDeclarations_CheckTypeNameUniqueness_Declaration[];
-
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_Returns = Tests_TypeDeclarations_CheckTypeNameUniqueness_Violations;
-
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_Violation = string;
-
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_Violations = Tests_TypeDeclarations_CheckTypeNameUniqueness_Violation[];
-
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_Seen = Map<Tests_TypeDeclarations_CheckTypeNameUniqueness_Declaration_TypeName, Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence>;
-
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_Existing = Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence | undefined;
-
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence_Name = string;
-
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence_LineNumber = number;
-
-export type Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence = {
-  name: Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence_Name;
-  lineNumber: Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence_LineNumber;
-};
-
-/**
  * Tests - Type Declarations - Check Type Name Uniqueness Comprehensive - Detects Duplicate Expected Names Rule78.
  *
  * @since 0.18.0
@@ -560,27 +365,6 @@ export type Tests_TypeDeclarations_CheckTypeNameUniquenessComprehensive_ReturnsN
 export type Tests_TypeDeclarations_CheckTypeNameUniquenessComprehensive_ReturnsNoViolationsForUniqueNames_Violation = string;
 
 export type Tests_TypeDeclarations_CheckTypeNameUniquenessComprehensive_ReturnsNoViolationsForUniqueNames_ViolationsCheckTypeNameUniqueness = Tests_TypeDeclarations_CheckTypeNameUniquenessComprehensive_ReturnsNoViolationsForUniqueNames_Violation[];
-
-/**
- * Tests - Type Declarations - Derive Class Prefix.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_DeriveClassPrefix_FilePath = string;
-
-export type Tests_TypeDeclarations_DeriveClassPrefix_Returns = string;
-
-export type Tests_TypeDeclarations_DeriveClassPrefix_CurrentDirectory = string;
-
-export type Tests_TypeDeclarations_DeriveClassPrefix_RelativePath = string;
-
-export type Tests_TypeDeclarations_DeriveClassPrefix_RelativeCleaned = string;
-
-export type Tests_TypeDeclarations_DeriveClassPrefix_Segments = string[];
-
-export type Tests_TypeDeclarations_DeriveClassPrefix_CamelCaseWordsPattern = RegExp;
-
-export type Tests_TypeDeclarations_DeriveClassPrefix_Words = string[] | null;
 
 /**
  * Tests - Type Declarations - Derive Class Prefix - Drops Test From Test Files.
@@ -652,104 +436,6 @@ export type Tests_TypeDeclarations_DeriveClassPrefixComprehensive_HandlesSingleS
 export type Tests_TypeDeclarations_DeriveClassPrefixComprehensive_StripsTestMarkerForTestFiles_Prefix = string;
 
 /**
- * Tests - Type Declarations - Derive Source Path.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_DeriveSourcePath_DtsPath = string;
-
-export type Tests_TypeDeclarations_DeriveSourcePath_Returns = string;
-
-/**
- * Tests - Type Declarations - Detect Inline Typed Callbacks.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Content = string;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_FilePath = string;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback_ParamName = string;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback_TypeName = string;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback_LineNumber = number;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback = {
-  paramName: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback_ParamName;
-  typeName: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback_TypeName;
-  lineNumber: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback_LineNumber;
-};
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback[];
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_SourceFile = SourceFile;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callbacks = Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback[];
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_VisitReturns = void;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithKindShape = {
-  kind?: number;
-};
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithParentShape = {
-  parent?: Node;
-};
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameShape_TypeName = Node;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameShape = {
-  typeName: Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameShape_TypeName;
-};
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTextShape_Text = string;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTextShape = {
-  text: Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTextShape_Text;
-};
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameTextShape_TypeName_Text = string;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameTextShape_TypeName = {
-  text: Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameTextShape_TypeName_Text;
-};
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameTextShape = {
-  typeName: Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameTextShape_TypeName;
-};
-
-/**
- * Tests - Type Declarations - Detect Inline Typed Callbacks - Visit.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Visit_Node = Node;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Visit_IsFunctionTypedConst = boolean;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Visit_Walker = Node | undefined;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Visit_ParamNode = {
-  name?: Node;
-  type?: Node;
-};
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Visit_LineNumber = number;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Visit_Callback_ParamName = string;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Visit_Callback_TypeName = string;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Visit_Callback_LineNumber = number;
-
-export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Visit_Callback = {
-  paramName: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Visit_Callback_ParamName;
-  typeName: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Visit_Callback_TypeName;
-  lineNumber: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Visit_Callback_LineNumber;
-};
-
-/**
  * Tests - Type Declarations - Detect Inline Typed Callbacks Comprehensive - Detects Typed Arrow Callback Param.
  *
  * @since 0.18.0
@@ -807,35 +493,11 @@ export type Tests_TypeDeclarations_DetectInlineTypedCallbacksComprehensive_Skips
 export type Tests_TypeDeclarations_DetectInlineTypedCallbacksComprehensive_SkipsUntypedCallbackParamRule74H2_Callbacks = Tests_TypeDeclarations_DetectInlineTypedCallbacksComprehensive_SkipsUntypedCallbackParamRule74H2_Callback[];
 
 /**
- * Tests - Type Declarations - Discover Source Files.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_DiscoverSourceFiles_Returns = Promise<string[]>;
-
-export type Tests_TypeDeclarations_DiscoverSourceFiles_Patterns = string[];
-
-export type Tests_TypeDeclarations_DiscoverSourceFiles_IgnorePatterns = string[];
-
-export type Tests_TypeDeclarations_DiscoverSourceFiles_Matched = string[];
-
-/**
  * Tests - Type Declarations - Discover Source Files - Returns Absolute Paths To Ts Source Files Excluding DTs.
  *
  * @since 0.18.0
  */
 export type Tests_TypeDeclarations_DiscoverSourceFiles_ReturnsAbsolutePathsToTsSourceFilesExcludingDTs_Files = string[];
-
-/**
- * Tests - Type Declarations - Discover Type Files.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_DiscoverTypeFiles_Returns = Promise<string[]>;
-
-export type Tests_TypeDeclarations_DiscoverTypeFiles_Patterns = string[];
-
-export type Tests_TypeDeclarations_DiscoverTypeFiles_Matched = string[];
 
 /**
  * Tests - Type Declarations - Edge Cases EC11 EC20 - EC11 Default Export Class Adds Chunk Like Regular Class.
@@ -1335,33 +997,46 @@ export type Tests_TypeDeclarations_EndToEndFixturePipeline_CleanFixtureNoViolati
 export type Tests_TypeDeclarations_EndToEndFixturePipeline_CleanFixtureNoViolationsProducesEmptyViolationList_Violations = string[];
 
 /**
- * Tests - Type Declarations - Extract Array Types.
+ * Tests - Type Declarations - Engine Root Injection - Derive Class Prefix Strips The Injected Type Roots And Anchors On The Injected Package Root.
  *
  * @since 0.18.0
  */
-export type Tests_TypeDeclarations_ExtractArrayTypes_Lines = string[];
+export type Tests_TypeDeclarations_EngineRootInjection_DeriveClassPrefixStripsTheInjectedTypeRootsAndAnchorsOnTheInjectedPackageRoot_FixtureRoot = string;
 
-export type Tests_TypeDeclarations_ExtractArrayTypes_ArrayType_ArrayTypeName = string;
+export type Tests_TypeDeclarations_EngineRootInjection_DeriveClassPrefixStripsTheInjectedTypeRootsAndAnchorsOnTheInjectedPackageRoot_FilePath = string;
 
-export type Tests_TypeDeclarations_ExtractArrayTypes_ArrayType_ElementTypeName = string;
+export type Tests_TypeDeclarations_EngineRootInjection_DeriveClassPrefixStripsTheInjectedTypeRootsAndAnchorsOnTheInjectedPackageRoot_Result = string;
 
-export type Tests_TypeDeclarations_ExtractArrayTypes_ArrayType_LineIndex = number;
+/**
+ * Tests - Type Declarations - Engine Root Injection - Derive Dts Mapping Derives Src Types From The Injected Type Roots Not A Hardcoded Src.
+ *
+ * @since 0.18.0
+ */
+export type Tests_TypeDeclarations_EngineRootInjection_DeriveDtsMappingDerivesSrcTypesFromTheInjectedTypeRootsNotAHardcodedSrc_Mapping_SourceToDts = (file: string) => string;
 
-export type Tests_TypeDeclarations_ExtractArrayTypes_ArrayType = {
-  arrayTypeName: Tests_TypeDeclarations_ExtractArrayTypes_ArrayType_ArrayTypeName;
-  elementTypeName: Tests_TypeDeclarations_ExtractArrayTypes_ArrayType_ElementTypeName;
-  lineIndex: Tests_TypeDeclarations_ExtractArrayTypes_ArrayType_LineIndex;
+export type Tests_TypeDeclarations_EngineRootInjection_DeriveDtsMappingDerivesSrcTypesFromTheInjectedTypeRootsNotAHardcodedSrc_Mapping_DtsToSource = (file: string) => string;
+
+export type Tests_TypeDeclarations_EngineRootInjection_DeriveDtsMappingDerivesSrcTypesFromTheInjectedTypeRootsNotAHardcodedSrc_Mapping = {
+  sourceToDts: Tests_TypeDeclarations_EngineRootInjection_DeriveDtsMappingDerivesSrcTypesFromTheInjectedTypeRootsNotAHardcodedSrc_Mapping_SourceToDts;
+  dtsToSource: Tests_TypeDeclarations_EngineRootInjection_DeriveDtsMappingDerivesSrcTypesFromTheInjectedTypeRootsNotAHardcodedSrc_Mapping_DtsToSource;
 };
 
-export type Tests_TypeDeclarations_ExtractArrayTypes_Returns = Tests_TypeDeclarations_ExtractArrayTypes_ArrayType[];
+export type Tests_TypeDeclarations_EngineRootInjection_DeriveDtsMappingDerivesSrcTypesFromTheInjectedTypeRootsNotAHardcodedSrc_SourcePath = string;
 
-export type Tests_TypeDeclarations_ExtractArrayTypes_ArrayTypes = Tests_TypeDeclarations_ExtractArrayTypes_ArrayType[];
+export type Tests_TypeDeclarations_EngineRootInjection_DeriveDtsMappingDerivesSrcTypesFromTheInjectedTypeRootsNotAHardcodedSrc_DtsPath = string;
 
-export type Tests_TypeDeclarations_ExtractArrayTypes_I = number;
+/**
+ * Tests - Type Declarations - Engine Root Injection - Discover Source Files Scans The Injected Package Root Not Import Meta Url.
+ *
+ * @since 0.18.0
+ */
+export type Tests_TypeDeclarations_EngineRootInjection_DiscoverSourceFilesScansTheInjectedPackageRootNotImportMetaUrl_FixtureRoot = string;
 
-export type Tests_TypeDeclarations_ExtractArrayTypes_Line = string;
+export type Tests_TypeDeclarations_EngineRootInjection_DiscoverSourceFilesScansTheInjectedPackageRootNotImportMetaUrl_SourceDirectory = string;
 
-export type Tests_TypeDeclarations_ExtractArrayTypes_Match = RegExpMatchArray | null;
+export type Tests_TypeDeclarations_EngineRootInjection_DiscoverSourceFilesScansTheInjectedPackageRootNotImportMetaUrl_FixtureFile = string;
+
+export type Tests_TypeDeclarations_EngineRootInjection_DiscoverSourceFilesScansTheInjectedPackageRootNotImportMetaUrl_Files = string[];
 
 /**
  * Tests - Type Declarations - Extract Array Types Comprehensive - Extracts Simple Array Form XY.
@@ -1446,40 +1121,6 @@ export type Tests_TypeDeclarations_ExtractArrayTypesComprehensive_SkipsUnionType
 };
 
 export type Tests_TypeDeclarations_ExtractArrayTypesComprehensive_SkipsUnionTypesXYZ_Arrays = Tests_TypeDeclarations_ExtractArrayTypesComprehensive_SkipsUnionTypesXYZ_ArrayType[];
-
-/**
- * Tests - Type Declarations - Extract Body Declarations.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ExtractBodyDeclarations_Lines = string[];
-
-export type Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration_Keyword = 'const' | 'let';
-
-export type Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration_VarName = string;
-
-export type Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration_TypeName = string;
-
-export type Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration_LineNumber = number;
-
-export type Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration = {
-  keyword: Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration_Keyword;
-  varName: Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration_VarName;
-  typeName: Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration_TypeName;
-  lineNumber: Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration_LineNumber;
-};
-
-export type Tests_TypeDeclarations_ExtractBodyDeclarations_Returns = Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration[];
-
-export type Tests_TypeDeclarations_ExtractBodyDeclarations_Declarations = Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration[];
-
-export type Tests_TypeDeclarations_ExtractBodyDeclarations_I = number;
-
-export type Tests_TypeDeclarations_ExtractBodyDeclarations_Line = string;
-
-export type Tests_TypeDeclarations_ExtractBodyDeclarations_Match = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_ExtractBodyDeclarations_Keyword = 'const' | 'let';
 
 /**
  * Tests - Type Declarations - Extract Body Declarations - Extracts Const XTAnd Let XTLines Skips For Of And Untyped.
@@ -1602,63 +1243,6 @@ export type Tests_TypeDeclarations_ExtractBodyDeclarationsComprehensive_SkipsUnt
 export type Tests_TypeDeclarations_ExtractBodyDeclarationsComprehensive_SkipsUntypedConst_Decls = Tests_TypeDeclarations_ExtractBodyDeclarationsComprehensive_SkipsUntypedConst_Declaration[];
 
 /**
- * Tests - Type Declarations - Extract Function Params.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ExtractFunctionParams_Content = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_FilePath = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Param_ParamName = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Param_TypeName = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Param_LineNumber = number;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Param = {
-  paramName: Tests_TypeDeclarations_ExtractFunctionParams_Param_ParamName;
-  typeName: Tests_TypeDeclarations_ExtractFunctionParams_Param_TypeName;
-  lineNumber: Tests_TypeDeclarations_ExtractFunctionParams_Param_LineNumber;
-};
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Returns = Tests_TypeDeclarations_ExtractFunctionParams_Param[];
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_SourceFile = SourceFile;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Params = Tests_TypeDeclarations_ExtractFunctionParams_Param[];
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_VisitReturns = void;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithParametersShape_Parameters = readonly Node[];
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithParametersShape = {
-  parameters: Tests_TypeDeclarations_ExtractFunctionParams_NodeWithParametersShape_Parameters;
-};
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameShape_TypeName = Node;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameShape = {
-  typeName: Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameShape_TypeName;
-};
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTextShape_Text = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTextShape = {
-  text: Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTextShape_Text;
-};
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameTextShape_TypeName_Text = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameTextShape_TypeName = {
-  text: Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameTextShape_TypeName_Text;
-};
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameTextShape = {
-  typeName: Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameTextShape_TypeName;
-};
-
-/**
  * Tests - Type Declarations - Extract Function Params - Extracts Typed Params From Method Declarations.
  *
  * @since 0.18.0
@@ -1707,34 +1291,6 @@ export type Tests_TypeDeclarations_ExtractFunctionParams_ExtractsTypedParamsFrom
 export type Tests_TypeDeclarations_ExtractFunctionParams_ExtractsTypedParamsFromTopLevelFunctionDeclarations_Result = Tests_TypeDeclarations_ExtractFunctionParams_ExtractsTypedParamsFromTopLevelFunctionDeclarations_Param[];
 
 export type Tests_TypeDeclarations_ExtractFunctionParams_ExtractsTypedParamsFromTopLevelFunctionDeclarations_IsExecuteShellErrorParam = Tests_TypeDeclarations_ExtractFunctionParams_ExtractsTypedParamsFromTopLevelFunctionDeclarations_Param | undefined;
-
-/**
- * Tests - Type Declarations - Extract Function Params - Visit.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ExtractFunctionParams_Visit_Node = Node;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Visit_ParameterList = readonly Node[] | undefined;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Visit_ParamNode = {
-  name?: Node;
-  type?: Node;
-};
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Visit_LineNumber = number;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Visit_ParamRecord_ParamName = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Visit_ParamRecord_TypeName = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Visit_ParamRecord_LineNumber = number;
-
-export type Tests_TypeDeclarations_ExtractFunctionParams_Visit_ParamRecord = {
-  paramName: Tests_TypeDeclarations_ExtractFunctionParams_Visit_ParamRecord_ParamName;
-  typeName: Tests_TypeDeclarations_ExtractFunctionParams_Visit_ParamRecord_TypeName;
-  lineNumber: Tests_TypeDeclarations_ExtractFunctionParams_Visit_ParamRecord_LineNumber;
-};
 
 /**
  * Tests - Type Declarations - Extract Function Params Comprehensive - Extracts Constructor Params.
@@ -1832,86 +1388,6 @@ export type Tests_TypeDeclarations_ExtractFunctionParamsComprehensive_HandlesMul
 export type Tests_TypeDeclarations_ExtractFunctionParamsComprehensive_HandlesMultipleParams_Params = Tests_TypeDeclarations_ExtractFunctionParamsComprehensive_HandlesMultipleParams_Param[];
 
 /**
- * Tests - Type Declarations - Extract Function Returns.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Content = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_FilePath = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Return_ReturnType = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Return_IsTypeGuard = boolean;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Return_LineNumber = number;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Return = {
-  returnType: Tests_TypeDeclarations_ExtractFunctionReturns_Return_ReturnType;
-  isTypeGuard: Tests_TypeDeclarations_ExtractFunctionReturns_Return_IsTypeGuard;
-  lineNumber: Tests_TypeDeclarations_ExtractFunctionReturns_Return_LineNumber;
-};
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Returns = Tests_TypeDeclarations_ExtractFunctionReturns_Return[];
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_SourceFile = SourceFile;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_ReturnRecords = Tests_TypeDeclarations_ExtractFunctionReturns_Return[];
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_VisitReturns = void;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameShape_TypeName = Node;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameShape = {
-  typeName: Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameShape_TypeName;
-};
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameTextShape_TypeName_Text = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameTextShape_TypeName = {
-  text: Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameTextShape_TypeName_Text;
-};
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameTextShape = {
-  typeName: Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameTextShape_TypeName;
-};
-
-/**
- * Tests - Type Declarations - Extract Function Returns - Visit.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Visit_Node = Node;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Visit_FnNode = {
-  type?: Node;
-};
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Visit_TypeNode = Node | undefined;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Visit_ReturnType = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Visit_TypeGuardFlag = boolean;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Visit_PredicateNode = {
-  type?: Node;
-};
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Visit_LineNumber = number;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Visit_ReturnRecord_ReturnType = string;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Visit_ReturnRecord_IsTypeGuard = boolean;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Visit_ReturnRecord_LineNumber = number;
-
-export type Tests_TypeDeclarations_ExtractFunctionReturns_Visit_ReturnRecord = {
-  returnType: Tests_TypeDeclarations_ExtractFunctionReturns_Visit_ReturnRecord_ReturnType;
-  isTypeGuard: Tests_TypeDeclarations_ExtractFunctionReturns_Visit_ReturnRecord_IsTypeGuard;
-  lineNumber: Tests_TypeDeclarations_ExtractFunctionReturns_Visit_ReturnRecord_LineNumber;
-};
-
-/**
  * Tests - Type Declarations - Extract Function Returns Comprehensive - Detects Type Guard Returns Value Is X.
  *
  * @since 0.18.0
@@ -1988,27 +1464,6 @@ export type Tests_TypeDeclarations_ExtractFunctionReturnsComprehensive_GapDoesNO
 export type Tests_TypeDeclarations_ExtractFunctionReturnsComprehensive_GapDoesNOTExtractArrowFunctionConstReturnsExtractFunctionReturnsOnlyInspectsFunctionMethodConstructorDeclarations_ReturnRecords = Tests_TypeDeclarations_ExtractFunctionReturnsComprehensive_GapDoesNOTExtractArrowFunctionConstReturnsExtractFunctionReturnsOnlyInspectsFunctionMethodConstructorDeclarations_Return[];
 
 /**
- * Tests - Type Declarations - Extract Imported Names.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ExtractImportedNames_Lines = string[];
-
-export type Tests_TypeDeclarations_ExtractImportedNames_Returns = Set<string>;
-
-export type Tests_TypeDeclarations_ExtractImportedNames_ImportedNames = Set<string>;
-
-export type Tests_TypeDeclarations_ExtractImportedNames_InImportBlock = boolean;
-
-export type Tests_TypeDeclarations_ExtractImportedNames_InlineMatch = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_ExtractImportedNames_InlineMatchCapture = string;
-
-export type Tests_TypeDeclarations_ExtractImportedNames_Specifiers = string[];
-
-export type Tests_TypeDeclarations_ExtractImportedNames_Trimmed = string;
-
-/**
  * Tests - Type Declarations - Extract Imported Names Comprehensive - Extracts Inline Imports.
  *
  * @since 0.18.0
@@ -2034,73 +1489,6 @@ export type Tests_TypeDeclarations_ExtractImportedNamesComprehensive_ExtractsMul
 export type Tests_TypeDeclarations_ExtractImportedNamesComprehensive_ReturnsEmptySetForNoImports_Lines = string[];
 
 export type Tests_TypeDeclarations_ExtractImportedNamesComprehensive_ReturnsEmptySetForNoImports_Names = Set<string>;
-
-/**
- * Tests - Type Declarations - Extract Object Types.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ExtractObjectTypes_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_Lines = string[];
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_ObjectType_Name = string;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_ObjectType_LineIndex = number;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_ObjectProperty_Key = string;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_ObjectProperty_ValueType = string;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_ObjectProperty_TypeLineIndex = number;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_ObjectProperty = {
-  key: Tests_TypeDeclarations_ExtractObjectTypes_ObjectProperty_Key;
-  valueType: Tests_TypeDeclarations_ExtractObjectTypes_ObjectProperty_ValueType;
-  typeLineIndex: Tests_TypeDeclarations_ExtractObjectTypes_ObjectProperty_TypeLineIndex;
-};
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_ObjectType_Properties = Tests_TypeDeclarations_ExtractObjectTypes_ObjectProperty[];
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_ObjectType = {
-  name: Tests_TypeDeclarations_ExtractObjectTypes_ObjectType_Name;
-  lineIndex: Tests_TypeDeclarations_ExtractObjectTypes_ObjectType_LineIndex;
-  properties: Tests_TypeDeclarations_ExtractObjectTypes_ObjectType_Properties;
-};
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_Returns = Tests_TypeDeclarations_ExtractObjectTypes_ObjectType[];
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_ObjectTypes = Tests_TypeDeclarations_ExtractObjectTypes_ObjectType[];
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_TypeLineMap = Map<string, number>;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_I = number;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_Line = string;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_TypeDefMatch = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_Line2 = string;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_ObjectMatch = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_Properties = Tests_TypeDeclarations_ExtractObjectTypes_ObjectProperty[];
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_J = number;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_PropertyLine = string;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_TrimmedProperty = string;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_PropertyMatch = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_PropertyKey = string;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_PropertyValueType = string;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_TypeLineIndex = number;
-
-export type Tests_TypeDeclarations_ExtractObjectTypes_ObjectName = string;
 
 /**
  * Tests - Type Declarations - Extract Object Types Comprehensive - Extracts Object Type With Properties.
@@ -2202,31 +1590,6 @@ export type Tests_TypeDeclarations_ExtractObjectTypesComprehensive_HandlesReadon
 export type Tests_TypeDeclarations_ExtractObjectTypesComprehensive_HandlesReadonlyWrapper_ObjectTypes = Tests_TypeDeclarations_ExtractObjectTypesComprehensive_HandlesReadonlyWrapper_ObjectType[];
 
 /**
- * Tests - Type Declarations - Extract Referenced Types.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ExtractReferencedTypes_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_ExtractReferencedTypes_Line = string;
-
-export type Tests_TypeDeclarations_ExtractReferencedTypes_Returns = string[];
-
-export type Tests_TypeDeclarations_ExtractReferencedTypes_Match = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_ExtractReferencedTypes_TypeName = string;
-
-export type Tests_TypeDeclarations_ExtractReferencedTypes_RightSide = string;
-
-export type Tests_TypeDeclarations_ExtractReferencedTypes_ReferencedTypes = string[];
-
-export type Tests_TypeDeclarations_ExtractReferencedTypes_TypePattern = RegExp;
-
-export type Tests_TypeDeclarations_ExtractReferencedTypes_TypeMatch = RegExpExecArray | null;
-
-export type Tests_TypeDeclarations_ExtractReferencedTypes_ReferencedType = string;
-
-/**
  * Tests - Type Declarations - Extract Referenced Types - Captures Multi Segment Leaves Greedily.
  *
  * @since 0.18.0
@@ -2304,66 +1667,6 @@ export type Tests_TypeDeclarations_ExtractReferencedTypesComprehensive_ReturnsEm
  * @since 0.18.0
  */
 export type Tests_TypeDeclarations_ExtractReferencedTypesComprehensive_ReturnsEmptyForPrimitiveRHS_Refs = string[];
-
-/**
- * Tests - Type Declarations - Extract Top Level Identifiers.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Content = string;
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_FilePath = string;
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier_Name = string;
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier_Kind = 'class' | 'function' | 'const';
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier_LineNumber = number;
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier = {
-  name: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier_Name;
-  kind: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier_Kind;
-  lineNumber: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier_LineNumber;
-};
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier[];
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_SourceFile = SourceFile;
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifiers = Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier[];
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier2_Name = string;
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier2_Kind = 'class' | 'function' | 'const';
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier2_LineNumber = number;
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier2 = {
-  name: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier2_Name;
-  kind: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier2_Kind;
-  lineNumber: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier2_LineNumber;
-};
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier3_Name = string;
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier3_Kind = 'class' | 'function' | 'const';
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier3_LineNumber = number;
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier3 = {
-  name: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier3_Name;
-  kind: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier3_Kind;
-  lineNumber: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier3_LineNumber;
-};
-
-/**
- * Tests - Type Declarations - Extract Top Level Identifiers - Get Line.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_GetLine_Node = Node;
-
-export type Tests_TypeDeclarations_ExtractTopLevelIdentifiers_GetLine_Returns = number;
 
 /**
  * Tests - Type Declarations - Extract Top Level Identifiers Comprehensive - Extracts Class Expression Typed Const As Kind Const EC9 Class Wrapper Class.
@@ -2537,19 +1840,6 @@ export type Tests_TypeDeclarations_ExtractTopLevelIdentifiersComprehensive_Skips
 export type Tests_TypeDeclarations_ExtractTopLevelIdentifiersComprehensive_SkipsNonFunctionConstPrimitive_Identifiers = Tests_TypeDeclarations_ExtractTopLevelIdentifiersComprehensive_SkipsNonFunctionConstPrimitive_Identifier[];
 
 /**
- * Tests - Type Declarations - Extract Type Names.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ExtractTypeNames_Returns = string[];
-
-export type Tests_TypeDeclarations_ExtractTypeNames_TypeLines = string[];
-
-export type Tests_TypeDeclarations_ExtractTypeNames_TypeNames = string[];
-
-export type Tests_TypeDeclarations_ExtractTypeNames_Match = RegExpMatchArray | null;
-
-/**
  * Tests - Type Declarations - Extract Type Names Comprehensive - Extracts Type Names From Export Type Lines.
  *
  * @since 0.18.0
@@ -2569,70 +1859,6 @@ export type Tests_TypeDeclarations_ExtractTypeNamesComprehensive_HandlesTypeWith
  * @since 0.18.0
  */
 export type Tests_TypeDeclarations_ExtractTypeNamesComprehensive_ReturnsEmptyForNonExportTypeLines_Lines = string[];
-
-/**
- * Tests - Type Declarations - File Exists.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_FileExists_FilePath = string;
-
-export type Tests_TypeDeclarations_FileExists_Returns = Promise<boolean>;
-
-/**
- * Tests - Type Declarations - Find First Occurrence.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_FindFirstOccurrence_Returns = number;
-
-export type Tests_TypeDeclarations_FindFirstOccurrence_SourceLines = string[];
-
-export type Tests_TypeDeclarations_FindFirstOccurrence_TypeName = string;
-
-export type Tests_TypeDeclarations_FindFirstOccurrence_InImportBlock = boolean;
-
-export type Tests_TypeDeclarations_FindFirstOccurrence_I = number;
-
-export type Tests_TypeDeclarations_FindFirstOccurrence_Line = string;
-
-export type Tests_TypeDeclarations_FindFirstOccurrence_TypeNamePattern = RegExp;
-
-/**
- * Tests - Type Declarations - Get Package Root.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_GetPackageRoot_Returns = string;
-
-export type Tests_TypeDeclarations_GetPackageRoot_CurrentFilePath = string;
-
-export type Tests_TypeDeclarations_GetPackageRoot_CurrentFileDirectory = string;
-
-/**
- * Tests - Type Declarations - Is Alias To Foreign Type.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_IsAliasToForeignType_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_IsAliasToForeignType_DtsContent = string;
-
-export type Tests_TypeDeclarations_IsAliasToForeignType_Returns = boolean;
-
-export type Tests_TypeDeclarations_IsAliasToForeignType_TypeName = string;
-
-export type Tests_TypeDeclarations_IsAliasToForeignType_EscapedTypeName = string;
-
-export type Tests_TypeDeclarations_IsAliasToForeignType_Pattern = RegExp;
-
-export type Tests_TypeDeclarations_IsAliasToForeignType_Match = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_IsAliasToForeignType_Rhs = string;
-
-export type Tests_TypeDeclarations_IsAliasToForeignType_TypeMatch = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_IsAliasToForeignType_LeftmostType = string;
 
 /**
  * Tests - Type Declarations - Is Alias To Foreign Type Comprehensive - Detects Direct Alias To AForeign Prefix Type.
@@ -2698,21 +1924,6 @@ export type Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_ReturnsFals
 export type Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_StripsGenericsBeforeChecking_DtsContent = string;
 
 /**
- * Tests - Type Declarations - Is Locally Defined.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_IsLocallyDefined_DtsContent = string;
-
-export type Tests_TypeDeclarations_IsLocallyDefined_Returns = boolean;
-
-export type Tests_TypeDeclarations_IsLocallyDefined_TypeName = string;
-
-export type Tests_TypeDeclarations_IsLocallyDefined_EscapedTypeName = string;
-
-export type Tests_TypeDeclarations_IsLocallyDefined_Pattern = RegExp;
-
-/**
  * Tests - Type Declarations - Is Locally Defined Comprehensive - Handles Type Defined At End Of File Without Trailing Newline.
  *
  * @since 0.18.0
@@ -2746,15 +1957,6 @@ export type Tests_TypeDeclarations_IsLocallyDefinedComprehensive_ReturnsFalseFor
  * @since 0.18.0
  */
 export type Tests_TypeDeclarations_IsLocallyDefinedComprehensive_ReturnsTrueForExportTypeX_DtsContent = string;
-
-/**
- * Tests - Type Declarations - Is Reserved Suffix.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_IsReservedSuffix_Returns = boolean;
-
-export type Tests_TypeDeclarations_IsReservedSuffix_TypeName = string;
 
 /**
  * Tests - Type Declarations - Is Reserved Suffix Comprehensive - Detects Glued Returns.
@@ -2825,17 +2027,6 @@ export type Tests_TypeDeclarations_IsReservedSuffixComprehensive_DoesNotMatchRet
  * @since 0.18.0
  */
 export type Tests_TypeDeclarations_IsReservedSuffixComprehensive_DoesNotMatchTypeGuardianFalseSuffix_Coverage = string;
-
-/**
- * Tests - Type Declarations - Parse Describe String.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ParseDescribeString_Input = string;
-
-export type Tests_TypeDeclarations_ParseDescribeString_Returns = string;
-
-export type Tests_TypeDeclarations_ParseDescribeString_Pieces = string[];
 
 /**
  * Tests - Type Declarations - Parse Describe String - Handles Single Word Strings.
@@ -2919,30 +2110,6 @@ export type Tests_TypeDeclarations_ParseDescribeStringComprehensive_PreservesCam
  * @since 0.18.0
  */
 export type Tests_TypeDeclarations_ParseDescribeStringComprehensive_ReturnsEmptyStringForPurelyNonAlphanumericInput_Coverage = string;
-
-/**
- * Tests - Type Declarations - Parse Source File.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ParseSourceFile_Content = string;
-
-export type Tests_TypeDeclarations_ParseSourceFile_FilePath = string;
-
-export type Tests_TypeDeclarations_ParseSourceFile_Returns = SourceFile;
-
-export type Tests_TypeDeclarations_ParseSourceFile_Cached = Tests_TypeDeclarations_ParseSourceFile_CachedEntry | undefined;
-
-export type Tests_TypeDeclarations_ParseSourceFile_SourceFile = SourceFile;
-
-export type Tests_TypeDeclarations_ParseSourceFile_CachedEntry_Content = string;
-
-export type Tests_TypeDeclarations_ParseSourceFile_CachedEntry_SourceFile = SourceFile;
-
-export type Tests_TypeDeclarations_ParseSourceFile_CachedEntry = {
-  content: Tests_TypeDeclarations_ParseSourceFile_CachedEntry_Content;
-  sourceFile: Tests_TypeDeclarations_ParseSourceFile_CachedEntry_SourceFile;
-};
 
 /**
  * Tests - Type Declarations - Rule71 Integration - Fails When Leaf Differs From Var Name.
@@ -3653,89 +2820,6 @@ export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4ArrayElementTypesDe
 export type Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4ArrayElementTypesDefinedBeforeArray_ArrayLine = number;
 
 /**
- * Tests - Type Declarations - Run Rule Pipeline.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_RunRulePipeline_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_RunRulePipeline_DtsContent = string;
-
-export type Tests_TypeDeclarations_RunRulePipeline_FilePath = string;
-
-export type Tests_TypeDeclarations_RunRulePipeline_Returns = string[];
-
-export type Tests_TypeDeclarations_RunRulePipeline_SourceContent = string;
-
-export type Tests_TypeDeclarations_RunRulePipeline_SectionMap = Map<number, string>;
-
-export type Tests_TypeDeclarations_RunRulePipeline_Lines = string[];
-
-export type Tests_TypeDeclarations_RunRulePipeline_Declaration_Keyword = 'const' | 'let';
-
-export type Tests_TypeDeclarations_RunRulePipeline_Declaration_VarName = string;
-
-export type Tests_TypeDeclarations_RunRulePipeline_Declaration_TypeName = string;
-
-export type Tests_TypeDeclarations_RunRulePipeline_Declaration_LineNumber = number;
-
-export type Tests_TypeDeclarations_RunRulePipeline_Declaration = {
-  keyword: Tests_TypeDeclarations_RunRulePipeline_Declaration_Keyword;
-  varName: Tests_TypeDeclarations_RunRulePipeline_Declaration_VarName;
-  typeName: Tests_TypeDeclarations_RunRulePipeline_Declaration_TypeName;
-  lineNumber: Tests_TypeDeclarations_RunRulePipeline_Declaration_LineNumber;
-};
-
-export type Tests_TypeDeclarations_RunRulePipeline_Declarations = Tests_TypeDeclarations_RunRulePipeline_Declaration[];
-
-export type Tests_TypeDeclarations_RunRulePipeline_Callback_ParamName = string;
-
-export type Tests_TypeDeclarations_RunRulePipeline_Callback_TypeName = string;
-
-export type Tests_TypeDeclarations_RunRulePipeline_Callback_LineNumber = number;
-
-export type Tests_TypeDeclarations_RunRulePipeline_Callback = {
-  paramName: Tests_TypeDeclarations_RunRulePipeline_Callback_ParamName;
-  typeName: Tests_TypeDeclarations_RunRulePipeline_Callback_TypeName;
-  lineNumber: Tests_TypeDeclarations_RunRulePipeline_Callback_LineNumber;
-};
-
-export type Tests_TypeDeclarations_RunRulePipeline_Callbacks = Tests_TypeDeclarations_RunRulePipeline_Callback[];
-
-export type Tests_TypeDeclarations_RunRulePipeline_Return_ReturnType = string;
-
-export type Tests_TypeDeclarations_RunRulePipeline_Return_IsTypeGuard = boolean;
-
-export type Tests_TypeDeclarations_RunRulePipeline_Return_LineNumber = number;
-
-export type Tests_TypeDeclarations_RunRulePipeline_Return = {
-  returnType: Tests_TypeDeclarations_RunRulePipeline_Return_ReturnType;
-  isTypeGuard: Tests_TypeDeclarations_RunRulePipeline_Return_IsTypeGuard;
-  lineNumber: Tests_TypeDeclarations_RunRulePipeline_Return_LineNumber;
-};
-
-export type Tests_TypeDeclarations_RunRulePipeline_FnReturnRecords = Tests_TypeDeclarations_RunRulePipeline_Return[];
-
-export type Tests_TypeDeclarations_RunRulePipeline_Violations = string[];
-
-export type Tests_TypeDeclarations_RunRulePipeline_SourceSection = string;
-
-export type Tests_TypeDeclarations_RunRulePipeline_LeafResultReason_ActualLeaf = string;
-
-export type Tests_TypeDeclarations_RunRulePipeline_LeafResultReason_ExpectedLeaf = string;
-
-export type Tests_TypeDeclarations_RunRulePipeline_LeafResultReason = {
-  actualLeaf: Tests_TypeDeclarations_RunRulePipeline_LeafResultReason_ActualLeaf;
-  expectedLeaf: Tests_TypeDeclarations_RunRulePipeline_LeafResultReason_ExpectedLeaf;
-};
-
-export type Tests_TypeDeclarations_RunRulePipeline_LeafResult = Tests_TypeDeclarations_RunRulePipeline_LeafResultReason | null;
-
-export type Tests_TypeDeclarations_RunRulePipeline_Reason = Tests_TypeDeclarations_RunRulePipeline_ReasonValidateReturnType | null;
-
-export type Tests_TypeDeclarations_RunRulePipeline_ReasonValidateReturnType = string;
-
-/**
  * Tests - Type Declarations - Section FCoverage Integration - F1 Same Section References Are Allowed.
  *
  * @since 0.18.0
@@ -3830,15 +2914,6 @@ export type Tests_TypeDeclarations_SectionGImportsIntegration_G1MultiLineImportB
 export type Tests_TypeDeclarations_SectionGImportsIntegration_G1MultiLineImportBlockAlphabeticalOrderCanBeChecked_SortedSpecifiers = string[];
 
 /**
- * Tests - Type Declarations - Strip Underscore Prefix.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_StripUnderscorePrefix_Input = string;
-
-export type Tests_TypeDeclarations_StripUnderscorePrefix_Returns = string;
-
-/**
  * Tests - Type Declarations - Strip Underscore Prefix - Only Strips ONELeading Underscore.
  *
  * @since 0.18.0
@@ -3899,855 +2974,6 @@ export type Tests_TypeDeclarations_StripUnderscorePrefixComprehensive_StripsASin
  * @since 0.18.0
  */
 export type Tests_TypeDeclarations_StripUnderscorePrefixComprehensive_StripsOnlyTheFirstUnderscore_Coverage = string;
-
-/**
- * Tests - Type Declarations - Type Declaration Cross Section References.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Files = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_CrossSectionCurrentDirectory = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_CrossSectionRelativePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_SourcePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_SourceExists = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Content = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Lines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_SourceContent = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_SectionMap = Map<number, string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_SourceSectionSet = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_ImportedNames = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Section_Prefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Section_TypeLines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Section = {
-  prefix: Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Section_Prefix;
-  typeLines: Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Section_TypeLines;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Sections = Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Section[];
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_SectionPrefixes = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Violations = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_CurrentSectionPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_ReferencedTypes = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_IsSameSection = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_IsImported = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_IsOtherSection = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Violation = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_ViolationMessage = string;
-
-/**
- * Tests - Type Declarations - Type Declaration Filename Validation.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_SourceFiles = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_DtsFiles = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_AllFiles = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_FilenameValidationCurrentDirectory = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_FilenameValidationRelativePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Cleaned = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Segments = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern = RegExp;
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_PascalCasePattern = RegExp;
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Violations = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_MatchesKebab = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_MatchesPascal = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Violation = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFilenameValidation_ViolationMessage = string;
-
-/**
- * Tests - Type Declarations - Type Declaration First Come First Serve Order.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Files = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_OrderCurrentDirectory = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_OrderRelativePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourcePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourceExists = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourcePathAlternative = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourceContent = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourceLines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_DtsContent = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_DtsLines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SectionMap = Map<number, string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourceSectionSet = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Section_Prefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Section_TypeLines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Section = {
-  prefix: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Section_Prefix;
-  typeLines: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Section_TypeLines;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Sections = Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Section[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectType_Name = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectType_LineIndex = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectProperty_Key = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectProperty_ValueType = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectProperty_TypeLineIndex = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectProperty = {
-  key: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectProperty_Key;
-  valueType: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectProperty_ValueType;
-  typeLineIndex: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectProperty_TypeLineIndex;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectType_Properties = Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectProperty[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectType = {
-  name: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectType_Name;
-  lineIndex: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectType_LineIndex;
-  properties: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectType_Properties;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectTypes = Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectType[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectPropertyTypeNames = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayElementTypeNames = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayType_ArrayTypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayType_ElementTypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayType_LineIndex = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayType = {
-  arrayTypeName: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayType_ArrayTypeName;
-  elementTypeName: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayType_ElementTypeName;
-  lineIndex: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayType_LineIndex;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayTypesForOrder = Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayType[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Violations = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_TypeNames = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_TypePosition_Name = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_TypePosition_SourceLine = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_TypePosition = {
-  name: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_TypePosition_Name;
-  sourceLine: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_TypePosition_SourceLine;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_TypePositions = Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_TypePosition[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourceLineIndex = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SortedPositions = Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_TypePosition[];
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_J = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Actual_Name = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Actual_SourceLine = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Actual = {
-  name: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Actual_Name;
-  sourceLine: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Actual_SourceLine;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Expected_Name = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Expected_SourceLine = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Expected = {
-  name: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Expected_Name;
-  sourceLine: Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Expected_SourceLine;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Violation = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ViolationMessage = string;
-
-/**
- * Tests - Type Declarations - Type Declaration Identifier Vs File Name.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Files = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_IdentifierVsFileNameCurrentDirectory = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_IdentifierVsFileNameRelativePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Content = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Segments = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_FileName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Identifier_Name = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Identifier_Kind = 'class' | 'function' | 'const';
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Identifier_LineNumber = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Identifier = {
-  name: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Identifier_Name;
-  kind: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Identifier_Kind;
-  lineNumber: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Identifier_LineNumber;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Identifiers = Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Identifier[];
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Violations = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Violation = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_ViolationMessage = string;
-
-/**
- * Tests - Type Declarations - Type Declaration Import Specifier Order.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_Files = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_ImportOrderCurrentDirectory = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_ImportOrderRelativePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_Content = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_Lines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_Violations = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_SpecifierBuffer = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_InImportBlock = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_InlineMatch = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_InlineMatchCapture = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_Specifiers = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_PreviousSpecifier = string | undefined;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_CurrentSpecifier = string | undefined;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_Violation = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_Trimmed = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_PreviousSpecifier2 = string | undefined;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_CurrentSpecifier2 = string | undefined;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_Violation2 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_ViolationMessage = string;
-
-/**
- * Tests - Type Declarations - Type Declaration Object Property Types.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_Files = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectPropsCurrentDirectory = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectPropsRelativePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_Content = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_Lines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_Violations = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_DefinedTypes = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_I = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_Line = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_TypeDefMatch = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectType_Name = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectType_LineIndex = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectProperty_Key = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectProperty_ValueType = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectProperty_TypeLineIndex = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectProperty = {
-  key: Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectProperty_Key;
-  valueType: Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectProperty_ValueType;
-  typeLineIndex: Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectProperty_TypeLineIndex;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectType_Properties = Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectProperty[];
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectType = {
-  name: Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectType_Name;
-  lineIndex: Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectType_LineIndex;
-  properties: Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectType_Properties;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectTypes = Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ObjectType[];
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_PropertyExpectedPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_Violation = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_Violation2 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_Violation3 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ImportedNames = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ArrayType_ArrayTypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ArrayType_ElementTypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ArrayType_LineIndex = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ArrayType = {
-  arrayTypeName: Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ArrayType_ArrayTypeName;
-  elementTypeName: Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ArrayType_ElementTypeName;
-  lineIndex: Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ArrayType_LineIndex;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ArrayTypes = Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ArrayType[];
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_TypeDefLines = Map<string, number>;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_Line2 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_DefMatch = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ElementLine = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_Violation4 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_ViolationMessage = string;
-
-/**
- * Tests - Type Declarations - Type Declaration Section Alphabetical Order.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Files = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_SectionOrderCurrentDirectory = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_SectionOrderRelativePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_SourcePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_SourceExists = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Content = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Lines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_SourceContent = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_SectionMap = Map<number, string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_SourceSectionSet = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Section_Prefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Section_TypeLines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Section = {
-  prefix: Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Section_Prefix;
-  typeLines: Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Section_TypeLines;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Sections = Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Section[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Violations = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_I = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Previous_Prefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Previous_TypeLines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Previous = {
-  prefix: Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Previous_Prefix;
-  typeLines: Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Previous_TypeLines;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Current_Prefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Current_TypeLines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Current = {
-  prefix: Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Current_Prefix;
-  typeLines: Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Current_TypeLines;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_CompareResult = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_Violation = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionAlphabeticalOrder_ViolationMessage = string;
-
-/**
- * Tests - Type Declarations - Type Declaration Section Coverage.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Files = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_CoverageCurrentDirectory = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_CoverageRelativePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SourcePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SourceExists = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SourcePathAlternative = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SourceContent = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_DtsContent = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_DtsLines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SectionMap = Map<number, string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SourceSectionSet = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Section_Prefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Section_TypeLines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Section = {
-  prefix: Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Section_Prefix;
-  typeLines: Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Section_TypeLines;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_DtsSections = Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Section[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_DtsSectionPrefixes = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Violations = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_IsParent = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Violation = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SingleChunkTopLevelTypes = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SingleChunkMatch = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SingleChunkTypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SingleChunkAfterClassPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_ReverseMatch = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_ReverseTypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_ReverseAfterClassPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_ReverseChunks = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_ReverseExpectedMethodSection = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Violation2 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_ViolationMessage = string;
-
-/**
- * Tests - Type Declarations - Type Declaration Standalone Type Files.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_StandaloneSourceFiles = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_StandaloneDtsFiles = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TopLevelPathPrefixes = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_SourceClassPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_FirstChunk = string | undefined;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_StandaloneFiles = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_StandaloneCurrentDirectory = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_StandaloneRelativePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Content = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Lines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypeLines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypeNames = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_LocalTypeSet = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PrimitiveSet = Set<string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PascalCasePattern = RegExp;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_BrandCasePattern = RegExp;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Violations = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Violation = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Violation2 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Violation3 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectType_Name = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectType_LineIndex = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectProperty_Key = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectProperty_ValueType = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectProperty_TypeLineIndex = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectProperty = {
-  key: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectProperty_Key;
-  valueType: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectProperty_ValueType;
-  typeLineIndex: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectProperty_TypeLineIndex;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectType_Properties = Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectProperty[];
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectType = {
-  name: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectType_Name;
-  lineIndex: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectType_LineIndex;
-  properties: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectType_Properties;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectTypes = Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectType[];
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ExpectedPropertyPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Violation4 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ArrayType_ArrayTypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ArrayType_ElementTypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ArrayType_LineIndex = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ArrayType = {
-  arrayTypeName: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ArrayType_ArrayTypeName;
-  elementTypeName: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ArrayType_ElementTypeName;
-  lineIndex: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ArrayType_LineIndex;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ArrayTypes = Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ArrayType[];
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypePositions = Map<string, number>;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_I = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_LineToScan = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PositionMatch = RegExpMatchArray | null;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ElementLine = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Violation5 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ViolationMessage = string;
-
-/**
- * Tests - Type Declarations - Type Declaration Variable Type Symmetry.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Files = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_SymmetryCurrentDirectory = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_SymmetryRelativePath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Content = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Lines = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_SectionMap = Map<number, string>;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_DtsPath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_DtsExists = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_DtsContent = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violations = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_InlineCallbacksRecord_ParamName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_InlineCallbacksRecord_TypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_InlineCallbacksRecord_LineNumber = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_InlineCallbacksRecord = {
-  paramName: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_InlineCallbacksRecord_ParamName;
-  typeName: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_InlineCallbacksRecord_TypeName;
-  lineNumber: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_InlineCallbacksRecord_LineNumber;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_InlineCallbacks = Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_InlineCallbacksRecord[];
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_BodyDeclsRecord_Keyword = 'const' | 'let';
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_BodyDeclsRecord_VarName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_BodyDeclsRecord_TypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_BodyDeclsRecord_LineNumber = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_BodyDeclsRecord = {
-  keyword: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_BodyDeclsRecord_Keyword;
-  varName: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_BodyDeclsRecord_VarName;
-  typeName: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_BodyDeclsRecord_TypeName;
-  lineNumber: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_BodyDeclsRecord_LineNumber;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_BodyDecls = Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_BodyDeclsRecord[];
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ExpectedNamesRecord_Name = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ExpectedNamesRecord_TypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ExpectedNamesRecord_LineNumber = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ExpectedNamesRecord = {
-  name: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ExpectedNamesRecord_Name;
-  typeName: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ExpectedNamesRecord_TypeName;
-  lineNumber: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ExpectedNamesRecord_LineNumber;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ExpectedNames = Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ExpectedNamesRecord[];
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_SourceSection = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation2 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResultReason_ActualLeaf = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResultReason_ExpectedLeaf = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResultReason = {
-  actualLeaf: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResultReason_ActualLeaf;
-  expectedLeaf: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResultReason_ExpectedLeaf;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResult = Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResultReason | null;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation3 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_RelativeDtsPath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_CleanedDtsPath = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation4 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_RelativeDtsPath2 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_CleanedDtsPath2 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation5 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Stripped = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_TitleVar = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ParamsRecord_ParamName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ParamsRecord_TypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ParamsRecord_LineNumber = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ParamsRecord = {
-  paramName: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ParamsRecord_ParamName;
-  typeName: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ParamsRecord_TypeName;
-  lineNumber: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ParamsRecord_LineNumber;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Params = Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ParamsRecord[];
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_SourceSection2 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation6 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResult2Reason_ActualLeaf = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResult2Reason_ExpectedLeaf = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResult2Reason = {
-  actualLeaf: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResult2Reason_ActualLeaf;
-  expectedLeaf: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResult2Reason_ExpectedLeaf;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResult2 = Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResult2Reason | null;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation7 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Stripped2 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_TitleVar2 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_FnReturnRecordsRecord_ReturnType = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_FnReturnRecordsRecord_IsTypeGuard = boolean;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_FnReturnRecordsRecord_LineNumber = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_FnReturnRecordsRecord = {
-  returnType: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_FnReturnRecordsRecord_ReturnType;
-  isTypeGuard: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_FnReturnRecordsRecord_IsTypeGuard;
-  lineNumber: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_FnReturnRecordsRecord_LineNumber;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_FnReturnRecords = Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_FnReturnRecordsRecord[];
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ReturnValidationReason = string | null;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation8 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_UniquenessViolations = string[];
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation9 = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ViolationMessage = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Returns = Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Declaration[];
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Declaration_Keyword = 'const' | 'let';
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Declaration_VarName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Declaration_TypeName = string;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Declaration_LineNumber = number;
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Declaration = {
-  keyword: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Declaration_Keyword;
-  varName: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Declaration_VarName;
-  typeName: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Declaration_TypeName;
-  lineNumber: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Declaration_LineNumber;
-};
-
-export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Declarations = Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Declaration[];
-
-/**
- * Tests - Type Declarations - Validate Leaf.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ValidateLeaf_ClassPrefix = string;
-
-export type Tests_TypeDeclarations_ValidateLeaf_Returns = Tests_TypeDeclarations_ValidateLeaf_Reason | null;
-
-export type Tests_TypeDeclarations_ValidateLeaf_SourceSection = string;
-
-export type Tests_TypeDeclarations_ValidateLeaf_TypeName = string;
-
-export type Tests_TypeDeclarations_ValidateLeaf_VarName = string;
-
-export type Tests_TypeDeclarations_ValidateLeaf_Stripped = string;
-
-export type Tests_TypeDeclarations_ValidateLeaf_TitleVar = string;
-
-export type Tests_TypeDeclarations_ValidateLeaf_ExpectedSection = string;
-
-export type Tests_TypeDeclarations_ValidateLeaf_ExpectedClass = string;
-
-export type Tests_TypeDeclarations_ValidateLeaf_ActualLeaf = string;
-
-export type Tests_TypeDeclarations_ValidateLeaf_Reason_ActualLeaf = string;
-
-export type Tests_TypeDeclarations_ValidateLeaf_Reason_ExpectedLeaf = string;
-
-export type Tests_TypeDeclarations_ValidateLeaf_Reason = {
-  actualLeaf: Tests_TypeDeclarations_ValidateLeaf_Reason_ActualLeaf;
-  expectedLeaf: Tests_TypeDeclarations_ValidateLeaf_Reason_ExpectedLeaf;
-};
 
 /**
  * Tests - Type Declarations - Validate Leaf Comprehensive - Handles Single Character Var Name.
@@ -4876,19 +3102,6 @@ export type Tests_TypeDeclarations_ValidateLeafComprehensive_StripsUnderscorePre
   actualLeaf: Tests_TypeDeclarations_ValidateLeafComprehensive_StripsUnderscorePrefixFromVarNameBeforeComparison_Reason_ActualLeaf;
   expectedLeaf: Tests_TypeDeclarations_ValidateLeafComprehensive_StripsUnderscorePrefixFromVarNameBeforeComparison_Reason_ExpectedLeaf;
 };
-
-/**
- * Tests - Type Declarations - Validate Return Type.
- *
- * @since 0.18.0
- */
-export type Tests_TypeDeclarations_ValidateReturnType_ReturnType = string;
-
-export type Tests_TypeDeclarations_ValidateReturnType_Returns = Tests_TypeDeclarations_ValidateReturnType_Reason | null;
-
-export type Tests_TypeDeclarations_ValidateReturnType_TypeGuardFlag = boolean;
-
-export type Tests_TypeDeclarations_ValidateReturnType_Reason = string;
 
 /**
  * Tests - Type Declarations - Validate Return Type Comprehensive - Passes Returns At Non Type Guard Return.

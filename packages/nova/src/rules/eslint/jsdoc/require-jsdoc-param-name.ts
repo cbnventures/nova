@@ -1,6 +1,6 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
-import { LIB_REGEX_PATTERN_CAMEL_CASE_BOUNDARY } from '../../../lib/regex.js';
+import { LIB_REGEX_PATTERN_CAMEL_CASE_BOUNDARY, LIB_REGEX_PATTERN_JSDOC_PARAM_TAG_LINE } from '../../../lib/regex.js';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
@@ -43,7 +43,7 @@ export class Runner {
    *
    * @since 0.15.0
    */
-  static readonly #paramPattern = new RegExp('@param\\s+(?:\\{[^}]*\\}\\s+)?(\\w+)\\s+-\\s+(.+)');
+  static readonly #paramPattern = LIB_REGEX_PATTERN_JSDOC_PARAM_TAG_LINE;
 
   /**
    * Rules - ESLint - JSDoc - Require JSDoc Param Name - Rule.

@@ -39,7 +39,7 @@ jobs:
       contents: "read"
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v6"
+        uses: "actions/checkout@v7"
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v6"
@@ -64,7 +64,7 @@ jobs:
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Upload build artifacts (npm/packages-nova)"
-        uses: "actions/upload-artifact@v4"
+        uses: "actions/upload-artifact@v7"
         with:
           name: "build-npm-packages-nova"
           retention-days: 1
@@ -72,7 +72,7 @@ jobs:
             packages/nova/build
 
       - name: "Upload build artifacts (npm/packages-docusaurus-preset-nova)"
-        uses: "actions/upload-artifact@v4"
+        uses: "actions/upload-artifact@v7"
         with:
           name: "build-npm-packages-docusaurus-preset-nova"
           retention-days: 1
@@ -80,7 +80,7 @@ jobs:
             packages/docusaurus-preset-nova/build
 
       - name: "Upload build artifacts (github-packages/packages-nova)"
-        uses: "actions/upload-artifact@v4"
+        uses: "actions/upload-artifact@v7"
         with:
           name: "build-github-packages-packages-nova"
           retention-days: 1
@@ -88,7 +88,7 @@ jobs:
             packages/nova/build
 
       - name: "Upload build artifacts (github-packages/packages-docusaurus-preset-nova)"
-        uses: "actions/upload-artifact@v4"
+        uses: "actions/upload-artifact@v7"
         with:
           name: "build-github-packages-packages-docusaurus-preset-nova"
           retention-days: 1
@@ -96,7 +96,7 @@ jobs:
             packages/docusaurus-preset-nova/build
 
       - name: "Upload build artifacts (cloudflare-pages-docusaurus/apps-docs)"
-        uses: "actions/upload-artifact@v4"
+        uses: "actions/upload-artifact@v7"
         with:
           name: "build-cloudflare-pages-docusaurus-apps-docs"
           retention-days: 1
@@ -112,7 +112,7 @@ jobs:
       id-token: "write"
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v6"
+        uses: "actions/checkout@v7"
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v6"
@@ -130,7 +130,7 @@ jobs:
           fi
 
       - name: "Download build artifacts"
-        uses: "actions/download-artifact@v4"
+        uses: "actions/download-artifact@v8"
         with:
           name: "build-npm-packages-nova"
           path: "./packages/nova/build"
@@ -173,7 +173,7 @@ jobs:
       id-token: "write"
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v6"
+        uses: "actions/checkout@v7"
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v6"
@@ -191,7 +191,7 @@ jobs:
           fi
 
       - name: "Download build artifacts"
-        uses: "actions/download-artifact@v4"
+        uses: "actions/download-artifact@v8"
         with:
           name: "build-npm-packages-docusaurus-preset-nova"
           path: "./packages/docusaurus-preset-nova/build"
@@ -235,7 +235,7 @@ jobs:
       id-token: "write"
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v6"
+        uses: "actions/checkout@v7"
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v6"
@@ -260,7 +260,7 @@ jobs:
           fi
 
       - name: "Download build artifacts"
-        uses: "actions/download-artifact@v4"
+        uses: "actions/download-artifact@v8"
         with:
           name: "build-github-packages-packages-nova"
           path: "./packages/nova/build"
@@ -320,7 +320,7 @@ jobs:
       id-token: "write"
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v6"
+        uses: "actions/checkout@v7"
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v6"
@@ -345,7 +345,7 @@ jobs:
           fi
 
       - name: "Download build artifacts"
-        uses: "actions/download-artifact@v4"
+        uses: "actions/download-artifact@v8"
         with:
           name: "build-github-packages-packages-docusaurus-preset-nova"
           path: "./packages/docusaurus-preset-nova/build"
@@ -403,10 +403,10 @@ jobs:
       contents: "read"
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v6"
+        uses: "actions/checkout@v7"
 
       - name: "Download build artifacts"
-        uses: "actions/download-artifact@v4"
+        uses: "actions/download-artifact@v8"
         with:
           name: "build-cloudflare-pages-docusaurus-apps-docs"
           path: "./apps/docs/build"

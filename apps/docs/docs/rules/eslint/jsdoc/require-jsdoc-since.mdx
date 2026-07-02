@@ -1,7 +1,7 @@
 ---
 id: "require-jsdoc-since"
 title: "Require JSDoc Since"
-description: "Require a since tag in every JSDoc block to track when classes, methods, properties, and type declarations were introduced."
+description: "Require a @since tag in every JSDoc block and validate its value to track when API members were introduced."
 keywords:
   - "nova"
   - "eslint rule"
@@ -9,6 +9,8 @@ keywords:
   - "since tag"
   - "versioning"
   - "linting"
+  - "unreleased"
+  - "semver"
 tags:
   - "rules"
   - "eslint"
@@ -19,19 +21,21 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Require a `@since` tag in every JSDoc block to track when declarations were introduced.
+Require a `@since` tag in every JSDoc block and validate its value so every declaration records the version it was introduced in.
 
 ## Summary
 
-The `require-jsdoc-since` rule reports any JSDoc block on a class, method, property, function, type alias, interface, or enum that is missing a `@since` tag.
-
-This ensures every declaration records the version in which it was introduced, making it easy to track API evolution.
+- Reports any JSDoc block on a class, method, property, function, type alias, interface, or enum that is missing a `@since` tag.
+- Also validates the value of `@since` — and of `@deprecated` when present — rejecting empty values, malformed strings, and versions that exceed the package's current version.
+- Accepts the `UNRELEASED` sentinel (optionally followed by trailing prose) for new or newly deprecated declarations that haven't shipped yet.
+- Accepts a concrete semver `X.Y.Z` (with optional trailing prose such as `0.15.0 backported`) as long as the version is less than or equal to the nearest `package.json` version.
 
 ## Why Use This Rule?
 
 1. Provides a version history directly in source code so contributors know when each declaration was added.
-2. Makes it possible to generate changelogs and migration guides from `@since` tags.
-3. Catches new declarations that were added without recording a version.
+2. Prevents accidental hand-written future versions (e.g., `@since 99.0.0`) from slipping through a review unnoticed.
+3. Enforces the `UNRELEASED` sentinel workflow so real versions are stamped at release by `nova utility changelog --release`, not guessed by hand.
+4. Makes it possible to generate changelogs and migration guides from `@since` tags.
 
 ## Examples
 
@@ -39,16 +43,17 @@ This ensures every declaration records the version in which it was introduced, m
   <TabItem value="correct" label="Correct" default>
 
     ```ts
+    // New declaration — use the UNRELEASED sentinel.
     /**
      * CLI - Utility - Changelog.
      *
-     * @since 1.0.0
+     * @since UNRELEASED
      */
     export class Runner {
       /**
        * CLI - Utility - Changelog - Generate.
        *
-       * @since 1.2.0
+       * @since UNRELEASED
        */
       public static generate() {
         // ...
@@ -56,21 +61,71 @@ This ensures every declaration records the version in which it was introduced, m
     }
     ```
 
+    ```ts
+    // Already-released member — concrete semver <= the current package version.
+    /**
+     * CLI - Utility - Changelog - List.
+     *
+     * @since 0.15.0
+     */
+    public static list() {
+      // ...
+    }
+    ```
+
+    ```ts
+    // Newly deprecated member — @deprecated also accepts UNRELEASED.
+    /**
+     * CLI - Utility - Changelog - Run.
+     *
+     * @since 0.15.0
+     * @deprecated UNRELEASED Use `generate()` instead.
+     */
+    public static run() {
+      // ...
+    }
+    ```
+
   </TabItem>
   <TabItem value="incorrect" label="Incorrect">
 
     ```ts
+    // Missing @since — triggers requireSinceTag.
     /**
      * CLI - Utility - Changelog.
      */
-    export class Runner {
-      /**
-       * CLI - Utility - Changelog - Generate.
-       */
-      public static generate() {
-        // ...
-      }
-    }
+    export class Runner {}
+    ```
+
+    ```ts
+    // Bare @since with no value — triggers invalidSinceVersion.
+    /**
+     * CLI - Utility - Changelog - Generate.
+     *
+     * @since
+     */
+    public static generate() {}
+    ```
+
+    ```ts
+    // Future version in @since — triggers invalidSinceVersion.
+    /**
+     * CLI - Utility - Changelog - Build.
+     *
+     * @since 99.0.0
+     */
+    public static build() {}
+    ```
+
+    ```ts
+    // Future version in @deprecated — triggers invalidDeprecatedVersion.
+    /**
+     * CLI - Utility - Changelog - Run.
+     *
+     * @since 0.15.0
+     * @deprecated 99.0.0 Use `generate()` instead.
+     */
+    public static run() {}
     ```
 
   </TabItem>
@@ -143,12 +198,23 @@ This ensures every declaration records the version in which it was introduced, m
 |---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
 | `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 
+## Messages
+
+Three message IDs are reported by this rule, each covering a distinct failure:
+
+- **`requireSinceTag`** — The JSDoc block has no `@since` tag at all. Add `@since UNRELEASED` for a new declaration.
+- **`invalidSinceVersion`** — The `@since` tag is present but its value is empty, malformed, or a version greater than the current `package.json` version. Use `UNRELEASED` or a valid semver that is less than or equal to the current version.
+- **`invalidDeprecatedVersion`** — A `@deprecated` tag is present but its version value is malformed or greater than the current `package.json` version. Use `UNRELEASED` for a newly deprecated member or a valid semver at or below the current version.
+
 ## Autofix
 
 Autofix is not available for this rule. Flagged code must be updated manually.
 
+For new or newly deprecated declarations, the correct value is the literal `UNRELEASED`. The real version is stamped automatically when you run `nova utility changelog --release` at release time.
+
 ## Troubleshooting
 
-- **Warning fires on declarations without JSDoc** — The rule only checks declarations that already have a JSDoc block. If a declaration has no JSDoc comment at all, the rule does not report it.
+- **Rule fires on declarations without JSDoc** — The rule only checks declarations that already have a JSDoc block. If a declaration has no JSDoc comment at all, the rule does not report it.
 - **Checked node types** — The rule checks classes, methods, properties, function declarations, type aliases, interfaces, and enums. Function expressions and arrow functions assigned to variables (`const foo = () => {}`) are not checked, nor are variable declarations.
-- **The `@since` value format is not validated** — The rule only checks for the presence of `@since`. It does not enforce a specific version format (e.g., semver).
+- **Value validation is skipped when no versioned `package.json` is found, or when the package version is `0.0.0`** — The rule walks up the directory tree to find the nearest `package.json` that has a `version` field. If none is found, or the version is `0.0.0` (an unreleased package that is never published), version-range validation is skipped and only the presence of `@since` is enforced. This allows internal apps to carry `@since` tags that track the library's version rather than their own `0.0.0` version.
+- **Trailing prose after the version is allowed** — Values like `0.15.0 backported` are accepted. The rule extracts the leading semver and compares it against the package version; anything after the first whitespace is treated as descriptive text.

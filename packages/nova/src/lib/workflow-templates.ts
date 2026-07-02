@@ -7,7 +7,7 @@ import type { Lib_WorkflowTemplates_Metadata } from '../types/lib/workflow-templ
  * template, including variable formats, target definitions,
  * and explicit permissions declarations.
  *
- * @since 0.20.0
+ * @since 0.18.0
  */
 export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
   {

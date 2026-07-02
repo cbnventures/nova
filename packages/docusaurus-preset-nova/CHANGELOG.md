@@ -1,5 +1,10 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.20.0 - 2026-07-01
+
+### ADDED
+- Adds `@since` version enforcement to the preset's source via the `require-jsdoc-since` ESLint rule and the since-version meta-test. New or changed API is tagged `@since UNRELEASED` and stamped with the real version at release.
+
 ## 0.19.0 - 2026-06-21
 
 ### UPDATED

@@ -3,7 +3,7 @@ import type { LoadContext, Plugin } from '@docusaurus/types';
 /**
  * Plugins - Bundle Guard - Index - Bundle Guard.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_BundleGuard_Index_BundleGuard_Context = LoadContext;
 
@@ -21,7 +21,7 @@ export type Plugins_BundleGuard_Index_BundleGuard_MaxBundleFileSize = number | f
 /**
  * Plugins - Bundle Guard - Index - Bundle Guard - Post Build.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Plugins_BundleGuard_Index_BundleGuard_PostBuild_PropsOutDir = string;
 

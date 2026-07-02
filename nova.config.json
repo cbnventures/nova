@@ -55,6 +55,41 @@
   "emails": {
     "bugs": "bugs@cbnventures.io"
   },
+  "github": {
+    "owner": "cbnventures",
+    "repo": "nova",
+    "recipes": {
+      "sync-identity": true,
+      "sync-features": true,
+      "sync-policies": true
+    },
+    "topics": [
+      "eslint-config",
+      "eslint",
+      "typescript",
+      "tsconfig",
+      "eslint-flat-config",
+      "monorepo",
+      "linting",
+      "developer-tools"
+    ],
+    "features": {
+      "issues": true,
+      "wiki": false,
+      "projects": false,
+      "discussions": false
+    },
+    "policies": {
+      "visibility": "public",
+      "defaultBranch": "main",
+      "mergeMethods": {
+        "merge": true,
+        "squash": true,
+        "rebase": true
+      },
+      "autoDeleteHeadBranch": true
+    }
+  },
   "workflows": [
     {
       "template": "check-sponsor-gated-issues",
@@ -138,7 +173,6 @@
     "license": "https://github.com/cbnventures/nova/blob/HEAD/LICENSE",
     "logo": "https://nova.cbnventures.io/images/logo.svg",
     "documentation": "https://nova.cbnventures.io/",
-    "github": "https://github.com/cbnventures/nova",
     "npm": "https://www.npmjs.com/package/@cbnventures/nova",
     "fundSources": [
       "https://github.com/sponsors/cbnventures",
@@ -191,7 +225,8 @@
         "sync-ownership": [
           true
         ]
-      }
+      },
+      "dotenv": {}
     },
     "./apps/demo-envoy": {
       "role": "template",
@@ -622,5 +657,14 @@
         ]
       }
     }
-  }
+  },
+  "gitignore": {
+    "projectExcludes": [
+      "!packages/nova/bin/"
+    ]
+  },
+  "agents": [
+    "claude-code",
+    "codex"
+  ]
 }

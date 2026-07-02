@@ -1,14 +1,14 @@
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - CLI Generate GitHub Workflows Build Artifact Name - Joins Build Prefix Target Type And Target Id With Dashes.
  *
- * @since 0.16.3
+ * @since 0.19.0
  */
 export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflowsBuildArtifactName_JoinsBuildPrefixTargetTypeAndTargetIdWithDashes_Result = string;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - CLI Generate GitHub Workflows Build Artifact Name - Preserves Nested Slug Target Ids Verbatim.
  *
- * @since 0.16.3
+ * @since 0.19.0
  */
 export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflowsBuildArtifactName_PreservesNestedSlugTargetIdsVerbatim_Result = string;
 
@@ -64,7 +64,7 @@ export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflow
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - CLI Generate GitHub Workflows Render Upload Artifact Steps.
  *
- * @since 0.16.3
+ * @since 0.19.0
  */
 export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflowsRenderUploadArtifactSteps_TargetsMetadata = Record<string, Readonly<{
   artifactPaths: string[];
@@ -73,7 +73,7 @@ export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflow
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - CLI Generate GitHub Workflows Render Upload Artifact Steps - Emits One Upload Step Per Target Without Deduping Shared Working Dirs.
  *
- * @since 0.16.3
+ * @since 0.19.0
  */
 export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflowsRenderUploadArtifactSteps_EmitsOneUploadStepPerTargetWithoutDedupingSharedWorkingDirs_Targets_Element_Type = string;
 
@@ -93,7 +93,7 @@ export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflow
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - CLI Generate GitHub Workflows Render Upload Artifact Steps - Emits Two Indented Path Lines For Aws Amplify Nextjs.
  *
- * @since 0.16.3
+ * @since 0.19.0
  */
 export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflowsRenderUploadArtifactSteps_EmitsTwoIndentedPathLinesForAwsAmplifyNextjs_Targets_Element_Type = string;
 
@@ -113,7 +113,7 @@ export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflow
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - CLI Generate GitHub Workflows Render Upload Artifact Steps - Returns Empty String When All Targets Have Empty Artifact Paths.
  *
- * @since 0.16.3
+ * @since 0.19.0
  */
 export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflowsRenderUploadArtifactSteps_ReturnsEmptyStringWhenAllTargetsHaveEmptyArtifactPaths_Targets_Element_Type = string;
 
@@ -131,7 +131,7 @@ export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflow
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - CLI Generate GitHub Workflows Render Upload Artifact Steps - Skips Targets Whose Type Is Missing From Targets Metadata.
  *
- * @since 0.16.3
+ * @since 0.19.0
  */
 export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflowsRenderUploadArtifactSteps_SkipsTargetsWhoseTypeIsMissingFromTargetsMetadata_Targets_Element_Type = string;
 
@@ -149,7 +149,7 @@ export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflow
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - CLI Generate GitHub Workflows Render Upload Artifact Steps - Skips Targets With Empty Artifact Paths But Emits Steps For The Rest.
  *
- * @since 0.16.3
+ * @since 0.19.0
  */
 export type Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflowsRenderUploadArtifactSteps_SkipsTargetsWithEmptyArtifactPathsButEmitsStepsForTheRest_Targets_Element_Type = string;
 

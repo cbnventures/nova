@@ -112,16 +112,47 @@ You can run this command in two ways:
 
 ### Release Flow
 
+Steps 4–6 run once per releasing package in a loop. Step 7 runs once after all packages are processed.
+
 1. **Read entries** — Collects all `.md` files from `.changelog/`.
 2. **Show summary** — Lists entries grouped by package with the computed version bump (highest bump wins).
 3. **Confirm** — Interactive only. Non-interactive mode (`--release`) skips this step.
 4. **Bump version** — Updates the `version` field in each affected `package.json`.
 5. **Write CHANGELOG.md** — Prepends a new version section. Creates the file if it does not exist.
-6. **Clean up** — Deletes consumed entry files from `.changelog/`.
+6. **Stamp sentinels** — Replaces every `@since UNRELEASED` and `@deprecated UNRELEASED` tag in the package's `src/` tree (`.ts` and `.tsx` files) with the new version. Skipped when the new version is a prerelease (contains a hyphen). Fails the release with a non-zero exit code if any sentinel survives after stamping.
+7. **Clean up** — Deletes consumed entry files from `.changelog/`.
 
 :::danger Non-Zero Exit Code
 The command exits with code **1** when validation fails (invalid flags, missing config, unknown package). <Terminology title="continuous integration" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> pipelines that use this command will fail the step on errors.
 :::
+
+### UNRELEASED Sentinel Convention
+
+When you add or change a public API member, tag it with the literal sentinel `@since UNRELEASED` (or `@deprecated UNRELEASED`) rather than a hand-written version number. The release step stamps the real version at release time, so you never have to guess or update the tag manually.
+
+- Write `@since UNRELEASED` for new members and `@deprecated UNRELEASED` for members being deprecated.
+- Never write a concrete version (e.g., `@since 1.3.0`) for unreleased code — it will be wrong if the bump type changes before release.
+- Concrete versions are only appropriate for members that have already shipped in a published release.
+
+```ts title="src/my-feature.ts"
+// Before release (what you write):
+
+/**
+ * Returns the current config version.
+ *
+ * @since UNRELEASED
+ */
+export function getConfigVersion(): string { ... }
+
+// After `nova utility changelog --release` (what gets stamped):
+
+/**
+ * Returns the current config version.
+ *
+ * @since 1.4.0
+ */
+export function getConfigVersion(): string { ... }
+```
 
 ### Entry File Format
 
@@ -236,10 +267,10 @@ Empty headings are omitted.
 
 For users migrating from the [Changesets](https://github.com/changesets/changesets) workflow, Nova provides equivalent flags under `nova utility changelog`:
 
-| Command                            | Equivalent          | What It Does                                       |
-|------------------------------------|---------------------|----------------------------------------------------|
-| `nova utility changelog --record`  | `changeset add`     | Record a change with `-p`, `-c`, `-b`, `-m` flags. |
-| `nova utility changelog --release` | `changeset version` | Release accumulated changes and bump versions.     |
+| Command                            | Equivalent          | What It Does                                                                                            |
+|------------------------------------|---------------------|---------------------------------------------------------------------------------------------------------|
+| `nova utility changelog --record`  | `changeset add`     | Record a change with `-p`, `-c`, `-b`, `-m` flags.                                                      |
+| `nova utility changelog --release` | `changeset version` | Release accumulated changes, bump versions, and stamp `@since`/`@deprecated UNRELEASED` tags in source. |
 
 :::tip Shorten long commands with scripts
 Nova bundles many tools in one package, so commands can be verbose. Shorten them by adding aliases to the `"scripts"` field in your **root** `package.json` (the one at the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>):
@@ -263,3 +294,4 @@ Then run `npm run changelog:record` or `npm run changelog:release`.
 - **"Non-interactive record requires --package, --category, --bump, and --message"** — All four flags are required when using `--record`. Omit `--record` for interactive mode.
 - **"No changelog entries found"** — The `.changelog/` directory is empty or does not exist. Record at least one change before releasing.
 - **"Package not found in nova.config.json"** — The `--package` value must match the `name` field of a non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+- **"UNRELEASED sentinel survived stamping"** — The release step found one or more `@since UNRELEASED` or `@deprecated UNRELEASED` tags in `src/` that were not replaced. This means a file was added or moved after the stamp pass searched it, or the file extension is not `.ts` or `.tsx`. Locate the surviving tag with `grep -r "UNRELEASED" src/` and update it manually to the released version, then re-run any post-release steps.

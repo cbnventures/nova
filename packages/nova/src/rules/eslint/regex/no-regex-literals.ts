@@ -7,8 +7,19 @@ import type {
   Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Node,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Options,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Returns,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Context,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_FirstArgument,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_IsStaticTemplate,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_IsStringLiteral,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Node,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Options,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Returns,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_CallExpression_Node,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_CallExpression_Returns,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Literal_Node,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Literal_Returns,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_NewExpression_Node,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_NewExpression_Returns,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Options,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleDefaultOptionsRegexFile,
@@ -37,7 +48,7 @@ export class Runner {
     meta: {
       type: 'suggestion',
       docs: {
-        description: 'Disallow regex literal expressions. Centralize patterns in a shared regex file instead.',
+        description: 'Disallow regex literals and RegExp constructor calls with inline patterns. Centralize patterns in a shared regex file instead.',
       },
       messages: {
         noRegexLiteralWithFile: 'Move this regex literal to \'{{ regexFile }}\' and import from there.',
@@ -77,8 +88,18 @@ export class Runner {
       }
 
       return {
+        CallExpression(node: Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_CallExpression_Node): Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_CallExpression_Returns {
+          Runner.checkRegExpConstructor(context, node, options);
+
+          return;
+        },
         Literal(node: Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Literal_Node): Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Literal_Returns {
           Runner.checkLiteral(context, node, options);
+
+          return;
+        },
+        NewExpression(node: Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_NewExpression_Node): Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_NewExpression_Returns {
+          Runner.checkRegExpConstructor(context, node, options);
 
           return;
         },
@@ -118,6 +139,59 @@ export class Runner {
           messageId: 'noRegexLiteralWithoutFile',
         });
       }
+    }
+
+    return;
+  }
+
+  /**
+   * Rules - ESLint - Regex - No Regex Literals - Check Reg Exp Constructor.
+   *
+   * Reports a `RegExp(...)` or `new RegExp(...)` call whose first argument is an
+   * inline string or static template pattern, so the pattern moves to the shared
+   * regex file. Calls passing a reference such as a lib constant `.source` are allowed.
+   *
+   * @private
+   *
+   * @param {Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Context} context - Context.
+   * @param {Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Node}    node    - Node.
+   * @param {Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Options} options - Options.
+   *
+   * @returns {Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Returns}
+   *
+   * @since 0.20.0
+   */
+  private static checkRegExpConstructor(context: Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Context, node: Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Node, options: Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Options): Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Returns {
+    if (node.callee.type !== 'Identifier' || node.callee.name !== 'RegExp') {
+      return;
+    }
+
+    const firstArgument: Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_FirstArgument = node.arguments[0];
+
+    if (firstArgument === undefined) {
+      return;
+    }
+
+    const isStringLiteral: Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_IsStringLiteral = firstArgument.type === 'Literal' && typeof firstArgument.value === 'string';
+    const isStaticTemplate: Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_IsStaticTemplate = firstArgument.type === 'TemplateLiteral' && firstArgument.expressions.length === 0;
+
+    if (isStringLiteral === false && isStaticTemplate === false) {
+      return;
+    }
+
+    if (options['regexFile'] !== '') {
+      context.report({
+        node,
+        messageId: 'noRegexLiteralWithFile',
+        data: {
+          regexFile: options['regexFile'],
+        },
+      });
+    } else {
+      context.report({
+        node,
+        messageId: 'noRegexLiteralWithoutFile',
+      });
     }
 
     return;

@@ -19,6 +19,15 @@ import type {
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_AllFieldsDefinedCallsGhRepoEditWithAllSixFlags_IsCommandExistsSpy,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_AllFieldsDefinedCallsGhRepoEditWithAllSixFlags_IsProjectRootSpy,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_AllFieldsDefinedCallsGhRepoEditWithAllSixFlags_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_Calls,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_EditCall,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_ExecuteShellSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_HasBranchMissingWarn,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_IsCommandExistsSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_IsProjectRootSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_LoggerWarnSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_WarnCalls,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DryRunTrueRunsPrecheckCallsButSkipsGhRepoEditCall_AuthCall,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DryRunTrueRunsPrecheckCallsButSkipsGhRepoEditCall_Calls,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DryRunTrueRunsPrecheckCallsButSkipsGhRepoEditCall_EditCall,
@@ -61,6 +70,15 @@ import type {
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_IsProjectRootSpy,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_LoadSpy,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_LoggerErrorSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_Calls,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ErrorCalls,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ExecuteShellSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_HasUnparseableError,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsCommandExistsSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsProjectRootSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoggerErrorSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_MutationCall,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_ExecuteShellSpy,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_HasGithubBlockWarn,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_IsProjectRootSpy,
@@ -118,6 +136,15 @@ import type {
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_ExecuteShellSpy,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_IsProjectRootSpy,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_Calls,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ErrorCalls,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ExecuteShellSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_HasAccessError,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsCommandExistsSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsProjectRootSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoggerErrorSpy,
+  Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_MutationCall,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_ErrorCalls,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_ExecuteShellSpy,
   Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_HasWriteError,
@@ -156,7 +183,7 @@ import type {
 /**
  * Tests - CLI - Recipe - GitHub - Sync Policies - Run.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 describe('CliRecipeGithubSyncPolicies.run', () => {
   afterEach(() => {
@@ -186,7 +213,11 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       code: 0,
     });
 
+    process.exitCode = 0;
+
     await CliRecipeGithubSyncPolicies.run({});
+
+    strictEqual(process.exitCode, 0);
 
     strictEqual(executeShellSpy['mock']['calls'].length, 0);
 
@@ -212,7 +243,11 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
 
     const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
 
+    process.exitCode = 0;
+
     await CliRecipeGithubSyncPolicies.run({});
+
+    strictEqual(process.exitCode, 0);
 
     strictEqual(executeShellSpy['mock']['calls'].length, 0);
 
@@ -256,7 +291,11 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
 
     const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
 
+    process.exitCode = 0;
+
     await CliRecipeGithubSyncPolicies.run({});
+
+    strictEqual(process.exitCode, 0);
 
     strictEqual(executeShellSpy['mock']['calls'].length, 0);
 
@@ -366,6 +405,77 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
     ));
 
     ok(hasVersionError, 'Expected error about gh version below minimum');
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    isCommandExistsSpy.mockRestore();
+
+    executeShellSpy.mockRestore();
+
+    loggerErrorSpy.mockRestore();
+
+    return;
+  });
+
+  it('gh version output unparseable logs error and sets exitCode=1', async () => {
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+
+    const loadSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+      github: {
+        owner: 'test-owner',
+        repo: 'test-repo',
+        recipes: {
+          'sync-policies': true,
+        },
+      },
+    });
+
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+      if (cmd === 'gh --version') {
+        return Promise.resolve({
+          textOut: 'garbage',
+          textError: '',
+          code: 0,
+        });
+      }
+
+      return Promise.resolve({
+        textOut: '',
+        textError: '',
+        code: 0,
+      });
+    });
+
+    const loggerErrorSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoggerErrorSpy = vi.spyOn(toolkit['Logger'], 'error').mockReturnValue(undefined);
+
+    await CliRecipeGithubSyncPolicies.run({});
+
+    strictEqual(process.exitCode, 1);
+
+    const errorCalls: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ErrorCalls = loggerErrorSpy['mock']['calls'];
+
+    const hasUnparseableError: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_HasUnparseableError = errorCalls.some((call) => (
+      typeof call[0] === 'string'
+      && call[0].includes('Could not determine the "gh" CLI version.') === true
+    ));
+
+    ok(hasUnparseableError, 'Expected error about unparseable gh version');
+
+    const calls: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_Calls = executeShellSpy['mock']['calls'];
+
+    const mutationCall: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_MutationCall = calls.find((call) => (
+      typeof call[0] === 'string'
+      && (
+        call[0].includes('gh repo edit') === true
+        || call[0].includes('gh api') === true
+      )
+    ));
+
+    strictEqual(mutationCall, undefined, 'Expected no mutation call when gh version is unparseable');
 
     isProjectRootSpy.mockRestore();
 
@@ -528,6 +638,99 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
     return;
   });
 
+  it('repo view non-zero exit logs error and sets exitCode=1', async () => {
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+
+    const loadSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+      github: {
+        owner: 'test-owner',
+        repo: 'test-repo',
+        recipes: {
+          'sync-policies': true,
+        },
+        policies: {
+          visibility: 'public',
+        },
+      },
+    });
+
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+      if (cmd === 'gh --version') {
+        return Promise.resolve({
+          textOut: 'gh version 2.50.0 (2024-01-01)',
+          textError: '',
+          code: 0,
+        });
+      }
+
+      if (cmd === 'gh auth status') {
+        return Promise.resolve({
+          textOut: '',
+          textError: '',
+          code: 0,
+        });
+      }
+
+      if (
+        typeof cmd === 'string'
+        && cmd.includes('gh repo view') === true
+      ) {
+        return Promise.resolve({
+          textOut: '',
+          textError: 'Could not resolve to a Repository',
+          code: 1,
+        });
+      }
+
+      return Promise.resolve({
+        textOut: '',
+        textError: '',
+        code: 0,
+      });
+    });
+
+    const loggerErrorSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoggerErrorSpy = vi.spyOn(toolkit['Logger'], 'error').mockReturnValue(undefined);
+
+    await CliRecipeGithubSyncPolicies.run({});
+
+    strictEqual(process.exitCode, 1);
+
+    const errorCalls: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ErrorCalls = loggerErrorSpy['mock']['calls'];
+
+    const hasAccessError: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_HasAccessError = errorCalls.some((call) => (
+      typeof call[0] === 'string'
+      && call[0].includes('Cannot access test-owner/test-repo.') === true
+    ));
+
+    ok(hasAccessError, 'Expected error about cannot access repo');
+
+    const calls: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_Calls = executeShellSpy['mock']['calls'];
+
+    const mutationCall: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_MutationCall = calls.find((call) => (
+      typeof call[0] === 'string'
+      && (
+        call[0].includes('gh repo edit') === true
+        || call[0].includes('gh api') === true
+      )
+    ));
+
+    strictEqual(mutationCall, undefined, 'Expected no mutation call when repo view fails');
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    isCommandExistsSpy.mockRestore();
+
+    executeShellSpy.mockRestore();
+
+    loggerErrorSpy.mockRestore();
+
+    return;
+  });
+
   it('all fields defined calls gh repo edit with all six flags', async () => {
     const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_AllFieldsDefinedCallsGhRepoEditWithAllSixFlags_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
@@ -581,6 +784,18 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
         });
       }
 
+      if (
+        typeof cmd === 'string'
+        && cmd.includes('gh api repos/') === true
+        && cmd.includes('/branches/') === true
+      ) {
+        return Promise.resolve({
+          textOut: JSON.stringify({ name: 'main' }),
+          textError: '',
+          code: 0,
+        });
+      }
+
       return Promise.resolve({
         textOut: '',
         textError: '',
@@ -602,6 +817,11 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
     ok(
       typeof editCall[0] === 'string' && editCall[0].includes('--visibility=public') === true,
       'Expected --visibility=public flag',
+    );
+
+    ok(
+      typeof editCall[0] === 'string' && editCall[0].includes('--accept-visibility-change-consequences') === true,
+      'Expected --accept-visibility-change-consequences consent flag alongside --visibility',
     );
 
     ok(
@@ -636,6 +856,126 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
     isCommandExistsSpy.mockRestore();
 
     executeShellSpy.mockRestore();
+
+    return;
+  });
+
+  it('defaultBranch set but branch does not exist skips default-branch flag and logs warn', async () => {
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+
+    const loadSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+      github: {
+        owner: 'test-owner',
+        repo: 'test-repo',
+        recipes: {
+          'sync-policies': true,
+        },
+        policies: {
+          defaultBranch: 'main',
+          mergeMethods: {
+            merge: true,
+          },
+          autoDeleteHeadBranch: true,
+        },
+      },
+    });
+
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+      if (cmd === 'gh --version') {
+        return Promise.resolve({
+          textOut: 'gh version 2.50.0 (2024-01-01)',
+          textError: '',
+          code: 0,
+        });
+      }
+
+      if (cmd === 'gh auth status') {
+        return Promise.resolve({
+          textOut: '',
+          textError: '',
+          code: 0,
+        });
+      }
+
+      if (
+        typeof cmd === 'string'
+        && cmd.includes('gh repo view') === true
+      ) {
+        return Promise.resolve({
+          textOut: JSON.stringify({ viewerPermission: 'ADMIN' }),
+          textError: '',
+          code: 0,
+        });
+      }
+
+      if (
+        typeof cmd === 'string'
+        && cmd.includes('gh api repos/') === true
+        && cmd.includes('/branches/') === true
+      ) {
+        return Promise.resolve({
+          textOut: '',
+          textError: 'HTTP 404: Branch not found',
+          code: 1,
+        });
+      }
+
+      return Promise.resolve({
+        textOut: '',
+        textError: '',
+        code: 0,
+      });
+    });
+
+    const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
+
+    await CliRecipeGithubSyncPolicies.run({});
+
+    const calls: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_Calls = executeShellSpy['mock']['calls'];
+
+    const editCall: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_EditCall = calls.find((call) => (
+      typeof call[0] === 'string'
+      && call[0].includes('gh repo edit') === true
+    ));
+
+    ok(editCall !== undefined, 'Expected gh repo edit call');
+
+    strictEqual(
+      typeof editCall[0] === 'string' && editCall[0].includes('--default-branch') === true,
+      false,
+      'Expected no --default-branch flag when the branch does not exist',
+    );
+
+    ok(
+      typeof editCall[0] === 'string' && editCall[0].includes('--enable-merge-commit=true') === true,
+      'Expected --enable-merge-commit=true flag to still be present',
+    );
+
+    ok(
+      typeof editCall[0] === 'string' && editCall[0].includes('--delete-branch-on-merge=true') === true,
+      'Expected --delete-branch-on-merge=true flag to still be present',
+    );
+
+    const warnCalls: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_WarnCalls = loggerWarnSpy['mock']['calls'];
+
+    const hasBranchMissingWarn: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_DefaultBranchSetButBranchDoesNotExistSkipsDefaultBranchFlagAndLogsWarn_HasBranchMissingWarn = warnCalls.some((call) => (
+      typeof call[0] === 'string'
+      && call[0].includes('does not exist') === true
+    ));
+
+    ok(hasBranchMissingWarn, 'Expected warn about the branch not existing');
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    isCommandExistsSpy.mockRestore();
+
+    executeShellSpy.mockRestore();
+
+    loggerWarnSpy.mockRestore();
 
     return;
   });
@@ -707,6 +1047,11 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
     ok(
       typeof editCall[0] === 'string' && editCall[0].includes('--visibility=private') === true,
       'Expected --visibility=private flag',
+    );
+
+    ok(
+      typeof editCall[0] === 'string' && editCall[0].includes('--accept-visibility-change-consequences') === true,
+      'Expected --accept-visibility-change-consequences consent flag alongside --visibility',
     );
 
     strictEqual(
@@ -1222,7 +1567,11 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
 
     const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_PoliciesBlockExistsButAllFieldsUndefinedLogsWarnAndMakesNoGhRepoEditCall_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
 
+    process.exitCode = 0;
+
     await CliRecipeGithubSyncPolicies.run({});
+
+    strictEqual(process.exitCode, 0);
 
     const calls: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_PoliciesBlockExistsButAllFieldsUndefinedLogsWarnAndMakesNoGhRepoEditCall_Calls = executeShellSpy['mock']['calls'];
 
@@ -1307,7 +1656,11 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
 
     const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_PoliciesBlockMissingLogsWarnAndMakesNoGhRepoEditCall_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
 
+    process.exitCode = 0;
+
     await CliRecipeGithubSyncPolicies.run({});
+
+    strictEqual(process.exitCode, 0);
 
     const calls: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_PoliciesBlockMissingLogsWarnAndMakesNoGhRepoEditCall_Calls = executeShellSpy['mock']['calls'];
 

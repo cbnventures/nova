@@ -203,7 +203,7 @@ export const LIB_REGEX_TYPE_DECLARATION_FIELD = /^\s+(\w+)\??:\s*([^;]+);/;
  * object-shape declaration. Used by the config-drift overrides-parity check to
  * derive the public consumer leaf paths.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export const LIB_REGEX_NOVA_PRESET_OVERRIDES_OBJECT_TYPE = /export type (NovaPresetOverrides\w*)\s*=\s*\{([\s\S]*?)\}/;
 
@@ -214,7 +214,7 @@ export const LIB_REGEX_NOVA_PRESET_OVERRIDES_OBJECT_TYPE = /export type (NovaPre
  * `export type NovaPresetOverrides... = Partial<NovaPresetOverrides...>` alias
  * so the config-drift overrides-parity walk can resolve Partial wrappers.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export const LIB_REGEX_NOVA_PRESET_OVERRIDES_PARTIAL_ALIAS = /export type (NovaPresetOverrides\w*)\s*=\s*Partial<(NovaPresetOverrides\w*)>/;
 
@@ -225,7 +225,7 @@ export const LIB_REGEX_NOVA_PRESET_OVERRIDES_PARTIAL_ALIAS = /export type (NovaP
  * expression so the config-drift overrides-parity walk can distinguish
  * object-type and Partial-wrapper references from union/primitive aliases.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export const LIB_REGEX_NOVA_PRESET_OVERRIDES_TYPE_REFERENCE = /^(NovaPresetOverrides\w*)/;
 
@@ -409,6 +409,37 @@ export const LIB_REGEX_BLOCKS_INDEX_EXPORT = /^export \{ default as (\w+) \} fro
  * identifier so the icon scan plugin can discover every icon a site
  * references in its content and theme configuration.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export const LIB_REGEX_ICON_CANDIDATE = /([a-z][a-z0-9-]*):([a-z0-9][a-z0-9-]*)/;
+
+/**
+ * Lib - Regex - Pattern JSDoc Tag Scan.
+ *
+ * Matches a JSDoc `@since` or `@deprecated` tag and captures the first
+ * non-whitespace token on the same line (the [ \t]+ gap stops the capture from
+ * crossing a newline). Used by the since-version meta-test; apply `g` at the call site.
+ *
+ * @since 0.20.0
+ */
+export const LIB_REGEX_PATTERN_JSDOC_TAG_SCAN = /(?:\/\*+\s*|\n\s*\*\s*)@(?:since|deprecated)[ \t]+(\S+)/;
+
+/**
+ * Lib - Regex - Pattern Regex Special Chars.
+ *
+ * Matches a single RegExp metacharacter so a search term can be escaped before being
+ * interpolated into a dynamically built pattern.
+ *
+ * @since 0.20.0
+ */
+export const LIB_REGEX_PATTERN_REGEX_SPECIAL_CHARS = /[.*+?^${}()|[\]\\]/;
+
+/**
+ * Lib - Regex - Pattern Semver Leading.
+ *
+ * Matches a leading `major.minor.patch` semver triple at the start of a string.
+ * Used by the since-version meta-test to validate tag values.
+ *
+ * @since 0.20.0
+ */
+export const LIB_REGEX_PATTERN_SEMVER_LEADING = /^(\d+\.\d+\.\d+)(?:\s|$)/;

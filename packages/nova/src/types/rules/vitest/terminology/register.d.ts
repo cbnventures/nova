@@ -1,0 +1,48 @@
+import type {
+  Rules_Vitest_Index_TerminologySuiteConfig,
+  Rules_Vitest_Index_TerminologyToggleKey,
+} from '../index.d.ts';
+
+/**
+ * Rules - Vitest - Terminology - Register - Register Terminology Suite.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Config = Rules_Vitest_Index_TerminologySuiteConfig;
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Returns = void;
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_RootDir = string;
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_ContentDirs = string[];
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_TerminologyPath = string;
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_ExpectedBase = string;
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_ComponentName = string;
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Enable = 'all' | Rules_Vitest_Index_TerminologyToggleKey[];
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Files = string[];
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved_ContentDirs = string[];
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved_TerminologyPath = string;
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved_ExpectedBase = string;
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved_RootDir = string;
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved_ComponentName = string;
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved_Files = string[];
+
+export type Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved = {
+  contentDirs: Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved_ContentDirs;
+  terminologyPath: Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved_TerminologyPath;
+  expectedBase: Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved_ExpectedBase;
+  rootDir: Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved_RootDir;
+  componentName: Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved_ComponentName;
+  files: Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_Resolved_Files;
+};

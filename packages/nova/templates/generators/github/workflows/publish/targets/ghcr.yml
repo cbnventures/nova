@@ -10,7 +10,7 @@ publish-ghcr-[__TARGET_ID__]:
 [__JOBS_CONDITION__]
   steps:
     - name: "Checkout repository"
-      uses: "actions/checkout@v6"
+      uses: "actions/checkout@v7"
 
     - name: "Set up QEMU"
       uses: "docker/setup-qemu-action@v3"

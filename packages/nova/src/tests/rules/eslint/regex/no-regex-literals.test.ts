@@ -34,6 +34,16 @@ ruleTester.run('noRegexLiterals', NoRegexLiterals['rule'], {
       code: 'new RegExp(PATTERN_SLUG, "g");',
     },
 
+    // RegExp constructor with a shared constant's source (allowed reference).
+    {
+      code: 'new RegExp(PATTERN_SLUG.source, "g");',
+    },
+
+    // RegExp constructor with a dynamic concatenated pattern (cannot be a static constant, allowed).
+    {
+      code: 'new RegExp("^" + PATTERN_SLUG + "$");',
+    },
+
     // Regex literal in the designated regexFile.
     {
       code: 'const pattern = /test/;',
@@ -76,6 +86,35 @@ ruleTester.run('noRegexLiterals', NoRegexLiterals['rule'], {
     {
       code: '"test".match(/pattern/);',
       errors: [{ messageId: 'noRegexLiteralWithoutFile' }],
+    },
+
+    // RegExp constructor with an inline string pattern.
+    {
+      code: 'const pattern = new RegExp("^abc$");',
+      errors: [{ messageId: 'noRegexLiteralWithoutFile' }],
+    },
+
+    // RegExp call (no new) with an inline string pattern.
+    {
+      code: 'const pattern = RegExp("^abc$");',
+      errors: [{ messageId: 'noRegexLiteralWithoutFile' }],
+    },
+
+    // RegExp constructor with a static template pattern.
+    {
+      code: 'const pattern = new RegExp(`^abc$`);',
+      errors: [{ messageId: 'noRegexLiteralWithoutFile' }],
+    },
+
+    // RegExp constructor inline string with regexFile configured but in wrong file.
+    {
+      code: 'const pattern = new RegExp("^abc$");',
+      options: [{
+        ignoreFiles: [],
+        regexFile: 'src/lib/regex.ts',
+      }],
+      filename: 'not-regex-file.ts',
+      errors: [{ messageId: 'noRegexLiteralWithFile' }],
     },
 
     // Regex literal with regexFile configured but in wrong file.

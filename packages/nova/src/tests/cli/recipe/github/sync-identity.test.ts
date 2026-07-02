@@ -76,6 +76,15 @@ import type {
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_IsProjectRootSpy,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_LoadSpy,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_LoggerErrorSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_Calls,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ErrorCalls,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ExecuteShellSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_HasUnparseableError,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsCommandExistsSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsProjectRootSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoggerErrorSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_MutationCall,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_ExecuteShellSpy,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_HasGithubBlockWarn,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_IsProjectRootSpy,
@@ -147,6 +156,15 @@ import type {
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_ExecuteShellSpy,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_IsProjectRootSpy,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_Calls,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ErrorCalls,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ExecuteShellSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_HasAccessError,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsCommandExistsSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsProjectRootSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoggerErrorSpy,
+  Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_MutationCall,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_ErrorCalls,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_ExecuteShellSpy,
   Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_HasWriteError,
@@ -186,7 +204,7 @@ import type {
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - Run.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 describe('CliRecipeGithubSyncIdentity.run', () => {
   afterEach(() => {
@@ -216,7 +234,11 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       code: 0,
     });
 
+    process.exitCode = 0;
+
     await CliRecipeGithubSyncIdentity.run({});
+
+    strictEqual(process.exitCode, 0);
 
     strictEqual(executeShellSpy['mock']['calls'].length, 0);
 
@@ -242,7 +264,11 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
 
     const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
 
+    process.exitCode = 0;
+
     await CliRecipeGithubSyncIdentity.run({});
+
+    strictEqual(process.exitCode, 0);
 
     strictEqual(executeShellSpy['mock']['calls'].length, 0);
 
@@ -286,7 +312,11 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
 
     const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
 
+    process.exitCode = 0;
+
     await CliRecipeGithubSyncIdentity.run({});
+
+    strictEqual(process.exitCode, 0);
 
     strictEqual(executeShellSpy['mock']['calls'].length, 0);
 
@@ -396,6 +426,77 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
     ));
 
     ok(hasVersionError, 'Expected error about gh version below minimum');
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    isCommandExistsSpy.mockRestore();
+
+    executeShellSpy.mockRestore();
+
+    loggerErrorSpy.mockRestore();
+
+    return;
+  });
+
+  it('gh version output unparseable logs error and sets exitCode=1', async () => {
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+
+    const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+      github: {
+        owner: 'test-owner',
+        repo: 'test-repo',
+        recipes: {
+          'sync-identity': true,
+        },
+      },
+    });
+
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+      if (cmd === 'gh --version') {
+        return Promise.resolve({
+          textOut: 'garbage',
+          textError: '',
+          code: 0,
+        });
+      }
+
+      return Promise.resolve({
+        textOut: '',
+        textError: '',
+        code: 0,
+      });
+    });
+
+    const loggerErrorSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoggerErrorSpy = vi.spyOn(toolkit['Logger'], 'error').mockReturnValue(undefined);
+
+    await CliRecipeGithubSyncIdentity.run({});
+
+    strictEqual(process.exitCode, 1);
+
+    const errorCalls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ErrorCalls = loggerErrorSpy['mock']['calls'];
+
+    const hasUnparseableError: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_HasUnparseableError = errorCalls.some((call) => (
+      typeof call[0] === 'string'
+      && call[0].includes('Could not determine the "gh" CLI version.') === true
+    ));
+
+    ok(hasUnparseableError, 'Expected error about unparseable gh version');
+
+    const calls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_Calls = executeShellSpy['mock']['calls'];
+
+    const mutationCall: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_MutationCall = calls.find((call) => (
+      typeof call[0] === 'string'
+      && (
+        call[0].includes('gh repo edit') === true
+        || call[0].includes('gh api') === true
+      )
+    ));
+
+    strictEqual(mutationCall, undefined, 'Expected no mutation call when gh version is unparseable');
 
     isProjectRootSpy.mockRestore();
 
@@ -542,6 +643,97 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
     ));
 
     ok(hasWriteError, 'Expected error about insufficient write access');
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    isCommandExistsSpy.mockRestore();
+
+    executeShellSpy.mockRestore();
+
+    loggerErrorSpy.mockRestore();
+
+    return;
+  });
+
+  it('repo view non-zero exit logs error and sets exitCode=1', async () => {
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+
+    const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+      github: {
+        owner: 'test-owner',
+        repo: 'test-repo',
+        recipes: {
+          'sync-identity': true,
+        },
+      },
+      project: { description: { short: 'A test project' } },
+    });
+
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+      if (cmd === 'gh --version') {
+        return Promise.resolve({
+          textOut: 'gh version 2.50.0 (2024-01-01)',
+          textError: '',
+          code: 0,
+        });
+      }
+
+      if (cmd === 'gh auth status') {
+        return Promise.resolve({
+          textOut: '',
+          textError: '',
+          code: 0,
+        });
+      }
+
+      if (
+        typeof cmd === 'string'
+        && cmd.includes('gh repo view') === true
+      ) {
+        return Promise.resolve({
+          textOut: '',
+          textError: 'Could not resolve to a Repository',
+          code: 1,
+        });
+      }
+
+      return Promise.resolve({
+        textOut: '',
+        textError: '',
+        code: 0,
+      });
+    });
+
+    const loggerErrorSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoggerErrorSpy = vi.spyOn(toolkit['Logger'], 'error').mockReturnValue(undefined);
+
+    await CliRecipeGithubSyncIdentity.run({});
+
+    strictEqual(process.exitCode, 1);
+
+    const errorCalls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ErrorCalls = loggerErrorSpy['mock']['calls'];
+
+    const hasAccessError: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_HasAccessError = errorCalls.some((call) => (
+      typeof call[0] === 'string'
+      && call[0].includes('Cannot access test-owner/test-repo.') === true
+    ));
+
+    ok(hasAccessError, 'Expected error about cannot access repo');
+
+    const calls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_Calls = executeShellSpy['mock']['calls'];
+
+    const mutationCall: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_MutationCall = calls.find((call) => (
+      typeof call[0] === 'string'
+      && (
+        call[0].includes('gh repo edit') === true
+        || call[0].includes('gh api') === true
+      )
+    ));
+
+    strictEqual(mutationCall, undefined, 'Expected no mutation call when repo view fails');
 
     isProjectRootSpy.mockRestore();
 
@@ -796,6 +988,16 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
 
     ok(topicsCall !== undefined, 'Expected gh api PUT topics call');
 
+    ok(
+      typeof topicsCall[0] === 'string' && topicsCall[0].includes('-f "names[]=typescript"') === true,
+      'Expected the entire names[]=<topic> token to be shell-quoted',
+    );
+
+    ok(
+      typeof topicsCall[0] === 'string' && topicsCall[0].includes('-f names[]=') !== true,
+      'Expected no bare -f names[]= token (zsh would glob the brackets)',
+    );
+
     isProjectRootSpy.mockRestore();
 
     loadSpy.mockRestore();
@@ -957,6 +1159,16 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
 
     ok(topicsCall !== undefined, 'Expected gh api PUT topics call even with empty topics array');
 
+    ok(
+      typeof topicsCall[0] === 'string' && topicsCall[0].includes('-f "names[]"') === true,
+      'Expected empty-array clearing field -f "names[]" in topics command',
+    );
+
+    ok(
+      typeof topicsCall[0] === 'string' && topicsCall[0].trim().endsWith('/topics') === false,
+      'Expected topics command to carry the clearing field, not a field-less PUT',
+    );
+
     isProjectRootSpy.mockRestore();
 
     loadSpy.mockRestore();
@@ -1093,7 +1305,11 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
 
     const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_AllThreeUndefinedLogsWarnAndMakesNoMutationCalls_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
 
+    process.exitCode = 0;
+
     await CliRecipeGithubSyncIdentity.run({});
+
+    strictEqual(process.exitCode, 0);
 
     const calls: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_AllThreeUndefinedLogsWarnAndMakesNoMutationCalls_Calls = executeShellSpy['mock']['calls'];
 

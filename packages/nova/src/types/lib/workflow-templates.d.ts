@@ -1,7 +1,7 @@
 /**
  * Lib - Workflow Templates - Lib Workflow Templates Metadata.
  *
- * @since 0.20.0
+ * @since 0.18.0
  */
 export type Lib_WorkflowTemplates_PermissionRead = 'read';
 

@@ -33,7 +33,7 @@ const bytesPerMebibyte = 1024 * 1024;
  *
  * @returns {Plugins_BundleGuard_Index_BundleGuard_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export function bundleGuard(_context: Plugins_BundleGuard_Index_BundleGuard_Context, options: Plugins_BundleGuard_Index_BundleGuard_Options): Plugins_BundleGuard_Index_BundleGuard_Returns {
   const maxBundleFileSize: Plugins_BundleGuard_Index_BundleGuard_MaxBundleFileSize = options['maxBundleFileSize'] ?? defaultMaxBundleFileSize;

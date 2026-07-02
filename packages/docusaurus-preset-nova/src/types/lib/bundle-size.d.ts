@@ -1,7 +1,7 @@
 /**
  * Lib - Bundle Size - Find Oversized Files.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Lib_BundleSize_FindOversizedFiles_Directory = string;
 

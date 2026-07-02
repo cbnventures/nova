@@ -1,7 +1,7 @@
 /**
  * Tests - CLI - Recipe - GitHub - Handle Gh Failure - Handle Gh Failure - Logs Generic Failure For Non Rate Limit Errors.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericFailureForNonRateLimitErrors_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
 
@@ -34,7 +34,7 @@ export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsGenericF
 /**
  * Tests - CLI - Recipe - GitHub - Handle Gh Failure - Handle Gh Failure - Logs Rate Limit Specific Error When Stderr Contains API Rate Limit Exceeded And Reset Header.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimitSpecificErrorWhenStderrContainsAPIRateLimitExceededAndResetHeader_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
 
@@ -67,7 +67,7 @@ export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_LogsRateLimi
 /**
  * Tests - CLI - Recipe - GitHub - Handle Gh Failure - Handle Gh Failure - Uses Unknown Reset Time When X Rate Limit Reset Header Is Missing.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_UsesUnknownResetTimeWhenXRateLimitResetHeaderIsMissing_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
 

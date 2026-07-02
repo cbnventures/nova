@@ -465,14 +465,14 @@ export type Shared_TocHeading = {
 /**
  * Shared - Iconify Icon Entry.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Shared_IconifyIconEntry = Record<string, unknown>;
 
 /**
  * Shared - Iconify Alias Entry.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Shared_IconifyAliasEntry_Parent = string;
 
@@ -484,7 +484,7 @@ export type Shared_IconifyAliasEntry = {
 /**
  * Shared - Iconify Collection.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Shared_IconifyCollection_Prefix = string;
 
@@ -508,14 +508,14 @@ export type Shared_IconifyCollection = {
 /**
  * Shared - Iconify Collections Index.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Shared_IconifyCollectionsIndex = Record<string, unknown>;
 
 /**
  * Shared - Icon Slice.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Shared_IconSlice_Icons = Set<string>;
 
@@ -529,20 +529,20 @@ export type Shared_IconSlice = {
 /**
  * Shared - Icon Slices.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Shared_IconSlices = Map<string, Shared_IconSlice>;
 
 /**
  * Shared - Icon Loaded Collections.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Shared_IconLoadedCollections = Map<string, Shared_IconifyCollection | undefined>;
 
 /**
  * Shared - Icon Sliced Collection.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Shared_IconSlicedCollection = Record<string, unknown>;

@@ -1,0 +1,46 @@
+import type { Shared_TypeDeclarationDtsMapping } from '../../../shared.d.ts';
+import type {
+  Rules_Vitest_Index_TypeDeclarationSuiteConfig,
+  Rules_Vitest_Index_TypeDeclarationToggleKey,
+} from '../index.d.ts';
+
+/**
+ * Rules - Vitest - Type Declarations - Register - Register Type Declaration Suite.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_Config = Rules_Vitest_Index_TypeDeclarationSuiteConfig;
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_Returns = void;
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_PackageRoot = string;
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_TypeRoots = string[];
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_StandaloneTypeFilesConfig = string[];
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Mapping_SourceToDts = (file: string) => string;
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Mapping_DtsToSource = (file: string) => string;
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Mapping = {
+  sourceToDts: Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Mapping_SourceToDts;
+  dtsToSource: Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Mapping_DtsToSource;
+};
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Enable = 'all' | Rules_Vitest_Index_TypeDeclarationToggleKey[];
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Resolved_PackageRoot = string;
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Resolved_TypeRoots = string[];
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Resolved_StandaloneTypeFiles = string[];
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Resolved_Mapping = Shared_TypeDeclarationDtsMapping;
+
+export type Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Resolved = {
+  packageRoot: Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Resolved_PackageRoot;
+  typeRoots: Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Resolved_TypeRoots;
+  standaloneTypeFiles: Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Resolved_StandaloneTypeFiles;
+  mapping: Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_Resolved_Mapping;
+};

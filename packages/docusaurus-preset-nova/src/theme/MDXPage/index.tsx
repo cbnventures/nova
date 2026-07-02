@@ -97,7 +97,7 @@ function MDXPage(props: Theme_MdxPage_Index_MdxPageProps) {
   }
 
   /**
-   * Theme - MDX Page - MDX Page - First H State.
+   * Theme - MDX Page - MDX Page - First H1 State.
    *
    * Function-local flag scoping first-h1 detection to a single render so
    * subsequent renders start clean. Drives the `TOCCollapsible` trigger

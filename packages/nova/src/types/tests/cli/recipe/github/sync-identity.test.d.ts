@@ -1,7 +1,7 @@
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - All Three Undefined Logs Warn And Makes No Mutation Calls.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_AllThreeUndefinedLogsWarnAndMakesNoMutationCalls_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -26,7 +26,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Description And Homepage Both Set Calls Gh Repo Edit With Both Flags.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_DescriptionAndHomepageBothSetCallsGhRepoEditWithBothFlags_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -43,7 +43,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Dry Run True Runs Precheck Calls But Skips Mutation Calls.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_DryRunTrueRunsPrecheckCallsButSkipsMutationCalls_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -66,7 +66,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Gh Not Authenticated Logs Error And Sets Exit Code1.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotAuthenticatedLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -85,7 +85,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Gh Not On PATH Logs Error And Sets Exit Code1.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhNotOnPATHLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -104,7 +104,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Gh Repo Edit Returns Code1 Sets Exit Code1 And Logs Error.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditReturnsCode1SetsExitCode1AndLogsError_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -117,7 +117,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Gh Repo Edit With Rate Limit In Stderr Logs Rate Limit Specific Error.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhRepoEditWithRateLimitInStderrLogsRateLimitSpecificError_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -151,7 +151,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Gh Version Below Minimum Logs Error And Sets Exit Code1.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -168,9 +168,32 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionBelowMinimumLogsErrorAndSetsExitCode1_HasVersionError = boolean;
 
 /**
+ * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Gh Version Output Unparseable Logs Error And Sets Exit Code1.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_IsCommandExistsSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ExecuteShellSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_LoggerErrorSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_ErrorCalls = unknown[][];
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_HasUnparseableError = boolean;
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_Calls = unknown[][];
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GhVersionOutputUnparseableLogsErrorAndSetsExitCode1_MutationCall = unknown[] | undefined;
+
+/**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - GitHub Block Missing Logs Warn And Returns Without Exit Code.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GithubBlockMissingLogsWarnAndReturnsWithoutExitCode_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -187,7 +210,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - GitHub Topics Empty Array Fires API Call Clearing Topics.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_GithubTopicsEmptyArrayFiresApiCallClearingTopics_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -204,7 +227,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Neither Topics Nor Keywords Results In No API Call.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NeitherTopicsNorKeywordsResultsInNoApiCall_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -221,7 +244,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Normalize Topics Deduplicates Topics Keeping First Occurrence.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDeduplicatesTopicsKeepingFirstOccurrence_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -240,7 +263,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Normalize Topics Drops Keywords That Become Empty After Stripping.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsKeywordsThatBecomeEmptyAfterStripping_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -257,7 +280,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Normalize Topics Drops Topics Exceeding50 Chars With Warn.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsDropsTopicsExceeding50CharsWithWarn_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -276,7 +299,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Normalize Topics Trims To20 Topics With Warn When More Than20 Provided.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_NormalizeTopicsTrimsTo20TopicsWithWarnWhenMoreThan20Provided_Keywords = string[];
 
@@ -303,7 +326,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Only Description Set Calls Gh Repo Edit With Only Description Flag.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OnlyDescriptionSetCallsGhRepoEditWithOnlyDescriptionFlag_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -320,7 +343,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Only Topics From GitHub Topics Set Fires Only Gh API PUT Topics Call.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OnlyTopicsFromGithubTopicsSetFiresOnlyGhApiPUTTopicsCall_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -339,7 +362,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Owner Or Repo Missing Logs Warn And Returns Without Exit Code.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -356,7 +379,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Recipe Disabled Returns Silently Without Execute Shell Mutation Calls.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -365,9 +388,32 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RecipeDisabledReturnsSilentlyWithoutExecuteShellMutationCalls_ExecuteShellSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
 /**
+ * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Repo View Non Zero Exit Logs Error And Sets Exit Code1.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_IsCommandExistsSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ExecuteShellSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_LoggerErrorSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_ErrorCalls = unknown[][];
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_HasAccessError = boolean;
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_Calls = unknown[][];
+
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewNonZeroExitLogsErrorAndSetsExitCode1_MutationCall = unknown[] | undefined;
+
+/**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Repo View Returns READ Permission Logs Error And Sets Exit Code1.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_RepoViewReturnsREADPermissionLogsErrorAndSetsExitCode1_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -386,7 +432,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Sets Exit Code1 When Gh Repo View Returns Malformed J S O N.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsMalformedJSON_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -420,7 +466,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Sets Exit Code1 When Gh Repo View Returns Valid JSON Without Viewer Permission.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_SetsExitCode1WhenGhRepoViewReturnsValidJSONWithoutViewerPermission_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
@@ -460,7 +506,7 @@ export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_
 /**
  * Tests - CLI - Recipe - GitHub - Sync Identity - CLI Recipe GitHub Sync Identity Run - Topics Derived From Project Keywords Are Normalized In API Call.
  *
- * @since 0.22.0
+ * @since 0.19.0
  */
 export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsDerivedFromProjectKeywordsAreNormalizedInApiCall_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 

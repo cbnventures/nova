@@ -25,7 +25,7 @@ Create a `.gitignore` file with pre-configured patterns for Node.js projects, co
 
 - Prevents build artifacts, `node_modules`, and OS junk files from cluttering Git history.
 - Ships with sensible defaults so new projects start with a clean ignore list.
-- Supports adding custom ignore patterns interactively.
+- Reads custom ignore patterns from `nova.config.json` so the same excludes apply on every run.
 
 ## Requirements
 
@@ -66,6 +66,12 @@ Create a `.gitignore` file with pre-configured patterns for Node.js projects, co
 | `-d, --dry-run`      | Run without writing any files.                                         |
 | `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
 
+## Config Fields
+
+| Field                       | Description                                                                       |
+|-----------------------------|-----------------------------------------------------------------------------------|
+| `gitignore.projectExcludes` | Custom ignore patterns appended under the Project Excludes section of the output. |
+
 ## Output Files
 
 | File         | Description                                                        |
@@ -74,20 +80,19 @@ Create a `.gitignore` file with pre-configured patterns for Node.js projects, co
 
 ## How It Works
 
-### New File
+The command is non-interactive. It reads its customization from `nova.config.json` and writes `.gitignore` without prompting.
 
-When `.gitignore` does not exist yet, the generator creates it from the built-in template. You are then prompted to add your own patterns to the Project Excludes section.
+To change the custom patterns, edit them through [`nova utility initialize`](/docs/cli/utilities/initialize#ignores) under the **Ignores** category, which manages `gitignore.projectExcludes`.
 
-### Existing File
+### Template Output
 
-When `.gitignore` already exists, you are prompted to choose between:
+The generator writes the bundled template covering build output, editor files, and OS artifacts. Any patterns under `gitignore.projectExcludes` are appended to the **Project Excludes** section.
 
-- **Manage existing patterns** — Reconstructs the file into the two-layer structure by separating template patterns from your custom patterns, then opens a menu where you can add, edit, or delete patterns in the Project Excludes section. Template patterns are read-only.
-- **Regenerate from template** — Replaces the file with a fresh copy from the template (a `.nova-backup` copy is created unless `--replace-file` is set).
+When `gitignore.projectExcludes` is absent, the generator emits the template only.
 
 :::tip Overriding a File Inside an Ignored Directory
 
-Git does not allow negating a path inside a directory that is fully ignored with `dir/`. To track a specific file inside an ignored directory, add the following sequence to the **Project Excludes** section:
+Git does not allow negating a path inside a directory that is fully ignored with `dir/`. To track a specific file inside an ignored directory, add the following sequence to `gitignore.projectExcludes`:
 
 ```gitignore
 !node_modules/
@@ -98,20 +103,3 @@ node_modules/*
 This first un-ignores the directory itself, then re-ignores its contents with a wildcard, and finally un-ignores the specific path you want tracked.
 
 :::
-
-### Manage Menu
-
-When managing existing patterns, the following actions are available:
-
-- **Add a pattern** — Enter an ignore pattern (e.g. `logs/`) or a negation pattern (e.g. `!.vscode/settings.json`) to override a template rule. Duplicate and reserved patterns are blocked.
-- **Edit a pattern** — Select a pattern from Project Excludes and replace it.
-- **Delete a pattern** — Select a pattern from Project Excludes to remove.
-- **Save & Exit** — Exit the manage menu.
-- **Back** — Return to the mode selection menu.
-
-### Regenerate Prompts
-
-When regenerating (or creating a new file), the generator prompts you to add custom ignore patterns:
-
-1. **Pattern to ignore** — Enter the pattern (e.g. `dist/`, `*.log`). Leave empty to finish.
-2. Repeat until you leave the pattern empty.

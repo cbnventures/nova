@@ -3,7 +3,7 @@ import type { Shared_GeneratorRunResult as SharedGeneratorRunResult } from '../.
 /**
  * CLI - Generate - GitHub - Workflows - Build Artifact Name.
  *
- * @since 0.16.3
+ * @since 0.16.0
  */
 export type Cli_Generate_Github_Workflows_Runner_BuildArtifactName_TargetType = string;
 export type Cli_Generate_Github_Workflows_Runner_BuildArtifactName_TargetId = string;
@@ -46,7 +46,7 @@ export type Cli_Generate_Github_Workflows_Runner_BuildEntrySetupLines_TargetVarR
 /**
  * CLI - Generate - GitHub - Workflows - Build Merged Jobs Condition.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData_RunName = string;
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerData_PublishCondition = string;
@@ -67,7 +67,7 @@ export type Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_JobsCo
 /**
  * CLI - Generate - GitHub - Workflows - Build Merged Publish Condition.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData_RunName = string;
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerData_PublishCondition = string;
@@ -92,7 +92,7 @@ export type Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_All
 /**
  * CLI - Generate - GitHub - Workflows - Build Merged Run Name.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData_RunName = string;
 export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerData_PublishCondition = string;
@@ -124,7 +124,7 @@ export type Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_MergedContex
 /**
  * CLI - Generate - GitHub - Workflows - Detect Circular Depends On.
  *
- * @since 0.21.0
+ * @since 0.18.0
  */
 export type Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_Workflows = import('../../../shared.d.ts').Shared_NovaConfigWorkflow[];
 export type Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_Returns = boolean;
@@ -147,7 +147,7 @@ export type Cli_Generate_Github_Workflows_Runner_DetectTurbo_TurboConfigPath = s
 /**
  * CLI - Generate - GitHub - Workflows - Render Upload Artifact Steps.
  *
- * @since 0.16.3
+ * @since 0.16.0
  */
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetEntry_Type = string;
 export type Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetEntry_WorkingDir = string;
@@ -565,7 +565,7 @@ export type Cli_Generate_Github_Workflows_Runner_SlugifyWorkingDir_Trimmed = str
 /**
  * CLI - Generate - GitHub - Workflows - Substitute Variables.
  *
- * @since 0.20.0
+ * @since 0.18.0
  */
 export type Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Content = string;
 

@@ -345,6 +345,34 @@ export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_ReturnsUndefinedForNonArr
 export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_ReturnsUndefinedForNonArrayWorkflows_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
 
 /**
+ * Tests - Lib - Nova Config - SharedNovaConfigAgents.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_OriginalCwd = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_TemporaryDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_SandboxPrefix = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_SandboxRoot = string;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigAgents - ParsesAgentsAndDropsUnknownIds.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows' | 'gitignore' | 'agents'>;
+
+/**
  * Tests - Lib - Nova Config - SharedNovaConfigConstructor - CreatesInstanceWithoutErrors.
  *
  * @since 0.13.0
@@ -357,6 +385,133 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigConstructor_CreatesInstanceWith
  * @since 0.13.0
  */
 export type Tests_Lib_NovaConfig_SharedNovaConfigConstructor_InstanceHasExpectedPublicMethods_Config = LibNovaConfig;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigDotenv.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_OriginalCwd = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_TemporaryDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_SandboxPrefix = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_SandboxRoot = string;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigDotenv - DropsInvalidKeysAndDefaultsMissingValues.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigDotenv - RejectsReservedKeys.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock = {
+  debug: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Debug;
+  dev: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Dev;
+  info: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Info;
+  warn: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Warn;
+  error: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Error;
+};
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_LoggerCustomizeReturn = import('../../toolkit/logger.d.ts').Toolkit_Logger_Runner_Customize_Returns;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedWarnCalls = unknown[][];
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_HasReservedKeyWarning = boolean;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigGithubIssueTemplate.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_OriginalCwd = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_TemporaryDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_SandboxPrefix = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_SandboxRoot = string;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigGithubIssueTemplate - FiltersEmptyBugReportFields.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_LoadedGithub = Shared_NovaConfig_Github | undefined;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigGitignore.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_OriginalCwd = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_TemporaryDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_SandboxPrefix = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_SandboxRoot = string;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigGitignore - FiltersEmptyStringsFromProjectExcludes.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows' | 'gitignore'>;
 
 /**
  * Tests - Lib - Nova Config - SharedNovaConfigLoad.
@@ -835,9 +990,117 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithIn
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_ConfigContents = string;
 
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock = {
+  debug: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Debug;
+  dev: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Dev;
+  info: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Info;
+  warn: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Warn;
+  error: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Error;
+};
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_LoggerCustomizeReturn = import('../../toolkit/logger.d.ts').Toolkit_Logger_Runner_Customize_Returns;
+
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_Config = LibNovaConfig;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedWarnCalls = unknown[][];
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_HasDroppedWorkspaceWarning = boolean;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadRejectsWorkspaceWithMissingPolicy.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock = {
+  debug: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Debug;
+  dev: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Dev;
+  info: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Info;
+  warn: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Warn;
+  error: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Error;
+};
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_LoggerCustomizeReturn = import('../../toolkit/logger.d.ts').Toolkit_Logger_Runner_Customize_Returns;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedWarnCalls = unknown[][];
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_HasDroppedWorkspaceWarning = boolean;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadRejectsWorkspaceWithMissingRole.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock = {
+  debug: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Debug;
+  dev: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Dev;
+  info: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Info;
+  warn: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Warn;
+  error: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Error;
+};
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_LoggerCustomizeReturn = import('../../toolkit/logger.d.ts').Toolkit_Logger_Runner_Customize_Returns;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedWarnCalls = unknown[][];
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_HasDroppedWorkspaceWarning = boolean;
 
 /**
  * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadReturnsEmptyObjectWhenConfigFileIsMissing.

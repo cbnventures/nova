@@ -40,7 +40,7 @@ const watchDirectories = [
  *
  * @returns {Plugins_Icons_Index_Icons_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export function icons(context: Plugins_Icons_Index_Icons_Context, options: Plugins_Icons_Index_Icons_Options): Plugins_Icons_Index_Icons_Returns {
   const siteDirectory: Plugins_Icons_Index_Icons_SiteDirectory = context['siteDir'];
@@ -95,7 +95,7 @@ export function icons(context: Plugins_Icons_Index_Icons_Context, options: Plugi
  *
  * @returns {Plugins_Icons_Index_WriteRegistry_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function writeRegistry(generatedDirectory: Plugins_Icons_Index_WriteRegistry_GeneratedDirectory, generatedPath: Plugins_Icons_Index_WriteRegistry_GeneratedPath, moduleOptions: Plugins_Icons_Index_WriteRegistry_ModuleOptions): Plugins_Icons_Index_WriteRegistry_Returns {
   const source: Plugins_Icons_Index_WriteRegistry_Source = generateIconModule(moduleOptions);
@@ -117,7 +117,7 @@ function writeRegistry(generatedDirectory: Plugins_Icons_Index_WriteRegistry_Gen
  *
  * @returns {Plugins_Icons_Index_BuildWatchPaths_Returns}
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 function buildWatchPaths(siteDirectory: Plugins_Icons_Index_BuildWatchPaths_SiteDirectory): Plugins_Icons_Index_BuildWatchPaths_Returns {
   const paths: Plugins_Icons_Index_BuildWatchPaths_Paths = [];

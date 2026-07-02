@@ -3,7 +3,7 @@ import type { Shared_SearchWorkerSearchHit } from '../../shared.d.ts';
 /**
  * Theme - Search Bar - Search Input - Parse Shortcut Keymap.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Theme_SearchBar_SearchInput_ParseShortcutKeymap_Keymap = string;
 

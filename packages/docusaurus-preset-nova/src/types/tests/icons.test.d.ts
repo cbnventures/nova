@@ -1,7 +1,7 @@
 /**
  * Tests - Icons - Create Fixture Site.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Tests_Icons_CreateFixtureSite_File_Path = string;
 
@@ -23,7 +23,7 @@ export type Tests_Icons_CreateFixtureSite_FilePath = string;
 /**
  * Tests - Icons - Generate Icon Module - Discovers Icons From Content Theme Config And The Safelist.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Tests_Icons_GenerateIconModule_DiscoversIconsFromContentThemeConfigAndTheSafelist_SiteDir = string;
 
@@ -34,7 +34,7 @@ export type Tests_Icons_GenerateIconModule_DiscoversIconsFromContentThemeConfigA
 /**
  * Tests - Icons - Generate Icon Module - Registers The Entire Preset Base Set.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Tests_Icons_GenerateIconModule_RegistersTheEntirePresetBaseSet_SiteDir = string;
 
@@ -45,7 +45,7 @@ export type Tests_Icons_GenerateIconModule_RegistersTheEntirePresetBaseSet_Regis
 /**
  * Tests - Icons - Generate Icon Module - Skips Unresolved Names And Ignores Non Collection Prefixes.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Tests_Icons_GenerateIconModule_SkipsUnresolvedNamesAndIgnoresNonCollectionPrefixes_SiteDir = string;
 
@@ -56,7 +56,7 @@ export type Tests_Icons_GenerateIconModule_SkipsUnresolvedNamesAndIgnoresNonColl
 /**
  * Tests - Icons - Parse Registered Identifiers.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Tests_Icons_ParseRegisteredIdentifiers_Source = string;
 

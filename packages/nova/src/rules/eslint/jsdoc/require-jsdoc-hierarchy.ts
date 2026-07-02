@@ -8,6 +8,8 @@ import {
   LIB_REGEX_PATTERN_CAMEL_CASE_WORDS,
   LIB_REGEX_PATTERN_EXTENSION,
   LIB_REGEX_PATTERN_JSDOC_LINE_PREFIX,
+  LIB_REGEX_PATTERN_LEADING_DIGIT,
+  LIB_REGEX_PATTERN_TRAILING_EXTENSION,
 } from '../../../lib/regex.js';
 import { isIgnoredFile, normalizeRouteSegment } from '../../../lib/utility.js';
 
@@ -1007,7 +1009,7 @@ export class Runner {
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Returns}
    *
-   * @since 0.17.1
+   * @since 0.17.0
    */
   private static derivePathParts(filename: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Filename, options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Options): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Returns {
     let srcIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_SrcIndex = -1;
@@ -1060,7 +1062,7 @@ export class Runner {
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Returns}
    *
-   * @since 0.17.1
+   * @since 0.17.0
    */
   private static deriveInvalidPrefixDiagnostic(filename: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Filename, options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Options): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Returns {
     const parts: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Parts = Runner.derivePathParts(filename, options);
@@ -1071,7 +1073,7 @@ export class Runner {
 
     const firstSegment: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_FirstSegment = parts[0] ?? '';
 
-    if (new RegExp('^[0-9]').test(firstSegment) === false) {
+    if (LIB_REGEX_PATTERN_LEADING_DIGIT.test(firstSegment) === false) {
       return null;
     }
 
@@ -1109,7 +1111,7 @@ export class Runner {
     // No anchor directory found in path. Use the filename stem as the sole hierarchy base.
     if (parts.length === 0) {
       const lastSlashIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_LastSlashIndex = filename.lastIndexOf('/');
-      const safeExtensionPattern: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_SafeExtensionPattern = new RegExp('\\.[a-zA-Z0-9]+$');
+      const safeExtensionPattern: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_SafeExtensionPattern = LIB_REGEX_PATTERN_TRAILING_EXTENSION;
       const filenameStem: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_FilenameStem = filename.slice(lastSlashIndex + 1).replace(safeExtensionPattern, '').replace(safeExtensionPattern, '').replace(safeExtensionPattern, '');
       const normalizedStem: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_NormalizedStem = normalizeRouteSegment(filenameStem);
 

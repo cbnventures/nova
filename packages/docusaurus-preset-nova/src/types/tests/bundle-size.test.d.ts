@@ -1,7 +1,7 @@
 /**
  * Tests - Bundle Size - Find Oversized Files - Returns Oversized Js Files Recursively.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export type Tests_BundleSize_FindOversizedFiles_ReturnsOversizedJsFilesRecursively_Directory = string;
 

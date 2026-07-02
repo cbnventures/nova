@@ -1,6 +1,11 @@
 import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
-import type { Shared_GeneratorRunResult as SharedGeneratorRunResult, Shared_NovaConfig as SharedNovaConfig } from '../../../shared.d.ts';
+import type {
+  Shared_GeneratorRunResult as SharedGeneratorRunResult,
+  Shared_NovaConfig as SharedNovaConfig,
+  Shared_NovaConfig_Github_IssueTemplate as SharedNovaConfigGithubIssueTemplate,
+  Shared_NovaConfig_Github_IssueTemplate_BugReportFields as SharedNovaConfigGithubIssueTemplateBugReportFields,
+} from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - GitHub - Issue Template - Run.
@@ -46,6 +51,10 @@ export type Cli_Generate_Github_IssueTemplate_Runner_Run_Urls = SharedNovaConfig
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_Github = SharedNovaConfig['github'];
 
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_IssueTemplate = SharedNovaConfigGithubIssueTemplate | undefined;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_ConfigBugReportFields = SharedNovaConfigGithubIssueTemplateBugReportFields;
+
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_GithubOwner = string;
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_GithubRepoName = string;
@@ -62,21 +71,6 @@ export type Cli_Generate_Github_IssueTemplate_Runner_Run_GithubSponsor = string;
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_Platforms = string[];
 
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Title = string;
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Description = string;
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Value = string;
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Selected = boolean;
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_Choice = {
-  title: Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Title;
-  description: Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Description;
-  value: Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Value;
-  selected: Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Selected;
-};
-
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMappingKey = string;
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMappingValue = string;
@@ -87,12 +81,6 @@ export type Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectedFiles = Set<
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_File = string | undefined;
 
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_BugReportFieldChoices = Cli_Generate_Github_IssueTemplate_Runner_Run_Choice[];
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_Cancelled = boolean;
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_Answers = Record<string, unknown>;
-
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_SelectedFiles = string[];
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_TemplateDirectory = string;
@@ -102,12 +90,6 @@ export type Cli_Generate_Github_IssueTemplate_Runner_Run_PlatformFieldsDirectory
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalAgreementsDirectory = string;
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_PlatformFieldParts = string[];
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_FieldPath = string;
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_FieldContent = string;
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_TrimmedFieldContent = string;
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_PlatformFieldsContent = string;
 
@@ -146,8 +128,6 @@ export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalContent = string;
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalLinkParts = string[];
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalLabelParts = string[];
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalPath = string;
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalRaw = string;
 

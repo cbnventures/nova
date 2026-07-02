@@ -7,7 +7,7 @@ import type { Plugins_Icons_BaseSet_IconBaseSet } from '../../types/plugins/icon
  * the theme toggle, navbar, footer, pagination, and related components. Always
  * bundled regardless of the content scan so the preset UI resolves offline.
  *
- * @since 0.18.1
+ * @since 0.19.0
  */
 export const iconBaseSet: Plugins_Icons_BaseSet_IconBaseSet = [
   'lucide:alert-circle',

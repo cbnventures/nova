@@ -352,7 +352,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_AllP
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Derive Invalid Prefix Diagnostic.
  *
- * @since 0.17.1
+ * @since 0.17.0
  */
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Filename = string;
 
@@ -378,7 +378,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixD
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Derive Path Parts.
  *
- * @since 0.17.1
+ * @since 0.17.0
  */
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Filename = string;
 

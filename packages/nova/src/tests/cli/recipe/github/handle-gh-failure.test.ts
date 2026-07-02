@@ -33,7 +33,7 @@ import type {
 /**
  * Tests - CLI - Recipe - GitHub - Handle Gh Failure - Handle Gh Failure.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 describe('handleGhFailure', () => {
   beforeEach(() => {

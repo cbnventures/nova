@@ -9,7 +9,7 @@ import type {
 /**
  * CLI - Recipe - GitHub - Sync Policies - Run.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export type Cli_Recipe_Github_SyncPolicies_Runner_Run_Options_DryRun = true;
 
@@ -62,6 +62,8 @@ export type Cli_Recipe_Github_SyncPolicies_Runner_Run_Permission = string[];
 export type Cli_Recipe_Github_SyncPolicies_Runner_Run_Policies = SharedNovaConfigGithubPolicies | undefined;
 
 export type Cli_Recipe_Github_SyncPolicies_Runner_Run_Flags = string[];
+
+export type Cli_Recipe_Github_SyncPolicies_Runner_Run_BranchResult = SharedShellOutput;
 
 export type Cli_Recipe_Github_SyncPolicies_Runner_Run_MergeMethods = SharedNovaConfigGithubPoliciesMergeMethods | undefined;
 

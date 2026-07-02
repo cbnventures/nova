@@ -539,7 +539,7 @@ export class Runner {
         if (uniquenessKeyExisting !== undefined) {
           // Both the previously-recorded workflow and the current workflow are
           // marked for skip so neither emits a partial output for a destination
-          // that nova cannot disambiguate.
+          // that Nova cannot disambiguate.
           skippedWorkflowKeys.add(uniquenessKeyExisting['workflowKey']);
           skippedWorkflowKeys.add(uniquenessWorkflowKey);
 
@@ -1238,7 +1238,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_Returns}
    *
-   * @since 0.21.0
+   * @since 0.18.0
    */
   private static buildMergedRunName(triggerDataList: Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_TriggerDataList, needsManuallyFallback: Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_NeedsManuallyFallback): Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_Returns {
     const contextExpressions: Cli_Generate_Github_Workflows_Runner_BuildMergedRunName_ContextExpressions = [];
@@ -1298,7 +1298,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_Returns}
    *
-   * @since 0.21.0
+   * @since 0.18.0
    */
   private static buildMergedPublishCondition(triggerDataList: Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_TriggerDataList): Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_Returns {
     const nonDispatchParts: Cli_Generate_Github_Workflows_Runner_BuildMergedPublishCondition_NonDispatchParts = [];
@@ -1349,7 +1349,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_Returns}
    *
-   * @since 0.21.0
+   * @since 0.18.0
    */
   private static buildMergedJobsCondition(triggerDataList: Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_TriggerDataList): Cli_Generate_Github_Workflows_Runner_BuildMergedJobsCondition_Returns {
     // Find the first trigger with a jobs-condition.
@@ -1377,7 +1377,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_Returns}
    *
-   * @since 0.21.0
+   * @since 0.18.0
    */
   private static detectCircularDependsOn(workflows: Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_Workflows): Cli_Generate_Github_Workflows_Runner_DetectCircularDependsOn_Returns {
     for (const entry of workflows) {
@@ -1513,7 +1513,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Returns}
    *
-   * @since 0.20.0
+   * @since 0.18.0
    */
   private static substituteVariables(content: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Content, variables: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Variables, settings: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Settings): Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Returns {
     let result: Cli_Generate_Github_Workflows_Runner_SubstituteVariables_Result = content;
@@ -1566,7 +1566,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_Workflows_Runner_BuildArtifactName_Returns}
    *
-   * @since 0.16.3
+   * @since 0.16.0
    */
   public static buildArtifactName(targetType: Cli_Generate_Github_Workflows_Runner_BuildArtifactName_TargetType, targetId: Cli_Generate_Github_Workflows_Runner_BuildArtifactName_TargetId): Cli_Generate_Github_Workflows_Runner_BuildArtifactName_Returns {
     return `build-${targetType}-${targetId}`;
@@ -1693,7 +1693,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Returns}
    *
-   * @since 0.16.3
+   * @since 0.16.0
    */
   public static renderUploadArtifactSteps(targets: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Targets, targetsMetadata: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_TargetsMetadata): Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Returns {
     const steps: Cli_Generate_Github_Workflows_Runner_RenderUploadArtifactSteps_Steps = [];

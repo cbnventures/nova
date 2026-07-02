@@ -1,5 +1,33 @@
 # @cbnventures/nova
 
+## 0.20.0 - 2026-07-01
+
+### UPDATED
+- `nova generate must-haves agent-conventions` now emits only the AI-tool files a repository selects: `claude-code` writes `CLAUDE.md`, `codex` writes `AGENTS.md`, and the shared `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md` files are written whenever at least one tool is selected. When no tool is selected, the generator writes nothing and warns.
+- Tightens `nova.config.json` parsing so silent drops become visible. A `dotenv` variable that reuses a template-managed key (`NODE_ENV`, `LOG_LEVEL`, `LOG_TIME`) is now rejected with a warning naming the key. Each workspace dropped during parsing now logs a warning naming its path and the reason, instead of disappearing without notice.
+- The `require-jsdoc-since` ESLint rule now validates `@since` and `@deprecated` version values and enforces `@since` on exported declarations (previously only non-exported declarations were checked).
+- Makes `nova generate must-haves dotenv` uniform across every workspace. The `dotenv` block moves off the top-level config onto each `workspaces[path]` entry (the root workspace uses the `./` path), and a workspace receives `.env` and `.env.sample` files only when it declares a `dotenv` block, listing its variables under `dotenv.variables`. The top-level `dotenv` config and the `nova utility initialize` Environment category are removed, so an existing config must move its `dotenv` block under the appropriate workspace.
+- The `generate` commands for `.gitignore`, `.env`, and GitHub issue templates are now non-interactive and read their customization from `nova.config.json`. Manage ignores and issue-template fields through `nova utility initialize`, which imports existing `.gitignore` entries on first open. Regenerating `.env` preserves values you have already filled in (only new keys start blank); `.env.sample` is rebuilt from the configured defaults.
+- The generated `.gitignore` template now includes a Tooling - Claude Code section that ignores `.worktrees/` and `docs/superpowers/`, keeping git worktrees and Superpowers planning docs out of version control by default.
+- Pins every dependency in the scaffold templates (`nova scaffold`) to an exact version, so generated projects no longer install caret ranges. A new test keeps the scaffolded Docusaurus project's `@cbnventures/nova` and `@cbnventures/docusaurus-preset-nova` dependencies matched to the current Nova version, catching the kind of drift that previously left the preset pinned to an outdated `^0.1.0`.
+- `nova generate must-haves dotenv` now seeds sensible defaults for the reserved `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` keys (previously `LOG_LEVEL` and `LOG_TIME` shipped blank) and documents each key's valid values as an inline comment in `.env` and `.env.sample`. Regenerating never overwrites a value you have already set.
+- Bumps the GitHub Actions in the generated publish and CI workflows to `actions/checkout@v7`, `actions/configure-pages@v6`, `actions/upload-pages-artifact@v5`, and `actions/deploy-pages@v5`.
+- `nova utility changelog --release` now bumps every exact-pinned dependency on a co-released package to the new version across workspace and template `package.json` files, so a release no longer leaves stale internal pins behind for the drift tests to catch afterward.
+
+### FIXED
+- The `no-regex-literals` ESLint rule now also flags regular expressions built with the `RegExp` constructor from a string or static template literal (e.g. `new RegExp('foo')`), closing a gap where the constructor form bypassed the rule. Patterns built from a `.source` reference, an identifier, or an interpolated or concatenated string remain allowed.
+- Fixes the `nova recipe github` sync recipes, which previously failed to apply. `sync-identity` now shell-quotes the `gh api` topics field and clears all topics when the configured list is empty. `sync-policies` now passes `--accept-visibility-change-consequences` alongside `--visibility`, and skips `--default-branch` when that branch does not yet exist on the remote.
+
+### ADDED
+- Adds a `registerDotenvSuite` Vitest conformance suite, exported from `@cbnventures/nova/rules/vitest`, that fails the run when any value in a `.env` or `.env.sample` file is not wrapped in double quotes.
+- Adds the `@cbnventures/nova/rules/vitest` conformance kit: importable `registerTypeDeclarationSuite`, `registerFrontmatterSuite`, `registerLinkSuite`, `registerMarkdownTableSuite`, and `registerTerminologySuite` functions that replace the previously copy-pasted vitest meta-tests. Each consumer test becomes a thin wrapper that calls the matching `register*Suite(config)`, so docs and type-declaration conventions upgrade by version bump instead of re-copying. `nova scaffold docs` emits these wrapper tests for new sites.
+- Adds the `@since UNRELEASED` sentinel convention for tagging new or changed API: authors write `UNRELEASED`, and `nova utility changelog --release` stamps the real version at release. The convention is scaffolded into the generated agent-conventions templates for TypeScript, Java, Kotlin, and PHP.
+- Adds an `auto` value for `LOG_LEVEL` (the new default) that derives the level from `NODE_ENV`, recognized by the Nova logger.
+- Adds a top-level `agents` field to `nova.config.json` for selecting AI-tool conventions (`claude-code`, `codex`), chosen through a new **AI Tools** category in `nova utility initialize` that requires at least one tool.
+
+### REMOVED
+- Removes Cursor support from the agent-conventions generator, including the `.cursorrules` output file and its template.
+
 ## 0.19.0 - 2026-06-21
 
 ### UPDATED

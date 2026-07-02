@@ -235,7 +235,7 @@ describe('CliGenerateGithubWorkflows.buildCommand', () => {
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - Render Upload Artifact Steps.
  *
- * @since 0.16.3
+ * @since 0.16.0
  */
 describe('CliGenerateGithubWorkflows.renderUploadArtifactSteps', () => {
   const targetsMetadata: Tests_Cli_Generate_Github_WorkflowsHelpers_CliGenerateGithubWorkflowsRenderUploadArtifactSteps_TargetsMetadata = {
@@ -366,7 +366,7 @@ describe('CliGenerateGithubWorkflows.renderUploadArtifactSteps', () => {
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - Build Artifact Name.
  *
- * @since 0.16.3
+ * @since 0.16.0
  */
 describe('CliGenerateGithubWorkflows.buildArtifactName', () => {
   it('joins build prefix, targetType, and targetId with dashes', () => {

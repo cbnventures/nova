@@ -1,0 +1,820 @@
+import type {
+  Rules_Vitest_Index_TypeDeclarationResolvedConfig,
+  Rules_Vitest_Index_TypeDeclarationToggleKey,
+} from '../index.d.ts';
+
+/**
+ * Rules - Vitest - Type Declarations - Rules - Cross Section References.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Config = Rules_Vitest_Index_TypeDeclarationResolvedConfig;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Enable = 'all' | Rules_Vitest_Index_TypeDeclarationToggleKey[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Returns = Promise<void>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Files = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_CrossSectionCurrentDirectory = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_CrossSectionRelativePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_SourcePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_SourceExists = boolean;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Content = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Lines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_SourceContent = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_ClassPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_SectionMap = Map<number, string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_SourceSectionSet = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_ImportedNames = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Section_Prefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Section_TypeLines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Section = {
+  prefix: Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Section_Prefix;
+  typeLines: Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Section_TypeLines;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Sections = Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Section[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_SectionPrefixes = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Violations = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_CurrentSectionPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_ReferencedTypes = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_IsSameSection = boolean;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_IsImported = boolean;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_IsOtherSection = boolean;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Violation = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_ViolationMessage = string;
+
+/**
+ * Rules - Vitest - Type Declarations - Rules - Filename Validation.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Config = Rules_Vitest_Index_TypeDeclarationResolvedConfig;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Enable = 'all' | Rules_Vitest_Index_TypeDeclarationToggleKey[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Returns = Promise<void>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_SourceFiles = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_DtsFiles = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_AllFiles = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_FilenameValidationCurrentDirectory = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_FilenameValidationRelativePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Cleaned = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Segments = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Pattern = RegExp;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_PascalCasePattern = RegExp;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Violations = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_MatchesKebab = boolean;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_MatchesPascal = boolean;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Violation = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_ViolationMessage = string;
+
+/**
+ * Rules - Vitest - Type Declarations - Rules - First Come First Serve Order.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Config = Rules_Vitest_Index_TypeDeclarationResolvedConfig;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Enable = 'all' | Rules_Vitest_Index_TypeDeclarationToggleKey[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Returns = Promise<void>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Files = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_OrderCurrentDirectory = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_OrderRelativePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_SourcePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_SourceExists = boolean;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_SourcePathAlternative = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_SourceContent = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_SourceLines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_DtsContent = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_DtsLines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ClassPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_SectionMap = Map<number, string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_SourceSectionSet = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Section_Prefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Section_TypeLines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Section = {
+  prefix: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Section_Prefix;
+  typeLines: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Section_TypeLines;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Sections = Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Section[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectType_Name = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectType_LineIndex = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectProperty_Key = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectProperty_ValueType = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectProperty_TypeLineIndex = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectProperty = {
+  key: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectProperty_Key;
+  valueType: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectProperty_ValueType;
+  typeLineIndex: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectProperty_TypeLineIndex;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectType_Properties = Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectProperty[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectType = {
+  name: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectType_Name;
+  lineIndex: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectType_LineIndex;
+  properties: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectType_Properties;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectTypes = Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectType[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ObjectPropertyTypeNames = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ArrayElementTypeNames = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ArrayType_ArrayTypeName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ArrayType_ElementTypeName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ArrayType_LineIndex = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ArrayType = {
+  arrayTypeName: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ArrayType_ArrayTypeName;
+  elementTypeName: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ArrayType_ElementTypeName;
+  lineIndex: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ArrayType_LineIndex;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ArrayTypesForOrder = Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ArrayType[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Violations = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_TypeNames = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_TypePosition_Name = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_TypePosition_SourceLine = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_TypePosition = {
+  name: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_TypePosition_Name;
+  sourceLine: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_TypePosition_SourceLine;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_TypePositions = Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_TypePosition[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_SourceLineIndex = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_SortedPositions = Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_TypePosition[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_J = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Actual_Name = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Actual_SourceLine = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Actual = {
+  name: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Actual_Name;
+  sourceLine: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Actual_SourceLine;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Expected_Name = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Expected_SourceLine = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Expected = {
+  name: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Expected_Name;
+  sourceLine: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Expected_SourceLine;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_Violation = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_ViolationMessage = string;
+
+/**
+ * Rules - Vitest - Type Declarations - Rules - Identifier Vs File Name.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Config = Rules_Vitest_Index_TypeDeclarationResolvedConfig;
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Enable = 'all' | Rules_Vitest_Index_TypeDeclarationToggleKey[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Returns = Promise<void>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Files = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_IdentifierVsFileNameCurrentDirectory = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_IdentifierVsFileNameRelativePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Content = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_ClassPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Segments = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_FileName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Identifier_Name = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Identifier_Kind = 'class' | 'function' | 'const';
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Identifier_LineNumber = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Identifier = {
+  name: Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Identifier_Name;
+  kind: Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Identifier_Kind;
+  lineNumber: Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Identifier_LineNumber;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Identifiers = Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Identifier[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Violations = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Violation = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_ViolationMessage = string;
+
+/**
+ * Rules - Vitest - Type Declarations - Rules - Object Property Types.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Config = Rules_Vitest_Index_TypeDeclarationResolvedConfig;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Enable = 'all' | Rules_Vitest_Index_TypeDeclarationToggleKey[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Returns = Promise<void>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Files = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectPropsCurrentDirectory = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectPropsRelativePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Content = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Lines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ClassPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violations = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_DefinedTypes = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_I = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Line = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_TypeDefMatch = RegExpMatchArray | null;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectType_Name = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectType_LineIndex = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectProperty_Key = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectProperty_ValueType = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectProperty_TypeLineIndex = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectProperty = {
+  key: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectProperty_Key;
+  valueType: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectProperty_ValueType;
+  typeLineIndex: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectProperty_TypeLineIndex;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectType_Properties = Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectProperty[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectType = {
+  name: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectType_Name;
+  lineIndex: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectType_LineIndex;
+  properties: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectType_Properties;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectTypes = Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectType[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_PropertyExpectedPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violation = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violation2 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violation3 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ImportedNames = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ArrayType_ArrayTypeName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ArrayType_ElementTypeName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ArrayType_LineIndex = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ArrayType = {
+  arrayTypeName: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ArrayType_ArrayTypeName;
+  elementTypeName: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ArrayType_ElementTypeName;
+  lineIndex: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ArrayType_LineIndex;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ArrayTypes = Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ArrayType[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_TypeDefLines = Map<string, number>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Line2 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_DefMatch = RegExpMatchArray | null;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ElementLine = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violation4 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ViolationMessage = string;
+
+/**
+ * Rules - Vitest - Type Declarations - Rules - Section Alphabetical Order.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Config = Rules_Vitest_Index_TypeDeclarationResolvedConfig;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Enable = 'all' | Rules_Vitest_Index_TypeDeclarationToggleKey[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Returns = Promise<void>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Files = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_SectionOrderCurrentDirectory = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_SectionOrderRelativePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_SourcePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_SourceExists = boolean;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Content = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Lines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_SourceContent = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_ClassPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_SectionMap = Map<number, string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_SourceSectionSet = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Section_Prefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Section_TypeLines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Section = {
+  prefix: Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Section_Prefix;
+  typeLines: Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Section_TypeLines;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Sections = Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Section[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Violations = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_I = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Previous_Prefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Previous_TypeLines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Previous = {
+  prefix: Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Previous_Prefix;
+  typeLines: Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Previous_TypeLines;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Current_Prefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Current_TypeLines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Current = {
+  prefix: Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Current_Prefix;
+  typeLines: Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Current_TypeLines;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_CompareResult = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_Violation = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_ViolationMessage = string;
+
+/**
+ * Rules - Vitest - Type Declarations - Rules - Section Coverage.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Config = Rules_Vitest_Index_TypeDeclarationResolvedConfig;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Enable = 'all' | Rules_Vitest_Index_TypeDeclarationToggleKey[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Returns = Promise<void>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Files = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_CoverageCurrentDirectory = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_CoverageRelativePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_SourcePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_SourceExists = boolean;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_SourcePathAlternative = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_SourceContent = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_DtsContent = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_DtsLines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_ClassPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_SectionMap = Map<number, string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_SourceSectionSet = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Section_Prefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Section_TypeLines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Section = {
+  prefix: Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Section_Prefix;
+  typeLines: Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Section_TypeLines;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_DtsSections = Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Section[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_DtsSectionPrefixes = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Violations = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_IsParent = boolean;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Violation = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_SingleChunkTopLevelTypes = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_SingleChunkMatch = RegExpMatchArray | null;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_SingleChunkTypeName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_SingleChunkAfterClassPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_ReverseMatch = RegExpMatchArray | null;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_ReverseTypeName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_ReverseAfterClassPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_ReverseChunks = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_ReverseExpectedMethodSection = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_Violation2 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_ViolationMessage = string;
+
+/**
+ * Rules - Vitest - Type Declarations - Rules - Standalone Type Files.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Config = Rules_Vitest_Index_TypeDeclarationResolvedConfig;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Enable = 'all' | Rules_Vitest_Index_TypeDeclarationToggleKey[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Returns = Promise<void>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_StandaloneSourceFiles = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_StandaloneDtsFiles = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_TopLevelPathPrefixes = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_SourceClassPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_FirstChunk = string | undefined;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_StandaloneFiles = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_StandaloneCurrentDirectory = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_StandaloneRelativePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Content = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Lines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_TypeLines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_TypeNames = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_LocalTypeSet = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_PrimitiveSet = Set<string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_PascalCasePattern = RegExp;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_BrandCasePattern = RegExp;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Violations = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Violation = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Violation2 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Violation3 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectType_Name = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectType_LineIndex = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectProperty_Key = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectProperty_ValueType = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectProperty_TypeLineIndex = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectProperty = {
+  key: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectProperty_Key;
+  valueType: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectProperty_ValueType;
+  typeLineIndex: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectProperty_TypeLineIndex;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectType_Properties = Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectProperty[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectType = {
+  name: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectType_Name;
+  lineIndex: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectType_LineIndex;
+  properties: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectType_Properties;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectTypes = Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectType[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ExpectedPropertyPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Violation4 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ArrayType_ArrayTypeName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ArrayType_ElementTypeName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ArrayType_LineIndex = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ArrayType = {
+  arrayTypeName: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ArrayType_ArrayTypeName;
+  elementTypeName: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ArrayType_ElementTypeName;
+  lineIndex: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ArrayType_LineIndex;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ArrayTypes = Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ArrayType[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_TypePositions = Map<string, number>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_I = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_LineToScan = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_PositionMatch = RegExpMatchArray | null;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ElementLine = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Violation5 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ViolationMessage = string;
+
+/**
+ * Rules - Vitest - Type Declarations - Rules - Variable Type Symmetry.
+ *
+ * @since 0.20.0
+ */
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Config = Rules_Vitest_Index_TypeDeclarationResolvedConfig;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Enable = 'all' | Rules_Vitest_Index_TypeDeclarationToggleKey[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Returns = Promise<void>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Files = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SymmetryCurrentDirectory = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SymmetryMapping_SourceToDts = (file: string) => string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SymmetryMapping_DtsToSource = (file: string) => string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SymmetryMapping = {
+  sourceToDts: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SymmetryMapping_SourceToDts;
+  dtsToSource: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SymmetryMapping_DtsToSource;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SymmetryRelativePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Content = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Lines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ClassPrefix = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SectionMap = Map<number, string>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_DtsPath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_DtsExists = boolean;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_DtsContent = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Violations = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_InlineCallbacksRecord_ParamName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_InlineCallbacksRecord_TypeName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_InlineCallbacksRecord_LineNumber = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_InlineCallbacksRecord = {
+  paramName: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_InlineCallbacksRecord_ParamName;
+  typeName: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_InlineCallbacksRecord_TypeName;
+  lineNumber: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_InlineCallbacksRecord_LineNumber;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_InlineCallbacks = Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_InlineCallbacksRecord[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Violation = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_BodyDeclsRecord_Keyword = 'const' | 'let';
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_BodyDeclsRecord_VarName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_BodyDeclsRecord_TypeName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_BodyDeclsRecord_LineNumber = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_BodyDeclsRecord = {
+  keyword: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_BodyDeclsRecord_Keyword;
+  varName: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_BodyDeclsRecord_VarName;
+  typeName: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_BodyDeclsRecord_TypeName;
+  lineNumber: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_BodyDeclsRecord_LineNumber;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_BodyDecls = Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_BodyDeclsRecord[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ExpectedNamesRecord_Name = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ExpectedNamesRecord_TypeName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ExpectedNamesRecord_LineNumber = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ExpectedNamesRecord = {
+  name: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ExpectedNamesRecord_Name;
+  typeName: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ExpectedNamesRecord_TypeName;
+  lineNumber: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ExpectedNamesRecord_LineNumber;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ExpectedNames = Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ExpectedNamesRecord[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SourceSection = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Violation2 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResultReason_ActualLeaf = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResultReason_ExpectedLeaf = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResultReason = {
+  actualLeaf: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResultReason_ActualLeaf;
+  expectedLeaf: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResultReason_ExpectedLeaf;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResult = Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResultReason | null;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Violation3 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_RelativeDtsPath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_CleanedDtsPath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Violation4 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_RelativeDtsPath2 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_CleanedDtsPath2 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Violation5 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Stripped = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_TitleVar = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ParamsRecord_ParamName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ParamsRecord_TypeName = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ParamsRecord_LineNumber = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ParamsRecord = {
+  paramName: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ParamsRecord_ParamName;
+  typeName: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ParamsRecord_TypeName;
+  lineNumber: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ParamsRecord_LineNumber;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Params = Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ParamsRecord[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SourceSection2 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Violation6 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResult2Reason_ActualLeaf = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResult2Reason_ExpectedLeaf = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResult2Reason = {
+  actualLeaf: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResult2Reason_ActualLeaf;
+  expectedLeaf: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResult2Reason_ExpectedLeaf;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResult2 = Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_LeafResult2Reason | null;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Violation7 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Stripped2 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_TitleVar2 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_FnReturnRecordsRecord_ReturnType = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_FnReturnRecordsRecord_IsTypeGuard = boolean;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_FnReturnRecordsRecord_LineNumber = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_FnReturnRecordsRecord = {
+  returnType: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_FnReturnRecordsRecord_ReturnType;
+  isTypeGuard: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_FnReturnRecordsRecord_IsTypeGuard;
+  lineNumber: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_FnReturnRecordsRecord_LineNumber;
+};
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_FnReturnRecords = Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_FnReturnRecordsRecord[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ReturnValidationReason = string | null;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Violation8 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_UniquenessViolations = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Violation9 = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ViolationMessage = string;

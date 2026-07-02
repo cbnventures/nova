@@ -129,6 +129,10 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 - **Nice to know**: Roles (project, config, docs, app, package, tool, template) and policies (<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology>, <Terminology title="private workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>trackable</Terminology>, <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology>) are constrained to allowed combinations so you don't accidentally pick an invalid pairing.
 - **Things to watch**: Naming rules enforced by role (config/app/tool require the project-slug prefix when set); <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology> can opt into syncing selected metadata fields.
 
+:::note Environment variables
+Environment variables are declared per workspace in `nova.config.json` under `workspaces.<path>.dotenv` and are not editable through this command; see the [dotenv generator](/docs/cli/generators/must-haves/dotenv) for the config shape.
+:::
+
 ### Workflows
 
 - **Purpose**: Manage the list of GitHub Actions workflow templates that the [workflow generator](/docs/cli/generators/github/workflows) reads from at generation time.
@@ -141,9 +145,26 @@ The interactive prompt is single-line. To include line breaks in a setting value
 
 ### GitHub
 
-- **Purpose**: Configure GitHub repository settings, recipes, and policies: owner, repository name, sync recipes, topics, features, and merge/branch policies.
+- **Purpose**: Configure GitHub repository settings, recipes, policies, and issue-template fields: owner, repository name, sync recipes, topics, features, merge/branch policies, and bug report fields.
 - **Nice to know**: Recipes toggle which repository settings get synced (`sync-identity`, `sync-features`, `sync-policies`). Features cover the repository toggles for issues, wiki, projects, and discussions, while policies cover visibility (public, private, internal), default branch, allowed merge methods (merge, squash, rebase), and automatic head-branch deletion.
+- **Bug report fields**: A multiselect chooses which platform field files the [issue template generator](/docs/cli/generators/github/issue-template) includes, saved under `github.issueTemplate.bugReportFields`. Leaving every option unselected omits the field so the generator falls back to fields derived from `project.platforms`.
 - **Things to watch**: Owner and repository name are required (non-empty) and trimmed before they're saved.
+
+### Ignores
+
+- **Purpose**: Manage the project-specific `.gitignore` excludes that the [gitignore generator](/docs/cli/generators/must-haves/gitignore) appends under the Project Excludes section, saved under `gitignore.projectExcludes`.
+- **Nice to know**: On first open with nothing configured yet, the editor imports any entries already beneath the Project Excludes marker in your current `.gitignore` so you start from your existing list.
+- **Things to watch**: Patterns are managed as a plain list with Add, Edit, and Remove actions; the generator stays non-interactive and reads only what you save here.
+
+:::tip Migrating an existing project
+If your repository already has a hand-maintained `.gitignore`, open the **Ignores** category once to import those entries into `nova.config.json` before regenerating. A regenerate emits only what the config holds, so excludes that were never imported are dropped from the output.
+:::
+
+### AI Tools
+
+- **Purpose**: Select which AI tools the [agent-conventions generator](/docs/cli/generators/must-haves/agent-conventions) emits files for, saved under the top-level `agents` field. Claude Code writes `CLAUDE.md` and Codex writes `AGENTS.md`; both share `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md`.
+- **Nice to know**: The category is a multiselect that pre-checks whatever is already stored, so reopening it shows your current selection.
+- **Things to watch**: At least one tool must stay selected — the menu will not let you save an empty list, since the generator has nothing to emit for zero tools.
 
 ## Saving and Canceling
 

@@ -43,7 +43,7 @@ import type {
  * Pushes github.features.{issues, wiki, projects, discussions} from
  * nova.config.json to a GitHub repository using the gh CLI.
  *
- * @since 0.22.0
+ * @since 0.18.0
  */
 export class Runner {
   /**
@@ -56,7 +56,7 @@ export class Runner {
    *
    * @returns {Cli_Recipe_Github_SyncFeatures_Runner_Run_Returns}
    *
-   * @since 0.22.0
+   * @since 0.18.0
    */
   public static async run(options: Cli_Recipe_Github_SyncFeatures_Runner_Run_Options): Cli_Recipe_Github_SyncFeatures_Runner_Run_Returns {
     const currentDirectory: Cli_Recipe_Github_SyncFeatures_Runner_Run_CurrentDirectory = process.cwd();

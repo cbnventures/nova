@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import prompts from 'prompts';
 
 import {
+  libItemAllowedAgents,
   libItemAllowedPoliciesByRole,
   libItemAllowedRecipes,
   libItemSyncRoles,
@@ -28,6 +29,14 @@ import type {
   Cli_Utility_Initialize_Runner_CheckPath_Locations,
   Cli_Utility_Initialize_Runner_CheckPath_NotProjectRootDirectoryMessage,
   Cli_Utility_Initialize_Runner_CheckPath_Returns,
+  Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Exists,
+  Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_GitignorePath,
+  Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Lines,
+  Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_MarkerIndex,
+  Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Raw,
+  Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Result,
+  Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Returns,
+  Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Trimmed,
   Cli_Utility_Initialize_Runner_IsNonEmptyLiteralInput_Returns,
   Cli_Utility_Initialize_Runner_IsNonEmptyLiteralInput_Value,
   Cli_Utility_Initialize_Runner_NormalizeEmail_Returns,
@@ -73,6 +82,15 @@ import type {
   Cli_Utility_Initialize_Runner_NormalizeWorkspaceName_Role,
   Cli_Utility_Initialize_Runner_NormalizeWorkspaceName_TrimmedValue,
   Cli_Utility_Initialize_Runner_NormalizeWorkspaceName_Value,
+  Cli_Utility_Initialize_Runner_PromptAgents_Agents,
+  Cli_Utility_Initialize_Runner_PromptAgents_AgentsInput,
+  Cli_Utility_Initialize_Runner_PromptAgents_AgentsOutput,
+  Cli_Utility_Initialize_Runner_PromptAgents_AgentsOutputKey,
+  Cli_Utility_Initialize_Runner_PromptAgents_AgentsOutputResult,
+  Cli_Utility_Initialize_Runner_PromptAgents_Choices,
+  Cli_Utility_Initialize_Runner_PromptAgents_Config,
+  Cli_Utility_Initialize_Runner_PromptAgents_Existing,
+  Cli_Utility_Initialize_Runner_PromptAgents_Returns,
   Cli_Utility_Initialize_Runner_PromptEmails_Config,
   Cli_Utility_Initialize_Runner_PromptEmails_Emails,
   Cli_Utility_Initialize_Runner_PromptEmails_EmailsBugsInput,
@@ -162,6 +180,9 @@ import type {
   Cli_Utility_Initialize_Runner_PromptGithub_AutoDeleteInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_AutoDeleteOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_AutoDeleteOutputResult,
+  Cli_Utility_Initialize_Runner_PromptGithub_BugReportFields,
+  Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsOutputKey,
+  Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsResult,
   Cli_Utility_Initialize_Runner_PromptGithub_Config,
   Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchChoiceValue,
   Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchInitial,
@@ -170,9 +191,11 @@ import type {
   Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchTextOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchTitle,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingAutoDelete,
+  Cli_Utility_Initialize_Runner_PromptGithub_ExistingBugReportFields,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingDefaultBranch,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingFeatures,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingGithub,
+  Cli_Utility_Initialize_Runner_PromptGithub_ExistingGithubForIssueTemplate,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingMergeMethods,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingMergeMethodsObj,
   Cli_Utility_Initialize_Runner_PromptGithub_ExistingPolicies,
@@ -206,6 +229,8 @@ import type {
   Cli_Utility_Initialize_Runner_PromptGithub_GithubRepoInput,
   Cli_Utility_Initialize_Runner_PromptGithub_GithubRepoValue,
   Cli_Utility_Initialize_Runner_PromptGithub_GithubTopicsInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_MergeInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodsMergeValue,
   Cli_Utility_Initialize_Runner_PromptGithub_MergeMethodsOutput,
@@ -258,6 +283,37 @@ import type {
   Cli_Utility_Initialize_Runner_PromptGithub_VisibilityOrder,
   Cli_Utility_Initialize_Runner_PromptGithub_VisibilityOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_VisibilityOutputResult,
+  Cli_Utility_Initialize_Runner_PromptGitignore_AddOutput,
+  Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputKey,
+  Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputResultValue,
+  Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputValue,
+  Cli_Utility_Initialize_Runner_PromptGitignore_AddPattern,
+  Cli_Utility_Initialize_Runner_PromptGitignore_Choices,
+  Cli_Utility_Initialize_Runner_PromptGitignore_Config,
+  Cli_Utility_Initialize_Runner_PromptGitignore_EditIndex,
+  Cli_Utility_Initialize_Runner_PromptGitignore_EditOutput,
+  Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputKey,
+  Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputResultValue,
+  Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputValue,
+  Cli_Utility_Initialize_Runner_PromptGitignore_EditPattern,
+  Cli_Utility_Initialize_Runner_PromptGitignore_Excludes,
+  Cli_Utility_Initialize_Runner_PromptGitignore_Existing,
+  Cli_Utility_Initialize_Runner_PromptGitignore_Imported,
+  Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutput,
+  Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputKey,
+  Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputResult,
+  Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputResultValue,
+  Cli_Utility_Initialize_Runner_PromptGitignore_Pattern,
+  Cli_Utility_Initialize_Runner_PromptGitignore_PatternToEdit,
+  Cli_Utility_Initialize_Runner_PromptGitignore_PatternToRemove,
+  Cli_Utility_Initialize_Runner_PromptGitignore_RemoveIndex,
+  Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutput,
+  Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputKey,
+  Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputResultValue,
+  Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputValue,
+  Cli_Utility_Initialize_Runner_PromptGitignore_Returns,
+  Cli_Utility_Initialize_Runner_PromptGitignore_Sync,
+  Cli_Utility_Initialize_Runner_PromptGitignore_Sync_Returns,
   Cli_Utility_Initialize_Runner_PromptProject_Config,
   Cli_Utility_Initialize_Runner_PromptProject_CurrentLabel,
   Cli_Utility_Initialize_Runner_PromptProject_CurrentSlug,
@@ -568,6 +624,7 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_EnvironmentSelectedSettings,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_EnvironmentSettings,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_EnvironmentSettingsPrompt,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingDotenv,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingPolicyIndex,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingRecipes,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingRoleIndex,
@@ -776,6 +833,16 @@ export class Runner {
         label: 'Workspaces',
         description: 'Review workspace packages, assigning roles and policies.',
         handler: Runner['promptWorkspaces'],
+      },
+      gitignore: {
+        label: 'Ignores',
+        description: 'Manage project-specific .gitignore excludes.',
+        handler: Runner['promptGitignore'],
+      },
+      agents: {
+        label: 'AI Tools',
+        description: 'Select the AI tools (Claude Code, Codex) to generate conventions for.',
+        handler: Runner['promptAgents'],
       },
     };
 
@@ -2353,6 +2420,86 @@ export class Runner {
       };
     }
 
+    // Prompt 17: issueTemplate.bugReportFields (optional multiselect — empty omits field).
+    const existingGithubForIssueTemplate: Cli_Utility_Initialize_Runner_PromptGithub_ExistingGithubForIssueTemplate = (config['github'] !== undefined) ? config['github']['issueTemplate'] : undefined;
+    const existingBugReportFields: Cli_Utility_Initialize_Runner_PromptGithub_ExistingBugReportFields = (existingGithubForIssueTemplate !== undefined) ? (existingGithubForIssueTemplate['bugReportFields'] ?? []) : [];
+
+    const issueTemplateOutput: Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsResult>({
+      type: 'multiselect',
+      name: 'bugReportFields',
+      message: 'Issue-template bug-report fields (space to select)',
+      choices: [
+        {
+          title: 'Node.js',
+          value: 'nodejs.yml',
+          selected: existingBugReportFields.includes('nodejs.yml'),
+        },
+        {
+          title: 'Apple',
+          value: 'apple.yml',
+          selected: existingBugReportFields.includes('apple.yml'),
+        },
+        {
+          title: 'Android',
+          value: 'android.yml',
+          selected: existingBugReportFields.includes('android.yml'),
+        },
+        {
+          title: 'C# / .NET',
+          value: 'csharp.yml',
+          selected: existingBugReportFields.includes('csharp.yml'),
+        },
+        {
+          title: 'PHP',
+          value: 'php.yml',
+          selected: existingBugReportFields.includes('php.yml'),
+        },
+        {
+          title: 'Python',
+          value: 'python.yml',
+          selected: existingBugReportFields.includes('python.yml'),
+        },
+        {
+          title: 'Homebridge',
+          value: 'homebridge.yml',
+          selected: existingBugReportFields.includes('homebridge.yml'),
+        },
+        {
+          title: 'pfSense',
+          value: 'pfsense.yml',
+          selected: existingBugReportFields.includes('pfsense.yml'),
+        },
+        {
+          title: 'Synology',
+          value: 'synology.yml',
+          selected: existingBugReportFields.includes('synology.yml'),
+        },
+        {
+          title: 'Docker',
+          value: 'docker.yml',
+          selected: existingBugReportFields.includes('docker.yml'),
+        },
+        {
+          title: 'Web Browser',
+          value: 'web.yml',
+          selected: existingBugReportFields.includes('web.yml'),
+        },
+        {
+          title: 'Screenshots',
+          value: 'screenshots.yml',
+          selected: existingBugReportFields.includes('screenshots.yml'),
+        },
+      ],
+      hint: '- Space to select. Return to submit',
+    });
+
+    if (issueTemplateOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const bugReportFields: Cli_Utility_Initialize_Runner_PromptGithub_BugReportFields = issueTemplateOutput['result'].bugReportFields ?? [];
+    const issueTemplateInput: Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateInput = (bugReportFields.length > 0) ? { bugReportFields } : undefined;
+
     // Build the github config object in schema declaration order.
     const githubConfig: Cli_Utility_Initialize_Runner_PromptGithub_GithubConfig = {
       owner: githubOwnerInput,
@@ -2361,6 +2508,7 @@ export class Runner {
       ...(githubTopicsInput !== undefined ? { topics: githubTopicsInput } : {}),
       ...(githubFeaturesInput !== undefined ? { features: githubFeaturesInput } : {}),
       ...(githubPoliciesInput !== undefined ? { policies: githubPoliciesInput } : {}),
+      ...(issueTemplateInput !== undefined ? { issueTemplate: issueTemplateInput } : {}),
     };
 
     Object.assign(config, { github: githubConfig });
@@ -3545,6 +3693,358 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Initialize - Prompt Gitignore.
+   *
+   * Manages the project-specific ".gitignore" excludes stored under the "gitignore" config
+   * section. On first open with no existing excludes, imports any entries found beneath the
+   * "Project Excludes" marker in the project's ".gitignore" file.
+   *
+   * @param {Cli_Utility_Initialize_Runner_PromptGitignore_Config} config - Config.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Initialize_Runner_PromptGitignore_Returns}
+   *
+   * @since 0.20.0
+   */
+  private static async promptGitignore(config: Cli_Utility_Initialize_Runner_PromptGitignore_Config): Cli_Utility_Initialize_Runner_PromptGitignore_Returns {
+    const existing: Cli_Utility_Initialize_Runner_PromptGitignore_Existing = config['gitignore'];
+    const excludes: Cli_Utility_Initialize_Runner_PromptGitignore_Excludes = (existing !== undefined && Array.isArray(existing['projectExcludes']) === true) ? [...existing['projectExcludes']] : [];
+
+    // Import-on-first-open: seed from the project ".gitignore" when nothing is configured yet.
+    if (excludes.length === 0) {
+      const imported: Cli_Utility_Initialize_Runner_PromptGitignore_Imported = await Runner.importGitignoreExcludes();
+
+      excludes.push(...imported);
+    }
+
+    /**
+     * CLI - Utility - Initialize - Prompt Gitignore - Sync.
+     *
+     * Flushes the local excludes array back into the config object after every add, edit, or
+     * remove action so partial changes are not lost.
+     *
+     * @returns {Cli_Utility_Initialize_Runner_PromptGitignore_Sync_Returns}
+     *
+     * @since 0.20.0
+     */
+    const sync: Cli_Utility_Initialize_Runner_PromptGitignore_Sync = (): Cli_Utility_Initialize_Runner_PromptGitignore_Sync_Returns => {
+      if (excludes.length > 0) {
+        Object.assign(config, {
+          gitignore: {
+            projectExcludes: [...excludes],
+          },
+        });
+      } else {
+        Reflect.deleteProperty(config, 'gitignore');
+      }
+
+      return;
+    };
+
+    while (true) {
+      const choices: Cli_Utility_Initialize_Runner_PromptGitignore_Choices = [];
+
+      // Add the "EDIT" and "REMOVE" menu choices for each exclude.
+      for (let i = 0; i < excludes.length; i += 1) {
+        const pattern: Cli_Utility_Initialize_Runner_PromptGitignore_Pattern = excludes[i];
+
+        if (pattern === undefined) {
+          continue;
+        }
+
+        choices.push({
+          title: `${chalk.yellow.bold('[EDIT]')} ${pattern}`,
+          description: 'Update this pattern.',
+          value: {
+            kind: 'edit',
+            index: i,
+          },
+        });
+
+        choices.push({
+          title: `${chalk.red.bold('[REMOVE]')} ${pattern}`,
+          description: 'Delete this pattern.',
+          value: {
+            kind: 'remove',
+            index: i,
+          },
+        });
+      }
+
+      choices.push({
+        title: 'Add a pattern',
+        description: 'Add a new ".gitignore" exclude.',
+        value: {
+          kind: 'add',
+        },
+      });
+
+      choices.push({
+        title: 'Back',
+        description: 'Return to the category selection.',
+        value: {
+          kind: 'back',
+        },
+      });
+
+      const menuOutput: Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputKey, Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputResult>({
+        type: 'select',
+        name: 'action',
+        message: (excludes.length > 0) ? 'Select a pattern to manage.' : 'No patterns found. Choose an option.',
+        choices,
+      });
+
+      if (menuOutput['cancelled'] === true) {
+        // Sync changes back to config.
+        sync();
+
+        return 'back';
+      }
+
+      const menuOutputResultValue: Cli_Utility_Initialize_Runner_PromptGitignore_MenuOutputResultValue = menuOutput['result'];
+
+      // If user wants to go back to the main menu.
+      if (
+        menuOutputResultValue.action === undefined
+        || menuOutputResultValue.action['kind'] === 'back'
+      ) {
+        // Sync changes back to config.
+        sync();
+
+        return 'back';
+      }
+
+      // If user wants to add a pattern.
+      if (menuOutputResultValue.action['kind'] === 'add') {
+        const addOutput: Cli_Utility_Initialize_Runner_PromptGitignore_AddOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputKey, Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputValue>({
+          type: 'text',
+          name: 'pattern',
+          message: 'Pattern to ignore (e.g. logs/):',
+          validate: Runner['isNonEmptyLiteralInput'],
+        });
+
+        if (addOutput['cancelled'] === true) {
+          continue;
+        }
+
+        const addOutputResultValue: Cli_Utility_Initialize_Runner_PromptGitignore_AddOutputResultValue = addOutput['result'];
+        const addPattern: Cli_Utility_Initialize_Runner_PromptGitignore_AddPattern = addOutputResultValue.pattern.trim();
+
+        if (addPattern === '') {
+          continue;
+        }
+
+        // Add a new pattern.
+        excludes.push(addPattern);
+
+        // Sync changes back to config.
+        sync();
+
+        Logger.customize({
+          name: 'Runner.promptGitignore',
+          purpose: 'add',
+          padTop: 1,
+          padBottom: 1,
+        }).info('Added new pattern.');
+
+        continue;
+      }
+
+      // If user wants to edit a pattern.
+      if (menuOutputResultValue.action['kind'] === 'edit') {
+        const editIndex: Cli_Utility_Initialize_Runner_PromptGitignore_EditIndex = menuOutputResultValue.action['index'];
+
+        // If pattern index was out-of-bounds.
+        if (editIndex < 0 || editIndex >= excludes.length) {
+          continue;
+        }
+
+        const patternToEdit: Cli_Utility_Initialize_Runner_PromptGitignore_PatternToEdit = excludes[editIndex];
+
+        // If pattern to edit does not exist.
+        if (patternToEdit === undefined) {
+          continue;
+        }
+
+        const editOutput: Cli_Utility_Initialize_Runner_PromptGitignore_EditOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputKey, Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputValue>({
+          type: 'text',
+          name: 'pattern',
+          message: 'Pattern to ignore (e.g. logs/):',
+          initial: patternToEdit,
+          validate: Runner['isNonEmptyLiteralInput'],
+        });
+
+        if (editOutput['cancelled'] === true) {
+          continue;
+        }
+
+        const editOutputResultValue: Cli_Utility_Initialize_Runner_PromptGitignore_EditOutputResultValue = editOutput['result'];
+        const editPattern: Cli_Utility_Initialize_Runner_PromptGitignore_EditPattern = editOutputResultValue.pattern.trim();
+
+        if (editPattern === '') {
+          continue;
+        }
+
+        // Update the pattern.
+        Reflect.set(excludes, editIndex, editPattern);
+
+        // Sync changes back to config.
+        sync();
+
+        Logger.customize({
+          name: 'Runner.promptGitignore',
+          purpose: 'edit',
+          padTop: 1,
+          padBottom: 1,
+        }).info('Updated pattern.');
+
+        continue;
+      }
+
+      // If user wants to remove a pattern.
+      if (menuOutputResultValue.action['kind'] === 'remove') {
+        const removeIndex: Cli_Utility_Initialize_Runner_PromptGitignore_RemoveIndex = menuOutputResultValue.action['index'];
+
+        // If pattern index was out-of-bounds.
+        if (removeIndex < 0 || removeIndex >= excludes.length) {
+          continue;
+        }
+
+        const patternToRemove: Cli_Utility_Initialize_Runner_PromptGitignore_PatternToRemove = excludes[removeIndex];
+
+        // If pattern to remove does not exist.
+        if (patternToRemove === undefined) {
+          continue;
+        }
+
+        const removeOutput: Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputKey, Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputValue>({
+          type: 'confirm',
+          name: 'confirm',
+          message: `Remove pattern "${patternToRemove}"?`,
+          initial: false,
+        });
+
+        if (removeOutput['cancelled'] === true) {
+          continue;
+        }
+
+        const removeOutputResultValue: Cli_Utility_Initialize_Runner_PromptGitignore_RemoveOutputResultValue = removeOutput['result'];
+
+        if (removeOutputResultValue.confirm !== true) {
+          continue;
+        }
+
+        // Delete the pattern.
+        excludes.splice(removeIndex, 1);
+
+        // Sync changes back to config.
+        sync();
+
+        Logger.customize({
+          name: 'Runner.promptGitignore',
+          purpose: 'remove',
+          padTop: 1,
+          padBottom: 1,
+        }).info('Removed pattern.');
+      }
+    }
+  }
+
+  /**
+   * CLI - Utility - Initialize - Prompt Agents.
+   *
+   * Multi-selects the AI tools (Claude Code, Codex) the agent-conventions generator emits
+   * files for, stored under the top-level "agents" field. Requires at least one selection so
+   * the config never saves an empty list; cancelling leaves the existing value untouched.
+   *
+   * @param {Cli_Utility_Initialize_Runner_PromptAgents_Config} config - Config.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Initialize_Runner_PromptAgents_Returns}
+   *
+   * @since 0.20.0
+   */
+  private static async promptAgents(config: Cli_Utility_Initialize_Runner_PromptAgents_Config): Cli_Utility_Initialize_Runner_PromptAgents_Returns {
+    const existing: Cli_Utility_Initialize_Runner_PromptAgents_Existing = (Array.isArray(config['agents']) === true) ? config['agents'] : [];
+
+    const choices: Cli_Utility_Initialize_Runner_PromptAgents_Choices = libItemAllowedAgents.map((allowedAgent) => ({
+      title: (allowedAgent === 'claude-code') ? 'Claude Code' : 'Codex',
+      value: allowedAgent,
+      selected: existing.includes(allowedAgent),
+    }));
+
+    const agentsOutput: Cli_Utility_Initialize_Runner_PromptAgents_AgentsOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptAgents_AgentsOutputKey, Cli_Utility_Initialize_Runner_PromptAgents_AgentsOutputResult>({
+      type: 'multiselect',
+      name: 'agents',
+      message: 'AI tools to generate conventions for',
+      choices,
+      min: 1,
+    });
+
+    if (agentsOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const agentsInput: Cli_Utility_Initialize_Runner_PromptAgents_AgentsInput = agentsOutput['result'].agents;
+
+    // Rebuild in canonical order so the serialized config stays stable across runs.
+    const agents: Cli_Utility_Initialize_Runner_PromptAgents_Agents = libItemAllowedAgents.filter((allowedAgent) => agentsInput.includes(allowedAgent));
+
+    if (agents.length > 0) {
+      Object.assign(config, {
+        agents,
+      });
+    } else {
+      Reflect.deleteProperty(config, 'agents');
+    }
+
+    return 'back';
+  }
+
+  /**
+   * CLI - Utility - Initialize - Import Gitignore Excludes.
+   *
+   * Reads the project's ".gitignore" file and returns the entries listed beneath the
+   * "Project Excludes" marker. Returns an empty array when the file or marker is absent.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Returns}
+   *
+   * @since 0.20.0
+   */
+  private static async importGitignoreExcludes(): Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Returns {
+    const gitignorePath: Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_GitignorePath = join(process.cwd(), '.gitignore');
+    const exists: Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Exists = await pathExists(gitignorePath);
+
+    if (exists === false) {
+      return [];
+    }
+
+    const raw: Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Raw = await fs.readFile(gitignorePath, 'utf-8');
+    const lines: Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Lines = raw.split('\n');
+    const markerIndex: Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_MarkerIndex = lines.findIndex((line) => line.includes('#### Project Excludes ####'));
+
+    if (markerIndex === -1) {
+      return [];
+    }
+
+    const result: Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Result = [];
+
+    for (const line of lines.slice(markerIndex + 1)) {
+      const trimmed: Cli_Utility_Initialize_Runner_ImportGitignoreExcludes_Trimmed = line.trim();
+
+      if (trimmed !== '' && trimmed.startsWith('#') === false) {
+        result.push(trimmed);
+      }
+    }
+
+    return result;
+  }
+
+  /**
    * CLI - Utility - Initialize - Prompt Workspaces.
    *
    * Discovers all package.json paths in the monorepo and lets the user assign a role, policy,
@@ -3848,6 +4348,8 @@ export class Runner {
 
     const existingRecipes: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingRecipes = (options['existingWorkspace'] !== undefined && options['existingWorkspace']['recipes'] !== undefined) ? options['existingWorkspace']['recipes'] : undefined;
 
+    const existingDotenv: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingDotenv = (options['existingWorkspace'] !== undefined && options['existingWorkspace']['dotenv'] !== undefined) ? options['existingWorkspace']['dotenv'] : undefined;
+
     const recipesPrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipesPrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipesPromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipesPromptValue>({
       type: 'multiselect',
       name: 'workspaceRecipes',
@@ -4113,6 +4615,7 @@ export class Runner {
         role: selectedRole,
         policy: selectedPolicy,
         ...(Object.keys(recipes).length > 0) ? { recipes } : {},
+        ...(existingDotenv !== undefined) ? { dotenv: existingDotenv } : {},
       },
     };
   }

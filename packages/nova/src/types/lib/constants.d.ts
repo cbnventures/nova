@@ -1,7 +1,7 @@
 /**
  * Lib - Constants - Docs Base URL.
  *
- * @since 0.16.3
+ * @since 0.16.0
  */
 export type Lib_Constants_DocsBaseUrl = string;
 
