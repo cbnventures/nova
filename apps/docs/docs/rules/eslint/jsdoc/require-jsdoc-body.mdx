@@ -74,6 +74,55 @@ The `require-jsdoc-body` rule reports any JSDoc block that is missing a body par
   </TabItem>
 </Tabs>
 
+When `diamond` is enabled, a 3-line body must have its second (middle) line be the longest, forming a diamond or belly shape:
+
+<Tabs groupId="require-jsdoc-body-diamond-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    /**
+     * Parse the configuration file.
+     *
+     * Reads the file at
+     * the given path and returns a parsed object
+     * from its contents.
+     *
+     * @param {string} path - Path.
+     *
+     * @returns {Config}
+     *
+     * @since UNRELEASED
+     */
+    function parseConfig(path) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    /**
+     * Parse the configuration file.
+     *
+     * Reads the file at the given path and returns
+     * a parsed object
+     * from its contents.
+     *
+     * @param {string} path - Path.
+     *
+     * @returns {Config}
+     *
+     * @since UNRELEASED
+     */
+    function parseConfig(path) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
 ## Configuration
 
 <Tabs groupId="require-jsdoc-body-config">
@@ -165,6 +214,7 @@ The `require-jsdoc-body` rule reports any JSDoc block that is missing a body par
 
 | Option            | Type       | Default | Description                                                                                                                               |
 |-------------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `diamond`         | `boolean`  | `false` | When enabled, a 3-line body must have its second (middle) line be the longest, forming a diamond shape.                                   |
 | `ignoreFiles`     | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
 | `maxLines`        | `number`   | `3`     | Maximum number of lines allowed in the body.                                                                                              |
 | `maxWidth`        | `number`   | `80`    | Maximum character width allowed per body line.                                                                                            |
@@ -183,3 +233,4 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 - **Want to skip specific files** — Use the `ignoreFiles` option to exclude files that do not need body paragraphs.
 - **Rule appears to do nothing** — If `maxLines` is set lower than `minLines`, the rule disables itself for the whole file (no warnings are emitted). Ensure `maxLines` is greater than or equal to `minLines`.
 - **Tags-only or empty JSDoc blocks are not flagged** — The rule only checks blocks that have a summary line. A JSDoc block with no summary (empty, or containing only tags like `@since`) is skipped.
+- **Diamond warning fires on a 3-line body** — With `diamond` enabled, the second (middle) line must be the longest of the three. Rewrap the body so the middle line is longer than both the first and last.

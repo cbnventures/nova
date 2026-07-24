@@ -175,5 +175,68 @@ ruleTester.run('requireJsdocParamName', RequireJsdocParamName['rule'], {
       ].join('\n'),
       errors: [{ messageId: 'paramDescriptionMismatch' }],
     },
+
+    // Swapped param descriptions must each be rewritten at their own position.
+    {
+      code: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} paramA - Param b.',
+        ' * @param {string} paramB - Param a.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(paramA, paramB) {}',
+      ].join('\n'),
+      output: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} paramA - Param a.',
+        ' * @param {string} paramB - Param b.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(paramA, paramB) {}',
+      ].join('\n'),
+      errors: [
+        { messageId: 'paramDescriptionMismatch' },
+        { messageId: 'paramDescriptionMismatch' },
+      ],
+    },
+
+    // Cyclic (three-way) param descriptions must each be rewritten at their own position.
+    {
+      code: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} paramA - Param b.',
+        ' * @param {string} paramB - Param c.',
+        ' * @param {string} paramC - Param a.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(paramA, paramB, paramC) {}',
+      ].join('\n'),
+      output: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} paramA - Param a.',
+        ' * @param {string} paramB - Param b.',
+        ' * @param {string} paramC - Param c.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(paramA, paramB, paramC) {}',
+      ].join('\n'),
+      errors: [
+        { messageId: 'paramDescriptionMismatch' },
+        { messageId: 'paramDescriptionMismatch' },
+        { messageId: 'paramDescriptionMismatch' },
+      ],
+    },
   ],
 });

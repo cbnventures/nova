@@ -82,10 +82,10 @@ export class Runner {
    * since no usage of the any type is permitted in the
    * codebase regardless of context.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Context} context - Context.
    * @param {Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Returns}
    *

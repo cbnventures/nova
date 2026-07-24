@@ -17,8 +17,6 @@ import type {
  *
  * @param {Theme_DocItem_Toc_Mobile_Index_DocItemTOCMobile_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocItemTOCMobile(props: Theme_DocItem_Toc_Mobile_Index_DocItemTOCMobile_Props) {

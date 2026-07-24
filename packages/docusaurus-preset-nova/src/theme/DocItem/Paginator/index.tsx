@@ -21,8 +21,6 @@ import type {
  *
  * @param {Theme_DocItem_Paginator_Index_DocItemPaginator_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocItemPaginator(props: Theme_DocItem_Paginator_Index_DocItemPaginator_Props) {

@@ -27,35 +27,40 @@ ruleTester.run('noSharedTypeImport', NoSharedTypeImport['rule'], {
       code: 'import type { RunnerParseEntries } from "@/types/cli/runner.d.ts";',
       filename: 'src/cli/runner.ts',
       options: [{
-        sharedFiles: ['shared.d.ts'], ignoreFiles: [],
+        sharedFiles: ['shared.d.ts'],
+        ignoreFiles: [],
       }],
     },
     {
       code: 'import type { EntryCategory } from "@/types/shared.d.ts";',
       filename: 'src/types/cli/runner.d.ts',
       options: [{
-        sharedFiles: ['shared.d.ts'], ignoreFiles: [],
+        sharedFiles: ['shared.d.ts'],
+        ignoreFiles: [],
       }],
     },
     {
       code: 'import type { Something } from "@/types/shared.d.ts";',
       filename: 'src/types/shared.d.ts',
       options: [{
-        sharedFiles: ['shared.d.ts'], ignoreFiles: [],
+        sharedFiles: ['shared.d.ts'],
+        ignoreFiles: [],
       }],
     },
     {
       code: 'import { Logger } from "@/toolkit/index.js";',
       filename: 'src/cli/runner.ts',
       options: [{
-        sharedFiles: ['shared.d.ts'], ignoreFiles: [],
+        sharedFiles: ['shared.d.ts'],
+        ignoreFiles: [],
       }],
     },
     {
       code: 'import type { EntryCategory } from "@/types/shared.d.ts";',
       filename: 'src/cli/runner.ts',
       options: [{
-        sharedFiles: ['shared.d.ts'], ignoreFiles: ['runner.ts'],
+        sharedFiles: ['shared.d.ts'],
+        ignoreFiles: ['runner.ts'],
       }],
     },
   ],
@@ -64,7 +69,8 @@ ruleTester.run('noSharedTypeImport', NoSharedTypeImport['rule'], {
       code: 'import type { EntryCategory } from "@/types/shared.d.ts";',
       filename: 'src/cli/runner.ts',
       options: [{
-        sharedFiles: ['shared.d.ts'], ignoreFiles: [],
+        sharedFiles: ['shared.d.ts'],
+        ignoreFiles: [],
       }],
       errors: [{ messageId: 'noSharedTypeImport' }],
     },
@@ -72,7 +78,8 @@ ruleTester.run('noSharedTypeImport', NoSharedTypeImport['rule'], {
       code: 'import type { EntryCategory } from "@/types/shared.d.ts";',
       filename: '/project/src/cli/runner.ts',
       options: [{
-        sharedFiles: ['shared.d.ts'], ignoreFiles: [],
+        sharedFiles: ['shared.d.ts'],
+        ignoreFiles: [],
       }],
       errors: [{ messageId: 'noSharedTypeImport' }],
     },

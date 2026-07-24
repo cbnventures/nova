@@ -2,9 +2,8 @@ import { strictEqual } from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-import { it } from 'vitest';
-
 import { findEnvQuoteViolations } from '../../../lib/dotenv.js';
+import { getActiveVitest } from '../active-vitest.js';
 import { isEnabled } from '../enable.js';
 
 import type {
@@ -20,9 +19,9 @@ import type {
 /**
  * Rules - Vitest - Dotenv - Rules - Values Double Quoted.
  *
- * Rule `values-double-quoted`: every value in the scanned `.env` files must be wrapped in
- * balanced double quotes. Reads each configured path (skipping any that does not exist),
- * classifies its entries, and aggregates one assertion across all files.
+ * Rule `values-double-quoted`: every value in the scanned `.env` files must be
+ * wrapped in balanced double quotes. Reads each configured path (skipping any missing one),
+ * classifies its entries, and aggregates one assertion across all of the files.
  *
  * @param {Rules_Vitest_Dotenv_Rules_ValuesDoubleQuoted_Config} config - Config.
  * @param {Rules_Vitest_Dotenv_Rules_ValuesDoubleQuoted_Enable} enable - Enable.
@@ -36,7 +35,7 @@ export function valuesDoubleQuoted(config: Rules_Vitest_Dotenv_Rules_ValuesDoubl
     return;
   }
 
-  it(`all .env values are double-quoted${''}`, async () => {
+  getActiveVitest().it(`all .env values are double-quoted${''}`, async () => {
     const failures: Rules_Vitest_Dotenv_Rules_ValuesDoubleQuoted_Failures = [];
 
     for (const path of config['envPaths']) {

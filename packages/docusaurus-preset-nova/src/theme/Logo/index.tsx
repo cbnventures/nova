@@ -25,8 +25,6 @@ import type {
  *
  * @param {Theme_Logo_Index_ThemedImage_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.18.0
  */
 function ThemedImage(props: Theme_Logo_Index_ThemedImage_Props): Theme_Logo_Index_ThemedImage_Returns {
@@ -54,8 +52,6 @@ function ThemedImage(props: Theme_Logo_Index_ThemedImage_Props): Theme_Logo_Inde
  * Defaults to wordmark-first; pass `iconFirst` to flip the priority.
  *
  * @param {Theme_Logo_Index_Logo_Props} props - Props.
- *
- * @constructor
  *
  * @since 0.18.0
  */

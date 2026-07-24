@@ -94,11 +94,11 @@ export class Runner {
    * Only processes the outermost logical expression. Collects all
    * operands via collectOperands and reports when consecutive operands share a line.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Context}   context   - Context.
    * @param {Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Node}      node      - Node.
    * @param {Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_MaxInline} maxInline - Max inline.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Returns}
    *
@@ -149,9 +149,9 @@ export class Runner {
    * Recursively flattens a chain of LogicalExpression nodes into
    * a flat array of leaf operand nodes. Called by checkLogicalExpression for counting.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CollectOperands_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CollectOperands_Returns}
    *

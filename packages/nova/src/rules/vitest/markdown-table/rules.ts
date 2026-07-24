@@ -2,10 +2,9 @@ import { strictEqual } from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-import { it } from 'vitest';
-
 import { discoverContentFiles } from '../../../lib/file-discovery.js';
 import { MarkdownTable } from '../../../toolkit/index.js';
+import { getActiveVitest } from '../active-vitest.js';
 import { isEnabled } from '../enable.js';
 
 import type {
@@ -36,9 +35,9 @@ import type {
 /**
  * Rules - Vitest - Markdown Table - Rules - Tables Match Markdown Table Output.
  *
- * Rule `tables-match-markdowntable-output`: every pipe-delimited table in the scanned
- * content files must render byte-for-byte identically to the output of the canonical
- * `MarkdownTable` class. Tables inside code fences and tables with alignment markers skip.
+ * Rule `tables-match-markdowntable-output`: every pipe-delimited table in
+ * scanned content files must render byte-for-byte identically to the output of the canonical
+ * `MarkdownTable` class. Code-fenced tables and alignment-marker tables are skipped.
  *
  * @param {Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_Config} config - Config.
  * @param {Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_Enable} enable - Enable.
@@ -58,10 +57,20 @@ export async function tablesMatchMarkdownTableOutput(config: Rules_Vitest_Markdo
     fileExtensions: config['fileExtensions'],
   });
 
-  it(`all documentation tables match MarkdownTable output${''}`, async () => {
-    /*
-     * Replace escaped pipes with a placeholder before splitting,
-     * then restore as raw pipes so MarkdownTable can re-escape them.
+  getActiveVitest().it(`all documentation tables match MarkdownTable output${''}`, async () => {
+    /**
+     * Rules - Vitest - Markdown Table - Rules - Tables Match Markdown Table Output - Parse Cells.
+     *
+     * Splits a pipe-delimited row into trimmed cell values, temporarily masking escaped
+     * pipes so they survive the split and are restored as raw pipes afterward.
+     *
+     * @param {Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_ParseCells_Row} row - Row.
+     *
+     * @private
+     *
+     * @returns {Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_ParseCells_Returns}
+     *
+     * @since 0.20.0
      */
     const parseCells: Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_ParseCells = (row) => {
       const segments: Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_ParseCells_Segments = row
@@ -85,7 +94,7 @@ export async function tablesMatchMarkdownTableOutput(config: Rules_Vitest_Markdo
 
       for (const line of lines) {
         if (line.trimStart().startsWith('```') === true) {
-          inCodeBlock = !inCodeBlock;
+          inCodeBlock = inCodeBlock === false;
 
           if (currentTable.length >= 3) {
             tables.push(currentTable);

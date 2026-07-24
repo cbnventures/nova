@@ -27,6 +27,8 @@ The `require-kebab-case-filename` rule checks the file name stem (without known 
 
 If the stem does not match, the rule reports on the first line of the file.
 
+Files that hold `<script>` tags (`astro`, `md`, `markdown`, `html`, `htm`, `vue`, `svelte`) are skipped silently, because processor-based ESLint plugins extract each `<script>` block into a virtual file whose basename embeds a machine-generated batch counter (e.g. `1_1.js`), so there is no user-authored file name to validate.
+
 ## Why Use This Rule?
 
 1. Prevents case-sensitivity issues across platforms — macOS and Windows treat `MyFile.ts` and `myfile.ts` as the same file, causing subtle bugs.
@@ -159,3 +161,4 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 - **Warning fires on a generated file** — Add the file name to `ignoreFiles` (e.g., `['*.gen.ts']`).
 - **Warning fires on a file with compound extensions** — The rule strips known extensions (`.d.ts`, `.test.ts`, `.tsx`, etc.) before checking. If your extension is not recognized, the full name including the extra extension is checked against kebab-case.
 - **Want to allow PascalCase for React components** — Add the component file names to `ignoreFiles` (e.g., `['*.tsx']`).
+- **A `<script>` block inside a component is not checked** — Extracted `<script>` virtual files (`astro`, `md`, `markdown`, `html`, `htm`, `vue`, `svelte` hosts) are skipped silently, because the processor machine-generates the virtual basename (e.g. `1_1.js`), leaving no user-authored file name to validate.

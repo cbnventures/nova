@@ -1,0 +1,514 @@
+{
+  "home.layout.description": {
+    "message": "Signal इरादे की यात्रा को ट्रैक करता है — पहले इंप्रेशन से आख़िरी एक्शन तक। सिर्फ़ यह नहीं कि क्या क्लिक हुआ। बल्कि क्यों क्लिक हुआ।",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Signal - हर क्लिक एक कहानी कहती है",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "एट्रिब्यूशन इंजन",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "हर क्लिक एक कहानी कहती है। ज़्यादातर टूल कहानी का सिरा ही खो देते हैं।",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Signal इरादे की यात्रा को ट्रैक करता है — पहले इंप्रेशन से आख़िरी एक्शन तक। सिर्फ़ यह नहीं कि क्या क्लिक हुआ। बल्कि क्यों क्लिक हुआ। और क्या लगभग हो ही गया था।",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "शुरू करें",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Threadbare पर देखें",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.beacon.description": {
+    "message": "लिंक-निर्माण इंजन। ब्रांडेड शॉर्ट लिंक, जिनमें एट्रिब्यूशन मेटाडेटा जड़ा होता है — जो URL शॉर्टनिंग, मैसेजिंग ऐप्स और क्रॉस-डिवाइस हैंडऑफ़ के बीच भी बचा रहता है। हर लिंक एक सेंसर है।",
+    "description": "Front page Features card description for Beacon"
+  },
+  "home.features.prism.description": {
+    "message": "मल्टी-टच एट्रिब्यूशन मॉडलर। चैनलों के आर-पार कन्वर्ज़न पाथ को ट्रैक करता है, हर टचपॉइंट को भारित श्रेय देता है, और पहले संपर्क से आख़िरी एक्शन तक की पूरी यात्रा को फिर से बुनता है।",
+    "description": "Front page Features card description for Prism"
+  },
+  "home.features.pulse.description": {
+    "message": "रियल-टाइम क्लिक स्ट्रीम। हर इंटरैक्शन की लाइव फ़ीड — geo, डिवाइस, referrer और एट्रिब्यूशन डेटा — हर क्लिक के एक सेकंड के भीतर।",
+    "description": "Front page Features card description for Pulse"
+  },
+  "home.features.aperture.description": {
+    "message": "कैंपेन स्नैपशॉट। किसी भी पल का परफ़ॉर्मेंस कैप्चर, तुलना ओवरले के साथ। देखें कि किसी कैंपेन के किन्हीं दो पलों के बीच ठीक-ठीक क्या बदला।",
+    "description": "Front page Features card description for Aperture"
+  },
+  "home.features.resonance.description": {
+    "message": "ऑडियंस ओवरलैप डिटेक्टर। ढूँढता है कि कैंपेन और सेगमेंट के आर-पार आपकी ऑडियंस कहाँ आपस में घुल-मिल जाती है। एक ही लोगों तक पहुँचने के लिए दो बार पैसा देना बंद करें।",
+    "description": "Front page Features card description for Resonance"
+  },
+  "home.features.flare.description": {
+    "message": "QR और deep link जनरेटर। भौतिक और डिजिटल एट्रिब्यूशन को पूरे ट्रेस मेटाडेटा के साथ जोड़ता है। हर स्कैन में उतनी ही समझ, जितनी एक डिजिटल क्लिक में।",
+    "description": "Front page Features card description for Flare"
+  },
+  "home.stats.heading": {
+    "message": "आँकड़ों में",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.latency.label": {
+    "message": "रीडायरेक्ट लेटेंसी",
+    "description": "Front page Stats label for redirect latency"
+  },
+  "home.stats.links.label": {
+    "message": "ट्रैक किए गए लिंक",
+    "description": "Front page Stats label for links traced"
+  },
+  "home.stats.uptime.label": {
+    "message": "अपटाइम",
+    "description": "Front page Stats label for uptime"
+  },
+  "home.stats.regions.label": {
+    "message": "क्षेत्र",
+    "description": "Front page Stats label for regions"
+  },
+  "home.spotlight.heading": {
+    "message": "Beacon से एट्रिब्यूशन तक",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "हर लिंक एक सेंसर है। हर रीडायरेक्ट एक डेटा पॉइंट। Prism इन सबको एक ही एट्रिब्यूशन पाथ में जोड़ देता है।",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "चलते-फिरते कैंपेन पर नज़र रखें",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "एट्रिब्यूशन इनसाइट्स",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "केस स्टडी, तकनीकी गहराइयाँ, और आपकी क्लिक स्ट्रीम में छिपे पैटर्न।",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Signal ब्लॉक शोकेस, जो docusaurus-preset-nova का हर ब्लॉक दिखाता है।",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Signal प्रीसेट का हर ब्लॉक, सैंपल डेटा के साथ रेंडर किया गया।",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (पूर्ण)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "ब्लॉक शोकेस",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "हर Signal ब्लॉक, एक ही जगह दिखाया गया।",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "यह पेज @cbnventures/docusaurus-preset-nova/blocks के हर ब्लॉक को Signal-दुनिया के डेटा के साथ रेंडर करता है, ताकि आप देख सकें कि वे कैसे दिखते और काम करते हैं।",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "डॉक्यूमेंटेशन पढ़ें",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Threadbare पर देखें",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (न्यूनतम)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Signal इरादे की यात्रा को ट्रैक करता है — पहले इंप्रेशन से आख़िरी एक्शन तक। सिर्फ़ यह नहीं कि क्या क्लिक हुआ। बल्कि क्यों क्लिक हुआ। और क्या लगभग हो ही गया था।",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "शुरू करें",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (डिफ़ॉल्ट)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "मुझे पसंद है ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (बिना उपसर्ग)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "तेज़",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "लचीला",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "मुफ़्त",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (धीमी गति)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "बना है ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "डेवलपर्स के लिए",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "डिज़ाइनर्स के लिए",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (बिना लूप)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "आपका स्वागत है ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Spark से इंस्टॉल करें",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "या Loom Registry इस्तेमाल करें",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (बिना लेबल)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "त्वरित इंस्टॉल",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (आइकन के साथ)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "टीमें Signal क्यों चुनती हैं",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.beacon.description": {
+    "message": "लिंक-निर्माण इंजन। ब्रांडेड शॉर्ट लिंक, जिनमें एट्रिब्यूशन मेटाडेटा जड़ा होता है — जो वहाँ भी बचा रहता है जहाँ UTM पैरामीटर नाकाम हो जाते हैं।",
+    "description": "Showcase Features (with icons) card description for Beacon"
+  },
+  "showcase.featuresIcons.prism.description": {
+    "message": "मल्टी-टच एट्रिब्यूशन मॉडलर। चैनलों के आर-पार कन्वर्ज़न पाथ को ट्रैक करता है और हर टचपॉइंट को भारित श्रेय देता है।",
+    "description": "Showcase Features (with icons) card description for Prism"
+  },
+  "showcase.featuresIcons.pulse.description": {
+    "message": "रियल-टाइम क्लिक स्ट्रीम। इंटरैक्शन की लाइव फ़ीड — geo, डिवाइस, referrer और एट्रिब्यूशन डेटा के साथ।",
+    "description": "Showcase Features (with icons) card description for Pulse"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (बिना आइकन, बिना हेडिंग)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.aperture.description": {
+    "message": "कैंपेन स्नैपशॉट। किसी भी पल का परफ़ॉर्मेंस कैप्चर, अलग-अलग समयावधियों में तुलना ओवरले के साथ।",
+    "description": "Showcase Features (no icons) card description for Aperture"
+  },
+  "showcase.featuresNoIcons.resonance.description": {
+    "message": "ऑडियंस ओवरलैप डिटेक्टर। ढूँढता है कि कैंपेन और सेगमेंट के आर-पार आपकी ऑडियंस कहाँ आपस में घुल-मिल जाती है।",
+    "description": "Showcase Features (no icons) card description for Resonance"
+  },
+  "showcase.featuresNoIcons.flare.description": {
+    "message": "QR और deep link जनरेटर। हर स्कैन पर पूरे एट्रिब्यूशन चेन के साथ भौतिक-से-डिजिटल पुल।",
+    "description": "Showcase Features (no icons) card description for Flare"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (छह आइटम, मिश्रित आइकन)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "पूरा एट्रिब्यूशन स्टैक",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.beacon.description": {
+    "message": "जड़े हुए ट्रेस मेटाडेटा के साथ ब्रांडेड लिंक बनाता है। हर लिंक एट्रिब्यूशन नेटवर्क में एक सेंसर है।",
+    "description": "Showcase Features (six items) card description for Beacon"
+  },
+  "showcase.featuresSix.prism.description": {
+    "message": "पूरे कन्वर्ज़न पाथ को फिर से बुनता है। लीनियर, डिके, पोज़िशन और कस्टम एट्रिब्यूशन मॉडल सपोर्ट करता है।",
+    "description": "Showcase Features (six items) card description for Prism"
+  },
+  "showcase.featuresSix.pulse.description": {
+    "message": "क्लिक इवेंट्स को रियल टाइम में स्ट्रीम करता है। कैंपेन, चैनल, geo या डिवाइस के हिसाब से फ़िल्टर करें।",
+    "description": "Showcase Features (six items) card description for Pulse"
+  },
+  "showcase.featuresSix.aperture.description": {
+    "message": "अपरिवर्तनीय कैंपेन स्नैपशॉट कैप्चर करता है। यह देखने के लिए कि क्या बदला, किन्हीं दो पलों की तुलना करें।",
+    "description": "Showcase Features (six items) card description for Aperture"
+  },
+  "showcase.featuresSix.resonance.description": {
+    "message": "सेगमेंट के आर-पार ऑडियंस ओवरलैप मापता है। पता लगाता है कि कब कैंपेन एक ही विज़िटर्स के लिए आपस में भिड़ते हैं।",
+    "description": "Showcase Features (six items) card description for Resonance"
+  },
+  "showcase.featuresSix.flare.description": {
+    "message": "पूरे एट्रिब्यूशन के साथ QR कोड और deep link बनाता है। प्रिंट, इवेंट्स और डिजिटल को जोड़ता है।",
+    "description": "Showcase Features (six items) card description for Flare"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (हेडिंग और विवरण के साथ)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "एट्रिब्यूशन मेट्रिक्स",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Signal प्लेटफ़ॉर्म के मुख्य परफ़ॉर्मेंस इंडिकेटर।",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "रीडायरेक्ट लेटेंसी",
+    "description": "Showcase Stats (full) label for redirect latency"
+  },
+  "showcase.statsFull.links.label": {
+    "message": "ट्रैक किए गए लिंक",
+    "description": "Showcase Stats (full) label for links traced"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "अपटाइम SLA",
+    "description": "Showcase Stats (full) label for uptime SLA"
+  },
+  "showcase.statsFull.regions.label": {
+    "message": "कवर किए गए क्षेत्र",
+    "description": "Showcase Stats (full) label for regions served"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (बिना हेडिंग)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "सब-टूल्स",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.models.label": {
+    "message": "एट्रिब्यूशन मॉडल",
+    "description": "Showcase Stats (no heading) label for attribution models"
+  },
+  "showcase.statsNoHeading.operators.label": {
+    "message": "सेगमेंट ऑपरेटर",
+    "description": "Showcase Stats (no heading) label for segment operators"
+  },
+  "showcase.statsNoHeading.pixels.label": {
+    "message": "ज़रूरी ट्रैकिंग पिक्सल",
+    "description": "Showcase Stats (no heading) label for tracking pixels required"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (कोड के साथ)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "त्वरित शुरुआत",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "शून्य से पूरी तरह एट्रिब्यूटेड लिंक तक पहुँचने के लिए तीन कमांड।",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (टेक्स्ट के साथ)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "यह कैसे काम करता है",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Signal एट्रिब्यूशन मेटाडेटा को लिंक में ही जड़ देता है — उन query पैरामीटर में नहीं जो हट जाते हैं, न ही उन referrer हेडर में जो गायब हो जाते हैं। जब क्लिक होती है, Pulse उसे कैप्चर करता है। जब कन्वर्ज़न होता है, Prism पूरे पाथ को फिर से बुनता है। कोई ट्रैकिंग पिक्सल नहीं। कोई पेज-साइड स्क्रिप्ट नहीं।",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (विवरण के साथ)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "एट्रिब्यूशन इनसाइट्स",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "केस स्टडी, कैंपेन फ़ॉरेंसिक्स, और आपकी क्लिक स्ट्रीम में छिपे पैटर्न।",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "हमने एक वायरल कैंपेन का सुराग़ मंगलवार के न्यूज़लेटर के एक अकेले लिंक तक पहुँचाया",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "40% कन्वर्ज़न उछाल का सुराग़ एक ऐसे साइडबार लिंक तक पहुँचा, जिसे किसी ने ज़रूरी नहीं समझा था।",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "डार्क ट्रैफ़िक: वे क्लिक जो आपको दिखते ही नहीं",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "जब कोई किसी URL को मैसेजिंग ऐप में कॉपी करता है, तो referrer गायब हो जाता है। Beacon मेटाडेटा बचा रहता है।",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "लास्ट-क्लिक एट्रिब्यूशन का अंत",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "सिर्फ़ आख़िरी टचपॉइंट को श्रेय देना एक झूठ है। Prism श्रेय को पूरे पाथ में बाँट देता है।",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (बिना विवरण)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "हाल के अपडेट",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Signal 2.1: Resonance ओवरलैप मैप और Flare बल्क जनरेशन",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Resonance अब असीमित सेगमेंट के आर-पार ऑडियंस ओवरलैप को विज़ुअलाइज़ करता है, और Flare अब CSV से बल्क QR जनरेशन सपोर्ट करता है।",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (इनलाइन उपयोग)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Signal, ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.beaconLinks.title": {
+    "message": "ब्रांडेड एट्रिब्यूशन लिंक",
+    "description": "Showcase Terminology hover title for Beacon links"
+  },
+  "showcase.terminology.beaconLinks.label": {
+    "message": "Beacon लिंक्स",
+    "description": "Showcase Terminology displayed text for Beacon links"
+  },
+  "showcase.terminology.paragraph1.afterBeacon": {
+    "message": " के ज़रिये इंप्रेशन से कन्वर्ज़न तक के सफ़र को मापता है। हर क्लिक को ",
+    "description": "Showcase Terminology paragraph 1 fragment after Beacon links"
+  },
+  "showcase.terminology.pulse.title": {
+    "message": "रियल-टाइम क्लिक स्ट्रीम",
+    "description": "Showcase Terminology hover title for Pulse"
+  },
+  "showcase.terminology.paragraph1.afterPulse": {
+    "message": " कैप्चर करता है और उसे ",
+    "description": "Showcase Terminology paragraph 1 fragment after Pulse"
+  },
+  "showcase.terminology.prism.title": {
+    "message": "मल्टी-टच एट्रिब्यूशन इंजन",
+    "description": "Showcase Terminology hover title for Prism"
+  },
+  "showcase.terminology.paragraph1.afterPrism": {
+    "message": " में फीड करता है — पूरे-पाथ एट्रिब्यूशन के लिए।",
+    "description": "Showcase Terminology paragraph 1 fragment after Prism"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "समय-दर-समय, ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.aperture.title": {
+    "message": "किसी भी पल का कैंपेन स्नैपशॉट",
+    "description": "Showcase Terminology hover title for Aperture snapshots"
+  },
+  "showcase.terminology.aperture.label": {
+    "message": "Aperture स्नैपशॉट्स",
+    "description": "Showcase Terminology displayed text for Aperture snapshots"
+  },
+  "showcase.terminology.paragraph2.afterAperture": {
+    "message": " के साथ टीमें कैंपेन परफ़ॉर्मेंस पर नज़र रखती हैं। ",
+    "description": "Showcase Terminology paragraph 2 fragment after Aperture"
+  },
+  "showcase.terminology.resonance.title": {
+    "message": "ऑडियंस ओवरलैप डिटेक्टर",
+    "description": "Showcase Terminology hover title for Resonance engine"
+  },
+  "showcase.terminology.resonance.label": {
+    "message": "Resonance इंजन",
+    "description": "Showcase Terminology displayed text for Resonance engine"
+  },
+  "showcase.terminology.paragraph2.afterResonance": {
+    "message": " दिखाता है कि ऑडियंस कहाँ ओवरलैप होती है, और ",
+    "description": "Showcase Terminology paragraph 2 fragment after Resonance"
+  },
+  "showcase.terminology.flare.title": {
+    "message": "QR और deep link जनरेटर",
+    "description": "Showcase Terminology hover title for Flare"
+  },
+  "showcase.terminology.paragraph2.afterFlare": {
+    "message": " एट्रिब्यूशन को भौतिक दुनिया तक बढ़ा देता है।",
+    "description": "Showcase Terminology paragraph 2 fragment after Flare"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (कैप्शन के साथ)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Frame ब्लॉक के ज़रिये उभारा गया ब्रांड मार्क, एट्रिब्यूशन के लिए कैप्शन के साथ।",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Signal ब्रांड थंबनेल।",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (बिना कैप्शन)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (दोनों स्टोर)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "साथी ऐप डाउनलोड करें",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (सिर्फ़ App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "iOS पर उपलब्ध",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (सिर्फ़ Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Android पर उपलब्ध",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (बिना लेबल)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "पढ़ने में {readingTime} मिनट",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

@@ -1,0 +1,510 @@
+{
+  "home.layout.description": {
+    "message": "Signal verfolgt, wie sich Absicht bewegt — vom ersten Eindruck bis zur finalen Handlung. Nicht nur, was geklickt wurde. Sondern warum.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Signal – Jeder Klick erzählt eine Geschichte",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Attributions-Engine",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Jeder Klick erzählt eine Geschichte. Die meisten Tools verlieren den roten Faden.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Signal verfolgt, wie sich Absicht bewegt — vom ersten Eindruck bis zur finalen Handlung. Nicht nur, was geklickt wurde. Sondern warum. Und was beinahe passiert wäre.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Loslegen",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Auf Threadbare ansehen",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.beacon.description": {
+    "message": "Engine zum Prägen von Links. Gebrandete Kurzlinks mit eingebetteten Attributions-Metadaten, die URL-Kürzung, Messaging-Apps und geräteübergreifende Übergaben überstehen. Jeder Link ist ein Sensor.",
+    "description": "Front page Features card description for Beacon"
+  },
+  "home.features.prism.description": {
+    "message": "Modellierer für Multi-Touch-Attribution. Verfolgt Conversion-Pfade über Kanäle hinweg, rechnet jedem Touchpoint einen gewichteten Anteil zu und rekonstruiert die gesamte Journey von der ersten Begegnung bis zur finalen Handlung.",
+    "description": "Front page Features card description for Prism"
+  },
+  "home.features.pulse.description": {
+    "message": "Klickstream in Echtzeit. Ein Live-Feed jeder Interaktion — Geo, Gerät, Referrer und Attributionsdaten — der innerhalb einer Sekunde nach jedem Klick eintrifft.",
+    "description": "Front page Features card description for Pulse"
+  },
+  "home.features.aperture.description": {
+    "message": "Kampagnen-Momentaufnahmen. Zeitpunktbezogene Performance-Erfassungen mit Vergleichs-Overlays. Sieh genau, was sich zwischen zwei beliebigen Momenten einer Kampagne verändert hat.",
+    "description": "Front page Features card description for Aperture"
+  },
+  "home.features.resonance.description": {
+    "message": "Erkennung von Zielgruppenüberschneidungen. Findet, wo Zielgruppen über Kampagnen und Segmente hinweg ineinander übergehen. Hör auf, doppelt zu zahlen, um dieselben Menschen zu erreichen.",
+    "description": "Front page Features card description for Resonance"
+  },
+  "home.features.flare.description": {
+    "message": "QR- und Deep-Link-Generator. Verbindet physische und digitale Attribution mit vollständigen Trace-Metadaten. Jeder Scan liefert dieselben Erkenntnisse wie ein digitaler Klick.",
+    "description": "Front page Features card description for Flare"
+  },
+  "home.stats.heading": {
+    "message": "In Zahlen",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.latency.label": {
+    "message": "Redirect-Latenz",
+    "description": "Front page Stats label for redirect latency"
+  },
+  "home.stats.links.label": {
+    "message": "Nachverfolgte Links",
+    "description": "Front page Stats label for links traced"
+  },
+  "home.stats.uptime.label": {
+    "message": "Verfügbarkeit",
+    "description": "Front page Stats label for uptime"
+  },
+  "home.stats.regions.label": {
+    "message": "Regionen",
+    "description": "Front page Stats label for regions"
+  },
+  "home.spotlight.heading": {
+    "message": "Von Beacon zur Attribution",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Jeder Link ist ein Sensor. Jeder Redirect ist ein Datenpunkt. Prism verbindet sie zu einem einzigen Attributionspfad.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Behalte Kampagnen unterwegs im Blick",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Einblicke in die Attribution",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Fallstudien, technische Deep-Dives und die Muster, die sich in deinen Klickströmen verbergen.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Signal-Block-Showcase, der jeden Block aus docusaurus-preset-nova demonstriert.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Jeder Block aus dem Signal-Preset, dargestellt mit Beispieldaten.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (vollständig)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Block-Showcase",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Jeder Signal-Block, an einem Ort demonstriert.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Diese Seite rendert jeden Block aus @cbnventures/docusaurus-preset-nova/blocks mit Daten aus der Signal-Welt, damit du siehst, wie sie aussehen und sich verhalten.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Dokumentation lesen",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Auf Threadbare ansehen",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Signal verfolgt, wie sich Absicht bewegt — vom ersten Eindruck bis zur finalen Handlung. Nicht nur, was geklickt wurde. Sondern warum. Und was beinahe passiert wäre.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Loslegen",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (Standard)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Ich liebe ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (ohne Präfix)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Schnell",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Flexibel",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Kostenlos",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (langsames Timing)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Gebaut für ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "Entwickler",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "Designer",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (ohne Schleife)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Willkommen bei ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Mit Spark installieren",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Oder nutze die Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (ohne Label)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Schnellinstallation",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (mit Icons)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Warum Teams sich für Signal entscheiden",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.beacon.description": {
+    "message": "Engine zum Prägen von Links. Gebrandete Kurzlinks mit eingebetteten Attributions-Metadaten, die dort bestehen, wo UTM-Parameter versagen.",
+    "description": "Showcase Features (with icons) card description for Beacon"
+  },
+  "showcase.featuresIcons.prism.description": {
+    "message": "Modellierer für Multi-Touch-Attribution. Verfolgt Conversion-Pfade über Kanäle hinweg und rechnet jedem Touchpoint einen gewichteten Anteil zu.",
+    "description": "Showcase Features (with icons) card description for Prism"
+  },
+  "showcase.featuresIcons.pulse.description": {
+    "message": "Klickstream in Echtzeit. Live-Feed von Interaktionen mit Geo, Gerät, Referrer und Attributionsdaten.",
+    "description": "Showcase Features (with icons) card description for Pulse"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (ohne Icons, ohne Überschrift)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.aperture.description": {
+    "message": "Kampagnen-Momentaufnahmen. Zeitpunktbezogene Performance-Erfassungen mit Vergleichs-Overlays über verschiedene Zeitfenster hinweg.",
+    "description": "Showcase Features (no icons) card description for Aperture"
+  },
+  "showcase.featuresNoIcons.resonance.description": {
+    "message": "Erkennung von Zielgruppenüberschneidungen. Findet, wo Zielgruppen über Kampagnen und Segmente hinweg ineinander übergehen.",
+    "description": "Showcase Features (no icons) card description for Resonance"
+  },
+  "showcase.featuresNoIcons.flare.description": {
+    "message": "QR- und Deep-Link-Generator. Brücke vom Physischen ins Digitale mit vollständiger Attributionskette bei jedem Scan.",
+    "description": "Showcase Features (no icons) card description for Flare"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (sechs Elemente, gemischte Icons)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Der komplette Attributions-Stack",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.beacon.description": {
+    "message": "Prägt gebrandete Links mit eingebetteten Trace-Metadaten. Jeder Link ist ein Sensor im Attributionsnetzwerk.",
+    "description": "Showcase Features (six items) card description for Beacon"
+  },
+  "showcase.featuresSix.prism.description": {
+    "message": "Rekonstruiert den vollständigen Conversion-Pfad. Unterstützt lineare, Decay-, Positions- und benutzerdefinierte Attributionsmodelle.",
+    "description": "Showcase Features (six items) card description for Prism"
+  },
+  "showcase.featuresSix.pulse.description": {
+    "message": "Streamt Klick-Events in Echtzeit. Filtere nach Kampagne, Kanal, Geo oder Gerät.",
+    "description": "Showcase Features (six items) card description for Pulse"
+  },
+  "showcase.featuresSix.aperture.description": {
+    "message": "Erfasst unveränderliche Kampagnen-Momentaufnahmen. Vergleiche zwei beliebige Zeitpunkte, um zu sehen, was sich verändert hat.",
+    "description": "Showcase Features (six items) card description for Aperture"
+  },
+  "showcase.featuresSix.resonance.description": {
+    "message": "Misst Zielgruppenüberschneidungen über Segmente hinweg. Erkennt, wenn Kampagnen um dieselben Besucher konkurrieren.",
+    "description": "Showcase Features (six items) card description for Resonance"
+  },
+  "showcase.featuresSix.flare.description": {
+    "message": "Erzeugt QR-Codes und Deep-Links mit vollständiger Attribution. Verbindet Print, Events und Digital.",
+    "description": "Showcase Features (six items) card description for Flare"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (mit Überschrift und Beschreibung)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Attributionsmetriken",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Zentrale Leistungskennzahlen der gesamten Signal-Plattform.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Redirect-Latenz",
+    "description": "Showcase Stats (full) label for redirect latency"
+  },
+  "showcase.statsFull.links.label": {
+    "message": "Nachverfolgte Links",
+    "description": "Showcase Stats (full) label for links traced"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "Verfügbarkeits-SLA",
+    "description": "Showcase Stats (full) label for uptime SLA"
+  },
+  "showcase.statsFull.regions.label": {
+    "message": "Abgedeckte Regionen",
+    "description": "Showcase Stats (full) label for regions served"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (ohne Überschrift)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "Sub-Tools",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.models.label": {
+    "message": "Attributionsmodelle",
+    "description": "Showcase Stats (no heading) label for attribution models"
+  },
+  "showcase.statsNoHeading.operators.label": {
+    "message": "Segment-Operatoren",
+    "description": "Showcase Stats (no heading) label for segment operators"
+  },
+  "showcase.statsNoHeading.pixels.label": {
+    "message": "Erforderliche Tracking-Pixel",
+    "description": "Showcase Stats (no heading) label for tracking pixels required"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (mit Code)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Schnellstart",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Drei Befehle, um von null zu einem vollständig attribuierten Link zu gelangen.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (mit Text)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "So funktioniert es",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Signal bettet Attributions-Metadaten in den Link selbst ein — nicht in Query-Parameter, die entfernt werden, nicht in Referrer-Header, die verschwinden. Wenn ein Klick passiert, erfasst Pulse ihn. Wenn eine Conversion passiert, rekonstruiert Prism den gesamten Pfad. Keine Tracking-Pixel. Keine clientseitigen Skripte.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (mit Beschreibung)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Einblicke in die Attribution",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Fallstudien, Kampagnen-Forensik und die Muster, die sich in deinen Klickströmen verbergen.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Wie wir eine virale Kampagne bis zu einem einzigen Link in einem Dienstags-Newsletter zurückverfolgt haben",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Ein Conversion-Anstieg von 40 %, zurückverfolgt bis zu einem Sidebar-Link, den niemand als wichtig markiert hatte.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Dark Traffic: Die Klicks, die du nicht sehen kannst",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Wenn jemand eine URL in eine Messaging-App kopiert, verschwindet der Referrer. Die Beacon-Metadaten überleben.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Das Ende der Last-Click-Attribution",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Dem letzten Touchpoint den gesamten Erfolg zuzuschreiben, ist eine Lüge. Prism verteilt die Anrechnung über den gesamten Pfad.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (ohne Beschreibung)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Neueste Updates",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Signal 2.1: Resonance-Überschneidungskarten und Flare-Massenerzeugung",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Resonance visualisiert jetzt Zielgruppenüberschneidungen über unbegrenzt viele Segmente hinweg, und Flare unterstützt die Massenerzeugung von QR-Codes aus CSV.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (Inline-Verwendung)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Signal verwendet ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.beaconLinks.title": {
+    "message": "gebrandeter Attributions-Link",
+    "description": "Showcase Terminology hover title for Beacon links"
+  },
+  "showcase.terminology.beaconLinks.label": {
+    "message": "Beacon-Links",
+    "description": "Showcase Terminology displayed text for Beacon links"
+  },
+  "showcase.terminology.paragraph1.afterBeacon": {
+    "message": ", um den Pfad von der Impression bis zur Conversion zu instrumentieren. Jeder Klick wird von ",
+    "description": "Showcase Terminology paragraph 1 fragment after Beacon links"
+  },
+  "showcase.terminology.pulse.title": {
+    "message": "Klickstream in Echtzeit",
+    "description": "Showcase Terminology hover title for Pulse"
+  },
+  "showcase.terminology.paragraph1.afterPulse": {
+    "message": " erfasst und in ",
+    "description": "Showcase Terminology paragraph 1 fragment after Pulse"
+  },
+  "showcase.terminology.prism.title": {
+    "message": "Multi-Touch-Attribution-Engine",
+    "description": "Showcase Terminology hover title for Prism"
+  },
+  "showcase.terminology.paragraph1.afterPrism": {
+    "message": " eingespeist – für die Attribution über den gesamten Pfad.",
+    "description": "Showcase Terminology paragraph 1 fragment after Prism"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Mit ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.aperture.title": {
+    "message": "zeitpunktbezogene Kampagnen-Momentaufnahme",
+    "description": "Showcase Terminology hover title for Aperture snapshots"
+  },
+  "showcase.terminology.aperture.label": {
+    "message": "Aperture-Momentaufnahmen",
+    "description": "Showcase Terminology displayed text for Aperture snapshots"
+  },
+  "showcase.terminology.paragraph2.afterAperture": {
+    "message": " verfolgen Teams die Kampagnen-Performance im Zeitverlauf. Die ",
+    "description": "Showcase Terminology paragraph 2 fragment after Aperture"
+  },
+  "showcase.terminology.resonance.title": {
+    "message": "Detektor für Zielgruppenüberschneidungen",
+    "description": "Showcase Terminology hover title for Resonance engine"
+  },
+  "showcase.terminology.resonance.label": {
+    "message": "Resonance-Engine",
+    "description": "Showcase Terminology displayed text for Resonance engine"
+  },
+  "showcase.terminology.paragraph2.afterResonance": {
+    "message": " zeigt, wo sich Zielgruppen überschneiden, und ",
+    "description": "Showcase Terminology paragraph 2 fragment after Resonance"
+  },
+  "showcase.terminology.flare.title": {
+    "message": "QR- und Deep-Link-Generator",
+    "description": "Showcase Terminology hover title for Flare"
+  },
+  "showcase.terminology.paragraph2.afterFlare": {
+    "message": " erweitert die Attribution in die physische Welt.",
+    "description": "Showcase Terminology paragraph 2 fragment after Flare"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (mit Bildunterschrift)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Markenzeichen, verstärkt durch einen Frame-Block und mit Bildunterschrift zur Attribution versehen.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Miniaturbild der Marke Signal.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (ohne Bildunterschrift)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (beide Stores)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Begleit-App herunterladen",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (nur App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Verfügbar für iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (nur Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Verfügbar für Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (ohne Label)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} Min. Lesezeit",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

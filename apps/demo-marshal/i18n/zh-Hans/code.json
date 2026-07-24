@@ -15,49 +15,25 @@
     "message": "按赞助者、贡献者或公众路由入站工作。标签由系统盖章，不容协商。每一次路由决策都会被记入档案。",
     "description": "Front page Features card description for Access Tiers"
   },
-  "home.features.accessTiers.title": {
-    "message": "Access Tiers",
-    "description": "Front page Features card title for Access Tiers"
-  },
   "home.features.automatedStamps.description": {
     "message": "Marshal 在常设授权下行事。每一次操作都带有时间戳、记录在案的执行者，以及触发该操作的策略引用。",
     "description": "Front page Features card description for Automated Stamps"
-  },
-  "home.features.automatedStamps.title": {
-    "message": "Automated Stamps",
-    "description": "Front page Features card title for Automated Stamps"
   },
   "home.features.dockets.description": {
     "message": "Marshal 的每一次操作都会在公开记录中留下一行。关闭的话题、盖章的审批、定期轮转——全部仅追加、全部可见、绝不撤回。",
     "description": "Front page Features card description for Dockets"
   },
-  "home.features.dockets.title": {
-    "message": "Dockets",
-    "description": "Front page Features card title for Dockets"
-  },
   "home.features.policies.description": {
     "message": "写一段 YAML 来描述 Marshal 如何处理一类事件——陈旧话题、逾期 PR、按层级提供的支持。Marshal 只读取被立案的内容，只盖章被封存的内容。",
     "description": "Front page Features card description for Policies"
-  },
-  "home.features.policies.title": {
-    "message": "Policies",
-    "description": "Front page Features card title for Policies"
   },
   "home.features.scheduledStewardship.description": {
     "message": "通过 cron 运行清理、审计和轮转。Marshal 在整点执行、归档一份记录，然后继续前行。无需等待人类去记得。",
     "description": "Front page Features card description for Scheduled Stewardship"
   },
-  "home.features.scheduledStewardship.title": {
-    "message": "Scheduled Stewardship",
-    "description": "Front page Features card title for Scheduled Stewardship"
-  },
   "home.features.threadArchival.description": {
     "message": "对静默 N 天的话题进行关闭和封存——每一条都附带书面凭证。每个被封存的话题都带有归档原因和重新开启的路径。",
     "description": "Front page Features card description for Thread Archival"
-  },
-  "home.features.threadArchival.title": {
-    "message": "Thread Archival",
-    "description": "Front page Features card title for Thread Archival"
   },
   "home.head.title": {
     "message": "Marshal - 立案、封存、自动化",
@@ -179,17 +155,9 @@
     "message": "按赞助者、贡献者或公众路由入站工作。标签由系统盖章，不容协商。",
     "description": "Showcase Features (with icons) card description for Access Tiers"
   },
-  "showcase.featuresIcons.accessTiers.title": {
-    "message": "Access Tiers",
-    "description": "Showcase Features (with icons) card title for Access Tiers"
-  },
   "showcase.featuresIcons.dockets.description": {
     "message": "Marshal 的每一次操作都会在公开记录中留下一行。关闭的话题、盖章的审批、定期轮转——全部仅追加。",
     "description": "Showcase Features (with icons) card description for Dockets"
-  },
-  "showcase.featuresIcons.dockets.title": {
-    "message": "Dockets",
-    "description": "Showcase Features (with icons) card title for Dockets"
   },
   "showcase.featuresIcons.heading": {
     "message": "仓库为何选择 Marshal",
@@ -199,57 +167,29 @@
     "message": "写一段 YAML 来描述 Marshal 如何处理一类事件。Marshal 只读取被立案的内容，只盖章被封存的内容。",
     "description": "Showcase Features (with icons) card description for Policies"
   },
-  "showcase.featuresIcons.policies.title": {
-    "message": "Policies",
-    "description": "Showcase Features (with icons) card title for Policies"
-  },
   "showcase.featuresNoIcons.automatedStamps.description": {
     "message": "每一次操作都带有时间戳、记录在案的执行者，以及触发该操作的策略引用。",
     "description": "Showcase Features (no icons) card description for Automated Stamps"
-  },
-  "showcase.featuresNoIcons.automatedStamps.title": {
-    "message": "Automated Stamps",
-    "description": "Showcase Features (no icons) card title for Automated Stamps"
   },
   "showcase.featuresNoIcons.scheduledStewardship.description": {
     "message": "通过 cron 运行清理、审计和轮转。Marshal 在整点执行并归档一份记录。",
     "description": "Showcase Features (no icons) card description for Scheduled Stewardship"
   },
-  "showcase.featuresNoIcons.scheduledStewardship.title": {
-    "message": "Scheduled Stewardship",
-    "description": "Showcase Features (no icons) card title for Scheduled Stewardship"
-  },
   "showcase.featuresNoIcons.threadArchival.description": {
     "message": "对静默 N 天的话题进行关闭和封存——每条都附带书面凭证，并保留重新开启的路径。",
     "description": "Showcase Features (no icons) card description for Thread Archival"
-  },
-  "showcase.featuresNoIcons.threadArchival.title": {
-    "message": "Thread Archival",
-    "description": "Showcase Features (no icons) card title for Thread Archival"
   },
   "showcase.featuresSix.accessTiers.description": {
     "message": "赞助者、贡献者、公众——三个层级、一个队列、一位文书员。标签在受理时即被指派。",
     "description": "Showcase Features (six items) card description for Access Tiers"
   },
-  "showcase.featuresSix.accessTiers.title": {
-    "message": "Access Tiers",
-    "description": "Showcase Features (six items) card title for Access Tiers"
-  },
   "showcase.featuresSix.automatedStamps.description": {
     "message": "Marshal 的每一次操作都引用授权它的策略。授权在执行之前先行立案。",
     "description": "Showcase Features (six items) card description for Automated Stamps"
   },
-  "showcase.featuresSix.automatedStamps.title": {
-    "message": "Automated Stamps",
-    "description": "Showcase Features (six items) card title for Automated Stamps"
-  },
   "showcase.featuresSix.dockets.description": {
     "message": "每一次操作的仅追加公开记录。关闭的话题、路由决策、定时巡检——全部盖章。",
     "description": "Showcase Features (six items) card description for Dockets"
-  },
-  "showcase.featuresSix.dockets.title": {
-    "message": "Dockets",
-    "description": "Showcase Features (six items) card title for Dockets"
   },
   "showcase.featuresSix.heading": {
     "message": "一个部门，囊括一切",
@@ -259,25 +199,13 @@
     "message": "用 YAML 描述规则。Marshal 读取、执行、立案。运行时没有任何协商。",
     "description": "Showcase Features (six items) card description for Policies"
   },
-  "showcase.featuresSix.policies.title": {
-    "message": "Policies",
-    "description": "Showcase Features (six items) card title for Policies"
-  },
   "showcase.featuresSix.scheduledStewardship.description": {
     "message": "由 cron 驱动的清理与审计。Marshal 按计划行事，不会等待人类去记得。",
     "description": "Showcase Features (six items) card description for Scheduled Stewardship"
   },
-  "showcase.featuresSix.scheduledStewardship.title": {
-    "message": "Scheduled Stewardship",
-    "description": "Showcase Features (six items) card title for Scheduled Stewardship"
-  },
   "showcase.featuresSix.threadArchival.description": {
     "message": "静默话题按策略关闭并封存，每个案例都附带盖章通知与重新开启的路径。",
     "description": "Showcase Features (six items) card description for Thread Archival"
-  },
-  "showcase.featuresSix.threadArchival.title": {
-    "message": "Thread Archival",
-    "description": "Showcase Features (six items) card title for Thread Archival"
   },
   "showcase.heroFull.ctaLabel": {
     "message": "阅读文档",
@@ -591,52 +519,100 @@
     "message": "为 ",
     "description": "Showcase Typewriter (slow timing) prefix text"
   },
-  "theme.blog.author.noPosts": {
-    "message": "该作者尚未撰写任何文章。",
-    "description": "The text for authors with 0 blog post"
-  },
-  "theme.blog.author.pageTitle": {
-    "message": "{authorName} - {nPosts}",
-    "description": "The title of the page for a blog author"
-  },
-  "theme.blog.authorsList.viewAll": {
-    "message": "查看所有作者",
-    "description": "The label of the link targeting the blog authors page"
-  },
-  "theme.blog.post.plurals": {
-    "message": "{count} 篇博文",
-    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
-  },
-  "theme.blog.tagTitle": {
-    "message": "{nPosts} 含有标签「{tagName}」",
-    "description": "The title of the page for a blog tag"
-  },
-  "theme.common.skipToMainContent": {
-    "message": "跳到主要内容",
-    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
-  },
   "theme.footer.copyright": {
     "message": "版权所有 © 2025-2026 CBN Ventures LLC。保留所有权利。",
     "description": "Footer copyright text, localized per-locale via i18n code.json"
-  },
-  "theme.tags.tagsPageTitle": {
-    "message": "标签",
-    "description": "The title of the tag list page"
   },
   "showcase.frame.imageAlt": {
     "message": "Marshal 品牌缩略图。",
     "description": "Showcase Frame image alt text"
   },
   "showcase.frameWithCaption.caption": {
-    "message": "品牌标识归档于 Frame 块中,可供引用。",
+    "message": "品牌标识归档于 Frame 块中，可供引用。",
     "description": "Showcase Frame (with caption) caption text"
   },
   "showcase.item.frameNoCaption.title": {
-    "message": "Frame(无标题)",
+    "message": "Frame（无标题）",
     "description": "Showcase item title for Frame (no caption variant)"
   },
   "showcase.item.frameWithCaption.title": {
-    "message": "Frame(带标题)",
+    "message": "Frame（带标题）",
     "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "home.features.policies.title": {
+    "message": "策略",
+    "description": "Front page Features card title for Policies"
+  },
+  "home.features.dockets.title": {
+    "message": "档案",
+    "description": "Front page Features card title for Dockets"
+  },
+  "home.features.accessTiers.title": {
+    "message": "访问层级",
+    "description": "Front page Features card title for Access Tiers"
+  },
+  "home.features.scheduledStewardship.title": {
+    "message": "定时管理",
+    "description": "Front page Features card title for Scheduled Stewardship"
+  },
+  "home.features.threadArchival.title": {
+    "message": "话题归档",
+    "description": "Front page Features card title for Thread Archival"
+  },
+  "home.features.automatedStamps.title": {
+    "message": "自动盖章",
+    "description": "Front page Features card title for Automated Stamps"
+  },
+  "showcase.featuresIcons.policies.title": {
+    "message": "策略",
+    "description": "Showcase Features (with icons) card title for Policies"
+  },
+  "showcase.featuresIcons.dockets.title": {
+    "message": "档案",
+    "description": "Showcase Features (with icons) card title for Dockets"
+  },
+  "showcase.featuresIcons.accessTiers.title": {
+    "message": "访问层级",
+    "description": "Showcase Features (with icons) card title for Access Tiers"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.title": {
+    "message": "定时管理",
+    "description": "Showcase Features (no icons) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.threadArchival.title": {
+    "message": "话题归档",
+    "description": "Showcase Features (no icons) card title for Thread Archival"
+  },
+  "showcase.featuresNoIcons.automatedStamps.title": {
+    "message": "自动盖章",
+    "description": "Showcase Features (no icons) card title for Automated Stamps"
+  },
+  "showcase.featuresSix.policies.title": {
+    "message": "策略",
+    "description": "Showcase Features (six items) card title for Policies"
+  },
+  "showcase.featuresSix.dockets.title": {
+    "message": "档案",
+    "description": "Showcase Features (six items) card title for Dockets"
+  },
+  "showcase.featuresSix.accessTiers.title": {
+    "message": "访问层级",
+    "description": "Showcase Features (six items) card title for Access Tiers"
+  },
+  "showcase.featuresSix.scheduledStewardship.title": {
+    "message": "定时管理",
+    "description": "Showcase Features (six items) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.threadArchival.title": {
+    "message": "话题归档",
+    "description": "Showcase Features (six items) card title for Thread Archival"
+  },
+  "showcase.featuresSix.automatedStamps.title": {
+    "message": "自动盖章",
+    "description": "Showcase Features (six items) card title for Automated Stamps"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "阅读时间约 {readingTime} 分钟",
+    "description": "The label showing estimated reading time for a blog post"
   }
 }

@@ -47,15 +47,23 @@ ruleTester.run('requireKebabCaseFilename', RequireKebabCaseFilename['rule'], {
       code: 'const x = 1;',
       filename: '/path/to/MyComponent.ts',
       options: [{
-        extraExtensions: [], ignoreFiles: ['MyComponent.ts'],
+        extraExtensions: [],
+        ignoreFiles: ['MyComponent.ts'],
       }],
     },
     {
       code: 'const x = 1;',
       filename: '/path/to/my-component.vue',
       options: [{
-        extraExtensions: ['.vue'], ignoreFiles: [],
+        extraExtensions: ['.vue'],
+        ignoreFiles: [],
       }],
+    },
+
+    // Extracted <script> virtual file is skipped (basename is machine-generated).
+    {
+      code: 'const x = 1;',
+      filename: '/project/src/components/github.astro/1_1.js',
     },
   ],
   invalid: [
@@ -78,7 +86,8 @@ ruleTester.run('requireKebabCaseFilename', RequireKebabCaseFilename['rule'], {
       code: 'const x = 1;',
       filename: '/path/to/MyComponent.vue',
       options: [{
-        extraExtensions: ['.vue'], ignoreFiles: [],
+        extraExtensions: ['.vue'],
+        ignoreFiles: [],
       }],
       errors: [{ messageId: 'requireKebabCase' }],
     },

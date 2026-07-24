@@ -37,12 +37,16 @@ import {
   RequireJsdocHierarchy,
   RequireJsdocParamAlignment,
   RequireJsdocParamName,
+  RequireJsdocPresence,
   RequireJsdocPrivate,
+  RequireJsdocReturns,
   RequireJsdocSince,
+  RequireJsdocTagOrder,
   RequireKebabCaseFilename,
   RequireMultilineConditionGroups,
   RequireMultilineConditions,
   RequireNamingConvention,
+  RequireNodeProtocol,
   RequirePaddingLines,
   RequireTernaryParens,
   RequireTypeNaming,
@@ -123,12 +127,16 @@ export default [
           'require-jsdoc-hierarchy': RequireJsdocHierarchy['rule'],
           'require-jsdoc-param-alignment': RequireJsdocParamAlignment['rule'],
           'require-jsdoc-param-name': RequireJsdocParamName['rule'],
+          'require-jsdoc-presence': RequireJsdocPresence['rule'],
           'require-jsdoc-private': RequireJsdocPrivate['rule'],
+          'require-jsdoc-returns': RequireJsdocReturns['rule'],
           'require-jsdoc-since': RequireJsdocSince['rule'],
+          'require-jsdoc-tag-order': RequireJsdocTagOrder['rule'],
           'require-kebab-case-filename': RequireKebabCaseFilename['rule'],
           'require-multiline-condition-groups': RequireMultilineConditionGroups['rule'],
           'require-multiline-conditions': RequireMultilineConditions['rule'],
           'require-naming-convention': RequireNamingConvention['rule'],
+          'require-node-protocol': RequireNodeProtocol['rule'],
           'require-padding-lines': RequirePaddingLines['rule'],
           'require-ternary-parens': RequireTernaryParens['rule'],
           'require-type-naming': RequireTypeNaming['rule'],
@@ -413,6 +421,7 @@ export default [
       '@cbnventures/nova/require-jsdoc-body': [
         'error',
         {
+          diamond: true,
           ignoreFiles: [
             './eslint.config.ts',
             './vitest.config.ts',
@@ -461,6 +470,23 @@ export default [
         },
       ],
 
+      // Require a leading JSDoc block on every documentable symbol.
+      '@cbnventures/nova/require-jsdoc-presence': [
+        'error',
+        {
+          ignoreFiles: [
+            './bin/nova.mjs',
+            './eslint.config.ts',
+            './vitest.config.ts',
+            './vitest.setup.ts',
+          ],
+          skipDirectories: [
+            'tests',
+            'types',
+          ],
+        },
+      ],
+
       // Require a @private tag in JSDoc blocks for private class members.
       '@cbnventures/nova/require-jsdoc-private': [
         'error',
@@ -469,8 +495,24 @@ export default [
         },
       ],
 
+      // Require @returns tags to contain only a type in braces.
+      '@cbnventures/nova/require-jsdoc-returns': [
+        'error',
+        {
+          ignoreFiles: [],
+        },
+      ],
+
       // Require a @since tag in every JSDoc block so additions are versioned.
       '@cbnventures/nova/require-jsdoc-since': [
+        'error',
+        {
+          ignoreFiles: [],
+        },
+      ],
+
+      // Require canonical ordering and spacing of JSDoc tags.
+      '@cbnventures/nova/require-jsdoc-tag-order': [
         'error',
         {
           ignoreFiles: [],
@@ -527,6 +569,9 @@ export default [
           variable: 'camelCase',
         },
       ],
+
+      // Require the "node:" protocol when importing Node.js built-in modules.
+      '@cbnventures/nova/require-node-protocol': ['error'],
 
       // Require blank lines between declaration blocks and operations for visual separation.
       '@cbnventures/nova/require-padding-lines': [

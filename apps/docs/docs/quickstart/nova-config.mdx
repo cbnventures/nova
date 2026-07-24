@@ -191,79 +191,74 @@ Repository policy settings. Each field is optional.
 
 An array of GitHub Actions workflow entries consumed by [`nova generate github workflows`](/docs/cli/generators/github/workflows). Each entry maps to one generated `.yml` file.
 
-| Field        | Type       | Description                                                                                                    |
-|--------------|------------|----------------------------------------------------------------------------------------------------------------|
-| `template`   | `string`   | Name of a bundled workflow template: `"publish"`, `"lock-inactive-issues"`, or `"check-sponsor-gated-issues"`. |
-| `suffix`     | `string`   | Required label appended to the output filename and workflow name. Must be unique within the same template.     |
-| `triggers`   | `string[]` | Trigger names from the template's `triggers/` folder. Use an empty array for templates with baked-in triggers. |
-| `depends-on` | `string[]` | Optional. Workflow references as `"{template}-{suffix}"`. Required for `workflow-run-*` triggers.              |
-| `scopes`     | `string[]` | Optional. Workspace paths (keys from `workspaces`) that the `check` / `build` step should filter to.           |
-| `targets`    | `object[]` | Optional. Publish destinations for the `publish` template. Each target has `type`, `workingDir`, and `needs`.  |
-| `settings`   | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.  |
+| Field      | Type       | Description                                                                                                       |
+|------------|------------|-------------------------------------------------------------------------------------------------------------------|
+| `template` | `string`   | Name of a bundled workflow template: `"publish"`, `"lock-inactive-issues"`, or `"check-sponsor-gated-issues"`.    |
+| `name`     | `string`   | Required label appended to the output filename and workflow name. Must be unique within the same template.        |
+| `triggers` | `array`    | Triggers for the template. Each is a bare string or an object such as `{ "name": "push", "branches": ["main"] }`. |
+| `build`    | `string[]` | Optional. Workspace paths (keys from `workspaces`) that the `check` / `build` step should filter to.              |
+| `deploy`   | `object[]` | Optional. Publish destinations for the `publish` template. Each destination has `to`, `path`, `after`, `with`.    |
+| `with`     | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.     |
 
-### Target Fields
+Field names changed in the rebuilt generator: `suffix` is now `name`, `scopes` is now `build`, `targets` is now `deploy`, and `settings` is now `with`. The former top-level `depends-on` moved onto the workflow-run trigger object as a `workflows` array.
 
-Each entry in the `targets` array pins one publish destination to a workspace.
+### Deploy Fields
 
-| Field        | Type       | Description                                                                                                                                                                                 |
-|--------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `type`       | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages-docusaurus"`, `"github-pages-docusaurus"`, `"aws-amplify-nextjs"`, `"vercel-nextjs"`. |
-| `workingDir` | `string`   | Path to the workspace that owns the target (e.g., `"./packages/nova"`).                                                                                                                     |
-| `needs`      | `string[]` | Optional. Working directories of other same-type targets that must finish publishing before this one starts.                                                                                |
+Each entry in the `deploy` array pins one publish destination to a workspace.
+
+| Field   | Type       | Description                                                                                                                                                                                 |
+|---------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `to`    | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages-docusaurus"`, `"cloudflare-workers"`, `"github-pages-docusaurus"`, `"vercel-nextjs"`. |
+| `path`  | `string`   | Path to the workspace that owns the destination (e.g., `"./packages/nova"`).                                                                                                                |
+| `after` | `string[]` | Optional. Paths of other same-type destinations that must finish publishing before this one starts.                                                                                         |
+| `with`  | `object`   | Optional. Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                                                             |
 
 ### Variable Formats
 
-Each template declares variables with one of three formats. The format determines how values in `settings` are used:
+Each template declares variables with one of three formats. The format determines how values in `with` are used:
 
-| Format    | What happens                                                                                              |
-|-----------|-----------------------------------------------------------------------------------------------------------|
-| `secret`  | Produces `${{ secrets.NAME }}` in the YAML. A setting value remaps the secret name.                       |
-| `var`     | Produces `${{ vars.NAME }}` in the YAML. A setting value remaps the variable name.                        |
-| `literal` | Replaces the placeholder with the exact string from `settings`. Must be provided or the entry is skipped. |
+| Format    | What happens                                                                                          |
+|-----------|-------------------------------------------------------------------------------------------------------|
+| `secret`  | Produces `${{ secrets.NAME }}` in the YAML. A `with` value remaps the secret name.                    |
+| `var`     | Produces `${{ vars.NAME }}` in the YAML. A `with` value remaps the variable name.                     |
+| `literal` | Replaces the placeholder with the exact string from `with`. Must be provided or the entry is skipped. |
 
 ### Output Filenames
 
-Generated files follow the pattern `nova-{template}-{suffix}.yml` under `.github/workflows/`.
+Generated files follow the pattern `nova-{template}-{name}.yml` under `.github/workflows/`.
 
 ```json
 {
   "workflows": [
     {
       "template": "lock-inactive-issues",
-      "suffix": "project",
+      "name": "project",
       "triggers": ["schedule-weekly"]
     },
     {
       "template": "publish",
-      "suffix": "project",
+      "name": "project",
       "triggers": ["release"],
-      "scopes": [
+      "build": [
         "./packages/core",
         "./packages/preset",
         "./apps/docs"
       ],
-      "targets": [
+      "deploy": [
         {
-          "type": "npm",
-          "workingDir": "./packages/core"
+          "to": "npm",
+          "path": "./packages/core"
         },
         {
-          "type": "npm",
-          "workingDir": "./packages/preset",
-          "needs": ["./packages/core"]
+          "to": "npm",
+          "path": "./packages/preset",
+          "after": ["./packages/core"]
         },
         {
-          "type": "cloudflare-pages-docusaurus",
-          "workingDir": "./apps/docs"
+          "to": "cloudflare-pages-docusaurus",
+          "path": "./apps/docs"
         }
-      ],
-      "settings": {
-        "CLOUDFLARE_ACCOUNT_ID": "CLOUDFLARE_ACCOUNT_ID",
-        "CLOUDFLARE_API_TOKEN": "CLOUDFLARE_API_TOKEN",
-        "CLOUDFLARE_PROJECT_NAME": "CLOUDFLARE_PROJECT_NAME",
-        "NPM_TOKEN": "NPM_TOKEN",
-        "ROOT_WORKING_DIR": "./"
-      }
+      ]
     }
   ]
 }
@@ -319,6 +314,29 @@ A map of relative paths to <Terminology title="package" to="/docs/quickstart/ter
 | `role`        | `string` | Workspace role: `"project"`, `"docs"`, `"config"`, `"app"`, `"package"`, `"tool"`, or `"template"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                          |
 | `policy`      | `string` | Workspace policy: `"freezable"`, `"trackable"`, or `"distributable"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                                                        |
 | `recipes`     | `object` | Optional. Enabled <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> and their settings, keyed by recipe name. Each value is a tuple: `[enabled]` or `[enabled, settings]`. |
+| `dotenv`      | `object` | Optional. Environment variables for the workspace's generated `.env` files and, on a publish `build` scope, its build-time environment. See [Dotenv Fields](#dotenv-fields) below.                                                                |
+
+### Dotenv Fields
+
+:::warning Retired — use [`environment`](#environment) instead
+
+The per-workspace `dotenv` block is retired. Environment variables and secrets now live in the top-level [`environment`](#environment) block, classified by a required `secret` flag and delivered by a required `buildOnly` flag. A config that still declares `dotenv`, `visibility`, or `from` is a load-time error. The fields below document the old shape for reference only.
+:::
+
+A `dotenv` block holds a `variables` array, and each entry describes one environment variable. The [`nova generate must-haves dotenv`](/docs/cli/generators/must-haves/dotenv) command reads these to write `.env` and `.env.sample`, while the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) reads the visibility to decide what gets baked into a static build.
+
+| Field          | Type     | Description                                                                                                                                                                                                                                                         |
+|----------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `key`          | `string` | Environment variable name written to the workspace's `.env` files.                                                                                                                                                                                                  |
+| `defaultValue` | `string` | Value written to `.env.sample`; the `.env` entry is left blank so real secrets stay out of version control.                                                                                                                                                         |
+| `visibility`   | `string` | Optional. `"public"` bakes the value into the build; `"private"` never bakes it. Required on any variable of a publish `build` scope.                                                                                                                               |
+| `from`         | `string` | Optional. On a `public` variable, the GitHub Variable its value is read from at build time (defaults to `key`). On a `private` variable, the GitHub Secret its value syncs from at deploy time — required and explicit on `cloudflare-workers` and `vercel-nextjs`. |
+
+A `public` variable is client-exposed and read from a GitHub Variable when the publish build job writes the scope's `.env`, so it suits values that ship to the browser (analytics IDs, public site keys). A `private` variable is a backend or runtime secret that Nova never bakes into the build.
+
+On a `cloudflare-workers` or `vercel-nextjs` deploy, a `private` variable must declare a `from` and Nova syncs its value from that GitHub Secret into the platform's runtime-secret store. See [Runtime Secret Sync](/docs/cli/generators/github/workflows#runtime-secret-sync) for the reconcile and full-authority behavior.
+
+Set `from` on a `public` variable when two apps declare the same `key` but need different per-app values, so each points at its own GitHub Variable.
 
 ```json
 {
@@ -343,6 +361,86 @@ A map of relative paths to <Terminology title="package" to="/docs/quickstart/ter
         "cleanup": [true, { "removeUnknownKeys": true, "reorderKeys": true }],
         "sync-identity": [true, { "description": true, "keywords": true }],
         "sync-ownership": [true, { "homepage": true, "bugs": true, "author": true }]
+      }
+    },
+    "./apps/docs": {
+      "name": "example-docs",
+      "role": "docs",
+      "policy": "freezable"
+    }
+  }
+}
+```
+
+## `environment`
+
+Every environment variable and secret in the repository lives here, classified by a required `secret` flag and grouped by namespace. The [`nova generate must-haves dotenv`](/docs/cli/generators/must-haves/dotenv) command reads `environment.apps` to write each app's `.env` and `.env.sample`, and the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) delivers each value by kind.
+
+| Field       | Type     | Description                                                                                                                            |
+|-------------|----------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `global`    | `object` | Optional. Account-wide keys (deploy credentials, managed-only secrets) under one shared `prefix`. See [Global Fields](#global-fields). |
+| `apps`      | `object` | Optional. Per-app environment values, keyed by the app's workspace path. See [Apps Fields](#apps-fields).                              |
+| `workflows` | `object` | Optional. Workflow-config prefixes, keyed by workflow name. See [Workflows Fields](#workflows-fields).                                 |
+
+Each group declares a `prefix` that Nova joins to every `key` to form its GitHub name (for example, `CBN_` joined to `PUBLIC_SITE_KEY` becomes `CBN_PUBLIC_SITE_KEY`). Prefixes must be disjoint, must not reuse the reserved `GITHUB_` namespace, and a `key` must not repeat its own prefix.
+
+### Global Fields
+
+`global` holds account-wide keys under a single `prefix`. Its `variables` are managed-only — provisioned on GitHub but not delivered to a build or server — so each carries only `secret`. Account-scoped deploy credentials (such as a Cloudflare API token) also derive their GitHub name from this `prefix`.
+
+| Field       | Type     | Description                                                           |
+|-------------|----------|-----------------------------------------------------------------------|
+| `prefix`    | `string` | Required. The uppercase namespace joined to every `key`.              |
+| `variables` | `array`  | Optional. Managed-only values, each with a `key` and a `secret` flag. |
+
+### Apps Fields
+
+`apps` is keyed by an app workspace path that matches a `workspaces` entry. Each app declares a `prefix` and the `variables` delivered to its build and servers.
+
+| Field       | Type     | Description                                                          |
+|-------------|----------|----------------------------------------------------------------------|
+| `prefix`    | `string` | Required. The uppercase namespace joined to every `key`.             |
+| `variables` | `array`  | Optional. App environment values. See [Value Fields](#value-fields). |
+
+### Value Fields
+
+| Field          | Type      | Description                                                                                                                                                                                                                          |
+|----------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `key`          | `string`  | Environment variable name, joined to the group's `prefix` to form the GitHub name.                                                                                                                                                   |
+| `secret`       | `boolean` | Required. `true` stores the value as a GitHub Secret (encrypted); `false` as a GitHub Variable (plaintext).                                                                                                                          |
+| `buildOnly`    | `boolean` | Required on an app value. `true` delivers it to the build; `false` syncs it to every server-bearing deploy target. See [Environment Variables and Secrets](/docs/cli/generators/github/workflows#environment-variables-and-secrets). |
+| `defaultValue` | `string`  | Optional, non-secret only. Seeds `.env.sample`; on a `buildOnly: true` value it is also the build fallback. Rejected on a `secret: true` value.                                                                                      |
+
+### Workflows Fields
+
+`workflows` is keyed by a workflow name and gives that workflow's config keys their own `prefix`.
+
+| Field    | Type     | Description                                              |
+|----------|----------|----------------------------------------------------------|
+| `prefix` | `string` | Required. The uppercase namespace joined to every `key`. |
+
+```json
+{
+  "environment": {
+    "global": {
+      "prefix": "ACCT_",
+      "variables": [
+        { "key": "NPM_TOKEN", "secret": true }
+      ]
+    },
+    "apps": {
+      "./apps/web": {
+        "prefix": "WEB_",
+        "variables": [
+          { "key": "PUBLIC_ANALYTICS_ID", "secret": false, "buildOnly": true, "defaultValue": "" },
+          { "key": "AMAZON_REGION", "secret": false, "buildOnly": false, "defaultValue": "us-east-1" },
+          { "key": "STRIPE_SECRET_KEY", "secret": true, "buildOnly": false }
+        ]
+      }
+    },
+    "workflows": {
+      "sponsor-check": {
+        "prefix": "SGI_"
       }
     }
   }

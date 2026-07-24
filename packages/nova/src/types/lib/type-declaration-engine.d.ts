@@ -823,6 +823,8 @@ export type Lib_TypeDeclarationEngine_IsAliasToForeignType_DtsContent = string;
 
 export type Lib_TypeDeclarationEngine_IsAliasToForeignType_Returns = boolean;
 
+export type Lib_TypeDeclarationEngine_IsAliasToForeignType_StandaloneTypeFiles = string[];
+
 export type Lib_TypeDeclarationEngine_IsAliasToForeignType_TypeName = string;
 
 export type Lib_TypeDeclarationEngine_IsAliasToForeignType_EscapedTypeName = string;
@@ -836,6 +838,20 @@ export type Lib_TypeDeclarationEngine_IsAliasToForeignType_Rhs = string;
 export type Lib_TypeDeclarationEngine_IsAliasToForeignType_TypeMatch = RegExpMatchArray | null;
 
 export type Lib_TypeDeclarationEngine_IsAliasToForeignType_LeftmostType = string;
+
+export type Lib_TypeDeclarationEngine_IsAliasToForeignType_ImportStart = number;
+
+export type Lib_TypeDeclarationEngine_IsAliasToForeignType_ImportSource = string | null;
+
+export type Lib_TypeDeclarationEngine_IsAliasToForeignType_BraceOpen = number;
+
+export type Lib_TypeDeclarationEngine_IsAliasToForeignType_BraceClose = number;
+
+export type Lib_TypeDeclarationEngine_IsAliasToForeignType_QuoteStart = number;
+
+export type Lib_TypeDeclarationEngine_IsAliasToForeignType_QuoteEnd = number;
+
+export type Lib_TypeDeclarationEngine_IsAliasToForeignType_Specifiers = string[];
 
 /**
  * Lib - Type Declaration Engine - Is Locally Defined.
@@ -877,9 +893,9 @@ export type Lib_TypeDeclarationEngine_ParseDescribeString_Pieces = string[];
  *
  * @since 0.18.0
  */
-export type Lib_TypeDeclarationEngine_ParseSourceFile_Content = string;
-
 export type Lib_TypeDeclarationEngine_ParseSourceFile_FilePath = string;
+
+export type Lib_TypeDeclarationEngine_ParseSourceFile_Content = string;
 
 export type Lib_TypeDeclarationEngine_ParseSourceFile_Returns = SourceFile;
 

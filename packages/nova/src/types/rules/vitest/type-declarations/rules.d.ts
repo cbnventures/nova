@@ -68,6 +68,49 @@ export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Violation
 export type Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_ViolationMessage = string;
 
 /**
+ * Rules - Vitest - Type Declarations - Rules - Dts Import Verbatim.
+ *
+ * @since 0.21.0
+ */
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Config = Rules_Vitest_Index_TypeDeclarationResolvedConfig;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Enable = 'all' | Rules_Vitest_Index_TypeDeclarationToggleKey[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Returns = Promise<void>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Files = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_DtsImportCurrentDirectory = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_DtsImportRelativePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Content = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Violations = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_ImportStart = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_BraceOpen = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_BraceClose = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_QuoteStart = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_QuoteEnd = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Source = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_SpecifierBlock = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Specifiers = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_AliasedSpecifier = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Violation = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_ViolationMessage = string;
+
+/**
  * Rules - Vitest - Type Declarations - Rules - Filename Validation.
  *
  * @since 0.20.0
@@ -285,6 +328,37 @@ export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Violations 
 export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Violation = string;
 
 export type Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_ViolationMessage = string;
+
+/**
+ * Rules - Vitest - Type Declarations - Rules - No Inline Import Types.
+ *
+ * @since 0.21.0
+ */
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Config = Rules_Vitest_Index_TypeDeclarationResolvedConfig;
+
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Enable = 'all' | Rules_Vitest_Index_TypeDeclarationToggleKey[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Returns = Promise<void>;
+
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Files = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_InlineImportCurrentDirectory = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_InlineImportRelativePath = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Content = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Lines = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Violations = string[];
+
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_I = number;
+
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_CurrentLine = string | undefined;
+
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Violation = string;
+
+export type Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_ViolationMessage = string;
 
 /**
  * Rules - Vitest - Type Declarations - Rules - Object Property Types.

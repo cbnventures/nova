@@ -1,8 +1,7 @@
 import { join } from 'node:path';
 
-import { describe } from 'vitest';
-
 import { discoverContentFiles } from '../../../lib/file-discovery.js';
+import { setActiveVitest } from '../active-vitest.js';
 import {
   anchorResolves,
   childrenNonempty,
@@ -28,9 +27,9 @@ import type {
 /**
  * Rules - Vitest - Terminology - Register - Terminology Suite.
  *
- * Resolves the suite config (defaulting the content dirs, terminology source page, expected
- * base route, root, and component name to Nova's layout) and runs the terminology checks
- * inside a single describe, each gated by `enable`.
+ * Resolves the suite config (defaulting the content dirs,
+ * terminology source page, expected base route, root, and component name to Nova's layout)
+ * and runs the terminology checks inside a single describe, each gated by `enable`.
  *
  * @param {Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Config} config - Config.
  *
@@ -39,7 +38,9 @@ import type {
  * @since 0.20.0
  */
 export function registerTerminologySuite(config: Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Config): Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Returns {
-  describe('terminology', async () => {
+  setActiveVitest(config['vitest']);
+
+  config['vitest'].describe('terminology', async () => {
     const rootDir: Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_RootDir = config['rootDir'] ?? process.cwd();
     const contentDirs: Rules_Vitest_Terminology_Register_RegisterTerminologySuite_Terminology_ContentDirs = config['contentDirs'] ?? [
       'docs',

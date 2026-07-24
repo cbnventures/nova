@@ -25,8 +25,6 @@ import type {
  *
  * @param {Blocks_InstallStrip_Index_BlocksInstallStrip_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlocksInstallStrip(props: Blocks_InstallStrip_Index_BlocksInstallStrip_Props) {

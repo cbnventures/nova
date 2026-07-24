@@ -1,0 +1,502 @@
+{
+  "home.layout.description": {
+    "message": "Foundry leser intensjonen din og smir hele utviklingsmiljøet ditt fra ett enkelt manifest.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Foundry - Hvert verktøy starter som rått metall",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Utviklerverktøy",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Hvert verktøy starter som rått metall.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Foundry leser intensjonen din og smir hele utviklingsmiljøet ditt fra ett enkelt manifest. Slutt å konfigurere. Begynn å beskrive.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Kom i gang",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Se på Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.anvil.description": {
+    "message": "Kjerne-CLI-en. Leser ett enkelt Blueprint-manifest og smir hele arbeidsområdet ditt — mappestruktur, avhengighetsgraf, byggkonfigurasjon og linting-regler. Én fil inn, et komplett miljø ut.",
+    "description": "Front page Features card description for Anvil"
+  },
+  "home.features.tongs.description": {
+    "message": "Løser opp og visualiserer avhengighetsgrafen. Kartlegger hver relasjon mellom pakkene i arbeidsområdet og tegner hele treet, så du ser hva som avhenger av hva før du endrer noe.",
+    "description": "Front page Features card description for Tongs"
+  },
+  "home.features.quench.description": {
+    "message": "Inkrementell bygg-cache som sporer fil-hasher og bare bygger på nytt det som faktisk er endret. En kald smiing tar 14 sekunder. En varm tar under to.",
+    "description": "Front page Features card description for Quench"
+  },
+  "home.features.bellows.description": {
+    "message": "Parallell oppgavekjører som fordeler arbeidet på alle pakkene i arbeidsområdet samtidig. Respekterer avhengighetsgrafen fra Tongs, så ingenting kjører før forutsetningene er ferdige.",
+    "description": "Front page Features card description for Bellows"
+  },
+  "home.features.crucible.description": {
+    "message": "Generator for testrammeverk som leser typesignaturene dine og skriver teststillaset for deg. Snapshot-testing, assertion-maler og fixture-filer — alt utledet fra typene du allerede har skrevet.",
+    "description": "Front page Features card description for Crucible"
+  },
+  "home.features.slag.description": {
+    "message": "Detektor for død kode og ubrukte avhengigheter. Skanner hver import, hver eksport og hver oppføring i Blueprint-en din for å finne det som ikke lenger refereres. Fjern slagget, behold stålet.",
+    "description": "Front page Features card description for Slag"
+  },
+  "home.stats.heading": {
+    "message": "I tall",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.configFiles.label": {
+    "message": "Konfigfiler",
+    "description": "Front page Stats label for config file count"
+  },
+  "home.stats.coldForge.label": {
+    "message": "Kald smiing",
+    "description": "Front page Stats label for cold forge time"
+  },
+  "home.stats.wardenRules.label": {
+    "message": "Warden-regler",
+    "description": "Front page Stats label for Warden rule count"
+  },
+  "home.spotlight.heading": {
+    "message": "Ett manifest, alt koblet sammen",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Beskriv hva du mener. Foundry finner ut resten.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Styr smia di på farten",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Meldinger fra smia",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Filosofi, benchmarks og meningene vi lanserte.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Foundry-blokkutstilling som demonstrerer hver blokk fra docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Hver blokk fra Foundry-preseten, gjengitt med eksempeldata.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Blokkutstilling",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Hver Foundry-blokk, demonstrert på ett sted.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Denne siden gjengir hver blokk fra @cbnventures/docusaurus-preset-nova/blocks med data fra Foundry-verdenen, så du ser hvordan de ser ut og oppfører seg.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Les dokumentasjonen",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Se på Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Form det som lanseres.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Foundry leser intensjonen din og smir hele utviklingsmiljøet ditt fra ett enkelt manifest. Slutt å konfigurere. Begynn å beskrive.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Kom i gang",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (standard)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Jeg elsker ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (uten prefiks)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Raskt",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Fleksibelt",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Gratis",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (langsom timing)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Bygd for ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "utviklere",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "designere",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (uten løkke)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Velkommen til ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Installer med Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Eller bruk Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (uten etikett)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Rask installasjon",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (med ikoner)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Derfor velger team Foundry",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.anvil.description": {
+    "message": "Kjerne-CLI-en. Leser et Blueprint-manifest og smir arbeidsområdet ditt — mappestruktur, avhengighetsgraf, byggkonfigurasjon og linting-regler.",
+    "description": "Showcase Features (with icons) card description for Anvil"
+  },
+  "showcase.featuresIcons.tongs.description": {
+    "message": "Løser opp og visualiserer avhengighetsgrafen. Kartlegger hver relasjon mellom pakkene og tegner hele treet.",
+    "description": "Showcase Features (with icons) card description for Tongs"
+  },
+  "showcase.featuresIcons.quench.description": {
+    "message": "Inkrementell bygg-cache som sporer fil-hasher og bare bygger på nytt det som er endret. En kald smiing tar 14 sekunder. En varm tar under to.",
+    "description": "Showcase Features (with icons) card description for Quench"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (uten ikoner, uten overskrift)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.bellows.description": {
+    "message": "Parallell oppgavekjører som fordeler arbeidet på alle pakkene i arbeidsområdet samtidig. Respekterer avhengighetsgrafen fra Tongs.",
+    "description": "Showcase Features (no icons) card description for Bellows"
+  },
+  "showcase.featuresNoIcons.crucible.description": {
+    "message": "Generator for testrammeverk som leser typesignaturene dine og skriver teststillaset. Snapshot-testing og assertion-maler inkludert.",
+    "description": "Showcase Features (no icons) card description for Crucible"
+  },
+  "showcase.featuresNoIcons.slag.description": {
+    "message": "Detektor for død kode og ubrukte avhengigheter. Skanner hver import og eksport for å finne det som ikke lenger refereres.",
+    "description": "Showcase Features (no icons) card description for Slag"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (seks elementer, blandede ikoner)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Alt i én smie",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.anvil.description": {
+    "message": "Leser manifestet ditt og genererer hvert konfigurasjonsartefakt arbeidsområdet ditt trenger. Én fil inn, alt ut.",
+    "description": "Showcase Features (six items) card description for Anvil"
+  },
+  "showcase.featuresSix.tongs.description": {
+    "message": "Løser opp avhengighetsgrafen, oppdager sykluser og gir spørreverktøy for skripting og pipeline-integrasjon.",
+    "description": "Showcase Features (six items) card description for Tongs"
+  },
+  "showcase.featuresSix.quench.description": {
+    "message": "Innholdsadressert bygg-cache. Hvis inndataene ikke er endret, hoppes bygget over helt.",
+    "description": "Showcase Features (six items) card description for Quench"
+  },
+  "showcase.featuresSix.bellows.description": {
+    "message": "Planlegger byggoppgaver i bølger basert på avhengighetsgrafen. Uavhengige pakker bygges parallelt.",
+    "description": "Showcase Features (six items) card description for Bellows"
+  },
+  "showcase.featuresSix.crucible.description": {
+    "message": "Genererer teststillaser fra typesignaturer. Snapshot-tester, assertion-maler og fixture-filer.",
+    "description": "Showcase Features (six items) card description for Crucible"
+  },
+  "showcase.featuresSix.slag.description": {
+    "message": "Finner død kode og foreldreløse avhengigheter. Fjern slagget, behold stålet.",
+    "description": "Showcase Features (six items) card description for Slag"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (med overskrift og beskrivelse)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Smiemetrikker",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Sentrale ytelsesindikatorer på tvers av et arbeidsområde med 200 pakker.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.coldForge.label": {
+    "message": "Kald smietid",
+    "description": "Showcase Stats (full) label for cold forge time"
+  },
+  "showcase.statsFull.warmForge.label": {
+    "message": "Varm smietid",
+    "description": "Showcase Stats (full) label for warm forge time"
+  },
+  "showcase.statsFull.cacheHit.label": {
+    "message": "Cache-treffrate",
+    "description": "Showcase Stats (full) label for cache hit rate"
+  },
+  "showcase.statsFull.wardenRules.label": {
+    "message": "Warden-regler",
+    "description": "Showcase Stats (full) label for Warden rule count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (uten overskrift)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "Konfigfiler",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "Underverktøy",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.maxPackages.label": {
+    "message": "Maks pakker testet",
+    "description": "Showcase Stats (no heading) label for max packages tested"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (med kode)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Hurtigstart",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Tre kommandoer for å gå fra null til et fullstendig smidd arbeidsområde.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (med tekst)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Slik fungerer det",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Foundry leser manifestet ditt, løser opp avhengighetsgrafen med Tongs og genererer hvert konfigurasjonsartefakt deterministisk. Utdataene er alltid de samme for samme inndata — ingen bivirkninger, ingen skjult tilstand.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (med beskrivelse)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Meldinger fra smia",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Filosofi, benchmarks og meningene vi lanserte.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Derfor sluttet vi å skrive konfigurasjonsfiler",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Konfigurasjonsdrift er den stille dreperen som tar livet av arbeidsområder. Vi bygde Foundry fordi vi mente at intensjon bør være deklarativ.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Å smi et monorepo med 200 pakker på 14 sekunder",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Hvordan Quench-caching og Bellows-parallellisme gjorde et tolv minutters bygg om til en fjorten sekunders smiing.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Warden-reglene vi nesten ikke lanserte",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Vi skrev 380 linting-regler og kastet 60. Her er det som overlevde, og diskusjonene som nesten splittet teamet.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (uten beskrivelse)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Nylige oppdateringer",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Foundry 2.4: Crucible Auto-Mode og Slag-deteksjon",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Crucible regenererer nå teststillaser automatisk ved hver smiing, og Slag oppdager ubrukte avhengigheter på tvers av hele arbeidsområdegrafen.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (inline-bruk)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Foundry bruker et ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.manifest.title": {
+    "message": "konfigurasjonsfil for arbeidsområdet",
+    "description": "Showcase Terminology hover title for manifest"
+  },
+  "showcase.terminology.paragraph1.afterManifest": {
+    "message": " til å drive all kodegenerering og konfigurasjon. Hver pakke i arbeidsområdet håndteres av ",
+    "description": "Showcase Terminology paragraph 1 fragment after manifest"
+  },
+  "showcase.terminology.forge.title": {
+    "message": "konfigurasjonsgenereringsprosess",
+    "description": "Showcase Terminology hover title for forge"
+  },
+  "showcase.terminology.forge.label": {
+    "message": "smie",
+    "description": "Showcase Terminology displayed text for forge"
+  },
+  "showcase.terminology.paragraph1.afterForge": {
+    "message": "-prosessen som holder hvert artefakt synkronisert. Når du trenger å validere kodekvalitet, kjører ",
+    "description": "Showcase Terminology paragraph 1 fragment after forge"
+  },
+  "showcase.terminology.warden.title": {
+    "message": "statisk analysemotor",
+    "description": "Showcase Terminology hover title for Warden"
+  },
+  "showcase.terminology.paragraph1.afterWarden": {
+    "message": "-motoren hver regel uten ekstra konfigurasjon.",
+    "description": "Showcase Terminology paragraph 1 fragment after Warden"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Med ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.presetSystem.title": {
+    "message": "preset for regelsamling",
+    "description": "Showcase Terminology hover title for preset system"
+  },
+  "showcase.terminology.presetSystem.label": {
+    "message": "preset-systemet",
+    "description": "Showcase Terminology displayed text for preset system"
+  },
+  "showcase.terminology.paragraph2.afterPreset": {
+    "message": " deler team én felles sannhetskilde for ",
+    "description": "Showcase Terminology paragraph 2 fragment after preset system"
+  },
+  "showcase.terminology.lintingRules.title": {
+    "message": "statiske analyseregler",
+    "description": "Showcase Terminology hover title for linting rules"
+  },
+  "showcase.terminology.lintingRules.label": {
+    "message": "linting-regler",
+    "description": "Showcase Terminology displayed text for linting rules"
+  },
+  "showcase.terminology.paragraph2.afterLinting": {
+    "message": " og ",
+    "description": "Showcase Terminology paragraph 2 fragment after linting rules"
+  },
+  "showcase.terminology.alloySettings.title": {
+    "message": "kompilatorkonfigurasjon",
+    "description": "Showcase Terminology hover title for Alloy settings"
+  },
+  "showcase.terminology.alloySettings.label": {
+    "message": "Alloy-innstillinger",
+    "description": "Showcase Terminology displayed text for Alloy settings"
+  },
+  "showcase.terminology.paragraph2.afterAlloy": {
+    "message": " uten å duplisere konfigurasjonsfiler.",
+    "description": "Showcase Terminology paragraph 2 fragment after Alloy settings"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (med bildetekst)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Varemerke stemplet inn i en Frame — skarp kant, monospace bildetekst.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Miniatyrbilde av Foundry-varemerket.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (uten bildetekst)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (begge butikker)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Last ned følgeappen",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (kun App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Tilgjengelig på iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (kun Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Tilgjengelig på Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (uten etikett)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

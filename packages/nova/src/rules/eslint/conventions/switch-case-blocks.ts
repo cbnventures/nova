@@ -100,10 +100,10 @@ export class Runner {
    * Validates a single SwitchCase node by ensuring its consequent
    * is exactly one BlockStatement. Empty cases are allowed for explicit fallthrough.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Context} context - Context.
    * @param {Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Returns}
    *
@@ -142,10 +142,10 @@ export class Runner {
    * Checks whether the SwitchStatement includes a default case.
    * Only called when the requireDefault option is enabled in the rule configuration.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Context} context - Context.
    * @param {Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Returns}
    *

@@ -24,16 +24,20 @@ describe('presetsMarshalPresetMarshal', async () => {
     const marshal: Tests_Presets_Marshal_Preset_PresetsMarshalPresetMarshal_HasCorrectColorValues_Marshal = presetsMarshalPresetMarshal;
 
     deepStrictEqual(marshal['colors']['primary'], {
-      light: '#2f5a3d', dark: '#2f5a3d',
+      light: '#2f5a3d',
+      dark: '#2f5a3d',
     });
     deepStrictEqual(marshal['colors']['accent'], {
-      light: '#a33939', dark: '#a33939',
+      light: '#a33939',
+      dark: '#a33939',
     });
     deepStrictEqual(marshal['colors']['text'], {
-      light: '#2a2620', dark: '#ede5cf',
+      light: '#2a2620',
+      dark: '#ede5cf',
     });
     deepStrictEqual(marshal['colors']['border'], {
-      light: '#d8cdb0', dark: '#4a4030',
+      light: '#d8cdb0',
+      dark: '#4a4030',
     });
 
     return;

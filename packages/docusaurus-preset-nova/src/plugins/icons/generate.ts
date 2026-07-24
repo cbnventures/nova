@@ -15,6 +15,7 @@ import type {
   Plugins_Icons_Generate_BuildModuleSource_Prefixes,
   Plugins_Icons_Generate_BuildModuleSource_Returns,
   Plugins_Icons_Generate_BuildModuleSource_Slice,
+  Plugins_Icons_Generate_BuildModuleSource_Sliced,
   Plugins_Icons_Generate_BuildModuleSource_Slices,
   Plugins_Icons_Generate_BuildSlicedCollection_Aliases,
   Plugins_Icons_Generate_BuildSlicedCollection_AliasNames,
@@ -90,12 +91,28 @@ import type {
   Plugins_Icons_Generate_WalkDirectory_Stats,
 } from '../../types/plugins/icons/generate.d.ts';
 
+/**
+ * Plugins - Icons - Generate - Scan Directories.
+ *
+ * Project-relative directories scanned for source files that may
+ * reference Iconify identifiers to include in the bundle.
+ *
+ * @since 0.21.0
+ */
 const scanDirectories = [
   'docs',
   'blog',
   'src',
 ];
 
+/**
+ * Plugins - Icons - Generate - Scan Extensions.
+ *
+ * File extensions scanned for Iconify identifiers, covering both
+ * authored content and component source in the project.
+ *
+ * @since 0.21.0
+ */
 const scanExtensions = [
   '.md',
   '.mdx',
@@ -461,8 +478,9 @@ function resolveName(collection: Plugins_Icons_Generate_ResolveName_Collection, 
 /**
  * Plugins - Icons - Generate - Build Module Source.
  *
- * Assembles the generated client module source: one `addCollection` call per
- * source collection, each carrying only the sliced icons and aliases.
+ * Assembles the generated client module source: a single `registerIcons` call
+ * carrying one sliced collection per source collection, so registration runs
+ * inside this package instead of the consuming site's own tree.
  *
  * @param {Plugins_Icons_Generate_BuildModuleSource_Slices}            slices            - Slices.
  * @param {Plugins_Icons_Generate_BuildModuleSource_LoadedCollections} loadedCollections - Loaded collections.
@@ -473,8 +491,9 @@ function resolveName(collection: Plugins_Icons_Generate_ResolveName_Collection, 
  */
 function buildModuleSource(slices: Plugins_Icons_Generate_BuildModuleSource_Slices, loadedCollections: Plugins_Icons_Generate_BuildModuleSource_LoadedCollections): Plugins_Icons_Generate_BuildModuleSource_Returns {
   const lines: Plugins_Icons_Generate_BuildModuleSource_Lines = [];
+  const sliced: Plugins_Icons_Generate_BuildModuleSource_Sliced = [];
 
-  lines.push('import { addCollection } from \'@iconify/react/offline\';');
+  lines.push('import { registerIcons } from \'@cbnventures/docusaurus-preset-nova/icons\';');
   lines.push('');
 
   const prefixes: Plugins_Icons_Generate_BuildModuleSource_Prefixes = Array.from(slices.keys()).sort();
@@ -487,9 +506,10 @@ function buildModuleSource(slices: Plugins_Icons_Generate_BuildModuleSource_Slic
       continue;
     }
 
-    lines.push(`addCollection(${JSON.stringify(buildSlicedCollection(prefix, slice, collection))});`);
+    sliced.push(buildSlicedCollection(prefix, slice, collection));
   }
 
+  lines.push(`registerIcons(${JSON.stringify(sliced)});`);
   lines.push('');
 
   return lines.join('\n');

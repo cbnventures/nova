@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs';
-import { dirname, join } from 'path';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
 
 import { ESLintUtils } from '@typescript-eslint/utils';
 
@@ -256,14 +256,14 @@ export class Runner {
   /**
    * Rules - ESLint - JSDoc - Require JSDoc Since - Check Node.
    *
-   * Retrieves the leading JSDoc block comment for the node and
-   * verifies it contains the @since tag with an acceptable value.
-   * Reports the comment node when the tag is missing or the value is invalid.
-   *
-   * @private
+   * Retrieves the leading JSDoc block comment for the node
+   * and verifies it contains a @since tag whose value is an acceptable version.
+   * Reports the comment when the tag is missing or invalid.
    *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Context} context - Context.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Returns}
    *

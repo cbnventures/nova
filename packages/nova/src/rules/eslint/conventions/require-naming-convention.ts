@@ -250,10 +250,10 @@ export class Runner {
    * Tests a name against camelCase, PascalCase, UnderscorePascalCase, or
    * UPPER_SNAKE_CASE using regex patterns from the shared lib/regex module.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckCasing_Name}     name     - Name.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckCasing_Expected} expected - Expected.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckCasing_Returns}
    *
@@ -286,11 +286,11 @@ export class Runner {
    * Called by the ClassDeclaration visitor to verify the class name matches the configured
    * casing, which defaults to PascalCase.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassDeclaration_Context}          context          - Context.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassDeclaration_Node}             node             - Node.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassDeclaration_ClassDeclaration} classDeclaration - Class declaration.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassDeclaration_Returns}
    *
@@ -324,11 +324,11 @@ export class Runner {
    * Called by the MethodDefinition visitor to enforce casing on class method names. Skips
    * constructors since their name is fixed by the language.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassMethod_Context}     context     - Context.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassMethod_Node}        node        - Node.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassMethod_ClassMethod} classMethod - Class method.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassMethod_Returns}
    *
@@ -367,11 +367,11 @@ export class Runner {
    * Called by the PropertyDefinition visitor to enforce casing on
    * class property names, which defaults to camelCase for instance fields.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassProperty_Context}       context       - Context.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassProperty_Node}          node          - Node.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassProperty_ClassProperty} classProperty - Class property.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassProperty_Returns}
    *
@@ -405,12 +405,12 @@ export class Runner {
    * Called by the TSEnumDeclaration visitor to enforce casing on both the enum name and each
    * member name, which default to PascalCase for both.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Context}    context    - Context.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Node}       node       - Node.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_EnumCasing} enumCasing - Enum casing.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_EnumMember} enumMember - Enum member.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Returns}
    *
@@ -458,13 +458,13 @@ export class Runner {
    * Called by the FunctionDeclaration visitor. Detects React
    * components by an uppercase first letter and applies PascalCase, else enforces camelCase.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Context}              context              - Context.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Node}                 node                 - Node.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_FunctionCasing}       functionCasing       - Function casing.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_ReactComponentCasing} reactComponentCasing - React component casing.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Parameter}            parameter            - Parameter.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Returns}
    *
@@ -506,11 +506,11 @@ export class Runner {
    * Called by the TSInterfaceDeclaration visitor to
    * enforce casing on interface names, which defaults to PascalCase.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Context}         context         - Context.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Node}            node            - Node.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_InterfaceCasing} interfaceCasing - Interface casing.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Returns}
    *
@@ -540,11 +540,11 @@ export class Runner {
    * Shared by function declarations, function expressions, and arrow functions to enforce
    * camelCase on all parameter names.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Context}   context   - Context.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Node}      node      - Node.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Parameter} parameter - Parameter.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Returns}
    *
@@ -595,11 +595,11 @@ export class Runner {
    * Called by the TSTypeAliasDeclaration visitor to
    * enforce casing on type alias names, which defaults to UnderscorePascalCase.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckTypeAliasDeclaration_Context}   context   - Context.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckTypeAliasDeclaration_Node}      node      - Node.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckTypeAliasDeclaration_TypeAlias} typeAlias - Type alias.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckTypeAliasDeclaration_Returns}
    *
@@ -626,17 +626,17 @@ export class Runner {
   /**
    * Rules - ESLint - Conventions - Require Naming Convention - Check Variable Declarator.
    *
-   * Called by the VariableDeclarator visitor. Routes const declarations with immutable
-   * values to UPPER_SNAKE_CASE, variables used as constructors to PascalCase,
-   * and all others to camelCase.
-   *
-   * @private
+   * Called by the VariableDeclarator visitor. It routes const declarations with
+   * immutable values to UPPER_SNAKE_CASE, constructor-typed variables to PascalCase,
+   * and all other identifiers to camelCase.
    *
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Context}             context             - Context.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Node}                node                - Node.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Variable}            variable            - Variable.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Constant}            constant            - Constant.
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_ConstructorVariable} constructorVariable - Constructor variable.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Returns}
    *
@@ -745,9 +745,9 @@ export class Runner {
    * Used by checkVariableDeclarator to decide whether a const initializer is a primitive
    * literal, negative number, or static template literal.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Init} init - Init.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Returns}
    *

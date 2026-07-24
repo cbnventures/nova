@@ -27,6 +27,7 @@ import type {
   Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Context,
   Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_CurrentLineContent,
   Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Fix_Fixer,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Fix_LineStart,
   Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Fix_Returns,
   Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Lines,
   Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_PrevLineContent,
@@ -184,7 +185,7 @@ export class Runner {
 
           return;
         },
-        ...(checkBetweenSwitchCases === true ? {
+        ...((checkBetweenSwitchCases === true) ? {
           SwitchStatement(node: Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_SwitchStatement_Node): Rules_Eslint_Formatting_RequirePaddingLines_Runner_Create_SwitchStatement_Returns {
             Runner.checkSwitchCases(context, node);
 
@@ -201,14 +202,14 @@ export class Runner {
    * Iterates consecutive statement pairs in a Program or BlockStatement and reports when a
    * required blank line is missing between them.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Context}                     context                     - Context.
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Node}                        node                        - Node.
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_ExitCodeBeforeReturnEnabled} exitCodeBeforeReturnEnabled - Exit code before return enabled.
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BeforeLoops}                 beforeLoops                 - Before loops.
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BareAwait}                   bareAwait                   - Bare await.
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BetweenOperations}           betweenOperations           - Between operations.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Returns}
    *
@@ -345,9 +346,9 @@ export class Runner {
    * Scans all line comments in the source and reports those not preceded by a blank line,
    * another comment, or an opening brace. Provides an auto-fix.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Context} context - Context.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Returns}
    *
@@ -411,9 +412,15 @@ export class Runner {
         loc: comment.loc,
         messageId: 'beforeLineComment',
         fix(fixer: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Fix_Fixer): Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Fix_Returns {
+          // Insert the blank line at the start of the comment's physical line so the comment keeps its indentation and the new line is genuinely blank.
+          const lineStart: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Fix_LineStart = context.sourceCode.getIndexFromLoc({
+            line: commentLine,
+            column: 0,
+          });
+
           return fixer.insertTextBeforeRange([
-            comment.range[0],
-            comment.range[0],
+            lineStart,
+            lineStart,
           ], '\n');
         },
       });
@@ -428,10 +435,10 @@ export class Runner {
    * Iterates consecutive case/default clauses and reports missing blank lines between them,
    * skipping empty fallthrough cases.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Context} context - Context.
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Returns}
    *
@@ -476,9 +483,9 @@ export class Runner {
    * Used by checkBody to extract a serialized callee key from
    * an expression statement, unwrapping any await wrapper first.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Returns}
    *
@@ -509,9 +516,9 @@ export class Runner {
    * Used by checkBody to detect standalone await statements that are not assigned to a
    * variable, so they can be separated from surrounding code.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsBareAwaitExpression_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsBareAwaitExpression_Returns}
    *
@@ -531,9 +538,9 @@ export class Runner {
    * Used by checkBody to identify expression statements that are
    * call or await expressions, which require blank-line separation from declarations.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Returns}
    *
@@ -558,9 +565,9 @@ export class Runner {
    * Used by checkBody to detect for, for-in, for-of, while, and
    * do-while statements so a blank line can be required before them.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsLoopStatement_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsLoopStatement_Returns}
    *
@@ -582,9 +589,9 @@ export class Runner {
    * Used by checkBody to detect process.exitCode assignments so a blank line is required
    * before the subsequent return statement.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Returns}
    *
@@ -624,9 +631,9 @@ export class Runner {
    * Recursively builds a dot-separated string from a callee node so getCalleeKey can compare
    * whether two consecutive calls target the same receiver.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Returns}
    *

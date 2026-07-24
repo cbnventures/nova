@@ -9,6 +9,21 @@ import type {
 } from '../../shared.d.ts';
 
 /**
+ * Lib - Search - Worker - Lunr Global.
+ *
+ * @since 0.15.0
+ */
+export type Lib_Search_Worker_LunrGlobal_Index_Load = (serializedIndex: unknown) => unknown;
+
+export type Lib_Search_Worker_LunrGlobal_Index = {
+  load: Lib_Search_Worker_LunrGlobal_Index_Load;
+};
+
+export type Lib_Search_Worker_LunrGlobal = {
+  Index: Lib_Search_Worker_LunrGlobal_Index;
+};
+
+/**
  * Lib - Search - Worker - Search Index.
  *
  * @since 0.15.0
@@ -57,28 +72,13 @@ export type Lib_Search_Worker_ListenerEvent = MessageEvent<Shared_SearchWorkerMe
 export type Lib_Search_Worker_ListenerMessageData = Shared_SearchWorkerMessage;
 
 /**
- * Lib - Search - Worker - Lunr Global.
- *
- * @since 0.15.0
- */
-export type Lib_Search_Worker_LunrGlobal_Index_Load = (serializedIndex: unknown) => unknown;
-
-export type Lib_Search_Worker_LunrGlobal_Index = {
-  load: Lib_Search_Worker_LunrGlobal_Index_Load;
-};
-
-export type Lib_Search_Worker_LunrGlobal = {
-  Index: Lib_Search_Worker_LunrGlobal_Index;
-};
-
-/**
  * Lib - Search - Worker - Handle Init.
  *
  * @since 0.15.0
  */
-export type Lib_Search_Worker_HandleInit_Message = Shared_SearchWorkerInitMessage;
-
 export type Lib_Search_Worker_HandleInit_Returns = Promise<void>;
+
+export type Lib_Search_Worker_HandleInit_Message = Shared_SearchWorkerInitMessage;
 
 export type Lib_Search_Worker_HandleInit_Response = Response;
 
@@ -151,6 +151,14 @@ export type Lib_Search_Worker_PerformSearch_TypedIndex = {
   search: Lib_Search_Worker_PerformSearch_TypedIndex_Search;
 };
 
+export type Lib_Search_Worker_PerformSearch_AllResults = Array<{
+  ref: string;
+  score: number;
+  matchData: {
+    metadata: Record<string, unknown>;
+  };
+}>;
+
 export type Lib_Search_Worker_PerformSearch_ExactResults = Array<{
   ref: string;
   score: number;
@@ -172,14 +180,6 @@ export type Lib_Search_Worker_PerformSearch_WildcardResults = Array<{
 export type Lib_Search_Worker_PerformSearch_FuzzyQuery = string;
 
 export type Lib_Search_Worker_PerformSearch_FuzzyResults = Array<{
-  ref: string;
-  score: number;
-  matchData: {
-    metadata: Record<string, unknown>;
-  };
-}>;
-
-export type Lib_Search_Worker_PerformSearch_AllResults = Array<{
   ref: string;
   score: number;
   matchData: {

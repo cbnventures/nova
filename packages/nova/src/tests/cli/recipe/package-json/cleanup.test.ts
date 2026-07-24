@@ -198,8 +198,14 @@ describe('CliRecipePackageJsonCleanup.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'cleanup': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'cleanup': {
+              enabled: true,
+            },
           },
         },
       },
@@ -263,8 +269,14 @@ describe('CliRecipePackageJsonCleanup.run', async () => {
           name: '@test/lib',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'cleanup': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/lib': {
+            'cleanup': {
+              enabled: true,
+            },
           },
         },
       },
@@ -319,11 +331,15 @@ describe('CliRecipePackageJsonCleanup.run', async () => {
           name: '@test/keep',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'cleanup': [
-              true,
-              { removeUnknownKeys: false },
-            ],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/keep': {
+            'cleanup': {
+              enabled: true,
+              settings: { removeUnknownKeys: false },
+            },
           },
         },
       },
@@ -376,11 +392,15 @@ describe('CliRecipePackageJsonCleanup.run', async () => {
           name: '@test/unsorted',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'cleanup': [
-              true,
-              { reorderKeys: false },
-            ],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/unsorted': {
+            'cleanup': {
+              enabled: true,
+              settings: { reorderKeys: false },
+            },
           },
         },
       },
@@ -438,8 +458,14 @@ describe('CliRecipePackageJsonCleanup.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'cleanup': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'cleanup': {
+              enabled: true,
+            },
           },
         },
       },

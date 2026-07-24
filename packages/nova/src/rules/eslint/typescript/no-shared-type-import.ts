@@ -100,11 +100,11 @@ export class Runner {
    * it against the configured sharedFiles list to determine
    * whether the import should be flagged.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Context}     context     - Context.
    * @param {Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Node}        node        - Node.
    * @param {Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_SharedFiles} sharedFiles - Shared files.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Returns}
    *

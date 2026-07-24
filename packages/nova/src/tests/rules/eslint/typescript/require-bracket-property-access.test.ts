@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 
 import tsParser from '@typescript-eslint/parser';
 import { RuleTester } from '@typescript-eslint/rule-tester';
@@ -75,7 +75,8 @@ ruleTester.run('requireBracketPropertyAccess', RequireBracketPropertyAccess['rul
     {
       code: 'type Config = { name: string }; const config: Config = { name: "test" }; const x = config.name;',
       options: [{
-        allowedProperties: [], ignoreFiles: ['ignored.ts'],
+        allowedProperties: [],
+        ignoreFiles: ['ignored.ts'],
       }],
       filename: 'ignored.ts',
     },
@@ -84,7 +85,8 @@ ruleTester.run('requireBracketPropertyAccess', RequireBracketPropertyAccess['rul
     {
       code: 'type Config = { name: string }; const config: Config = { name: "test" }; const x = config.name;',
       options: [{
-        allowedProperties: ['name'], ignoreFiles: [],
+        allowedProperties: ['name'],
+        ignoreFiles: [],
       }],
     },
 
@@ -107,6 +109,27 @@ ruleTester.run('requireBracketPropertyAccess', RequireBracketPropertyAccess['rul
       code: 'interface Settings { timeout: number; } const s: Settings = { timeout: 100 }; const x = s.timeout;',
       errors: [{ messageId: 'requireBracketAccess' }],
       output: 'interface Settings { timeout: number; } const s: Settings = { timeout: 100 }; const x = s[\'timeout\'];',
+    },
+
+    // Assertion object - must parenthesize so brackets bind to the assertion, not the type.
+    {
+      code: 'type Config = { name: string }; const config = { name: "test" }; const x = (config as Config).name;',
+      errors: [{ messageId: 'requireBracketAccess' }],
+      output: 'type Config = { name: string }; const config = { name: "test" }; const x = (config as Config)[\'name\'];',
+    },
+
+    // Conditional object - must parenthesize so brackets bind to the whole conditional.
+    {
+      code: 'type Config = { name: string }; const a: Config = { name: "x" }; const b: Config = { name: "y" }; const cond = true; const x = (cond ? a : b).name;',
+      errors: [{ messageId: 'requireBracketAccess' }],
+      output: 'type Config = { name: string }; const a: Config = { name: "x" }; const b: Config = { name: "y" }; const cond = true; const x = (cond ? a : b)[\'name\'];',
+    },
+
+    // Logical object - must parenthesize so brackets bind to the whole expression.
+    {
+      code: 'type Config = { name: string }; const a: Config = { name: "x" }; const b: Config = { name: "y" }; const x = (a || b).name;',
+      errors: [{ messageId: 'requireBracketAccess' }],
+      output: 'type Config = { name: string }; const a: Config = { name: "x" }; const b: Config = { name: "y" }; const x = (a || b)[\'name\'];',
     },
   ],
 });

@@ -173,11 +173,11 @@ export class Runner {
    * Inspects regular string literals for backslash continuation and
    * internal escape sequences, skipping standalone newline delimiters.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Context}              context              - Context.
    * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Node}                 node                 - Node.
    * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_AllowEscapeSequences} allowEscapeSequences - Allow escape sequences.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Returns}
    *
@@ -226,11 +226,11 @@ export class Runner {
    * Inspects template literals for visual newlines in quasis and internal escape sequences,
    * skipping tagged template expressions.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Context}              context              - Context.
    * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Node}                 node                 - Node.
    * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_AllowEscapeSequences} allowEscapeSequences - Allow escape sequences.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Returns}
    *
@@ -281,9 +281,9 @@ export class Runner {
    * Strips leading and trailing escape sequences from the first and last parts, then checks
    * whether any remaining part still contains an escaped newline.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Parts} parts - Parts.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Returns}
    *

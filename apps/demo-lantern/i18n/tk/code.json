@@ -1,0 +1,598 @@
+{
+  "home.layout.description": {
+    "message": "Lantern tutuş öýüňize göz-gulak bolýar — zonalar, hereket, goraga alyş/aýyryş — hiç haçan sesini gataltman.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Lantern - Hüşgär, Ýyly, Hemişe Öýde",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Tutuş öýe gözegçilik",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Hüşgär, ýyly, hemişe öýde.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Lantern tutuş öýüňize göz-gulak bolýar — zonalar, hereket, goraga alyş/aýyryş — hiç haçan sesini gataltman. Her otag, her gapy, her rahat pursat mylaýymlyk bilen goralýar.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Başlaň",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Threadbare-de görüň",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.zones.title": {
+    "message": "Zonalar",
+    "description": "Front page Features card title for Zones"
+  },
+  "home.features.zones.description": {
+    "message": "Enjamlary ýerleşýän ýerine görä toparlaň — perimetr, iç bölüm, ýatylýan ýerler. Islendik zonany aýratyn goraga alyň. Ady bilen, mylaýymlyk bilen aýyryň. Lantern hiç haçan sesini gataltmaýar.",
+    "description": "Front page Features card description for Zones"
+  },
+  "home.features.motionEvents.title": {
+    "message": "Hereket wakalary",
+    "description": "Front page Features card title for Motion Events"
+  },
+  "home.features.motionEvents.description": {
+    "message": "Her hereket ugry we islege bagly ynam derejesi bilen waka akymyndan geçýär. Gaýtadan görkeziň, süzüň, hub-a geçiriň. Hiç zat ýitmeýär.",
+    "description": "Front page Features card description for Motion Events"
+  },
+  "home.features.contactSensors.title": {
+    "message": "Kontakt datçikleri",
+    "description": "Front page Features card title for Contact Sensors"
+  },
+  "home.features.contactSensors.description": {
+    "message": "Gapy açyldy, penjire açyk galdy, derweze ýapyldy — her kontakt wakasy wagt belligi bilen bellenip, asuda hasaba ýazylýar. Otagdan çykman datçik taryhyny gözden geçiriň.",
+    "description": "Front page Features card description for Contact Sensors"
+  },
+  "home.features.armDisarm.title": {
+    "message": "Goraga alyş / aýyryş",
+    "description": "Front page Features card title for Arm / Disarm"
+  },
+  "home.features.armDisarm.description": {
+    "message": "Zona boýunça, ulanyjy boýunça ýa-da tertip boýunça goraga alyň ýa-da aýyryň. Dolandyryşy ynanýan adamyňyza geçiriň — ady bilen, parol bilen ýa-da HomeKit Home Hub barlygy bilen.",
+    "description": "Front page Features card description for Arm / Disarm"
+  },
+  "home.features.deviceDiscovery.title": {
+    "message": "Enjam tapyş",
+    "description": "Front page Features card title for Device Discovery"
+  },
+  "home.features.deviceDiscovery.description": {
+    "message": "Lantern hub-yňyzdaky her datçigi we kontakt enjamyny awtomatik tapýar. El bilen jübütleşdirmek ýok, konfigurasiýa faýllary ýok. Ol eýýäm bar bolan zady tapýar.",
+    "description": "Front page Features card description for Device Discovery"
+  },
+  "home.features.sensorHistory.title": {
+    "message": "Datçik taryhy",
+    "description": "Front page Features card title for Sensor History"
+  },
+  "home.features.sensorHistory.description": {
+    "message": "Bolup geçen ähli zadyň asuda hasaby — hereket, kontakt, gorag ýagdaýlary — zona we wagt boýunça tertiplenen. Dolandyryş panelinden çykman bir hepdäni yzyna görüň.",
+    "description": "Front page Features card description for Sensor History"
+  },
+  "home.stats.heading": {
+    "message": "Sanlaryň dili bilen",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.zones.label": {
+    "message": "Deslapky zonalar",
+    "description": "Front page Stats label for default zones count"
+  },
+  "home.stats.configFiles.label": {
+    "message": "Konfig faýllary",
+    "description": "Front page Stats label for config files count"
+  },
+  "home.stats.handoff.label": {
+    "message": "Geçirmäge taýýar",
+    "description": "Front page Stats label for handoff readiness"
+  },
+  "home.stats.sensorHistory.label": {
+    "message": "Datçik taryhy",
+    "description": "Front page Stats label for sensor history"
+  },
+  "home.spotlight.heading": {
+    "message": "Her zona, asudalyk bilen goralýar",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Kimiň nirede ýaşaýandygyny beýan ediň. Galanyna Lantern göz-gulak bolýar.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Zonalaryňyzy islendik ýerde dolandyryň",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Eýwan çyrasyndan",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Öýden täzelikler, nusgalar we asuda ýazgylar.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "docusaurus-preset-nova-daky her bloky görkezýän Lantern blok sergisi.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Lantern presetindäki her blok, nusga maglumatlary bilen görkezilýär.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (doly)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Blok sergisi",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Her Lantern bloky, bir ýerde görkezildi.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Bu sahypa @cbnventures/docusaurus-preset-nova/blocks-daky her bloky Lantern dünýäsiniň maglumatlary bilen görkezýär, şeýdip olaryň nähili görünýändigini we işleýändigini görüp bilersiňiz.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Resminamalary okaň",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Threadbare-de görüň",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (sada)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Hüşgär, ýyly, hemişe öýde.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Lantern tutuş öýüňize göz-gulak bolýar — zonalar, hereket, goraga alyş/aýyryş — hiç haçan sesini gataltman.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Başlaň",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (adaty)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Söýýän zadym: ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (prefikssiz)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Çalt",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Çeýe",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Mugt",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (haýal tizlik)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Kim üçin döredildi: ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "işläp düzüjiler",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "dizaýnerler",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (aýlawsyz)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Hoş geldiňiz — ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Spark bilen gurnaň",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Ýa-da Loom Registry-ni ulanyň",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (belliksiz)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Çalt gurnama",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (nyşanlar bilen)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Näme üçin öý hojalyklary Lantern-i saýlaýar",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.zones.title": {
+    "message": "Zonalar",
+    "description": "Showcase Features (with icons) card title for Zones"
+  },
+  "showcase.featuresIcons.zones.description": {
+    "message": "Enjamlary ýerleşýän ýerine görä toparlaň — perimetr, iç bölüm, ýatylýan ýerler. Islendik zonany aýratyn goraga alyň, ady bilen mylaýymlyk bilen aýyryň.",
+    "description": "Showcase Features (with icons) card description for Zones"
+  },
+  "showcase.featuresIcons.motionEvents.title": {
+    "message": "Hereket wakalary",
+    "description": "Showcase Features (with icons) card title for Motion Events"
+  },
+  "showcase.featuresIcons.motionEvents.description": {
+    "message": "Her hereket ugry we islege bagly ynam derejesi bilen waka akymyndan geçýär. Gaýtadan görkeziň, süzüň, hub-a geçiriň.",
+    "description": "Showcase Features (with icons) card description for Motion Events"
+  },
+  "showcase.featuresIcons.armDisarm.title": {
+    "message": "Goraga alyş / aýyryş",
+    "description": "Showcase Features (with icons) card title for Arm / Disarm"
+  },
+  "showcase.featuresIcons.armDisarm.description": {
+    "message": "Zona, ulanyjy ýa-da tertip boýunça goraga alyň ýa-da aýyryň. Dolandyryşy ynanýan adamyňyza ady, paroly ýa-da HomeKit barlygy bilen geçiriň.",
+    "description": "Showcase Features (with icons) card description for Arm / Disarm"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (nyşansyz, sözbaşysyz)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.contactSensors.title": {
+    "message": "Kontakt datçikleri",
+    "description": "Showcase Features (no icons) card title for Contact Sensors"
+  },
+  "showcase.featuresNoIcons.contactSensors.description": {
+    "message": "Gapy açyldy, penjire açyk galdy, derweze ýapyldy — her kontakt wakasy wagt belligi bilen bellenip, asuda hasaba ýazylýar.",
+    "description": "Showcase Features (no icons) card description for Contact Sensors"
+  },
+  "showcase.featuresNoIcons.deviceDiscovery.title": {
+    "message": "Enjam tapyş",
+    "description": "Showcase Features (no icons) card title for Device Discovery"
+  },
+  "showcase.featuresNoIcons.deviceDiscovery.description": {
+    "message": "Lantern hub-yňyzdaky her datçigi we kontakt enjamyny awtomatik tapýar. El bilen jübütleşdirmek ýok, konfigurasiýa faýllary ýok.",
+    "description": "Showcase Features (no icons) card description for Device Discovery"
+  },
+  "showcase.featuresNoIcons.sensorHistory.title": {
+    "message": "Datçik taryhy",
+    "description": "Showcase Features (no icons) card title for Sensor History"
+  },
+  "showcase.featuresNoIcons.sensorHistory.description": {
+    "message": "Bolup geçen ähli zadyň asuda hasaby — hereket, kontakt, gorag ýagdaýlary — zona we wagt boýunça tertiplenen.",
+    "description": "Showcase Features (no icons) card description for Sensor History"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (alty element, garyşyk nyşanlar)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Bir öýde ähli zat",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.zones.title": {
+    "message": "Zonalar",
+    "description": "Showcase Features (six items) card title for Zones"
+  },
+  "showcase.featuresSix.zones.description": {
+    "message": "Otag, geçelge, daşky bölüm ýa-da enjam topary boýunça toparlaň. Aýratyn goraga alyň. Ady bilen mylaýymlyk bilen aýyryň.",
+    "description": "Showcase Features (six items) card description for Zones"
+  },
+  "showcase.featuresSix.motionEvents.title": {
+    "message": "Hereket wakalary",
+    "description": "Showcase Features (six items) card title for Motion Events"
+  },
+  "showcase.featuresSix.motionEvents.description": {
+    "message": "Islege bagly ynam derejesi bilen ugurly hereket. Wakalary ýitirmän gaýtadan görkeziň, süzüň we hub-a geçiriň.",
+    "description": "Showcase Features (six items) card description for Motion Events"
+  },
+  "showcase.featuresSix.contactSensors.title": {
+    "message": "Kontakt datçikleri",
+    "description": "Showcase Features (six items) card title for Contact Sensors"
+  },
+  "showcase.featuresSix.contactSensors.description": {
+    "message": "Gapy, penjire, derweze — her kontakt wakasy wagt belligi bilen bellenip, datçik taryhy hasabynda saklanýar.",
+    "description": "Showcase Features (six items) card description for Contact Sensors"
+  },
+  "showcase.featuresSix.armDisarm.title": {
+    "message": "Goraga alyş / aýyryş",
+    "description": "Showcase Features (six items) card title for Arm / Disarm"
+  },
+  "showcase.featuresSix.armDisarm.description": {
+    "message": "Zona, ulanyjy ýa-da tertip boýunça. Ady, paroly ýa-da HomeKit Home Hub barlygy bilen geçiriň.",
+    "description": "Showcase Features (six items) card description for Arm / Disarm"
+  },
+  "showcase.featuresSix.deviceDiscovery.title": {
+    "message": "Enjam tapyş",
+    "description": "Showcase Features (six items) card title for Device Discovery"
+  },
+  "showcase.featuresSix.deviceDiscovery.description": {
+    "message": "Hub-yňyzdaky her datçigiň we kontakt enjamynyň awtomatik tapylyşy. El bilen jübütleşdirmek ýok.",
+    "description": "Showcase Features (six items) card description for Device Discovery"
+  },
+  "showcase.featuresSix.sensorHistory.title": {
+    "message": "Datçik taryhy",
+    "description": "Showcase Features (six items) card title for Sensor History"
+  },
+  "showcase.featuresSix.sensorHistory.description": {
+    "message": "Hereket, kontakt we gorag ýagdaýlary asuda hasapda. Dolandyryş panelinden çykman bir hepdäni yzyna görüň.",
+    "description": "Showcase Features (six items) card description for Sensor History"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (sözbaşy we düşündiriş bilen)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Lantern görkezijileri",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Adaty dört zonaly öý hojalyk gurnamasyndaky esasy sanlar.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.zones.label": {
+    "message": "Deslapky zonalar",
+    "description": "Showcase Stats (full) label for default zones"
+  },
+  "showcase.statsFull.devices.label": {
+    "message": "Tapylan enjamlar",
+    "description": "Showcase Stats (full) label for devices discovered"
+  },
+  "showcase.statsFull.handoff.label": {
+    "message": "Geçirmäge taýýar",
+    "description": "Showcase Stats (full) label for handoff readiness"
+  },
+  "showcase.statsFull.configFiles.label": {
+    "message": "Konfig faýllary",
+    "description": "Showcase Stats (full) label for config files"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (sözbaşysyz)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.zones.label": {
+    "message": "Zonalar",
+    "description": "Showcase Stats (no heading) label for zones"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "Konfig faýllary",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.sensorHistory.label": {
+    "message": "Datçik taryhy",
+    "description": "Showcase Stats (no heading) label for sensor history"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (kod bilen)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Çalt başlangyç",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Noldan goralýan öýe ýetmek üçin üç buýruk.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (tekst bilen)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Ol nähili işleýär",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Lantern hub-yňyzdaky her enjamy tapýar, olary zona boýunça toparlaýar we her hereket hem kontakt wakasyny waka žurnalyna akdyrýar. Gorag ýagdaýlary hemişelik — togy öçüriň, togy goşuň, zona ýatda saklaýar.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (düşündiriş bilen)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Eýwan çyrasyndan",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Öýden täzelikler, nusgalar we asuda ýazgylar.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Öýe bildirmän başga otagdan gözegçilik etmek",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Ýokarky gatdaky öý agzasy güjüge bildiriş iberilmezden gapynyň ýapykdygyny bilmelidir. Lantern wakalary görnüşi boýunça däl-de, kime niýetlenendigi boýunça ugrukdyrýar.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Alty aýyň perimetr hereketi, bir suratda",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Öň eýwandaky hereket datçigi günde kyrk gezek işleýär. Olaryň köpüsi tiýinlerdir. Lantern-iň taryh görnüşi tiýinleriň bir nusga öwrülýän ýeridir.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Goraga alyş/aýyryşy ynanýan adamyňyza geçirmek",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Ynamdar ulanyjy telefonyňyz elinde bolmazdan Lantern gözegçilik edýän islendik zonany goragdan aýryp biler. Ady, paroly ýa-da HomeKit barlygy bilen.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (düşündirişsiz)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Soňky täzelikler",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Lantern 2.4: Lens gat-plan örtügi we Beacon basgançakly goýberilişleri",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Lens indi öý hojalyk zona grafigini gat-planyň üstünde görkezýär, Beacon bolsa diňe üýtgän datçikleri gaýtadan bahalandyrýan basgançakly goýberilişleri goldaýar.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (tekst içindäki ulanylyşy)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Lantern ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.zone.title": {
+    "message": "atlandyrylan otag, geçelge ýa-da daşky topar",
+    "description": "Showcase Terminology hover title for zone"
+  },
+  "showcase.terminology.zone.label": {
+    "message": "zona",
+    "description": "Showcase Terminology displayed text for zone"
+  },
+  "showcase.terminology.paragraph1.afterZone": {
+    "message": " ulanyp, enjamlary ýerleşýän ýerine görä toparlaýar. Her zona ",
+    "description": "Showcase Terminology paragraph 1 fragment after zone"
+  },
+  "showcase.terminology.armState.title": {
+    "message": "goraga alyş/aýyryş dolandyryşy",
+    "description": "Showcase Terminology hover title for arm state"
+  },
+  "showcase.terminology.armState.label": {
+    "message": "gorag ýagdaýy",
+    "description": "Showcase Terminology displayed text for arm state"
+  },
+  "showcase.terminology.paragraph1.afterArmState": {
+    "message": " bilen dolandyrylýar, ol toguň kesilip-goşulmagyndan soň hem saklanýar. Datçik işe giren mahaly, ol ",
+    "description": "Showcase Terminology paragraph 1 fragment after arm state"
+  },
+  "showcase.terminology.eventStream.title": {
+    "message": "hakyky wagt bildiriş akymy",
+    "description": "Showcase Terminology hover title for event stream"
+  },
+  "showcase.terminology.eventStream.label": {
+    "message": "waka akymy",
+    "description": "Showcase Terminology displayed text for event stream"
+  },
+  "showcase.terminology.paragraph1.afterEventStream": {
+    "message": " arkaly ýitirilmän geçýär.",
+    "description": "Showcase Terminology paragraph 1 fragment after event stream"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Indi ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.handoffSystem.title": {
+    "message": "ynamdar adama geçiriş",
+    "description": "Showcase Terminology hover title for handoff system"
+  },
+  "showcase.terminology.handoffSystem.label": {
+    "message": "geçiriş ulgamy",
+    "description": "Showcase Terminology displayed text for handoff system"
+  },
+  "showcase.terminology.paragraph2.afterHandoff": {
+    "message": " bilen öý hojalyklary ",
+    "description": "Showcase Terminology paragraph 2 fragment after handoff system"
+  },
+  "showcase.terminology.zoneAccess.title": {
+    "message": "zonany goraga alyş/aýyryş elýeterliligi",
+    "description": "Showcase Terminology hover title for zone access"
+  },
+  "showcase.terminology.zoneAccess.label": {
+    "message": "zona elýeterliligi",
+    "description": "Showcase Terminology displayed text for zone access"
+  },
+  "showcase.terminology.paragraph2.afterZoneAccess": {
+    "message": " we ",
+    "description": "Showcase Terminology paragraph 2 fragment after zone access"
+  },
+  "showcase.terminology.sensorHistory.title": {
+    "message": "taryhy datçik maglumatlary",
+    "description": "Showcase Terminology hover title for sensor history"
+  },
+  "showcase.terminology.sensorHistory.label": {
+    "message": "datçik taryhy",
+    "description": "Showcase Terminology displayed text for sensor history"
+  },
+  "showcase.terminology.paragraph2.afterSensorHistory": {
+    "message": " babatda dolandyryşy hasap maglumatlaryny alyşman paýlaşýarlar.",
+    "description": "Showcase Terminology paragraph 2 fragment after sensor history"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (ýazgy bilen)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Frame içinde ýalpyldap duran brend nyşany — surat we ýazgy bilen ýyly kagyz kartoçka.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Lantern brend kiçi suraty.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (ýazgysyz)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (her iki dükan)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Ýoldaş goşundyny göçürip alyň",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (diňe App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "iOS-da elýeterli",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (diňe Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Android-de elýeterli",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (belliksiz)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} minutlyk okamak",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

@@ -71,7 +71,8 @@ describe.skip('CliScaffoldAppExpressjs.run', async () => {
     await mkdir(childDirectory, { recursive: true });
 
     const rootPackageJson: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJson = JSON.stringify({
-      name: 'root', workspaces: ['apps/*'],
+      name: 'root',
+      workspaces: ['apps/*'],
     }, null, 2);
 
     const rootPackageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJsonPath = join(rootDirectory, 'package.json');
@@ -173,7 +174,8 @@ describe.skip('CliScaffoldAppExpressjs.run', async () => {
     await mkdir(projectDirectory, { recursive: true });
 
     const packageJson: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_PackageJson = JSON.stringify({
-      name: 'root', workspaces: ['apps/*'],
+      name: 'root',
+      workspaces: ['apps/*'],
     }, null, 2);
     const packageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_PackageJsonPath = join(projectDirectory, 'package.json');
 

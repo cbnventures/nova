@@ -85,7 +85,8 @@ function AnnouncementBar(props: Theme_AnnouncementBar_Index_AnnouncementBar_Prop
     <div
       className={(props['className'] !== undefined) ? `nova-announcement-bar ${props['className']}` : 'nova-announcement-bar'}
       style={{
-        ...inlineStyle, ...props['style'],
+        ...inlineStyle,
+        ...props['style'],
       }}
       role="banner"
     >

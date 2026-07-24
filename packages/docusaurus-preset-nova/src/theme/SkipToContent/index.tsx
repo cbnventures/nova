@@ -11,8 +11,6 @@ import type { Theme_SkipToContent_Index_SkipToContent_Props } from '../../types/
  *
  * @param {Theme_SkipToContent_Index_SkipToContent_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function SkipToContent(props: Theme_SkipToContent_Index_SkipToContent_Props) {

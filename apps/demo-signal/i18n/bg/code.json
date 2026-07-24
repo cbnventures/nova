@@ -1,0 +1,514 @@
+{
+  "home.layout.description": {
+    "message": "Signal проследява как намерението пътува — от първото впечатление до финалното действие. Не просто какво е кликнато. А защо е кликнато.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Signal - всяко кликване разказва история",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Машина за атрибуция",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Всяко кликване разказва история. Повечето инструменти изпускат сюжета.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Signal проследява как намерението пътува — от първото впечатление до финалното действие. Не просто какво е кликнато. А защо е кликнато. И какво почти се случи.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Започни сега",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Виж в Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.beacon.description": {
+    "message": "Машина за генериране на връзки. Брандирани кратки връзки с вградени метаданни за атрибуция, които оцеляват при съкращаване на URL, приложения за съобщения и прехвърляния между устройства. Всяка връзка е сензор.",
+    "description": "Front page Features card description for Beacon"
+  },
+  "home.features.prism.description": {
+    "message": "Инструмент за многоконтактно моделиране на атрибуция. Проследява пътищата на конверсия през различните канали, разпределя претеглена заслуга към всяка допирна точка и възстановява цялото пътуване — от първата среща до финалното действие.",
+    "description": "Front page Features card description for Prism"
+  },
+  "home.features.pulse.description": {
+    "message": "Поток от кликвания в реално време. Поток на живо от всяко взаимодействие — geo, устройство, referrer и данни за атрибуция — пристигащ до секунда след всяко кликване.",
+    "description": "Front page Features card description for Pulse"
+  },
+  "home.features.aperture.description": {
+    "message": "Моментни снимки на кампании. Заснемане на представянето в конкретен момент със сравнителни наслагвания. Виж точно какво се е променило между всеки два момента от кампанията.",
+    "description": "Front page Features card description for Aperture"
+  },
+  "home.features.resonance.description": {
+    "message": "Детектор за припокриване на аудитории. Открива къде аудиториите се преливат една в друга през кампании и сегменти. Спри да плащаш два пъти, за да достигнеш до едни и същи хора.",
+    "description": "Front page Features card description for Resonance"
+  },
+  "home.features.flare.description": {
+    "message": "Генератор на QR и deep link. Свързва физическата и дигиталната атрибуция с пълни метаданни за проследяване. Всяко сканиране носи същата информация като дигиталното кликване.",
+    "description": "Front page Features card description for Flare"
+  },
+  "home.stats.heading": {
+    "message": "В цифри",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.latency.label": {
+    "message": "Латентност при пренасочване",
+    "description": "Front page Stats label for redirect latency"
+  },
+  "home.stats.links.label": {
+    "message": "Проследени връзки",
+    "description": "Front page Stats label for links traced"
+  },
+  "home.stats.uptime.label": {
+    "message": "Наличност",
+    "description": "Front page Stats label for uptime"
+  },
+  "home.stats.regions.label": {
+    "message": "Региони",
+    "description": "Front page Stats label for regions"
+  },
+  "home.spotlight.heading": {
+    "message": "От Beacon до атрибуция",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Всяка връзка е сензор. Всяко пренасочване е точка от данни. Prism ги свързва в единен път на атрибуция.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Следи кампаниите си в движение",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Прозрения за атрибуцията",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Казуси, задълбочени технически анализи и закономерностите, скрити в потоците ти от кликвания.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Витрина на блоковете на Signal, демонстрираща всеки блок от docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Всеки блок от пресета Signal, показан с примерни данни.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (пълен)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Витрина на блоковете",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Every Signal block, демонстриран на едно място.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Тази страница изобразява всеки блок от @cbnventures/docusaurus-preset-nova/blocks с данни от света на Signal, за да видиш как изглеждат и как се държат.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Прочети документацията",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Виж в Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (минимален)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Signal проследява как намерението пътува — от първото впечатление до финалното действие. Не просто какво е кликнато. А защо е кликнато. И какво почти се случи.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Започни сега",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (по подразбиране)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Обичам ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (без префикс)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Бърз",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Гъвкав",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Безплатен",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (бавно темпо)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Създаден за ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "разработчици",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "дизайнери",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (без цикъл)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Добре дошли в ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Инсталирай със Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Или използвай Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (без етикет)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Бърза инсталация",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (с икони)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Защо екипите избират Signal",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.beacon.description": {
+    "message": "Машина за генериране на връзки. Брандирани кратки връзки с вградени метаданни за атрибуция, които оцеляват там, където UTM параметрите се провалят.",
+    "description": "Showcase Features (with icons) card description for Beacon"
+  },
+  "showcase.featuresIcons.prism.description": {
+    "message": "Инструмент за многоконтактно моделиране на атрибуция. Проследява пътищата на конверсия през каналите и разпределя претеглена заслуга към всяка допирна точка.",
+    "description": "Showcase Features (with icons) card description for Prism"
+  },
+  "showcase.featuresIcons.pulse.description": {
+    "message": "Поток от кликвания в реално време. Поток на живо от взаимодействия с geo, устройство, referrer и данни за атрибуция.",
+    "description": "Showcase Features (with icons) card description for Pulse"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (без икони, без заглавие)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.aperture.description": {
+    "message": "Моментни снимки на кампании. Заснемане на представянето в конкретен момент със сравнителни наслагвания през времеви прозорци.",
+    "description": "Showcase Features (no icons) card description for Aperture"
+  },
+  "showcase.featuresNoIcons.resonance.description": {
+    "message": "Детектор за припокриване на аудитории. Открива къде аудиториите се преливат една в друга през кампании и сегменти.",
+    "description": "Showcase Features (no icons) card description for Resonance"
+  },
+  "showcase.featuresNoIcons.flare.description": {
+    "message": "Генератор на QR и deep link. Мост между физическото и дигиталното с пълна верига на атрибуция при всяко сканиране.",
+    "description": "Showcase Features (no icons) card description for Flare"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (шест елемента, смесени икони)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Пълният стек за атрибуция",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.beacon.description": {
+    "message": "Генерира брандирани връзки с вградени метаданни за проследяване. Всяка връзка е сензор в мрежата за атрибуция.",
+    "description": "Showcase Features (six items) card description for Beacon"
+  },
+  "showcase.featuresSix.prism.description": {
+    "message": "Възстановява целия път на конверсия. Поддържа линейни, с времево затихване, позиционни и персонализирани модели за атрибуция.",
+    "description": "Showcase Features (six items) card description for Prism"
+  },
+  "showcase.featuresSix.pulse.description": {
+    "message": "Предава събитията от кликвания в реално време. Филтрирай по кампания, канал, geo или устройство.",
+    "description": "Showcase Features (six items) card description for Pulse"
+  },
+  "showcase.featuresSix.aperture.description": {
+    "message": "Заснема неизменни моментни снимки на кампании. Сравни всеки два момента във времето, за да видиш какво се е променило.",
+    "description": "Showcase Features (six items) card description for Aperture"
+  },
+  "showcase.featuresSix.resonance.description": {
+    "message": "Измерва припокриването на аудитории между сегментите. Открива кога кампаниите се конкурират за едни и същи посетители.",
+    "description": "Showcase Features (six items) card description for Resonance"
+  },
+  "showcase.featuresSix.flare.description": {
+    "message": "Генерира QR кодове и deep link връзки с пълна атрибуция. Свързва печат, събития и дигитално.",
+    "description": "Showcase Features (six items) card description for Flare"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (със заглавие и описание)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Метрики за атрибуция",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Ключови показатели за ефективност в платформата Signal.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Латентност при пренасочване",
+    "description": "Showcase Stats (full) label for redirect latency"
+  },
+  "showcase.statsFull.links.label": {
+    "message": "Проследени връзки",
+    "description": "Showcase Stats (full) label for links traced"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "Наличност по SLA",
+    "description": "Showcase Stats (full) label for uptime SLA"
+  },
+  "showcase.statsFull.regions.label": {
+    "message": "Обслужвани региони",
+    "description": "Showcase Stats (full) label for regions served"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (без заглавие)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "Подинструменти",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.models.label": {
+    "message": "Модели за атрибуция",
+    "description": "Showcase Stats (no heading) label for attribution models"
+  },
+  "showcase.statsNoHeading.operators.label": {
+    "message": "Сегментни оператори",
+    "description": "Showcase Stats (no heading) label for segment operators"
+  },
+  "showcase.statsNoHeading.pixels.label": {
+    "message": "Необходими проследяващи пиксели",
+    "description": "Showcase Stats (no heading) label for tracking pixels required"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (с код)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Бърз старт",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Три команди — от нула до връзка с пълна атрибуция.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (с текст)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Как работи",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Signal вгражда метаданните за атрибуция в самата връзка — не в параметрите на заявката, които се премахват, нито в referrer хедърите, които изчезват. Когато се случи кликване, Pulse го улавя. Когато се случи конверсия, Prism възстановява целия път. Без проследяващи пиксели. Без скриптове от страна на страницата.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (с описание)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Прозрения за атрибуцията",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Казуси, разследвания на кампании и закономерностите, скрити в потоците ти от кликвания.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Проследихме една вирусна кампания до една-единствена връзка в бюлетин от вторник",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Скок от 40% в конверсиите, проследен до връзка в страничната лента, която никой не отбеляза като важна.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Тъмен трафик: кликванията, които не можеш да видиш",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Когато някой копира URL в приложение за съобщения, referrer изчезва. Метаданните на Beacon оцеляват.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Смъртта на атрибуцията по последно кликване",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Да приписваш цялата заслуга на последната допирна точка е лъжа. Prism разпределя заслугата по целия път.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (без описание)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Последни обновления",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Signal 2.1: карти на припокриване в Resonance и масово генериране във Flare",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Resonance вече визуализира припокриването на аудитории през неограничен брой сегменти, а Flare поддържа масово генериране на QR от CSV.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (употреба в текста)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Signal използва ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.beaconLinks.title": {
+    "message": "брандирана атрибуционна връзка",
+    "description": "Showcase Terminology hover title for Beacon links"
+  },
+  "showcase.terminology.beaconLinks.label": {
+    "message": "Beacon връзки",
+    "description": "Showcase Terminology displayed text for Beacon links"
+  },
+  "showcase.terminology.paragraph1.afterBeacon": {
+    "message": ", за да проследи пътя от импресия до конверсия. Всяко кликване се улавя от ",
+    "description": "Showcase Terminology paragraph 1 fragment after Beacon links"
+  },
+  "showcase.terminology.pulse.title": {
+    "message": "поток от кликвания в реално време",
+    "description": "Showcase Terminology hover title for Pulse"
+  },
+  "showcase.terminology.paragraph1.afterPulse": {
+    "message": " и се подава към ",
+    "description": "Showcase Terminology paragraph 1 fragment after Pulse"
+  },
+  "showcase.terminology.prism.title": {
+    "message": "машина за многоконтактна атрибуция",
+    "description": "Showcase Terminology hover title for Prism"
+  },
+  "showcase.terminology.paragraph1.afterPrism": {
+    "message": " за атрибуция по целия път.",
+    "description": "Showcase Terminology paragraph 1 fragment after Prism"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "С ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.aperture.title": {
+    "message": "моментна снимка на кампания в конкретен момент",
+    "description": "Showcase Terminology hover title for Aperture snapshots"
+  },
+  "showcase.terminology.aperture.label": {
+    "message": "Aperture моментни снимки",
+    "description": "Showcase Terminology displayed text for Aperture snapshots"
+  },
+  "showcase.terminology.paragraph2.afterAperture": {
+    "message": ", екипите проследяват представянето на кампаниите във времето. ",
+    "description": "Showcase Terminology paragraph 2 fragment after Aperture"
+  },
+  "showcase.terminology.resonance.title": {
+    "message": "детектор за припокриване на аудитории",
+    "description": "Showcase Terminology hover title for Resonance engine"
+  },
+  "showcase.terminology.resonance.label": {
+    "message": "Машината Resonance",
+    "description": "Showcase Terminology displayed text for Resonance engine"
+  },
+  "showcase.terminology.paragraph2.afterResonance": {
+    "message": " разкрива къде аудиториите се припокриват, а ",
+    "description": "Showcase Terminology paragraph 2 fragment after Resonance"
+  },
+  "showcase.terminology.flare.title": {
+    "message": "генератор на QR и deep link",
+    "description": "Showcase Terminology hover title for Flare"
+  },
+  "showcase.terminology.paragraph2.afterFlare": {
+    "message": " разширява атрибуцията във физическия свят.",
+    "description": "Showcase Terminology paragraph 2 fragment after Flare"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (с надпис)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Знакът на бранда, усилен през Frame блок, с надпис за атрибуция.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Миниатюра на бранда Signal.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (без надпис)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (и двата магазина)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Изтегли придружаващото приложение",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (само App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Налично за iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (само Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Налично за Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (без етикет)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} мин за четене",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

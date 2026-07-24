@@ -49,6 +49,8 @@ For visual testing and web page interaction, prefer the Claude-in-Chrome MCP too
 
 If the Claude-in-Chrome MCP is not available, fall back to Vercel's `agent-browser` command for headless rendering and interaction. Run `agent-browser --help` for available commands.
 
+One exception to the MCP-first preference: Claude-in-Chrome screenshots are returned inline in the conversation and cannot be written to disk. When a screenshot must be saved to a file — to attach to a commit, produce an artifact, or include in a report — use `agent-browser` to capture it even when the MCP is available.
+
 Do not use `curl`, `wget`, or other plain HTTP clients for tasks that require rendering, clicking, or inspecting a page.
 
 ### Web Research

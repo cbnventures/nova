@@ -219,11 +219,11 @@ export class Runner {
    * function expressions passed as arguments to known
    * array methods like map, filter, and reduce.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Context}        context        - Context.
    * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Node}           node           - Node.
    * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_InsideCallback} insideCallback - Inside callback.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Returns}
    *
@@ -272,10 +272,10 @@ export class Runner {
    * statements so callers use a single variable name and
    * access elements by index in the loop body.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Context} context - Context.
    * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Returns}
    *
@@ -313,10 +313,10 @@ export class Runner {
    * declarations and non-callback function expressions.
    * Skips callbacks handled by checkCallback.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Context} context - Context.
    * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Returns}
    *
@@ -353,10 +353,10 @@ export class Runner {
    * variable declarations. Skips for-of loop variables
    * since those are handled by checkForOf.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Context} context - Context.
    * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Returns}
    *
@@ -395,10 +395,10 @@ export class Runner {
    * of assignment expressions where object or array patterns
    * are used to reassign multiple bindings.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Context} context - Context.
    * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Returns}
    *

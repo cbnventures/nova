@@ -1,0 +1,514 @@
+{
+  "home.layout.description": {
+    "message": "Signal اس بات کا سراغ لگاتا ہے کہ ارادہ کیسے سفر کرتا ہے — پہلے تاثر سے آخری عمل تک۔ صرف یہ نہیں کہ کس چیز پر کلک ہوا، بلکہ یہ کہ کلک کیوں ہوا۔",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Signal - ہر کلک ایک کہانی سناتا ہے",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "نسبت دہی انجن",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "ہر کلک ایک کہانی سناتا ہے۔ زیادہ تر ٹولز اصل کہانی سے چوک جاتے ہیں۔",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Signal اس بات کا سراغ لگاتا ہے کہ ارادہ کیسے سفر کرتا ہے — پہلے تاثر سے آخری عمل تک۔ صرف یہ نہیں کہ کس چیز پر کلک ہوا، بلکہ یہ کہ کلک کیوں ہوا۔ اور جو تقریباً ہو ہی چلا تھا۔",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "شروع کریں",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Threadbare پر دیکھیں",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.beacon.description": {
+    "message": "لنک بنانے کا انجن۔ برانڈڈ مختصر لنکس جن میں شامل نسبت دہی میٹا ڈیٹا URL شارٹننگ، میسجنگ ایپس اور مختلف ڈیوائسز کے درمیان منتقلی کے باوجود قائم رہتا ہے۔ ہر لنک ایک سینسر ہے۔",
+    "description": "Front page Features card description for Beacon"
+  },
+  "home.features.prism.description": {
+    "message": "کثیر رابطہ نسبت دہی ماڈلر۔ مختلف چینلز میں کنورژن کے راستوں کا سراغ لگاتا ہے، ہر رابطہ نقطے کو وزنی کریڈٹ دیتا ہے، اور پہلی ملاقات سے آخری عمل تک کا مکمل سفر دوبارہ تشکیل دیتا ہے۔",
+    "description": "Front page Features card description for Prism"
+  },
+  "home.features.pulse.description": {
+    "message": "حقیقی وقت کلک اسٹریم۔ ہر تعامل کی لائیو فیڈ — geo، ڈیوائس، referrer اور نسبت دہی ڈیٹا — جو ہر کلک کے ایک سیکنڈ کے اندر پہنچتی ہے۔",
+    "description": "Front page Features card description for Pulse"
+  },
+  "home.features.aperture.description": {
+    "message": "مہم کے اسنیپ شاٹس۔ کسی مخصوص لمحے کی کارکردگی کی تصاویر، موازنہ اوورلیز کے ساتھ۔ دیکھیں کہ مہم کے کسی بھی دو لمحوں کے درمیان بالکل کیا بدلا۔",
+    "description": "Front page Features card description for Aperture"
+  },
+  "home.features.resonance.description": {
+    "message": "سامعین کے تداخل کا پتہ لگانے والا۔ ڈھونڈتا ہے کہ مہمات اور سیگمنٹس میں سامعین کہاں ایک دوسرے میں گھل مل جاتے ہیں۔ ایک ہی لوگوں تک پہنچنے کے لیے دوہری قیمت ادا کرنا بند کریں۔",
+    "description": "Front page Features card description for Resonance"
+  },
+  "home.features.flare.description": {
+    "message": "QR اور deep link جنریٹر۔ مکمل ٹریس میٹا ڈیٹا کے ساتھ فزیکل اور ڈیجیٹل نسبت دہی کو جوڑتا ہے۔ ہر اسکین ڈیجیٹل کلک جتنی ہی معلومات رکھتا ہے۔",
+    "description": "Front page Features card description for Flare"
+  },
+  "home.stats.heading": {
+    "message": "اعداد کی زبانی",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.latency.label": {
+    "message": "ری ڈائریکٹ میں تاخیر",
+    "description": "Front page Stats label for redirect latency"
+  },
+  "home.stats.links.label": {
+    "message": "سراغ شدہ لنکس",
+    "description": "Front page Stats label for links traced"
+  },
+  "home.stats.uptime.label": {
+    "message": "اپ ٹائم",
+    "description": "Front page Stats label for uptime"
+  },
+  "home.stats.regions.label": {
+    "message": "خطے",
+    "description": "Front page Stats label for regions"
+  },
+  "home.spotlight.heading": {
+    "message": "Beacon سے نسبت دہی تک",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "ہر لنک ایک سینسر ہے۔ ہر ری ڈائریکٹ ایک ڈیٹا پوائنٹ ہے۔ Prism انہیں ایک واحد نسبت دہی راستے میں جوڑ دیتا ہے۔",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "چلتے پھرتے مہمات پر نظر رکھیں",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "نسبت دہی کی بصیرتیں",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "کیس اسٹڈیز، تکنیکی گہرے تجزیے، اور آپ کے کلک اسٹریمز میں چھپے پیٹرنز۔",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Signal بلاک شوکیس جو docusaurus-preset-nova کے ہر بلاک کو پیش کرتا ہے۔",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Signal پریسیٹ کا ہر بلاک، نمونہ ڈیٹا کے ساتھ پیش کیا گیا۔",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (مکمل)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "بلاک شوکیس",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "ہر Signal بلاک، ایک ہی جگہ پیش کیا گیا۔",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "یہ صفحہ @cbnventures/docusaurus-preset-nova/blocks کے ہر بلاک کو Signal-world ڈیٹا کے ساتھ رینڈر کرتا ہے تاکہ آپ دیکھ سکیں کہ وہ کیسے نظر آتے اور برتاؤ کرتے ہیں۔",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "دستاویزات پڑھیں",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Threadbare پر دیکھیں",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (سادہ)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Signal اس بات کا سراغ لگاتا ہے کہ ارادہ کیسے سفر کرتا ہے — پہلے تاثر سے آخری عمل تک۔ صرف یہ نہیں کہ کس چیز پر کلک ہوا، بلکہ یہ کہ کلک کیوں ہوا۔ اور جو تقریباً ہو ہی چلا تھا۔",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "شروع کریں",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (ڈیفالٹ)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "مجھے پسند ہے ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (بغیر سابقہ)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "تیز رفتار",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "لچکدار",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "مفت",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (سست ٹائمنگ)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "بنایا گیا برائے ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "ڈویلپرز",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "ڈیزائنرز",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (بغیر لوپ)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "خوش آمدید ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Spark سے انسٹال کریں",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "یا Loom Registry استعمال کریں",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (بغیر لیبل)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "فوری انسٹال",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (آئیکنز کے ساتھ)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "ٹیمیں Signal کو کیوں چنتی ہیں",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.beacon.description": {
+    "message": "لنک بنانے کا انجن۔ برانڈڈ مختصر لنکس جن میں شامل نسبت دہی میٹا ڈیٹا وہاں بھی قائم رہتا ہے جہاں UTM پیرامیٹرز ناکام ہو جاتے ہیں۔",
+    "description": "Showcase Features (with icons) card description for Beacon"
+  },
+  "showcase.featuresIcons.prism.description": {
+    "message": "کثیر رابطہ نسبت دہی ماڈلر۔ مختلف چینلز میں کنورژن کے راستوں کا سراغ لگاتا ہے اور ہر رابطہ نقطے کو وزنی کریڈٹ دیتا ہے۔",
+    "description": "Showcase Features (with icons) card description for Prism"
+  },
+  "showcase.featuresIcons.pulse.description": {
+    "message": "حقیقی وقت کلک اسٹریم۔ geo، ڈیوائس، referrer اور نسبت دہی ڈیٹا کے ساتھ تعاملات کی لائیو فیڈ۔",
+    "description": "Showcase Features (with icons) card description for Pulse"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (بغیر آئیکنز، بغیر عنوان)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.aperture.description": {
+    "message": "مہم کے اسنیپ شاٹس۔ مختلف وقتی وقفوں میں موازنہ اوورلیز کے ساتھ کسی مخصوص لمحے کی کارکردگی کی تصاویر۔",
+    "description": "Showcase Features (no icons) card description for Aperture"
+  },
+  "showcase.featuresNoIcons.resonance.description": {
+    "message": "سامعین کے تداخل کا پتہ لگانے والا۔ ڈھونڈتا ہے کہ مہمات اور سیگمنٹس میں سامعین کہاں ایک دوسرے میں گھل مل جاتے ہیں۔",
+    "description": "Showcase Features (no icons) card description for Resonance"
+  },
+  "showcase.featuresNoIcons.flare.description": {
+    "message": "QR اور deep link جنریٹر۔ ہر اسکین پر مکمل نسبت دہی سلسلے کے ساتھ فزیکل سے ڈیجیٹل کا پل۔",
+    "description": "Showcase Features (no icons) card description for Flare"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (چھ عناصر، ملے جلے آئیکنز)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "مکمل نسبت دہی اسٹیک",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.beacon.description": {
+    "message": "شامل ٹریس میٹا ڈیٹا کے ساتھ برانڈڈ لنکس بناتا ہے۔ ہر لنک نسبت دہی نیٹ ورک میں ایک سینسر ہے۔",
+    "description": "Showcase Features (six items) card description for Beacon"
+  },
+  "showcase.featuresSix.prism.description": {
+    "message": "مکمل کنورژن راستہ دوبارہ تشکیل دیتا ہے۔ لینیئر، ڈیکے، پوزیشن اور حسبِ ضرورت نسبت دہی ماڈلز کو سپورٹ کرتا ہے۔",
+    "description": "Showcase Features (six items) card description for Prism"
+  },
+  "showcase.featuresSix.pulse.description": {
+    "message": "کلک ایونٹس کو حقیقی وقت میں اسٹریم کرتا ہے۔ مہم، چینل، geo یا ڈیوائس کے حساب سے فلٹر کریں۔",
+    "description": "Showcase Features (six items) card description for Pulse"
+  },
+  "showcase.featuresSix.aperture.description": {
+    "message": "ناقابلِ تبدیل مہم اسنیپ شاٹس محفوظ کرتا ہے۔ کسی بھی دو وقتی نقطوں کا موازنہ کر کے دیکھیں کہ کیا بدلا۔",
+    "description": "Showcase Features (six items) card description for Aperture"
+  },
+  "showcase.featuresSix.resonance.description": {
+    "message": "سیگمنٹس میں سامعین کے تداخل کی پیمائش کرتا ہے۔ پتہ لگاتا ہے کہ مہمات کب ایک ہی وزیٹرز کے لیے مقابلہ کرتی ہیں۔",
+    "description": "Showcase Features (six items) card description for Resonance"
+  },
+  "showcase.featuresSix.flare.description": {
+    "message": "مکمل نسبت دہی کے ساتھ QR کوڈز اور deep links بناتا ہے۔ پرنٹ، ایونٹس اور ڈیجیٹل کو جوڑتا ہے۔",
+    "description": "Showcase Features (six items) card description for Flare"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (عنوان اور وضاحت کے ساتھ)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "نسبت دہی میٹرکس",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Signal پلیٹ فارم کے کلیدی کارکردگی اشاریے۔",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "ری ڈائریکٹ میں تاخیر",
+    "description": "Showcase Stats (full) label for redirect latency"
+  },
+  "showcase.statsFull.links.label": {
+    "message": "سراغ شدہ لنکس",
+    "description": "Showcase Stats (full) label for links traced"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "اپ ٹائم SLA",
+    "description": "Showcase Stats (full) label for uptime SLA"
+  },
+  "showcase.statsFull.regions.label": {
+    "message": "خدمت یافتہ خطے",
+    "description": "Showcase Stats (full) label for regions served"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (بغیر عنوان)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "ذیلی ٹولز",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.models.label": {
+    "message": "نسبت دہی ماڈلز",
+    "description": "Showcase Stats (no heading) label for attribution models"
+  },
+  "showcase.statsNoHeading.operators.label": {
+    "message": "سیگمنٹ آپریٹرز",
+    "description": "Showcase Stats (no heading) label for segment operators"
+  },
+  "showcase.statsNoHeading.pixels.label": {
+    "message": "درکار ٹریکنگ پکسلز",
+    "description": "Showcase Stats (no heading) label for tracking pixels required"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (کوڈ کے ساتھ)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "فوری آغاز",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "صفر سے مکمل طور پر منسوب لنک تک پہنچنے کے لیے تین کمانڈز۔",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (متن کے ساتھ)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "یہ کیسے کام کرتا ہے",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Signal نسبت دہی میٹا ڈیٹا کو لنک کے اندر ہی شامل کرتا ہے — نہ اُن query parameters میں جو ہٹا دیے جاتے ہیں، نہ اُن referrer headers میں جو غائب ہو جاتے ہیں۔ جب کلک ہوتا ہے تو Pulse اسے پکڑ لیتا ہے۔ جب کنورژن ہوتا ہے تو Prism پورا راستہ دوبارہ تشکیل دیتا ہے۔ نہ کوئی ٹریکنگ پکسلز، نہ کوئی page-side اسکرپٹس۔",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (وضاحت کے ساتھ)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "نسبت دہی کی بصیرتیں",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "کیس اسٹڈیز، مہمات کی فرانزک جانچ، اور آپ کے کلک اسٹریمز میں چھپے پیٹرنز۔",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "ہم نے ایک وائرل مہم کا سراغ منگل کے نیوز لیٹر کے ایک واحد لنک تک لگایا",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "کنورژن میں 40% اضافے کا سراغ اُس سائیڈبار لنک تک پہنچا جسے کسی نے اہم نہیں سمجھا تھا۔",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "ڈارک ٹریفک: وہ کلکس جو آپ نہیں دیکھ سکتے",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "جب کوئی URL کو کسی میسجنگ ایپ میں کاپی کرتا ہے تو referrer غائب ہو جاتا ہے۔ Beacon میٹا ڈیٹا برقرار رہتا ہے۔",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "لاسٹ-کلک نسبت دہی کا خاتمہ",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "صرف آخری رابطہ نقطے کو کریڈٹ دینا ایک جھوٹ ہے۔ Prism کریڈٹ کو پورے راستے میں تقسیم کرتا ہے۔",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (بغیر وضاحت)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "حالیہ اپڈیٹس",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Signal 2.1: Resonance اوورلیپ نقشے اور Flare بلک جنریشن",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Resonance اب لامحدود سیگمنٹس میں سامعین کے تداخل کو بصری شکل دیتا ہے، اور Flare اب CSV سے بلک QR جنریشن کو سپورٹ کرتا ہے۔",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (متن کے اندر استعمال)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Signal، ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.beaconLinks.title": {
+    "message": "برانڈڈ نسبت دہی لنک",
+    "description": "Showcase Terminology hover title for Beacon links"
+  },
+  "showcase.terminology.beaconLinks.label": {
+    "message": "Beacon لنکس",
+    "description": "Showcase Terminology displayed text for Beacon links"
+  },
+  "showcase.terminology.paragraph1.afterBeacon": {
+    "message": " کا استعمال کرتے ہوئے تاثر سے کنورژن تک کے راستے کی پیمائش کرتا ہے۔ ہر کلک کو ",
+    "description": "Showcase Terminology paragraph 1 fragment after Beacon links"
+  },
+  "showcase.terminology.pulse.title": {
+    "message": "حقیقی وقت کلک اسٹریم",
+    "description": "Showcase Terminology hover title for Pulse"
+  },
+  "showcase.terminology.paragraph1.afterPulse": {
+    "message": " پکڑتا ہے اور اسے ",
+    "description": "Showcase Terminology paragraph 1 fragment after Pulse"
+  },
+  "showcase.terminology.prism.title": {
+    "message": "کثیر رابطہ نسبت دہی انجن",
+    "description": "Showcase Terminology hover title for Prism"
+  },
+  "showcase.terminology.paragraph1.afterPrism": {
+    "message": " میں بھیج دیتا ہے تاکہ مکمل راستے کی نسبت دہی ہو سکے۔",
+    "description": "Showcase Terminology paragraph 1 fragment after Prism"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "اپنے ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.aperture.title": {
+    "message": "کسی مخصوص لمحے کا مہم اسنیپ شاٹ",
+    "description": "Showcase Terminology hover title for Aperture snapshots"
+  },
+  "showcase.terminology.aperture.label": {
+    "message": "Aperture اسنیپ شاٹس",
+    "description": "Showcase Terminology displayed text for Aperture snapshots"
+  },
+  "showcase.terminology.paragraph2.afterAperture": {
+    "message": " کی مدد سے ٹیمیں وقت کے ساتھ مہم کی کارکردگی کا سراغ لگاتی ہیں۔ ",
+    "description": "Showcase Terminology paragraph 2 fragment after Aperture"
+  },
+  "showcase.terminology.resonance.title": {
+    "message": "سامعین کے تداخل کا پتہ لگانے والا",
+    "description": "Showcase Terminology hover title for Resonance engine"
+  },
+  "showcase.terminology.resonance.label": {
+    "message": "Resonance انجن",
+    "description": "Showcase Terminology displayed text for Resonance engine"
+  },
+  "showcase.terminology.paragraph2.afterResonance": {
+    "message": " ظاہر کرتا ہے کہ سامعین کہاں آپس میں تداخل کرتے ہیں، اور ",
+    "description": "Showcase Terminology paragraph 2 fragment after Resonance"
+  },
+  "showcase.terminology.flare.title": {
+    "message": "QR اور deep link جنریٹر",
+    "description": "Showcase Terminology hover title for Flare"
+  },
+  "showcase.terminology.paragraph2.afterFlare": {
+    "message": " نسبت دہی کو فزیکل دنیا تک بڑھا دیتا ہے۔",
+    "description": "Showcase Terminology paragraph 2 fragment after Flare"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (کیپشن کے ساتھ)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "برانڈ نشان کو Frame بلاک کے ذریعے نمایاں کیا گیا، نسبت دہی کے لیے کیپشن کے ساتھ۔",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Signal برانڈ تھمب نیل۔",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (بغیر کیپشن)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (دونوں اسٹورز)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "ساتھی ایپ ڈاؤن لوڈ کریں",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (صرف App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "iOS پر دستیاب",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (صرف Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Android پر دستیاب",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (بغیر لیبل)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} منٹ کا مطالعہ",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

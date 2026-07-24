@@ -12,6 +12,16 @@ import Head from '@docusaurus/Head';
 import { translate } from '@docusaurus/Translate';
 import Layout from '@theme/Layout';
 
+/**
+ * Pages - Home.
+ *
+ * Renders the Lantern front page, composing the hero, install strip,
+ * feature grid, stats, spotlight, app market download, and blog preview blocks.
+ *
+ * @returns {JSX.Element}
+ *
+ * @since UNRELEASED
+ */
 function Home() {
   return (
     <Layout description={translate({

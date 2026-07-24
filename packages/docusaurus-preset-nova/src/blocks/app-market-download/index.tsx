@@ -21,8 +21,6 @@ import type {
  *
  * @param {Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlocksAppMarketDownload(props: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props) {

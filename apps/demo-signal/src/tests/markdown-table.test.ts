@@ -1,4 +1,5 @@
 import { registerMarkdownTableSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 /**
  * Tests - Markdown Table.
@@ -10,5 +11,6 @@ import { registerMarkdownTableSuite } from '@cbnventures/nova/rules/vitest';
  * @since 0.20.0
  */
 registerMarkdownTableSuite({
+  vitest,
   enable: 'all',
 });

@@ -7,10 +7,6 @@
     "message": "العروض",
     "description": "Label of navbar item 2"
   },
-  "item.2.label": {
-    "message": "Trust",
-    "description": "Label of navbar item 3"
-  },
   "item.3.label": {
     "message": "المدونة",
     "description": "Label of navbar item 4"
@@ -18,9 +14,5 @@
   "item.4.label": {
     "message": "البيان",
     "description": "Label of navbar item 5"
-  },
-  "item.6.label": {
-    "message": "GitHub",
-    "description": "Label of navbar item 7"
   }
 }

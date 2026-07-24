@@ -14,8 +14,6 @@ import type {
  *
  * @param {Theme_DocsRoot_Index_DocsRoot_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocsRoot(props: Theme_DocsRoot_Index_DocsRoot_Props) {

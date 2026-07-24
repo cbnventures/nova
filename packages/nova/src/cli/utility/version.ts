@@ -3,7 +3,7 @@ import {
   platform,
   release,
   version,
-} from 'os';
+} from 'node:os';
 
 import chalk from 'chalk';
 

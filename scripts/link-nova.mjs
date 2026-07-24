@@ -1,6 +1,6 @@
-import { execSync } from 'child_process';
-import { existsSync, lstatSync } from 'fs';
-import { join } from 'path';
+import { execSync } from 'node:child_process';
+import { existsSync, lstatSync } from 'node:fs';
+import { join } from 'node:path';
 
 const PACKAGES = [
   '@cbnventures/nova',
@@ -32,9 +32,17 @@ function linkNova() {
     return;
   }
 
+  console.log(`link-nova: Linking ${PACKAGES.join(', ')} ...`);
+
+  execSync(`npm link ${PACKAGES.join(' ')}`, { stdio: 'inherit' });
+
   for (const packageName of PACKAGES) {
-    console.log(`link-nova: Linking ${packageName} ...`);
-    execSync(`npm link ${packageName}`, { stdio: 'inherit' });
+    const localPath = join(process.cwd(), 'node_modules', packageName);
+    const isLinked = existsSync(localPath) && lstatSync(localPath).isSymbolicLink();
+
+    if (!isLinked) {
+      throw new Error(`link-nova: ${packageName} is a package copy, not a symlink. Run "npm link ${PACKAGES.join(' ')}" manually.`);
+    }
   }
 
   console.log('link-nova: Done.');

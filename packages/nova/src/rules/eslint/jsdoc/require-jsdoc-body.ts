@@ -6,11 +6,15 @@ import { isIgnoredFile } from '../../../lib/utility.js';
 import type {
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_AllComments,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyLineCount,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyLines,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyPast,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyReached,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Context,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_FirstLine,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_FoundSummary,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_LastLine,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Lines,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_MiddleLine,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_PastSummary,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Returns,
@@ -18,6 +22,7 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_WidthTrimmed,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Program_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsDiamond,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxLines,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxWidth,
@@ -54,10 +59,14 @@ export class Runner {
         bodyTooShort: 'JSDoc body must have at least {{ minLines }} line(s). Found {{ actual }}.',
         bodyTooLong: 'JSDoc body must have at most {{ maxLines }} line(s). Found {{ actual }}.',
         bodyLineTooWide: 'JSDoc body line exceeds {{ maxWidth }} characters. Found {{ actual }}.',
+        bodyNotDiamond: 'A 3-line JSDoc body must have its second line be the longest (diamond shape).',
       },
       schema: [{
         type: 'object',
         properties: {
+          diamond: {
+            type: 'boolean',
+          },
           ignoreFiles: {
             type: 'array',
             items: {
@@ -87,6 +96,7 @@ export class Runner {
       }],
     },
     defaultOptions: [{
+      diamond: false as Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsDiamond,
       ignoreFiles: [] as Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsIgnoreFiles,
       maxLines: 3 as Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxLines,
       maxWidth: 80 as Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxWidth,
@@ -129,10 +139,10 @@ export class Runner {
    * Scans all block comments for JSDoc blocks and verifies
    * each has a body paragraph between the summary and the first tag.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Context} context - Context.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Returns}
    *
@@ -154,6 +164,7 @@ export class Runner {
       let foundSummary: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_FoundSummary = false;
       let pastSummary: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_PastSummary = false;
       let bodyLineCount: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyLineCount = 0;
+      const bodyLines: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyLines = [];
 
       for (const line of lines) {
         const trimmed: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Trimmed = line.replace(LIB_REGEX_PATTERN_JSDOC_LINE_PREFIX, '').trim();
@@ -182,6 +193,7 @@ export class Runner {
         // Any non-empty, non-tag line after the summary is body text.
         if (pastSummary === true) {
           bodyLineCount += 1;
+          bodyLines.push(trimmed);
         }
       }
 
@@ -262,6 +274,26 @@ export class Runner {
             });
 
             break;
+          }
+        }
+      }
+
+      // Check the 3-line body diamond shape.
+      if (options['diamond'] === true && bodyLineCount === 3) {
+        const firstLine: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_FirstLine = bodyLines[0];
+        const middleLine: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_MiddleLine = bodyLines[1];
+        const lastLine: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_LastLine = bodyLines[2];
+
+        if (
+          firstLine !== undefined
+          && middleLine !== undefined
+          && lastLine !== undefined
+        ) {
+          if (middleLine.length < firstLine.length || middleLine.length < lastLine.length) {
+            context.report({
+              node: comment,
+              messageId: 'bodyNotDiamond',
+            });
           }
         }
       }

@@ -1,0 +1,494 @@
+{
+  "home.layout.description": {
+    "message": "Envoy menerjemahkan antar sistem yang tak pernah dirancang untuk saling memahami. Tanpa format bersama. Tanpa protokol bersama. Hanya pengiriman.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Envoy - Pesan Pasti Sampai",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Infrastruktur Integrasi",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Pesan sampai. Itulah seluruh produknya.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Envoy menerjemahkan antar sistem yang tak pernah dirancang untuk saling memahami. Tanpa format bersama. Tanpa protokol bersama. Hanya pengiriman.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Baca Dokumentasi",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Lihat di Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.dispatch.description": {
+    "message": "Mesin perutean cerdas. Memeriksa setiap payload masuk dan merutekannya berdasarkan konten, sumber, tingkat keparahan, atau aturan khusus. Kecocokan pertama yang menang. Tanpa ambiguitas.",
+    "description": "Front page Features card description for Dispatch"
+  },
+  "home.features.courier.description": {
+    "message": "Mesin retry dengan jaminan pengiriman. Exponential backoff dengan jitter, dead-letter queue untuk pesan yang takkan pernah sampai, dan tanda terima pengiriman untuk setiap percobaan.",
+    "description": "Front page Features card description for Courier"
+  },
+  "home.features.parcel.description": {
+    "message": "Pipeline transformasi payload. Menulis ulang pesan antar format — JSON ke JSON, JSON ke plaintext, XML ke JSON. Pemetaan field, mode lossy dan lossless.",
+    "description": "Front page Features card description for Parcel"
+  },
+  "home.features.cipher.description": {
+    "message": "Gerbang autentikasi. Tanda tangan HMAC-SHA256, bearer token, dan daftar izin IP. Memverifikasi identitas sumber sebelum satu byte pun mencapai pipeline transformasi.",
+    "description": "Front page Features card description for Cipher"
+  },
+  "home.features.ledger.description": {
+    "message": "Jejak audit pengiriman yang lengkap. Setiap pesan yang diterima, ditransformasi, dirutekan, dan dikirim tercatat dalam log append-only dengan kebijakan retensi yang dapat dikonfigurasi.",
+    "description": "Front page Features card description for Ledger"
+  },
+  "home.features.embassy.description": {
+    "message": "Reverse proxy penyamar origin. Menjauhkan layanan internal Anda dari internet publik. Sumber eksternal berhenti di Embassy. Layanan internal tak pernah tahu dunia luar itu ada.",
+    "description": "Front page Features card description for Embassy"
+  },
+  "home.stats.heading": {
+    "message": "Dalam Angka",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.translators.label": {
+    "message": "Penerjemah protokol",
+    "description": "Front page Stats label for protocol translator count"
+  },
+  "home.stats.image.label": {
+    "message": "Image Vial",
+    "description": "Front page Stats label for Vial image size"
+  },
+  "home.stats.dependencies.label": {
+    "message": "Dependensi eksternal",
+    "description": "Front page Stats label for external dependency count"
+  },
+  "home.stats.latency.label": {
+    "message": "Latensi relay",
+    "description": "Front page Stats label for relay latency"
+  },
+  "home.spotlight.heading": {
+    "message": "Terjemahkan, Rutekan, Kirim",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Glassboard memicu peringatan. Envoy menerjemahkan payload, merutekannya ke topik Canary yang tepat, dan mengonfirmasi pengiriman. Tak satu pihak pun tahu pihak lain itu ada.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Dapatkan notifikasi pengiriman",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Kabar dari Relay Room",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Catatan rilis, ulasan mendalam soal integrasi, dan sesekali kabar dari ruang relay.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Etalase blok Envoy yang memperagakan setiap blok dari docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Setiap blok dari preset Envoy, dirender dengan data contoh.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (penuh)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Etalase Blok",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Setiap blok Envoy, diperagakan dalam satu tempat.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Halaman ini merender setiap blok dari @cbnventures/docusaurus-preset-nova/blocks dengan data dunia Envoy agar Anda bisa melihat tampilan dan perilakunya.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Baca Dokumentasi",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Lihat di Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Kirim tanpa basa-basi.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Envoy menerjemahkan antar sistem yang tak pernah dirancang untuk saling memahami. Tanpa format bersama. Tanpa protokol bersama. Hanya pengiriman.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Mulai Sekarang",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (bawaan)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Saya suka ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (tanpa prefiks)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Cepat",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Fleksibel",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Gratis",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (tempo lambat)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Dibuat untuk ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "pengembang",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "desainer",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (tanpa loop)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Selamat datang di ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Pasang dengan Vial",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Atau gunakan Spark CLI",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (tanpa label)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Instalasi cepat",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (dengan ikon)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Mengapa Tim Memilih Envoy",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.dispatch.description": {
+    "message": "Mesin perutean cerdas. Memeriksa payload dan merutekannya berdasarkan konten, sumber, tingkat keparahan, atau aturan khusus.",
+    "description": "Showcase Features (with icons) card description for Dispatch"
+  },
+  "showcase.featuresIcons.courier.description": {
+    "message": "Mesin retry dengan jaminan pengiriman. Exponential backoff, dead-letter queue, dan tanda terima pengiriman.",
+    "description": "Showcase Features (with icons) card description for Courier"
+  },
+  "showcase.featuresIcons.parcel.description": {
+    "message": "Pipeline transformasi payload. Menulis ulang pesan antar format — JSON, XML, plaintext, form-data.",
+    "description": "Showcase Features (with icons) card description for Parcel"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (tanpa ikon, tanpa judul)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.cipher.description": {
+    "message": "Gerbang autentikasi. Tanda tangan HMAC, bearer token, dan daftar izin IP. Memverifikasi identitas sumber sebelum diproses.",
+    "description": "Showcase Features (no icons) card description for Cipher"
+  },
+  "showcase.featuresNoIcons.ledger.description": {
+    "message": "Jejak audit pengiriman yang append-only. Setiap pesan yang diterima, ditransformasi, dirutekan, dan dikirim tercatat.",
+    "description": "Showcase Features (no icons) card description for Ledger"
+  },
+  "showcase.featuresNoIcons.embassy.description": {
+    "message": "Reverse proxy penyamar origin. Menjauhkan layanan internal dari internet publik sepenuhnya.",
+    "description": "Showcase Features (no icons) card description for Embassy"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (enam item, ikon campuran)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Semua dalam Satu Relay",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.dispatch.description": {
+    "message": "Merutekan pesan berdasarkan konten, sumber, tingkat keparahan, atau jadwal. Relay pertama yang cocok yang menang.",
+    "description": "Showcase Features (six items) card description for Dispatch"
+  },
+  "showcase.featuresSix.courier.description": {
+    "message": "Exponential backoff dengan jitter. Dead-letter queue. Tanda terima pengiriman. Pengiriman terjamin.",
+    "description": "Showcase Features (six items) card description for Courier"
+  },
+  "showcase.featuresSix.parcel.description": {
+    "message": "Mentransformasi payload antar dua format apa pun. Mode lossy dan lossless. Pemetaan field dan rendering template.",
+    "description": "Showcase Features (six items) card description for Parcel"
+  },
+  "showcase.featuresSix.cipher.description": {
+    "message": "Mengautentikasi setiap permintaan masuk. Mode HMAC, bearer, dan daftar izin IP. Rotasi token tanpa downtime.",
+    "description": "Showcase Features (six items) card description for Cipher"
+  },
+  "showcase.featuresSix.ledger.description": {
+    "message": "Mencatat setiap transisi status. Append-only. Retensi yang dapat dikonfigurasi. Dapat diekspor via Spoke API.",
+    "description": "Showcase Features (six items) card description for Ledger"
+  },
+  "showcase.featuresSix.embassy.description": {
+    "message": "Reverse proxy yang menyembunyikan topologi internal. Terminasi TLS. Penghapusan header. Penyamaran origin.",
+    "description": "Showcase Features (six items) card description for Embassy"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (dengan judul dan deskripsi)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Metrik Relay",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Indikator kinerja utama di seluruh pipeline relay yang aktif.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Latensi relay (p99)",
+    "description": "Showcase Stats (full) label for relay latency"
+  },
+  "showcase.statsFull.image.label": {
+    "message": "Ukuran image Vial",
+    "description": "Showcase Stats (full) label for Vial image size"
+  },
+  "showcase.statsFull.delivery.label": {
+    "message": "Tingkat pengiriman",
+    "description": "Showcase Stats (full) label for delivery rate"
+  },
+  "showcase.statsFull.translators.label": {
+    "message": "Penerjemah protokol",
+    "description": "Showcase Stats (full) label for protocol translator count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (tanpa judul)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.translators.label": {
+    "message": "Penerjemah",
+    "description": "Showcase Stats (no heading) label for translators"
+  },
+  "showcase.statsNoHeading.dependencies.label": {
+    "message": "Dependensi",
+    "description": "Showcase Stats (no heading) label for dependencies"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "Sub-alat",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (dengan kode)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Mulai Cepat",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Tiga perintah dari nol hingga relay siap pakai.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (dengan teks)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Cara Kerjanya",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Envoy membaca relay manifest Anda, menginisialisasi Cipher untuk autentikasi, mengompilasi aturan transformasi Parcel, dan mendaftarkan rute Dispatch. Pesan mengalir melalui pipeline dalam waktu kurang dari lima milidetik.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (dengan deskripsi)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Kabar dari Relay Room",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Catatan rilis, ulasan mendalam soal integrasi, dan sesekali kabar dari ruang relay.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Apa yang Terjadi Saat Webhook Gagal Pukul 3 Pagi",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Peringatan Glassboard menyala pukul 3:47 pagi. Webhook ke Canary gagal tanpa suara. Tak seorang pun terbangun. Itulah masalah yang melahirkan Envoy.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Logika Retry Lebih Sulit dari yang Anda Kira",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Retry naif itu mudah. Retry yang andal di bawah beban, dengan backoff, jitter, dan dead-letter queue, adalah disiplin yang berbeda.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Kontainer 3MB yang Menggantikan Seluruh Lapisan Integrasi Kami",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Dua belas layanan, sembilan cron job, dan satu basis data bersama — digantikan oleh satu image Vial 3MB.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (tanpa deskripsi)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Kabar Terbaru",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Envoy 2.2: Perutean Fanout dan Ekspor Ledger",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Dispatch kini mendukung fanout ke banyak tujuan dari satu relay. Entri Ledger dapat diekspor ke endpoint Spoke mana pun sesuai jadwal yang dapat dikonfigurasi.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (penggunaan inline)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Envoy menggunakan ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.relayManifest.title": {
+    "message": "berkas deklarasi pipeline relay",
+    "description": "Showcase Terminology hover title for relay manifest"
+  },
+  "showcase.terminology.paragraph1.afterRelay": {
+    "message": " untuk mendefinisikan setiap pipeline integrasi. Setiap pesan masuk diautentikasi oleh gerbang ",
+    "description": "Showcase Terminology paragraph 1 fragment after relay manifest"
+  },
+  "showcase.terminology.cipher.title": {
+    "message": "gerbang autentikasi",
+    "description": "Showcase Terminology hover title for Cipher"
+  },
+  "showcase.terminology.paragraph1.afterCipher": {
+    "message": " sebelum mencapai tahap transformasi. Ketika pengiriman gagal, mesin ",
+    "description": "Showcase Terminology paragraph 1 fragment after Cipher"
+  },
+  "showcase.terminology.courier.title": {
+    "message": "mesin retry dengan jaminan pengiriman",
+    "description": "Showcase Terminology hover title for Courier"
+  },
+  "showcase.terminology.paragraph1.afterCourier": {
+    "message": " menangani retry secara otomatis.",
+    "description": "Showcase Terminology paragraph 1 fragment after Courier"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Dengan pipeline ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.parcel.title": {
+    "message": "pipeline transformasi payload",
+    "description": "Showcase Terminology hover title for Parcel"
+  },
+  "showcase.terminology.paragraph2.afterParcel": {
+    "message": ", sumber dan tujuan tak pernah perlu menyepakati format apa pun. ",
+    "description": "Showcase Terminology paragraph 2 fragment after Parcel"
+  },
+  "showcase.terminology.dispatch.title": {
+    "message": "mesin perutean cerdas",
+    "description": "Showcase Terminology hover title for Dispatch"
+  },
+  "showcase.terminology.paragraph2.afterDispatch": {
+    "message": " menangani perutean, dan ",
+    "description": "Showcase Terminology paragraph 2 fragment after Dispatch"
+  },
+  "showcase.terminology.ledger.title": {
+    "message": "jejak audit append-only",
+    "description": "Showcase Terminology hover title for Ledger"
+  },
+  "showcase.terminology.paragraph2.afterLedger": {
+    "message": " mencatat seluruh riwayat transaksi.",
+    "description": "Showcase Terminology paragraph 2 fragment after Ledger"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (dengan keterangan)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Logo merek yang dirutekan melalui blok Frame — gambar + keterangan, tanpa basa-basi.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Thumbnail merek Envoy.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (tanpa keterangan)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (kedua toko)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Unduh aplikasi pendamping",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (khusus App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Tersedia di iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (khusus Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Tersedia di Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (tanpa label)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

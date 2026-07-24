@@ -1,0 +1,510 @@
+{
+  "home.layout.description": {
+    "message": "Sentinel безперервно оцінює кожного користувача, кожен пристрій, кожне з'єднання. Доступ — це не двері. Це розмова, що не закінчується ніколи.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Sentinel: Довіра — це вразливість",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Платформа безпеки",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Довіра — це вразливість.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Sentinel безперервно оцінює кожного користувача, кожен пристрій, кожне з'єднання. Доступ — це не двері. Це розмова, що не закінчується ніколи.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Дослідити платформу",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Переглянути на Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.watchtower.description": {
+    "message": "Безперервна оцінка стану захищеності. Кожні 90 секунд аналізує справність пристрою, розташування та поведінку. Щойно умови змінюються, Watchtower дізнається про це першим.",
+    "description": "Front page Features card description for Watchtower"
+  },
+  "home.features.drawbridge.description": {
+    "message": "Адаптивний шлюз доступу. Надає, звужує або відкликає доступ у реальному часі залежно від контексту — особи, стану захищеності, розташування й часу. Жодних статичних правил.",
+    "description": "Front page Features card description for Drawbridge"
+  },
+  "home.features.garrison.description": {
+    "message": "Рушій відповідності кінцевих точок. Застосовує політику на кожному підключеному пристрої. Шифрування диска, версія OS, стан фаєрвола — усе перевіряється, перш ніж надати доступ.",
+    "description": "Front page Features card description for Garrison"
+  },
+  "home.features.rampart.description": {
+    "message": "Рівень мікросегментації. Ізолює робочі навантаження так, що горизонтальне переміщення стає неможливим. Навіть якщо один сегмент скомпрометовано, вторгнення зупиняється саме там.",
+    "description": "Front page Features card description for Rampart"
+  },
+  "home.features.spyglass.description": {
+    "message": "Аудит і криміналістика. Повна реконструкція сеансів із незмінним зберіганням журналів упродовж 7 років. Кожне рішення про доступ, кожна перевірка політики, кожне з'єднання — усе фіксується.",
+    "description": "Front page Features card description for Spyglass"
+  },
+  "home.features.parapet.description": {
+    "message": "Пісочниця симуляції політик. Перевіряйте правила доступу на реальному трафіку, перш ніж вводити їх у дію. Побачте, хто отримає доступ, хто його втратить і чому — не торкаючись робочого середовища.",
+    "description": "Front page Features card description for Parapet"
+  },
+  "home.stats.heading": {
+    "message": "У цифрах",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.cycle.label": {
+    "message": "Цикл повторної оцінки",
+    "description": "Front page Stats label for re-evaluation cycle"
+  },
+  "home.stats.tunnels.label": {
+    "message": "Одночасні тунелі",
+    "description": "Front page Stats label for concurrent tunnels"
+  },
+  "home.stats.retention.label": {
+    "message": "Зберігання аудиту",
+    "description": "Front page Stats label for audit retention"
+  },
+  "home.stats.latency.label": {
+    "message": "Затримка політики",
+    "description": "Front page Stats label for policy latency"
+  },
+  "home.spotlight.heading": {
+    "message": "Одна політика — повна оцінка",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Визначте, що означає довіра. Sentinel застосовує це безперервно.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Стежте за своїм парком пристроїв будь-де",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Бюлетень безпеки",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Дослідження загроз, рекомендації щодо стану захищеності та філософія безперервної довіри.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Вітрина блоків Sentinel, що демонструє кожен блок із docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Кожен блок із пресета Sentinel, відтворений на зразкових даних.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (повний)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Вітрина блоків",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Кожен блок Sentinel, продемонстрований в одному місці.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Ця сторінка відтворює кожен блок із @cbnventures/docusaurus-preset-nova/blocks з даними зі світу Sentinel, щоб ви побачили, як вони виглядають і поводяться.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Читати документацію",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Переглянути на Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (мінімальний)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Довіру заробляють безперервно.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Sentinel безперервно оцінює кожного користувача, кожен пристрій, кожне з'єднання. Доступ — це не двері. Це розмова, що не закінчується ніколи.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Дослідити платформу",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (за замовчуванням)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Я люблю ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (без префікса)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Швидкий",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Гнучкий",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Безкоштовний",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (повільний темп)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Створено для ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "розробників",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "дизайнерів",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (без циклу)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Ласкаво просимо до ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Встановити через Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Або скористайтеся контейнером Vial",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (без мітки)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Швидке встановлення",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (з іконками)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Чому команди обирають Sentinel",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.watchtower.description": {
+    "message": "Безперервна оцінка стану захищеності. Кожні 90 секунд аналізує справність пристрою, розташування та поведінку.",
+    "description": "Showcase Features (with icons) card description for Watchtower"
+  },
+  "showcase.featuresIcons.drawbridge.description": {
+    "message": "Адаптивний шлюз доступу. Надає, звужує або відкликає доступ у реальному часі на основі оцінки довіри.",
+    "description": "Showcase Features (with icons) card description for Drawbridge"
+  },
+  "showcase.featuresIcons.garrison.description": {
+    "message": "Рушій відповідності кінцевих точок. Застосовує політику на кожному підключеному пристрої, перш ніж надати доступ.",
+    "description": "Showcase Features (with icons) card description for Garrison"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (без іконок, без заголовка)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.rampart.description": {
+    "message": "Рівень мікросегментації. Ізолює робочі навантаження так, що горизонтальне переміщення між зонами стає неможливим.",
+    "description": "Showcase Features (no icons) card description for Rampart"
+  },
+  "showcase.featuresNoIcons.spyglass.description": {
+    "message": "Аудит і криміналістика. Повна реконструкція сеансів із незмінним зберіганням журналів упродовж 7 років.",
+    "description": "Showcase Features (no icons) card description for Spyglass"
+  },
+  "showcase.featuresNoIcons.parapet.description": {
+    "message": "Пісочниця симуляції політик. Перевіряйте правила доступу на реальному трафіку, перш ніж вводити їх у дію.",
+    "description": "Showcase Features (no icons) card description for Parapet"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (шість елементів, змішані іконки)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Повноцінний рушій довіри",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.watchtower.description": {
+    "message": "Оцінює стан захищеності пристрою, особу користувача, мережевий контекст і поведінкові сигнали в безперервному 90-секундному циклі.",
+    "description": "Showcase Features (six items) card description for Watchtower"
+  },
+  "showcase.featuresSix.drawbridge.description": {
+    "message": "Перетворює оцінки Watchtower на конкретні рішення про доступ — надати, звузити або відкликати.",
+    "description": "Showcase Features (six items) card description for Drawbridge"
+  },
+  "showcase.featuresSix.garrison.description": {
+    "message": "Керує реєстрацією пристроїв, базовими рівнями захищеності та профілями відповідності для кожної кінцевої точки.",
+    "description": "Showcase Features (six items) card description for Garrison"
+  },
+  "showcase.featuresSix.rampart.description": {
+    "message": "Розділяє інфраструктуру на ізольовані зони. Перетин зон вимагає перевірки політики.",
+    "description": "Showcase Features (six items) card description for Rampart"
+  },
+  "showcase.featuresSix.spyglass.description": {
+    "message": "Фіксує кожне рішення про доступ, кожну перевірку політики та кожен перетин зони в незмінному ланцюжку аудиту.",
+    "description": "Showcase Features (six items) card description for Spyglass"
+  },
+  "showcase.featuresSix.parapet.description": {
+    "message": "Відтворює реальний трафік на чернетках політик, щоб показати точний вплив на доступ ще до впровадження.",
+    "description": "Showcase Features (six items) card description for Parapet"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (із заголовком і описом)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Метрики платформи",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Ключові показники ефективності всього рушія довіри Sentinel.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.cycle.label": {
+    "message": "Цикл повторної оцінки",
+    "description": "Showcase Stats (full) label for re-evaluation cycle"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Затримка політики",
+    "description": "Showcase Stats (full) label for policy latency"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "Час безперебійної роботи оцінювання",
+    "description": "Showcase Stats (full) label for evaluation uptime"
+  },
+  "showcase.statsFull.retention.label": {
+    "message": "Зберігання аудиту",
+    "description": "Showcase Stats (full) label for audit retention"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (без заголовка)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.tunnels.label": {
+    "message": "Одночасні тунелі",
+    "description": "Showcase Stats (no heading) label for concurrent tunnels"
+  },
+  "showcase.statsNoHeading.components.label": {
+    "message": "Компоненти",
+    "description": "Showcase Stats (no heading) label for components"
+  },
+  "showcase.statsNoHeading.zoneTypes.label": {
+    "message": "Типи зон",
+    "description": "Showcase Stats (no heading) label for zone types"
+  },
+  "showcase.statsNoHeading.implicitTrust.label": {
+    "message": "Неявна довіра",
+    "description": "Showcase Stats (no heading) label for implicit trust"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (з кодом)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Швидкий старт",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Три команди — від нуля до безперервної оцінки довіри.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (з текстом)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Як це працює",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Sentinel оцінює довіру безперервно. Watchtower обчислює оцінку стану захищеності кожні 90 секунд. Drawbridge застосовує результат у реальному часі. Spyglass незмінно фіксує кожне рішення. На виході завжди докази — а не припущення.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (з описом)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Бюлетень безпеки",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Дослідження загроз, рекомендації щодо стану захищеності та філософія безперервної довіри.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "День, коли ми перестали довіряти мережі",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Периметр розчинився, а галузь удавала, що ні. Ми створили Sentinel, бо кожен VPN — це припущення про довіру.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Симуляція вторгнення, якого в нас ніколи не було",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Як Parapet виявив шлях горизонтального переміщення в середовищі підготовки ще до того, як він дістався робочого.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Чому відповідність — це не безпека (але потрібні обидві)",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Пройти аудит і бути захищеним — не одне й те саме. Spyglass долає цю прірву.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (без опису)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Останні оновлення",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Sentinel 3.4: відтворення трафіку в Parapet і карантин зон у Rampart",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Parapet тепер підтримує повне відтворення трафіку на чернетках політик, а Rampart може автоматично поміщати в карантин пристрої, які не проходять перевірки стану захищеності.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (вживання в тексті)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Sentinel використовує ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.trustPolicy.title": {
+    "message": "декларація контролю доступу",
+    "description": "Showcase Terminology hover title for trust policy"
+  },
+  "showcase.terminology.trustPolicy.label": {
+    "message": "політику довіри",
+    "description": "Showcase Terminology displayed text for trust policy"
+  },
+  "showcase.terminology.paragraph1.afterTrustPolicy": {
+    "message": " для ухвалення всіх рішень щодо доступу. Кожен зареєстрований пристрій контролюється агентом ",
+    "description": "Showcase Terminology paragraph 1 fragment after trust policy"
+  },
+  "showcase.terminology.garrison.title": {
+    "message": "агент відповідності кінцевих точок",
+    "description": "Showcase Terminology hover title for Garrison"
+  },
+  "showcase.terminology.paragraph1.afterGarrison": {
+    "message": ", який передає дані про стан захищеності до ",
+    "description": "Showcase Terminology paragraph 1 fragment after Garrison"
+  },
+  "showcase.terminology.watchtower.title": {
+    "message": "рушій безперервної оцінки довіри",
+    "description": "Showcase Terminology hover title for Watchtower"
+  },
+  "showcase.terminology.paragraph1.afterWatchtower": {
+    "message": " для оцінювання.",
+    "description": "Showcase Terminology paragraph 1 fragment after Watchtower"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Завдяки ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.rampart.title": {
+    "message": "рівень мікросегментації",
+    "description": "Showcase Terminology hover title for Rampart"
+  },
+  "showcase.terminology.paragraph2.afterRampart": {
+    "message": " із системою зон, робочі навантаження ізольовані так, що навіть скомпрометований сегмент не може вплинути на ",
+    "description": "Showcase Terminology paragraph 2 fragment after Rampart"
+  },
+  "showcase.terminology.filament.title": {
+    "message": "протокол шифрованого тунелю",
+    "description": "Showcase Terminology hover title for Filament"
+  },
+  "showcase.terminology.paragraph2.afterFilament": {
+    "message": " тунелі в сусідніх зонах. Кожне рішення фіксується в ",
+    "description": "Showcase Terminology paragraph 2 fragment after Filament"
+  },
+  "showcase.terminology.spyglass.title": {
+    "message": "рушій аудиту та криміналістики",
+    "description": "Showcase Terminology hover title for Spyglass"
+  },
+  "showcase.terminology.paragraph2.afterSpyglass": {
+    "message": " для незмінного зберігання журналів аудиту.",
+    "description": "Showcase Terminology paragraph 2 fragment after Spyglass"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (з підписом)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Знак бренду, розміщений на Frame — суцільна рамка, незворушна, мов вартова вежа.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Мініатюра бренду Sentinel.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (без підпису)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (обидва магазини)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Завантажте супутній застосунок",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (лише App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Доступно для iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (лише Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Доступно для Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (без мітки)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} хвилина читання|{readingTime} хвилини читання|{readingTime} хвилин читання",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

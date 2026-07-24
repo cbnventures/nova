@@ -1,4 +1,13 @@
+import { NovaIdentity } from '@cbnventures/nova/toolkit';
+
 import type { DocusaurusNovaConfig } from '@cbnventures/docusaurus-preset-nova/types/config';
+
+/**
+ * Identity.
+ *
+ * @since UNRELEASED
+ */
+const identity = new NovaIdentity().forDocs();
 
 /**
  * Docusaurus Configuration.
@@ -15,7 +24,7 @@ const config: DocusaurusNovaConfig = {
   // Deployment.
   url: 'https://signal-demo.nova.cbnventures.io',
   baseUrl: '/',
-  organizationName: 'cbnventures',
+  organizationName: identity['organizationName'] ?? 'cbnventures',
   projectName: 'demo-signal',
   deploymentBranch: undefined,
   githubHost: undefined,
@@ -87,8 +96,41 @@ const config: DocusaurusNovaConfig = {
     defaultLocale: 'en',
     locales: [
       'en',
-      'zh-Hans',
       'ar',
+      'bg',
+      'bn',
+      'cs',
+      'da',
+      'de',
+      'es',
+      'et',
+      'fa',
+      'fil',
+      'fr',
+      'he',
+      'hi',
+      'hu',
+      'id',
+      'is',
+      'it',
+      'ja',
+      'ko',
+      'nb',
+      'nl',
+      'pl',
+      'pt-BR',
+      'pt-PT',
+      'ru',
+      'sl',
+      'sr',
+      'sv',
+      'tk',
+      'tr',
+      'uk',
+      'ur',
+      'vi',
+      'zh-Hans',
+      'zh-Hant',
     ],
     path: 'i18n',
     localeConfigs: {
@@ -195,7 +237,7 @@ const config: DocusaurusNovaConfig = {
               'rss',
               'atom',
             ],
-            copyright: `Copyright \u00A9 2025-${String(new Date().getFullYear())} CBN Ventures LLC. All Rights Reserved.`,
+            copyright: identity['copyright'] ?? `Copyright \u00A9 2025-${String(new Date().getFullYear())} CBN Ventures LLC. All Rights Reserved.`,
             limit: 20,
             title: 'Signal Blog',
             description: 'Attribution insights, campaign forensics, and the patterns hiding in your click streams.',
@@ -507,7 +549,7 @@ const config: DocusaurusNovaConfig = {
           label: 'LinkedIn',
         },
       ],
-      copyright: `Copyright \u00A9 2025-${String(new Date().getFullYear())} CBN Ventures LLC. All Rights Reserved.`,
+      copyright: identity['copyright'] ?? `Copyright \u00A9 2025-${String(new Date().getFullYear())} CBN Ventures LLC. All Rights Reserved.`,
       credit: true,
       cta: {
         label: 'Ready to find yours?',

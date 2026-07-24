@@ -2,6 +2,8 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
+import * as vitest from 'vitest';
+
 import { registerTypeDeclarationSuite } from '../../../rules/vitest/type-declarations/register.js';
 
 import type {
@@ -48,6 +50,7 @@ writeFileSync(
 );
 
 registerTypeDeclarationSuite({
+  vitest,
   packageRoot: fixtureRoot,
   typeRoots: ['src'],
   enable: ['inspector-filename-validation'],

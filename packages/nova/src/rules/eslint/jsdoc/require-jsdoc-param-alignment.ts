@@ -134,9 +134,9 @@ export class Runner {
    * Scans all block comments for JSDoc blocks with two or more @param
    * tags and reports any whose types, names, or dashes are not vertically aligned.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Context} context - Context.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Returns}
    *

@@ -146,8 +146,6 @@ function TabList(tabs: Theme_Tabs_Index_TabList_TabsResult) {
  *
  * @param {Theme_Tabs_Index_Tabs_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function Tabs(props: Theme_Tabs_Index_Tabs_Props) {

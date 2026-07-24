@@ -1,5 +1,4 @@
-import { describe } from 'vitest';
-
+import { setActiveVitest } from '../active-vitest.js';
 import { tablesMatchMarkdownTableOutput } from './rules.js';
 
 import type {
@@ -26,7 +25,9 @@ import type {
  * @since 0.20.0
  */
 export function registerMarkdownTableSuite(config: Rules_Vitest_MarkdownTable_Register_RegisterMarkdownTableSuite_Config): Rules_Vitest_MarkdownTable_Register_RegisterMarkdownTableSuite_Returns {
-  describe('markdown table', async () => {
+  setActiveVitest(config['vitest']);
+
+  config['vitest'].describe('markdown table', async () => {
     const contentDirs: Rules_Vitest_MarkdownTable_Register_RegisterMarkdownTableSuite_MarkdownTable_ContentDirs = config['contentDirs'] ?? [
       'docs',
       'blog',

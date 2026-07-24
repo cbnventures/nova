@@ -42,8 +42,6 @@ export type Theme_BlogPostItem_Index_BlogPostItem_FormattedDate = string;
 
 export type Theme_BlogPostItem_Index_BlogPostItem_ReadingTime = number | undefined;
 
-export type Theme_BlogPostItem_Index_BlogPostItem_ReadingTimeLabel = string;
-
 export type Theme_BlogPostItem_Index_BlogPostItem_FormattedReadingTime = string;
 
 export type Theme_BlogPostItem_Index_BlogPostItem_HasTruncateMarker = boolean;
@@ -99,3 +97,20 @@ export type Theme_BlogPostItem_Index_BlogPostItem_AuthorPage = {
 export type Theme_BlogPostItem_Index_BlogPostItem_AuthorPermalink = string | undefined;
 
 export type Theme_BlogPostItem_Index_BlogPostItem_Tag = TagMetadata;
+
+/**
+ * Theme - Blog Post Item - Use Reading Time Plural.
+ *
+ * @since 0.21.0
+ */
+export type Theme_BlogPostItem_Index_UseReadingTimePlural_SelectMessage = (readingTime: number) => string;
+
+export type Theme_BlogPostItem_Index_UseReadingTimePlural_PluralForm_SelectMessage = (count: number, message: string) => string;
+
+export type Theme_BlogPostItem_Index_UseReadingTimePlural_PluralForm = {
+  selectMessage: Theme_BlogPostItem_Index_UseReadingTimePlural_PluralForm_SelectMessage;
+};
+
+export type Theme_BlogPostItem_Index_UseReadingTimePlural_ReadingTime = number;
+
+export type Theme_BlogPostItem_Index_UseReadingTimePlural_Translated = string;

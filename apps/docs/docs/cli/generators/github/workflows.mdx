@@ -23,13 +23,13 @@ import TabItem from '@theme/TabItem';
 
 Generate GitHub Actions workflow files under `.github/workflows/` from the `"workflows"` array in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 
-The generator reads each entry, validates triggers and targets, substitutes variables from the template metadata, validates the output YAML, and writes the result to disk.
+The generator validates each entry against its template, builds the workflow from your config, resolves variable names, and writes the YAML to disk.
 
 ## Why Use This Command?
 
 - Bootstraps a full set of <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> workflows without writing YAML by hand.
 - Publishes one project to multiple destinations (npm, GitHub Packages, Docker, hosting) from a single build, instead of each destination running its own pipeline from scratch.
-- Serializes dependent publishes (e.g., preset waits for its core dependency to be on the registry) via `needs` on publish targets.
+- Serializes dependent publishes (e.g., a preset waits for its core dependency to reach the registry) via `after` on deploy destinations.
 - Keeps workflow definitions consistent across Nova-managed repositories.
 
 ## Requirements
@@ -72,29 +72,34 @@ The generator reads each entry, validates triggers and targets, substitutes vari
 | `-d, --dry-run`      | Run without writing any files.                                         |
 | `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
 
+:::warning Renamed fields are a breaking change
+
+Configs written for the previous generator must migrate to the new field names (`name`, `build`, `deploy`, `with`, and the per-destination `to`, `path`, `after`). An old-shape field is rejected with a diagnostic naming its exact replacement, and the workflow is skipped until you update it.
+:::
+
 ## Config-Driven Workflow Entries
 
 Each entry in the `"workflows"` array maps to one output file. An entry contains:
 
-| Field        | Required | Description                                                                                                     |
-|--------------|----------|-----------------------------------------------------------------------------------------------------------------|
-| `template`   | Yes      | The name of a bundled workflow template (see [Available Templates](#available-templates)).                      |
-| `suffix`     | Yes      | A label appended to the output filename and workflow name. Must be unique within the same template.             |
-| `triggers`   | Yes      | An array of trigger names (see [Available Triggers](#available-triggers)). Use an empty array to omit triggers. |
-| `depends-on` | No       | An array of workflow references in `{template}-{suffix}` format. Required when using `workflow-run-*` triggers. |
-| `scopes`     | No       | An array of workspace paths (keys from `workspaces`) to include in the `check` / `build` step filter.           |
-| `targets`    | No       | An array of publish destinations for the `publish` template. See [Target Fields](#target-fields).               |
-| `settings`   | No       | Key-value pairs that remap secret / variable names or supply values for literal template variables.             |
+| Field      | Required | Description                                                                                                        |
+|------------|----------|--------------------------------------------------------------------------------------------------------------------|
+| `template` | Yes      | The name of a bundled workflow template (see [Available Templates](#available-templates)).                         |
+| `name`     | Yes      | A label appended to the output filename and workflow name. Must be unique within the same template.                |
+| `triggers` | Yes      | An array of triggers (see [Available Triggers](#available-triggers)). Each trigger must be valid for the template. |
+| `build`    | No       | An array of workspace paths (keys from `workspaces`) to include in the `check` / `build` step filter.              |
+| `deploy`   | No       | An array of publish destinations for the `publish` template. See [Deploy Fields](#deploy-fields).                  |
+| `with`     | No       | Key-value pairs that remap secret / variable names or supply values for literal template variables.                |
 
-### Target Fields
+### Deploy Fields
 
-Each entry in the `targets` array pins one publish destination to a workspace.
+Each entry in the `deploy` array pins one publish destination to a workspace.
 
-| Field        | Required | Description                                                                                        |
-|--------------|----------|----------------------------------------------------------------------------------------------------|
-| `type`       | Yes      | One of the 9 target types (see [Available Target Types](#available-target-types)).                 |
-| `workingDir` | Yes      | Path to the workspace that owns the target (e.g., `"./packages/nova"`).                            |
-| `needs`      | No       | Working directories of other same-type targets that must finish publishing before this one starts. |
+| Field   | Required | Description                                                                                                           |
+|---------|----------|-----------------------------------------------------------------------------------------------------------------------|
+| `to`    | Yes      | One of the nine target types (see [Available Target Types](#available-target-types)).                                 |
+| `path`  | Yes      | Path to the workspace that owns the destination (e.g., `"./packages/nova"`).                                          |
+| `after` | No       | Paths of other same-type destinations that must finish publishing before this one starts.                             |
+| `with`  | No       | Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`. |
 
 ### Config Examples
 
@@ -103,99 +108,84 @@ Each entry in the `targets` array pins one publish destination to a workspace.
 ```json
 {
   "template": "publish",
-  "suffix": "project",
+  "name": "project",
   "triggers": ["release"],
-  "scopes": ["./packages/core"],
-  "targets": [
+  "build": ["./packages/core"],
+  "deploy": [
     {
-      "type": "npm",
-      "workingDir": "./packages/core"
+      "to": "npm",
+      "path": "./packages/core"
     }
-  ],
-  "settings": {
-    "NPM_TOKEN": "NPM_TOKEN",
-    "ROOT_WORKING_DIR": "./"
-  }
+  ]
 }
 ```
 
-**Serialize dependent publishes with `needs`:**
+**Serialize dependent publishes with `after`:**
 
 ```json
 {
   "template": "publish",
-  "suffix": "project",
+  "name": "project",
   "triggers": ["release"],
-  "scopes": [
+  "build": [
     "./packages/core",
     "./packages/preset"
   ],
-  "targets": [
+  "deploy": [
     {
-      "type": "npm",
-      "workingDir": "./packages/core"
+      "to": "npm",
+      "path": "./packages/core"
     },
     {
-      "type": "npm",
-      "workingDir": "./packages/preset",
-      "needs": ["./packages/core"]
+      "to": "npm",
+      "path": "./packages/preset",
+      "after": ["./packages/core"]
     }
-  ],
-  "settings": {
-    "NPM_TOKEN": "NPM_TOKEN",
-    "ROOT_WORKING_DIR": "./"
-  }
+  ]
 }
 ```
 
-The `preset` target waits for `core` to finish publishing before it starts, so consumers that pull `preset@x.y.z` can always resolve its declared dependency on `core@x.y.z`.
+The `preset` destination waits for `core` to finish publishing before it starts, so consumers that pull `preset@x.y.z` can always resolve its declared dependency on `core@x.y.z`.
 
 **Publish to multiple destinations from one build:**
 
 ```json
 {
   "template": "publish",
-  "suffix": "project",
+  "name": "project",
   "triggers": ["release"],
-  "scopes": [
+  "build": [
     "./packages/sdk",
     "./apps/docs"
   ],
-  "targets": [
+  "deploy": [
     {
-      "type": "npm",
-      "workingDir": "./packages/sdk"
+      "to": "npm",
+      "path": "./packages/sdk"
     },
     {
-      "type": "github-packages",
-      "workingDir": "./packages/sdk"
+      "to": "github-packages",
+      "path": "./packages/sdk"
     },
     {
-      "type": "cloudflare-pages-docusaurus",
-      "workingDir": "./apps/docs"
+      "to": "cloudflare-pages-docusaurus",
+      "path": "./apps/docs"
     }
-  ],
-  "settings": {
-    "CLOUDFLARE_ACCOUNT_ID": "CLOUDFLARE_ACCOUNT_ID",
-    "CLOUDFLARE_API_TOKEN": "CLOUDFLARE_API_TOKEN",
-    "CLOUDFLARE_PROJECT_NAME": "CLOUDFLARE_PROJECT_NAME",
-    "NPM_TOKEN": "NPM_TOKEN",
-    "ROOT_WORKING_DIR": "./"
-  }
+  ]
 }
 ```
 
-Each target becomes its own publish job. Jobs run in parallel off a shared `build` job, except where `needs` declares an explicit ordering.
+Each destination becomes its own publish job. Jobs run in parallel off a shared `build` job, except where `after` declares an explicit ordering.
 
 ### Available Templates
 
-The generator currently bundles three templates, each with its own trigger set.
+The generator bundles three templates, each with its own trigger set.
 
-| Template                     | Description                                   | Notes                                                                                                                                                             |
-|------------------------------|-----------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `publish`                    | Build once and publish to one or more targets | Requires `targets`. Each target declares its own secret / variable setup.                                                                                         |
-| `lock-inactive-issues`       | Lock stale issues and pull requests           | No manual setup needed (uses automatic `GITHUB_TOKEN`). Pick a cadence via triggers.                                                                              |
-| `check-sponsor-gated-issues` | Gate issues by GitHub sponsor status          | Requires a `PERSONAL_ACCESS_TOKEN` secret plus several `var`-format settings (see [check-sponsor-gated-issues Variables](#check-sponsor-gated-issues-variables)). |
+| Template                     | Description                                        | Notes                                                                                                                                                                   |
+|------------------------------|----------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `publish`                    | Build once and publish to one or more destinations | Uses `deploy`. Each destination declares its own secret / variable setup.                                                                                               |
+| `lock-inactive-issues`       | Lock stale issues                                  | No manual setup needed (uses automatic `GITHUB_TOKEN`). Pick a cadence via triggers.                                                                                    |
+| `check-sponsor-gated-issues` | Gate issues by GitHub sponsor status               | Requires a `PERSONAL_ACCESS_TOKEN` secret plus several `var`-format `with` entries (see [check-sponsor-gated-issues Variables](#check-sponsor-gated-issues-variables)). |
 
 #### `check-sponsor-gated-issues` Variables
 
@@ -217,60 +207,146 @@ This template declares the following variables. `GITHUB_TOKEN` is supplied autom
 
 ### Available Target Types
 
-The `publish` template supports the following `type` values for each entry in `targets`. Each type has its own template under `targets/` and declares its own secrets and variables.
+The `publish` template supports the following `to` values for each entry in `deploy`. Each type declares its own secrets and variables.
 
-| Type                          | Description                                         | Secrets / Variables                                                                                                                                                                                                                                                                                                                                     |
-|-------------------------------|-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `npm`                         | Publish a package to npm                            | `NPM_TOKEN` (`secret`) - npm access token for publishing. Skip creating this secret in GitHub if using OIDC trusted publishing.                                                                                                                                                                                                                         |
-| `github-action`               | Publish a JavaScript GitHub Action via orphan tags  | None to configure on GitHub. Its `ACTION_ENTRY_POINT`, `ACTION_OUTPUT_PATH`, `ACTION_YML_PATH`, and `RELEASE_BRANCH_NAME` are `literal` settings (see [Publishing GitHub Actions](#publishing-github-actions)).                                                                                                                                         |
-| `github-packages`             | Publish a package to GitHub Packages                | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                                                                                                                                    |
-| `docker-hub`                  | Publish a Docker image to Docker Hub                | `DOCKERHUB_TOKEN` (`secret`) - Docker Hub access token for publishing images. `DOCKERHUB_USERNAME` (`var`) - Docker Hub username or organization name.                                                                                                                                                                                                  |
-| `ghcr`                        | Publish a Docker image to GitHub Container Registry | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                                                                                                                                    |
-| `cloudflare-pages-docusaurus` | Deploy a Docusaurus site to Cloudflare Pages        | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Pages deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID. `CLOUDFLARE_PROJECT_NAME` (`var`) - Cloudflare Pages project name.                                                                                                                                 |
-| `github-pages-docusaurus`     | Deploy a Docusaurus site to GitHub Pages            | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                                                                                                                                                    |
-| `aws-amplify-nextjs`          | Deploy a Next.js app to AWS Amplify                 | `AWS_ACCESS_KEY_ID` (`secret`) - AWS access key ID for Amplify deployments. `AWS_SECRET_ACCESS_KEY` (`secret`) - AWS secret access key for Amplify deployments. `AMPLIFY_APP_ID` (`var`) - Amplify application ID. `AMPLIFY_BRANCH_NAME` (`var`) - Amplify branch name to deploy to. `AWS_REGION` (`var`) - AWS region where the Amplify app is hosted. |
-| `vercel-nextjs`               | Deploy a Next.js app to Vercel                      | `VERCEL_TOKEN` (`secret`) - Vercel access token with deploy permissions. `VERCEL_ORG_ID` (`var`) - Vercel organization ID. `VERCEL_PROJECT_ID` (`var`) - Vercel project ID.                                                                                                                                                                             |
+| `to` value                    | Description                                              | Secrets / Variables                                                                                                                                                                                                               |
+|-------------------------------|----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `npm`                         | Publish a package to npm                                 | `NPM_TOKEN` (`secret`) - npm access token for publishing. Skip creating this secret in GitHub if using OIDC trusted publishing.                                                                                                   |
+| `github-action`               | Publish a JavaScript GitHub Action via orphan tags       | None to configure on GitHub. Its `ACTION_ENTRY_POINT`, `ACTION_OUTPUT_PATH`, `ACTION_YML_PATH`, and `RELEASE_BRANCH_NAME` are `literal` values supplied via `with` (see [Publishing GitHub Actions](#publishing-github-actions)). |
+| `github-packages`             | Publish a package to GitHub Packages                     | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                              |
+| `docker-hub`                  | Publish a Docker image to Docker Hub                     | `DOCKERHUB_TOKEN` (`secret`) - Docker Hub access token for publishing images. `DOCKERHUB_USERNAME` (`var`) - Docker Hub username or organization name.                                                                            |
+| `ghcr`                        | Publish a Docker image to GitHub Container Registry      | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                              |
+| `cloudflare-pages-docusaurus` | Deploy a Docusaurus site to Cloudflare Pages             | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Pages deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID. `CLOUDFLARE_PROJECT_NAME` (`var`) - Cloudflare Pages project name.           |
+| `cloudflare-workers`          | Deploy a Worker with static assets to Cloudflare Workers | `CLOUDFLARE_API_TOKEN` (`secret`) - Cloudflare API token with Workers deployment permissions. `CLOUDFLARE_ACCOUNT_ID` (`var`) - Cloudflare account ID.                                                                            |
+| `github-pages-docusaurus`     | Deploy a Docusaurus site to GitHub Pages                 | `GITHUB_TOKEN` (`secret`, supplied automatically - no manual setup).                                                                                                                                                              |
+| `vercel-nextjs`               | Deploy a Next.js app to Vercel                           | `VERCEL_TOKEN` (`secret`) - Vercel access token with deploy permissions. `VERCEL_ORG_ID` (`var`) - Vercel organization ID. `VERCEL_PROJECT_ID` (`var`) - Vercel project ID.                                                       |
 
 ### Available Triggers
 
-Each template supports a specific set of triggers. The generator reads the available triggers from the template's `triggers/` folder.
+Each template accepts a specific set of triggers, and a trigger outside that set is rejected.
 
-| Template                     | Triggers                                                                      |
-|------------------------------|-------------------------------------------------------------------------------|
-| `publish`                    | `release`, `workflow-run-success`, `workflow-run-failure`, `workflow-run-any` |
-| `lock-inactive-issues`       | `schedule-daily`, `schedule-weekly`, `schedule-monthly`                       |
-| `check-sponsor-gated-issues` | `issues`, `issue-comment`                                                     |
+| Template                     | Triggers                                                                                          |
+|------------------------------|---------------------------------------------------------------------------------------------------|
+| `publish`                    | `release`, `tag-push`, `push`, `workflow-run-success`, `workflow-run-failure`, `workflow-run-any` |
+| `lock-inactive-issues`       | `schedule-daily`, `schedule-weekly`, `schedule-monthly`                                           |
+| `check-sponsor-gated-issues` | `issues`, `issue-comment`                                                                         |
 
-| Trigger                | Requires `depends-on` |
-|------------------------|-----------------------|
-| `release`              | No                    |
-| `schedule-daily`       | No                    |
-| `schedule-weekly`      | No                    |
-| `schedule-monthly`     | No                    |
-| `issues`               | No                    |
-| `issue-comment`        | No                    |
-| `workflow-run-success` | Yes                   |
-| `workflow-run-failure` | Yes                   |
-| `workflow-run-any`     | Yes                   |
+| Trigger                | Carries `workflows` |
+|------------------------|:-------------------:|
+| `release`              |         No          |
+| `tag-push`             |         No          |
+| `push`                 |         No          |
+| `schedule-daily`       |         No          |
+| `schedule-weekly`      |         No          |
+| `schedule-monthly`     |         No          |
+| `issues`               |         No          |
+| `issue-comment`        |         No          |
+| `workflow-run-success` |         Yes         |
+| `workflow-run-failure` |         Yes         |
+| `workflow-run-any`     |         Yes         |
 
 The `publish` and `lock-inactive-issues` templates also include `workflow_dispatch` (manual trigger with dry-run option) automatically.
+
+#### Configuring Publish Triggers
+
+The `publish` template accepts three release-style triggers, each with its own config form.
+
+- **`release`** — Publishes when a GitHub Release is published. Configure it with the bare string `"release"`.
+- **`tag-push`** — Publishes when a version tag is pushed, emitting `on: push: tags: ["v*"]`. Configure it with the bare string `"tag-push"` (tags default to `v*`), or an object `{ "name": "tag-push", "tags": ["v*"] }` to override the tag globs.
+- **`push`** — Branch continuous deployment that publishes for real on a push to a listed branch. Configure it only in object form with a required `branches` filter, for example `{ "name": "push", "branches": ["main"], "paths": ["packages/**"] }`.
+
+Publishing on a version tag keeps `GITHUB_REF` pointing at the tag, so npm `--provenance` signing stays valid. A `release`-triggered run can instead bind to the default branch and fail provenance, which is why `tag-push` is preferred for signed npm publishes.
+
+The bare string `"push"` is a validation error, since a branchless push trigger would fire on every branch. The `branches`, `paths`, and `tags` filters must each be a non-empty array of strings when present.
+
+#### Configuring Workflow-Run Triggers
+
+The three `workflow-run-*` triggers chain a publish workflow to one or more upstream workflows, and each carries its upstream references on the trigger object.
+
+- Declare them in object form with a `workflows` array of `<template>-<name>` keys, for example `{ "name": "workflow-run-success", "workflows": ["publish-core"] }`.
+- Each referenced key must resolve to a sibling workflow in the same config, and circular references abort the run.
+
+```json
+{
+  "template": "publish",
+  "name": "preset",
+  "triggers": [
+    {
+      "name": "workflow-run-success",
+      "workflows": ["publish-core"]
+    }
+  ],
+  "build": ["./packages/preset"],
+  "deploy": [
+    {
+      "to": "npm",
+      "path": "./packages/preset"
+    }
+  ]
+}
+```
+
+## Environment Variables and Secrets
+
+A publish workflow delivers every app environment value declared under [`environment.apps`](/docs/quickstart/nova-config#environment). Each value carries two independent, required flags — `secret` (storage) and `buildOnly` (delivery) — and Nova routes delivery entirely off `buildOnly`, never off `secret`.
+
+The difference between the two `buildOnly` destinations is *when there is a live environment to read the value*. A **running server** has one, so a `buildOnly: false` value sits in its env and the code reads it by reference (`env.X`) each run — never in a file. A **build** has one only while it runs on the CI runner, so a `buildOnly: true` value is placed in the build's env there; a Variable the code inlines (`import.meta.env.X`) gets *baked* into the output, a Secret used for auth is *consumed and not emitted*. **"Build" means "available to the build process," not "baked into the shipped output"** — that is why `secret + buildOnly` is valid, and why the only leak risk (a secret inlined into *client* output) is a code choice, not the delivery's fault.
+
+`secret` never changes *where* a value goes; `buildOnly` never changes *how* it is stored and moved. All four combinations are real:
+
+| Storage                    | `buildOnly: true` (build env)                                                        | `buildOnly: false` (running server)                       |
+|----------------------------|--------------------------------------------------------------------------------------|-----------------------------------------------------------|
+| `secret: false` (Variable) | baked into the build (a `PUBLIC_` client key)                                        | synced to the server as **plaintext** (`AMAZON_REGION`)   |
+| `secret: true` (Secret)    | available to the CI build, used transiently, **not shipped** (a private build token) | synced to the server, **encrypted** (`STRIPE_SECRET_KEY`) |
+
+Every GitHub name is the app's `prefix` joined to the `key` (e.g. `CBN_` joined to `PUBLIC_SITE_KEY` becomes `CBN_PUBLIC_SITE_KEY`).
+
+### Build Delivery
+
+Every `buildOnly: true` app value is written into the build `.env` before `check` / `build`. Nova reads it from its GitHub **Variable** (`${{ vars.<name> }}`) when `secret: false`, or its GitHub **Secret** (`${{ secrets.<name> }}`) when `secret: true`. A `secret: false` Variable falls back to its `defaultValue` when the Variable is unset. Deploy credentials and workflow-config keys never reach the build.
+
+The [Setup report](#setup-instructions) lists every GitHub Variable and Secret to create.
+
+### Runtime Secret Sync
+
+On each deploy, Nova reconciles every `buildOnly: false` app value into the runtime store of **every server-bearing target** in the app's `deploy[]`. `secret` picks the channel: a `secret: true` value is stored **encrypted**, a `secret: false` value as a **plaintext** runtime variable.
+
+- **Upsert** — Every declared `buildOnly: false` value is pushed to the destination under its prefixed name, and the running app reads it as `env.NAME` on Workers or `process.env.NAME` on Vercel.
+- **Delete** — Any value already in the destination store but no longer declared in the config is removed, since Nova is the single source of truth for that target's runtime env.
+- **Log by name** — Each add and removal is written to the deploy log by name only, never by value, so the reconcile stays auditable.
+
+:::warning Sync makes Nova authoritative
+
+Nova has full authority over each server's runtime env. Removing a `buildOnly: false` value from the config deletes it from every server on the next deploy, and any value set out-of-band is reconciled away. The sync runs unattended in CI, so there is no interactive confirm — the deploy log records every change.
+:::
+
+#### Per-Target Mechanism
+
+The config is identical across both targets; only the deploy step differs.
+
+| Target               | Reconcile mechanism                                                                                             | Runtime scope    |
+|----------------------|-----------------------------------------------------------------------------------------------------------------|------------------|
+| `cloudflare-workers` | `wrangler secret` for encrypted values and `wrangler deploy --var` for plaintext, run around `wrangler deploy`. | Live worker.     |
+| `vercel-nextjs`      | `vercel env` add and remove for both channels, run before the prebuilt deploy.                                  | Production only. |
+
+Dev is unchanged — the values live in the local `.env` from [`nova generate must-haves dotenv`](/docs/cli/generators/must-haves/dotenv), which you fill in with real values.
 
 ## Variable Formats
 
 Each template declares variables with one of three formats. The format determines how the value is substituted into the generated YAML:
 
-| Format    | Substitution behavior                                                                                                                            |
-|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| `secret`  | Produces `${{ secrets.NAME }}` in the output. If a setting is provided, the secret reference uses the setting value as the name instead.         |
-| `var`     | Produces `${{ vars.NAME }}` in the output. If a setting is provided, the variable reference uses the setting value as the name instead.          |
-| `literal` | Replaces the placeholder with the exact string from `settings`. All literal variables must have a corresponding setting or the entry is skipped. |
+| Format    | Substitution behavior                                                                                                                      |
+|-----------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| `secret`  | Produces `${{ secrets.NAME }}` in the output. If a `with` entry is provided, the secret reference uses that value as the name instead.     |
+| `var`     | Produces `${{ vars.NAME }}` in the output. If a `with` entry is provided, the variable reference uses that value as the name instead.      |
+| `literal` | Replaces the placeholder with the exact string from `with`. A literal variable without a default must be provided or the entry is skipped. |
 
 ## Output Filename Convention
 
 Generated files are written to `.github/workflows/` with the naming pattern:
 
 ```
-nova-{template}-{suffix}.yml
+nova-{template}-{name}.yml
 ```
 
 **Examples:**
@@ -288,36 +364,39 @@ The generator loads <Terminology title="Nova config" to="/docs/quickstart/termin
 
 Before generating each file, the generator checks:
 
-1. The template name matches a known bundled template.
-2. The template directory and base file exist on disk.
-3. Each trigger in `triggers` has a corresponding file in the template's `triggers/` folder.
-4. When a trigger requires `depends-on`, the config entry provides it and the referenced workflow exists.
-5. Circular `depends-on` references are detected and rejected.
-6. Each target's `type` has a matching target template.
-7. Each target's `workingDir` exists as a workspace key.
-8. Each target's `type` and `workingDir` pair is unique within the entry.
-9. All `literal`-format variables have a corresponding entry in `settings`.
-10. No two entries produce the same output filename.
+1. No entry carries an old-shape field name — a renamed field is rejected with a hint naming its replacement (e.g., `Workflow field "suffix" was renamed to "name". Skipping.`).
+2. The template name matches a known bundled template.
+3. `name` is present and a non-empty string, and no two entries share the same template and `name`.
+4. Each trigger is valid for the entry's template, and object-form filter lists are non-empty string arrays.
+5. A `push` trigger uses the object form with a `branches` filter, and a workflow-run trigger carries `workflows` references that each resolve to a sibling workflow.
+6. Each `build` scope is a registered workspace, and no workspace still carries the retired `dotenv` block — that model moved to the top-level `environment` block classified by `secret`, so an old-shape config is rejected with a migration hint.
+7. Each deploy `to` is a supported target type, and each deploy `path` is a registered workspace.
+8. All `literal` variables without a default have a corresponding value in `with`.
+9. Destination uniqueness holds across every workflow (see [Cross-Workflow Uniqueness](#publishing-github-actions)), and no two entries produce the same output filename.
 
-If any check fails, the entry is skipped with an error message.
+Each failed check emits a diagnostic and skips the affected workflow, while any valid workflows still build.
 
 ### File Generation
 
-Each valid entry produces one YAML file under `.github/workflows/`. The generator composes the template's `base.yml` with the resolved triggers and targets, substitutes variable placeholders based on the template metadata and the entry's `settings`, and emits `needs: ["build", ...]` on each target job that declares dependencies.
+Each valid entry produces one YAML file under `.github/workflows/`. The generator builds the workflow blueprint from your config — merging the resolved triggers, jobs, and deploy destinations — resolves variable placeholders from the template metadata and the entry's `with`, then serializes the blueprint to YAML.
 
-If the target file already exists, a `.nova-backup` copy is created unless `--replace-file` is set.
+Deploy jobs that declare `after` dependencies emit `needs: ["build", ...]`. If the target file already exists, a `.nova-backup` copy is created unless `--replace-file` is set.
 
 ### Orphan Cleanup
 
-After generation, the generator scans `.github/workflows/` for existing `nova-*.yml` files that are not in the current config. These orphaned files are backed up (renamed with a `.nova-backup` timestamp) or deleted when `--replace-file` is set.
+Orphan cleanup runs only when the config validated with zero diagnostics. A config with any error never deletes your existing workflow files, so a rejected workflow's file is left untouched.
+
+When the config is clean, the generator scans `.github/workflows/` for existing `nova-*.yml` files that are not in the current config. These orphaned files are backed up (renamed with a `.nova-backup` timestamp) or deleted when `--replace-file` is set.
 
 ### Setup Instructions
 
-After all files are generated, the generator prints a summary of secrets and variables that need to be configured on GitHub. This covers every non-automatic `secret` and `var` format variable across all generated workflows.
+After all files are generated, the generator prints a Setup report of the secrets and variables to configure on GitHub. This covers every non-automatic `secret` and `var`, plus every `buildOnly: true` app value each build scope reads — listed under its prefixed GitHub name as a Variable (`secret: false`) or a Secret (`secret: true`).
+
+Entries are deduplicated and listed once per output file, so a value used by two destinations in the same workflow appears a single time.
 
 ## Publishing GitHub Actions
 
-The `github-action` target distributes a JavaScript GitHub Action by maintaining an orphan `releases` branch whose commits contain only the runtime files needed by consumers. Each release is tagged with its semver (e.g., `v2.1.0`), and the floating major tag (`v2`) is force-moved to the latest release commit. Older frozen major tags (e.g., `v1`) are never touched.
+The `github-action` destination distributes a JavaScript GitHub Action by maintaining an orphan `releases` branch whose commits contain only the runtime files needed by consumers. Each release is tagged with its semver (e.g., `v2.1.0`), and the floating major tag (`v2`) is force-moved to the latest release commit. Older frozen major tags (e.g., `v1`) are never touched.
 
 ### Expected Repo Shape
 
@@ -347,25 +426,29 @@ What lands on the `releases` branch for each release:
 {
   "workflows": [{
     "template": "publish",
-    "suffix": "release",
+    "name": "release",
     "triggers": ["release"],
-    "targets": [
-      { "type": "github-action", "workingDir": "./packages/my-action" }
-    ],
-    "settings": {
-      "ACTION_ENTRY_POINT": "index.js",
-      "ACTION_OUTPUT_PATH": "./packages/my-action/build",
-      "ACTION_YML_PATH": "./action.yml",
-      "RELEASE_BRANCH_NAME": "releases",
-      "ROOT_WORKING_DIR": "./"
-    }
+    "deploy": [
+      {
+        "to": "github-action",
+        "path": "./packages/my-action",
+        "with": {
+          "ACTION_ENTRY_POINT": "index.js",
+          "ACTION_OUTPUT_PATH": "./packages/my-action/build",
+          "ACTION_YML_PATH": "./action.yml",
+          "RELEASE_BRANCH_NAME": "releases"
+        }
+      }
+    ]
   }]
 }
 ```
 
-All four override settings are **required**. Defaults aren't auto-applied — `nova utility initialize` prompts for each one, showing the suggested value as an example.
+All four `with` values are **required**. Defaults aren't auto-applied — `nova utility initialize` prompts for each one, showing the suggested value as an example.
 
-| Setting               | Description                                                                                          |
+You can set these on the deploy's `with` as shown, or on the workflow-level `with` to share them across the entry. A deploy-level `with` value takes precedence over the workflow-level one for that destination.
+
+| Value                 | Description                                                                                          |
 |-----------------------|------------------------------------------------------------------------------------------------------|
 | `ACTION_ENTRY_POINT`  | Filename of the bundled action entry script (relative to `ACTION_OUTPUT_PATH`). Example: `index.js`. |
 | `ACTION_OUTPUT_PATH`  | Path to the built action output directory.                                                           |
@@ -398,38 +481,46 @@ A few non-obvious consequences worth knowing:
 
 ### Multiple actions in one repo
 
-If a repo ships more than one GitHub Action (rare), each `github-action` target must declare a distinct `RELEASE_BRANCH_NAME` across the entire `nova.config.json`. Two `github-action` targets sharing the same release branch will race on push — both jobs run in parallel and force-push to the same branch, so the second writer overwrites the first.
+If a repo ships more than one GitHub Action (rare), each `github-action` destination must declare a distinct `RELEASE_BRANCH_NAME` across the entire `nova.config.json`. Two `github-action` destinations sharing the same release branch will race on push — both jobs run in parallel and force-push to the same branch, so the second writer overwrites the first.
 
-Nova validates destination uniqueness across the entire `workflows[]` array, not just within a single workflow: declaring two `github-action` targets anywhere in your config — same workflow or separate workflows — with overlapping `RELEASE_BRANCH_NAME` values fails the generator with a clear error message and rejects both colliding workflows. To ship two actions from one repo, use distinct `RELEASE_BRANCH_NAME` values (e.g., `releases-primary`, `releases-secondary`) — typically each in its own workflow with its own `suffix`. Example layout:
+Nova validates destination uniqueness across the entire `workflows[]` array, not just within a single workflow: declaring two `github-action` destinations anywhere in your config — same workflow or separate workflows — with overlapping `RELEASE_BRANCH_NAME` values fails the generator with a clear error message and rejects both colliding workflows. To ship two actions from one repo, use distinct `RELEASE_BRANCH_NAME` values (e.g., `releases-primary`, `releases-secondary`) — typically each in its own workflow with its own `name`. Example layout:
 
 ```json
 {
   "workflows": [
     {
       "template": "publish",
-      "suffix": "primary",
+      "name": "primary",
       "triggers": ["release"],
-      "targets": [{ "type": "github-action", "workingDir": "./packages/primary-action" }],
-      "settings": {
-        "ACTION_ENTRY_POINT": "index.js",
-        "ACTION_OUTPUT_PATH": "./packages/primary-action/build",
-        "ACTION_YML_PATH": "./action.yml",
-        "RELEASE_BRANCH_NAME": "releases-primary",
-        "ROOT_WORKING_DIR": "./"
-      }
+      "deploy": [
+        {
+          "to": "github-action",
+          "path": "./packages/primary-action",
+          "with": {
+            "ACTION_ENTRY_POINT": "index.js",
+            "ACTION_OUTPUT_PATH": "./packages/primary-action/build",
+            "ACTION_YML_PATH": "./action.yml",
+            "RELEASE_BRANCH_NAME": "releases-primary"
+          }
+        }
+      ]
     },
     {
       "template": "publish",
-      "suffix": "secondary",
+      "name": "secondary",
       "triggers": ["release"],
-      "targets": [{ "type": "github-action", "workingDir": "./packages/secondary-action" }],
-      "settings": {
-        "ACTION_ENTRY_POINT": "index.js",
-        "ACTION_OUTPUT_PATH": "./packages/secondary-action/build",
-        "ACTION_YML_PATH": "./packages/secondary-action/action.yml",
-        "RELEASE_BRANCH_NAME": "releases-secondary",
-        "ROOT_WORKING_DIR": "./"
-      }
+      "deploy": [
+        {
+          "to": "github-action",
+          "path": "./packages/secondary-action",
+          "with": {
+            "ACTION_ENTRY_POINT": "index.js",
+            "ACTION_OUTPUT_PATH": "./packages/secondary-action/build",
+            "ACTION_YML_PATH": "./packages/secondary-action/action.yml",
+            "RELEASE_BRANCH_NAME": "releases-secondary"
+          }
+        }
+      ]
     }
   ]
 }
@@ -437,17 +528,16 @@ Nova validates destination uniqueness across the entire `workflows[]` array, not
 
 Each action gets its own publish workflow with a distinct `RELEASE_BRANCH_NAME`, and the GitHub Releases for each action use a uniquely-prefixed tag (e.g., `primary-v1.2.3`, `secondary-v1.0.0`). Nova's force-retag step is prefix-aware: the floating major derivation matches an optional alphanumeric prefix before the `v` (so `primary-v1.2.3` → `primary-v1`, `v2.1.3` → `v2`). Consumers reference each action via its prefixed tag: `uses: owner/repo@primary-v1`, `uses: owner/repo@secondary-v1`.
 
-Similarly, only one `github-pages-docusaurus` target may be declared across all workflows in your `nova.config.json` — GitHub Pages is repo-scoped, so two deployments would overwrite each other regardless of whether they live in the same workflow or separate ones. Nova validates this at workflow-generation time.
+Similarly, only one `github-pages-docusaurus` destination may be declared across all workflows in your `nova.config.json` — GitHub Pages is repo-scoped, so two deployments would overwrite each other regardless of whether they live in the same workflow or separate ones. Nova validates this at workflow-generation time.
 
 The same cross-workflow uniqueness check applies to these other publish targets:
 
-| Target                        | Uniqueness check                                                                  |
-|-------------------------------|-----------------------------------------------------------------------------------|
-| `aws-amplify-nextjs`          | `AMPLIFY_APP_ID` + `AMPLIFY_BRANCH_NAME` must not be duplicated across workflows. |
-| `cloudflare-pages-docusaurus` | `CLOUDFLARE_PROJECT_NAME` must not be duplicated across workflows.                |
-| `vercel-nextjs`               | `VERCEL_ORG_ID` + `VERCEL_PROJECT_ID` must not be duplicated across workflows.    |
-| `github-action`               | `RELEASE_BRANCH_NAME` must not be duplicated across workflows.                    |
-| `github-pages-docusaurus`     | At most one target across all workflows (GitHub Pages is repo-scoped).            |
+| Target                        | Uniqueness check                                                               |
+|-------------------------------|--------------------------------------------------------------------------------|
+| `cloudflare-pages-docusaurus` | `CLOUDFLARE_PROJECT_NAME` must not be duplicated across workflows.             |
+| `vercel-nextjs`               | `VERCEL_ORG_ID` + `VERCEL_PROJECT_ID` must not be duplicated across workflows. |
+| `github-action`               | `RELEASE_BRANCH_NAME` must not be duplicated across workflows.                 |
+| `github-pages-docusaurus`     | At most one destination across all workflows (GitHub Pages is repo-scoped).    |
 
 :::note Tag protection rules
 

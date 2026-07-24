@@ -1,3 +1,5 @@
+import type { Stats } from 'node:fs';
+
 /**
  * Lib - Bundle Size - Find Oversized Files.
  *
@@ -15,4 +17,4 @@ export type Lib_BundleSize_FindOversizedFiles_Names = string[];
 
 export type Lib_BundleSize_FindOversizedFiles_EntryPath = string;
 
-export type Lib_BundleSize_FindOversizedFiles_Stats = import('node:fs').Stats;
+export type Lib_BundleSize_FindOversizedFiles_Stats = Stats;

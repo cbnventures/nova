@@ -1,4 +1,8 @@
 {
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} 分钟阅读",
+    "description": "The label showing estimated reading time for a blog post"
+  },
   "home.appMarket.label": {
     "message": "随时随地监控你的设备群",
     "description": "Front page AppMarketDownload label"
@@ -15,49 +19,25 @@
     "message": "自适应访问网关。基于身份、态势、位置与时间等上下文实时授予、收窄或撤销访问。绝无静态规则。",
     "description": "Front page Features card description for Drawbridge"
   },
-  "home.features.drawbridge.title": {
-    "message": "Drawbridge",
-    "description": "Front page Features card title for Drawbridge"
-  },
   "home.features.garrison.description": {
     "message": "终端合规引擎。在每一台已连接设备上强制执行策略。磁盘加密、操作系统版本、防火墙状态——授予访问前一律核验。",
     "description": "Front page Features card description for Garrison"
-  },
-  "home.features.garrison.title": {
-    "message": "Garrison",
-    "description": "Front page Features card title for Garrison"
   },
   "home.features.parapet.description": {
     "message": "策略仿真沙箱。在正式启用之前，先用真实流量测试访问规则。看清谁会获得访问、谁会失去访问、原因为何——无需触碰生产环境。",
     "description": "Front page Features card description for Parapet"
   },
-  "home.features.parapet.title": {
-    "message": "Parapet",
-    "description": "Front page Features card title for Parapet"
-  },
   "home.features.rampart.description": {
     "message": "微隔离层。将工作负载隔离，使横向移动成为不可能。即便某个区段被攻破，破坏也止步于此。",
     "description": "Front page Features card description for Rampart"
-  },
-  "home.features.rampart.title": {
-    "message": "Rampart",
-    "description": "Front page Features card title for Rampart"
   },
   "home.features.spyglass.description": {
     "message": "审计与取证。完整会话重建，附带 7 年不可篡改的日志保留。每一次访问决策、每一次策略评估、每一次连接——都被记录在案。",
     "description": "Front page Features card description for Spyglass"
   },
-  "home.features.spyglass.title": {
-    "message": "Spyglass",
-    "description": "Front page Features card title for Spyglass"
-  },
   "home.features.watchtower.description": {
     "message": "持续态势评估。每 90 秒评估一次设备健康、位置与行为。条件一旦变化，Watchtower 立刻知晓。",
     "description": "Front page Features card description for Watchtower"
-  },
-  "home.features.watchtower.title": {
-    "message": "Watchtower",
-    "description": "Front page Features card title for Watchtower"
   },
   "home.head.title": {
     "message": "Sentinel - 信任本身即是漏洞",
@@ -179,17 +159,9 @@
     "message": "自适应访问网关。基于信任评估实时授予、收窄或撤销访问。",
     "description": "Showcase Features (with icons) card description for Drawbridge"
   },
-  "showcase.featuresIcons.drawbridge.title": {
-    "message": "Drawbridge",
-    "description": "Showcase Features (with icons) card title for Drawbridge"
-  },
   "showcase.featuresIcons.garrison.description": {
     "message": "终端合规引擎。在每一台已连接设备上强制执行策略，访问授予前先行核验。",
     "description": "Showcase Features (with icons) card description for Garrison"
-  },
-  "showcase.featuresIcons.garrison.title": {
-    "message": "Garrison",
-    "description": "Showcase Features (with icons) card title for Garrison"
   },
   "showcase.featuresIcons.heading": {
     "message": "团队为何选择 Sentinel",
@@ -199,49 +171,25 @@
     "message": "持续态势评估。每 90 秒评估一次设备健康、位置与行为。",
     "description": "Showcase Features (with icons) card description for Watchtower"
   },
-  "showcase.featuresIcons.watchtower.title": {
-    "message": "Watchtower",
-    "description": "Showcase Features (with icons) card title for Watchtower"
-  },
   "showcase.featuresNoIcons.parapet.description": {
     "message": "策略仿真沙箱。在正式启用之前，先用真实流量测试访问规则。",
     "description": "Showcase Features (no icons) card description for Parapet"
-  },
-  "showcase.featuresNoIcons.parapet.title": {
-    "message": "Parapet",
-    "description": "Showcase Features (no icons) card title for Parapet"
   },
   "showcase.featuresNoIcons.rampart.description": {
     "message": "微隔离层。将工作负载隔离，使区域之间的横向移动成为不可能。",
     "description": "Showcase Features (no icons) card description for Rampart"
   },
-  "showcase.featuresNoIcons.rampart.title": {
-    "message": "Rampart",
-    "description": "Showcase Features (no icons) card title for Rampart"
-  },
   "showcase.featuresNoIcons.spyglass.description": {
     "message": "审计与取证。完整会话重建，附带 7 年不可篡改的日志保留。",
     "description": "Showcase Features (no icons) card description for Spyglass"
-  },
-  "showcase.featuresNoIcons.spyglass.title": {
-    "message": "Spyglass",
-    "description": "Showcase Features (no icons) card title for Spyglass"
   },
   "showcase.featuresSix.drawbridge.description": {
     "message": "把 Watchtower 的评估结果转化为具体的访问决策——授予、收窄或撤销。",
     "description": "Showcase Features (six items) card description for Drawbridge"
   },
-  "showcase.featuresSix.drawbridge.title": {
-    "message": "Drawbridge",
-    "description": "Showcase Features (six items) card title for Drawbridge"
-  },
   "showcase.featuresSix.garrison.description": {
     "message": "管理每一个终端的设备注册、态势基线与合规画像。",
     "description": "Showcase Features (six items) card description for Garrison"
-  },
-  "showcase.featuresSix.garrison.title": {
-    "message": "Garrison",
-    "description": "Showcase Features (six items) card title for Garrison"
   },
   "showcase.featuresSix.heading": {
     "message": "完整的信任引擎",
@@ -251,33 +199,17 @@
     "message": "用真实流量回放草稿策略，在正式生效前精确呈现访问影响。",
     "description": "Showcase Features (six items) card description for Parapet"
   },
-  "showcase.featuresSix.parapet.title": {
-    "message": "Parapet",
-    "description": "Showcase Features (six items) card title for Parapet"
-  },
   "showcase.featuresSix.rampart.description": {
     "message": "将基础设施划分为相互隔离的区域，跨区访问必须经过策略评估。",
     "description": "Showcase Features (six items) card description for Rampart"
-  },
-  "showcase.featuresSix.rampart.title": {
-    "message": "Rampart",
-    "description": "Showcase Features (six items) card title for Rampart"
   },
   "showcase.featuresSix.spyglass.description": {
     "message": "把每一次访问决策、策略评估与跨区行为，记入不可篡改的审计链。",
     "description": "Showcase Features (six items) card description for Spyglass"
   },
-  "showcase.featuresSix.spyglass.title": {
-    "message": "Spyglass",
-    "description": "Showcase Features (six items) card title for Spyglass"
-  },
   "showcase.featuresSix.watchtower.description": {
     "message": "以 90 秒为周期，持续评估设备态势、用户身份、网络上下文与行为信号。",
     "description": "Showcase Features (six items) card description for Watchtower"
-  },
-  "showcase.featuresSix.watchtower.title": {
-    "message": "Watchtower",
-    "description": "Showcase Features (six items) card title for Watchtower"
   },
   "showcase.heroFull.ctaLabel": {
     "message": "阅读文档",
@@ -571,52 +503,24 @@
     "message": "为 ",
     "description": "Showcase Typewriter (slow timing) prefix text"
   },
-  "theme.blog.author.noPosts": {
-    "message": "该作者尚未撰写任何文章。",
-    "description": "The text for authors with 0 blog post"
-  },
-  "theme.blog.author.pageTitle": {
-    "message": "{authorName} - {nPosts}",
-    "description": "The title of the page for a blog author"
-  },
-  "theme.blog.authorsList.viewAll": {
-    "message": "查看所有作者",
-    "description": "The label of the link targeting the blog authors page"
-  },
-  "theme.blog.post.plurals": {
-    "message": "{count} 篇博文",
-    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
-  },
-  "theme.blog.tagTitle": {
-    "message": "{nPosts} 含有标签「{tagName}」",
-    "description": "The title of the page for a blog tag"
-  },
-  "theme.common.skipToMainContent": {
-    "message": "跳到主要内容",
-    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
-  },
   "theme.footer.copyright": {
     "message": "版权所有 © 2025-2026 CBN Ventures LLC。保留所有权利。",
     "description": "Footer copyright text, localized per-locale via i18n code.json"
-  },
-  "theme.tags.tagsPageTitle": {
-    "message": "标签",
-    "description": "The title of the tag list page"
   },
   "showcase.frame.imageAlt": {
     "message": "Sentinel 品牌缩略图。",
     "description": "Showcase Frame image alt text"
   },
   "showcase.frameWithCaption.caption": {
-    "message": "品牌标识张贴于 Frame 上 — 实心边框,如哨塔般稳固。",
+    "message": "品牌标识张贴于 Frame 上 — 实心边框，如哨塔般稳固。",
     "description": "Showcase Frame (with caption) caption text"
   },
   "showcase.item.frameNoCaption.title": {
-    "message": "Frame(无标题)",
+    "message": "Frame（无标题）",
     "description": "Showcase item title for Frame (no caption variant)"
   },
   "showcase.item.frameWithCaption.title": {
-    "message": "Frame(带标题)",
+    "message": "Frame（带标题）",
     "description": "Showcase item title for Frame (with caption variant)"
   }
 }

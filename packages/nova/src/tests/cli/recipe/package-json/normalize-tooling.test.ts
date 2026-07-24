@@ -182,8 +182,14 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-tooling': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-tooling': {
+              enabled: true,
+            },
           },
         },
       },
@@ -235,8 +241,14 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-tooling': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-tooling': {
+              enabled: true,
+            },
           },
         },
       },
@@ -289,8 +301,14 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-tooling': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-tooling': {
+              enabled: true,
+            },
           },
         },
       },
@@ -343,8 +361,14 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-tooling': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-tooling': {
+              enabled: true,
+            },
           },
         },
       },

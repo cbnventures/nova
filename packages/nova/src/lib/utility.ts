@@ -1,6 +1,6 @@
-import { exec, spawn } from 'child_process';
-import { promises as fs } from 'fs';
-import { platform } from 'os';
+import { exec, spawn } from 'node:child_process';
+import { promises as fs } from 'node:fs';
+import { platform } from 'node:os';
 import {
   basename,
   dirname,
@@ -9,9 +9,9 @@ import {
   parse,
   relative,
   resolve,
-} from 'path';
-import { fileURLToPath } from 'url';
-import { promisify } from 'util';
+} from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { promisify } from 'node:util';
 
 import chalk from 'chalk';
 
@@ -90,6 +90,14 @@ import type {
   Lib_Utility_CurrentTimestamp_TimezoneSign,
   Lib_Utility_CurrentTimestamp_Width,
   Lib_Utility_CurrentTimestamp_Year,
+  Lib_Utility_DetectScriptHostFile_Filename,
+  Lib_Utility_DetectScriptHostFile_HostExtensionIndex,
+  Lib_Utility_DetectScriptHostFile_HostLastSlashIndex,
+  Lib_Utility_DetectScriptHostFile_HostPath,
+  Lib_Utility_DetectScriptHostFile_NormalizedFilename,
+  Lib_Utility_DetectScriptHostFile_Returns,
+  Lib_Utility_DetectScriptHostFile_ScriptHostExtension,
+  Lib_Utility_DetectScriptHostFile_ScriptHostExtensions,
   Lib_Utility_DetectShell_CurrentPlatform,
   Lib_Utility_DetectShell_Returns,
   Lib_Utility_DiscoverPathsWithFile_CurrentDirectory,
@@ -97,6 +105,7 @@ import type {
   Lib_Utility_DiscoverPathsWithFile_Entries,
   Lib_Utility_DiscoverPathsWithFile_FileName,
   Lib_Utility_DiscoverPathsWithFile_ForwardDirectory,
+  Lib_Utility_DiscoverPathsWithFile_GitPath,
   Lib_Utility_DiscoverPathsWithFile_HasTargetFile,
   Lib_Utility_DiscoverPathsWithFile_Queue,
   Lib_Utility_DiscoverPathsWithFile_RealDirectory,
@@ -271,6 +280,9 @@ export function collectConsumerWorkspacePaths(currentDirectory: Lib_Utility_Coll
     const workspacePath: Lib_Utility_CollectConsumerWorkspacePaths_WorkspacePath = workspacesEntry[0];
     const workspace: Lib_Utility_CollectConsumerWorkspacePaths_Workspace = workspacesEntry[1];
 
+    // The root workspace is keyed './' by convention, but a '.'-keyed entry resolves to the same
+    // directory, so join(currentDirectory, '.', filename) equals the root target. Exclude both
+    // spellings so a '.'-keyed workspace never duplicates the root path the caller adds itself.
     if (
       [
         'app',
@@ -279,6 +291,7 @@ export function collectConsumerWorkspacePaths(currentDirectory: Lib_Utility_Coll
         'config',
       ].includes(workspace['role']) === true
       && workspacePath !== './'
+      && workspacePath !== '.'
     ) {
       const path: Lib_Utility_CollectConsumerWorkspacePaths_Path = join(currentDirectory, workspacePath, filename);
 
@@ -377,6 +390,52 @@ export function currentTimestamp(): Lib_Utility_CurrentTimestamp_Returns {
 }
 
 /**
+ * Lib - Utility - Detect Script Host File.
+ *
+ * Returns the host file basename (e.g. "github.astro") when the filename points to an
+ * extracted <script> virtual file, or undefined otherwise. Processor-based ESLint plugins
+ * extract each <script> block into a virtual file with the host file as a path segment.
+ *
+ * @param {Lib_Utility_DetectScriptHostFile_Filename} filename - Filename.
+ *
+ * @returns {Lib_Utility_DetectScriptHostFile_Returns}
+ *
+ * @since 0.21.0
+ */
+export function detectScriptHostFile(filename: Lib_Utility_DetectScriptHostFile_Filename): Lib_Utility_DetectScriptHostFile_Returns {
+  const scriptHostExtensions: Lib_Utility_DetectScriptHostFile_ScriptHostExtensions = [
+    '.astro/',
+    '.md/',
+    '.markdown/',
+    '.html/',
+    '.htm/',
+    '.vue/',
+    '.svelte/',
+  ];
+  const normalizedFilename: Lib_Utility_DetectScriptHostFile_NormalizedFilename = filename.replaceAll('\\', '/');
+
+  let scriptHostExtension: Lib_Utility_DetectScriptHostFile_ScriptHostExtension = undefined;
+
+  for (const extension of scriptHostExtensions) {
+    if (normalizedFilename.includes(extension) === true) {
+      scriptHostExtension = extension;
+
+      break;
+    }
+  }
+
+  if (scriptHostExtension === undefined) {
+    return undefined;
+  }
+
+  const hostExtensionIndex: Lib_Utility_DetectScriptHostFile_HostExtensionIndex = normalizedFilename.indexOf(scriptHostExtension);
+  const hostPath: Lib_Utility_DetectScriptHostFile_HostPath = `${normalizedFilename.slice(0, hostExtensionIndex)}${scriptHostExtension.slice(0, -1)}`;
+  const hostLastSlashIndex: Lib_Utility_DetectScriptHostFile_HostLastSlashIndex = hostPath.lastIndexOf('/');
+
+  return hostPath.slice(hostLastSlashIndex + 1);
+}
+
+/**
  * Lib - Utility - Detect Shell.
  *
  * Returns the default shell path for the current operating system
@@ -419,7 +478,8 @@ export function detectShell(): Lib_Utility_DetectShell_Returns {
  * Lib - Utility - Discover Paths With File.
  *
  * Walks the filesystem either upward or downward from the working
- * directory to collect every path containing the named file.
+ * directory to collect every path containing the named file. Upward
+ * walks stop at the repository boundary marked by a ".git" entry.
  *
  * @param {Lib_Utility_DiscoverPathsWithFile_FileName}  fileName  - File name.
  * @param {Lib_Utility_DiscoverPathsWithFile_Direction} direction - Direction.
@@ -453,6 +513,14 @@ export async function discoverPathsWithFile(fileName: Lib_Utility_DiscoverPathsW
         results.push(currentDirectory);
       } catch {
         /* empty */
+      }
+
+      // Stop at the repository boundary (a ".git" directory in regular checkouts, a ".git" file in git worktrees)
+      // so package.json files above the repository, like a parent checkout above a worktree, are not collected.
+      const gitPath: Lib_Utility_DiscoverPathsWithFile_GitPath = join(currentDirectory, '.git');
+
+      if (await pathExists(gitPath) === true) {
+        break;
       }
 
       // Stop if current directory is the root directory.
@@ -1030,6 +1098,7 @@ export async function loadWorkspaceManifests(options: Lib_Utility_LoadWorkspaceM
       const parsedFile: Lib_Utility_LoadWorkspaceManifests_ParsedFile = JSON.parse(rawFile);
 
       packageJsons.push({
+        workspacePath: relativeWorkspacePath,
         manifest: workspaceManifest,
         filePath: absolutePackageJsonPath,
         fileContents: parsedFile,
@@ -1393,9 +1462,9 @@ export function buildGeneratedFileHeader(options: Lib_Utility_BuildGeneratedFile
 /**
  * Lib - Utility - Save Generated File.
  *
- * Writes content to disk after creating parent directories,
- * skipping identical files, and backing up existing files when replaceFile is false.
- * When header is supplied, the banner is prepended before the identity check and write.
+ * Writes content to disk after creating parent directories.
+ * Skips identical files, backs up existing files when replaceFile is false, and prepends the
+ * banner header before the identity check and write when one is supplied.
  *
  * @param {Lib_Utility_SaveGeneratedFile_TargetPath}  targetPath  - Target path.
  * @param {Lib_Utility_SaveGeneratedFile_Contents}    contents    - Contents.

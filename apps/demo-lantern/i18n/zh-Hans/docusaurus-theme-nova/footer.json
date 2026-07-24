@@ -1,8 +1,4 @@
 {
-  "layout.lantern.title": {
-    "message": "Lantern",
-    "description": "Title of footer column \"lantern\""
-  },
   "layout.community.title": {
     "message": "社区",
     "description": "Title of footer column \"community\""
@@ -26,10 +22,6 @@
   "sections.lantern.2.label": {
     "message": "API 参考",
     "description": "Label of link 3 in footer section \"lantern\""
-  },
-  "sections.community.0.label": {
-    "message": "Threadbare",
-    "description": "Label of link 1 in footer section \"community\""
   },
   "sections.community.1.label": {
     "message": "博客",
@@ -58,9 +50,5 @@
   "cta.label": {
     "message": "准备回家了吗？",
     "description": "The footer call-to-action link label"
-  },
-  "copyright": {
-    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
-    "description": "The footer copyright text"
   }
 }

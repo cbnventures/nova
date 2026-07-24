@@ -32,8 +32,6 @@ import type {
  *
  * @param {Theme_BlogPostPaginator_Index_PrevLink_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.18.0
  */
 function PrevLink(props: Theme_BlogPostPaginator_Index_PrevLink_Props) {
@@ -82,8 +80,6 @@ function PrevLink(props: Theme_BlogPostPaginator_Index_PrevLink_Props) {
  * from the global plugin data.
  *
  * @param {Theme_BlogPostPaginator_Index_NextLink_Props} props - Props.
- *
- * @constructor
  *
  * @since 0.18.0
  */
@@ -134,8 +130,6 @@ function NextLink(props: Theme_BlogPostPaginator_Index_NextLink_Props) {
  * `PrevLink` and `NextLink` sub-components.
  *
  * @param {Theme_BlogPostPaginator_Index_BlogPostPaginator_Props} props - Props.
- *
- * @constructor
  *
  * @since 0.15.0
  */

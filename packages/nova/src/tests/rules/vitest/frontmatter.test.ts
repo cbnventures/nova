@@ -1,12 +1,17 @@
+import { strictEqual } from 'node:assert/strict';
 import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
+import * as vitest from 'vitest';
+
 import { registerFrontmatterSuite } from '../../../rules/vitest/frontmatter/register.js';
+import { splitFrontmatter } from '../../../rules/vitest/frontmatter/rules.js';
 
 import type {
   Tests_Rules_Vitest_Frontmatter_DocsDir,
   Tests_Rules_Vitest_Frontmatter_FixtureRoot,
+  Tests_Rules_Vitest_Frontmatter_SplitFrontmatter_KeepsFieldsAfterAValueThatContainsATripleDash_Split,
 } from '../../../types/tests/rules/vitest/frontmatter.test.d.ts';
 
 /**
@@ -58,6 +63,7 @@ writeFileSync(
 );
 
 registerFrontmatterSuite({
+  vitest,
   rootDir: fixtureRoot,
   contentDirs: ['docs'],
   requiredFields: [
@@ -68,4 +74,34 @@ registerFrontmatterSuite({
     'tags',
   ],
   enable: ['frontmatter-present'],
+});
+
+/**
+ * Tests - Rules - Vitest - Frontmatter.
+ *
+ * Regression: the closing fence must be found as a `---` at the start of a line. A `---`
+ * appearing inside a frontmatter value must not truncate the block, otherwise every field
+ * after it looks missing and dedicated rules report false failures.
+ *
+ * @since 0.21.0
+ */
+vitest.describe('split frontmatter', async () => {
+  vitest.it('keeps fields after a value that contains a triple-dash', () => {
+    const split: Tests_Rules_Vitest_Frontmatter_SplitFrontmatter_KeepsFieldsAfterAValueThatContainsATripleDash_Split = splitFrontmatter([
+      '---',
+      'id: overview',
+      'title: Before --- after',
+      'description: A real description.',
+      '---',
+      '',
+      'Body.',
+      '',
+    ].join('\n'));
+
+    strictEqual(split !== null && split['frontmatter'].includes('description: A real description.'), true);
+
+    return;
+  });
+
+  return;
 });

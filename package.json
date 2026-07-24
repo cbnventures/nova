@@ -19,9 +19,9 @@
     "./apps/*",
     "./packages/*"
   ],
-  "packageManager": "npm@11.11.0",
+  "packageManager": "npm@11.18.0",
   "engines": {
-    "node": "^20 || ^22 || ^24"
+    "node": "^22 || ^24"
   },
   "devDependencies": {
     "@cbnventures/nova": "file:./packages/nova",
@@ -29,7 +29,7 @@
     "chalk": "5.6.2",
     "chokidar": "3.6.0",
     "jiti": "2.6.1",
-    "turbo": "2.9.5",
+    "turbo": "2.10.6",
     "typescript": "5.9.3"
   },
   "overrides": {

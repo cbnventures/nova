@@ -139,6 +139,37 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenRecordA
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenRecordAndReleaseAreBothSet_ConfigContents = string;
 
 /**
+ * Tests - CLI - Utility - Changelog - Run - Errors When Version Is Not Clean Numeric.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspaceDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_ChangelogDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJsonContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_ConfigPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_ConfigContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspacePackagePath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspacePackageContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_EntryPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_EntryContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJsonRaw = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJson = Record<string, unknown>;
+
+/**
  * Tests - CLI - Utility - Changelog - Run - Prerelease Version Skips Stamp.
  *
  * Note: the normal bump arithmetic (split('.').map(Number)) always produces clean

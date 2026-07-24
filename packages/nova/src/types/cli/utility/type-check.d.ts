@@ -1,4 +1,9 @@
-import type { Diagnostic, ParsedCommandLine, Program } from 'typescript';
+import type {
+  Diagnostic,
+  LineAndCharacter,
+  ParsedCommandLine,
+  Program,
+} from 'typescript';
 
 /**
  * CLI - Utility - Type Check - Filter Diagnostics.
@@ -50,7 +55,7 @@ export type Cli_Utility_TypeCheck_Runner_PrintDiagnostics_FileName = string;
 
 export type Cli_Utility_TypeCheck_Runner_PrintDiagnostics_Message = string;
 
-export type Cli_Utility_TypeCheck_Runner_PrintDiagnostics_Position = import('typescript').LineAndCharacter;
+export type Cli_Utility_TypeCheck_Runner_PrintDiagnostics_Position = LineAndCharacter;
 
 export type Cli_Utility_TypeCheck_Runner_PrintDiagnostics_Line = number;
 
@@ -72,7 +77,8 @@ export type Cli_Utility_TypeCheck_Runner_Run_Returns = void;
 export type Cli_Utility_TypeCheck_Runner_Run_ConfigPath = string | undefined;
 
 export type Cli_Utility_TypeCheck_Runner_Run_ConfigResult = {
-  config?: unknown; error?: Diagnostic;
+  config?: unknown;
+  error?: Diagnostic;
 };
 
 export type Cli_Utility_TypeCheck_Runner_Run_Config = unknown;

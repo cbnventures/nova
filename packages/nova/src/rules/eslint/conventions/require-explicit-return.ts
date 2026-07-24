@@ -109,11 +109,11 @@ export class Runner {
    * Examines a single function node on exit. Skips concise arrows,
    * constructors, setters, and functions that return a value (non-void).
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Context} context - Context.
    * @param {Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Node}    node    - Node.
    * @param {Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Returns}
    *
@@ -195,9 +195,9 @@ export class Runner {
    * Recursively walks the AST subtree looking for any return statement
    * with an argument. Stops at nested function boundaries to avoid false positives.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireExplicitReturn_Runner_HasReturnValue_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireExplicitReturn_Runner_HasReturnValue_Returns}
    *

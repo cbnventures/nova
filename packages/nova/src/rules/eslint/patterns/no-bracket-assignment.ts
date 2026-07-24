@@ -87,10 +87,10 @@ export class Runner {
    * side of an assignment and provides an auto-fix
    * that rewrites it as a Reflect.set call.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Context} context - Context.
    * @param {Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Patterns_NoBracketAssignment_Runner_CheckAssignment_Returns}
    *

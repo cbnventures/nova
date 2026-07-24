@@ -1,0 +1,159 @@
+---
+id: "require-jsdoc-returns"
+title: "Require JSDoc Returns"
+description: "Require every @returns tag to contain only a type in braces, with no trailing description."
+keywords:
+  - "nova"
+  - "eslint rule"
+  - "jsdoc"
+  - "returns tag"
+  - "type only"
+  - "linting"
+tags:
+  - "rules"
+  - "eslint"
+  - "code style"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require every `@returns` tag to contain only a type in braces, with no trailing description.
+
+## Summary
+
+The `require-jsdoc-returns` rule reports any `@returns` tag that carries more than a braced type. A valid tag reads `@returns {SomeType}` and nothing else — never `@returns {SomeType} the result` or `@returns void`.
+
+The semantic meaning of the return value lives in the named type alias, so the description belongs there rather than on the tag.
+
+## Why Use This Rule?
+
+1. Keeps every `@returns` tag terse and uniform, so readers get the type at a glance.
+2. Pushes the meaning into the named type alias, where it stays close to the shape it describes.
+3. Blocks bare types like `@returns void` that skip the braces, keeping the syntax consistent.
+
+## Examples
+
+<Tabs groupId="require-jsdoc-returns-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    /**
+     * Parse the configuration file.
+     *
+     * Reads the file at the given path and returns
+     * a parsed configuration object.
+     *
+     * @param {string} path - Path.
+     *
+     * @returns {Config}
+     *
+     * @since UNRELEASED
+     */
+    function parseConfig(path) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    /**
+     * Parse the configuration file.
+     *
+     * Reads the file at the given path and returns
+     * a parsed configuration object.
+     *
+     * @param {string} path - Path.
+     *
+     * @returns {Config} the parsed result
+     *
+     * @since UNRELEASED
+     */
+    function parseConfig(path) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-jsdoc-returns-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireJsdocReturns } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-returns': RequireJsdocReturns.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-returns': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireJsdocReturns } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-returns': RequireJsdocReturns.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-returns': ['error', {
+            ignoreFiles: [
+              '*.test.ts',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually by moving the description into the named type alias.
+
+## Troubleshooting
+
+- **Warning fires on `@returns {Config} the result`** — The trailing description is not allowed. Move it into the `Config` type alias and leave only `@returns {Config}`.
+- **Warning fires on `@returns void`** — The type must be wrapped in braces. Write `@returns {void}` instead.
+- **Not sure where the description should go** — Document the meaning of the return value on the named type alias it points to, not on the tag.
+- **Want to skip specific files** — Use the `ignoreFiles` option to exclude files where the type-only convention does not apply.

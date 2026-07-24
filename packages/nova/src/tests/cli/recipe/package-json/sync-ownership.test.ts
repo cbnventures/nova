@@ -172,11 +172,15 @@ describe('CliRecipePackageJsonSyncOwnership.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'sync-ownership': [
-              true,
-              { homepage: true },
-            ],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-ownership': {
+              enabled: true,
+              settings: { homepage: true },
+            },
           },
         },
       },
@@ -228,8 +232,14 @@ describe('CliRecipePackageJsonSyncOwnership.run', async () => {
           name: 'docs',
           role: 'docs',
           policy: 'freezable',
-          recipes: {
-            'sync-ownership': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './apps/docs': {
+            'sync-ownership': {
+              enabled: true,
+            },
           },
         },
       },
@@ -285,11 +295,15 @@ describe('CliRecipePackageJsonSyncOwnership.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'sync-ownership': [
-              true,
-              { homepage: true },
-            ],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-ownership': {
+              enabled: true,
+              settings: { homepage: true },
+            },
           },
         },
       },

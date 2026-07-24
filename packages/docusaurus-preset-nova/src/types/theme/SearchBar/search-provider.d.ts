@@ -1,4 +1,8 @@
+import type useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import type { Dispatch, SetStateAction } from 'react';
+
+import type { Lib_Search_UseSearchWorker_Returns } from '../../lib/search/use-search-worker.d.ts';
+import type { Theme_SearchBar_SearchContext_Value } from './search-context.d.ts';
 
 /**
  * Theme - Search Bar - Search Provider - Search Provider.
@@ -13,7 +17,7 @@ export type Theme_SearchBar_SearchProvider_Props = {
 
 export type Theme_SearchBar_SearchProvider_SearchProvider_Returns = React.JSX.Element;
 
-export type Theme_SearchBar_SearchProvider_DocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
+export type Theme_SearchBar_SearchProvider_DocusaurusContext = ReturnType<typeof useDocusaurusContext>;
 
 export type Theme_SearchBar_SearchProvider_BaseUrl = string;
 
@@ -41,7 +45,7 @@ export type Theme_SearchBar_SearchProvider_SearchResultLimits = number;
 
 export type Theme_SearchBar_SearchProvider_FuzzyMatchingDistance = number;
 
-export type Theme_SearchBar_SearchProvider_SearchWorker = import('../../lib/search/use-search-worker.d.ts').Lib_Search_UseSearchWorker_Returns;
+export type Theme_SearchBar_SearchProvider_SearchWorker = Lib_Search_UseSearchWorker_Returns;
 
 export type Theme_SearchBar_SearchProvider_QueryState = [Theme_SearchBar_SearchProvider_Query, Theme_SearchBar_SearchProvider_SetQuery];
 
@@ -77,4 +81,4 @@ export type Theme_SearchBar_SearchProvider_HandleQueryChangeFunction = (value: T
 
 export type Theme_SearchBar_SearchProvider_HandleQueryChangeValue = string;
 
-export type Theme_SearchBar_SearchProvider_ContextValue = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value;
+export type Theme_SearchBar_SearchProvider_ContextValue = Theme_SearchBar_SearchContext_Value;

@@ -90,10 +90,10 @@ export class Runner {
    * initializer is referenced exactly once as the test
    * of the immediately following if-statement.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Context} context - Context.
    * @param {Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Returns}
    *

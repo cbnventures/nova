@@ -201,8 +201,10 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': false,
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: false },
         },
       },
     });
@@ -277,8 +279,10 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
     const loadSpy: Tests_Cli_Recipe_Github_SyncPolicies_CliRecipeGithubSyncPoliciesRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
-        recipes: {
-          'sync-policies': true,
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -326,8 +330,10 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -377,8 +383,10 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -426,8 +434,10 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -497,8 +507,10 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -564,11 +576,13 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           visibility: 'public',
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -645,11 +659,13 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           visibility: 'public',
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -738,9 +754,6 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           visibility: 'public',
           defaultBranch: 'main',
@@ -750,6 +763,11 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
             rebase: false,
           },
           autoDeleteHeadBranch: true,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -867,15 +885,17 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           defaultBranch: 'main',
           mergeMethods: {
             merge: true,
           },
           autoDeleteHeadBranch: true,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -987,11 +1007,13 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           visibility: 'private',
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -1102,13 +1124,15 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           mergeMethods: {
             squash: true,
           },
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -1214,12 +1238,14 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           visibility: 'public',
           mergeMethods: {},
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -1313,11 +1339,13 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           autoDeleteHeadBranch: true,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -1411,12 +1439,14 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           visibility: 'public',
           autoDeleteHeadBranch: false,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -1521,10 +1551,12 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {},
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
+        },
       },
     });
 
@@ -1611,8 +1643,10 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -1700,12 +1734,14 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           visibility: 'public',
           autoDeleteHeadBranch: true,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -1787,11 +1823,13 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           visibility: 'public',
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -1866,11 +1904,13 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           visibility: 'public',
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -1969,11 +2009,13 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           visibility: 'public',
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });
@@ -2058,11 +2100,13 @@ describe('CliRecipeGithubSyncPolicies.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-policies': true,
-        },
         policies: {
           visibility: 'public',
+        },
+      },
+      recipes: {
+        github: {
+          'sync-policies': { enabled: true },
         },
       },
     });

@@ -18,9 +18,5 @@
   "item.4.label": {
     "message": "البيان",
     "description": "Label of navbar item 5"
-  },
-  "item.6.label": {
-    "message": "GitHub",
-    "description": "Label of navbar item 7"
   }
 }

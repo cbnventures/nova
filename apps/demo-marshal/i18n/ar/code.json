@@ -15,49 +15,25 @@
     "message": "وجّه الأعمال الواردة بحسب الرعاة أو المساهمين أو العموم. التسميات يختمها النظام ولا تقبل التفاوض. كل قرار توجيه يُقيَّد في السجل.",
     "description": "Front page Features card description for Access Tiers"
   },
-  "home.features.accessTiers.title": {
-    "message": "Access Tiers",
-    "description": "Front page Features card title for Access Tiers"
-  },
   "home.features.automatedStamps.description": {
     "message": "يعمل Marshal بموجب تفويضات قائمة. كل عملية تحمل ختماً زمنياً، ومنفّذاً موثقاً، وإشارة إلى السياسة التي أطلقتها.",
     "description": "Front page Features card description for Automated Stamps"
-  },
-  "home.features.automatedStamps.title": {
-    "message": "Automated Stamps",
-    "description": "Front page Features card title for Automated Stamps"
   },
   "home.features.dockets.description": {
     "message": "كل عملية يقوم بها Marshal تترك سطراً في السجل العام. المواضيع المغلقة، والموافقات المختومة، والمناوبات الدورية، كلها قابلة للإلحاق فقط، ومرئية للجميع، ولا يمكن سحبها أبداً.",
     "description": "Front page Features card description for Dockets"
   },
-  "home.features.dockets.title": {
-    "message": "Dockets",
-    "description": "Front page Features card title for Dockets"
-  },
   "home.features.policies.description": {
     "message": "اكتب مقطعاً من YAML لوصف كيفية تعامل Marshal مع فئة من الأحداث، من المواضيع الراكدة إلى طلبات السحب المتأخرة وحتى الدعم المقدم بحسب المستوى. لا يقرأ Marshal إلا ما هو مسجل، ولا يختم إلا ما هو مغلق.",
     "description": "Front page Features card description for Policies"
-  },
-  "home.features.policies.title": {
-    "message": "Policies",
-    "description": "Front page Features card title for Policies"
   },
   "home.features.scheduledStewardship.description": {
     "message": "شغّل عمليات التنظيف والتدقيق والمناوبة عبر cron. ينفّذ Marshal مهامه عند رأس الساعة، ويؤرشف سجلاً بذلك، ثم يمضي قُدُماً. لا حاجة لانتظار من يتذكر من البشر.",
     "description": "Front page Features card description for Scheduled Stewardship"
   },
-  "home.features.scheduledStewardship.title": {
-    "message": "Scheduled Stewardship",
-    "description": "Front page Features card title for Scheduled Stewardship"
-  },
   "home.features.threadArchival.description": {
     "message": "إغلاق وأرشفة المواضيع التي ظلت صامتة N من الأيام، مع تدوين خطي لكل حالة. كل موضوع مؤرشف يحمل سبب الأرشفة ومساراً لإعادة فتحه.",
     "description": "Front page Features card description for Thread Archival"
-  },
-  "home.features.threadArchival.title": {
-    "message": "Thread Archival",
-    "description": "Front page Features card title for Thread Archival"
   },
   "home.head.title": {
     "message": "Marshal - التسجيل، الإغلاق، الأتمتة",
@@ -179,17 +155,9 @@
     "message": "وجّه الأعمال الواردة بحسب الرعاة أو المساهمين أو العموم. التسميات يختمها النظام ولا تقبل التفاوض.",
     "description": "Showcase Features (with icons) card description for Access Tiers"
   },
-  "showcase.featuresIcons.accessTiers.title": {
-    "message": "Access Tiers",
-    "description": "Showcase Features (with icons) card title for Access Tiers"
-  },
   "showcase.featuresIcons.dockets.description": {
     "message": "كل عملية يقوم بها Marshal تترك سطراً في السجل العام. المواضيع المغلقة، والموافقات المختومة، والمناوبات الدورية، كلها قابلة للإلحاق فقط.",
     "description": "Showcase Features (with icons) card description for Dockets"
-  },
-  "showcase.featuresIcons.dockets.title": {
-    "message": "Dockets",
-    "description": "Showcase Features (with icons) card title for Dockets"
   },
   "showcase.featuresIcons.heading": {
     "message": "لماذا تختار المستودعات Marshal",
@@ -199,57 +167,29 @@
     "message": "اكتب مقطعاً من YAML لوصف كيفية تعامل Marshal مع فئة من الأحداث. لا يقرأ Marshal إلا ما هو مسجل، ولا يختم إلا ما هو مغلق.",
     "description": "Showcase Features (with icons) card description for Policies"
   },
-  "showcase.featuresIcons.policies.title": {
-    "message": "Policies",
-    "description": "Showcase Features (with icons) card title for Policies"
-  },
   "showcase.featuresNoIcons.automatedStamps.description": {
     "message": "كل عملية تحمل ختماً زمنياً، ومنفّذاً موثقاً، وإشارة إلى السياسة التي أطلقتها.",
     "description": "Showcase Features (no icons) card description for Automated Stamps"
-  },
-  "showcase.featuresNoIcons.automatedStamps.title": {
-    "message": "Automated Stamps",
-    "description": "Showcase Features (no icons) card title for Automated Stamps"
   },
   "showcase.featuresNoIcons.scheduledStewardship.description": {
     "message": "شغّل عمليات التنظيف والتدقيق والمناوبة عبر cron. ينفّذ Marshal مهامه عند رأس الساعة ويؤرشف سجلاً بذلك.",
     "description": "Showcase Features (no icons) card description for Scheduled Stewardship"
   },
-  "showcase.featuresNoIcons.scheduledStewardship.title": {
-    "message": "Scheduled Stewardship",
-    "description": "Showcase Features (no icons) card title for Scheduled Stewardship"
-  },
   "showcase.featuresNoIcons.threadArchival.description": {
     "message": "إغلاق وأرشفة المواضيع التي ظلت صامتة N من الأيام، مع تدوين خطي لكل حالة، والإبقاء على مسار لإعادة الفتح.",
     "description": "Showcase Features (no icons) card description for Thread Archival"
-  },
-  "showcase.featuresNoIcons.threadArchival.title": {
-    "message": "Thread Archival",
-    "description": "Showcase Features (no icons) card title for Thread Archival"
   },
   "showcase.featuresSix.accessTiers.description": {
     "message": "الرعاة، والمساهمون، والعموم؛ ثلاثة مستويات، وطابور واحد، وكاتب واحد. تُسنَد التسميات لحظة الاستلام.",
     "description": "Showcase Features (six items) card description for Access Tiers"
   },
-  "showcase.featuresSix.accessTiers.title": {
-    "message": "Access Tiers",
-    "description": "Showcase Features (six items) card title for Access Tiers"
-  },
   "showcase.featuresSix.automatedStamps.description": {
     "message": "كل عملية يقوم بها Marshal تشير إلى السياسة التي أذنت بها. التفويض يُسجَّل قبل التنفيذ.",
     "description": "Showcase Features (six items) card description for Automated Stamps"
   },
-  "showcase.featuresSix.automatedStamps.title": {
-    "message": "Automated Stamps",
-    "description": "Showcase Features (six items) card title for Automated Stamps"
-  },
   "showcase.featuresSix.dockets.description": {
     "message": "سجل عام قابل للإلحاق فقط لكل عملية. المواضيع المغلقة، وقرارات التوجيه، والجولات المجدولة، كلها مختومة.",
     "description": "Showcase Features (six items) card description for Dockets"
-  },
-  "showcase.featuresSix.dockets.title": {
-    "message": "Dockets",
-    "description": "Showcase Features (six items) card title for Dockets"
   },
   "showcase.featuresSix.heading": {
     "message": "قسم واحد يضم كل شيء",
@@ -259,25 +199,13 @@
     "message": "صِف القواعد بـ YAML. يقرؤها Marshal وينفّذها ويسجّلها. لا تفاوض في وقت التشغيل.",
     "description": "Showcase Features (six items) card description for Policies"
   },
-  "showcase.featuresSix.policies.title": {
-    "message": "Policies",
-    "description": "Showcase Features (six items) card title for Policies"
-  },
   "showcase.featuresSix.scheduledStewardship.description": {
     "message": "تنظيف وتدقيق مدفوعان بـ cron. يعمل Marshal وفق الجدول، ولا ينتظر من يتذكر من البشر.",
     "description": "Showcase Features (six items) card description for Scheduled Stewardship"
   },
-  "showcase.featuresSix.scheduledStewardship.title": {
-    "message": "Scheduled Stewardship",
-    "description": "Showcase Features (six items) card title for Scheduled Stewardship"
-  },
   "showcase.featuresSix.threadArchival.description": {
     "message": "المواضيع الصامتة تُغلق وتُؤرشف وفقاً للسياسة، وكل حالة تحمل إشعاراً مختوماً ومساراً لإعادة الفتح.",
     "description": "Showcase Features (six items) card description for Thread Archival"
-  },
-  "showcase.featuresSix.threadArchival.title": {
-    "message": "Thread Archival",
-    "description": "Showcase Features (six items) card title for Thread Archival"
   },
   "showcase.heroFull.ctaLabel": {
     "message": "اقرأ الوثائق",
@@ -367,21 +295,9 @@
     "message": "Hero (مبسط)",
     "description": "Showcase item title for Hero (minimal variant)"
   },
-  "showcase.item.installStripBlock.title": {
-    "message": "InstallStrip (copyTarget: block)",
-    "description": "Showcase item title for InstallStrip (block copyTarget variant)"
-  },
-  "showcase.item.installStripIcon.title": {
-    "message": "InstallStrip (copyTarget: icon)",
-    "description": "Showcase item title for InstallStrip (icon copyTarget variant)"
-  },
   "showcase.item.installStripNoLabel.title": {
     "message": "InstallStrip (بدون تسمية)",
     "description": "Showcase item title for InstallStrip (no label variant)"
-  },
-  "showcase.item.installStripText.title": {
-    "message": "InstallStrip (copyTarget: text)",
-    "description": "Showcase item title for InstallStrip (text copyTarget variant)"
   },
   "showcase.item.spotlightCode.title": {
     "message": "Spotlight (مع الكود)",
@@ -595,10 +511,6 @@
     "message": "لم يكتب هذا المؤلّف أيّ منشورات بعد.",
     "description": "The text for authors with 0 blog post"
   },
-  "theme.blog.author.pageTitle": {
-    "message": "{authorName} - {nPosts}",
-    "description": "The title of the page for a blog author"
-  },
   "theme.blog.authorsList.viewAll": {
     "message": "عرض جميع المؤلّفين",
     "description": "The label of the link targeting the blog authors page"
@@ -607,10 +519,6 @@
     "message": "منشور واحد|{count} منشورات",
     "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
-  "theme.blog.tagTitle": {
-    "message": "{nPosts} موسومة بـ \"{tagName}\"",
-    "description": "The title of the page for a blog tag"
-  },
   "theme.common.skipToMainContent": {
     "message": "تخطّى إلى المحتوى الرئيسي",
     "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
@@ -618,10 +526,6 @@
   "theme.footer.copyright": {
     "message": "حقوق النشر © 2025-2026 CBN Ventures LLC. جميع الحقوق محفوظة.",
     "description": "Footer copyright text. The {copyright} placeholder receives the consumer's themeConfig.footer.copyright value as the source-locale fallback; per-locale overrides in i18n code.json usually inline their own text."
-  },
-  "theme.tags.tagsPageTitle": {
-    "message": "الوسوم",
-    "description": "The title of the tag list page"
   },
   "showcase.frame.imageAlt": {
     "message": "صورة مصغرة لعلامة Marshal التجارية.",
@@ -638,5 +542,81 @@
   "showcase.item.frameWithCaption.title": {
     "message": "إطار (مع تعليق)",
     "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "home.features.policies.title": {
+    "message": "السياسات",
+    "description": "Front page Features card title for Policies"
+  },
+  "home.features.dockets.title": {
+    "message": "السجلات",
+    "description": "Front page Features card title for Dockets"
+  },
+  "home.features.accessTiers.title": {
+    "message": "مستويات الوصول",
+    "description": "Front page Features card title for Access Tiers"
+  },
+  "home.features.scheduledStewardship.title": {
+    "message": "الإدارة المجدولة",
+    "description": "Front page Features card title for Scheduled Stewardship"
+  },
+  "home.features.threadArchival.title": {
+    "message": "أرشفة المواضيع",
+    "description": "Front page Features card title for Thread Archival"
+  },
+  "home.features.automatedStamps.title": {
+    "message": "الأختام الآلية",
+    "description": "Front page Features card title for Automated Stamps"
+  },
+  "showcase.featuresIcons.policies.title": {
+    "message": "السياسات",
+    "description": "Showcase Features (with icons) card title for Policies"
+  },
+  "showcase.featuresIcons.dockets.title": {
+    "message": "السجلات",
+    "description": "Showcase Features (with icons) card title for Dockets"
+  },
+  "showcase.featuresIcons.accessTiers.title": {
+    "message": "مستويات الوصول",
+    "description": "Showcase Features (with icons) card title for Access Tiers"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.title": {
+    "message": "الإدارة المجدولة",
+    "description": "Showcase Features (no icons) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.threadArchival.title": {
+    "message": "أرشفة المواضيع",
+    "description": "Showcase Features (no icons) card title for Thread Archival"
+  },
+  "showcase.featuresNoIcons.automatedStamps.title": {
+    "message": "الأختام الآلية",
+    "description": "Showcase Features (no icons) card title for Automated Stamps"
+  },
+  "showcase.featuresSix.policies.title": {
+    "message": "السياسات",
+    "description": "Showcase Features (six items) card title for Policies"
+  },
+  "showcase.featuresSix.dockets.title": {
+    "message": "السجلات",
+    "description": "Showcase Features (six items) card title for Dockets"
+  },
+  "showcase.featuresSix.accessTiers.title": {
+    "message": "مستويات الوصول",
+    "description": "Showcase Features (six items) card title for Access Tiers"
+  },
+  "showcase.featuresSix.scheduledStewardship.title": {
+    "message": "الإدارة المجدولة",
+    "description": "Showcase Features (six items) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.threadArchival.title": {
+    "message": "أرشفة المواضيع",
+    "description": "Showcase Features (six items) card title for Thread Archival"
+  },
+  "showcase.featuresSix.automatedStamps.title": {
+    "message": "الأختام الآلية",
+    "description": "Showcase Features (six items) card title for Automated Stamps"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} دقيقة للقراءة",
+    "description": "The label showing estimated reading time for a blog post"
   }
 }

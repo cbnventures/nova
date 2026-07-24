@@ -1,0 +1,506 @@
+{
+  "home.layout.description": {
+    "message": "Sentinel mengevaluasi setiap pengguna, setiap perangkat, setiap koneksi — tanpa henti. Akses bukanlah sebuah pintu. Ia adalah percakapan yang tak pernah berakhir.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Sentinel - Kepercayaan Adalah Kerentanan",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Platform Keamanan",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Kepercayaan adalah kerentanan.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Sentinel mengevaluasi setiap pengguna, setiap perangkat, setiap koneksi — tanpa henti. Akses bukanlah sebuah pintu. Ia adalah percakapan yang tak pernah berakhir.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Jelajahi Platform",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Lihat di Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.watchtower.description": {
+    "message": "Penilaian postur berkelanjutan. Mengevaluasi kesehatan perangkat, lokasi, dan perilaku setiap 90 detik. Begitu kondisi berubah, Watchtower langsung tahu.",
+    "description": "Front page Features card description for Watchtower"
+  },
+  "home.features.drawbridge.description": {
+    "message": "Gerbang akses adaptif. Memberikan, mempersempit, atau mencabut akses secara real-time berdasarkan konteks — identitas, postur, lokasi, dan waktu. Tanpa aturan statis.",
+    "description": "Front page Features card description for Drawbridge"
+  },
+  "home.features.garrison.description": {
+    "message": "Mesin kepatuhan endpoint. Menegakkan kebijakan pada setiap perangkat yang terhubung. Enkripsi disk, versi OS, status firewall — semuanya diverifikasi sebelum akses diberikan.",
+    "description": "Front page Features card description for Garrison"
+  },
+  "home.features.rampart.description": {
+    "message": "Lapisan mikro-segmentasi. Mengisolasi beban kerja sehingga pergerakan lateral menjadi mustahil. Bahkan jika satu segmen disusupi, penyusupan berhenti di situ.",
+    "description": "Front page Features card description for Rampart"
+  },
+  "home.features.spyglass.description": {
+    "message": "Audit dan forensik. Rekonstruksi sesi penuh dengan retensi log yang tak dapat diubah selama 7 tahun. Setiap keputusan akses, setiap evaluasi kebijakan, setiap koneksi — terekam.",
+    "description": "Front page Features card description for Spyglass"
+  },
+  "home.features.parapet.description": {
+    "message": "Sandbox simulasi kebijakan. Uji aturan akses terhadap lalu lintas nyata sebelum menerapkannya. Lihat siapa yang memperoleh akses, siapa yang kehilangannya, dan mengapa — tanpa menyentuh produksi.",
+    "description": "Front page Features card description for Parapet"
+  },
+  "home.stats.heading": {
+    "message": "Dalam Angka",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.cycle.label": {
+    "message": "Siklus evaluasi ulang",
+    "description": "Front page Stats label for re-evaluation cycle"
+  },
+  "home.stats.tunnels.label": {
+    "message": "Tunnel serentak",
+    "description": "Front page Stats label for concurrent tunnels"
+  },
+  "home.stats.retention.label": {
+    "message": "Retensi audit",
+    "description": "Front page Stats label for audit retention"
+  },
+  "home.stats.latency.label": {
+    "message": "Latensi kebijakan",
+    "description": "Front page Stats label for policy latency"
+  },
+  "home.spotlight.heading": {
+    "message": "Satu Kebijakan, Evaluasi Menyeluruh",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Tentukan makna kepercayaan. Sentinel menegakkannya tanpa henti.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Pantau armada Anda di mana saja",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Buletin Keamanan",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Riset ancaman, panduan postur, dan filosofi kepercayaan berkelanjutan.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Etalase blok Sentinel yang mendemonstrasikan setiap blok dari docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Setiap blok dari preset Sentinel, ditampilkan dengan data contoh.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (penuh)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Etalase Blok",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Setiap blok Sentinel, didemonstrasikan di satu tempat.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Halaman ini menampilkan setiap blok dari @cbnventures/docusaurus-preset-nova/blocks dengan data dunia Sentinel sehingga Anda bisa melihat tampilan dan perilakunya.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Baca Dokumentasi",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Lihat di Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Kepercayaan diraih secara berkelanjutan.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Sentinel mengevaluasi setiap pengguna, setiap perangkat, setiap koneksi — tanpa henti. Akses bukanlah sebuah pintu. Ia adalah percakapan yang tak pernah berakhir.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Jelajahi Platform",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (bawaan)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Saya suka ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (tanpa prefiks)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Cepat",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Fleksibel",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Gratis",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (tempo lambat)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Dibuat untuk ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "pengembang",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "desainer",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (tanpa loop)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Selamat datang di ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Pasang dengan Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Atau gunakan kontainer Vial",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (tanpa label)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Instalasi cepat",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (dengan ikon)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Mengapa Tim Memilih Sentinel",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.watchtower.description": {
+    "message": "Penilaian postur berkelanjutan. Mengevaluasi kesehatan perangkat, lokasi, dan perilaku setiap 90 detik.",
+    "description": "Showcase Features (with icons) card description for Watchtower"
+  },
+  "showcase.featuresIcons.drawbridge.description": {
+    "message": "Gerbang akses adaptif. Memberikan, mempersempit, atau mencabut akses secara real-time berdasarkan evaluasi kepercayaan.",
+    "description": "Showcase Features (with icons) card description for Drawbridge"
+  },
+  "showcase.featuresIcons.garrison.description": {
+    "message": "Mesin kepatuhan endpoint. Menegakkan kebijakan pada setiap perangkat yang terhubung sebelum akses diberikan.",
+    "description": "Showcase Features (with icons) card description for Garrison"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (tanpa ikon, tanpa judul)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.rampart.description": {
+    "message": "Lapisan mikro-segmentasi. Mengisolasi beban kerja sehingga pergerakan lateral antar zona menjadi mustahil.",
+    "description": "Showcase Features (no icons) card description for Rampart"
+  },
+  "showcase.featuresNoIcons.spyglass.description": {
+    "message": "Audit dan forensik. Rekonstruksi sesi penuh dengan retensi log yang tak dapat diubah selama 7 tahun.",
+    "description": "Showcase Features (no icons) card description for Spyglass"
+  },
+  "showcase.featuresNoIcons.parapet.description": {
+    "message": "Sandbox simulasi kebijakan. Uji aturan akses terhadap lalu lintas nyata sebelum menerapkannya.",
+    "description": "Showcase Features (no icons) card description for Parapet"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (enam item, ikon campuran)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Mesin Kepercayaan yang Lengkap",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.watchtower.description": {
+    "message": "Mengevaluasi postur perangkat, identitas pengguna, konteks jaringan, dan sinyal perilaku dalam siklus 90 detik yang berkelanjutan.",
+    "description": "Showcase Features (six items) card description for Watchtower"
+  },
+  "showcase.featuresSix.drawbridge.description": {
+    "message": "Menerjemahkan evaluasi Watchtower menjadi keputusan akses yang konkret — memberikan, mempersempit, atau mencabut.",
+    "description": "Showcase Features (six items) card description for Drawbridge"
+  },
+  "showcase.featuresSix.garrison.description": {
+    "message": "Mengelola pendaftaran perangkat, baseline postur, dan profil kepatuhan untuk setiap endpoint.",
+    "description": "Showcase Features (six items) card description for Garrison"
+  },
+  "showcase.featuresSix.rampart.description": {
+    "message": "Membagi infrastruktur menjadi zona-zona terisolasi. Perlintasan antar zona memerlukan evaluasi kebijakan.",
+    "description": "Showcase Features (six items) card description for Rampart"
+  },
+  "showcase.featuresSix.spyglass.description": {
+    "message": "Merekam setiap keputusan akses, evaluasi kebijakan, dan perlintasan zona dalam rantai audit yang tak dapat diubah.",
+    "description": "Showcase Features (six items) card description for Spyglass"
+  },
+  "showcase.featuresSix.parapet.description": {
+    "message": "Memutar ulang lalu lintas nyata terhadap draf kebijakan untuk menunjukkan dampak akses yang tepat sebelum penegakan.",
+    "description": "Showcase Features (six items) card description for Parapet"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (dengan judul dan deskripsi)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Metrik Platform",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Indikator kinerja utama di seluruh mesin kepercayaan Sentinel.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.cycle.label": {
+    "message": "Siklus evaluasi ulang",
+    "description": "Showcase Stats (full) label for re-evaluation cycle"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Latensi kebijakan",
+    "description": "Showcase Stats (full) label for policy latency"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "Uptime evaluasi",
+    "description": "Showcase Stats (full) label for evaluation uptime"
+  },
+  "showcase.statsFull.retention.label": {
+    "message": "Retensi audit",
+    "description": "Showcase Stats (full) label for audit retention"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (tanpa judul)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.tunnels.label": {
+    "message": "Tunnel serentak",
+    "description": "Showcase Stats (no heading) label for concurrent tunnels"
+  },
+  "showcase.statsNoHeading.components.label": {
+    "message": "Komponen",
+    "description": "Showcase Stats (no heading) label for components"
+  },
+  "showcase.statsNoHeading.zoneTypes.label": {
+    "message": "Jenis zona",
+    "description": "Showcase Stats (no heading) label for zone types"
+  },
+  "showcase.statsNoHeading.implicitTrust.label": {
+    "message": "Kepercayaan implisit",
+    "description": "Showcase Stats (no heading) label for implicit trust"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (dengan kode)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Mulai Cepat",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Tiga perintah untuk beralih dari nol ke evaluasi kepercayaan berkelanjutan.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (dengan teks)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Cara Kerjanya",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Sentinel mengevaluasi kepercayaan tanpa henti. Watchtower menghitung skor postur setiap 90 detik. Drawbridge menegakkan hasilnya secara real-time. Spyglass merekam setiap keputusan dalam bentuk yang tak dapat diubah. Keluarannya selalu bukti — bukan asumsi.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (dengan deskripsi)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Buletin Keamanan",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Riset ancaman, panduan postur, dan filosofi kepercayaan berkelanjutan.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Hari Ketika Kami Berhenti Memercayai Jaringan",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Perimeter telah lenyap dan industri berpura-pura seakan ia masih ada. Kami membangun Sentinel karena setiap VPN adalah sebuah asumsi kepercayaan.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Menyimulasikan Pelanggaran yang Tak Pernah Kami Alami",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Bagaimana Parapet menangkap jalur pergerakan lateral di staging sebelum mencapai produksi.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Mengapa Kepatuhan Bukanlah Keamanan (Tetapi Anda Tetap Membutuhkan Keduanya)",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Lolos audit dan menjadi aman bukanlah hal yang sama. Spyglass menjembatani kesenjangannya.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (tanpa deskripsi)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Pembaruan Terbaru",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Sentinel 3.4: Pemutaran Ulang Lalu Lintas Parapet dan Karantina Zona Rampart",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Parapet kini mendukung pemutaran ulang lalu lintas penuh terhadap draf kebijakan, dan Rampart dapat secara otomatis mengarantina perangkat yang gagal pemeriksaan postur.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (penggunaan inline)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Sentinel menggunakan ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.trustPolicy.title": {
+    "message": "deklarasi kontrol akses",
+    "description": "Showcase Terminology hover title for trust policy"
+  },
+  "showcase.terminology.trustPolicy.label": {
+    "message": "kebijakan kepercayaan",
+    "description": "Showcase Terminology displayed text for trust policy"
+  },
+  "showcase.terminology.paragraph1.afterTrustPolicy": {
+    "message": " untuk menggerakkan semua keputusan akses. Setiap perangkat terdaftar dipantau oleh agen ",
+    "description": "Showcase Terminology paragraph 1 fragment after trust policy"
+  },
+  "showcase.terminology.garrison.title": {
+    "message": "agen kepatuhan endpoint",
+    "description": "Showcase Terminology hover title for Garrison"
+  },
+  "showcase.terminology.paragraph1.afterGarrison": {
+    "message": ", yang melaporkan data postur ke ",
+    "description": "Showcase Terminology paragraph 1 fragment after Garrison"
+  },
+  "showcase.terminology.watchtower.title": {
+    "message": "mesin evaluasi kepercayaan berkelanjutan",
+    "description": "Showcase Terminology hover title for Watchtower"
+  },
+  "showcase.terminology.paragraph1.afterWatchtower": {
+    "message": " untuk penilaian.",
+    "description": "Showcase Terminology paragraph 1 fragment after Watchtower"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Dengan sistem zona ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.rampart.title": {
+    "message": "lapisan mikro-segmentasi",
+    "description": "Showcase Terminology hover title for Rampart"
+  },
+  "showcase.terminology.paragraph2.afterRampart": {
+    "message": ", beban kerja diisolasi sehingga bahkan segmen yang disusupi pun tidak dapat memengaruhi tunnel ",
+    "description": "Showcase Terminology paragraph 2 fragment after Rampart"
+  },
+  "showcase.terminology.filament.title": {
+    "message": "protokol tunnel terenkripsi",
+    "description": "Showcase Terminology hover title for Filament"
+  },
+  "showcase.terminology.paragraph2.afterFilament": {
+    "message": " di zona-zona yang berdekatan. Setiap keputusan direkam dalam ",
+    "description": "Showcase Terminology paragraph 2 fragment after Filament"
+  },
+  "showcase.terminology.spyglass.title": {
+    "message": "mesin audit dan forensik",
+    "description": "Showcase Terminology hover title for Spyglass"
+  },
+  "showcase.terminology.paragraph2.afterSpyglass": {
+    "message": " untuk retensi audit yang tak dapat diubah.",
+    "description": "Showcase Terminology paragraph 2 fragment after Spyglass"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (dengan keterangan)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Tanda merek dipasang pada Frame — batas tegas, kokoh bagai menara pengawas.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Thumbnail merek Sentinel.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (tanpa keterangan)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (kedua toko)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Unduh aplikasi pendamping",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (khusus App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Tersedia di iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (khusus Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Tersedia di Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (tanpa label)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} menit baca",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

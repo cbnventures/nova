@@ -23,6 +23,7 @@ import type {
   Lib_Item_PrettyNamesColumnTitle,
   Lib_Item_PrettyNamesKeyword,
   Lib_Item_PrettyNamesType,
+  Lib_Item_RecipesByCategory,
   Lib_Item_RepositoryProtocols,
   Lib_Item_ReservedDotenvKeys,
   Lib_Item_SideEffectsEsnextRoles,
@@ -83,6 +84,41 @@ export const libItemAllowedRecipes: Lib_Item_AllowedRecipes = [
   'sync-identity',
   'sync-ownership',
 ];
+
+/**
+ * Lib - Item - Recipes By Category.
+ *
+ * Canonical recipe names per category, keyed by CLI category. Nova-config validates the
+ * unified recipes block against this map during parsing.
+ *
+ * @since 0.21.0
+ */
+export const libItemRecipesByCategory: Lib_Item_RecipesByCategory = {
+  'github': [
+    'sync-features',
+    'sync-identity',
+    'sync-policies',
+  ],
+  'license': ['update-copyright'],
+  'read-me': [
+    'update-badges',
+    'update-credits',
+    'update-documentation',
+    'update-header',
+    'update-introduction',
+  ],
+  'package-json': [
+    'cleanup',
+    'normalize-artifacts',
+    'normalize-bundler',
+    'normalize-dependencies',
+    'normalize-modules',
+    'normalize-tooling',
+    'sync-environment',
+    'sync-identity',
+    'sync-ownership',
+  ],
+};
 
 /**
  * Lib - Item - Allowed Roles.

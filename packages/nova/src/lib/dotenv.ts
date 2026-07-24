@@ -30,8 +30,8 @@ import type {
 /**
  * Lib - Dotenv - Find Env Quote Violations.
  *
- * Walks the lines of raw .env content, skipping comments and blanks, then classifies each
- * KEY=value entry's quote style and accumulates multi-line double-quoted values. Returns
+ * Walks the raw .env lines, skipping comments and blanks, then classifies each
+ * KEY=value entry's quote style and accumulates multi-line double-quoted values, returning
  * one violation per offending key.
  *
  * @param {Lib_Dotenv_FindEnvQuoteViolations_Content} content - Content.

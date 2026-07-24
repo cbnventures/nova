@@ -1,0 +1,526 @@
+{
+  "home.layout.description": {
+    "message": "Foundry đọc ý định của bạn và rèn nên toàn bộ môi trường phát triển từ một bản kê khai duy nhất.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Foundry - Mọi công cụ đều bắt đầu từ kim loại thô",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Bộ công cụ cho nhà phát triển",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Mọi công cụ đều bắt đầu từ kim loại thô.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Foundry đọc ý định của bạn và rèn nên toàn bộ môi trường phát triển từ một bản kê khai duy nhất. Ngừng cấu hình. Bắt đầu mô tả.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Bắt đầu ngay",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Xem trên Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.anvil.description": {
+    "message": "CLI cốt lõi. Đọc một bản kê khai Blueprint duy nhất và rèn nên toàn bộ không gian làm việc của bạn — cấu trúc thư mục, đồ thị phụ thuộc, cấu hình bản dựng và quy tắc kiểm tra mã. Một tệp đầu vào, một môi trường hoàn chỉnh đầu ra.",
+    "description": "Front page Features card description for Anvil"
+  },
+  "home.features.tongs.description": {
+    "message": "Trình phân giải và trực quan hóa đồ thị phụ thuộc. Ánh xạ mọi mối quan hệ giữa các gói trong không gian làm việc và kết xuất toàn bộ cây phụ thuộc, để bạn thấy rõ cái gì phụ thuộc vào cái gì trước khi thay đổi bất cứ thứ gì.",
+    "description": "Front page Features card description for Tongs"
+  },
+  "home.features.quench.description": {
+    "message": "Bộ nhớ đệm bản dựng tăng dần, theo dõi giá trị băm của tệp và chỉ dựng lại phần thực sự thay đổi. Lượt rèn nguội mất 14 giây. Lượt rèn ấm chưa tới hai giây.",
+    "description": "Front page Features card description for Quench"
+  },
+  "home.features.bellows.description": {
+    "message": "Trình chạy tác vụ song song, phân tán công việc đồng thời ra mọi gói trong không gian làm việc. Tôn trọng đồ thị phụ thuộc từ Tongs nên không có gì chạy trước khi các điều kiện tiên quyết của nó hoàn tất.",
+    "description": "Front page Features card description for Bellows"
+  },
+  "home.features.crucible.description": {
+    "message": "Trình tạo khung kiểm thử, đọc chữ ký kiểu của bạn và tự viết bộ khung kiểm thử cho bạn. Kiểm thử snapshot, mẫu khẳng định và tệp fixture — tất cả đều bắt nguồn từ những kiểu bạn đã viết sẵn.",
+    "description": "Front page Features card description for Crucible"
+  },
+  "home.features.slag.description": {
+    "message": "Trình phát hiện mã chết và phụ thuộc không dùng đến. Quét mọi import, mọi export và mọi mục trong Blueprint để tìm ra thứ không còn được tham chiếu. Loại bỏ xỉ, giữ lại thép.",
+    "description": "Front page Features card description for Slag"
+  },
+  "home.stats.heading": {
+    "message": "Những con số biết nói",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manifest.label": {
+    "message": "Bản kê khai",
+    "description": "Front page Stats label for manifest count"
+  },
+  "home.stats.configFiles.label": {
+    "message": "Tệp cấu hình",
+    "description": "Front page Stats label for config file count"
+  },
+  "home.stats.coldForge.label": {
+    "message": "Rèn nguội",
+    "description": "Front page Stats label for cold forge time"
+  },
+  "home.stats.wardenRules.label": {
+    "message": "Quy tắc Warden",
+    "description": "Front page Stats label for Warden rule count"
+  },
+  "home.spotlight.heading": {
+    "message": "Một bản kê khai, mọi thứ đã kết nối",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Mô tả điều bạn muốn. Foundry lo phần còn lại.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Quản lý lò rèn của bạn mọi lúc mọi nơi",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Bản tin từ lò rèn",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Triết lý, các phép đo hiệu năng, và những quan điểm chúng tôi đã ship.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Trưng bày các khối của Foundry, minh họa mọi khối từ docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Mọi khối từ bộ preset Foundry, được kết xuất với dữ liệu mẫu.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (đầy đủ)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Trưng bày khối",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Mọi khối Foundry, trình diễn tại một nơi.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Trang này kết xuất từng khối từ @cbnventures/docusaurus-preset-nova/blocks với dữ liệu thế giới Foundry, để bạn thấy chúng trông và hoạt động ra sao.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Đọc tài liệu",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Xem trên Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (tối giản)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Định hình thứ được xuất xưởng.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Foundry đọc ý định của bạn và rèn nên toàn bộ môi trường phát triển từ một bản kê khai duy nhất. Ngừng cấu hình. Bắt đầu mô tả.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Bắt đầu ngay",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (mặc định)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Tôi yêu ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (không có tiền tố)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Nhanh",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Linh hoạt",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Miễn phí",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (tốc độ chậm)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Dành cho ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "nhà phát triển",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "nhà thiết kế",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (không lặp)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Chào mừng đến với ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Cài đặt bằng Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Hoặc dùng Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (không có nhãn)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Cài đặt nhanh",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (có biểu tượng)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Vì sao các nhóm chọn Foundry",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.anvil.description": {
+    "message": "CLI cốt lõi. Đọc một bản kê khai Blueprint và rèn nên không gian làm việc của bạn — cấu trúc thư mục, đồ thị phụ thuộc, cấu hình bản dựng và quy tắc kiểm tra mã.",
+    "description": "Showcase Features (with icons) card description for Anvil"
+  },
+  "showcase.featuresIcons.tongs.description": {
+    "message": "Trình phân giải và trực quan hóa đồ thị phụ thuộc. Ánh xạ mọi mối quan hệ giữa các gói và kết xuất toàn bộ cây phụ thuộc.",
+    "description": "Showcase Features (with icons) card description for Tongs"
+  },
+  "showcase.featuresIcons.quench.description": {
+    "message": "Bộ nhớ đệm bản dựng tăng dần, theo dõi giá trị băm của tệp và chỉ dựng lại phần đã thay đổi. Lượt rèn nguội mất 14 giây. Lượt rèn ấm chưa tới hai giây.",
+    "description": "Showcase Features (with icons) card description for Quench"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (không biểu tượng, không tiêu đề)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.bellows.description": {
+    "message": "Trình chạy tác vụ song song, phân tán công việc đồng thời ra mọi gói trong không gian làm việc. Tôn trọng đồ thị phụ thuộc của Tongs.",
+    "description": "Showcase Features (no icons) card description for Bellows"
+  },
+  "showcase.featuresNoIcons.crucible.description": {
+    "message": "Trình tạo khung kiểm thử, đọc chữ ký kiểu của bạn và viết bộ khung kiểm thử. Bao gồm kiểm thử snapshot và mẫu khẳng định.",
+    "description": "Showcase Features (no icons) card description for Crucible"
+  },
+  "showcase.featuresNoIcons.slag.description": {
+    "message": "Trình phát hiện mã chết và phụ thuộc không dùng đến. Quét mọi import và export để tìm ra thứ không còn được tham chiếu.",
+    "description": "Showcase Features (no icons) card description for Slag"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (sáu mục, biểu tượng hỗn hợp)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Mọi thứ trong một lò rèn",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.anvil.description": {
+    "message": "Đọc bản kê khai của bạn và tạo ra mọi tạo phẩm cấu hình mà không gian làm việc cần. Một tệp đầu vào, mọi thứ đầu ra.",
+    "description": "Showcase Features (six items) card description for Anvil"
+  },
+  "showcase.featuresSix.tongs.description": {
+    "message": "Phân giải đồ thị phụ thuộc, phát hiện chu trình và cung cấp công cụ truy vấn để viết script và tích hợp pipeline.",
+    "description": "Showcase Features (six items) card description for Tongs"
+  },
+  "showcase.featuresSix.quench.description": {
+    "message": "Bộ nhớ đệm bản dựng định địa chỉ theo nội dung. Nếu đầu vào không đổi, quá trình dựng được bỏ qua hoàn toàn.",
+    "description": "Showcase Features (six items) card description for Quench"
+  },
+  "showcase.featuresSix.bellows.description": {
+    "message": "Lập lịch các tác vụ dựng theo từng đợt dựa trên đồ thị phụ thuộc. Các gói độc lập được dựng song song.",
+    "description": "Showcase Features (six items) card description for Bellows"
+  },
+  "showcase.featuresSix.crucible.description": {
+    "message": "Tạo khung kiểm thử từ chữ ký kiểu. Kiểm thử snapshot, mẫu khẳng định và tệp fixture.",
+    "description": "Showcase Features (six items) card description for Crucible"
+  },
+  "showcase.featuresSix.slag.description": {
+    "message": "Tìm mã chết và phụ thuộc mồ côi. Loại bỏ xỉ, giữ lại thép.",
+    "description": "Showcase Features (six items) card description for Slag"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (có tiêu đề và mô tả)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Số liệu rèn",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Các chỉ số hiệu suất chính trên không gian làm việc gồm 200 gói.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.coldForge.label": {
+    "message": "Thời gian rèn nguội",
+    "description": "Showcase Stats (full) label for cold forge time"
+  },
+  "showcase.statsFull.warmForge.label": {
+    "message": "Thời gian rèn ấm",
+    "description": "Showcase Stats (full) label for warm forge time"
+  },
+  "showcase.statsFull.cacheHit.label": {
+    "message": "Tỷ lệ trúng bộ nhớ đệm",
+    "description": "Showcase Stats (full) label for cache hit rate"
+  },
+  "showcase.statsFull.wardenRules.label": {
+    "message": "Quy tắc Warden",
+    "description": "Showcase Stats (full) label for Warden rule count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (không có tiêu đề)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.manifest.label": {
+    "message": "Bản kê khai",
+    "description": "Showcase Stats (no heading) label for manifest"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "Tệp cấu hình",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "Công cụ con",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.maxPackages.label": {
+    "message": "Số gói tối đa đã kiểm thử",
+    "description": "Showcase Stats (no heading) label for max packages tested"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (có mã)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Bắt đầu nhanh",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Ba câu lệnh để đi từ con số không đến một không gian làm việc được rèn hoàn chỉnh.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (có văn bản)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Cách thức hoạt động",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Foundry đọc bản kê khai của bạn, phân giải đồ thị phụ thuộc bằng Tongs, và tạo ra mọi tạo phẩm cấu hình một cách xác định. Cùng một đầu vào luôn cho ra cùng một đầu ra — không tác dụng phụ, không trạng thái ẩn.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (có mô tả)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Bản tin từ lò rèn",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Triết lý, các phép đo hiệu năng, và những quan điểm chúng tôi đã ship.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Vì sao chúng tôi ngừng viết các tệp cấu hình",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Sự trôi dạt cấu hình là kẻ giết người thầm lặng của các không gian làm việc. Chúng tôi tạo ra Foundry vì tin rằng ý định nên mang tính khai báo.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Rèn một Monorepo với 200 gói trong 14 giây",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Cách bộ nhớ đệm Quench và khả năng song song của Bellows biến một bản dựng mười hai phút thành một lượt rèn mười bốn giây.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Những quy tắc Warden mà chúng tôi suýt không ship",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Chúng tôi viết 380 quy tắc kiểm tra mã rồi bỏ đi 60. Đây là những gì trụ lại và những cuộc tranh luận suýt khiến cả đội chia rẽ.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (không có mô tả)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Cập nhật gần đây",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Foundry 2.4: Chế độ tự động của Crucible và khả năng phát hiện của Slag",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Crucible giờ đây tự động tạo lại khung kiểm thử ở mỗi lượt rèn, còn Slag phát hiện các phụ thuộc không dùng đến trên toàn bộ đồ thị không gian làm việc.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (dùng trong văn bản)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Foundry sử dụng một ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.manifest.title": {
+    "message": "tệp cấu hình không gian làm việc",
+    "description": "Showcase Terminology hover title for manifest"
+  },
+  "showcase.terminology.manifest.label": {
+    "message": "bản kê khai",
+    "description": "Showcase Terminology displayed text for manifest"
+  },
+  "showcase.terminology.paragraph1.afterManifest": {
+    "message": " để điều khiển toàn bộ quá trình sinh mã và cấu hình. Mỗi gói trong không gian làm việc được quản lý bởi quá trình ",
+    "description": "Showcase Terminology paragraph 1 fragment after manifest"
+  },
+  "showcase.terminology.forge.title": {
+    "message": "quá trình tạo cấu hình",
+    "description": "Showcase Terminology hover title for forge"
+  },
+  "showcase.terminology.forge.label": {
+    "message": "rèn",
+    "description": "Showcase Terminology displayed text for forge"
+  },
+  "showcase.terminology.paragraph1.afterForge": {
+    "message": " giúp mọi tạo phẩm luôn đồng bộ. Khi bạn cần kiểm tra chất lượng mã, công cụ ",
+    "description": "Showcase Terminology paragraph 1 fragment after forge"
+  },
+  "showcase.terminology.warden.title": {
+    "message": "công cụ phân tích tĩnh",
+    "description": "Showcase Terminology hover title for Warden"
+  },
+  "showcase.terminology.paragraph1.afterWarden": {
+    "message": " chạy mọi quy tắc mà không cần cấu hình thêm.",
+    "description": "Showcase Terminology paragraph 1 fragment after Warden"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Nhờ ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.presetSystem.title": {
+    "message": "bộ preset tập hợp quy tắc",
+    "description": "Showcase Terminology hover title for preset system"
+  },
+  "showcase.terminology.presetSystem.label": {
+    "message": "hệ thống preset",
+    "description": "Showcase Terminology displayed text for preset system"
+  },
+  "showcase.terminology.paragraph2.afterPreset": {
+    "message": ", các nhóm cùng chia sẻ một nguồn chân lý duy nhất cho ",
+    "description": "Showcase Terminology paragraph 2 fragment after preset system"
+  },
+  "showcase.terminology.lintingRules.title": {
+    "message": "quy tắc phân tích tĩnh",
+    "description": "Showcase Terminology hover title for linting rules"
+  },
+  "showcase.terminology.lintingRules.label": {
+    "message": "quy tắc kiểm tra mã",
+    "description": "Showcase Terminology displayed text for linting rules"
+  },
+  "showcase.terminology.paragraph2.afterLinting": {
+    "message": " và ",
+    "description": "Showcase Terminology paragraph 2 fragment after linting rules"
+  },
+  "showcase.terminology.alloySettings.title": {
+    "message": "cấu hình trình biên dịch",
+    "description": "Showcase Terminology hover title for Alloy settings"
+  },
+  "showcase.terminology.alloySettings.label": {
+    "message": "thiết lập Alloy",
+    "description": "Showcase Terminology displayed text for Alloy settings"
+  },
+  "showcase.terminology.paragraph2.afterAlloy": {
+    "message": " mà không phải nhân đôi các tệp cấu hình.",
+    "description": "Showcase Terminology paragraph 2 fragment after Alloy settings"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (có chú thích)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Dấu ấn thương hiệu được dập vào một Frame — viền sắc nét, chú thích dùng phông monospace.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Ảnh thu nhỏ thương hiệu Foundry.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (không có chú thích)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (cả hai cửa hàng)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Tải ứng dụng đồng hành",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (chỉ App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Có trên iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (chỉ Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Có trên Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (không có nhãn)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} phút đọc",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

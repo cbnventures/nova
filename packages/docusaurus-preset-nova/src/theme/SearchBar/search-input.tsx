@@ -90,8 +90,6 @@ const parseShortcutKeymap: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Funct
  *
  * @param {Theme_SearchBar_SearchInput_Props} _props - _props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function SearchInput(_props: Theme_SearchBar_SearchInput_Props) {
@@ -158,6 +156,18 @@ function SearchInput(_props: Theme_SearchBar_SearchInput_Props) {
     // unchanged and never replay the collapse - subsequent cycles snapped
     // instead of sliding. Now the keyframes have direction-specific names
     // (slide-swap-in / slide-swap-out) so animationend fires per cycle.
+    /**
+     * Theme - Search Bar - Search Input - Search Input - On Swap End.
+     *
+     * Removes the direction-specific swap class once the body swap
+     * animation finishes so the next cycle replays from a clean state.
+     *
+     * @param {Theme_SearchBar_SearchInput_AnimationEvent} event - Event.
+     *
+     * @private
+     *
+     * @since 0.21.0
+     */
     const onSwapEnd: Theme_SearchBar_SearchInput_SearchInput_OnSwapEnd_Function = (event: Theme_SearchBar_SearchInput_AnimationEvent) => {
       if (event.target !== body) {
         return;
@@ -193,6 +203,18 @@ function SearchInput(_props: Theme_SearchBar_SearchInput_Props) {
     const shortcutKey: Theme_SearchBar_SearchInput_ShortcutKey = parsedKeymap['key'];
     const shortcutModifiers: Theme_SearchBar_SearchInput_ShortcutModifiers = parsedKeymap['modifiers'];
 
+    /**
+     * Theme - Search Bar - Search Input - Search Input - Handle Key Down.
+     *
+     * Opens the search dialog when the configured keyboard shortcut is
+     * pressed, resolving the mod modifier per platform before matching.
+     *
+     * @param {Theme_SearchBar_SearchInput_KeyboardEvent} event - Event.
+     *
+     * @private
+     *
+     * @since 0.21.0
+     */
     const handleKeyDown: Theme_SearchBar_SearchInput_SearchInput_HandleKeyDown_Function = (event: Theme_SearchBar_SearchInput_KeyboardEvent) => {
       const isMac: Theme_SearchBar_SearchInput_IsMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
       const modifiersMatch: Theme_SearchBar_SearchInput_ModifiersMatch = shortcutModifiers.every((requiredModifier) => {

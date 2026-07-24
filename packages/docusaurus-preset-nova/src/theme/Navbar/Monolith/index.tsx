@@ -30,8 +30,6 @@ import type {
  *
  * @param {Theme_Navbar_Monolith_Index_Monolith_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function Monolith(props: Theme_Navbar_Monolith_Index_Monolith_Props): Theme_Navbar_Monolith_Index_Monolith_Returns {

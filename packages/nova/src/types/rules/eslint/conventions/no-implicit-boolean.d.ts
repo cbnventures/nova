@@ -117,6 +117,13 @@ export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionT
 
 export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Returns = boolean;
 
+/**
+ * Rules - ESLint - Conventions - No Implicit Boolean - Is Inside Condition Test.
+ *
+ * @since 0.21.0
+ */
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Child = TSESTree.Node;
+
 export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Current = TSESTree.Node | null | undefined;
 
 /**

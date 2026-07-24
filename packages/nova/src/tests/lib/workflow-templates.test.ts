@@ -9,7 +9,6 @@ import { libWorkflowTemplatesMetadata } from '../../lib/workflow-templates.js';
 
 import type {
   Tests_Lib_WorkflowTemplates_CurrentDirectory,
-  Tests_Lib_WorkflowTemplates_CurrentEntry,
   Tests_Lib_WorkflowTemplates_EveryLiteralVariableHasADescription_HasDescription,
   Tests_Lib_WorkflowTemplates_EveryLiteralVariableHasADescription_Name,
   Tests_Lib_WorkflowTemplates_EveryLiteralVariableHasADescription_Variable,
@@ -24,6 +23,14 @@ import type {
   Tests_Lib_WorkflowTemplates_HasATargetsDirectoryWithAYAMLFileForEachDeclaredTargetType_TargetFilePath,
   Tests_Lib_WorkflowTemplates_HasATargetsDirectoryWithAYAMLFileForEachDeclaredTargetType_TargetName,
   Tests_Lib_WorkflowTemplates_HasATargetsDirectoryWithAYAMLFileForEachDeclaredTargetType_TargetsDirExists,
+  Tests_Lib_WorkflowTemplates_PublishTargets_FlagRuntimeSecretSyncSupport_OtherTargetNames,
+  Tests_Lib_WorkflowTemplates_PublishTargets_FlagRuntimeSecretSyncSupport_PublishEntry,
+  Tests_Lib_WorkflowTemplates_PublishTargets_FlagRuntimeSecretSyncSupport_TargetName,
+  Tests_Lib_WorkflowTemplates_PublishTargets_FlagRuntimeSecretSyncSupport_Targets,
+  Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_CloudflareWorkers,
+  Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_PublishEntry,
+  Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_Targets,
+  Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_Vercel,
   Tests_Lib_WorkflowTemplates_TemplatesDir,
 } from '../../types/tests/lib/workflow-templates.test.d.ts';
 
@@ -31,9 +38,7 @@ const filePath: Tests_Lib_WorkflowTemplates_FilePath = fileURLToPath(import.meta
 const currentDirectory: Tests_Lib_WorkflowTemplates_CurrentDirectory = dirname(filePath);
 const templatesDir: Tests_Lib_WorkflowTemplates_TemplatesDir = join(currentDirectory, '..', '..', '..', 'templates', 'generators', 'github', 'workflows');
 
-for (const entry of libWorkflowTemplatesMetadata) {
-  const currentEntry: Tests_Lib_WorkflowTemplates_CurrentEntry = entry;
-
+for (const currentEntry of libWorkflowTemplatesMetadata) {
   describe(`${currentEntry['name']} template directory existence`, () => {
     it('has a directory with base.yml', async () => {
       const templatePath: Tests_Lib_WorkflowTemplates_HasADirectoryWithBaseYml_TemplatePath = join(templatesDir, currentEntry['name']);
@@ -96,3 +101,59 @@ for (const entry of libWorkflowTemplatesMetadata) {
     });
   }
 }
+
+describe('publish targets', () => {
+  it('flag runtime secret sync support', () => {
+    const publishEntry: Tests_Lib_WorkflowTemplates_PublishTargets_FlagRuntimeSecretSyncSupport_PublishEntry = libWorkflowTemplatesMetadata.find((entry) => entry['name'] === 'publish');
+
+    strictEqual(publishEntry !== undefined, true, 'Expected a "publish" template entry to exist');
+
+    const targets: Tests_Lib_WorkflowTemplates_PublishTargets_FlagRuntimeSecretSyncSupport_Targets = publishEntry!['targets'];
+
+    strictEqual(targets !== undefined, true, 'Expected the "publish" entry to declare targets');
+
+    strictEqual(targets!['cloudflare-workers']!['supportsRuntimeSecretSync'], true, 'Expected "cloudflare-workers" to support runtime secret sync');
+    strictEqual(targets!['vercel-nextjs']!['supportsRuntimeSecretSync'], true, 'Expected "vercel-nextjs" to support runtime secret sync');
+
+    const otherTargetNames: Tests_Lib_WorkflowTemplates_PublishTargets_FlagRuntimeSecretSyncSupport_OtherTargetNames = [
+      'npm',
+      'github-action',
+      'github-packages',
+      'docker-hub',
+      'ghcr',
+      'cloudflare-pages-docusaurus',
+      'github-pages-docusaurus',
+    ];
+
+    for (const otherTargetName of otherTargetNames) {
+      const targetName: Tests_Lib_WorkflowTemplates_PublishTargets_FlagRuntimeSecretSyncSupport_TargetName = otherTargetName;
+
+      strictEqual(targets![targetName]!['supportsRuntimeSecretSync'], undefined, `Expected "${targetName}" to not support runtime secret sync`);
+    }
+
+    return;
+  });
+
+  it('marks per-app deploy creds with app scope and account creds with account scope', () => {
+    const publishEntry: Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_PublishEntry = libWorkflowTemplatesMetadata.find((entry) => entry['name'] === 'publish');
+
+    strictEqual(publishEntry !== undefined, true, 'Expected a "publish" template entry to exist');
+
+    const targets: Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_Targets = publishEntry!['targets'];
+
+    strictEqual(targets !== undefined, true, 'Expected the "publish" entry to declare targets');
+
+    const vercel: Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_Vercel = targets!['vercel-nextjs'];
+    const cloudflareWorkers: Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_CloudflareWorkers = targets!['cloudflare-workers'];
+
+    strictEqual(vercel!['variables']['VERCEL_PROJECT_ID']!['scope'], 'app', 'Expected "VERCEL_PROJECT_ID" to be app scoped');
+    strictEqual(vercel!['variables']['VERCEL_TOKEN']!['scope'], 'account', 'Expected "VERCEL_TOKEN" to be account scoped');
+    strictEqual(vercel!['variables']['VERCEL_ORG_ID']!['scope'], 'account', 'Expected "VERCEL_ORG_ID" to be account scoped');
+    strictEqual(cloudflareWorkers!['variables']['CLOUDFLARE_API_TOKEN']!['scope'], 'account', 'Expected "CLOUDFLARE_API_TOKEN" to be account scoped');
+    strictEqual(cloudflareWorkers!['variables']['CLOUDFLARE_ACCOUNT_ID']!['scope'], 'account', 'Expected "CLOUDFLARE_ACCOUNT_ID" to be account scoped');
+
+    return;
+  });
+
+  return;
+});

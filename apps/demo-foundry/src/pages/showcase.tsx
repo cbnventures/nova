@@ -13,6 +13,16 @@ import {
 import { translate } from '@docusaurus/Translate';
 import Showcase from '@theme/Showcase';
 
+/**
+ * Pages - Showcase - Page.
+ *
+ * Block showcase page that renders every block from the preset with
+ * Foundry-world sample data across each supported variant.
+ *
+ * @constructor
+ *
+ * @since UNRELEASED
+ */
 function ShowcasePage() {
   return (
     <Showcase

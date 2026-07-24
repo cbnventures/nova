@@ -27,7 +27,7 @@ Audit `.d.ts` mirror files against their source files for structure, ordering, n
 ## Summary
 
 - Scans a package for source files and their `<root>/types/**/*.d.ts` mirrors.
-- Runs ten inspector checks covering section order, identifier naming, source-to-mirror symmetry, and coverage.
+- Runs eleven inspector checks covering section order, identifier naming, source-to-mirror symmetry, and coverage.
 - Scans the current working directory by default, which is the consumer root when run from `node_modules`.
 
 ## Why Use This Suite?
@@ -41,7 +41,7 @@ Audit `.d.ts` mirror files against their source files for structure, ordering, n
 <Tabs groupId="type-declarations-examples">
   <TabItem value="correct" label="Correct" default>
 
-    A clean source file plus its mirror that passes all ten checks: kebab-case path, no identifier equal to the file name, every body var and return typed through a path-derived alias, alphabetical sections, an object property prefixed with its parent type, and full source-to-mirror coverage.
+    A clean source file plus its mirror that passes all eleven checks: kebab-case path, no identifier equal to the file name, every body var and return typed through a path-derived alias, alphabetical sections, an object property prefixed with its parent type, and full source-to-mirror coverage.
 
     ```ts title="src/widget.ts"
     import type {
@@ -75,7 +75,7 @@ Audit `.d.ts` mirror files against their source files for structure, ordering, n
   </TabItem>
   <TabItem value="incorrect" label="Incorrect">
 
-    One source file and its mirror that trip eight of the ten checks. Each violating line is annotated with the exact toggle key it fails.
+    One source file and its mirror that trip eight of the eleven checks. Each violating line is annotated with the exact toggle key it fails.
 
     ```ts title="src/Bad_Widget.ts"
     import type {
@@ -116,8 +116,10 @@ Audit `.d.ts` mirror files against their source files for structure, ordering, n
 
 ```ts title="src/tests/type-declarations.test.ts"
 import { registerTypeDeclarationSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 registerTypeDeclarationSuite({
+  vitest,
   enable: 'all',
   typeRoots: ['src'],
 });
@@ -140,6 +142,8 @@ The `packageRoot` defaults to `process.cwd()`, so the suite audits the project V
 | Toggle Key                               | Description                                                                                                                                      |
 |------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | `inspector-cross-section-references`     | A declaration section may only reference types from its own section or imported names; cross-section references must move to a shared type file. |
+| `inspector-dts-import-verbatim`          | Requires a type imported from another `.d.ts` file to be used verbatim, with no `as` alias, since declared types are already canonically named.  |
+| `inspector-no-inline-import-types`       | Forbids inline `import('...')` type references in a declaration file; reference types through top-of-file named type imports instead.            |
 | `inspector-section-alphabetical`         | Requires sections inside a declaration file to be alphabetically ordered.                                                                        |
 | `inspector-first-come-first-serve-order` | Requires declaration order to follow first appearance in the source file.                                                                        |
 | `inspector-object-property-types`        | Requires each object-type property to use a named type that starts with the parent type's name and is defined earlier in the file.               |

@@ -3,6 +3,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
+import * as vitest from 'vitest';
 import { describe, it } from 'vitest';
 
 import { discoverContentFiles } from '../../../lib/file-discovery.js';
@@ -167,6 +168,7 @@ describe(`markdown table kit helpers${''}`, () => {
 // Enable gating: the single conformance key runs against the good-only root, which renders its
 // table via the canonical class, so the registered suite stays green.
 registerMarkdownTableSuite({
+  vitest,
   rootDir: fixtureRoot,
   contentDirs: ['docs'],
   enable: ['tables-match-markdowntable-output'],

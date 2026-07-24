@@ -1,5 +1,6 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
+import { LIB_REGEX_PATTERN_JS_IDENTIFIER } from '../../../lib/regex.js';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
@@ -95,11 +96,11 @@ export class Runner {
    * static string keys and provides an auto-fix that
    * replaces bracket notation with dot notation.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Context} context - Context.
    * @param {Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Node}    node    - Node.
    * @param {Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Returns}
    *
@@ -139,6 +140,11 @@ export class Runner {
         method: methodName,
       },
       fix(fixer: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Fix_Fixer): Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Fix_Returns {
+        // Skip the fix for keys that are not valid identifiers to avoid producing invalid code.
+        if (LIB_REGEX_PATTERN_JS_IDENTIFIER.test(methodName) === false) {
+          return null;
+        }
+
         return fixer.replaceTextRange([
           callee.object.range[1],
           callee.range[1],

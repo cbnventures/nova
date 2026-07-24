@@ -172,8 +172,14 @@ describe('CliRecipePackageJsonNormalizeArtifacts.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-artifacts': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-artifacts': {
+              enabled: true,
+            },
           },
         },
       },
@@ -228,8 +234,14 @@ describe('CliRecipePackageJsonNormalizeArtifacts.run', async () => {
           name: 'docs',
           role: 'docs',
           policy: 'freezable',
-          recipes: {
-            'normalize-artifacts': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './apps/docs': {
+            'normalize-artifacts': {
+              enabled: true,
+            },
           },
         },
       },
@@ -281,8 +293,14 @@ describe('CliRecipePackageJsonNormalizeArtifacts.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-artifacts': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-artifacts': {
+              enabled: true,
+            },
           },
         },
       },

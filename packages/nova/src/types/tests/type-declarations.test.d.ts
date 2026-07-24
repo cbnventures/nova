@@ -1868,6 +1868,20 @@ export type Tests_TypeDeclarations_ExtractTypeNamesComprehensive_ReturnsEmptyFor
 export type Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DetectsDirectAliasToAForeignPrefixType_DtsContent = string;
 
 /**
+ * Tests - Type Declarations - Is Alias To Foreign Type Comprehensive - Does Not Flag Alias To An External Package Type.
+ *
+ * @since 0.21.0
+ */
+export type Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DoesNotFlagAliasToAnExternalPackageType_DtsContent = string;
+
+/**
+ * Tests - Type Declarations - Is Alias To Foreign Type Comprehensive - Does Not Flag Alias To AStandalone Type File.
+ *
+ * @since 0.21.0
+ */
+export type Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DoesNotFlagAliasToAStandaloneTypeFile_DtsContent = string;
+
+/**
  * Tests - Type Declarations - Is Alias To Foreign Type Comprehensive - Does Not Flag Alias To Same Prefix Type.
  *
  * @since 0.18.0

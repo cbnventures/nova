@@ -17,16 +17,20 @@ import type {
 describe('presetsFoundryPresetFoundry', async () => {
   it('has correct color values', () => {
     deepStrictEqual(presetsFoundryPresetFoundry['colors']['primary'], {
-      light: '#ea580c', dark: '#ea580c',
+      light: '#ea580c',
+      dark: '#ea580c',
     });
     deepStrictEqual(presetsFoundryPresetFoundry['colors']['accent'], {
-      light: '#fbbf24', dark: '#fbbf24',
+      light: '#fbbf24',
+      dark: '#fbbf24',
     });
     deepStrictEqual(presetsFoundryPresetFoundry['colors']['text'], {
-      light: '#1c1917', dark: '#e7e5e4',
+      light: '#1c1917',
+      dark: '#e7e5e4',
     });
     deepStrictEqual(presetsFoundryPresetFoundry['colors']['border'], {
-      light: '#d6d3d1', dark: '#57534e',
+      light: '#d6d3d1',
+      dark: '#57534e',
     });
 
     return;

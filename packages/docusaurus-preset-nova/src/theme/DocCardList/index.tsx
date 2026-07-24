@@ -38,8 +38,6 @@ function DocCardListForCurrentSidebar() {
  *
  * @param {Theme_DocCardList_Index_DocCardList_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocCardList(props: Theme_DocCardList_Index_DocCardList_Props) {

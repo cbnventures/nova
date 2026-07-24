@@ -11,8 +11,6 @@ import type { Theme_ThemeProvider_TitleFormatter_Index_TitleFormatter_Props } fr
  *
  * @param {Theme_ThemeProvider_TitleFormatter_Index_TitleFormatter_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function TitleFormatter(props: Theme_ThemeProvider_TitleFormatter_Index_TitleFormatter_Props) {

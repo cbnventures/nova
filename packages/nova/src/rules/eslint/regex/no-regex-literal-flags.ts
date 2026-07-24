@@ -80,10 +80,10 @@ export class Runner {
    * so the pattern stays portable and flags are applied
    * at the call site through the RegExp constructor.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Context} context - Context.
    * @param {Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Returns}
    *

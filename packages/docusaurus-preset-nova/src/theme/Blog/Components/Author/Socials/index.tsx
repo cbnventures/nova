@@ -22,43 +22,56 @@ import type {
  */
 const socialIconConfigs: Theme_Blog_Components_Author_Socials_Index_Socials_IconConfigMap = {
   twitter: {
-    icon: 'ri:twitter-fill', label: 'Twitter',
+    icon: 'ri:twitter-fill',
+    label: 'Twitter',
   },
   x: {
-    icon: 'ri:twitter-x-fill', label: 'X',
+    icon: 'ri:twitter-x-fill',
+    label: 'X',
   },
   github: {
-    icon: 'ri:github-fill', label: 'GitHub',
+    icon: 'ri:github-fill',
+    label: 'GitHub',
   },
   stackoverflow: {
-    icon: 'ri:stack-overflow-fill', label: 'Stack Overflow',
+    icon: 'ri:stack-overflow-fill',
+    label: 'Stack Overflow',
   },
   linkedin: {
-    icon: 'ri:linkedin-fill', label: 'LinkedIn',
+    icon: 'ri:linkedin-fill',
+    label: 'LinkedIn',
   },
   bluesky: {
-    icon: 'ri:bluesky-fill', label: 'Bluesky',
+    icon: 'ri:bluesky-fill',
+    label: 'Bluesky',
   },
   instagram: {
-    icon: 'ri:instagram-fill', label: 'Instagram',
+    icon: 'ri:instagram-fill',
+    label: 'Instagram',
   },
   facebook: {
-    icon: 'ri:facebook-fill', label: 'Facebook',
+    icon: 'ri:facebook-fill',
+    label: 'Facebook',
   },
   threads: {
-    icon: 'ri:threads-fill', label: 'Threads',
+    icon: 'ri:threads-fill',
+    label: 'Threads',
   },
   mastodon: {
-    icon: 'ri:mastodon-fill', label: 'Mastodon',
+    icon: 'ri:mastodon-fill',
+    label: 'Mastodon',
   },
   youtube: {
-    icon: 'ri:youtube-fill', label: 'YouTube',
+    icon: 'ri:youtube-fill',
+    label: 'YouTube',
   },
   twitch: {
-    icon: 'ri:twitch-fill', label: 'Twitch',
+    icon: 'ri:twitch-fill',
+    label: 'Twitch',
   },
   email: {
-    icon: 'ri:mail-fill', label: 'Email',
+    icon: 'ri:mail-fill',
+    label: 'Email',
   },
 };
 
@@ -70,8 +83,6 @@ const socialIconConfigs: Theme_Blog_Components_Author_Socials_Index_Socials_Icon
  * unknown keys fall back to a generic link icon labeled with the platform name.
  *
  * @param {Theme_Blog_Components_Author_Socials_Index_Socials_Props} props - Props.
- *
- * @constructor
  *
  * @since 0.18.0
  */
@@ -88,7 +99,8 @@ function Socials(props: Theme_Blog_Components_Author_Socials_Index_Socials_Props
         const platform: Theme_Blog_Components_Author_Socials_Index_Socials_Platform = entry[0];
         const link: Theme_Blog_Components_Author_Socials_Index_Socials_Link = entry[1];
         const config: Theme_Blog_Components_Author_Socials_Index_Socials_IconConfig = socialIconConfigs[platform] ?? {
-          icon: 'ri:links-fill', label: platform,
+          icon: 'ri:links-fill',
+          label: platform,
         };
 
         return (

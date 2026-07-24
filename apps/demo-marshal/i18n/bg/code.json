@@ -1,0 +1,602 @@
+{
+  "home.layout.description": {
+    "message": "Marshal е Служба по въпросите на хранилищата — автоматизирано попечителство за проекти, които предпочитат документацията пред драмата.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Marshal - заведено, подпечатано, автоматизирано",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Попечителство над хранилища",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Заведено, подпечатано, автоматизирано.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Marshal е Служба по въпросите на хранилищата — автоматизирано попечителство за проекти, които предпочитат документацията пред драмата. Всяка нишка, всеки тикет, всяко ниво на достъп — обработени по надлежния ред.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Започни сега",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Виж в Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.policies.title": {
+    "message": "Политики",
+    "description": "Front page Features card title for Policies"
+  },
+  "home.features.policies.description": {
+    "message": "Напишете YAML блок, който описва как Marshal обработва даден клас събития — залежали нишки, просрочени PR-и, поддръжка по нива. Marshal чете само заведеното и подпечатва само скрепеното.",
+    "description": "Front page Features card description for Policies"
+  },
+  "home.features.dockets.title": {
+    "message": "Регистри",
+    "description": "Front page Features card title for Dockets"
+  },
+  "home.features.dockets.description": {
+    "message": "Всяко действие на Marshal вписва ред в публичния регистър. Закрити нишки, подпечатани одобрения, планови прехвърляния — само за добавяне, всичко видимо, нищо оттеглено.",
+    "description": "Front page Features card description for Dockets"
+  },
+  "home.features.accessTiers.title": {
+    "message": "Нива на достъп",
+    "description": "Front page Features card title for Access Tiers"
+  },
+  "home.features.accessTiers.description": {
+    "message": "Насочвайте входящата работа според това дали е от спонсор, сътрудник или обществеността. Етикетът се подпечатва, не се договаря. Всяко решение за насочване се завежда в регистъра.",
+    "description": "Front page Features card description for Access Tiers"
+  },
+  "home.features.scheduledStewardship.title": {
+    "message": "Планово попечителство",
+    "description": "Front page Features card title for Scheduled Stewardship"
+  },
+  "home.features.scheduledStewardship.description": {
+    "message": "Изпълнявайте почиствания, одити и прехвърляния по cron. Marshal действа точно на кръгъл час, завежда запис и продължава нататък. Нищо не чака човек да си спомни.",
+    "description": "Front page Features card description for Scheduled Stewardship"
+  },
+  "home.features.threadArchival.title": {
+    "message": "Архивиране на нишки",
+    "description": "Front page Features card title for Thread Archival"
+  },
+  "home.features.threadArchival.description": {
+    "message": "Закривайте и подпечатвайте нишки, неактивни от N дни — с документална следа за всяка. Всяка подпечатана нишка носи причината за архивиране и път за повторно отваряне.",
+    "description": "Front page Features card description for Thread Archival"
+  },
+  "home.features.automatedStamps.title": {
+    "message": "Автоматични печати",
+    "description": "Front page Features card title for Automated Stamps"
+  },
+  "home.features.automatedStamps.description": {
+    "message": "Marshal действа с постоянно пълномощно. Всяко действие носи времеви печат, вписан автор и препратка към политиката, която го е задействала.",
+    "description": "Front page Features card description for Automated Stamps"
+  },
+  "home.stats.heading": {
+    "message": "В цифри",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manualClosures.label": {
+    "message": "Ръчни закривания",
+    "description": "Front page Stats label for manual closures count"
+  },
+  "home.stats.policyFile.label": {
+    "message": "Файл с политики",
+    "description": "Front page Stats label for policy file count"
+  },
+  "home.stats.docketEntries.label": {
+    "message": "Записи в регистъра",
+    "description": "Front page Stats label for docket entries count"
+  },
+  "home.stats.accessTiers.label": {
+    "message": "Нива на достъп",
+    "description": "Front page Stats label for access tiers count"
+  },
+  "home.spotlight.heading": {
+    "message": "Един файл с политики, всичко подпечатано",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Опишете правилата. Marshal завежда документацията.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Преглеждайте регистъра си в движение",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Депеши от Службата",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Заведени политики, подпечатани регистри, попечителство в архива.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Витрина на блоковете на Marshal, представяща всеки блок от docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Всеки блок от пресета Marshal, представен с примерни данни.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (пълен)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Витрина на блоковете",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Всеки блок на Marshal, демонстриран на едно място.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Тази страница представя всеки блок от @cbnventures/docusaurus-preset-nova/blocks с данни от света на Marshal, за да видите как изглеждат и се държат.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Прочети документацията",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Виж в Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (минимален)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Заведено, подпечатано, автоматизирано.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Marshal е Служба по въпросите на хранилищата — автоматизирано попечителство за проекти, които предпочитат документацията пред драмата.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Започни сега",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (по подразбиране)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Обичам ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (без префикс)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Бърз",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Гъвкав",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Безплатен",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (бавно темпо)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Създаден за ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "разработчици",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "дизайнери",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (без цикъл)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Добре дошли в ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Инсталирайте със Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Или използвайте Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (без етикет)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Бърза инсталация",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (с икони)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Защо хранилищата избират Marshal",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.policies.title": {
+    "message": "Политики",
+    "description": "Showcase Features (with icons) card title for Policies"
+  },
+  "showcase.featuresIcons.policies.description": {
+    "message": "Напишете YAML блок, който описва как Marshal обработва даден клас събития. Marshal чете само заведеното и подпечатва само скрепеното.",
+    "description": "Showcase Features (with icons) card description for Policies"
+  },
+  "showcase.featuresIcons.dockets.title": {
+    "message": "Регистри",
+    "description": "Showcase Features (with icons) card title for Dockets"
+  },
+  "showcase.featuresIcons.dockets.description": {
+    "message": "Всяко действие на Marshal вписва ред в публичния регистър. Закрити нишки, подпечатани одобрения, планови прехвърляния — само за добавяне.",
+    "description": "Showcase Features (with icons) card description for Dockets"
+  },
+  "showcase.featuresIcons.accessTiers.title": {
+    "message": "Нива на достъп",
+    "description": "Showcase Features (with icons) card title for Access Tiers"
+  },
+  "showcase.featuresIcons.accessTiers.description": {
+    "message": "Насочвайте входящата работа според това дали е от спонсор, сътрудник или обществеността. Етикетът се подпечатва, не се договаря.",
+    "description": "Showcase Features (with icons) card description for Access Tiers"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (без икони, без заглавие)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.title": {
+    "message": "Планово попечителство",
+    "description": "Showcase Features (no icons) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.description": {
+    "message": "Изпълнявайте почиствания, одити и прехвърляния по cron. Marshal действа точно на кръгъл час и завежда запис.",
+    "description": "Showcase Features (no icons) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.threadArchival.title": {
+    "message": "Архивиране на нишки",
+    "description": "Showcase Features (no icons) card title for Thread Archival"
+  },
+  "showcase.featuresNoIcons.threadArchival.description": {
+    "message": "Закривайте и подпечатвайте нишки, неактивни от N дни — с документална следа за всяка и път за повторно отваряне.",
+    "description": "Showcase Features (no icons) card description for Thread Archival"
+  },
+  "showcase.featuresNoIcons.automatedStamps.title": {
+    "message": "Автоматични печати",
+    "description": "Showcase Features (no icons) card title for Automated Stamps"
+  },
+  "showcase.featuresNoIcons.automatedStamps.description": {
+    "message": "Всяко действие носи времеви печат, вписан автор и препратка към политиката, която го е задействала.",
+    "description": "Showcase Features (no icons) card description for Automated Stamps"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (шест елемента, смесени икони)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Всичко в една Служба",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.policies.title": {
+    "message": "Политики",
+    "description": "Showcase Features (six items) card title for Policies"
+  },
+  "showcase.featuresSix.policies.description": {
+    "message": "Опишете правилата в YAML. Marshal чете, действа и завежда. Нищо не се договаря по време на изпълнение.",
+    "description": "Showcase Features (six items) card description for Policies"
+  },
+  "showcase.featuresSix.dockets.title": {
+    "message": "Регистри",
+    "description": "Showcase Features (six items) card title for Dockets"
+  },
+  "showcase.featuresSix.dockets.description": {
+    "message": "Публичен регистър само за добавяне на всяко действие. Закрити нишки, решения за насочване, планови обхождания — всичко подпечатано.",
+    "description": "Showcase Features (six items) card description for Dockets"
+  },
+  "showcase.featuresSix.accessTiers.title": {
+    "message": "Нива на достъп",
+    "description": "Showcase Features (six items) card title for Access Tiers"
+  },
+  "showcase.featuresSix.accessTiers.description": {
+    "message": "Спонсор, сътрудник, общественост — три нива, една опашка, един деловодител. Етикетът се определя при постъпване.",
+    "description": "Showcase Features (six items) card description for Access Tiers"
+  },
+  "showcase.featuresSix.scheduledStewardship.title": {
+    "message": "Планово попечителство",
+    "description": "Showcase Features (six items) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.scheduledStewardship.description": {
+    "message": "Почиствания и одити, управлявани по cron. Marshal действа по график и не чака човек да си спомни.",
+    "description": "Showcase Features (six items) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.threadArchival.title": {
+    "message": "Архивиране на нишки",
+    "description": "Showcase Features (six items) card title for Thread Archival"
+  },
+  "showcase.featuresSix.threadArchival.description": {
+    "message": "Неактивните нишки се закриват и подпечатват по политика, с подпечатано уведомление и път за повторно отваряне по всяка преписка.",
+    "description": "Showcase Features (six items) card description for Thread Archival"
+  },
+  "showcase.featuresSix.automatedStamps.title": {
+    "message": "Автоматични печати",
+    "description": "Showcase Features (six items) card title for Automated Stamps"
+  },
+  "showcase.featuresSix.automatedStamps.description": {
+    "message": "Всяко действие на Marshal препраща към политиката, която го е разрешила. Разрешението се завежда преди самото действие.",
+    "description": "Showcase Features (six items) card description for Automated Stamps"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (със заглавие и описание)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Показатели на Marshal",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Ключови числа за един типичен цикъл на попечителство над хранилище.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.threadsArchived.label": {
+    "message": "Архивирани нишки",
+    "description": "Showcase Stats (full) label for threads archived"
+  },
+  "showcase.statsFull.accessTiers.label": {
+    "message": "Нива на достъп",
+    "description": "Showcase Stats (full) label for access tiers"
+  },
+  "showcase.statsFull.manualClosures.label": {
+    "message": "Ръчни закривания",
+    "description": "Showcase Stats (full) label for manual closures"
+  },
+  "showcase.statsFull.policyFile.label": {
+    "message": "Файл с политики",
+    "description": "Showcase Stats (full) label for policy file"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (без заглавие)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.policyFile.label": {
+    "message": "Файл с политики",
+    "description": "Showcase Stats (no heading) label for policy file"
+  },
+  "showcase.statsNoHeading.manualActions.label": {
+    "message": "Ръчни действия",
+    "description": "Showcase Stats (no heading) label for manual actions"
+  },
+  "showcase.statsNoHeading.docketEntries.label": {
+    "message": "Записи в регистъра",
+    "description": "Showcase Stats (no heading) label for docket entries"
+  },
+  "showcase.statsNoHeading.accessTiers.label": {
+    "message": "Нива на достъп",
+    "description": "Showcase Stats (no heading) label for access tiers"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (с код)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Бърз старт",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Три команди от нулата до хранилище под попечителство.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (с текст)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Как работи",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Marshal чете вашия файл с политики, нарежда в опашка всеки приложим работен процес точно на следващия кръгъл час и подпечатва запис в регистъра за всяко предприето действие. Регистърът е само за добавяне. Нищо не се закрива безмълвно.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (с описание)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Депеши от Службата",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Заведени политики, подпечатани регистри, попечителство в архива.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Завеждане на незаведимото",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Част от входящата работа не попада под никоя политика. Погрешно заведен бъг, заявка извън системата от нива, дубликат на дубликат. Marshal ги завежда под „некласифицирано“.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Една година залежали нишки, архивирани за един следобед",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Хранилището имаше 2184 казуса, по-стари от година. Marshal закри и подпечата 2108 от тях за едно нощно обхождане.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Три нива на поддръжка, една опашка, един деловодител",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Marshal вече насочва входящите тикети за поддръжка по ниво на достъп в единна опашка с три етикета. Етикетът се подпечатва, не се договаря.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (без описание)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Последни депеши",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Marshal 2.4: нива за автоматична поправка на Одитора и графи на зависимостите на Деловодителя",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Одиторът вече прилага автоматични поправки в нивата за конвенции и форматиране, а Деловодителят изчертава граф на зависимостите за всички регистри в работното пространство.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (употреба в текста)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Marshal използва ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.policy.title": {
+    "message": "писано правило за това как Marshal обработва определен клас събития",
+    "description": "Showcase Terminology hover title for policy"
+  },
+  "showcase.terminology.policy.label": {
+    "message": "политика",
+    "description": "Showcase Terminology displayed text for policy"
+  },
+  "showcase.terminology.paragraph1.afterPolicy": {
+    "message": ", за да ръководи действията си върху хранилище. Всяко действие се вписва в ",
+    "description": "Showcase Terminology paragraph 1 fragment after policy"
+  },
+  "showcase.terminology.docket.title": {
+    "message": "публичен регистър само за добавяне на всяко предприето действие",
+    "description": "Showcase Terminology hover title for docket"
+  },
+  "showcase.terminology.docket.label": {
+    "message": "регистър",
+    "description": "Showcase Terminology displayed text for docket"
+  },
+  "showcase.terminology.paragraph1.afterDocket": {
+    "message": ", където всеки запис носи ",
+    "description": "Showcase Terminology paragraph 1 fragment after docket"
+  },
+  "showcase.terminology.stamp.title": {
+    "message": "маркировка за оторизация с времеви печат, поставяна върху завършено действие",
+    "description": "Showcase Terminology hover title for stamp"
+  },
+  "showcase.terminology.stamp.label": {
+    "message": "печат",
+    "description": "Showcase Terminology displayed text for stamp"
+  },
+  "showcase.terminology.paragraph1.afterStamp": {
+    "message": ", препращащ към политиката, която го е разрешила.",
+    "description": "Showcase Terminology paragraph 1 fragment after stamp"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Входящата работа се насочва по ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.accessTier.title": {
+    "message": "класификация на входящата работа според спонсорство или статус на принос",
+    "description": "Showcase Terminology hover title for access tier"
+  },
+  "showcase.terminology.accessTier.label": {
+    "message": "ниво на достъп",
+    "description": "Showcase Terminology displayed text for access tier"
+  },
+  "showcase.terminology.paragraph2.afterAccessTier": {
+    "message": " към ",
+    "description": "Showcase Terminology paragraph 2 fragment after access tier"
+  },
+  "showcase.terminology.queue.title": {
+    "message": "единен подреден списък на цялата входяща работа",
+    "description": "Showcase Terminology hover title for queue"
+  },
+  "showcase.terminology.queue.label": {
+    "message": "опашка",
+    "description": "Showcase Terminology displayed text for queue"
+  },
+  "showcase.terminology.paragraph2.afterQueue": {
+    "message": ". Неактивните нишки се закриват чрез ",
+    "description": "Showcase Terminology paragraph 2 fragment after queue"
+  },
+  "showcase.terminology.threadArchival.title": {
+    "message": "закриване по политика на нишки, неактивни над определен праг",
+    "description": "Showcase Terminology hover title for thread archival"
+  },
+  "showcase.terminology.threadArchival.label": {
+    "message": "архивиране на нишки",
+    "description": "Showcase Terminology displayed text for thread archival"
+  },
+  "showcase.terminology.paragraph2.afterThreadArchival": {
+    "message": ", с документална следа по всяка преписка.",
+    "description": "Showcase Terminology paragraph 2 fragment after thread archival"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (с надпис)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Марков знак, заведен в блок Frame, готов за цитиране.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Миниатюра на марката Marshal.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (без надпис)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (и двата магазина)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Изтегли придружаващото приложение",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (само App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Налично за iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (само Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Налично за Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (без етикет)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} мин четене",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

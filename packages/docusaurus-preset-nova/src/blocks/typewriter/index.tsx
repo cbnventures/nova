@@ -41,8 +41,6 @@ import type {
  *
  * @param {Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlocksTypewriterPrefix(props: Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps) {
@@ -65,8 +63,6 @@ function BlocksTypewriterPrefix(props: Blocks_Typewriter_Index_BlocksTypewriter_
  *
  * @param {Blocks_Typewriter_Index_BlocksTypewriter_WordProps} _props - _props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlocksTypewriterWord(_props: Blocks_Typewriter_Index_BlocksTypewriter_WordProps) {
@@ -81,8 +77,6 @@ function BlocksTypewriterWord(_props: Blocks_Typewriter_Index_BlocksTypewriter_W
  * words are declared with Word children. Timing props control the animation speed.
  *
  * @param {Blocks_Typewriter_Index_BlocksTypewriter_Props} props - Props.
- *
- * @constructor
  *
  * @since 0.15.0
  */

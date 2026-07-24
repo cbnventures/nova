@@ -1,6 +1,7 @@
-import { join } from 'path';
+import { join } from 'node:path';
 
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
+import { wrapReadMeRegion } from '../../../lib/read-me-regions.js';
 import {
   LIB_REGEX_URL_PREFIX_BUY_ME_A_COFFEE,
   LIB_REGEX_URL_PREFIX_DOCKER_HUB,
@@ -25,6 +26,33 @@ import type {
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Platform,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Platforms,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Returns,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Badges,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Config,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_DockerImage,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_DockerUrl,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_FundSources,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Github,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_GithubOwner,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_GithubRepo,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_GithubRepoName,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_NpmPackage,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_NpmUrl,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Project,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_ProjectPlatforms,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Returns,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Urls,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Config,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_ContributorsAndSupporters,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_CreditsSection,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Entities,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_FundSources,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Project,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_ProjectPronouns,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_PronounOur,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_PronounUs,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Returns,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Roles,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Urls,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsSection_ContributorsAndSupporters,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsSection_EntityLines,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsSection_EntityName,
@@ -36,60 +64,50 @@ import type {
   Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsSection_PronounUs,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsSection_Returns,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsSection_Sections,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_Config,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_DocumentationSection,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_DocumentationUrl,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_Returns,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_Urls,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationSection_DocumentationUrl,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationSection_Returns,
-  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_Badges,
-  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_HomepageUrl,
-  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_Lines,
-  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_LogoUrl,
-  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_ProjectName,
-  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_Returns,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Config,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_HeaderLines,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_HomepageUrl,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_LogoUrl,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Project,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_ProjectName,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_ProjectNameRecord,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Returns,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Urls,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_Config,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_IntroductionSection,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_Project,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_ProjectDescription,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_ProjectDescriptionRecord,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_Returns,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionSection_ProjectDescription,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionSection_Returns,
   Cli_Generate_MustHaves_ReadMe_Runner_DetectFundPlatform_Returns,
   Cli_Generate_MustHaves_ReadMe_Runner_DetectFundPlatform_Url,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_Badges,
+  Cli_Generate_MustHaves_ReadMe_Runner_Run_BadgesContent,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_ConsumerWorkspacePaths,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_Content,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_ContributorsAndSupporters,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_CreditsSection,
+  Cli_Generate_MustHaves_ReadMe_Runner_Run_CreditsContent,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_CurrentDirectory,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_DockerImage,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_DockerUrl,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_DocumentationSection,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_DocumentationUrl,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_Entities,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_FundSources,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_Github,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_GithubOwner,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_GithubRepo,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_GithubRepoName,
+  Cli_Generate_MustHaves_ReadMe_Runner_Run_DocumentationContent,
+  Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderContent,
+  Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderLines,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderOptions,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderSection,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_HomepageUrl,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_IntroductionSection,
+  Cli_Generate_MustHaves_ReadMe_Runner_Run_IntroductionContent,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_IsAtProjectRoot,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_IsDryRun,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_IsReplaceFile,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_LogoUrl,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_NpmPackage,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_NpmUrl,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_Options,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_Project,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_ProjectDescription,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_ProjectDescriptionRecord,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_ProjectName,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_ProjectNameRecord,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_ProjectPlatforms,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_ProjectPronouns,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_PronounOur,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_PronounUs,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_ReplaceFileNotice,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_Returns,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_Roles,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_Sections,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_TargetPath,
-  Cli_Generate_MustHaves_ReadMe_Runner_Run_Urls,
   Cli_Generate_MustHaves_ReadMe_Runner_Run_WorkingFile,
 } from '../../../types/cli/generate/must-haves/read-me.d.ts';
 
@@ -97,8 +115,8 @@ import type {
  * CLI - Generate - Must Haves - Read Me.
  *
  * Generates the root README.md from a bundled template
- * and nova.config.json data. Also copies the file into
- * each consumer-facing workspace (app, package, tool, config).
+ * and nova.config.json data, then copies the resulting file into every
+ * consumer-facing workspace (app, package, tool, config).
  *
  * @since 0.15.0
  */
@@ -146,59 +164,43 @@ export class Runner {
 
     const workingFile: Cli_Generate_MustHaves_ReadMe_Runner_Run_WorkingFile = await new LibNovaConfig().load();
 
-    const project: Cli_Generate_MustHaves_ReadMe_Runner_Run_Project = workingFile['project'];
-    const projectNameRecord: Cli_Generate_MustHaves_ReadMe_Runner_Run_ProjectNameRecord = (project !== undefined) ? project['name'] : undefined;
-    const projectName: Cli_Generate_MustHaves_ReadMe_Runner_Run_ProjectName = (projectNameRecord !== undefined) ? (projectNameRecord['title'] ?? '') : '';
-    const projectDescriptionRecord: Cli_Generate_MustHaves_ReadMe_Runner_Run_ProjectDescriptionRecord = (project !== undefined) ? project['description'] : undefined;
-    const projectDescription: Cli_Generate_MustHaves_ReadMe_Runner_Run_ProjectDescription = (projectDescriptionRecord !== undefined) ? (projectDescriptionRecord['long'] ?? '') : '';
-    const projectPronouns: Cli_Generate_MustHaves_ReadMe_Runner_Run_ProjectPronouns = (project !== undefined) ? (project['pronouns'] ?? 'business') : 'business';
-    const projectPlatforms: Cli_Generate_MustHaves_ReadMe_Runner_Run_ProjectPlatforms = (project !== undefined) ? (project['platforms'] ?? []) : [];
-    const urls: Cli_Generate_MustHaves_ReadMe_Runner_Run_Urls = workingFile['urls'];
-    const github: Cli_Generate_MustHaves_ReadMe_Runner_Run_Github = workingFile['github'];
-    const homepageUrl: Cli_Generate_MustHaves_ReadMe_Runner_Run_HomepageUrl = (urls !== undefined) ? (urls['homepage'] ?? '') : '';
-    const logoUrl: Cli_Generate_MustHaves_ReadMe_Runner_Run_LogoUrl = (urls !== undefined) ? (urls['logo'] ?? '') : '';
-    const documentationUrl: Cli_Generate_MustHaves_ReadMe_Runner_Run_DocumentationUrl = (urls !== undefined) ? (urls['documentation'] ?? '') : '';
-    const githubOwner: Cli_Generate_MustHaves_ReadMe_Runner_Run_GithubOwner = (github !== undefined) ? (github['owner'] ?? '') : '';
-    const githubRepoName: Cli_Generate_MustHaves_ReadMe_Runner_Run_GithubRepoName = (github !== undefined) ? (github['repo'] ?? '') : '';
-    const githubRepo: Cli_Generate_MustHaves_ReadMe_Runner_Run_GithubRepo = (githubOwner !== '' && githubRepoName !== '') ? `${githubOwner}/${githubRepoName}` : '';
-    const npmUrl: Cli_Generate_MustHaves_ReadMe_Runner_Run_NpmUrl = (urls !== undefined) ? (urls['npm'] ?? '') : '';
-    const npmPackage: Cli_Generate_MustHaves_ReadMe_Runner_Run_NpmPackage = npmUrl.replace(LIB_REGEX_URL_PREFIX_NPM_PACKAGE, '');
-    const dockerUrl: Cli_Generate_MustHaves_ReadMe_Runner_Run_DockerUrl = (urls !== undefined) ? (urls['docker'] ?? '') : '';
-    const dockerImage: Cli_Generate_MustHaves_ReadMe_Runner_Run_DockerImage = dockerUrl.replace(LIB_REGEX_URL_PREFIX_DOCKER_HUB, '');
-    const fundSources: Cli_Generate_MustHaves_ReadMe_Runner_Run_FundSources = (urls !== undefined) ? (urls['fundSources'] ?? []) : [];
-
-    const pronounUs: Cli_Generate_MustHaves_ReadMe_Runner_Run_PronounUs = (projectPronouns === 'personal') ? 'me' : 'us';
-    const pronounOur: Cli_Generate_MustHaves_ReadMe_Runner_Run_PronounOur = (projectPronouns === 'personal') ? 'my' : 'our';
-
-    const entities: Cli_Generate_MustHaves_ReadMe_Runner_Run_Entities = workingFile['entities'] ?? [];
-    const contributorsAndSupporters: Cli_Generate_MustHaves_ReadMe_Runner_Run_ContributorsAndSupporters = entities.filter((entity) => {
-      const roles: Cli_Generate_MustHaves_ReadMe_Runner_Run_Roles = entity['roles'] ?? [];
-
-      return roles.includes('contributor') || roles.includes('supporter');
-    });
-
-    const badges: Cli_Generate_MustHaves_ReadMe_Runner_Run_Badges = Runner.buildBadges(githubRepo, npmPackage, dockerImage, projectPlatforms, fundSources);
-    const headerSection: Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderSection = Runner.buildHeaderSection(projectName, homepageUrl, logoUrl, badges);
-    const introductionSection: Cli_Generate_MustHaves_ReadMe_Runner_Run_IntroductionSection = Runner.buildIntroductionSection(projectDescription);
-    const documentationSection: Cli_Generate_MustHaves_ReadMe_Runner_Run_DocumentationSection = Runner.buildDocumentationSection(documentationUrl);
-    const creditsSection: Cli_Generate_MustHaves_ReadMe_Runner_Run_CreditsSection = Runner.buildCreditsSection(fundSources, contributorsAndSupporters, pronounUs, pronounOur);
+    // Each region's inner content is derived from config by a public region-content method so
+    // both this generator and the read-me refresh recipes assemble regions from one source.
+    const headerContent: Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderContent = Runner.buildHeaderRegionContent(workingFile);
+    const badgesContent: Cli_Generate_MustHaves_ReadMe_Runner_Run_BadgesContent = Runner.buildBadgesRegionContent(workingFile);
+    const introductionContent: Cli_Generate_MustHaves_ReadMe_Runner_Run_IntroductionContent = Runner.buildIntroductionRegionContent(workingFile);
+    const documentationContent: Cli_Generate_MustHaves_ReadMe_Runner_Run_DocumentationContent = Runner.buildDocumentationRegionContent(workingFile);
+    const creditsContent: Cli_Generate_MustHaves_ReadMe_Runner_Run_CreditsContent = Runner.buildCreditsRegionContent(workingFile);
 
     const sections: Cli_Generate_MustHaves_ReadMe_Runner_Run_Sections = [];
 
-    if (headerSection !== '') {
-      sections.push(headerSection);
+    // The header block wraps the header and badges regions inside a centered div. Badges only
+    // appear when the header is present, so both are bound to the header block.
+    if (headerContent !== undefined) {
+      const headerLines: Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderLines = [
+        '<div align="center">',
+        wrapReadMeRegion('header', headerContent),
+      ];
+
+      if (badgesContent !== undefined) {
+        headerLines.push(wrapReadMeRegion('badges', badgesContent));
+      }
+
+      headerLines.push('</div>');
+
+      sections.push(headerLines.join('\n'));
     }
 
-    if (introductionSection !== '') {
-      sections.push(introductionSection);
+    if (introductionContent !== undefined) {
+      sections.push(wrapReadMeRegion('introduction', introductionContent));
     }
 
-    if (documentationSection !== '') {
-      sections.push(documentationSection);
+    if (documentationContent !== undefined) {
+      sections.push(wrapReadMeRegion('documentation', documentationContent));
     }
 
-    if (creditsSection !== '') {
-      sections.push(creditsSection);
+    if (creditsContent !== undefined) {
+      sections.push(wrapReadMeRegion('credits', creditsContent));
     }
 
     const content: Cli_Generate_MustHaves_ReadMe_Runner_Run_Content = `${sections.join('\n\n')}\n`;
@@ -225,6 +227,185 @@ export class Runner {
     }
 
     return 'completed';
+  }
+
+  /**
+   * CLI - Generate - Must Haves - Read Me - Build Badges Region Content.
+   *
+   * Derives the badge inputs from config and returns the inner content for the badges
+   * region, or undefined when no badges apply. Shared by the generator and the recipes.
+   *
+   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Config} config - Config.
+   *
+   * @returns {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Returns}
+   *
+   * @since 0.21.0
+   */
+  public static buildBadgesRegionContent(config: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Config): Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Returns {
+    const project: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Project = config['project'];
+    const projectPlatforms: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_ProjectPlatforms = (project !== undefined) ? (project['platforms'] ?? []) : [];
+    const urls: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Urls = config['urls'];
+    const github: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Github = config['github'];
+    const githubOwner: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_GithubOwner = (github !== undefined) ? (github['owner'] ?? '') : '';
+    const githubRepoName: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_GithubRepoName = (github !== undefined) ? (github['repo'] ?? '') : '';
+    const githubRepo: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_GithubRepo = (githubOwner !== '' && githubRepoName !== '') ? `${githubOwner}/${githubRepoName}` : '';
+    const npmUrl: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_NpmUrl = (urls !== undefined) ? (urls['npm'] ?? '') : '';
+    const npmPackage: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_NpmPackage = npmUrl.replace(LIB_REGEX_URL_PREFIX_NPM_PACKAGE, '');
+    const dockerUrl: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_DockerUrl = (urls !== undefined) ? (urls['docker'] ?? '') : '';
+    const dockerImage: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_DockerImage = dockerUrl.replace(LIB_REGEX_URL_PREFIX_DOCKER_HUB, '');
+    const fundSources: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_FundSources = (urls !== undefined) ? (urls['fundSources'] ?? []) : [];
+
+    const badges: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Badges = Runner.buildBadges(githubRepo, npmPackage, dockerImage, projectPlatforms, fundSources);
+
+    if (badges === '') {
+      return undefined;
+    }
+
+    return badges;
+  }
+
+  /**
+   * CLI - Generate - Must Haves - Read Me - Build Credits Region Content.
+   *
+   * Derives the credits inputs from config and returns the inner content for the credits
+   * region, or undefined when there is nothing to credit. Shared by generator and recipes.
+   *
+   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Config} config - Config.
+   *
+   * @returns {Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Returns}
+   *
+   * @since 0.21.0
+   */
+  public static buildCreditsRegionContent(config: Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Config): Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Returns {
+    const project: Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Project = config['project'];
+    const projectPronouns: Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_ProjectPronouns = (project !== undefined) ? (project['pronouns'] ?? 'business') : 'business';
+    const urls: Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Urls = config['urls'];
+    const fundSources: Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_FundSources = (urls !== undefined) ? (urls['fundSources'] ?? []) : [];
+
+    const pronounUs: Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_PronounUs = (projectPronouns === 'personal') ? 'me' : 'us';
+    const pronounOur: Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_PronounOur = (projectPronouns === 'personal') ? 'my' : 'our';
+
+    const entities: Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Entities = config['entities'] ?? [];
+    const contributorsAndSupporters: Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_ContributorsAndSupporters = entities.filter((entity) => {
+      const roles: Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Roles = entity['roles'] ?? [];
+
+      return roles.includes('contributor') || roles.includes('supporter');
+    });
+
+    const creditsSection: Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_CreditsSection = Runner.buildCreditsSection(fundSources, contributorsAndSupporters, pronounUs, pronounOur);
+
+    if (creditsSection === '') {
+      return undefined;
+    }
+
+    return creditsSection;
+  }
+
+  /**
+   * CLI - Generate - Must Haves - Read Me - Build Documentation Region Content.
+   *
+   * Derives the documentation URL from config and returns the inner content for the
+   * documentation region, or undefined when no URL is set. Shared by generator and recipes.
+   *
+   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_Config} config - Config.
+   *
+   * @returns {Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_Returns}
+   *
+   * @since 0.21.0
+   */
+  public static buildDocumentationRegionContent(config: Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_Config): Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_Returns {
+    const urls: Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_Urls = config['urls'];
+    const documentationUrl: Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_DocumentationUrl = (urls !== undefined) ? (urls['documentation'] ?? '') : '';
+
+    const documentationSection: Cli_Generate_MustHaves_ReadMe_Runner_BuildDocumentationRegionContent_DocumentationSection = Runner.buildDocumentationSection(documentationUrl);
+
+    if (documentationSection === '') {
+      return undefined;
+    }
+
+    return documentationSection;
+  }
+
+  /**
+   * CLI - Generate - Must Haves - Read Me - Build Header Region Content.
+   *
+   * Derives the header inputs from config and returns the inner content for the header
+   * region, or undefined when there is no project name. Shared by generator and recipes.
+   *
+   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Config} config - Config.
+   *
+   * @returns {Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Returns}
+   *
+   * @since 0.21.0
+   */
+  public static buildHeaderRegionContent(config: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Config): Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Returns {
+    const project: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Project = config['project'];
+    const projectNameRecord: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_ProjectNameRecord = (project !== undefined) ? project['name'] : undefined;
+    const projectName: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_ProjectName = (projectNameRecord !== undefined) ? (projectNameRecord['title'] ?? '') : '';
+
+    if (projectName === '') {
+      return undefined;
+    }
+
+    const urls: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_Urls = config['urls'];
+    const homepageUrl: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_HomepageUrl = (urls !== undefined) ? (urls['homepage'] ?? '') : '';
+    const logoUrl: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_LogoUrl = (urls !== undefined) ? (urls['logo'] ?? '') : '';
+
+    const headerLines: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderRegionContent_HeaderLines = [];
+
+    if (logoUrl !== '' && homepageUrl !== '') {
+      headerLines.push(
+        `  <a href="${homepageUrl}">`,
+        '    <picture>',
+        `      <img alt="${projectName}" src="${logoUrl}" height="128">`,
+        '    </picture>',
+        '  </a>',
+        `  <h1>${projectName}</h1>`,
+      );
+    } else if (logoUrl !== '') {
+      headerLines.push(
+        '  <picture>',
+        `    <img alt="${projectName}" src="${logoUrl}" height="128">`,
+        '  </picture>',
+        `  <h1>${projectName}</h1>`,
+      );
+    } else if (homepageUrl !== '') {
+      headerLines.push(
+        `  <a href="${homepageUrl}">`,
+        `    <h1>${projectName}</h1>`,
+        '  </a>',
+      );
+    } else {
+      headerLines.push(`  <h1>${projectName}</h1>`);
+    }
+
+    return headerLines.join('\n');
+  }
+
+  /**
+   * CLI - Generate - Must Haves - Read Me - Build Introduction Region Content.
+   *
+   * Derives the project description from config and returns the inner content for the
+   * introduction region, or undefined when there is no description. Shared by the recipes.
+   *
+   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_Config} config - Config.
+   *
+   * @returns {Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_Returns}
+   *
+   * @since 0.21.0
+   */
+  public static buildIntroductionRegionContent(config: Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_Config): Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_Returns {
+    const project: Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_Project = config['project'];
+    const projectDescriptionRecord: Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_ProjectDescriptionRecord = (project !== undefined) ? project['description'] : undefined;
+    const projectDescription: Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_ProjectDescription = (projectDescriptionRecord !== undefined) ? (projectDescriptionRecord['long'] ?? '') : '';
+
+    const introductionSection: Cli_Generate_MustHaves_ReadMe_Runner_BuildIntroductionRegionContent_IntroductionSection = Runner.buildIntroductionSection(projectDescription);
+
+    if (introductionSection === '') {
+      return undefined;
+    }
+
+    return introductionSection;
   }
 
   /**
@@ -440,65 +621,6 @@ export class Runner {
       '',
       `To get started, visit [${documentationUrl}](${documentationUrl}) to view the full documentation.`,
     ].join('\n');
-  }
-
-  /**
-   * CLI - Generate - Must Haves - Read Me - Build Header Section.
-   *
-   * Builds the centered header block with optional logo, homepage link,
-   * title, and badges. Each piece appears only when its source value exists.
-   *
-   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_ProjectName} projectName - Project name.
-   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_HomepageUrl} homepageUrl - Homepage url.
-   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_LogoUrl}     logoUrl     - Logo url.
-   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_Badges}      badges      - Badges.
-   *
-   * @private
-   *
-   * @returns {Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_Returns}
-   *
-   * @since 0.16.2
-   */
-  private static buildHeaderSection(projectName: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_ProjectName, homepageUrl: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_HomepageUrl, logoUrl: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_LogoUrl, badges: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_Badges): Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_Returns {
-    if (projectName === '') {
-      return '';
-    }
-
-    const lines: Cli_Generate_MustHaves_ReadMe_Runner_BuildHeaderSection_Lines = ['<div align="center">'];
-
-    if (logoUrl !== '' && homepageUrl !== '') {
-      lines.push(
-        `  <a href="${homepageUrl}">`,
-        '    <picture>',
-        `      <img alt="${projectName}" src="${logoUrl}" height="128">`,
-        '    </picture>',
-        '  </a>',
-        `  <h1>${projectName}</h1>`,
-      );
-    } else if (logoUrl !== '') {
-      lines.push(
-        '  <picture>',
-        `    <img alt="${projectName}" src="${logoUrl}" height="128">`,
-        '  </picture>',
-        `  <h1>${projectName}</h1>`,
-      );
-    } else if (homepageUrl !== '') {
-      lines.push(
-        `  <a href="${homepageUrl}">`,
-        `    <h1>${projectName}</h1>`,
-        '  </a>',
-      );
-    } else {
-      lines.push(`  <h1>${projectName}</h1>`);
-    }
-
-    if (badges !== '') {
-      lines.push(badges);
-    }
-
-    lines.push('</div>');
-
-    return lines.join('\n');
   }
 
   /**

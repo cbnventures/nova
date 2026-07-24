@@ -1,8 +1,4 @@
 {
-  "layout.foundry.title": {
-    "message": "Foundry",
-    "description": "Title of footer column \"foundry\""
-  },
   "layout.community.title": {
     "message": "社区",
     "description": "Title of footer column \"community\""
@@ -26,10 +22,6 @@
   "sections.foundry.2.label": {
     "message": "CLI 参考",
     "description": "Label of link 3 in footer section \"foundry\""
-  },
-  "sections.community.0.label": {
-    "message": "Threadbare",
-    "description": "Label of link 1 in footer section \"community\""
   },
   "sections.community.1.label": {
     "message": "博客",
@@ -58,9 +50,5 @@
   "cta.label": {
     "message": "准备开始打造？",
     "description": "The footer call-to-action link label"
-  },
-  "copyright": {
-    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
-    "description": "The footer copyright text"
   }
 }

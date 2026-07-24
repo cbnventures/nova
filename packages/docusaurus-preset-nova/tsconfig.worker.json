@@ -10,8 +10,7 @@
     "rootDir": "./"
   },
   "include": [
-    "./src/lib/search/worker.ts",
-    "./src/types/worker-globals.d.ts"
+    "./src/lib/search/worker.ts"
   ],
   "exclude": [
     "./build/**",

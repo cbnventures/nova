@@ -82,10 +82,10 @@ export class Runner {
    * Only flags named function and class declarations attached
    * to export default and provides an auto-fix that separates the declaration from export.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Context} context - Context.
    * @param {Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Returns}
    *

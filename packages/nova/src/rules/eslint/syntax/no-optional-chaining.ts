@@ -79,10 +79,10 @@ export class Runner {
    * Reports every ChainExpression node unconditionally since the ?. operator is banned in
    * favor of explicit null and undefined guard clauses.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Context} context - Context.
    * @param {Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Returns}
    *

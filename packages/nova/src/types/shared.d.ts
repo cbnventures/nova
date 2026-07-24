@@ -1,4 +1,20 @@
 /**
+ * Shared - Active Vitest.
+ *
+ * @since 0.21.0
+ */
+export type Shared_ActiveVitest_Factory = () => void | Promise<void>;
+
+export type Shared_ActiveVitest_Describe = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+
+export type Shared_ActiveVitest_It = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+
+export type Shared_ActiveVitest = {
+  describe: Shared_ActiveVitest_Describe;
+  it: Shared_ActiveVitest_It;
+};
+
+/**
  * Shared - Border Characters.
  *
  * @since 0.15.0
@@ -189,6 +205,327 @@ export type Shared_FundPlatform = {
 export type Shared_GeneratorRunResult = 'completed' | 'cancelled';
 
 /**
+ * Shared - Blueprint Permission.
+ *
+ * @since 0.21.0
+ */
+export type Shared_BlueprintPermission = 'read' | 'write';
+
+/**
+ * Shared - Blueprint Permissions.
+ *
+ * @since 0.21.0
+ */
+export type Shared_BlueprintPermissionsScope = string;
+
+export type Shared_BlueprintPermissions = {
+  [scope: Shared_BlueprintPermissionsScope]: Shared_BlueprintPermission;
+};
+
+/**
+ * Shared - Blueprint Concurrency.
+ *
+ * @since 0.21.0
+ */
+export type Shared_BlueprintConcurrency_Group = string;
+
+export type Shared_BlueprintConcurrency_CancelInProgress = boolean;
+
+export type Shared_BlueprintConcurrency = {
+  group: Shared_BlueprintConcurrency_Group;
+  cancelInProgress: Shared_BlueprintConcurrency_CancelInProgress;
+};
+
+/**
+ * Shared - Blueprint Env Map.
+ *
+ * @since 0.21.0
+ */
+export type Shared_BlueprintEnvMapKey = string;
+
+export type Shared_BlueprintEnvMapValue = string;
+
+export type Shared_BlueprintEnvMapEntry_Key = Shared_BlueprintEnvMapKey;
+
+export type Shared_BlueprintEnvMapEntry_Value = Shared_BlueprintEnvMapValue;
+
+export type Shared_BlueprintEnvMapEntry = {
+  key: Shared_BlueprintEnvMapEntry_Key;
+  value: Shared_BlueprintEnvMapEntry_Value;
+};
+
+export type Shared_BlueprintEnvMap = Shared_BlueprintEnvMapEntry[];
+
+/**
+ * Shared - Blueprint With Map.
+ *
+ * @since 0.21.0
+ */
+export type Shared_BlueprintWithMapKey = string;
+
+export type Shared_BlueprintWithMapValue = string | number | boolean;
+
+export type Shared_BlueprintWithMapBlock = boolean;
+
+export type Shared_BlueprintWithMapEntry_Key = Shared_BlueprintWithMapKey;
+
+export type Shared_BlueprintWithMapEntry_Value = Shared_BlueprintWithMapValue;
+
+export type Shared_BlueprintWithMapEntry_Block = Shared_BlueprintWithMapBlock;
+
+export type Shared_BlueprintWithMapEntry = {
+  key: Shared_BlueprintWithMapEntry_Key;
+  value: Shared_BlueprintWithMapEntry_Value;
+  block?: Shared_BlueprintWithMapEntry_Block;
+};
+
+export type Shared_BlueprintWithMap = Shared_BlueprintWithMapEntry[];
+
+/**
+ * Shared - Blueprint Dispatch Input.
+ *
+ * @since 0.21.0
+ */
+export type Shared_BlueprintDispatchInput_Name = string;
+
+export type Shared_BlueprintDispatchInput_Description = string;
+
+export type Shared_BlueprintDispatchInput_Required = boolean;
+
+export type Shared_BlueprintDispatchInput_Type = string;
+
+export type Shared_BlueprintDispatchInput_Default = boolean;
+
+export type Shared_BlueprintDispatchInput = {
+  name: Shared_BlueprintDispatchInput_Name;
+  description: Shared_BlueprintDispatchInput_Description;
+  required: Shared_BlueprintDispatchInput_Required;
+  type: Shared_BlueprintDispatchInput_Type;
+  default: Shared_BlueprintDispatchInput_Default;
+};
+
+export type Shared_BlueprintDispatchInputs = Shared_BlueprintDispatchInput[];
+
+/**
+ * Shared - Blueprint Trigger.
+ *
+ * @since 0.21.0
+ */
+export type Shared_BlueprintTriggerIssuesEvent = 'issues' | 'issue_comment';
+
+export type Shared_BlueprintTriggerIssuesType = string;
+
+export type Shared_BlueprintTriggerIssuesTypes = Shared_BlueprintTriggerIssuesType[];
+
+export type Shared_BlueprintTriggerIssues_Event = Shared_BlueprintTriggerIssuesEvent;
+
+export type Shared_BlueprintTriggerIssues_Types = Shared_BlueprintTriggerIssuesTypes;
+
+export type Shared_BlueprintTriggerIssues = {
+  event: Shared_BlueprintTriggerIssues_Event;
+  types: Shared_BlueprintTriggerIssues_Types;
+};
+
+export type Shared_BlueprintTriggerScheduleEvent = 'schedule';
+
+export type Shared_BlueprintTriggerScheduleCron = string;
+
+export type Shared_BlueprintTriggerSchedule_Event = Shared_BlueprintTriggerScheduleEvent;
+
+export type Shared_BlueprintTriggerSchedule_Cron = Shared_BlueprintTriggerScheduleCron;
+
+export type Shared_BlueprintTriggerSchedule = {
+  event: Shared_BlueprintTriggerSchedule_Event;
+  cron: Shared_BlueprintTriggerSchedule_Cron;
+};
+
+export type Shared_BlueprintTriggerDispatchEvent = 'workflow_dispatch';
+
+export type Shared_BlueprintTriggerDispatch_Event = Shared_BlueprintTriggerDispatchEvent;
+
+export type Shared_BlueprintTriggerDispatch_Inputs = Shared_BlueprintDispatchInputs;
+
+export type Shared_BlueprintTriggerDispatch = {
+  event: Shared_BlueprintTriggerDispatch_Event;
+  inputs: Shared_BlueprintTriggerDispatch_Inputs;
+};
+
+export type Shared_BlueprintTriggerReleaseEvent = 'release';
+
+export type Shared_BlueprintTriggerReleaseType = string;
+
+export type Shared_BlueprintTriggerReleaseTypes = Shared_BlueprintTriggerReleaseType[];
+
+export type Shared_BlueprintTriggerRelease_Event = Shared_BlueprintTriggerReleaseEvent;
+
+export type Shared_BlueprintTriggerRelease_Types = Shared_BlueprintTriggerReleaseTypes;
+
+export type Shared_BlueprintTriggerRelease = {
+  event: Shared_BlueprintTriggerRelease_Event;
+  types: Shared_BlueprintTriggerRelease_Types;
+};
+
+export type Shared_BlueprintTriggerPushEvent = 'push';
+
+export type Shared_BlueprintTriggerPushBranch = string;
+
+export type Shared_BlueprintTriggerPushBranches = Shared_BlueprintTriggerPushBranch[];
+
+export type Shared_BlueprintTriggerPushPath = string;
+
+export type Shared_BlueprintTriggerPushPaths = Shared_BlueprintTriggerPushPath[];
+
+export type Shared_BlueprintTriggerPushTag = string;
+
+export type Shared_BlueprintTriggerPushTags = Shared_BlueprintTriggerPushTag[];
+
+export type Shared_BlueprintTriggerPush_Event = Shared_BlueprintTriggerPushEvent;
+
+export type Shared_BlueprintTriggerPush_Branches = Shared_BlueprintTriggerPushBranches;
+
+export type Shared_BlueprintTriggerPush_Paths = Shared_BlueprintTriggerPushPaths;
+
+export type Shared_BlueprintTriggerPush_Tags = Shared_BlueprintTriggerPushTags;
+
+export type Shared_BlueprintTriggerPush = {
+  event: Shared_BlueprintTriggerPush_Event;
+  branches?: Shared_BlueprintTriggerPush_Branches;
+  paths?: Shared_BlueprintTriggerPush_Paths;
+  tags?: Shared_BlueprintTriggerPush_Tags;
+};
+
+export type Shared_BlueprintTriggerWorkflowRunEvent = 'workflow_run';
+
+export type Shared_BlueprintTriggerWorkflowRunWorkflow = string;
+
+export type Shared_BlueprintTriggerWorkflowRunWorkflows = Shared_BlueprintTriggerWorkflowRunWorkflow[];
+
+export type Shared_BlueprintTriggerWorkflowRunType = string;
+
+export type Shared_BlueprintTriggerWorkflowRunTypes = Shared_BlueprintTriggerWorkflowRunType[];
+
+export type Shared_BlueprintTriggerWorkflowRun_Event = Shared_BlueprintTriggerWorkflowRunEvent;
+
+export type Shared_BlueprintTriggerWorkflowRun_Workflows = Shared_BlueprintTriggerWorkflowRunWorkflows;
+
+export type Shared_BlueprintTriggerWorkflowRun_Types = Shared_BlueprintTriggerWorkflowRunTypes;
+
+export type Shared_BlueprintTriggerWorkflowRun = {
+  event: Shared_BlueprintTriggerWorkflowRun_Event;
+  workflows: Shared_BlueprintTriggerWorkflowRun_Workflows;
+  types: Shared_BlueprintTriggerWorkflowRun_Types;
+};
+
+export type Shared_BlueprintTrigger = Shared_BlueprintTriggerIssues | Shared_BlueprintTriggerSchedule | Shared_BlueprintTriggerDispatch | Shared_BlueprintTriggerRelease | Shared_BlueprintTriggerPush | Shared_BlueprintTriggerWorkflowRun;
+
+export type Shared_BlueprintTriggers = Shared_BlueprintTrigger[];
+
+/**
+ * Shared - Blueprint Step.
+ *
+ * @since 0.21.0
+ */
+export type Shared_BlueprintStep_Name = string;
+
+export type Shared_BlueprintStep_Id = string;
+
+export type Shared_BlueprintStep_Uses = string;
+
+export type Shared_BlueprintStep_Env = Shared_BlueprintEnvMap;
+
+export type Shared_BlueprintStep_EnvAfterRun = boolean;
+
+export type Shared_BlueprintStep_With = Shared_BlueprintWithMap;
+
+export type Shared_BlueprintStep_Run = string;
+
+export type Shared_BlueprintStep_RunBlock = boolean;
+
+export type Shared_BlueprintStep_RunPlain = boolean;
+
+export type Shared_BlueprintStep_WorkingDirectory = string;
+
+export type Shared_BlueprintStep_If = string;
+
+export type Shared_BlueprintStep = {
+  name: Shared_BlueprintStep_Name;
+  id?: Shared_BlueprintStep_Id;
+  if?: Shared_BlueprintStep_If;
+  uses?: Shared_BlueprintStep_Uses;
+  env?: Shared_BlueprintStep_Env;
+  envAfterRun?: Shared_BlueprintStep_EnvAfterRun;
+  with?: Shared_BlueprintStep_With;
+  run?: Shared_BlueprintStep_Run;
+  runBlock?: Shared_BlueprintStep_RunBlock;
+  runPlain?: Shared_BlueprintStep_RunPlain;
+  workingDirectory?: Shared_BlueprintStep_WorkingDirectory;
+};
+
+export type Shared_BlueprintSteps = Shared_BlueprintStep[];
+
+/**
+ * Shared - Blueprint Job.
+ *
+ * @since 0.21.0
+ */
+export type Shared_BlueprintJob_Id = string;
+
+export type Shared_BlueprintJob_If = string;
+
+export type Shared_BlueprintJob_RunsOn = string;
+
+export type Shared_BlueprintJob_TimeoutMinutes = number;
+
+export type Shared_BlueprintJob_Permissions = Shared_BlueprintPermissions;
+
+export type Shared_BlueprintJob_Steps = Shared_BlueprintSteps;
+
+export type Shared_BlueprintJobNeedsEntry = string;
+
+export type Shared_BlueprintJob_Needs = Shared_BlueprintJobNeedsEntry[];
+
+export type Shared_BlueprintJob = {
+  id: Shared_BlueprintJob_Id;
+  needs?: Shared_BlueprintJob_Needs;
+  runsOn: Shared_BlueprintJob_RunsOn;
+  timeoutMinutes: Shared_BlueprintJob_TimeoutMinutes;
+  permissions?: Shared_BlueprintJob_Permissions;
+  if?: Shared_BlueprintJob_If;
+  steps: Shared_BlueprintJob_Steps;
+};
+
+export type Shared_BlueprintJobs = Shared_BlueprintJob[];
+
+/**
+ * Shared - Blueprint Workflow.
+ *
+ * @since 0.21.0
+ */
+export type Shared_BlueprintWorkflow_Name = string;
+
+export type Shared_BlueprintWorkflow_RunName = string;
+
+export type Shared_BlueprintWorkflow_On = Shared_BlueprintTriggers;
+
+export type Shared_BlueprintWorkflow_Permissions = Shared_BlueprintPermissions;
+
+export type Shared_BlueprintWorkflow_Concurrency = Shared_BlueprintConcurrency;
+
+export type Shared_BlueprintWorkflow_Env = Shared_BlueprintEnvMap;
+
+export type Shared_BlueprintWorkflow_Jobs = Shared_BlueprintJobs;
+
+export type Shared_BlueprintWorkflow = {
+  name: Shared_BlueprintWorkflow_Name;
+  runName: Shared_BlueprintWorkflow_RunName;
+  on: Shared_BlueprintWorkflow_On;
+  permissions: Shared_BlueprintWorkflow_Permissions;
+  concurrency: Shared_BlueprintWorkflow_Concurrency;
+  env: Shared_BlueprintWorkflow_Env;
+  jobs: Shared_BlueprintWorkflow_Jobs;
+};
+
+/**
  * Shared - Item Pretty Names.
  *
  * @since 0.11.0
@@ -208,11 +545,14 @@ export type Shared_JsdocHierarchyCreateOptions_KnownNames = Record<string, strin
 
 export type Shared_JsdocHierarchyCreateOptions_StripDirectories = string[];
 
+export type Shared_JsdocHierarchyCreateOptions_WarnSkippedScripts = boolean;
+
 export type Shared_JsdocHierarchyCreateOptions = Readonly<{
   anchorDirectories: Shared_JsdocHierarchyCreateOptions_AnchorDirectories;
   ignoreFiles: Shared_JsdocHierarchyCreateOptions_IgnoreFiles;
   knownNames: Shared_JsdocHierarchyCreateOptions_KnownNames;
   stripDirectories: Shared_JsdocHierarchyCreateOptions_StripDirectories;
+  warnSkippedScripts: Shared_JsdocHierarchyCreateOptions_WarnSkippedScripts;
 }>;
 
 /**
@@ -470,10 +810,6 @@ export type Shared_NovaConfigGithubRecipeName =
   | 'sync-identity'
   | 'sync-policies';
 
-export type Shared_NovaConfig_Github_Recipes = {
-  [K in Shared_NovaConfigGithubRecipeName]?: boolean;
-};
-
 export type Shared_NovaConfig_Github_Topics = string[];
 
 export type Shared_NovaConfig_Github_Features = {
@@ -507,7 +843,6 @@ export type Shared_NovaConfig_Github_IssueTemplate = {
 export type Shared_NovaConfig_Github = {
   owner?: Shared_NovaConfig_Github_Owner;
   repo?: Shared_NovaConfig_Github_Repo;
-  recipes?: Shared_NovaConfig_Github_Recipes;
   topics?: Shared_NovaConfig_Github_Topics;
   features?: Shared_NovaConfig_Github_Features;
   policies?: Shared_NovaConfig_Github_Policies;
@@ -571,27 +906,13 @@ export type Shared_NovaConfigWorkspaceRecipeName =
   | 'sync-identity'
   | 'sync-ownership';
 
-export type Shared_NovaConfigWorkspaceRecipeEnabled = boolean;
-
 export type Shared_NovaConfigWorkspaceRecipeSettings = Record<string, boolean>;
-
-export type Shared_NovaConfigWorkspaceRecipeTupleWithSettings = [Shared_NovaConfigWorkspaceRecipeEnabled, Shared_NovaConfigWorkspaceRecipeSettings];
-
-export type Shared_NovaConfigWorkspaceRecipeTupleWithoutSettings = [Shared_NovaConfigWorkspaceRecipeEnabled];
-
-export type Shared_NovaConfigWorkspaceRecipeTuple = Shared_NovaConfigWorkspaceRecipeTupleWithSettings | Shared_NovaConfigWorkspaceRecipeTupleWithoutSettings;
-
-export type Shared_NovaConfigWorkspace_Recipes = {
-  [key in Shared_NovaConfigWorkspaceRecipeName]?: Shared_NovaConfigWorkspaceRecipeTuple;
-};
 
 export type Shared_NovaConfigWorkspace = {
   name: Shared_NovaConfigWorkspace_Name;
   displayName?: Shared_NovaConfigWorkspace_DisplayName;
   role: Shared_NovaConfigWorkspace_Role;
   policy: Shared_NovaConfigWorkspace_Policy;
-  recipes?: Shared_NovaConfigWorkspace_Recipes;
-  dotenv?: Shared_NovaConfigWorkspace_Dotenv;
 };
 
 export type Shared_NovaConfig_Workspaces = {
@@ -606,11 +927,40 @@ export type Shared_NovaConfigWorkflowTrigger = string;
 
 export type Shared_NovaConfigWorkflow_Triggers = Shared_NovaConfigWorkflowTrigger[];
 
+export type Shared_NovaConfigWorkflowTriggerObject_Name = string;
+
+export type Shared_NovaConfigWorkflowTriggerObjectBranch = string;
+
+export type Shared_NovaConfigWorkflowTriggerObject_Branches = Shared_NovaConfigWorkflowTriggerObjectBranch[];
+
+export type Shared_NovaConfigWorkflowTriggerObjectPath = string;
+
+export type Shared_NovaConfigWorkflowTriggerObject_Paths = Shared_NovaConfigWorkflowTriggerObjectPath[];
+
+export type Shared_NovaConfigWorkflowTriggerObjectTag = string;
+
+export type Shared_NovaConfigWorkflowTriggerObject_Tags = Shared_NovaConfigWorkflowTriggerObjectTag[];
+
+export type Shared_NovaConfigWorkflowTriggerObject = {
+  name: Shared_NovaConfigWorkflowTriggerObject_Name;
+  branches?: Shared_NovaConfigWorkflowTriggerObject_Branches;
+  paths?: Shared_NovaConfigWorkflowTriggerObject_Paths;
+  tags?: Shared_NovaConfigWorkflowTriggerObject_Tags;
+};
+
+export type Shared_NovaConfigWorkflowTriggerWideEntry = Shared_NovaConfigWorkflowTrigger | Shared_NovaConfigWorkflowTriggerObject;
+
+export type Shared_NovaConfigWorkflowTriggersWide = Shared_NovaConfigWorkflowTriggerWideEntry[];
+
 export type Shared_NovaConfigWorkflow_DependsOn = string[];
 
 export type Shared_NovaConfigWorkflowScope = string;
 
 export type Shared_NovaConfigWorkflow_Scopes = Shared_NovaConfigWorkflowScope[];
+
+export type Shared_NovaConfigWorkflowSettingsKey = string;
+
+export type Shared_NovaConfigWorkflowSettingsValue = string;
 
 export type Shared_NovaConfigWorkflowTarget_Type = string;
 
@@ -620,17 +970,18 @@ export type Shared_NovaConfigWorkflowTargetNeedsEntry = string;
 
 export type Shared_NovaConfigWorkflowTarget_Needs = Shared_NovaConfigWorkflowTargetNeedsEntry[];
 
+export type Shared_NovaConfigWorkflowTarget_Settings = {
+  [key: Shared_NovaConfigWorkflowSettingsKey]: Shared_NovaConfigWorkflowSettingsValue;
+};
+
 export type Shared_NovaConfigWorkflowTarget = {
   type: Shared_NovaConfigWorkflowTarget_Type;
   workingDir: Shared_NovaConfigWorkflowTarget_WorkingDir;
   needs?: Shared_NovaConfigWorkflowTarget_Needs;
+  settings?: Shared_NovaConfigWorkflowTarget_Settings;
 };
 
 export type Shared_NovaConfigWorkflow_Targets = Shared_NovaConfigWorkflowTarget[];
-
-export type Shared_NovaConfigWorkflowSettingsKey = string;
-
-export type Shared_NovaConfigWorkflowSettingsValue = string;
 
 export type Shared_NovaConfigWorkflow_Settings = {
   [key: Shared_NovaConfigWorkflowSettingsKey]: Shared_NovaConfigWorkflowSettingsValue;
@@ -648,6 +999,113 @@ export type Shared_NovaConfigWorkflow = {
 
 export type Shared_NovaConfig_Workflows = Shared_NovaConfigWorkflow[];
 
+export type Shared_BlueprintConfigWorkflow_Template = Shared_NovaConfigWorkflow_Template;
+
+export type Shared_BlueprintConfigWorkflow_Name = Shared_NovaConfigWorkflow_Suffix;
+
+export type Shared_BlueprintConfigTriggerObjectWorkflow = string;
+
+export type Shared_BlueprintConfigTriggerObject_Workflows = Shared_BlueprintConfigTriggerObjectWorkflow[];
+
+export type Shared_BlueprintConfigTriggerObject_Name = Shared_NovaConfigWorkflowTriggerObject_Name;
+
+export type Shared_BlueprintConfigTriggerObject_Branches = Shared_NovaConfigWorkflowTriggerObject_Branches;
+
+export type Shared_BlueprintConfigTriggerObject_Paths = Shared_NovaConfigWorkflowTriggerObject_Paths;
+
+export type Shared_BlueprintConfigTriggerObject_Tags = Shared_NovaConfigWorkflowTriggerObject_Tags;
+
+export type Shared_BlueprintConfigTriggerObject = {
+  name: Shared_BlueprintConfigTriggerObject_Name;
+  branches?: Shared_BlueprintConfigTriggerObject_Branches;
+  paths?: Shared_BlueprintConfigTriggerObject_Paths;
+  tags?: Shared_BlueprintConfigTriggerObject_Tags;
+  workflows?: Shared_BlueprintConfigTriggerObject_Workflows;
+};
+
+export type Shared_BlueprintConfigTriggerWideEntry = Shared_NovaConfigWorkflowTrigger | Shared_BlueprintConfigTriggerObject;
+
+export type Shared_BlueprintConfigWorkflow_Triggers = Shared_BlueprintConfigTriggerWideEntry[];
+
+export type Shared_BlueprintConfigWorkflow_Build = Shared_NovaConfigWorkflow_Scopes;
+
+export type Shared_BlueprintConfigDeployTarget_To = Shared_NovaConfigWorkflowTarget_Type;
+
+export type Shared_BlueprintConfigDeployTarget_Path = Shared_NovaConfigWorkflowTarget_WorkingDir;
+
+export type Shared_BlueprintConfigDeployTarget_After = Shared_NovaConfigWorkflowTarget_Needs;
+
+export type Shared_BlueprintConfigDeployTarget_With = Shared_NovaConfigWorkflowTarget_Settings;
+
+export type Shared_BlueprintConfigDeployTarget = {
+  to: Shared_BlueprintConfigDeployTarget_To;
+  path: Shared_BlueprintConfigDeployTarget_Path;
+  after?: Shared_BlueprintConfigDeployTarget_After;
+  with?: Shared_BlueprintConfigDeployTarget_With;
+};
+
+export type Shared_BlueprintConfigWorkflow_Deploy = Shared_BlueprintConfigDeployTarget[];
+
+export type Shared_BlueprintConfigWorkflow_With = Shared_NovaConfigWorkflow_Settings;
+
+export type Shared_BlueprintConfigWorkflow = {
+  'template': Shared_BlueprintConfigWorkflow_Template;
+  'name': Shared_BlueprintConfigWorkflow_Name;
+  'triggers': Shared_BlueprintConfigWorkflow_Triggers;
+  'build'?: Shared_BlueprintConfigWorkflow_Build;
+  'deploy'?: Shared_BlueprintConfigWorkflow_Deploy;
+  'with'?: Shared_BlueprintConfigWorkflow_With;
+};
+
+export type Shared_BlueprintConfig_Workflows = Shared_BlueprintConfigWorkflow[];
+
+export type Shared_BlueprintValidationResultDiagnostic_Severity = 'error';
+
+export type Shared_BlueprintValidationResultDiagnostic_Message = string;
+
+export type Shared_BlueprintValidationResultDiagnostic = {
+  severity: Shared_BlueprintValidationResultDiagnostic_Severity;
+  message: Shared_BlueprintValidationResultDiagnostic_Message;
+};
+
+export type Shared_BlueprintValidationResult_Workflows = Shared_BlueprintConfig_Workflows;
+
+export type Shared_BlueprintValidationResult_Diagnostics = Shared_BlueprintValidationResultDiagnostic[];
+
+export type Shared_BlueprintValidationResult = {
+  workflows: Shared_BlueprintValidationResult_Workflows;
+  diagnostics: Shared_BlueprintValidationResult_Diagnostics;
+};
+
+/**
+ * Shared - Blueprint Publish Target Context.
+ *
+ * @since 0.21.0
+ */
+export type Shared_BlueprintPublishTargetContext_WorkingDir = string;
+
+export type Shared_BlueprintPublishTargetContext_ArtifactName = string;
+
+export type Shared_BlueprintPublishTargetContext_Needs = Shared_BlueprintJob_Needs;
+
+export type Shared_BlueprintPublishTargetContext_TargetSettings = Shared_NovaConfigWorkflowTarget_Settings | undefined;
+
+export type Shared_BlueprintPublishTargetContext_WorkflowSettings = Shared_NovaConfigWorkflow_Settings | undefined;
+
+export type Shared_BlueprintPublishTargetContext_Workspace = Shared_NovaConfigWorkspace | undefined;
+
+export type Shared_BlueprintPublishTargetContext_Environment = Shared_NovaConfigEnvironment | undefined;
+
+export type Shared_BlueprintPublishTargetContext = {
+  workingDir: Shared_BlueprintPublishTargetContext_WorkingDir;
+  artifactName: Shared_BlueprintPublishTargetContext_ArtifactName;
+  needs: Shared_BlueprintPublishTargetContext_Needs;
+  targetSettings?: Shared_BlueprintPublishTargetContext_TargetSettings;
+  workflowSettings?: Shared_BlueprintPublishTargetContext_WorkflowSettings;
+  workspace?: Shared_BlueprintPublishTargetContext_Workspace;
+  environment?: Shared_BlueprintPublishTargetContext_Environment;
+};
+
 export type Shared_NovaConfigGitignoreProjectExclude = string;
 
 export type Shared_NovaConfig_Gitignore_ProjectExcludes = Shared_NovaConfigGitignoreProjectExclude[];
@@ -656,24 +1114,166 @@ export type Shared_NovaConfig_Gitignore = {
   projectExcludes?: Shared_NovaConfig_Gitignore_ProjectExcludes;
 };
 
-export type Shared_NovaConfigDotenvVariable_Key = string;
+export type Shared_BlueprintPublicDotenvVariable_Key = string;
 
-export type Shared_NovaConfigDotenvVariable_DefaultValue = string;
+export type Shared_BlueprintPublicDotenvVariable_Source = string;
 
-export type Shared_NovaConfigDotenvVariable = {
-  key: Shared_NovaConfigDotenvVariable_Key;
-  defaultValue: Shared_NovaConfigDotenvVariable_DefaultValue;
+export type Shared_BlueprintPublicDotenvVariable = {
+  key: Shared_BlueprintPublicDotenvVariable_Key;
+  source: Shared_BlueprintPublicDotenvVariable_Source;
 };
 
-export type Shared_NovaConfigWorkspace_Dotenv_Variables = Shared_NovaConfigDotenvVariable[];
+export type Shared_BlueprintPublicDotenvVariables = Shared_BlueprintPublicDotenvVariable[];
 
-export type Shared_NovaConfigWorkspace_Dotenv = {
-  variables?: Shared_NovaConfigWorkspace_Dotenv_Variables;
+export type Shared_BlueprintManagedSecret_Key = string;
+
+export type Shared_BlueprintManagedSecret_From = string;
+
+export type Shared_BlueprintManagedSecret = {
+  key: Shared_BlueprintManagedSecret_Key;
+  from: Shared_BlueprintManagedSecret_From;
 };
+
+export type Shared_BlueprintManagedSecrets = Shared_BlueprintManagedSecret[];
+
+/**
+ * Shared - Blueprint Delivery Value.
+ *
+ * A single environment value resolved for delivery: its source key, the derived
+ * GitHub name (prefix + key), and whether it stores as a Secret (which only
+ * picks the GitHub source and vendor channel, never the delivery route).
+ *
+ * @since 0.21.0
+ */
+export type Shared_BlueprintDeliveryValue_Key = string;
+
+export type Shared_BlueprintDeliveryValue_Name = string;
+
+export type Shared_BlueprintDeliveryValue_Secret = boolean;
+
+export type Shared_BlueprintDeliveryValue_DefaultValue = string;
+
+export type Shared_BlueprintDeliveryValue = {
+  key: Shared_BlueprintDeliveryValue_Key;
+  name: Shared_BlueprintDeliveryValue_Name;
+  secret: Shared_BlueprintDeliveryValue_Secret;
+  defaultValue?: Shared_BlueprintDeliveryValue_DefaultValue;
+};
+
+export type Shared_BlueprintDeliveryValues = Shared_BlueprintDeliveryValue[];
+
+/**
+ * Shared - Nova Config Environment.
+ *
+ * @since 0.21.0
+ */
+export type Shared_NovaConfigEnvironmentValue_Key = string;
+
+export type Shared_NovaConfigEnvironmentValue_Secret = boolean;
+
+export type Shared_NovaConfigEnvironmentValue_BuildOnly = boolean;
+
+export type Shared_NovaConfigEnvironmentValue_DefaultValue = string;
+
+export type Shared_NovaConfigEnvironmentValue = {
+  key: Shared_NovaConfigEnvironmentValue_Key;
+  secret: Shared_NovaConfigEnvironmentValue_Secret;
+  buildOnly?: Shared_NovaConfigEnvironmentValue_BuildOnly;
+  defaultValue?: Shared_NovaConfigEnvironmentValue_DefaultValue;
+};
+
+export type Shared_NovaConfigEnvironmentApp_Prefix = string;
+
+export type Shared_NovaConfigEnvironmentApp_Variables = Shared_NovaConfigEnvironmentValue[];
+
+export type Shared_NovaConfigEnvironmentApp = {
+  prefix: Shared_NovaConfigEnvironmentApp_Prefix;
+  variables?: Shared_NovaConfigEnvironmentApp_Variables;
+};
+
+export type Shared_NovaConfigEnvironmentGlobal_Prefix = string;
+
+export type Shared_NovaConfigEnvironmentGlobal_Variables = Shared_NovaConfigEnvironmentValue[];
+
+export type Shared_NovaConfigEnvironmentGlobal = {
+  prefix: Shared_NovaConfigEnvironmentGlobal_Prefix;
+  variables?: Shared_NovaConfigEnvironmentGlobal_Variables;
+};
+
+export type Shared_NovaConfigEnvironmentWorkflow_Prefix = string;
+
+export type Shared_NovaConfigEnvironmentWorkflow = {
+  prefix: Shared_NovaConfigEnvironmentWorkflow_Prefix;
+};
+
+export type Shared_NovaConfigEnvironment_Global = Shared_NovaConfigEnvironmentGlobal;
+
+export type Shared_NovaConfigEnvironment_Apps = {
+  [key: string]: Shared_NovaConfigEnvironmentApp;
+};
+
+export type Shared_NovaConfigEnvironment_Workflows = {
+  [key: string]: Shared_NovaConfigEnvironmentWorkflow;
+};
+
+export type Shared_NovaConfigEnvironment = {
+  global?: Shared_NovaConfigEnvironment_Global;
+  apps?: Shared_NovaConfigEnvironment_Apps;
+  workflows?: Shared_NovaConfigEnvironment_Workflows;
+};
+
+export type Shared_NovaConfig_Environment = Shared_NovaConfigEnvironment;
 
 export type Shared_NovaConfigAgent = 'claude-code' | 'codex';
 
 export type Shared_NovaConfig_Agents = Shared_NovaConfigAgent[];
+
+export type Shared_NovaConfig_RecipeEntry_Enabled = boolean;
+
+export type Shared_NovaConfig_RecipeEntry_Settings = {
+  [key: string]: boolean;
+};
+
+export type Shared_NovaConfig_RecipeEntry = {
+  enabled: Shared_NovaConfig_RecipeEntry_Enabled;
+  settings?: Shared_NovaConfig_RecipeEntry_Settings;
+};
+
+export type Shared_NovaConfig_Recipes_Github = {
+  [K in Shared_NovaConfigGithubRecipeName]?: Shared_NovaConfig_RecipeEntry;
+};
+
+export type Shared_NovaConfigLicenseRecipeName = 'update-copyright';
+
+export type Shared_NovaConfig_Recipes_License = {
+  [K in Shared_NovaConfigLicenseRecipeName]?: Shared_NovaConfig_RecipeEntry;
+};
+
+export type Shared_NovaConfigReadMeRecipeName =
+  'update-badges'
+  | 'update-credits'
+  | 'update-documentation'
+  | 'update-header'
+  | 'update-introduction';
+
+export type Shared_NovaConfig_Recipes_ReadMe = {
+  [K in Shared_NovaConfigReadMeRecipeName]?: Shared_NovaConfig_RecipeEntry;
+};
+
+export type Shared_NovaConfig_Recipes_PackageJsonWorkspace = {
+  [K in Shared_NovaConfigWorkspaceRecipeName]?: Shared_NovaConfig_RecipeEntry;
+};
+
+export type Shared_NovaConfig_Recipes_PackageJson = {
+  [workspacePath: string]: Shared_NovaConfig_Recipes_PackageJsonWorkspace;
+};
+
+export type Shared_NovaConfig_Recipes = {
+  'github'?: Shared_NovaConfig_Recipes_Github;
+  'license'?: Shared_NovaConfig_Recipes_License;
+  'read-me'?: Shared_NovaConfig_Recipes_ReadMe;
+  'package-json'?: Shared_NovaConfig_Recipes_PackageJson;
+};
 
 export type Shared_NovaConfig = {
   project?: Shared_NovaConfig_Project;
@@ -685,6 +1285,8 @@ export type Shared_NovaConfig = {
   workspaces?: Shared_NovaConfig_Workspaces;
   gitignore?: Shared_NovaConfig_Gitignore;
   agents?: Shared_NovaConfig_Agents;
+  recipes?: Shared_NovaConfig_Recipes;
+  environment?: Shared_NovaConfig_Environment;
 };
 
 export type Shared_NovaConfigConfig = Shared_NovaConfig;
@@ -694,7 +1296,7 @@ export type Shared_NovaConfigConfig = Shared_NovaConfig;
  *
  * @since 0.11.0
  */
-export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'workspaces' | 'workflows' | 'gitignore' | 'agents';
+export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'workspaces' | 'workflows' | 'gitignore' | 'agents' | 'environment';
 
 /**
  * Shared - Prompt With Cancel.
@@ -879,11 +1481,19 @@ export type Shared_WorkflowTemplateTarget_Variables = Shared_WorkflowTemplateVar
 
 export type Shared_WorkflowTemplateTarget_Permissions = Shared_WorkflowTemplatePermissions;
 
+export type Shared_WorkflowTemplateTargetUniquenessKeyEntry = Shared_WorkflowTemplateVariableName;
+
+export type Shared_WorkflowTemplateTarget_UniquenessKey = Shared_WorkflowTemplateTargetUniquenessKeyEntry[];
+
+export type Shared_WorkflowTemplateTarget_SupportsRuntimeSecretSync = boolean;
+
 export type Shared_WorkflowTemplateTarget = {
   description: Shared_WorkflowTemplateTarget_Description;
   artifactPaths: Shared_WorkflowTemplateTarget_ArtifactPaths;
   variables: Shared_WorkflowTemplateTarget_Variables;
   permissions: Shared_WorkflowTemplateTarget_Permissions;
+  uniquenessKey?: Shared_WorkflowTemplateTarget_UniquenessKey;
+  supportsRuntimeSecretSync?: Shared_WorkflowTemplateTarget_SupportsRuntimeSecretSync;
 };
 
 export type Shared_WorkflowTemplateTargetType = string;
@@ -913,12 +1523,33 @@ export type Shared_WorkflowTemplateVariable_Description = string;
 
 export type Shared_WorkflowTemplateVariable_Example = string;
 
+/**
+ * Shared - Workflow Template Variable Scope.
+ *
+ * @since 0.21.0
+ */
+export type Shared_WorkflowTemplateVariable_Scope = 'account' | 'app';
+
+/**
+ * Shared - Workflow Template Variable Optional.
+ *
+ * @since 0.21.0
+ */
+export type Shared_WorkflowTemplateVariable_Optional = boolean;
+
+/**
+ * Shared - Workflow Template Variable.
+ *
+ * @since 0.18.0
+ */
 export type Shared_WorkflowTemplateVariable = {
   format: Shared_WorkflowTemplateVariable_Format;
   default?: Shared_WorkflowTemplateVariable_Default;
   auto?: Shared_WorkflowTemplateVariable_Auto;
   description?: Shared_WorkflowTemplateVariable_Description;
   example?: Shared_WorkflowTemplateVariable_Example;
+  scope?: Shared_WorkflowTemplateVariable_Scope;
+  optional?: Shared_WorkflowTemplateVariable_Optional;
 };
 
 export type Shared_WorkflowTemplateVariableName = string;
@@ -932,6 +1563,8 @@ export type Shared_WorkflowTemplateVariables = {
  *
  * @since 0.13.0
  */
+export type Shared_WorkspaceManifest_WorkspacePath = string;
+
 export type Shared_WorkspaceManifest_Manifest = Shared_NovaConfigWorkspace;
 
 export type Shared_WorkspaceManifest_FilePath = string;
@@ -939,6 +1572,7 @@ export type Shared_WorkspaceManifest_FilePath = string;
 export type Shared_WorkspaceManifest_FileContents = Record<string, unknown>;
 
 export type Shared_WorkspaceManifest = {
+  workspacePath: Shared_WorkspaceManifest_WorkspacePath;
   manifest: Shared_WorkspaceManifest_Manifest;
   filePath: Shared_WorkspaceManifest_FilePath;
   fileContents: Shared_WorkspaceManifest_FileContents;

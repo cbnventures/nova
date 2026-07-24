@@ -1,4 +1,8 @@
 {
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} دقيقة قراءة",
+    "description": "The label showing estimated reading time for a blog post"
+  },
   "home.appMarket.label": {
     "message": "راقب أسطول أجهزتك في أي وقت ومن أي مكان",
     "description": "Front page AppMarketDownload label"
@@ -15,49 +19,25 @@
     "message": "بوابة وصول تكيفية. تمنح الوصول أو تضيِّقه أو تسحبه في الوقت الفعلي استنادًا إلى الهوية والوضع والموقع والوقت. لا قواعد ثابتة على الإطلاق.",
     "description": "Front page Features card description for Drawbridge"
   },
-  "home.features.drawbridge.title": {
-    "message": "Drawbridge",
-    "description": "Front page Features card title for Drawbridge"
-  },
   "home.features.garrison.description": {
     "message": "محرك امتثال للأجهزة الطرفية. يفرض السياسات على كل جهاز متصل. تشفير القرص، إصدار نظام التشغيل، حالة جدار الحماية — يُتحقق منها جميعًا قبل منح الوصول.",
     "description": "Front page Features card description for Garrison"
-  },
-  "home.features.garrison.title": {
-    "message": "Garrison",
-    "description": "Front page Features card title for Garrison"
   },
   "home.features.parapet.description": {
     "message": "صندوق رمل لمحاكاة السياسات. اختبر قواعد الوصول بحركة مرور حقيقية قبل تفعيلها رسميًا. اكتشف من سيحصل على الوصول، ومن سيفقده، ولماذا — دون لمس بيئة الإنتاج.",
     "description": "Front page Features card description for Parapet"
   },
-  "home.features.parapet.title": {
-    "message": "Parapet",
-    "description": "Front page Features card title for Parapet"
-  },
   "home.features.rampart.description": {
     "message": "طبقة عزل دقيق. يعزل أعباء العمل بحيث يستحيل التحرك الجانبي. حتى إن اخترق المهاجم قطاعًا واحدًا، يتوقف الضرر عند هذا الحد.",
     "description": "Front page Features card description for Rampart"
-  },
-  "home.features.rampart.title": {
-    "message": "Rampart",
-    "description": "Front page Features card title for Rampart"
   },
   "home.features.spyglass.description": {
     "message": "تدقيق وتحليل جنائي. إعادة بناء كاملة للجلسات، مع احتفاظ بسجلات غير قابلة للتعديل لمدة 7 سنوات. كل قرار وصول، كل تقييم سياسة، كل اتصال — كله مُسجَّل.",
     "description": "Front page Features card description for Spyglass"
   },
-  "home.features.spyglass.title": {
-    "message": "Spyglass",
-    "description": "Front page Features card title for Spyglass"
-  },
   "home.features.watchtower.description": {
     "message": "تقييم وضعي مستمر. تقييم صحة الجهاز والموقع والسلوك كل 90 ثانية. ما إن تتغير الظروف حتى يدرك Watchtower ذلك فورًا.",
     "description": "Front page Features card description for Watchtower"
-  },
-  "home.features.watchtower.title": {
-    "message": "Watchtower",
-    "description": "Front page Features card title for Watchtower"
   },
   "home.head.title": {
     "message": "Sentinel - الثقة نفسها هي الثغرة",
@@ -179,17 +159,9 @@
     "message": "بوابة وصول تكيفية. تمنح الوصول أو تضيِّقه أو تسحبه في الوقت الفعلي وفق تقييم الثقة.",
     "description": "Showcase Features (with icons) card description for Drawbridge"
   },
-  "showcase.featuresIcons.drawbridge.title": {
-    "message": "Drawbridge",
-    "description": "Showcase Features (with icons) card title for Drawbridge"
-  },
   "showcase.featuresIcons.garrison.description": {
     "message": "محرك امتثال للأجهزة الطرفية. يفرض السياسات على كل جهاز متصل، مع التحقق قبل منح الوصول.",
     "description": "Showcase Features (with icons) card description for Garrison"
-  },
-  "showcase.featuresIcons.garrison.title": {
-    "message": "Garrison",
-    "description": "Showcase Features (with icons) card title for Garrison"
   },
   "showcase.featuresIcons.heading": {
     "message": "لماذا تختار الفرق Sentinel",
@@ -199,49 +171,25 @@
     "message": "تقييم وضعي مستمر. تقييم صحة الجهاز والموقع والسلوك كل 90 ثانية.",
     "description": "Showcase Features (with icons) card description for Watchtower"
   },
-  "showcase.featuresIcons.watchtower.title": {
-    "message": "Watchtower",
-    "description": "Showcase Features (with icons) card title for Watchtower"
-  },
   "showcase.featuresNoIcons.parapet.description": {
     "message": "صندوق رمل لمحاكاة السياسات. اختبر قواعد الوصول بحركة مرور حقيقية قبل تفعيلها رسميًا.",
     "description": "Showcase Features (no icons) card description for Parapet"
-  },
-  "showcase.featuresNoIcons.parapet.title": {
-    "message": "Parapet",
-    "description": "Showcase Features (no icons) card title for Parapet"
   },
   "showcase.featuresNoIcons.rampart.description": {
     "message": "طبقة عزل دقيق. تعزل أعباء العمل بحيث يستحيل التحرك الجانبي بين المناطق.",
     "description": "Showcase Features (no icons) card description for Rampart"
   },
-  "showcase.featuresNoIcons.rampart.title": {
-    "message": "Rampart",
-    "description": "Showcase Features (no icons) card title for Rampart"
-  },
   "showcase.featuresNoIcons.spyglass.description": {
     "message": "تدقيق وتحليل جنائي. إعادة بناء كاملة للجلسات، مع احتفاظ بسجلات غير قابلة للتعديل لمدة 7 سنوات.",
     "description": "Showcase Features (no icons) card description for Spyglass"
-  },
-  "showcase.featuresNoIcons.spyglass.title": {
-    "message": "Spyglass",
-    "description": "Showcase Features (no icons) card title for Spyglass"
   },
   "showcase.featuresSix.drawbridge.description": {
     "message": "يحوِّل نتائج تقييم Watchtower إلى قرارات وصول ملموسة — منح، أو تضييق، أو سحب.",
     "description": "Showcase Features (six items) card description for Drawbridge"
   },
-  "showcase.featuresSix.drawbridge.title": {
-    "message": "Drawbridge",
-    "description": "Showcase Features (six items) card title for Drawbridge"
-  },
   "showcase.featuresSix.garrison.description": {
     "message": "يدير تسجيل الأجهزة وخطوط وضع الأساس وصور الامتثال لكل جهاز طرفي.",
     "description": "Showcase Features (six items) card description for Garrison"
-  },
-  "showcase.featuresSix.garrison.title": {
-    "message": "Garrison",
-    "description": "Showcase Features (six items) card title for Garrison"
   },
   "showcase.featuresSix.heading": {
     "message": "محرك الثقة الكامل",
@@ -251,33 +199,17 @@
     "message": "يُعيد تشغيل السياسات المسوَّدة بحركة مرور حقيقية، ويعرض تأثير الوصول بدقة قبل التفعيل.",
     "description": "Showcase Features (six items) card description for Parapet"
   },
-  "showcase.featuresSix.parapet.title": {
-    "message": "Parapet",
-    "description": "Showcase Features (six items) card title for Parapet"
-  },
   "showcase.featuresSix.rampart.description": {
     "message": "يُقسِّم البنية التحتية إلى مناطق معزولة، حيث يجب أن يمر الوصول عبر المناطق بتقييم سياسة.",
     "description": "Showcase Features (six items) card description for Rampart"
-  },
-  "showcase.featuresSix.rampart.title": {
-    "message": "Rampart",
-    "description": "Showcase Features (six items) card title for Rampart"
   },
   "showcase.featuresSix.spyglass.description": {
     "message": "يُسجِّل كل قرار وصول، وكل تقييم سياسة، وكل سلوك عبر المناطق في سلسلة تدقيق غير قابلة للتعديل.",
     "description": "Showcase Features (six items) card description for Spyglass"
   },
-  "showcase.featuresSix.spyglass.title": {
-    "message": "Spyglass",
-    "description": "Showcase Features (six items) card title for Spyglass"
-  },
   "showcase.featuresSix.watchtower.description": {
     "message": "يُقيِّم باستمرار وضع الجهاز وهوية المستخدم وسياق الشبكة وإشارات السلوك في دورات مدتها 90 ثانية.",
     "description": "Showcase Features (six items) card description for Watchtower"
-  },
-  "showcase.featuresSix.watchtower.title": {
-    "message": "Watchtower",
-    "description": "Showcase Features (six items) card title for Watchtower"
   },
   "showcase.heroFull.ctaLabel": {
     "message": "اقرأ الوثائق",
@@ -367,21 +299,9 @@
     "message": "Hero (مبسط)",
     "description": "Showcase item title for Hero (minimal variant)"
   },
-  "showcase.item.installStripBlock.title": {
-    "message": "InstallStrip (copyTarget: block)",
-    "description": "Showcase item title for InstallStrip (block copyTarget variant)"
-  },
-  "showcase.item.installStripIcon.title": {
-    "message": "InstallStrip (copyTarget: icon)",
-    "description": "Showcase item title for InstallStrip (icon copyTarget variant)"
-  },
   "showcase.item.installStripNoLabel.title": {
     "message": "InstallStrip (بدون تسمية)",
     "description": "Showcase item title for InstallStrip (no label variant)"
-  },
-  "showcase.item.installStripText.title": {
-    "message": "InstallStrip (copyTarget: text)",
-    "description": "Showcase item title for InstallStrip (text copyTarget variant)"
   },
   "showcase.item.spotlightCode.title": {
     "message": "Spotlight (مع الكود)",
@@ -575,10 +495,6 @@
     "message": "لم يكتب هذا المؤلّف أيّ منشورات بعد.",
     "description": "The text for authors with 0 blog post"
   },
-  "theme.blog.author.pageTitle": {
-    "message": "{authorName} - {nPosts}",
-    "description": "The title of the page for a blog author"
-  },
   "theme.blog.authorsList.viewAll": {
     "message": "عرض جميع المؤلّفين",
     "description": "The label of the link targeting the blog authors page"
@@ -587,10 +503,6 @@
     "message": "منشور واحد|{count} منشورات",
     "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
-  "theme.blog.tagTitle": {
-    "message": "{nPosts} موسومة بـ \"{tagName}\"",
-    "description": "The title of the page for a blog tag"
-  },
   "theme.common.skipToMainContent": {
     "message": "تخطّى إلى المحتوى الرئيسي",
     "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
@@ -598,10 +510,6 @@
   "theme.footer.copyright": {
     "message": "حقوق النشر © 2025-2026 CBN Ventures LLC. جميع الحقوق محفوظة.",
     "description": "Footer copyright text. The {copyright} placeholder receives the consumer's themeConfig.footer.copyright value as the source-locale fallback; per-locale overrides in i18n code.json usually inline their own text."
-  },
-  "theme.tags.tagsPageTitle": {
-    "message": "الوسوم",
-    "description": "The title of the tag list page"
   },
   "showcase.frame.imageAlt": {
     "message": "صورة مصغرة لعلامة Sentinel التجارية.",

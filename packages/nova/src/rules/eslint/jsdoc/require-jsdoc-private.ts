@@ -95,12 +95,12 @@ export class Runner {
    *
    * Identifies private members by the private
    * keyword or PrivateIdentifier key, then checks their JSDoc for
-   * @private and auto-inserts it before @since.
-   *
-   * @private
+   * `@private` and auto-inserts it before `@since`.
    *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Context} context - Context.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Returns}
    *

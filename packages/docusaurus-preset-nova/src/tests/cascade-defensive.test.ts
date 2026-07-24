@@ -367,10 +367,12 @@ async function listThemeAndBlockTsx(): Tests_CascadeDefensive_ListThemeAndBlockT
   const themeRoot: Tests_CascadeDefensive_ListThemeAndBlockTsx_ThemeRoot = resolve(getPackageRoot(), 'src', 'theme');
   const blocksRoot: Tests_CascadeDefensive_ListThemeAndBlockTsx_BlocksRoot = resolve(getPackageRoot(), 'src', 'blocks');
   const themeFiles: Tests_CascadeDefensive_ListThemeAndBlockTsx_ThemeFiles = await glob('**/*.tsx', {
-    cwd: themeRoot, posix: true,
+    cwd: themeRoot,
+    posix: true,
   });
   const blocksFiles: Tests_CascadeDefensive_ListThemeAndBlockTsx_BlocksFiles = await glob('**/*.tsx', {
-    cwd: blocksRoot, posix: true,
+    cwd: blocksRoot,
+    posix: true,
   });
   const absolute: Tests_CascadeDefensive_ListThemeAndBlockTsx_Absolute = [];
 
@@ -427,7 +429,8 @@ async function readAnchorClasses(tsxPaths: Tests_CascadeDefensive_ReadAnchorClas
 async function readCssTriplesByFile(): Tests_CascadeDefensive_ReadCssTriplesByFile_Returns {
   const stylesRoot: Tests_CascadeDefensive_ReadCssTriplesByFile_StylesRoot = resolve(getPackageRoot(), 'src', 'styles');
   const relativePaths: Tests_CascadeDefensive_ReadCssTriplesByFile_RelativePaths = await glob('**/*.css', {
-    cwd: stylesRoot, posix: true,
+    cwd: stylesRoot,
+    posix: true,
   });
   const triplesByFile: Tests_CascadeDefensive_ReadCssTriplesByFile_TriplesByFile = new Map();
 

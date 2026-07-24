@@ -1,7 +1,7 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
 import { LIB_REGEX_PATTERN_KEBAB_CASE_FILENAME } from '../../../lib/regex.js';
-import { isIgnoredFile } from '../../../lib/utility.js';
+import { detectScriptHostFile, isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
   Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Context,
@@ -24,9 +24,9 @@ import type {
 /**
  * Rules - ESLint - Conventions - Require Kebab Case Filename.
  *
- * Requires all TypeScript file names to use kebab-case. Strips known
- * compound extensions like .test.ts and .d.ts before validating the stem.
- * Mission is house naming style; path-token validity is inspector-filename-validation.
+ * Requires all TypeScript file names to use kebab-case.
+ * Strips known compound extensions like .test.ts and .d.ts before validating the stem.
+ * Mission is house naming style; path-token validity is separate.
  *
  * @since 0.15.0
  */
@@ -106,6 +106,12 @@ export class Runner {
         return {};
       }
 
+      // Skip extracted <script> virtual files silently. The processor machine-generates the
+      // virtual basename (e.g. "1_1.js"), so no user-authored file name exists to validate.
+      if (detectScriptHostFile(context.filename) !== undefined) {
+        return {};
+      }
+
       return {
         Program(): Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_Create_Program_Returns {
           Runner.checkProgram(context, options);
@@ -122,10 +128,10 @@ export class Runner {
    * Extracts the base file name without its extension by normalizing
    * path separators and stripping the first matching compound extension.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Filename}        filename        - Filename.
    * @param {Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_ExtraExtensions} extraExtensions - Extra extensions.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Returns}
    *
@@ -154,10 +160,10 @@ export class Runner {
    * Retrieves the file stem via getStem and tests it against the
    * shared kebab-case regex pattern from lib/regex. Reports at line 1 column 0 on failure.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Context} context - Context.
    * @param {Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Returns}
    *

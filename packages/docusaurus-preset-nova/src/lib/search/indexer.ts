@@ -116,7 +116,8 @@ import type {
  *
  * @param routePath - Route path.
  * @param patterns  - Patterns.
- * @returns         Matches ignore pattern.
+ *
+ * @returns {Lib_Search_Indexer_MatchesIgnorePattern_Returns}
  *
  * @since 0.15.0
  */
@@ -143,7 +144,8 @@ function matchesIgnorePattern(routePath: Lib_Search_Indexer_MatchesIgnorePattern
  *
  * @param htmlFilePath - Html file path.
  * @param routePath    - Route path.
- * @returns            Extract document.
+ *
+ * @returns {Lib_Search_Indexer_ExtractDocument_Returns}
  *
  * @since 0.15.0
  */
@@ -166,6 +168,19 @@ function extractDocument(htmlFilePath: Lib_Search_Indexer_ExtractDocument_HtmlFi
 
   const headings: Lib_Search_Indexer_ExtractDocument_Headings = [];
 
+  /**
+   * Lib - Search - Indexer - Extract Document - Heading Iterator.
+   *
+   * Reads the id, text, and level from one h2 or h3 element and
+   * appends a normalized heading entry to the headings accumulator.
+   *
+   * @param _index  - _index.
+   * @param element - Element.
+   *
+   * @private
+   *
+   * @since 0.21.0
+   */
   const headingIterator: Lib_Search_Indexer_ExtractDocument_HeadingIterator = (_index, element) => {
     const headingElement: Lib_Search_Indexer_ExtractDocument_HeadingIterator_HeadingElement = element;
     const headingId: Lib_Search_Indexer_ExtractDocument_HeadingIterator_HeadingId = String(cheerioApi(headingElement).attr('id') ?? '');
@@ -209,6 +224,7 @@ function extractDocument(htmlFilePath: Lib_Search_Indexer_ExtractDocument_HtmlFi
  * and writes the serialized index and manifest files to the output directory.
  *
  * @param options - Options.
+ *
  * @since 0.15.0
  */
 export function buildSearchIndex(options: Lib_Search_Indexer_BuildSearchIndex_Options): Lib_Search_Indexer_BuildSearchIndex_Returns {
@@ -343,6 +359,16 @@ export function buildSearchIndex(options: Lib_Search_Indexer_BuildSearchIndex_Op
     }
   }
 
+  /**
+   * Lib - Search - Indexer - Build Search Index - Index Builder.
+   *
+   * Configures the lunr builder with language plugins, reference and
+   * fields, then adds every document entry to the search index.
+   *
+   * @private
+   *
+   * @since 0.21.0
+   */
   const indexBuilder: Lib_Search_Indexer_BuildSearchIndex_IndexBuilder = function indexBuilder() {
     const builder: Lib_Search_Indexer_BuildSearchIndex_IndexBuilder_Builder = this;
     const typedBuilder: Lib_Search_Indexer_BuildSearchIndex_IndexBuilder_TypedBuilder = builder as Lib_Search_Indexer_BuildSearchIndex_IndexBuilder_TypedBuilder;

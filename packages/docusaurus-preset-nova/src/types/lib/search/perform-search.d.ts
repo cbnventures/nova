@@ -3,31 +3,6 @@
  *
  * @since 0.15.0
  */
-export type Lib_Search_PerformSearch_PerformSearch_Index = unknown;
-
-export type Lib_Search_PerformSearch_PerformSearch_Documents_Item_Path = string;
-
-export type Lib_Search_PerformSearch_PerformSearch_Documents_Item_Title = string;
-
-export type Lib_Search_PerformSearch_PerformSearch_Documents_Item_Snippet = string;
-
-export type Lib_Search_PerformSearch_PerformSearch_Documents_Item_Body = string;
-
-export type Lib_Search_PerformSearch_PerformSearch_Documents_Item = {
-  path: Lib_Search_PerformSearch_PerformSearch_Documents_Item_Path;
-  title: Lib_Search_PerformSearch_PerformSearch_Documents_Item_Title;
-  snippet: Lib_Search_PerformSearch_PerformSearch_Documents_Item_Snippet;
-  body: Lib_Search_PerformSearch_PerformSearch_Documents_Item_Body;
-};
-
-export type Lib_Search_PerformSearch_PerformSearch_Documents = Lib_Search_PerformSearch_PerformSearch_Documents_Item[];
-
-export type Lib_Search_PerformSearch_PerformSearch_Query = string;
-
-export type Lib_Search_PerformSearch_PerformSearch_Limit = number;
-
-export type Lib_Search_PerformSearch_PerformSearch_FuzzyDistance = number;
-
 export type Lib_Search_PerformSearch_PerformSearch_Returns_Item_Path = string;
 
 export type Lib_Search_PerformSearch_PerformSearch_Returns_Item_Title = string;
@@ -57,6 +32,31 @@ export type Lib_Search_PerformSearch_PerformSearch_Returns_Item = {
 
 export type Lib_Search_PerformSearch_PerformSearch_Returns = Lib_Search_PerformSearch_PerformSearch_Returns_Item[];
 
+export type Lib_Search_PerformSearch_PerformSearch_Index = unknown;
+
+export type Lib_Search_PerformSearch_PerformSearch_Documents_Item_Path = string;
+
+export type Lib_Search_PerformSearch_PerformSearch_Documents_Item_Title = string;
+
+export type Lib_Search_PerformSearch_PerformSearch_Documents_Item_Snippet = string;
+
+export type Lib_Search_PerformSearch_PerformSearch_Documents_Item_Body = string;
+
+export type Lib_Search_PerformSearch_PerformSearch_Documents_Item = {
+  path: Lib_Search_PerformSearch_PerformSearch_Documents_Item_Path;
+  title: Lib_Search_PerformSearch_PerformSearch_Documents_Item_Title;
+  snippet: Lib_Search_PerformSearch_PerformSearch_Documents_Item_Snippet;
+  body: Lib_Search_PerformSearch_PerformSearch_Documents_Item_Body;
+};
+
+export type Lib_Search_PerformSearch_PerformSearch_Documents = Lib_Search_PerformSearch_PerformSearch_Documents_Item[];
+
+export type Lib_Search_PerformSearch_PerformSearch_Query = string;
+
+export type Lib_Search_PerformSearch_PerformSearch_Limit = number;
+
+export type Lib_Search_PerformSearch_PerformSearch_FuzzyDistance = number;
+
 export type Lib_Search_PerformSearch_PerformSearch_TrimmedQuery = string;
 
 export type Lib_Search_PerformSearch_PerformSearch_LunrResult_Item_Ref = string;
@@ -81,6 +81,8 @@ export type Lib_Search_PerformSearch_PerformSearch_TypedIndex = {
   search: Lib_Search_PerformSearch_PerformSearch_TypedIndex_Search;
 };
 
+export type Lib_Search_PerformSearch_PerformSearch_AllResults = Lib_Search_PerformSearch_PerformSearch_LunrResult_Item[];
+
 export type Lib_Search_PerformSearch_PerformSearch_ExactResults = Lib_Search_PerformSearch_PerformSearch_LunrResult_Item[];
 
 export type Lib_Search_PerformSearch_PerformSearch_WildcardQuery = string;
@@ -90,8 +92,6 @@ export type Lib_Search_PerformSearch_PerformSearch_WildcardResults = Lib_Search_
 export type Lib_Search_PerformSearch_PerformSearch_FuzzyQuery = string;
 
 export type Lib_Search_PerformSearch_PerformSearch_FuzzyResults = Lib_Search_PerformSearch_PerformSearch_LunrResult_Item[];
-
-export type Lib_Search_PerformSearch_PerformSearch_AllResults = Lib_Search_PerformSearch_PerformSearch_LunrResult_Item[];
 
 export type Lib_Search_PerformSearch_PerformSearch_ScoreMap = Map<string, number>;
 

@@ -1,5 +1,5 @@
-import { promises as fs } from 'fs';
-import { basename, join, resolve } from 'path';
+import { promises as fs } from 'node:fs';
+import { basename, join, resolve } from 'node:path';
 
 import chalk from 'chalk';
 import prompts from 'prompts';
@@ -797,6 +797,17 @@ export class Runner {
 
       // Compute new version.
       const versionParts: Cli_Utility_Changelog_Runner_Release_VersionParts = currentVersion.split('.').map(Number);
+
+      // A releasable version must be a clean numeric "x.y.z" with exactly three finite integer
+      // parts. Anything else (e.g. a prerelease like "1.0.0-rc.1") yields a NaN part that "?? 0"
+      // cannot recover, so a patch bump would write a corrupt "1.0.NaN". Surface it instead.
+      if (
+        versionParts.length !== 3
+        || versionParts.some((versionPart) => Number.isInteger(versionPart) === false) === true
+      ) {
+        throw new Error(`Invalid version "${currentVersion}" in "${packageJsonPath}": expected a clean numeric "x.y.z" to bump.`);
+      }
+
       const versionPartsMajor: Cli_Utility_Changelog_Runner_Release_VersionPartsMajor = versionParts[0] ?? 0;
       const versionPartsMinor: Cli_Utility_Changelog_Runner_Release_VersionPartsMinor = versionParts[1] ?? 0;
       const versionPartsPatch: Cli_Utility_Changelog_Runner_Release_VersionPartsPatch = versionParts[2] ?? 0;

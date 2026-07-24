@@ -367,21 +367,9 @@
     "message": "Hero (مبسط)",
     "description": "Showcase item title for Hero (minimal variant)"
   },
-  "showcase.item.installStripBlock.title": {
-    "message": "InstallStrip (copyTarget: block)",
-    "description": "Showcase item title for InstallStrip (block copyTarget variant)"
-  },
-  "showcase.item.installStripIcon.title": {
-    "message": "InstallStrip (copyTarget: icon)",
-    "description": "Showcase item title for InstallStrip (icon copyTarget variant)"
-  },
   "showcase.item.installStripNoLabel.title": {
     "message": "InstallStrip (بدون تسمية)",
     "description": "Showcase item title for InstallStrip (no label variant)"
-  },
-  "showcase.item.installStripText.title": {
-    "message": "InstallStrip (copyTarget: text)",
-    "description": "Showcase item title for InstallStrip (text copyTarget variant)"
   },
   "showcase.item.spotlightCode.title": {
     "message": "Spotlight (مع الكود)",
@@ -595,10 +583,6 @@
     "message": "لم يكتب هذا المؤلّف أيّ منشورات بعد.",
     "description": "The text for authors with 0 blog post"
   },
-  "theme.blog.author.pageTitle": {
-    "message": "{authorName} - {nPosts}",
-    "description": "The title of the page for a blog author"
-  },
   "theme.blog.authorsList.viewAll": {
     "message": "عرض جميع المؤلّفين",
     "description": "The label of the link targeting the blog authors page"
@@ -607,10 +591,6 @@
     "message": "منشور واحد|{count} منشورات",
     "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
-  "theme.blog.tagTitle": {
-    "message": "{nPosts} موسومة بـ \"{tagName}\"",
-    "description": "The title of the page for a blog tag"
-  },
   "theme.common.skipToMainContent": {
     "message": "تخطّى إلى المحتوى الرئيسي",
     "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
@@ -618,10 +598,6 @@
   "theme.footer.copyright": {
     "message": "حقوق النشر © 2025-2026 CBN Ventures LLC. جميع الحقوق محفوظة.",
     "description": "Footer copyright text. The {copyright} placeholder receives the consumer's themeConfig.footer.copyright value as the source-locale fallback; per-locale overrides in i18n code.json usually inline their own text."
-  },
-  "theme.tags.tagsPageTitle": {
-    "message": "الوسوم",
-    "description": "The title of the tag list page"
   },
   "showcase.frame.imageAlt": {
     "message": "صورة مصغرة لعلامة Lantern التجارية.",

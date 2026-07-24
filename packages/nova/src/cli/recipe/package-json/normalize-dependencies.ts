@@ -1,7 +1,10 @@
 import chalk from 'chalk';
 
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
-import { LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER } from '../../../lib/regex.js';
+import {
+  LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER,
+  LIB_REGEX_PATTERN_SEMVER_STRICT,
+} from '../../../lib/regex.js';
 import {
   isPlainObject,
   isProjectRoot,
@@ -47,17 +50,22 @@ import type {
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_IsDryRun,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_IsReplaceFile,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Options,
+  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_PackageJsonRecipes,
+  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_PackageJsonRecipesFilter,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_PinDependencyVersions,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_PinDevDependencyVersions,
+  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeEntry,
+  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeEntryFilter,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Recipes,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeSettings,
-  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeTuple,
-  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeTupleFilter,
+  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipesFilter,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_ReplaceFileNotice,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Returns,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkingFile,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkingFileWorkspaces,
-  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspaceConfigFilter,
+  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspacePath,
+  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspacePathFilter,
+  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspaceRecipes,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspaceRecipesFilter,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Workspaces,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_StripPrefix_Match,
@@ -129,20 +137,22 @@ export class Runner {
 
     // Filter workspaces that have the recipe enabled.
     const eligibleWorkspaces: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfigFilter: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspaceConfigFilter = workspace[1];
-      const workspaceRecipesFilter: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspaceRecipesFilter = workspaceConfigFilter['recipes'];
+      const workspacePathFilter: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspacePathFilter = workspace[0];
+      const recipesFilter: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipesFilter = workingFile['recipes'];
+      const packageJsonRecipesFilter: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_PackageJsonRecipesFilter = (recipesFilter !== undefined) ? recipesFilter['package-json'] : undefined;
+      const workspaceRecipesFilter: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspaceRecipesFilter = (packageJsonRecipesFilter !== undefined) ? packageJsonRecipesFilter[workspacePathFilter] : undefined;
 
       if (workspaceRecipesFilter === undefined) {
         return false;
       }
 
-      const recipeTupleFilter: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeTupleFilter = workspaceRecipesFilter['normalize-dependencies'];
+      const recipeEntryFilter: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeEntryFilter = workspaceRecipesFilter['normalize-dependencies'];
 
-      if (recipeTupleFilter === undefined) {
+      if (recipeEntryFilter === undefined) {
         return false;
       }
 
-      return recipeTupleFilter[0] === true;
+      return recipeEntryFilter['enabled'] === true;
     });
 
     if (eligibleWorkspaces.length === 0) {
@@ -185,9 +195,12 @@ export class Runner {
       await Runner.handle(workspace);
 
       // Check if version pinning is enabled in the recipe settings.
-      const recipes: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Recipes = workspace['manifest']['recipes'];
-      const recipeTuple: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeTuple = (recipes !== undefined) ? recipes['normalize-dependencies'] : undefined;
-      const recipeSettings: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeSettings = (recipeTuple !== undefined && recipeTuple.length > 1) ? recipeTuple[1] : undefined;
+      const workspacePath: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspacePath = workspace['workspacePath'];
+      const recipes: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Recipes = workingFile['recipes'];
+      const packageJsonRecipes: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_PackageJsonRecipes = (recipes !== undefined) ? recipes['package-json'] : undefined;
+      const workspaceRecipes: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspaceRecipes = (packageJsonRecipes !== undefined) ? packageJsonRecipes[workspacePath] : undefined;
+      const recipeEntry: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeEntry = (workspaceRecipes !== undefined) ? workspaceRecipes['normalize-dependencies'] : undefined;
+      const recipeSettings: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeSettings = (recipeEntry !== undefined) ? recipeEntry['settings'] : undefined;
       const pinDependencyVersions: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_PinDependencyVersions = (recipeSettings !== undefined && recipeSettings['pinDependencyVersions'] === true);
       const pinDevDependencyVersions: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_PinDevDependencyVersions = (recipeSettings !== undefined && recipeSettings['pinDevDependencyVersions'] === true);
 
@@ -480,7 +493,13 @@ export class Runner {
     const match: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_StripPrefix_Match = version.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (match !== null && match[1] !== undefined) {
-      return match[1];
+      // Multi-comparator ranges (e.g. ">=5.0.0 <6.0.0") strip to a value that is still a range.
+      // Only pin when the stripped result is a bare exact semver; otherwise it is unpinnable.
+      if (LIB_REGEX_PATTERN_SEMVER_STRICT.test(match[1]) === true) {
+        return match[1];
+      }
+
+      return undefined;
     }
 
     // Already pinned (starts with a digit or is some other format).

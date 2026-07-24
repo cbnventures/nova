@@ -6,6 +6,8 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsDiamond = boolean;
+
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxLines = number;
@@ -23,6 +25,8 @@ export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsSkipDir
  */
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Context = Readonly<RuleContext<string, unknown[]>>;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options_Diamond = boolean;
+
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options_IgnoreFiles = string[];
 
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options_MaxLines = number;
@@ -34,6 +38,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options_MinL
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options_SkipDirectories = string[];
 
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options = Readonly<{
+  diamond: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options_Diamond;
   ignoreFiles: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options_IgnoreFiles;
   maxLines: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options_MaxLines;
   maxWidth: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Options_MaxWidth;
@@ -53,6 +58,8 @@ export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_PastSummary 
 
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyLineCount = number;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyLines = string[];
+
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Trimmed = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyReached = boolean;
@@ -61,11 +68,19 @@ export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyPast = b
 
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_WidthTrimmed = string;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_FirstLine = string | undefined;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_MiddleLine = string | undefined;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_LastLine = string | undefined;
+
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Body - Create.
  *
  * @since 0.15.0
  */
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options_Diamond = boolean;
+
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options_IgnoreFiles = string[];
 
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options_MaxLines = number;
@@ -77,6 +92,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options_MinLines =
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options_SkipDirectories = string[];
 
 export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options = Readonly<{
+  diamond: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options_Diamond;
   ignoreFiles: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options_IgnoreFiles;
   maxLines: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options_MaxLines;
   maxWidth: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options_MaxWidth;

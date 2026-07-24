@@ -22,6 +22,14 @@ import type {
   Plugins_Icons_Index_WriteRegistry_Source,
 } from '../../types/plugins/icons/index.d.ts';
 
+/**
+ * Plugins - Icons - Watch Directories.
+ *
+ * Project-relative directories watched in dev so the icon module is
+ * regenerated whenever their content changes.
+ *
+ * @since 0.21.0
+ */
 const watchDirectories = [
   'docs',
   'blog',

@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
-
 import { discoverContentFiles } from '../../../lib/file-discovery.js';
+import { setActiveVitest } from '../active-vitest.js';
 import {
   descriptionNotPlaceholder,
   frontmatterClosed,
@@ -44,7 +43,9 @@ import type {
  * @since 0.20.0
  */
 export function registerFrontmatterSuite(config: Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Config): Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Returns {
-  describe('frontmatter', async () => {
+  setActiveVitest(config['vitest']);
+
+  config['vitest'].describe('frontmatter', async () => {
     const requiredFields: Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_RequiredFields = config['requiredFields'];
     const requiredBlogFields: Rules_Vitest_Frontmatter_Register_RegisterFrontmatterSuite_Frontmatter_RequiredBlogFields = config['requiredBlogFields'] ?? [
       'title',

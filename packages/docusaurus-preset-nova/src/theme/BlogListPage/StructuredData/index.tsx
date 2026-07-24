@@ -17,8 +17,6 @@ import type {
  *
  * @param {Theme_BlogListPage_StructuredData_Index_BlogListPageStructuredData_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.18.0
  */
 function BlogListPageStructuredData(props: Theme_BlogListPage_StructuredData_Index_BlogListPageStructuredData_Props) {

@@ -1,0 +1,502 @@
+{
+  "home.layout.description": {
+    "message": "Sentinel évalue chaque utilisateur, chaque appareil, chaque connexion — en continu. L'accès n'est pas une porte. C'est une conversation qui ne s'arrête jamais.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Sentinel - La confiance est une vulnérabilité",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Plateforme de sécurité",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "La confiance est une vulnérabilité.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Sentinel évalue chaque utilisateur, chaque appareil, chaque connexion — en continu. L'accès n'est pas une porte. C'est une conversation qui ne s'arrête jamais.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Explorer la plateforme",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Voir sur Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.watchtower.description": {
+    "message": "Évaluation continue de la posture. Analyse l'état de l'appareil, sa localisation et son comportement toutes les 90 secondes. Dès que les conditions changent, Watchtower le sait.",
+    "description": "Front page Features card description for Watchtower"
+  },
+  "home.features.drawbridge.description": {
+    "message": "Passerelle d'accès adaptative. Accorde, restreint ou révoque l'accès en temps réel selon le contexte — identité, posture, localisation et heure. Aucune règle statique.",
+    "description": "Front page Features card description for Drawbridge"
+  },
+  "home.features.garrison.description": {
+    "message": "Moteur de conformité des terminaux. Applique la politique sur chaque appareil connecté. Chiffrement du disque, version de l'OS, état du pare-feu — tout est vérifié avant d'accorder l'accès.",
+    "description": "Front page Features card description for Garrison"
+  },
+  "home.features.rampart.description": {
+    "message": "Couche de micro-segmentation. Isole les charges de travail pour rendre tout déplacement latéral impossible. Même si un segment est compromis, la brèche s'arrête là.",
+    "description": "Front page Features card description for Rampart"
+  },
+  "home.features.spyglass.description": {
+    "message": "Audit et investigation. Reconstruction complète des sessions avec conservation des journaux immuables pendant 7 ans. Chaque décision d'accès, chaque évaluation de politique, chaque connexion — enregistrée.",
+    "description": "Front page Features card description for Spyglass"
+  },
+  "home.features.parapet.description": {
+    "message": "Bac à sable de simulation de politiques. Testez les règles d'accès sur du trafic réel avant de les appliquer. Voyez qui obtient l'accès, qui le perd, et pourquoi — sans toucher à la production.",
+    "description": "Front page Features card description for Parapet"
+  },
+  "home.stats.heading": {
+    "message": "En chiffres",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.cycle.label": {
+    "message": "Cycle de réévaluation",
+    "description": "Front page Stats label for re-evaluation cycle"
+  },
+  "home.stats.tunnels.label": {
+    "message": "Tunnels simultanés",
+    "description": "Front page Stats label for concurrent tunnels"
+  },
+  "home.stats.retention.label": {
+    "message": "Conservation des audits",
+    "description": "Front page Stats label for audit retention"
+  },
+  "home.stats.latency.label": {
+    "message": "Latence des politiques",
+    "description": "Front page Stats label for policy latency"
+  },
+  "home.spotlight.heading": {
+    "message": "Une seule politique, une évaluation complète",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Définissez ce qu'est la confiance. Sentinel l'applique en continu.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Surveillez votre parc d'appareils en déplacement",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Bulletin de sécurité",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Recherche sur les menaces, avis de posture et philosophie de la confiance continue.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Vitrine des blocs Sentinel présentant chaque bloc de docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Chaque bloc du preset Sentinel, rendu avec des données d'exemple.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (complet)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Vitrine des blocs",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Chaque bloc Sentinel, présenté au même endroit.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Cette page affiche chaque bloc de @cbnventures/docusaurus-preset-nova/blocks avec des données de l'univers Sentinel pour vous montrer leur apparence et leur comportement.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Lire la documentation",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Voir sur Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "La confiance se gagne en continu.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Sentinel évalue chaque utilisateur, chaque appareil, chaque connexion — en continu. L'accès n'est pas une porte. C'est une conversation qui ne s'arrête jamais.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Explorer la plateforme",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (par défaut)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "J'adore ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (sans préfixe)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Rapide",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Gratuit",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (rythme lent)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Conçu pour ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "les développeurs",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "les designers",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (sans boucle)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Bienvenue sur ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Installer avec Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Ou utilisez un conteneur Vial",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (sans libellé)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Installation rapide",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (avec icônes)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Pourquoi les équipes choisissent Sentinel",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.watchtower.description": {
+    "message": "Évaluation continue de la posture. Analyse l'état de l'appareil, sa localisation et son comportement toutes les 90 secondes.",
+    "description": "Showcase Features (with icons) card description for Watchtower"
+  },
+  "showcase.featuresIcons.drawbridge.description": {
+    "message": "Passerelle d'accès adaptative. Accorde, restreint ou révoque l'accès en temps réel selon l'évaluation de la confiance.",
+    "description": "Showcase Features (with icons) card description for Drawbridge"
+  },
+  "showcase.featuresIcons.garrison.description": {
+    "message": "Moteur de conformité des terminaux. Applique la politique sur chaque appareil connecté avant d'accorder l'accès.",
+    "description": "Showcase Features (with icons) card description for Garrison"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (sans icônes, sans titre)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.rampart.description": {
+    "message": "Couche de micro-segmentation. Isole les charges de travail pour rendre impossible tout déplacement latéral entre les zones.",
+    "description": "Showcase Features (no icons) card description for Rampart"
+  },
+  "showcase.featuresNoIcons.spyglass.description": {
+    "message": "Audit et investigation. Reconstruction complète des sessions avec conservation des journaux immuables pendant 7 ans.",
+    "description": "Showcase Features (no icons) card description for Spyglass"
+  },
+  "showcase.featuresNoIcons.parapet.description": {
+    "message": "Bac à sable de simulation de politiques. Testez les règles d'accès sur du trafic réel avant de les appliquer.",
+    "description": "Showcase Features (no icons) card description for Parapet"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (six éléments, icônes mixtes)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Le moteur de confiance complet",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.watchtower.description": {
+    "message": "Évalue la posture de l'appareil, l'identité de l'utilisateur, le contexte réseau et les signaux comportementaux sur un cycle continu de 90 secondes.",
+    "description": "Showcase Features (six items) card description for Watchtower"
+  },
+  "showcase.featuresSix.drawbridge.description": {
+    "message": "Traduit les évaluations de Watchtower en décisions d'accès concrètes — accorder, restreindre ou révoquer.",
+    "description": "Showcase Features (six items) card description for Drawbridge"
+  },
+  "showcase.featuresSix.garrison.description": {
+    "message": "Gère l'enrôlement des appareils, les références de posture et les profils de conformité pour chaque terminal.",
+    "description": "Showcase Features (six items) card description for Garrison"
+  },
+  "showcase.featuresSix.rampart.description": {
+    "message": "Divise l'infrastructure en zones isolées. Chaque franchissement de zone exige une évaluation de politique.",
+    "description": "Showcase Features (six items) card description for Rampart"
+  },
+  "showcase.featuresSix.spyglass.description": {
+    "message": "Consigne chaque décision d'accès, évaluation de politique et franchissement de zone dans une chaîne d'audit immuable.",
+    "description": "Showcase Features (six items) card description for Spyglass"
+  },
+  "showcase.featuresSix.parapet.description": {
+    "message": "Rejoue le trafic réel sur des politiques provisoires pour montrer l'impact exact sur l'accès avant leur application.",
+    "description": "Showcase Features (six items) card description for Parapet"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (avec titre et description)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Indicateurs de la plateforme",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Indicateurs clés de performance du moteur de confiance Sentinel.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.cycle.label": {
+    "message": "Cycle de réévaluation",
+    "description": "Showcase Stats (full) label for re-evaluation cycle"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Latence des politiques",
+    "description": "Showcase Stats (full) label for policy latency"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "Disponibilité de l'évaluation",
+    "description": "Showcase Stats (full) label for evaluation uptime"
+  },
+  "showcase.statsFull.retention.label": {
+    "message": "Conservation des audits",
+    "description": "Showcase Stats (full) label for audit retention"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (sans titre)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.tunnels.label": {
+    "message": "Tunnels simultanés",
+    "description": "Showcase Stats (no heading) label for concurrent tunnels"
+  },
+  "showcase.statsNoHeading.components.label": {
+    "message": "Composants",
+    "description": "Showcase Stats (no heading) label for components"
+  },
+  "showcase.statsNoHeading.zoneTypes.label": {
+    "message": "Types de zones",
+    "description": "Showcase Stats (no heading) label for zone types"
+  },
+  "showcase.statsNoHeading.implicitTrust.label": {
+    "message": "Confiance implicite",
+    "description": "Showcase Stats (no heading) label for implicit trust"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (avec code)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Démarrage rapide",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Trois commandes pour passer de zéro à l'évaluation continue de la confiance.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (avec texte)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Comment ça marche",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Sentinel évalue la confiance en continu. Watchtower calcule un score de posture toutes les 90 secondes. Drawbridge applique le résultat en temps réel. Spyglass consigne chaque décision de façon immuable. Le résultat est toujours une preuve — jamais une supposition.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (avec description)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Bulletin de sécurité",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Recherche sur les menaces, avis de posture et philosophie de la confiance continue.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Le jour où nous avons cessé de faire confiance au réseau",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Le périmètre s'est dissous et le secteur a fait comme si de rien n'était. Nous avons créé Sentinel parce que chaque VPN est une hypothèse de confiance.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Simuler une brèche que nous n'avons jamais subie",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Comment Parapet a détecté un chemin de déplacement latéral en préproduction avant qu'il n'atteigne la production.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Pourquoi la conformité n'est pas la sécurité (mais les deux restent indispensables)",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Réussir un audit et être sécurisé ne sont pas la même chose. Spyglass comble l'écart.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (sans description)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Dernières mises à jour",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Sentinel 3.4 : rejeu du trafic Parapet et mise en quarantaine des zones Rampart",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Parapet prend désormais en charge le rejeu complet du trafic sur des politiques provisoires, et Rampart peut automatiquement mettre en quarantaine les appareils qui échouent aux contrôles de posture.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (usage dans le texte)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Sentinel utilise une ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.trustPolicy.title": {
+    "message": "déclaration de contrôle d'accès",
+    "description": "Showcase Terminology hover title for trust policy"
+  },
+  "showcase.terminology.trustPolicy.label": {
+    "message": "politique de confiance",
+    "description": "Showcase Terminology displayed text for trust policy"
+  },
+  "showcase.terminology.paragraph1.afterTrustPolicy": {
+    "message": " pour orienter toutes les décisions d'accès. Chaque appareil enrôlé est surveillé par l'agent ",
+    "description": "Showcase Terminology paragraph 1 fragment after trust policy"
+  },
+  "showcase.terminology.garrison.title": {
+    "message": "agent de conformité des terminaux",
+    "description": "Showcase Terminology hover title for Garrison"
+  },
+  "showcase.terminology.paragraph1.afterGarrison": {
+    "message": ", qui transmet ses données de posture à ",
+    "description": "Showcase Terminology paragraph 1 fragment after Garrison"
+  },
+  "showcase.terminology.watchtower.title": {
+    "message": "moteur d'évaluation continue de la confiance",
+    "description": "Showcase Terminology hover title for Watchtower"
+  },
+  "showcase.terminology.paragraph1.afterWatchtower": {
+    "message": " pour en calculer le score.",
+    "description": "Showcase Terminology paragraph 1 fragment after Watchtower"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Avec le système de zones ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.rampart.title": {
+    "message": "couche de micro-segmentation",
+    "description": "Showcase Terminology hover title for Rampart"
+  },
+  "showcase.terminology.paragraph2.afterRampart": {
+    "message": ", les charges de travail sont isolées de sorte qu'un segment compromis ne puisse même pas atteindre les tunnels ",
+    "description": "Showcase Terminology paragraph 2 fragment after Rampart"
+  },
+  "showcase.terminology.filament.title": {
+    "message": "protocole de tunnel chiffré",
+    "description": "Showcase Terminology hover title for Filament"
+  },
+  "showcase.terminology.paragraph2.afterFilament": {
+    "message": " des zones adjacentes. Chaque décision est consignée dans ",
+    "description": "Showcase Terminology paragraph 2 fragment after Filament"
+  },
+  "showcase.terminology.spyglass.title": {
+    "message": "moteur d'audit et d'investigation",
+    "description": "Showcase Terminology hover title for Spyglass"
+  },
+  "showcase.terminology.paragraph2.afterSpyglass": {
+    "message": " pour une conservation d'audit immuable.",
+    "description": "Showcase Terminology paragraph 2 fragment after Spyglass"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (avec légende)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Logo affiché sur un Frame — bordure pleine, stable comme une tour de guet.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Vignette de la marque Sentinel.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (sans légende)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (les deux stores)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Téléchargez l'application compagnon",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (App Store uniquement)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Disponible sur iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (Google Play uniquement)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Disponible sur Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (sans libellé)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} min de lecture",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

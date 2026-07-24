@@ -93,8 +93,10 @@ Require valid frontmatter on every Markdown and MDX content file with `registerF
 
 ```ts title="src/tests/frontmatter.test.ts"
 import { registerFrontmatterSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 registerFrontmatterSuite({
+  vitest,
   enable: 'all',
   requiredFields: ['id', 'title', 'description', 'keywords', 'tags'],
 });

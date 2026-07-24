@@ -7,12 +7,15 @@
 -->
 
 <div align="center">
+<!-- nova-region: header -->
   <a href="https://nova.cbnventures.io/">
     <picture>
       <img alt="Nova" src="https://nova.cbnventures.io/images/logo.svg" height="128">
     </picture>
   </a>
   <h1>Nova</h1>
+<!-- nova-region-end: header -->
+<!-- nova-region: badges -->
   <a href="https://www.npmjs.com/package/@cbnventures/nova">
     <img alt="npm Package" src="https://img.shields.io/npm/v/@cbnventures/nova?style=for-the-badge&logo=npm&logoColor=%23ffffff&color=%23b25da6">
   </a>
@@ -34,16 +37,22 @@
   <a href="https://www.paypal.com/biz/profile/cbnventures">
     <img alt="Donate via PayPal" src="https://img.shields.io/badge/paypal-donate-gray?style=for-the-badge&logo=paypal&logoColor=%23ffffff&color=%23ce4a4a">
   </a>
+<!-- nova-region-end: badges -->
 </div>
 
+<!-- nova-region: introduction -->
 ## Introduction
 
 Nova is a JavaScript and TypeScript monorepo suite, offering strict presets and guided tooling to help you build with confidence, predictability, and minimal setup. It delivers strong defaults, robust linting and typing, and scaffolded project generators — all wrapped in guardrails that keep your workflow safe without sacrificing flexibility.
+<!-- nova-region-end: introduction -->
 
+<!-- nova-region: documentation -->
 ## Documentation
 
 To get started, visit [https://nova.cbnventures.io/](https://nova.cbnventures.io/) to view the full documentation.
+<!-- nova-region-end: documentation -->
 
+<!-- nova-region: credits -->
 ## Credits and Appreciation
 
 If you find value in the ongoing development of this project and wish to express your appreciation, you have the option to:
@@ -54,3 +63,4 @@ If you find value in the ongoing development of this project and wish to express
 A special thanks to our contributors and supporters:
 
 - [Jacky Liang](https://www.mrjackyliang.com/)
+<!-- nova-region-end: credits -->

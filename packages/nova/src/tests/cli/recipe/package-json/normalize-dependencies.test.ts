@@ -24,6 +24,17 @@ import type {
   Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_DoesNotModifyFilesDuringDryRun_WorkspaceDirectory,
   Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_DoesNotModifyFilesDuringDryRun_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_DoesNotModifyFilesDuringDryRun_WorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_Dependencies,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_Output,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_Parsed,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_WorkspacePackageJsonPath,
   Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_MergesBundledDependenciesIntoBundleDependencies_BundleDependencies,
   Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_MergesBundledDependenciesIntoBundleDependencies_IncludesChalk,
   Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_MergesBundledDependenciesIntoBundleDependencies_IncludesLodash,
@@ -173,8 +184,14 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-dependencies': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-dependencies': {
+              enabled: true,
+            },
           },
         },
       },
@@ -235,8 +252,14 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-dependencies': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-dependencies': {
+              enabled: true,
+            },
           },
         },
       },
@@ -301,8 +324,14 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-dependencies': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-dependencies': {
+              enabled: true,
+            },
           },
         },
       },
@@ -332,6 +361,78 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
     const parsed: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_DoesNotModifyFilesDuringDryRun_Parsed = JSON.parse(output);
 
     strictEqual(typeof parsed['dependencies'], 'object');
+
+    return;
+  });
+
+  it('leaves multi-comparator ranges unpinned when pinning versions', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_ProjectDirectory = join(sandboxRoot, 'multi-comparator');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_PackageJsonContents = JSON.stringify({
+      name: 'test-multi-comparator',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_NovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-dependencies': {
+              enabled: true,
+              settings: {
+                pinDependencyVersions: true,
+              },
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_WorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+      dependencies: {
+        chalk: '^4.1.2',
+        lodash: '>=5.0.0 <6.0.0',
+      },
+    }, null, 2);
+
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonNormalizeDependencies.run({
+      replaceFile: true,
+    });
+
+    // The multi-comparator range is unpinnable, so the exit code is set.
+    strictEqual(process.exitCode, 1);
+
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_Parsed = JSON.parse(output);
+    const dependencies: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_Dependencies = parsed['dependencies'] as Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_LeavesMultiComparatorRangesUnpinnedWhenPinningVersions_Dependencies;
+
+    // The multi-comparator range is left untouched, not written as "5.0.0 <6.0.0".
+    strictEqual(dependencies['lodash'], '>=5.0.0 <6.0.0');
+
+    // A single-operator range still pins to the bare exact version.
+    strictEqual(dependencies['chalk'], '4.1.2');
 
     return;
   });

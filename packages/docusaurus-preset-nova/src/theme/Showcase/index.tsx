@@ -45,8 +45,6 @@ import type {
  *
  * @param {Theme_Showcase_Index_ItemProps} _props - _props.
  *
- * @constructor
- *
  * @since 0.18.0
  */
 function ShowcaseItem(_props: Theme_Showcase_Index_ItemProps): Theme_Showcase_Index_ItemReturns {
@@ -61,8 +59,6 @@ function ShowcaseItem(_props: Theme_Showcase_Index_ItemProps): Theme_Showcase_In
  * controlled Details - clicks sync the parent's per-item state map.
  *
  * @param {Theme_Showcase_Index_Showcase_Props} props - Props.
- *
- * @constructor
  *
  * @since 0.18.0
  */
@@ -102,6 +98,16 @@ function Showcase(props: Theme_Showcase_Index_Showcase_Props): Theme_Showcase_In
   });
   const toggleAllLabel: Theme_Showcase_Index_Showcase_ToggleAllLabel = (allOpen === true) ? collapseAllLabel : expandAllLabel;
 
+  /**
+   * Theme - Showcase - Showcase - Handle Toggle All.
+   *
+   * Opens or closes every showcase item disclosure at once by
+   * rebuilding the open map with a single shared next state.
+   *
+   * @private
+   *
+   * @since 0.21.0
+   */
   function handleToggleAll() {
     const nextOpen: Theme_Showcase_Index_Showcase_HandleToggleAll_NextOpen = (allOpen === false);
     const nextMap: Theme_Showcase_Index_Showcase_OpenMap = {};
@@ -117,6 +123,19 @@ function Showcase(props: Theme_Showcase_Index_Showcase_Props): Theme_Showcase_In
     return undefined;
   }
 
+  /**
+   * Theme - Showcase - Showcase - Handle Item Toggle.
+   *
+   * Records the open or closed state for a single showcase item by
+   * merging its index into the existing open map.
+   *
+   * @param {Theme_Showcase_Index_Showcase_HandleItemToggle_Index}  index  - Index.
+   * @param {Theme_Showcase_Index_Showcase_HandleItemToggle_IsOpen} isOpen - Is open.
+   *
+   * @private
+   *
+   * @since 0.21.0
+   */
   function handleItemToggle(index: Theme_Showcase_Index_Showcase_HandleItemToggle_Index, isOpen: Theme_Showcase_Index_Showcase_HandleItemToggle_IsOpen) {
     setOpenMap((previous: Theme_Showcase_Index_Showcase_HandleItemToggle_Previous) => ({
       ...previous,

@@ -1,0 +1,598 @@
+{
+  "home.layout.description": {
+    "message": "Marshal es el Departamento de Asuntos de Repositorios: custodia automatizada para proyectos que prefieren el papeleo al drama.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Marshal - Archivado, lacrado, automatizado",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Custodia de repositorios",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Archivado, lacrado, automatizado.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Marshal es el Departamento de Asuntos de Repositorios: custodia automatizada para proyectos que prefieren el papeleo al drama. Cada hilo, cada ticket, cada nivel de acceso, tramitado en debido orden.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Comenzar",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Ver en Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.policies.title": {
+    "message": "Políticas",
+    "description": "Front page Features card title for Policies"
+  },
+  "home.features.policies.description": {
+    "message": "Redacta un bloque YAML que describa cómo Marshal atiende una clase de eventos: hilos inactivos, PRs vencidos, soporte por nivel. Marshal solo lee lo que está archivado y solo sella lo que está lacrado.",
+    "description": "Front page Features card description for Policies"
+  },
+  "home.features.dockets.title": {
+    "message": "Expedientes",
+    "description": "Front page Features card title for Dockets"
+  },
+  "home.features.dockets.description": {
+    "message": "Cada acción que ejecuta Marshal deja constancia en el registro público. Hilos cerrados, aprobaciones selladas, prórrogas programadas: todo se añade sin borrar, todo queda a la vista, nada se revoca.",
+    "description": "Front page Features card description for Dockets"
+  },
+  "home.features.accessTiers.title": {
+    "message": "Niveles de acceso",
+    "description": "Front page Features card title for Access Tiers"
+  },
+  "home.features.accessTiers.description": {
+    "message": "Deriva el trabajo entrante según patrocinador, colaborador o público. La etiqueta se sella, no se negocia. Cada decisión de derivación queda archivada en el expediente.",
+    "description": "Front page Features card description for Access Tiers"
+  },
+  "home.features.scheduledStewardship.title": {
+    "message": "Custodia programada",
+    "description": "Front page Features card title for Scheduled Stewardship"
+  },
+  "home.features.scheduledStewardship.description": {
+    "message": "Ejecuta limpiezas, auditorías y prórrogas mediante cron. Marshal actúa a la hora en punto, levanta acta y sigue adelante. Nada espera a que un humano se acuerde.",
+    "description": "Front page Features card description for Scheduled Stewardship"
+  },
+  "home.features.threadArchival.title": {
+    "message": "Archivado de hilos",
+    "description": "Front page Features card title for Thread Archival"
+  },
+  "home.features.threadArchival.description": {
+    "message": "Cierra y lacra los hilos inactivos durante N días, con su rastro documental en cada caso. Cada hilo lacrado consigna el motivo del archivado y una vía para reabrirlo.",
+    "description": "Front page Features card description for Thread Archival"
+  },
+  "home.features.automatedStamps.title": {
+    "message": "Sellos automáticos",
+    "description": "Front page Features card title for Automated Stamps"
+  },
+  "home.features.automatedStamps.description": {
+    "message": "Marshal actúa al amparo de una autorización permanente. Cada acción lleva una marca de tiempo, un autor de registro y una referencia a la política que la originó.",
+    "description": "Front page Features card description for Automated Stamps"
+  },
+  "home.stats.heading": {
+    "message": "En cifras",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manualClosures.label": {
+    "message": "Cierres manuales",
+    "description": "Front page Stats label for manual closures count"
+  },
+  "home.stats.policyFile.label": {
+    "message": "Archivo de políticas",
+    "description": "Front page Stats label for policy file count"
+  },
+  "home.stats.docketEntries.label": {
+    "message": "Entradas del expediente",
+    "description": "Front page Stats label for docket entries count"
+  },
+  "home.stats.accessTiers.label": {
+    "message": "Niveles de acceso",
+    "description": "Front page Stats label for access tiers count"
+  },
+  "home.spotlight.heading": {
+    "message": "Un archivo de políticas, todo sellado",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Describe las reglas. Marshal tramita el papeleo.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Consulta tu expediente sobre la marcha",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Despachos del Departamento",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Políticas archivadas, expedientes sellados, custodia que consta en acta.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Vitrina de bloques de Marshal que muestra todos los bloques de docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Todos los bloques del preset de Marshal, representados con datos de muestra.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (completo)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Vitrina de bloques",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Todos los bloques de Marshal, demostrados en un solo lugar.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Esta página representa cada bloque de @cbnventures/docusaurus-preset-nova/blocks con datos del mundo de Marshal para que veas cómo se ven y se comportan.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Leer la documentación",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Ver en Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (mínimo)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Archivado, lacrado, automatizado.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Marshal es el Departamento de Asuntos de Repositorios: custodia automatizada para proyectos que prefieren el papeleo al drama.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Comenzar",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (por defecto)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Me encanta ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (sin prefijo)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Rápido",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Gratis",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (temporización lenta)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Hecho para ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "desarrolladores",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "diseñadores",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (sin bucle)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Bienvenido a ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Instala con Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "O usa el Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (sin etiqueta)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Instalación rápida",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (con iconos)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Por qué los repositorios eligen Marshal",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.policies.title": {
+    "message": "Políticas",
+    "description": "Showcase Features (with icons) card title for Policies"
+  },
+  "showcase.featuresIcons.policies.description": {
+    "message": "Redacta un bloque YAML que describa cómo Marshal atiende una clase de eventos. Marshal solo lee lo que está archivado y solo sella lo que está lacrado.",
+    "description": "Showcase Features (with icons) card description for Policies"
+  },
+  "showcase.featuresIcons.dockets.title": {
+    "message": "Expedientes",
+    "description": "Showcase Features (with icons) card title for Dockets"
+  },
+  "showcase.featuresIcons.dockets.description": {
+    "message": "Cada acción que ejecuta Marshal deja constancia en el registro público. Hilos cerrados, aprobaciones selladas, prórrogas programadas: todo se añade sin borrar.",
+    "description": "Showcase Features (with icons) card description for Dockets"
+  },
+  "showcase.featuresIcons.accessTiers.title": {
+    "message": "Niveles de acceso",
+    "description": "Showcase Features (with icons) card title for Access Tiers"
+  },
+  "showcase.featuresIcons.accessTiers.description": {
+    "message": "Deriva el trabajo entrante según patrocinador, colaborador o público. La etiqueta se sella, no se negocia.",
+    "description": "Showcase Features (with icons) card description for Access Tiers"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (sin iconos, sin encabezado)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.title": {
+    "message": "Custodia programada",
+    "description": "Showcase Features (no icons) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.description": {
+    "message": "Ejecuta limpiezas, auditorías y prórrogas mediante cron. Marshal actúa a la hora en punto y levanta acta.",
+    "description": "Showcase Features (no icons) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.threadArchival.title": {
+    "message": "Archivado de hilos",
+    "description": "Showcase Features (no icons) card title for Thread Archival"
+  },
+  "showcase.featuresNoIcons.threadArchival.description": {
+    "message": "Cierra y lacra los hilos inactivos durante N días, con su rastro documental en cada caso y una vía para reabrirlos.",
+    "description": "Showcase Features (no icons) card description for Thread Archival"
+  },
+  "showcase.featuresNoIcons.automatedStamps.title": {
+    "message": "Sellos automáticos",
+    "description": "Showcase Features (no icons) card title for Automated Stamps"
+  },
+  "showcase.featuresNoIcons.automatedStamps.description": {
+    "message": "Cada acción lleva una marca de tiempo, un autor de registro y una referencia a la política que la originó.",
+    "description": "Showcase Features (no icons) card description for Automated Stamps"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (seis elementos, iconos mixtos)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Todo en un solo Departamento",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.policies.title": {
+    "message": "Políticas",
+    "description": "Showcase Features (six items) card title for Policies"
+  },
+  "showcase.featuresSix.policies.description": {
+    "message": "Describe las reglas en YAML. Marshal lee, actúa y archiva. Nada se negocia en tiempo de ejecución.",
+    "description": "Showcase Features (six items) card description for Policies"
+  },
+  "showcase.featuresSix.dockets.title": {
+    "message": "Expedientes",
+    "description": "Showcase Features (six items) card title for Dockets"
+  },
+  "showcase.featuresSix.dockets.description": {
+    "message": "Registro público de cada acción, de solo adición. Hilos cerrados, decisiones de derivación, pasadas programadas: todo sellado.",
+    "description": "Showcase Features (six items) card description for Dockets"
+  },
+  "showcase.featuresSix.accessTiers.title": {
+    "message": "Niveles de acceso",
+    "description": "Showcase Features (six items) card title for Access Tiers"
+  },
+  "showcase.featuresSix.accessTiers.description": {
+    "message": "Patrocinador, colaborador, público: tres niveles, una cola, un secretario. La etiqueta se asigna en la recepción.",
+    "description": "Showcase Features (six items) card description for Access Tiers"
+  },
+  "showcase.featuresSix.scheduledStewardship.title": {
+    "message": "Custodia programada",
+    "description": "Showcase Features (six items) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.scheduledStewardship.description": {
+    "message": "Limpiezas y auditorías gobernadas por cron. Marshal actúa según lo programado y no espera a que un humano se acuerde.",
+    "description": "Showcase Features (six items) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.threadArchival.title": {
+    "message": "Archivado de hilos",
+    "description": "Showcase Features (six items) card title for Thread Archival"
+  },
+  "showcase.featuresSix.threadArchival.description": {
+    "message": "Los hilos inactivos se cierran y lacran por política, con un aviso sellado y una vía de reapertura en cada caso.",
+    "description": "Showcase Features (six items) card description for Thread Archival"
+  },
+  "showcase.featuresSix.automatedStamps.title": {
+    "message": "Sellos automáticos",
+    "description": "Showcase Features (six items) card title for Automated Stamps"
+  },
+  "showcase.featuresSix.automatedStamps.description": {
+    "message": "Cada acción de Marshal remite a la política que la autorizó. La autorización se archiva antes del acto.",
+    "description": "Showcase Features (six items) card description for Automated Stamps"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (con encabezado y descripción)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Métricas de Marshal",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Cifras clave a lo largo de un ciclo típico de custodia de repositorios.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.threadsArchived.label": {
+    "message": "Hilos archivados",
+    "description": "Showcase Stats (full) label for threads archived"
+  },
+  "showcase.statsFull.accessTiers.label": {
+    "message": "Niveles de acceso",
+    "description": "Showcase Stats (full) label for access tiers"
+  },
+  "showcase.statsFull.manualClosures.label": {
+    "message": "Cierres manuales",
+    "description": "Showcase Stats (full) label for manual closures"
+  },
+  "showcase.statsFull.policyFile.label": {
+    "message": "Archivo de políticas",
+    "description": "Showcase Stats (full) label for policy file"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (sin encabezado)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.policyFile.label": {
+    "message": "Archivo de políticas",
+    "description": "Showcase Stats (no heading) label for policy file"
+  },
+  "showcase.statsNoHeading.manualActions.label": {
+    "message": "Acciones manuales",
+    "description": "Showcase Stats (no heading) label for manual actions"
+  },
+  "showcase.statsNoHeading.docketEntries.label": {
+    "message": "Entradas del expediente",
+    "description": "Showcase Stats (no heading) label for docket entries"
+  },
+  "showcase.statsNoHeading.accessTiers.label": {
+    "message": "Niveles de acceso",
+    "description": "Showcase Stats (no heading) label for access tiers"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (con código)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Inicio rápido",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Tres comandos para pasar de cero a un repositorio bajo custodia.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (con texto)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Cómo funciona",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Marshal lee tu archivo de políticas, pone en cola cada flujo de trabajo aplicable a la siguiente hora en punto y sella una entrada de expediente por cada acción realizada. El expediente es de solo adición. Nada se cierra en silencio.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (con descripción)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Despachos del Departamento",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Políticas archivadas, expedientes sellados, custodia que consta en acta.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Archivar lo inarchivable",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Parte del trabajo entrante no encaja en ninguna política. Un error mal archivado, una solicitud ajena al sistema de niveles, un duplicado de un duplicado. Marshal los archiva como sin clasificar.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Un año de hilos inactivos, archivados en una sola tarde",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "El repositorio tenía 2184 incidencias de más de un año. Marshal cerró y lacró 2108 en una sola pasada nocturna.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Tres niveles de soporte, una cola, un secretario",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Marshal ahora deriva los tickets de soporte entrantes por nivel de acceso a una única cola con tres etiquetas. La etiqueta se sella, no se negocia.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (sin descripción)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Despachos recientes",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Marshal 2.4: niveles de corrección automática del Auditor y grafos de dependencias del Secretario",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "El Auditor ahora aplica correcciones automáticas en los niveles de convenciones y formato, y el Secretario traza un grafo de dependencias de todos los expedientes del espacio de trabajo.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (uso en línea)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Marshal usa una ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.policy.title": {
+    "message": "regla escrita sobre cómo Marshal atiende una clase de eventos",
+    "description": "Showcase Terminology hover title for policy"
+  },
+  "showcase.terminology.policy.label": {
+    "message": "política",
+    "description": "Showcase Terminology displayed text for policy"
+  },
+  "showcase.terminology.paragraph1.afterPolicy": {
+    "message": " para regir sus acciones sobre un repositorio. Cada acción queda registrada en el ",
+    "description": "Showcase Terminology paragraph 1 fragment after policy"
+  },
+  "showcase.terminology.docket.title": {
+    "message": "registro público de solo adición de cada acción realizada",
+    "description": "Showcase Terminology hover title for docket"
+  },
+  "showcase.terminology.docket.label": {
+    "message": "expediente",
+    "description": "Showcase Terminology displayed text for docket"
+  },
+  "showcase.terminology.paragraph1.afterDocket": {
+    "message": ", donde cada asiento lleva un ",
+    "description": "Showcase Terminology paragraph 1 fragment after docket"
+  },
+  "showcase.terminology.stamp.title": {
+    "message": "marca de autorización con fecha y hora aplicada a una acción concluida",
+    "description": "Showcase Terminology hover title for stamp"
+  },
+  "showcase.terminology.stamp.label": {
+    "message": "sello",
+    "description": "Showcase Terminology displayed text for stamp"
+  },
+  "showcase.terminology.paragraph1.afterStamp": {
+    "message": " que remite a la política que lo autorizó.",
+    "description": "Showcase Terminology paragraph 1 fragment after stamp"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "El trabajo entrante se deriva por ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.accessTier.title": {
+    "message": "clasificación del trabajo entrante según el estado de patrocinio o de contribución",
+    "description": "Showcase Terminology hover title for access tier"
+  },
+  "showcase.terminology.accessTier.label": {
+    "message": "nivel de acceso",
+    "description": "Showcase Terminology displayed text for access tier"
+  },
+  "showcase.terminology.paragraph2.afterAccessTier": {
+    "message": " hacia la ",
+    "description": "Showcase Terminology paragraph 2 fragment after access tier"
+  },
+  "showcase.terminology.queue.title": {
+    "message": "lista única y ordenada de todo el trabajo entrante",
+    "description": "Showcase Terminology hover title for queue"
+  },
+  "showcase.terminology.queue.label": {
+    "message": "cola",
+    "description": "Showcase Terminology displayed text for queue"
+  },
+  "showcase.terminology.paragraph2.afterQueue": {
+    "message": ". Los hilos inactivos se cierran mediante ",
+    "description": "Showcase Terminology paragraph 2 fragment after queue"
+  },
+  "showcase.terminology.threadArchival.title": {
+    "message": "cierre gobernado por política de los hilos inactivos más allá de un umbral",
+    "description": "Showcase Terminology hover title for thread archival"
+  },
+  "showcase.terminology.threadArchival.label": {
+    "message": "archivado de hilos",
+    "description": "Showcase Terminology displayed text for thread archival"
+  },
+  "showcase.terminology.paragraph2.afterThreadArchival": {
+    "message": ", con un rastro documental en cada caso.",
+    "description": "Showcase Terminology paragraph 2 fragment after thread archival"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (con leyenda)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Marca gráfica archivada dentro de un bloque Frame, lista para su cita.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Miniatura de la marca Marshal.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (sin leyenda)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (ambas tiendas)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Descarga la app complementaria",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (solo App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Disponible en iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (solo Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Disponible en Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (sin etiqueta)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} min de lectura",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

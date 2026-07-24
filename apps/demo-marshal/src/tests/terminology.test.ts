@@ -1,4 +1,5 @@
 import { registerTerminologySuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 /**
  * Tests - Terminology.
@@ -10,5 +11,6 @@ import { registerTerminologySuite } from '@cbnventures/nova/rules/vitest';
  * @since 0.20.0
  */
 registerTerminologySuite({
+  vitest,
   enable: 'all',
 });

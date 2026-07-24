@@ -24,16 +24,20 @@ describe('presetsSentinelPresetSentinel', async () => {
     const sentinel: Tests_Presets_Sentinel_Preset_PresetsSentinelPresetSentinel_HasCorrectColorValues_Sentinel = presetsSentinelPresetSentinel;
 
     deepStrictEqual(sentinel['colors']['primary'], {
-      light: '#0d9488', dark: '#0d9488',
+      light: '#0d9488',
+      dark: '#0d9488',
     });
     deepStrictEqual(sentinel['colors']['accent'], {
-      light: '#6366f1', dark: '#6366f1',
+      light: '#6366f1',
+      dark: '#6366f1',
     });
     deepStrictEqual(sentinel['colors']['text'], {
-      light: '#1e293b', dark: '#e2e8f0',
+      light: '#1e293b',
+      dark: '#e2e8f0',
     });
     deepStrictEqual(sentinel['colors']['border'], {
-      light: '#cbd5e1', dark: '#334155',
+      light: '#cbd5e1',
+      dark: '#334155',
     });
 
     return;

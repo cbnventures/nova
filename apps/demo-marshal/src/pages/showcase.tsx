@@ -13,6 +13,16 @@ import {
 import { translate } from '@docusaurus/Translate';
 import Showcase from '@theme/Showcase';
 
+/**
+ * Pages - Showcase - Page.
+ *
+ * Block showcase page that renders every block from the Marshal preset
+ * with sample data so each variant can be seen and compared in one place.
+ *
+ * @constructor
+ *
+ * @since UNRELEASED
+ */
 function ShowcasePage() {
   return (
     <Showcase

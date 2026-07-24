@@ -122,6 +122,18 @@ import type {
 function collectNodes(tree: Lib_RehypeShiki_CollectNodes_Tree, tagName: Lib_RehypeShiki_CollectNodes_TagName): Lib_RehypeShiki_CollectNodes_Returns {
   const matches: Lib_RehypeShiki_CollectNodes_Matches = [];
 
+  /**
+   * Lib - Rehype Shiki - Collect Nodes - Walk.
+   *
+   * Recurses into a hast node's children, pushing every element that
+   * matches the target tag name onto the shared matches accumulator.
+   *
+   * @param {Lib_RehypeShiki_CollectNodes_Walk_Node} node - Node.
+   *
+   * @private
+   *
+   * @since 0.21.0
+   */
   function walk(node: Lib_RehypeShiki_CollectNodes_Walk_Node) {
     const children: Lib_RehypeShiki_CollectNodes_Walk_Children = node['children'] ?? [];
 
@@ -555,6 +567,14 @@ function processNode(node: Lib_RehypeShiki_ProcessNode_Node, index: Lib_RehypeSh
  * @since 0.15.0
  */
 let moduleHighlighter: Lib_RehypeShiki_ModuleHighlighter = undefined;
+/**
+ * Lib - Rehype Shiki - Module Highlighter Promise.
+ *
+ * In-flight promise for the Shiki highlighter initialization so
+ * concurrent invocations await a single shared creation call.
+ *
+ * @since 0.21.0
+ */
 let moduleHighlighterPromise: Lib_RehypeShiki_ModuleHighlighterPromise = undefined;
 
 /**

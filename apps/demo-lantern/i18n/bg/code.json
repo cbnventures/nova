@@ -1,0 +1,602 @@
+{
+  "home.layout.description": {
+    "message": "Lantern следи целия ви дом — зони, движение, охрана/изключване — без нито веднъж да повиши тон.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Lantern - бдителен, топъл, винаги у дома",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Наблюдение на целия дом",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Бдителен, топъл, винаги у дома.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Lantern следи целия ви дом — зони, движение, охрана/изключване — без нито веднъж да повиши тон. Всяка стая, всяка врата, всеки спокоен момент, обгрижени внимателно.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Започнете сега",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Вижте в Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.zones.title": {
+    "message": "Зони",
+    "description": "Front page Features card title for Zones"
+  },
+  "home.features.zones.description": {
+    "message": "Групирайте устройствата според мястото им — периметър, вътрешност, зони за сън. Поставяйте всяка зона под охрана независимо. Изключвайте я внимателно, по име. Lantern никога не повишава тон.",
+    "description": "Front page Features card description for Zones"
+  },
+  "home.features.motionEvents.title": {
+    "message": "Събития при движение",
+    "description": "Front page Features card title for Motion Events"
+  },
+  "home.features.motionEvents.description": {
+    "message": "Всяко движение преминава през потока от събития с посока и незадължителна лента на увереност. Възпроизвеждайте, филтрирайте, прехвърляйте към хъб. Нищо не се губи.",
+    "description": "Front page Features card description for Motion Events"
+  },
+  "home.features.contactSensors.title": {
+    "message": "Контактни сензори",
+    "description": "Front page Features card title for Contact Sensors"
+  },
+  "home.features.contactSensors.description": {
+    "message": "Отворена врата, открехнат прозорец, затворена порта — всяко контактно събитие получава времеви печат и се съхранява в тих регистър. Преглеждайте историята на сензорите, без да излизате от стаята.",
+    "description": "Front page Features card description for Contact Sensors"
+  },
+  "home.features.armDisarm.title": {
+    "message": "Охрана / Изключване",
+    "description": "Front page Features card title for Arm / Disarm"
+  },
+  "home.features.armDisarm.description": {
+    "message": "Поставяйте под охрана или изключвайте по зона, по потребител или по график. Прехвърляйте контрола на човек, на когото имате доверие — по име, по парола или чрез присъствие на HomeKit Home Hub.",
+    "description": "Front page Features card description for Arm / Disarm"
+  },
+  "home.features.deviceDiscovery.title": {
+    "message": "Откриване на устройства",
+    "description": "Front page Features card title for Device Discovery"
+  },
+  "home.features.deviceDiscovery.description": {
+    "message": "Lantern намира автоматично всеки сензор и контактно устройство във вашия хъб. Без ръчно сдвояване, без конфигурационни файлове. Открива това, което вече е там.",
+    "description": "Front page Features card description for Device Discovery"
+  },
+  "home.features.sensorHistory.title": {
+    "message": "История на сензорите",
+    "description": "Front page Features card title for Sensor History"
+  },
+  "home.features.sensorHistory.description": {
+    "message": "Тих регистър на всичко случило се — движение, контакт, състояния на охрана — подредено по зона и време. Прелиствайте назад цяла седмица, без да напускате таблото.",
+    "description": "Front page Features card description for Sensor History"
+  },
+  "home.stats.heading": {
+    "message": "В цифри",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.zones.label": {
+    "message": "Зони по подразбиране",
+    "description": "Front page Stats label for default zones count"
+  },
+  "home.stats.configFiles.label": {
+    "message": "Конфигурационни файлове",
+    "description": "Front page Stats label for config files count"
+  },
+  "home.stats.handoff.label": {
+    "message": "Готово за прехвърляне",
+    "description": "Front page Stats label for handoff readiness"
+  },
+  "home.stats.sensorHistory.label": {
+    "message": "История на сензорите",
+    "description": "Front page Stats label for sensor history"
+  },
+  "home.spotlight.heading": {
+    "message": "Всяка зона под тиха грижа",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Опишете кой къде живее. За останалото се грижи Lantern.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Управлявайте зоните си в движение",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "От светлината на верандата",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Новини, наблюдения и тихи бележки от дома.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Витрина на блоковете на Lantern, представяща всеки блок от docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Всеки блок от пресета Lantern, показан с примерни данни.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (пълен)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Витрина на блоковете",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Всеки блок на Lantern, демонстриран на едно място.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Тази страница показва всеки блок от @cbnventures/docusaurus-preset-nova/blocks с данни от света на Lantern, за да видите как изглеждат и се държат.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Прочетете документацията",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Вижте в Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (минимален)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Бдителен, топъл, винаги у дома.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Lantern следи целия ви дом — зони, движение, охрана/изключване — без нито веднъж да повиши тон.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Започнете сега",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (по подразбиране)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Обичам ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (без префикс)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Бърз",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Гъвкав",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Безплатен",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (бавно темпо)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Създаден за ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "разработчици",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "дизайнери",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (без цикъл)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Добре дошли в ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Инсталирайте със Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Или използвайте Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (без етикет)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Бърза инсталация",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (с икони)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Защо домакинствата избират Lantern",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.zones.title": {
+    "message": "Зони",
+    "description": "Showcase Features (with icons) card title for Zones"
+  },
+  "showcase.featuresIcons.zones.description": {
+    "message": "Групирайте устройствата според мястото им — периметър, вътрешност, зони за сън. Поставяйте всяка зона под охрана независимо, изключвайте я внимателно по име.",
+    "description": "Showcase Features (with icons) card description for Zones"
+  },
+  "showcase.featuresIcons.motionEvents.title": {
+    "message": "Събития при движение",
+    "description": "Showcase Features (with icons) card title for Motion Events"
+  },
+  "showcase.featuresIcons.motionEvents.description": {
+    "message": "Всяко движение преминава през потока от събития с посока и незадължителна лента на увереност. Възпроизвеждайте, филтрирайте, прехвърляйте към хъб.",
+    "description": "Showcase Features (with icons) card description for Motion Events"
+  },
+  "showcase.featuresIcons.armDisarm.title": {
+    "message": "Охрана / Изключване",
+    "description": "Showcase Features (with icons) card title for Arm / Disarm"
+  },
+  "showcase.featuresIcons.armDisarm.description": {
+    "message": "Поставяйте под охрана или изключвайте по зона, потребител или график. Прехвърляйте контрола на човек, на когото имате доверие — по име, парола или чрез присъствие на HomeKit.",
+    "description": "Showcase Features (with icons) card description for Arm / Disarm"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (без икони, без заглавие)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.contactSensors.title": {
+    "message": "Контактни сензори",
+    "description": "Showcase Features (no icons) card title for Contact Sensors"
+  },
+  "showcase.featuresNoIcons.contactSensors.description": {
+    "message": "Отворена врата, открехнат прозорец, затворена порта — всяко контактно събитие получава времеви печат и се съхранява в тих регистър.",
+    "description": "Showcase Features (no icons) card description for Contact Sensors"
+  },
+  "showcase.featuresNoIcons.deviceDiscovery.title": {
+    "message": "Откриване на устройства",
+    "description": "Showcase Features (no icons) card title for Device Discovery"
+  },
+  "showcase.featuresNoIcons.deviceDiscovery.description": {
+    "message": "Lantern намира автоматично всеки сензор и контактно устройство във вашия хъб. Без ръчно сдвояване, без конфигурационни файлове.",
+    "description": "Showcase Features (no icons) card description for Device Discovery"
+  },
+  "showcase.featuresNoIcons.sensorHistory.title": {
+    "message": "История на сензорите",
+    "description": "Showcase Features (no icons) card title for Sensor History"
+  },
+  "showcase.featuresNoIcons.sensorHistory.description": {
+    "message": "Тих регистър на всичко случило се — движение, контакт, състояния на охрана — подредено по зона и време.",
+    "description": "Showcase Features (no icons) card description for Sensor History"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (шест елемента, смесени икони)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Всичко в един дом",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.zones.title": {
+    "message": "Зони",
+    "description": "Showcase Features (six items) card title for Zones"
+  },
+  "showcase.featuresSix.zones.description": {
+    "message": "Групирайте по стая, коридор, екстериор или група уреди. Поставяйте под охрана независимо. Изключвайте внимателно по име.",
+    "description": "Showcase Features (six items) card description for Zones"
+  },
+  "showcase.featuresSix.motionEvents.title": {
+    "message": "Събития при движение",
+    "description": "Showcase Features (six items) card title for Motion Events"
+  },
+  "showcase.featuresSix.motionEvents.description": {
+    "message": "Насочено движение с незадължителна лента на увереност. Възпроизвеждайте, филтрирайте и прехвърляйте към хъб, без да губите събития.",
+    "description": "Showcase Features (six items) card description for Motion Events"
+  },
+  "showcase.featuresSix.contactSensors.title": {
+    "message": "Контактни сензори",
+    "description": "Showcase Features (six items) card title for Contact Sensors"
+  },
+  "showcase.featuresSix.contactSensors.description": {
+    "message": "Врата, прозорец, порта — всяко контактно събитие получава времеви печат и се съхранява в регистъра с история на сензорите.",
+    "description": "Showcase Features (six items) card description for Contact Sensors"
+  },
+  "showcase.featuresSix.armDisarm.title": {
+    "message": "Охрана / Изключване",
+    "description": "Showcase Features (six items) card title for Arm / Disarm"
+  },
+  "showcase.featuresSix.armDisarm.description": {
+    "message": "По зона, потребител или график. Прехвърляне по име, парола или чрез присъствие на HomeKit Home Hub.",
+    "description": "Showcase Features (six items) card description for Arm / Disarm"
+  },
+  "showcase.featuresSix.deviceDiscovery.title": {
+    "message": "Откриване на устройства",
+    "description": "Showcase Features (six items) card title for Device Discovery"
+  },
+  "showcase.featuresSix.deviceDiscovery.description": {
+    "message": "Автоматично откриване на всеки сензор и контактно устройство във вашия хъб. Без ръчно сдвояване.",
+    "description": "Showcase Features (six items) card description for Device Discovery"
+  },
+  "showcase.featuresSix.sensorHistory.title": {
+    "message": "История на сензорите",
+    "description": "Showcase Features (six items) card title for Sensor History"
+  },
+  "showcase.featuresSix.sensorHistory.description": {
+    "message": "Движение, контакт и състояния на охрана в тих регистър. Прелиствайте назад цяла седмица, без да напускате таблото.",
+    "description": "Showcase Features (six items) card description for Sensor History"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (със заглавие и описание)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Показатели на Lantern",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Ключови числа за типична конфигурация с четири зони в дома.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.zones.label": {
+    "message": "Зони по подразбиране",
+    "description": "Showcase Stats (full) label for default zones"
+  },
+  "showcase.statsFull.devices.label": {
+    "message": "Открити устройства",
+    "description": "Showcase Stats (full) label for devices discovered"
+  },
+  "showcase.statsFull.handoff.label": {
+    "message": "Готово за прехвърляне",
+    "description": "Showcase Stats (full) label for handoff readiness"
+  },
+  "showcase.statsFull.configFiles.label": {
+    "message": "Конфигурационни файлове",
+    "description": "Showcase Stats (full) label for config files"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (без заглавие)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.zones.label": {
+    "message": "Зони",
+    "description": "Showcase Stats (no heading) label for zones"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "Конфигурационни файлове",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.sensorHistory.label": {
+    "message": "История на сензорите",
+    "description": "Showcase Stats (no heading) label for sensor history"
+  },
+  "showcase.statsNoHeading.manifest.label": {
+    "message": "Манифест",
+    "description": "Showcase Stats (no heading) label for manifest"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (с код)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Бърз старт",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Три команди от нула до наблюдаван дом.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (с текст)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Как работи",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Lantern открива всички устройства във вашия хъб, групира ги по зона и предава всяко събитие за движение и контакт към дневника със събития. Състоянията на охрана се запазват — изключете захранването, включете го, зоната помни.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (с описание)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "От светлината на верандата",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Новини, наблюдения и тихи бележки от дома.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Наблюдение от друга стая, без домът да разбере",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Човек на горния етаж трябва да знае, че входната врата е затворена, без кучето да получава известие. Lantern насочва събитията според аудиторията, а не според вида им.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Шест месеца движение по периметъра, в една картина",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Сензор за движение на предната веранда се задейства четиридесет пъти на ден. Повечето от тях са катерици. В изгледа с историята на Lantern катериците се превръщат в закономерност.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Прехвърляне на охрана/изключване към човек, на когото имате доверие",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Доверен потребител може да изключи охраната на всяка зона, която Lantern следи, без телефона ви в ръка. По име, парола или чрез присъствие на HomeKit.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (без описание)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Последни обновления",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Lantern 2.4: наслагване на плана на етажа с Lens и инкрементални изпълнения с Beacon",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Lens вече изобразява графа на зоните в дома върху план на етажа, а Beacon поддържа инкрементални изпълнения, които преоценяват само променените сензори.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (употреба в текста)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Lantern използва ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.zone.title": {
+    "message": "именувана стая, коридор или външна група",
+    "description": "Showcase Terminology hover title for zone"
+  },
+  "showcase.terminology.zone.label": {
+    "message": "зона",
+    "description": "Showcase Terminology displayed text for zone"
+  },
+  "showcase.terminology.paragraph1.afterZone": {
+    "message": ", за да групира устройствата според мястото им. Всяка зона се управлява от ",
+    "description": "Showcase Terminology paragraph 1 fragment after zone"
+  },
+  "showcase.terminology.armState.title": {
+    "message": "контрол за охрана/изключване",
+    "description": "Showcase Terminology hover title for arm state"
+  },
+  "showcase.terminology.armState.label": {
+    "message": "състояние на охрана",
+    "description": "Showcase Terminology displayed text for arm state"
+  },
+  "showcase.terminology.paragraph1.afterArmState": {
+    "message": ", което се запазва при изключване и включване на захранването. Когато сензор се задейства, събитието преминава през ",
+    "description": "Showcase Terminology paragraph 1 fragment after arm state"
+  },
+  "showcase.terminology.eventStream.title": {
+    "message": "поток от известия в реално време",
+    "description": "Showcase Terminology hover title for event stream"
+  },
+  "showcase.terminology.eventStream.label": {
+    "message": "поток от събития",
+    "description": "Showcase Terminology displayed text for event stream"
+  },
+  "showcase.terminology.paragraph1.afterEventStream": {
+    "message": ", без да бъде изгубено.",
+    "description": "Showcase Terminology paragraph 1 fragment after event stream"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Със ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.handoffSystem.title": {
+    "message": "прехвърляне към доверен човек",
+    "description": "Showcase Terminology hover title for handoff system"
+  },
+  "showcase.terminology.handoffSystem.label": {
+    "message": "системата за прехвърляне",
+    "description": "Showcase Terminology displayed text for handoff system"
+  },
+  "showcase.terminology.paragraph2.afterHandoff": {
+    "message": ", домакинствата споделят контрол над ",
+    "description": "Showcase Terminology paragraph 2 fragment after handoff system"
+  },
+  "showcase.terminology.zoneAccess.title": {
+    "message": "достъп за охрана/изключване на зона",
+    "description": "Showcase Terminology hover title for zone access"
+  },
+  "showcase.terminology.zoneAccess.label": {
+    "message": "достъпа до зоните",
+    "description": "Showcase Terminology displayed text for zone access"
+  },
+  "showcase.terminology.paragraph2.afterZoneAccess": {
+    "message": " и ",
+    "description": "Showcase Terminology paragraph 2 fragment after zone access"
+  },
+  "showcase.terminology.sensorHistory.title": {
+    "message": "исторически данни от сензорите",
+    "description": "Showcase Terminology hover title for sensor history"
+  },
+  "showcase.terminology.sensorHistory.label": {
+    "message": "историята на сензорите",
+    "description": "Showcase Terminology displayed text for sensor history"
+  },
+  "showcase.terminology.paragraph2.afterSensorHistory": {
+    "message": " без размяна на идентификационни данни.",
+    "description": "Showcase Terminology paragraph 2 fragment after sensor history"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (с надпис)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Марковият знак свети вътре в Frame — топла хартиена картичка с изображение и надпис.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Миниатюра на марката Lantern.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (без надпис)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (и двата магазина)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Изтеглете придружаващото приложение",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (само App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Налично за iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (само Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Налично за Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (без етикет)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} мин четене",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

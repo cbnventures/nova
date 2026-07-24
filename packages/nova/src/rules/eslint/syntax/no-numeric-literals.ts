@@ -98,11 +98,11 @@ export class Runner {
    * or 0x prefixes and reports unless the corresponding
    * allow option is enabled in the rule configuration.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Context} context - Context.
    * @param {Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Node}    node    - Node.
    * @param {Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Returns}
    *

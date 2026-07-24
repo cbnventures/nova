@@ -1,0 +1,514 @@
+{
+  "home.layout.description": {
+    "message": "Foundry prebere vaš namen in iz enega samega manifesta ukuje celotno razvojno okolje.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Foundry - Vsako orodje se začne kot surova kovina",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Orodja za razvijalce",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Vsako orodje se začne kot surova kovina.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Foundry prebere vaš namen in iz enega samega manifesta ukuje celotno razvojno okolje. Nehajte nastavljati. Začnite opisovati.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Začnite",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Oglejte si na Threadbaru",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.anvil.description": {
+    "message": "Osrednji CLI. Prebere en sam manifest Blueprint in ukuje celoten delovni prostor — strukturo map, graf odvisnosti, konfiguracijo gradnje in pravila lintanja. Ena datoteka noter, celotno okolje ven.",
+    "description": "Front page Features card description for Anvil"
+  },
+  "home.features.tongs.description": {
+    "message": "Razreševalnik in vizualizator grafa odvisnosti. Preslika vsako razmerje med paketi v delovnem prostoru in izriše celotno drevo, da vidite, kaj je od česa odvisno, še preden karkoli spremenite.",
+    "description": "Front page Features card description for Tongs"
+  },
+  "home.features.quench.description": {
+    "message": "Inkrementalni predpomnilnik gradnje, ki spremlja zgoščene vrednosti datotek in znova zgradi le tisto, kar se je dejansko spremenilo. Hladno kovanje traja 14 sekund. Toplo kovanje manj kot dve.",
+    "description": "Front page Features card description for Quench"
+  },
+  "home.features.bellows.description": {
+    "message": "Vzporedni izvajalnik opravil, ki delo hkrati razporedi po vseh paketih delovnega prostora. Upošteva graf odvisnosti iz orodja Tongs, tako da se nič ne zažene, dokler niso dokončani vsi njegovi predpogoji.",
+    "description": "Front page Features card description for Bellows"
+  },
+  "home.features.crucible.description": {
+    "message": "Generator testnega ogrodja, ki prebere vaše tipske podpise in namesto vas napiše testno ogrodje. Testiranje s posnetki, predloge trditev in datoteke s testnimi podatki — vse izpeljano iz tipov, ki ste jih že napisali.",
+    "description": "Front page Features card description for Crucible"
+  },
+  "home.features.slag.description": {
+    "message": "Zaznavalnik mrtve kode in neuporabljenih odvisnosti. Pregleda vsak import, vsak export in vsak vnos v vašem Blueprintu ter poišče tisto, na kar se nič več ne sklicuje. Odstranite žlindro, obdržite jeklo.",
+    "description": "Front page Features card description for Slag"
+  },
+  "home.stats.heading": {
+    "message": "V številkah",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.configFiles.label": {
+    "message": "Konfiguracijske datoteke",
+    "description": "Front page Stats label for config file count"
+  },
+  "home.stats.coldForge.label": {
+    "message": "Hladno kovanje",
+    "description": "Front page Stats label for cold forge time"
+  },
+  "home.stats.wardenRules.label": {
+    "message": "Pravila Warden",
+    "description": "Front page Stats label for Warden rule count"
+  },
+  "home.spotlight.heading": {
+    "message": "En manifest, vse povezano",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Opišite, kaj mislite. Foundry poskrbi za ostalo.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Upravljajte svojo kovačnico na poti",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Poročila iz kovačnice",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Filozofija, meritve zmogljivosti in mnenja, ki smo jih izdali.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Predstavitev blokov Foundry, ki prikazuje vsak blok iz docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Vsak blok iz prednastavitve Foundry, izrisan z vzorčnimi podatki.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (celoten)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Predstavitev blokov",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Vsak blok Foundry, predstavljen na enem mestu.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Ta stran izriše vsak blok iz @cbnventures/docusaurus-preset-nova/blocks s podatki iz sveta Foundry, da si ogledate, kako so videti in se obnašajo.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Preberite dokumentacijo",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Oglejte si na Threadbaru",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (minimalen)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Oblikujte, kar gre v izdajo.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Foundry prebere vaš namen in iz enega samega manifesta ukuje celotno razvojno okolje. Nehajte nastavljati. Začnite opisovati.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Začnite",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (privzeti)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Obožujem ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (brez predpone)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Hitro",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Prilagodljivo",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Brezplačno",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (počasni ritem)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Ustvarjeno za ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "razvijalce",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "oblikovalce",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (brez zanke)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Dobrodošli v ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Namestite s Sparkom",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Ali pa uporabite Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (brez oznake)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Hitra namestitev",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (z ikonami)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Zakaj ekipe izbirajo Foundry",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.anvil.description": {
+    "message": "Osrednji CLI. Prebere manifest Blueprint in ukuje vaš delovni prostor — strukturo map, graf odvisnosti, konfiguracijo gradnje in pravila lintanja.",
+    "description": "Showcase Features (with icons) card description for Anvil"
+  },
+  "showcase.featuresIcons.tongs.description": {
+    "message": "Razreševalnik in vizualizator grafa odvisnosti. Preslika vsako razmerje med paketi in izriše celotno drevo.",
+    "description": "Showcase Features (with icons) card description for Tongs"
+  },
+  "showcase.featuresIcons.quench.description": {
+    "message": "Inkrementalni predpomnilnik gradnje, ki spremlja zgoščene vrednosti datotek in znova zgradi le tisto, kar se je spremenilo. Hladno kovanje traja 14 sekund. Toplo kovanje manj kot dve.",
+    "description": "Showcase Features (with icons) card description for Quench"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (brez ikon, brez naslova)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.bellows.description": {
+    "message": "Vzporedni izvajalnik opravil, ki delo hkrati razporedi po vseh paketih delovnega prostora. Upošteva graf odvisnosti orodja Tongs.",
+    "description": "Showcase Features (no icons) card description for Bellows"
+  },
+  "showcase.featuresNoIcons.crucible.description": {
+    "message": "Generator testnega ogrodja, ki prebere vaše tipske podpise in napiše testno ogrodje. Vključuje testiranje s posnetki in predloge trditev.",
+    "description": "Showcase Features (no icons) card description for Crucible"
+  },
+  "showcase.featuresNoIcons.slag.description": {
+    "message": "Zaznavalnik mrtve kode in neuporabljenih odvisnosti. Pregleda vsak import in export ter poišče tisto, na kar se nič več ne sklicuje.",
+    "description": "Showcase Features (no icons) card description for Slag"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (šest elementov, mešane ikone)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Vse v eni kovačnici",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.anvil.description": {
+    "message": "Prebere vaš manifest in ustvari vsak konfiguracijski artefakt, ki ga potrebuje vaš delovni prostor. Ena datoteka noter, vse ven.",
+    "description": "Showcase Features (six items) card description for Anvil"
+  },
+  "showcase.featuresSix.tongs.description": {
+    "message": "Razreši graf odvisnosti, zazna cikle in ponuja poizvedovalna orodja za skriptanje in integracijo v cevovode.",
+    "description": "Showcase Features (six items) card description for Tongs"
+  },
+  "showcase.featuresSix.quench.description": {
+    "message": "Vsebinsko naslovljiv predpomnilnik gradnje. Če se vhodni podatki niso spremenili, se gradnja povsem preskoči.",
+    "description": "Showcase Features (six items) card description for Quench"
+  },
+  "showcase.featuresSix.bellows.description": {
+    "message": "Razporeja opravila gradnje v valovih glede na graf odvisnosti. Neodvisni paketi se gradijo vzporedno.",
+    "description": "Showcase Features (six items) card description for Bellows"
+  },
+  "showcase.featuresSix.crucible.description": {
+    "message": "Ustvarja testna ogrodja iz tipskih podpisov. Testi s posnetki, predloge trditev in datoteke s testnimi podatki.",
+    "description": "Showcase Features (six items) card description for Crucible"
+  },
+  "showcase.featuresSix.slag.description": {
+    "message": "Najde mrtvo kodo in osirotele odvisnosti. Odstranite žlindro, obdržite jeklo.",
+    "description": "Showcase Features (six items) card description for Slag"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (z naslovom in opisom)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Meritve kovanja",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Ključni kazalniki zmogljivosti v delovnem prostoru z 200 paketi.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.coldForge.label": {
+    "message": "Čas hladnega kovanja",
+    "description": "Showcase Stats (full) label for cold forge time"
+  },
+  "showcase.statsFull.warmForge.label": {
+    "message": "Čas toplega kovanja",
+    "description": "Showcase Stats (full) label for warm forge time"
+  },
+  "showcase.statsFull.cacheHit.label": {
+    "message": "Stopnja zadetkov predpomnilnika",
+    "description": "Showcase Stats (full) label for cache hit rate"
+  },
+  "showcase.statsFull.wardenRules.label": {
+    "message": "Pravila Warden",
+    "description": "Showcase Stats (full) label for Warden rule count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (brez naslova)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "Konfiguracijske datoteke",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "Podorodja",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.maxPackages.label": {
+    "message": "Največ preizkušenih paketov",
+    "description": "Showcase Stats (no heading) label for max packages tested"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (s kodo)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Hitri začetek",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Trije ukazi, da iz nič ustvarite popolnoma ukovan delovni prostor.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (z besedilom)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Kako deluje",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Foundry prebere vaš manifest, z orodjem Tongs razreši graf odvisnosti in deterministično ustvari vsak konfiguracijski artefakt. Izhod je za enak vhod vedno enak — brez stranskih učinkov, brez skritega stanja.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (z opisom)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Poročila iz kovačnice",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Filozofija, meritve zmogljivosti in mnenja, ki smo jih izdali.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Zakaj smo nehali pisati konfiguracijske datoteke",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Odklon konfiguracije je tihi ubijalec delovnih prostorov. Foundry smo zgradili, ker verjamemo, da mora biti namen deklarativen.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Kovanje monorepa z 200 paketi v 14 sekundah",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Kako sta predpomnjenje Quench in vzporednost Bellows dvanajstminutno gradnjo spremenila v štirinajstsekundno kovanje.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Pravila Warden, ki jih skoraj nismo izdali",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Napisali smo 380 pravil lintanja in 60 jih zavrgli. Tukaj je tisto, kar je preživelo, in prepiri, ki so skoraj razklali ekipo.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (brez opisa)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Nedavne posodobitve",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Foundry 2.4: samodejni način Crucible in zaznavanje Slag",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Crucible zdaj ob vsakem kovanju samodejno znova ustvari testna ogrodja, Slag pa zazna neuporabljene odvisnosti po celotnem grafu delovnega prostora.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (uporaba v besedilu)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Foundry uporablja ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.manifest.title": {
+    "message": "konfiguracijska datoteka delovnega prostora",
+    "description": "Showcase Terminology hover title for manifest"
+  },
+  "showcase.terminology.paragraph1.afterManifest": {
+    "message": " za poganjanje vsega generiranja kode in konfiguracije. Za vsak paket v delovnem prostoru skrbi proces ",
+    "description": "Showcase Terminology paragraph 1 fragment after manifest"
+  },
+  "showcase.terminology.forge.title": {
+    "message": "proces generiranja konfiguracije",
+    "description": "Showcase Terminology hover title for forge"
+  },
+  "showcase.terminology.forge.label": {
+    "message": "kovanja",
+    "description": "Showcase Terminology displayed text for forge"
+  },
+  "showcase.terminology.paragraph1.afterForge": {
+    "message": ", ki ohranja vsak artefakt sinhroniziran. Ko morate preveriti kakovost kode, pogon ",
+    "description": "Showcase Terminology paragraph 1 fragment after forge"
+  },
+  "showcase.terminology.warden.title": {
+    "message": "pogon za statično analizo",
+    "description": "Showcase Terminology hover title for Warden"
+  },
+  "showcase.terminology.paragraph1.afterWarden": {
+    "message": " zažene vsako pravilo brez dodatne konfiguracije.",
+    "description": "Showcase Terminology paragraph 1 fragment after Warden"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "S ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.presetSystem.title": {
+    "message": "prednastavitev zbirke pravil",
+    "description": "Showcase Terminology hover title for preset system"
+  },
+  "showcase.terminology.presetSystem.label": {
+    "message": "sistemom prednastavitev",
+    "description": "Showcase Terminology displayed text for preset system"
+  },
+  "showcase.terminology.paragraph2.afterPreset": {
+    "message": " ekipe delijo en sam vir resnice za ",
+    "description": "Showcase Terminology paragraph 2 fragment after preset system"
+  },
+  "showcase.terminology.lintingRules.title": {
+    "message": "pravila statične analize",
+    "description": "Showcase Terminology hover title for linting rules"
+  },
+  "showcase.terminology.lintingRules.label": {
+    "message": "pravila lintanja",
+    "description": "Showcase Terminology displayed text for linting rules"
+  },
+  "showcase.terminology.paragraph2.afterLinting": {
+    "message": " in ",
+    "description": "Showcase Terminology paragraph 2 fragment after linting rules"
+  },
+  "showcase.terminology.alloySettings.title": {
+    "message": "konfiguracija prevajalnika",
+    "description": "Showcase Terminology hover title for Alloy settings"
+  },
+  "showcase.terminology.alloySettings.label": {
+    "message": "nastavitve Alloy",
+    "description": "Showcase Terminology displayed text for Alloy settings"
+  },
+  "showcase.terminology.paragraph2.afterAlloy": {
+    "message": ", ne da bi podvajale konfiguracijske datoteke.",
+    "description": "Showcase Terminology paragraph 2 fragment after Alloy settings"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (s podnapisom)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Znak blagovne znamke, vtisnjen v Frame — oster rob, podnapis z monospace pisavo.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Sličica blagovne znamke Foundry.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (brez podnapisa)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (obe trgovini)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Prenesite spremljevalno aplikacijo",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (samo App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Na voljo za iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (samo Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Na voljo za Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (brez oznake)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} min branja",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

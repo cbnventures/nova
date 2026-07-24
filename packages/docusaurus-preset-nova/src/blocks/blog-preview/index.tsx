@@ -30,8 +30,6 @@ import type {
  *
  * @param {Blocks_BlogPreview_Index_BlocksBlogPreview_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlocksBlogPreview(props: Blocks_BlogPreview_Index_BlocksBlogPreview_Props) {

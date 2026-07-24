@@ -15,6 +15,7 @@ import SkipToContent from '@theme/SkipToContent';
 import { useSearchHighlight } from '../../lib/search/use-search-highlight.js';
 
 import type {
+  Theme_Layout_Index_Layout_CanDisplayFooter,
   Theme_Layout_Index_Layout_HighlightSearchTerms,
   Theme_Layout_Index_Layout_MetadataSpread,
   Theme_Layout_Index_Layout_PluginData,
@@ -30,8 +31,6 @@ import type {
  * without any module CSS or framework-specific class names.
  *
  * @param {Theme_Layout_Index_Layout_Props} props - Props.
- *
- * @constructor
  *
  * @since 0.15.0
  */
@@ -51,6 +50,8 @@ function Layout(props: Theme_Layout_Index_Layout_Props) {
   if (props['description'] !== undefined) {
     Reflect.set(metadataSpread, 'description', props['description']);
   }
+
+  const canDisplayFooter: Theme_Layout_Index_Layout_CanDisplayFooter = props['noFooter'] !== true;
 
   return (
     <LayoutProvider>
@@ -79,7 +80,7 @@ function Layout(props: Theme_Layout_Index_Layout_Props) {
         </ErrorBoundary>
       </div>
 
-      {(props['noFooter'] !== true) && (
+      {(canDisplayFooter === true) && (
         <Footer />
       )}
 

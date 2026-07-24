@@ -33,6 +33,7 @@ import {
 } from '../../lib/regex.js';
 import {
   buildGeneratedFileHeader,
+  collectConsumerWorkspacePaths,
   compareSemver,
   currentTimestamp,
   detectShell,
@@ -64,6 +65,8 @@ import type {
   Tests_Lib_Utility_BuildGeneratedFileHeader_ProducesAPrefixedStrictBannerForAYamlPath_Result,
   Tests_Lib_Utility_BuildGeneratedFileHeader_ProducesAPrefixedStrictBannerForAYmlPath_Result,
   Tests_Lib_Utility_BuildGeneratedFileHeader_ThrowsWhenTheTargetPathHasAnUnsupportedExtension_Threw,
+  Tests_Lib_Utility_CollectConsumerWorkspacePaths_CollectsConsumerWorkspacePathsAndSkipsTheProjectRoot_Paths,
+  Tests_Lib_Utility_CollectConsumerWorkspacePaths_ExcludesADotKeyedWorkspaceSoItNeverDuplicatesTheRoot_Paths,
   Tests_Lib_Utility_CompareSemver_ComparesNumericallyNotLexically_Result,
   Tests_Lib_Utility_CompareSemver_ReturnsNegativeWhenFirstVersionIsLower_Result,
   Tests_Lib_Utility_CompareSemver_ReturnsPositiveWhenFirstVersionIsHigher_Result,
@@ -169,6 +172,14 @@ import type {
   Tests_Lib_Utility_IsProjectRoot_ReturnsFalseWhenMultiplePackageJsonFilesFoundAbove_ProjectRoot,
   Tests_Lib_Utility_IsProjectRoot_ReturnsFalseWhenMultiplePackageJsonFilesFoundAbove_RealAppRoot,
   Tests_Lib_Utility_IsProjectRoot_ReturnsFalseWhenMultiplePackageJsonFilesFoundAbove_Result,
+  Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_MainGitDirectory,
+  Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_MainPackage,
+  Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_MainRoot,
+  Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_RealWorktreeRoot,
+  Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_Result,
+  Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_WorktreeGitFile,
+  Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_WorktreePackage,
+  Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_WorktreeRoot,
   Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsProjectRootWithSinglePackageJson_PackageJsonPath,
   Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsProjectRootWithSinglePackageJson_ProjectRoot,
   Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsProjectRootWithSinglePackageJson_RealProjectRoot,
@@ -704,6 +715,61 @@ describe('isExecuteShellError', async () => {
     const result: Tests_Lib_Utility_IsExecuteShellError_ReturnsFalseForObjectWithWrongPropertyTypes_Result = isExecuteShellError({ cmd: 123 });
 
     strictEqual(result, false);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Utility - Collect Consumer Workspace Paths.
+ *
+ * @since 0.20.0
+ */
+describe('collectConsumerWorkspacePaths', () => {
+  it('collects consumer workspace paths and skips the project root', () => {
+    // The root workspace keyed './' is excluded (the caller adds the root path itself); every
+    // consumer-facing workspace contributes a joined path to the requested filename.
+    const paths: Tests_Lib_Utility_CollectConsumerWorkspacePaths_CollectsConsumerWorkspacePathsAndSkipsTheProjectRoot_Paths = collectConsumerWorkspacePaths('/repo', {
+      './': {
+        name: 'test-project',
+        role: 'project',
+        policy: 'freezable',
+      },
+      './apps/web': {
+        name: 'test-app-web',
+        role: 'app',
+        policy: 'trackable',
+      },
+      './packages/lib-a': {
+        name: 'lib-a',
+        role: 'package',
+        policy: 'distributable',
+      },
+    }, 'LICENSE');
+
+    deepStrictEqual(paths, [
+      join('/repo', './apps/web', 'LICENSE'),
+      join('/repo', './packages/lib-a', 'LICENSE'),
+    ]);
+
+    return;
+  });
+
+  it('excludes a dot-keyed workspace so it never duplicates the root', () => {
+    // A '.'-keyed workspace resolves to the same directory as the root, so join(dir, '.', file)
+    // equals the root target the caller already adds. It must be excluded like './' rather than
+    // producing a duplicate of the root path.
+    const paths: Tests_Lib_Utility_CollectConsumerWorkspacePaths_ExcludesADotKeyedWorkspaceSoItNeverDuplicatesTheRoot_Paths = collectConsumerWorkspacePaths('/repo', {
+      '.': {
+        name: 'test-project',
+        role: 'app',
+        policy: 'trackable',
+      },
+    }, 'LICENSE');
+
+    deepStrictEqual(paths, []);
 
     return;
   });
@@ -1265,6 +1331,37 @@ describe('isProjectRoot', async () => {
     return;
   });
 
+  it('returns true when cwd is a git worktree root', async () => {
+    const mainRoot: Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_MainRoot = join(sandboxRoot, 'worktree');
+    const mainGitDirectory: Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_MainGitDirectory = join(mainRoot, '.git');
+    const worktreeRoot: Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_WorktreeRoot = join(mainRoot, '.worktrees', 'my-feature');
+
+    // Create the main checkout with a ".git" directory and the worktree below it.
+    await mkdir(mainGitDirectory, { recursive: true });
+    await mkdir(worktreeRoot, { recursive: true });
+
+    const mainPackage: Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_MainPackage = join(mainRoot, 'package.json');
+    const worktreePackage: Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_WorktreePackage = join(worktreeRoot, 'package.json');
+    const worktreeGitFile: Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_WorktreeGitFile = join(worktreeRoot, '.git');
+
+    // Git worktrees mark their root with a ".git" file instead of a directory.
+    await Promise.all([
+      writeFile(mainPackage, '{}\n'),
+      writeFile(worktreePackage, '{}\n'),
+      writeFile(worktreeGitFile, 'gitdir: ../../.git/worktrees/my-feature\n'),
+    ]);
+
+    const realWorktreeRoot: Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_RealWorktreeRoot = await realpath(worktreeRoot);
+
+    process.chdir(realWorktreeRoot);
+
+    const result: Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_Result = await isProjectRoot(realWorktreeRoot);
+
+    strictEqual(result, true);
+
+    return;
+  });
+
   it('returns false when cwd has no package.json above', async () => {
     const emptyDirectory: Tests_Lib_Utility_IsProjectRoot_ReturnsFalseWhenCwdHasNoPackageJsonAbove_EmptyDirectory = join(sandboxRoot, 'empty');
 
@@ -1478,6 +1575,7 @@ describe('saveWorkspaceManifest', async () => {
     };
 
     await saveWorkspaceManifest({
+      workspacePath: '.',
       manifest: {
         name: 'test',
         role: 'package',
@@ -1514,6 +1612,7 @@ describe('saveWorkspaceManifest', async () => {
     const statBefore: Tests_Lib_Utility_SaveWorkspaceManifest_SkipsWritingWhenFileContentsAreIdentical_StatBefore = await stat(filePath);
 
     await saveWorkspaceManifest({
+      workspacePath: '.',
       manifest: {
         name: 'test',
         role: 'package',
@@ -1551,6 +1650,7 @@ describe('saveWorkspaceManifest', async () => {
     };
 
     await saveWorkspaceManifest({
+      workspacePath: '.',
       manifest: {
         name: 'test',
         role: 'package',
@@ -2152,76 +2252,120 @@ describe('normalizeRouteSegment', () => {
 
     // Phase 1 — unwrap framework patterns.
     {
-      input: '[id]', expected: 'id', description: 'dynamic segment',
+      input: '[id]',
+      expected: 'id',
+      description: 'dynamic segment',
     },
     {
-      input: '[slug]', expected: 'slug', description: 'dynamic segment with longer name',
+      input: '[slug]',
+      expected: 'slug',
+      description: 'dynamic segment with longer name',
     },
     {
-      input: '[...name]', expected: 'name', description: 'catch-all segment',
+      input: '[...name]',
+      expected: 'name',
+      description: 'catch-all segment',
     },
     {
-      input: '[...not-found]', expected: 'not-found', description: 'catch-all with hyphen preserved',
+      input: '[...not-found]',
+      expected: 'not-found',
+      description: 'catch-all with hyphen preserved',
     },
     {
-      input: '[[...name]]', expected: 'name', description: 'optional catch-all segment',
+      input: '[[...name]]',
+      expected: 'name',
+      description: 'optional catch-all segment',
     },
     {
-      input: '[[...rest]]', expected: 'rest', description: 'optional catch-all with different name',
+      input: '[[...rest]]',
+      expected: 'rest',
+      description: 'optional catch-all with different name',
     },
     {
-      input: '(group)', expected: 'group', description: 'route group',
+      input: '(group)',
+      expected: 'group',
+      description: 'route group',
     },
     {
-      input: '(marketing)', expected: 'marketing', description: 'route group with name',
+      input: '(marketing)',
+      expected: 'marketing',
+      description: 'route group with name',
     },
     {
-      input: '@modal', expected: 'modal', description: 'parallel route slot',
+      input: '@modal',
+      expected: 'modal',
+      description: 'parallel route slot',
     },
     {
-      input: '@slot', expected: 'slot', description: 'parallel route with short name',
+      input: '@slot',
+      expected: 'slot',
+      description: 'parallel route with short name',
     },
 
     // Pass-through.
     {
-      input: 'components', expected: 'components', description: 'plain kebab-case pass-through',
+      input: 'components',
+      expected: 'components',
+      description: 'plain kebab-case pass-through',
     },
     {
-      input: 'package-json', expected: 'package-json', description: 'hyphen preserved',
+      input: 'package-json',
+      expected: 'package-json',
+      description: 'hyphen preserved',
     },
     {
-      input: 'MDXComponents', expected: 'MDXComponents', description: 'PascalCase preserved',
+      input: 'MDXComponents',
+      expected: 'MDXComponents',
+      description: 'PascalCase preserved',
     },
 
     // Phase 2 — dash-replace non-identifier chars.
     {
-      input: 'foo$bar', expected: 'foo-bar', description: 'dollar replaced with hyphen',
+      input: 'foo$bar',
+      expected: 'foo-bar',
+      description: 'dollar replaced with hyphen',
     },
     {
-      input: 'hello.world', expected: 'hello-world', description: 'dot replaced with hyphen',
+      input: 'hello.world',
+      expected: 'hello-world',
+      description: 'dot replaced with hyphen',
     },
     {
-      input: 'hello world', expected: 'hello-world', description: 'space replaced with hyphen',
+      input: 'hello world',
+      expected: 'hello-world',
+      description: 'space replaced with hyphen',
     },
     {
-      input: 'hello..world', expected: 'hello--world', description: 'multiple dots become multiple hyphens',
+      input: 'hello..world',
+      expected: 'hello--world',
+      description: 'multiple dots become multiple hyphens',
     },
 
     // Empty-signal cases.
     {
-      input: '', expected: '', description: 'empty string returns empty',
+      input: '',
+      expected: '',
+      description: 'empty string returns empty',
     },
     {
-      input: '   ', expected: '', description: 'whitespace-only returns empty',
+      input: '   ',
+      expected: '',
+      description: 'whitespace-only returns empty',
     },
     {
-      input: '@@@', expected: '', description: 'no alphanumeric returns empty',
+      input: '@@@',
+      expected: '',
+      description: 'no alphanumeric returns empty',
     },
     {
-      input: '[]', expected: '', description: 'empty brackets return empty',
+      input: '[]',
+      expected: '',
+      description: 'empty brackets return empty',
     },
     {
-      input: '[.]', expected: '', description: 'only punctuation returns empty',
+      input: '[.]',
+      expected: '',
+      description: 'only punctuation returns empty',
     },
   ];
 

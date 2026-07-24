@@ -123,13 +123,13 @@ export class Runner {
   /**
    * Rules - ESLint - TypeScript - Require Type Naming - Normalized Path Segments.
    *
-   * Produces the normalized segment list shared by derivePrefix and the invalid
-   * prefix diagnostic. Returns an empty list when the filename lacks the
+   * Produces the normalized segment list shared by derivePrefix and the
+   * invalid prefix diagnostic. Returns an empty list when the filename lacks the
    * expected `/types/` anchor so callers can skip enforcement.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Filename} filename - Filename.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Returns}
    *
@@ -167,9 +167,9 @@ export class Runner {
    * underscore-separated PascalCase prefix string (e.g. `Cli_Utility_Changelog`).
    * Called by checkTypeAlias to compare against each type name.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Filename} filename - Filename.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Returns}
    *
@@ -210,9 +210,9 @@ export class Runner {
    * resulting prefix when the first character would be a digit. Null otherwise
    * so the caller can proceed with normal naming enforcement.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Filename} filename - Filename.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Returns}
    *
@@ -250,10 +250,10 @@ export class Runner {
    * by checking that its name starts with the prefix
    * derived from the current file path.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Context} context - Context.
    * @param {Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Returns}
    *

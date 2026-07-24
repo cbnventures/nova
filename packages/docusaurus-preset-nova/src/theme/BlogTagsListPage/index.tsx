@@ -19,8 +19,6 @@ import type {
  *
  * @param {Theme_BlogTagsListPage_Index_BlogTagsListPage_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlogTagsListPage(props: Theme_BlogTagsListPage_Index_BlogTagsListPage_Props) {

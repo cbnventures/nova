@@ -71,7 +71,8 @@ describe.skip('CliScaffoldAppWorkers.run', async () => {
     await mkdir(childDirectory, { recursive: true });
 
     const rootPackageJson: Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJson = JSON.stringify({
-      name: 'root', workspaces: ['apps/*'],
+      name: 'root',
+      workspaces: ['apps/*'],
     }, null, 2);
 
     const rootPackageJsonPath: Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJsonPath = join(rootDirectory, 'package.json');
@@ -173,7 +174,8 @@ describe.skip('CliScaffoldAppWorkers.run', async () => {
     await mkdir(projectDirectory, { recursive: true });
 
     const packageJson: Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_PackageJson = JSON.stringify({
-      name: 'root', workspaces: ['apps/*'],
+      name: 'root',
+      workspaces: ['apps/*'],
     }, null, 2);
     const packageJsonPath: Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_PackageJsonPath = join(projectDirectory, 'package.json');
 

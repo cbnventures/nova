@@ -1,0 +1,514 @@
+{
+  "home.layout.description": {
+    "message": "Signal, niyetin nasıl yol aldığını izler — ilk gösterimden son eyleme kadar. Sadece neyin tıklandığını değil. Neden tıklandığını.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Signal - Her Tıklama Bir Hikaye Anlatır",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "İlişkilendirme Motoru",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Her tıklama bir hikaye anlatır. Çoğu araç olay örgüsünü kaçırır.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Signal, niyetin nasıl yol aldığını izler — ilk gösterimden son eyleme kadar. Sadece neyin tıklandığını değil. Neden tıklandığını. Ve neyin neredeyse tıklanacağını.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Başlayın",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Threadbare'de Görüntüleyin",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.beacon.description": {
+    "message": "Bağlantı üretim motoru. URL kısaltmadan, mesajlaşma uygulamalarından ve cihazlar arası geçişlerden sağ çıkan, gömülü ilişkilendirme meta verisi taşıyan markalı kısa bağlantılar. Her bağlantı bir sensördür.",
+    "description": "Front page Features card description for Beacon"
+  },
+  "home.features.prism.description": {
+    "message": "Çok temaslı ilişkilendirme modelleyici. Kanallar arasında dönüşüm yollarını izler, her temas noktasına ağırlıklı pay atar ve ilk karşılaşmadan son eyleme kadar tüm yolculuğu yeniden kurar.",
+    "description": "Front page Features card description for Prism"
+  },
+  "home.features.pulse.description": {
+    "message": "Gerçek zamanlı tıklama akışı. Her etkileşimin canlı akışı — geo, cihaz, referrer ve ilişkilendirme verisi — her tıklamadan sonra bir saniye içinde ulaşır.",
+    "description": "Front page Features card description for Pulse"
+  },
+  "home.features.aperture.description": {
+    "message": "Kampanya anlık görüntüleri. Karşılaştırma katmanlarıyla belirli bir ana ait performans kayıtları. Bir kampanyadaki herhangi iki an arasında tam olarak neyin değiştiğini görün.",
+    "description": "Front page Features card description for Aperture"
+  },
+  "home.features.resonance.description": {
+    "message": "Kitle örtüşmesi dedektörü. Kampanyalar ve segmentler arasında kitlelerin nerede iç içe geçtiğini bulur. Aynı kişilere ulaşmak için iki kez ödeme yapmayı bırakın.",
+    "description": "Front page Features card description for Resonance"
+  },
+  "home.features.flare.description": {
+    "message": "QR ve deep link oluşturucu. Fiziksel ve dijital ilişkilendirmeyi eksiksiz izleme meta verisiyle birbirine bağlar. Her tarama, dijital bir tıklamayla aynı zekâyı taşır.",
+    "description": "Front page Features card description for Flare"
+  },
+  "home.stats.heading": {
+    "message": "Rakamlarla",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.latency.label": {
+    "message": "Yönlendirme gecikmesi",
+    "description": "Front page Stats label for redirect latency"
+  },
+  "home.stats.links.label": {
+    "message": "İzlenen bağlantılar",
+    "description": "Front page Stats label for links traced"
+  },
+  "home.stats.uptime.label": {
+    "message": "Çalışma süresi",
+    "description": "Front page Stats label for uptime"
+  },
+  "home.stats.regions.label": {
+    "message": "Bölgeler",
+    "description": "Front page Stats label for regions"
+  },
+  "home.spotlight.heading": {
+    "message": "Beacon'dan İlişkilendirmeye",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Her bağlantı bir sensördür. Her yönlendirme bir veri noktasıdır. Prism bunları tek bir ilişkilendirme yolunda birleştirir.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Kampanyalarınızı hareket halindeyken izleyin",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "İlişkilendirme İçgörüleri",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Vaka çalışmaları, teknik derinlemesine incelemeler ve tıklama akışlarınızda gizlenen desenler.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "docusaurus-preset-nova'daki her bloğu sergileyen Signal blok vitrini.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Signal preset'indeki her blok, örnek verilerle işlenmiş.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (tam)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Blok Vitrini",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Her Signal bloğu, tek bir yerde sergileniyor.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Bu sayfa, @cbnventures/docusaurus-preset-nova/blocks içindeki her bloğu Signal dünyasına ait verilerle işler; böylece nasıl göründüklerini ve davrandıklarını görebilirsiniz.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Belgeleri Okuyun",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Threadbare'de Görüntüleyin",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (sade)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Signal, niyetin nasıl yol aldığını izler — ilk gösterimden son eyleme kadar. Sadece neyin tıklandığını değil. Neden tıklandığını. Ve neyin neredeyse tıklanacağını.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Başlayın",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (varsayılan)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Bayıldığım şey: ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (önek yok)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Hızlı",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Esnek",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Ücretsiz",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (yavaş zamanlama)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Şunlar için tasarlandı: ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "geliştiriciler",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "tasarımcılar",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (döngüsüz)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Hoş geldiniz: ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Spark ile kurun",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Ya da Loom Registry'yi kullanın",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (etiketsiz)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Hızlı kurulum",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (simgeli)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Ekipler Neden Signal'ı Seçiyor",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.beacon.description": {
+    "message": "Bağlantı üretim motoru. UTM parametrelerinin başarısız olduğu yerde ayakta kalan, gömülü ilişkilendirme meta verisi taşıyan markalı kısa bağlantılar.",
+    "description": "Showcase Features (with icons) card description for Beacon"
+  },
+  "showcase.featuresIcons.prism.description": {
+    "message": "Çok temaslı ilişkilendirme modelleyici. Kanallar arasında dönüşüm yollarını izler ve her temas noktasına ağırlıklı pay atar.",
+    "description": "Showcase Features (with icons) card description for Prism"
+  },
+  "showcase.featuresIcons.pulse.description": {
+    "message": "Gerçek zamanlı tıklama akışı. Geo, cihaz, referrer ve ilişkilendirme verisiyle etkileşimlerin canlı akışı.",
+    "description": "Showcase Features (with icons) card description for Pulse"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (simgesiz, başlıksız)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.aperture.description": {
+    "message": "Kampanya anlık görüntüleri. Zaman aralıkları boyunca karşılaştırma katmanlarıyla belirli bir ana ait performans kayıtları.",
+    "description": "Showcase Features (no icons) card description for Aperture"
+  },
+  "showcase.featuresNoIcons.resonance.description": {
+    "message": "Kitle örtüşmesi dedektörü. Kampanyalar ve segmentler arasında kitlelerin nerede iç içe geçtiğini bulur.",
+    "description": "Showcase Features (no icons) card description for Resonance"
+  },
+  "showcase.featuresNoIcons.flare.description": {
+    "message": "QR ve deep link oluşturucu. Her taramada eksiksiz ilişkilendirme zinciriyle fizikselden dijitale köprü.",
+    "description": "Showcase Features (no icons) card description for Flare"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (altı öğe, karışık simgeler)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Eksiksiz İlişkilendirme Yığını",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.beacon.description": {
+    "message": "Gömülü izleme meta verisiyle markalı bağlantılar üretir. Her bağlantı, ilişkilendirme ağındaki bir sensördür.",
+    "description": "Showcase Features (six items) card description for Beacon"
+  },
+  "showcase.featuresSix.prism.description": {
+    "message": "Tüm dönüşüm yolunu yeniden kurar. Doğrusal, azalan, konum bazlı ve özel ilişkilendirme modellerini destekler.",
+    "description": "Showcase Features (six items) card description for Prism"
+  },
+  "showcase.featuresSix.pulse.description": {
+    "message": "Tıklama olaylarını gerçek zamanlı olarak akıtır. Kampanya, kanal, geo veya cihaza göre filtreleyin.",
+    "description": "Showcase Features (six items) card description for Pulse"
+  },
+  "showcase.featuresSix.aperture.description": {
+    "message": "Değiştirilemez kampanya anlık görüntüleri yakalar. Neyin değiştiğini görmek için herhangi iki zaman noktasını karşılaştırın.",
+    "description": "Showcase Features (six items) card description for Aperture"
+  },
+  "showcase.featuresSix.resonance.description": {
+    "message": "Segmentler arasında kitle örtüşmesini ölçer. Kampanyaların aynı ziyaretçiler için rekabet ettiği durumları saptar.",
+    "description": "Showcase Features (six items) card description for Resonance"
+  },
+  "showcase.featuresSix.flare.description": {
+    "message": "Eksiksiz ilişkilendirmeyle QR kodları ve deep link'ler oluşturur. Baskı, etkinlik ve dijitali birbirine bağlar.",
+    "description": "Showcase Features (six items) card description for Flare"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (başlık ve açıklamalı)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "İlişkilendirme Metrikleri",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Signal platformu genelinde temel performans göstergeleri.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Yönlendirme gecikmesi",
+    "description": "Showcase Stats (full) label for redirect latency"
+  },
+  "showcase.statsFull.links.label": {
+    "message": "İzlenen bağlantılar",
+    "description": "Showcase Stats (full) label for links traced"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "Çalışma süresi SLA'sı",
+    "description": "Showcase Stats (full) label for uptime SLA"
+  },
+  "showcase.statsFull.regions.label": {
+    "message": "Hizmet verilen bölgeler",
+    "description": "Showcase Stats (full) label for regions served"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (başlıksız)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "Alt araçlar",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.models.label": {
+    "message": "İlişkilendirme modelleri",
+    "description": "Showcase Stats (no heading) label for attribution models"
+  },
+  "showcase.statsNoHeading.operators.label": {
+    "message": "Segment operatörleri",
+    "description": "Showcase Stats (no heading) label for segment operators"
+  },
+  "showcase.statsNoHeading.pixels.label": {
+    "message": "Gerekli izleme pikselleri",
+    "description": "Showcase Stats (no heading) label for tracking pixels required"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (kodlu)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Hızlı Başlangıç",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Sıfırdan tam ilişkilendirilmiş bir bağlantıya üç komutla ulaşın.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (metinli)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Nasıl Çalışır",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Signal, ilişkilendirme meta verisini bağlantının kendisine gömer — ayıklanan sorgu parametrelerine değil, kaybolan referrer başlıklarına değil. Bir tıklama gerçekleştiğinde, Pulse onu yakalar. Bir dönüşüm gerçekleştiğinde, Prism tüm yolu yeniden kurar. İzleme pikseli yok. Sayfa tarafı betiği yok.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (açıklamalı)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "İlişkilendirme İçgörüleri",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Vaka çalışmaları, kampanya adli incelemeleri ve tıklama akışlarınızda gizlenen desenler.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Viral Bir Kampanyayı Salı Günkü Bir Bültendeki Tek Bir Bağlantıya Kadar İzledik",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Kimsenin önemli olarak işaretlemediği bir kenar çubuğu bağlantısına dayandırılan %40'lık bir dönüşüm sıçraması.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Karanlık Trafik: Göremediğiniz Tıklamalar",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Birisi bir URL'yi bir mesajlaşma uygulamasına kopyaladığında, referrer kaybolur. Beacon meta verisi ayakta kalır.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Son Tıklama İlişkilendirmesinin Ölümü",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Payı yalnızca son temas noktasına vermek bir yalandır. Prism, payı tüm yola dağıtır.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (açıklamasız)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Son Güncellemeler",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Signal 2.1: Resonance Örtüşme Haritaları ve Flare Toplu Üretim",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Resonance artık sınırsız segment genelinde kitle örtüşmesini görselleştiriyor ve Flare, CSV'den toplu QR üretimini destekliyor.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (satır içi kullanım)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Signal, ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.beaconLinks.title": {
+    "message": "markalı ilişkilendirme bağlantısı",
+    "description": "Showcase Terminology hover title for Beacon links"
+  },
+  "showcase.terminology.beaconLinks.label": {
+    "message": "Beacon bağlantılarını",
+    "description": "Showcase Terminology displayed text for Beacon links"
+  },
+  "showcase.terminology.paragraph1.afterBeacon": {
+    "message": " kullanarak gösterimden dönüşüme giden yolu izler. Her tıklama ",
+    "description": "Showcase Terminology paragraph 1 fragment after Beacon links"
+  },
+  "showcase.terminology.pulse.title": {
+    "message": "gerçek zamanlı tıklama akışı",
+    "description": "Showcase Terminology hover title for Pulse"
+  },
+  "showcase.terminology.paragraph1.afterPulse": {
+    "message": " tarafından yakalanır ve tam yol ilişkilendirmesi için ",
+    "description": "Showcase Terminology paragraph 1 fragment after Pulse"
+  },
+  "showcase.terminology.prism.title": {
+    "message": "çok temaslı ilişkilendirme motoru",
+    "description": "Showcase Terminology hover title for Prism"
+  },
+  "showcase.terminology.paragraph1.afterPrism": {
+    "message": "'e beslenir.",
+    "description": "Showcase Terminology paragraph 1 fragment after Prism"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Ekipler, ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.aperture.title": {
+    "message": "belirli bir ana ait kampanya anlık görüntüsü",
+    "description": "Showcase Terminology hover title for Aperture snapshots"
+  },
+  "showcase.terminology.aperture.label": {
+    "message": "Aperture anlık görüntüleriyle",
+    "description": "Showcase Terminology displayed text for Aperture snapshots"
+  },
+  "showcase.terminology.paragraph2.afterAperture": {
+    "message": " kampanya performansını zaman içinde takip eder. ",
+    "description": "Showcase Terminology paragraph 2 fragment after Aperture"
+  },
+  "showcase.terminology.resonance.title": {
+    "message": "kitle örtüşmesi dedektörü",
+    "description": "Showcase Terminology hover title for Resonance engine"
+  },
+  "showcase.terminology.resonance.label": {
+    "message": "Resonance motoru",
+    "description": "Showcase Terminology displayed text for Resonance engine"
+  },
+  "showcase.terminology.paragraph2.afterResonance": {
+    "message": " kitlelerin nerede örtüştüğünü ortaya çıkarır ve ",
+    "description": "Showcase Terminology paragraph 2 fragment after Resonance"
+  },
+  "showcase.terminology.flare.title": {
+    "message": "QR ve deep link oluşturucu",
+    "description": "Showcase Terminology hover title for Flare"
+  },
+  "showcase.terminology.paragraph2.afterFlare": {
+    "message": " ilişkilendirmeyi fiziksel dünyaya taşır.",
+    "description": "Showcase Terminology paragraph 2 fragment after Flare"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (başlıklı)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Bir Frame bloğuyla büyütülen ve ilişkilendirme için başlık eklenen marka işareti.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Signal marka küçük resmi.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (başlıksız)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (her iki mağaza)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Yardımcı uygulamayı indirin",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (yalnızca App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "iOS'ta mevcut",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (yalnızca Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Android'de mevcut",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (etiketsiz)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} dakikalık okuma",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

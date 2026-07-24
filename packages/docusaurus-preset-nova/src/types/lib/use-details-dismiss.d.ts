@@ -14,13 +14,13 @@ export type Lib_UseDetailsDismiss_Returns = undefined;
  *
  * @since 0.18.0
  */
-export type Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown = (event: Lib_UseDetailsDismiss_UseDetailsDismiss_MouseEvent) => undefined;
-
 export type Lib_UseDetailsDismiss_UseDetailsDismiss_MouseEvent = MouseEvent;
 
-export type Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown = (event: Lib_UseDetailsDismiss_UseDetailsDismiss_KeyboardEvent) => undefined;
+export type Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown = (event: Lib_UseDetailsDismiss_UseDetailsDismiss_MouseEvent) => undefined;
 
 export type Lib_UseDetailsDismiss_UseDetailsDismiss_KeyboardEvent = KeyboardEvent;
+
+export type Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown = (event: Lib_UseDetailsDismiss_UseDetailsDismiss_KeyboardEvent) => undefined;
 
 /**
  * Lib - Use Details Dismiss - Use Details Dismiss - Handle Key Down.

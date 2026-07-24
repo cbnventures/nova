@@ -4,25 +4,28 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "node ../../scripts/run-scripts.mjs --parallel 'dev:*'",
+    "dev": "node ../../scripts/nova-run-scripts.mjs --parallel 'dev:*'",
     "dev:start": "PORTLESS_PORT=3000 portless dev-nova-demo-sentinel docusaurus start --host 0.0.0.0 --no-open",
-    "prod": "node ../../scripts/run-scripts.mjs --sequential 'prod:*'",
+    "prod": "node ../../scripts/nova-run-scripts.mjs --sequential 'prod:*'",
     "prod:serve": "PORTLESS_PORT=3000 portless prod-nova-demo-sentinel docusaurus serve --host 0.0.0.0 --no-open",
-    "build": "node ../../scripts/run-scripts.mjs --sequential 'build:*'",
+    "build": "node ../../scripts/nova-run-scripts.mjs --sequential 'build:*'",
     "build:build": "docusaurus build",
     "build:transpile-app": "nova utility transpile --project tsconfig.app.json",
     "build:fix-markdown-tables": "node ../../scripts/fix-markdown-tables.mjs",
-    "check": "node ../../scripts/run-scripts.mjs --sequential 'check:*'",
+    "i18n": "theme-nova i18n sync",
+    "i18n:check": "theme-nova i18n check",
+    "i18n:coverage": "theme-nova i18n coverage",
+    "check": "node ../../scripts/nova-run-scripts.mjs --sequential 'check:*'",
     "check:lint": "eslint ./ --max-warnings=0",
     "check:types-app": "nova utility type-check --project tsconfig.app.json",
     "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
     "check:test": "vitest run",
-    "clean": "node ../../scripts/run-scripts.mjs --parallel 'clean:*'",
+    "clean": "node ../../scripts/nova-run-scripts.mjs --parallel 'clean:*'",
     "clean:build": "shx rm -rf ./build",
     "clean:clear": "docusaurus clear"
   },
   "engines": {
-    "node": "^20 || ^22 || ^24"
+    "node": "^22 || ^24"
   },
   "dependencies": {
     "@cbnventures/docusaurus-preset-nova": "file:../../packages/docusaurus-preset-nova",

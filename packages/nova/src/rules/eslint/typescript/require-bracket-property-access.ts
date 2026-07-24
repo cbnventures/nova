@@ -109,11 +109,11 @@ export class Runner {
    * Uses the TypeScript type checker to determine whether the accessed property is
    * project-defined. Third-party and class instance access is allowed through.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Context} context - Context.
    * @param {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Node}    node    - Node.
    * @param {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Returns}
    *
@@ -194,7 +194,18 @@ export class Runner {
           },
           fix(fixer) {
             const objectText: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_ObjectText = context.sourceCode.getText(node.object);
-            const needsParens: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_NeedsParens = node.object.type === 'AwaitExpression';
+
+            // Wrap objects whose precedence is lower than member access so the brackets bind to the whole object, not just its tail.
+            const needsParens: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_NeedsParens = (
+              node.object.type === 'ArrowFunctionExpression'
+              || node.object.type === 'AwaitExpression'
+              || node.object.type === 'BinaryExpression'
+              || node.object.type === 'ConditionalExpression'
+              || node.object.type === 'LogicalExpression'
+              || node.object.type === 'SequenceExpression'
+              || node.object.type === 'TSAsExpression'
+              || node.object.type === 'TSSatisfiesExpression'
+            );
             const wrappedText: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Fix_WrappedText = (needsParens === true) ? `(${objectText})` : objectText;
 
             return fixer.replaceText(node, `${wrappedText}['${propertyName}']`);

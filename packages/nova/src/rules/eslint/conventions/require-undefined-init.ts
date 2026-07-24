@@ -84,10 +84,10 @@ export class Runner {
    * Only targets let declarations with a null init, skipping for-in and for-of loop variables.
    * Provides an auto-fix that appends = undefined after the id.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Context} context - Context.
    * @param {Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Returns}
    *

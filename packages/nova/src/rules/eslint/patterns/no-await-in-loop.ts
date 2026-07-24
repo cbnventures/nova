@@ -126,11 +126,11 @@ export class Runner {
    * options then delegates to getEnclosingLoop to determine
    * whether the await sits inside one.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Context} context - Context.
    * @param {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Node}    node    - Node.
    * @param {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Returns}
    *
@@ -177,10 +177,10 @@ export class Runner {
    * returns the first disallowed loop ancestor. Stops at
    * function boundaries to avoid cross-scope matches.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Node}                node                - Node.
    * @param {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_DisallowedLoopTypes} disallowedLoopTypes - Disallowed loop types.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Returns}
    *
@@ -189,7 +189,7 @@ export class Runner {
   private static getEnclosingLoop(node: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Node, disallowedLoopTypes: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_DisallowedLoopTypes): Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Returns {
     let current: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Current = node.parent;
 
-    while (current !== undefined) {
+    while (current !== undefined && current !== null) {
       if (Runner.#boundaryTypes.has(current.type) === true) {
         return undefined;
       }

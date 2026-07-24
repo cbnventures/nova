@@ -1,4 +1,5 @@
 import { registerLinkSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 /**
  * Tests - Link.
@@ -10,5 +11,6 @@ import { registerLinkSuite } from '@cbnventures/nova/rules/vitest';
  * @since 0.20.0
  */
 registerLinkSuite({
+  vitest,
   enable: 'all',
 });

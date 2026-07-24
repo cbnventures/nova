@@ -17,8 +17,6 @@ import type {
  *
  * @param {Theme_DocSidebarItems_Index_DocSidebarItems_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocSidebarItems(props: Theme_DocSidebarItems_Index_DocSidebarItems_Props) {

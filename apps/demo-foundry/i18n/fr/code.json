@@ -1,0 +1,510 @@
+{
+  "home.layout.description": {
+    "message": "Foundry lit votre intention et forge tout votre environnement de développement à partir d'un seul manifeste.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Foundry - Chaque outil commence à l'état de métal brut",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Outils pour développeurs",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Chaque outil commence à l'état de métal brut.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Foundry lit votre intention et forge tout votre environnement de développement à partir d'un seul manifeste. Arrêtez de configurer. Commencez à décrire.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Commencer",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Voir sur Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.anvil.description": {
+    "message": "Le CLI central. Il lit un seul manifeste Blueprint et forge tout votre espace de travail : arborescence des dossiers, graphe de dépendances, configuration de build et règles de linting. Un fichier en entrée, un environnement complet en sortie.",
+    "description": "Front page Features card description for Anvil"
+  },
+  "home.features.tongs.description": {
+    "message": "Résolveur et visualiseur de graphe de dépendances. Il cartographie chaque relation entre les paquets de l'espace de travail et affiche l'arbre complet, pour voir qui dépend de quoi avant de toucher à quoi que ce soit.",
+    "description": "Front page Features card description for Tongs"
+  },
+  "home.features.quench.description": {
+    "message": "Cache de build incrémental qui suit les empreintes des fichiers et ne reconstruit que ce qui a réellement changé. Une forge à froid prend 14 secondes. Une forge à chaud, moins de deux.",
+    "description": "Front page Features card description for Quench"
+  },
+  "home.features.bellows.description": {
+    "message": "Exécuteur de tâches parallèle qui répartit le travail sur chaque paquet de l'espace de travail en même temps. Il respecte le graphe de dépendances de Tongs, pour qu'aucune tâche ne démarre avant la fin de ses prérequis.",
+    "description": "Front page Features card description for Bellows"
+  },
+  "home.features.crucible.description": {
+    "message": "Générateur de bancs de test qui lit vos signatures de types et écrit l'ossature des tests à votre place. Tests par instantané, modèles d'assertions et fichiers de fixtures : le tout dérivé des types que vous avez déjà écrits.",
+    "description": "Front page Features card description for Crucible"
+  },
+  "home.features.slag.description": {
+    "message": "Détecteur de code mort et de dépendances inutilisées. Il analyse chaque import, chaque export et chaque entrée de votre Blueprint pour repérer ce qui n'est plus référencé. Retirez les scories, gardez l'acier.",
+    "description": "Front page Features card description for Slag"
+  },
+  "home.stats.heading": {
+    "message": "En chiffres",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manifest.label": {
+    "message": "Manifeste",
+    "description": "Front page Stats label for manifest count"
+  },
+  "home.stats.configFiles.label": {
+    "message": "Fichiers de configuration",
+    "description": "Front page Stats label for config file count"
+  },
+  "home.stats.coldForge.label": {
+    "message": "Forge à froid",
+    "description": "Front page Stats label for cold forge time"
+  },
+  "home.stats.wardenRules.label": {
+    "message": "Règles Warden",
+    "description": "Front page Stats label for Warden rule count"
+  },
+  "home.spotlight.heading": {
+    "message": "Un seul manifeste, tout est connecté",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Décrivez ce que vous voulez. Foundry s'occupe du reste.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Gérez votre forge où que vous soyez",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Nouvelles de la forge",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Philosophie, benchmarks et les opinions que nous avons livrées.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Vitrine des blocs Foundry, présentant chaque bloc de docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Chaque bloc du preset Foundry, rendu avec des données d'exemple.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (complet)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Vitrine des blocs",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Chaque bloc Foundry, présenté au même endroit.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Cette page affiche chaque bloc de @cbnventures/docusaurus-preset-nova/blocks avec des données de l'univers Foundry, pour que vous voyiez leur apparence et leur comportement.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Lire la documentation",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Voir sur Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Façonnez ce que vous livrez.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Foundry lit votre intention et forge tout votre environnement de développement à partir d'un seul manifeste. Arrêtez de configurer. Commencez à décrire.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Commencer",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (par défaut)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "J'adore ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (sans préfixe)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Rapide",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Gratuit",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (rythme lent)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Conçu pour ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "les développeurs",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "les designers",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (sans boucle)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Bienvenue dans ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Installer avec Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Ou utilisez le Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (sans étiquette)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Installation rapide",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (avec icônes)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Pourquoi les équipes choisissent Foundry",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.anvil.description": {
+    "message": "Le CLI central. Il lit un manifeste Blueprint et forge votre espace de travail : arborescence des dossiers, graphe de dépendances, configuration de build et règles de linting.",
+    "description": "Showcase Features (with icons) card description for Anvil"
+  },
+  "showcase.featuresIcons.tongs.description": {
+    "message": "Résolveur et visualiseur de graphe de dépendances. Il cartographie chaque relation entre les paquets et affiche l'arbre complet.",
+    "description": "Showcase Features (with icons) card description for Tongs"
+  },
+  "showcase.featuresIcons.quench.description": {
+    "message": "Cache de build incrémental qui suit les empreintes des fichiers et ne reconstruit que ce qui a changé. Une forge à froid prend 14 secondes. Une forge à chaud, moins de deux.",
+    "description": "Showcase Features (with icons) card description for Quench"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (sans icônes ni titre)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.bellows.description": {
+    "message": "Exécuteur de tâches parallèle qui répartit le travail sur chaque paquet de l'espace de travail en même temps. Il respecte le graphe de dépendances de Tongs.",
+    "description": "Showcase Features (no icons) card description for Bellows"
+  },
+  "showcase.featuresNoIcons.crucible.description": {
+    "message": "Générateur de bancs de test qui lit vos signatures de types et écrit l'ossature des tests. Tests par instantané et modèles d'assertions inclus.",
+    "description": "Showcase Features (no icons) card description for Crucible"
+  },
+  "showcase.featuresNoIcons.slag.description": {
+    "message": "Détecteur de code mort et de dépendances inutilisées. Il analyse chaque import et chaque export pour repérer ce qui n'est plus référencé.",
+    "description": "Showcase Features (no icons) card description for Slag"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (six éléments, icônes mixtes)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Tout dans une seule forge",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.anvil.description": {
+    "message": "Lit votre manifeste et génère chaque artefact de configuration dont votre espace de travail a besoin. Un fichier en entrée, tout en sortie.",
+    "description": "Showcase Features (six items) card description for Anvil"
+  },
+  "showcase.featuresSix.tongs.description": {
+    "message": "Résout le graphe de dépendances, détecte les cycles et fournit des outils de requête pour le scripting et l'intégration aux pipelines.",
+    "description": "Showcase Features (six items) card description for Tongs"
+  },
+  "showcase.featuresSix.quench.description": {
+    "message": "Cache de build adressable par contenu. Si les entrées n'ont pas changé, le build est entièrement ignoré.",
+    "description": "Showcase Features (six items) card description for Quench"
+  },
+  "showcase.featuresSix.bellows.description": {
+    "message": "Ordonnance les tâches de build par vagues selon le graphe de dépendances. Les paquets indépendants se construisent en parallèle.",
+    "description": "Showcase Features (six items) card description for Bellows"
+  },
+  "showcase.featuresSix.crucible.description": {
+    "message": "Génère des ossatures de test à partir des signatures de types. Tests par instantané, modèles d'assertions et fichiers de fixtures.",
+    "description": "Showcase Features (six items) card description for Crucible"
+  },
+  "showcase.featuresSix.slag.description": {
+    "message": "Repère le code mort et les dépendances orphelines. Retirez les scories, gardez l'acier.",
+    "description": "Showcase Features (six items) card description for Slag"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (avec titre et description)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Métriques de forge",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Indicateurs de performance clés sur un espace de travail de 200 paquets.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.coldForge.label": {
+    "message": "Temps de forge à froid",
+    "description": "Showcase Stats (full) label for cold forge time"
+  },
+  "showcase.statsFull.warmForge.label": {
+    "message": "Temps de forge à chaud",
+    "description": "Showcase Stats (full) label for warm forge time"
+  },
+  "showcase.statsFull.cacheHit.label": {
+    "message": "Taux de succès du cache",
+    "description": "Showcase Stats (full) label for cache hit rate"
+  },
+  "showcase.statsFull.wardenRules.label": {
+    "message": "Règles Warden",
+    "description": "Showcase Stats (full) label for Warden rule count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (sans titre)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.manifest.label": {
+    "message": "Manifeste",
+    "description": "Showcase Stats (no heading) label for manifest"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "Fichiers de configuration",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "Sous-outils",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.maxPackages.label": {
+    "message": "Nombre max de paquets testés",
+    "description": "Showcase Stats (no heading) label for max packages tested"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (avec code)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Démarrage rapide",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Trois commandes pour passer de zéro à un espace de travail entièrement forgé.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (avec texte)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Comment ça marche",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Foundry lit votre manifeste, résout le graphe de dépendances avec Tongs et génère chaque artefact de configuration de façon déterministe. La même entrée produit toujours la même sortie : aucun effet de bord, aucun état caché.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (avec description)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Nouvelles de la forge",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Philosophie, benchmarks et les opinions que nous avons livrées.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Pourquoi nous avons cessé d'écrire des fichiers de configuration",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "La dérive de configuration est le tueur silencieux des espaces de travail. Nous avons créé Foundry parce que nous étions convaincus que l'intention devait être déclarative.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Forger un monorepo de 200 paquets en 14 secondes",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Comment le cache de Quench et le parallélisme de Bellows ont transformé un build de douze minutes en une forge de quatorze secondes.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Les règles Warden que nous avons failli ne pas livrer",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Nous avons écrit 380 règles de linting et en avons abandonné 60. Voici celles qui ont survécu, et les débats qui ont failli diviser l'équipe.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (sans description)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Dernières mises à jour",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Foundry 2.4 : le mode automatique de Crucible et la détection Slag",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Crucible régénère désormais les ossatures de test automatiquement à chaque forge, et Slag détecte les dépendances inutilisées sur l'ensemble du graphe de l'espace de travail.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (usage en ligne)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Foundry utilise un ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.manifest.title": {
+    "message": "fichier de configuration de l'espace de travail",
+    "description": "Showcase Terminology hover title for manifest"
+  },
+  "showcase.terminology.manifest.label": {
+    "message": "manifeste",
+    "description": "Showcase Terminology displayed text for manifest"
+  },
+  "showcase.terminology.paragraph1.afterManifest": {
+    "message": " pour piloter toute la génération de code et la configuration. Chaque paquet de l'espace de travail est géré par le processus de ",
+    "description": "Showcase Terminology paragraph 1 fragment after manifest"
+  },
+  "showcase.terminology.forge.title": {
+    "message": "processus de génération de la configuration",
+    "description": "Showcase Terminology hover title for forge"
+  },
+  "showcase.terminology.paragraph1.afterForge": {
+    "message": " qui maintient chaque artefact synchronisé. Lorsque vous devez valider la qualité du code, le moteur ",
+    "description": "Showcase Terminology paragraph 1 fragment after forge"
+  },
+  "showcase.terminology.warden.title": {
+    "message": "moteur d'analyse statique",
+    "description": "Showcase Terminology hover title for Warden"
+  },
+  "showcase.terminology.paragraph1.afterWarden": {
+    "message": " applique chaque règle sans configuration supplémentaire.",
+    "description": "Showcase Terminology paragraph 1 fragment after Warden"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Grâce au ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.presetSystem.title": {
+    "message": "preset de collection de règles",
+    "description": "Showcase Terminology hover title for preset system"
+  },
+  "showcase.terminology.presetSystem.label": {
+    "message": "système de presets",
+    "description": "Showcase Terminology displayed text for preset system"
+  },
+  "showcase.terminology.paragraph2.afterPreset": {
+    "message": ", les équipes partagent une source de vérité unique pour les ",
+    "description": "Showcase Terminology paragraph 2 fragment after preset system"
+  },
+  "showcase.terminology.lintingRules.title": {
+    "message": "règles d'analyse statique",
+    "description": "Showcase Terminology hover title for linting rules"
+  },
+  "showcase.terminology.lintingRules.label": {
+    "message": "règles de linting",
+    "description": "Showcase Terminology displayed text for linting rules"
+  },
+  "showcase.terminology.paragraph2.afterLinting": {
+    "message": " et les ",
+    "description": "Showcase Terminology paragraph 2 fragment after linting rules"
+  },
+  "showcase.terminology.alloySettings.title": {
+    "message": "configuration du compilateur",
+    "description": "Showcase Terminology hover title for Alloy settings"
+  },
+  "showcase.terminology.alloySettings.label": {
+    "message": "réglages Alloy",
+    "description": "Showcase Terminology displayed text for Alloy settings"
+  },
+  "showcase.terminology.paragraph2.afterAlloy": {
+    "message": ", sans dupliquer les fichiers de configuration.",
+    "description": "Showcase Terminology paragraph 2 fragment after Alloy settings"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (avec légende)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Logo estampé dans un Frame : bordure nette, légende monospace.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Miniature de la marque Foundry.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (sans légende)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (les deux stores)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Téléchargez l'application compagnon",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (App Store uniquement)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Disponible sur iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (Google Play uniquement)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Disponible sur Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (sans étiquette)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

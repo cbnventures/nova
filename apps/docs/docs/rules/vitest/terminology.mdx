@@ -77,8 +77,10 @@ Validate glossary components against a source glossary page with `registerTermin
 
 ```ts title="src/tests/terminology.test.ts"
 import { registerTerminologySuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 registerTerminologySuite({
+  vitest,
   enable: 'all',
 });
 ```

@@ -1,7 +1,10 @@
 import type {
-  Shared_NovaConfig_Github as SharedNovaConfigGithub,
-  Shared_NovaConfig_Github_Recipes as SharedNovaConfigGithubRecipes,
-  Shared_ShellOutput as SharedShellOutput,
+  Shared_NovaConfig_Github,
+  Shared_NovaConfig_RecipeEntry,
+  Shared_NovaConfig_Recipes,
+  Shared_NovaConfig_Recipes_Github,
+  Shared_NovaConfigConfig,
+  Shared_ShellOutput,
 } from '../../../shared.d.ts';
 
 /**
@@ -52,11 +55,15 @@ export type Cli_Recipe_Github_SyncIdentity_Runner_Run_IsAtProjectRoot = boolean;
 
 export type Cli_Recipe_Github_SyncIdentity_Runner_Run_IsDryRun = boolean;
 
-export type Cli_Recipe_Github_SyncIdentity_Runner_Run_WorkingFile = import('../../../shared.d.ts').Shared_NovaConfigConfig;
+export type Cli_Recipe_Github_SyncIdentity_Runner_Run_WorkingFile = Shared_NovaConfigConfig;
 
-export type Cli_Recipe_Github_SyncIdentity_Runner_Run_Github = SharedNovaConfigGithub | undefined;
+export type Cli_Recipe_Github_SyncIdentity_Runner_Run_Github = Shared_NovaConfig_Github | undefined;
 
-export type Cli_Recipe_Github_SyncIdentity_Runner_Run_Recipes = SharedNovaConfigGithubRecipes | undefined;
+export type Cli_Recipe_Github_SyncIdentity_Runner_Run_Recipes = Shared_NovaConfig_Recipes | undefined;
+
+export type Cli_Recipe_Github_SyncIdentity_Runner_Run_GithubRecipes = Shared_NovaConfig_Recipes_Github | undefined;
+
+export type Cli_Recipe_Github_SyncIdentity_Runner_Run_SyncIdentity = Shared_NovaConfig_RecipeEntry | undefined;
 
 export type Cli_Recipe_Github_SyncIdentity_Runner_Run_Owner = string | undefined;
 
@@ -64,7 +71,7 @@ export type Cli_Recipe_Github_SyncIdentity_Runner_Run_Repo = string | undefined;
 
 export type Cli_Recipe_Github_SyncIdentity_Runner_Run_IsCommandOnPath = boolean;
 
-export type Cli_Recipe_Github_SyncIdentity_Runner_Run_GhVersionOutput = SharedShellOutput;
+export type Cli_Recipe_Github_SyncIdentity_Runner_Run_GhVersionOutput = Shared_ShellOutput;
 
 export type Cli_Recipe_Github_SyncIdentity_Runner_Run_GhVersionPattern = RegExp;
 
@@ -72,9 +79,9 @@ export type Cli_Recipe_Github_SyncIdentity_Runner_Run_GhVersionMatch = RegExpMat
 
 export type Cli_Recipe_Github_SyncIdentity_Runner_Run_GhVersion = string;
 
-export type Cli_Recipe_Github_SyncIdentity_Runner_Run_AuthStatus = SharedShellOutput;
+export type Cli_Recipe_Github_SyncIdentity_Runner_Run_AuthStatus = Shared_ShellOutput;
 
-export type Cli_Recipe_Github_SyncIdentity_Runner_Run_ViewResult = SharedShellOutput;
+export type Cli_Recipe_Github_SyncIdentity_Runner_Run_ViewResult = Shared_ShellOutput;
 
 export type Cli_Recipe_Github_SyncIdentity_Runner_Run_ViewerPermission = string | undefined;
 
@@ -98,10 +105,10 @@ export type Cli_Recipe_Github_SyncIdentity_Runner_Run_EditFlags = string[];
 
 export type Cli_Recipe_Github_SyncIdentity_Runner_Run_EditCommand = string;
 
-export type Cli_Recipe_Github_SyncIdentity_Runner_Run_EditResult = SharedShellOutput;
+export type Cli_Recipe_Github_SyncIdentity_Runner_Run_EditResult = Shared_ShellOutput;
 
 export type Cli_Recipe_Github_SyncIdentity_Runner_Run_TopicFlags = string;
 
 export type Cli_Recipe_Github_SyncIdentity_Runner_Run_TopicsCommand = string;
 
-export type Cli_Recipe_Github_SyncIdentity_Runner_Run_TopicsResult = SharedShellOutput;
+export type Cli_Recipe_Github_SyncIdentity_Runner_Run_TopicsResult = Shared_ShellOutput;

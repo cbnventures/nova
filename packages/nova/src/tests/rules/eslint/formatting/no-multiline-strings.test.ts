@@ -68,7 +68,8 @@ ruleTester.run('noMultilineStrings', NoMultilineStrings['rule'], {
     {
       code: 'const msg = "line one\\nline two";',
       options: [{
-        ignoreFiles: ['ignored-file.ts'], allowEscapeSequences: false,
+        ignoreFiles: ['ignored-file.ts'],
+        allowEscapeSequences: false,
       }],
       filename: '/path/to/ignored-file.ts',
     },

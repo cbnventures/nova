@@ -1,4 +1,7 @@
 import type { Shared_SearchWorkerSearchHit } from '../../shared.d.ts';
+import type {
+  Theme_SearchBar_SearchContext_Value, Theme_SearchBar_SearchContext_Value_HandleQueryChange, Theme_SearchBar_SearchContext_Value_InputRef, Theme_SearchBar_SearchContext_Value_SetActiveIndex, Theme_SearchBar_SearchContext_Value_SetIsOpen,
+} from './search-context.d.ts';
 
 /**
  * Theme - Search Bar - Search Input - Parse Shortcut Keymap.
@@ -31,23 +34,23 @@ export type Theme_SearchBar_SearchInput_ParseShortcutKeymap_Modifiers = string[]
  */
 export type Theme_SearchBar_SearchInput_Props = Record<string, unknown>;
 
-export type Theme_SearchBar_SearchInput_SearchContext = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value;
+export type Theme_SearchBar_SearchInput_SearchContext = Theme_SearchBar_SearchContext_Value;
 
 export type Theme_SearchBar_SearchInput_Query = string;
 
 export type Theme_SearchBar_SearchInput_IsOpen = boolean;
 
-export type Theme_SearchBar_SearchInput_SetIsOpen = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value_SetIsOpen;
+export type Theme_SearchBar_SearchInput_SetIsOpen = Theme_SearchBar_SearchContext_Value_SetIsOpen;
 
 export type Theme_SearchBar_SearchInput_ActiveIndex = number;
 
-export type Theme_SearchBar_SearchInput_SetActiveIndex = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value_SetActiveIndex;
+export type Theme_SearchBar_SearchInput_SetActiveIndex = Theme_SearchBar_SearchContext_Value_SetActiveIndex;
 
 export type Theme_SearchBar_SearchInput_Results = Shared_SearchWorkerSearchHit[];
 
-export type Theme_SearchBar_SearchInput_HandleQueryChange = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value_HandleQueryChange;
+export type Theme_SearchBar_SearchInput_HandleQueryChange = Theme_SearchBar_SearchContext_Value_HandleQueryChange;
 
-export type Theme_SearchBar_SearchInput_InputRef = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value_InputRef;
+export type Theme_SearchBar_SearchInput_InputRef = Theme_SearchBar_SearchContext_Value_InputRef;
 
 export type Theme_SearchBar_SearchInput_PluginData_Search_SearchBarShortcutKeymap = string;
 

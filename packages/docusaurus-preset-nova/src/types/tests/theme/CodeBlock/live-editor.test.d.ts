@@ -51,3 +51,10 @@ export type Tests_Theme_CodeBlock_LiveEditor_IsSandpackSupported_ReturnsTrueForT
 export type Tests_Theme_CodeBlock_LiveEditor_IsSandpackSupported_ReturnsTrueForVue_Language = string;
 
 export type Tests_Theme_CodeBlock_LiveEditor_IsSandpackSupported_ReturnsTrueForVue_Result = boolean;
+
+/**
+ * Tests - Theme - Code Block - Live Editor - Live Editor - Uses Entry File.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Theme_CodeBlock_LiveEditor_LiveEditor_UsesEntryFile_Element = Record<'props', Record<'files', Record<string, string>>>;

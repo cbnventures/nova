@@ -13,8 +13,6 @@ import type {
  *
  * @param {Theme_NavbarItem_HtmlNavbarItem_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function HtmlNavbarItem(props: Theme_NavbarItem_HtmlNavbarItem_Props) {

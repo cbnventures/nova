@@ -1,0 +1,506 @@
+{
+  "home.layout.description": {
+    "message": "Sentinel vurderer hver bruker, hver enhet, hver tilkobling — kontinuerlig. Tilgang er ikke en dør. Det er en samtale som aldri tar slutt.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Sentinel - Tillit er en sårbarhet",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Sikkerhetsplattform",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Tillit er en sårbarhet.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Sentinel vurderer hver bruker, hver enhet, hver tilkobling — kontinuerlig. Tilgang er ikke en dør. Det er en samtale som aldri tar slutt.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Utforsk plattformen",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Se på Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.watchtower.description": {
+    "message": "Kontinuerlig tilstandsvurdering. Evaluerer enhetens helse, plassering og atferd hvert 90. sekund. I det øyeblikket forholdene endrer seg, vet Watchtower det.",
+    "description": "Front page Features card description for Watchtower"
+  },
+  "home.features.drawbridge.description": {
+    "message": "Adaptiv tilgangsgateway. Innvilger, innsnevrer eller opphever tilgang i sanntid basert på kontekst — identitet, tilstand, plassering og tid. Ingen statiske regler.",
+    "description": "Front page Features card description for Drawbridge"
+  },
+  "home.features.garrison.description": {
+    "message": "Samsvarsmotor for endepunkter. Håndhever policy på hver tilkoblet enhet. Diskkryptering, OS-versjon, brannmurstatus — alt verifiseres før tilgang gis.",
+    "description": "Front page Features card description for Garrison"
+  },
+  "home.features.rampart.description": {
+    "message": "Mikrosegmenteringslag. Isolerer arbeidslaster slik at sidelengs bevegelse blir umulig. Selv om ett segment kompromitteres, stopper bruddet der.",
+    "description": "Front page Features card description for Rampart"
+  },
+  "home.features.spyglass.description": {
+    "message": "Revisjon og etterforskning. Fullstendig øktrekonstruksjon med uforanderlig loggoppbevaring i 7 år. Hver tilgangsbeslutning, hver policyevaluering, hver tilkobling — registrert.",
+    "description": "Front page Features card description for Spyglass"
+  },
+  "home.features.parapet.description": {
+    "message": "Sandkasse for policysimulering. Test tilgangsregler mot ekte trafikk før du håndhever dem. Se hvem som får tilgang, hvem som mister den, og hvorfor — uten å røre produksjon.",
+    "description": "Front page Features card description for Parapet"
+  },
+  "home.stats.heading": {
+    "message": "I tall",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.cycle.label": {
+    "message": "Revurderingssyklus",
+    "description": "Front page Stats label for re-evaluation cycle"
+  },
+  "home.stats.tunnels.label": {
+    "message": "Samtidige tunneler",
+    "description": "Front page Stats label for concurrent tunnels"
+  },
+  "home.stats.retention.label": {
+    "message": "Revisjonsoppbevaring",
+    "description": "Front page Stats label for audit retention"
+  },
+  "home.stats.latency.label": {
+    "message": "Policylatens",
+    "description": "Front page Stats label for policy latency"
+  },
+  "home.spotlight.heading": {
+    "message": "Én policy, fullstendig evaluering",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Definer hva tillit betyr. Sentinel håndhever det kontinuerlig.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Overvåk enhetsflåten din på farten",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Sikkerhetsbulletin",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Trusselforskning, tilstandsvarsler og filosofien om kontinuerlig tillit.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Sentinel-blokkvisning som demonstrerer hver blokk fra docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Hver blokk fra Sentinel-forhåndsinnstillingen, gjengitt med eksempeldata.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (fullstendig)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Blokkvisning",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Hver Sentinel-blokk, demonstrert på ett sted.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Denne siden gjengir hver blokk fra @cbnventures/docusaurus-preset-nova/blocks med data fra Sentinel-verdenen, slik at du kan se hvordan de ser ut og oppfører seg.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Les dokumentasjonen",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Se på Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Tillit fortjenes kontinuerlig.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Sentinel vurderer hver bruker, hver enhet, hver tilkobling — kontinuerlig. Tilgang er ikke en dør. Det er en samtale som aldri tar slutt.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Utforsk plattformen",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (standard)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Jeg elsker ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (uten prefiks)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Rask",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Fleksibel",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Gratis",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (langsom takt)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Bygget for ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "utviklere",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "designere",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (uten løkke)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Velkommen til ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Installer med Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Eller bruk en Vial-container",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (uten etikett)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Rask installasjon",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (med ikoner)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Hvorfor team velger Sentinel",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.watchtower.description": {
+    "message": "Kontinuerlig tilstandsvurdering. Evaluerer enhetens helse, plassering og atferd hvert 90. sekund.",
+    "description": "Showcase Features (with icons) card description for Watchtower"
+  },
+  "showcase.featuresIcons.drawbridge.description": {
+    "message": "Adaptiv tilgangsgateway. Innvilger, innsnevrer eller opphever tilgang i sanntid basert på tillitsevaluering.",
+    "description": "Showcase Features (with icons) card description for Drawbridge"
+  },
+  "showcase.featuresIcons.garrison.description": {
+    "message": "Samsvarsmotor for endepunkter. Håndhever policy på hver tilkoblet enhet før tilgang gis.",
+    "description": "Showcase Features (with icons) card description for Garrison"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (uten ikoner, uten overskrift)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.rampart.description": {
+    "message": "Mikrosegmenteringslag. Isolerer arbeidslaster slik at sidelengs bevegelse mellom soner blir umulig.",
+    "description": "Showcase Features (no icons) card description for Rampart"
+  },
+  "showcase.featuresNoIcons.spyglass.description": {
+    "message": "Revisjon og etterforskning. Fullstendig øktrekonstruksjon med uforanderlig loggoppbevaring i 7 år.",
+    "description": "Showcase Features (no icons) card description for Spyglass"
+  },
+  "showcase.featuresNoIcons.parapet.description": {
+    "message": "Sandkasse for policysimulering. Test tilgangsregler mot ekte trafikk før du håndhever dem.",
+    "description": "Showcase Features (no icons) card description for Parapet"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (seks elementer, blandede ikoner)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Den komplette tillitsmotoren",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.watchtower.description": {
+    "message": "Evaluerer enhetens tilstand, brukeridentitet, nettverkskontekst og atferdssignaler i en kontinuerlig 90-sekunders syklus.",
+    "description": "Showcase Features (six items) card description for Watchtower"
+  },
+  "showcase.featuresSix.drawbridge.description": {
+    "message": "Oversetter Watchtower-evalueringer til konkrete tilgangsbeslutninger — innvilg, innsnevr eller opphev.",
+    "description": "Showcase Features (six items) card description for Drawbridge"
+  },
+  "showcase.featuresSix.garrison.description": {
+    "message": "Administrerer enhetsregistrering, tilstandsgrunnlinjer og samsvarsprofiler for hvert endepunkt.",
+    "description": "Showcase Features (six items) card description for Garrison"
+  },
+  "showcase.featuresSix.rampart.description": {
+    "message": "Deler infrastrukturen inn i isolerte soner. Sonekryssinger krever policyevaluering.",
+    "description": "Showcase Features (six items) card description for Rampart"
+  },
+  "showcase.featuresSix.spyglass.description": {
+    "message": "Registrerer hver tilgangsbeslutning, policyevaluering og sonekryssing i en uforanderlig revisjonskjede.",
+    "description": "Showcase Features (six items) card description for Spyglass"
+  },
+  "showcase.featuresSix.parapet.description": {
+    "message": "Spiller av ekte trafikk mot policyutkast for å vise nøyaktig tilgangspåvirkning før håndheving.",
+    "description": "Showcase Features (six items) card description for Parapet"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (med overskrift og beskrivelse)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Plattformmålinger",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Sentrale ytelsesindikatorer på tvers av Sentinel-tillitsmotoren.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.cycle.label": {
+    "message": "Revurderingssyklus",
+    "description": "Showcase Stats (full) label for re-evaluation cycle"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Policylatens",
+    "description": "Showcase Stats (full) label for policy latency"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "Evalueringsoppetid",
+    "description": "Showcase Stats (full) label for evaluation uptime"
+  },
+  "showcase.statsFull.retention.label": {
+    "message": "Revisjonsoppbevaring",
+    "description": "Showcase Stats (full) label for audit retention"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (uten overskrift)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.tunnels.label": {
+    "message": "Samtidige tunneler",
+    "description": "Showcase Stats (no heading) label for concurrent tunnels"
+  },
+  "showcase.statsNoHeading.components.label": {
+    "message": "Komponenter",
+    "description": "Showcase Stats (no heading) label for components"
+  },
+  "showcase.statsNoHeading.zoneTypes.label": {
+    "message": "Sonetyper",
+    "description": "Showcase Stats (no heading) label for zone types"
+  },
+  "showcase.statsNoHeading.implicitTrust.label": {
+    "message": "Implisitt tillit",
+    "description": "Showcase Stats (no heading) label for implicit trust"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (med kode)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Hurtigstart",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Tre kommandoer for å gå fra null til kontinuerlig tillitsevaluering.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (med tekst)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Slik fungerer det",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Sentinel evaluerer tillit kontinuerlig. Watchtower beregner en tilstandsscore hvert 90. sekund. Drawbridge håndhever resultatet i sanntid. Spyglass registrerer hver beslutning uforanderlig. Resultatet er alltid bevis — ikke antakelse.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (med beskrivelse)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Sikkerhetsbulletin",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Trusselforskning, tilstandsvarsler og filosofien om kontinuerlig tillit.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Dagen vi sluttet å stole på nettverket",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Perimeteren gikk i oppløsning, og bransjen lot som om den ikke gjorde det. Vi bygde Sentinel fordi hver VPN er en tillitsantakelse.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Å simulere et brudd vi aldri hadde",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Hvordan Parapet fanget en sidelengs bevegelsesbane i staging før den nådde produksjon.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Hvorfor samsvar ikke er sikkerhet (men du trenger fortsatt begge)",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Å bestå en revisjon og å være sikker er ikke det samme. Spyglass bygger bro over gapet.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (uten beskrivelse)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Nylige oppdateringer",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Sentinel 3.4: Trafikkavspilling i Parapet og sonekarantene i Rampart",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Parapet støtter nå full trafikkavspilling mot policyutkast, og Rampart kan automatisk sette enheter som ikke består tilstandskontroller i karantene.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (inline-bruk)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Sentinel bruker en ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.trustPolicy.title": {
+    "message": "erklæring for tilgangskontroll",
+    "description": "Showcase Terminology hover title for trust policy"
+  },
+  "showcase.terminology.trustPolicy.label": {
+    "message": "tillitspolicy",
+    "description": "Showcase Terminology displayed text for trust policy"
+  },
+  "showcase.terminology.paragraph1.afterTrustPolicy": {
+    "message": " for å styre alle tilgangsbeslutninger. Hver registrert enhet overvåkes av ",
+    "description": "Showcase Terminology paragraph 1 fragment after trust policy"
+  },
+  "showcase.terminology.garrison.title": {
+    "message": "agent for endepunktssamsvar",
+    "description": "Showcase Terminology hover title for Garrison"
+  },
+  "showcase.terminology.paragraph1.afterGarrison": {
+    "message": "-agenten, som rapporterer tilstandsdata til ",
+    "description": "Showcase Terminology paragraph 1 fragment after Garrison"
+  },
+  "showcase.terminology.watchtower.title": {
+    "message": "motor for kontinuerlig tillitsevaluering",
+    "description": "Showcase Terminology hover title for Watchtower"
+  },
+  "showcase.terminology.paragraph1.afterWatchtower": {
+    "message": " for poengsetting.",
+    "description": "Showcase Terminology paragraph 1 fragment after Watchtower"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Med ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.rampart.title": {
+    "message": "mikrosegmenteringslag",
+    "description": "Showcase Terminology hover title for Rampart"
+  },
+  "showcase.terminology.paragraph2.afterRampart": {
+    "message": "-sonesystemet er arbeidslaster isolert slik at selv et kompromittert segment ikke kan påvirke ",
+    "description": "Showcase Terminology paragraph 2 fragment after Rampart"
+  },
+  "showcase.terminology.filament.title": {
+    "message": "kryptert tunnelprotokoll",
+    "description": "Showcase Terminology hover title for Filament"
+  },
+  "showcase.terminology.paragraph2.afterFilament": {
+    "message": "-tunneler i tilstøtende soner. Hver beslutning registreres i ",
+    "description": "Showcase Terminology paragraph 2 fragment after Filament"
+  },
+  "showcase.terminology.spyglass.title": {
+    "message": "motor for revisjon og etterforskning",
+    "description": "Showcase Terminology hover title for Spyglass"
+  },
+  "showcase.terminology.paragraph2.afterSpyglass": {
+    "message": " for uforanderlig revisjonsoppbevaring.",
+    "description": "Showcase Terminology paragraph 2 fragment after Spyglass"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (med bildetekst)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Varemerke plassert på en Frame — solid kant, stødig som et vakttårn.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Miniatyrbilde av Sentinel-merkevaren.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (uten bildetekst)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (begge butikker)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Last ned følgeappen",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (kun App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Tilgjengelig på iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (kun Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Tilgjengelig på Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (uten etikett)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} min lesetid",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

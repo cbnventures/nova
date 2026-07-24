@@ -35,8 +35,6 @@ import type {
  *
  * @param {Theme_Footer_Commons_Index_Commons_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function Commons(props: Theme_Footer_Commons_Index_Commons_Props): Theme_Footer_Commons_Index_Commons_Returns {

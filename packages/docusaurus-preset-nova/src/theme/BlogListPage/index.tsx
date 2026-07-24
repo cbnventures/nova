@@ -18,8 +18,6 @@ import type {
  *
  * @param {Theme_BlogListPage_Index_BlogListPage_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlogListPage(props: Theme_BlogListPage_Index_BlogListPage_Props) {

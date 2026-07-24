@@ -91,10 +91,10 @@ export class Runner {
    * Scans string literal values for the dollar-brace sequence that indicates a template
    * placeholder accidentally placed inside regular quotes.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Context} context - Context.
    * @param {Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Returns}
    *

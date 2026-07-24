@@ -12,6 +12,17 @@ import Head from '@docusaurus/Head';
 import { translate } from '@docusaurus/Translate';
 import Layout from '@theme/Layout';
 
+/**
+ * Pages - Home.
+ *
+ * Front page for the Sentinel demo site, composing the hero,
+ * install strip, feature grid, stats, spotlight, app market,
+ * and blog preview blocks from the Nova preset.
+ *
+ * @constructor
+ *
+ * @since UNRELEASED
+ */
 function Home() {
   return (
     <Layout description={translate({

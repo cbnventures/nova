@@ -1,14 +1,16 @@
 import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
 import type {
-  Shared_NovaConfig_Entities as SharedNovaConfigEntities,
-  Shared_NovaConfigConfig as SharedNovaConfigConfig,
-  Shared_NovaConfigEntity as SharedNovaConfigEntity,
-  Shared_NovaConfigWorkspace as SharedNovaConfigWorkspace,
-  Shared_NovaConfigWorkspace_Recipes as SharedNovaConfigWorkspaceRecipes,
-  Shared_NovaConfigWorkspaceRecipeSettings as SharedNovaConfigWorkspaceRecipeSettings,
-  Shared_NovaConfigWorkspaceRecipeTuple as SharedNovaConfigWorkspaceRecipeTuple,
-  Shared_WorkspaceManifest as SharedWorkspaceManifest,
+  Shared_NovaConfig_Entities,
+  Shared_NovaConfig_RecipeEntry,
+  Shared_NovaConfig_RecipeEntry_Settings,
+  Shared_NovaConfig_Recipes,
+  Shared_NovaConfig_Recipes_PackageJson,
+  Shared_NovaConfig_Recipes_PackageJsonWorkspace,
+  Shared_NovaConfigConfig,
+  Shared_NovaConfigEntity,
+  Shared_NovaConfigWorkspace,
+  Shared_WorkspaceManifest,
 } from '../../../shared.d.ts';
 
 /**
@@ -16,15 +18,15 @@ import type {
  *
  * @since 0.14.0
  */
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Workspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Workspace = Shared_WorkspaceManifest;
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_WorkingFile = SharedNovaConfigConfig;
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_WorkingFile = Shared_NovaConfigConfig;
 
 export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Returns = void;
 
 export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_FileContents = Record<string, unknown>;
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Manifest = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Manifest = Shared_NovaConfigWorkspace;
 
 export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageHomepage = unknown;
 
@@ -38,11 +40,15 @@ export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageFundingSou
 
 export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageRepository = unknown;
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Recipes = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipesBlock = Shared_NovaConfig_Recipes | undefined;
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeTuple = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageJsonRecipes = Shared_NovaConfig_Recipes_PackageJson | undefined;
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeSettings = SharedNovaConfigWorkspaceRecipeSettings | undefined;
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Recipes = Shared_NovaConfig_Recipes_PackageJsonWorkspace | undefined;
+
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeEntry = Shared_NovaConfig_RecipeEntry | undefined;
+
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeSettings = Shared_NovaConfig_RecipeEntry_Settings | undefined;
 
 export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidHomepage = string | undefined;
 
@@ -67,7 +73,7 @@ export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidAuthor = {
   url: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidAuthor_Url;
 };
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_AuthorEntity = SharedNovaConfigEntity | undefined;
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_AuthorEntity = Shared_NovaConfigEntity | undefined;
 
 export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidContributor_Name = string | undefined;
 
@@ -83,7 +89,7 @@ export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidContributor 
 
 export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidContributors = Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidContributor[];
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Entities = SharedNovaConfigEntities;
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Entities = Shared_NovaConfig_Entities;
 
 export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidFundingSources = string[] | undefined;
 
@@ -137,16 +143,20 @@ export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_ReplaceFileNotice = 
 
 export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_NovaConfig = LibNovaConfig;
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkingFile = SharedNovaConfigConfig;
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkingFile = Shared_NovaConfigConfig;
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkingFileWorkspaces = [string, Shared_NovaConfigWorkspace][];
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_EligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipesBlock = Shared_NovaConfig_Recipes | undefined;
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceConfig = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_PackageJsonRecipes = Shared_NovaConfig_Recipes_PackageJson | undefined;
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_EligibleWorkspaces = [string, Shared_NovaConfigWorkspace][];
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipeTuple = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspacePathFilter = string;
 
-export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Workspaces = SharedWorkspaceManifest[];
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceRecipesFilter = Shared_NovaConfig_Recipes_PackageJsonWorkspace | undefined;
+
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipeEntryFilter = Shared_NovaConfig_RecipeEntry | undefined;
+
+export type Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Workspaces = Shared_WorkspaceManifest[];

@@ -1,0 +1,518 @@
+{
+  "home.layout.description": {
+    "message": "Envoy 在從未打算彼此理解的系統之間居中翻譯。沒有共通格式，沒有共通協定，只有送達。",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Envoy - 訊息必達",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "整合基礎設施",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "訊息必達。這就是產品的全部。",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Envoy 在從未打算彼此理解的系統之間居中翻譯。沒有共通格式，沒有共通協定，只有送達。",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "閱讀文件",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "在 Threadbare 上查看",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.dispatch.description": {
+    "message": "智慧路由引擎。檢查每一筆傳入的酬載，依內容、來源、嚴重程度或自訂規則進行路由。第一個符合的規則勝出，毫不含糊。",
+    "description": "Front page Features card description for Dispatch"
+  },
+  "home.features.courier.description": {
+    "message": "保證送達的重試引擎。帶抖動的指數退避、為永遠無法送達的訊息準備的死信佇列，以及每一次嘗試的送達回條。",
+    "description": "Front page Features card description for Courier"
+  },
+  "home.features.parcel.description": {
+    "message": "酬載轉換管線。在各種格式之間改寫訊息——JSON 轉 JSON、JSON 轉純文字、XML 轉 JSON。支援欄位對應，以及有損與無損兩種模式。",
+    "description": "Front page Features card description for Parcel"
+  },
+  "home.features.cipher.description": {
+    "message": "身分驗證閘道。HMAC-SHA256 簽章、Bearer 權杖與 IP 允許清單。在任何一個位元組進入轉換管線之前，先驗證來源身分。",
+    "description": "Front page Features card description for Cipher"
+  },
+  "home.features.ledger.description": {
+    "message": "完整的送達稽核軌跡。每一則訊息的接收、轉換、路由與送達，都記錄在僅供附加的日誌中，保留政策可自訂。",
+    "description": "Front page Features card description for Ledger"
+  },
+  "home.features.embassy.description": {
+    "message": "遮蔽來源的反向代理。讓你的內部服務完全遠離公開網際網路。外部來源只碰得到 Embassy，內部服務永遠不知道外面的世界存在。",
+    "description": "Front page Features card description for Embassy"
+  },
+  "home.stats.heading": {
+    "message": "數據會說話",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.translators.label": {
+    "message": "協定翻譯器",
+    "description": "Front page Stats label for protocol translator count"
+  },
+  "home.stats.image.label": {
+    "message": "Vial 映像",
+    "description": "Front page Stats label for Vial image size"
+  },
+  "home.stats.dependencies.label": {
+    "message": "外部相依套件",
+    "description": "Front page Stats label for external dependency count"
+  },
+  "home.stats.latency.label": {
+    "message": "中繼延遲",
+    "description": "Front page Stats label for relay latency"
+  },
+  "home.spotlight.heading": {
+    "message": "翻譯、路由、送達",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Glassboard 發出警示。Envoy 翻譯酬載，將它路由到正確的 Canary 主題，並確認送達。兩端都不知道對方的存在。",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "接收送達通知",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "來自 Relay Room 的快報",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "版本發行說明、整合技術深度剖析，以及偶爾從中繼室傳來的快報。",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Envoy 區塊展示，示範 docusaurus-preset-nova 的每一個區塊。",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Envoy 預設集的每一個區塊，皆以範例資料呈現。",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero（完整）",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "區塊展示",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "每一個 Envoy 區塊，都在同一處完整示範。",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "本頁使用 Envoy 世界的資料呈現 @cbnventures/docusaurus-preset-nova/blocks 中的每一個區塊，讓你親眼看見它們的外觀與行為。",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "閱讀文件",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "在 Threadbare 上查看",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero（精簡）",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "送達，不必大費周章。",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Envoy 在從未打算彼此理解的系統之間居中翻譯。沒有共通格式，沒有共通協定，只有送達。",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "開始使用",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter（預設）",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "我愛 ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter（無前綴）",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "快速",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "靈活",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "免費",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter（慢速）",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "專為",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "開發者打造",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "設計師打造",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter（不循環）",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "歡迎使用 ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.item.installStripIcon.title": {
+    "message": "InstallStrip（copyTarget: icon）",
+    "description": "Showcase item title for InstallStrip (icon copyTarget variant)"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "使用 Vial 安裝",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.item.installStripBlock.title": {
+    "message": "InstallStrip（copyTarget: block）",
+    "description": "Showcase item title for InstallStrip (block copyTarget variant)"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "或改用 Spark CLI",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip（無標籤）",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.item.installStripText.title": {
+    "message": "InstallStrip（copyTarget: text）",
+    "description": "Showcase item title for InstallStrip (text copyTarget variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "快速安裝",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features（含圖示）",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "團隊為何選擇 Envoy",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.dispatch.description": {
+    "message": "智慧路由引擎。檢查酬載，並依內容、來源、嚴重程度或自訂規則進行路由。",
+    "description": "Showcase Features (with icons) card description for Dispatch"
+  },
+  "showcase.featuresIcons.courier.description": {
+    "message": "保證送達的重試引擎。指數退避、死信佇列與送達回條。",
+    "description": "Showcase Features (with icons) card description for Courier"
+  },
+  "showcase.featuresIcons.parcel.description": {
+    "message": "酬載轉換管線。在各種格式之間改寫訊息——JSON、XML、純文字、form-data。",
+    "description": "Showcase Features (with icons) card description for Parcel"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features（無圖示、無標題）",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.cipher.description": {
+    "message": "身分驗證閘道。HMAC 簽章、Bearer 權杖與 IP 允許清單。在處理之前先驗證來源身分。",
+    "description": "Showcase Features (no icons) card description for Cipher"
+  },
+  "showcase.featuresNoIcons.ledger.description": {
+    "message": "僅供附加的送達稽核軌跡。每一則訊息的接收、轉換、路由與送達，全數記錄在案。",
+    "description": "Showcase Features (no icons) card description for Ledger"
+  },
+  "showcase.featuresNoIcons.embassy.description": {
+    "message": "遮蔽來源的反向代理。讓內部服務徹底遠離公開網際網路。",
+    "description": "Showcase Features (no icons) card description for Embassy"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features（六個項目、圖示混用）",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "一個中繼，包辦一切",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.dispatch.description": {
+    "message": "依內容、來源、嚴重程度或排程路由訊息。第一個符合的中繼勝出。",
+    "description": "Showcase Features (six items) card description for Dispatch"
+  },
+  "showcase.featuresSix.courier.description": {
+    "message": "帶抖動的指數退避。死信佇列。送達回條。保證送達。",
+    "description": "Showcase Features (six items) card description for Courier"
+  },
+  "showcase.featuresSix.parcel.description": {
+    "message": "在任意兩種格式之間轉換酬載。有損與無損模式。欄位對應與範本渲染。",
+    "description": "Showcase Features (six items) card description for Parcel"
+  },
+  "showcase.featuresSix.cipher.description": {
+    "message": "驗證每一個傳入的請求。支援 HMAC、Bearer 與 IP 允許清單模式。零停機的權杖輪替。",
+    "description": "Showcase Features (six items) card description for Cipher"
+  },
+  "showcase.featuresSix.ledger.description": {
+    "message": "記錄每一次狀態轉換。僅供附加。保留期可自訂。可透過 Spoke API 匯出。",
+    "description": "Showcase Features (six items) card description for Ledger"
+  },
+  "showcase.featuresSix.embassy.description": {
+    "message": "隱藏內部拓撲的反向代理。TLS 終結。標頭剝除。來源遮蔽。",
+    "description": "Showcase Features (six items) card description for Embassy"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats（含標題與說明）",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "中繼指標",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "涵蓋所有運作中的中繼管線之關鍵效能指標。",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "中繼延遲（p99）",
+    "description": "Showcase Stats (full) label for relay latency"
+  },
+  "showcase.statsFull.image.label": {
+    "message": "Vial 映像大小",
+    "description": "Showcase Stats (full) label for Vial image size"
+  },
+  "showcase.statsFull.delivery.label": {
+    "message": "送達率",
+    "description": "Showcase Stats (full) label for delivery rate"
+  },
+  "showcase.statsFull.translators.label": {
+    "message": "協定翻譯器",
+    "description": "Showcase Stats (full) label for protocol translator count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats（無標題）",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.translators.label": {
+    "message": "翻譯器",
+    "description": "Showcase Stats (no heading) label for translators"
+  },
+  "showcase.statsNoHeading.dependencies.label": {
+    "message": "相依套件",
+    "description": "Showcase Stats (no heading) label for dependencies"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "子工具",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.coldStart.label": {
+    "message": "冷啟動",
+    "description": "Showcase Stats (no heading) label for cold start"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight（含程式碼）",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "快速上手",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "三道指令，從零打造可運作的中繼。",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight（含文字）",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "運作原理",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Envoy 讀取你的中繼清單，初始化 Cipher 進行身分驗證，編譯 Parcel 的轉換規則，並註冊 Dispatch 路由。訊息在五毫秒內流經整條管線。",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview（含說明）",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "來自 Relay Room 的快報",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "版本發行說明、整合技術深度剖析，以及偶爾從中繼室傳來的快報。",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "當 webhook 在凌晨三點失敗時，會發生什麼事",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "凌晨 3:47，Glassboard 發出了一則警示。送往 Canary 的 webhook 悄然失敗，沒有人被喚醒。這正是催生 Envoy 的那個問題。",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "重試邏輯比你想的更難",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "天真的重試很簡單。但要在高負載下做到可靠——搭配退避、抖動與死信佇列——則是另一門學問。",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "一個 3MB 的容器，取代了我們整個整合層",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "十二個服務、九個 cron 排程，加上一個共用資料庫——全被單一個 3MB 的 Vial 映像取代。",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview（無說明）",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "近期快報",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Envoy 2.2：扇出路由與 Ledger 匯出",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Dispatch 現在支援從單一中繼扇出到多個目的地。Ledger 的紀錄可依自訂排程匯出到任一 Spoke 端點。",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology（行內用法）",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Envoy 使用",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.relayManifest.title": {
+    "message": "中繼管線宣告檔",
+    "description": "Showcase Terminology hover title for relay manifest"
+  },
+  "showcase.terminology.relayManifest.label": {
+    "message": "中繼清單",
+    "description": "Showcase Terminology displayed text for relay manifest"
+  },
+  "showcase.terminology.paragraph1.afterRelay": {
+    "message": "來定義每一條整合管線。每一則傳入的訊息，都會先經過 ",
+    "description": "Showcase Terminology paragraph 1 fragment after relay manifest"
+  },
+  "showcase.terminology.cipher.title": {
+    "message": "身分驗證閘道",
+    "description": "Showcase Terminology hover title for Cipher"
+  },
+  "showcase.terminology.paragraph1.afterCipher": {
+    "message": " 閘道進行身分驗證，才進入轉換階段。當送達失敗時，",
+    "description": "Showcase Terminology paragraph 1 fragment after Cipher"
+  },
+  "showcase.terminology.courier.title": {
+    "message": "保證送達的重試引擎",
+    "description": "Showcase Terminology hover title for Courier"
+  },
+  "showcase.terminology.paragraph1.afterCourier": {
+    "message": " 引擎會自動處理重試。",
+    "description": "Showcase Terminology paragraph 1 fragment after Courier"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "有了 ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.parcel.title": {
+    "message": "酬載轉換管線",
+    "description": "Showcase Terminology hover title for Parcel"
+  },
+  "showcase.terminology.paragraph2.afterParcel": {
+    "message": " 管線，來源與目的地永遠不必就格式達成一致。",
+    "description": "Showcase Terminology paragraph 2 fragment after Parcel"
+  },
+  "showcase.terminology.dispatch.title": {
+    "message": "智慧路由引擎",
+    "description": "Showcase Terminology hover title for Dispatch"
+  },
+  "showcase.terminology.paragraph2.afterDispatch": {
+    "message": " 負責路由，而 ",
+    "description": "Showcase Terminology paragraph 2 fragment after Dispatch"
+  },
+  "showcase.terminology.ledger.title": {
+    "message": "僅供附加的稽核軌跡",
+    "description": "Showcase Terminology hover title for Ledger"
+  },
+  "showcase.terminology.paragraph2.afterLedger": {
+    "message": " 則記錄完整的交易歷程。",
+    "description": "Showcase Terminology paragraph 2 fragment after Ledger"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame（含圖說）",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "品牌標誌透過 Frame 區塊呈現——圖片加圖說，簡單俐落。",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Envoy 品牌縮圖。",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame（無圖說）",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload（兩家商店）",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "下載隨附 App",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload（僅 App Store）",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "iOS 版現已上架",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload（僅 Google Play）",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Android 版現已上架",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload（無標籤）",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

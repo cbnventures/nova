@@ -15,8 +15,6 @@ import type {
  *
  * @param {Theme_MdxContent_Index_MdxContent_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function MdxContent(props: Theme_MdxContent_Index_MdxContent_Props) {

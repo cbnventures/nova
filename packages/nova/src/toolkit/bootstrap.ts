@@ -80,9 +80,9 @@ class Runner {
   /**
    * Toolkit - Bootstrap - Get Config Dir.
    *
-   * Returns the platform-specific configuration directory for the given
-   * application name. Uses XDG_CONFIG_HOME on macOS and Linux, APPDATA
-   * on Windows. Creates the directory if it does not exist.
+   * Returns the platform-specific configuration directory for the
+   * given application name, using XDG_CONFIG_HOME on macOS and Linux and
+   * APPDATA on Windows. Creates the directory if it does not exist.
    *
    * @param {Toolkit_Bootstrap_Runner_GetConfigDir_AppName} appName - App name.
    *
@@ -117,8 +117,8 @@ class Runner {
   /**
    * Toolkit - Bootstrap - Get Data Dir.
    *
-   * Returns the platform-specific data directory for the given application
-   * name. Uses ~/Library/Application Support on macOS, XDG_DATA_HOME on
+   * Returns the platform-specific data directory for the given
+   * application name, using ~/Library/Application Support on macOS, XDG_DATA_HOME on
    * Linux, and APPDATA on Windows. Creates the directory if it does not exist.
    *
    * @param {Toolkit_Bootstrap_Runner_GetDataDir_AppName} appName - App name.
@@ -165,8 +165,8 @@ class Runner {
   /**
    * Toolkit - Bootstrap - Get Cache Dir.
    *
-   * Returns the platform-specific cache directory for the given application
-   * name. Uses ~/Library/Caches on macOS, XDG_CACHE_HOME on Linux, and
+   * Returns the platform-specific cache directory for the given
+   * application name, using ~/Library/Caches on macOS, XDG_CACHE_HOME on Linux, and
    * LOCALAPPDATA\Temp on Windows. Creates the directory if it does not exist.
    *
    * @param {Toolkit_Bootstrap_Runner_GetCacheDir_AppName} appName - App name.
@@ -252,8 +252,8 @@ class Runner {
   /**
    * Toolkit - Bootstrap - Load Env.
    *
-   * Reads a .env file from the given directory and sets each KEY=value
-   * pair in process.env. Does not override existing environment variables.
+   * Reads a .env file from the given directory and sets each
+   * KEY=value pair in process.env, without overriding existing environment variables.
    * Supports optional quotes around values, ignoring comments and empty lines.
    *
    * @param {Toolkit_Bootstrap_Runner_LoadEnv_Directory} directory - Directory.
@@ -304,9 +304,9 @@ class Runner {
   /**
    * Toolkit - Bootstrap - Resolve File Dir.
    *
-   * Searches through the given search order and returns the first directory
-   * that contains the specified file. Returns undefined if the file is not
-   * found in any directory.
+   * Searches through the given search order and returns the
+   * first directory that contains the specified file. Returns undefined if the file
+   * is not found in any of the directories.
    *
    * @param {Toolkit_Bootstrap_Runner_ResolveFileDir_AppName}     appName     - App name.
    * @param {Toolkit_Bootstrap_Runner_ResolveFileDir_Filename}    filename    - Filename.

@@ -1,5 +1,6 @@
 export { default as dxCodeStyle } from './dx-code-style.js';
 export { default as dxIgnore } from './dx-ignore.js';
+export { default as fwAstro } from './fw-astro.js';
 export { default as fwDocusaurus } from './fw-docusaurus.js';
 export { default as fwExpressjs } from './fw-expressjs.js';
 export { default as fwNextjs } from './fw-nextjs.js';

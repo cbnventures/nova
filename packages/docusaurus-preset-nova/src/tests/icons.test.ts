@@ -24,16 +24,16 @@ import type {
   Tests_Icons_GenerateIconModule_SkipsUnresolvedNamesAndIgnoresNonCollectionPrefixes_Registered,
   Tests_Icons_GenerateIconModule_SkipsUnresolvedNamesAndIgnoresNonCollectionPrefixes_SiteDir,
   Tests_Icons_GenerateIconModule_SkipsUnresolvedNamesAndIgnoresNonCollectionPrefixes_Source,
-  Tests_Icons_ParseRegisteredIdentifiers_AddCollectionPrefix,
-  Tests_Icons_ParseRegisteredIdentifiers_AddCollectionSuffix,
   Tests_Icons_ParseRegisteredIdentifiers_Aliases,
   Tests_Icons_ParseRegisteredIdentifiers_AliasNames,
-  Tests_Icons_ParseRegisteredIdentifiers_Collection,
+  Tests_Icons_ParseRegisteredIdentifiers_Collections,
   Tests_Icons_ParseRegisteredIdentifiers_IconNames,
   Tests_Icons_ParseRegisteredIdentifiers_Identifiers,
   Tests_Icons_ParseRegisteredIdentifiers_Json,
   Tests_Icons_ParseRegisteredIdentifiers_Lines,
   Tests_Icons_ParseRegisteredIdentifiers_Prefix,
+  Tests_Icons_ParseRegisteredIdentifiers_RegisterIconsPrefix,
+  Tests_Icons_ParseRegisteredIdentifiers_RegisterIconsSuffix,
   Tests_Icons_ParseRegisteredIdentifiers_Returns,
   Tests_Icons_ParseRegisteredIdentifiers_Source,
 } from '../types/tests/icons.test.d.ts';
@@ -77,32 +77,35 @@ function createFixtureSite(files: Tests_Icons_CreateFixtureSite_Files): Tests_Ic
  * @since 0.19.0
  */
 function parseRegisteredIdentifiers(source: Tests_Icons_ParseRegisteredIdentifiers_Source): Tests_Icons_ParseRegisteredIdentifiers_Returns {
-  const addCollectionPrefix: Tests_Icons_ParseRegisteredIdentifiers_AddCollectionPrefix = 'addCollection(';
-  const addCollectionSuffix: Tests_Icons_ParseRegisteredIdentifiers_AddCollectionSuffix = ');';
+  const registerIconsPrefix: Tests_Icons_ParseRegisteredIdentifiers_RegisterIconsPrefix = 'registerIcons(';
+  const registerIconsSuffix: Tests_Icons_ParseRegisteredIdentifiers_RegisterIconsSuffix = ');';
   const identifiers: Tests_Icons_ParseRegisteredIdentifiers_Identifiers = [];
   const lines: Tests_Icons_ParseRegisteredIdentifiers_Lines = source.split('\n');
 
   for (const line of lines) {
-    if (line.startsWith(addCollectionPrefix) === false) {
+    if (line.startsWith(registerIconsPrefix) === false) {
       continue;
     }
 
-    const json: Tests_Icons_ParseRegisteredIdentifiers_Json = line.slice(addCollectionPrefix.length, line.length - addCollectionSuffix.length);
-    const collection: Tests_Icons_ParseRegisteredIdentifiers_Collection = JSON.parse(json) as Tests_Icons_ParseRegisteredIdentifiers_Collection;
-    const prefix: Tests_Icons_ParseRegisteredIdentifiers_Prefix = collection['prefix'];
-    const iconNames: Tests_Icons_ParseRegisteredIdentifiers_IconNames = Object.keys(collection['icons']);
+    const json: Tests_Icons_ParseRegisteredIdentifiers_Json = line.slice(registerIconsPrefix.length, line.length - registerIconsSuffix.length);
+    const collections: Tests_Icons_ParseRegisteredIdentifiers_Collections = JSON.parse(json) as Tests_Icons_ParseRegisteredIdentifiers_Collections;
 
-    for (const name of iconNames) {
-      identifiers.push(`${prefix}:${name}`);
-    }
+    for (const collection of collections) {
+      const prefix: Tests_Icons_ParseRegisteredIdentifiers_Prefix = collection['prefix'];
+      const iconNames: Tests_Icons_ParseRegisteredIdentifiers_IconNames = Object.keys(collection['icons']);
 
-    const aliases: Tests_Icons_ParseRegisteredIdentifiers_Aliases = collection['aliases'];
-
-    if (aliases !== undefined) {
-      const aliasNames: Tests_Icons_ParseRegisteredIdentifiers_AliasNames = Object.keys(aliases);
-
-      for (const name of aliasNames) {
+      for (const name of iconNames) {
         identifiers.push(`${prefix}:${name}`);
+      }
+
+      const aliases: Tests_Icons_ParseRegisteredIdentifiers_Aliases = collection['aliases'];
+
+      if (aliases !== undefined) {
+        const aliasNames: Tests_Icons_ParseRegisteredIdentifiers_AliasNames = Object.keys(aliases);
+
+        for (const name of aliasNames) {
+          identifiers.push(`${prefix}:${name}`);
+        }
       }
     }
   }

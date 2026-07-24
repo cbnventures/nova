@@ -90,10 +90,10 @@ export class Runner {
    * Looks at the statement before a return to see if it declares a const whose identifier
    * matches the return argument, then offers an auto-fix to inline it.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Context} context - Context.
    * @param {Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Returns}
    *

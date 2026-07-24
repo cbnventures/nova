@@ -1,9 +1,29 @@
+import type { Dirent } from 'node:fs';
+
 import type { PromptObject } from 'prompts';
 
+import type * as FundingModule from '../../cli/generate/github/funding.js';
+
+import type * as IssueTemplateModule from '../../cli/generate/github/issue-template.js';
+
+import type * as WorkflowsModule from '../../cli/generate/github/workflows-blueprint.js';
+
+import type * as AgentConventionsModule from '../../cli/generate/must-haves/agent-conventions.js';
+
+import type * as DotenvModule from '../../cli/generate/must-haves/dotenv.js';
+
+import type * as EditorconfigModule from '../../cli/generate/must-haves/editorconfig.js';
+
+import type * as GitignoreModule from '../../cli/generate/must-haves/gitignore.js';
+
+import type * as LicenseModule from '../../cli/generate/must-haves/license.js';
+
+import type * as ReadMeModule from '../../cli/generate/must-haves/read-me.js';
+
 import type {
-  Shared_GeneratorRunResult as SharedGeneratorRunResult,
-  Shared_MonorepoContext as SharedMonorepoContext,
-  Shared_ScaffoldConfig as SharedScaffoldConfig,
+  Shared_GeneratorRunResult,
+  Shared_MonorepoContext,
+  Shared_ScaffoldConfig,
 } from '../shared.d.ts';
 
 /**
@@ -17,7 +37,7 @@ export type Lib_Scaffold_CollectFiles_Prefix = string;
 
 export type Lib_Scaffold_CollectFiles_Returns = Promise<string[]>;
 
-export type Lib_Scaffold_CollectFiles_Entries = import('fs').Dirent[];
+export type Lib_Scaffold_CollectFiles_Entries = Dirent[];
 
 export type Lib_Scaffold_CollectFiles_Files = string[];
 
@@ -86,7 +106,7 @@ export type Lib_Scaffold_CreateWorkspaceDirectory_WorkspaceDirectory = string;
  */
 export type Lib_Scaffold_DetectMonorepoContext_CurrentWorkingDirectory = string;
 
-export type Lib_Scaffold_DetectMonorepoContext_Returns = Promise<SharedMonorepoContext>;
+export type Lib_Scaffold_DetectMonorepoContext_Returns = Promise<Shared_MonorepoContext>;
 
 export type Lib_Scaffold_DetectMonorepoContext_Locations = string[];
 
@@ -105,25 +125,25 @@ export type Lib_Scaffold_LoadGenerator_Name = string;
 
 export type Lib_Scaffold_LoadGenerator_Returns = Promise<((options: {
   replaceFile: true;
-}) => Promise<SharedGeneratorRunResult>) | undefined>;
+}) => Promise<Shared_GeneratorRunResult>) | undefined>;
 
-export type Lib_Scaffold_LoadGenerator_EditorconfigModule = typeof import('../../cli/generate/must-haves/editorconfig.js');
+export type Lib_Scaffold_LoadGenerator_EditorconfigModule = typeof EditorconfigModule;
 
-export type Lib_Scaffold_LoadGenerator_GitignoreModule = typeof import('../../cli/generate/must-haves/gitignore.js');
+export type Lib_Scaffold_LoadGenerator_GitignoreModule = typeof GitignoreModule;
 
-export type Lib_Scaffold_LoadGenerator_DotenvModule = typeof import('../../cli/generate/must-haves/dotenv.js');
+export type Lib_Scaffold_LoadGenerator_DotenvModule = typeof DotenvModule;
 
-export type Lib_Scaffold_LoadGenerator_LicenseModule = typeof import('../../cli/generate/must-haves/license.js');
+export type Lib_Scaffold_LoadGenerator_LicenseModule = typeof LicenseModule;
 
-export type Lib_Scaffold_LoadGenerator_ReadMeModule = typeof import('../../cli/generate/must-haves/read-me.js');
+export type Lib_Scaffold_LoadGenerator_ReadMeModule = typeof ReadMeModule;
 
-export type Lib_Scaffold_LoadGenerator_AgentConventionsModule = typeof import('../../cli/generate/must-haves/agent-conventions.js');
+export type Lib_Scaffold_LoadGenerator_AgentConventionsModule = typeof AgentConventionsModule;
 
-export type Lib_Scaffold_LoadGenerator_FundingModule = typeof import('../../cli/generate/github/funding.js');
+export type Lib_Scaffold_LoadGenerator_FundingModule = typeof FundingModule;
 
-export type Lib_Scaffold_LoadGenerator_IssueTemplateModule = typeof import('../../cli/generate/github/issue-template.js');
+export type Lib_Scaffold_LoadGenerator_IssueTemplateModule = typeof IssueTemplateModule;
 
-export type Lib_Scaffold_LoadGenerator_WorkflowsModule = typeof import('../../cli/generate/github/workflows.js');
+export type Lib_Scaffold_LoadGenerator_WorkflowsModule = typeof WorkflowsModule;
 
 /**
  * Lib - Scaffold - Prompt Post Scaffold Generators.
@@ -158,16 +178,16 @@ export type Lib_Scaffold_PromptPostScaffoldGenerators_OriginalCwd = string;
 
 export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorModule = ((options: {
   replaceFile: true;
-}) => Promise<SharedGeneratorRunResult>) | undefined;
+}) => Promise<Shared_GeneratorRunResult>) | undefined;
 
-export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorResult = SharedGeneratorRunResult;
+export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorResult = Shared_GeneratorRunResult;
 
 /**
  * Lib - Scaffold - Prompt Scaffold Options.
  *
  * @since 0.15.0
  */
-export type Lib_Scaffold_PromptScaffoldOptions_Context = SharedMonorepoContext;
+export type Lib_Scaffold_PromptScaffoldOptions_Context = Shared_MonorepoContext;
 
 export type Lib_Scaffold_PromptScaffoldOptions_Defaults_Name = string | undefined;
 
@@ -184,7 +204,7 @@ export type Lib_Scaffold_PromptScaffoldOptions_Defaults = {
   workspaceName: Lib_Scaffold_PromptScaffoldOptions_Defaults_WorkspaceName;
 };
 
-export type Lib_Scaffold_PromptScaffoldOptions_Returns = Promise<SharedScaffoldConfig | undefined>;
+export type Lib_Scaffold_PromptScaffoldOptions_Returns = Promise<Shared_ScaffoldConfig | undefined>;
 
 export type Lib_Scaffold_PromptScaffoldOptions_CurrentDirectory = string;
 
@@ -231,11 +251,11 @@ export type Lib_Scaffold_PromptScaffoldOptions_WorkspaceNameValue = string | und
 
 export type Lib_Scaffold_PromptScaffoldOptions_Questions = PromptObject<string>[];
 
-export type Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput = (initialPrev: Lib_Scaffold_PromptScaffoldOptions_InitialPrev, initialAnswers: Lib_Scaffold_PromptScaffoldOptions_InitialAnswers) => string;
-
 export type Lib_Scaffold_PromptScaffoldOptions_InitialPrev = string;
 
 export type Lib_Scaffold_PromptScaffoldOptions_InitialAnswers = Record<string, string>;
+
+export type Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput = (initialPrev: Lib_Scaffold_PromptScaffoldOptions_InitialPrev, initialAnswers: Lib_Scaffold_PromptScaffoldOptions_InitialAnswers) => string;
 
 export type Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers = Record<string, unknown>;
 
@@ -323,9 +343,9 @@ export type Lib_Scaffold_RunScaffold_CurrentDirectory = string;
 
 export type Lib_Scaffold_RunScaffold_IsDryRun = boolean;
 
-export type Lib_Scaffold_RunScaffold_Context = SharedMonorepoContext;
+export type Lib_Scaffold_RunScaffold_Context = Shared_MonorepoContext;
 
-export type Lib_Scaffold_RunScaffold_Config = SharedScaffoldConfig | undefined;
+export type Lib_Scaffold_RunScaffold_Config = Shared_ScaffoldConfig | undefined;
 
 export type Lib_Scaffold_RunScaffold_ModePrefix = string;
 

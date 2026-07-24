@@ -49,8 +49,6 @@ import type {
  *
  * @param {Theme_SearchBar_SearchProvider_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function SearchProvider(props: Theme_SearchBar_SearchProvider_Props) {
@@ -68,7 +66,10 @@ function SearchProvider(props: Theme_SearchBar_SearchProvider_Props) {
   const fuzzyMatchingDistance: Theme_SearchBar_SearchProvider_FuzzyMatchingDistance = (searchSettings !== undefined) ? searchSettings['fuzzyMatchingDistance'] ?? 1 : 1;
 
   const searchWorker: Theme_SearchBar_SearchProvider_SearchWorker = useSearchWorker({
-    workerUrl, manifestUrl, searchResultLimits, fuzzyMatchingDistance,
+    workerUrl,
+    manifestUrl,
+    searchResultLimits,
+    fuzzyMatchingDistance,
   });
 
   const queryState: Theme_SearchBar_SearchProvider_QueryState = useState<Theme_SearchBar_SearchProvider_Query>('');

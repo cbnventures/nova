@@ -41,8 +41,6 @@ function useSyntheticTitle(): Theme_DocItem_Content_Index_UseSyntheticTitle_Synt
  *
  * @param {Theme_DocItem_Content_Index_DocItemContent_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocItemContent(props: Theme_DocItem_Content_Index_DocItemContent_Props) {

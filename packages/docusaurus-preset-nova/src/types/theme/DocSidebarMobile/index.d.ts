@@ -1,7 +1,5 @@
 import type { PropSidebarBreadcrumbsItem } from '@docusaurus/plugin-content-docs';
-import type {
-  CSSProperties, MouseEvent, ReactNode, RefObject,
-} from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - Doc Sidebar Mobile - Doc Sidebar Mobile.
@@ -20,62 +18,10 @@ export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Props = {
 
 export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Breadcrumbs = PropSidebarBreadcrumbsItem[] | null;
 
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Sidebar = Record<string, unknown> | null;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Pathname = string;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_IsOpenState = [boolean, Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsOpen];
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_IsOpen = boolean;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsOpen = React.Dispatch<React.SetStateAction<boolean>>;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_IsClosingState = [boolean, Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsClosing];
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_IsClosing = boolean;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsClosing = React.Dispatch<React.SetStateAction<boolean>>;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_PanelRef = RefObject<HTMLDivElement | null>;
-
-/**
- * Theme - Doc Sidebar Mobile - Doc Sidebar Mobile - Handle Escape.
- *
- * @since 0.15.0
- */
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeFunction = (event: Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeKeyboardEvent) => void;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeKeyboardEvent = KeyboardEvent;
-
-/**
- * Theme - Doc Sidebar Mobile - Doc Sidebar Mobile - Handle Click Outside.
- *
- * @since 0.15.0
- */
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideFunction = (event: Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideMouseEvent) => void;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideMouseEvent = MouseEvent<HTMLDivElement>;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideMouseTarget = EventTarget;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_FocusTarget = HTMLButtonElement | null;
-
 export type Theme_DocSidebarMobile_Index_DocSidebarMobile_OpenAriaLabel = string;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_PanelAriaLabel = string;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HeaderTitle = string;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_CloseAriaLabel = string;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_SidebarItems = unknown[];
 
 export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Separator = ReactNode;
 
 export type Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbItem = PropSidebarBreadcrumbsItem;
 
 export type Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbIndex = number;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_OverlayClassName = string;
-
-export type Theme_DocSidebarMobile_Index_DocSidebarMobile_AnimationEvent = React.AnimationEvent<HTMLDivElement>;

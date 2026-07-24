@@ -181,6 +181,7 @@ export class Runner {
    * the red, green, and blue channels into an HSL representation.
    *
    * @param hex - Hex.
+   *
    * @since 0.15.0
    */
   public constructor(hex: Lib_Color_Runner_Constructor_Hex) {
@@ -213,9 +214,10 @@ export class Runner {
    * @param lightness        - Lightness.
    * @param position         - Position.
    * @param saturationFactor - Saturation factor.
-   * @returns                Compute shade.
    *
    * @private
+   *
+   * @returns {Lib_Color_Runner_ComputeShade_Returns}
    *
    * @since 0.15.0
    */
@@ -239,7 +241,8 @@ export class Runner {
    * Iterates over the shade configuration to produce an eleven-shade color scale keyed
    * by shade level from 50 through 950.
    *
-   * @returns Generate scale.
+   * @returns {Lib_Color_Runner_GenerateScale_Returns}
+   *
    * @since 0.15.0
    */
   public generateScale(): Lib_Color_Runner_GenerateScale_Returns {
@@ -271,9 +274,10 @@ export class Runner {
    * @param hue        - Hue.
    * @param saturation - Saturation.
    * @param lightness  - Lightness.
-   * @returns          Hsl to hex.
    *
    * @private
+   *
+   * @returns {Lib_Color_Runner_HslToHex_Returns}
    *
    * @since 0.15.0
    */
@@ -334,9 +338,10 @@ export class Runner {
    * @param red   - Red.
    * @param green - Green.
    * @param blue  - Blue.
-   * @returns     Rgb to hsl.
    *
    * @private
+   *
+   * @returns {Lib_Color_Runner_RgbToHsl_Returns}
    *
    * @since 0.15.0
    */

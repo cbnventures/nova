@@ -5,8 +5,6 @@ import {
   join,
 } from 'node:path';
 
-import { it } from 'vitest';
-
 import { slugifyHeading } from '../../../lib/markdown-slug.js';
 import {
   LIB_REGEX_PATTERN_BLOG_DATE_PREFIX,
@@ -18,6 +16,7 @@ import {
   LIB_REGEX_PATTERN_SLUG_LINE,
   LIB_REGEX_PATTERN_TRAILING_SLASH,
 } from '../../../lib/regex.js';
+import { getActiveVitest } from '../active-vitest.js';
 import { isEnabled } from '../enable.js';
 
 import type {
@@ -329,7 +328,7 @@ export function stripProse(content: Rules_Vitest_Link_Rules_StripProse_Content):
 
   for (const line of lines) {
     if (line.trimStart().startsWith('```') === true) {
-      inCodeBlock = !inCodeBlock;
+      inCodeBlock = inCodeBlock === false;
 
       continue;
     }
@@ -345,9 +344,9 @@ export function stripProse(content: Rules_Vitest_Link_Rules_StripProse_Content):
 /**
  * Rules - Vitest - Link - Rules - Internal Doc Target Exists.
  *
- * Rule `link-internal-doc-target-exists`: every internal link beginning with the docs route
- * prefix must resolve to an existing docs file (by path, `/index` directory alias, or
- * frontmatter-id alias). Docusaurus auto-generated category routes are skipped.
+ * Rule `link-internal-doc-target-exists`: every internal link with the docs
+ * route prefix must resolve to an existing docs file by path, `/index` directory alias, or
+ * frontmatter-id alias. Docusaurus auto-generated category routes are skipped.
  *
  * @param {Rules_Vitest_Link_Rules_InternalDocTargetExists_Config} config - Config.
  * @param {Rules_Vitest_Link_Rules_InternalDocTargetExists_Files}  files  - Files.
@@ -366,7 +365,7 @@ export async function internalDocTargetExists(config: Rules_Vitest_Link_Rules_In
   const docPrefix: Rules_Vitest_Link_Rules_InternalDocTargetExists_DocPrefix = `/${config['docsRouteBasePath']}/`;
 
   for (const file of files) {
-    it(`internal doc link targets exist in ${file}`, async () => {
+    getActiveVitest().it(`internal doc link targets exist in ${file}`, async () => {
       const filePath: Rules_Vitest_Link_Rules_InternalDocTargetExists_FilePath = join(config['projectRoot'], file);
       const content: Rules_Vitest_Link_Rules_InternalDocTargetExists_Content = await readFile(filePath, 'utf-8');
       const hrefs: Rules_Vitest_Link_Rules_InternalDocTargetExists_Hrefs = collectProseLinks(content);
@@ -426,7 +425,7 @@ export async function internalDocAnchorExists(config: Rules_Vitest_Link_Rules_In
   const docPrefix: Rules_Vitest_Link_Rules_InternalDocAnchorExists_DocPrefix = `/${config['docsRouteBasePath']}/`;
 
   for (const file of files) {
-    it(`internal doc link anchors exist in ${file}`, async () => {
+    getActiveVitest().it(`internal doc link anchors exist in ${file}`, async () => {
       const filePath: Rules_Vitest_Link_Rules_InternalDocAnchorExists_FilePath = join(config['projectRoot'], file);
       const content: Rules_Vitest_Link_Rules_InternalDocAnchorExists_Content = await readFile(filePath, 'utf-8');
       const hrefs: Rules_Vitest_Link_Rules_InternalDocAnchorExists_Hrefs = collectProseLinks(content);
@@ -498,7 +497,7 @@ export async function internalBlogTargetExists(config: Rules_Vitest_Link_Rules_I
   const blogPrefix: Rules_Vitest_Link_Rules_InternalBlogTargetExists_BlogPrefix = `/${config['blogRouteBasePath']}/`;
 
   for (const file of files) {
-    it(`internal blog link targets exist in ${file}`, async () => {
+    getActiveVitest().it(`internal blog link targets exist in ${file}`, async () => {
       const filePath: Rules_Vitest_Link_Rules_InternalBlogTargetExists_FilePath = join(config['projectRoot'], file);
       const content: Rules_Vitest_Link_Rules_InternalBlogTargetExists_Content = await readFile(filePath, 'utf-8');
       const hrefs: Rules_Vitest_Link_Rules_InternalBlogTargetExists_Hrefs = collectProseLinks(content);
@@ -533,9 +532,9 @@ export async function internalBlogTargetExists(config: Rules_Vitest_Link_Rules_I
 /**
  * Rules - Vitest - Link - Rules - Internal Blog Anchor Exists.
  *
- * Rule `link-internal-blog-anchor-exists`: when a blog-route link carries a `#anchor`, the
- * anchor must match a heading slug in the resolved blog post. Disabled by omitting
- * `contentDirs.blog`.
+ * Rule `link-internal-blog-anchor-exists`: when a blog-route link carries
+ * a `#anchor`, the anchor must match a heading slug in the resolved blog post. Disabled by
+ * omitting `contentDirs.blog`.
  *
  * @param {Rules_Vitest_Link_Rules_InternalBlogAnchorExists_Config} config - Config.
  * @param {Rules_Vitest_Link_Rules_InternalBlogAnchorExists_Files}  files  - Files.
@@ -558,7 +557,7 @@ export async function internalBlogAnchorExists(config: Rules_Vitest_Link_Rules_I
   const blogPrefix: Rules_Vitest_Link_Rules_InternalBlogAnchorExists_BlogPrefix = `/${config['blogRouteBasePath']}/`;
 
   for (const file of files) {
-    it(`internal blog link anchors exist in ${file}`, async () => {
+    getActiveVitest().it(`internal blog link anchors exist in ${file}`, async () => {
       const filePath: Rules_Vitest_Link_Rules_InternalBlogAnchorExists_FilePath = join(config['projectRoot'], file);
       const content: Rules_Vitest_Link_Rules_InternalBlogAnchorExists_Content = await readFile(filePath, 'utf-8');
       const hrefs: Rules_Vitest_Link_Rules_InternalBlogAnchorExists_Hrefs = collectProseLinks(content);
@@ -618,7 +617,7 @@ export async function selfAnchorExists(config: Rules_Vitest_Link_Rules_SelfAncho
   }
 
   for (const file of files) {
-    it(`self anchors exist in ${file}`, async () => {
+    getActiveVitest().it(`self anchors exist in ${file}`, async () => {
       const filePath: Rules_Vitest_Link_Rules_SelfAnchorExists_FilePath = join(config['projectRoot'], file);
       const content: Rules_Vitest_Link_Rules_SelfAnchorExists_Content = await readFile(filePath, 'utf-8');
       const hrefs: Rules_Vitest_Link_Rules_SelfAnchorExists_Hrefs = collectProseLinks(content);
@@ -677,7 +676,7 @@ export function skipExternalAndCodeBlocks(enable: Rules_Vitest_Link_Rules_SkipEx
   ].join('\n');
   const hrefs: Rules_Vitest_Link_Rules_SkipExternalAndCodeBlocks_Hrefs = collectProseLinks(sample);
 
-  it(`external links and code blocks are excluded from link validation${''}`, () => {
+  getActiveVitest().it(`external links and code blocks are excluded from link validation${''}`, () => {
     strictEqual(hrefs.includes('/docs/should-be-ignored'), false, 'links inside code fences must be excluded');
 
     return;

@@ -53,7 +53,8 @@ describe('discoverContentFiles', async () => {
 
   afterAll(async () => {
     await rm(root, {
-      recursive: true, force: true,
+      recursive: true,
+      force: true,
     });
 
     return;

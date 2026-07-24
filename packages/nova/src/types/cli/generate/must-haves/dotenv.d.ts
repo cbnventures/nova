@@ -1,11 +1,26 @@
+import type { Answers } from 'prompts';
+
 import type {
-  Shared_GeneratorRunResult as SharedGeneratorRunResult,
-  Shared_NovaConfig as SharedNovaConfig,
-  Shared_NovaConfig_Workspaces as SharedNovaConfigWorkspaces,
-  Shared_NovaConfigWorkspace as SharedNovaConfigWorkspace,
-  Shared_NovaConfigWorkspace_Dotenv as SharedNovaConfigWorkspaceDotenv,
-  Shared_NovaConfigWorkspace_Dotenv_Variables as SharedNovaConfigWorkspaceDotenvVariables,
+  Shared_GeneratorRunResult,
+  Shared_NovaConfig,
+  Shared_NovaConfig_Environment,
+  Shared_NovaConfigEnvironment_Apps,
+  Shared_NovaConfigEnvironmentApp,
+  Shared_NovaConfigEnvironmentApp_Variables,
 } from '../../../shared.d.ts';
+
+/**
+ * CLI - Generate - Must Haves - Dotenv - Confirm Prune.
+ *
+ * @since 0.21.0
+ */
+export type Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_FilePath = string;
+
+export type Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_Keys = string[];
+
+export type Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_Returns = Promise<boolean>;
+
+export type Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_Response = Answers<'confirm'>;
 
 /**
  * CLI - Generate - Must Haves - Dotenv - Escape Sample Value.
@@ -25,28 +40,33 @@ export type Cli_Generate_MustHaves_Dotenv_Runner_EscapeSampleValue_Result = stri
  */
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options_TargetDirectory = string;
 
-export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options_Variables = SharedNovaConfigWorkspaceDotenvVariables;
+export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options_Variables = Shared_NovaConfigEnvironmentApp_Variables;
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options_IsDryRun = boolean;
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options_IsReplaceFile = boolean;
+
+export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options_IsPrune = boolean;
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options = {
   targetDirectory: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options_TargetDirectory;
   variables: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options_Variables;
   isDryRun: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options_IsDryRun;
   isReplaceFile: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options_IsReplaceFile;
+  isPrune: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options_IsPrune;
 };
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Returns = Promise<void>;
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_TargetDirectory = string;
 
-export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Variables = SharedNovaConfigWorkspaceDotenvVariables;
+export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Variables = Shared_NovaConfigEnvironmentApp_Variables;
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_IsDryRun = boolean;
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_IsReplaceFile = boolean;
+
+export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_IsPrune = boolean;
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_TemplateDirectory = string;
 
@@ -84,6 +104,8 @@ export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_AppendSection
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_ContentLines = string[];
 
+export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_SeenKeys = Set<string>;
+
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_PreservedLines = string[];
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_KeyMatch = RegExpMatchArray | null;
@@ -91,6 +113,12 @@ export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_KeyMatch = Re
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_ContentLineKey = string;
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_OriginalLine = string | undefined;
+
+export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_OrphanKeys = string[];
+
+export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_IsPruneConfirmed = boolean;
+
+export type Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_OrphanLines = string[];
 
 /**
  * CLI - Generate - Must Haves - Dotenv - Is Quote Open.
@@ -147,12 +175,15 @@ export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Options_DryRun = true;
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Options_ReplaceFile = true;
 
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Options_Prune = true;
+
 export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Options = {
   dryRun?: Cli_Generate_MustHaves_Dotenv_Runner_Run_Options_DryRun;
   replaceFile?: Cli_Generate_MustHaves_Dotenv_Runner_Run_Options_ReplaceFile;
+  prune?: Cli_Generate_MustHaves_Dotenv_Runner_Run_Options_Prune;
 };
 
-export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Returns = Promise<SharedGeneratorRunResult>;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Returns = Promise<Shared_GeneratorRunResult>;
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_Run_CurrentDirectory = string;
 
@@ -162,16 +193,20 @@ export type Cli_Generate_MustHaves_Dotenv_Runner_Run_IsDryRun = boolean;
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_Run_IsReplaceFile = boolean;
 
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_IsPrune = boolean;
+
 export type Cli_Generate_MustHaves_Dotenv_Runner_Run_ReplaceFileNotice = string;
 
-export type Cli_Generate_MustHaves_Dotenv_Runner_Run_WorkingFile = SharedNovaConfig;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_WorkingFile = Shared_NovaConfig;
 
-export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Workspaces = SharedNovaConfigWorkspaces;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Environment = Shared_NovaConfig_Environment;
+
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Apps = Shared_NovaConfigEnvironment_Apps;
 
 export type Cli_Generate_MustHaves_Dotenv_Runner_Run_GeneratedCount = number;
 
-export type Cli_Generate_MustHaves_Dotenv_Runner_Run_WorkspacePath = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_AppPath = string;
 
-export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Workspace = SharedNovaConfigWorkspace;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_App = Shared_NovaConfigEnvironmentApp;
 
-export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Dotenv = SharedNovaConfigWorkspaceDotenv | undefined;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Variables = Shared_NovaConfigEnvironmentApp_Variables;

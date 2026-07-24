@@ -1,0 +1,506 @@
+{
+  "home.layout.description": {
+    "message": "Envoy превежда между системи, които никога не са били проектирани да се разбират помежду си. Без общ формат. Без общ протокол. Само доставка.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Envoy - Съобщенията пристигат",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Интеграционна инфраструктура",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Съобщенията пристигат. Това е целият продукт.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Envoy превежда между системи, които никога не са били проектирани да се разбират помежду си. Без общ формат. Без общ протокол. Само доставка.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Прочети документацията",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Виж в Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.dispatch.description": {
+    "message": "Интелигентен маршрутизиращ механизъм. Проверява всеки входящ payload и го насочва според съдържанието, източника, критичността или твои собствени правила. Първото съвпадение печели. Без двусмислие.",
+    "description": "Front page Features card description for Dispatch"
+  },
+  "home.features.courier.description": {
+    "message": "Механизъм за повторни опити с гарантирана доставка. Експоненциален backoff с jitter, dead-letter опашки за съобщенията, които никога няма да пристигнат, и разписки за доставка при всеки опит.",
+    "description": "Front page Features card description for Courier"
+  },
+  "home.features.parcel.description": {
+    "message": "Конвейер за трансформация на payload. Пренаписва съобщенията между формати — от JSON към JSON, от JSON към чист текст, от XML към JSON. Съпоставяне на полета, режими със и без загуба.",
+    "description": "Front page Features card description for Parcel"
+  },
+  "home.features.cipher.description": {
+    "message": "Шлюз за удостоверяване. HMAC-SHA256 подписи, bearer токени и IP бели списъци. Проверява самоличността на източника, преди дори един байт да достигне конвейера за трансформация.",
+    "description": "Front page Features card description for Cipher"
+  },
+  "home.features.ledger.description": {
+    "message": "Пълна одитна следа на доставките. Всяко получено, трансформирано, маршрутизирано и доставено съобщение се записва в дневник само за добавяне, с настройваеми политики за съхранение.",
+    "description": "Front page Features card description for Ledger"
+  },
+  "home.features.embassy.description": {
+    "message": "Обратен прокси, който скрива източника. Държи вътрешните ти услуги извън публичния интернет. Външните източници стигат до Embassy. Вътрешните услуги така и не разбират, че външният свят съществува.",
+    "description": "Front page Features card description for Embassy"
+  },
+  "home.stats.heading": {
+    "message": "В цифри",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.translators.label": {
+    "message": "Преводачи на протоколи",
+    "description": "Front page Stats label for protocol translator count"
+  },
+  "home.stats.image.label": {
+    "message": "Образ Vial",
+    "description": "Front page Stats label for Vial image size"
+  },
+  "home.stats.dependencies.label": {
+    "message": "Външни зависимости",
+    "description": "Front page Stats label for external dependency count"
+  },
+  "home.stats.latency.label": {
+    "message": "Латентност на препредаването",
+    "description": "Front page Stats label for relay latency"
+  },
+  "home.spotlight.heading": {
+    "message": "Превеждай, маршрутизирай, доставяй",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Glassboard подава сигнала. Envoy превежда payload-а, насочва го към правилната тема в Canary и потвърждава доставката. Никоя от двете страни не знае, че другата съществува.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Получавай известия за доставка",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Депеши от Relay Room",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Бележки по изданията, задълбочени материали за интеграции и от време на време по някоя депеша от стаята за препредаване.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Витрина на блоковете на Envoy, представяща всеки блок от docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Всеки блок от пресета на Envoy, визуализиран с примерни данни.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (пълен)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Витрина на блоковете",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Всеки блок на Envoy, демонстриран на едно място.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Тази страница визуализира всеки блок от @cbnventures/docusaurus-preset-nova/blocks с данни от света на Envoy, за да видиш как изглеждат и как се държат.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Прочети документацията",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Виж в Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (минимален)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Доставяй без излишни церемонии.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Envoy превежда между системи, които никога не са били проектирани да се разбират помежду си. Без общ формат. Без общ протокол. Само доставка.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Започни сега",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (по подразбиране)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Обичам ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (без префикс)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Бърз",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Гъвкав",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Безплатен",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (бавно темпо)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Създаден за ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "разработчици",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "дизайнери",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (без цикъл)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Добре дошли в ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Инсталирай с Vial",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Или използвай Spark CLI",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (без етикет)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Бърза инсталация",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (с икони)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Защо екипите избират Envoy",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.dispatch.description": {
+    "message": "Интелигентен маршрутизиращ механизъм. Проверява всеки payload и го насочва според съдържание, източник, критичност или потребителски правила.",
+    "description": "Showcase Features (with icons) card description for Dispatch"
+  },
+  "showcase.featuresIcons.courier.description": {
+    "message": "Механизъм за повторни опити с гарантирана доставка. Експоненциален backoff, dead-letter опашки и разписки за доставка.",
+    "description": "Showcase Features (with icons) card description for Courier"
+  },
+  "showcase.featuresIcons.parcel.description": {
+    "message": "Конвейер за трансформация на payload. Пренаписва съобщенията между формати — JSON, XML, чист текст, form-data.",
+    "description": "Showcase Features (with icons) card description for Parcel"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (без икони, без заглавие)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.cipher.description": {
+    "message": "Шлюз за удостоверяване. HMAC подписи, bearer токени и IP бели списъци. Проверява самоличността на източника преди обработка.",
+    "description": "Showcase Features (no icons) card description for Cipher"
+  },
+  "showcase.featuresNoIcons.ledger.description": {
+    "message": "Одитна следа на доставките само за добавяне. Всяко получено, трансформирано, маршрутизирано и доставено съобщение се записва.",
+    "description": "Showcase Features (no icons) card description for Ledger"
+  },
+  "showcase.featuresNoIcons.embassy.description": {
+    "message": "Обратен прокси, който скрива източника. Държи вътрешните услуги напълно извън публичния интернет.",
+    "description": "Showcase Features (no icons) card description for Embassy"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (шест елемента, смесени икони)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Всичко в едно препредаване",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.dispatch.description": {
+    "message": "Насочва съобщенията според съдържание, източник, критичност или график. Първото съответстващо препредаване печели.",
+    "description": "Showcase Features (six items) card description for Dispatch"
+  },
+  "showcase.featuresSix.courier.description": {
+    "message": "Експоненциален backoff с jitter. Dead-letter опашки. Разписки за доставка. Гарантирана доставка.",
+    "description": "Showcase Features (six items) card description for Courier"
+  },
+  "showcase.featuresSix.parcel.description": {
+    "message": "Трансформира payload между произволни два формата. Режими със и без загуба. Съпоставяне на полета и рендиране на шаблони.",
+    "description": "Showcase Features (six items) card description for Parcel"
+  },
+  "showcase.featuresSix.cipher.description": {
+    "message": "Удостоверява всяка входяща заявка. Режими HMAC, bearer и IP бял списък. Ротация на токени без прекъсване.",
+    "description": "Showcase Features (six items) card description for Cipher"
+  },
+  "showcase.featuresSix.ledger.description": {
+    "message": "Записва всеки преход между състояния. Само за добавяне. Настройваемо съхранение. Може да се експортира през Spoke API.",
+    "description": "Showcase Features (six items) card description for Ledger"
+  },
+  "showcase.featuresSix.embassy.description": {
+    "message": "Обратен прокси, който скрива вътрешната топология. Терминиране на TLS. Премахване на хедъри. Маскиране на източника.",
+    "description": "Showcase Features (six items) card description for Embassy"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (със заглавие и описание)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Метрики на препредаването",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Ключови показатели за ефективност по всички активни конвейери за препредаване.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Латентност на препредаването (p99)",
+    "description": "Showcase Stats (full) label for relay latency"
+  },
+  "showcase.statsFull.image.label": {
+    "message": "Размер на образа Vial",
+    "description": "Showcase Stats (full) label for Vial image size"
+  },
+  "showcase.statsFull.delivery.label": {
+    "message": "Успеваемост на доставките",
+    "description": "Showcase Stats (full) label for delivery rate"
+  },
+  "showcase.statsFull.translators.label": {
+    "message": "Преводачи на протоколи",
+    "description": "Showcase Stats (full) label for protocol translator count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (без заглавие)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.translators.label": {
+    "message": "Преводачи",
+    "description": "Showcase Stats (no heading) label for translators"
+  },
+  "showcase.statsNoHeading.dependencies.label": {
+    "message": "Зависимости",
+    "description": "Showcase Stats (no heading) label for dependencies"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "Подинструменти",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.coldStart.label": {
+    "message": "Студен старт",
+    "description": "Showcase Stats (no heading) label for cold start"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (с код)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Бърз старт",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Три команди от нулата до работещо препредаване.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (с текст)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Как работи",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Envoy прочита твоя манифест за препредаване, инициализира Cipher за удостоверяване, компилира правилата за трансформация на Parcel и регистрира маршрутите на Dispatch. Съобщенията преминават през конвейера за по-малко от пет милисекунди.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (с описание)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Депеши от Relay Room",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Бележки по изданията, задълбочени материали за интеграции и от време на време по някоя депеша от стаята за препредаване.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Какво се случва, когато webhook се провали в 3 сутринта",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Сигнал от Glassboard се задейства в 3:47 сутринта. Webhook-ът към Canary се провали безшумно. Никой не се събуди. Точно този проблем даде началото на Envoy.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Логиката за повторни опити е по-сложна, отколкото си мислиш",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Наивният повторен опит е лесен. Надеждният повторен опит под натоварване — с backoff, jitter и dead-letter опашки — е съвсем друга дисциплина.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Контейнерът от 3MB, който замени целия ни интеграционен слой",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Дванадесет услуги, девет cron задачи и една обща база данни — заменени от един-единствен Vial образ от 3MB.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (без описание)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Последни депеши",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Envoy 2.2: Fanout маршрутизиране и експорт от Ledger",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Вече Dispatch поддържа fanout към множество местоназначения от едно препредаване. Записите в Ledger могат да се експортират към произволен Spoke endpoint по настройваем график.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (употреба в текста)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Envoy използва ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.relayManifest.title": {
+    "message": "файл за деклариране на конвейера за препредаване",
+    "description": "Showcase Terminology hover title for relay manifest"
+  },
+  "showcase.terminology.relayManifest.label": {
+    "message": "манифест за препредаване",
+    "description": "Showcase Terminology displayed text for relay manifest"
+  },
+  "showcase.terminology.paragraph1.afterRelay": {
+    "message": ", за да дефинира всеки интеграционен конвейер. Всяко входящо съобщение се удостоверява от шлюза ",
+    "description": "Showcase Terminology paragraph 1 fragment after relay manifest"
+  },
+  "showcase.terminology.cipher.title": {
+    "message": "шлюз за удостоверяване",
+    "description": "Showcase Terminology hover title for Cipher"
+  },
+  "showcase.terminology.paragraph1.afterCipher": {
+    "message": ", преди да достигне етапа на трансформация. Когато доставката се провали, механизмът ",
+    "description": "Showcase Terminology paragraph 1 fragment after Cipher"
+  },
+  "showcase.terminology.courier.title": {
+    "message": "механизъм за повторни опити с гарантирана доставка",
+    "description": "Showcase Terminology hover title for Courier"
+  },
+  "showcase.terminology.paragraph1.afterCourier": {
+    "message": " обработва повторните опити автоматично.",
+    "description": "Showcase Terminology paragraph 1 fragment after Courier"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "С конвейера ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.parcel.title": {
+    "message": "конвейер за трансформация на payload",
+    "description": "Showcase Terminology hover title for Parcel"
+  },
+  "showcase.terminology.paragraph2.afterParcel": {
+    "message": " източниците и местоназначенията никога не трябва да се съгласяват за общ формат. ",
+    "description": "Showcase Terminology paragraph 2 fragment after Parcel"
+  },
+  "showcase.terminology.dispatch.title": {
+    "message": "интелигентен маршрутизиращ механизъм",
+    "description": "Showcase Terminology hover title for Dispatch"
+  },
+  "showcase.terminology.paragraph2.afterDispatch": {
+    "message": " се грижи за маршрутизирането, а ",
+    "description": "Showcase Terminology paragraph 2 fragment after Dispatch"
+  },
+  "showcase.terminology.ledger.title": {
+    "message": "одитна следа само за добавяне",
+    "description": "Showcase Terminology hover title for Ledger"
+  },
+  "showcase.terminology.paragraph2.afterLedger": {
+    "message": " записва пълната история на транзакциите.",
+    "description": "Showcase Terminology paragraph 2 fragment after Ledger"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (с надпис)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Знакът на марката, прекаран през блока Frame — изображение и надпис, без излишни церемонии.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Миниатюра на марката Envoy.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (без надпис)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (и двата магазина)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Изтегли придружаващото приложение",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (само App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Налично за iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (само Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Налично за Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (без етикет)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

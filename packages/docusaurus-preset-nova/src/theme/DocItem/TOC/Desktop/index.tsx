@@ -17,8 +17,6 @@ import type {
  *
  * @param {Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopProps} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocItemTOCDesktop(props: Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopProps) {

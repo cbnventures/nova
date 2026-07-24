@@ -13,6 +13,16 @@ import {
 import { translate } from '@docusaurus/Translate';
 import Showcase from '@theme/Showcase';
 
+/**
+ * Pages - Showcase - Page.
+ *
+ * Renders the block showcase page, demonstrating every block from
+ * docusaurus-preset-nova with Lantern-world sample data across each variant.
+ *
+ * @returns {JSX.Element}
+ *
+ * @since UNRELEASED
+ */
 function ShowcasePage() {
   return (
     <Showcase

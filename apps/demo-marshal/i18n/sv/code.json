@@ -1,0 +1,598 @@
+{
+  "home.layout.description": {
+    "message": "Marshal är Myndigheten för kodförvar — automatiserad förvaltning för projekt som föredrar protokoll framför dramatik.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Marshal - Diariefört, förseglat, automatiserat",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Förvaltning av kodförvar",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Diariefört, förseglat, automatiserat.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Marshal är Myndigheten för kodförvar — automatiserad förvaltning för projekt som föredrar protokoll framför dramatik. Varje tråd, varje ärende, varje åtkomstnivå — allt hanteras i tur och ordning.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Kom igång",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Visa på Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.policies.title": {
+    "message": "Föreskrifter",
+    "description": "Front page Features card title for Policies"
+  },
+  "home.features.policies.description": {
+    "message": "Skriv ett YAML-block som beskriver hur Marshal hanterar en typ av händelser — inaktuella trådar, försenade PR:er, support per nivå. Marshal läser bara det som är diariefört och stämplar bara det som är förseglat.",
+    "description": "Front page Features card description for Policies"
+  },
+  "home.features.dockets.title": {
+    "message": "Diarier",
+    "description": "Front page Features card title for Dockets"
+  },
+  "home.features.dockets.description": {
+    "message": "Varje åtgärd Marshal vidtar skrivs in i det offentliga diariet. Stängda trådar, stämplade godkännanden, schemalagda överföringar — allt endast som tillägg, allt synligt, inget återkallat.",
+    "description": "Front page Features card description for Dockets"
+  },
+  "home.features.accessTiers.title": {
+    "message": "Åtkomstnivåer",
+    "description": "Front page Features card title for Access Tiers"
+  },
+  "home.features.accessTiers.description": {
+    "message": "Fördela inkommande ärenden efter sponsor, bidragsgivare eller allmänhet. Etiketten stämplas, inte förhandlas. Varje fördelningsbeslut diarieförs.",
+    "description": "Front page Features card description for Access Tiers"
+  },
+  "home.features.scheduledStewardship.title": {
+    "message": "Schemalagd förvaltning",
+    "description": "Front page Features card title for Scheduled Stewardship"
+  },
+  "home.features.scheduledStewardship.description": {
+    "message": "Kör rensningar, granskningar och överföringar enligt cron. Marshal agerar på hel timme, diarieför en post och går vidare. Inget väntar på att en människa ska minnas.",
+    "description": "Front page Features card description for Scheduled Stewardship"
+  },
+  "home.features.threadArchival.title": {
+    "message": "Trådarkivering",
+    "description": "Front page Features card title for Thread Archival"
+  },
+  "home.features.threadArchival.description": {
+    "message": "Stäng och försegla trådar som varit inaktiva i N dagar — med en verifikationskedja för varje. Varje förseglad tråd bär med sig skälet till arkiveringen och en väg till återöppning.",
+    "description": "Front page Features card description for Thread Archival"
+  },
+  "home.features.automatedStamps.title": {
+    "message": "Automatiska stämplar",
+    "description": "Front page Features card title for Automated Stamps"
+  },
+  "home.features.automatedStamps.description": {
+    "message": "Marshal agerar med stående bemyndigande. Varje åtgärd bär en tidsstämpel, en ansvarig utfärdare och en hänvisning till den föreskrift som utlöste den.",
+    "description": "Front page Features card description for Automated Stamps"
+  },
+  "home.stats.heading": {
+    "message": "I siffror",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manualClosures.label": {
+    "message": "Manuella stängningar",
+    "description": "Front page Stats label for manual closures count"
+  },
+  "home.stats.policyFile.label": {
+    "message": "Föreskriftsfil",
+    "description": "Front page Stats label for policy file count"
+  },
+  "home.stats.docketEntries.label": {
+    "message": "Diarieposter",
+    "description": "Front page Stats label for docket entries count"
+  },
+  "home.stats.accessTiers.label": {
+    "message": "Åtkomstnivåer",
+    "description": "Front page Stats label for access tiers count"
+  },
+  "home.spotlight.heading": {
+    "message": "En föreskriftsfil, allt stämplat",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Beskriv reglerna. Marshal sköter pappersarbetet.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Granska ditt diarium var du än är",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Rapporter från myndigheten",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Föreskrifter diarieförda, diarier stämplade, förvaltning förd till protokoll.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Marshal-blockgalleri som visar upp varje block från docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Varje block från Marshal-förinställningen, återgivet med exempeldata.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (fullständig)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Blockgalleri",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Varje Marshal-block, demonstrerat på ett och samma ställe.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Den här sidan återger varje block från @cbnventures/docusaurus-preset-nova/blocks med data ur Marshals värld så att du kan se hur de ser ut och beter sig.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Läs dokumentationen",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Visa på Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Diariefört, förseglat, automatiserat.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Marshal är Myndigheten för kodförvar — automatiserad förvaltning för projekt som föredrar protokoll framför dramatik.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Kom igång",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (standard)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Jag älskar ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (utan prefix)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Snabbt",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Flexibelt",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Gratis",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (långsam takt)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Byggt för ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "utvecklare",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "designer",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (ingen loop)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Välkommen till ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Installera med Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Eller använd Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (utan etikett)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Snabbinstallation",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (med ikoner)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Varför kodförvar väljer Marshal",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.policies.title": {
+    "message": "Föreskrifter",
+    "description": "Showcase Features (with icons) card title for Policies"
+  },
+  "showcase.featuresIcons.policies.description": {
+    "message": "Skriv ett YAML-block som beskriver hur Marshal hanterar en typ av händelser. Marshal läser bara det som är diariefört och stämplar bara det som är förseglat.",
+    "description": "Showcase Features (with icons) card description for Policies"
+  },
+  "showcase.featuresIcons.dockets.title": {
+    "message": "Diarier",
+    "description": "Showcase Features (with icons) card title for Dockets"
+  },
+  "showcase.featuresIcons.dockets.description": {
+    "message": "Varje åtgärd Marshal vidtar skrivs in i det offentliga diariet. Stängda trådar, stämplade godkännanden, schemalagda överföringar — allt endast som tillägg.",
+    "description": "Showcase Features (with icons) card description for Dockets"
+  },
+  "showcase.featuresIcons.accessTiers.title": {
+    "message": "Åtkomstnivåer",
+    "description": "Showcase Features (with icons) card title for Access Tiers"
+  },
+  "showcase.featuresIcons.accessTiers.description": {
+    "message": "Fördela inkommande ärenden efter sponsor, bidragsgivare eller allmänhet. Etiketten stämplas, inte förhandlas.",
+    "description": "Showcase Features (with icons) card description for Access Tiers"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (utan ikoner, utan rubrik)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.title": {
+    "message": "Schemalagd förvaltning",
+    "description": "Showcase Features (no icons) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.description": {
+    "message": "Kör rensningar, granskningar och överföringar enligt cron. Marshal agerar på hel timme och diarieför en post.",
+    "description": "Showcase Features (no icons) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.threadArchival.title": {
+    "message": "Trådarkivering",
+    "description": "Showcase Features (no icons) card title for Thread Archival"
+  },
+  "showcase.featuresNoIcons.threadArchival.description": {
+    "message": "Stäng och försegla trådar som varit inaktiva i N dagar — med en verifikationskedja för varje, och en väg till återöppning.",
+    "description": "Showcase Features (no icons) card description for Thread Archival"
+  },
+  "showcase.featuresNoIcons.automatedStamps.title": {
+    "message": "Automatiska stämplar",
+    "description": "Showcase Features (no icons) card title for Automated Stamps"
+  },
+  "showcase.featuresNoIcons.automatedStamps.description": {
+    "message": "Varje åtgärd bär en tidsstämpel, en ansvarig utfärdare och en hänvisning till den föreskrift som utlöste den.",
+    "description": "Showcase Features (no icons) card description for Automated Stamps"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (sex objekt, blandade ikoner)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Allt under samma myndighet",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.policies.title": {
+    "message": "Föreskrifter",
+    "description": "Showcase Features (six items) card title for Policies"
+  },
+  "showcase.featuresSix.policies.description": {
+    "message": "Beskriv reglerna i YAML. Marshal läser, agerar och diarieför. Inget förhandlas vid körning.",
+    "description": "Showcase Features (six items) card description for Policies"
+  },
+  "showcase.featuresSix.dockets.title": {
+    "message": "Diarier",
+    "description": "Showcase Features (six items) card title for Dockets"
+  },
+  "showcase.featuresSix.dockets.description": {
+    "message": "Ett offentligt diarium med enbart tillägg över varje åtgärd. Stängda trådar, fördelningsbeslut, schemalagda genomgångar — allt stämplat.",
+    "description": "Showcase Features (six items) card description for Dockets"
+  },
+  "showcase.featuresSix.accessTiers.title": {
+    "message": "Åtkomstnivåer",
+    "description": "Showcase Features (six items) card title for Access Tiers"
+  },
+  "showcase.featuresSix.accessTiers.description": {
+    "message": "Sponsor, bidragsgivare, allmänhet — tre nivåer, en kö, en registrator. Etiketten tilldelas vid mottagandet.",
+    "description": "Showcase Features (six items) card description for Access Tiers"
+  },
+  "showcase.featuresSix.scheduledStewardship.title": {
+    "message": "Schemalagd förvaltning",
+    "description": "Showcase Features (six items) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.scheduledStewardship.description": {
+    "message": "Cron-styrda rensningar och granskningar. Marshal agerar enligt schema och väntar inte på att en människa ska minnas.",
+    "description": "Showcase Features (six items) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.threadArchival.title": {
+    "message": "Trådarkivering",
+    "description": "Showcase Features (six items) card title for Thread Archival"
+  },
+  "showcase.featuresSix.threadArchival.description": {
+    "message": "Inaktiva trådar stängs och förseglas enligt föreskrift, med ett stämplat meddelande och en återöppningsväg för varje ärende.",
+    "description": "Showcase Features (six items) card description for Thread Archival"
+  },
+  "showcase.featuresSix.automatedStamps.title": {
+    "message": "Automatiska stämplar",
+    "description": "Showcase Features (six items) card title for Automated Stamps"
+  },
+  "showcase.featuresSix.automatedStamps.description": {
+    "message": "Varje Marshal-åtgärd hänvisar till den föreskrift som bemyndigade den. Bemyndigandet diarieförs före åtgärden.",
+    "description": "Showcase Features (six items) card description for Automated Stamps"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (med rubrik och beskrivning)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Marshals nyckeltal",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Nyckeltal från en typisk förvaltningscykel för ett kodförvar.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.threadsArchived.label": {
+    "message": "Arkiverade trådar",
+    "description": "Showcase Stats (full) label for threads archived"
+  },
+  "showcase.statsFull.accessTiers.label": {
+    "message": "Åtkomstnivåer",
+    "description": "Showcase Stats (full) label for access tiers"
+  },
+  "showcase.statsFull.manualClosures.label": {
+    "message": "Manuella stängningar",
+    "description": "Showcase Stats (full) label for manual closures"
+  },
+  "showcase.statsFull.policyFile.label": {
+    "message": "Föreskriftsfil",
+    "description": "Showcase Stats (full) label for policy file"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (utan rubrik)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.policyFile.label": {
+    "message": "Föreskriftsfil",
+    "description": "Showcase Stats (no heading) label for policy file"
+  },
+  "showcase.statsNoHeading.manualActions.label": {
+    "message": "Manuella åtgärder",
+    "description": "Showcase Stats (no heading) label for manual actions"
+  },
+  "showcase.statsNoHeading.docketEntries.label": {
+    "message": "Diarieposter",
+    "description": "Showcase Stats (no heading) label for docket entries"
+  },
+  "showcase.statsNoHeading.accessTiers.label": {
+    "message": "Åtkomstnivåer",
+    "description": "Showcase Stats (no heading) label for access tiers"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (med kod)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Snabbstart",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Tre kommandon från noll till ett förvaltat kodförvar.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (med text)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Så fungerar det",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Marshal läser din föreskriftsfil, ställer varje tillämpligt arbetsflöde i kö vid nästa hela timme och stämplar en diariepost för varje vidtagen åtgärd. Diariet har enbart tillägg. Inget stängs i tysthet.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (med beskrivning)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Rapporter från myndigheten",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Föreskrifter diarieförda, diarier stämplade, förvaltning förd till protokoll.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Att diarieföra det odiarieförbara",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "En del inkommande ärenden passar ingen föreskrift. En feldiarieförd bugg, en begäran utanför nivåsystemet, en dubblett av en dubblett. Marshal diarieför dem som oklassificerade.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Ett års inaktuella trådar, arkiverade på en enda eftermiddag",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Kodförvaret hade 2 184 ärenden äldre än ett år. Marshal stängde och förseglade 2 108 under en enda nattlig genomgång.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Tre supportnivåer, en kö, en registrator",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Marshal fördelar nu inkommande supportärenden efter åtkomstnivå till en enda kö med tre etiketter. Etiketten stämplas, inte förhandlas.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (utan beskrivning)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Senaste rapporterna",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Marshal 2.4: Granskarens automatiska rättningsnivåer och Registratorns beroendegrafer",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Granskaren tillämpar nu automatiska rättningar över konventions- och formateringsnivåerna, och Registratorn ritar upp en beroendegraf över alla diarier i arbetsytan.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (inline-användning)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Marshal använder en ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.policy.title": {
+    "message": "skriftlig regel för hur Marshal hanterar en typ av händelser",
+    "description": "Showcase Terminology hover title for policy"
+  },
+  "showcase.terminology.policy.label": {
+    "message": "föreskrift",
+    "description": "Showcase Terminology displayed text for policy"
+  },
+  "showcase.terminology.paragraph1.afterPolicy": {
+    "message": " för att styra sina åtgärder på ett kodförvar. Varje åtgärd förs in i ",
+    "description": "Showcase Terminology paragraph 1 fragment after policy"
+  },
+  "showcase.terminology.docket.title": {
+    "message": "offentligt register med enbart tillägg över varje vidtagen åtgärd",
+    "description": "Showcase Terminology hover title for docket"
+  },
+  "showcase.terminology.docket.label": {
+    "message": "diariet",
+    "description": "Showcase Terminology displayed text for docket"
+  },
+  "showcase.terminology.paragraph1.afterDocket": {
+    "message": ", där varje post bär en ",
+    "description": "Showcase Terminology paragraph 1 fragment after docket"
+  },
+  "showcase.terminology.stamp.title": {
+    "message": "tidsstämplat bemyndigandemärke som anbringas på en slutförd åtgärd",
+    "description": "Showcase Terminology hover title for stamp"
+  },
+  "showcase.terminology.stamp.label": {
+    "message": "stämpel",
+    "description": "Showcase Terminology displayed text for stamp"
+  },
+  "showcase.terminology.paragraph1.afterStamp": {
+    "message": " som hänvisar till den föreskrift som bemyndigade den.",
+    "description": "Showcase Terminology paragraph 1 fragment after stamp"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Inkommande ärenden fördelas efter ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.accessTier.title": {
+    "message": "klassificering av inkommande ärenden efter sponsrings- eller bidragsstatus",
+    "description": "Showcase Terminology hover title for access tier"
+  },
+  "showcase.terminology.accessTier.label": {
+    "message": "åtkomstnivå",
+    "description": "Showcase Terminology displayed text for access tier"
+  },
+  "showcase.terminology.paragraph2.afterAccessTier": {
+    "message": " till ",
+    "description": "Showcase Terminology paragraph 2 fragment after access tier"
+  },
+  "showcase.terminology.queue.title": {
+    "message": "en enda ordnad lista över alla inkommande ärenden",
+    "description": "Showcase Terminology hover title for queue"
+  },
+  "showcase.terminology.queue.label": {
+    "message": "kön",
+    "description": "Showcase Terminology displayed text for queue"
+  },
+  "showcase.terminology.paragraph2.afterQueue": {
+    "message": ". Inaktiva trådar stängs genom ",
+    "description": "Showcase Terminology paragraph 2 fragment after queue"
+  },
+  "showcase.terminology.threadArchival.title": {
+    "message": "föreskriftsstyrd stängning av trådar som varit inaktiva längre än en tröskel",
+    "description": "Showcase Terminology hover title for thread archival"
+  },
+  "showcase.terminology.threadArchival.label": {
+    "message": "trådarkivering",
+    "description": "Showcase Terminology displayed text for thread archival"
+  },
+  "showcase.terminology.paragraph2.afterThreadArchival": {
+    "message": " med en verifikationskedja för varje ärende.",
+    "description": "Showcase Terminology paragraph 2 fragment after thread archival"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (med bildtext)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Varumärke diariefört i ett Frame-block, redo att åberopas.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Miniatyr av Marshals varumärke.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (utan bildtext)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (båda butikerna)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Ladda ner den medföljande appen",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (endast App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Tillgänglig för iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (endast Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Tillgänglig för Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (utan etikett)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} min läsning",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

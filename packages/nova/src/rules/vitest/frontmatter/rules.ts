@@ -6,12 +6,11 @@ import {
   join,
 } from 'node:path';
 
-import { it } from 'vitest';
-
 import {
   LIB_REGEX_PATTERN_DESCRIPTION_LINE,
   LIB_REGEX_PATTERN_ID_LINE,
 } from '../../../lib/regex.js';
+import { getActiveVitest } from '../active-vitest.js';
 import { isEnabled } from '../enable.js';
 
 import type {
@@ -170,8 +169,8 @@ import type {
  * Rules - Vitest - Frontmatter - Rules - Split Frontmatter.
  *
  * Splits a file's raw content into the trimmed frontmatter block and the trimmed body.
- * Returns `null` when the content has no opening or closing `---`; those conditions are
- * validated by dedicated rules, so other rules skip a file with no parseable frontmatter.
+ * Returns `null` when the content has no opening or closing `---`, since those conditions
+ * get validated by dedicated rules and other rules skip files with no frontmatter.
  *
  * @param {Rules_Vitest_Frontmatter_Rules_SplitFrontmatter_Content} content - Content.
  *
@@ -184,14 +183,16 @@ export function splitFrontmatter(content: Rules_Vitest_Frontmatter_Rules_SplitFr
     return null;
   }
 
-  const endIndex: Rules_Vitest_Frontmatter_Rules_SplitFrontmatter_EndIndex = content.indexOf('---', 3);
+  // Locate the closing fence as a "---" at the start of a line so a "---" inside a
+  // frontmatter value does not truncate the block and drop later fields.
+  const endIndex: Rules_Vitest_Frontmatter_Rules_SplitFrontmatter_EndIndex = content.indexOf('\n---', 3);
 
   if (endIndex === -1) {
     return null;
   }
 
   const frontmatter: Rules_Vitest_Frontmatter_Rules_SplitFrontmatter_Frontmatter = content.slice(3, endIndex).trim();
-  const body: Rules_Vitest_Frontmatter_Rules_SplitFrontmatter_Body = content.slice(endIndex + 3).trim();
+  const body: Rules_Vitest_Frontmatter_Rules_SplitFrontmatter_Body = content.slice(endIndex + 4).trim();
 
   return {
     frontmatter,
@@ -202,8 +203,8 @@ export function splitFrontmatter(content: Rules_Vitest_Frontmatter_Rules_SplitFr
 /**
  * Rules - Vitest - Frontmatter - Rules - Is Placeholder Page.
  *
- * Decides whether a file's issues should be downgraded from failures to warnings. This is
- * the `placeholder-pages-warn-not-fail` behavior gate: a file qualifies only when that
+ * Decides whether a file's issues should be downgraded from failures to warnings.
+ * This is the `placeholder-pages-warn-not-fail` gate, and a file qualifies only when that
  * toggle is enabled, a prefix is configured, and the body starts with that prefix.
  *
  * @param {Rules_Vitest_Frontmatter_Rules_IsPlaceholderPage_Body}   body   - Body.
@@ -266,7 +267,7 @@ export async function frontmatterPresent(config: Rules_Vitest_Frontmatter_Rules_
   const files: Rules_Vitest_Frontmatter_Rules_FrontmatterPresent_Files = config['files'];
 
   for (const file of files) {
-    it(`frontmatter present in ${file}`, async () => {
+    getActiveVitest().it(`frontmatter present in ${file}`, async () => {
       const filePath: Rules_Vitest_Frontmatter_Rules_FrontmatterPresent_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Frontmatter_Rules_FrontmatterPresent_Content = await readFile(filePath, 'utf-8');
 
@@ -300,7 +301,7 @@ export async function frontmatterClosed(config: Rules_Vitest_Frontmatter_Rules_F
   const files: Rules_Vitest_Frontmatter_Rules_FrontmatterClosed_Files = config['files'];
 
   for (const file of files) {
-    it(`frontmatter closed in ${file}`, async () => {
+    getActiveVitest().it(`frontmatter closed in ${file}`, async () => {
       const filePath: Rules_Vitest_Frontmatter_Rules_FrontmatterClosed_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Frontmatter_Rules_FrontmatterClosed_Content = await readFile(filePath, 'utf-8');
 
@@ -346,7 +347,7 @@ export async function requiredFieldsPresentDocs(config: Rules_Vitest_Frontmatter
       continue;
     }
 
-    it(`required docs fields present in ${file}`, async () => {
+    getActiveVitest().it(`required docs fields present in ${file}`, async () => {
       const filePath: Rules_Vitest_Frontmatter_Rules_RequiredFieldsPresentDocs_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Frontmatter_Rules_RequiredFieldsPresentDocs_Content = await readFile(filePath, 'utf-8');
       const split: Rules_Vitest_Frontmatter_Rules_RequiredFieldsPresentDocs_Split = splitFrontmatter(content);
@@ -418,7 +419,7 @@ export async function requiredFieldsPresentBlog(config: Rules_Vitest_Frontmatter
       continue;
     }
 
-    it(`required blog fields present in ${file}`, async () => {
+    getActiveVitest().it(`required blog fields present in ${file}`, async () => {
       const filePath: Rules_Vitest_Frontmatter_Rules_RequiredFieldsPresentBlog_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Frontmatter_Rules_RequiredFieldsPresentBlog_Content = await readFile(filePath, 'utf-8');
       const split: Rules_Vitest_Frontmatter_Rules_RequiredFieldsPresentBlog_Split = splitFrontmatter(content);
@@ -490,7 +491,7 @@ export async function idMatchesFilename(config: Rules_Vitest_Frontmatter_Rules_I
       continue;
     }
 
-    it(`id matches filename in ${file}`, async () => {
+    getActiveVitest().it(`id matches filename in ${file}`, async () => {
       const filePath: Rules_Vitest_Frontmatter_Rules_IdMatchesFilename_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Frontmatter_Rules_IdMatchesFilename_Content = await readFile(filePath, 'utf-8');
       const split: Rules_Vitest_Frontmatter_Rules_IdMatchesFilename_Split = splitFrontmatter(content);
@@ -576,7 +577,7 @@ export async function descriptionNotPlaceholder(config: Rules_Vitest_Frontmatter
       continue;
     }
 
-    it(`description not placeholder in ${file}`, async () => {
+    getActiveVitest().it(`description not placeholder in ${file}`, async () => {
       const filePath: Rules_Vitest_Frontmatter_Rules_DescriptionNotPlaceholder_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Frontmatter_Rules_DescriptionNotPlaceholder_Content = await readFile(filePath, 'utf-8');
       const split: Rules_Vitest_Frontmatter_Rules_DescriptionNotPlaceholder_Split = splitFrontmatter(content);
@@ -655,7 +656,7 @@ export async function keywordsNotPlaceholder(config: Rules_Vitest_Frontmatter_Ru
       continue;
     }
 
-    it(`keywords not placeholder in ${file}`, async () => {
+    getActiveVitest().it(`keywords not placeholder in ${file}`, async () => {
       const filePath: Rules_Vitest_Frontmatter_Rules_KeywordsNotPlaceholder_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Frontmatter_Rules_KeywordsNotPlaceholder_Content = await readFile(filePath, 'utf-8');
       const split: Rules_Vitest_Frontmatter_Rules_KeywordsNotPlaceholder_Split = splitFrontmatter(content);
@@ -749,7 +750,7 @@ export async function keywordsNotEmpty(config: Rules_Vitest_Frontmatter_Rules_Ke
       continue;
     }
 
-    it(`keywords not empty in ${file}`, async () => {
+    getActiveVitest().it(`keywords not empty in ${file}`, async () => {
       const filePath: Rules_Vitest_Frontmatter_Rules_KeywordsNotEmpty_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Frontmatter_Rules_KeywordsNotEmpty_Content = await readFile(filePath, 'utf-8');
       const split: Rules_Vitest_Frontmatter_Rules_KeywordsNotEmpty_Split = splitFrontmatter(content);
@@ -841,7 +842,7 @@ export async function tagsNotPlaceholder(config: Rules_Vitest_Frontmatter_Rules_
   const files: Rules_Vitest_Frontmatter_Rules_TagsNotPlaceholder_Files = config['files'];
 
   for (const file of files) {
-    it(`tags not placeholder in ${file}`, async () => {
+    getActiveVitest().it(`tags not placeholder in ${file}`, async () => {
       const filePath: Rules_Vitest_Frontmatter_Rules_TagsNotPlaceholder_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Frontmatter_Rules_TagsNotPlaceholder_Content = await readFile(filePath, 'utf-8');
       const split: Rules_Vitest_Frontmatter_Rules_TagsNotPlaceholder_Split = splitFrontmatter(content);
@@ -928,7 +929,7 @@ export async function tagsNotEmpty(config: Rules_Vitest_Frontmatter_Rules_TagsNo
   const files: Rules_Vitest_Frontmatter_Rules_TagsNotEmpty_Files = config['files'];
 
   for (const file of files) {
-    it(`tags not empty in ${file}`, async () => {
+    getActiveVitest().it(`tags not empty in ${file}`, async () => {
       const filePath: Rules_Vitest_Frontmatter_Rules_TagsNotEmpty_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Frontmatter_Rules_TagsNotEmpty_Content = await readFile(filePath, 'utf-8');
       const split: Rules_Vitest_Frontmatter_Rules_TagsNotEmpty_Split = splitFrontmatter(content);

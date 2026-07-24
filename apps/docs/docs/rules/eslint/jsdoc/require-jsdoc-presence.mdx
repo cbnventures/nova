@@ -1,0 +1,196 @@
+---
+id: "require-jsdoc-presence"
+title: "Require JSDoc Presence"
+description: "Require a leading JSDoc block on every documentable symbol so no class, function, method, or property ships undocumented."
+keywords:
+  - "nova"
+  - "eslint rule"
+  - "jsdoc"
+  - "documentation"
+  - "documentable symbols"
+  - "linting"
+tags:
+  - "rules"
+  - "eslint"
+  - "code style"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require a leading JSDoc block on every documentable symbol so no class, function, method, or property ships undocumented.
+
+## Summary
+
+The `require-jsdoc-presence` rule reports any documentable symbol that is missing a leading JSDoc block. Documentable symbols include classes, top-level and nested functions, class methods and properties, module-level consts, and local function-consts (`const helper = () => {}` declared inside a function).
+
+The rule skips symbols where a block would add noise: local value consts (`const x = 1` inside a function), inline callbacks, ambient `declare` declarations, function and method overload signatures (no body), re-export lists, and `.d.ts` declaration files whose type aliases use the section-header convention instead.
+
+## Why Use This Rule?
+
+1. Guarantees every public and internal symbol carries context, so readers never hit an undocumented declaration.
+2. Draws the line at symbols worth documenting, skipping local values and callbacks that a block would only clutter.
+3. Leaves `.d.ts` files and overload signatures alone so their existing conventions stay intact.
+
+## Examples
+
+<Tabs groupId="require-jsdoc-presence-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    /**
+     * Parse the configuration file.
+     *
+     * Reads the file at the given path and returns
+     * a parsed configuration object.
+     *
+     * @param {string} path - Path.
+     *
+     * @returns {Config}
+     *
+     * @since UNRELEASED
+     */
+    function parseConfig(path) {
+      const raw = readFileSync(path);
+
+      /**
+       * Normalize a raw entry.
+       *
+       * Trims whitespace and lowercases the key so
+       * lookups stay case-insensitive.
+       *
+       * @param {Entry} entry - Entry.
+       *
+       * @returns {Entry}
+       *
+       * @since UNRELEASED
+       */
+      const normalize = (entry) => entry;
+
+      return normalize(raw);
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    function parseConfig(path) {
+      const raw = readFileSync(path);
+
+      const normalize = (entry) => entry;
+
+      return normalize(raw);
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-jsdoc-presence-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireJsdocPresence } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-presence': RequireJsdocPresence.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-presence': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-test-directories" label="Skip Test Directories">
+
+    Skip files in specific directories:
+
+    ```ts
+    import { RequireJsdocPresence } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-presence': RequireJsdocPresence.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-presence': ['error', {
+            skipDirectories: ['tests', 'types'],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireJsdocPresence } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-presence': RequireJsdocPresence.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-presence': ['error', {
+            ignoreFiles: [
+              '*.test.ts',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option            | Type       | Default | Description                                                                                                                               |
+|-------------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles`     | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+| `skipDirectories` | `string[]` | `[]`    | Directory names to skip, such as `['tests', 'types']`.                                                                                    |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually by adding the JSDoc block by hand.
+
+## Troubleshooting
+
+- **Warning does not fire for a local const** — Local value consts such as `const x = 1` inside a function are intentionally skipped. Only function-consts like `const helper = () => {}` are documentable.
+- **Overload signatures are not flagged** — Function and method overload signatures have no body and are skipped. Document the implementation signature instead.
+- **`declare` declarations are not flagged** — Ambient `declare` declarations are skipped because they describe external shapes, not project code.
+- **Type aliases in `.d.ts` files are not flagged** — Declaration files use the section-header convention, so the rule does not require a JSDoc block on their type aliases.
+- **Re-export lists are not flagged** — Re-export statements pass values through without adding declarations, so no block is required.
+- **Want to skip specific files** — Use the `ignoreFiles` option to exclude files that do not need documentation, or `skipDirectories` to skip whole directories.

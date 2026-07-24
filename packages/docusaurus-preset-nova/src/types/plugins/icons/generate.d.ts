@@ -1,3 +1,5 @@
+import type { Stats } from 'node:fs';
+
 import type {
   Shared_IconifyAliasEntry,
   Shared_IconifyCollection,
@@ -21,6 +23,8 @@ export type Plugins_Icons_Generate_BuildModuleSource_LoadedCollections = Shared_
 export type Plugins_Icons_Generate_BuildModuleSource_Returns = string;
 
 export type Plugins_Icons_Generate_BuildModuleSource_Lines = string[];
+
+export type Plugins_Icons_Generate_BuildModuleSource_Sliced = Shared_IconSlicedCollection[];
 
 export type Plugins_Icons_Generate_BuildModuleSource_Prefixes = string[];
 
@@ -247,4 +251,4 @@ export type Plugins_Icons_Generate_WalkDirectory_Names = string[];
 
 export type Plugins_Icons_Generate_WalkDirectory_EntryPath = string;
 
-export type Plugins_Icons_Generate_WalkDirectory_Stats = import('node:fs').Stats;
+export type Plugins_Icons_Generate_WalkDirectory_Stats = Stats;

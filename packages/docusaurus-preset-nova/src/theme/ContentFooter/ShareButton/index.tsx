@@ -24,8 +24,6 @@ import type {
  *
  * @param {Theme_ContentFooter_ShareButton_Index_ShareButton_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.18.0
  */
 function ShareButton(props: Theme_ContentFooter_ShareButton_Index_ShareButton_Props) {
@@ -57,6 +55,16 @@ function ShareButton(props: Theme_ContentFooter_ShareButton_Index_ShareButton_Pr
         title={(copied === true) ? shareLinkCopied : shareCopyLink}
         aria-label={(copied === true) ? shareLinkCopied : shareCopyLink}
         onClick={() => {
+          /*
+           * navigator.clipboard is a secure-context-only API. It is undefined
+           * on plain HTTP over a LAN IP (common during cross-device dev
+           * testing), so guard it to avoid an uncaught TypeError and only show
+           * the copied confirmation when the write actually happened.
+           */
+          if (navigator.clipboard === undefined || navigator.clipboard.writeText === undefined) {
+            return undefined;
+          }
+
           void navigator.clipboard.writeText(props['shareUrl']);
           setCopied(true);
           setTimeout(() => {

@@ -25,6 +25,18 @@ import type {
  */
 export function useDetailsDismiss(detailsRef: Lib_UseDetailsDismiss_DetailsRef): Lib_UseDetailsDismiss_Returns {
   useEffect(() => {
+    /**
+     * Lib - Use Details Dismiss - Use Details Dismiss - Handle Mouse Down.
+     *
+     * Closes the details element when a mousedown lands outside its
+     * bounds while the element is currently open.
+     *
+     * @param {Lib_UseDetailsDismiss_UseDetailsDismiss_MouseEvent} mouseEvent - Mouse event.
+     *
+     * @private
+     *
+     * @since 0.21.0
+     */
     const handleMouseDown: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown = (mouseEvent: Lib_UseDetailsDismiss_UseDetailsDismiss_MouseEvent) => {
       const mouseTarget: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseTarget = mouseEvent.target as Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseTarget;
 
@@ -39,6 +51,18 @@ export function useDetailsDismiss(detailsRef: Lib_UseDetailsDismiss_DetailsRef):
       return undefined;
     };
 
+    /**
+     * Lib - Use Details Dismiss - Use Details Dismiss - Handle Key Down.
+     *
+     * Closes the details element when the Escape key is pressed while
+     * the element is currently open.
+     *
+     * @param {Lib_UseDetailsDismiss_UseDetailsDismiss_KeyboardEvent} keyboardEvent - Keyboard event.
+     *
+     * @private
+     *
+     * @since 0.21.0
+     */
     const handleKeyDown: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown = (keyboardEvent: Lib_UseDetailsDismiss_UseDetailsDismiss_KeyboardEvent) => {
       if (
         keyboardEvent.key === 'Escape'

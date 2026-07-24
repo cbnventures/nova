@@ -1,8 +1,4 @@
 {
-  "layout.marshal.title": {
-    "message": "Marshal",
-    "description": "Title of footer column \"marshal\""
-  },
   "layout.community.title": {
     "message": "المجتمع",
     "description": "Title of footer column \"community\""
@@ -26,10 +22,6 @@
   "sections.marshal.2.label": {
     "message": "مرجع API",
     "description": "Label of link 3 in footer section \"marshal\""
-  },
-  "sections.community.0.label": {
-    "message": "Threadbare",
-    "description": "Label of link 1 in footer section \"community\""
   },
   "sections.community.1.label": {
     "message": "المدونة",
@@ -58,9 +50,5 @@
   "cta.label": {
     "message": "هل أنت مستعدّ لبدء الإيداع؟",
     "description": "The footer call-to-action link label"
-  },
-  "copyright": {
-    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
-    "description": "The footer copyright text"
   }
 }

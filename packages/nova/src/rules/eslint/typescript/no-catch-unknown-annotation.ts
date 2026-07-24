@@ -85,10 +85,10 @@ export class Runner {
    * TSUnknownKeyword type annotation and provides an
    * auto-fix that removes the redundant annotation.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Context} context - Context.
    * @param {Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Returns}
    *

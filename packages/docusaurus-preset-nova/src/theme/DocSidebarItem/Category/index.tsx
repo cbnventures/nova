@@ -72,8 +72,6 @@ const categoryStateMap: Theme_DocSidebarItem_Category_Index_DocSidebarItemCatego
  *
  * @param {Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocSidebarItemCategory(props: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props) {

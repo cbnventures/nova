@@ -22,6 +22,7 @@ import type {
   Cli_Recipe_Github_SyncPolicies_Runner_Run_GhVersionOutput,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_GhVersionPattern,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_Github,
+  Cli_Recipe_Github_SyncPolicies_Runner_Run_GithubRecipes,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_IsAtProjectRoot,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_IsCommandOnPath,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_IsDryRun,
@@ -35,6 +36,7 @@ import type {
   Cli_Recipe_Github_SyncPolicies_Runner_Run_Repo,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_Result,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_Returns,
+  Cli_Recipe_Github_SyncPolicies_Runner_Run_SyncPolicies,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_ViewerPermission,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_ViewResult,
   Cli_Recipe_Github_SyncPolicies_Runner_Run_WorkingFile,
@@ -89,11 +91,13 @@ export class Runner {
       return;
     }
 
-    const recipes: Cli_Recipe_Github_SyncPolicies_Runner_Run_Recipes = github['recipes'];
+    const recipes: Cli_Recipe_Github_SyncPolicies_Runner_Run_Recipes = workingFile['recipes'];
+    const githubRecipes: Cli_Recipe_Github_SyncPolicies_Runner_Run_GithubRecipes = (recipes !== undefined) ? recipes['github'] : undefined;
+    const syncPolicies: Cli_Recipe_Github_SyncPolicies_Runner_Run_SyncPolicies = (githubRecipes !== undefined) ? githubRecipes['sync-policies'] : undefined;
 
     if (
-      recipes === undefined
-      || recipes['sync-policies'] !== true
+      syncPolicies === undefined
+      || syncPolicies['enabled'] !== true
     ) {
       return;
     }

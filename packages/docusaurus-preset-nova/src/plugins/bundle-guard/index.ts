@@ -17,8 +17,24 @@ import type {
   Plugins_BundleGuard_Index_BundleGuard_Returns,
 } from '../../types/plugins/bundle-guard/index.d.ts';
 
+/**
+ * Plugins - Bundle Guard - Default Max Bundle File Size.
+ *
+ * Fallback maximum bundle file size in mebibytes applied when the
+ * preset option does not supply an explicit limit.
+ *
+ * @since 0.21.0
+ */
 const defaultMaxBundleFileSize = 3;
 
+/**
+ * Plugins - Bundle Guard - Bytes Per Mebibyte.
+ *
+ * Number of bytes in one mebibyte, used to convert the configured
+ * mebibyte limit into the byte threshold compared against files.
+ *
+ * @since 0.21.0
+ */
 const bytesPerMebibyte = 1024 * 1024;
 
 /**

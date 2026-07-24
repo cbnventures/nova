@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/nova",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",
@@ -55,6 +55,7 @@
     "./presets/eslint/*": "./build/src/presets/eslint/*.js",
     "./presets/tsconfig/dx-essentials.json": "./build/src/presets/tsconfig/dx-essentials.json",
     "./presets/tsconfig/dx-strict.json": "./build/src/presets/tsconfig/dx-strict.json",
+    "./presets/tsconfig/fw-astro.json": "./build/src/presets/tsconfig/fw-astro.json",
     "./presets/tsconfig/fw-docusaurus.json": "./build/src/presets/tsconfig/fw-docusaurus.json",
     "./presets/tsconfig/fw-expressjs.json": "./build/src/presets/tsconfig/fw-expressjs.json",
     "./presets/tsconfig/fw-nextjs.json": "./build/src/presets/tsconfig/fw-nextjs.json",
@@ -79,24 +80,24 @@
   },
   "private": false,
   "scripts": {
-    "dev": "node ../../scripts/run-scripts.mjs --parallel 'dev:*'",
+    "dev": "node ../../scripts/nova-run-scripts.mjs --parallel 'dev:*'",
     "dev:watch": "tsc --project tsconfig.source.json --watch",
-    "build": "node ../../scripts/run-scripts.mjs --sequential 'build:*'",
+    "build": "node ../../scripts/nova-run-scripts.mjs --sequential 'build:*'",
     "build:transpile-source": "tsc --project tsconfig.source.json --outDir ./build --skipLibCheck",
     "build:copy-types": "shx rm -rf \"./build/src/types\" && shx cp -r \"./src/types\" \"./build/src/types\"",
     "build:copy-tsconfig-presets": "shx rm -rf \"./build/src/presets/tsconfig\" && shx cp -r \"./src/presets/tsconfig\" \"./build/src/presets/tsconfig\"",
     "build:fix-perms": "shx chmod +x ./build/src/cli/index.js",
     "build:copy-templates": "shx rm -rf \"./build/templates\" && shx cp -r \"./templates\" \"./build/templates\"",
-    "check": "node ../../scripts/run-scripts.mjs --sequential 'check:*'",
+    "check": "node ../../scripts/nova-run-scripts.mjs --sequential 'check:*'",
     "check:lint": "eslint ./ --max-warnings=0",
-    "check:types-source": "node ../../scripts/type-check.mjs --project tsconfig.source.json",
-    "check:types-tests": "node ../../scripts/type-check.mjs --project tsconfig.tests.json",
+    "check:types-source": "node ../../scripts/nova-type-check.mjs --project tsconfig.source.json",
+    "check:types-tests": "node ../../scripts/nova-type-check.mjs --project tsconfig.tests.json",
     "check:test": "vitest run",
-    "clean": "node ../../scripts/run-scripts.mjs --parallel 'clean:*'",
+    "clean": "node ../../scripts/nova-run-scripts.mjs --parallel 'clean:*'",
     "clean:build": "shx rm -rf ./build"
   },
   "engines": {
-    "node": "^20 || ^22 || ^24"
+    "node": "^22 || ^24"
   },
   "dependencies": {
     "@eslint/js": "9.39.3",

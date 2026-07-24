@@ -16,9 +16,9 @@ export type Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_MdFi
 
 export type Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_ParseCells_Row = string;
 
-export type Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_ParseCells_Segments = string[];
-
 export type Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_ParseCells_Returns = string[];
+
+export type Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_ParseCells_Segments = string[];
 
 export type Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_ParseCells = (row: Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_ParseCells_Row) => Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_ParseCells_Returns;
 

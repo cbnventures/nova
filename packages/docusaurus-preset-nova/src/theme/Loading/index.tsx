@@ -18,8 +18,6 @@ import type {
  *
  * @param {Theme_Loading_Index_Loading_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function Loading(props: Theme_Loading_Index_Loading_Props) {

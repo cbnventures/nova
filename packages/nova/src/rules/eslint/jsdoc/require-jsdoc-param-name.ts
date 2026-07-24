@@ -11,7 +11,8 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FinalFixedValue,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Fix_Fixer,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Fix_Returns,
-  Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FixedValue,
+  Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FixedLines,
+  Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Line,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Lines,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Match,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatches,
@@ -104,9 +105,9 @@ export class Runner {
    * Iterates all block comments in the file and extracts param
    * tag lines via the regex pattern, reporting mismatches against the parameter name.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Context} context - Context.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Returns}
    *
@@ -125,11 +126,17 @@ export class Runner {
       }
 
       const lines: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Lines = comment.value.split('\n');
-      let fixedValue: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FixedValue = comment.value;
+      const fixedLines: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FixedLines = [...lines];
       const mismatches: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatches = [];
 
-      // First pass: collect mismatches and compute the fully fixed value.
-      for (const line of lines) {
+      // First pass: collect mismatches and rewrite each @param line at its own position.
+      for (let index = 0; index < lines.length; index += 1) {
+        const line: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Line = lines[index];
+
+        if (line === undefined) {
+          continue;
+        }
+
         const match: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Match = Runner.#paramPattern.exec(line);
 
         if (match === null) {
@@ -150,7 +157,8 @@ export class Runner {
         const expected: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Expected = `${words.charAt(0).toUpperCase()}${words.slice(1).toLowerCase()}.`;
 
         if (description !== expected) {
-          fixedValue = fixedValue.replace(`- ${description}`, `- ${expected}`);
+          Reflect.set(fixedLines, index, line.replace(`- ${description}`, `- ${expected}`));
+
           mismatches.push({
             paramName,
             expected,
@@ -159,7 +167,7 @@ export class Runner {
       }
 
       // Second pass: report errors with the pre-computed fixed value.
-      const finalFixedValue: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FinalFixedValue = fixedValue;
+      const finalFixedValue: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FinalFixedValue = fixedLines.join('\n');
 
       for (const mismatch of mismatches) {
         context.report({

@@ -1,4 +1,4 @@
-import type { Shared_TypeDeclarationDtsMapping } from '../../shared.d.ts';
+import type { Shared_ActiveVitest, Shared_TypeDeclarationDtsMapping } from '../../shared.d.ts';
 
 /**
  * Rules - Vitest - Index - Dotenv Resolved Config.
@@ -22,6 +22,8 @@ export type Rules_Vitest_Index_DotenvResolvedConfig = {
  *
  * @since 0.20.0
  */
+export type Rules_Vitest_Index_DotenvSuiteConfig_Vitest = Shared_ActiveVitest;
+
 export type Rules_Vitest_Index_DotenvSuiteConfig_RootDir = string;
 
 export type Rules_Vitest_Index_DotenvSuiteConfig_EnvPaths = string[];
@@ -29,6 +31,7 @@ export type Rules_Vitest_Index_DotenvSuiteConfig_EnvPaths = string[];
 export type Rules_Vitest_Index_DotenvSuiteConfig_Enable = Rules_Vitest_Index_SuiteEnable<Rules_Vitest_Index_DotenvToggleKey>;
 
 export type Rules_Vitest_Index_DotenvSuiteConfig = {
+  vitest: Rules_Vitest_Index_DotenvSuiteConfig_Vitest;
   rootDir?: Rules_Vitest_Index_DotenvSuiteConfig_RootDir;
   envPaths?: Rules_Vitest_Index_DotenvSuiteConfig_EnvPaths;
   enable: Rules_Vitest_Index_DotenvSuiteConfig_Enable;
@@ -81,6 +84,8 @@ export type Rules_Vitest_Index_FrontmatterResolvedConfig = {
  *
  * @since 0.20.0
  */
+export type Rules_Vitest_Index_FrontmatterSuiteConfig_Vitest = Shared_ActiveVitest;
+
 export type Rules_Vitest_Index_FrontmatterSuiteConfig_RequiredFields = string[];
 
 export type Rules_Vitest_Index_FrontmatterSuiteConfig_RequiredBlogFields = string[];
@@ -100,6 +105,7 @@ export type Rules_Vitest_Index_FrontmatterSuiteConfig_RootDir = string;
 export type Rules_Vitest_Index_FrontmatterSuiteConfig_Enable = Rules_Vitest_Index_SuiteEnable<Rules_Vitest_Index_FrontmatterToggleKey>;
 
 export type Rules_Vitest_Index_FrontmatterSuiteConfig = {
+  vitest: Rules_Vitest_Index_FrontmatterSuiteConfig_Vitest;
   requiredFields: Rules_Vitest_Index_FrontmatterSuiteConfig_RequiredFields;
   requiredBlogFields?: Rules_Vitest_Index_FrontmatterSuiteConfig_RequiredBlogFields;
   contentDirs?: Rules_Vitest_Index_FrontmatterSuiteConfig_ContentDirs;
@@ -167,6 +173,8 @@ export type Rules_Vitest_Index_LinkResolvedConfig = {
  *
  * @since 0.20.0
  */
+export type Rules_Vitest_Index_LinkSuiteConfig_Vitest = Shared_ActiveVitest;
+
 export type Rules_Vitest_Index_LinkSuiteConfig_ProjectRoot = string;
 
 export type Rules_Vitest_Index_LinkSuiteConfig_ContentDirsDocs = string;
@@ -189,6 +197,7 @@ export type Rules_Vitest_Index_LinkSuiteConfig_FileExtensions = string[];
 export type Rules_Vitest_Index_LinkSuiteConfig_Enable = Rules_Vitest_Index_SuiteEnable<Rules_Vitest_Index_LinkToggleKey>;
 
 export type Rules_Vitest_Index_LinkSuiteConfig = {
+  vitest: Rules_Vitest_Index_LinkSuiteConfig_Vitest;
   projectRoot?: Rules_Vitest_Index_LinkSuiteConfig_ProjectRoot;
   contentDirs?: Rules_Vitest_Index_LinkSuiteConfig_ContentDirs;
   docsRouteBasePath?: Rules_Vitest_Index_LinkSuiteConfig_DocsRouteBasePath;
@@ -233,6 +242,8 @@ export type Rules_Vitest_Index_MarkdownTableResolvedConfig = {
  *
  * @since 0.20.0
  */
+export type Rules_Vitest_Index_MarkdownTableSuiteConfig_Vitest = Shared_ActiveVitest;
+
 export type Rules_Vitest_Index_MarkdownTableSuiteConfig_ContentDirs = string[];
 
 export type Rules_Vitest_Index_MarkdownTableSuiteConfig_RootDir = string;
@@ -242,6 +253,7 @@ export type Rules_Vitest_Index_MarkdownTableSuiteConfig_FileExtensions = string[
 export type Rules_Vitest_Index_MarkdownTableSuiteConfig_Enable = Rules_Vitest_Index_SuiteEnable<Rules_Vitest_Index_MarkdownTableToggleKey>;
 
 export type Rules_Vitest_Index_MarkdownTableSuiteConfig = {
+  vitest: Rules_Vitest_Index_MarkdownTableSuiteConfig_Vitest;
   contentDirs?: Rules_Vitest_Index_MarkdownTableSuiteConfig_ContentDirs;
   rootDir?: Rules_Vitest_Index_MarkdownTableSuiteConfig_RootDir;
   fileExtensions?: Rules_Vitest_Index_MarkdownTableSuiteConfig_FileExtensions;
@@ -305,6 +317,8 @@ export type Rules_Vitest_Index_TerminologyResolvedConfig = {
  *
  * @since 0.20.0
  */
+export type Rules_Vitest_Index_TerminologySuiteConfig_Vitest = Shared_ActiveVitest;
+
 export type Rules_Vitest_Index_TerminologySuiteConfig_ContentDirs = string[];
 
 export type Rules_Vitest_Index_TerminologySuiteConfig_TerminologyPath = string;
@@ -318,6 +332,7 @@ export type Rules_Vitest_Index_TerminologySuiteConfig_ComponentName = string;
 export type Rules_Vitest_Index_TerminologySuiteConfig_Enable = Rules_Vitest_Index_SuiteEnable<Rules_Vitest_Index_TerminologyToggleKey>;
 
 export type Rules_Vitest_Index_TerminologySuiteConfig = {
+  vitest: Rules_Vitest_Index_TerminologySuiteConfig_Vitest;
   contentDirs?: Rules_Vitest_Index_TerminologySuiteConfig_ContentDirs;
   terminologyPath?: Rules_Vitest_Index_TerminologySuiteConfig_TerminologyPath;
   expectedBase?: Rules_Vitest_Index_TerminologySuiteConfig_ExpectedBase;
@@ -364,6 +379,8 @@ export type Rules_Vitest_Index_TypeDeclarationResolvedConfig = {
  *
  * @since 0.20.0
  */
+export type Rules_Vitest_Index_TypeDeclarationSuiteConfig_Vitest = Shared_ActiveVitest;
+
 export type Rules_Vitest_Index_TypeDeclarationSuiteConfig_PackageRoot = string;
 
 export type Rules_Vitest_Index_TypeDeclarationSuiteConfig_TypeRoots = string[];
@@ -375,6 +392,7 @@ export type Rules_Vitest_Index_TypeDeclarationSuiteConfig_Mapping = Shared_TypeD
 export type Rules_Vitest_Index_TypeDeclarationSuiteConfig_Enable = Rules_Vitest_Index_SuiteEnable<Rules_Vitest_Index_TypeDeclarationToggleKey>;
 
 export type Rules_Vitest_Index_TypeDeclarationSuiteConfig = {
+  vitest: Rules_Vitest_Index_TypeDeclarationSuiteConfig_Vitest;
   packageRoot?: Rules_Vitest_Index_TypeDeclarationSuiteConfig_PackageRoot;
   typeRoots?: Rules_Vitest_Index_TypeDeclarationSuiteConfig_TypeRoots;
   standaloneTypeFiles?: Rules_Vitest_Index_TypeDeclarationSuiteConfig_StandaloneTypeFiles;
@@ -389,6 +407,8 @@ export type Rules_Vitest_Index_TypeDeclarationSuiteConfig = {
  */
 export type Rules_Vitest_Index_TypeDeclarationToggleKey =
   | 'inspector-cross-section-references'
+  | 'inspector-dts-import-verbatim'
+  | 'inspector-no-inline-import-types'
   | 'inspector-section-alphabetical'
   | 'inspector-first-come-first-serve-order'
   | 'inspector-object-property-types'

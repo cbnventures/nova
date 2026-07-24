@@ -24,16 +24,20 @@ describe('presetsSignalPresetSignal', async () => {
     const signal: Tests_Presets_Signal_Preset_PresetsSignalPresetSignal_HasCorrectColorValues_Signal = presetsSignalPresetSignal;
 
     deepStrictEqual(signal['colors']['primary'], {
-      light: '#dc2626', dark: '#dc2626',
+      light: '#dc2626',
+      dark: '#dc2626',
     });
     deepStrictEqual(signal['colors']['accent'], {
-      light: '#f59e0b', dark: '#f59e0b',
+      light: '#f59e0b',
+      dark: '#f59e0b',
     });
     deepStrictEqual(signal['colors']['text'], {
-      light: '#262626', dark: '#e5e5e5',
+      light: '#262626',
+      dark: '#e5e5e5',
     });
     deepStrictEqual(signal['colors']['border'], {
-      light: '#d4d4d4', dark: '#404040',
+      light: '#d4d4d4',
+      dark: '#404040',
     });
 
     return;

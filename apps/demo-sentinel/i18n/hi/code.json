@@ -1,0 +1,510 @@
+{
+  "home.layout.description": {
+    "message": "Sentinel हर उपयोगकर्ता, हर डिवाइस, हर कनेक्शन का मूल्यांकन करता है — निरंतर। पहुँच कोई दरवाज़ा नहीं है। यह एक ऐसी बातचीत है जो कभी खत्म नहीं होती।",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Sentinel - भरोसा एक कमज़ोरी है",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "सुरक्षा प्लेटफ़ॉर्म",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "भरोसा एक कमज़ोरी है।",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Sentinel हर उपयोगकर्ता, हर डिवाइस, हर कनेक्शन का मूल्यांकन करता है — निरंतर। पहुँच कोई दरवाज़ा नहीं है। यह एक ऐसी बातचीत है जो कभी खत्म नहीं होती।",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "प्लेटफ़ॉर्म एक्सप्लोर करें",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Threadbare पर देखें",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.watchtower.description": {
+    "message": "निरंतर सुरक्षा-स्थिति आकलन। हर 90 सेकंड में डिवाइस के स्वास्थ्य, लोकेशन और व्यवहार का मूल्यांकन करता है। जिस पल हालात बदलते हैं, Watchtower को पता चल जाता है।",
+    "description": "Front page Features card description for Watchtower"
+  },
+  "home.features.drawbridge.description": {
+    "message": "अनुकूली एक्सेस गेटवे। संदर्भ के आधार पर वास्तविक समय में पहुँच देता, सीमित करता या रद्द करता है — पहचान, सुरक्षा-स्थिति, लोकेशन और समय। कोई स्थिर नियम नहीं।",
+    "description": "Front page Features card description for Drawbridge"
+  },
+  "home.features.garrison.description": {
+    "message": "एंडपॉइंट अनुपालन इंजन। हर जुड़े डिवाइस पर नीति लागू करता है। डिस्क एन्क्रिप्शन, OS संस्करण, फ़ायरवॉल स्थिति — पहुँच देने से पहले सब कुछ सत्यापित।",
+    "description": "Front page Features card description for Garrison"
+  },
+  "home.features.rampart.description": {
+    "message": "माइक्रो-सेगमेंटेशन परत। वर्कलोड को इस तरह अलग करती है कि पार्श्व संचलन असंभव हो जाए। एक सेगमेंट में सेंध लग जाने पर भी, हमला वहीं थम जाता है।",
+    "description": "Front page Features card description for Rampart"
+  },
+  "home.features.spyglass.description": {
+    "message": "ऑडिट और फ़ॉरेंसिक्स। 7-वर्षीय अपरिवर्तनीय लॉग प्रतिधारण के साथ पूर्ण सत्र पुनर्निर्माण। हर एक्सेस निर्णय, हर नीति मूल्यांकन, हर कनेक्शन — दर्ज।",
+    "description": "Front page Features card description for Spyglass"
+  },
+  "home.features.parapet.description": {
+    "message": "नीति सिमुलेशन सैंडबॉक्स। लागू करने से पहले वास्तविक ट्रैफ़िक पर एक्सेस नियमों का परीक्षण करें। देखें कि किसे पहुँच मिलती है, किसकी छिनती है, और क्यों — प्रोडक्शन को छुए बिना।",
+    "description": "Front page Features card description for Parapet"
+  },
+  "home.stats.heading": {
+    "message": "आँकड़ों में",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.cycle.label": {
+    "message": "पुनर्मूल्यांकन चक्र",
+    "description": "Front page Stats label for re-evaluation cycle"
+  },
+  "home.stats.tunnels.label": {
+    "message": "समवर्ती टनल",
+    "description": "Front page Stats label for concurrent tunnels"
+  },
+  "home.stats.retention.label": {
+    "message": "ऑडिट प्रतिधारण",
+    "description": "Front page Stats label for audit retention"
+  },
+  "home.stats.latency.label": {
+    "message": "नीति विलंबता",
+    "description": "Front page Stats label for policy latency"
+  },
+  "home.spotlight.heading": {
+    "message": "एक नीति, पूर्ण मूल्यांकन",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "तय करें कि भरोसे का क्या अर्थ है। Sentinel इसे निरंतर लागू करता है।",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "चलते-फिरते अपने फ़्लीट की निगरानी करें",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "सुरक्षा बुलेटिन",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "ख़तरा शोध, सुरक्षा-स्थिति सलाह, और निरंतर भरोसे का दर्शन।",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "docusaurus-preset-nova के हर ब्लॉक को प्रदर्शित करता Sentinel ब्लॉक शोकेस।",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Sentinel प्रीसेट का हर ब्लॉक, नमूना डेटा के साथ प्रस्तुत।",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (पूर्ण)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "ब्लॉक शोकेस",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "हर Sentinel ब्लॉक, एक ही जगह प्रदर्शित।",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "यह पेज @cbnventures/docusaurus-preset-nova/blocks के हर ब्लॉक को Sentinel-वर्ल्ड डेटा के साथ प्रस्तुत करता है ताकि आप देख सकें कि वे कैसे दिखते और व्यवहार करते हैं।",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "डॉक्यूमेंटेशन पढ़ें",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Threadbare पर देखें",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (न्यूनतम)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "भरोसा निरंतर अर्जित किया जाता है।",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Sentinel हर उपयोगकर्ता, हर डिवाइस, हर कनेक्शन का मूल्यांकन करता है — निरंतर। पहुँच कोई दरवाज़ा नहीं है। यह एक ऐसी बातचीत है जो कभी खत्म नहीं होती।",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "प्लेटफ़ॉर्म एक्सप्लोर करें",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (डिफ़ॉल्ट)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "मुझे पसंद है ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (बिना उपसर्ग)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "तेज़",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "लचीला",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "मुफ़्त",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (धीमी गति)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "बना है ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "डेवलपर्स के लिए",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "डिज़ाइनर्स के लिए",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (बिना लूप)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "आपका स्वागत है ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Spark से इंस्टॉल करें",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "या Vial कंटेनर का उपयोग करें",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (बिना लेबल)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "त्वरित इंस्टॉल",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (आइकन के साथ)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "टीमें Sentinel क्यों चुनती हैं",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.watchtower.description": {
+    "message": "निरंतर सुरक्षा-स्थिति आकलन। हर 90 सेकंड में डिवाइस के स्वास्थ्य, लोकेशन और व्यवहार का मूल्यांकन करता है।",
+    "description": "Showcase Features (with icons) card description for Watchtower"
+  },
+  "showcase.featuresIcons.drawbridge.description": {
+    "message": "अनुकूली एक्सेस गेटवे। भरोसे के मूल्यांकन के आधार पर वास्तविक समय में पहुँच देता, सीमित करता या रद्द करता है।",
+    "description": "Showcase Features (with icons) card description for Drawbridge"
+  },
+  "showcase.featuresIcons.garrison.description": {
+    "message": "एंडपॉइंट अनुपालन इंजन। पहुँच देने से पहले हर जुड़े डिवाइस पर नीति लागू करता है।",
+    "description": "Showcase Features (with icons) card description for Garrison"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (बिना आइकन, बिना हेडिंग)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.rampart.description": {
+    "message": "माइक्रो-सेगमेंटेशन परत। वर्कलोड को इस तरह अलग करती है कि ज़ोन के बीच पार्श्व संचलन असंभव हो जाए।",
+    "description": "Showcase Features (no icons) card description for Rampart"
+  },
+  "showcase.featuresNoIcons.spyglass.description": {
+    "message": "ऑडिट और फ़ॉरेंसिक्स। 7-वर्षीय अपरिवर्तनीय लॉग प्रतिधारण के साथ पूर्ण सत्र पुनर्निर्माण।",
+    "description": "Showcase Features (no icons) card description for Spyglass"
+  },
+  "showcase.featuresNoIcons.parapet.description": {
+    "message": "नीति सिमुलेशन सैंडबॉक्स। लागू करने से पहले वास्तविक ट्रैफ़िक पर एक्सेस नियमों का परीक्षण करें।",
+    "description": "Showcase Features (no icons) card description for Parapet"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (छह आइटम, मिश्रित आइकन)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "संपूर्ण भरोसा इंजन",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.watchtower.description": {
+    "message": "निरंतर 90-सेकंड चक्र पर डिवाइस की सुरक्षा-स्थिति, उपयोगकर्ता पहचान, नेटवर्क संदर्भ और व्यवहारगत संकेतों का मूल्यांकन करता है।",
+    "description": "Showcase Features (six items) card description for Watchtower"
+  },
+  "showcase.featuresSix.drawbridge.description": {
+    "message": "Watchtower के मूल्यांकनों को ठोस एक्सेस निर्णयों में बदलता है — देना, सीमित करना या रद्द करना।",
+    "description": "Showcase Features (six items) card description for Drawbridge"
+  },
+  "showcase.featuresSix.garrison.description": {
+    "message": "हर एंडपॉइंट के लिए डिवाइस नामांकन, सुरक्षा-स्थिति आधाररेखा और अनुपालन प्रोफ़ाइल का प्रबंधन करता है।",
+    "description": "Showcase Features (six items) card description for Garrison"
+  },
+  "showcase.featuresSix.rampart.description": {
+    "message": "बुनियादी ढाँचे को अलग-अलग ज़ोन में बाँटता है। ज़ोन पार करने के लिए नीति मूल्यांकन आवश्यक है।",
+    "description": "Showcase Features (six items) card description for Rampart"
+  },
+  "showcase.featuresSix.spyglass.description": {
+    "message": "हर एक्सेस निर्णय, नीति मूल्यांकन और ज़ोन पारगमन को एक अपरिवर्तनीय ऑडिट शृंखला में दर्ज करता है।",
+    "description": "Showcase Features (six items) card description for Spyglass"
+  },
+  "showcase.featuresSix.parapet.description": {
+    "message": "प्रवर्तन से पहले सटीक एक्सेस प्रभाव दिखाने के लिए मसौदा नीतियों पर वास्तविक ट्रैफ़िक को फिर से चलाता है।",
+    "description": "Showcase Features (six items) card description for Parapet"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (हेडिंग और विवरण के साथ)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "प्लेटफ़ॉर्म मेट्रिक्स",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Sentinel भरोसा इंजन में प्रमुख प्रदर्शन संकेतक।",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.cycle.label": {
+    "message": "पुनर्मूल्यांकन चक्र",
+    "description": "Showcase Stats (full) label for re-evaluation cycle"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "नीति विलंबता",
+    "description": "Showcase Stats (full) label for policy latency"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "मूल्यांकन अपटाइम",
+    "description": "Showcase Stats (full) label for evaluation uptime"
+  },
+  "showcase.statsFull.retention.label": {
+    "message": "ऑडिट प्रतिधारण",
+    "description": "Showcase Stats (full) label for audit retention"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (बिना हेडिंग)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.tunnels.label": {
+    "message": "समवर्ती टनल",
+    "description": "Showcase Stats (no heading) label for concurrent tunnels"
+  },
+  "showcase.statsNoHeading.components.label": {
+    "message": "कंपोनेंट",
+    "description": "Showcase Stats (no heading) label for components"
+  },
+  "showcase.statsNoHeading.zoneTypes.label": {
+    "message": "ज़ोन प्रकार",
+    "description": "Showcase Stats (no heading) label for zone types"
+  },
+  "showcase.statsNoHeading.implicitTrust.label": {
+    "message": "अंतर्निहित भरोसा",
+    "description": "Showcase Stats (no heading) label for implicit trust"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (कोड के साथ)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "त्वरित शुरुआत",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "शून्य से निरंतर भरोसा मूल्यांकन तक पहुँचने के लिए तीन कमांड।",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (टेक्स्ट के साथ)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "यह कैसे काम करता है",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Sentinel भरोसे का निरंतर मूल्यांकन करता है। Watchtower हर 90 सेकंड में एक सुरक्षा-स्थिति स्कोर की गणना करता है। Drawbridge परिणाम को वास्तविक समय में लागू करता है। Spyglass हर निर्णय को अपरिवर्तनीय रूप से दर्ज करता है। परिणाम हमेशा प्रमाण होता है — अनुमान नहीं।",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (विवरण के साथ)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "सुरक्षा बुलेटिन",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "ख़तरा शोध, सुरक्षा-स्थिति सलाह, और निरंतर भरोसे का दर्शन।",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "जिस दिन हमने नेटवर्क पर भरोसा करना बंद किया",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "परिधि घुल गई और उद्योग ने दिखावा किया कि ऐसा हुआ ही नहीं। हमने Sentinel इसलिए बनाया क्योंकि हर VPN एक भरोसे की धारणा है।",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "एक ऐसी सेंध का सिमुलेशन जो कभी हुई ही नहीं",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "कैसे Parapet ने प्रोडक्शन तक पहुँचने से पहले स्टेजिंग में एक पार्श्व संचलन पथ को पकड़ा।",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "अनुपालन सुरक्षा क्यों नहीं है (लेकिन फिर भी आपको दोनों चाहिए)",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "ऑडिट पास करना और सुरक्षित होना एक ही बात नहीं है। Spyglass इस खाई को पाटता है।",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (बिना विवरण)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "हाल के अपडेट",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Sentinel 3.4: Parapet ट्रैफ़िक रीप्ले और Rampart ज़ोन क्वारंटाइन",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Parapet अब मसौदा नीतियों पर पूर्ण ट्रैफ़िक रीप्ले का समर्थन करता है, और Rampart उन डिवाइसों को स्वचालित रूप से क्वारंटाइन कर सकता है जो सुरक्षा-स्थिति जाँच में विफल होते हैं।",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (इनलाइन उपयोग)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Sentinel एक ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.trustPolicy.title": {
+    "message": "एक्सेस नियंत्रण घोषणा",
+    "description": "Showcase Terminology hover title for trust policy"
+  },
+  "showcase.terminology.trustPolicy.label": {
+    "message": "भरोसा नीति",
+    "description": "Showcase Terminology displayed text for trust policy"
+  },
+  "showcase.terminology.paragraph1.afterTrustPolicy": {
+    "message": " का उपयोग सभी एक्सेस निर्णयों को संचालित करने के लिए करता है। हर नामांकित डिवाइस की निगरानी ",
+    "description": "Showcase Terminology paragraph 1 fragment after trust policy"
+  },
+  "showcase.terminology.garrison.title": {
+    "message": "एंडपॉइंट अनुपालन एजेंट",
+    "description": "Showcase Terminology hover title for Garrison"
+  },
+  "showcase.terminology.paragraph1.afterGarrison": {
+    "message": " एजेंट द्वारा की जाती है, जो स्कोरिंग के लिए ",
+    "description": "Showcase Terminology paragraph 1 fragment after Garrison"
+  },
+  "showcase.terminology.watchtower.title": {
+    "message": "निरंतर भरोसा मूल्यांकन इंजन",
+    "description": "Showcase Terminology hover title for Watchtower"
+  },
+  "showcase.terminology.paragraph1.afterWatchtower": {
+    "message": " को सुरक्षा-स्थिति डेटा भेजता है।",
+    "description": "Showcase Terminology paragraph 1 fragment after Watchtower"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "एक बार जब ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.rampart.title": {
+    "message": "माइक्रो-सेगमेंटेशन परत",
+    "description": "Showcase Terminology hover title for Rampart"
+  },
+  "showcase.terminology.paragraph2.afterRampart": {
+    "message": " ज़ोन प्रणाली लागू होती है, तो वर्कलोड इस तरह अलग हो जाते हैं कि एक सेंध लगा हुआ सेगमेंट भी निकटवर्ती ज़ोन में ",
+    "description": "Showcase Terminology paragraph 2 fragment after Rampart"
+  },
+  "showcase.terminology.filament.title": {
+    "message": "एन्क्रिप्टेड टनल प्रोटोकॉल",
+    "description": "Showcase Terminology hover title for Filament"
+  },
+  "showcase.terminology.paragraph2.afterFilament": {
+    "message": " टनल को प्रभावित नहीं कर सकता। हर निर्णय ",
+    "description": "Showcase Terminology paragraph 2 fragment after Filament"
+  },
+  "showcase.terminology.spyglass.title": {
+    "message": "ऑडिट और फ़ॉरेंसिक्स इंजन",
+    "description": "Showcase Terminology hover title for Spyglass"
+  },
+  "showcase.terminology.paragraph2.afterSpyglass": {
+    "message": " में अपरिवर्तनीय ऑडिट प्रतिधारण के लिए दर्ज होता है।",
+    "description": "Showcase Terminology paragraph 2 fragment after Spyglass"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (कैप्शन के साथ)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Frame पर टँगा ब्रांड चिह्न — ठोस किनारा, पहरा-मीनार सा अडिग।",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Sentinel ब्रांड थंबनेल।",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (बिना कैप्शन)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (दोनों स्टोर)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "साथी ऐप डाउनलोड करें",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (सिर्फ़ App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "iOS पर उपलब्ध",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (सिर्फ़ Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Android पर उपलब्ध",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (बिना लेबल)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} मिनट पढ़ें",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

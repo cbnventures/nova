@@ -1,0 +1,506 @@
+{
+  "home.layout.description": {
+    "message": "Envoy מתרגם בין מערכות שמעולם לא תוכננו להבין זו את זו. בלי פורמט משותף. בלי פרוטוקול משותף. רק מסירה.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Envoy - ההודעות מגיעות",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "תשתית אינטגרציה",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "ההודעות מגיעות. זה כל המוצר.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Envoy מתרגם בין מערכות שמעולם לא תוכננו להבין זו את זו. בלי פורמט משותף. בלי פרוטוקול משותף. רק מסירה.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "קראו את התיעוד",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "צפו ב-Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.dispatch.description": {
+    "message": "מנוע ניתוב חכם. בודק כל מטען נכנס ומנתב לפי תוכן, מקור, רמת חומרה או כללים מותאמים אישית. ההתאמה הראשונה מנצחת. בלי עמימות.",
+    "description": "Front page Features card description for Dispatch"
+  },
+  "home.features.courier.description": {
+    "message": "מנוע ניסיונות חוזרים שמבטיח מסירה. backoff אקספוננציאלי עם jitter, תורי dead-letter להודעות שלעולם לא יגיעו, ואישורי מסירה לכל ניסיון.",
+    "description": "Front page Features card description for Courier"
+  },
+  "home.features.parcel.description": {
+    "message": "צינור להמרת מטענים. משכתב הודעות בין פורמטים — מ-JSON ל-JSON, מ-JSON לטקסט רגיל, מ-XML ל-JSON. מיפוי שדות, ומצבים עם ובלי אובדן נתונים.",
+    "description": "Front page Features card description for Parcel"
+  },
+  "home.features.cipher.description": {
+    "message": "שער אימות. חתימות HMAC-SHA256, אסימוני bearer ורשימות היתר של כתובות IP. מאמת את זהות המקור עוד לפני שבייט אחד מגיע לצינור ההמרה.",
+    "description": "Front page Features card description for Cipher"
+  },
+  "home.features.ledger.description": {
+    "message": "מסלול ביקורת מלא לכל מסירה. כל הודעה שהתקבלה, הומרה, נותבה ונמסרה — נרשמת ביומן להוספה-בלבד, עם מדיניות שמירה הניתנת להגדרה.",
+    "description": "Front page Features card description for Ledger"
+  },
+  "home.features.embassy.description": {
+    "message": "פרוקסי הפוך שמסתיר את שרתי המקור. משאיר את השירותים הפנימיים שלכם מחוץ לאינטרנט הציבורי. מקורות חיצוניים פונים ל-Embassy. השירותים הפנימיים לא יודעים בכלל שקיים עולם בחוץ.",
+    "description": "Front page Features card description for Embassy"
+  },
+  "home.stats.heading": {
+    "message": "במספרים",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.translators.label": {
+    "message": "מתרגמי פרוטוקול",
+    "description": "Front page Stats label for protocol translator count"
+  },
+  "home.stats.image.label": {
+    "message": "אימג' Vial",
+    "description": "Front page Stats label for Vial image size"
+  },
+  "home.stats.dependencies.label": {
+    "message": "תלויות חיצוניות",
+    "description": "Front page Stats label for external dependency count"
+  },
+  "home.stats.latency.label": {
+    "message": "השהיית הממסר",
+    "description": "Front page Stats label for relay latency"
+  },
+  "home.spotlight.heading": {
+    "message": "תרגום, ניתוב, מסירה",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Glassboard משגר את ההתראה. Envoy מתרגם את המטען, מנתב אותו לנושא הנכון ב-Canary ומאשר את המסירה. אף אחד מהצדדים לא יודע שהאחר קיים.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "קבלו התראות מסירה",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "עדכונים מחדר הממסר",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "הערות גרסה, צלילות עומק לאינטגרציות, ומדי פעם גם עדכון מחדר הממסר.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "תצוגת הבלוקים של Envoy — הדגמה של כל בלוק מתוך docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "כל בלוק מתוך ה-preset של Envoy, מוצג עם נתוני דוגמה.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (מלא)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "תצוגת בלוקים",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "כל בלוק של Envoy, מודגם במקום אחד.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "הדף הזה מציג כל בלוק מתוך @cbnventures/docusaurus-preset-nova/blocks עם נתונים מעולם Envoy, כדי שתוכלו לראות איך הם נראים ואיך הם מתנהגים.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "קראו את התיעוד",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "צפו ב-Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (מינימלי)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "מסירה בלי טקסים.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Envoy מתרגם בין מערכות שמעולם לא תוכננו להבין זו את זו. בלי פורמט משותף. בלי פרוטוקול משותף. רק מסירה.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "התחילו עכשיו",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (ברירת מחדל)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "אני אוהב ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (בלי קידומת)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "מהיר",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "גמיש",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "חינמי",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (תזמון איטי)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "נבנה עבור ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "מפתחים",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "מעצבים",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (בלי לולאה)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "ברוכים הבאים אל ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "התקינו עם Vial",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "או השתמשו ב-Spark CLI",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (בלי תווית)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "התקנה מהירה",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (עם אייקונים)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "למה צוותים בוחרים ב-Envoy",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.dispatch.description": {
+    "message": "מנוע ניתוב חכם. בודק מטענים ומנתב לפי תוכן, מקור, רמת חומרה או כללים מותאמים אישית.",
+    "description": "Showcase Features (with icons) card description for Dispatch"
+  },
+  "showcase.featuresIcons.courier.description": {
+    "message": "מנוע ניסיונות חוזרים שמבטיח מסירה. backoff אקספוננציאלי, תורי dead-letter ואישורי מסירה.",
+    "description": "Showcase Features (with icons) card description for Courier"
+  },
+  "showcase.featuresIcons.parcel.description": {
+    "message": "צינור להמרת מטענים. משכתב הודעות בין פורמטים — JSON, XML, טקסט רגיל ו-form-data.",
+    "description": "Showcase Features (with icons) card description for Parcel"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (בלי אייקונים, בלי כותרת)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.cipher.description": {
+    "message": "שער אימות. חתימות HMAC, אסימוני bearer ורשימות היתר של כתובות IP. מאמת את זהות המקור לפני העיבוד.",
+    "description": "Showcase Features (no icons) card description for Cipher"
+  },
+  "showcase.featuresNoIcons.ledger.description": {
+    "message": "מסלול ביקורת מסירה להוספה-בלבד. כל הודעה שהתקבלה, הומרה, נותבה ונמסרה — נרשמת.",
+    "description": "Showcase Features (no icons) card description for Ledger"
+  },
+  "showcase.featuresNoIcons.embassy.description": {
+    "message": "פרוקסי הפוך שמסתיר את שרתי המקור. משאיר את השירותים הפנימיים מחוץ לאינטרנט הציבורי לחלוטין.",
+    "description": "Showcase Features (no icons) card description for Embassy"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (שישה פריטים, אייקונים מעורבים)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "הכול בממסר אחד",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.dispatch.description": {
+    "message": "מנתב הודעות לפי תוכן, מקור, רמת חומרה או תזמון. הממסר הראשון שמתאים מנצח.",
+    "description": "Showcase Features (six items) card description for Dispatch"
+  },
+  "showcase.featuresSix.courier.description": {
+    "message": "backoff אקספוננציאלי עם jitter. תורי dead-letter. אישורי מסירה. מסירה מובטחת.",
+    "description": "Showcase Features (six items) card description for Courier"
+  },
+  "showcase.featuresSix.parcel.description": {
+    "message": "ממיר מטענים בין כל שני פורמטים. מצבים עם ובלי אובדן נתונים. מיפוי שדות ועיבוד תבניות.",
+    "description": "Showcase Features (six items) card description for Parcel"
+  },
+  "showcase.featuresSix.cipher.description": {
+    "message": "מאמת כל בקשה נכנסת. מצבי HMAC, bearer ורשימת היתר של IP. רוטציית אסימונים ללא זמן השבתה.",
+    "description": "Showcase Features (six items) card description for Cipher"
+  },
+  "showcase.featuresSix.ledger.description": {
+    "message": "מתעד כל מעבר מצב. להוספה-בלבד. שמירה הניתנת להגדרה. ניתן לייצוא דרך Spoke API.",
+    "description": "Showcase Features (six items) card description for Ledger"
+  },
+  "showcase.featuresSix.embassy.description": {
+    "message": "פרוקסי הפוך שמסתיר את הטופולוגיה הפנימית. סיום TLS. הסרת כותרות. הסתרת המקור.",
+    "description": "Showcase Features (six items) card description for Embassy"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (עם כותרת ותיאור)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "מדדי הממסר",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "מדדי הביצועים המרכזיים בכל צינורות הממסר הפעילים.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "השהיית הממסר (p99)",
+    "description": "Showcase Stats (full) label for relay latency"
+  },
+  "showcase.statsFull.image.label": {
+    "message": "גודל אימג' Vial",
+    "description": "Showcase Stats (full) label for Vial image size"
+  },
+  "showcase.statsFull.delivery.label": {
+    "message": "שיעור מסירה",
+    "description": "Showcase Stats (full) label for delivery rate"
+  },
+  "showcase.statsFull.translators.label": {
+    "message": "מתרגמי פרוטוקול",
+    "description": "Showcase Stats (full) label for protocol translator count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (בלי כותרת)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.translators.label": {
+    "message": "מתרגמים",
+    "description": "Showcase Stats (no heading) label for translators"
+  },
+  "showcase.statsNoHeading.dependencies.label": {
+    "message": "תלויות",
+    "description": "Showcase Stats (no heading) label for dependencies"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "כלי משנה",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.coldStart.label": {
+    "message": "אתחול קר",
+    "description": "Showcase Stats (no heading) label for cold start"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (עם קוד)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "התחלה מהירה",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "שלוש פקודות, מאפס עד ממסר עובד.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (עם טקסט)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "איך זה עובד",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Envoy קורא את מניפסט הממסר שלכם, מאתחל את Cipher לאימות, מהדר את כללי ההמרה של Parcel ורושם את מסלולי Dispatch. ההודעות זורמות דרך הצינור בפחות מחמש מילישניות.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (עם תיאור)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "עדכונים מחדר הממסר",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "הערות גרסה, צלילות עומק לאינטגרציות, ומדי פעם גם עדכון מחדר הממסר.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "מה קורה כשה-webhook נכשל בשלוש לפנות בוקר",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "התראת Glassboard נשלחה ב-3:47 לפנות בוקר. ה-webhook ל-Canary נכשל בשקט. אף אחד לא התעורר. זו הבעיה שממנה נולד Envoy.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "לוגיקת ניסיונות חוזרים קשה ממה שנדמה לכם",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "ניסיון חוזר נאיבי זה קל. ניסיון חוזר אמין תחת עומס — עם backoff, jitter ותורי dead-letter — זה כבר תחום אחר לגמרי.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "הקונטיינר של 3MB שהחליף את כל שכבת האינטגרציה שלנו",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "שנים-עשר שירותים, תשע משימות cron ומסד נתונים משותף — הוחלפו באימג' Vial יחיד במשקל 3MB.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (בלי תיאור)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "עדכונים אחרונים",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Envoy 2.2: ניתוב Fanout וייצוא Ledger",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Dispatch תומך עכשיו ב-fanout: הפצה מתוך ממסר יחיד ליעדים מרובים. את רשומות ה-Ledger אפשר לייצא לכל נקודת קצה של Spoke לפי לוח זמנים הניתן להגדרה.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (שימוש בתוך הטקסט)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Envoy משתמש ב",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.relayManifest.title": {
+    "message": "קובץ הצהרה של צינור הממסר",
+    "description": "Showcase Terminology hover title for relay manifest"
+  },
+  "showcase.terminology.relayManifest.label": {
+    "message": "מניפסט הממסר",
+    "description": "Showcase Terminology displayed text for relay manifest"
+  },
+  "showcase.terminology.paragraph1.afterRelay": {
+    "message": " כדי להגדיר כל צינור אינטגרציה. כל הודעה נכנסת עוברת אימות דרך שער ",
+    "description": "Showcase Terminology paragraph 1 fragment after relay manifest"
+  },
+  "showcase.terminology.cipher.title": {
+    "message": "שער אימות",
+    "description": "Showcase Terminology hover title for Cipher"
+  },
+  "showcase.terminology.paragraph1.afterCipher": {
+    "message": " לפני שהיא מגיעה לשלב ההמרה. כשמסירה נכשלת, מנוע ",
+    "description": "Showcase Terminology paragraph 1 fragment after Cipher"
+  },
+  "showcase.terminology.courier.title": {
+    "message": "מנוע ניסיונות חוזרים שמבטיח מסירה",
+    "description": "Showcase Terminology hover title for Courier"
+  },
+  "showcase.terminology.paragraph1.afterCourier": {
+    "message": " מטפל בניסיונות החוזרים אוטומטית.",
+    "description": "Showcase Terminology paragraph 1 fragment after Courier"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "בעזרת צינור ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.parcel.title": {
+    "message": "צינור להמרת מטענים",
+    "description": "Showcase Terminology hover title for Parcel"
+  },
+  "showcase.terminology.paragraph2.afterParcel": {
+    "message": ", מקורות ויעדים לעולם אינם צריכים להסכים על פורמט משותף. ",
+    "description": "Showcase Terminology paragraph 2 fragment after Parcel"
+  },
+  "showcase.terminology.dispatch.title": {
+    "message": "מנוע ניתוב חכם",
+    "description": "Showcase Terminology hover title for Dispatch"
+  },
+  "showcase.terminology.paragraph2.afterDispatch": {
+    "message": " מטפל בניתוב, ואילו ",
+    "description": "Showcase Terminology paragraph 2 fragment after Dispatch"
+  },
+  "showcase.terminology.ledger.title": {
+    "message": "מסלול ביקורת להוספה-בלבד",
+    "description": "Showcase Terminology hover title for Ledger"
+  },
+  "showcase.terminology.paragraph2.afterLedger": {
+    "message": " מתעד את היסטוריית העסקאות המלאה.",
+    "description": "Showcase Terminology paragraph 2 fragment after Ledger"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (עם כיתוב)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "סמל המותג מנותב דרך בלוק Frame — תמונה עם כיתוב, בלי טקסים.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "תמונה ממוזערת של מותג Envoy.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (בלי כיתוב)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (שתי החנויות)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "הורידו את האפליקציה הנלווית",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (App Store בלבד)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "זמין ב-iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (Google Play בלבד)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "זמין ב-Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (בלי תווית)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

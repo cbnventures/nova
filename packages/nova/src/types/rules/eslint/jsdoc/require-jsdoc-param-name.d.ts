@@ -21,7 +21,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_AllComm
 
 export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Lines = string[];
 
-export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FixedValue = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FixedLines = string[];
 
 export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatch_ParamName = string;
 
@@ -33,6 +33,8 @@ export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatc
 };
 
 export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatches = Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatch[];
+
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Line = string | undefined;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Match = RegExpExecArray | null;
 

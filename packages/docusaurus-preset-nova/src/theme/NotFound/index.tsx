@@ -17,8 +17,6 @@ import type {
  *
  * @param {Theme_NotFound_Index_NotFound_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function NotFound(props: Theme_NotFound_Index_NotFound_Props) {

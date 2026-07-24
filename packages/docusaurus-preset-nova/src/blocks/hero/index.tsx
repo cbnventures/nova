@@ -11,8 +11,6 @@ import type { Blocks_Hero_Index_BlocksHero_Props } from '../../types/blocks/hero
  *
  * @param {Blocks_Hero_Index_BlocksHero_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlocksHero(props: Blocks_Hero_Index_BlocksHero_Props) {

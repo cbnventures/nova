@@ -42,10 +42,12 @@ import type {
   Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_Workspace,
   Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipe,
   Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipeSettings,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_ConfigRecipes,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_ConfigRecipesPackageJson,
   Cli_Recipe_PackageJson_Cleanup_Runner_Run_CurrentDirectory,
-  Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleConfig,
-  Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleRecipes,
-  Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleTuple,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleEntry,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligiblePath,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleWorkspaceRecipes,
   Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleWorkspaces,
   Cli_Recipe_PackageJson_Cleanup_Runner_Run_IsAtProjectRoot,
   Cli_Recipe_PackageJson_Cleanup_Runner_Run_IsDryRun,
@@ -57,9 +59,8 @@ import type {
   Cli_Recipe_PackageJson_Cleanup_Runner_Run_Returns,
   Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkingFile,
   Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkingFileWorkspaces,
-  Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfig,
-  Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigEntry,
   Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigEntryRecipes,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigPath,
   Cli_Recipe_PackageJson_Cleanup_Runner_Run_Workspaces,
 } from '../../../types/cli/recipe/package-json/cleanup.d.ts';
 
@@ -126,22 +127,30 @@ export class Runner {
       return;
     }
 
+    const configRecipes: Cli_Recipe_PackageJson_Cleanup_Runner_Run_ConfigRecipes = workingFile['recipes'];
+    const configRecipesPackageJson: Cli_Recipe_PackageJson_Cleanup_Runner_Run_ConfigRecipesPackageJson = (configRecipes !== undefined) ? configRecipes['package-json'] : undefined;
+
     // Filter workspaces that have the recipe enabled.
     const eligibleWorkspaces: Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const eligibleConfig: Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleConfig = workspace[1];
-      const eligibleRecipes: Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleRecipes = eligibleConfig['recipes'];
+      const eligiblePath: Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligiblePath = workspace[0];
 
-      if (eligibleRecipes === undefined) {
+      if (configRecipesPackageJson === undefined) {
         return false;
       }
 
-      const eligibleTuple: Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleTuple = eligibleRecipes['cleanup'];
+      const eligibleWorkspaceRecipes: Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleWorkspaceRecipes = configRecipesPackageJson[eligiblePath];
 
-      if (eligibleTuple === undefined) {
+      if (eligibleWorkspaceRecipes === undefined) {
         return false;
       }
 
-      return eligibleTuple[0] === true;
+      const eligibleEntry: Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleEntry = eligibleWorkspaceRecipes['cleanup'];
+
+      if (eligibleEntry === undefined) {
+        return false;
+      }
+
+      return eligibleEntry['enabled'] === true;
     });
 
     if (eligibleWorkspaces.length === 0) {
@@ -174,14 +183,8 @@ export class Runner {
 
     // Handle all workspace "package.json" files.
     for (const workspace of workspaces) {
-      const workspaceConfig: Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfig = eligibleWorkspaces.find((eligible) => eligible[1]['name'] === workspace['manifest']['name']);
-
-      if (workspaceConfig === undefined) {
-        continue;
-      }
-
-      const workspaceConfigEntry: Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigEntry = workspaceConfig[1];
-      const workspaceConfigEntryRecipes: Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigEntryRecipes = workspaceConfigEntry['recipes'];
+      const workspaceConfigPath: Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigPath = workspace['workspacePath'];
+      const workspaceConfigEntryRecipes: Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigEntryRecipes = (configRecipesPackageJson !== undefined) ? configRecipesPackageJson[workspaceConfigPath] : undefined;
 
       let removeUnknownKeys: Cli_Recipe_PackageJson_Cleanup_Runner_Run_RemoveUnknownKeys = true;
       let reorderKeys: Cli_Recipe_PackageJson_Cleanup_Runner_Run_ReorderKeys = true;
@@ -190,7 +193,7 @@ export class Runner {
         const cleanupRecipe: Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipe = workspaceConfigEntryRecipes['cleanup'];
 
         if (cleanupRecipe !== undefined) {
-          const cleanupRecipeSettings: Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipeSettings = cleanupRecipe[1];
+          const cleanupRecipeSettings: Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipeSettings = cleanupRecipe['settings'];
 
           if (cleanupRecipeSettings !== undefined) {
             removeUnknownKeys = cleanupRecipeSettings['removeUnknownKeys'] !== false;

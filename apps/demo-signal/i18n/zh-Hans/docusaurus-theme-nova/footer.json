@@ -1,8 +1,4 @@
 {
-  "layout.signal.title": {
-    "message": "Signal",
-    "description": "Title of footer column \"signal\""
-  },
   "layout.insights.title": {
     "message": "洞察",
     "description": "Title of footer column \"insights\""
@@ -58,9 +54,5 @@
   "cta.label": {
     "message": "准备好找到属于你的信号了吗？",
     "description": "The footer call-to-action link label"
-  },
-  "copyright": {
-    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
-    "description": "The footer copyright text"
   }
 }

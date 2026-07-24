@@ -1,0 +1,594 @@
+{
+  "home.layout.description": {
+    "message": "Lantern våker over hele huset ditt — soner, bevegelse, aktivering/deaktivering — uten noen gang å heve stemmen.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Lantern - Årvåken, varm, alltid hjemme",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Overvåking av hele huset",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Årvåken, varm, alltid hjemme.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Lantern våker over hele huset ditt — soner, bevegelse, aktivering/deaktivering — uten noen gang å heve stemmen. Hvert rom, hver dør, hvert stille øyeblikk, trygt ivaretatt.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Kom i gang",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Se på Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.zones.title": {
+    "message": "Soner",
+    "description": "Front page Features card title for Zones"
+  },
+  "home.features.zones.description": {
+    "message": "Grupper enheter etter hvor de hører hjemme — yttergrense, innendørs, soveområder. Aktiver hvilken som helst sone uavhengig. Deaktiver varsomt, ved navn. Lantern hever aldri stemmen.",
+    "description": "Front page Features card description for Zones"
+  },
+  "home.features.motionEvents.title": {
+    "message": "Bevegelseshendelser",
+    "description": "Front page Features card title for Motion Events"
+  },
+  "home.features.motionEvents.description": {
+    "message": "Hver bevegelse går gjennom hendelsesstrømmen med retning og et valgfritt konfidensintervall. Spill av på nytt, filtrer, overfør til en hub. Ingenting går tapt.",
+    "description": "Front page Features card description for Motion Events"
+  },
+  "home.features.contactSensors.title": {
+    "message": "Kontaktsensorer",
+    "description": "Front page Features card title for Contact Sensors"
+  },
+  "home.features.contactSensors.description": {
+    "message": "Dør åpnet, vindu på gløtt, port lukket — hver kontakthendelse tidsstemples og lagres i en stillferdig logg. Bla gjennom sensorhistorikken uten å forlate rommet.",
+    "description": "Front page Features card description for Contact Sensors"
+  },
+  "home.features.armDisarm.title": {
+    "message": "Aktiver / Deaktiver",
+    "description": "Front page Features card title for Arm / Disarm"
+  },
+  "home.features.armDisarm.description": {
+    "message": "Aktiver eller deaktiver per sone, per bruker eller etter tidsplan. Overlat kontrollen til noen du stoler på — ved navn, med passordfrase eller via tilstedeværelse på HomeKit Home Hub.",
+    "description": "Front page Features card description for Arm / Disarm"
+  },
+  "home.features.deviceDiscovery.title": {
+    "message": "Enhetsoppdagelse",
+    "description": "Front page Features card title for Device Discovery"
+  },
+  "home.features.deviceDiscovery.description": {
+    "message": "Lantern finner automatisk hver sensor og kontaktenhet på huben din. Ingen manuell paring, ingen konfigurasjonsfiler. Den oppdager det som allerede er der.",
+    "description": "Front page Features card description for Device Discovery"
+  },
+  "home.features.sensorHistory.title": {
+    "message": "Sensorhistorikk",
+    "description": "Front page Features card title for Sensor History"
+  },
+  "home.features.sensorHistory.description": {
+    "message": "En stillferdig logg over alt som har skjedd — bevegelse, kontakt, aktiveringsstatus — sortert etter sone og tid. Bla en uke tilbake uten å forlate dashbordet.",
+    "description": "Front page Features card description for Sensor History"
+  },
+  "home.stats.heading": {
+    "message": "I tall",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.zones.label": {
+    "message": "Standardsoner",
+    "description": "Front page Stats label for default zones count"
+  },
+  "home.stats.configFiles.label": {
+    "message": "Konfigfiler",
+    "description": "Front page Stats label for config files count"
+  },
+  "home.stats.handoff.label": {
+    "message": "Klar for overlevering",
+    "description": "Front page Stats label for handoff readiness"
+  },
+  "home.stats.sensorHistory.label": {
+    "message": "Sensorhistorikk",
+    "description": "Front page Stats label for sensor history"
+  },
+  "home.spotlight.heading": {
+    "message": "Hver sone, stille ivaretatt",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Beskriv hvem som bor hvor. Lantern våker over resten.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Administrer sonene dine på farten",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Fra verandalyset",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Oppdateringer, mønstre og stille notater fra huset.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Lantern-blokkvisning som demonstrerer hver blokk fra docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Hver blokk fra Lantern-forhåndsinnstillingen, gjengitt med eksempeldata.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (fullstendig)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Blokkvisning",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Hver Lantern-blokk, demonstrert på ett sted.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Denne siden gjengir hver blokk fra @cbnventures/docusaurus-preset-nova/blocks med data fra Lantern-verdenen, slik at du kan se hvordan de ser ut og oppfører seg.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Les dokumentasjonen",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Se på Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Årvåken, varm, alltid hjemme.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Lantern våker over hele huset ditt — soner, bevegelse, aktivering/deaktivering — uten noen gang å heve stemmen.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Kom i gang",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (standard)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Jeg elsker ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (uten prefiks)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Rask",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Fleksibel",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Gratis",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (langsom takt)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Bygget for ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "utviklere",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "designere",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (uten løkke)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Velkommen til ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Installer med Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Eller bruk Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (uten etikett)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Rask installasjon",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (med ikoner)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Hvorfor husholdninger velger Lantern",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.zones.title": {
+    "message": "Soner",
+    "description": "Showcase Features (with icons) card title for Zones"
+  },
+  "showcase.featuresIcons.zones.description": {
+    "message": "Grupper enheter etter hvor de hører hjemme — yttergrense, innendørs, soveområder. Aktiver hvilken som helst sone uavhengig, deaktiver varsomt ved navn.",
+    "description": "Showcase Features (with icons) card description for Zones"
+  },
+  "showcase.featuresIcons.motionEvents.title": {
+    "message": "Bevegelseshendelser",
+    "description": "Showcase Features (with icons) card title for Motion Events"
+  },
+  "showcase.featuresIcons.motionEvents.description": {
+    "message": "Hver bevegelse går gjennom hendelsesstrømmen med retning og et valgfritt konfidensintervall. Spill av på nytt, filtrer, overfør til en hub.",
+    "description": "Showcase Features (with icons) card description for Motion Events"
+  },
+  "showcase.featuresIcons.armDisarm.title": {
+    "message": "Aktiver / Deaktiver",
+    "description": "Showcase Features (with icons) card title for Arm / Disarm"
+  },
+  "showcase.featuresIcons.armDisarm.description": {
+    "message": "Aktiver eller deaktiver per sone, bruker eller tidsplan. Overlat kontrollen til noen du stoler på ved navn, passordfrase eller HomeKit-tilstedeværelse.",
+    "description": "Showcase Features (with icons) card description for Arm / Disarm"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (uten ikoner, uten overskrift)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.contactSensors.title": {
+    "message": "Kontaktsensorer",
+    "description": "Showcase Features (no icons) card title for Contact Sensors"
+  },
+  "showcase.featuresNoIcons.contactSensors.description": {
+    "message": "Dør åpnet, vindu på gløtt, port lukket — hver kontakthendelse tidsstemples og lagres i en stillferdig logg.",
+    "description": "Showcase Features (no icons) card description for Contact Sensors"
+  },
+  "showcase.featuresNoIcons.deviceDiscovery.title": {
+    "message": "Enhetsoppdagelse",
+    "description": "Showcase Features (no icons) card title for Device Discovery"
+  },
+  "showcase.featuresNoIcons.deviceDiscovery.description": {
+    "message": "Lantern finner automatisk hver sensor og kontaktenhet på huben din. Ingen manuell paring, ingen konfigurasjonsfiler.",
+    "description": "Showcase Features (no icons) card description for Device Discovery"
+  },
+  "showcase.featuresNoIcons.sensorHistory.title": {
+    "message": "Sensorhistorikk",
+    "description": "Showcase Features (no icons) card title for Sensor History"
+  },
+  "showcase.featuresNoIcons.sensorHistory.description": {
+    "message": "En stillferdig logg over alt som har skjedd — bevegelse, kontakt, aktiveringsstatus — sortert etter sone og tid.",
+    "description": "Showcase Features (no icons) card description for Sensor History"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (seks elementer, blandede ikoner)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Alt i ett hus",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.zones.title": {
+    "message": "Soner",
+    "description": "Showcase Features (six items) card title for Zones"
+  },
+  "showcase.featuresSix.zones.description": {
+    "message": "Grupper etter rom, gang, utendørs eller apparatgruppe. Aktiver uavhengig. Deaktiver varsomt ved navn.",
+    "description": "Showcase Features (six items) card description for Zones"
+  },
+  "showcase.featuresSix.motionEvents.title": {
+    "message": "Bevegelseshendelser",
+    "description": "Showcase Features (six items) card title for Motion Events"
+  },
+  "showcase.featuresSix.motionEvents.description": {
+    "message": "Retningsbestemt bevegelse med valgfritt konfidensintervall. Spill av på nytt, filtrer og overfør til en hub uten å miste hendelser.",
+    "description": "Showcase Features (six items) card description for Motion Events"
+  },
+  "showcase.featuresSix.contactSensors.title": {
+    "message": "Kontaktsensorer",
+    "description": "Showcase Features (six items) card title for Contact Sensors"
+  },
+  "showcase.featuresSix.contactSensors.description": {
+    "message": "Dør, vindu, port — hver kontakthendelse tidsstemples og lagres i sensorhistorikk-loggen.",
+    "description": "Showcase Features (six items) card description for Contact Sensors"
+  },
+  "showcase.featuresSix.armDisarm.title": {
+    "message": "Aktiver / Deaktiver",
+    "description": "Showcase Features (six items) card title for Arm / Disarm"
+  },
+  "showcase.featuresSix.armDisarm.description": {
+    "message": "Per sone, bruker eller tidsplan. Overlevering ved navn, passordfrase eller tilstedeværelse på HomeKit Home Hub.",
+    "description": "Showcase Features (six items) card description for Arm / Disarm"
+  },
+  "showcase.featuresSix.deviceDiscovery.title": {
+    "message": "Enhetsoppdagelse",
+    "description": "Showcase Features (six items) card title for Device Discovery"
+  },
+  "showcase.featuresSix.deviceDiscovery.description": {
+    "message": "Automatisk oppdagelse av hver sensor og kontaktenhet på huben din. Ingen manuell paring.",
+    "description": "Showcase Features (six items) card description for Device Discovery"
+  },
+  "showcase.featuresSix.sensorHistory.title": {
+    "message": "Sensorhistorikk",
+    "description": "Showcase Features (six items) card title for Sensor History"
+  },
+  "showcase.featuresSix.sensorHistory.description": {
+    "message": "Bevegelse, kontakt og aktiveringsstatus i en stillferdig logg. Bla en uke tilbake uten å forlate dashbordet.",
+    "description": "Showcase Features (six items) card description for Sensor History"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (med overskrift og beskrivelse)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Lantern-nøkkeltall",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Nøkkeltall for et typisk husholdningsoppsett med fire soner.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.zones.label": {
+    "message": "Standardsoner",
+    "description": "Showcase Stats (full) label for default zones"
+  },
+  "showcase.statsFull.devices.label": {
+    "message": "Enheter oppdaget",
+    "description": "Showcase Stats (full) label for devices discovered"
+  },
+  "showcase.statsFull.handoff.label": {
+    "message": "Klar for overlevering",
+    "description": "Showcase Stats (full) label for handoff readiness"
+  },
+  "showcase.statsFull.configFiles.label": {
+    "message": "Konfigfiler",
+    "description": "Showcase Stats (full) label for config files"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (uten overskrift)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.zones.label": {
+    "message": "Soner",
+    "description": "Showcase Stats (no heading) label for zones"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "Konfigfiler",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.sensorHistory.label": {
+    "message": "Sensorhistorikk",
+    "description": "Showcase Stats (no heading) label for sensor history"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (med kode)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Hurtigstart",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Tre kommandoer for å gå fra null til et overvåket hus.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (med tekst)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Slik fungerer det",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Lantern oppdager alle enhetene på huben din, grupperer dem etter sone og strømmer hver bevegelses- og kontakthendelse til hendelsesloggen. Aktiveringsstatuser er vedvarende — slå av, slå på, sonen husker.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (med beskrivelse)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Fra verandalyset",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Oppdateringer, mønstre og stille notater fra huset.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Følg med fra et annet rom uten at huset vet det",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "En i husholdningen i andre etasje bør vite at inngangsdøren er lukket uten å sende hunden et varsel. Lantern ruter hendelser etter mottaker, ikke etter hendelsestype.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Seks måneder med bevegelse langs yttergrensen, i ett bilde",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "En bevegelsessensor på verandaen utløses førti ganger om dagen. De fleste av dem er ekorn. Lanterns historikkvisning er der ekornene blir til et mønster.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Overlate aktivering/deaktivering til noen du stoler på",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "En betrodd bruker kan deaktivere hvilken som helst sone Lantern våker over, uten telefonen din i hånden. Ved navn, passordfrase eller HomeKit-tilstedeværelse.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (uten beskrivelse)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Nylige oppdateringer",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Lantern 2.4: Lens-plantegningsoverlegg og inkrementelle Beacon-kjøringer",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Lens gjengir nå husholdningens sonegraf på en plantegning, og Beacon støtter inkrementelle kjøringer som revurderer bare sensorene som har endret seg.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (inline-bruk)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Lantern bruker en ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.zone.title": {
+    "message": "navngitt rom, gang eller utvendig gruppe",
+    "description": "Showcase Terminology hover title for zone"
+  },
+  "showcase.terminology.zone.label": {
+    "message": "sone",
+    "description": "Showcase Terminology displayed text for zone"
+  },
+  "showcase.terminology.paragraph1.afterZone": {
+    "message": " for å gruppere enheter etter hvor de hører hjemme. Hver sone styres av en ",
+    "description": "Showcase Terminology paragraph 1 fragment after zone"
+  },
+  "showcase.terminology.armState.title": {
+    "message": "aktiverings-/deaktiveringskontroll",
+    "description": "Showcase Terminology hover title for arm state"
+  },
+  "showcase.terminology.armState.label": {
+    "message": "aktiveringsstatus",
+    "description": "Showcase Terminology displayed text for arm state"
+  },
+  "showcase.terminology.paragraph1.afterArmState": {
+    "message": " som varer på tvers av strømsykluser. Når en sensor utløses, går hendelsen gjennom ",
+    "description": "Showcase Terminology paragraph 1 fragment after arm state"
+  },
+  "showcase.terminology.eventStream.title": {
+    "message": "varslingsstrøm i sanntid",
+    "description": "Showcase Terminology hover title for event stream"
+  },
+  "showcase.terminology.eventStream.label": {
+    "message": "hendelsesstrømmen",
+    "description": "Showcase Terminology displayed text for event stream"
+  },
+  "showcase.terminology.paragraph1.afterEventStream": {
+    "message": " uten å bli forkastet.",
+    "description": "Showcase Terminology paragraph 1 fragment after event stream"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Med ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.handoffSystem.title": {
+    "message": "overlevering til betrodd person",
+    "description": "Showcase Terminology hover title for handoff system"
+  },
+  "showcase.terminology.handoffSystem.label": {
+    "message": "overleveringssystemet",
+    "description": "Showcase Terminology displayed text for handoff system"
+  },
+  "showcase.terminology.paragraph2.afterHandoff": {
+    "message": " deler husholdninger kontrollen over ",
+    "description": "Showcase Terminology paragraph 2 fragment after handoff system"
+  },
+  "showcase.terminology.zoneAccess.title": {
+    "message": "tilgang til å aktivere/deaktivere soner",
+    "description": "Showcase Terminology hover title for zone access"
+  },
+  "showcase.terminology.zoneAccess.label": {
+    "message": "sonetilgang",
+    "description": "Showcase Terminology displayed text for zone access"
+  },
+  "showcase.terminology.paragraph2.afterZoneAccess": {
+    "message": " og ",
+    "description": "Showcase Terminology paragraph 2 fragment after zone access"
+  },
+  "showcase.terminology.sensorHistory.title": {
+    "message": "historiske sensordata",
+    "description": "Showcase Terminology hover title for sensor history"
+  },
+  "showcase.terminology.sensorHistory.label": {
+    "message": "sensorhistorikk",
+    "description": "Showcase Terminology displayed text for sensor history"
+  },
+  "showcase.terminology.paragraph2.afterSensorHistory": {
+    "message": " uten å utveksle legitimasjon.",
+    "description": "Showcase Terminology paragraph 2 fragment after sensor history"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (med bildetekst)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Merket som gløder inne i en Frame — varmt papirkort med figur + bildetekst.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Miniatyrbilde av Lantern-merket.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (uten bildetekst)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (begge butikker)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Last ned følgeappen",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (kun App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Tilgjengelig på iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (kun Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Tilgjengelig på Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (uten etikett)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} min lesing",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

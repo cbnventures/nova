@@ -1,0 +1,594 @@
+{
+  "home.layout.description": {
+    "message": "Marshal adalah Departemen Urusan Repositori — penatalayanan otomatis untuk proyek yang lebih memilih administrasi ketimbang drama.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Marshal - Tercatat, Tersegel, Otomatis",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Penatalayanan Repositori",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Tercatat, tersegel, otomatis.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Marshal adalah Departemen Urusan Repositori — penatalayanan otomatis untuk proyek yang lebih memilih administrasi ketimbang drama. Setiap utas, setiap tiket, setiap tingkat akses, ditangani secara tertib.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Mulai Sekarang",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Lihat di Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.policies.title": {
+    "message": "Kebijakan",
+    "description": "Front page Features card title for Policies"
+  },
+  "home.features.policies.description": {
+    "message": "Tulis satu blok YAML yang menjelaskan bagaimana Marshal menangani suatu kelas peristiwa — utas basi, PR yang lewat tenggat, dukungan menurut tingkat. Marshal hanya membaca apa yang tercatat dan hanya mengecap apa yang tersegel.",
+    "description": "Front page Features card description for Policies"
+  },
+  "home.features.dockets.title": {
+    "message": "Register",
+    "description": "Front page Features card title for Dockets"
+  },
+  "home.features.dockets.description": {
+    "message": "Setiap tindakan yang diambil Marshal menorehkan satu baris dalam catatan publik. Utas yang ditutup, persetujuan yang dicap, peralihan terjadwal — semuanya hanya-tambah, semuanya terlihat, tak ada yang dicabut.",
+    "description": "Front page Features card description for Dockets"
+  },
+  "home.features.accessTiers.title": {
+    "message": "Tingkat Akses",
+    "description": "Front page Features card title for Access Tiers"
+  },
+  "home.features.accessTiers.description": {
+    "message": "Salurkan pekerjaan masuk berdasarkan sponsor, kontributor, atau publik. Label dicap, bukan dirundingkan. Setiap keputusan penyaluran dicatat dalam register.",
+    "description": "Front page Features card description for Access Tiers"
+  },
+  "home.features.scheduledStewardship.title": {
+    "message": "Penatalayanan Terjadwal",
+    "description": "Front page Features card title for Scheduled Stewardship"
+  },
+  "home.features.scheduledStewardship.description": {
+    "message": "Jalankan pembersihan, pemeriksaan, dan peralihan lewat cron. Marshal bertindak tepat pada awal jam, mengarsipkan catatan, lalu beranjak. Tak ada yang perlu menunggu manusia teringat.",
+    "description": "Front page Features card description for Scheduled Stewardship"
+  },
+  "home.features.threadArchival.title": {
+    "message": "Pengarsipan Utas",
+    "description": "Front page Features card title for Thread Archival"
+  },
+  "home.features.threadArchival.description": {
+    "message": "Tutup dan segel utas yang tak aktif selama N hari — dengan jejak berkas untuk masing-masing. Setiap utas yang tersegel memuat alasan pengarsipan dan jalur untuk membukanya kembali.",
+    "description": "Front page Features card description for Thread Archival"
+  },
+  "home.features.automatedStamps.title": {
+    "message": "Cap Otomatis",
+    "description": "Front page Features card title for Automated Stamps"
+  },
+  "home.features.automatedStamps.description": {
+    "message": "Marshal bertindak berdasarkan wewenang tetap. Setiap tindakan memuat cap waktu, pelaku yang tercatat, dan rujukan ke kebijakan yang memicunya.",
+    "description": "Front page Features card description for Automated Stamps"
+  },
+  "home.stats.heading": {
+    "message": "Dalam Angka",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manualClosures.label": {
+    "message": "Penutupan manual",
+    "description": "Front page Stats label for manual closures count"
+  },
+  "home.stats.policyFile.label": {
+    "message": "Berkas kebijakan",
+    "description": "Front page Stats label for policy file count"
+  },
+  "home.stats.docketEntries.label": {
+    "message": "Entri register",
+    "description": "Front page Stats label for docket entries count"
+  },
+  "home.stats.accessTiers.label": {
+    "message": "Tingkat akses",
+    "description": "Front page Stats label for access tiers count"
+  },
+  "home.spotlight.heading": {
+    "message": "Satu Berkas Kebijakan, Semua Dicap",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Uraikan aturannya. Marshal yang mengurus berkasnya.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Tinjau register Anda di mana saja",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Kabar dari Departemen",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Kebijakan diarsipkan, register dicap, penatalayanan yang tercatat resmi.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Etalase blok Marshal yang memperagakan setiap blok dari docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Setiap blok dari preset Marshal, ditampilkan dengan data contoh.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (penuh)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Etalase Blok",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Setiap blok Marshal, diperagakan dalam satu tempat.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Halaman ini menampilkan setiap blok dari @cbnventures/docusaurus-preset-nova/blocks dengan data ala dunia Marshal agar Anda dapat melihat tampilan dan perilakunya.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Baca Dokumentasi",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Lihat di Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Tercatat, tersegel, otomatis.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Marshal adalah Departemen Urusan Repositori — penatalayanan otomatis untuk proyek yang lebih memilih administrasi ketimbang drama.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Mulai Sekarang",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (bawaan)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Saya suka ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (tanpa prefiks)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Cepat",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Fleksibel",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Gratis",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (tempo lambat)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Dibuat untuk ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "pengembang",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "desainer",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (tanpa loop)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Selamat datang di ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Pasang dengan Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Atau gunakan Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (tanpa label)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Instalasi cepat",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (dengan ikon)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Mengapa Repositori Memilih Marshal",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.policies.title": {
+    "message": "Kebijakan",
+    "description": "Showcase Features (with icons) card title for Policies"
+  },
+  "showcase.featuresIcons.policies.description": {
+    "message": "Tulis satu blok YAML yang menjelaskan bagaimana Marshal menangani suatu kelas peristiwa. Marshal hanya membaca apa yang tercatat dan hanya mengecap apa yang tersegel.",
+    "description": "Showcase Features (with icons) card description for Policies"
+  },
+  "showcase.featuresIcons.dockets.title": {
+    "message": "Register",
+    "description": "Showcase Features (with icons) card title for Dockets"
+  },
+  "showcase.featuresIcons.dockets.description": {
+    "message": "Setiap tindakan yang diambil Marshal menorehkan satu baris dalam catatan publik. Utas yang ditutup, persetujuan yang dicap, peralihan terjadwal — semuanya hanya-tambah.",
+    "description": "Showcase Features (with icons) card description for Dockets"
+  },
+  "showcase.featuresIcons.accessTiers.title": {
+    "message": "Tingkat Akses",
+    "description": "Showcase Features (with icons) card title for Access Tiers"
+  },
+  "showcase.featuresIcons.accessTiers.description": {
+    "message": "Salurkan pekerjaan masuk berdasarkan sponsor, kontributor, atau publik. Label dicap, bukan dirundingkan.",
+    "description": "Showcase Features (with icons) card description for Access Tiers"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (tanpa ikon, tanpa judul)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.title": {
+    "message": "Penatalayanan Terjadwal",
+    "description": "Showcase Features (no icons) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.description": {
+    "message": "Jalankan pembersihan, pemeriksaan, dan peralihan lewat cron. Marshal bertindak tepat pada awal jam dan mengarsipkan catatan.",
+    "description": "Showcase Features (no icons) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.threadArchival.title": {
+    "message": "Pengarsipan Utas",
+    "description": "Showcase Features (no icons) card title for Thread Archival"
+  },
+  "showcase.featuresNoIcons.threadArchival.description": {
+    "message": "Tutup dan segel utas yang tak aktif selama N hari — dengan jejak berkas untuk masing-masing, dan jalur untuk membukanya kembali.",
+    "description": "Showcase Features (no icons) card description for Thread Archival"
+  },
+  "showcase.featuresNoIcons.automatedStamps.title": {
+    "message": "Cap Otomatis",
+    "description": "Showcase Features (no icons) card title for Automated Stamps"
+  },
+  "showcase.featuresNoIcons.automatedStamps.description": {
+    "message": "Setiap tindakan memuat cap waktu, pelaku yang tercatat, dan rujukan ke kebijakan yang memicunya.",
+    "description": "Showcase Features (no icons) card description for Automated Stamps"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (enam item, ikon campuran)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Semua dalam Satu Departemen",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.policies.title": {
+    "message": "Kebijakan",
+    "description": "Showcase Features (six items) card title for Policies"
+  },
+  "showcase.featuresSix.policies.description": {
+    "message": "Uraikan aturan dalam YAML. Marshal membaca, bertindak, dan mengarsipkan. Tak ada yang dirundingkan saat berjalan.",
+    "description": "Showcase Features (six items) card description for Policies"
+  },
+  "showcase.featuresSix.dockets.title": {
+    "message": "Register",
+    "description": "Showcase Features (six items) card title for Dockets"
+  },
+  "showcase.featuresSix.dockets.description": {
+    "message": "Catatan publik yang hanya-tambah untuk setiap tindakan. Utas yang ditutup, keputusan penyaluran, sapuan terjadwal — semuanya dicap.",
+    "description": "Showcase Features (six items) card description for Dockets"
+  },
+  "showcase.featuresSix.accessTiers.title": {
+    "message": "Tingkat Akses",
+    "description": "Showcase Features (six items) card title for Access Tiers"
+  },
+  "showcase.featuresSix.accessTiers.description": {
+    "message": "Sponsor, kontributor, publik — tiga tingkat, satu antrean, satu juru tulis. Label ditetapkan saat penerimaan.",
+    "description": "Showcase Features (six items) card description for Access Tiers"
+  },
+  "showcase.featuresSix.scheduledStewardship.title": {
+    "message": "Penatalayanan Terjadwal",
+    "description": "Showcase Features (six items) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.scheduledStewardship.description": {
+    "message": "Pembersihan dan pemeriksaan yang digerakkan cron. Marshal bertindak sesuai jadwal dan tak menunggu manusia teringat.",
+    "description": "Showcase Features (six items) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.threadArchival.title": {
+    "message": "Pengarsipan Utas",
+    "description": "Showcase Features (six items) card title for Thread Archival"
+  },
+  "showcase.featuresSix.threadArchival.description": {
+    "message": "Utas yang tak aktif ditutup dan disegel berdasarkan kebijakan, dengan pemberitahuan bercap dan jalur pembukaan kembali pada setiap perkara.",
+    "description": "Showcase Features (six items) card description for Thread Archival"
+  },
+  "showcase.featuresSix.automatedStamps.title": {
+    "message": "Cap Otomatis",
+    "description": "Showcase Features (six items) card title for Automated Stamps"
+  },
+  "showcase.featuresSix.automatedStamps.description": {
+    "message": "Setiap tindakan Marshal merujuk pada kebijakan yang mewenanginya. Wewenang itu diarsipkan sebelum tindakan dilaksanakan.",
+    "description": "Showcase Features (six items) card description for Automated Stamps"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (dengan judul dan deskripsi)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Metrik Marshal",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Angka-angka utama sepanjang satu siklus penatalayanan repositori yang lazim.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.threadsArchived.label": {
+    "message": "Utas terarsip",
+    "description": "Showcase Stats (full) label for threads archived"
+  },
+  "showcase.statsFull.accessTiers.label": {
+    "message": "Tingkat akses",
+    "description": "Showcase Stats (full) label for access tiers"
+  },
+  "showcase.statsFull.manualClosures.label": {
+    "message": "Penutupan manual",
+    "description": "Showcase Stats (full) label for manual closures"
+  },
+  "showcase.statsFull.policyFile.label": {
+    "message": "Berkas kebijakan",
+    "description": "Showcase Stats (full) label for policy file"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (tanpa judul)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.policyFile.label": {
+    "message": "Berkas kebijakan",
+    "description": "Showcase Stats (no heading) label for policy file"
+  },
+  "showcase.statsNoHeading.manualActions.label": {
+    "message": "Tindakan manual",
+    "description": "Showcase Stats (no heading) label for manual actions"
+  },
+  "showcase.statsNoHeading.docketEntries.label": {
+    "message": "Entri register",
+    "description": "Showcase Stats (no heading) label for docket entries"
+  },
+  "showcase.statsNoHeading.accessTiers.label": {
+    "message": "Tingkat akses",
+    "description": "Showcase Stats (no heading) label for access tiers"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (dengan kode)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Mulai Cepat",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Tiga perintah untuk beranjak dari nol menuju repositori yang terurus.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (dengan teks)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Cara Kerjanya",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Marshal membaca berkas kebijakan Anda, mengantrekan setiap alur kerja yang berlaku pada awal jam berikutnya, dan mengecap satu entri register untuk setiap tindakan yang diambil. Register bersifat hanya-tambah. Tak ada yang ditutup diam-diam.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (dengan deskripsi)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Kabar dari Departemen",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Kebijakan diarsipkan, register dicap, penatalayanan yang tercatat resmi.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Mengarsipkan yang tak terarsipkan",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Sebagian pekerjaan yang masuk tak cocok dengan kebijakan mana pun. Bug yang salah arsip, permintaan dari luar sistem tingkat, duplikat dari sebuah duplikat. Marshal mengarsipkannya di bawah label tak terklasifikasi.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Setahun utas basi, diarsipkan dalam satu sore",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Repositori itu memiliki 2.184 isu yang berusia lebih dari setahun. Marshal menutup dan menyegel 2.108 di antaranya dalam satu sapuan semalam.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Tiga tingkat dukungan, satu antrean, satu juru tulis",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Marshal kini menyalurkan tiket dukungan yang masuk berdasarkan tingkat akses ke dalam satu antrean dengan tiga label. Label dicap, bukan dirundingkan.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (tanpa deskripsi)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Kabar Terbaru",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Marshal 2.4: Tingkat Perbaikan Otomatis Pemeriksa dan Grafik Dependensi Juru Tulis",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Pemeriksa kini menerapkan perbaikan otomatis di seluruh tingkat konvensi dan pemformatan, dan Juru Tulis menggambar grafik dependensi di seluruh register dalam ruang kerja.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (penggunaan inline)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Marshal menggunakan sebuah ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.policy.title": {
+    "message": "aturan tertulis tentang bagaimana Marshal menangani suatu kelas peristiwa",
+    "description": "Showcase Terminology hover title for policy"
+  },
+  "showcase.terminology.policy.label": {
+    "message": "kebijakan",
+    "description": "Showcase Terminology displayed text for policy"
+  },
+  "showcase.terminology.paragraph1.afterPolicy": {
+    "message": " untuk mengatur tindakannya pada suatu repositori. Setiap tindakan dicatat dalam ",
+    "description": "Showcase Terminology paragraph 1 fragment after policy"
+  },
+  "showcase.terminology.docket.title": {
+    "message": "catatan publik hanya-tambah atas setiap tindakan yang diambil",
+    "description": "Showcase Terminology hover title for docket"
+  },
+  "showcase.terminology.docket.label": {
+    "message": "register",
+    "description": "Showcase Terminology displayed text for docket"
+  },
+  "showcase.terminology.paragraph1.afterDocket": {
+    "message": ", di mana setiap entri memuat sebuah ",
+    "description": "Showcase Terminology paragraph 1 fragment after docket"
+  },
+  "showcase.terminology.stamp.title": {
+    "message": "tanda otorisasi bercap waktu yang dibubuhkan pada tindakan yang telah selesai",
+    "description": "Showcase Terminology hover title for stamp"
+  },
+  "showcase.terminology.stamp.label": {
+    "message": "cap",
+    "description": "Showcase Terminology displayed text for stamp"
+  },
+  "showcase.terminology.paragraph1.afterStamp": {
+    "message": " yang merujuk pada kebijakan yang mewenanginya.",
+    "description": "Showcase Terminology paragraph 1 fragment after stamp"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Pekerjaan yang masuk disalurkan berdasarkan ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.accessTier.title": {
+    "message": "penggolongan pekerjaan yang masuk berdasarkan status sponsor atau kontribusi",
+    "description": "Showcase Terminology hover title for access tier"
+  },
+  "showcase.terminology.accessTier.label": {
+    "message": "tingkat akses",
+    "description": "Showcase Terminology displayed text for access tier"
+  },
+  "showcase.terminology.paragraph2.afterAccessTier": {
+    "message": " ke dalam ",
+    "description": "Showcase Terminology paragraph 2 fragment after access tier"
+  },
+  "showcase.terminology.queue.title": {
+    "message": "satu daftar berurutan atas semua pekerjaan yang masuk",
+    "description": "Showcase Terminology hover title for queue"
+  },
+  "showcase.terminology.queue.label": {
+    "message": "antrean",
+    "description": "Showcase Terminology displayed text for queue"
+  },
+  "showcase.terminology.paragraph2.afterQueue": {
+    "message": ". Utas yang tak aktif ditutup melalui ",
+    "description": "Showcase Terminology paragraph 2 fragment after queue"
+  },
+  "showcase.terminology.threadArchival.title": {
+    "message": "penutupan berbasis kebijakan atas utas yang tak aktif melampaui ambang batas",
+    "description": "Showcase Terminology hover title for thread archival"
+  },
+  "showcase.terminology.threadArchival.label": {
+    "message": "pengarsipan utas",
+    "description": "Showcase Terminology displayed text for thread archival"
+  },
+  "showcase.terminology.paragraph2.afterThreadArchival": {
+    "message": " dengan jejak berkas pada setiap perkara.",
+    "description": "Showcase Terminology paragraph 2 fragment after thread archival"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (dengan keterangan)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Tanda merek yang diarsipkan di dalam blok Frame, siap dirujuk.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Gambar kecil merek Marshal.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (tanpa keterangan)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (kedua toko)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Unduh aplikasi pendamping",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (khusus App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Tersedia di iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (khusus Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Tersedia di Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (tanpa label)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

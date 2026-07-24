@@ -1,0 +1,510 @@
+{
+  "home.layout.description": {
+    "message": "Foundry seniň niýetiňi okaýar we tutuş işläp düzüş gurşawyňy ýeke-täk manifestden ýasaýar.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Foundry - Her gural çig metaldan başlaýar",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Işläp düzüjiler üçin gurallar",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Her gural çig metaldan başlaýar.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Foundry seniň niýetiňi okaýar we tutuş işläp düzüş gurşawyňy ýeke-täk manifestden ýasaýar. Sazlamany bes et. Beýan etmäge başla.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Başla",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Threadbare-de gör",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.anvil.description": {
+    "message": "Esasy CLI. Ýeke-täk Blueprint manifestini okaýar we tutuş iş meýdanyňy ýasaýar — katalog gurluşy, garaşlylyk grafigi, gurluşyk konfigurasiýasy we barlag düzgünleri. Bir faýl girýär, doly gurşaw çykýar.",
+    "description": "Front page Features card description for Anvil"
+  },
+  "home.features.tongs.description": {
+    "message": "Garaşlylyk grafigini çözüji we şekillendiriji. Iş meýdanyndaky paketleriň arasyndaky ähli baglanyşygy kartalaýar we doly agajy görkezýär, şeýlelik bilen bir zady üýtgetmezden ozal näme nämä garaşýandygyny görüp bilýärsiň.",
+    "description": "Front page Features card description for Tongs"
+  },
+  "home.features.quench.description": {
+    "message": "Faýl heşlerini yzarlaýan we diňe hakykatdan üýtgän zatlary täzeden düzýän artdyrymly gurluşyk keşi. Sowuk ýasama 14 sekunt alýar. Yssy ýasama iki sekuntdan hem az.",
+    "description": "Front page Features card description for Quench"
+  },
+  "home.features.bellows.description": {
+    "message": "Işi her iş meýdany paketinde bir wagtyň özünde ýaýradýan parallel mesele ýerine ýetiriji. Tongs-dan gelýän garaşlylyk grafigine eýerýär, şonuň üçin hiç bir zat öz şertleri tamamlanmanka başlanmaýar.",
+    "description": "Front page Features card description for Bellows"
+  },
+  "home.features.crucible.description": {
+    "message": "Görnüş signaturalaryňy okap, synag skeletini seniň üçin ýazýan synag gurşawy generatory. Surat synaglary, tassyklama şablonlary we fikstura faýllary — ählisi eýýäm ýazan görnüşleriňden gelip çykýar.",
+    "description": "Front page Features card description for Crucible"
+  },
+  "home.features.slag.description": {
+    "message": "Öli kod we ulanylmaýan garaşlylyk anyklaýjy. Her importy, her exporty we Blueprint-däki her ýazgyny gözden geçirip, indi salgylanmaýan zatlary tapýar. Şlaky aýyr, polady sakla.",
+    "description": "Front page Features card description for Slag"
+  },
+  "home.stats.heading": {
+    "message": "Sanlarda",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.configFiles.label": {
+    "message": "Konfig faýllary",
+    "description": "Front page Stats label for config file count"
+  },
+  "home.stats.coldForge.label": {
+    "message": "Sowuk ýasama",
+    "description": "Front page Stats label for cold forge time"
+  },
+  "home.stats.wardenRules.label": {
+    "message": "Warden düzgünleri",
+    "description": "Front page Stats label for Warden rule count"
+  },
+  "home.spotlight.heading": {
+    "message": "Bir manifest, ähli zat birikdirilen",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Näme diýjek bolýanyňy beýan et. Galanyny Foundry çözer.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Ojagyňy islendik ýerden dolandyr",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Ojakdan habarlar",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Filosofiýa, öndürijilik ölçegleri we ýaýradan garaýyşlarymyz.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "docusaurus-preset-nova-daky her bloky görkezýän Foundry blok sergisi.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Foundry presetiniň her bloky, nusgalyk maglumatlar bilen görkezilýär.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (doly)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Blok sergisi",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Ähli Foundry bloky, bir ýerde görkezildi.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Bu sahypa @cbnventures/docusaurus-preset-nova/blocks-dan her bloky Foundry dünýäsiniň maglumatlary bilen görkezýär, şeýlelik bilen olaryň nähili görünýändigini we işleýändigini görüp bilersiň.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Resminamalary oka",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Threadbare-de gör",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (ýönekeý)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Iberiljek zady şekillendir.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Foundry seniň niýetiňi okaýar we tutuş işläp düzüş gurşawyňy ýeke-täk manifestden ýasaýar. Sazlamany bes et. Beýan etmäge başla.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Başla",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (adaty)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Men gowy görýärin: ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (prefikssiz)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Çalt",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Çeýe",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Mugt",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (haýal wagt)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Ýörite guruldy: ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "işläp düzüjiler",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "dizaýnerler",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (gaýtalanmasyz)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Hoş geldiň: ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Spark bilen gurna",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Ýa-da Loom Registry-ni ulan",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (belliksiz)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Çalt gurnama",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (nyşanlar bilen)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Toparlar näme üçin Foundry saýlaýar",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.anvil.description": {
+    "message": "Esasy CLI. Blueprint manifestini okaýar we iş meýdanyňy ýasaýar — katalog gurluşy, garaşlylyk grafigi, gurluşyk konfigurasiýasy we barlag düzgünleri.",
+    "description": "Showcase Features (with icons) card description for Anvil"
+  },
+  "showcase.featuresIcons.tongs.description": {
+    "message": "Garaşlylyk grafigini çözüji we şekillendiriji. Paketleriň arasyndaky ähli baglanyşygy kartalaýar we doly agajy görkezýär.",
+    "description": "Showcase Features (with icons) card description for Tongs"
+  },
+  "showcase.featuresIcons.quench.description": {
+    "message": "Faýl heşlerini yzarlaýan we diňe üýtgän zatlary täzeden düzýän artdyrymly gurluşyk keşi. Sowuk ýasama 14 sekunt alýar. Yssy ýasama iki sekuntdan hem az.",
+    "description": "Showcase Features (with icons) card description for Quench"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (nyşansyz, sözbaşysyz)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.bellows.description": {
+    "message": "Işi her iş meýdany paketinde bir wagtyň özünde ýaýradýan parallel mesele ýerine ýetiriji. Tongs-dan gelýän garaşlylyk grafigine eýerýär.",
+    "description": "Showcase Features (no icons) card description for Bellows"
+  },
+  "showcase.featuresNoIcons.crucible.description": {
+    "message": "Görnüş signaturalaryňy okap, synag skeletini ýazýan synag gurşawy generatory. Surat synaglary we tassyklama şablonlary içine alýar.",
+    "description": "Showcase Features (no icons) card description for Crucible"
+  },
+  "showcase.featuresNoIcons.slag.description": {
+    "message": "Öli kod we ulanylmaýan garaşlylyk anyklaýjy. Her importy we exporty gözden geçirip, indi salgylanmaýan zatlary tapýar.",
+    "description": "Showcase Features (no icons) card description for Slag"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (alty element, garyşyk nyşanlar)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Ähli zat bir ojakda",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.anvil.description": {
+    "message": "Manifestiňi okaýar we iş meýdanyňa gerek her konfigurasiýa artefaktyny döredýär. Bir faýl girýär, ähli zat çykýar.",
+    "description": "Showcase Features (six items) card description for Anvil"
+  },
+  "showcase.featuresSix.tongs.description": {
+    "message": "Garaşlylyk grafigini çözýär, aýlawlary anyklaýar we skriptler hem-de pipeline birleşdirmesi üçin gözleg gurallaryny hödürleýär.",
+    "description": "Showcase Features (six items) card description for Tongs"
+  },
+  "showcase.featuresSix.quench.description": {
+    "message": "Mazmun boýunça salgylanýan gurluşyk keşi. Girişler üýtgemedik bolsa, gurluşyk düýbünden ätlenip geçilýär.",
+    "description": "Showcase Features (six items) card description for Quench"
+  },
+  "showcase.featuresSix.bellows.description": {
+    "message": "Gurluşyk meselelerini garaşlylyk grafigine görä tolkunlar bilen meýilleşdirýär. Biri-birine bagly bolmadyk paketler parallel gurulýar.",
+    "description": "Showcase Features (six items) card description for Bellows"
+  },
+  "showcase.featuresSix.crucible.description": {
+    "message": "Görnüş signaturalaryndan synag skeletlerini döredýär. Surat synaglary, tassyklama şablonlary we fikstura faýllary.",
+    "description": "Showcase Features (six items) card description for Crucible"
+  },
+  "showcase.featuresSix.slag.description": {
+    "message": "Öli kody we ýetim garaşlylyklary tapýar. Şlaky aýyr, polady sakla.",
+    "description": "Showcase Features (six items) card description for Slag"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (sözbaşy we düşündiriş bilen)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Ýasama ölçegleri",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "200 paketli iş meýdanyndaky esasy öndürijilik görkezijileri.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.coldForge.label": {
+    "message": "Sowuk ýasama wagty",
+    "description": "Showcase Stats (full) label for cold forge time"
+  },
+  "showcase.statsFull.warmForge.label": {
+    "message": "Yssy ýasama wagty",
+    "description": "Showcase Stats (full) label for warm forge time"
+  },
+  "showcase.statsFull.cacheHit.label": {
+    "message": "Keş gabat gelme derejesi",
+    "description": "Showcase Stats (full) label for cache hit rate"
+  },
+  "showcase.statsFull.wardenRules.label": {
+    "message": "Warden düzgünleri",
+    "description": "Showcase Stats (full) label for Warden rule count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (sözbaşysyz)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "Konfig faýllary",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "Kömekçi gurallar",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.maxPackages.label": {
+    "message": "Synag edilen iň köp paket",
+    "description": "Showcase Stats (no heading) label for max packages tested"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (kod bilen)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Çalt başlangyç",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Noldan doly ýasalan iş meýdanyna çenli üç buýruk.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (tekst bilen)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Ol nähili işleýär",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Foundry manifestiňi okaýar, garaşlylyk grafigini Tongs bilen çözýär we her konfigurasiýa artefaktyny kesgitli görnüşde döredýär. Bir girişe hemişe şol bir çykyş — gapdal täsirsiz, gizlin ýagdaýsyz.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (düşündiriş bilen)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Ojakdan habarlar",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Filosofiýa, öndürijilik ölçegleri we ýaýradan garaýyşlarymyz.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Näme üçin konfigurasiýa faýllaryny ýazmagy bes etdik",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Konfigurasiýa süýşmesi iş meýdanlarynyň dymyk ganhorydyr. Foundry-ni niýetiň deklaratiw bolmalydygyna ynanýandygymyz üçin gurduk.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "200 paketli Monorepo-ny 14 sekuntda ýasamak",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Quench keşlemesi we Bellows parallelligi on iki minutlyk gurluşygy on dört sekuntlyk ýasama nädip öwürdi.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Ýaýratman galaýjak bolan Warden düzgünleri",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "380 barlag düzgünini ýazdyk we 60-syny taşladyk. Ine, aman galanlar we topary bölmäge az galan çekişmeler.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (düşündirişsiz)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Soňky täzelikler",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Foundry 2.4: Crucible awto-režimi we Slag anyklaýşy",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Crucible indi her ýasamada synag skeletlerini awtomatiki täzeden döredýär, Slag bolsa tutuş iş meýdany grafiginde ulanylmaýan garaşlylyklary anyklaýar.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (setir içinde ulanyş)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Foundry ähli kod döredişini we konfigurasiýany dolandyrmak üçin ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.manifest.title": {
+    "message": "iş meýdany konfigurasiýa faýly",
+    "description": "Showcase Terminology hover title for manifest"
+  },
+  "showcase.terminology.paragraph1.afterManifest": {
+    "message": " ulanýar. Her iş meýdany paketi ähli artefakty sinhron saklaýan ",
+    "description": "Showcase Terminology paragraph 1 fragment after manifest"
+  },
+  "showcase.terminology.forge.title": {
+    "message": "konfigurasiýa döretmek prosesi",
+    "description": "Showcase Terminology hover title for forge"
+  },
+  "showcase.terminology.forge.label": {
+    "message": "ýasama",
+    "description": "Showcase Terminology displayed text for forge"
+  },
+  "showcase.terminology.paragraph1.afterForge": {
+    "message": " prosesi arkaly dolandyrylýar. Kod hilini barlamaly bolanyňda, ",
+    "description": "Showcase Terminology paragraph 1 fragment after forge"
+  },
+  "showcase.terminology.warden.title": {
+    "message": "statik analiz hereketlendirijisi",
+    "description": "Showcase Terminology hover title for Warden"
+  },
+  "showcase.terminology.paragraph1.afterWarden": {
+    "message": " hereketlendirijisi her düzgüni goşmaça konfigurasiýasyz işledýär.",
+    "description": "Showcase Terminology paragraph 1 fragment after Warden"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Bu ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.presetSystem.title": {
+    "message": "düzgün toplumy preseti",
+    "description": "Showcase Terminology hover title for preset system"
+  },
+  "showcase.terminology.presetSystem.label": {
+    "message": "preset ulgamy",
+    "description": "Showcase Terminology displayed text for preset system"
+  },
+  "showcase.terminology.paragraph2.afterPreset": {
+    "message": " bilen toparlar ",
+    "description": "Showcase Terminology paragraph 2 fragment after preset system"
+  },
+  "showcase.terminology.lintingRules.title": {
+    "message": "statik analiz düzgünleri",
+    "description": "Showcase Terminology hover title for linting rules"
+  },
+  "showcase.terminology.lintingRules.label": {
+    "message": "linting düzgünleri",
+    "description": "Showcase Terminology displayed text for linting rules"
+  },
+  "showcase.terminology.paragraph2.afterLinting": {
+    "message": " we ",
+    "description": "Showcase Terminology paragraph 2 fragment after linting rules"
+  },
+  "showcase.terminology.alloySettings.title": {
+    "message": "kompilýator konfigurasiýasy",
+    "description": "Showcase Terminology hover title for Alloy settings"
+  },
+  "showcase.terminology.alloySettings.label": {
+    "message": "Alloy sazlamalary",
+    "description": "Showcase Terminology displayed text for Alloy settings"
+  },
+  "showcase.terminology.paragraph2.afterAlloy": {
+    "message": " üçin ýeke-täk hakykat çeşmesini konfigurasiýa faýllaryny gaýtalaman paýlaşýarlar.",
+    "description": "Showcase Terminology paragraph 2 fragment after Alloy settings"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (ýazgy bilen)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Frame-iň içine basylan marka nyşany — ýiti gyra, monospace ýazgy.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Foundry markasynyň miniatýurasy.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (ýazgysyz)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (iki dükan hem)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Ýoldaş programmany göçürip al",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (diňe App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "iOS-da elýeterli",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (diňe Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Android-da elýeterli",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (belliksiz)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

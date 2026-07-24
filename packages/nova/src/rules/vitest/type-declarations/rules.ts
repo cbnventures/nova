@@ -5,8 +5,6 @@ import {
   sep,
 } from 'node:path';
 
-import { it } from 'vitest';
-
 import {
   LIB_REGEX_PATTERN_EXPORT_TYPE_NAME,
   LIB_REGEX_PATTERN_EXT_CJS_SUFFIX,
@@ -53,6 +51,7 @@ import {
   validateLeaf,
   validateReturnType,
 } from '../../../lib/type-declaration-engine.js';
+import { getActiveVitest } from '../active-vitest.js';
 import { isEnabled } from '../enable.js';
 
 import type {
@@ -81,6 +80,25 @@ import type {
   Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Violation,
   Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_ViolationMessage,
   Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_Violations,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_AliasedSpecifier,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_BraceClose,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_BraceOpen,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Config,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Content,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_DtsImportCurrentDirectory,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_DtsImportRelativePath,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Enable,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Files,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_ImportStart,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_QuoteEnd,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_QuoteStart,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Returns,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Source,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_SpecifierBlock,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Specifiers,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Violation,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_ViolationMessage,
+  Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Violations,
   Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_AllFiles,
   Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Cleaned,
   Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Config,
@@ -143,6 +161,19 @@ import type {
   Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Violation,
   Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_ViolationMessage,
   Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Violations,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Config,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Content,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_CurrentLine,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Enable,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Files,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_I,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_InlineImportCurrentDirectory,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_InlineImportRelativePath,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Lines,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Returns,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Violation,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_ViolationMessage,
+  Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Violations,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ArrayTypes,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ClassPrefix,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Config,
@@ -328,7 +359,7 @@ export async function crossSectionReferences(config: Rules_Vitest_TypeDeclaratio
   for (const file of files) {
     const crossSectionRelativePath: Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_CrossSectionRelativePath = relative(crossSectionCurrentDirectory, file);
 
-    it(`no cross-section references in ${crossSectionRelativePath}`, async () => {
+    getActiveVitest().it(`no cross-section references in ${crossSectionRelativePath}`, async () => {
       if (config['standaloneTypeFiles'].some((pattern) => file.endsWith(pattern)) === true) {
         return;
       }
@@ -412,7 +443,7 @@ export async function sectionAlphabeticalOrder(config: Rules_Vitest_TypeDeclarat
   for (const file of files) {
     const sectionOrderRelativePath: Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_SectionOrderRelativePath = relative(sectionOrderCurrentDirectory, file);
 
-    it(`sections alphabetical in ${sectionOrderRelativePath}`, async () => {
+    getActiveVitest().it(`sections alphabetical in ${sectionOrderRelativePath}`, async () => {
       if (config['standaloneTypeFiles'].some((pattern) => file.endsWith(pattern)) === true) {
         return;
       }
@@ -485,7 +516,7 @@ export async function firstComeFirstServeOrder(config: Rules_Vitest_TypeDeclarat
   for (const file of files) {
     const orderRelativePath: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_OrderRelativePath = relative(orderCurrentDirectory, file);
 
-    it(`types match source order in ${orderRelativePath}`, async () => {
+    getActiveVitest().it(`types match source order in ${orderRelativePath}`, async () => {
       if (config['standaloneTypeFiles'].some((pattern) => file.endsWith(pattern)) === true) {
         return;
       }
@@ -612,7 +643,7 @@ export async function objectPropertyTypes(config: Rules_Vitest_TypeDeclarations_
   for (const file of files) {
     const objectPropsRelativePath: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectPropsRelativePath = relative(objectPropsCurrentDirectory, file);
 
-    it(`object properties use named types in ${objectPropsRelativePath}`, async () => {
+    getActiveVitest().it(`object properties use named types in ${objectPropsRelativePath}`, async () => {
       const content: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Content = await readFile(file, 'utf-8');
       const lines: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Lines = content.split('\n');
       const classPrefix: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ClassPrefix = deriveClassPrefix(file, config);
@@ -756,7 +787,7 @@ export async function sectionCoverage(config: Rules_Vitest_TypeDeclarations_Rule
   for (const file of files) {
     const coverageRelativePath: Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_CoverageRelativePath = relative(coverageCurrentDirectory, file);
 
-    it(`source sections have matching .d.ts sections in ${coverageRelativePath}`, async () => {
+    getActiveVitest().it(`source sections have matching .d.ts sections in ${coverageRelativePath}`, async () => {
       if (config['standaloneTypeFiles'].some((pattern) => file.endsWith(pattern)) === true) {
         return;
       }
@@ -915,7 +946,7 @@ export async function variableTypeSymmetry(config: Rules_Vitest_TypeDeclarations
   for (const file of files) {
     const symmetryRelativePath: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SymmetryRelativePath = relative(symmetryCurrentDirectory, file);
 
-    it(`variable type symmetry in ${symmetryRelativePath}`, async () => {
+    getActiveVitest().it(`variable type symmetry in ${symmetryRelativePath}`, async () => {
       const content: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Content = await readFile(file, 'utf-8');
       const lines: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Lines = content.split('\n');
       const classPrefix: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_ClassPrefix = deriveClassPrefix(file, config);
@@ -967,7 +998,7 @@ export async function variableTypeSymmetry(config: Rules_Vitest_TypeDeclarations
             const violation4: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Violation4 = `${symmetryRelativePath}:${decl['lineNumber']}: rule 7.2 violation: body var type "${decl['typeName']}" is not defined in the corresponding .d.ts. Cross-module body-var types are forbidden -- define the type concretely in ${cleanedDtsPath}, or promote the shape to shared.d.ts, or skip the typed body var.`;
 
             violations.push(violation4);
-          } else if (isAliasToForeignType(decl['typeName'], dtsContent, classPrefix) === true) {
+          } else if (isAliasToForeignType(decl['typeName'], dtsContent, classPrefix, config['standaloneTypeFiles']) === true) {
             const relativeDtsPath2: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_RelativeDtsPath2 = dtsPath.replace(symmetryCurrentDirectory, '');
             const cleanedDtsPath2: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_CleanedDtsPath2 = (relativeDtsPath2.startsWith('/') === true) ? relativeDtsPath2.slice(1) : relativeDtsPath2;
             const violation5: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Violation5 = `${symmetryRelativePath}:${decl['lineNumber']}: rule 7.2 violation: body var type "${decl['typeName']}" is locally defined but only as an alias to a foreign type. Cross-module body-var types are forbidden -- escape hatches: (a) promote the shape to shared.d.ts, (b) redefine the concrete shape in ${cleanedDtsPath2}, or (c) inline the call to skip the typed body var.`;
@@ -1079,7 +1110,7 @@ export async function identifierVsFileName(config: Rules_Vitest_TypeDeclarations
   for (const file of files) {
     const identifierVsFileNameRelativePath: Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_IdentifierVsFileNameRelativePath = relative(identifierVsFileNameCurrentDirectory, file);
 
-    it(`top-level identifiers in ${identifierVsFileNameRelativePath} do not equal file name`, async () => {
+    getActiveVitest().it(`top-level identifiers in ${identifierVsFileNameRelativePath} do not equal file name`, async () => {
       const content: Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Content = await readFile(file, 'utf-8');
       const classPrefix: Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_ClassPrefix = deriveClassPrefix(file, config);
       const segments: Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Segments = classPrefix.split('_');
@@ -1109,9 +1140,9 @@ export async function identifierVsFileName(config: Rules_Vitest_TypeDeclarations
 /**
  * Rules - Vitest - Type Declarations - Rules - Filename Validation.
  *
- * Inspector rule `inspector-filename-validation` (Mode 2 rules EC19/EC20/EC21): each
- * path segment must be kebab-case or PascalCase after stripping the recognized suffixes.
- * Mission is mirror-engine path-token validity; file naming is require-kebab-case-filename.
+ * Inspector rule `inspector-filename-validation` (Mode 2 rules EC19/EC20/EC21).
+ * Each path segment must be kebab-case or PascalCase after recognized suffixes are stripped.
+ * Mission is path-token validity; file naming is require-kebab-case-filename.
  *
  * @param {Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Config} config - Config.
  * @param {Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Enable} enable - Enable.
@@ -1136,7 +1167,7 @@ export async function filenameValidation(config: Rules_Vitest_TypeDeclarations_R
   for (const file of allFiles) {
     const filenameValidationRelativePath: Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_FilenameValidationRelativePath = relative(filenameValidationCurrentDirectory, file);
 
-    it(`filename and path segments in ${filenameValidationRelativePath} are valid`, () => {
+    getActiveVitest().it(`filename and path segments in ${filenameValidationRelativePath} are valid`, () => {
       let cleaned: Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Cleaned = filenameValidationRelativePath;
 
       for (const typeRoot of config['typeRoots']) {
@@ -1223,7 +1254,7 @@ export async function standaloneTypeFiles(config: Rules_Vitest_TypeDeclarations_
   // The description is templated (like the per-file `standalone file rules in ${...}` tests below) so it
   // attributes to the describe-level section and needs no dedicated .d.ts coverage type.
   if (standaloneFiles.length === 0) {
-    it(`standalone file rules in ${standaloneCurrentDirectory} (no standalone type files configured)`, () => {
+    getActiveVitest().it(`standalone file rules in ${standaloneCurrentDirectory} (no standalone type files configured)`, () => {
       return;
     });
   }
@@ -1231,7 +1262,7 @@ export async function standaloneTypeFiles(config: Rules_Vitest_TypeDeclarations_
   for (const file of standaloneFiles) {
     const standaloneRelativePath: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_StandaloneRelativePath = relative(standaloneCurrentDirectory, file);
 
-    it(`standalone file rules in ${standaloneRelativePath}`, async () => {
+    getActiveVitest().it(`standalone file rules in ${standaloneRelativePath}`, async () => {
       const content: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Content = await readFile(file, 'utf-8');
       const lines: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Lines = content.split('\n');
       const typeLines: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_TypeLines = lines.filter((line) => line.startsWith('export type '));
@@ -1340,6 +1371,133 @@ export async function standaloneTypeFiles(config: Rules_Vitest_TypeDeclarations_
       }
 
       const violationMessage: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ViolationMessage = violations.join('\n');
+
+      strictEqual(violations.length, 0, violationMessage);
+
+      return;
+    });
+  }
+
+  return;
+}
+
+/**
+ * Rules - Vitest - Type Declarations - Rules - Dts Import Verbatim.
+ *
+ * Inspector rule `inspector-dts-import-verbatim`: a type imported from a `.d.ts`
+ * file must be used verbatim with no `as` alias, since declared types are already named.
+ *
+ * @param {Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Config} config - Config.
+ * @param {Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Enable} enable - Enable.
+ *
+ * @returns {Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Returns}
+ *
+ * @since 0.21.0
+ */
+export async function dtsImportVerbatim(config: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Config, enable: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Enable): Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Returns {
+  if (isEnabled('inspector-dts-import-verbatim', enable) === false) {
+    return;
+  }
+
+  const files: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Files = await discoverTypeFiles(config);
+  const dtsImportCurrentDirectory: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_DtsImportCurrentDirectory = config['packageRoot'] ?? process.cwd();
+
+  for (const file of files) {
+    const dtsImportRelativePath: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_DtsImportRelativePath = relative(dtsImportCurrentDirectory, file);
+
+    getActiveVitest().it(`imports from .d.ts files are verbatim in ${dtsImportRelativePath}`, async () => {
+      const content: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Content = await readFile(file, 'utf-8');
+      const violations: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Violations = [];
+
+      let importStart: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_ImportStart = content.indexOf('import type');
+
+      while (importStart !== -1) {
+        const braceOpen: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_BraceOpen = content.indexOf('{', importStart);
+        const braceClose: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_BraceClose = content.indexOf('}', braceOpen);
+        const quoteStart: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_QuoteStart = content.indexOf('\'', braceClose);
+        const quoteEnd: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_QuoteEnd = content.indexOf('\'', quoteStart + 1);
+
+        if (
+          braceOpen === -1
+          || braceClose === -1
+          || quoteStart === -1
+          || quoteEnd === -1
+        ) {
+          break;
+        }
+
+        const source: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Source = content.slice(quoteStart + 1, quoteEnd);
+
+        if (LIB_REGEX_PATTERN_EXT_D_TS_SUFFIX.test(source) === true) {
+          const specifierBlock: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_SpecifierBlock = content.slice(braceOpen + 1, braceClose);
+          const specifiers: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Specifiers = specifierBlock.split(',');
+
+          for (const specifier of specifiers) {
+            const aliasedSpecifier: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_AliasedSpecifier = specifier.trim();
+
+            if (aliasedSpecifier.includes(' as ') === true) {
+              const violation: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Violation = `${dtsImportRelativePath}: "${aliasedSpecifier}" is imported from "${source}" with an alias. Types imported from a .d.ts file must be verbatim - drop the "as" and use the imported name directly.`;
+
+              violations.push(violation);
+            }
+          }
+        }
+
+        importStart = content.indexOf('import type', quoteEnd + 1);
+      }
+
+      const violationMessage: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_ViolationMessage = violations.join('\n');
+
+      strictEqual(violations.length, 0, violationMessage);
+
+      return;
+    });
+  }
+
+  return;
+}
+
+/**
+ * Rules - Vitest - Type Declarations - Rules - No Inline Import Types.
+ *
+ * Inspector rule `inspector-no-inline-import-types`: a declaration
+ * file must not reference types through inline `import('...')` expressions;
+ * use a top-of-file named type import instead.
+ *
+ * @param {Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Config} config - Config.
+ * @param {Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Enable} enable - Enable.
+ *
+ * @returns {Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Returns}
+ *
+ * @since 0.21.0
+ */
+export async function noInlineImportTypes(config: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Config, enable: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Enable): Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Returns {
+  if (isEnabled('inspector-no-inline-import-types', enable) === false) {
+    return;
+  }
+
+  const files: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Files = await discoverTypeFiles(config);
+  const inlineImportCurrentDirectory: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_InlineImportCurrentDirectory = config['packageRoot'] ?? process.cwd();
+
+  for (const file of files) {
+    const inlineImportRelativePath: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_InlineImportRelativePath = relative(inlineImportCurrentDirectory, file);
+
+    getActiveVitest().it(`no inline import() type references in ${inlineImportRelativePath}`, async () => {
+      const content: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Content = await readFile(file, 'utf-8');
+      const lines: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Lines = content.split('\n');
+      const violations: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Violations = [];
+
+      for (let i: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_I = 0; i < lines.length; i += 1) {
+        const currentLine: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_CurrentLine = lines[i];
+
+        if (currentLine !== undefined && currentLine.includes('import(') === true) {
+          const violation: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Violation = `${inlineImportRelativePath}:${i + 1}: inline import() type reference found. Reference the type through a top-of-file "import type { ... } from '...'" statement instead.`;
+
+          violations.push(violation);
+        }
+      }
+
+      const violationMessage: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_ViolationMessage = violations.join('\n');
 
       strictEqual(violations.length, 0, violationMessage);
 

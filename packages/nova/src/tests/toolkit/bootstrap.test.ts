@@ -95,7 +95,8 @@ describe('Bootstrap getConfigDir', async () => {
     }
 
     rmSync(sandboxDir!, {
-      recursive: true, force: true,
+      recursive: true,
+      force: true,
     });
 
     return;
@@ -222,7 +223,8 @@ describe('Bootstrap resolveFileDir', async () => {
 
   afterEach(() => {
     rmSync(tempDir!, {
-      recursive: true, force: true,
+      recursive: true,
+      force: true,
     });
 
     return;
@@ -288,10 +290,12 @@ describe('Bootstrap resolveFileDirs', async () => {
 
   afterEach(() => {
     rmSync(tempDir!, {
-      recursive: true, force: true,
+      recursive: true,
+      force: true,
     });
     rmSync(tempDir2!, {
-      recursive: true, force: true,
+      recursive: true,
+      force: true,
     });
 
     return;
@@ -351,7 +355,8 @@ describe('Bootstrap loadEnv', async () => {
 
   afterEach(() => {
     rmSync(tempDir!, {
-      recursive: true, force: true,
+      recursive: true,
+      force: true,
     });
 
     Reflect.deleteProperty(process.env, 'NOVA_TEST_KEY');

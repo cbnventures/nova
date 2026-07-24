@@ -57,6 +57,20 @@ export type Tests_Lib_Utility_BuildGeneratedFileHeader_ProducesAPrefixedStrictBa
 export type Tests_Lib_Utility_BuildGeneratedFileHeader_ThrowsWhenTheTargetPathHasAnUnsupportedExtension_Threw = boolean;
 
 /**
+ * Tests - Lib - Utility - CollectConsumerWorkspacePaths - CollectsConsumerWorkspacePathsAndSkipsTheProjectRoot.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Utility_CollectConsumerWorkspacePaths_CollectsConsumerWorkspacePathsAndSkipsTheProjectRoot_Paths = string[];
+
+/**
+ * Tests - Lib - Utility - CollectConsumerWorkspacePaths - ExcludesADotKeyedWorkspaceSoItNeverDuplicatesTheRoot.
+ *
+ * @since 0.20.0
+ */
+export type Tests_Lib_Utility_CollectConsumerWorkspacePaths_ExcludesADotKeyedWorkspaceSoItNeverDuplicatesTheRoot_Paths = string[];
+
+/**
  * Tests - Lib - Utility - CompareSemver - ComparesNumericallyNotLexically.
  *
  * @since 0.12.0
@@ -556,6 +570,27 @@ export type Tests_Lib_Utility_IsProjectRoot_ReturnsFalseWhenMultiplePackageJsonF
 export type Tests_Lib_Utility_IsProjectRoot_ReturnsFalseWhenMultiplePackageJsonFilesFoundAbove_RealAppRoot = string;
 
 export type Tests_Lib_Utility_IsProjectRoot_ReturnsFalseWhenMultiplePackageJsonFilesFoundAbove_Result = boolean;
+
+/**
+ * Tests - Lib - Utility - IsProjectRoot - ReturnsTrueWhenCwdIsAGitWorktreeRoot.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_MainRoot = string;
+
+export type Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_MainGitDirectory = string;
+
+export type Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_WorktreeRoot = string;
+
+export type Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_MainPackage = string;
+
+export type Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_WorktreePackage = string;
+
+export type Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_WorktreeGitFile = string;
+
+export type Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_RealWorktreeRoot = string;
+
+export type Tests_Lib_Utility_IsProjectRoot_ReturnsTrueWhenCwdIsAGitWorktreeRoot_Result = boolean;
 
 /**
  * Tests - Lib - Utility - IsProjectRoot - ReturnsTrueWhenCwdIsProjectRootWithSinglePackageJson.

@@ -93,6 +93,8 @@ export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments
 
 export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Fix_Returns = RuleFix;
 
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Fix_LineStart = number;
+
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Check Switch Cases.
  *

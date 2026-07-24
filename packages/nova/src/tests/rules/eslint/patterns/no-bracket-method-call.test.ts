@@ -71,5 +71,25 @@ ruleTester.run('noBracketMethodCall', NoBracketMethodCall['rule'], {
       output: 'element.addEventListener("click", handler);',
       errors: [{ messageId: 'noBracketMethodCall' }],
     },
+    {
+      code: 'obj["$emit"]();',
+      output: 'obj.$emit();',
+      errors: [{ messageId: 'noBracketMethodCall' }],
+    },
+    {
+      code: 'obj["foo-bar"]();',
+      output: null,
+      errors: [{ messageId: 'noBracketMethodCall' }],
+    },
+    {
+      code: 'obj["123"]();',
+      output: null,
+      errors: [{ messageId: 'noBracketMethodCall' }],
+    },
+    {
+      code: 'obj["foo bar"]();',
+      output: null,
+      errors: [{ messageId: 'noBracketMethodCall' }],
+    },
   ],
 });

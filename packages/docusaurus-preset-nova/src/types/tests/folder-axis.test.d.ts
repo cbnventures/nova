@@ -1,3 +1,5 @@
+import type { Dirent } from 'node:fs';
+
 /**
  * Tests - Folder Axis - Folder Axis - Every Blocks Directory Is Re Exported From Index Ts.
  *
@@ -68,7 +70,7 @@ export type Tests_FolderAxis_ListBlockDirectories_Returns = readonly string[];
 
 export type Tests_FolderAxis_ListBlockDirectories_BlocksRoot = string;
 
-export type Tests_FolderAxis_ListBlockDirectories_Entries = readonly import('node:fs').Dirent[];
+export type Tests_FolderAxis_ListBlockDirectories_Entries = readonly Dirent[];
 
 /**
  * Tests - Folder Axis - List Theme Directories.
@@ -79,7 +81,7 @@ export type Tests_FolderAxis_ListThemeDirectories_Returns = readonly string[];
 
 export type Tests_FolderAxis_ListThemeDirectories_ThemeRoot = string;
 
-export type Tests_FolderAxis_ListThemeDirectories_Entries = readonly import('node:fs').Dirent[];
+export type Tests_FolderAxis_ListThemeDirectories_Entries = readonly Dirent[];
 
 /**
  * Tests - Folder Axis - Read Blocks Index Exports.

@@ -1,4 +1,4 @@
-import type { ChildProcess, ChildProcessWithoutNullStreams } from 'child_process';
+import type { ChildProcess, ChildProcessWithoutNullStreams } from 'node:child_process';
 
 import type { Shared_RunScriptsOptions } from '../../shared.d.ts';
 

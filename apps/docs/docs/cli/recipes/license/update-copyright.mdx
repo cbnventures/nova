@@ -1,0 +1,88 @@
+---
+id: "update-copyright"
+title: "Update Copyright"
+description: "Refresh the copyright holder and year range in a nova-generated LICENSE without ever touching a hand-edited or custom file."
+keywords:
+  - "nova"
+  - "update-copyright"
+  - "license"
+  - "copyright"
+  - "legal"
+tags:
+  - "cli"
+  - "update-copyright"
+  - "recipe"
+  - "license"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Refresh the **copyright holder and year range** in your `LICENSE` from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Summary
+
+The `update-copyright` recipe rewrites the copyright line of a `LICENSE` file so the holder name and year range stay in sync with `project.legalName` and `project.startingYear` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. It reuses the exact substitution the `generate must-haves license` command uses, so the regenerated body is byte-identical except for the holder and year.
+
+The recipe never mangles a `LICENSE` that was not produced by Nova. Before writing, it fingerprints the on-disk file against the bundled template for the configured license. If the file has been hand-edited, is a custom license, or does not match the template for `project.license`, the recipe skips it and leaves it untouched.
+
+## Prerequisites
+
+- **`project.license`** — The SPDX identifier must be set in `nova.config.json` so the recipe can locate the matching template.
+- **`project.legalName`** — The copyright holder name written into the refreshed `LICENSE`.
+- **`project.startingYear`** — The first year of the range. The recipe pairs it with the current year to build the range (a single year when they match).
+- **An existing `LICENSE`** — The recipe updates a file in the project root; it does not create one. Use `generate must-haves license` to create the initial file.
+
+## Behavior
+
+The recipe follows an anti-mangle algorithm so it can only ever rewrite a file it recognizes as its own.
+
+- **Fingerprint gate** — A pattern is built from the license template text with the holder and year positions as capture groups. The on-disk `LICENSE` must match this pattern exactly. If it does not, the recipe warns that the file looks hand-edited or custom and returns without writing.
+- **Format-aware** — Because the fingerprint is derived from the template, per-license copyright formatting is handled automatically: MIT and Proprietary use `Copyright (c) <year> <holder>`, BSD adds a comma, and Apache-2.0 uses an indented line without `(c)`.
+- **Placeholder-less licenses** — Templates with no holder or year to substitute (for example `CC0-1.0` and `Unlicense`) have nothing to refresh, so the recipe logs an informational skip.
+- **Idempotent** — When the regenerated content already matches the file on disk, the recipe reports that the copyright is already up to date and makes no write.
+
+## Settings
+
+Settings are configured in `nova.config.json` under the `recipes.license` key. The `update-copyright` recipe is controlled by a single `enabled` toggle:
+
+```json
+{
+  "recipes": {
+    "license": {
+      "update-copyright": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+When the recipe is not enabled, it warns and returns without touching any files.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe license update-copyright [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe license update-copyright [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                          |
+|----------------------|------------------------------------------------------|
+| `-d, --dry-run`      | Run without writing any files.                       |
+| `-r, --replace-file` | Replace the original file without creating a backup. |

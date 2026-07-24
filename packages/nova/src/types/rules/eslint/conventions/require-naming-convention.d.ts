@@ -1,5 +1,9 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
+import type {
+  RuleContext,
+  Scope,
+  SourceCode,
+} from '@typescript-eslint/utils/ts-eslint';
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Rule.
@@ -204,13 +208,13 @@ export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariabl
 
 export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Init = TSESTree.Expression | null;
 
-export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Scope = ReturnType<typeof import('@typescript-eslint/utils/ts-eslint').SourceCode.prototype.getScope>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Scope = ReturnType<typeof SourceCode.prototype.getScope>;
 
-export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_ScopeVariable = ReturnType<Map<string, import('@typescript-eslint/utils/ts-eslint').Scope.Variable>['get']>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_ScopeVariable = ReturnType<Map<string, Scope.Variable>['get']>;
 
 export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_IsConstructor = boolean;
 
-export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Ref = import('@typescript-eslint/utils/ts-eslint').Scope.Reference;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Ref = Scope.Reference;
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Create.

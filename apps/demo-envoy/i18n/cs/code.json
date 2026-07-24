@@ -1,0 +1,506 @@
+{
+  "home.layout.description": {
+    "message": "Envoy překládá mezi systémy, které nikdy nebyly navrženy tak, aby si rozuměly. Žádný společný formát. Žádný společný protokol. Jen doručení.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Envoy - Zprávy dorazí",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Integrační infrastruktura",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Zprávy dorazí. To je celý produkt.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Envoy překládá mezi systémy, které nikdy nebyly navrženy tak, aby si rozuměly. Žádný společný formát. Žádný společný protokol. Jen doručení.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Přečíst dokumentaci",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Zobrazit na Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.dispatch.description": {
+    "message": "Inteligentní směrovací engine. Prozkoumá každý příchozí payload a nasměruje jej podle obsahu, zdroje, závažnosti nebo vlastních pravidel. Vyhrává první shoda. Žádné nejasnosti.",
+    "description": "Front page Features card description for Dispatch"
+  },
+  "home.features.courier.description": {
+    "message": "Engine pro opakování se zárukou doručení. Exponenciální backoff s jitterem, dead-letter fronty pro zprávy, které nikdy nedorazí, a potvrzení o doručení pro každý pokus.",
+    "description": "Front page Features card description for Courier"
+  },
+  "home.features.parcel.description": {
+    "message": "Pipeline pro transformaci payloadů. Přepisuje zprávy mezi formáty — z JSON do JSON, z JSON do prostého textu, z XML do JSON. Mapování polí, ztrátový i bezeztrátový režim.",
+    "description": "Front page Features card description for Parcel"
+  },
+  "home.features.cipher.description": {
+    "message": "Autentizační brána. Podpisy HMAC-SHA256, bearer tokeny a seznamy povolených IP adres. Ověří identitu zdroje dřív, než do transformační pipeline dorazí jediný bajt.",
+    "description": "Front page Features card description for Cipher"
+  },
+  "home.features.ledger.description": {
+    "message": "Kompletní auditní stopa doručení. Každá přijatá, transformovaná, směrovaná i doručená zpráva se zapisuje do append-only logu s konfigurovatelnými zásadami uchovávání.",
+    "description": "Front page Features card description for Ledger"
+  },
+  "home.features.embassy.description": {
+    "message": "Reverzní proxy, která maskuje origin. Drží vaše interní služby mimo veřejný internet. Externí zdroje narazí na Embassy. Interní služby o vnějším světě nikdy nevědí.",
+    "description": "Front page Features card description for Embassy"
+  },
+  "home.stats.heading": {
+    "message": "V číslech",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.translators.label": {
+    "message": "Překladače protokolů",
+    "description": "Front page Stats label for protocol translator count"
+  },
+  "home.stats.image.label": {
+    "message": "Obraz Vial",
+    "description": "Front page Stats label for Vial image size"
+  },
+  "home.stats.dependencies.label": {
+    "message": "Externí závislosti",
+    "description": "Front page Stats label for external dependency count"
+  },
+  "home.stats.latency.label": {
+    "message": "Latence přenosu",
+    "description": "Front page Stats label for relay latency"
+  },
+  "home.spotlight.heading": {
+    "message": "Přeložit, směrovat, doručit",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Glassboard spustí upozornění. Envoy přeloží payload, nasměruje jej do správného topicu Canary a potvrdí doručení. Ani jedna strana netuší, že ta druhá existuje.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Získejte oznámení o doručení",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Depeše z Relay Room",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Poznámky k vydání, hloubkové rozbory integrací a občasná depeše z přenosové centrály.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Přehlídka bloků Envoy, která představuje každý blok z docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Každý blok z presetu Envoy, vykreslený s ukázkovými daty.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (plná verze)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Přehlídka bloků",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Každý blok Envoy, předvedený na jednom místě.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Tato stránka vykresluje každý blok z @cbnventures/docusaurus-preset-nova/blocks s daty ze světa Envoy, abyste viděli, jak vypadají a jak se chovají.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Přečíst dokumentaci",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Zobrazit na Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (minimální)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Doručujte bez okolků.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Envoy překládá mezi systémy, které nikdy nebyly navrženy tak, aby si rozuměly. Žádný společný formát. Žádný společný protokol. Jen doručení.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Začít",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (výchozí)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Miluji ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (bez prefixu)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Rychlé",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Flexibilní",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Zdarma",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (pomalé časování)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Vytvořeno pro ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "vývojáře",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "designéry",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (bez smyčky)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Vítejte v ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Nainstalujte pomocí Vial",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Nebo použijte Spark CLI",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (bez popisku)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Rychlá instalace",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (s ikonami)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Proč si týmy vybírají Envoy",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.dispatch.description": {
+    "message": "Inteligentní směrovací engine. Prozkoumá payloady a nasměruje je podle obsahu, zdroje, závažnosti nebo vlastních pravidel.",
+    "description": "Showcase Features (with icons) card description for Dispatch"
+  },
+  "showcase.featuresIcons.courier.description": {
+    "message": "Engine pro opakování se zárukou doručení. Exponenciální backoff, dead-letter fronty a potvrzení o doručení.",
+    "description": "Showcase Features (with icons) card description for Courier"
+  },
+  "showcase.featuresIcons.parcel.description": {
+    "message": "Pipeline pro transformaci payloadů. Přepisuje zprávy mezi formáty — JSON, XML, prostý text, form-data.",
+    "description": "Showcase Features (with icons) card description for Parcel"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (bez ikon, bez nadpisu)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.cipher.description": {
+    "message": "Autentizační brána. Podpisy HMAC, bearer tokeny a seznamy povolených IP adres. Ověří identitu zdroje ještě před zpracováním.",
+    "description": "Showcase Features (no icons) card description for Cipher"
+  },
+  "showcase.featuresNoIcons.ledger.description": {
+    "message": "Auditní stopa doručení typu append-only. Každá přijatá, transformovaná, směrovaná i doručená zpráva se zaznamená.",
+    "description": "Showcase Features (no icons) card description for Ledger"
+  },
+  "showcase.featuresNoIcons.embassy.description": {
+    "message": "Reverzní proxy, která maskuje origin. Udrží interní služby zcela mimo veřejný internet.",
+    "description": "Showcase Features (no icons) card description for Embassy"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (šest položek, smíšené ikony)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Všechno v jednom přenosu",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.dispatch.description": {
+    "message": "Směruje zprávy podle obsahu, zdroje, závažnosti nebo plánu. Vyhrává první odpovídající přenos.",
+    "description": "Showcase Features (six items) card description for Dispatch"
+  },
+  "showcase.featuresSix.courier.description": {
+    "message": "Exponenciální backoff s jitterem. Dead-letter fronty. Potvrzení o doručení. Zaručené doručení.",
+    "description": "Showcase Features (six items) card description for Courier"
+  },
+  "showcase.featuresSix.parcel.description": {
+    "message": "Transformuje payloady mezi libovolnými dvěma formáty. Ztrátový i bezeztrátový režim. Mapování polí a vykreslování šablon.",
+    "description": "Showcase Features (six items) card description for Parcel"
+  },
+  "showcase.featuresSix.cipher.description": {
+    "message": "Autentizuje každý příchozí požadavek. Režimy HMAC, bearer a seznam povolených IP. Rotace tokenů bez výpadku.",
+    "description": "Showcase Features (six items) card description for Cipher"
+  },
+  "showcase.featuresSix.ledger.description": {
+    "message": "Zaznamenává každý přechod stavu. Append-only. Konfigurovatelné uchovávání. Exportovatelné přes Spoke API.",
+    "description": "Showcase Features (six items) card description for Ledger"
+  },
+  "showcase.featuresSix.embassy.description": {
+    "message": "Reverzní proxy, která skrývá interní topologii. Ukončení TLS. Odstraňování hlaviček. Maskování originu.",
+    "description": "Showcase Features (six items) card description for Embassy"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (s nadpisem a popisem)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Metriky přenosů",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Klíčové ukazatele výkonu napříč všemi aktivními přenosovými pipelinami.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Latence přenosu (p99)",
+    "description": "Showcase Stats (full) label for relay latency"
+  },
+  "showcase.statsFull.image.label": {
+    "message": "Velikost obrazu Vial",
+    "description": "Showcase Stats (full) label for Vial image size"
+  },
+  "showcase.statsFull.delivery.label": {
+    "message": "Míra doručení",
+    "description": "Showcase Stats (full) label for delivery rate"
+  },
+  "showcase.statsFull.translators.label": {
+    "message": "Překladače protokolů",
+    "description": "Showcase Stats (full) label for protocol translator count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (bez nadpisu)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.translators.label": {
+    "message": "Překladače",
+    "description": "Showcase Stats (no heading) label for translators"
+  },
+  "showcase.statsNoHeading.dependencies.label": {
+    "message": "Závislosti",
+    "description": "Showcase Stats (no heading) label for dependencies"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "Dílčí nástroje",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.coldStart.label": {
+    "message": "Studený start",
+    "description": "Showcase Stats (no heading) label for cold start"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (s kódem)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Rychlý start",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Tři příkazy vás dovedou od nuly k funkčnímu přenosu.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (s textem)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Jak to funguje",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Envoy načte váš přenosový manifest, inicializuje Cipher pro autentizaci, zkompiluje transformační pravidla Parcel a zaregistruje trasy Dispatch. Zprávy projdou pipelinou za méně než pět milisekund.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (s popisem)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Depeše z Relay Room",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Poznámky k vydání, hloubkové rozbory integrací a občasná depeše z přenosové centrály.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Co se stane, když webhook selže ve 3 ráno",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Glassboard spustil upozornění ve 3:47 ráno. Webhook do Canary tiše selhal. Nikdo se neprobudil. Právě tenhle problém dal vzniknout Envoy.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Logika opakování je těžší, než si myslíte",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Naivní opakování je snadné. Spolehlivé opakování pod zátěží — s backoffem, jitterem a dead-letter frontami — je úplně jiná disciplína.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Kontejner o velikosti 3 MB, který nahradil celou naši integrační vrstvu",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Dvanáct služeb, devět cron jobů a sdílená databáze — to vše nahradil jediný obraz Vial o velikosti 3 MB.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (bez popisu)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Nedávné depeše",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Envoy 2.2: Fanout směrování a export Ledgeru",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Dispatch nyní podporuje fanout do více cílů z jediného přenosu. Záznamy Ledgeru lze exportovat na libovolný Spoke endpoint podle konfigurovatelného plánu.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (použití v textu)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Envoy používá ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.relayManifest.title": {
+    "message": "deklarační soubor přenosové pipeline",
+    "description": "Showcase Terminology hover title for relay manifest"
+  },
+  "showcase.terminology.relayManifest.label": {
+    "message": "přenosový manifest",
+    "description": "Showcase Terminology displayed text for relay manifest"
+  },
+  "showcase.terminology.paragraph1.afterRelay": {
+    "message": " k definici každé integrační pipeline. Každá příchozí zpráva se ověřuje bránou ",
+    "description": "Showcase Terminology paragraph 1 fragment after relay manifest"
+  },
+  "showcase.terminology.cipher.title": {
+    "message": "autentizační brána",
+    "description": "Showcase Terminology hover title for Cipher"
+  },
+  "showcase.terminology.paragraph1.afterCipher": {
+    "message": ", než dorazí do fáze transformace. Když doručení selže, engine ",
+    "description": "Showcase Terminology paragraph 1 fragment after Cipher"
+  },
+  "showcase.terminology.courier.title": {
+    "message": "engine pro opakování se zárukou doručení",
+    "description": "Showcase Terminology hover title for Courier"
+  },
+  "showcase.terminology.paragraph1.afterCourier": {
+    "message": " se automaticky postará o opakování.",
+    "description": "Showcase Terminology paragraph 1 fragment after Courier"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Díky pipeline ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.parcel.title": {
+    "message": "pipeline pro transformaci payloadů",
+    "description": "Showcase Terminology hover title for Parcel"
+  },
+  "showcase.terminology.paragraph2.afterParcel": {
+    "message": " se zdroje a cíle nikdy nemusí shodnout na formátu. ",
+    "description": "Showcase Terminology paragraph 2 fragment after Parcel"
+  },
+  "showcase.terminology.dispatch.title": {
+    "message": "inteligentní směrovací engine",
+    "description": "Showcase Terminology hover title for Dispatch"
+  },
+  "showcase.terminology.paragraph2.afterDispatch": {
+    "message": " se stará o směrování a ",
+    "description": "Showcase Terminology paragraph 2 fragment after Dispatch"
+  },
+  "showcase.terminology.ledger.title": {
+    "message": "auditní stopa typu append-only",
+    "description": "Showcase Terminology hover title for Ledger"
+  },
+  "showcase.terminology.paragraph2.afterLedger": {
+    "message": " zaznamenává kompletní historii transakcí.",
+    "description": "Showcase Terminology paragraph 2 fragment after Ledger"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (s popiskem)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Logo protažené blokem Frame — obrázek a popisek, bez okolků.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Náhledový obrázek značky Envoy.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (bez popisku)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (oba obchody)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Stáhněte si doprovodnou aplikaci",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (pouze App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Dostupné pro iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (pouze Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Dostupné pro Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (bez popisku)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
-
 import { discoverContentFiles } from '../../../lib/file-discovery.js';
+import { setActiveVitest } from '../active-vitest.js';
 import {
   buildLinkIndex,
   internalBlogAnchorExists,
@@ -41,7 +40,9 @@ import type {
  * @since 0.20.0
  */
 export function registerLinkSuite(config: Rules_Vitest_Link_Register_RegisterLinkSuite_Config): Rules_Vitest_Link_Register_RegisterLinkSuite_Returns {
-  describe('link', async () => {
+  setActiveVitest(config['vitest']);
+
+  config['vitest'].describe('link', async () => {
     const projectRoot: Rules_Vitest_Link_Register_RegisterLinkSuite_Link_ProjectRoot = config['projectRoot'] ?? process.cwd();
     const contentDirs: Rules_Vitest_Link_Register_RegisterLinkSuite_Link_ContentDirs = config['contentDirs'] ?? {
       docs: 'docs',

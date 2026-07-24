@@ -29,6 +29,12 @@ ruleTester.run('noAwaitInLoop', NoAwaitInLoop['rule'], {
     {
       code: 'async function f() { await fetch("/api"); }',
     },
+
+    // Regression: a top-level await (outside any loop) must not crash the enclosing-loop
+    // walk when it reaches the `Program` node, whose parent is `null`.
+    {
+      code: 'await fetch("/api");',
+    },
     {
       code: 'async function f() { for (const item of items) { const fn = async () => { await fetch(item); }; } }',
     },

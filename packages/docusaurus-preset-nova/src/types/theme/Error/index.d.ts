@@ -1,3 +1,4 @@
+import type useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import type { CSSProperties } from 'react';
 
 /**
@@ -21,7 +22,7 @@ export type Theme_Error_Index_Error_Props = {
   [key: string]: unknown;
 };
 
-export type Theme_Error_Index_Error_DocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
+export type Theme_Error_Index_Error_DocusaurusContext = ReturnType<typeof useDocusaurusContext>;
 
 export type Theme_Error_Index_Error_ThemeConfig = Record<string, unknown>;
 

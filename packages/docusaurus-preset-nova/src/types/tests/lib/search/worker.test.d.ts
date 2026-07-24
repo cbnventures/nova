@@ -153,6 +153,13 @@ export type Tests_Lib_Search_Worker_PerformSearchFuzzyDistance_WidensFuzzyMatchi
 export type Tests_Lib_Search_Worker_PerformSearchLimit_CapsResultsAtTheSpecifiedLimit_Index = unknown;
 
 /**
+ * Tests - Lib - Search - Worker - PerformSearch Reserved Syntax - Returns An Empty Array For A Query With Reserved Lunr Syntax Characters.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_Search_Worker_PerformSearchReservedSyntax_ReturnsAnEmptyArrayForAQueryWithReservedLunrSyntaxCharacters_Index = unknown;
+
+/**
  * Tests - Lib - Search - Worker - PerformSearch Score Sorting - Returns Results Sorted By Score Descending.
  *
  * @since 0.15.0

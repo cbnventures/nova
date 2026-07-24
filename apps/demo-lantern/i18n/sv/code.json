@@ -1,0 +1,594 @@
+{
+  "home.layout.description": {
+    "message": "Lantern vakar över hela ditt hus — zoner, rörelse, larma/larma av — utan att någonsin höja rösten.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Lantern - Vaksam, varm, alltid hemma",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Övervakning för hela hemmet",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Vaksam, varm, alltid hemma.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Lantern vakar över hela ditt hus — zoner, rörelse, larma/larma av — utan att någonsin höja rösten. Varje rum, varje dörr, varje stilla stund, varsamt omhändertagna.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Kom igång",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Visa på Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.zones.title": {
+    "message": "Zoner",
+    "description": "Front page Features card title for Zones"
+  },
+  "home.features.zones.description": {
+    "message": "Gruppera enheter efter var de hör hemma — ytterområde, inomhus, sovrum. Larma vilken zon som helst separat. Larma av varsamt, med namn. Lantern höjer aldrig rösten.",
+    "description": "Front page Features card description for Zones"
+  },
+  "home.features.motionEvents.title": {
+    "message": "Rörelsehändelser",
+    "description": "Front page Features card title for Motion Events"
+  },
+  "home.features.motionEvents.description": {
+    "message": "Varje rörelse passerar händelseströmmen med riktning och ett valfritt konfidensintervall. Spela upp igen, filtrera, lämna över till en hubb. Inget tappas bort.",
+    "description": "Front page Features card description for Motion Events"
+  },
+  "home.features.contactSensors.title": {
+    "message": "Kontaktsensorer",
+    "description": "Front page Features card title for Contact Sensors"
+  },
+  "home.features.contactSensors.description": {
+    "message": "Dörr öppnad, fönster på glänt, grind stängd — varje kontakthändelse tidsstämplas och sparas i en stillsam liggare. Bläddra i sensorhistoriken utan att lämna rummet.",
+    "description": "Front page Features card description for Contact Sensors"
+  },
+  "home.features.armDisarm.title": {
+    "message": "Larma / Larma av",
+    "description": "Front page Features card title for Arm / Disarm"
+  },
+  "home.features.armDisarm.description": {
+    "message": "Larma eller larma av per zon, per användare eller per schema. Lämna över kontrollen till någon du litar på — med namn, med lösenfras eller via närvaro på HomeKit Home Hub.",
+    "description": "Front page Features card description for Arm / Disarm"
+  },
+  "home.features.deviceDiscovery.title": {
+    "message": "Enhetsidentifiering",
+    "description": "Front page Features card title for Device Discovery"
+  },
+  "home.features.deviceDiscovery.description": {
+    "message": "Lantern hittar automatiskt varje sensor och kontaktenhet på din hubb. Ingen manuell parkoppling, inga konfigurationsfiler. Den upptäcker det som redan finns.",
+    "description": "Front page Features card description for Device Discovery"
+  },
+  "home.features.sensorHistory.title": {
+    "message": "Sensorhistorik",
+    "description": "Front page Features card title for Sensor History"
+  },
+  "home.features.sensorHistory.description": {
+    "message": "En stillsam liggare över allt som hänt — rörelse, kontakt, larmlägen — sorterad efter zon och tid. Bläddra tillbaka en vecka utan att lämna instrumentpanelen.",
+    "description": "Front page Features card description for Sensor History"
+  },
+  "home.stats.heading": {
+    "message": "I siffror",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.zones.label": {
+    "message": "Standardzoner",
+    "description": "Front page Stats label for default zones count"
+  },
+  "home.stats.configFiles.label": {
+    "message": "Konfigurationsfiler",
+    "description": "Front page Stats label for config files count"
+  },
+  "home.stats.handoff.label": {
+    "message": "Redo för överlämning",
+    "description": "Front page Stats label for handoff readiness"
+  },
+  "home.stats.sensorHistory.label": {
+    "message": "Sensorhistorik",
+    "description": "Front page Stats label for sensor history"
+  },
+  "home.spotlight.heading": {
+    "message": "Varje zon, varsamt omhändertagen",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Beskriv vem som bor var. Lantern vakar över resten.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Hantera dina zoner på språng",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Från verandalampan",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Uppdateringar, mönster och stillsamma noteringar från huset.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Lantern-blockgalleri som visar varje block från docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Varje block från Lantern-förinställningen, återgivet med exempeldata.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (fullständig)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Blockgalleri",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Varje Lantern-block, demonstrerat på ett och samma ställe.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Den här sidan återger varje block från @cbnventures/docusaurus-preset-nova/blocks med data från Lantern-världen så att du kan se hur de ser ut och beter sig.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Läs dokumentationen",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Visa på Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Vaksam, varm, alltid hemma.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Lantern vakar över hela ditt hus — zoner, rörelse, larma/larma av — utan att någonsin höja rösten.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Kom igång",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (standard)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Jag älskar ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (utan prefix)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Snabbt",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Flexibelt",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Gratis",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (långsam takt)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Byggt för ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "utvecklare",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "designer",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (ingen loop)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Välkommen till ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Installera med Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Eller använd Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (utan etikett)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Snabbinstallation",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (med ikoner)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Därför väljer hushåll Lantern",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.zones.title": {
+    "message": "Zoner",
+    "description": "Showcase Features (with icons) card title for Zones"
+  },
+  "showcase.featuresIcons.zones.description": {
+    "message": "Gruppera enheter efter var de hör hemma — ytterområde, inomhus, sovrum. Larma vilken zon som helst separat, larma av varsamt med namn.",
+    "description": "Showcase Features (with icons) card description for Zones"
+  },
+  "showcase.featuresIcons.motionEvents.title": {
+    "message": "Rörelsehändelser",
+    "description": "Showcase Features (with icons) card title for Motion Events"
+  },
+  "showcase.featuresIcons.motionEvents.description": {
+    "message": "Varje rörelse passerar händelseströmmen med riktning och ett valfritt konfidensintervall. Spela upp igen, filtrera, lämna över till en hubb.",
+    "description": "Showcase Features (with icons) card description for Motion Events"
+  },
+  "showcase.featuresIcons.armDisarm.title": {
+    "message": "Larma / Larma av",
+    "description": "Showcase Features (with icons) card title for Arm / Disarm"
+  },
+  "showcase.featuresIcons.armDisarm.description": {
+    "message": "Larma eller larma av per zon, användare eller schema. Lämna över kontrollen till någon du litar på med namn, lösenfras eller HomeKit-närvaro.",
+    "description": "Showcase Features (with icons) card description for Arm / Disarm"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (utan ikoner, utan rubrik)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.contactSensors.title": {
+    "message": "Kontaktsensorer",
+    "description": "Showcase Features (no icons) card title for Contact Sensors"
+  },
+  "showcase.featuresNoIcons.contactSensors.description": {
+    "message": "Dörr öppnad, fönster på glänt, grind stängd — varje kontakthändelse tidsstämplas och sparas i en stillsam liggare.",
+    "description": "Showcase Features (no icons) card description for Contact Sensors"
+  },
+  "showcase.featuresNoIcons.deviceDiscovery.title": {
+    "message": "Enhetsidentifiering",
+    "description": "Showcase Features (no icons) card title for Device Discovery"
+  },
+  "showcase.featuresNoIcons.deviceDiscovery.description": {
+    "message": "Lantern hittar automatiskt varje sensor och kontaktenhet på din hubb. Ingen manuell parkoppling, inga konfigurationsfiler.",
+    "description": "Showcase Features (no icons) card description for Device Discovery"
+  },
+  "showcase.featuresNoIcons.sensorHistory.title": {
+    "message": "Sensorhistorik",
+    "description": "Showcase Features (no icons) card title for Sensor History"
+  },
+  "showcase.featuresNoIcons.sensorHistory.description": {
+    "message": "En stillsam liggare över allt som hänt — rörelse, kontakt, larmlägen — sorterad efter zon och tid.",
+    "description": "Showcase Features (no icons) card description for Sensor History"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (sex objekt, blandade ikoner)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Allt i ett hus",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.zones.title": {
+    "message": "Zoner",
+    "description": "Showcase Features (six items) card title for Zones"
+  },
+  "showcase.featuresSix.zones.description": {
+    "message": "Gruppera efter rum, hall, utomhus eller apparatgrupp. Larma separat. Larma av varsamt med namn.",
+    "description": "Showcase Features (six items) card description for Zones"
+  },
+  "showcase.featuresSix.motionEvents.title": {
+    "message": "Rörelsehändelser",
+    "description": "Showcase Features (six items) card title for Motion Events"
+  },
+  "showcase.featuresSix.motionEvents.description": {
+    "message": "Riktningsbestämd rörelse med valfritt konfidensintervall. Spela upp igen, filtrera och lämna över till en hubb utan att tappa händelser.",
+    "description": "Showcase Features (six items) card description for Motion Events"
+  },
+  "showcase.featuresSix.contactSensors.title": {
+    "message": "Kontaktsensorer",
+    "description": "Showcase Features (six items) card title for Contact Sensors"
+  },
+  "showcase.featuresSix.contactSensors.description": {
+    "message": "Dörr, fönster, grind — varje kontakthändelse tidsstämplas och sparas i sensorhistorikens liggare.",
+    "description": "Showcase Features (six items) card description for Contact Sensors"
+  },
+  "showcase.featuresSix.armDisarm.title": {
+    "message": "Larma / Larma av",
+    "description": "Showcase Features (six items) card title for Arm / Disarm"
+  },
+  "showcase.featuresSix.armDisarm.description": {
+    "message": "Per zon, användare eller schema. Överlämning med namn, lösenfras eller närvaro på HomeKit Home Hub.",
+    "description": "Showcase Features (six items) card description for Arm / Disarm"
+  },
+  "showcase.featuresSix.deviceDiscovery.title": {
+    "message": "Enhetsidentifiering",
+    "description": "Showcase Features (six items) card title for Device Discovery"
+  },
+  "showcase.featuresSix.deviceDiscovery.description": {
+    "message": "Automatisk identifiering av varje sensor och kontaktenhet på din hubb. Ingen manuell parkoppling.",
+    "description": "Showcase Features (six items) card description for Device Discovery"
+  },
+  "showcase.featuresSix.sensorHistory.title": {
+    "message": "Sensorhistorik",
+    "description": "Showcase Features (six items) card title for Sensor History"
+  },
+  "showcase.featuresSix.sensorHistory.description": {
+    "message": "Rörelse-, kontakt- och larmlägen i en stillsam liggare. Bläddra tillbaka en vecka utan att lämna instrumentpanelen.",
+    "description": "Showcase Features (six items) card description for Sensor History"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (med rubrik och beskrivning)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Lantern-mätvärden",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Nyckeltal för en typisk hushållsinstallation med fyra zoner.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.zones.label": {
+    "message": "Standardzoner",
+    "description": "Showcase Stats (full) label for default zones"
+  },
+  "showcase.statsFull.devices.label": {
+    "message": "Upptäckta enheter",
+    "description": "Showcase Stats (full) label for devices discovered"
+  },
+  "showcase.statsFull.handoff.label": {
+    "message": "Redo för överlämning",
+    "description": "Showcase Stats (full) label for handoff readiness"
+  },
+  "showcase.statsFull.configFiles.label": {
+    "message": "Konfigurationsfiler",
+    "description": "Showcase Stats (full) label for config files"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (utan rubrik)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.zones.label": {
+    "message": "Zoner",
+    "description": "Showcase Stats (no heading) label for zones"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "Konfigurationsfiler",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.sensorHistory.label": {
+    "message": "Sensorhistorik",
+    "description": "Showcase Stats (no heading) label for sensor history"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (med kod)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Snabbstart",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Tre kommandon för att gå från noll till ett bevakat hus.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (med text)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Så fungerar det",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Lantern upptäcker varje enhet på din hubb, grupperar dem efter zon och strömmar varje rörelse- och kontakthändelse till händelseloggen. Larmlägen är beständiga — stäng av, slå på, zonen minns.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (med beskrivning)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Från verandalampan",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Uppdateringar, mönster och stillsamma noteringar från huset.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Bevaka från ett annat rum utan att huset märker det",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "En familjemedlem på övervåningen ska veta att ytterdörren är stängd utan att hunden får en avisering. Lantern dirigerar händelser efter mottagare, inte efter händelsetyp.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Sex månaders rörelse vid ytterområdet, i en enda bild",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "En rörelsesensor på verandan löser ut fyrtio gånger om dagen. De flesta av dem är ekorrar. I Lanterns historikvy blir ekorrarna ett mönster.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Lämna över larma/larma av till någon du litar på",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "En betrodd användare kan larma av vilken zon Lantern än bevakar utan din telefon i handen. Med namn, lösenfras eller HomeKit-närvaro.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (utan beskrivning)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Senaste uppdateringarna",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Lantern 2.4: Lens planritningsöverlägg och inkrementella Beacon-körningar",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Lens ritar nu upp hushållets zongraf på en planritning, och Beacon stöder inkrementella körningar som endast omvärderar de sensorer som ändrats.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (inline-användning)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Lantern använder en ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.zone.title": {
+    "message": "namngivet rum, hall eller yttre grupp",
+    "description": "Showcase Terminology hover title for zone"
+  },
+  "showcase.terminology.zone.label": {
+    "message": "zon",
+    "description": "Showcase Terminology displayed text for zone"
+  },
+  "showcase.terminology.paragraph1.afterZone": {
+    "message": " för att gruppera enheter efter var de hör hemma. Varje zon hanteras av ett ",
+    "description": "Showcase Terminology paragraph 1 fragment after zone"
+  },
+  "showcase.terminology.armState.title": {
+    "message": "kontroll för larma/larma av",
+    "description": "Showcase Terminology hover title for arm state"
+  },
+  "showcase.terminology.armState.label": {
+    "message": "larmläge",
+    "description": "Showcase Terminology displayed text for arm state"
+  },
+  "showcase.terminology.paragraph1.afterArmState": {
+    "message": " som består genom strömcykler. När en sensor löser ut passerar händelsen genom ",
+    "description": "Showcase Terminology paragraph 1 fragment after arm state"
+  },
+  "showcase.terminology.eventStream.title": {
+    "message": "aviseringsström i realtid",
+    "description": "Showcase Terminology hover title for event stream"
+  },
+  "showcase.terminology.eventStream.label": {
+    "message": "händelseströmmen",
+    "description": "Showcase Terminology displayed text for event stream"
+  },
+  "showcase.terminology.paragraph1.afterEventStream": {
+    "message": " utan att tappas bort.",
+    "description": "Showcase Terminology paragraph 1 fragment after event stream"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Med ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.handoffSystem.title": {
+    "message": "överlämning till betrodd person",
+    "description": "Showcase Terminology hover title for handoff system"
+  },
+  "showcase.terminology.handoffSystem.label": {
+    "message": "överlämningssystemet",
+    "description": "Showcase Terminology displayed text for handoff system"
+  },
+  "showcase.terminology.paragraph2.afterHandoff": {
+    "message": " delar hushåll kontrollen över ",
+    "description": "Showcase Terminology paragraph 2 fragment after handoff system"
+  },
+  "showcase.terminology.zoneAccess.title": {
+    "message": "åtkomst till att larma/larma av per zon",
+    "description": "Showcase Terminology hover title for zone access"
+  },
+  "showcase.terminology.zoneAccess.label": {
+    "message": "zonåtkomst",
+    "description": "Showcase Terminology displayed text for zone access"
+  },
+  "showcase.terminology.paragraph2.afterZoneAccess": {
+    "message": " och ",
+    "description": "Showcase Terminology paragraph 2 fragment after zone access"
+  },
+  "showcase.terminology.sensorHistory.title": {
+    "message": "historiska sensordata",
+    "description": "Showcase Terminology hover title for sensor history"
+  },
+  "showcase.terminology.sensorHistory.label": {
+    "message": "sensorhistorik",
+    "description": "Showcase Terminology displayed text for sensor history"
+  },
+  "showcase.terminology.paragraph2.afterSensorHistory": {
+    "message": " utan att utbyta inloggningsuppgifter.",
+    "description": "Showcase Terminology paragraph 2 fragment after sensor history"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (med bildtext)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Varumärkessymbol som glöder inuti en Frame — varmt papperskort med figur + bildtext.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Miniatyrbild av Lanterns varumärke.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (utan bildtext)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (båda butikerna)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Ladda ner den medföljande appen",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (endast App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Tillgänglig för iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (endast Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Tillgänglig för Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (utan etikett)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} min att läsa",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

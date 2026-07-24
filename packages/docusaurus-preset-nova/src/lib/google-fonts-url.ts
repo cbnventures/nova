@@ -15,6 +15,14 @@ import type {
   Lib_GoogleFontsUrl_BuildGoogleFontsUrl_SpacePattern,
 } from '../types/lib/google-fonts-url.d.ts';
 
+/**
+ * Lib - Google Fonts URL - Base URL.
+ *
+ * Base endpoint for the Google Fonts CSS API version two, used as the
+ * origin for every generated stylesheet URL.
+ *
+ * @since 0.21.0
+ */
 const baseUrl: Lib_GoogleFontsUrl_BaseUrl = 'https://fonts.googleapis.com/css2';
 
 /**
@@ -34,6 +42,20 @@ const baseUrl: Lib_GoogleFontsUrl_BaseUrl = 'https://fonts.googleapis.com/css2';
 export function buildGoogleFontsUrl(families: Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Families, display: Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Display): Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Returns {
   const spacePattern: Lib_GoogleFontsUrl_BuildGoogleFontsUrl_SpacePattern = new RegExp(LIB_REGEX_CHARACTER_SPACE.source, 'g');
 
+  /**
+   * Lib - Google Fonts URL - Build Google Fonts URL - Build Family Part.
+   *
+   * Builds a single `family=<name>:<axis>` query segment for one font
+   * family, URL-encoding spaces in the family name before joining.
+   *
+   * @param {Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Family} family - Family.
+   *
+   * @private
+   *
+   * @returns {Lib_GoogleFontsUrl_BuildGoogleFontsUrl_BuildFamilyPart_Returns}
+   *
+   * @since 0.21.0
+   */
   const buildFamilyPart: Lib_GoogleFontsUrl_BuildGoogleFontsUrl_BuildFamilyPart = (family: Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Family): Lib_GoogleFontsUrl_BuildGoogleFontsUrl_BuildFamilyPart_Returns => {
     const encodedName: Lib_GoogleFontsUrl_BuildGoogleFontsUrl_BuildFamilyPart_EncodedName = family['name'].replace(spacePattern, '+');
 

@@ -54,8 +54,6 @@ function TocList(items: Theme_Toc_Index_ListItems) {
  *
  * @param {Theme_Toc_Index_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function TOC(props: Theme_Toc_Index_Props) {

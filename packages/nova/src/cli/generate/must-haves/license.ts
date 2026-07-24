@@ -1,5 +1,5 @@
-import { promises as fs } from 'fs';
-import { join } from 'path';
+import { promises as fs } from 'node:fs';
+import { join } from 'node:path';
 
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
@@ -111,9 +111,13 @@ export class Runner {
       purpose: 'license',
     }).info(`Using license from nova.config.json: ${licenseId}`);
 
+    // The holder and year range are inserted through function replacers so any "$" sequence in
+    // the value (such as "$&", "$`", "$'", "$$", or "$1") is written literally instead of being
+    // interpreted as a replacement-string metacharacter. This keeps generated and refreshed
+    // LICENSE files byte-identical so the update-copyright recipe recognizes its own output.
     const content: Cli_Generate_MustHaves_License_Runner_Run_Content = (await fs.readFile(join(resolveTemplatePath(import.meta.url, 'generators/must-haves/license'), licenseId), 'utf-8'))
-      .replace(new RegExp(LIB_REGEX_PLACEHOLDER_ENTITY_NAME.source, 'g'), entityName)
-      .replace(new RegExp(LIB_REGEX_PLACEHOLDER_YEAR_RANGE.source, 'g'), yearRange);
+      .replace(new RegExp(LIB_REGEX_PLACEHOLDER_ENTITY_NAME.source, 'g'), () => entityName)
+      .replace(new RegExp(LIB_REGEX_PLACEHOLDER_YEAR_RANGE.source, 'g'), () => yearRange);
 
     const targetPath: Cli_Generate_MustHaves_License_Runner_Run_TargetPath = join(currentDirectory, 'LICENSE');
 

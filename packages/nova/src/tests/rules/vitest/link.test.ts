@@ -3,6 +3,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
+import * as vitest from 'vitest';
 import { describe, it } from 'vitest';
 
 import { discoverContentFiles } from '../../../lib/file-discovery.js';
@@ -137,6 +138,7 @@ describe(`link kit helpers${''}`, () => {
 // Enable gating: only the self-anchor check runs, so the broken /docs/ target in broken.md is
 // never validated and the registered suite stays green.
 registerLinkSuite({
+  vitest,
   projectRoot: fixtureRoot,
   contentDirs: { docs: 'docs' },
   enable: ['link-self-anchor-exists'],

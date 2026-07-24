@@ -12,6 +12,16 @@ import Head from '@docusaurus/Head';
 import { translate } from '@docusaurus/Translate';
 import Layout from '@theme/Layout';
 
+/**
+ * Pages - Home.
+ *
+ * Root landing page that composes the hero header, install strip, feature grid,
+ * stats, and blog preview using theme components.
+ *
+ * @constructor
+ *
+ * @since UNRELEASED
+ */
 function Home() {
   return (
     <Layout description={translate({

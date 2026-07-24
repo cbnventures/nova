@@ -20,8 +20,6 @@ import type {
  *
  * @param {Theme_NavbarItem_DocSidebarNavbarItem_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocSidebarNavbarItem(props: Theme_NavbarItem_DocSidebarNavbarItem_Props) {

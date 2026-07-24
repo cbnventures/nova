@@ -17,16 +17,20 @@ import type {
 describe('presetsSamplePresetSample', async () => {
   it('has correct color values', () => {
     deepStrictEqual(presetsSamplePresetSample['colors']['primary'], {
-      light: '#64748b', dark: '#64748b',
+      light: '#64748b',
+      dark: '#64748b',
     });
     deepStrictEqual(presetsSamplePresetSample['colors']['accent'], {
-      light: '#94a3b8', dark: '#94a3b8',
+      light: '#94a3b8',
+      dark: '#94a3b8',
     });
     deepStrictEqual(presetsSamplePresetSample['colors']['text'], {
-      light: '#27272a', dark: '#e4e4e7',
+      light: '#27272a',
+      dark: '#e4e4e7',
     });
     deepStrictEqual(presetsSamplePresetSample['colors']['border'], {
-      light: '#d4d4d8', dark: '#3f3f46',
+      light: '#d4d4d8',
+      dark: '#3f3f46',
     });
 
     return;

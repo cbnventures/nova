@@ -19,8 +19,6 @@ import type {
  *
  * @param {Theme_NavbarItem_DefaultNavbarItem_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DefaultNavbarItem(props: Theme_NavbarItem_DefaultNavbarItem_Props) {

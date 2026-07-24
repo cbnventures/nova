@@ -1,0 +1,602 @@
+{
+  "home.layout.description": {
+    "message": "Marshal is het Departement van Repository-zaken — geautomatiseerd beheer voor projecten die papierwerk boven drama verkiezen.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Marshal - Geregistreerd, verzegeld, geautomatiseerd",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Repositorybeheer",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Geregistreerd, verzegeld, geautomatiseerd.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Marshal is het Departement van Repository-zaken — geautomatiseerd beheer voor projecten die papierwerk boven drama verkiezen. Elk gesprek, elke melding, elk toegangsniveau, netjes op volgorde afgehandeld.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Aan de slag",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Bekijk op Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.policies.title": {
+    "message": "Beleidsregels",
+    "description": "Front page Features card title for Policies"
+  },
+  "home.features.policies.description": {
+    "message": "Schrijf een YAML-blok dat beschrijft hoe Marshal een categorie gebeurtenissen afhandelt — slapende gesprekken, achterstallige PR's, ondersteuning per niveau. Marshal leest alleen wat geregistreerd is en stempelt alleen wat verzegeld is.",
+    "description": "Front page Features card description for Policies"
+  },
+  "home.features.dockets.title": {
+    "message": "Registers",
+    "description": "Front page Features card title for Dockets"
+  },
+  "home.features.dockets.description": {
+    "message": "Elke handeling van Marshal schrijft een regel in het openbare register. Gesloten gesprekken, gestempelde goedkeuringen, geplande doorschuivingen — alles uitsluitend aanvullend, alles zichtbaar, niets ingetrokken.",
+    "description": "Front page Features card description for Dockets"
+  },
+  "home.features.accessTiers.title": {
+    "message": "Toegangsniveaus",
+    "description": "Front page Features card title for Access Tiers"
+  },
+  "home.features.accessTiers.description": {
+    "message": "Verdeel binnenkomend werk naar sponsor, bijdrager of publiek. Het etiket wordt gestempeld, niet onderhandeld. Elke toewijzing wordt in het register vastgelegd.",
+    "description": "Front page Features card description for Access Tiers"
+  },
+  "home.features.scheduledStewardship.title": {
+    "message": "Gepland beheer",
+    "description": "Front page Features card title for Scheduled Stewardship"
+  },
+  "home.features.scheduledStewardship.description": {
+    "message": "Draai opschoningen, controles en doorschuivingen via een cron. Marshal handelt op het hele uur, legt een verslag vast en gaat door. Niets blijft liggen tot een mens eraan denkt.",
+    "description": "Front page Features card description for Scheduled Stewardship"
+  },
+  "home.features.threadArchival.title": {
+    "message": "Gespreksarchivering",
+    "description": "Front page Features card title for Thread Archival"
+  },
+  "home.features.threadArchival.description": {
+    "message": "Sluit en verzegel gesprekken die N dagen inactief zijn — elk met een papierspoor. Elk verzegeld gesprek vermeldt de reden voor archivering en een weg naar heropening.",
+    "description": "Front page Features card description for Thread Archival"
+  },
+  "home.features.automatedStamps.title": {
+    "message": "Geautomatiseerde stempels",
+    "description": "Front page Features card title for Automated Stamps"
+  },
+  "home.features.automatedStamps.description": {
+    "message": "Marshal handelt onder een doorlopende machtiging. Elke handeling draagt een tijdstempel, een verantwoordelijke opsteller en een verwijzing naar de beleidsregel die eraan ten grondslag lag.",
+    "description": "Front page Features card description for Automated Stamps"
+  },
+  "home.stats.heading": {
+    "message": "In cijfers",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manualClosures.label": {
+    "message": "Handmatige sluitingen",
+    "description": "Front page Stats label for manual closures count"
+  },
+  "home.stats.policyFile.label": {
+    "message": "Beleidsbestand",
+    "description": "Front page Stats label for policy file count"
+  },
+  "home.stats.docketEntries.label": {
+    "message": "Registervermeldingen",
+    "description": "Front page Stats label for docket entries count"
+  },
+  "home.stats.accessTiers.label": {
+    "message": "Toegangsniveaus",
+    "description": "Front page Stats label for access tiers count"
+  },
+  "home.spotlight.heading": {
+    "message": "Eén beleidsbestand, alles gestempeld",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Beschrijf de regels. Marshal verzorgt het papierwerk.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Raadpleeg uw register onderweg",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Berichten van het Departement",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Beleidsregels geregistreerd, registers gestempeld, beheer vastgelegd.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Marshal block-showcase die elk block uit docusaurus-preset-nova demonstreert.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Elk block uit het Marshal-preset, weergegeven met voorbeeldgegevens.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (volledig)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Block-showcase",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Elk Marshal-block, op één plek gedemonstreerd.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Deze pagina geeft elk block uit @cbnventures/docusaurus-preset-nova/blocks weer met data uit de Marshal-wereld, zodat u ziet hoe ze eruitzien en zich gedragen.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Lees de docs",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Bekijk op Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (minimaal)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Geregistreerd, verzegeld, geautomatiseerd.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Marshal is het Departement van Repository-zaken — geautomatiseerd beheer voor projecten die papierwerk boven drama verkiezen.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Aan de slag",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (standaard)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Ik hou van ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (geen prefix)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Snel",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Flexibel",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Gratis",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (langzame timing)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Gebouwd voor ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "ontwikkelaars",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "ontwerpers",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (geen loop)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Welkom bij ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Installeer met Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Of gebruik de Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (geen label)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Snelle installatie",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (met iconen)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Waarom repositories voor Marshal kiezen",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.policies.title": {
+    "message": "Beleidsregels",
+    "description": "Showcase Features (with icons) card title for Policies"
+  },
+  "showcase.featuresIcons.policies.description": {
+    "message": "Schrijf een YAML-blok dat beschrijft hoe Marshal een categorie gebeurtenissen afhandelt. Marshal leest alleen wat geregistreerd is en stempelt alleen wat verzegeld is.",
+    "description": "Showcase Features (with icons) card description for Policies"
+  },
+  "showcase.featuresIcons.dockets.title": {
+    "message": "Registers",
+    "description": "Showcase Features (with icons) card title for Dockets"
+  },
+  "showcase.featuresIcons.dockets.description": {
+    "message": "Elke handeling van Marshal schrijft een regel in het openbare register. Gesloten gesprekken, gestempelde goedkeuringen, geplande doorschuivingen — alles uitsluitend aanvullend.",
+    "description": "Showcase Features (with icons) card description for Dockets"
+  },
+  "showcase.featuresIcons.accessTiers.title": {
+    "message": "Toegangsniveaus",
+    "description": "Showcase Features (with icons) card title for Access Tiers"
+  },
+  "showcase.featuresIcons.accessTiers.description": {
+    "message": "Verdeel binnenkomend werk naar sponsor, bijdrager of publiek. Het etiket wordt gestempeld, niet onderhandeld.",
+    "description": "Showcase Features (with icons) card description for Access Tiers"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (zonder iconen, zonder kop)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.title": {
+    "message": "Gepland beheer",
+    "description": "Showcase Features (no icons) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.description": {
+    "message": "Draai opschoningen, controles en doorschuivingen via een cron. Marshal handelt op het hele uur en legt een verslag vast.",
+    "description": "Showcase Features (no icons) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.threadArchival.title": {
+    "message": "Gespreksarchivering",
+    "description": "Showcase Features (no icons) card title for Thread Archival"
+  },
+  "showcase.featuresNoIcons.threadArchival.description": {
+    "message": "Sluit en verzegel gesprekken die N dagen inactief zijn — elk met een papierspoor en een weg naar heropening.",
+    "description": "Showcase Features (no icons) card description for Thread Archival"
+  },
+  "showcase.featuresNoIcons.automatedStamps.title": {
+    "message": "Geautomatiseerde stempels",
+    "description": "Showcase Features (no icons) card title for Automated Stamps"
+  },
+  "showcase.featuresNoIcons.automatedStamps.description": {
+    "message": "Elke handeling draagt een tijdstempel, een verantwoordelijke opsteller en een verwijzing naar de beleidsregel die eraan ten grondslag lag.",
+    "description": "Showcase Features (no icons) card description for Automated Stamps"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (zes items, gemengde iconen)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Alles in één departement",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.policies.title": {
+    "message": "Beleidsregels",
+    "description": "Showcase Features (six items) card title for Policies"
+  },
+  "showcase.featuresSix.policies.description": {
+    "message": "Beschrijf de regels in YAML. Marshal leest, handelt en registreert. Er wordt niets onderhandeld tijdens runtime.",
+    "description": "Showcase Features (six items) card description for Policies"
+  },
+  "showcase.featuresSix.dockets.title": {
+    "message": "Registers",
+    "description": "Showcase Features (six items) card title for Dockets"
+  },
+  "showcase.featuresSix.dockets.description": {
+    "message": "Openbaar register van elke handeling, uitsluitend aanvullend. Gesloten gesprekken, toewijzingsbeslissingen, geplande rondes — alles gestempeld.",
+    "description": "Showcase Features (six items) card description for Dockets"
+  },
+  "showcase.featuresSix.accessTiers.title": {
+    "message": "Toegangsniveaus",
+    "description": "Showcase Features (six items) card title for Access Tiers"
+  },
+  "showcase.featuresSix.accessTiers.description": {
+    "message": "Sponsor, bijdrager, publiek — drie niveaus, één wachtrij, één griffier. Het etiket wordt bij ontvangst toegekend.",
+    "description": "Showcase Features (six items) card description for Access Tiers"
+  },
+  "showcase.featuresSix.scheduledStewardship.title": {
+    "message": "Gepland beheer",
+    "description": "Showcase Features (six items) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.scheduledStewardship.description": {
+    "message": "Cron-gestuurde opschoningen en controles. Marshal handelt volgens schema en wacht niet tot een mens eraan denkt.",
+    "description": "Showcase Features (six items) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.threadArchival.title": {
+    "message": "Gespreksarchivering",
+    "description": "Showcase Features (six items) card title for Thread Archival"
+  },
+  "showcase.featuresSix.threadArchival.description": {
+    "message": "Inactieve gesprekken worden krachtens beleidsregel gesloten en verzegeld, met een gestempelde kennisgeving en een weg naar heropening bij elke zaak.",
+    "description": "Showcase Features (six items) card description for Thread Archival"
+  },
+  "showcase.featuresSix.automatedStamps.title": {
+    "message": "Geautomatiseerde stempels",
+    "description": "Showcase Features (six items) card title for Automated Stamps"
+  },
+  "showcase.featuresSix.automatedStamps.description": {
+    "message": "Elke Marshal-handeling verwijst naar de beleidsregel die haar heeft gemachtigd. De machtiging wordt vastgelegd vóór de handeling.",
+    "description": "Showcase Features (six items) card description for Automated Stamps"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (met kop en beschrijving)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Marshal-cijfers",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Kerncijfers over een typische beheercyclus van een repository.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.threadsArchived.label": {
+    "message": "Gearchiveerde gesprekken",
+    "description": "Showcase Stats (full) label for threads archived"
+  },
+  "showcase.statsFull.accessTiers.label": {
+    "message": "Toegangsniveaus",
+    "description": "Showcase Stats (full) label for access tiers"
+  },
+  "showcase.statsFull.manualClosures.label": {
+    "message": "Handmatige sluitingen",
+    "description": "Showcase Stats (full) label for manual closures"
+  },
+  "showcase.statsFull.policyFile.label": {
+    "message": "Beleidsbestand",
+    "description": "Showcase Stats (full) label for policy file"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (zonder kop)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.policyFile.label": {
+    "message": "Beleidsbestand",
+    "description": "Showcase Stats (no heading) label for policy file"
+  },
+  "showcase.statsNoHeading.manualActions.label": {
+    "message": "Handmatige handelingen",
+    "description": "Showcase Stats (no heading) label for manual actions"
+  },
+  "showcase.statsNoHeading.docketEntries.label": {
+    "message": "Registervermeldingen",
+    "description": "Showcase Stats (no heading) label for docket entries"
+  },
+  "showcase.statsNoHeading.accessTiers.label": {
+    "message": "Toegangsniveaus",
+    "description": "Showcase Stats (no heading) label for access tiers"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (met code)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Snel starten",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Drie commando's om van nul naar een beheerde repository te gaan.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (met tekst)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Hoe het werkt",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Marshal leest uw beleidsbestand, plaatst elke toepasselijke workflow in de wachtrij op het volgende hele uur en stempelt een registervermelding voor elke uitgevoerde handeling. Het register is uitsluitend aanvullend. Niets wordt stilzwijgend gesloten.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (met beschrijving)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Berichten van het Departement",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Beleidsregels geregistreerd, registers gestempeld, beheer vastgelegd.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Het onregistreerbare registreren",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Sommig binnenkomend werk valt onder geen enkele beleidsregel. Een verkeerd ingediende bug, een verzoek van buiten het niveausysteem, een duplicaat van een duplicaat. Marshal registreert ze onder ongeclassificeerd.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Een jaar aan slapende gesprekken, gearchiveerd in één middag",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "De repository had 2.184 issues ouder dan een jaar. Marshal sloot en verzegelde er 2.108 in één nachtelijke ronde.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Drie ondersteuningsniveaus, één wachtrij, één griffier",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Marshal verdeelt binnenkomende ondersteuningsmeldingen nu op toegangsniveau in één wachtrij met drie etiketten. Het etiket wordt gestempeld, niet onderhandeld.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (zonder beschrijving)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Recente berichten",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Marshal 2.4: autofix-niveaus voor de Controleur en afhankelijkheidsgrafieken voor de Griffier",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "De Controleur past nu automatische correcties toe op de niveaus voor conventies en opmaak, en de Griffier tekent een afhankelijkheidsgrafiek over alle registers in de workspace.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (inline gebruik)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Marshal gebruikt een ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.policy.title": {
+    "message": "geschreven regel over hoe Marshal een categorie gebeurtenissen afhandelt",
+    "description": "Showcase Terminology hover title for policy"
+  },
+  "showcase.terminology.policy.label": {
+    "message": "beleidsregel",
+    "description": "Showcase Terminology displayed text for policy"
+  },
+  "showcase.terminology.paragraph1.afterPolicy": {
+    "message": " om zijn handelingen op een repository te sturen. Elke handeling wordt vastgelegd in het ",
+    "description": "Showcase Terminology paragraph 1 fragment after policy"
+  },
+  "showcase.terminology.docket.title": {
+    "message": "uitsluitend aanvullend openbaar register van elke uitgevoerde handeling",
+    "description": "Showcase Terminology hover title for docket"
+  },
+  "showcase.terminology.docket.label": {
+    "message": "register",
+    "description": "Showcase Terminology displayed text for docket"
+  },
+  "showcase.terminology.paragraph1.afterDocket": {
+    "message": ", waar elke vermelding een ",
+    "description": "Showcase Terminology paragraph 1 fragment after docket"
+  },
+  "showcase.terminology.stamp.title": {
+    "message": "van een tijdstempel voorzien machtigingsmerk dat op een voltooide handeling wordt aangebracht",
+    "description": "Showcase Terminology hover title for stamp"
+  },
+  "showcase.terminology.stamp.label": {
+    "message": "stempel",
+    "description": "Showcase Terminology displayed text for stamp"
+  },
+  "showcase.terminology.paragraph1.afterStamp": {
+    "message": " draagt die verwijst naar de beleidsregel die de handeling machtigde.",
+    "description": "Showcase Terminology paragraph 1 fragment after stamp"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Binnenkomend werk wordt gerouteerd op basis van ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.accessTier.title": {
+    "message": "classificatie van binnenkomend werk op basis van sponsor- of bijdragestatus",
+    "description": "Showcase Terminology hover title for access tier"
+  },
+  "showcase.terminology.accessTier.label": {
+    "message": "toegangsniveau",
+    "description": "Showcase Terminology displayed text for access tier"
+  },
+  "showcase.terminology.paragraph2.afterAccessTier": {
+    "message": " naar de ",
+    "description": "Showcase Terminology paragraph 2 fragment after access tier"
+  },
+  "showcase.terminology.queue.title": {
+    "message": "enkele geordende lijst van al het binnenkomende werk",
+    "description": "Showcase Terminology hover title for queue"
+  },
+  "showcase.terminology.queue.label": {
+    "message": "wachtrij",
+    "description": "Showcase Terminology displayed text for queue"
+  },
+  "showcase.terminology.paragraph2.afterQueue": {
+    "message": ". Inactieve gesprekken worden gesloten door ",
+    "description": "Showcase Terminology paragraph 2 fragment after queue"
+  },
+  "showcase.terminology.threadArchival.title": {
+    "message": "beleidsgestuurde sluiting van gesprekken die langer dan een drempel inactief zijn",
+    "description": "Showcase Terminology hover title for thread archival"
+  },
+  "showcase.terminology.threadArchival.label": {
+    "message": "gespreksarchivering",
+    "description": "Showcase Terminology displayed text for thread archival"
+  },
+  "showcase.terminology.paragraph2.afterThreadArchival": {
+    "message": ", met een papierspoor bij elke zaak.",
+    "description": "Showcase Terminology paragraph 2 fragment after thread archival"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (met bijschrift)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Merkteken gearchiveerd in een Frame-block, klaar voor verwijzing.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Miniatuur van het Marshal-merk.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (geen bijschrift)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (beide stores)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Download de bijbehorende app",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (alleen App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Beschikbaar op iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (alleen Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Beschikbaar op Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (geen label)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} min leestijd",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

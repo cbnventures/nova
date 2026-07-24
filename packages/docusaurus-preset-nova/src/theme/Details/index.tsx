@@ -30,8 +30,6 @@ import type {
  *
  * @param {Theme_Details_Index_Details_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function Details(props: Theme_Details_Index_Details_Props): Theme_Details_Index_Details_Returns {

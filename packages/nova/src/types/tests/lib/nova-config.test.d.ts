@@ -1,3 +1,5 @@
+import type { vi } from 'vitest';
+
 import type { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 
 import type {
@@ -6,10 +8,10 @@ import type {
   Shared_NovaConfig_Github_Features,
   Shared_NovaConfig_Github_Policies,
   Shared_NovaConfig_Github_Policies_MergeMethods,
-  Shared_NovaConfig_Github_Recipes,
   Shared_NovaConfig_Github_Topics,
   Shared_NovaConfig_Project,
   Shared_NovaConfig_Project_Name,
+  Shared_NovaConfig_Recipes,
   Shared_NovaConfig_Urls,
   Shared_NovaConfig_Workflows,
   Shared_NovaConfig_Workspaces,
@@ -17,8 +19,271 @@ import type {
   Shared_NovaConfigEntity,
   Shared_NovaConfigWorkflow,
   Shared_NovaConfigWorkspace,
-  Shared_NovaConfigWorkspace_Recipes,
 } from '../../shared.d.ts';
+
+import type { Toolkit_Logger_Runner_Customize_Returns } from '../../toolkit/logger.d.ts';
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_OriginalCwd = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_TemporaryDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_SandboxPrefix = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_SandboxRoot = string;
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAKeyStartsWithItsOwnPrefix.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAnAppGroupOmitsItsPrefix.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppGroupOmitsItsPrefix_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppGroupOmitsItsPrefix_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppGroupOmitsItsPrefix_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppGroupOmitsItsPrefix_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAnAppPathMatchesNoWorkspace.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_Loaded = Shared_NovaConfigConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAnAppValueOmitsTheSecretFlag.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheSecretFlag_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheSecretFlag_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheSecretFlag_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheSecretFlag_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAResolvedNameBreaksGitHubNameFormat.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAResolvedNameBreaksGitHubNameFormat_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAResolvedNameBreaksGitHubNameFormat_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAResolvedNameBreaksGitHubNameFormat_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAResolvedNameBreaksGitHubNameFormat_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenASecretValueCarriesADefaultValue.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenTwoPrefixesOverlap.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenTwoWorkflowsShareTheReferencedName.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - WarnsWhenABrowserExposedKeyIsMarkedSecret.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_WarnsWhenABrowserExposedKeyIsMarkedSecret_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_WarnsWhenABrowserExposedKeyIsMarkedSecret_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_WarnsWhenABrowserExposedKeyIsMarkedSecret_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_WarnsWhenABrowserExposedKeyIsMarkedSecret_Warnings = string[];
 
 /**
  * Tests - Lib - Nova Config - ParseGithubViaLoad.
@@ -102,8 +367,6 @@ export type Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAll
 export type Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
 
 export type Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_LoadedGithub = Shared_NovaConfig_Github | undefined;
-
-export type Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_LoadedRecipes = Shared_NovaConfig_Github_Recipes | undefined;
 
 export type Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_LoadedTopics = Shared_NovaConfig_Github_Topics | undefined;
 
@@ -387,75 +650,6 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigConstructor_CreatesInstanceWith
 export type Tests_Lib_NovaConfig_SharedNovaConfigConstructor_InstanceHasExpectedPublicMethods_Config = LibNovaConfig;
 
 /**
- * Tests - Lib - Nova Config - SharedNovaConfigDotenv.
- *
- * @since 0.20.0
- */
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_OriginalCwd = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_TemporaryDirectory = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_SandboxPrefix = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_SandboxRoot = string;
-
-/**
- * Tests - Lib - Nova Config - SharedNovaConfigDotenv - DropsInvalidKeysAndDefaultsMissingValues.
- *
- * @since 0.20.0
- */
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ProjectDirectory = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ConfigPath = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ConfigContents = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_Config = LibNovaConfig;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
-
-/**
- * Tests - Lib - Nova Config - SharedNovaConfigDotenv - RejectsReservedKeys.
- *
- * @since 0.20.0
- */
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ProjectDirectory = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ConfigPath = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ConfigContents = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock = {
-  debug: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Debug;
-  dev: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Dev;
-  info: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Info;
-  warn: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Warn;
-  error: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock_Error;
-};
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_LoggerCustomizeReturn = import('../../toolkit/logger.d.ts').Toolkit_Logger_Runner_Customize_Returns;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_Config = LibNovaConfig;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedWarnCalls = unknown[][];
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_HasReservedKeyWarning = boolean;
-
-/**
  * Tests - Lib - Nova Config - SharedNovaConfigGithubIssueTemplate.
  *
  * @since 0.20.0
@@ -737,6 +931,23 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNam
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNameFromWorkspaceConfig_CoreWorkspace = Shared_NovaConfigWorkspace | undefined;
 
 /**
+ * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadDropsMalformedEntriesInTheUnifiedRecipesBlock.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_Loaded = Pick<Shared_NovaConfigConfig, 'recipes'>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_Recipes = Shared_NovaConfig_Recipes | undefined;
+
+/**
  * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadFiltersInvalidEmailFormat.
  *
  * @since 0.13.0
@@ -792,27 +1003,6 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersInvalidPlatform
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersInvalidPlatformEntries_LoadedProject = Shared_NovaConfig_Project | undefined;
 
 /**
- * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadFiltersNonBooleanRecipeSettings.
- *
- * @since 0.13.0
- */
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_ProjectDirectory = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_ConfigPath = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_ConfigContents = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_Config = LibNovaConfig;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_LoadedWorkspaces = Shared_NovaConfig_Workspaces | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_RootWorkspace = Shared_NovaConfigWorkspace | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_RootRecipes = Shared_NovaConfigWorkspace_Recipes | undefined;
-
-/**
  * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadHandlesNonObjectConfigGracefully.
  *
  * @since 0.13.0
@@ -824,50 +1014,6 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadHandlesNonObjectConfig
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadHandlesNonObjectConfigGracefully_Config = LibNovaConfig;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadHandlesNonObjectConfigGracefully_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
-
-/**
- * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadIgnoresInvalidRecipeTuples.
- *
- * @since 0.13.0
- */
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_ProjectDirectory = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_ConfigPath = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_ConfigContents = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_Config = LibNovaConfig;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_LoadedWorkspaces = Shared_NovaConfig_Workspaces | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_RootWorkspace = Shared_NovaConfigWorkspace | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_RootRecipes = Shared_NovaConfigWorkspace_Recipes | undefined;
-
-/**
- * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadIgnoresUnknownRecipeNames.
- *
- * @since 0.13.0
- */
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_ProjectDirectory = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_ConfigPath = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_ConfigContents = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_Config = LibNovaConfig;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_LoadedWorkspaces = Shared_NovaConfig_Workspaces | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_RootWorkspace = Shared_NovaConfigWorkspace | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_RootRecipes = Shared_NovaConfigWorkspace_Recipes | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_RecipeKeys = string[];
 
 /**
  * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadParsesDisplayNameFromWorkspaceConfig.
@@ -891,27 +1037,21 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromW
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_CoreWorkspace = Shared_NovaConfigWorkspace | undefined;
 
 /**
- * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadParsesRecipesFromWorkspaceConfig.
+ * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadParsesTheUnifiedRecipesBlock.
  *
- * @since 0.13.0
+ * @since 0.21.0
  */
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_ProjectDirectory = string;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_ProjectDirectory = string;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_ConfigPath = string;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_ConfigPath = string;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_ConfigContents = string;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_ConfigContents = string;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_Config = LibNovaConfig;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_Config = LibNovaConfig;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_Loaded = Pick<Shared_NovaConfigConfig, 'recipes'>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_LoadedWorkspaces = Shared_NovaConfig_Workspaces | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_RootWorkspace = Shared_NovaConfigWorkspace | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_CoreWorkspace = Shared_NovaConfigWorkspace | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_RootRecipes = Shared_NovaConfigWorkspace_Recipes | undefined;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_Recipes = Shared_NovaConfig_Recipes | undefined;
 
 /**
  * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadReadsConfigFromFilesystem.
@@ -990,15 +1130,15 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithIn
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_ConfigContents = string;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Debug = ReturnType<typeof vi['fn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Dev = ReturnType<typeof vi['fn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Info = ReturnType<typeof vi['fn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Warn = ReturnType<typeof vi['fn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Error = ReturnType<typeof vi['fn']>;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock = {
   debug: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Debug;
@@ -1008,9 +1148,9 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithIn
   error: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_CustomizedLoggerMock_Error;
 };
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_LoggerCustomizeSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_LoggerCustomizeReturn = import('../../toolkit/logger.d.ts').Toolkit_Logger_Runner_Customize_Returns;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_LoggerCustomizeReturn = Toolkit_Logger_Runner_Customize_Returns;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithInvalidRole_Config = LibNovaConfig;
 
@@ -1031,15 +1171,15 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMi
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_ConfigContents = string;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Debug = ReturnType<typeof vi['fn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Dev = ReturnType<typeof vi['fn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Info = ReturnType<typeof vi['fn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Warn = ReturnType<typeof vi['fn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Error = ReturnType<typeof vi['fn']>;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock = {
   debug: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Debug;
@@ -1049,9 +1189,9 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMi
   error: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_CustomizedLoggerMock_Error;
 };
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_LoggerCustomizeSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_LoggerCustomizeReturn = import('../../toolkit/logger.d.ts').Toolkit_Logger_Runner_Customize_Returns;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_LoggerCustomizeReturn = Toolkit_Logger_Runner_Customize_Returns;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingPolicy_Config = LibNovaConfig;
 
@@ -1072,15 +1212,15 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMi
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_ConfigContents = string;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Debug = ReturnType<typeof vi['fn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Dev = ReturnType<typeof vi['fn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Info = ReturnType<typeof vi['fn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Warn = ReturnType<typeof vi['fn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Error = ReturnType<typeof vi['fn']>;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock = {
   debug: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Debug;
@@ -1090,9 +1230,9 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMi
   error: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_CustomizedLoggerMock_Error;
 };
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_LoggerCustomizeSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_LoggerCustomizeReturn = import('../../toolkit/logger.d.ts').Toolkit_Logger_Runner_Customize_Returns;
+export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_LoggerCustomizeReturn = Toolkit_Logger_Runner_Customize_Returns;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadRejectsWorkspaceWithMissingRole_Config = LibNovaConfig;
 
@@ -1282,6 +1422,23 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_TemporaryDirectory =
 export type Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SandboxPrefix = string;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SandboxRoot = string;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigSetAndSave - SaveSkipsBackupWhenConfigFileIsMissing.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_FilePath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_FileContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_Parsed = Record<string, unknown>;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_DirectoryEntries = string[];
 
 /**
  * Tests - Lib - Nova Config - SharedNovaConfigSetAndSave - SetAcceptsValidConfigAndSaveWritesFile.

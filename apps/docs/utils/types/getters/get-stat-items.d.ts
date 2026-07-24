@@ -1,4 +1,4 @@
-import type { Dirent } from 'fs';
+import type { Dirent } from 'node:fs';
 
 import type { PagesStatItems } from '@site/src/types/pages/index.d.ts';
 

@@ -76,7 +76,7 @@ export class Runner {
 
           return;
         },
-        ...(options['skipMethods'] === true ? {} : {
+        ...((options['skipMethods'] === true) ? {} : {
           MethodDefinition(node: Rules_Eslint_Conventions_RequireHashPrivate_Runner_Create_MethodDefinition_Node): Rules_Eslint_Conventions_RequireHashPrivate_Runner_Create_MethodDefinition_Returns {
             Runner.checkMember(context, node);
 
@@ -93,10 +93,10 @@ export class Runner {
    * Reports class members that use the private keyword accessibility but do not use a
    * PrivateIdentifier key, prompting migration to #hash syntax.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Context} context - Context.
    * @param {Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Returns}
    *

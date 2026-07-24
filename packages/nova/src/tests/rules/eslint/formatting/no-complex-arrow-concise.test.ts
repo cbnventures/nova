@@ -44,7 +44,9 @@ ruleTester.run('noComplexArrowConcise', NoComplexArrowConcise['rule'], {
     {
       code: 'const names = (items) => items.filter((item) => item.active).map((item) => item.name);',
       options: [{
-        ignoreFiles: ['ignored-file.ts'], maxNestedArrows: 1, maxChainLength: 2,
+        ignoreFiles: ['ignored-file.ts'],
+        maxNestedArrows: 1,
+        maxChainLength: 2,
       }],
       filename: '/path/to/ignored-file.ts',
     },

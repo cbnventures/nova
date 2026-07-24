@@ -62,9 +62,9 @@ export type Tests_Icons_ParseRegisteredIdentifiers_Source = string;
 
 export type Tests_Icons_ParseRegisteredIdentifiers_Returns = string[];
 
-export type Tests_Icons_ParseRegisteredIdentifiers_AddCollectionPrefix = string;
+export type Tests_Icons_ParseRegisteredIdentifiers_RegisterIconsPrefix = string;
 
-export type Tests_Icons_ParseRegisteredIdentifiers_AddCollectionSuffix = string;
+export type Tests_Icons_ParseRegisteredIdentifiers_RegisterIconsSuffix = string;
 
 export type Tests_Icons_ParseRegisteredIdentifiers_Identifiers = string[];
 
@@ -83,6 +83,8 @@ export type Tests_Icons_ParseRegisteredIdentifiers_Collection = {
   icons: Tests_Icons_ParseRegisteredIdentifiers_Collection_Icons;
   aliases?: Tests_Icons_ParseRegisteredIdentifiers_Collection_Aliases;
 };
+
+export type Tests_Icons_ParseRegisteredIdentifiers_Collections = Tests_Icons_ParseRegisteredIdentifiers_Collection[];
 
 export type Tests_Icons_ParseRegisteredIdentifiers_Prefix = string;
 

@@ -45,7 +45,8 @@ ruleTester.run('noScriptUrl', NoScriptUrl['rule'], {
     {
       code: 'const href = "javascript:alert(\'XSS\')";',
       options: [{
-        allowedPatterns: ['javascript:void(0)'], ignoreFiles: ['ignored.ts'],
+        allowedPatterns: ['javascript:void(0)'],
+        ignoreFiles: ['ignored.ts'],
       }],
       filename: '/path/to/ignored.ts',
     },

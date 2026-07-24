@@ -1,8 +1,4 @@
 {
-  "layout.sentinel.title": {
-    "message": "Sentinel",
-    "description": "Title of footer column \"sentinel\""
-  },
   "layout.security.title": {
     "message": "الأمن",
     "description": "Title of footer column \"security\""
@@ -58,9 +54,5 @@
   "cta.label": {
     "message": "هل أنت مستعد لتعزيز دفاعاتك؟",
     "description": "The footer call-to-action link label"
-  },
-  "copyright": {
-    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
-    "description": "The footer copyright text"
   }
 }

@@ -1,3 +1,4 @@
+import type { Runner } from '../../lib/color.js';
 import type {
   Shared_ColorScale,
   Shared_Preset,
@@ -20,13 +21,13 @@ export type Lib_CssGenerator_Runner_Generate_Options = {
 
 export type Lib_CssGenerator_Runner_Generate_Returns = string;
 
-export type Lib_CssGenerator_Runner_Generate_PrimaryLightColor = InstanceType<typeof import('../../lib/color.js').Runner>;
+export type Lib_CssGenerator_Runner_Generate_PrimaryLightColor = InstanceType<typeof Runner>;
 
-export type Lib_CssGenerator_Runner_Generate_PrimaryDarkColor = InstanceType<typeof import('../../lib/color.js').Runner>;
+export type Lib_CssGenerator_Runner_Generate_PrimaryDarkColor = InstanceType<typeof Runner>;
 
-export type Lib_CssGenerator_Runner_Generate_AccentLightColor = InstanceType<typeof import('../../lib/color.js').Runner>;
+export type Lib_CssGenerator_Runner_Generate_AccentLightColor = InstanceType<typeof Runner>;
 
-export type Lib_CssGenerator_Runner_Generate_AccentDarkColor = InstanceType<typeof import('../../lib/color.js').Runner>;
+export type Lib_CssGenerator_Runner_Generate_AccentDarkColor = InstanceType<typeof Runner>;
 
 export type Lib_CssGenerator_Runner_Generate_PrimaryLightScale = Record<50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950, string>;
 

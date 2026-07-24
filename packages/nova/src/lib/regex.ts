@@ -39,6 +39,16 @@ export const LIB_REGEX_CHARACTER_DOLLAR = /\$/;
 export const LIB_REGEX_CHARACTER_DOUBLE_QUOTE = /"/;
 
 /**
+ * Lib - Regex - Character Forward Slash.
+ *
+ * Used by the workflow generator to replace path separators with dashes
+ * when slugifying a working directory into an artifact name.
+ *
+ * @since 0.21.0
+ */
+export const LIB_REGEX_CHARACTER_FORWARD_SLASH = /\//;
+
+/**
  * Lib - Regex - Character Pipe.
  *
  * Used by the markdown table toolkit to escape pipe characters inside cell content
@@ -203,9 +213,9 @@ export const LIB_REGEX_PATTERN_COMPLEX_TYPE_RHS_CHARS = /[|&{}();,]/;
 /**
  * Lib - Regex - Pattern Deprecated Unreleased.
  *
- * Matches a JSDoc `@deprecated UNRELEASED` sentinel on a real comment star line
- * and captures the leading "\n * " prefix. Anchoring to the star line keeps
- * Runner.stampUnreleased from rewriting the token inside string literals or prose.
+ * Matches a JSDoc `@deprecated UNRELEASED` sentinel on a comment
+ * star line and captures the leading "\n * " prefix. Anchoring to the star keeps
+ * stampUnreleased from rewriting the token inside strings or prose.
  *
  * @since 0.20.0
  */
@@ -334,9 +344,9 @@ export const LIB_REGEX_PATTERN_ERROR_PREFIX = /^error:\s*/;
 /**
  * Lib - Regex - Pattern Exact Semver.
  *
- * Matches an exact three-part version pin (`1.2.3`) with no range operator or
- * suffix. Used by Runner.syncPackageReferences to rewrite only exact-pinned
- * dependencies at release time.
+ * Matches an exact three-part version pin (`1.2.3`)
+ * with no range operator or suffix. Used by Runner.syncPackageReferences to
+ * rewrite only exact-pinned dependencies at release time.
  *
  * @since 0.20.0
  */
@@ -603,6 +613,17 @@ export const LIB_REGEX_PATTERN_INDEX_SUFFIX = /\/index$/;
 export const LIB_REGEX_PATTERN_JAVA_VERSION_LINE = /^(?:openjdk|java)\s+(?<javaVersion>\d+(?:\.\d+){0,2})(?:\s+\d{4}-\d{2}-\d{2})?(?:\s+LTS)?[\s\S]*?(?:(?:Runtime Environment|SE Runtime Environment)\s+)?(?:(?<distro>Oracle GraalVM|GraalVM CE|GraalVM|Corretto|Temurin|Zulu|SapMachine|Microsoft|JBR|IBM Semeru Runtime Open Edition|Eclipse OpenJ9(?: VM)?|TencentKonaJDK|KonaJDK)(?:[-\s]?(?<distroVersion>[0-9][A-Za-z0-9.+-]*))?)?\s*\(build\s+(?<build>[^)]+)\)/;
 
 /**
+ * Lib - Regex - Pattern JSDoc Content Star Prefix.
+ *
+ * Captures the leading whitespace and star of a content line (real text
+ * after the star), so require-jsdoc-tag-order can derive a blank separator matching the
+ * block's indent when rebuilding the tag section.
+ *
+ * @since 0.21.0
+ */
+export const LIB_REGEX_PATTERN_JSDOC_CONTENT_STAR_PREFIX = /^(\s*\*)\s+\S/;
+
+/**
  * Lib - Regex - Pattern JSDoc Deprecated Tag Capture.
  *
  * Matches a JSDoc `@deprecated` tag line and captures the value that follows it.
@@ -615,9 +636,9 @@ export const LIB_REGEX_PATTERN_JSDOC_DEPRECATED_TAG_CAPTURE = /^@deprecated\s+(.
 /**
  * Lib - Regex - Pattern JSDoc Deprecated Tag Line.
  *
- * Detects a real JSDoc `@deprecated` tag at the start of a comment line (after the
- * leading star), not a prose mention elsewhere in the block. Used by
- * require-jsdoc-since to gate @deprecated validation so prose is not seen as a tag.
+ * Detects a real JSDoc `@deprecated` tag at the start of a line
+ * (after the leading star), not a prose mention elsewhere in the block. Used
+ * by require-jsdoc-since to gate validation so prose is not seen as a tag.
  *
  * @since 0.20.0
  */
@@ -664,6 +685,16 @@ export const LIB_REGEX_PATTERN_JSDOC_PARAM_ALIGNMENT_PARAM = /@param\s+(\{[^}]*\
 export const LIB_REGEX_PATTERN_JSDOC_PARAM_TAG_LINE = /@param\s+(?:\{[^}]*\}\s+)?(\w+)\s+-\s+(.+)/;
 
 /**
+ * Lib - Regex - Pattern JSDoc Returns Type Only.
+ *
+ * Matches a JSDoc `@returns` line that contains only a type in braces with no
+ * trailing description. Used by require-jsdoc-returns to flag described returns.
+ *
+ * @since 0.21.0
+ */
+export const LIB_REGEX_PATTERN_JSDOC_RETURNS_TYPE_ONLY = /^@returns\s+\{[^}]+\}\s*$/;
+
+/**
  * Lib - Regex - Pattern JSDoc Since Tag Capture.
  *
  * Matches a JSDoc `@since` tag line and captures the value that follows it.
@@ -674,15 +705,35 @@ export const LIB_REGEX_PATTERN_JSDOC_PARAM_TAG_LINE = /@param\s+(?:\{[^}]*\}\s+)
 export const LIB_REGEX_PATTERN_JSDOC_SINCE_TAG_CAPTURE = /^@since\s+(.+)$/;
 
 /**
+ * Lib - Regex - Pattern JSDoc Tag Name Capture.
+ *
+ * Matches a JSDoc tag at the start of a stripped line and captures the tag name.
+ * Used by require-jsdoc-tag-order to rank each tag line by its canonical order.
+ *
+ * @since 0.21.0
+ */
+export const LIB_REGEX_PATTERN_JSDOC_TAG_NAME_CAPTURE = /^@(\w+)/;
+
+/**
  * Lib - Regex - Pattern JSDoc Tag Scan.
  *
- * Matches a JSDoc `@since` or `@deprecated` tag and captures the first
- * non-whitespace token on the same line (the [ \t]+ gap stops the capture from
- * crossing a newline). Used by the since-version meta-test; apply `g` at the call site.
+ * Matches a JSDoc `@since` or `@deprecated` tag and captures the
+ * first non-whitespace token on the same line (the [ \t]+ gap stops the capture
+ * from crossing a newline). Used by the since-version meta-test.
  *
  * @since 0.20.0
  */
 export const LIB_REGEX_PATTERN_JSDOC_TAG_SCAN = /(?:\/\*+\s*|\n\s*\*\s*)@(?:since|deprecated)[ \t]+(\S+)/;
+
+/**
+ * Lib - Regex - Pattern Js Identifier.
+ *
+ * Validates that a string is a legal JavaScript identifier so no-bracket-method-call
+ * can withhold its dot-notation autofix for keys that would produce invalid code.
+ *
+ * @since 0.21.0
+ */
+export const LIB_REGEX_PATTERN_JS_IDENTIFIER = /^[A-Za-z_$][A-Za-z0-9_$]*$/;
 
 /**
  * Lib - Regex - Pattern Kebab Case Filename.
@@ -697,9 +748,9 @@ export const LIB_REGEX_PATTERN_KEBAB_CASE_FILENAME = /^[a-z][a-z0-9]*(-[a-z0-9]+
 /**
  * Lib - Regex - Pattern Kebab Case Segment.
  *
- * Validates a kebab-case path segment of lowercase letters, digits, and hyphens
- * starting with a letter; deliberately distinct from the stricter kebab-case
- * filename pattern.
+ * Validates a kebab-case path segment of lowercase letters,
+ * digits, and hyphens starting with a letter; deliberately distinct from the
+ * stricter kebab-case filename pattern.
  *
  * @since 0.20.0
  */
@@ -1039,9 +1090,9 @@ export const LIB_REGEX_PATTERN_SETUP_INSTRUCTIONS_BLOCK = /^[\s\S]*# ={3,}\n/;
 /**
  * Lib - Regex - Pattern Since Unreleased.
  *
- * Matches a JSDoc `@since UNRELEASED` sentinel on a real comment star line and
- * captures the leading "\n * " prefix. Anchoring to the star line keeps
- * Runner.stampUnreleased from rewriting the token inside string literals or prose.
+ * Matches a JSDoc `@since UNRELEASED` sentinel on a comment
+ * star line and captures the leading "\n * " prefix. Anchoring to the star keeps
+ * stampUnreleased from rewriting the token inside strings or prose.
  *
  * @since 0.20.0
  */
@@ -1595,9 +1646,9 @@ export const LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_EXPRESSION = /\$\{\{\s*(.+?)\s*\
 /**
  * Lib - Regex - Pattern Workflow Context Separator.
  *
- * Splits a GitHub Actions expression on top-level `||` operators. Used by
- * the workflows generator to separate fallback branches in publish and
- * jobs conditions.
+ * Splits a GitHub Actions expression on top-level `||` operators.
+ * Used by the workflows generator to separate fallback branches in publish
+ * and jobs conditions.
  *
  * @since 0.18.0
  */
@@ -1606,9 +1657,9 @@ export const LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_SEPARATOR = /\s*\|\|\s*/;
 /**
  * Lib - Regex - Pattern Workflow Context Wrapper End.
  *
- * Strips the trailing `}}` wrapper (with optional whitespace) from a GitHub
- * Actions expression. Used by the workflows generator for publish and jobs
- * condition parsing.
+ * Strips the trailing `}}` wrapper (with optional whitespace)
+ * from a GitHub Actions expression. Used by the workflows generator for the
+ * publish and jobs condition parsing.
  *
  * @since 0.18.0
  */
@@ -1617,9 +1668,9 @@ export const LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_WRAPPER_END = /\s*\}\}$/;
 /**
  * Lib - Regex - Pattern Workflow Context Wrapper Start.
  *
- * Strips the leading `${{` wrapper (with optional whitespace) from a GitHub
- * Actions expression. Used by the workflows generator for publish and jobs
- * condition parsing.
+ * Strips the leading `${{` wrapper (with optional whitespace)
+ * from a GitHub Actions expression. Used by the workflows generator for the
+ * publish and jobs condition parsing.
  *
  * @since 0.18.0
  */
@@ -1638,9 +1689,9 @@ export const LIB_REGEX_PATTERN_WORKFLOW_NAME = /^name:\s*"(.+)"/;
 /**
  * Lib - Regex - Pattern Workflow On Block.
  *
- * Matches a top-level `on:` line at the start of any line in a GitHub Actions
- * YAML document. Used by the workflows test to assert that coexisting target
- * jobs share a single trigger block.
+ * Matches a top-level `on:` line at the start of any line
+ * in a GitHub Actions YAML document. Used by the workflows test to assert
+ * coexisting target jobs share a single trigger block.
  *
  * @since 0.18.0
  */
@@ -1660,9 +1711,9 @@ export const LIB_REGEX_PATTERN_WORKFLOW_PLACEHOLDER = /\[__\w+__\]/;
 /**
  * Lib - Regex - Pattern Workflow Run Name Capture.
  *
- * Captures the prefix and suffix surrounding a `${{ ... }}` expression in
- * a run-name string. Used by the workflows generator to reconstruct the
- * merged run-name.
+ * Captures the prefix and suffix surrounding a `${{ ... }}`
+ * expression in a run-name string. Used by the workflows generator to rebuild
+ * the merged run-name.
  *
  * @since 0.18.0
  */

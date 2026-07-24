@@ -4,6 +4,9 @@ import type {
   Shared_ItemPrettyNames,
   Shared_NovaConfigAgent,
   Shared_NovaConfigEntityRole,
+  Shared_NovaConfigGithubRecipeName,
+  Shared_NovaConfigLicenseRecipeName,
+  Shared_NovaConfigReadMeRecipeName,
   Shared_NovaConfigWorkspace_Policy,
   Shared_NovaConfigWorkspace_Role,
   Shared_NovaConfigWorkspaceRecipeName,
@@ -44,6 +47,26 @@ export type Lib_Item_AllowedPoliciesByRole = {
  * @since 0.11.0
  */
 export type Lib_Item_AllowedRecipes = readonly Shared_NovaConfigWorkspaceRecipeName[];
+
+/**
+ * Lib - Item - Recipes By Category.
+ *
+ * @since 0.21.0
+ */
+export type Lib_Item_RecipesByCategory_Github = readonly Shared_NovaConfigGithubRecipeName[];
+
+export type Lib_Item_RecipesByCategory_License = readonly Shared_NovaConfigLicenseRecipeName[];
+
+export type Lib_Item_RecipesByCategory_ReadMe = readonly Shared_NovaConfigReadMeRecipeName[];
+
+export type Lib_Item_RecipesByCategory_PackageJson = readonly Shared_NovaConfigWorkspaceRecipeName[];
+
+export type Lib_Item_RecipesByCategory = {
+  'github': Lib_Item_RecipesByCategory_Github;
+  'license': Lib_Item_RecipesByCategory_License;
+  'read-me': Lib_Item_RecipesByCategory_ReadMe;
+  'package-json': Lib_Item_RecipesByCategory_PackageJson;
+};
 
 /**
  * Lib - Item - Allowed Roles.

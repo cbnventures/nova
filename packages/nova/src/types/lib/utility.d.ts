@@ -1,6 +1,6 @@
-import type { ChildProcess, ExecException, ExecOptions } from 'child_process';
-import type { Dirent } from 'fs';
-import type { ParsedPath } from 'path';
+import type { ChildProcess, ExecException, ExecOptions } from 'node:child_process';
+import type { Dirent } from 'node:fs';
+import type { ParsedPath } from 'node:path';
 
 import type {
   Shared_LinuxOsReleaseEntries,
@@ -193,6 +193,27 @@ export type Lib_Utility_CurrentTimestamp_TimezoneHours = string;
 export type Lib_Utility_CurrentTimestamp_TimezoneMinutes = string;
 
 /**
+ * Lib - Utility - Detect Script Host File.
+ *
+ * @since 0.21.0
+ */
+export type Lib_Utility_DetectScriptHostFile_Filename = string;
+
+export type Lib_Utility_DetectScriptHostFile_Returns = string | undefined;
+
+export type Lib_Utility_DetectScriptHostFile_ScriptHostExtensions = string[];
+
+export type Lib_Utility_DetectScriptHostFile_NormalizedFilename = string;
+
+export type Lib_Utility_DetectScriptHostFile_ScriptHostExtension = string | undefined;
+
+export type Lib_Utility_DetectScriptHostFile_HostExtensionIndex = number;
+
+export type Lib_Utility_DetectScriptHostFile_HostPath = string;
+
+export type Lib_Utility_DetectScriptHostFile_HostLastSlashIndex = number;
+
+/**
  * Lib - Utility - Detect Shell.
  *
  * @since 0.11.0
@@ -227,6 +248,18 @@ export type Lib_Utility_DiscoverPathsWithFile_CurrentDirectory = string;
 
 export type Lib_Utility_DiscoverPathsWithFile_TargetPath = string;
 
+/**
+ * Lib - Utility - Discover Paths With File.
+ *
+ * @since 0.21.0
+ */
+export type Lib_Utility_DiscoverPathsWithFile_GitPath = string;
+
+/**
+ * Lib - Utility - Discover Paths With File.
+ *
+ * @since 0.11.0
+ */
 export type Lib_Utility_DiscoverPathsWithFile_Queue = string[];
 
 export type Lib_Utility_DiscoverPathsWithFile_Visited = Set<string>;
@@ -253,7 +286,8 @@ export type Lib_Utility_ExecuteShell_Command = string;
 export type Lib_Utility_ExecuteShell_Returns = Promise<Shared_ShellOutput>;
 
 export type Lib_Utility_ExecuteShell_ExecAsync = (command: string, options: ExecOptions) => Promise<{
-  stdout: string; stderr: string;
+  stdout: string;
+  stderr: string;
 }>;
 
 export type Lib_Utility_ExecuteShell_Shell = string;

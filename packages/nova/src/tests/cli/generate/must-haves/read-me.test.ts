@@ -101,6 +101,13 @@ import type {
   Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SetsExitCodeWhenNotAtProjectRoot_IsProjectRootSpy,
   Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_TemporaryDirectory,
   Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_TemporaryPrefix,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_NovaConfig,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_NovaConfigPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_PackageJson,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_PackageJsonPath,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_ProjectDirectory,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_ReadmeContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_ReadmePath,
   Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_Name,
   Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_NovaConfig,
   Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_NovaConfigPath,
@@ -143,30 +150,45 @@ async function createRoleMatrixSandbox(sandboxRoot: Tests_Cli_Generate_MustHaves
   const novaConfig: Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_NovaConfig = JSON.stringify({
     project: {
       name: {
-        slug: 'test', title: 'Test Project',
+        slug: 'test',
+        title: 'Test Project',
       },
     },
     workspaces: {
       './': {
-        name: 'test-project', role: 'project', policy: 'freezable',
+        name: 'test-project',
+        role: 'project',
+        policy: 'freezable',
       },
       './apps/web': {
-        name: 'test-app-web', role: 'app', policy: 'trackable',
+        name: 'test-app-web',
+        role: 'app',
+        policy: 'trackable',
       },
       './apps/docs-site': {
-        name: 'test-docs', role: 'docs', policy: 'freezable',
+        name: 'test-docs',
+        role: 'docs',
+        policy: 'freezable',
       },
       './packages/lib-a': {
-        name: 'lib-a', role: 'package', policy: 'distributable',
+        name: 'lib-a',
+        role: 'package',
+        policy: 'distributable',
       },
       './packages/cli-a': {
-        name: 'test-tool-cli-a', role: 'tool', policy: 'trackable',
+        name: 'test-tool-cli-a',
+        role: 'tool',
+        policy: 'trackable',
       },
       './packages/preset-a': {
-        name: 'test-config-preset-a', role: 'config', policy: 'trackable',
+        name: 'test-config-preset-a',
+        role: 'config',
+        policy: 'trackable',
       },
       './packages/template-a': {
-        name: 'template-a', role: 'template', policy: 'freezable',
+        name: 'template-a',
+        role: 'template',
+        policy: 'freezable',
       },
     },
   }, null, 2);
@@ -266,6 +288,57 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
     loadSpy.mockRestore();
 
     saveSpy.mockRestore();
+
+    return;
+  });
+
+  it('wraps each section in nova region anchors', async () => {
+    const projectDirectory: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_ProjectDirectory = join(sandboxRoot, 'region-anchors');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const packageJson: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJsonPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_PackageJsonPath = join(projectDirectory, 'package.json');
+
+    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+
+    const novaConfig: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_NovaConfig = JSON.stringify({
+      project: {
+        name: {
+          title: 'Test Project',
+        },
+        description: {
+          long: 'A long description of the project.',
+        },
+      },
+      github: {
+        owner: 'acme',
+        repo: 'widget',
+      },
+      urls: {
+        homepage: 'https://example.com',
+        logo: 'https://example.com/logo.svg',
+        documentation: 'https://docs.example.com',
+        fundSources: ['https://github.com/sponsors/acme'],
+      },
+    }, null, 2);
+    const novaConfigPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateMustHavesReadMe.run({});
+
+    const readmePath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_ReadmePath = join(projectDirectory, 'README.md');
+    const readmeContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_ReadmeContent = await readFile(readmePath, 'utf-8');
+
+    ok(readmeContent.includes('<!-- nova-region: header -->'), 'Expected the header region start anchor');
+    ok(readmeContent.includes('<!-- nova-region-end: header -->'), 'Expected the header region end anchor');
+    ok(readmeContent.includes('<!-- nova-region: badges -->'), 'Expected the badges region anchor');
+    ok(readmeContent.includes('<!-- nova-region: introduction -->'), 'Expected the introduction region anchor');
+    ok(readmeContent.includes('<!-- nova-region: documentation -->'), 'Expected the documentation region anchor');
+    ok(readmeContent.includes('<!-- nova-region: credits -->'), 'Expected the credits region anchor');
 
     return;
   });

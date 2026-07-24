@@ -11,7 +11,8 @@ import {
   LIB_REGEX_PATTERN_LEADING_DIGIT,
   LIB_REGEX_PATTERN_TRAILING_EXTENSION,
 } from '../../../lib/regex.js';
-import { isIgnoredFile, normalizeRouteSegment } from '../../../lib/utility.js';
+import { detectScriptHostFile, isIgnoredFile, normalizeRouteSegment } from '../../../lib/utility.js';
+import { Logger } from '../../../toolkit/index.js';
 
 import type {
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_CommentValue,
@@ -81,6 +82,7 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Options,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Program_Node,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Program_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ScriptHostFile,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_UserEntries,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_UserKnownNames,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_VariableDeclaration_Node,
@@ -172,6 +174,7 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsKnownNames,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsStripDirectories,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsWarnSkippedScripts,
 } from '../../../types/rules/eslint/jsdoc/require-jsdoc-hierarchy.d.ts';
 
 /**
@@ -230,6 +233,9 @@ export class Runner {
               type: 'string',
             },
           },
+          warnSkippedScripts: {
+            type: 'boolean',
+          },
         },
         additionalProperties: false,
       }],
@@ -239,12 +245,29 @@ export class Runner {
       ignoreFiles: [] as Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsIgnoreFiles,
       knownNames: {} as Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsKnownNames,
       stripDirectories: ['types'] as Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsStripDirectories,
+      warnSkippedScripts: true as Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_RuleDefaultOptionsWarnSkippedScripts,
     }],
     create(context, defaultOptions) {
       const options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_Options = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
+        return {};
+      }
+
+      // Skip extracted <script> virtual files. Their machine-generated basenames embed a
+      // non-deterministic batch counter, so the required title can never converge. This is
+      // real enforcement loss, so a Logger.warn notice fires unless warnSkippedScripts is false.
+      const scriptHostFile: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_Create_ScriptHostFile = detectScriptHostFile(context.filename);
+
+      if (scriptHostFile !== undefined) {
+        if (options['warnSkippedScripts'] === true) {
+          Logger.customize({
+            name: 'require-jsdoc-hierarchy',
+            purpose: 'skipped-scripts',
+          }).warn(`Found a <script> in "${scriptHostFile}" — skipping require-jsdoc-hierarchy (its extracted virtual filename is non-deterministic). Set warnSkippedScripts to false to silence.`);
+        }
+
         return {};
       }
 
@@ -321,11 +344,11 @@ export class Runner {
    * Called for ClassDeclaration nodes to verify the summary
    * matches the file path hierarchy with no method suffix appended.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Context} context - Context.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Node}    node    - Node.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckClass_Returns}
    *
@@ -384,11 +407,11 @@ export class Runner {
    * Handles exports, functions, variables, and expression
    * statements. Skips nodes inside class bodies and appends a suffix from describe strings.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Context} context - Context.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Node}    node    - Node.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_Returns}
    *
@@ -504,9 +527,9 @@ export class Runner {
    * Pulls the identifier name from function, variable, or
    * unwrapped export declarations so checkNode can build its hierarchy suffix.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractNodeName_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractNodeName_Returns}
    *
@@ -538,11 +561,11 @@ export class Runner {
    * Called for MethodDefinition nodes inside classes. Appends the
    * method name or "constructor" as the final segment of the expected hierarchy chain.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Context} context - Context.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Node}    node    - Node.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckMethod_Returns}
    *
@@ -606,9 +629,9 @@ export class Runner {
    * Scans the raw JSDoc comment text line by line to locate the
    * first non-empty, non-tag line, returning its index and trimmed text for comparison.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_FindSummaryInfo_CommentValue} commentValue - Comment value.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_FindSummaryInfo_Returns}
    *
@@ -649,12 +672,12 @@ export class Runner {
    * Produces the corrected comment text used by the ESLint fixer
    * by replacing the old summary line at the given index with the expected hierarchy string.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_CommentValue}  commentValue - Comment value.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_SummaryIndex}  summaryIndex - Summary index.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_OldSummary}    oldSummary   - Old summary.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_NewSummary}    newSummary   - New summary.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_BuildFixedComment_Returns}
    *
@@ -681,9 +704,9 @@ export class Runner {
    * Detects describe() and test() call expressions in ExpressionStatement
    * nodes and returns the first string argument used as the test suite label.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractDescribeString_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_ExtractDescribeString_Returns}
    *
@@ -744,10 +767,10 @@ export class Runner {
    * Converts a describe/test label or variable name into a pretty hierarchy
    * suffix. Handles plain strings, dot notation, UPPER_SNAKE_CASE, and camelCase.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_DescribeString} describeString - Describe string.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_PathParts}      pathParts      - Path parts.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_Returns}
    *
@@ -824,10 +847,10 @@ export class Runner {
    * Strips leading words from a suffix when they overlap with the
    * trailing segments of the path hierarchy, preventing redundant repetition in the summary.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_Words}     words     - Words.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_PathParts} pathParts - Path parts.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_Returns}
    *
@@ -904,9 +927,9 @@ export class Runner {
    * Converts a single path segment like "cli" or "package-json"
    * into title-cased display text, using knownNames for abbreviations and brands.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettySegment_Segment} segment - Segment.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettySegment_Returns}
    *
@@ -941,9 +964,9 @@ export class Runner {
    * Splits a camelCase or PascalCase identifier into space-separated
    * title-cased words, merging adjacent pairs that match a known brand or abbreviation.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Name} name - Name.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_PrettyMethodName_Returns}
    *
@@ -998,14 +1021,14 @@ export class Runner {
   /**
    * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Derive Path Parts.
    *
-   * Produces the normalized segment list shared by deriveHierarchy and the invalid
-   * prefix diagnostic. Returns an empty array when the filename lacks an anchor
-   * directory so callers can handle the missing-anchor case independently.
-   *
-   * @private
+   * Produces the normalized segment list shared by deriveHierarchy and
+   * the invalid prefix diagnostic. Returns an empty array when the filename lacks an
+   * anchor directory so callers can handle the missing-anchor case independently.
    *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Filename} filename - Filename.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Options}  options  - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Returns}
    *
@@ -1051,14 +1074,14 @@ export class Runner {
   /**
    * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Derive Invalid Prefix Diagnostic.
    *
-   * Inspects the first normalized path segment and returns the offending segment plus the
-   * resulting prefix when the first character would be a digit. Null otherwise so the
-   * caller can proceed with normal hierarchy enforcement.
-   *
-   * @private
+   * Inspects the first normalized path segment and returns
+   * the offending segment plus the resulting prefix when the first character would be a
+   * digit. Null otherwise so the caller can proceed with normal hierarchy enforcement.
    *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Filename} filename - Filename.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Options}  options  - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveInvalidPrefixDiagnostic_Returns}
    *
@@ -1095,11 +1118,11 @@ export class Runner {
    * Builds the full expected summary string from the file path relative
    * to an anchor directory and any extra segments like method or parent function names.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Filename} filename - Filename.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Segments} segments - Segments.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Options}  options  - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Returns}
    *

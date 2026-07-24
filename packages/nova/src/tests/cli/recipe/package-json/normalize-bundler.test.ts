@@ -169,8 +169,14 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-bundler': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-bundler': {
+              enabled: true,
+            },
           },
         },
       },
@@ -224,8 +230,14 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
           name: 'docs',
           role: 'docs',
           policy: 'freezable',
-          recipes: {
-            'normalize-bundler': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './apps/docs': {
+            'normalize-bundler': {
+              enabled: true,
+            },
           },
         },
       },
@@ -278,8 +290,14 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-bundler': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-bundler': {
+              enabled: true,
+            },
           },
         },
       },

@@ -1,5 +1,7 @@
+import type useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import type { CSSProperties, Dispatch, SetStateAction } from 'react';
 
+import type { Lib_Search_UseSearchWorker_Returns } from '../../lib/search/use-search-worker.d.ts';
 import type { Shared_SearchWorkerSearchHit } from '../../shared.d.ts';
 
 /**
@@ -17,7 +19,7 @@ export type Theme_SearchPage_Index_SearchPage_Props = {
   [key: string]: unknown;
 };
 
-export type Theme_SearchPage_Index_SearchPage_DocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
+export type Theme_SearchPage_Index_SearchPage_DocusaurusContext = ReturnType<typeof useDocusaurusContext>;
 
 export type Theme_SearchPage_Index_SearchPage_BaseUrl = string;
 
@@ -50,7 +52,7 @@ export type Theme_SearchPage_Index_SearchPage_FuzzyMatchingDistance = number;
 
 export type Theme_SearchPage_Index_SearchPage_HighlightSearchTerms = boolean;
 
-export type Theme_SearchPage_Index_SearchPage_SearchWorker = import('../../lib/search/use-search-worker.d.ts').Lib_Search_UseSearchWorker_Returns;
+export type Theme_SearchPage_Index_SearchPage_SearchWorker = Lib_Search_UseSearchWorker_Returns;
 
 export type Theme_SearchPage_Index_SearchPage_SearchParams = URLSearchParams;
 

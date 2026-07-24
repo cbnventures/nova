@@ -9,8 +9,6 @@ import type { Theme_DocRoot_Layout_Main_Index_DocRootLayoutMain_Props } from '..
  *
  * @param {Theme_DocRoot_Layout_Main_Index_DocRootLayoutMain_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocRootLayoutMain(props: Theme_DocRoot_Layout_Main_Index_DocRootLayoutMain_Props) {

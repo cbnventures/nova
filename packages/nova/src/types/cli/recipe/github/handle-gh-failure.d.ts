@@ -1,11 +1,11 @@
-import type { Shared_ShellOutput as SharedShellOutput } from '../../../shared.d.ts';
+import type { Shared_ShellOutput } from '../../../shared.d.ts';
 
 /**
  * CLI - Recipe - GitHub - Handle Gh Failure - Handle Gh Failure.
  *
  * @since 0.18.0
  */
-export type Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_Result = SharedShellOutput;
+export type Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_Result = Shared_ShellOutput;
 
 export type Cli_Recipe_Github_HandleGhFailure_HandleGhFailure_RecipeName = string;
 

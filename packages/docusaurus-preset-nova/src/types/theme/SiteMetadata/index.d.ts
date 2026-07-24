@@ -1,3 +1,5 @@
+import type { Location } from 'history';
+
 /**
  * Theme - Site Metadata.
  *
@@ -24,7 +26,7 @@ export type Theme_SiteMetadata_Index_SiteMetadata_SiteConfig = {
   [key: string]: unknown;
 };
 
-export type Theme_SiteMetadata_Index_SiteMetadata_LocationData = import('history').Location;
+export type Theme_SiteMetadata_Index_SiteMetadata_LocationData = Location;
 
 export type Theme_SiteMetadata_Index_MetadataEntry_Name = string;
 

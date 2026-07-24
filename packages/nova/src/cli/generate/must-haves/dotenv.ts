@@ -1,5 +1,7 @@
-import { promises as fs } from 'fs';
-import { join } from 'path';
+import { promises as fs } from 'node:fs';
+import { join } from 'node:path';
+
+import prompts from 'prompts';
 
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import { LIB_REGEX_LINEBREAK_CRLF_OR_LF, LIB_REGEX_PATTERN_ENV_VAR_KEY, LIB_REGEX_PATTERN_LEADING_DOT } from '../../../lib/regex.js';
@@ -11,6 +13,10 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
+  Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_FilePath,
+  Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_Keys,
+  Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_Response,
+  Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_Returns,
   Cli_Generate_MustHaves_Dotenv_Runner_EscapeSampleValue_Result,
   Cli_Generate_MustHaves_Dotenv_Runner_EscapeSampleValue_Returns,
   Cli_Generate_MustHaves_Dotenv_Runner_EscapeSampleValue_Value,
@@ -29,13 +35,18 @@ import type {
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_ExistingEnvPath,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Files,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_IsDryRun,
+  Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_IsPrune,
+  Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_IsPruneConfirmed,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_IsReplaceFile,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_KeyMatch,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_OriginalLine,
+  Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_OrphanKeys,
+  Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_OrphanLines,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_PreservedLines,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Returns,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_SampleLines,
+  Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_SeenKeys,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_TargetDirectory,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_TargetPath,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_TemplateDirectory,
@@ -60,27 +71,29 @@ import type {
   Cli_Generate_MustHaves_Dotenv_Runner_ParseExistingEnv_Raw,
   Cli_Generate_MustHaves_Dotenv_Runner_ParseExistingEnv_Returns,
   Cli_Generate_MustHaves_Dotenv_Runner_ParseExistingEnv_ValuePortion,
+  Cli_Generate_MustHaves_Dotenv_Runner_Run_App,
+  Cli_Generate_MustHaves_Dotenv_Runner_Run_AppPath,
+  Cli_Generate_MustHaves_Dotenv_Runner_Run_Apps,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_CurrentDirectory,
-  Cli_Generate_MustHaves_Dotenv_Runner_Run_Dotenv,
+  Cli_Generate_MustHaves_Dotenv_Runner_Run_Environment,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_GeneratedCount,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_IsAtProjectRoot,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_IsDryRun,
+  Cli_Generate_MustHaves_Dotenv_Runner_Run_IsPrune,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_IsReplaceFile,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_Options,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_ReplaceFileNotice,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_Returns,
+  Cli_Generate_MustHaves_Dotenv_Runner_Run_Variables,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_WorkingFile,
-  Cli_Generate_MustHaves_Dotenv_Runner_Run_Workspace,
-  Cli_Generate_MustHaves_Dotenv_Runner_Run_WorkspacePath,
-  Cli_Generate_MustHaves_Dotenv_Runner_Run_Workspaces,
 } from '../../../types/cli/generate/must-haves/dotenv.d.ts';
 
 /**
  * CLI - Generate - Must Haves - Dotenv.
  *
- * Generates .env and .env.sample files for every workspace that declares a "dotenv"
- * block in nova.config.json, appending each workspace's configured variables. The .env
- * file preserves filled values from an existing .env; .env.sample keeps each default.
+ * Generates .env and .env.sample files for every app declared under "environment.apps"
+ * in nova.config.json, appending each app's configured variables. The .env file preserves
+ * filled values from an existing .env; .env.sample keeps each non-secret default value.
  *
  * @since 0.15.0
  */
@@ -88,9 +101,9 @@ export class Runner {
   /**
    * CLI - Generate - Must Haves - Dotenv - Run.
    *
-   * Called by the CLI index via executeCommand. Loads nova.config.json and generates env
-   * files for each workspace with a "dotenv" block, delegating per-directory work to
-   * generateForTarget. Warns and no-ops when no workspace declares a "dotenv" block.
+   * Called by the CLI index via executeCommand. Loads nova.config.json and generates
+   * env files for each app declared under "environment.apps", delegating per-directory work
+   * to generateForTarget. Warns and no-ops when no app declares environment variables.
    *
    * @param {Cli_Generate_MustHaves_Dotenv_Runner_Run_Options} options - Options.
    *
@@ -110,6 +123,7 @@ export class Runner {
 
     const isDryRun: Cli_Generate_MustHaves_Dotenv_Runner_Run_IsDryRun = options['dryRun'] === true;
     const isReplaceFile: Cli_Generate_MustHaves_Dotenv_Runner_Run_IsReplaceFile = options['replaceFile'] === true;
+    const isPrune: Cli_Generate_MustHaves_Dotenv_Runner_Run_IsPrune = options['prune'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
@@ -128,35 +142,33 @@ export class Runner {
     }
 
     const workingFile: Cli_Generate_MustHaves_Dotenv_Runner_Run_WorkingFile = await new LibNovaConfig().load();
-    const workspaces: Cli_Generate_MustHaves_Dotenv_Runner_Run_Workspaces = workingFile['workspaces'] ?? {};
+    const environment: Cli_Generate_MustHaves_Dotenv_Runner_Run_Environment = workingFile['environment'] ?? {};
+    const apps: Cli_Generate_MustHaves_Dotenv_Runner_Run_Apps = environment['apps'] ?? {};
 
     let generatedCount: Cli_Generate_MustHaves_Dotenv_Runner_Run_GeneratedCount = 0;
 
-    // Generate ".env"/".env.sample" for every workspace that declares a "dotenv" block; the root workspace uses the "./" path.
-    for (const workspaceEntry of Object.entries(workspaces)) {
-      const workspacePath: Cli_Generate_MustHaves_Dotenv_Runner_Run_WorkspacePath = workspaceEntry[0];
-      const workspace: Cli_Generate_MustHaves_Dotenv_Runner_Run_Workspace = workspaceEntry[1];
-      const dotenv: Cli_Generate_MustHaves_Dotenv_Runner_Run_Dotenv = workspace['dotenv'];
-
-      if (dotenv === undefined) {
-        continue;
-      }
+    // Generate ".env"/".env.sample" for every app declared under "environment.apps"; the root app uses the "./" path.
+    for (const appEntry of Object.entries(apps)) {
+      const appPath: Cli_Generate_MustHaves_Dotenv_Runner_Run_AppPath = appEntry[0];
+      const app: Cli_Generate_MustHaves_Dotenv_Runner_Run_App = appEntry[1];
+      const variables: Cli_Generate_MustHaves_Dotenv_Runner_Run_Variables = app['variables'] ?? [];
 
       generatedCount += 1;
 
       await Runner.generateForTarget({
-        targetDirectory: join(currentDirectory, workspacePath),
-        variables: dotenv['variables'] ?? [],
+        targetDirectory: join(currentDirectory, appPath),
+        variables,
         isDryRun,
         isReplaceFile,
+        isPrune,
       });
     }
 
     if (generatedCount === 0) {
       Logger.customize({
         name: 'Runner.run',
-        purpose: 'workspaces',
-      }).warn('No workspaces declare a "dotenv" block. Nothing to generate.');
+        purpose: 'environment',
+      }).warn('No apps declare environment variables. Nothing to generate.');
     }
 
     return 'completed';
@@ -165,7 +177,7 @@ export class Runner {
   /**
    * CLI - Generate - Must Haves - Dotenv - Generate For Target.
    *
-   * Writes ".env" and ".env.sample" for one workspace directory from the bundled templates,
+   * Writes ".env" and ".env.sample" for one app directory from the bundled templates,
    * appending the configured variables and preserving filled ".env" values.
    *
    * @param {Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options} options - Options.
@@ -181,6 +193,7 @@ export class Runner {
     const variables: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Variables = options['variables'];
     const isDryRun: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_IsDryRun = options['isDryRun'];
     const isReplaceFile: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_IsReplaceFile = options['isReplaceFile'];
+    const isPrune: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_IsPrune = options['isPrune'];
 
     const templateDirectory: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_TemplateDirectory = resolveTemplatePath(import.meta.url, 'generators/must-haves/dotenv');
 
@@ -219,7 +232,7 @@ export class Runner {
 
       envLines.push(`${variable['key']}=""`);
 
-      sampleLines.push(`${variable['key']}="${Runner.escapeSampleValue(variable['defaultValue'])}"`);
+      sampleLines.push(`${variable['key']}="${Runner.escapeSampleValue(variable['defaultValue'] ?? '')}"`);
     }
 
     const customSection: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_CustomSection = envLines.join('\n');
@@ -257,6 +270,7 @@ export class Runner {
       // Preserve filled values for declared keys when rewriting the ".env" file only.
       if (fileName === '.env' && existingEnv.size > 0) {
         const contentLines: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_ContentLines = content.split('\n');
+        const seenKeys: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_SeenKeys = new Set();
         const preservedLines: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_PreservedLines = contentLines.map((contentLine) => {
           const keyMatch: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_KeyMatch = contentLine.match(LIB_REGEX_PATTERN_ENV_VAR_KEY);
 
@@ -265,6 +279,9 @@ export class Runner {
           }
 
           const contentLineKey: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_ContentLineKey = keyMatch[1] ?? '';
+
+          seenKeys.add(contentLineKey);
+
           const originalLine: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_OriginalLine = existingEnv.get(contentLineKey);
 
           if (originalLine === undefined) {
@@ -275,6 +292,24 @@ export class Runner {
         });
 
         content = preservedLines.join('\n');
+
+        // Keys still present in the local ".env" but no longer declared are preserved by default so a
+        // filled line is never dropped silently; "--prune" (with confirmation) is the only way to strip them.
+        const orphanKeys: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_OrphanKeys = [...existingEnv.keys()].filter((existingKey) => seenKeys.has(existingKey) === false);
+
+        if (orphanKeys.length > 0) {
+          let isPruneConfirmed: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_IsPruneConfirmed = false;
+
+          if (isPrune === true && isDryRun === false) {
+            isPruneConfirmed = await Runner.confirmPrune(existingEnvPath, orphanKeys);
+          }
+
+          if (isPruneConfirmed === false) {
+            const orphanLines: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_OrphanLines = orphanKeys.map((orphanKey) => existingEnv.get(orphanKey) ?? '');
+
+            content = `${content}${orphanLines.join('\n')}\n`;
+          }
+        }
       }
 
       if (isDryRun === true) {
@@ -289,6 +324,34 @@ export class Runner {
     }
 
     return;
+  }
+
+  /**
+   * CLI - Generate - Must Haves - Dotenv - Confirm Prune.
+   *
+   * Asks the operator to confirm dropping keys that are no longer declared from the local
+   * ".env". Returns false on cancellation so a filled line is never stripped without a yes.
+   *
+   * @param {Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_FilePath} filePath - File path.
+   * @param {Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_Keys}     keys     - Keys.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_Returns}
+   *
+   * @since 0.21.0
+   */
+  private static async confirmPrune(filePath: Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_FilePath, keys: Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_Keys): Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_Returns {
+    const response: Cli_Generate_MustHaves_Dotenv_Runner_ConfirmPrune_Response = await prompts({
+      type: 'confirm',
+      name: 'confirm',
+      message: `Remove undeclared keys from "${filePath}"? ${keys.join(', ')}`,
+      initial: false,
+    }, {
+      onCancel: () => false,
+    });
+
+    return response['confirm'] === true;
   }
 
   /**

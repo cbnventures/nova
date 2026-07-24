@@ -57,8 +57,6 @@ import type {
  *
  * @param {Theme_SearchPage_Index_SearchPage_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function SearchPage(props: Theme_SearchPage_Index_SearchPage_Props) {
@@ -75,7 +73,10 @@ function SearchPage(props: Theme_SearchPage_Index_SearchPage_Props) {
   const highlightSearchTerms: Theme_SearchPage_Index_SearchPage_HighlightSearchTerms = (searchSettings !== undefined) ? searchSettings['highlightSearchTermsOnTargetPage'] ?? true : true;
 
   const searchWorker: Theme_SearchPage_Index_SearchPage_SearchWorker = useSearchWorker({
-    workerUrl, manifestUrl, searchResultLimits, fuzzyMatchingDistance,
+    workerUrl,
+    manifestUrl,
+    searchResultLimits,
+    fuzzyMatchingDistance,
   });
 
   const searchParams: Theme_SearchPage_Index_SearchPage_SearchParams = (typeof window !== 'undefined') ? new URLSearchParams(window.location.search) : new URLSearchParams();

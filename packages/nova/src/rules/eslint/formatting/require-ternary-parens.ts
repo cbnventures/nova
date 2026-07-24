@@ -3,14 +3,14 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_CharBefore,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Context,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Fix_Fixer,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Fix_Returns,
+  Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_IsParenthesized,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Node,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Returns,
-  Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_SourceText,
-  Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_TestStart,
+  Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_TokenAfter,
+  Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_TokenBefore,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_ConditionalExpression_Node,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_ConditionalExpression_Returns,
   Rules_Eslint_Formatting_RequireTernaryParens_Runner_Create_Options,
@@ -82,44 +82,35 @@ export class Runner {
   /**
    * Rules - ESLint - Formatting - Require Ternary Parens - Check Conditional Expression.
    *
-   * Checks the character before the test expression start position
-   * for an opening parenthesis and provides an auto-fix to wrap the condition.
-   *
-   * @private
+   * Reports a ternary whose condition lacks wrapping parentheses and auto-fixes it. The
+   * tokens immediately around the test detect an already-wrapped condition.
    *
    * @param {Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Context} context - Context.
    * @param {Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Returns}
    *
    * @since 0.15.0
    */
   private static checkConditionalExpression(context: Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Context, node: Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Node): Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Returns {
-    const sourceText: Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_SourceText = context.sourceCode.getText();
-    const testStart: Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_TestStart = node.test.range[0];
+    const tokenBefore: Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_TokenBefore = context.sourceCode.getTokenBefore(node.test);
+    const tokenAfter: Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_TokenAfter = context.sourceCode.getTokenAfter(node.test);
 
-    if (testStart < 1) {
+    // The condition is only genuinely wrapped when a '(' token opens immediately before the test
+    // and a matching ')' token closes immediately after it. Inspecting a single preceding character
+    // misfired on spaced parens like ( a === b ) and on ternaries nested in call arguments like foo(a ? 1 : 0).
+    const isParenthesized: Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_IsParenthesized = tokenBefore !== null
+      && tokenBefore.value === '('
+      && tokenAfter !== null
+      && tokenAfter.value === ')';
+
+    if (isParenthesized === false) {
       context.report({
         node,
         messageId: 'requireTernaryParens',
         fix(fixer: Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Fix_Fixer): Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Fix_Returns {
-          return [
-            fixer.insertTextBefore(node.test, '('),
-            fixer.insertTextAfter(node.test, ')'),
-          ];
-        },
-      });
-
-      return;
-    }
-
-    const charBefore: Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_CharBefore = sourceText[testStart - 1];
-
-    if (charBefore !== '(') {
-      context.report({
-        node,
-        messageId: 'requireTernaryParens',
-        fix(fixer) {
           return [
             fixer.insertTextBefore(node.test, '('),
             fixer.insertTextAfter(node.test, ')'),

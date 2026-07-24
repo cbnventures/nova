@@ -39,6 +39,7 @@ import type {
   Cli_Recipe_Github_SyncIdentity_Runner_Run_GhVersionOutput,
   Cli_Recipe_Github_SyncIdentity_Runner_Run_GhVersionPattern,
   Cli_Recipe_Github_SyncIdentity_Runner_Run_Github,
+  Cli_Recipe_Github_SyncIdentity_Runner_Run_GithubRecipes,
   Cli_Recipe_Github_SyncIdentity_Runner_Run_Homepage,
   Cli_Recipe_Github_SyncIdentity_Runner_Run_IsAtProjectRoot,
   Cli_Recipe_Github_SyncIdentity_Runner_Run_IsCommandOnPath,
@@ -51,6 +52,7 @@ import type {
   Cli_Recipe_Github_SyncIdentity_Runner_Run_Recipes,
   Cli_Recipe_Github_SyncIdentity_Runner_Run_Repo,
   Cli_Recipe_Github_SyncIdentity_Runner_Run_Returns,
+  Cli_Recipe_Github_SyncIdentity_Runner_Run_SyncIdentity,
   Cli_Recipe_Github_SyncIdentity_Runner_Run_TopicFlags,
   Cli_Recipe_Github_SyncIdentity_Runner_Run_Topics,
   Cli_Recipe_Github_SyncIdentity_Runner_Run_TopicsCommand,
@@ -109,11 +111,13 @@ export class Runner {
       return;
     }
 
-    const recipes: Cli_Recipe_Github_SyncIdentity_Runner_Run_Recipes = github['recipes'];
+    const recipes: Cli_Recipe_Github_SyncIdentity_Runner_Run_Recipes = workingFile['recipes'];
+    const githubRecipes: Cli_Recipe_Github_SyncIdentity_Runner_Run_GithubRecipes = (recipes !== undefined) ? recipes['github'] : undefined;
+    const syncIdentity: Cli_Recipe_Github_SyncIdentity_Runner_Run_SyncIdentity = (githubRecipes !== undefined) ? githubRecipes['sync-identity'] : undefined;
 
     if (
-      recipes === undefined
-      || recipes['sync-identity'] !== true
+      syncIdentity === undefined
+      || syncIdentity['enabled'] !== true
     ) {
       return;
     }
@@ -306,9 +310,9 @@ export class Runner {
   /**
    * CLI - Recipe - GitHub - Sync Identity - Normalize Topics.
    *
-   * Converts raw keyword strings into valid GitHub topic slugs by lowercasing,
-   * replacing separators, stripping invalid characters, deduping, and capping
-   * at twenty items.
+   * Converts raw keyword strings into valid GitHub topic slugs.
+   * Lowercases, replaces separators, strips invalid characters, dedupes, and caps at
+   * twenty items.
    *
    * @param {Cli_Recipe_Github_SyncIdentity_Runner_NormalizeTopics_Keywords} keywords - Keywords.
    *

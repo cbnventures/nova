@@ -3,8 +3,8 @@ import {
   readdirSync,
   readFileSync,
   writeFileSync,
-} from 'fs';
-import { dirname, resolve } from 'path';
+} from 'node:fs';
+import { dirname, resolve } from 'node:path';
 
 import { readDefaultCodeTranslationMessages } from '@docusaurus/theme-translations';
 
@@ -71,6 +71,7 @@ import type {
   Index_Runner_Default_CssAccessibilityPath,
   Index_Runner_Default_CssBlockFiles,
   Index_Runner_Default_CssBlocksDirectory,
+  Index_Runner_Default_CssEmbedPath,
   Index_Runner_Default_CssGridPath,
   Index_Runner_Default_CssPresetBlockFiles,
   Index_Runner_Default_CssPresetBlocksDirectory,
@@ -211,6 +212,7 @@ export class Runner {
     const cssGridPath: Index_Runner_Default_CssGridPath = resolve(currentDirectory, 'styles/grid.css');
     const cssAccessibilityPath: Index_Runner_Default_CssAccessibilityPath = resolve(currentDirectory, 'styles/accessibility.css');
     const cssUtilitiesPath: Index_Runner_Default_CssUtilitiesPath = resolve(currentDirectory, 'styles/utilities.css');
+    const cssEmbedPath: Index_Runner_Default_CssEmbedPath = resolve(currentDirectory, 'styles/embed.css');
 
     // Shared block and theme CSS files.
     const cssBlocksDirectory: Index_Runner_Default_CssBlocksDirectory = resolve(currentDirectory, 'styles/blocks');
@@ -312,6 +314,7 @@ export class Runner {
           cssGridPath,
           cssAccessibilityPath,
           cssUtilitiesPath,
+          cssEmbedPath,
           generatedCssPath,
           ...cssBlockFiles,
           ...cssThemeFiles,
@@ -337,7 +340,7 @@ export class Runner {
        * scripts that initialize color mode, announcement bar dismiss
        * state, data attribute query strings, and preset variants.
        *
-       * @returns {{ headTags: Index_Runner_Default_InjectHtmlTags_HeadTags, preBodyTags: Index_Runner_Default_InjectHtmlTags_PreBodyTags }}
+       * @returns {Index_Runner_Default_Returns_InjectHtmlTags}
        *
        * @since 0.15.0
        */
@@ -444,7 +447,7 @@ export class Runner {
        * alias mapping at-nova-assets to the package assets directory so
        * preset logo files can be imported by path.
        *
-       * @returns {{ resolve: { alias: Record<string, string> } }}
+       * @returns {Index_Runner_Default_ReturnsConfigureWebpackReturns}
        *
        * @since 0.15.0
        */

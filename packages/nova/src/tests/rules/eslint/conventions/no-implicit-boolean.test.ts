@@ -116,5 +116,9 @@ ruleTester.run('noImplicitBoolean', NoImplicitBoolean['rule'], {
       code: 'return !getValue();',
       errors: [{ messageId: 'requireExplicitCheck' }],
     },
+    {
+      code: 'if (a === true) { const b = !c; }',
+      errors: [{ messageId: 'requireExplicitCheck' }],
+    },
   ],
 });

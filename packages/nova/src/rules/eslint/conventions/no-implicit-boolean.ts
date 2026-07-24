@@ -26,6 +26,7 @@ import type {
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Argument,
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Node,
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Returns,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Child,
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Current,
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Node,
   Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Returns,
@@ -127,10 +128,10 @@ export class Runner {
    * Shared by if, while, do-while, for, and ternary visitors to extract the test expression
    * and delegate to reportImplicitNodes.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Context} context - Context.
    * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Returns}
    *
@@ -154,10 +155,10 @@ export class Runner {
    * Called by the UnaryExpression visitor to catch negations outside
    * condition tests, such as standalone "if (!value)" patterns in assignments.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Context} context - Context.
    * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Returns}
    *
@@ -189,18 +190,20 @@ export class Runner {
    * Used by checkNegation to avoid double-reporting negations that already appear inside a
    * condition test handled by the condition visitors.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Returns}
    *
    * @since 0.15.0
    */
   private static isInsideConditionTest(node: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Node): Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Returns {
+    let child: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Child = node;
     let current: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Current = node.parent;
 
     while (current !== undefined && current !== null) {
+      // Only suppress when the ascended-from child is the conditional's test subtree, not its body.
       if (
         (
           current.type === 'IfStatement'
@@ -210,12 +213,12 @@ export class Runner {
           || current.type === 'ConditionalExpression'
         )
         && 'test' in current
-        && current.test !== undefined
-        && current.test !== null
+        && current.test === child
       ) {
         return true;
       }
 
+      child = current;
       current = current.parent;
     }
 
@@ -228,9 +231,9 @@ export class Runner {
    * Returns true for node types that rely on truthy or falsy coercion: identifiers, member
    * expressions, call expressions, awaits, and negations thereof.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Returns}
    *
@@ -276,10 +279,10 @@ export class Runner {
    * Recursively walks logical expression operands and
    * reports each leaf node that uses implicit boolean coercion.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Context} context - Context.
    * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Test}    test    - Test.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Returns}
    *

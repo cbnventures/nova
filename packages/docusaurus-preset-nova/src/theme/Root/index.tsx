@@ -11,8 +11,6 @@ import type { Theme_Root_Index_Root_Props } from '../../types/theme/Root/index.d
  *
  * @param {Theme_Root_Index_Root_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function Root(props: Theme_Root_Index_Root_Props) {

@@ -20,16 +20,20 @@ describe('presetsLanternPresetLantern', async () => {
     const lantern: Tests_Presets_Lantern_Preset_Lantern = presetsLanternPresetLantern;
 
     deepStrictEqual(lantern['colors']['primary'], {
-      light: '#f59e0b', dark: '#f59e0b',
+      light: '#f59e0b',
+      dark: '#f59e0b',
     });
     deepStrictEqual(lantern['colors']['accent'], {
-      light: '#4338ca', dark: '#4338ca',
+      light: '#4338ca',
+      dark: '#4338ca',
     });
     deepStrictEqual(lantern['colors']['text'], {
-      light: '#3d2f1a', dark: '#f0e2c0',
+      light: '#3d2f1a',
+      dark: '#f0e2c0',
     });
     deepStrictEqual(lantern['colors']['border'], {
-      light: '#e8dcb8', dark: '#4a3d24',
+      light: '#e8dcb8',
+      dark: '#4a3d24',
     });
 
     return;

@@ -1,0 +1,522 @@
+{
+  "home.layout.description": {
+    "message": "Foundry קורא את הכוונה שלך ומחשל את כל סביבת הפיתוח שלך ממניפסט יחיד.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Foundry - כל כלי מתחיל כמתכת גולמית",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "כלים למפתחים",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "כל כלי מתחיל כמתכת גולמית.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Foundry קורא את הכוונה שלך ומחשל את כל סביבת הפיתוח שלך ממניפסט יחיד. הפסיקו להגדיר. התחילו לתאר.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "התחילו עכשיו",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "צפו ב-Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.anvil.description": {
+    "message": "ה-CLI המרכזי. קורא מניפסט Blueprint יחיד ומחשל את כל מרחב העבודה שלך — מבנה תיקיות, גרף תלויות, תצורת בנייה וכללי לינטינג. קובץ אחד נכנס, סביבה שלמה יוצאת.",
+    "description": "Front page Features card description for Anvil"
+  },
+  "home.features.tongs.description": {
+    "message": "פותר גרף התלויות וכלי המחשה. ממפה כל קשר בין חבילות מרחב העבודה ומציג את העץ המלא, כדי שתדעו מה תלוי במה עוד לפני שאתם משנים משהו.",
+    "description": "Front page Features card description for Tongs"
+  },
+  "home.features.quench.description": {
+    "message": "מטמון בנייה מצטבר שעוקב אחר ערכי ה-hash של הקבצים ובונה מחדש רק את מה שבאמת השתנה. חישול קר אורך 14 שניות. חישול חם — פחות משתיים.",
+    "description": "Front page Features card description for Quench"
+  },
+  "home.features.bellows.description": {
+    "message": "מריץ משימות מקבילי שמפזר עבודה על כל חבילות מרחב העבודה בו-זמנית. מכבד את גרף התלויות של Tongs, כך ששום דבר לא רץ לפני שהתלויות המקדימות שלו הסתיימו.",
+    "description": "Front page Features card description for Bellows"
+  },
+  "home.features.crucible.description": {
+    "message": "מחולל תשתית בדיקות שקורא את חתימות הטיפוסים שלך וכותב עבורך את שלד הבדיקות. בדיקות snapshot, תבניות assertion וקבצי fixture — הכול נגזר מהטיפוסים שכבר כתבת.",
+    "description": "Front page Features card description for Crucible"
+  },
+  "home.features.slag.description": {
+    "message": "מזהה קוד מת ותלויות שאינן בשימוש. סורק כל import, כל export וכל רשומה ב-Blueprint כדי לאתר את מה שכבר אין אליו הפניה. הסירו את הסיגים, השאירו את הפלדה.",
+    "description": "Front page Features card description for Slag"
+  },
+  "home.stats.heading": {
+    "message": "במספרים",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manifest.label": {
+    "message": "מניפסט",
+    "description": "Front page Stats label for manifest count"
+  },
+  "home.stats.configFiles.label": {
+    "message": "קבצי תצורה",
+    "description": "Front page Stats label for config file count"
+  },
+  "home.stats.coldForge.label": {
+    "message": "חישול קר",
+    "description": "Front page Stats label for cold forge time"
+  },
+  "home.stats.wardenRules.label": {
+    "message": "כללי Warden",
+    "description": "Front page Stats label for Warden rule count"
+  },
+  "home.spotlight.heading": {
+    "message": "מניפסט אחד, והכול מחובר",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "תארו למה אתם מתכוונים. Foundry מבין את השאר לבד.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "נהלו את המפחה שלכם מכל מקום",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "עדכונים מהמפחה",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "פילוסופיה, מדדי ביצועים, והדעות ששחררנו לעולם.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "תצוגת הבלוקים של Foundry, המדגימה כל בלוק מ-docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "כל בלוק מה-preset של Foundry, מוצג עם נתוני דוגמה.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (מלא)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "תצוגת בלוקים",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "כל בלוק של Foundry, מודגם במקום אחד.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "הדף הזה מציג כל בלוק מתוך @cbnventures/docusaurus-preset-nova/blocks עם נתונים מעולמו של Foundry, כדי שתראו כיצד הם נראים ומתנהגים.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "קראו את התיעוד",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "צפו ב-Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (מינימלי)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "עצבו את מה שיוצא לדרך.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Foundry קורא את הכוונה שלך ומחשל את כל סביבת הפיתוח שלך ממניפסט יחיד. הפסיקו להגדיר. התחילו לתאר.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "התחילו עכשיו",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (ברירת מחדל)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "אני אוהב ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (ללא קידומת)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "מהיר",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "גמיש",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "חינמי",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (תזמון איטי)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "נבנה עבור ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "מפתחים",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "מעצבים",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (ללא לולאה)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "ברוכים הבאים אל ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "התקינו באמצעות Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "או השתמשו ב-Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (ללא תווית)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "התקנה מהירה",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (עם אייקונים)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "למה צוותים בוחרים ב-Foundry",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.anvil.description": {
+    "message": "ה-CLI המרכזי. קורא מניפסט Blueprint ומחשל את מרחב העבודה שלך — מבנה תיקיות, גרף תלויות, תצורת בנייה וכללי לינטינג.",
+    "description": "Showcase Features (with icons) card description for Anvil"
+  },
+  "showcase.featuresIcons.tongs.description": {
+    "message": "פותר גרף התלויות וכלי המחשה. ממפה כל קשר בין החבילות ומציג את העץ המלא.",
+    "description": "Showcase Features (with icons) card description for Tongs"
+  },
+  "showcase.featuresIcons.quench.description": {
+    "message": "מטמון בנייה מצטבר שעוקב אחר ערכי ה-hash של הקבצים ובונה מחדש רק את מה שהשתנה. חישול קר אורך 14 שניות. חישול חם — פחות משתיים.",
+    "description": "Showcase Features (with icons) card description for Quench"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (ללא אייקונים, ללא כותרת)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.bellows.description": {
+    "message": "מריץ משימות מקבילי שמפזר עבודה על כל חבילות מרחב העבודה בו-זמנית. מכבד את גרף התלויות של Tongs.",
+    "description": "Showcase Features (no icons) card description for Bellows"
+  },
+  "showcase.featuresNoIcons.crucible.description": {
+    "message": "מחולל תשתית בדיקות שקורא את חתימות הטיפוסים שלך וכותב את שלד הבדיקות. כולל בדיקות snapshot ותבניות assertion.",
+    "description": "Showcase Features (no icons) card description for Crucible"
+  },
+  "showcase.featuresNoIcons.slag.description": {
+    "message": "מזהה קוד מת ותלויות שאינן בשימוש. סורק כל import ו-export כדי לאתר את מה שכבר אין אליו הפניה.",
+    "description": "Showcase Features (no icons) card description for Slag"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (שישה פריטים, אייקונים מעורבים)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "הכול במפחה אחת",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.anvil.description": {
+    "message": "קורא את המניפסט שלך ומייצר כל פריט תצורה שמרחב העבודה שלך צריך. קובץ אחד נכנס, הכול יוצא.",
+    "description": "Showcase Features (six items) card description for Anvil"
+  },
+  "showcase.featuresSix.tongs.description": {
+    "message": "פותר את גרף התלויות, מזהה מעגלים, ומספק כלי שאילתה לכתיבת סקריפטים ולשילוב ב-pipeline.",
+    "description": "Showcase Features (six items) card description for Tongs"
+  },
+  "showcase.featuresSix.quench.description": {
+    "message": "מטמון בנייה הממוען לפי תוכן. אם הקלטים לא השתנו, הבנייה מדולגת כליל.",
+    "description": "Showcase Features (six items) card description for Quench"
+  },
+  "showcase.featuresSix.bellows.description": {
+    "message": "מתזמן משימות בנייה בגלים לפי גרף התלויות. חבילות עצמאיות נבנות במקביל.",
+    "description": "Showcase Features (six items) card description for Bellows"
+  },
+  "showcase.featuresSix.crucible.description": {
+    "message": "מייצר שלדי בדיקות מתוך חתימות הטיפוסים. בדיקות snapshot, תבניות assertion וקבצי fixture.",
+    "description": "Showcase Features (six items) card description for Crucible"
+  },
+  "showcase.featuresSix.slag.description": {
+    "message": "מאתר קוד מת ותלויות יתומות. הסירו את הסיגים, השאירו את הפלדה.",
+    "description": "Showcase Features (six items) card description for Slag"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (עם כותרת ותיאור)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "מדדי החישול",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "מדדי ביצוע מרכזיים על פני מרחב עבודה בן 200 חבילות.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.coldForge.label": {
+    "message": "זמן חישול קר",
+    "description": "Showcase Stats (full) label for cold forge time"
+  },
+  "showcase.statsFull.warmForge.label": {
+    "message": "זמן חישול חם",
+    "description": "Showcase Stats (full) label for warm forge time"
+  },
+  "showcase.statsFull.cacheHit.label": {
+    "message": "שיעור פגיעות במטמון",
+    "description": "Showcase Stats (full) label for cache hit rate"
+  },
+  "showcase.statsFull.wardenRules.label": {
+    "message": "כללי Warden",
+    "description": "Showcase Stats (full) label for Warden rule count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (ללא כותרת)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.manifest.label": {
+    "message": "מניפסט",
+    "description": "Showcase Stats (no heading) label for manifest"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "קבצי תצורה",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "כלי משנה",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.maxPackages.label": {
+    "message": "מקסימום חבילות שנבדקו",
+    "description": "Showcase Stats (no heading) label for max packages tested"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (עם קוד)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "התחלה מהירה",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "שלוש פקודות בדרך מאפס אל מרחב עבודה מחושל לגמרי.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (עם טקסט)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "איך זה עובד",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Foundry קורא את המניפסט שלך, פותר את גרף התלויות בעזרת Tongs, ומייצר כל פריט תצורה בצורה דטרמיניסטית. אותו קלט מפיק תמיד את אותו פלט — ללא תופעות לוואי, ללא מצב נסתר.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (עם תיאור)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "עדכונים מהמפחה",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "פילוסופיה, מדדי ביצועים, והדעות ששחררנו לעולם.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "למה הפסקנו לכתוב קבצי תצורה",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "סחף תצורה הוא הרוצח השקט של מרחבי עבודה. בנינו את Foundry כי האמנו שכוונה צריכה להיות דקלרטיבית.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "חישול Monorepo עם 200 חבילות ב-14 שניות",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "כיצד מטמון Quench ומקביליות Bellows הפכו בנייה של שתים-עשרה דקות לחישול של ארבע-עשרה שניות.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "כללי Warden שכמעט לא שוחררו",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "כתבנו 380 כללי לינטינג וזרקנו 60. הנה מה ששרד, והוויכוחים שכמעט פילגו את הצוות.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (ללא תיאור)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "עדכונים אחרונים",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Foundry 2.4: מצב Crucible אוטומטי וזיהוי Slag",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "מעתה, Crucible מייצר מחדש את שלדי הבדיקות אוטומטית בכל חישול, ו-Slag מזהה תלויות שאינן בשימוש על פני גרף מרחב העבודה כולו.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (שימוש בתוך הטקסט)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Foundry משתמש ב",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.manifest.title": {
+    "message": "קובץ תצורת מרחב העבודה",
+    "description": "Showcase Terminology hover title for manifest"
+  },
+  "showcase.terminology.manifest.label": {
+    "message": "מניפסט",
+    "description": "Showcase Terminology displayed text for manifest"
+  },
+  "showcase.terminology.paragraph1.afterManifest": {
+    "message": " כדי להניע את כל תהליכי יצירת הקוד וההגדרה. כל חבילה במרחב העבודה מנוהלת בתהליך ה",
+    "description": "Showcase Terminology paragraph 1 fragment after manifest"
+  },
+  "showcase.terminology.forge.title": {
+    "message": "תהליך יצירת התצורה",
+    "description": "Showcase Terminology hover title for forge"
+  },
+  "showcase.terminology.forge.label": {
+    "message": "חישול",
+    "description": "Showcase Terminology displayed text for forge"
+  },
+  "showcase.terminology.paragraph1.afterForge": {
+    "message": " ששומר על סנכרון בין כל הפריטים. כשצריך לאמת את איכות הקוד, מנוע ",
+    "description": "Showcase Terminology paragraph 1 fragment after forge"
+  },
+  "showcase.terminology.warden.title": {
+    "message": "מנוע ניתוח סטטי",
+    "description": "Showcase Terminology hover title for Warden"
+  },
+  "showcase.terminology.paragraph1.afterWarden": {
+    "message": " מריץ כל כלל ללא הגדרה נוספת.",
+    "description": "Showcase Terminology paragraph 1 fragment after Warden"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "בעזרת ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.presetSystem.title": {
+    "message": "ערכת preset לאוסף כללים",
+    "description": "Showcase Terminology hover title for preset system"
+  },
+  "showcase.terminology.presetSystem.label": {
+    "message": "מערכת ה-preset",
+    "description": "Showcase Terminology displayed text for preset system"
+  },
+  "showcase.terminology.paragraph2.afterPreset": {
+    "message": ", צוותים חולקים מקור אמת יחיד עבור ",
+    "description": "Showcase Terminology paragraph 2 fragment after preset system"
+  },
+  "showcase.terminology.lintingRules.title": {
+    "message": "כללי ניתוח סטטי",
+    "description": "Showcase Terminology hover title for linting rules"
+  },
+  "showcase.terminology.lintingRules.label": {
+    "message": "כללי לינטינג",
+    "description": "Showcase Terminology displayed text for linting rules"
+  },
+  "showcase.terminology.paragraph2.afterLinting": {
+    "message": " ו",
+    "description": "Showcase Terminology paragraph 2 fragment after linting rules"
+  },
+  "showcase.terminology.alloySettings.title": {
+    "message": "תצורת המהדר",
+    "description": "Showcase Terminology hover title for Alloy settings"
+  },
+  "showcase.terminology.alloySettings.label": {
+    "message": "הגדרות Alloy",
+    "description": "Showcase Terminology displayed text for Alloy settings"
+  },
+  "showcase.terminology.paragraph2.afterAlloy": {
+    "message": ", בלי לשכפל קבצי תצורה.",
+    "description": "Showcase Terminology paragraph 2 fragment after Alloy settings"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (עם כיתוב)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "סמל המותג מוטבע בתוך Frame — מסגרת חדה, כיתוב בגופן monospace.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "תמונה ממוזערת של מותג Foundry.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (ללא כיתוב)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (שתי החנויות)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "הורידו את האפליקציה הנלווית",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (App Store בלבד)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "זמין ב-iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (Google Play בלבד)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "זמין ב-Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (ללא תווית)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

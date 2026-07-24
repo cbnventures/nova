@@ -1,0 +1,602 @@
+{
+  "home.layout.description": {
+    "message": "Lantern आपके पूरे घर पर नज़र रखता है — ज़ोन, मोशन, आर्म/डिसआर्म — कभी आवाज़ ऊँची किए बिना।",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Lantern - सतर्क, आत्मीय, हमेशा घर पर",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "पूरे घर की निगरानी",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "सतर्क, आत्मीय, हमेशा घर पर।",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Lantern आपके पूरे घर पर नज़र रखता है — ज़ोन, मोशन, आर्म/डिसआर्म — कभी आवाज़ ऊँची किए बिना। हर कमरा, हर दरवाज़ा, हर शांत पल, कोमलता से सँभाला हुआ।",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "शुरू करें",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Threadbare पर देखें",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.zones.title": {
+    "message": "ज़ोन",
+    "description": "Front page Features card title for Zones"
+  },
+  "home.features.zones.description": {
+    "message": "डिवाइस को उनके स्थान के अनुसार समूहित करें — परिधि, भीतरी हिस्सा, सोने के कमरे। किसी भी ज़ोन को स्वतंत्र रूप से आर्म करें। नाम लेकर, कोमलता से डिसआर्म करें। Lantern कभी अपनी आवाज़ ऊँची नहीं करता।",
+    "description": "Front page Features card description for Zones"
+  },
+  "home.features.motionEvents.title": {
+    "message": "मोशन इवेंट्स",
+    "description": "Front page Features card title for Motion Events"
+  },
+  "home.features.motionEvents.description": {
+    "message": "हर हलचल दिशा और एक वैकल्पिक कॉन्फिडेंस बैंड के साथ इवेंट स्ट्रीम से होकर गुज़रती है। रीप्ले करें, फ़िल्टर करें, किसी हब को सौंप दें। कुछ भी छूटता नहीं।",
+    "description": "Front page Features card description for Motion Events"
+  },
+  "home.features.contactSensors.title": {
+    "message": "कॉन्टैक्ट सेंसर",
+    "description": "Front page Features card title for Contact Sensors"
+  },
+  "home.features.contactSensors.description": {
+    "message": "दरवाज़ा खुला, खिड़की अटकी, गेट बंद — हर कॉन्टैक्ट इवेंट पर समय अंकित होता है और उसे एक शांत बहीखाते में सहेजा जाता है। कमरे से बाहर निकले बिना सेंसर हिस्ट्री देखें।",
+    "description": "Front page Features card description for Contact Sensors"
+  },
+  "home.features.armDisarm.title": {
+    "message": "आर्म / डिसआर्म",
+    "description": "Front page Features card title for Arm / Disarm"
+  },
+  "home.features.armDisarm.description": {
+    "message": "ज़ोन के हिसाब से, यूज़र के हिसाब से, या शेड्यूल के हिसाब से आर्म या डिसआर्म करें। किसी भरोसेमंद व्यक्ति को नियंत्रण सौंपें — नाम से, पासफ़्रेज़ से, या HomeKit Home Hub की मौजूदगी से।",
+    "description": "Front page Features card description for Arm / Disarm"
+  },
+  "home.features.deviceDiscovery.title": {
+    "message": "डिवाइस डिस्कवरी",
+    "description": "Front page Features card title for Device Discovery"
+  },
+  "home.features.deviceDiscovery.description": {
+    "message": "Lantern आपके हब पर मौजूद हर सेंसर और कॉन्टैक्ट डिवाइस को अपने आप ढूँढ लेता है। न मैन्युअल पेयरिंग, न कॉन्फ़िगरेशन फ़ाइलें। जो पहले से मौजूद है, उसे यह खोज निकालता है।",
+    "description": "Front page Features card description for Device Discovery"
+  },
+  "home.features.sensorHistory.title": {
+    "message": "सेंसर हिस्ट्री",
+    "description": "Front page Features card title for Sensor History"
+  },
+  "home.features.sensorHistory.description": {
+    "message": "जो कुछ भी हुआ उसका एक शांत बहीखाता — मोशन, कॉन्टैक्ट, आर्म स्टेट — ज़ोन और समय के अनुसार क्रमबद्ध। डैशबोर्ड छोड़े बिना पूरे हफ़्ते पीछे तक स्क्रॉल करें।",
+    "description": "Front page Features card description for Sensor History"
+  },
+  "home.stats.heading": {
+    "message": "आँकड़ों में",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.zones.label": {
+    "message": "डिफ़ॉल्ट ज़ोन",
+    "description": "Front page Stats label for default zones count"
+  },
+  "home.stats.configFiles.label": {
+    "message": "कॉन्फ़िग फ़ाइलें",
+    "description": "Front page Stats label for config files count"
+  },
+  "home.stats.handoff.label": {
+    "message": "हैंडऑफ़ के लिए तैयार",
+    "description": "Front page Stats label for handoff readiness"
+  },
+  "home.stats.sensorHistory.label": {
+    "message": "सेंसर हिस्ट्री",
+    "description": "Front page Stats label for sensor history"
+  },
+  "home.spotlight.heading": {
+    "message": "हर ज़ोन, चुपचाप सँभाला हुआ",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "बताएँ कौन कहाँ रहता है। बाकी पर Lantern नज़र रखता है।",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "चलते-फिरते अपने ज़ोन संभालें",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "बरामदे की रोशनी से",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "घर से अपडेट, पैटर्न और शांत नोट्स।",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Lantern ब्लॉक शोकेस, जो docusaurus-preset-nova के हर ब्लॉक को प्रदर्शित करता है।",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Lantern प्रीसेट का हर ब्लॉक, सैंपल डेटा के साथ रेंडर किया गया।",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (पूर्ण)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "ब्लॉक शोकेस",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "हर Lantern ब्लॉक, एक ही जगह प्रदर्शित।",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "यह पेज @cbnventures/docusaurus-preset-nova/blocks के हर ब्लॉक को Lantern की दुनिया के डेटा के साथ रेंडर करता है, ताकि आप देख सकें कि वे कैसे दिखते और व्यवहार करते हैं।",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "डॉक्यूमेंटेशन पढ़ें",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Threadbare पर देखें",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (न्यूनतम)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "सतर्क, आत्मीय, हमेशा घर पर।",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Lantern आपके पूरे घर पर नज़र रखता है — ज़ोन, मोशन, आर्म/डिसआर्म — कभी आवाज़ ऊँची किए बिना।",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "शुरू करें",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (डिफ़ॉल्ट)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "मुझे पसंद है ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (बिना उपसर्ग)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "तेज़",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "लचीला",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "मुफ़्त",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (धीमी गति)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "बना है ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "डेवलपर्स के लिए",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "डिज़ाइनर्स के लिए",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (बिना लूप)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "आपका स्वागत है ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Spark से इंस्टॉल करें",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "या Loom Registry इस्तेमाल करें",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (बिना लेबल)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "त्वरित इंस्टॉल",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (आइकन के साथ)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "घर-परिवार Lantern को क्यों चुनते हैं",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.zones.title": {
+    "message": "ज़ोन",
+    "description": "Showcase Features (with icons) card title for Zones"
+  },
+  "showcase.featuresIcons.zones.description": {
+    "message": "डिवाइस को उनके स्थान के अनुसार समूहित करें — परिधि, भीतरी हिस्सा, सोने के कमरे। किसी भी ज़ोन को स्वतंत्र रूप से आर्म करें, नाम लेकर कोमलता से डिसआर्म करें।",
+    "description": "Showcase Features (with icons) card description for Zones"
+  },
+  "showcase.featuresIcons.motionEvents.title": {
+    "message": "मोशन इवेंट्स",
+    "description": "Showcase Features (with icons) card title for Motion Events"
+  },
+  "showcase.featuresIcons.motionEvents.description": {
+    "message": "हर हलचल दिशा और एक वैकल्पिक कॉन्फिडेंस बैंड के साथ इवेंट स्ट्रीम से होकर गुज़रती है। रीप्ले करें, फ़िल्टर करें, किसी हब को सौंप दें।",
+    "description": "Showcase Features (with icons) card description for Motion Events"
+  },
+  "showcase.featuresIcons.armDisarm.title": {
+    "message": "आर्म / डिसआर्म",
+    "description": "Showcase Features (with icons) card title for Arm / Disarm"
+  },
+  "showcase.featuresIcons.armDisarm.description": {
+    "message": "ज़ोन, यूज़र या शेड्यूल के हिसाब से आर्म या डिसआर्म करें। किसी भरोसेमंद व्यक्ति को नाम, पासफ़्रेज़ या HomeKit की मौजूदगी से नियंत्रण सौंपें।",
+    "description": "Showcase Features (with icons) card description for Arm / Disarm"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (बिना आइकन, बिना हेडिंग)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.contactSensors.title": {
+    "message": "कॉन्टैक्ट सेंसर",
+    "description": "Showcase Features (no icons) card title for Contact Sensors"
+  },
+  "showcase.featuresNoIcons.contactSensors.description": {
+    "message": "दरवाज़ा खुला, खिड़की अटकी, गेट बंद — हर कॉन्टैक्ट इवेंट पर समय अंकित होता है और उसे एक शांत बहीखाते में सहेजा जाता है।",
+    "description": "Showcase Features (no icons) card description for Contact Sensors"
+  },
+  "showcase.featuresNoIcons.deviceDiscovery.title": {
+    "message": "डिवाइस डिस्कवरी",
+    "description": "Showcase Features (no icons) card title for Device Discovery"
+  },
+  "showcase.featuresNoIcons.deviceDiscovery.description": {
+    "message": "Lantern आपके हब पर मौजूद हर सेंसर और कॉन्टैक्ट डिवाइस को अपने आप ढूँढ लेता है। न मैन्युअल पेयरिंग, न कॉन्फ़िगरेशन फ़ाइलें।",
+    "description": "Showcase Features (no icons) card description for Device Discovery"
+  },
+  "showcase.featuresNoIcons.sensorHistory.title": {
+    "message": "सेंसर हिस्ट्री",
+    "description": "Showcase Features (no icons) card title for Sensor History"
+  },
+  "showcase.featuresNoIcons.sensorHistory.description": {
+    "message": "जो कुछ भी हुआ उसका एक शांत बहीखाता — मोशन, कॉन्टैक्ट, आर्म स्टेट — ज़ोन और समय के अनुसार क्रमबद्ध।",
+    "description": "Showcase Features (no icons) card description for Sensor History"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (छह आइटम, मिश्रित आइकन)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "सब कुछ एक ही घर में",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.zones.title": {
+    "message": "ज़ोन",
+    "description": "Showcase Features (six items) card title for Zones"
+  },
+  "showcase.featuresSix.zones.description": {
+    "message": "कमरे, गलियारे, बाहरी हिस्से या उपकरण समूह के अनुसार समूहित करें। स्वतंत्र रूप से आर्म करें। नाम लेकर कोमलता से डिसआर्म करें।",
+    "description": "Showcase Features (six items) card description for Zones"
+  },
+  "showcase.featuresSix.motionEvents.title": {
+    "message": "मोशन इवेंट्स",
+    "description": "Showcase Features (six items) card title for Motion Events"
+  },
+  "showcase.featuresSix.motionEvents.description": {
+    "message": "दिशात्मक मोशन, वैकल्पिक कॉन्फिडेंस बैंड के साथ। रीप्ले करें, फ़िल्टर करें, और बिना कोई इवेंट छोड़े किसी हब को सौंप दें।",
+    "description": "Showcase Features (six items) card description for Motion Events"
+  },
+  "showcase.featuresSix.contactSensors.title": {
+    "message": "कॉन्टैक्ट सेंसर",
+    "description": "Showcase Features (six items) card title for Contact Sensors"
+  },
+  "showcase.featuresSix.contactSensors.description": {
+    "message": "दरवाज़ा, खिड़की, गेट — हर कॉन्टैक्ट इवेंट पर समय अंकित होता है और उसे सेंसर हिस्ट्री बहीखाते में सहेजा जाता है।",
+    "description": "Showcase Features (six items) card description for Contact Sensors"
+  },
+  "showcase.featuresSix.armDisarm.title": {
+    "message": "आर्म / डिसआर्म",
+    "description": "Showcase Features (six items) card title for Arm / Disarm"
+  },
+  "showcase.featuresSix.armDisarm.description": {
+    "message": "ज़ोन, यूज़र या शेड्यूल के हिसाब से। नाम, पासफ़्रेज़ या HomeKit Home Hub की मौजूदगी से हैंडऑफ़।",
+    "description": "Showcase Features (six items) card description for Arm / Disarm"
+  },
+  "showcase.featuresSix.deviceDiscovery.title": {
+    "message": "डिवाइस डिस्कवरी",
+    "description": "Showcase Features (six items) card title for Device Discovery"
+  },
+  "showcase.featuresSix.deviceDiscovery.description": {
+    "message": "आपके हब पर मौजूद हर सेंसर और कॉन्टैक्ट डिवाइस की स्वतः खोज। कोई मैन्युअल पेयरिंग नहीं।",
+    "description": "Showcase Features (six items) card description for Device Discovery"
+  },
+  "showcase.featuresSix.sensorHistory.title": {
+    "message": "सेंसर हिस्ट्री",
+    "description": "Showcase Features (six items) card title for Sensor History"
+  },
+  "showcase.featuresSix.sensorHistory.description": {
+    "message": "मोशन, कॉन्टैक्ट और आर्म स्टेट एक शांत बहीखाते में। डैशबोर्ड छोड़े बिना पूरे हफ़्ते पीछे तक स्क्रॉल करें।",
+    "description": "Showcase Features (six items) card description for Sensor History"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (हेडिंग और विवरण के साथ)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Lantern मेट्रिक्स",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "एक सामान्य चार-ज़ोन वाले घरेलू सेटअप के मुख्य आँकड़े।",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.zones.label": {
+    "message": "डिफ़ॉल्ट ज़ोन",
+    "description": "Showcase Stats (full) label for default zones"
+  },
+  "showcase.statsFull.devices.label": {
+    "message": "खोजे गए डिवाइस",
+    "description": "Showcase Stats (full) label for devices discovered"
+  },
+  "showcase.statsFull.handoff.label": {
+    "message": "हैंडऑफ़ के लिए तैयार",
+    "description": "Showcase Stats (full) label for handoff readiness"
+  },
+  "showcase.statsFull.configFiles.label": {
+    "message": "कॉन्फ़िग फ़ाइलें",
+    "description": "Showcase Stats (full) label for config files"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (बिना हेडिंग)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.zones.label": {
+    "message": "ज़ोन",
+    "description": "Showcase Stats (no heading) label for zones"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "कॉन्फ़िग फ़ाइलें",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.sensorHistory.label": {
+    "message": "सेंसर हिस्ट्री",
+    "description": "Showcase Stats (no heading) label for sensor history"
+  },
+  "showcase.statsNoHeading.manifest.label": {
+    "message": "मैनिफ़ेस्ट",
+    "description": "Showcase Stats (no heading) label for manifest"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (कोड के साथ)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "त्वरित शुरुआत",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "शून्य से एक निगरानी वाले घर तक पहुँचने के लिए तीन कमांड।",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (टेक्स्ट के साथ)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "यह कैसे काम करता है",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Lantern आपके हब पर मौजूद हर डिवाइस को खोजता है, उन्हें ज़ोन के अनुसार समूहित करता है, और हर मोशन व कॉन्टैक्ट इवेंट को इवेंट लॉग में स्ट्रीम करता है। आर्म स्टेट स्थायी रहती हैं — पावर बंद करें, पावर चालू करें, ज़ोन को याद रहता है।",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (विवरण के साथ)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "बरामदे की रोशनी से",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "घर से अपडेट, पैटर्न और शांत नोट्स।",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "घर को पता चले बिना दूसरे कमरे से नज़र रखना",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "ऊपर की मंज़िल पर मौजूद घर के किसी सदस्य को यह पता होना चाहिए कि सामने का दरवाज़ा बंद है, बिना कुत्ते को कोई नोटिफ़िकेशन भेजे। Lantern हर इवेंट को उसके प्रकार से नहीं, बल्कि इस आधार पर भेजता है कि वह किसके लिए है।",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "छह महीनों की परिधि पर हुई हलचल, एक ही तस्वीर में",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "सामने बरामदे का मोशन सेंसर दिन में चालीस बार सक्रिय होता है। इनमें से ज़्यादातर गिलहरियाँ होती हैं। Lantern का हिस्ट्री व्यू वह जगह है जहाँ ये गिलहरियाँ एक पैटर्न बन जाती हैं।",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "आर्म/डिसआर्म किसी भरोसेमंद व्यक्ति को सौंपना",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "कोई भरोसेमंद यूज़र आपके फ़ोन के बिना ही, Lantern जिस भी ज़ोन पर नज़र रखता है उसे डिसआर्म कर सकता है। नाम, पासफ़्रेज़ या HomeKit की मौजूदगी से।",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (बिना विवरण)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "हाल के अपडेट",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Lantern 2.4: Lens फ़्लोर-प्लान ओवरले और Beacon इंक्रीमेंटल रन",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Lens अब घरेलू ज़ोन ग्राफ़ को एक फ़्लोर प्लान पर रेंडर करता है, और Beacon इंक्रीमेंटल रन को सपोर्ट करता है जो सिर्फ़ उन्हीं सेंसर का दोबारा मूल्यांकन करते हैं जिनमें बदलाव हुआ है।",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (इनलाइन उपयोग)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Lantern एक ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.zone.title": {
+    "message": "नामित कमरा, गलियारा या बाहरी समूह",
+    "description": "Showcase Terminology hover title for zone"
+  },
+  "showcase.terminology.zone.label": {
+    "message": "ज़ोन",
+    "description": "Showcase Terminology displayed text for zone"
+  },
+  "showcase.terminology.paragraph1.afterZone": {
+    "message": " का उपयोग डिवाइस को उनके स्थान के अनुसार समूहित करने के लिए करता है। हर ज़ोन को एक ",
+    "description": "Showcase Terminology paragraph 1 fragment after zone"
+  },
+  "showcase.terminology.armState.title": {
+    "message": "आर्म/डिसआर्म नियंत्रण",
+    "description": "Showcase Terminology hover title for arm state"
+  },
+  "showcase.terminology.armState.label": {
+    "message": "आर्म स्टेट",
+    "description": "Showcase Terminology displayed text for arm state"
+  },
+  "showcase.terminology.paragraph1.afterArmState": {
+    "message": " द्वारा नियंत्रित किया जाता है, जो पावर बंद-चालू होने पर भी बनी रहती है। जब कोई सेंसर सक्रिय होता है, तो घटना ",
+    "description": "Showcase Terminology paragraph 1 fragment after arm state"
+  },
+  "showcase.terminology.eventStream.title": {
+    "message": "रियल-टाइम नोटिफ़िकेशन स्ट्रीम",
+    "description": "Showcase Terminology hover title for event stream"
+  },
+  "showcase.terminology.eventStream.label": {
+    "message": "इवेंट स्ट्रीम",
+    "description": "Showcase Terminology displayed text for event stream"
+  },
+  "showcase.terminology.paragraph1.afterEventStream": {
+    "message": " से होकर गुज़रती है, बिना छूटे।",
+    "description": "Showcase Terminology paragraph 1 fragment after event stream"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "एक बार जब ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.handoffSystem.title": {
+    "message": "भरोसेमंद व्यक्ति को हैंडऑफ़",
+    "description": "Showcase Terminology hover title for handoff system"
+  },
+  "showcase.terminology.handoffSystem.label": {
+    "message": "हैंडऑफ़ सिस्टम",
+    "description": "Showcase Terminology displayed text for handoff system"
+  },
+  "showcase.terminology.paragraph2.afterHandoff": {
+    "message": " तैयार हो जाता है, परिवार ",
+    "description": "Showcase Terminology paragraph 2 fragment after handoff system"
+  },
+  "showcase.terminology.zoneAccess.title": {
+    "message": "ज़ोन आर्म/डिसआर्म एक्सेस",
+    "description": "Showcase Terminology hover title for zone access"
+  },
+  "showcase.terminology.zoneAccess.label": {
+    "message": "ज़ोन एक्सेस",
+    "description": "Showcase Terminology displayed text for zone access"
+  },
+  "showcase.terminology.paragraph2.afterZoneAccess": {
+    "message": " और ",
+    "description": "Showcase Terminology paragraph 2 fragment after zone access"
+  },
+  "showcase.terminology.sensorHistory.title": {
+    "message": "ऐतिहासिक सेंसर डेटा",
+    "description": "Showcase Terminology hover title for sensor history"
+  },
+  "showcase.terminology.sensorHistory.label": {
+    "message": "सेंसर हिस्ट्री",
+    "description": "Showcase Terminology displayed text for sensor history"
+  },
+  "showcase.terminology.paragraph2.afterSensorHistory": {
+    "message": " का नियंत्रण बिना क्रेडेंशियल साझा किए आपस में बाँट लेते हैं।",
+    "description": "Showcase Terminology paragraph 2 fragment after sensor history"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (कैप्शन के साथ)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "एक Frame के भीतर चमकता ब्रांड मार्क — आकृति और कैप्शन के साथ गर्म कागज़ का कार्ड।",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Lantern ब्रांड थंबनेल।",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (बिना कैप्शन)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (दोनों स्टोर)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "साथी ऐप डाउनलोड करें",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (सिर्फ़ App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "iOS पर उपलब्ध",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (सिर्फ़ Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Android पर उपलब्ध",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (बिना लेबल)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} मिनट का पठन",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

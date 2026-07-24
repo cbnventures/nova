@@ -1,4 +1,5 @@
 import { registerFrontmatterSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 /**
  * Tests - Frontmatter.
@@ -10,6 +11,7 @@ import { registerFrontmatterSuite } from '@cbnventures/nova/rules/vitest';
  * @since 0.20.0
  */
 registerFrontmatterSuite({
+  vitest,
   enable: 'all',
   requiredFields: [
     'title',

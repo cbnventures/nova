@@ -1,4 +1,4 @@
-import { Sandpack } from '@codesandbox/sandpack-react';
+import { SANDBOX_TEMPLATES, Sandpack } from '@codesandbox/sandpack-react';
 
 import type {
   Theme_CodeBlock_LiveEditor_IsSandpackSupported_Language,
@@ -67,8 +67,6 @@ export function isSandpackSupported(language: Theme_CodeBlock_LiveEditor_IsSandp
  *
  * @param {Theme_CodeBlock_LiveEditor_LiveEditor_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function LiveEditor(props: Theme_CodeBlock_LiveEditor_LiveEditor_Props) {
@@ -78,7 +76,7 @@ function LiveEditor(props: Theme_CodeBlock_LiveEditor_LiveEditor_Props) {
     <Sandpack
       template={template}
       files={{
-        '/App.tsx': props['code'],
+        [SANDBOX_TEMPLATES[template]['main']]: props['code'],
       }}
       options={{
         showConsole: false,

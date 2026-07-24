@@ -1,12 +1,14 @@
 import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
 import type {
-  Shared_NovaConfigConfig as SharedNovaConfigConfig,
-  Shared_NovaConfigWorkspace as SharedNovaConfigWorkspace,
-  Shared_NovaConfigWorkspace_Recipes as SharedNovaConfigWorkspaceRecipes,
-  Shared_NovaConfigWorkspaceRecipeSettings as SharedNovaConfigWorkspaceRecipeSettings,
-  Shared_NovaConfigWorkspaceRecipeTuple as SharedNovaConfigWorkspaceRecipeTuple,
-  Shared_WorkspaceManifest as SharedWorkspaceManifest,
+  Shared_NovaConfig_RecipeEntry,
+  Shared_NovaConfig_RecipeEntry_Settings,
+  Shared_NovaConfig_Recipes,
+  Shared_NovaConfig_Recipes_PackageJson,
+  Shared_NovaConfig_Recipes_PackageJsonWorkspace,
+  Shared_NovaConfigConfig,
+  Shared_NovaConfigWorkspace,
+  Shared_WorkspaceManifest,
 } from '../../../shared.d.ts';
 
 /**
@@ -14,7 +16,7 @@ import type {
  *
  * @since 0.14.0
  */
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Handle_Workspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Handle_Workspace = Shared_WorkspaceManifest;
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_Handle_RemoveUnknownKeys = boolean;
 
@@ -27,13 +29,13 @@ export type Cli_Recipe_PackageJson_Cleanup_Runner_Handle_Returns = void;
  *
  * @since 0.14.0
  */
-export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Workspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Workspace = Shared_WorkspaceManifest;
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Returns = void;
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_FileContents = Record<string, unknown>;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Manifest = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Manifest = Shared_NovaConfigWorkspace;
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_SortedKeys = Set<string>;
 
@@ -54,7 +56,7 @@ export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_ReorderedEntries
  *
  * @since 0.14.0
  */
-export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_Workspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_Workspace = Shared_WorkspaceManifest;
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_Returns = void;
 
@@ -98,30 +100,32 @@ export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_ReplaceFileNotice = string
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_NovaConfig = LibNovaConfig;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkingFile = SharedNovaConfigConfig;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkingFile = Shared_NovaConfigConfig;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkingFileWorkspaces = [string, Shared_NovaConfigWorkspace][];
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_ConfigRecipes = Shared_NovaConfig_Recipes | undefined;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleConfig = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_ConfigRecipesPackageJson = Shared_NovaConfig_Recipes_PackageJson | undefined;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleWorkspaces = [string, Shared_NovaConfigWorkspace][];
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleTuple = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligiblePath = string;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_Workspaces = SharedWorkspaceManifest[];
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleWorkspaceRecipes = Shared_NovaConfig_Recipes_PackageJsonWorkspace | undefined;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfig = [string, SharedNovaConfigWorkspace] | undefined;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleEntry = Shared_NovaConfig_RecipeEntry | undefined;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigEntry = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_Workspaces = Shared_WorkspaceManifest[];
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigEntryRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigPath = string;
+
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigEntryRecipes = Shared_NovaConfig_Recipes_PackageJsonWorkspace | undefined;
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_RemoveUnknownKeys = boolean;
 
 export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_ReorderKeys = boolean;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipe = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipe = Shared_NovaConfig_RecipeEntry | undefined;
 
-export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipeSettings = SharedNovaConfigWorkspaceRecipeSettings | undefined;
+export type Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipeSettings = Shared_NovaConfig_RecipeEntry_Settings | undefined;

@@ -152,7 +152,8 @@ afterEach(() => {
 
     if (existsSync(typedTempDir) === true) {
       rmSync(typedTempDir, {
-        recursive: true, force: true,
+        recursive: true,
+        force: true,
       });
     }
   }

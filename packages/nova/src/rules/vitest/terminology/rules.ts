@@ -3,8 +3,6 @@ import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-import { it } from 'vitest';
-
 import { slugifyHeading } from '../../../lib/markdown-slug.js';
 import {
   LIB_REGEX_PATTERN_CODE_BLOCK,
@@ -12,6 +10,7 @@ import {
   LIB_REGEX_PATTERN_TERMINOLOGY_TITLE_ATTR,
   LIB_REGEX_PATTERN_TERMINOLOGY_TO_ATTR,
 } from '../../../lib/regex.js';
+import { getActiveVitest } from '../active-vitest.js';
 import { isEnabled } from '../enable.js';
 
 import type {
@@ -93,9 +92,9 @@ import type {
 /**
  * Rules - Vitest - Terminology - Rules - Component Pattern.
  *
- * Builds the component-capture regex source for the configured component name. Capture
- * group one is the attribute string and group two is the children text. The children
- * capture cannot span nested elements (a known nova limitation carried forward).
+ * Builds the component-capture regex source for the configured component name.
+ * Capture group one is the attribute string and group two holds the children text, which
+ * cannot span nested elements (a known nova limitation carried forward).
  *
  * @param {Rules_Vitest_Terminology_Rules_ComponentPattern_ComponentName} componentName - Component name.
  *
@@ -104,7 +103,7 @@ import type {
  * @since 0.20.0
  */
 export function componentPattern(componentName: Rules_Vitest_Terminology_Rules_ComponentPattern_ComponentName): Rules_Vitest_Terminology_Rules_ComponentPattern_Returns {
-  return `<${componentName}\\s+([^>]*)>([^<]*)</${componentName}>`;
+  return `<${componentName}(?=[\\s>])\\s*([^>]*)>([^<]*)</${componentName}>`;
 }
 
 /**
@@ -162,7 +161,7 @@ export async function titleAttrPresent(config: Rules_Vitest_Terminology_Rules_Ti
   const componentRegexSource: Rules_Vitest_Terminology_Rules_TitleAttrPresent_ComponentRegexSource = componentPattern(config['componentName']);
 
   for (const file of files) {
-    it(`terminology title attributes present in ${file}`, async () => {
+    getActiveVitest().it(`terminology title attributes present in ${file}`, async () => {
       const filePath: Rules_Vitest_Terminology_Rules_TitleAttrPresent_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Terminology_Rules_TitleAttrPresent_Content = await readFile(filePath, 'utf-8');
       const strippedContent: Rules_Vitest_Terminology_Rules_TitleAttrPresent_StrippedContent = content.replace(new RegExp(LIB_REGEX_PATTERN_CODE_BLOCK, 'g'), '');
@@ -212,7 +211,7 @@ export async function toAttrPresent(config: Rules_Vitest_Terminology_Rules_ToAtt
   const componentRegexSource: Rules_Vitest_Terminology_Rules_ToAttrPresent_ComponentRegexSource = componentPattern(config['componentName']);
 
   for (const file of files) {
-    it(`terminology to attributes present in ${file}`, async () => {
+    getActiveVitest().it(`terminology to attributes present in ${file}`, async () => {
       const filePath: Rules_Vitest_Terminology_Rules_ToAttrPresent_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Terminology_Rules_ToAttrPresent_Content = await readFile(filePath, 'utf-8');
       const strippedContent: Rules_Vitest_Terminology_Rules_ToAttrPresent_StrippedContent = content.replace(new RegExp(LIB_REGEX_PATTERN_CODE_BLOCK, 'g'), '');
@@ -262,7 +261,7 @@ export async function childrenNonempty(config: Rules_Vitest_Terminology_Rules_Ch
   const componentRegexSource: Rules_Vitest_Terminology_Rules_ChildrenNonempty_ComponentRegexSource = componentPattern(config['componentName']);
 
   for (const file of files) {
-    it(`terminology children non-empty in ${file}`, async () => {
+    getActiveVitest().it(`terminology children non-empty in ${file}`, async () => {
       const filePath: Rules_Vitest_Terminology_Rules_ChildrenNonempty_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Terminology_Rules_ChildrenNonempty_Content = await readFile(filePath, 'utf-8');
       const strippedContent: Rules_Vitest_Terminology_Rules_ChildrenNonempty_StrippedContent = content.replace(new RegExp(LIB_REGEX_PATTERN_CODE_BLOCK, 'g'), '');
@@ -313,7 +312,7 @@ export async function toPointsToBase(config: Rules_Vitest_Terminology_Rules_ToPo
   const expectedBase: Rules_Vitest_Terminology_Rules_ToPointsToBase_ExpectedBase = config['expectedBase'];
 
   for (const file of files) {
-    it(`terminology to points to base in ${file}`, async () => {
+    getActiveVitest().it(`terminology to points to base in ${file}`, async () => {
       const filePath: Rules_Vitest_Terminology_Rules_ToPointsToBase_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Terminology_Rules_ToPointsToBase_Content = await readFile(filePath, 'utf-8');
       const strippedContent: Rules_Vitest_Terminology_Rules_ToPointsToBase_StrippedContent = content.replace(new RegExp(LIB_REGEX_PATTERN_CODE_BLOCK, 'g'), '');
@@ -378,7 +377,7 @@ export async function anchorResolves(config: Rules_Vitest_Terminology_Rules_Anch
   const expectedBase: Rules_Vitest_Terminology_Rules_AnchorResolves_ExpectedBase = config['expectedBase'];
 
   for (const file of files) {
-    it(`terminology anchors resolve in ${file}`, async () => {
+    getActiveVitest().it(`terminology anchors resolve in ${file}`, async () => {
       const filePath: Rules_Vitest_Terminology_Rules_AnchorResolves_FilePath = join(config['rootDir'], file);
       const content: Rules_Vitest_Terminology_Rules_AnchorResolves_Content = await readFile(filePath, 'utf-8');
       const strippedContent: Rules_Vitest_Terminology_Rules_AnchorResolves_StrippedContent = content.replace(new RegExp(LIB_REGEX_PATTERN_CODE_BLOCK, 'g'), '');
@@ -442,7 +441,7 @@ export function componentValidation(config: Rules_Vitest_Terminology_Rules_Compo
     return;
   }
 
-  it(`terminology component validation is active${''}`, () => {
+  getActiveVitest().it(`terminology component validation is active${''}`, () => {
     strictEqual(existsSync(terminologyPath), true, 'terminology source page must exist when validation is active');
 
     return;

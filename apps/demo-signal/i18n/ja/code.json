@@ -1,0 +1,526 @@
+{
+  "home.layout.description": {
+    "message": "Signal は、意図がたどる道のりを追跡します。最初のインプレッションから最終アクションまで。何がクリックされたかではなく、なぜクリックされたのかを解き明かします。",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Signal - すべてのクリックには物語がある",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "アトリビューションエンジン",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "すべてのクリックには物語がある。多くのツールは、その筋書きを見逃している。",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Signal は、意図がたどる道のりを追跡します。最初のインプレッションから最終アクションまで。何がクリックされたかではなく、なぜクリックされたのか。そして、あと一歩で何が起こりかけていたのかまで。",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "はじめる",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Threadbare で見る",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.beacon.description": {
+    "message": "リンク生成エンジン。アトリビューションのメタデータを埋め込んだブランド短縮リンクは、URL 短縮やメッセージングアプリ、クロスデバイスの引き継ぎを越えても失われません。すべてのリンクが、ひとつのセンサーです。",
+    "description": "Front page Features card description for Beacon"
+  },
+  "home.features.prism.description": {
+    "message": "マルチタッチアトリビューションのモデラー。チャネルをまたいでコンバージョン経路を追跡し、あらゆるタッチポイントに加重クレジットを割り当て、最初の接点から最終アクションまでの道のり全体を再構築します。",
+    "description": "Front page Features card description for Prism"
+  },
+  "home.features.pulse.description": {
+    "message": "リアルタイムのクリックストリーム。geo、デバイス、referrer、アトリビューションデータなど、あらゆるインタラクションのライブフィードが、クリックから 1 秒以内に届きます。",
+    "description": "Front page Features card description for Pulse"
+  },
+  "home.features.aperture.description": {
+    "message": "キャンペーンスナップショット。特定時点のパフォーマンスを捉え、比較オーバーレイで重ね合わせます。キャンペーンの任意の 2 つの時点の間で、何が変わったのかを正確に把握できます。",
+    "description": "Front page Features card description for Aperture"
+  },
+  "home.features.resonance.description": {
+    "message": "オーディエンス重複ディテクター。キャンペーンやセグメントをまたいで、オーディエンスがどこで重なり合っているかを見つけ出します。同じ人へ届けるために二重に支払うのは、もう終わりです。",
+    "description": "Front page Features card description for Resonance"
+  },
+  "home.features.flare.description": {
+    "message": "QR・deep link 生成ツール。完全なトレースメタデータで、物理とデジタルのアトリビューションを橋渡しします。すべてのスキャンが、デジタルのクリックと同じ情報を運びます。",
+    "description": "Front page Features card description for Flare"
+  },
+  "home.stats.heading": {
+    "message": "数字で見る",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.latency.label": {
+    "message": "リダイレクトの遅延",
+    "description": "Front page Stats label for redirect latency"
+  },
+  "home.stats.links.label": {
+    "message": "追跡したリンク数",
+    "description": "Front page Stats label for links traced"
+  },
+  "home.stats.uptime.label": {
+    "message": "稼働率",
+    "description": "Front page Stats label for uptime"
+  },
+  "home.stats.regions.label": {
+    "message": "地域",
+    "description": "Front page Stats label for regions"
+  },
+  "home.spotlight.heading": {
+    "message": "Beacon からアトリビューションへ",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "すべてのリンクがセンサー。すべてのリダイレクトがデータポイント。Prism がそれらをつなぎ、ひとつのアトリビューション経路にまとめ上げます。",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "外出先でもキャンペーンをモニタリング",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "アトリビューションインサイト",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "ケーススタディ、技術的な深掘り、そしてあなたのクリックストリームに潜むパターン。",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "docusaurus-preset-nova のすべてのブロックを実演する、Signal ブロックショーケース。",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Signal プリセットのすべてのブロックを、サンプルデータで表示しています。",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero（フル）",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "ブロックショーケース",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "すべての Signal ブロックを、一箇所で実演。",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "このページは、@cbnventures/docusaurus-preset-nova/blocks の各ブロックを Signal の世界観のデータでレンダリングし、見た目と挙動を確認できるようにしています。",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "ドキュメントを読む",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Threadbare で見る",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero（ミニマル）",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Signal は、意図がたどる道のりを追跡します。最初のインプレッションから最終アクションまで。何がクリックされたかではなく、なぜクリックされたのか。そして、あと一歩で何が起こりかけていたのかまで。",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "はじめる",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter（デフォルト）",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "私が愛するのは ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter（プレフィックスなし）",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "高速",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "柔軟",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "無料",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter（低速タイミング）",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "対象は",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "開発者",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "デザイナー",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter（ループなし）",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "ようこそ ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.item.installStripIcon.title": {
+    "message": "InstallStrip（copyTarget: icon）",
+    "description": "Showcase item title for InstallStrip (icon copyTarget variant)"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Spark でインストール",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.item.installStripBlock.title": {
+    "message": "InstallStrip（copyTarget: block）",
+    "description": "Showcase item title for InstallStrip (block copyTarget variant)"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "または Loom Registry を使う",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip（ラベルなし）",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.item.installStripText.title": {
+    "message": "InstallStrip（copyTarget: text）",
+    "description": "Showcase item title for InstallStrip (text copyTarget variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "クイックインストール",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features（アイコンあり）",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "チームが Signal を選ぶ理由",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.beacon.description": {
+    "message": "リンク生成エンジン。アトリビューションのメタデータを埋め込んだブランド短縮リンクは、UTM パラメータが機能しない場面でも生き残ります。",
+    "description": "Showcase Features (with icons) card description for Beacon"
+  },
+  "showcase.featuresIcons.prism.description": {
+    "message": "マルチタッチアトリビューションのモデラー。チャネルをまたいでコンバージョン経路を追跡し、あらゆるタッチポイントに加重クレジットを割り当てます。",
+    "description": "Showcase Features (with icons) card description for Prism"
+  },
+  "showcase.featuresIcons.pulse.description": {
+    "message": "リアルタイムのクリックストリーム。geo、デバイス、referrer、アトリビューションデータを伴う、インタラクションのライブフィード。",
+    "description": "Showcase Features (with icons) card description for Pulse"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features（アイコンなし・見出しなし）",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.aperture.description": {
+    "message": "キャンペーンスナップショット。特定時点のパフォーマンスを捉え、複数の時間帯にわたって比較オーバーレイで重ね合わせます。",
+    "description": "Showcase Features (no icons) card description for Aperture"
+  },
+  "showcase.featuresNoIcons.resonance.description": {
+    "message": "オーディエンス重複ディテクター。キャンペーンやセグメントをまたいで、オーディエンスがどこで重なり合っているかを見つけ出します。",
+    "description": "Showcase Features (no icons) card description for Resonance"
+  },
+  "showcase.featuresNoIcons.flare.description": {
+    "message": "QR・deep link 生成ツール。すべてのスキャンに完全なアトリビューションチェーンを備えた、物理からデジタルへの架け橋。",
+    "description": "Showcase Features (no icons) card description for Flare"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features（6 項目・アイコン混在）",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "アトリビューションのフルスタック",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.beacon.description": {
+    "message": "トレースメタデータを埋め込んだブランドリンクを生成します。すべてのリンクが、アトリビューションネットワークのセンサーです。",
+    "description": "Showcase Features (six items) card description for Beacon"
+  },
+  "showcase.featuresSix.prism.description": {
+    "message": "コンバージョン経路の全体を再構築します。線形、減衰、位置ベース、そしてカスタムのアトリビューションモデルに対応します。",
+    "description": "Showcase Features (six items) card description for Prism"
+  },
+  "showcase.featuresSix.pulse.description": {
+    "message": "クリックイベントをリアルタイムでストリーミングします。キャンペーン、チャネル、geo、デバイスで絞り込めます。",
+    "description": "Showcase Features (six items) card description for Pulse"
+  },
+  "showcase.featuresSix.aperture.description": {
+    "message": "変更不能なキャンペーンスナップショットを記録します。任意の 2 つの時点を比較して、何が変わったかを確認できます。",
+    "description": "Showcase Features (six items) card description for Aperture"
+  },
+  "showcase.featuresSix.resonance.description": {
+    "message": "セグメントをまたいでオーディエンスの重複を測定します。複数のキャンペーンが同じ訪問者を奪い合っている場面を検出します。",
+    "description": "Showcase Features (six items) card description for Resonance"
+  },
+  "showcase.featuresSix.flare.description": {
+    "message": "完全なアトリビューションを備えた QR コードと deep link を生成します。印刷物、イベント、デジタルを橋渡しします。",
+    "description": "Showcase Features (six items) card description for Flare"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats（見出しと説明あり）",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "アトリビューション指標",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Signal プラットフォーム全体の主要パフォーマンス指標。",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "リダイレクトの遅延",
+    "description": "Showcase Stats (full) label for redirect latency"
+  },
+  "showcase.statsFull.links.label": {
+    "message": "追跡したリンク数",
+    "description": "Showcase Stats (full) label for links traced"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "稼働率 SLA",
+    "description": "Showcase Stats (full) label for uptime SLA"
+  },
+  "showcase.statsFull.regions.label": {
+    "message": "対応地域",
+    "description": "Showcase Stats (full) label for regions served"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats（見出しなし）",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "サブツール",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.models.label": {
+    "message": "アトリビューションモデル",
+    "description": "Showcase Stats (no heading) label for attribution models"
+  },
+  "showcase.statsNoHeading.operators.label": {
+    "message": "セグメント演算子",
+    "description": "Showcase Stats (no heading) label for segment operators"
+  },
+  "showcase.statsNoHeading.pixels.label": {
+    "message": "必要なトラッキングピクセル",
+    "description": "Showcase Stats (no heading) label for tracking pixels required"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight（コードあり）",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "クイックスタート",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "ゼロから、完全にアトリビューションされたリンクを作るまで、わずか 3 つのコマンド。",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight（テキストあり）",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "仕組み",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Signal は、アトリビューションのメタデータをリンクそのものに埋め込みます。削ぎ落とされてしまうクエリパラメータでもなく、消えてしまう referrer ヘッダーでもありません。クリックが起きれば Pulse が捕捉し、コンバージョンが起きれば Prism が経路全体を再構築します。トラッキングピクセルは不要。ページ側のスクリプトも不要です。",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview（説明あり）",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "アトリビューションインサイト",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "ケーススタディ、キャンペーンのフォレンジック分析、そしてあなたのクリックストリームに潜むパターン。",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "あるバイラルキャンペーンをたどると、火曜のニュースレターの 1 本のリンクに行き着いた",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "40% のコンバージョン急増をたどると、誰も重要視していなかったサイドバーのリンクに行き着いた。",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "ダークトラフィック: 見えないクリックたち",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "誰かが URL をコピーしてメッセージングアプリに貼ると、referrer は消えます。それでも、Beacon のメタデータは生き残ります。",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "ラストクリックアトリビューションの終焉",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "最後のタッチポイントだけに功績を認めるのは、嘘です。Prism は、経路全体にクレジットを配分します。",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview（説明なし）",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "最近の更新",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Signal 2.1: Resonance の重複マップと Flare の一括生成",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Resonance は無制限のセグメントにわたってオーディエンスの重複を可視化できるようになり、Flare は CSV からの QR 一括生成に対応しました。",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology（インラインでの使用）",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Signal は ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.beaconLinks.title": {
+    "message": "ブランド化されたアトリビューションリンク",
+    "description": "Showcase Terminology hover title for Beacon links"
+  },
+  "showcase.terminology.beaconLinks.label": {
+    "message": "Beacon リンク",
+    "description": "Showcase Terminology displayed text for Beacon links"
+  },
+  "showcase.terminology.paragraph1.afterBeacon": {
+    "message": "を使って、インプレッションからコンバージョンまでの経路を計測します。各クリックは ",
+    "description": "Showcase Terminology paragraph 1 fragment after Beacon links"
+  },
+  "showcase.terminology.pulse.title": {
+    "message": "リアルタイムのクリックストリーム",
+    "description": "Showcase Terminology hover title for Pulse"
+  },
+  "showcase.terminology.paragraph1.afterPulse": {
+    "message": " が捕捉し、",
+    "description": "Showcase Terminology paragraph 1 fragment after Pulse"
+  },
+  "showcase.terminology.prism.title": {
+    "message": "マルチタッチアトリビューションエンジン",
+    "description": "Showcase Terminology hover title for Prism"
+  },
+  "showcase.terminology.paragraph1.afterPrism": {
+    "message": " へ送り込まれ、フルパスのアトリビューションを実現します。",
+    "description": "Showcase Terminology paragraph 1 fragment after Prism"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "また、",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.aperture.title": {
+    "message": "特定時点のキャンペーンスナップショット",
+    "description": "Showcase Terminology hover title for Aperture snapshots"
+  },
+  "showcase.terminology.aperture.label": {
+    "message": "Aperture スナップショット",
+    "description": "Showcase Terminology displayed text for Aperture snapshots"
+  },
+  "showcase.terminology.paragraph2.afterAperture": {
+    "message": "を使えば、チームはキャンペーンのパフォーマンスを長期的に追跡できます。",
+    "description": "Showcase Terminology paragraph 2 fragment after Aperture"
+  },
+  "showcase.terminology.resonance.title": {
+    "message": "オーディエンス重複ディテクター",
+    "description": "Showcase Terminology hover title for Resonance engine"
+  },
+  "showcase.terminology.resonance.label": {
+    "message": "Resonance エンジン",
+    "description": "Showcase Terminology displayed text for Resonance engine"
+  },
+  "showcase.terminology.paragraph2.afterResonance": {
+    "message": "はオーディエンスの重複を明らかにし、",
+    "description": "Showcase Terminology paragraph 2 fragment after Resonance"
+  },
+  "showcase.terminology.flare.title": {
+    "message": "QR・deep link 生成ツール",
+    "description": "Showcase Terminology hover title for Flare"
+  },
+  "showcase.terminology.paragraph2.afterFlare": {
+    "message": " はアトリビューションを物理世界にまで広げます。",
+    "description": "Showcase Terminology paragraph 2 fragment after Flare"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame（キャプションあり）",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Frame ブロックを通して引き立てたブランドマーク。アトリビューションのためのキャプション付き。",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Signal のブランドサムネイル。",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame（キャプションなし）",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload（両ストア）",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "コンパニオンアプリをダウンロード",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload（App Store のみ）",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "iOS で利用可能",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload（Google Play のみ）",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Android で利用可能",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload（ラベルなし）",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "約 {readingTime} 分で読めます",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

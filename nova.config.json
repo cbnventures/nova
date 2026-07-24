@@ -58,11 +58,6 @@
   "github": {
     "owner": "cbnventures",
     "repo": "nova",
-    "recipes": {
-      "sync-identity": true,
-      "sync-features": true,
-      "sync-policies": true
-    },
     "topics": [
       "eslint-config",
       "eslint",
@@ -93,79 +88,75 @@
   "workflows": [
     {
       "template": "check-sponsor-gated-issues",
-      "suffix": "project",
+      "name": "sponsor-check",
       "triggers": [
         "issue-comment",
         "issues"
-      ],
-      "settings": {
-        "IS_ORGANIZATION": "IS_ORGANIZATION",
-        "ISSUE_LABELS": "ISSUE_LABELS",
-        "ISSUE_LIMIT_COMMENTER": "ISSUE_LIMIT_COMMENTER",
-        "ISSUE_LOCK_ON_CLOSE": "ISSUE_LOCK_ON_CLOSE",
-        "ISSUE_MESSAGE_NOT_SPONSOR": "ISSUE_MESSAGE_NOT_SPONSOR",
-        "ISSUE_MESSAGE_WELCOME": "ISSUE_MESSAGE_WELCOME",
-        "PERSONAL_ACCESS_TOKEN": "PERSONAL_ACCESS_TOKEN",
-        "SPONSOR_ACTIVE_ONLY": "SPONSOR_ACTIVE_ONLY",
-        "SPONSOR_EXEMPT_FILE_LOCATION": "SPONSOR_EXEMPT_FILE_LOCATION",
-        "SPONSOR_MINIMUM": "SPONSOR_MINIMUM"
-      }
+      ]
     },
     {
       "template": "lock-inactive-issues",
-      "suffix": "project",
+      "name": "lock-inactive",
       "triggers": [
         "schedule-weekly"
       ]
     },
     {
       "template": "publish",
-      "suffix": "project",
+      "name": "sites",
       "triggers": [
-        "release"
+        "tag-push"
       ],
-      "scopes": [
+      "build": [
         "./packages/nova",
         "./packages/docusaurus-preset-nova",
         "./apps/docs"
       ],
-      "targets": [
+      "deploy": [
         {
-          "type": "npm",
-          "workingDir": "./packages/nova"
+          "to": "npm",
+          "path": "./packages/nova"
         },
         {
-          "type": "npm",
-          "workingDir": "./packages/docusaurus-preset-nova",
-          "needs": [
+          "to": "npm",
+          "path": "./packages/docusaurus-preset-nova",
+          "after": [
             "./packages/nova"
           ]
         },
         {
-          "type": "github-packages",
-          "workingDir": "./packages/nova"
+          "to": "github-packages",
+          "path": "./packages/nova"
         },
         {
-          "type": "github-packages",
-          "workingDir": "./packages/docusaurus-preset-nova",
-          "needs": [
+          "to": "github-packages",
+          "path": "./packages/docusaurus-preset-nova",
+          "after": [
             "./packages/nova"
           ]
         },
         {
-          "type": "cloudflare-pages-docusaurus",
-          "workingDir": "./apps/docs"
+          "to": "cloudflare-pages-docusaurus",
+          "path": "./apps/docs"
         }
-      ],
-      "settings": {
-        "CLOUDFLARE_ACCOUNT_ID": "CLOUDFLARE_ACCOUNT_ID",
-        "CLOUDFLARE_API_TOKEN": "CLOUDFLARE_API_TOKEN",
-        "CLOUDFLARE_PROJECT_NAME": "CLOUDFLARE_PROJECT_NAME",
-        "NPM_TOKEN": "NPM_TOKEN",
-        "ROOT_WORKING_DIR": "./"
-      }
+      ]
     }
   ],
+  "environment": {
+    "global": {
+      "prefix": "PROJECT_"
+    },
+    "apps": {
+      "./apps/docs": {
+        "prefix": "DOCS_"
+      }
+    },
+    "workflows": {
+      "sponsor-check": {
+        "prefix": "SGI_"
+      }
+    }
+  },
   "urls": {
     "homepage": "https://nova.cbnventures.io/",
     "repository": "git+https://github.com/cbnventures/nova.git",
@@ -185,486 +176,506 @@
     "./": {
       "role": "project",
       "policy": "freezable",
-      "name": "nova-project",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true
-        ],
-        "sync-ownership": [
-          true
-        ]
-      },
-      "dotenv": {}
+      "name": "nova-project"
     },
     "./apps/demo-envoy": {
       "role": "template",
       "policy": "freezable",
-      "name": "demo-envoy",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true
-        ],
-        "sync-ownership": [
-          true
-        ]
-      }
+      "name": "demo-envoy"
     },
     "./apps/demo-foundry": {
       "role": "template",
       "policy": "freezable",
-      "name": "demo-foundry",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true
-        ],
-        "sync-ownership": [
-          true
-        ]
-      }
+      "name": "demo-foundry"
     },
     "./apps/demo-lantern": {
       "role": "template",
       "policy": "freezable",
-      "name": "demo-lantern",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true
-        ],
-        "sync-ownership": [
-          true
-        ]
-      }
+      "name": "demo-lantern"
     },
     "./apps/demo-marshal": {
       "role": "template",
       "policy": "freezable",
-      "name": "demo-marshal",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true
-        ],
-        "sync-ownership": [
-          true
-        ]
-      }
+      "name": "demo-marshal"
     },
     "./apps/demo-sentinel": {
       "role": "template",
       "policy": "freezable",
-      "name": "demo-sentinel",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true
-        ],
-        "sync-ownership": [
-          true
-        ]
-      }
+      "name": "demo-sentinel"
     },
     "./apps/demo-signal": {
       "role": "template",
       "policy": "freezable",
-      "name": "demo-signal",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true
-        ],
-        "sync-ownership": [
-          true
-        ]
-      }
+      "name": "demo-signal"
     },
     "./apps/docs": {
       "role": "docs",
       "policy": "freezable",
-      "name": "nova-docs",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true
-        ],
-        "sync-ownership": [
-          true
-        ]
-      }
+      "name": "nova-docs"
     },
     "./packages/docusaurus-preset-nova": {
       "role": "package",
       "policy": "distributable",
-      "name": "@cbnventures/docusaurus-preset-nova",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true,
-          {
-            "description": true,
-            "keywords": true
-          }
-        ],
-        "sync-ownership": [
-          true,
-          {
-            "homepage": true,
-            "bugs": true,
-            "author": true,
-            "contributors": true,
-            "funding": true,
-            "repository": true
-          }
-        ]
-      }
+      "name": "@cbnventures/docusaurus-preset-nova"
     },
     "./packages/nova": {
       "role": "package",
       "policy": "distributable",
-      "name": "@cbnventures/nova",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true,
-          {
-            "description": true,
-            "keywords": true
-          }
-        ],
-        "sync-ownership": [
-          true,
-          {
-            "homepage": true,
-            "bugs": true,
-            "author": true,
-            "contributors": true,
-            "funding": true,
-            "repository": true
-          }
-        ]
-      }
+      "name": "@cbnventures/nova"
     }
   },
   "gitignore": {
     "projectExcludes": [
-      "!packages/nova/bin/"
+      "!packages/nova/bin/",
+      "graphify-out/"
     ]
   },
   "agents": [
     "claude-code",
     "codex"
-  ]
+  ],
+  "recipes": {
+    "github": {
+      "sync-features": {
+        "enabled": true
+      },
+      "sync-identity": {
+        "enabled": true
+      },
+      "sync-policies": {
+        "enabled": true
+      }
+    },
+    "license": {
+      "update-copyright": {
+        "enabled": true
+      }
+    },
+    "package-json": {
+      "./": {
+        "cleanup": {
+          "enabled": true,
+          "settings": {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        },
+        "normalize-artifacts": {
+          "enabled": true
+        },
+        "normalize-bundler": {
+          "enabled": true
+        },
+        "normalize-dependencies": {
+          "enabled": true,
+          "settings": {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        },
+        "normalize-modules": {
+          "enabled": true
+        },
+        "normalize-tooling": {
+          "enabled": true
+        },
+        "sync-environment": {
+          "enabled": true,
+          "settings": {
+            "trackNodeLtsVersions": true
+          }
+        },
+        "sync-identity": {
+          "enabled": true
+        },
+        "sync-ownership": {
+          "enabled": true
+        }
+      },
+      "./apps/demo-envoy": {
+        "cleanup": {
+          "enabled": true,
+          "settings": {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        },
+        "normalize-artifacts": {
+          "enabled": true
+        },
+        "normalize-bundler": {
+          "enabled": true
+        },
+        "normalize-dependencies": {
+          "enabled": true,
+          "settings": {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        },
+        "normalize-modules": {
+          "enabled": true
+        },
+        "normalize-tooling": {
+          "enabled": true
+        },
+        "sync-environment": {
+          "enabled": true,
+          "settings": {
+            "trackNodeLtsVersions": true
+          }
+        },
+        "sync-identity": {
+          "enabled": true
+        },
+        "sync-ownership": {
+          "enabled": true
+        }
+      },
+      "./apps/demo-foundry": {
+        "cleanup": {
+          "enabled": true,
+          "settings": {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        },
+        "normalize-artifacts": {
+          "enabled": true
+        },
+        "normalize-bundler": {
+          "enabled": true
+        },
+        "normalize-dependencies": {
+          "enabled": true,
+          "settings": {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        },
+        "normalize-modules": {
+          "enabled": true
+        },
+        "normalize-tooling": {
+          "enabled": true
+        },
+        "sync-environment": {
+          "enabled": true,
+          "settings": {
+            "trackNodeLtsVersions": true
+          }
+        },
+        "sync-identity": {
+          "enabled": true
+        },
+        "sync-ownership": {
+          "enabled": true
+        }
+      },
+      "./apps/demo-lantern": {
+        "cleanup": {
+          "enabled": true,
+          "settings": {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        },
+        "normalize-artifacts": {
+          "enabled": true
+        },
+        "normalize-bundler": {
+          "enabled": true
+        },
+        "normalize-dependencies": {
+          "enabled": true,
+          "settings": {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        },
+        "normalize-modules": {
+          "enabled": true
+        },
+        "normalize-tooling": {
+          "enabled": true
+        },
+        "sync-environment": {
+          "enabled": true,
+          "settings": {
+            "trackNodeLtsVersions": true
+          }
+        },
+        "sync-identity": {
+          "enabled": true
+        },
+        "sync-ownership": {
+          "enabled": true
+        }
+      },
+      "./apps/demo-marshal": {
+        "cleanup": {
+          "enabled": true,
+          "settings": {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        },
+        "normalize-artifacts": {
+          "enabled": true
+        },
+        "normalize-bundler": {
+          "enabled": true
+        },
+        "normalize-dependencies": {
+          "enabled": true,
+          "settings": {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        },
+        "normalize-modules": {
+          "enabled": true
+        },
+        "normalize-tooling": {
+          "enabled": true
+        },
+        "sync-environment": {
+          "enabled": true,
+          "settings": {
+            "trackNodeLtsVersions": true
+          }
+        },
+        "sync-identity": {
+          "enabled": true
+        },
+        "sync-ownership": {
+          "enabled": true
+        }
+      },
+      "./apps/demo-sentinel": {
+        "cleanup": {
+          "enabled": true,
+          "settings": {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        },
+        "normalize-artifacts": {
+          "enabled": true
+        },
+        "normalize-bundler": {
+          "enabled": true
+        },
+        "normalize-dependencies": {
+          "enabled": true,
+          "settings": {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        },
+        "normalize-modules": {
+          "enabled": true
+        },
+        "normalize-tooling": {
+          "enabled": true
+        },
+        "sync-environment": {
+          "enabled": true,
+          "settings": {
+            "trackNodeLtsVersions": true
+          }
+        },
+        "sync-identity": {
+          "enabled": true
+        },
+        "sync-ownership": {
+          "enabled": true
+        }
+      },
+      "./apps/demo-signal": {
+        "cleanup": {
+          "enabled": true,
+          "settings": {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        },
+        "normalize-artifacts": {
+          "enabled": true
+        },
+        "normalize-bundler": {
+          "enabled": true
+        },
+        "normalize-dependencies": {
+          "enabled": true,
+          "settings": {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        },
+        "normalize-modules": {
+          "enabled": true
+        },
+        "normalize-tooling": {
+          "enabled": true
+        },
+        "sync-environment": {
+          "enabled": true,
+          "settings": {
+            "trackNodeLtsVersions": true
+          }
+        },
+        "sync-identity": {
+          "enabled": true
+        },
+        "sync-ownership": {
+          "enabled": true
+        }
+      },
+      "./apps/docs": {
+        "cleanup": {
+          "enabled": true,
+          "settings": {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        },
+        "normalize-artifacts": {
+          "enabled": true
+        },
+        "normalize-bundler": {
+          "enabled": true
+        },
+        "normalize-dependencies": {
+          "enabled": true,
+          "settings": {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        },
+        "normalize-modules": {
+          "enabled": true
+        },
+        "normalize-tooling": {
+          "enabled": true
+        },
+        "sync-environment": {
+          "enabled": true,
+          "settings": {
+            "trackNodeLtsVersions": true
+          }
+        },
+        "sync-identity": {
+          "enabled": true
+        },
+        "sync-ownership": {
+          "enabled": true
+        }
+      },
+      "./packages/docusaurus-preset-nova": {
+        "cleanup": {
+          "enabled": true,
+          "settings": {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        },
+        "normalize-artifacts": {
+          "enabled": true
+        },
+        "normalize-bundler": {
+          "enabled": true
+        },
+        "normalize-dependencies": {
+          "enabled": true,
+          "settings": {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        },
+        "normalize-modules": {
+          "enabled": true
+        },
+        "normalize-tooling": {
+          "enabled": true
+        },
+        "sync-environment": {
+          "enabled": true,
+          "settings": {
+            "trackNodeLtsVersions": true
+          }
+        },
+        "sync-identity": {
+          "enabled": true,
+          "settings": {
+            "description": true,
+            "keywords": true
+          }
+        },
+        "sync-ownership": {
+          "enabled": true,
+          "settings": {
+            "homepage": true,
+            "bugs": true,
+            "author": true,
+            "contributors": true,
+            "funding": true,
+            "repository": true
+          }
+        }
+      },
+      "./packages/nova": {
+        "cleanup": {
+          "enabled": true,
+          "settings": {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        },
+        "normalize-artifacts": {
+          "enabled": true
+        },
+        "normalize-bundler": {
+          "enabled": true
+        },
+        "normalize-dependencies": {
+          "enabled": true,
+          "settings": {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        },
+        "normalize-modules": {
+          "enabled": true
+        },
+        "normalize-tooling": {
+          "enabled": true
+        },
+        "sync-environment": {
+          "enabled": true,
+          "settings": {
+            "trackNodeLtsVersions": true
+          }
+        },
+        "sync-identity": {
+          "enabled": true,
+          "settings": {
+            "description": true,
+            "keywords": true
+          }
+        },
+        "sync-ownership": {
+          "enabled": true,
+          "settings": {
+            "homepage": true,
+            "bugs": true,
+            "author": true,
+            "contributors": true,
+            "funding": true,
+            "repository": true
+          }
+        }
+      }
+    }
+  }
 }

@@ -31,8 +31,6 @@ import type {
  *
  * @param {Theme_Mermaid_Index_MermaidContent_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_Mermaid_Index_MermaidContent_Returns {
@@ -74,8 +72,6 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
  * that malformed syntax does not crash the page.
  *
  * @param {Theme_Mermaid_Index_Mermaid_Props} props - Props.
- *
- * @constructor
  *
  * @since 0.15.0
  */

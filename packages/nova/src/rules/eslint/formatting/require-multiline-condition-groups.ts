@@ -105,11 +105,11 @@ export class Runner {
    * Fires only for inner groups where the parent uses a different operator. Checks operand
    * line positions and validates operator token placement style.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Context}    context    - Context.
    * @param {Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Node}       node       - Node.
    * @param {Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_GroupStyle} groupStyle - Group style.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Returns}
    *
@@ -210,9 +210,9 @@ export class Runner {
    * Recursively flattens a chain of same-operator LogicalExpression nodes into a flat array of
    * leaf operands for line position comparison.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Returns}
    *

@@ -1,0 +1,132 @@
+/**
+ * Embed - Bare mode chrome hiding for webview embedding.
+ *
+ * Appending `?docusaurus-data-bare=true` to any page URL maps to a
+ * `data-bare="true"` attribute on the document element before first paint
+ * (see scripts/data-attribute-query.ts), so every rule below keys off
+ * `html[data-bare="true"]` and pure CSS strips the chrome with no flash
+ * and no hydration mismatch. Removing the parameter restores the chrome.
+ *
+ * @since 0.21.0
+ */
+
+/**
+ * ============================
+ * Embed - Sticky Offset Baseline
+ * ============================
+ */
+
+/* The sticky-layout client module already resolves the offset to 0px at
+   runtime (a display: none navbar measures a zero-height rect), but the
+   CSS baseline before that script runs is the preset token. Zero it here
+   so pre-hydration hash-anchor scrolls land at the viewport top. */
+html[data-bare="true"] {
+  --nova-layout-sticky-top: 0px;
+}
+
+/**
+ * ============================
+ * Embed - Site Chrome
+ * ============================
+ */
+
+/* Navbar wrapper (all variants render inside .navbar) plus the portal
+   mounted mobile menus, which attach to document.body and are still
+   reached by an html[data-bare] descendant selector. */
+html[data-bare="true"] .navbar,
+html[data-bare="true"] .nova-navbar-bridge-menu-overlay,
+html[data-bare="true"] .nova-navbar-canopy-menu-overlay,
+html[data-bare="true"] .nova-navbar-compass-menu-overlay,
+html[data-bare="true"] .nova-navbar-monolith-menu-overlay {
+  display: none;
+}
+
+/* Footer variant roots plus their sibling CTA band wrappers (FooterCta
+   renders BEFORE the footer element, outside it), announcement bar,
+   back-to-top button, and skip-to-content link. */
+html[data-bare="true"] .nova-footer-commons,
+html[data-bare="true"] .nova-footer-embassy,
+html[data-bare="true"] .nova-footer-ledger,
+html[data-bare="true"] .nova-footer-launchpad,
+html[data-bare="true"] .nova-footer-commons-cta-wrap,
+html[data-bare="true"] .nova-footer-embassy-cta-wrap,
+html[data-bare="true"] .nova-footer-ledger-cta-wrap,
+html[data-bare="true"] .nova-footer-launchpad-cta-wrap,
+html[data-bare="true"] .nova-announcement-bar,
+html[data-bare="true"] .nova-back-to-top,
+html[data-bare="true"] .nova-skip-to-content {
+  display: none;
+}
+
+/**
+ * ============================
+ * Embed - Docs Navigation
+ * ============================
+ */
+
+/* Docs sidebar rail (the aside is a direct child of the doc root
+   container), the mobile sidebar trigger and its portal overlay,
+   breadcrumbs, and the previous/next paginator. */
+html[data-bare="true"] .nova-doc-root > .nova-container > aside,
+html[data-bare="true"] .nova-sidebar-mobile-trigger,
+html[data-bare="true"] .nova-sidebar-mobile-overlay,
+html[data-bare="true"] .nova-breadcrumbs,
+html[data-bare="true"] .nova-doc-paginator {
+  display: none;
+}
+
+/**
+ * ============================
+ * Embed - Table of Contents
+ * ============================
+ */
+
+/* Desktop TOC rail column (DocItem and MDXPage both wrap the TOC in a
+   lg-3 grid column) plus the mobile collapsible trigger and its portal
+   overlay. */
+html[data-bare="true"] .nova-grid > .nova-col-lg-3:has(.nova-toc),
+html[data-bare="true"] .nova-toc-collapsible-trigger,
+html[data-bare="true"] .nova-toc-collapsible-overlay {
+  display: none;
+}
+
+/**
+ * ============================
+ * Embed - Content Footer
+ * ============================
+ */
+
+/* Tags row, share row, edit-this-page link, and the section labels
+   (including the Contribute label above the last-updated line). The
+   .nova-last-updated stamp intentionally stays visible. */
+html[data-bare="true"] .nova-content-footer-section:has(.nova-content-footer-tags),
+html[data-bare="true"] .nova-content-footer-section:has(.nova-content-footer-share),
+html[data-bare="true"] .nova-content-footer-section-label,
+html[data-bare="true"] .nova-edit-this-page {
+  display: none;
+}
+
+/* When a page has no last-updated stamp, everything inside the doc
+   footer or edit meta row is hidden, so hide the container too and
+   avoid a stray border or margin where the empty footer would sit. */
+html[data-bare="true"] .nova-doc-footer:not(:has(.nova-last-updated)),
+html[data-bare="true"] .nova-edit-meta-row:not(:has(.nova-last-updated)) {
+  display: none;
+}
+
+/**
+ * ============================
+ * Embed - Content Column
+ * ============================
+ */
+
+/* With the sidebar and TOC columns suppressed, the content column keeps
+   the regular lg-9 span and would leave a dead right rail. Stretch it
+   across the row and center it at the lg container width. */
+html[data-bare="true"] .nova-grid > .nova-col-lg-9 {
+  grid-column: 1 / -1;
+
+  width: 100%;
+  max-width: var(--nova-grid-lg);
+  margin-inline: auto;
+}

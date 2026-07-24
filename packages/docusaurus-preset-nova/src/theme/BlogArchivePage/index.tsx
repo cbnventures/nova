@@ -29,8 +29,6 @@ import type {
  *
  * @param {Theme_BlogArchivePage_Index_BlogArchivePage_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlogArchivePage(props: Theme_BlogArchivePage_Index_BlogArchivePage_Props) {
@@ -101,7 +99,7 @@ function BlogArchivePage(props: Theme_BlogArchivePage_Index_BlogArchivePage_Prop
  *
  * @param {Theme_BlogArchivePage_Index_ListPostsByYears_BlogPosts} blogPosts - Blog posts.
  *
- * @returns {Theme_BlogArchivePage_Index_BlogArchivePage_YearGroups} Year groups.
+ * @returns {Theme_BlogArchivePage_Index_BlogArchivePage_YearGroups}
  *
  * @since 0.15.0
  */

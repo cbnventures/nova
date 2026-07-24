@@ -1,0 +1,506 @@
+{
+  "home.layout.description": {
+    "message": "Envoy는 애초에 서로를 이해하도록 설계되지 않은 시스템 사이를 통역합니다. 공통 포맷도, 공통 프로토콜도 필요 없습니다. 오직 전달만 있습니다.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Envoy - 메시지는 반드시 도착합니다",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "통합 인프라",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "메시지는 도착합니다. 그것이 이 제품의 전부입니다.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Envoy는 애초에 서로를 이해하도록 설계되지 않은 시스템 사이를 통역합니다. 공통 포맷도, 공통 프로토콜도 필요 없습니다. 오직 전달만 있습니다.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "문서 읽기",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Threadbare에서 보기",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.dispatch.description": {
+    "message": "지능형 라우팅 엔진. 들어오는 모든 페이로드를 검사해 내용, 출처, 심각도 또는 사용자 지정 규칙에 따라 경로를 정합니다. 처음 일치하는 규칙이 이깁니다. 애매함은 없습니다.",
+    "description": "Front page Features card description for Dispatch"
+  },
+  "home.features.courier.description": {
+    "message": "전달을 보장하는 재시도 엔진. 지터를 더한 지수 백오프, 끝내 도착하지 못할 메시지를 위한 데드레터 큐, 그리고 모든 시도에 대한 전달 확인서를 제공합니다.",
+    "description": "Front page Features card description for Courier"
+  },
+  "home.features.parcel.description": {
+    "message": "페이로드 변환 파이프라인. 포맷 사이에서 메시지를 다시 씁니다 — JSON에서 JSON으로, JSON에서 평문으로, XML에서 JSON으로. 필드 매핑과 함께 손실/무손실 모드를 지원합니다.",
+    "description": "Front page Features card description for Parcel"
+  },
+  "home.features.cipher.description": {
+    "message": "인증 게이트웨이. HMAC-SHA256 서명, 베어러 토큰, IP 허용 목록을 지원합니다. 단 한 바이트가 변환 파이프라인에 닿기 전에 출처의 신원을 먼저 확인합니다.",
+    "description": "Front page Features card description for Cipher"
+  },
+  "home.features.ledger.description": {
+    "message": "완전한 전달 감사 추적. 수신, 변환, 라우팅, 전달된 모든 메시지가 추가 전용 로그에 기록되며, 보존 정책은 자유롭게 설정할 수 있습니다.",
+    "description": "Front page Features card description for Ledger"
+  },
+  "home.features.embassy.description": {
+    "message": "출처를 감추는 리버스 프록시. 내부 서비스를 공개 인터넷에서 완전히 떼어 놓습니다. 외부 요청은 Embassy에 닿고, 내부 서비스는 바깥세상이 존재하는지조차 모릅니다.",
+    "description": "Front page Features card description for Embassy"
+  },
+  "home.stats.heading": {
+    "message": "숫자로 보는 Envoy",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.translators.label": {
+    "message": "프로토콜 변환기",
+    "description": "Front page Stats label for protocol translator count"
+  },
+  "home.stats.image.label": {
+    "message": "Vial 이미지",
+    "description": "Front page Stats label for Vial image size"
+  },
+  "home.stats.dependencies.label": {
+    "message": "외부 의존성",
+    "description": "Front page Stats label for external dependency count"
+  },
+  "home.stats.latency.label": {
+    "message": "Relay 지연 시간",
+    "description": "Front page Stats label for relay latency"
+  },
+  "home.spotlight.heading": {
+    "message": "통역하고, 경로를 정하고, 전달합니다",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Glassboard가 알림을 발생시킵니다. Envoy는 페이로드를 통역해 알맞은 Canary 토픽으로 보내고 전달을 확인합니다. 양쪽 모두 상대가 존재한다는 사실을 모릅니다.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "전달 알림 받기",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Relay Room에서 전하는 소식",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "릴리스 노트, 통합 심층 분석, 그리고 이따금 중계실에서 전하는 이야기.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "docusaurus-preset-nova의 모든 블록을 보여 주는 Envoy 블록 쇼케이스.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Envoy 프리셋의 모든 블록을 샘플 데이터로 렌더링했습니다.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (전체)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "블록 쇼케이스",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "모든 Envoy 블록을 한곳에서 확인하세요.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "이 페이지는 @cbnventures/docusaurus-preset-nova/blocks의 각 블록을 Envoy 세계의 데이터로 렌더링해, 블록의 모습과 동작을 직접 확인할 수 있게 합니다.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "문서 읽기",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Threadbare에서 보기",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (미니멀)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "군더더기 없이 전달합니다.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Envoy는 애초에 서로를 이해하도록 설계되지 않은 시스템 사이를 통역합니다. 공통 포맷도, 공통 프로토콜도 필요 없습니다. 오직 전달만 있습니다.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "시작하기",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (기본)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "제가 사랑하는 건 ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (프리픽스 없음)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "빠릅니다",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "유연합니다",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "무료입니다",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (느린 속도)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "오직 ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "개발자를 위해",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "디자이너를 위해",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (반복 없음)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "환영합니다. 여기는 ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Vial로 설치하기",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "또는 Spark CLI를 사용하세요",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (라벨 없음)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "빠른 설치",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (아이콘 포함)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "팀이 Envoy를 선택하는 이유",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.dispatch.description": {
+    "message": "지능형 라우팅 엔진. 페이로드를 검사해 내용, 출처, 심각도 또는 사용자 지정 규칙에 따라 경로를 정합니다.",
+    "description": "Showcase Features (with icons) card description for Dispatch"
+  },
+  "showcase.featuresIcons.courier.description": {
+    "message": "전달을 보장하는 재시도 엔진. 지수 백오프, 데드레터 큐, 전달 확인서를 제공합니다.",
+    "description": "Showcase Features (with icons) card description for Courier"
+  },
+  "showcase.featuresIcons.parcel.description": {
+    "message": "페이로드 변환 파이프라인. JSON, XML, 평문, 폼 데이터 사이에서 메시지를 다시 씁니다.",
+    "description": "Showcase Features (with icons) card description for Parcel"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (아이콘 없음, 제목 없음)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.cipher.description": {
+    "message": "인증 게이트웨이. HMAC 서명, 베어러 토큰, IP 허용 목록을 지원합니다. 처리에 앞서 출처의 신원을 확인합니다.",
+    "description": "Showcase Features (no icons) card description for Cipher"
+  },
+  "showcase.featuresNoIcons.ledger.description": {
+    "message": "추가 전용 전달 감사 추적. 수신, 변환, 라우팅, 전달된 모든 메시지가 기록됩니다.",
+    "description": "Showcase Features (no icons) card description for Ledger"
+  },
+  "showcase.featuresNoIcons.embassy.description": {
+    "message": "출처를 감추는 리버스 프록시. 내부 서비스를 공개 인터넷에서 완전히 떼어 놓습니다.",
+    "description": "Showcase Features (no icons) card description for Embassy"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (6개 항목, 아이콘 혼합)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "하나의 Relay에 담은 모든 것",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.dispatch.description": {
+    "message": "내용, 출처, 심각도 또는 일정에 따라 메시지 경로를 정합니다. 처음 일치하는 중계가 이깁니다.",
+    "description": "Showcase Features (six items) card description for Dispatch"
+  },
+  "showcase.featuresSix.courier.description": {
+    "message": "지터를 더한 지수 백오프. 데드레터 큐. 전달 확인서. 보장된 전달.",
+    "description": "Showcase Features (six items) card description for Courier"
+  },
+  "showcase.featuresSix.parcel.description": {
+    "message": "임의의 두 포맷 사이에서 페이로드를 변환합니다. 손실/무손실 모드. 필드 매핑과 템플릿 렌더링.",
+    "description": "Showcase Features (six items) card description for Parcel"
+  },
+  "showcase.featuresSix.cipher.description": {
+    "message": "들어오는 모든 요청을 인증합니다. HMAC, 베어러, IP 허용 목록 모드. 무중단 토큰 교체.",
+    "description": "Showcase Features (six items) card description for Cipher"
+  },
+  "showcase.featuresSix.ledger.description": {
+    "message": "모든 상태 전이를 기록합니다. 추가 전용. 설정 가능한 보존 기간. Spoke API로 내보내기 가능.",
+    "description": "Showcase Features (six items) card description for Ledger"
+  },
+  "showcase.featuresSix.embassy.description": {
+    "message": "내부 토폴로지를 숨기는 리버스 프록시. TLS 종료. 헤더 제거. 출처 마스킹.",
+    "description": "Showcase Features (six items) card description for Embassy"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (제목 및 설명 포함)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Relay 지표",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "활성화된 모든 중계 파이프라인의 핵심 성능 지표.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Relay 지연 시간 (p99)",
+    "description": "Showcase Stats (full) label for relay latency"
+  },
+  "showcase.statsFull.image.label": {
+    "message": "Vial 이미지 크기",
+    "description": "Showcase Stats (full) label for Vial image size"
+  },
+  "showcase.statsFull.delivery.label": {
+    "message": "전달 성공률",
+    "description": "Showcase Stats (full) label for delivery rate"
+  },
+  "showcase.statsFull.translators.label": {
+    "message": "프로토콜 변환기",
+    "description": "Showcase Stats (full) label for protocol translator count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (제목 없음)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.translators.label": {
+    "message": "변환기",
+    "description": "Showcase Stats (no heading) label for translators"
+  },
+  "showcase.statsNoHeading.dependencies.label": {
+    "message": "의존성",
+    "description": "Showcase Stats (no heading) label for dependencies"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "하위 도구",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.coldStart.label": {
+    "message": "콜드 스타트",
+    "description": "Showcase Stats (no heading) label for cold start"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (코드 포함)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "빠른 시작",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "세 개의 명령이면 아무것도 없는 상태에서 동작하는 중계까지 갑니다.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (텍스트 포함)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "작동 방식",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Envoy는 여러분의 중계 매니페스트를 읽고, 인증을 위해 Cipher를 초기화하며, Parcel 변환 규칙을 컴파일하고, Dispatch 경로를 등록합니다. 메시지는 5밀리초 안에 파이프라인을 통과합니다.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (설명 포함)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Relay Room에서 전하는 소식",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "릴리스 노트, 통합 심층 분석, 그리고 이따금 중계실에서 전하는 이야기.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "새벽 3시에 웹훅이 실패하면 벌어지는 일",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "새벽 3시 47분, Glassboard 알림이 울렸습니다. Canary로 향하던 웹훅은 소리 없이 실패했고, 아무도 깨어나지 않았습니다. Envoy는 바로 이 문제에서 시작됐습니다.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "재시도 로직은 생각보다 어렵습니다",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "단순한 재시도는 쉽습니다. 하지만 부하 속에서 백오프와 지터, 데드레터 큐까지 갖춘 신뢰할 수 있는 재시도는 전혀 다른 차원의 이야기입니다.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "우리의 통합 레이어 전체를 대체한 3MB 컨테이너",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "열두 개의 서비스, 아홉 개의 크론 작업, 그리고 공유 데이터베이스 — 이 모두를 단 하나의 3MB Vial 이미지가 대체했습니다.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (설명 없음)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "최근 소식",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Envoy 2.2: 팬아웃 라우팅과 Ledger 내보내기",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "이제 Dispatch는 하나의 중계에서 여러 목적지로의 팬아웃을 지원합니다. Ledger 항목은 설정한 일정에 따라 어떤 Spoke 엔드포인트로든 내보낼 수 있습니다.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (인라인 사용)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Envoy는 ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.relayManifest.title": {
+    "message": "중계 파이프라인 선언 파일",
+    "description": "Showcase Terminology hover title for relay manifest"
+  },
+  "showcase.terminology.relayManifest.label": {
+    "message": "중계 매니페스트",
+    "description": "Showcase Terminology displayed text for relay manifest"
+  },
+  "showcase.terminology.paragraph1.afterRelay": {
+    "message": "를 사용해 모든 통합 파이프라인을 정의합니다. 들어오는 각 메시지는 변환 단계에 이르기 전에 ",
+    "description": "Showcase Terminology paragraph 1 fragment after relay manifest"
+  },
+  "showcase.terminology.cipher.title": {
+    "message": "인증 게이트웨이",
+    "description": "Showcase Terminology hover title for Cipher"
+  },
+  "showcase.terminology.paragraph1.afterCipher": {
+    "message": " 게이트웨이에서 인증됩니다. 전달이 실패하면 ",
+    "description": "Showcase Terminology paragraph 1 fragment after Cipher"
+  },
+  "showcase.terminology.courier.title": {
+    "message": "전달을 보장하는 재시도 엔진",
+    "description": "Showcase Terminology hover title for Courier"
+  },
+  "showcase.terminology.paragraph1.afterCourier": {
+    "message": " 엔진이 재시도를 자동으로 처리합니다.",
+    "description": "Showcase Terminology paragraph 1 fragment after Courier"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "이제 ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.parcel.title": {
+    "message": "페이로드 변환 파이프라인",
+    "description": "Showcase Terminology hover title for Parcel"
+  },
+  "showcase.terminology.paragraph2.afterParcel": {
+    "message": " 파이프라인을 사용하면 소스와 목적지가 포맷을 맞출 필요가 전혀 없습니다. ",
+    "description": "Showcase Terminology paragraph 2 fragment after Parcel"
+  },
+  "showcase.terminology.dispatch.title": {
+    "message": "지능형 라우팅 엔진",
+    "description": "Showcase Terminology hover title for Dispatch"
+  },
+  "showcase.terminology.paragraph2.afterDispatch": {
+    "message": "가 라우팅을 처리하고, ",
+    "description": "Showcase Terminology paragraph 2 fragment after Dispatch"
+  },
+  "showcase.terminology.ledger.title": {
+    "message": "추가 전용 감사 추적",
+    "description": "Showcase Terminology hover title for Ledger"
+  },
+  "showcase.terminology.paragraph2.afterLedger": {
+    "message": "가 전체 트랜잭션 기록을 남깁니다.",
+    "description": "Showcase Terminology paragraph 2 fragment after Ledger"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (캡션 포함)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Frame 블록을 통해 전달된 브랜드 마크 — 그림과 캡션, 군더더기 없이.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Envoy 브랜드 썸네일.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (캡션 없음)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (양쪽 스토어)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "컴패니언 앱 다운로드",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (App Store만)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "iOS에서 이용 가능",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (Google Play만)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Android에서 이용 가능",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (라벨 없음)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

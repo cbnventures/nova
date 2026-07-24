@@ -172,8 +172,14 @@ describe('CliRecipePackageJsonNormalizeModules.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-modules': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-modules': {
+              enabled: true,
+            },
           },
         },
       },
@@ -230,8 +236,14 @@ describe('CliRecipePackageJsonNormalizeModules.run', async () => {
           name: 'docs',
           role: 'docs',
           policy: 'freezable',
-          recipes: {
-            'normalize-modules': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './apps/docs': {
+            'normalize-modules': {
+              enabled: true,
+            },
           },
         },
       },
@@ -284,8 +296,14 @@ describe('CliRecipePackageJsonNormalizeModules.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'normalize-modules': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-modules': {
+              enabled: true,
+            },
           },
         },
       },

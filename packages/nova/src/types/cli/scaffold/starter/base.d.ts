@@ -1,6 +1,6 @@
 import type { PromptObject } from 'prompts';
 
-import type { Shared_MonorepoContext as SharedMonorepoContext } from '../../../shared.d.ts';
+import type { Shared_MonorepoContext } from '../../../shared.d.ts';
 
 /**
  * CLI - Scaffold - Starter - Base - Run.
@@ -25,7 +25,7 @@ export type Cli_Scaffold_Starter_Base_Runner_Run_CurrentDirectory = string;
 
 export type Cli_Scaffold_Starter_Base_Runner_Run_IsDryRun = boolean;
 
-export type Cli_Scaffold_Starter_Base_Runner_Run_Context = SharedMonorepoContext;
+export type Cli_Scaffold_Starter_Base_Runner_Run_Context = Shared_MonorepoContext;
 
 export type Cli_Scaffold_Starter_Base_Runner_Run_Cancelled = boolean;
 

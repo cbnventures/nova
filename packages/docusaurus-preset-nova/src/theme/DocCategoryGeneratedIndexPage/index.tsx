@@ -25,8 +25,6 @@ import type {
  *
  * @param {Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocCategoryGeneratedIndexPage(props: Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_Props) {

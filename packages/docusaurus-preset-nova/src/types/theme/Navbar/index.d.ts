@@ -4,6 +4,7 @@ import type {
   GlobalSidebar,
   GlobalVersion,
 } from '@docusaurus/plugin-content-docs/client';
+import type useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import type {
   CSSProperties,
   Dispatch,
@@ -221,7 +222,7 @@ export type Theme_Navbar_Index_Navbar_ThemeConfigCast = unknown;
 
 export type Theme_Navbar_Index_Navbar_ThemeConfig = Record<string, unknown>;
 
-export type Theme_Navbar_Index_Navbar_DocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
+export type Theme_Navbar_Index_Navbar_DocusaurusContext = ReturnType<typeof useDocusaurusContext>;
 
 export type Theme_Navbar_Index_Navbar_SiteTitle = string;
 

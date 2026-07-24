@@ -23,8 +23,6 @@ import type {
  *
  * @param {Theme_NavbarItem_DocNavbarItem_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocNavbarItem(props: Theme_NavbarItem_DocNavbarItem_Props) {

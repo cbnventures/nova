@@ -11,8 +11,6 @@ import type { Blocks_Spotlight_Index_BlocksSpotlight_Props } from '../../types/b
  *
  * @param {Blocks_Spotlight_Index_BlocksSpotlight_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlocksSpotlight(props: Blocks_Spotlight_Index_BlocksSpotlight_Props) {

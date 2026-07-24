@@ -12,6 +12,8 @@ import TOC from '@theme/TOC';
 import TOCCollapsible from '@theme/TOCCollapsible';
 import { createElement } from 'react';
 
+import TOCCollapsiblePanel from '../TOCCollapsible/panel.js';
+
 import type {
   Theme_BlogPostPage_Index_BlogPostPage_BlogPostContent,
   Theme_BlogPostPage_Index_BlogPostPage_Props,
@@ -36,8 +38,6 @@ import type {
  * BlogPostProvider context for metadata access.
  *
  * @param {Theme_BlogPostPage_Index_BlogPostPageContent_Props} props - Props.
- *
- * @constructor
  *
  * @since 0.15.0
  */
@@ -92,6 +92,7 @@ function BlogPostPageContent(props: Theme_BlogPostPage_Index_BlogPostPageContent
       {(canRenderToc === true) && (
         <TOCCollapsible toc={blogPost['toc']} {...tocSpread} />
       )}
+      <TOCCollapsiblePanel />
       <BlogPostItem>
         {props['children']}
       </BlogPostItem>
@@ -116,8 +117,6 @@ function BlogPostPageContent(props: Theme_BlogPostPage_Index_BlogPostPageContent
  * full sidebar and navigation support.
  *
  * @param {Theme_BlogPostPage_Index_BlogPostPage_Props} props - Props.
- *
- * @constructor
  *
  * @since 0.15.0
  */

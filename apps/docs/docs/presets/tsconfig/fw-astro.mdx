@@ -1,0 +1,32 @@
+---
+id: "fw-astro"
+title: "Framework - Astro"
+description: "The Astro framework layer for your TypeScript config: bundler resolution, DOM libraries, and preserved JSX for .astro components."
+keywords:
+  - "nova"
+  - "astro"
+  - "tsconfig preset"
+  - "astro framework"
+  - "bundler resolution"
+  - "dom libraries"
+  - "jsx preserve"
+  - "typescript config"
+tags:
+  - "presets"
+  - "tsconfig"
+  - "framework"
+  - "astro"
+---
+
+This preset is the framework layer for Astro projects in your TypeScript config.
+
+It sets the modern, browser-oriented compiler options an Astro project expects — `isolatedModules`, the DOM libraries, `ESNext` modules, `Bundler` module resolution, preserved JSX, and `noEmit` — matching how Astro's Vite pipeline builds. Combine it with Astro's own base so `.astro` type-checking stays correct:
+
+```json
+{
+  "extends": [
+    "astro/tsconfigs/base",
+    "@cbnventures/nova/presets/tsconfig/fw-astro.json"
+  ]
+}
+```

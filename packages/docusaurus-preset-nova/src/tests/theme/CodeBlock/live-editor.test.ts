@@ -2,10 +2,11 @@ import { strictEqual } from 'node:assert/strict';
 
 import { describe, it } from 'vitest';
 
-import { isSandpackSupported } from '../../../theme/CodeBlock/live-editor.js';
+import LiveEditor, { isSandpackSupported } from '../../../theme/CodeBlock/live-editor.js';
 
 import type {
   Tests_Theme_CodeBlock_LiveEditor_Language,
+  Tests_Theme_CodeBlock_LiveEditor_LiveEditor_UsesEntryFile_Element,
   Tests_Theme_CodeBlock_LiveEditor_Result,
 } from '../../../types/tests/theme/CodeBlock/live-editor.test.d.ts';
 
@@ -56,6 +57,27 @@ describe('isSandpackSupported', async () => {
     const result: Tests_Theme_CodeBlock_LiveEditor_Result = isSandpackSupported(language);
 
     strictEqual(result, false);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Theme - Code Block - Live Editor - Live Editor.
+ *
+ * @since 0.21.0
+ */
+describe('LiveEditor', async () => {
+  it('uses entry file', () => {
+    const element: Tests_Theme_CodeBlock_LiveEditor_LiveEditor_UsesEntryFile_Element = LiveEditor({
+      code: 'const value = 1;',
+      language: 'js',
+    });
+
+    strictEqual(element['props']['files']['/index.js'], 'const value = 1;');
+    strictEqual(element['props']['files']['/App.tsx'], undefined);
 
     return;
   });

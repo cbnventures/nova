@@ -1,0 +1,258 @@
+import type { vi } from 'vitest';
+
+import type { Toolkit_Logger_Runner_Customize_Returns } from '../../../../toolkit/logger.d.ts';
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Documentation - Run.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_OriginalCwd = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_TemporaryDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_SandboxPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_SandboxRoot = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Documentation - CLI Recipe Read Me Update Documentation Run - A Consumer README Without Markers Is Skipped While The Root Updates.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_NewDocumentation = string | undefined;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_RootPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_AppPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_RootStaleContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_MarkerlessContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_ExpectedRootContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_RootOutput = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_AppOutput = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Documentation - CLI Recipe Read Me Update Documentation Run - A Missing Consumer README Is Skipped.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AMissingConsumerREADMEIsSkipped_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AMissingConsumerREADMEIsSkipped_NewDocumentation = string | undefined;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AMissingConsumerREADMEIsSkipped_RootPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AMissingConsumerREADMEIsSkipped_MissingPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AMissingConsumerREADMEIsSkipped_RootStaleContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AMissingConsumerREADMEIsSkipped_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AMissingConsumerREADMEIsSkipped_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AMissingConsumerREADMEIsSkipped_ExpectedRootContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AMissingConsumerREADMEIsSkipped_RootOutput = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_AMissingConsumerREADMEIsSkipped_MissingExists = boolean;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Documentation - CLI Recipe Read Me Update Documentation Run - Disabled Flag Skips And Does Not Write.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DisabledFlagSkipsAndDoesNotWrite_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DisabledFlagSkipsAndDoesNotWrite_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DisabledFlagSkipsAndDoesNotWrite_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DisabledFlagSkipsAndDoesNotWrite_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DisabledFlagSkipsAndDoesNotWrite_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DisabledFlagSkipsAndDoesNotWrite_Output = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Documentation - CLI Recipe Read Me Update Documentation Run - Dry Run Does Not Write.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunDoesNotWrite_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunDoesNotWrite_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunDoesNotWrite_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunDoesNotWrite_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunDoesNotWrite_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunDoesNotWrite_Output = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Documentation - CLI Recipe Read Me Update Documentation Run - Dry Run Writes Nothing Anywhere In A Fan Out Tree.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunWritesNothingAnywhereInAFanOutTree_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunWritesNothingAnywhereInAFanOutTree_RootPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunWritesNothingAnywhereInAFanOutTree_AppPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunWritesNothingAnywhereInAFanOutTree_StaleContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunWritesNothingAnywhereInAFanOutTree_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunWritesNothingAnywhereInAFanOutTree_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunWritesNothingAnywhereInAFanOutTree_SaveGeneratedFileSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunWritesNothingAnywhereInAFanOutTree_RootOutput = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_DryRunWritesNothingAnywhereInAFanOutTree_AppOutput = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Documentation - CLI Recipe Read Me Update Documentation Run - Fans Out To Every Consumer Workspace README.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_FansOutToEveryConsumerWorkspaceREADME_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_FansOutToEveryConsumerWorkspaceREADME_NewDocumentation = string | undefined;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_FansOutToEveryConsumerWorkspaceREADME_RootPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_FansOutToEveryConsumerWorkspaceREADME_AppPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_FansOutToEveryConsumerWorkspaceREADME_PackagePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_FansOutToEveryConsumerWorkspaceREADME_StaleContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_FansOutToEveryConsumerWorkspaceREADME_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_FansOutToEveryConsumerWorkspaceREADME_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_FansOutToEveryConsumerWorkspaceREADME_ExpectedContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_FansOutToEveryConsumerWorkspaceREADME_RootOutput = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_FansOutToEveryConsumerWorkspaceREADME_AppOutput = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_FansOutToEveryConsumerWorkspaceREADME_PackageOutput = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Documentation - CLI Recipe Read Me Update Documentation Run - Idempotent Second Run Is A No Op.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_IdempotentSecondRunIsANoOp_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_IdempotentSecondRunIsANoOp_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_IdempotentSecondRunIsANoOp_NewDocumentation = string | undefined;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_IdempotentSecondRunIsANoOp_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_IdempotentSecondRunIsANoOp_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_IdempotentSecondRunIsANoOp_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_IdempotentSecondRunIsANoOp_SaveGeneratedFileSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_IdempotentSecondRunIsANoOp_Output = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Documentation - CLI Recipe Read Me Update Documentation Run - Missing Enable Flag Skips And Does Not Write.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingEnableFlagSkipsAndDoesNotWrite_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingEnableFlagSkipsAndDoesNotWrite_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingEnableFlagSkipsAndDoesNotWrite_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingEnableFlagSkipsAndDoesNotWrite_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingEnableFlagSkipsAndDoesNotWrite_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingEnableFlagSkipsAndDoesNotWrite_Output = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Documentation - CLI Recipe Read Me Update Documentation Run - Missing Markers Are Skipped And The File Is Left Untouched.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Debug = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Dev = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Info = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Warn = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Error = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock = {
+  debug: Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Debug;
+  dev: Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Dev;
+  info: Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Info;
+  warn: Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Warn;
+  error: Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Error;
+};
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_LoggerCustomizeSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_LoggerCustomizeReturn = Toolkit_Logger_Runner_Customize_Returns;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_Output = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_WarnCalls = unknown[][];
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Documentation - CLI Recipe Read Me Update Documentation Run - Refreshes The Documentation Region And Keeps Everything Outside Byte Identical.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_RefreshesTheDocumentationRegionAndKeepsEverythingOutsideByteIdentical_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_RefreshesTheDocumentationRegionAndKeepsEverythingOutsideByteIdentical_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_RefreshesTheDocumentationRegionAndKeepsEverythingOutsideByteIdentical_NewDocumentation = string | undefined;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_RefreshesTheDocumentationRegionAndKeepsEverythingOutsideByteIdentical_Prefix = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_RefreshesTheDocumentationRegionAndKeepsEverythingOutsideByteIdentical_Suffix = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_RefreshesTheDocumentationRegionAndKeepsEverythingOutsideByteIdentical_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_RefreshesTheDocumentationRegionAndKeepsEverythingOutsideByteIdentical_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_RefreshesTheDocumentationRegionAndKeepsEverythingOutsideByteIdentical_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_RefreshesTheDocumentationRegionAndKeepsEverythingOutsideByteIdentical_Output = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateDocumentation_CliRecipeReadMeUpdateDocumentationRun_RefreshesTheDocumentationRegionAndKeepsEverythingOutsideByteIdentical_ExpectedContent = string;

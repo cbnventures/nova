@@ -1,5 +1,17 @@
-import type { TSESTree } from '@typescript-eslint/utils';
+import type {
+  ESLintUtils,
+  TSESTree,
+} from '@typescript-eslint/utils';
+
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
+
+import type {
+  Declaration,
+  Node,
+  Symbol,
+  Type,
+  TypeChecker,
+} from 'typescript';
 
 /**
  * Rules - ESLint - TypeScript - Require Bracket Property Access - Rule.
@@ -32,17 +44,17 @@ export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMem
 
 export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_PropertyName = string;
 
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ParserServices = ReturnType<typeof import('@typescript-eslint/utils').ESLintUtils.getParserServices>;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ParserServices = ReturnType<typeof ESLintUtils.getParserServices>;
 
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Checker = import('typescript').TypeChecker;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Checker = TypeChecker;
 
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_TsNode = import('typescript').Node;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_TsNode = Node;
 
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ObjectType = import('typescript').Type;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ObjectType = Type;
 
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Symbol = import('typescript').Symbol | undefined;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Symbol = Symbol | undefined;
 
-export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Declarations = import('typescript').Declaration[] | undefined;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Declarations = Declaration[] | undefined;
 
 export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_SourceFileName = string;
 

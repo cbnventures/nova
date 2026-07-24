@@ -25,6 +25,8 @@ export type Theme_DocItem_Footer_Index_DocItemFooter_LastUpdatedBy = string | un
 
 export type Theme_DocItem_Footer_Index_DocItemFooter_Doc = DocContextValue;
 
+export type Theme_DocItem_Footer_Index_DocItemFooter_Tags = DocContextValue['metadata']['tags'];
+
 export type Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayTagsRow = boolean;
 
 export type Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayEditMetaRow = boolean;

@@ -11,8 +11,6 @@ import type { Theme_ThemeProvider_Index_ThemeProvider_Props } from '../../types/
  *
  * @param {Theme_ThemeProvider_Index_ThemeProvider_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function ThemeProvider(props: Theme_ThemeProvider_Index_ThemeProvider_Props) {

@@ -106,12 +106,12 @@ export class Runner {
    * Called by the rule visitor for each arrow function. Skips block
    * bodies then checks nested arrow count and method chain length against thresholds.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Context}         context         - Context.
    * @param {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Node}            node            - Node.
    * @param {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_MaxNestedArrows} maxNestedArrows - Max nested arrows.
    * @param {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_MaxChainLength}  maxChainLength  - Max chain length.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Returns}
    *
@@ -164,9 +164,9 @@ export class Runner {
    * Walks a CallExpression chain by following each callee
    * MemberExpression to count how many chained method calls exist in the expression.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountChainLength_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountChainLength_Returns}
    *
@@ -193,9 +193,9 @@ export class Runner {
    * Recursively traverses the AST subtree to count
    * ArrowFunctionExpression nodes nested within arguments, properties, and sub-expressions.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Returns}
    *

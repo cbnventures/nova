@@ -18,8 +18,6 @@ import type {
  *
  * @param {Theme_DocItem_Metadata_Index_DocItemMetadata_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocItemMetadata(props: Theme_DocItem_Metadata_Index_DocItemMetadata_Props) {

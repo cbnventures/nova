@@ -33,6 +33,9 @@ ruleTester.run('requireTernaryParens', RequireTernaryParens['rule'], {
       code: 'const x = (a === true && b === false) ? 1 : 0;',
     },
     {
+      code: 'const x = ( a === b ) ? 1 : 0;',
+    },
+    {
       code: 'const x = a ? 1 : 0;',
       options: [{ ignoreFiles: ['ignored-file.ts'] }],
       filename: '/path/to/ignored-file.ts',
@@ -52,6 +55,11 @@ ruleTester.run('requireTernaryParens', RequireTernaryParens['rule'], {
     {
       code: 'const x = a > b ? "yes" : "no";',
       output: 'const x = (a > b) ? "yes" : "no";',
+      errors: [{ messageId: 'requireTernaryParens' }],
+    },
+    {
+      code: 'const x = foo(a ? 1 : 0);',
+      output: 'const x = foo((a) ? 1 : 0);',
       errors: [{ messageId: 'requireTernaryParens' }],
     },
   ],

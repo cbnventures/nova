@@ -62,7 +62,9 @@ import type {
  * @param query         - Query.
  * @param limit         - Limit.
  * @param fuzzyDistance - Fuzzy distance.
- * @returns             Perform search.
+ *
+ * @returns {Lib_Search_PerformSearch_PerformSearch_Returns}
+ *
  * @since 0.15.0
  */
 export function performSearch(index: Lib_Search_PerformSearch_PerformSearch_Index, documents: Lib_Search_PerformSearch_PerformSearch_Documents, query: Lib_Search_PerformSearch_PerformSearch_Query, limit: Lib_Search_PerformSearch_PerformSearch_Limit, fuzzyDistance: Lib_Search_PerformSearch_PerformSearch_FuzzyDistance): Lib_Search_PerformSearch_PerformSearch_Returns {
@@ -74,17 +76,26 @@ export function performSearch(index: Lib_Search_PerformSearch_PerformSearch_Inde
 
   const typedIndex: Lib_Search_PerformSearch_PerformSearch_TypedIndex = index as Lib_Search_PerformSearch_PerformSearch_TypedIndex;
 
-  const exactResults: Lib_Search_PerformSearch_PerformSearch_ExactResults = typedIndex.search(trimmedQuery);
-  const wildcardQuery: Lib_Search_PerformSearch_PerformSearch_WildcardQuery = `${trimmedQuery}*`;
-  const wildcardResults: Lib_Search_PerformSearch_PerformSearch_WildcardResults = typedIndex.search(wildcardQuery);
-  const fuzzyQuery: Lib_Search_PerformSearch_PerformSearch_FuzzyQuery = `${trimmedQuery}~${fuzzyDistance}`;
-  const fuzzyResults: Lib_Search_PerformSearch_PerformSearch_FuzzyResults = typedIndex.search(fuzzyQuery);
+  let allResults: Lib_Search_PerformSearch_PerformSearch_AllResults = [];
 
-  const allResults: Lib_Search_PerformSearch_PerformSearch_AllResults = [
-    ...exactResults,
-    ...wildcardResults,
-    ...fuzzyResults,
-  ];
+  try {
+    const exactResults: Lib_Search_PerformSearch_PerformSearch_ExactResults = typedIndex.search(trimmedQuery);
+    const wildcardQuery: Lib_Search_PerformSearch_PerformSearch_WildcardQuery = `${trimmedQuery}*`;
+    const wildcardResults: Lib_Search_PerformSearch_PerformSearch_WildcardResults = typedIndex.search(wildcardQuery);
+    const fuzzyQuery: Lib_Search_PerformSearch_PerformSearch_FuzzyQuery = `${trimmedQuery}~${fuzzyDistance}`;
+    const fuzzyResults: Lib_Search_PerformSearch_PerformSearch_FuzzyResults = typedIndex.search(fuzzyQuery);
+
+    allResults = [
+      ...exactResults,
+      ...wildcardResults,
+      ...fuzzyResults,
+    ];
+  } catch {
+    // Lunr throws a QueryParseError when the query contains reserved syntax
+    // characters (for example "9:00", "key:value", or "foo~bar"). Leave the
+    // results empty so the search yields no matches instead of throwing,
+    // letting the worker post a normal empty results message.
+  }
 
   const scoreMap: Lib_Search_PerformSearch_PerformSearch_ScoreMap = new Map();
   const termsMap: Lib_Search_PerformSearch_PerformSearch_TermsMap = new Map();

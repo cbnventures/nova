@@ -1,4 +1,4 @@
-import type { Shared_GeneratorRunResult as SharedGeneratorRunResult } from '../../../shared.d.ts';
+import type { Shared_GeneratorRunResult } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - Must Haves - Editorconfig - Run.
@@ -14,7 +14,7 @@ export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_Options = {
   replaceFile?: Cli_Generate_MustHaves_Editorconfig_Runner_Run_Options_ReplaceFile;
 };
 
-export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_Returns = Promise<SharedGeneratorRunResult>;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_Returns = Promise<Shared_GeneratorRunResult>;
 
 export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_CurrentDirectory = string;
 

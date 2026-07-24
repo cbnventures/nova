@@ -20,6 +20,8 @@
   "include": [
     "./nova-theme.d.ts",
     "./src/blocks/**/*",
+    "./src/icons.ts",
+    "./src/types/icons.d.ts",
     "./src/lib/mermaid.ts",
     "./src/lib/rehype-shiki.ts",
     "./src/lib/search/perform-search.ts",
@@ -38,6 +40,8 @@
   ],
   "exclude": [
     "./build/**",
-    "./node_modules/**"
+    "./node_modules/**",
+    "./src/tests/cli/**",
+    "./src/tests/lib/i18n/**"
   ]
 }

@@ -156,8 +156,12 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': false,
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: false,
+          },
         },
       },
     });
@@ -224,8 +228,12 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
     const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
-        recipes: {
-          'sync-features': true,
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -269,8 +277,12 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -320,8 +332,12 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -369,8 +385,12 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -436,11 +456,15 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
-        },
         features: {
           issues: true,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -517,14 +541,18 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
-        },
         features: {
           issues: true,
           wiki: false,
           projects: false,
           discussions: false,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -615,11 +643,15 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
-        },
         features: {
           issues: true,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -713,12 +745,16 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
-        },
         features: {
           wiki: false,
           discussions: true,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -811,10 +847,14 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
-        },
         features: {},
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
+        },
       },
     });
 
@@ -897,8 +937,12 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -982,12 +1026,16 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
-        },
         features: {
           issues: true,
           wiki: false,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -1069,11 +1117,15 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
-        },
         features: {
           issues: true,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -1148,11 +1200,15 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
-        },
         features: {
           issues: true,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -1251,11 +1307,15 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
-        },
         features: {
           issues: true,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });
@@ -1340,11 +1400,15 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-features': true,
-        },
         features: {
           issues: true,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-features': {
+            enabled: true,
+          },
         },
       },
     });

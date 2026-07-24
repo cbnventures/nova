@@ -160,7 +160,8 @@ export class Runner {
 
     if (navbarContent !== undefined) {
       result.push({
-        path: 'navbar', content: navbarContent,
+        path: 'navbar',
+        content: navbarContent,
       });
     }
 
@@ -168,7 +169,8 @@ export class Runner {
 
     if (blogContent !== undefined) {
       result.push({
-        path: 'blog', content: blogContent,
+        path: 'blog',
+        content: blogContent,
       });
     }
 
@@ -176,7 +178,8 @@ export class Runner {
 
     if (announcementBarContent !== undefined) {
       result.push({
-        path: 'announcementBar', content: announcementBarContent,
+        path: 'announcementBar',
+        content: announcementBarContent,
       });
     }
 
@@ -184,7 +187,8 @@ export class Runner {
 
     if (errorPagesContent !== undefined) {
       result.push({
-        path: 'errorPages', content: errorPagesContent,
+        path: 'errorPages',
+        content: errorPagesContent,
       });
     }
 
@@ -192,7 +196,8 @@ export class Runner {
 
     if (footerContent !== undefined) {
       result.push({
-        path: 'footer', content: footerContent,
+        path: 'footer',
+        content: footerContent,
       });
     }
 

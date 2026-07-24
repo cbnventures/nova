@@ -1,6 +1,6 @@
 import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
-import type { Shared_GeneratorRunResult as SharedGeneratorRunResult, Shared_NovaConfig as SharedNovaConfig } from '../../../shared.d.ts';
+import type { Shared_GeneratorRunResult, Shared_NovaConfig } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - GitHub - Funding - Run.
@@ -16,7 +16,7 @@ export type Cli_Generate_Github_Funding_Runner_Run_Options = {
   replaceFile?: Cli_Generate_Github_Funding_Runner_Run_Options_ReplaceFile;
 };
 
-export type Cli_Generate_Github_Funding_Runner_Run_Returns = Promise<SharedGeneratorRunResult>;
+export type Cli_Generate_Github_Funding_Runner_Run_Returns = Promise<Shared_GeneratorRunResult>;
 
 export type Cli_Generate_Github_Funding_Runner_Run_CurrentDirectory = string;
 
@@ -30,9 +30,9 @@ export type Cli_Generate_Github_Funding_Runner_Run_ReplaceFileNotice = string;
 
 export type Cli_Generate_Github_Funding_Runner_Run_NovaConfig = LibNovaConfig;
 
-export type Cli_Generate_Github_Funding_Runner_Run_WorkingFile = SharedNovaConfig;
+export type Cli_Generate_Github_Funding_Runner_Run_WorkingFile = Shared_NovaConfig;
 
-export type Cli_Generate_Github_Funding_Runner_Run_Urls = SharedNovaConfig['urls'];
+export type Cli_Generate_Github_Funding_Runner_Run_Urls = Shared_NovaConfig['urls'];
 
 export type Cli_Generate_Github_Funding_Runner_Run_FundSources = string[];
 

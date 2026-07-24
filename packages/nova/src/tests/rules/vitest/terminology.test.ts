@@ -3,14 +3,17 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
+import * as vitest from 'vitest';
 import { describe, it } from 'vitest';
 
 import { registerTerminologySuite } from '../../../rules/vitest/terminology/register.js';
-import { buildValidAnchors } from '../../../rules/vitest/terminology/rules.js';
+import { buildValidAnchors, componentPattern } from '../../../rules/vitest/terminology/rules.js';
 
 import type {
+  Tests_Rules_Vitest_Terminology_AttrMatch,
   Tests_Rules_Vitest_Terminology_BadAnchors,
   Tests_Rules_Vitest_Terminology_BadRootDir,
+  Tests_Rules_Vitest_Terminology_BareMatch,
   Tests_Rules_Vitest_Terminology_DocsDir,
   Tests_Rules_Vitest_Terminology_FixtureRoot,
   Tests_Rules_Vitest_Terminology_GoodAnchors,
@@ -132,12 +135,29 @@ describe(`terminology kit helpers${''}`, () => {
     return;
   });
 
+  it(`matches an attribute-less component usage and still captures attributes${''}`, () => {
+    // An attribute-less "<Terminology>API</Terminology>" must match so the attribute checks can
+    // see it; the old required whitespace made this escape every check.
+    const bareMatch: Tests_Rules_Vitest_Terminology_BareMatch = new RegExp(componentPattern('Terminology')).exec('<Terminology>API</Terminology>');
+
+    strictEqual(bareMatch !== null && bareMatch[1] === '', true);
+    strictEqual(bareMatch !== null && bareMatch[2] === 'API', true);
+
+    const attrMatch: Tests_Rules_Vitest_Terminology_AttrMatch = new RegExp(componentPattern('Terminology')).exec('<Terminology title="Preset" to="/docs/quickstart/terminology">preset</Terminology>');
+
+    strictEqual(attrMatch !== null && attrMatch[1] === 'title="Preset" to="/docs/quickstart/terminology"', true);
+    strictEqual(attrMatch !== null && attrMatch[2] === 'preset', true);
+
+    return;
+  });
+
   return;
 });
 
 // Enable gating: only the title-attr check runs, so the broken anchor in the good-only root is
 // never validated and the registered suite stays green.
 registerTerminologySuite({
+  vitest,
   rootDir: fixtureRoot,
   contentDirs: ['docs'],
   terminologyPath,

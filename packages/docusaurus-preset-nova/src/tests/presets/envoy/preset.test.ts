@@ -24,16 +24,20 @@ describe('presetsEnvoyPresetEnvoy', async () => {
     const envoy: Tests_Presets_Envoy_Preset_PresetsEnvoyPresetEnvoy_HasCorrectColorValues_Envoy = presetsEnvoyPresetEnvoy;
 
     deepStrictEqual(envoy['colors']['primary'], {
-      light: '#7c3aed', dark: '#7c3aed',
+      light: '#7c3aed',
+      dark: '#7c3aed',
     });
     deepStrictEqual(envoy['colors']['accent'], {
-      light: '#06b6d4', dark: '#06b6d4',
+      light: '#06b6d4',
+      dark: '#06b6d4',
     });
     deepStrictEqual(envoy['colors']['text'], {
-      light: '#18181b', dark: '#e4e4e7',
+      light: '#18181b',
+      dark: '#e4e4e7',
     });
     deepStrictEqual(envoy['colors']['border'], {
-      light: '#d4d4d8', dark: '#52525b',
+      light: '#d4d4d8',
+      dark: '#52525b',
     });
 
     return;

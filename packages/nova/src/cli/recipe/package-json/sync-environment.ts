@@ -7,8 +7,10 @@ import {
   LIB_REGEX_PATTERN_NAME_AT_VERSION,
   LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR,
   LIB_REGEX_PATTERN_RANGE_MAJOR,
+  LIB_REGEX_PATTERN_SEMVER,
 } from '../../../lib/regex.js';
 import {
+  executeShell,
   isPlainObject,
   isProjectRoot,
   loadWorkspaceManifests,
@@ -18,6 +20,7 @@ import { Logger } from '../../../toolkit/index.js';
 
 import type {
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Branches,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Config,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_CoversAll,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_ExistingNode,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_FileContents,
@@ -30,16 +33,21 @@ import type {
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_PackageCpu,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_PackageDevEngines,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_PackageEngines,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_PackageJsonRecipes,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_PackageLibc,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_PackageOs,
-  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Recipes,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_RecipeEntry,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_RecipesBlock,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_RecipeSettings,
-  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_RecipeTuple,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Returns,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_TrackNodeLtsVersions,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Workspace,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_WorkspaceRecipes,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_FileContents,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Manifest,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_NpmMatch,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_NpmMatchResult,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_NpmVersionResult,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_PackageManager,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Returns,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Workspace,
@@ -51,12 +59,14 @@ import type {
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_IsDryRun,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_IsReplaceFile,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_Options,
-  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_RecipeTupleFilter,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_PackageJsonRecipes,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_RecipeEntryFilter,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_RecipesBlock,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_ReplaceFileNotice,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_Returns,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkingFile,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkingFileWorkspaces,
-  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkspaceConfigFilter,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkspacePathFilter,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkspaceRecipesFilter,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_Workspaces,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_SyncNodeConstraint_Constraint,
@@ -132,21 +142,28 @@ export class Runner {
     }
 
     // Filter workspaces that have the recipe enabled.
+    const recipesBlock: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_RecipesBlock = workingFile['recipes'];
+    const packageJsonRecipes: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_PackageJsonRecipes = (recipesBlock !== undefined) ? recipesBlock['package-json'] : undefined;
     const eligibleWorkspaces: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfigFilter: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkspaceConfigFilter = workspace[1];
-      const workspaceRecipesFilter: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkspaceRecipesFilter = workspaceConfigFilter['recipes'];
+      const workspacePathFilter: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkspacePathFilter = workspace[0];
+
+      if (packageJsonRecipes === undefined) {
+        return false;
+      }
+
+      const workspaceRecipesFilter: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkspaceRecipesFilter = packageJsonRecipes[workspacePathFilter];
 
       if (workspaceRecipesFilter === undefined) {
         return false;
       }
 
-      const recipeTupleFilter: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_RecipeTupleFilter = workspaceRecipesFilter['sync-environment'];
+      const recipeEntryFilter: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_RecipeEntryFilter = workspaceRecipesFilter['sync-environment'];
 
-      if (recipeTupleFilter === undefined) {
+      if (recipeEntryFilter === undefined) {
         return false;
       }
 
-      return recipeTupleFilter[0] === true;
+      return recipeEntryFilter['enabled'] === true;
     });
 
     if (eligibleWorkspaces.length === 0) {
@@ -184,9 +201,9 @@ export class Runner {
         purpose: 'iteration',
       }).info(`Running sync-environment for the "${workspace['manifest']['name']}" workspace ...`);
 
-      Runner.handleCorepack(workspace);
+      await Runner.handleCorepack(workspace);
 
-      await Runner.handle(workspace);
+      await Runner.handle(workspace, workingFile);
 
       if (isDryRun === true) {
         continue;
@@ -206,6 +223,7 @@ export class Runner {
    * Fetches active LTS versions from the Node API.
    *
    * @param {Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Workspace} workspace - Workspace.
+   * @param {Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Config}    config    - Config.
    *
    * @private
    *
@@ -213,7 +231,7 @@ export class Runner {
    *
    * @since 0.14.0
    */
-  private static async handle(workspace: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Workspace): Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Returns {
+  private static async handle(workspace: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Workspace, config: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Config): Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Returns {
     const fileContents: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_FileContents = workspace['fileContents'];
     const manifest: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Manifest = workspace['manifest'];
 
@@ -260,9 +278,11 @@ export class Runner {
     }
 
     // Check if "trackNodeLtsVersions" is enabled in the recipe settings.
-    const recipes: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Recipes = manifest['recipes'];
-    const recipeTuple: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_RecipeTuple = (recipes !== undefined) ? recipes['sync-environment'] : undefined;
-    const recipeSettings: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_RecipeSettings = (recipeTuple !== undefined && recipeTuple.length > 1) ? recipeTuple[1] : undefined;
+    const recipesBlock: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_RecipesBlock = config['recipes'];
+    const packageJsonRecipes: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_PackageJsonRecipes = (recipesBlock !== undefined) ? recipesBlock['package-json'] : undefined;
+    const workspaceRecipes: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_WorkspaceRecipes = (packageJsonRecipes !== undefined) ? packageJsonRecipes[workspace['workspacePath']] : undefined;
+    const recipeEntry: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_RecipeEntry = (workspaceRecipes !== undefined) ? workspaceRecipes['sync-environment'] : undefined;
+    const recipeSettings: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_RecipeSettings = (recipeEntry !== undefined) ? recipeEntry['settings'] : undefined;
     const trackNodeLtsVersions: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_TrackNodeLtsVersions = (recipeSettings !== undefined && recipeSettings['trackNodeLtsVersions'] === true);
 
     // Warn if "engines.node" does not cover all active LTS versions (only when trackNodeLtsVersions is enabled).
@@ -400,7 +420,8 @@ export class Runner {
    * CLI - Recipe - package.json - Sync Environment - Handle Corepack.
    *
    * Validates the packageManager field for corepack compatibility. Only project-role
-   * workspaces may keep the field; all others have it removed.
+   * workspaces may keep the field; all others have it removed. Project roots missing
+   * the field gain one pinned to the detected npm version.
    *
    * @param {Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Workspace} workspace - Workspace.
    *
@@ -410,7 +431,7 @@ export class Runner {
    *
    * @since 0.14.0
    */
-  private static handleCorepack(workspace: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Workspace): Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Returns {
+  private static async handleCorepack(workspace: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Workspace): Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Returns {
     const fileContents: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_FileContents = workspace['fileContents'];
     const manifest: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Manifest = workspace['manifest'];
 
@@ -441,6 +462,39 @@ export class Runner {
       }).warn(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "packageManager". Invalid format detected.`);
 
       Reflect.deleteProperty(fileContents, 'packageManager');
+    } else if (
+      manifest['role'] === 'project' // Workspace role is "project".
+      && packageManager === undefined // Package "packageManager" is missing.
+    ) {
+      const npmVersionResult: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_NpmVersionResult = await executeShell('npm --version');
+
+      if (npmVersionResult['code'] !== 0) {
+        Logger.customize({
+          name: 'Runner.handleCorepack',
+          purpose: 'packageManager',
+        }).warn(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Skipping "packageManager". Unable to detect the npm version.`);
+
+        return;
+      }
+
+      const npmMatchResult: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_NpmMatchResult = npmVersionResult['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
+      const npmMatch: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_NpmMatch = (npmMatchResult !== null) ? npmMatchResult[1] : undefined;
+
+      if (npmMatch === undefined) {
+        Logger.customize({
+          name: 'Runner.handleCorepack',
+          purpose: 'packageManager',
+        }).warn(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Skipping "packageManager". Unable to detect the npm version.`);
+
+        return;
+      }
+
+      Logger.customize({
+        name: 'Runner.handleCorepack',
+        purpose: 'packageManager',
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding "packageManager" set to "npm@${npmMatch}" ...`);
+
+      Reflect.set(fileContents, 'packageManager', `npm@${npmMatch}`);
     }
 
     return;

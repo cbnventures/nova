@@ -11,8 +11,6 @@ import type { Theme_SearchMetadata_Index_SearchMetadata_Props } from '../../type
  *
  * @param {Theme_SearchMetadata_Index_SearchMetadata_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function SearchMetadata(props: Theme_SearchMetadata_Index_SearchMetadata_Props) {

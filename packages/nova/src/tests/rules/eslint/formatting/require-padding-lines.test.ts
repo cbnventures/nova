@@ -125,7 +125,13 @@ ruleTester.run('requirePaddingLines', RequirePaddingLines['rule'], {
     {
       code: 'fn();\nawait bar();',
       options: [{
-        ignoreFiles: ['ignored-file.ts'], exitCodeBeforeReturn: true, beforeLineComment: true, beforeLoops: true, bareAwait: true, betweenOperations: true, betweenSwitchCases: true,
+        ignoreFiles: ['ignored-file.ts'],
+        exitCodeBeforeReturn: true,
+        beforeLineComment: true,
+        beforeLoops: true,
+        bareAwait: true,
+        betweenOperations: true,
+        betweenSwitchCases: true,
       }],
       filename: '/path/to/ignored-file.ts',
     },
@@ -156,6 +162,13 @@ ruleTester.run('requirePaddingLines', RequirePaddingLines['rule'], {
     {
       code: 'const x = 1;\n// comment\nconst y = 2;',
       output: 'const x = 1;\n\n// comment\nconst y = 2;',
+      errors: [{ messageId: 'beforeLineComment' }],
+    },
+
+    // Indented line comment without blank line before - keeps its indentation and the inserted line is genuinely blank.
+    {
+      code: 'function f() {\n  const x = 1;\n  // comment\n  const y = 2;\n}',
+      output: 'function f() {\n  const x = 1;\n\n  // comment\n  const y = 2;\n}',
       errors: [{ messageId: 'beforeLineComment' }],
     },
     {

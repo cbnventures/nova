@@ -156,9 +156,9 @@ export class Runner {
    * Maps an import declaration to one of six groups based on its
    * source path and whether it is a type import: Node, third-party, or local.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_ImportNode} importNode - Import node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_Returns}
    *
@@ -197,9 +197,9 @@ export class Runner {
    * Iterates all import declarations in the file to verify group
    * ordering, blank line separation between groups, and alphabetical order within.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Context} context - Context.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Returns}
    *
@@ -290,10 +290,10 @@ export class Runner {
    * Validates that named import specifiers within each import
    * declaration are sorted alphabetically by their imported identifier name.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Context} context - Context.
    * @param {Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Imports} imports - Imports.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Returns}
    *

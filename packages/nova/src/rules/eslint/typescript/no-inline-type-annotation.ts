@@ -1,6 +1,6 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
-import { isIgnoredFile } from '../../../lib/utility.js';
+import { detectScriptHostFile, isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
   Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Context,
@@ -121,6 +121,12 @@ export class Runner {
         return {};
       }
 
+      // Skip extracted <script> virtual files silently. Plain <script> blocks are extracted
+      // as .js virtual files, so demanding TypeScript annotations there could never parse.
+      if (detectScriptHostFile(context.filename) !== undefined) {
+        return {};
+      }
+
       return {
         TSAsExpression(node: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSAsExpression_Node): Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_Create_TSAsExpression_Returns {
           Runner.checkAsExpression(context, node);
@@ -148,10 +154,10 @@ export class Runner {
    * type reference only uses enclosing generic type
    * parameters collected from parent scopes.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Context} context - Context.
    * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Returns}
    *
@@ -188,9 +194,9 @@ export class Runner {
    * type parameter names from enclosing functions and
    * classes, used to allow forwarded generics.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Returns}
    *
@@ -229,10 +235,10 @@ export class Runner {
    * TSTypeReference is an enclosing generic parameter,
    * meaning no concrete inline type is introduced.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_Node}               node               - Node.
    * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_TypeParameterNames} typeParameterNames - Type parameter names.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_Returns}
    *
@@ -259,10 +265,10 @@ export class Runner {
    * inline types on variables, parameters, and return types,
    * allowing type predicates and bare references.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_Context} context - Context.
    * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_Returns}
    *
@@ -304,10 +310,10 @@ export class Runner {
    * bodies that lack an explicit type annotation, skipping
    * loop variables and callback closures.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Context} context - Context.
    * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Returns}
    *

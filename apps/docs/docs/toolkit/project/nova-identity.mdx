@@ -1,0 +1,129 @@
+---
+id: "nova-identity"
+title: "Nova Identity"
+description: "Resolve project identity from the nearest nova.config.json and project it into the fields a Docusaurus config, README, or license consumes."
+keywords:
+  - "nova"
+  - "nova identity"
+  - "project identity"
+  - "nova config"
+  - "docusaurus config"
+  - "single source of truth"
+  - "developer utilities"
+tags:
+  - "toolkit"
+  - "identity"
+  - "config"
+  - "docusaurus"
+  - "automation"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Read your project's identity from one place — the nearest `nova.config.json` — instead of hand-copying the title, tagline, URLs, and copyright line into every config that needs them.
+
+## Summary
+
+The `NovaIdentity` battery walks up from a working directory to the nearest `nova.config.json`, reads the identity it declares, and exposes it as typed projections plus the pure transforms used to derive them.
+
+It gives configs, recipes, and generators a single definition of who the project is, so a change in `nova.config.json` flows everywhere without a manual sweep.
+
+## Why Use This Battery?
+
+1. One source of truth: edit `nova.config.json` and every consumer that reads through the battery updates on the next build.
+2. No drift: the copyright line, repository URL, and organization name are derived the same way everywhere.
+3. Fail loud, not wrong: a missing file, invalid JSON, or a wrongly-typed field throws a clear, path-specific error instead of shipping a bad value.
+
+## Capabilities
+
+- Resolves the config by walking up the directory tree, so a nested workspace finds the project root without a hard-coded path.
+- Treats every identity field as optional: an absent value comes back as `undefined` (or an empty array) for the caller to coalesce with a fallback.
+- Projects identity into the exact shape a Docusaurus config consumes through `forDocs()`, applying the copyright, repository, GitHub, and trailing-slash transforms.
+- Exposes those transforms as static methods, so a README or license generator composes the same copyright line the site footer shows.
+
+## Usage
+
+:::info Good to Know
+Examples use TypeScript, but the <Terminology title="application programming interface" to="/docs/quickstart/terminology#fundamentals" color={true}>API</Terminology> is identical in JavaScript (<Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology>-only).
+:::
+
+<Tabs groupId="nova-identity-usage">
+  <TabItem value="docs" label="Docusaurus config" default>
+
+    ```ts
+    import { NovaIdentity } from '@cbnventures/nova/toolkit';
+
+    import type { Config } from '@docusaurus/types';
+
+    const identity = new NovaIdentity().forDocs();
+
+    const config: Config = {
+      title: identity['title'] ?? 'My Docs',
+      tagline: identity['tagline'] ?? 'Documentation',
+      url: identity['url'] ?? 'https://example.com',
+      organizationName: identity['organizationName'] ?? 'your-org',
+      projectName: identity['projectName'] ?? 'my-docs',
+    };
+
+    export default config;
+    ```
+
+  </TabItem>
+  <TabItem value="transforms" label="Static transforms">
+
+    ```ts
+    import { NovaIdentity } from '@cbnventures/nova/toolkit';
+
+    // Compose the same copyright line the site footer and the license file use.
+    const line = NovaIdentity.composeCopyright(2025, 'CBN Ventures LLC');
+
+    // Turn a package "repository" URL into a browsable https URL.
+    const repo = NovaIdentity.normalizeRepoUrl('git+https://github.com/cbnventures/nova.git');
+
+    // Build a profile URL from a GitHub owner handle.
+    const profile = NovaIdentity.githubUserUrl('cbnventures');
+    ```
+
+  </TabItem>
+  <TabItem value="anchor" label="Anchor to a directory">
+
+    ```ts
+    import { NovaIdentity } from '@cbnventures/nova/toolkit';
+
+    // Pass a directory to start the walk-up from a known location
+    // instead of the current working directory.
+    const identity = new NovaIdentity(import.meta.dirname);
+
+    const projected = identity.forDocs();
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Projections
+
+`forDocs()` returns a flat object ready to spread into a Docusaurus config. Each field is optional, so pair it with a fallback using the `??` operator:
+
+- `title`, `tagline`, and `projectName` come straight from `project.name` and `project.description`.
+- `url` is the homepage with any trailing slash removed.
+- `organizationName` is the GitHub owner, and `github` is the owner's profile URL.
+- `copyright` is the composed line, present only when both `project.startingYear` and `project.legalName` exist.
+- `editUrl` and `repository` are the normalized repository URL; `npm`, `bugs`, `documentation`, `privacyPolicy`, and `termsOfUse` come from `urls`; `funding` is the list of funding URLs.
+
+## Static Transforms
+
+Every transform is pure and available without constructing an instance:
+
+- `composeCopyright(startingYear, legalName)` builds the full copyright line.
+- `copyrightYearRange(startingYear)` returns a single year, or a `start-current` range, computing the current year at call time.
+- `normalizeRepoUrl(repositoryUrl)` strips a leading `git+` and a trailing `.git`.
+- `githubUserUrl(owner)` builds the canonical GitHub profile URL.
+- `stripTrailingSlash(url)` removes a single trailing slash.
+
+## Troubleshooting
+
+- **`no "nova.config.json" found`** — The walk-up reached the filesystem root without finding a config. Run from inside a nova project, or pass a starting directory to the constructor.
+- **`could not read or parse`** — The config exists but is unreadable or is not valid JSON. Check file permissions and JSON syntax.
+- **`field "..." must be a string` / `must be a number`** — A field is present but has the wrong type. Fix the value in `nova.config.json`; absent fields are allowed and simply come back as `undefined`.

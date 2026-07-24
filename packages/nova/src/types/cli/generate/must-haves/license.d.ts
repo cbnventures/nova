@@ -1,6 +1,6 @@
 import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
-import type { Shared_GeneratorRunResult as SharedGeneratorRunResult, Shared_NovaConfig as SharedNovaConfig, Shared_NovaConfig_Project_License as SharedNovaConfigProjectLicense } from '../../../shared.d.ts';
+import type { Shared_GeneratorRunResult, Shared_NovaConfig, Shared_NovaConfig_Project_License } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - Must Haves - License - Run.
@@ -16,7 +16,7 @@ export type Cli_Generate_MustHaves_License_Runner_Run_Options = {
   replaceFile?: Cli_Generate_MustHaves_License_Runner_Run_Options_ReplaceFile;
 };
 
-export type Cli_Generate_MustHaves_License_Runner_Run_Returns = Promise<SharedGeneratorRunResult>;
+export type Cli_Generate_MustHaves_License_Runner_Run_Returns = Promise<Shared_GeneratorRunResult>;
 
 export type Cli_Generate_MustHaves_License_Runner_Run_CurrentDirectory = string;
 
@@ -30,9 +30,9 @@ export type Cli_Generate_MustHaves_License_Runner_Run_ReplaceFileNotice = string
 
 export type Cli_Generate_MustHaves_License_Runner_Run_NovaConfig = LibNovaConfig;
 
-export type Cli_Generate_MustHaves_License_Runner_Run_WorkingFile = SharedNovaConfig;
+export type Cli_Generate_MustHaves_License_Runner_Run_WorkingFile = Shared_NovaConfig;
 
-export type Cli_Generate_MustHaves_License_Runner_Run_Project = SharedNovaConfig['project'];
+export type Cli_Generate_MustHaves_License_Runner_Run_Project = Shared_NovaConfig['project'];
 
 export type Cli_Generate_MustHaves_License_Runner_Run_EntityName = string;
 
@@ -42,7 +42,7 @@ export type Cli_Generate_MustHaves_License_Runner_Run_StartingYear = number;
 
 export type Cli_Generate_MustHaves_License_Runner_Run_YearRange = string;
 
-export type Cli_Generate_MustHaves_License_Runner_Run_LicenseId = SharedNovaConfigProjectLicense | undefined;
+export type Cli_Generate_MustHaves_License_Runner_Run_LicenseId = Shared_NovaConfig_Project_License | undefined;
 
 export type Cli_Generate_MustHaves_License_Runner_Run_TemplateDirectory = string;
 

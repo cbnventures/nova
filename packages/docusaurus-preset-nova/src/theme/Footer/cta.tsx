@@ -19,8 +19,6 @@ import type {
  *
  * @param {Theme_Footer_Cta_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.18.0
  */
 function FooterCta(props: Theme_Footer_Cta_Props): Theme_Footer_Cta_Returns {

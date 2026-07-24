@@ -41,6 +41,8 @@ export type Lib_Color_ShadeConfig = [Shared_ShadeLevel, number, number][];
  *
  * @since 0.15.0
  */
+export type Lib_Color_Runner_ComputeShade_Returns = Shared_HexColor;
+
 export type Lib_Color_Runner_ComputeShade_Hue = number;
 
 export type Lib_Color_Runner_ComputeShade_Saturation = number;
@@ -50,8 +52,6 @@ export type Lib_Color_Runner_ComputeShade_Lightness = number;
 export type Lib_Color_Runner_ComputeShade_Position = number;
 
 export type Lib_Color_Runner_ComputeShade_SaturationFactor = number;
-
-export type Lib_Color_Runner_ComputeShade_Returns = Shared_HexColor;
 
 export type Lib_Color_Runner_ComputeShade_TargetLightness = number;
 
@@ -114,13 +114,13 @@ export type Lib_Color_Runner_GenerateScale_ShadeHex = Shared_HexColor;
  *
  * @since 0.15.0
  */
+export type Lib_Color_Runner_HslToHex_Returns = Shared_HexColor;
+
 export type Lib_Color_Runner_HslToHex_Hue = number;
 
 export type Lib_Color_Runner_HslToHex_Saturation = number;
 
 export type Lib_Color_Runner_HslToHex_Lightness = number;
-
-export type Lib_Color_Runner_HslToHex_Returns = Shared_HexColor;
 
 export type Lib_Color_Runner_HslToHex_NormalizedSaturation = number;
 
@@ -157,13 +157,13 @@ export type Lib_Color_Runner_HslToHex_BlueHex = string;
  *
  * @since 0.15.0
  */
+export type Lib_Color_Runner_RgbToHsl_Returns = Shared_HslColor;
+
 export type Lib_Color_Runner_RgbToHsl_Red = number;
 
 export type Lib_Color_Runner_RgbToHsl_Green = number;
 
 export type Lib_Color_Runner_RgbToHsl_Blue = number;
-
-export type Lib_Color_Runner_RgbToHsl_Returns = Shared_HslColor;
 
 export type Lib_Color_Runner_RgbToHsl_NormalizedRed = number;
 

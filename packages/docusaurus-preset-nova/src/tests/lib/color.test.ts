@@ -276,7 +276,9 @@ describe('Color edge cases', async () => {
  * Tests - Lib - Color - Hex To Lightness.
  *
  * @param hex - Hex.
- * @returns   Hex to lightness.
+ *
+ * @returns {Tests_Lib_Color_HexToLightness_Returns}
+ *
  * @since 0.15.0
  */
 function hexToLightness(hex: Tests_Lib_Color_HexToLightness_Hex): Tests_Lib_Color_HexToLightness_Returns {

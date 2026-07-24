@@ -35,6 +35,13 @@ ruleTester.run('noRawTextInCode', NoRawTextInCode['rule'], {
       code: '<code>{variable}</code>;',
     },
     {
+      code: [
+        '<code>',
+        '  {\'Array<string>\'}',
+        '</code>;',
+      ].join('\n'),
+    },
+    {
       code: '<span>raw text is fine here</span>;',
     },
     {

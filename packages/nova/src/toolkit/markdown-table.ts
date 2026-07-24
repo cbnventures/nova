@@ -296,7 +296,7 @@ class Runner {
     const usePaddedDelimiter: Toolkit_MarkdownTable_Runner_FormatDelimiter_UsePaddedDelimiter = this.#padDelimiterRow;
 
     const columnCells: Toolkit_MarkdownTable_Runner_FormatDelimiter_ColumnCells = columnWidths.map((columnWidth) => {
-      return '-'.repeat(columnWidth > minimumWidth ? columnWidth : minimumWidth);
+      return '-'.repeat((columnWidth > minimumWidth) ? columnWidth : minimumWidth);
     });
 
     const delimiter: Toolkit_MarkdownTable_Runner_FormatDelimiter_Delimiter = (usePaddedDelimiter === true) ? ' | ' : '-|-';

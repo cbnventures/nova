@@ -1,3 +1,7 @@
+import type { vi } from 'vitest';
+
+import type { Toolkit_Logger_Runner_Customize_Returns } from '../../../../toolkit/logger.d.ts';
+
 /**
  * Tests - CLI - Generate - Must Haves - Agent Conventions - Run.
  *
@@ -94,15 +98,15 @@ export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAg
 
 export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_PackageJsonPath = string;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock_Debug = ReturnType<typeof vi['fn']>;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock_Dev = ReturnType<typeof vi['fn']>;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock_Info = ReturnType<typeof vi['fn']>;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock_Warn = ReturnType<typeof vi['fn']>;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock_Error = ReturnType<typeof vi['fn']>;
 
 export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock = {
   debug: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock_Debug;
@@ -112,9 +116,9 @@ export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAg
   error: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_CustomizedLoggerMock_Error;
 };
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_LoggerCustomizeSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_LoggerCustomizeReturn = import('../../../../toolkit/logger.d.ts').Toolkit_Logger_Runner_Customize_Returns;
+export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_LoggerCustomizeReturn = Toolkit_Logger_Runner_Customize_Returns;
 
 export type Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_WarnsWhenNoAgentsSelected_WarnCalls = unknown[][];
 

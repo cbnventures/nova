@@ -22,8 +22,6 @@ import type {
  *
  * @param {Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlogTagsPostsPage(props: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props) {

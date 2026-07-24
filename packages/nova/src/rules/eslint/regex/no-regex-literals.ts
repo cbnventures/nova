@@ -113,11 +113,11 @@ export class Runner {
    * Checks whether a literal node contains a regex value and reports it with the configured
    * regexFile path when available, or a generic message otherwise.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Context} context - Context.
    * @param {Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Node}    node    - Node.
    * @param {Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Returns}
    *
@@ -147,15 +147,15 @@ export class Runner {
   /**
    * Rules - ESLint - Regex - No Regex Literals - Check Reg Exp Constructor.
    *
-   * Reports a `RegExp(...)` or `new RegExp(...)` call whose first argument is an
-   * inline string or static template pattern, so the pattern moves to the shared
-   * regex file. Calls passing a reference such as a lib constant `.source` are allowed.
-   *
-   * @private
+   * Reports a `RegExp(...)` or `new RegExp(...)` call whose first argument is an inline
+   * string or static template pattern, so the pattern moves to the shared regex file. Calls
+   * passing a reference such as a lib constant `.source` are allowed.
    *
    * @param {Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Context} context - Context.
    * @param {Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Node}    node    - Node.
    * @param {Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckRegExpConstructor_Returns}
    *

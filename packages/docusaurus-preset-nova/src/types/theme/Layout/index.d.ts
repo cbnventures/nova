@@ -46,3 +46,5 @@ export type Theme_Layout_Index_Layout_SearchSettings = Theme_Layout_Index_Layout
 export type Theme_Layout_Index_Layout_HighlightSearchTerms = boolean;
 
 export type Theme_Layout_Index_Layout_MetadataSpread = Record<string, unknown>;
+
+export type Theme_Layout_Index_Layout_CanDisplayFooter = boolean;

@@ -14,6 +14,7 @@ import {
   sep,
 } from 'node:path';
 
+import * as vitest from 'vitest';
 import { describe, it } from 'vitest';
 
 import {
@@ -271,6 +272,8 @@ import type {
   Tests_TypeDeclarations_ExtractTypeNamesComprehensive_HandlesTypeWithObjectBody_Lines,
   Tests_TypeDeclarations_ExtractTypeNamesComprehensive_ReturnsEmptyForNonExportTypeLines_Lines,
   Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DetectsDirectAliasToAForeignPrefixType_DtsContent,
+  Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DoesNotFlagAliasToAnExternalPackageType_DtsContent,
+  Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DoesNotFlagAliasToAStandaloneTypeFile_DtsContent,
   Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DoesNotFlagAliasToSamePrefixType_DtsContent,
   Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DoesNotFlagConcreteObjectShape_DtsContent,
   Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DoesNotFlagPrimitiveAlias_DtsContent,
@@ -814,7 +817,7 @@ describe('stripUnderscorePrefix', () => {
 /**
  * Tests - Type Declarations.
  *
- * Nova self-checks its own sources THROUGH the published kit: the ten inspector rules now
+ * Nova self-checks its own sources THROUGH the published kit: the inspector rules now
  * live in src/rules/vitest/type-declarations and are invoked here via the same register
  * function consumers call. The engine self-tests + comprehensive/integration suites below
  * stay nova-only and import the engine from src/lib.
@@ -822,6 +825,7 @@ describe('stripUnderscorePrefix', () => {
  * @since 0.20.0
  */
 registerTypeDeclarationSuite({
+  vitest,
   enable: 'all',
   typeRoots: [
     'src',
@@ -1036,7 +1040,8 @@ describe('validateLeaf comprehensive', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsReasonWhenLeafDoesNotMatch_ReasonResult = validateLeaf('items', 'Cli_Foo_Run_Things', 'Cli_Foo_Run', 'Cli_Foo');
 
     deepStrictEqual(reasonResult, {
-      actualLeaf: 'Things', expectedLeaf: 'Items',
+      actualLeaf: 'Things',
+      expectedLeaf: 'Items',
     });
 
     return;
@@ -1062,7 +1067,8 @@ describe('validateLeaf comprehensive', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithSourceSectionButLeafDiffers_ReasonResult = validateLeaf('items', 'Cli_Foo_Run_Things', 'Cli_Foo_Run', 'Cli_Foo');
 
     deepStrictEqual(reasonResult, {
-      actualLeaf: 'Things', expectedLeaf: 'Items',
+      actualLeaf: 'Things',
+      expectedLeaf: 'Items',
     });
 
     return;
@@ -1072,7 +1078,8 @@ describe('validateLeaf comprehensive', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsTheActualLeafWhenTypeNameStartsWithClassPrefixPassthroughButLeafDiffers_ReasonResult = validateLeaf('items', 'Cli_Foo_Things', 'Cli_Foo_Run', 'Cli_Foo');
 
     deepStrictEqual(reasonResult, {
-      actualLeaf: 'Things', expectedLeaf: 'Items',
+      actualLeaf: 'Things',
+      expectedLeaf: 'Items',
     });
 
     return;
@@ -1082,7 +1089,8 @@ describe('validateLeaf comprehensive', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsFullTypeNameAsActualLeafWhenNoPrefixMatches_ReasonResult = validateLeaf('items', 'Foreign_Type', 'Cli_Foo_Run', 'Cli_Foo');
 
     deepStrictEqual(reasonResult, {
-      actualLeaf: 'Foreign_Type', expectedLeaf: 'Items',
+      actualLeaf: 'Foreign_Type',
+      expectedLeaf: 'Items',
     });
 
     return;
@@ -1216,9 +1224,37 @@ describe('isLocallyDefined comprehensive', () => {
  */
 describe('isAliasToForeignType comprehensive', () => {
   it('detects direct alias to a foreign-prefix type', () => {
-    const dtsContent: Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DetectsDirectAliasToAForeignPrefixType_DtsContent = 'export type Cli_Foo_Run_Data = Lib_Utility_FetchData_Returns;\n';
+    const dtsContent: Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DetectsDirectAliasToAForeignPrefixType_DtsContent = [
+      'import type { Lib_Utility_FetchData_Returns } from \'../utility.d.ts\';',
+      'export type Cli_Foo_Run_Data = Lib_Utility_FetchData_Returns;',
+      '',
+    ].join('\n');
 
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), true);
+
+    return;
+  });
+
+  it('does not flag alias to a standalone type file', () => {
+    const dtsContent: Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DoesNotFlagAliasToAStandaloneTypeFile_DtsContent = [
+      'import type { Shared_Config } from \'../shared.d.ts\';',
+      'export type Cli_Foo_Run_Data = Shared_Config;',
+      '',
+    ].join('\n');
+
+    strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo', ['/shared.d.ts']), false);
+
+    return;
+  });
+
+  it('does not flag alias to an external package type', () => {
+    const dtsContent: Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_DoesNotFlagAliasToAnExternalPackageType_DtsContent = [
+      'import type { ReactNode } from \'react\';',
+      'export type Cli_Foo_Run_Data = ReactNode;',
+      '',
+    ].join('\n');
+
+    strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), false);
 
     return;
   });
@@ -1256,7 +1292,11 @@ describe('isAliasToForeignType comprehensive', () => {
   });
 
   it('handles array form: alias to foreign[]', () => {
-    const dtsContent: Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_HandlesArrayFormAliasToForeign_DtsContent = 'export type Cli_Foo_Run_Data = Lib_Utility_X[];\n';
+    const dtsContent: Tests_TypeDeclarations_IsAliasToForeignTypeComprehensive_HandlesArrayFormAliasToForeign_DtsContent = [
+      'import type { Lib_Utility_X } from \'../utility.d.ts\';',
+      'export type Cli_Foo_Run_Data = Lib_Utility_X[];',
+      '',
+    ].join('\n');
 
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), true);
 
@@ -2334,10 +2374,14 @@ describe('checkTypeNameUniqueness comprehensive', () => {
   it('returns no violations for unique names', () => {
     const violations: Tests_TypeDeclarations_CheckTypeNameUniquenessComprehensive_ReturnsNoViolationsForUniqueNames_Violations = checkTypeNameUniqueness([
       {
-        name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 1,
+        name: 'foo',
+        typeName: 'Cli_X_Foo',
+        lineNumber: 1,
       },
       {
-        name: 'bar', typeName: 'Cli_X_Bar', lineNumber: 2,
+        name: 'bar',
+        typeName: 'Cli_X_Bar',
+        lineNumber: 2,
       },
     ]);
 
@@ -2349,10 +2393,14 @@ describe('checkTypeNameUniqueness comprehensive', () => {
   it('detects duplicate expected names (rule 7.8)', () => {
     const violations: Tests_TypeDeclarations_CheckTypeNameUniquenessComprehensive_DetectsDuplicateExpectedNamesRule78_Violations = checkTypeNameUniqueness([
       {
-        name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 1,
+        name: 'foo',
+        typeName: 'Cli_X_Foo',
+        lineNumber: 1,
       },
       {
-        name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 5,
+        name: 'foo',
+        typeName: 'Cli_X_Foo',
+        lineNumber: 5,
       },
     ]);
 
@@ -2531,7 +2579,11 @@ describe('Rule 7.2 integration', () => {
   });
 
   it('fires when locally defined as alias to foreign type (Mode 2 tightening)', () => {
-    const dtsContent: Tests_TypeDeclarations_Rule72Integration_FiresWhenLocallyDefinedAsAliasToForeignTypeMode2Tightening_DtsContent = 'export type Cli_Foo_Run_Data = Lib_Utility_X;\n';
+    const dtsContent: Tests_TypeDeclarations_Rule72Integration_FiresWhenLocallyDefinedAsAliasToForeignTypeMode2Tightening_DtsContent = [
+      'import type { Lib_Utility_X } from \'../utility.d.ts\';',
+      'export type Cli_Foo_Run_Data = Lib_Utility_X;',
+      '',
+    ].join('\n');
 
     strictEqual(isLocallyDefined('Cli_Foo_Run_Data', dtsContent), true);
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), true);
@@ -2689,10 +2741,14 @@ describe('Rule 7.8 integration', () => {
   it('passes when all expected names unique', () => {
     const violations: Tests_TypeDeclarations_Rule78Integration_PassesWhenAllExpectedNamesUnique_Violations = checkTypeNameUniqueness([
       {
-        name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 1,
+        name: 'foo',
+        typeName: 'Cli_X_Foo',
+        lineNumber: 1,
       },
       {
-        name: 'bar', typeName: 'Cli_X_Bar', lineNumber: 2,
+        name: 'bar',
+        typeName: 'Cli_X_Bar',
+        lineNumber: 2,
       },
     ]);
 
@@ -2704,10 +2760,14 @@ describe('Rule 7.8 integration', () => {
   it('fires when two body vars produce the same expected type name (rule 7.8)', () => {
     const violations: Tests_TypeDeclarations_Rule78Integration_FiresWhenTwoBodyVarsProduceTheSameExpectedTypeNameRule78_Violations = checkTypeNameUniqueness([
       {
-        name: 'foo', typeName: 'Cli_X_Run_Foo', lineNumber: 5,
+        name: 'foo',
+        typeName: 'Cli_X_Run_Foo',
+        lineNumber: 5,
       },
       {
-        name: 'foo', typeName: 'Cli_X_Run_Foo', lineNumber: 12,
+        name: 'foo',
+        typeName: 'Cli_X_Run_Foo',
+        lineNumber: 12,
       },
     ]);
 
@@ -3370,10 +3430,14 @@ describe('Edge cases EC31-EC55', () => {
   it('EC35: rule 7.8 catches two body vars producing the same expected type name', () => {
     const violations: Tests_TypeDeclarations_EdgeCasesEC31EC55_EC35Rule78CatchesTwoBodyVarsProducingTheSameExpectedTypeName_Violations = checkTypeNameUniqueness([
       {
-        name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 10,
+        name: 'foo',
+        typeName: 'Cli_X_Foo',
+        lineNumber: 10,
       },
       {
-        name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 20,
+        name: 'foo',
+        typeName: 'Cli_X_Foo',
+        lineNumber: 20,
       },
     ]);
 
@@ -3474,7 +3538,8 @@ describe('Rule 7.1 integration', () => {
     const result: Tests_TypeDeclarations_Rule71Integration_FailsWhenLeafDiffersFromVarName_Result = validateLeaf('items', 'Cli_Foo_Run_Things', 'Cli_Foo_Run', 'Cli_Foo');
 
     deepStrictEqual(result, {
-      actualLeaf: 'Things', expectedLeaf: 'Items',
+      actualLeaf: 'Things',
+      expectedLeaf: 'Items',
     });
 
     return;
@@ -3718,6 +3783,7 @@ describe('end-to-end fixture pipeline', () => {
       '',
     ].join('\n');
     const dtsContent: Tests_TypeDeclarations_EndToEndFixturePipeline_CatchesTheExpectedViolationsAcrossRules7172737475InASingleFixture_DtsContent = [
+      'import type { Lib_Utility_X } from \'../utility.d.ts\';',
       'export type Cli_Foo_Wrong_Leaf = unknown;',
       'export type Cli_Foo_Bar_Result_Returns = unknown;',
       'export type Cli_Foo_Bar_Data = Lib_Utility_X;', // 7.2-alias source

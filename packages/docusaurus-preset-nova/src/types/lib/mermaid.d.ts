@@ -1,3 +1,5 @@
+import type * as mermaid from 'mermaid';
+
 import type { Shared_MermaidRenderOutput } from '../shared.d.ts';
 
 /**
@@ -43,7 +45,7 @@ export type Lib_Mermaid_GetResolvedColor_A = number | undefined;
  */
 export type Lib_Mermaid_LoadMermaid_Returns = Promise<Lib_Mermaid_LoadMermaid_Module>;
 
-export type Lib_Mermaid_LoadMermaid_Module = typeof import('mermaid');
+export type Lib_Mermaid_LoadMermaid_Module = typeof mermaid;
 
 /**
  * Lib - Mermaid - Promise.
@@ -52,7 +54,7 @@ export type Lib_Mermaid_LoadMermaid_Module = typeof import('mermaid');
  */
 export type Lib_Mermaid_MermaidPromise = Promise<Lib_Mermaid_MermaidPromiseModule> | undefined;
 
-export type Lib_Mermaid_MermaidPromiseModule = typeof import('mermaid');
+export type Lib_Mermaid_MermaidPromiseModule = typeof mermaid;
 
 /**
  * Lib - Mermaid - Use Mermaid Config.
@@ -116,7 +118,7 @@ export type Lib_Mermaid_UseMermaidRenderResult_Id = string;
 
 export type Lib_Mermaid_UseMermaidRenderResult_Cancelled = boolean;
 
-export type Lib_Mermaid_UseMermaidRenderResult_MermaidModuleType = typeof import('mermaid');
+export type Lib_Mermaid_UseMermaidRenderResult_MermaidModuleType = typeof mermaid;
 
 export type Lib_Mermaid_UseMermaidRenderResult_MermaidModule = Lib_Mermaid_UseMermaidRenderResult_MermaidModuleType;
 

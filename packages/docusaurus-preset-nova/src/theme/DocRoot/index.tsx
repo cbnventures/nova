@@ -20,8 +20,6 @@ import type {
  *
  * @param {Theme_DocRoot_Index_DocRoot_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocRoot(props: Theme_DocRoot_Index_DocRoot_Props) {

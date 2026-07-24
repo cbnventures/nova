@@ -64,8 +64,10 @@ Require documentation tables to match canonical `MarkdownTable` output with `reg
 
 ```ts title="src/tests/markdown-table.test.ts"
 import { registerMarkdownTableSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 registerMarkdownTableSuite({
+  vitest,
   enable: 'all',
 });
 ```

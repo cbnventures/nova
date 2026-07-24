@@ -50,6 +50,19 @@ import type {
   Lib_UseNavbarOverflow_Width,
 } from '../types/lib/use-navbar-overflow.d.ts';
 
+/**
+ * Lib - Use Navbar Overflow - Parse Length.
+ *
+ * Converts a CSS length string into a pixel number, resolving rem
+ * units against the document root font size and treating any
+ * non-numeric input as zero.
+ *
+ * @param {Lib_UseNavbarOverflow_ParseLength_Value} value - Value.
+ *
+ * @returns {Lib_UseNavbarOverflow_ParseLength_Returns}
+ *
+ * @since 0.21.0
+ */
 function parseLength(value: Lib_UseNavbarOverflow_ParseLength_Value): Lib_UseNavbarOverflow_ParseLength_Returns {
   const numeric: Lib_UseNavbarOverflow_ParseLength_Numeric = parseFloat(value);
 
@@ -66,6 +79,19 @@ function parseLength(value: Lib_UseNavbarOverflow_ParseLength_Value): Lib_UseNav
   return numeric;
 }
 
+/**
+ * Lib - Use Navbar Overflow - Use Navbar Overflow.
+ *
+ * Measures navbar items against a width budget and returns the count
+ * that fit alongside a measuring flag, recomputing on resize so the
+ * overflow menu only appears once items no longer fit.
+ *
+ * @param {Lib_UseNavbarOverflow_Input} input - Input.
+ *
+ * @returns {Lib_UseNavbarOverflow_Returns}
+ *
+ * @since 0.21.0
+ */
 export function useNavbarOverflow(input: Lib_UseNavbarOverflow_Input): Lib_UseNavbarOverflow_Returns {
   const itemCount: Lib_UseNavbarOverflow_ItemCount = input['items'].length;
   const measureRef: Lib_UseNavbarOverflow_MeasureRef = useRef<Lib_UseNavbarOverflow_ContainerElement | null>(null);
@@ -76,6 +102,18 @@ export function useNavbarOverflow(input: Lib_UseNavbarOverflow_Input): Lib_UseNa
   const measuring: Lib_UseNavbarOverflow_Measuring = measuringState[0];
   const setMeasuring: Lib_UseNavbarOverflow_SetMeasuring = measuringState[1];
 
+  /**
+   * Lib - Use Navbar Overflow - Use Navbar Overflow - Compute.
+   *
+   * Measures each navbar child against the width budget and updates
+   * the visible count and measuring state to reflect what fits.
+   *
+   * @private
+   *
+   * @returns {Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_Returns}
+   *
+   * @since 0.21.0
+   */
   function compute(): Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_Returns {
     if (measureRef.current === null) {
       return undefined;

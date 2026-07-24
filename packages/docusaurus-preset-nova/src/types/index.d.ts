@@ -61,10 +61,6 @@ export type Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve = {
   alias: Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve_Alias;
 };
 
-export type Index_Runner_Default_ReturnsConfigureWebpackReturns = {
-  resolve: Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve;
-};
-
 export type Index_Runner_Default_Returns_ConfigureWebpack = () => Index_Runner_Default_ReturnsConfigureWebpackReturns;
 
 export type Index_Runner_Default_Returns_GetTranslationFiles = () => TranslationFile[];
@@ -149,6 +145,8 @@ export type Index_Runner_Default_CssAccessibilityPath = string;
 
 export type Index_Runner_Default_CssUtilitiesPath = string;
 
+export type Index_Runner_Default_CssEmbedPath = string;
+
 export type Index_Runner_Default_CssBlocksDirectory = string;
 
 export type Index_Runner_Default_CssBlockFiles = string[];
@@ -231,6 +229,10 @@ export type Index_Runner_Default_ProgressBarConfig = boolean | Record<string, un
 export type Index_Runner_Default_NprogressCssPath = string;
 
 export type Index_Runner_Default_SearchConfig = Options_PluginOptions_Search | undefined;
+
+export type Index_Runner_Default_ReturnsConfigureWebpackReturns = {
+  resolve: Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve;
+};
 
 /**
  * Index - Docusaurus Theme Nova - Default - All Content Loaded.
@@ -518,12 +520,6 @@ export type Index_Runner_Default_InjectHtmlTags_HeadTags = Array<{
   innerHTML?: string;
 }>;
 
-export type Index_Runner_Default_InjectHtmlTags_PreBodyTags = Array<{
-  tagName: string;
-  attributes?: Record<string, string | boolean>;
-  innerHTML?: string;
-}>;
-
 export type Index_Runner_Default_InjectHtmlTags_ColorModeScript = string;
 
 export type Index_Runner_Default_InjectHtmlTags_PreBodyScriptEntries = Array<{
@@ -534,6 +530,12 @@ export type Index_Runner_Default_InjectHtmlTags_PreBodyScriptEntries = Array<{
 export type Index_Runner_Default_InjectHtmlTags_PresetVariantInit = string;
 
 export type Index_Runner_Default_InjectHtmlTags_AnnouncementBarScript = string;
+
+export type Index_Runner_Default_InjectHtmlTags_PreBodyTags = Array<{
+  tagName: string;
+  attributes?: Record<string, string | boolean>;
+  innerHTML?: string;
+}>;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Post Build.

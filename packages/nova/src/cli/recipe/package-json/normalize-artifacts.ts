@@ -28,19 +28,21 @@ import type {
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Workspace,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Returns,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Value,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_ConfigRecipes,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_ConfigRecipesPackageJson,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_CurrentDirectory,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_EligibleEntry,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_EligiblePath,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_EligibleWorkspaceRecipes,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_EligibleWorkspaces,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_IsAtProjectRoot,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_IsDryRun,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_IsReplaceFile,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Options,
-  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_RecipeTupleFilter,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_ReplaceFileNotice,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Returns,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkingFile,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkingFileWorkspaces,
-  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkspaceConfigFilter,
-  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkspaceRecipesFilter,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Workspaces,
 } from '../../../types/cli/recipe/package-json/normalize-artifacts.d.ts';
 
@@ -106,22 +108,30 @@ export class Runner {
       return;
     }
 
+    const configRecipes: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_ConfigRecipes = workingFile['recipes'];
+    const configRecipesPackageJson: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_ConfigRecipesPackageJson = (configRecipes !== undefined) ? configRecipes['package-json'] : undefined;
+
     // Filter workspaces that have the recipe enabled.
     const eligibleWorkspaces: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfigFilter: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkspaceConfigFilter = workspace[1];
-      const workspaceRecipesFilter: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkspaceRecipesFilter = workspaceConfigFilter['recipes'];
+      const eligiblePath: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_EligiblePath = workspace[0];
 
-      if (workspaceRecipesFilter === undefined) {
+      if (configRecipesPackageJson === undefined) {
         return false;
       }
 
-      const recipeTupleFilter: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_RecipeTupleFilter = workspaceRecipesFilter['normalize-artifacts'];
+      const eligibleWorkspaceRecipes: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_EligibleWorkspaceRecipes = configRecipesPackageJson[eligiblePath];
 
-      if (recipeTupleFilter === undefined) {
+      if (eligibleWorkspaceRecipes === undefined) {
         return false;
       }
 
-      return recipeTupleFilter[0] === true;
+      const eligibleEntry: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_EligibleEntry = eligibleWorkspaceRecipes['normalize-artifacts'];
+
+      if (eligibleEntry === undefined) {
+        return false;
+      }
+
+      return eligibleEntry['enabled'] === true;
     });
 
     if (eligibleWorkspaces.length === 0) {

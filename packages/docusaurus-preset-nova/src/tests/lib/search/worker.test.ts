@@ -25,6 +25,7 @@ import type {
   Tests_Lib_Search_Worker_PerformSearchFuzzy_MatchesNearMissQueriesViaFuzzyStrategy_Index,
   Tests_Lib_Search_Worker_PerformSearchFuzzyDistance_WidensFuzzyMatchingAsTheDistanceIncreases_Index,
   Tests_Lib_Search_Worker_PerformSearchLimit_CapsResultsAtTheSpecifiedLimit_Index,
+  Tests_Lib_Search_Worker_PerformSearchReservedSyntax_ReturnsAnEmptyArrayForAQueryWithReservedLunrSyntaxCharacters_Index,
   Tests_Lib_Search_Worker_PerformSearchScoreSorting_ReturnsResultsSortedByScoreDescending_Index,
   Tests_Lib_Search_Worker_PerformSearchWildcard_MatchesPrefixQueriesViaWildcardStrategy_Index,
   Tests_Lib_Search_Worker_Results,
@@ -47,7 +48,8 @@ const mapHitPath = (hit: Tests_Lib_Search_Worker_MapHitPath_Hit): Tests_Lib_Sear
 /**
  * Tests - Lib - Search - Worker - Build Test Index.
  *
- * @returns Build test index.
+ * @returns {Tests_Lib_Search_Worker_BuildTestIndex_Returns}
+ *
  * @since 0.15.0
  */
 function buildTestIndex(): Tests_Lib_Search_Worker_BuildTestIndex_Returns {
@@ -284,6 +286,26 @@ describe('performSearch empty query', async () => {
     const index: Tests_Lib_Search_Worker_PerformSearchEmptyQuery_ReturnsAnEmptyArrayForAnEmptyQuery_Index = testData['index'];
     const documents: Tests_Lib_Search_Worker_Documents = testData['documents'];
     const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, '', 10, 1);
+
+    deepStrictEqual(results, []);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Search - Worker - PerformSearch Reserved Syntax.
+ *
+ * @since 0.21.0
+ */
+describe('performSearch reserved syntax', async () => {
+  it('returns an empty array for a query with reserved lunr syntax characters', () => {
+    const testData: Tests_Lib_Search_Worker_TestData = buildTestIndex();
+    const index: Tests_Lib_Search_Worker_PerformSearchReservedSyntax_ReturnsAnEmptyArrayForAQueryWithReservedLunrSyntaxCharacters_Index = testData['index'];
+    const documents: Tests_Lib_Search_Worker_Documents = testData['documents'];
+    const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, '9:00', 10, 1);
 
     deepStrictEqual(results, []);
 

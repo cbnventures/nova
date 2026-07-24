@@ -2,6 +2,9 @@ import { useDocsSidebar } from '@docusaurus/plugin-content-docs/client';
 import DocRootLayoutMain from '@theme/DocRoot/Layout/Main';
 import DocRootLayoutSidebar from '@theme/DocRoot/Layout/Sidebar';
 
+import DocSidebarMobilePanel from '../../DocSidebarMobile/panel.js';
+import TOCCollapsiblePanel from '../../TOCCollapsible/panel.js';
+
 import type {
   Theme_DocRoot_Layout_Index_DocRootLayout_Props,
   Theme_DocRoot_Layout_Index_DocRootLayout_Sidebar,
@@ -16,14 +19,15 @@ import type {
  *
  * @param {Theme_DocRoot_Layout_Index_DocRootLayout_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocRootLayout(props: Theme_DocRoot_Layout_Index_DocRootLayout_Props) {
   const sidebar: Theme_DocRoot_Layout_Index_DocRootLayout_Sidebar = useDocsSidebar();
 
-  if (sidebar !== null && sidebar !== undefined) {
+  if (
+    sidebar !== null
+    && sidebar !== undefined
+  ) {
     return (
       <div
         className={(props['className'] !== undefined) ? `nova-doc-root ${props['className']}` : 'nova-doc-root'}
@@ -39,6 +43,8 @@ function DocRootLayout(props: Theme_DocRoot_Layout_Index_DocRootLayout_Props) {
             {props['children']}
           </DocRootLayoutMain>
         </div>
+        <DocSidebarMobilePanel />
+        <TOCCollapsiblePanel />
       </div>
     );
   }

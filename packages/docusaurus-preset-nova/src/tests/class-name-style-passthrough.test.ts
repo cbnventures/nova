@@ -98,10 +98,12 @@ async function discoverComponents(): Tests_ClassNameStylePassthrough_DiscoverCom
   const themeRoot: Tests_ClassNameStylePassthrough_DiscoverComponents_ThemeRoot = resolve(getPackageRoot(), 'src', 'theme');
   const blocksRoot: Tests_ClassNameStylePassthrough_DiscoverComponents_BlocksRoot = resolve(getPackageRoot(), 'src', 'blocks');
   const themeFiles: Tests_ClassNameStylePassthrough_DiscoverComponents_ThemeFiles = await glob('**/index.tsx', {
-    cwd: themeRoot, posix: true,
+    cwd: themeRoot,
+    posix: true,
   });
   const blocksFiles: Tests_ClassNameStylePassthrough_DiscoverComponents_BlocksFiles = await glob('**/index.tsx', {
-    cwd: blocksRoot, posix: true,
+    cwd: blocksRoot,
+    posix: true,
   });
   const keyed: Tests_ClassNameStylePassthrough_DiscoverComponents_Keyed = [];
 

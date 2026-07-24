@@ -1,0 +1,199 @@
+import type { vi } from 'vitest';
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_OriginalCwd = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_TemporaryDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_TemporaryPrefix = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_SandboxRoot = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Bakes Public Dotenv Variables And Lists Them In The Setup Report.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_StdoutChunks = string[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_StdoutSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_StdoutText = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_PublishPath = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_PublishContent = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Generates A Tag Push Publish Workflow With A Tags Filtered On Block.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_PublishPath = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_PublishContent = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_GeneratesATagPushPublishWorkflowWithATagsFilteredOnBlock_DollarBrace = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Keeps An Existing Workflow File When The Config Has A Diagnostic.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_KeepsAnExistingWorkflowFileWhenTheConfigHasADiagnostic_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_KeepsAnExistingWorkflowFileWhenTheConfigHasADiagnostic_ExistingPath = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_KeepsAnExistingWorkflowFileWhenTheConfigHasADiagnostic_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_KeepsAnExistingWorkflowFileWhenTheConfigHasADiagnostic_PreviousExitCode = number | string | null | undefined;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_KeepsAnExistingWorkflowFileWhenTheConfigHasADiagnostic_StderrSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_KeepsAnExistingWorkflowFileWhenTheConfigHasADiagnostic_Entries = string[];
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Reports A Diagnostic And Skips The File For An Unknown Template.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticAndSkipsTheFileForAnUnknownTemplate_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticAndSkipsTheFileForAnUnknownTemplate_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticAndSkipsTheFileForAnUnknownTemplate_PreviousExitCode = number | string | null | undefined;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticAndSkipsTheFileForAnUnknownTemplate_StderrChunks = string[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticAndSkipsTheFileForAnUnknownTemplate_StderrSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticAndSkipsTheFileForAnUnknownTemplate_ObservedExitCode = number | string | null | undefined;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticAndSkipsTheFileForAnUnknownTemplate_StderrText = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticAndSkipsTheFileForAnUnknownTemplate_Entries = string[];
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Reports A Diagnostic For An Unregistered Scope.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAnUnregisteredScope_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAnUnregisteredScope_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAnUnregisteredScope_PreviousExitCode = number | string | null | undefined;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAnUnregisteredScope_StderrChunks = string[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAnUnregisteredScope_StderrSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAnUnregisteredScope_ObservedExitCode = number | string | null | undefined;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAnUnregisteredScope_StderrText = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Reports A Diagnostic For A Workflow Missing A Suffix.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAWorkflowMissingASuffix_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAWorkflowMissingASuffix_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAWorkflowMissingASuffix_PreviousExitCode = number | string | null | undefined;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAWorkflowMissingASuffix_StderrChunks = string[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAWorkflowMissingASuffix_StderrSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAWorkflowMissingASuffix_ObservedExitCode = number | string | null | undefined;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReportsADiagnosticForAWorkflowMissingASuffix_StderrText = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Reproduces All Three Portfolio Workflows Byte For Byte And Skips On A Second Run.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_FixturesDir = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_CheckPath = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_CheckContent = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_CheckFixture = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_LockPath = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_LockContent = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_LockFixture = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_PublishPath = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_PublishContent = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_PublishFixture = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_PublishContentSecondRun = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_Entries = string[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_BackupFiles = string[];
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Resolves A Workflow Environment Prefix Onto The Sponsor Env Block.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ResolvesAWorkflowEnvironmentPrefixOntoTheSponsorEnvBlock_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ResolvesAWorkflowEnvironmentPrefixOntoTheSponsorEnvBlock_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ResolvesAWorkflowEnvironmentPrefixOntoTheSponsorEnvBlock_PreviousExitCode = number | string | null | undefined;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ResolvesAWorkflowEnvironmentPrefixOntoTheSponsorEnvBlock_StderrChunks = string[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ResolvesAWorkflowEnvironmentPrefixOntoTheSponsorEnvBlock_StderrSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ResolvesAWorkflowEnvironmentPrefixOntoTheSponsorEnvBlock_ObservedExitCode = number | string | null | undefined;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ResolvesAWorkflowEnvironmentPrefixOntoTheSponsorEnvBlock_StderrText = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ResolvesAWorkflowEnvironmentPrefixOntoTheSponsorEnvBlock_CheckPath = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ResolvesAWorkflowEnvironmentPrefixOntoTheSponsorEnvBlock_CheckContent = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Generate - Workflows Blueprint Generate - Writes The Expected Files And Prints Setup Lines For A Valid Nova Shaped Config.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_NovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_StdoutChunks = string[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_StdoutSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_Entries = string[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_StdoutText = string;

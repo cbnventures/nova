@@ -28,6 +28,8 @@ The `require-jsdoc-hierarchy` rule reports any JSDoc summary line on a class or 
 
 The expected hierarchy is built from the file path segments after the first matching anchor directory (default: `src`), with each segment title-cased and separated by ` - `. For methods, the method name is appended as the final segment. Known abbreviations (e.g., `api` to `API`, `eslint` to `ESLint`) are applied automatically. Path segments named `index` are always dropped (e.g. `src/cli/index.ts` yields `CLI.`), in addition to any `stripDirectories` entries.
 
+Files that hold `<script>` tags (`astro`, `md`, `markdown`, `html`, `htm`, `vue`, `svelte`) are skipped, because processor-based ESLint plugins extract each `<script>` block into a virtual file whose name embeds a non-deterministic batch counter, so the expected hierarchy can never converge. A `Logger.warn` notice reports each skip; set `warnSkippedScripts` to `false` to silence it.
+
 ## Why Use This Rule?
 
 1. Ensures every JSDoc summary line is consistent and predictable across the codebase.
@@ -166,6 +168,32 @@ The expected hierarchy is built from the file path segments after the first matc
     ```
 
   </TabItem>
+  <TabItem value="silence-script-notices" label="Silence Script Notices">
+
+    Silence the notice emitted when a file with a `<script>` tag is skipped:
+
+    ```ts
+    import { RequireJsdocHierarchy } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-hierarchy': RequireJsdocHierarchy.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-hierarchy': ['error', {
+            warnSkippedScripts: false,
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
 </Tabs>
 
 ## Options
@@ -174,12 +202,13 @@ The expected hierarchy is built from the file path segments after the first matc
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option              | Type                     | Default     | Description                                                                                                                               |
-|---------------------|--------------------------|-------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| `anchorDirectories` | `string[]`               | `['src']`   | Directory names that serve as path anchors.                                                                                               |
-| `ignoreFiles`       | `string[]`               | `[]`        | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
-| `knownNames`        | `Record<string, string>` | `{}`        | Custom brand/abbreviation mappings for prettifying.                                                                                       |
-| `stripDirectories`  | `string[]`               | `['types']` | Directory names to filter out from path parts.                                                                                            |
+| Option               | Type                     | Default     | Description                                                                                                                               |
+|----------------------|--------------------------|-------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `anchorDirectories`  | `string[]`               | `['src']`   | Directory names that serve as path anchors.                                                                                               |
+| `ignoreFiles`        | `string[]`               | `[]`        | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+| `knownNames`         | `Record<string, string>` | `{}`        | Custom brand/abbreviation mappings for prettifying.                                                                                       |
+| `stripDirectories`   | `string[]`               | `['types']` | Directory names to filter out from path parts.                                                                                            |
+| `warnSkippedScripts` | `boolean`                | `true`      | Emit a `Logger.warn` notice when a file holding a `<script>` tag is skipped. Set to `false` to silence the notice.                        |
 
 ## Autofix
 
@@ -196,3 +225,4 @@ npx eslint --fix . --rule '@cbnventures/nova/require-jsdoc-hierarchy: error'
 - **Constructor summary looks off** — Constructors are checked like any other method, with `Constructor` appended as the final segment (e.g. `CLI - Utility - Changelog - Constructor.`).
 - **Error says to rename a directory** — If the first path segment after the anchor directory begins with a digit (e.g. `src/2fa/...`), the rule reports `invalidIdentifierPrefix` and asks you to rename the directory to start with a letter, because the segment would produce an invalid TypeScript identifier prefix. The normal hierarchy check is skipped for that file until renamed.
 - **Exported type aliases may add sub-segments** — For `export type` declarations the rule accepts any summary that begins with the file's hierarchy prefix and ends with a period (e.g. `Logger - Debug.` is allowed under a `Logger.` path), so related types can live in one file under sub-section names.
+- **Notice fires for a component with a `<script>`** — Files holding `<script>` tags (`astro`, `md`, `markdown`, `html`, `htm`, `vue`, `svelte`) are skipped because their extracted virtual filenames are non-deterministic. The `Logger.warn` notice is informational, not an error. Set `warnSkippedScripts` to `false` to silence it.

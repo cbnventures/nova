@@ -51,6 +51,27 @@ import type {
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SkipsWhenNoWorkspacesHaveTheRecipeEnabled_WorkspaceDirectory,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SkipsWhenNoWorkspacesHaveTheRecipeEnabled_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SkipsWhenNoWorkspacesHaveTheRecipeEnabled_WorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_LicensePath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_Output,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_Parsed,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_WorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_Output,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_Parsed,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_WorkspacePackageJsonPath,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsNameFromWorkspaceManifest_NovaConfigContents,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsNameFromWorkspaceManifest_NovaConfigPath,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsNameFromWorkspaceManifest_Output,
@@ -191,8 +212,14 @@ describe('CliRecipePackageJsonSyncIdentity.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'sync-identity': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-identity': {
+              enabled: true,
+            },
           },
         },
       },
@@ -224,6 +251,136 @@ describe('CliRecipePackageJsonSyncIdentity.run', async () => {
     return;
   });
 
+  it('syncs license to proprietary reference from nova config', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_ProjectDirectory = join(sandboxRoot, 'sync-license-proprietary');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_PackageJsonContents = JSON.stringify({
+      name: 'test-license-proprietary',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_NovaConfigContents = JSON.stringify({
+      project: {
+        license: 'Proprietary',
+      },
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-identity': {
+              enabled: true,
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_WorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+      license: 'MIT',
+    }, null, 2);
+
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
+
+    const licensePath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_LicensePath = join(workspaceDirectory, 'LICENSE');
+
+    await writeFile(licensePath, 'Proprietary license.\n', 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonSyncIdentity.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_Parsed = JSON.parse(output);
+
+    strictEqual(parsed['license'], 'SEE LICENSE IN ./LICENSE');
+
+    return;
+  });
+
+  it('syncs license to spdx identifier from nova config', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_ProjectDirectory = join(sandboxRoot, 'sync-license-spdx');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_PackageJsonContents = JSON.stringify({
+      name: 'test-license-spdx',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_NovaConfigContents = JSON.stringify({
+      project: {
+        license: 'MIT',
+      },
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-identity': {
+              enabled: true,
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_WorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+      license: 'Apache-2.0',
+    }, null, 2);
+
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonSyncIdentity.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToSpdxIdentifierFromNovaConfig_Parsed = JSON.parse(output);
+
+    strictEqual(parsed['license'], 'MIT');
+
+    return;
+  });
+
   it('sets freezable workspace version to 0.0.0', async () => {
     const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SetsFreezableWorkspaceVersionTo000_ProjectDirectory = join(sandboxRoot, 'freezable-version');
     const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SetsFreezableWorkspaceVersionTo000_WorkspaceDirectory = join(projectDirectory, 'packages', 'config');
@@ -244,8 +401,14 @@ describe('CliRecipePackageJsonSyncIdentity.run', async () => {
           name: 'config-test',
           role: 'config',
           policy: 'freezable',
-          recipes: {
-            'sync-identity': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/config': {
+            'sync-identity': {
+              enabled: true,
+            },
           },
         },
       },
@@ -297,8 +460,14 @@ describe('CliRecipePackageJsonSyncIdentity.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'sync-identity': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-identity': {
+              enabled: true,
+            },
           },
         },
       },

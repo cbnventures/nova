@@ -1,0 +1,172 @@
+---
+id: "require-jsdoc-tag-order"
+title: "Require JSDoc Tag Order"
+description: "Require JSDoc tags to follow the canonical order with exactly one blank line between adjacent tag groups."
+keywords:
+  - "nova"
+  - "eslint rule"
+  - "jsdoc"
+  - "tag order"
+  - "blank lines"
+  - "linting"
+tags:
+  - "rules"
+  - "eslint"
+  - "code style"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require JSDoc tags to follow the canonical order with exactly one blank line between adjacent tag groups.
+
+## Summary
+
+The `require-jsdoc-tag-order` rule reports any JSDoc block whose tags are out of order or whose tag groups are spaced incorrectly. The canonical order is the title, prose body, then `@param` (grouped), `@private`, `@returns`, `@since`, and `@deprecated`.
+
+Adjacent tag groups must be separated by exactly one blank line, and `@param` lines within their group must have no blank line between them. Notably, `@private` sits after the `@param` group and before `@returns`.
+
+## Why Use This Rule?
+
+1. Keeps every JSDoc block laid out the same way so readers scan tags in a predictable order.
+2. Normalizes the blank-line spacing between groups so blocks stay visually consistent across the codebase.
+3. Fixes both ordering and spacing automatically, so authors never have to reshuffle tags by hand.
+
+## Examples
+
+<Tabs groupId="require-jsdoc-tag-order-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    /**
+     * Parse the configuration file.
+     *
+     * Reads the file at the given path and returns
+     * a parsed configuration object.
+     *
+     * @param {string} path - Path.
+     * @param {Options} options - Options.
+     *
+     * @private
+     *
+     * @returns {Config}
+     *
+     * @since UNRELEASED
+     */
+    private parseConfig(path, options) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    /**
+     * Parse the configuration file.
+     *
+     * Reads the file at the given path and returns
+     * a parsed configuration object.
+     *
+     * @private
+     *
+     * @param {string} path - Path.
+     *
+     * @param {Options} options - Options.
+     *
+     * @returns {Config}
+     *
+     * @since UNRELEASED
+     */
+    private parseConfig(path, options) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-jsdoc-tag-order-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireJsdocTagOrder } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-tag-order': RequireJsdocTagOrder.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-tag-order': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireJsdocTagOrder } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-tag-order': RequireJsdocTagOrder.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-tag-order': ['error', {
+            ignoreFiles: [
+              '*.test.ts',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/require-jsdoc-tag-order: error'
+```
+
+The fix reorders the tags into canonical order and normalizes the blank-line spacing between groups, preserving the block's indentation.
+
+## Troubleshooting
+
+- **`@private` appears in the wrong place** — The canonical order places `@private` after the `@param` group and before `@returns`. Run the fixer to move it.
+- **Blank line between two `@param` lines** — Lines within the `@param` group must be adjacent with no blank line. The fixer removes the extra spacing.
+- **Groups run together** — Adjacent tag groups need exactly one blank `*` line between them. The fixer inserts the missing separator.
+- **Want to skip specific files** — Use the `ignoreFiles` option to exclude files that do not follow the canonical tag order.

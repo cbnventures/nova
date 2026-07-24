@@ -1,11 +1,12 @@
-import { describe } from 'vitest';
-
 import { deriveDtsMapping } from '../../../lib/type-declaration-engine.js';
+import { setActiveVitest } from '../active-vitest.js';
 import {
   crossSectionReferences,
+  dtsImportVerbatim,
   filenameValidation,
   firstComeFirstServeOrder,
   identifierVsFileName,
+  noInlineImportTypes,
   objectPropertyTypes,
   sectionAlphabeticalOrder,
   sectionCoverage,
@@ -27,9 +28,9 @@ import type {
 /**
  * Rules - Vitest - Type Declarations - Register - Type Declaration Suite.
  *
- * Resolves the suite config (defaulting `packageRoot` to `process.cwd()`, `typeRoots`
- * to `['src']`, `standaloneTypeFiles` to `[]`, and `mapping` to the `typeRoots`-derived
- * mapping) and runs the nine inspector rules inside a single describe, gated by `enable`.
+ * Resolves the suite config (defaulting `packageRoot` to `process.cwd()`, `typeRoots` to
+ * `['src']`, `standaloneTypeFiles` to `[]`, and `mapping` to the `typeRoots`-derived value)
+ * then runs the inspector rules inside a single describe, gated by `enable`.
  *
  * @param {Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_Config} config - Config.
  *
@@ -38,7 +39,9 @@ import type {
  * @since 0.20.0
  */
 export function registerTypeDeclarationSuite(config: Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_Config): Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_Returns {
-  describe('type declarations', async () => {
+  setActiveVitest(config['vitest']);
+
+  config['vitest'].describe('type declarations', async () => {
     const packageRoot: Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_PackageRoot = config['packageRoot'] ?? process.cwd();
     const typeRoots: Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_TypeRoots = config['typeRoots'] ?? ['src'];
     const standaloneTypeFilesConfig: Rules_Vitest_TypeDeclarations_Register_RegisterTypeDeclarationSuite_TypeDeclarations_StandaloneTypeFilesConfig = config['standaloneTypeFiles'] ?? [];
@@ -52,6 +55,8 @@ export function registerTypeDeclarationSuite(config: Rules_Vitest_TypeDeclaratio
     };
 
     await crossSectionReferences(resolved, enable);
+    await dtsImportVerbatim(resolved, enable);
+    await noInlineImportTypes(resolved, enable);
     await sectionAlphabeticalOrder(resolved, enable);
     await firstComeFirstServeOrder(resolved, enable);
     await objectPropertyTypes(resolved, enable);

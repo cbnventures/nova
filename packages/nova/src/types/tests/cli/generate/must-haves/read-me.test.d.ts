@@ -1,3 +1,7 @@
+import type { vi } from 'vitest';
+
+import type { Lib_Utility_SaveGeneratedFile_Header } from '../../../../lib/utility.d.ts';
+
 /**
  * Tests - CLI - Generate - Must Haves - Read Me - Run.
  *
@@ -16,11 +20,11 @@ export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Sa
  *
  * @since 0.15.0
  */
-export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_LoadSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_SaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_SaveSpy = ReturnType<typeof vi['spyOn']>;
 
 /**
  * Tests - CLI - Generate - Must Haves - Read Me - Run - Drops The Anchor Wrapping When Urls Homepage Is Missing.
@@ -176,17 +180,17 @@ export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Om
  *
  * @since 0.15.0
  */
-export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_LoadSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_SaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_SaveSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_Calls = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined][];
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_Calls = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined][];
 
-export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_TargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_TargetCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
 
-export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_HeaderArg = import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_HeaderArg = Lib_Utility_SaveGeneratedFile_Header | undefined;
 
 /**
  * Tests - CLI - Generate - Must Haves - Read Me - Run - Replace File Mode Overwrites Existing Fan Out Files.
@@ -214,7 +218,26 @@ export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Re
  *
  * @since 0.15.0
  */
-export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SetsExitCodeWhenNotAtProjectRoot_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SetsExitCodeWhenNotAtProjectRoot_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Run - Wraps Each Section In Nova Region Anchors.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_ProjectDirectory = string;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_PackageJson = string;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_PackageJsonPath = string;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_NovaConfig = string;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_NovaConfigPath = string;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_ReadmePath = string;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_ReadmeContent = string;
 
 /**
  * Tests - CLI - Generate - Must Haves - Read Me - Create Role Matrix Sandbox.

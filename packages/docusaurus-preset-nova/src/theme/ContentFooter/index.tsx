@@ -19,8 +19,6 @@ import type {
  *
  * @param {Theme_ContentFooter_Index_ContentFooter_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function ContentFooter(props: Theme_ContentFooter_Index_ContentFooter_Props) {

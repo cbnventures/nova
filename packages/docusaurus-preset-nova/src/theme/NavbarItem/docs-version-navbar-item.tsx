@@ -19,8 +19,6 @@ import type {
  *
  * @param {Theme_NavbarItem_DocsVersionNavbarItem_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocsVersionNavbarItem(props: Theme_NavbarItem_DocsVersionNavbarItem_Props) {
@@ -30,7 +28,7 @@ function DocsVersionNavbarItem(props: Theme_NavbarItem_DocsVersionNavbarItem_Pro
     (doc) => doc['id'] === version['mainDocId'],
   );
   const label: Theme_NavbarItem_DocsVersionNavbarItem_Label = props['label'] ?? version['label'];
-  const path: Theme_NavbarItem_DocsVersionNavbarItem_Path = props['to'] ?? (mainDoc !== undefined ? mainDoc['path'] : version['path']);
+  const path: Theme_NavbarItem_DocsVersionNavbarItem_Path = props['to'] ?? ((mainDoc !== undefined) ? mainDoc['path'] : version['path']);
 
   return (
     <Link to={path}>

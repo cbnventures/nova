@@ -10,6 +10,7 @@ import type {
   Theme_DocItem_Footer_Index_DocItemFooter_Doc,
   Theme_DocItem_Footer_Index_DocItemFooter_Props,
   Theme_DocItem_Footer_Index_DocItemFooter_ShareUrl,
+  Theme_DocItem_Footer_Index_DocItemFooter_Tags,
   Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig,
   Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog,
   Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share_Platforms,
@@ -29,11 +30,25 @@ import type {
  */
 function DocItemFooter(props: Theme_DocItem_Footer_Index_DocItemFooter_Props) {
   const doc: Theme_DocItem_Footer_Index_DocItemFooter_Doc = useDoc();
-  const canDisplayTagsRow: Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayTagsRow = doc['metadata']['tags']['length'] > 0;
+  const tags: Theme_DocItem_Footer_Index_DocItemFooter_Tags = doc['metadata']['tags'];
+  const canDisplayTagsRow: Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayTagsRow = tags['length'] > 0;
+
+  // Docusaurus emits null (not undefined) for missing git metadata, so these
+  // guards must stay in sync with the null-safe spread guards below; otherwise
+  // an empty footer element renders when no metadata value survives the spread.
   const canDisplayEditMetaRow: Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayEditMetaRow = (
-    doc['metadata']['editUrl'] !== undefined
-    || doc['metadata']['lastUpdatedAt'] !== undefined
-    || doc['metadata']['lastUpdatedBy'] !== undefined
+    (
+      doc['metadata']['editUrl'] !== undefined
+      && doc['metadata']['editUrl'] !== null
+    )
+    || (
+      doc['metadata']['lastUpdatedAt'] !== undefined
+      && doc['metadata']['lastUpdatedAt'] !== null
+    )
+    || (
+      doc['metadata']['lastUpdatedBy'] !== undefined
+      && doc['metadata']['lastUpdatedBy'] !== null
+    )
   );
   const themeConfig: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig = useThemeConfig() as Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfigCast as Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig;
   const blogShareConfig: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog = themeConfig['blog'] as Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog;
@@ -59,7 +74,10 @@ function DocItemFooter(props: Theme_DocItem_Footer_Index_DocItemFooter_Props) {
 
   const contentFooterSpread: Theme_DocItem_Footer_Index_DocItemFooter_ContentFooterSpread = {};
 
-  if (doc['metadata']['editUrl'] !== undefined && doc['metadata']['editUrl'] !== null) {
+  if (
+    doc['metadata']['editUrl'] !== undefined
+    && doc['metadata']['editUrl'] !== null
+  ) {
     Reflect.set(contentFooterSpread, 'editUrl', doc['metadata']['editUrl']);
   }
 
@@ -77,7 +95,7 @@ function DocItemFooter(props: Theme_DocItem_Footer_Index_DocItemFooter_Props) {
       style={props['style']}
     >
       <ContentFooter
-        tags={doc['metadata']['tags']}
+        tags={tags}
         sharePlatforms={sharePlatforms}
         shareUrl={shareUrl}
         {...contentFooterSpread}

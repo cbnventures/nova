@@ -1,0 +1,522 @@
+{
+  "home.layout.description": {
+    "message": "Foundry আপনার উদ্দেশ্য বুঝে নেয় এবং একটিমাত্র ম্যানিফেস্ট থেকে আপনার সম্পূর্ণ ডেভেলপমেন্ট পরিবেশ গড়ে তোলে।",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Foundry - প্রতিটি টুল শুরু হয় কাঁচা ধাতু থেকে",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "ডেভেলপার টুলিং",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "প্রতিটি টুল শুরু হয় কাঁচা ধাতু থেকে।",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Foundry আপনার উদ্দেশ্য বুঝে নেয় এবং একটিমাত্র ম্যানিফেস্ট থেকে আপনার সম্পূর্ণ ডেভেলপমেন্ট পরিবেশ গড়ে তোলে। কনফিগার করা বন্ধ করুন। বর্ণনা করা শুরু করুন।",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "শুরু করুন",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Threadbare-এ দেখুন",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.anvil.description": {
+    "message": "মূল CLI। একটিমাত্র Blueprint ম্যানিফেস্ট পড়ে আপনার সম্পূর্ণ ওয়ার্কস্পেস গড়ে তোলে — ডিরেক্টরি স্ট্রাকচার, ডিপেনডেন্সি গ্রাফ, বিল্ড কনফিগ, আর লিন্টিং রুল। একটি ফাইল ঢোকে, পুরো একটা পরিবেশ বেরোয়।",
+    "description": "Front page Features card description for Anvil"
+  },
+  "home.features.tongs.description": {
+    "message": "ডিপেনডেন্সি গ্রাফ রিজলভার ও ভিজ্যুয়ালাইজার। ওয়ার্কস্পেসের প্রতিটি প্যাকেজের মধ্যকার সম্পর্ক ম্যাপ করে এবং পুরো ট্রি এঁকে দেখায়, যাতে কোনো কিছু বদলানোর আগেই বুঝতে পারেন কোনটা কার উপর নির্ভরশীল।",
+    "description": "Front page Features card description for Tongs"
+  },
+  "home.features.quench.description": {
+    "message": "ইনক্রিমেন্টাল বিল্ড ক্যাশ, যা ফাইল হ্যাশ ট্র্যাক করে আর শুধু যা সত্যিই বদলেছে তা-ই আবার বিল্ড করে। কোল্ড ফোর্জে লাগে ১৪ সেকেন্ড। ওয়ার্ম ফোর্জে দুই সেকেন্ডেরও কম।",
+    "description": "Front page Features card description for Quench"
+  },
+  "home.features.bellows.description": {
+    "message": "প্যারালাল টাস্ক রানার, যা একসঙ্গে ওয়ার্কস্পেসের প্রতিটি প্যাকেজে কাজ ছড়িয়ে দেয়। Tongs-এর তৈরি ডিপেনডেন্সি গ্রাফ মেনে চলে, তাই কোনো কাজ তার পূর্বশর্ত শেষ হওয়ার আগে শুরু হয় না।",
+    "description": "Front page Features card description for Bellows"
+  },
+  "home.features.crucible.description": {
+    "message": "টেস্ট হারনেস জেনারেটর, যা আপনার টাইপ সিগনেচার পড়ে আপনার হয়ে টেস্ট স্ক্যাফোল্ড লিখে দেয়। স্ন্যাপশট টেস্টিং, অ্যাসারশন টেমপ্লেট আর ফিক্সচার ফাইল — সবই আপনার আগে থেকে লেখা টাইপ থেকেই তৈরি।",
+    "description": "Front page Features card description for Crucible"
+  },
+  "home.features.slag.description": {
+    "message": "ডেড কোড আর অব্যবহৃত ডিপেনডেন্সি শনাক্তকারী। প্রতিটি import, প্রতিটি export আর আপনার Blueprint-এর প্রতিটি এন্ট্রি স্ক্যান করে খুঁজে বের করে কোনটার আর কোথাও রেফারেন্স নেই। খাদ সরিয়ে ফেলুন, ইস্পাত রেখে দিন।",
+    "description": "Front page Features card description for Slag"
+  },
+  "home.stats.heading": {
+    "message": "সংখ্যার ভাষায়",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manifest.label": {
+    "message": "ম্যানিফেস্ট",
+    "description": "Front page Stats label for manifest count"
+  },
+  "home.stats.configFiles.label": {
+    "message": "কনফিগ ফাইল",
+    "description": "Front page Stats label for config file count"
+  },
+  "home.stats.coldForge.label": {
+    "message": "কোল্ড ফোর্জ",
+    "description": "Front page Stats label for cold forge time"
+  },
+  "home.stats.wardenRules.label": {
+    "message": "Warden রুল",
+    "description": "Front page Stats label for Warden rule count"
+  },
+  "home.spotlight.heading": {
+    "message": "এক ম্যানিফেস্ট, সব কিছু যুক্ত",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "শুধু বলুন আপনি কী চান। বাকিটা Foundry বুঝে নেবে।",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "চলতে-ফিরতেই সামলান আপনার ফোর্জ",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "ফোর্জ থেকে খবরাখবর",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "দর্শন, বেঞ্চমার্ক, আর আমরা যেসব মতামত রিলিজ করেছি।",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Foundry ব্লক শোকেস, docusaurus-preset-nova-এর প্রতিটি ব্লক দেখায়।",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Foundry প্রিসেটের প্রতিটি ব্লক, নমুনা ডেটা দিয়ে রেন্ডার করা।",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (পূর্ণ)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "ব্লক শোকেস",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Foundry-এর প্রতিটি ব্লক, এক জায়গায় দেখানো।",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "এই পেজটি @cbnventures/docusaurus-preset-nova/blocks-এর প্রতিটি ব্লক Foundry-জগতের ডেটা দিয়ে রেন্ডার করে, যাতে আপনি দেখতে পারেন সেগুলো দেখতে কেমন আর কীভাবে কাজ করে।",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "ডকুমেন্টেশন পড়ুন",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Threadbare-এ দেখুন",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (সংক্ষিপ্ত)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "যা রিলিজ হবে, তা গড়ে তুলুন।",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Foundry আপনার উদ্দেশ্য বুঝে নেয় এবং একটিমাত্র ম্যানিফেস্ট থেকে আপনার সম্পূর্ণ ডেভেলপমেন্ট পরিবেশ গড়ে তোলে। কনফিগার করা বন্ধ করুন। বর্ণনা করা শুরু করুন।",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "শুরু করুন",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (ডিফল্ট)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "আমি ভালোবাসি ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (প্রিফিক্স ছাড়া)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "দ্রুত",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "নমনীয়",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "ফ্রি",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (ধীর গতি)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "তৈরি ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "ডেভেলপারদের জন্য",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "ডিজাইনারদের জন্য",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (লুপ ছাড়া)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "স্বাগতম ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Spark দিয়ে ইনস্টল করুন",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "অথবা Loom Registry ব্যবহার করুন",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (লেবেল ছাড়া)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "দ্রুত ইনস্টল",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (আইকনসহ)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "কেন দলগুলো Foundry বেছে নেয়",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.anvil.description": {
+    "message": "মূল CLI। একটি Blueprint ম্যানিফেস্ট পড়ে আপনার ওয়ার্কস্পেস গড়ে তোলে — ডিরেক্টরি স্ট্রাকচার, ডিপেনডেন্সি গ্রাফ, বিল্ড কনফিগ, আর লিন্টিং রুল।",
+    "description": "Showcase Features (with icons) card description for Anvil"
+  },
+  "showcase.featuresIcons.tongs.description": {
+    "message": "ডিপেনডেন্সি গ্রাফ রিজলভার ও ভিজ্যুয়ালাইজার। প্যাকেজগুলোর মধ্যকার প্রতিটি সম্পর্ক ম্যাপ করে এবং পুরো ট্রি এঁকে দেখায়।",
+    "description": "Showcase Features (with icons) card description for Tongs"
+  },
+  "showcase.featuresIcons.quench.description": {
+    "message": "ইনক্রিমেন্টাল বিল্ড ক্যাশ, যা ফাইল হ্যাশ ট্র্যাক করে আর শুধু যা বদলেছে তা-ই আবার বিল্ড করে। কোল্ড ফোর্জে লাগে ১৪ সেকেন্ড। ওয়ার্ম ফোর্জে দুই সেকেন্ডেরও কম।",
+    "description": "Showcase Features (with icons) card description for Quench"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (আইকন ছাড়া, হেডিং ছাড়া)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.bellows.description": {
+    "message": "প্যারালাল টাস্ক রানার, যা একসঙ্গে ওয়ার্কস্পেসের প্রতিটি প্যাকেজে কাজ ছড়িয়ে দেয়। Tongs ডিপেনডেন্সি গ্রাফ মেনে চলে।",
+    "description": "Showcase Features (no icons) card description for Bellows"
+  },
+  "showcase.featuresNoIcons.crucible.description": {
+    "message": "টেস্ট হারনেস জেনারেটর, যা আপনার টাইপ সিগনেচার পড়ে টেস্ট স্ক্যাফোল্ড লিখে দেয়। স্ন্যাপশট টেস্টিং আর অ্যাসারশন টেমপ্লেট অন্তর্ভুক্ত।",
+    "description": "Showcase Features (no icons) card description for Crucible"
+  },
+  "showcase.featuresNoIcons.slag.description": {
+    "message": "ডেড কোড আর অব্যবহৃত ডিপেনডেন্সি শনাক্তকারী। প্রতিটি import আর export স্ক্যান করে খুঁজে বের করে কোনটার আর কোথাও রেফারেন্স নেই।",
+    "description": "Showcase Features (no icons) card description for Slag"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (ছয়টি আইটেম, মিশ্র আইকন)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "এক ফোর্জেই সবকিছু",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.anvil.description": {
+    "message": "আপনার ম্যানিফেস্ট পড়ে আপনার ওয়ার্কস্পেসের প্রয়োজনীয় প্রতিটি কনফিগারেশন আর্টিফ্যাক্ট তৈরি করে। একটি ফাইল ঢোকে, সবকিছু বেরোয়।",
+    "description": "Showcase Features (six items) card description for Anvil"
+  },
+  "showcase.featuresSix.tongs.description": {
+    "message": "ডিপেনডেন্সি গ্রাফ রিজলভ করে, চক্র শনাক্ত করে, আর স্ক্রিপ্টিং ও পাইপলাইন ইন্টিগ্রেশনের জন্য কোয়েরি টুল দেয়।",
+    "description": "Showcase Features (six items) card description for Tongs"
+  },
+  "showcase.featuresSix.quench.description": {
+    "message": "কনটেন্ট-অ্যাড্রেসেবল বিল্ড ক্যাশ। ইনপুট না বদলালে বিল্ড পুরোপুরি এড়িয়ে যাওয়া হয়।",
+    "description": "Showcase Features (six items) card description for Quench"
+  },
+  "showcase.featuresSix.bellows.description": {
+    "message": "ডিপেনডেন্সি গ্রাফের ভিত্তিতে বিল্ড টাস্কগুলো ধাপে ধাপে শিডিউল করে। স্বাধীন প্যাকেজগুলো প্যারালালভাবে বিল্ড হয়।",
+    "description": "Showcase Features (six items) card description for Bellows"
+  },
+  "showcase.featuresSix.crucible.description": {
+    "message": "টাইপ সিগনেচার থেকে টেস্ট স্ক্যাফোল্ড তৈরি করে। স্ন্যাপশট টেস্ট, অ্যাসারশন টেমপ্লেট, আর ফিক্সচার ফাইল।",
+    "description": "Showcase Features (six items) card description for Crucible"
+  },
+  "showcase.featuresSix.slag.description": {
+    "message": "ডেড কোড আর অনাথ ডিপেনডেন্সি খুঁজে বের করে। খাদ সরিয়ে ফেলুন, ইস্পাত রেখে দিন।",
+    "description": "Showcase Features (six items) card description for Slag"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (হেডিং ও বর্ণনাসহ)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "ফোর্জ মেট্রিক্স",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "২০০-প্যাকেজের একটি ওয়ার্কস্পেস জুড়ে মূল পারফরম্যান্স সূচক।",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.coldForge.label": {
+    "message": "কোল্ড ফোর্জের সময়",
+    "description": "Showcase Stats (full) label for cold forge time"
+  },
+  "showcase.statsFull.warmForge.label": {
+    "message": "ওয়ার্ম ফোর্জের সময়",
+    "description": "Showcase Stats (full) label for warm forge time"
+  },
+  "showcase.statsFull.cacheHit.label": {
+    "message": "ক্যাশ হিট রেট",
+    "description": "Showcase Stats (full) label for cache hit rate"
+  },
+  "showcase.statsFull.wardenRules.label": {
+    "message": "Warden রুল",
+    "description": "Showcase Stats (full) label for Warden rule count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (হেডিং ছাড়া)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.manifest.label": {
+    "message": "ম্যানিফেস্ট",
+    "description": "Showcase Stats (no heading) label for manifest"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "কনফিগ ফাইল",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "সাব-টুল",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.maxPackages.label": {
+    "message": "সর্বোচ্চ পরীক্ষিত প্যাকেজ",
+    "description": "Showcase Stats (no heading) label for max packages tested"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (কোডসহ)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "দ্রুত শুরু",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "শূন্য থেকে সম্পূর্ণ ফোর্জ করা ওয়ার্কস্পেসে পৌঁছাতে মাত্র তিনটি কমান্ড।",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (টেক্সটসহ)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "কীভাবে কাজ করে",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Foundry আপনার ম্যানিফেস্ট পড়ে, Tongs দিয়ে ডিপেনডেন্সি গ্রাফ রিজলভ করে, আর প্রতিটি কনফিগারেশন আর্টিফ্যাক্ট নির্ধারিতভাবে তৈরি করে। একই ইনপুটে আউটপুট সবসময় একই — কোনো সাইড ইফেক্ট নেই, কোনো লুকানো স্টেট নেই।",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (বর্ণনাসহ)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "ফোর্জ থেকে খবরাখবর",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "দর্শন, বেঞ্চমার্ক, আর আমরা যেসব মতামত রিলিজ করেছি।",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "কেন আমরা কনফিগারেশন ফাইল লেখা বন্ধ করলাম",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "কনফিগারেশন ড্রিফট হলো ওয়ার্কস্পেসের নীরব ঘাতক। আমরা Foundry বানিয়েছি কারণ আমরা বিশ্বাস করি উদ্দেশ্য হওয়া উচিত ডিক্লারেটিভ।",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "১৪ সেকেন্ডে ২০০ প্যাকেজের একটি মনোরেপো ফোর্জ করা",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "কীভাবে Quench ক্যাশিং আর Bellows প্যারালালিজম বারো মিনিটের একটি বিল্ডকে চৌদ্দ সেকেন্ডের ফোর্জে পরিণত করল।",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "যে Warden রুলগুলো আমরা প্রায় রিলিজই করিনি",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "আমরা ৩৮০টি লিন্টিং রুল লিখেছিলাম, তারপর ৬০টি বাদ দিয়েছি। শেষমেশ যা টিকে গেল, আর যেসব তর্ক দলটাকে প্রায় ভেঙে দিচ্ছিল — সবই এখানে।",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (বর্ণনা ছাড়া)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "সাম্প্রতিক আপডেট",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Foundry 2.4: Crucible অটো-মোড আর Slag ডিটেকশন",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Crucible এখন প্রতিটি ফোর্জে টেস্ট স্ক্যাফোল্ড স্বয়ংক্রিয়ভাবে আবার তৈরি করে, আর Slag পুরো ওয়ার্কস্পেস গ্রাফ জুড়ে অব্যবহৃত ডিপেনডেন্সি শনাক্ত করে।",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (ইনলাইন ব্যবহার)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Foundry একটি ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.manifest.title": {
+    "message": "ওয়ার্কস্পেস কনফিগারেশন ফাইল",
+    "description": "Showcase Terminology hover title for manifest"
+  },
+  "showcase.terminology.manifest.label": {
+    "message": "ম্যানিফেস্ট",
+    "description": "Showcase Terminology displayed text for manifest"
+  },
+  "showcase.terminology.paragraph1.afterManifest": {
+    "message": " ব্যবহার করে সমস্ত কোড জেনারেশন আর কনফিগারেশন চালায়। ওয়ার্কস্পেসের প্রতিটি প্যাকেজ ",
+    "description": "Showcase Terminology paragraph 1 fragment after manifest"
+  },
+  "showcase.terminology.forge.title": {
+    "message": "কনফিগারেশন তৈরির প্রক্রিয়া",
+    "description": "Showcase Terminology hover title for forge"
+  },
+  "showcase.terminology.forge.label": {
+    "message": "ফোর্জ",
+    "description": "Showcase Terminology displayed text for forge"
+  },
+  "showcase.terminology.paragraph1.afterForge": {
+    "message": " প্রক্রিয়ার মাধ্যমে পরিচালিত হয়, যা প্রতিটি আর্টিফ্যাক্টকে সিঙ্কে রাখে। কোডের মান যাচাই করার দরকার হলে, ",
+    "description": "Showcase Terminology paragraph 1 fragment after forge"
+  },
+  "showcase.terminology.warden.title": {
+    "message": "স্ট্যাটিক অ্যানালাইসিস ইঞ্জিন",
+    "description": "Showcase Terminology hover title for Warden"
+  },
+  "showcase.terminology.paragraph1.afterWarden": {
+    "message": " ইঞ্জিন কোনো বাড়তি কনফিগারেশন ছাড়াই প্রতিটি রুল চালায়।",
+    "description": "Showcase Terminology paragraph 1 fragment after Warden"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "আর ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.presetSystem.title": {
+    "message": "রুল কালেকশন প্রিসেট",
+    "description": "Showcase Terminology hover title for preset system"
+  },
+  "showcase.terminology.presetSystem.label": {
+    "message": "প্রিসেট সিস্টেম",
+    "description": "Showcase Terminology displayed text for preset system"
+  },
+  "showcase.terminology.paragraph2.afterPreset": {
+    "message": " দিয়ে দলগুলো ",
+    "description": "Showcase Terminology paragraph 2 fragment after preset system"
+  },
+  "showcase.terminology.lintingRules.title": {
+    "message": "স্ট্যাটিক অ্যানালাইসিস রুল",
+    "description": "Showcase Terminology hover title for linting rules"
+  },
+  "showcase.terminology.lintingRules.label": {
+    "message": "লিন্টিং রুল",
+    "description": "Showcase Terminology displayed text for linting rules"
+  },
+  "showcase.terminology.paragraph2.afterLinting": {
+    "message": " আর ",
+    "description": "Showcase Terminology paragraph 2 fragment after linting rules"
+  },
+  "showcase.terminology.alloySettings.title": {
+    "message": "কম্পাইলার কনফিগারেশন",
+    "description": "Showcase Terminology hover title for Alloy settings"
+  },
+  "showcase.terminology.alloySettings.label": {
+    "message": "Alloy সেটিংস",
+    "description": "Showcase Terminology displayed text for Alloy settings"
+  },
+  "showcase.terminology.paragraph2.afterAlloy": {
+    "message": "-এর জন্য একটিমাত্র নির্ভরযোগ্য উৎস ভাগ করে নেয়, কনফিগারেশন ফাইল বারবার নকল না করেই।",
+    "description": "Showcase Terminology paragraph 2 fragment after Alloy settings"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (ক্যাপশনসহ)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "একটি Frame-এ ছাপানো ব্র্যান্ড মার্ক — ধারালো বর্ডার, মনোস্পেস ক্যাপশন।",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Foundry ব্র্যান্ড থাম্বনেইল।",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (ক্যাপশন ছাড়া)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (দুই স্টোর)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "কম্প্যানিয়ন অ্যাপ ডাউনলোড করুন",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (শুধু App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "iOS-এ উপলব্ধ",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (শুধু Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Android-এ উপলব্ধ",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (লেবেল ছাড়া)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

@@ -36,8 +36,6 @@ import type {
  *
  * @param {Theme_BlogSidebar_Index_BlogSidebar_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlogSidebar(props: Theme_BlogSidebar_Index_BlogSidebar_Props) {

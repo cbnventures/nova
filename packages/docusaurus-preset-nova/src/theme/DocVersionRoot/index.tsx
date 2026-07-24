@@ -21,8 +21,6 @@ import type {
  *
  * @param {Theme_DocVersionRoot_Index_DocVersionRoot_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocVersionRoot(props: Theme_DocVersionRoot_Index_DocVersionRoot_Props) {

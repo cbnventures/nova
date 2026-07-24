@@ -1,6 +1,6 @@
 import Link from '@docusaurus/Link';
 import { useBlogPost } from '@docusaurus/plugin-content-blog/client';
-import { useThemeConfig } from '@docusaurus/theme-common';
+import { usePluralForm, useThemeConfig } from '@docusaurus/theme-common';
 import { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import ContentFooter from '@theme/ContentFooter';
@@ -28,7 +28,6 @@ import type {
   Theme_BlogPostItem_Index_BlogPostItem_Permalink,
   Theme_BlogPostItem_Index_BlogPostItem_Props,
   Theme_BlogPostItem_Index_BlogPostItem_ReadingTime,
-  Theme_BlogPostItem_Index_BlogPostItem_ReadingTimeLabel,
   Theme_BlogPostItem_Index_BlogPostItem_ReadMore,
   Theme_BlogPostItem_Index_BlogPostItem_ReadMoreAriaLabel,
   Theme_BlogPostItem_Index_BlogPostItem_ShareUrl,
@@ -39,7 +38,39 @@ import type {
   Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share_Platforms,
   Theme_BlogPostItem_Index_BlogPostItem_ThemeConfigCast,
   Theme_BlogPostItem_Index_BlogPostItem_Title,
+  Theme_BlogPostItem_Index_UseReadingTimePlural_PluralForm,
+  Theme_BlogPostItem_Index_UseReadingTimePlural_ReadingTime,
+  Theme_BlogPostItem_Index_UseReadingTimePlural_SelectMessage,
+  Theme_BlogPostItem_Index_UseReadingTimePlural_Translated,
 } from '../../types/theme/BlogPostItem/index.d.ts';
+
+/**
+ * Theme - Blog Post Item - Use Reading Time Plural.
+ *
+ * Returns a function that pluralizes the estimated reading time
+ * label for a blog post, used next to the formatted date on
+ * listing pages and individual post pages.
+ *
+ * @returns {Theme_BlogPostItem_Index_UseReadingTimePlural_SelectMessage}
+ *
+ * @since 0.21.0
+ */
+function useReadingTimePlural(): Theme_BlogPostItem_Index_UseReadingTimePlural_SelectMessage {
+  const pluralForm: Theme_BlogPostItem_Index_UseReadingTimePlural_PluralForm = usePluralForm();
+
+  return (readingTime: Theme_BlogPostItem_Index_UseReadingTimePlural_ReadingTime) => {
+    const translated: Theme_BlogPostItem_Index_UseReadingTimePlural_Translated = translate(
+      {
+        message: 'One min read|{readingTime} min read',
+        id: 'theme.blog.post.readingTime.plurals',
+        description: 'The label showing estimated reading time for a blog post',
+      },
+      { readingTime: Math.ceil(readingTime) },
+    );
+
+    return pluralForm.selectMessage(Math.ceil(readingTime), translated);
+  };
+}
 
 /**
  * Theme - Blog Post Item - Blog Post Item.
@@ -49,8 +80,6 @@ import type {
  * on individual post pages.
  *
  * @param {Theme_BlogPostItem_Index_BlogPostItem_Props} props - Props.
- *
- * @constructor
  *
  * @since 0.15.0
  */
@@ -69,15 +98,8 @@ function BlogPostItem(props: Theme_BlogPostItem_Index_BlogPostItem_Props) {
     day: 'numeric',
   });
   const readingTime: Theme_BlogPostItem_Index_BlogPostItem_ReadingTime = blogPost['metadata']['readingTime'];
-  const readingTimeLabel: Theme_BlogPostItem_Index_BlogPostItem_ReadingTimeLabel = translate(
-    {
-      id: 'theme.blog.post.readingTime.plurals',
-      message: '{readingTime} min read',
-      description: 'The label showing estimated reading time for a blog post',
-    },
-    { readingTime: (readingTime !== undefined) ? String(Math.ceil(readingTime)) : '' },
-  );
-  const formattedReadingTime: Theme_BlogPostItem_Index_BlogPostItem_FormattedReadingTime = (readingTime !== undefined) ? readingTimeLabel : '';
+  const readingTimePlural: Theme_BlogPostItem_Index_UseReadingTimePlural_SelectMessage = useReadingTimePlural();
+  const formattedReadingTime: Theme_BlogPostItem_Index_BlogPostItem_FormattedReadingTime = (readingTime !== undefined) ? readingTimePlural(readingTime) : '';
   const hasTruncateMarker: Theme_BlogPostItem_Index_BlogPostItem_HasTruncateMarker = blogPost['metadata']['hasTruncateMarker'];
   const authors: Theme_BlogPostItem_Index_BlogPostItem_Authors = blogPost['metadata']['authors'];
   const authorsImageUrls: Theme_BlogPostItem_Index_BlogPostItem_AssetsAuthorImageUrls = blogPost['assets']['authorsImageUrls'];

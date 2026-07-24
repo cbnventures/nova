@@ -1,0 +1,258 @@
+import type { vi } from 'vitest';
+
+import type { Toolkit_Logger_Runner_Customize_Returns } from '../../../../toolkit/logger.d.ts';
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Badges - Run.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_OriginalCwd = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_TemporaryDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_SandboxPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_SandboxRoot = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - A Consumer README Without Markers Is Skipped While The Root Updates.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_NewBadges = string | undefined;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_RootPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_AppPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_RootStaleContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_MarkerlessContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_ExpectedRootContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_RootOutput = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AConsumerREADMEWithoutMarkersIsSkippedWhileTheRootUpdates_AppOutput = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - A Missing Consumer README Is Skipped.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AMissingConsumerREADMEIsSkipped_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AMissingConsumerREADMEIsSkipped_NewBadges = string | undefined;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AMissingConsumerREADMEIsSkipped_RootPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AMissingConsumerREADMEIsSkipped_MissingPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AMissingConsumerREADMEIsSkipped_RootStaleContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AMissingConsumerREADMEIsSkipped_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AMissingConsumerREADMEIsSkipped_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AMissingConsumerREADMEIsSkipped_ExpectedRootContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AMissingConsumerREADMEIsSkipped_RootOutput = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_AMissingConsumerREADMEIsSkipped_MissingExists = boolean;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - Disabled Flag Skips And Does Not Write.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DisabledFlagSkipsAndDoesNotWrite_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DisabledFlagSkipsAndDoesNotWrite_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DisabledFlagSkipsAndDoesNotWrite_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DisabledFlagSkipsAndDoesNotWrite_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DisabledFlagSkipsAndDoesNotWrite_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DisabledFlagSkipsAndDoesNotWrite_Output = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - Dry Run Does Not Write.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunDoesNotWrite_Output = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - Dry Run Writes Nothing Anywhere In A Fan Out Tree.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunWritesNothingAnywhereInAFanOutTree_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunWritesNothingAnywhereInAFanOutTree_RootPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunWritesNothingAnywhereInAFanOutTree_AppPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunWritesNothingAnywhereInAFanOutTree_StaleContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunWritesNothingAnywhereInAFanOutTree_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunWritesNothingAnywhereInAFanOutTree_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunWritesNothingAnywhereInAFanOutTree_SaveGeneratedFileSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunWritesNothingAnywhereInAFanOutTree_RootOutput = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_DryRunWritesNothingAnywhereInAFanOutTree_AppOutput = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - Fans Out To Every Consumer Workspace README.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_FansOutToEveryConsumerWorkspaceREADME_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_FansOutToEveryConsumerWorkspaceREADME_NewBadges = string | undefined;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_FansOutToEveryConsumerWorkspaceREADME_RootPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_FansOutToEveryConsumerWorkspaceREADME_AppPath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_FansOutToEveryConsumerWorkspaceREADME_PackagePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_FansOutToEveryConsumerWorkspaceREADME_StaleContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_FansOutToEveryConsumerWorkspaceREADME_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_FansOutToEveryConsumerWorkspaceREADME_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_FansOutToEveryConsumerWorkspaceREADME_ExpectedContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_FansOutToEveryConsumerWorkspaceREADME_RootOutput = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_FansOutToEveryConsumerWorkspaceREADME_AppOutput = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_FansOutToEveryConsumerWorkspaceREADME_PackageOutput = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - Idempotent Second Run Is A No Op.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_IdempotentSecondRunIsANoOp_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_IdempotentSecondRunIsANoOp_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_IdempotentSecondRunIsANoOp_NewBadges = string | undefined;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_IdempotentSecondRunIsANoOp_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_IdempotentSecondRunIsANoOp_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_IdempotentSecondRunIsANoOp_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_IdempotentSecondRunIsANoOp_SaveGeneratedFileSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_IdempotentSecondRunIsANoOp_Output = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - Missing Enable Flag Skips And Does Not Write.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingEnableFlagSkipsAndDoesNotWrite_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingEnableFlagSkipsAndDoesNotWrite_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingEnableFlagSkipsAndDoesNotWrite_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingEnableFlagSkipsAndDoesNotWrite_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingEnableFlagSkipsAndDoesNotWrite_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingEnableFlagSkipsAndDoesNotWrite_Output = string;
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - Missing Markers Are Skipped And The File Is Left Untouched.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Debug = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Dev = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Info = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Warn = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Error = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock = {
+  debug: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Debug;
+  dev: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Dev;
+  info: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Info;
+  warn: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Warn;
+  error: Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_CustomizedLoggerMock_Error;
+};
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_LoggerCustomizeSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_LoggerCustomizeReturn = Toolkit_Logger_Runner_Customize_Returns;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_Output = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_MissingMarkersAreSkippedAndTheFileIsLeftUntouched_WarnCalls = unknown[][];
+
+/**
+ * Tests - CLI - Recipe - Read Me - Update Badges - CLI Recipe Read Me Update Badges Run - Refreshes The Badges Region And Keeps Everything Outside Byte Identical.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_ReadmePath = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_NewBadges = string | undefined;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_Prefix = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_Suffix = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_OnDiskContent = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_Output = string;
+
+export type Tests_Cli_Recipe_ReadMe_UpdateBadges_CliRecipeReadMeUpdateBadgesRun_RefreshesTheBadgesRegionAndKeepsEverythingOutsideByteIdentical_ExpectedContent = string;

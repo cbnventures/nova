@@ -28,8 +28,6 @@ import type {
  *
  * @param {Theme_ErrorPageContent_Index_ErrorPageContent_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function ErrorPageContent(props: Theme_ErrorPageContent_Index_ErrorPageContent_Props) {

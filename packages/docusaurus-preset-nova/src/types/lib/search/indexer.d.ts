@@ -308,6 +308,8 @@ export type Lib_Search_Indexer_BuildSearchIndex_IndexBuilder_HeadingsText = stri
  *
  * @since 0.15.0
  */
+export type Lib_Search_Indexer_ExtractDocument_Returns = Lib_Search_Indexer_ExtractDocument_DocumentItem | undefined;
+
 export type Lib_Search_Indexer_ExtractDocument_HtmlFilePath = string;
 
 export type Lib_Search_Indexer_ExtractDocument_RoutePath = string;
@@ -341,8 +343,6 @@ export type Lib_Search_Indexer_ExtractDocument_DocumentItem = {
   body: Lib_Search_Indexer_ExtractDocument_DocumentItem_Body;
   snippet: Lib_Search_Indexer_ExtractDocument_DocumentItem_Snippet;
 };
-
-export type Lib_Search_Indexer_ExtractDocument_Returns = Lib_Search_Indexer_ExtractDocument_DocumentItem | undefined;
 
 export type Lib_Search_Indexer_ExtractDocument_FileExists = boolean;
 
@@ -398,11 +398,11 @@ export type Lib_Search_Indexer_ExtractDocument_HeadingIterator_HeadingLevel = nu
  *
  * @since 0.15.0
  */
+export type Lib_Search_Indexer_MatchesIgnorePattern_Returns = boolean;
+
 export type Lib_Search_Indexer_MatchesIgnorePattern_RoutePath = string;
 
 export type Lib_Search_Indexer_MatchesIgnorePattern_Patterns = string[];
-
-export type Lib_Search_Indexer_MatchesIgnorePattern_Returns = boolean;
 
 export type Lib_Search_Indexer_MatchesIgnorePattern_TypedPattern = string;
 

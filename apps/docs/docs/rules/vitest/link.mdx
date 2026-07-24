@@ -77,8 +77,10 @@ Verify that internal documentation links and anchors resolve to real targets wit
 
 ```ts title="src/tests/link.test.ts"
 import { registerLinkSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 registerLinkSuite({
+  vitest,
   enable: 'all',
 });
 ```

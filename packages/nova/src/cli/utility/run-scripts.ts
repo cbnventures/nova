@@ -1,7 +1,7 @@
-import { spawn } from 'child_process';
-import { readFile } from 'fs/promises';
-import { platform } from 'os';
-import { resolve } from 'path';
+import { spawn } from 'node:child_process';
+import { readFile } from 'node:fs/promises';
+import { platform } from 'node:os';
+import { resolve } from 'node:path';
 
 import chalk from 'chalk';
 
@@ -307,9 +307,9 @@ export class Runner {
   /**
    * CLI - Utility - Run Scripts - Run Parallel.
    *
-   * Spawns all matched scripts with piped stdio, streams output
-   * with colored prefixes, and uses a time-windowed log queue
-   * to group lines from the same script visually.
+   * Spawns matched scripts with piped stdio and streams their
+   * output through colored prefixes using a time-windowed log queue
+   * that groups consecutive lines from the same script visually.
    *
    * @param {Cli_Utility_RunScripts_Runner_RunParallel_MatchedScripts} matchedScripts - Matched scripts.
    * @param {Cli_Utility_RunScripts_Runner_RunParallel_BufferMs}       bufferMs       - Buffer ms.
@@ -350,6 +350,16 @@ export class Runner {
 
     let lastFlushedScript: Cli_Utility_RunScripts_Runner_RunParallel_LastFlushedScript = '';
 
+    /**
+     * CLI - Utility - Run Scripts - Run Parallel - Flush Queue.
+     *
+     * Writes every queued line to stdout or stderr with its colored prefix and
+     * inserts a blank separator whenever output switches to a different script.
+     *
+     * @private
+     *
+     * @since 0.21.0
+     */
     // Flush all queued lines with prefixes and blank-line separators.
     const flushQueue: Cli_Utility_RunScripts_Runner_RunParallel_FlushQueue = () => {
       for (const entry of queue) {
@@ -389,6 +399,19 @@ export class Runner {
 
       partialLines.set(script, '');
 
+      /**
+       * CLI - Utility - Run Scripts - Run Parallel - Handle Data.
+       *
+       * Appends the chunk to any held partial line, splits the buffer on newlines,
+       * queues each complete line, and retains the trailing segment as the new partial.
+       *
+       * @param {Buffer}               data   - Data.
+       * @param {'stdout' | 'stderr'}  stream - Stream.
+       *
+       * @private
+       *
+       * @since 0.21.0
+       */
       // Handle incoming data by splitting into lines and queuing.
       const handleData: Cli_Utility_RunScripts_Runner_RunParallel_HandleData = (data, stream) => {
         const text: Cli_Utility_RunScripts_Runner_RunParallel_HandleData_Text = (partialLines.get(script) ?? '') + data.toString();
@@ -479,6 +502,20 @@ export class Runner {
     // Start periodic flushing.
     const flushInterval: Cli_Utility_RunScripts_Runner_RunParallel_FlushInterval = setInterval(flushQueue, bufferMs);
 
+    /**
+     * CLI - Utility - Run Scripts - Run Parallel - Forward Signal.
+     *
+     * Relays the received termination signal to every spawned child process so a
+     * parent interrupt propagates cleanly to all running scripts at once.
+     *
+     * @param {NodeJS.Signals} signal - Signal.
+     *
+     * @private
+     *
+     * @returns {Cli_Utility_RunScripts_Runner_RunParallel_ForwardSignal_Returns}
+     *
+     * @since 0.21.0
+     */
     // Forward signals to children.
     const forwardSignal: Cli_Utility_RunScripts_Runner_RunParallel_ForwardSignal = (signal): Cli_Utility_RunScripts_Runner_RunParallel_ForwardSignal_Returns => {
       for (const child of children) {

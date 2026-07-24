@@ -22,6 +22,8 @@ export type Theme_DocItem_Index_DocItem_Props = {
   [key: string]: unknown;
 };
 
+export type Theme_DocItem_Index_DocItem_BaseHtmlClassName = string;
+
 export type Theme_DocItem_Index_DocItem_HtmlClassName = string;
 
 export type Theme_DocItem_Index_DocItem_MdxComponent = Theme_DocItem_Index_DocItem_Content;

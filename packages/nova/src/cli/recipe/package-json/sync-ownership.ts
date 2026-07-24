@@ -2,7 +2,7 @@ import {
   dirname,
   relative,
   sep,
-} from 'path';
+} from 'node:path';
 
 import chalk from 'chalk';
 
@@ -24,10 +24,12 @@ import type {
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageContributors,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageFundingSources,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageHomepage,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageJsonRecipes,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageRepository,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeEntry,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Recipes,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipesBlock,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeSettings,
-  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeTuple,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RepositoryDirectory,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RepositoryUrl,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Returns,
@@ -45,13 +47,15 @@ import type {
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_IsDryRun,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_IsReplaceFile,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Options,
-  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipeTuple,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_PackageJsonRecipes,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipeEntryFilter,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipesBlock,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_ReplaceFileNotice,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Returns,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkingFile,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkingFileWorkspaces,
-  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceConfig,
-  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceRecipes,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspacePathFilter,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceRecipesFilter,
   Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Workspaces,
 } from '../../../types/cli/recipe/package-json/sync-ownership.d.ts';
 
@@ -118,21 +122,28 @@ export class Runner {
     }
 
     // Filter workspaces that have the recipe enabled.
+    const recipesBlock: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipesBlock = workingFile['recipes'];
+    const packageJsonRecipes: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_PackageJsonRecipes = (recipesBlock !== undefined) ? recipesBlock['package-json'] : undefined;
     const eligibleWorkspaces: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceConfig = workspace[1];
-      const workspaceRecipes: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceRecipes = workspaceConfig['recipes'];
+      const workspacePathFilter: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspacePathFilter = workspace[0];
 
-      if (workspaceRecipes === undefined) {
+      if (packageJsonRecipes === undefined) {
         return false;
       }
 
-      const recipeTuple: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipeTuple = workspaceRecipes['sync-ownership'];
+      const workspaceRecipesFilter: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceRecipesFilter = packageJsonRecipes[workspacePathFilter];
 
-      if (recipeTuple === undefined) {
+      if (workspaceRecipesFilter === undefined) {
         return false;
       }
 
-      return recipeTuple[0] === true;
+      const recipeEntryFilter: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipeEntryFilter = workspaceRecipesFilter['sync-ownership'];
+
+      if (recipeEntryFilter === undefined) {
+        return false;
+      }
+
+      return recipeEntryFilter['enabled'] === true;
     });
 
     if (eligibleWorkspaces.length === 0) {
@@ -209,9 +220,11 @@ export class Runner {
     const packageRepository: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageRepository = fileContents['repository'];
 
     // Get recipe settings for this workspace.
-    const recipes: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Recipes = manifest['recipes'];
-    const recipeTuple: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeTuple = (recipes !== undefined) ? recipes['sync-ownership'] : undefined;
-    const recipeSettings: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeSettings = (recipeTuple !== undefined && recipeTuple.length > 1) ? recipeTuple[1] : undefined;
+    const recipesBlock: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipesBlock = workingFile['recipes'];
+    const packageJsonRecipes: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageJsonRecipes = (recipesBlock !== undefined) ? recipesBlock['package-json'] : undefined;
+    const recipes: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Recipes = (packageJsonRecipes !== undefined) ? packageJsonRecipes[workspace['workspacePath']] : undefined;
+    const recipeEntry: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeEntry = (recipes !== undefined) ? recipes['sync-ownership'] : undefined;
+    const recipeSettings: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeSettings = (recipeEntry !== undefined) ? recipeEntry['settings'] : undefined;
 
     // Sync the "homepage" field.
     if (
@@ -538,7 +551,7 @@ export class Runner {
         return {
           type: 'git',
           url: repositoryUrl,
-          ...(repositoryDirectory !== '' && repositoryDirectory !== '.' ? {
+          ...((repositoryDirectory !== '' && repositoryDirectory !== '.') ? {
             directory: repositoryDirectory,
           } : {}),
         };

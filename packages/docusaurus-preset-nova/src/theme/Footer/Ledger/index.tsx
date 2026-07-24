@@ -36,8 +36,6 @@ import type {
  *
  * @param {Theme_Footer_Ledger_Index_Ledger_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function Ledger(props: Theme_Footer_Ledger_Index_Ledger_Props): Theme_Footer_Ledger_Index_Ledger_Returns {

@@ -25,4 +25,12 @@ const lines: Scripts_DataAttributeQuery_Lines = [
   '})();',
 ];
 
+/**
+ * Scripts - Data Attribute Query - Data Attribute Query.
+ *
+ * Newline-joined inline script source ready to embed in a pre-body
+ * tag so query string data parameters apply before hydration.
+ *
+ * @since 0.21.0
+ */
 export const dataAttributeQuery = lines.join('\n');

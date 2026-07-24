@@ -192,7 +192,6 @@ function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
         return {
           ...item,
           to: matchedDoc['path'],
-          claimBase: pluginData['path'],
         } as Theme_Navbar_Index_ResolvedItem;
       }
     }
@@ -235,8 +234,9 @@ function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
 
   // Coordinator: pick the most-specific item that claims the current URL.
   // Most-specific is decided by claim length (regex match or prefix). Doc
-  // items broaden their claim to the docs plugin base via `claimBase`, so
-  // a per-section sibling with a deeper prefix always wins specificity.
+  // items claim their own resolved doc path via `to`, so the item whose
+  // path best matches the current URL wins instead of tying on the shared
+  // plugin base.
   const activeItemLabel: Theme_Navbar_Index_VariantProps_ActiveItemLabel = useNavbarActiveItem(resolvedItems);
 
   // Read navbar variant from build-time global data (no hydration mismatch).

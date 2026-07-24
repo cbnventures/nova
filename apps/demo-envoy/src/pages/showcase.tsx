@@ -13,6 +13,16 @@ import {
 import { translate } from '@docusaurus/Translate';
 import Showcase from '@theme/Showcase';
 
+/**
+ * Pages - Showcase - Page.
+ *
+ * Block showcase page that renders every block from docusaurus-preset-nova with
+ * Envoy-world sample data so each variant can be seen side by side.
+ *
+ * @constructor
+ *
+ * @since UNRELEASED
+ */
 function ShowcasePage() {
   return (
     <Showcase

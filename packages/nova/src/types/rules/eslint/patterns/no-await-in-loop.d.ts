@@ -92,4 +92,4 @@ export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Disallow
 
 export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Returns = TSESTree.Node | undefined;
 
-export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Current = TSESTree.Node | undefined;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Current = TSESTree.Node | null | undefined;

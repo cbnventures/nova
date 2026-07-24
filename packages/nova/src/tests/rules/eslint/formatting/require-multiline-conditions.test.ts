@@ -60,7 +60,8 @@ ruleTester.run('requireMultilineConditions', RequireMultilineConditions['rule'],
     {
       code: 'if (a === true && b === false && c === true) {}',
       options: [{
-        ignoreFiles: ['ignored-file.ts'], maxInline: 2,
+        ignoreFiles: ['ignored-file.ts'],
+        maxInline: 2,
       }],
       filename: '/path/to/ignored-file.ts',
     },

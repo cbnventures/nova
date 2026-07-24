@@ -1,6 +1,7 @@
 import { ok, strictEqual } from 'node:assert/strict';
 import { promises as fsPromises } from 'node:fs';
 
+import prompts from 'prompts';
 import {
   describe,
   it,
@@ -37,6 +38,14 @@ import type {
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesMultiLineQuotedValues_LoadSpy,
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesMultiLineQuotedValues_ReadFileSpy,
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesMultiLineQuotedValues_SaveSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_ActualReadFile,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_Calls,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_EnvTargetCall,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_ExistingEnvContent,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_IsProjectRootSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_LoadSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_ReadFileSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_SaveSpy,
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SetsExitCodeWhenNotAtProjectRoot_IsProjectRootSpy,
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WarnsWhenNoWorkspaceDeclaresDotenv_IsProjectRootSpy,
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WarnsWhenNoWorkspaceDeclaresDotenv_LoadSpy,
@@ -60,6 +69,12 @@ import type {
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_SaveSpy,
 } from '../../../../types/tests/cli/generate/must-haves/dotenv.test.d.ts';
 
+vi.mock('prompts', () => {
+  return {
+    default: vi.fn(),
+  };
+});
+
 /**
  * Tests - CLI - Generate - Must Haves - Dotenv - Run.
  *
@@ -69,18 +84,22 @@ describe('CliGenerateMustHavesDotenv.run', () => {
   it('preserves existing env values', async () => {
     const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
     const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
-      workspaces: {
-        './': {
-          name: 'demo-project',
-          role: 'project',
-          policy: 'freezable',
-          dotenv: {
+      environment: {
+        apps: {
+          './': {
+            prefix: 'DEMO_',
             variables: [
               {
-                key: 'CLOUDFLARE_API_TOKEN', defaultValue: 'changeme',
+                key: 'CLOUDFLARE_API_TOKEN',
+                secret: false,
+                buildOnly: false,
+                defaultValue: 'changeme',
               },
               {
-                key: 'NEW_KEY', defaultValue: 'fresh',
+                key: 'NEW_KEY',
+                secret: false,
+                buildOnly: false,
+                defaultValue: 'fresh',
               },
             ],
           },
@@ -138,14 +157,15 @@ describe('CliGenerateMustHavesDotenv.run', () => {
   it('drops keys not declared in the config or template', async () => {
     const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
     const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
-      workspaces: {
-        './': {
-          name: 'demo-project',
-          role: 'project',
-          policy: 'freezable',
-          dotenv: {
+      environment: {
+        apps: {
+          './': {
+            prefix: 'DEMO_',
             variables: [{
-              key: 'API_KEY', defaultValue: 'abc',
+              key: 'API_KEY',
+              secret: false,
+              buildOnly: false,
+              defaultValue: 'abc',
             }],
           },
         },
@@ -168,7 +188,15 @@ describe('CliGenerateMustHavesDotenv.run', () => {
       return actualReadFile(filePath, encoding);
     });
 
-    await CliGenerateMustHavesDotenv.run({ replaceFile: true });
+    // Only "--prune" with a confirmed prompt may strip the undeclared filled line.
+    vi.mocked(prompts).mockResolvedValue({
+      confirm: true,
+    });
+
+    await CliGenerateMustHavesDotenv.run({
+      replaceFile: true,
+      prune: true,
+    });
 
     const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_Calls = saveSpy['mock']['calls'];
 
@@ -176,7 +204,66 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     ok(envTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env');
 
-    ok(envTargetCall[1].includes('OLD_TOKEN') === false, 'Expected .env content to drop the undeclared key');
+    ok(envTargetCall[1].includes('OLD_TOKEN') === false, 'Expected .env content to drop the undeclared key after a confirmed prune');
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    readFileSpy.mockRestore();
+
+    saveSpy.mockRestore();
+
+    vi.mocked(prompts).mockReset();
+
+    return;
+  });
+
+  it('preserves undeclared keys without prune', async () => {
+    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+      environment: {
+        apps: {
+          './': {
+            prefix: 'DEMO_',
+            variables: [{
+              key: 'API_KEY',
+              secret: false,
+              buildOnly: false,
+              defaultValue: 'abc',
+            }],
+          },
+        },
+      },
+    });
+    const saveSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+
+    // The existing ".env" carries a filled key that is neither a template baseline nor a config variable.
+    const existingEnvContent: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_ExistingEnvContent = [
+      'NODE_ENV="production"',
+      'OLD_TOKEN="secret"',
+    ].join('\n');
+
+    const actualReadFile: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_ActualReadFile = fsPromises.readFile;
+    const readFileSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_ReadFileSpy = vi.spyOn(fsPromises, 'readFile').mockImplementation((filePath, encoding) => {
+      if (typeof filePath === 'string' && filePath.endsWith('/.env') === true) {
+        return Promise.resolve(existingEnvContent);
+      }
+
+      return actualReadFile(filePath, encoding);
+    });
+
+    await CliGenerateMustHavesDotenv.run({ replaceFile: true });
+
+    const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_Calls = saveSpy['mock']['calls'];
+
+    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env'));
+
+    ok(envTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env');
+
+    ok(envTargetCall[1].includes('OLD_TOKEN="secret"'), 'Expected .env content to keep the undeclared filled line when prune is not requested');
+
+    ok(vi.mocked(prompts).mock.calls.length === 0, 'Expected no prune prompt without the prune flag');
 
     isProjectRootSpy.mockRestore();
 
@@ -192,14 +279,15 @@ describe('CliGenerateMustHavesDotenv.run', () => {
   it('preserves multi-line quoted values', async () => {
     const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesMultiLineQuotedValues_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
     const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesMultiLineQuotedValues_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
-      workspaces: {
-        './': {
-          name: 'demo-project',
-          role: 'project',
-          policy: 'freezable',
-          dotenv: {
+      environment: {
+        apps: {
+          './': {
+            prefix: 'DEMO_',
             variables: [{
-              key: 'CLOUDFLARE_API_TOKEN', defaultValue: 'changeme',
+              key: 'CLOUDFLARE_API_TOKEN',
+              secret: false,
+              buildOnly: false,
+              defaultValue: 'changeme',
             }],
           },
         },
@@ -267,15 +355,23 @@ describe('CliGenerateMustHavesDotenv.run', () => {
   it('writes config variables to env and env sample', async () => {
     const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
     const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
-      workspaces: {
-        './': {
-          name: 'demo-project',
-          role: 'project',
-          policy: 'freezable',
-          dotenv: {
-            variables: [{
-              key: 'API_KEY', defaultValue: 'abc',
-            }],
+      environment: {
+        apps: {
+          './': {
+            prefix: 'DEMO_',
+            variables: [
+              {
+                key: 'API_KEY',
+                secret: false,
+                buildOnly: false,
+                defaultValue: 'abc',
+              },
+              {
+                key: 'SECRET_TOKEN',
+                secret: true,
+                buildOnly: false,
+              },
+            ],
           },
         },
       },
@@ -302,13 +398,17 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     ok(envTargetCall[1].includes('API_KEY=""'), 'Expected .env content to include the blank-valued config variable');
 
+    ok(envTargetCall[1].includes('SECRET_TOKEN=""'), 'Expected .env content to include the secret config variable as a blank line');
+
     strictEqual((envTargetCall[3] !== undefined) ? envTargetCall[3]['mode'] : undefined, 'fillable');
 
     const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env.sample'));
 
     ok(sampleTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env.sample');
 
-    ok(sampleTargetCall[1].includes('API_KEY="abc"'), 'Expected .env.sample content to include the default-valued config variable');
+    ok(sampleTargetCall[1].includes('API_KEY="abc"'), 'Expected .env.sample content to seed the non-secret default value');
+
+    ok(sampleTargetCall[1].includes('SECRET_TOKEN=""'), 'Expected .env.sample content to leave the secret variable blank');
 
     strictEqual((sampleTargetCall[3] !== undefined) ? sampleTargetCall[3]['mode'] : undefined, 'strict');
 
@@ -354,31 +454,26 @@ describe('CliGenerateMustHavesDotenv.run', () => {
   it('writes a file for each workspace that declares dotenv', async () => {
     const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesAFileForEachWorkspaceThatDeclaresDotenv_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
     const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesAFileForEachWorkspaceThatDeclaresDotenv_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
-      workspaces: {
-        './': {
-          name: 'demo-project',
-          role: 'project',
-          policy: 'freezable',
-          dotenv: {
+      environment: {
+        apps: {
+          './': {
+            prefix: 'ROOT_',
             variables: [{
-              key: 'ROOT_KEY', defaultValue: 'root',
+              key: 'ROOT_KEY',
+              secret: false,
+              buildOnly: false,
+              defaultValue: 'root',
             }],
           },
-        },
-        'apps/web': {
-          name: 'demo-web',
-          role: 'app',
-          policy: 'freezable',
-          dotenv: {
+          'apps/web': {
+            prefix: 'WEB_',
             variables: [{
-              key: 'WEB_KEY', defaultValue: 'web',
+              key: 'WEB_KEY',
+              secret: false,
+              buildOnly: false,
+              defaultValue: 'web',
             }],
           },
-        },
-        'packages/core': {
-          name: '@demo/core',
-          role: 'package',
-          policy: 'distributable',
         },
       },
     });

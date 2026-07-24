@@ -1,0 +1,36 @@
+---
+id: "fw-astro"
+title: "Framework - Astro"
+description: "Parse TypeScript in .astro frontmatter by wiring the typescript-eslint parser into eslint-plugin-astro's flat config."
+keywords:
+  - "nova"
+  - "astro"
+  - "eslint preset"
+  - "astro framework"
+  - "frontmatter parser"
+  - "typescript eslint"
+  - "flat config"
+  - "component script"
+tags:
+  - "presets"
+  - "eslint"
+  - "framework"
+  - "astro"
+---
+
+This preset is the framework layer for Astro projects in your ESLint flat config.
+
+An Astro component script — the `---` frontmatter block at the top of an `.astro` file — is TypeScript. By default `eslint-plugin-astro` hands that block to a JavaScript parser, so `import type`, type annotations, and `as` casts fail with `Unexpected token` parse errors before any rule runs. This preset points the frontmatter sub-parser at the TypeScript parser so typed `.astro` files lint cleanly, and it covers every future TS-frontmatter file instead of one at a time.
+
+Spread it into your flat config after `eslint-plugin-astro`'s recommended config:
+
+```ts
+import { fwAstro } from '@cbnventures/nova/presets/eslint';
+import astro from 'eslint-plugin-astro';
+
+export default [
+  // ...your other config...
+  ...astro.configs['flat/recommended'],
+  ...fwAstro,
+];
+```

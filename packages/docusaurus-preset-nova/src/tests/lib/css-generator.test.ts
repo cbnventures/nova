@@ -100,22 +100,28 @@ describe('CssGenerator generate', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -180,22 +186,28 @@ describe('CssGenerator generate', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -253,22 +265,28 @@ describe('CssGenerator generate depth variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -313,22 +331,28 @@ describe('CssGenerator generate depth variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -373,22 +397,28 @@ describe('CssGenerator generate depth variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -442,22 +472,28 @@ describe('CssGenerator generate grid variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -507,22 +543,28 @@ describe('CssGenerator generate grid variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -572,22 +614,28 @@ describe('CssGenerator generate grid variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -637,22 +685,28 @@ describe('CssGenerator generate grid variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -707,22 +761,28 @@ describe('CssGenerator generate grid variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -777,22 +837,28 @@ describe('CssGenerator generate grid variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -847,22 +913,28 @@ describe('CssGenerator generate grid variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -909,22 +981,28 @@ describe('CssGenerator generate grid variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -982,22 +1060,28 @@ describe('CssGenerator generate motion variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -1042,22 +1126,28 @@ describe('CssGenerator generate motion variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -1102,22 +1192,28 @@ describe('CssGenerator generate motion variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -1171,22 +1267,28 @@ describe('CssGenerator generate shape variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {
@@ -1231,22 +1333,28 @@ describe('CssGenerator generate shape variables', async () => {
         },
         colors: {
           primary: {
-            light: '#ea580c', dark: '#ea580c',
+            light: '#ea580c',
+            dark: '#ea580c',
           },
           accent: {
-            light: '#fbbf24', dark: '#fbbf24',
+            light: '#fbbf24',
+            dark: '#fbbf24',
           },
           text: {
-            light: '#1c1917', dark: '#e7e5e4',
+            light: '#1c1917',
+            dark: '#e7e5e4',
           },
           border: {
-            light: '#d6d3d1', dark: '#44403c',
+            light: '#d6d3d1',
+            dark: '#44403c',
           },
           warning: {
-            light: '#f59e0b', dark: '#fbbf24',
+            light: '#f59e0b',
+            dark: '#fbbf24',
           },
           danger: {
-            light: '#ef4444', dark: '#f87171',
+            light: '#ef4444',
+            dark: '#f87171',
           },
         },
         fonts: {

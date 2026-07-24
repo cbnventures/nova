@@ -35,6 +35,14 @@ import type {
   Theme_CodeBlock_Index_ExtractPlainText_Returns,
 } from '../../types/theme/CodeBlock/index.d.ts';
 
+/**
+ * Theme - Code Block - Lazy Live Editor.
+ *
+ * Lazily loaded live editor component so the Sandpack bundle is only
+ * fetched when a code block actually opts into live editing.
+ *
+ * @since 0.21.0
+ */
 const lazyLiveEditor = React.lazy(() => import('./live-editor.js'));
 
 /**
@@ -88,8 +96,6 @@ function extractPlainText(node: Theme_CodeBlock_Index_ExtractPlainText_Node): Th
  * live editor support via lazy-loaded Sandpack.
  *
  * @param {Theme_CodeBlock_Index_CodeBlock_Props} props - Props.
- *
- * @constructor
  *
  * @since 0.15.0
  */

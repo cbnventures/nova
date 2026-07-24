@@ -187,22 +187,28 @@ describe('configDrift validateOptions', async () => {
         overrides: {
           colors: {
             primary: {
-              light: '#DC2626', dark: '#DC2626',
+              light: '#DC2626',
+              dark: '#DC2626',
             },
             secondary: {
-              light: '#FBBF24', dark: '#FBBF24',
+              light: '#FBBF24',
+              dark: '#FBBF24',
             },
             text: {
-              light: '#1c1917', dark: '#e7e5e4',
+              light: '#1c1917',
+              dark: '#e7e5e4',
             },
             border: {
-              light: '#d6d3d1', dark: '#44403c',
+              light: '#d6d3d1',
+              dark: '#44403c',
             },
             warning: {
-              light: '#f59e0b', dark: '#fbbf24',
+              light: '#f59e0b',
+              dark: '#fbbf24',
             },
             danger: {
-              light: '#ef4444', dark: '#f87171',
+              light: '#ef4444',
+              dark: '#f87171',
             },
           },
           fonts: {
@@ -260,10 +266,12 @@ describe('configDrift validateOptions', async () => {
     const overridesColorsSecondary: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesColorsSecondary = overrides['colors']['secondary'];
 
     deepStrictEqual(overridesColorsPrimary, {
-      light: '#DC2626', dark: '#DC2626',
+      light: '#DC2626',
+      dark: '#DC2626',
     });
     deepStrictEqual(overridesColorsSecondary, {
-      light: '#FBBF24', dark: '#FBBF24',
+      light: '#FBBF24',
+      dark: '#FBBF24',
     });
 
     const overridesFontsDisplay: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesFontsDisplay = overrides['fonts']['display'];
@@ -451,7 +459,8 @@ describe('configDrift validateThemeConfig', async () => {
         },
         footer: {
           cta: {
-            label: 'Get Started', href: '/docs/intro',
+            label: 'Get Started',
+            href: '/docs/intro',
           },
         },
       },

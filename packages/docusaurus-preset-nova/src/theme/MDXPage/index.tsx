@@ -9,10 +9,13 @@ import TOC from '@theme/TOC';
 import TOCCollapsible from '@theme/TOCCollapsible';
 import { createElement } from 'react';
 
+import TOCCollapsiblePanel from '../TOCCollapsible/panel.js';
+
 import type {
   Theme_MdxPage_Index_MdxPageCanDisplayEditMetaRow,
   Theme_MdxPage_Index_MdxPageCanRenderToc,
   Theme_MdxPage_Index_MdxPageDescription,
+  Theme_MdxPage_Index_MdxPageDisplayEditUrl,
   Theme_MdxPage_Index_MdxPageEditUrl,
   Theme_MdxPage_Index_MdxPageFirstH1State,
   Theme_MdxPage_Index_MdxPageFrontMatter,
@@ -42,8 +45,6 @@ import type {
  *
  * @param {Theme_MdxPage_Index_MdxPageProps} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function MDXPage(props: Theme_MdxPage_Index_MdxPageProps) {
@@ -55,16 +56,26 @@ function MDXPage(props: Theme_MdxPage_Index_MdxPageProps) {
   const lastUpdatedAt: Theme_MdxPage_Index_MdxPageLastUpdatedAt = props['content']['metadata']['lastUpdatedAt'];
   const keywords: Theme_MdxPage_Index_MdxPageKeywords = frontMatter['keywords'];
   const image: Theme_MdxPage_Index_MdxPageImage = props['content']['assets']['image'] ?? frontMatter['image'];
-  const hideTableOfContents: Theme_MdxPage_Index_MdxPageHideTableOfContents = frontMatter['hide_table_of_contents'];
+  const hideTableOfContents: Theme_MdxPage_Index_MdxPageHideTableOfContents = frontMatter['hide_table_of_contents'] as Theme_MdxPage_Index_MdxPageHideTableOfContents;
   const tocMinHeadingLevel: Theme_MdxPage_Index_MdxPageTocMinHeadingLevel = frontMatter['toc_min_heading_level'];
   const tocMaxHeadingLevel: Theme_MdxPage_Index_MdxPageTocMaxHeadingLevel = frontMatter['toc_max_heading_level'];
+  const displayEditUrl: Theme_MdxPage_Index_MdxPageDisplayEditUrl = (editUrl === null) ? undefined : editUrl;
+
+  // Docusaurus emits null (not undefined) for missing git metadata, so the
+  // guards below must treat null as absent or an empty edit meta row renders.
   const canDisplayEditMetaRow: Theme_MdxPage_Index_MdxPageCanDisplayEditMetaRow = (
-    editUrl !== undefined
-    || lastUpdatedAt !== undefined
-    || lastUpdatedBy !== undefined
+    displayEditUrl !== undefined
+    || (
+      lastUpdatedAt !== undefined
+      && lastUpdatedAt !== null
+    )
+    || (
+      lastUpdatedBy !== undefined
+      && lastUpdatedBy !== null
+    )
   );
   const canRenderToc: Theme_MdxPage_Index_MdxPageCanRenderToc = (
-    hideTableOfContents !== 'true'
+    hideTableOfContents !== true
     && props['content']['toc']['length'] > 0
   );
   const mdxComponent: Theme_MdxPage_Index_MdxPageMdxComponent = props['content'];
@@ -145,7 +156,7 @@ function MDXPage(props: Theme_MdxPage_Index_MdxPageProps) {
                 </article>
                 {canDisplayEditMetaRow === true && (
                   <EditMetaRow
-                    editUrl={editUrl}
+                    editUrl={displayEditUrl}
                     lastUpdatedAt={lastUpdatedAt}
                     lastUpdatedBy={lastUpdatedBy}
                   />
@@ -159,6 +170,7 @@ function MDXPage(props: Theme_MdxPage_Index_MdxPageProps) {
             </div>
           </main>
         </div>
+        <TOCCollapsiblePanel />
       </div>
     </Layout>
   );

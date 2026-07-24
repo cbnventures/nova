@@ -188,9 +188,9 @@ export type Tests_Lib_Color_ColorGenerateScale_Shade600ApproximatesTheInputColor
  *
  * @since 0.15.0
  */
-export type Tests_Lib_Color_HexToLightness_Hex = string;
-
 export type Tests_Lib_Color_HexToLightness_Returns = number;
+
+export type Tests_Lib_Color_HexToLightness_Hex = string;
 
 export type Tests_Lib_Color_HexToLightness_RedSlice = string;
 

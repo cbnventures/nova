@@ -1,5 +1,4 @@
-import { describe } from 'vitest';
-
+import { setActiveVitest } from '../active-vitest.js';
 import { valuesDoubleQuoted } from './rules.js';
 
 import type {
@@ -14,9 +13,9 @@ import type {
 /**
  * Rules - Vitest - Dotenv - Register - Dotenv Suite.
  *
- * Resolves the suite config (defaulting `rootDir` to `process.cwd()` and `envPaths` to
- * `.env` / `.env.sample`) and runs the single double-quote conformance check inside a
- * describe, gated by `enable`.
+ * Resolves the suite config (defaulting `rootDir` to `process.cwd()` and
+ * `envPaths` to `.env` / `.env.sample`) and runs the single double-quote conformance
+ * check inside a describe, gated by `enable`.
  *
  * @param {Rules_Vitest_Dotenv_Register_RegisterDotenvSuite_Config} config - Config.
  *
@@ -25,7 +24,9 @@ import type {
  * @since 0.20.0
  */
 export function registerDotenvSuite(config: Rules_Vitest_Dotenv_Register_RegisterDotenvSuite_Config): Rules_Vitest_Dotenv_Register_RegisterDotenvSuite_Returns {
-  describe('dotenv', () => {
+  setActiveVitest(config['vitest']);
+
+  config['vitest'].describe('dotenv', () => {
     const rootDir: Rules_Vitest_Dotenv_Register_RegisterDotenvSuite_Dotenv_RootDir = config['rootDir'] ?? process.cwd();
     const envPaths: Rules_Vitest_Dotenv_Register_RegisterDotenvSuite_Dotenv_EnvPaths = config['envPaths'] ?? [
       '.env',

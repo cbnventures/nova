@@ -113,30 +113,45 @@ async function createRoleMatrixSandbox(sandboxRoot: Tests_Cli_Generate_MustHaves
       legalName: 'Test Corp',
       startingYear: 2024,
       name: {
-        slug: 'test', title: 'Test',
+        slug: 'test',
+        title: 'Test',
       },
     },
     workspaces: {
       './': {
-        name: 'test-project', role: 'project', policy: 'freezable',
+        name: 'test-project',
+        role: 'project',
+        policy: 'freezable',
       },
       './apps/web': {
-        name: 'test-app-web', role: 'app', policy: 'trackable',
+        name: 'test-app-web',
+        role: 'app',
+        policy: 'trackable',
       },
       './apps/docs-site': {
-        name: 'test-docs', role: 'docs', policy: 'freezable',
+        name: 'test-docs',
+        role: 'docs',
+        policy: 'freezable',
       },
       './packages/lib-a': {
-        name: 'lib-a', role: 'package', policy: 'distributable',
+        name: 'lib-a',
+        role: 'package',
+        policy: 'distributable',
       },
       './packages/cli-a': {
-        name: 'test-tool-cli-a', role: 'tool', policy: 'trackable',
+        name: 'test-tool-cli-a',
+        role: 'tool',
+        policy: 'trackable',
       },
       './packages/preset-a': {
-        name: 'test-config-preset-a', role: 'config', policy: 'trackable',
+        name: 'test-config-preset-a',
+        role: 'config',
+        policy: 'trackable',
       },
       './packages/template-a': {
-        name: 'template-a', role: 'template', policy: 'freezable',
+        name: 'template-a',
+        role: 'template',
+        policy: 'freezable',
       },
     },
   }, null, 2);

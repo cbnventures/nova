@@ -44,8 +44,6 @@ import type {
  *
  * @param {Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function BlogSidebarMobile(props: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Props) {

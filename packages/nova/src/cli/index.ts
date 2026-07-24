@@ -12,7 +12,7 @@ import {
 import { Bootstrap, CLIHeader, Logger } from '../toolkit/index.js';
 import { Runner as CliGenerateGithubFunding } from './generate/github/funding.js';
 import { Runner as CliGenerateGithubIssueTemplate } from './generate/github/issue-template.js';
-import { Runner as CliGenerateGithubWorkflows } from './generate/github/workflows.js';
+import { Runner as CliGenerateGithubWorkflowsBlueprint } from './generate/github/workflows-blueprint.js';
 import { Runner as CliGenerateMustHavesAgentConventions } from './generate/must-haves/agent-conventions.js';
 import { Runner as CliGenerateMustHavesDotenv } from './generate/must-haves/dotenv.js';
 import { Runner as CliGenerateMustHavesEditorconfig } from './generate/must-haves/editorconfig.js';
@@ -22,6 +22,7 @@ import { Runner as CliGenerateMustHavesReadMe } from './generate/must-haves/read
 import { Runner as CliRecipeGithubSyncFeatures } from './recipe/github/sync-features.js';
 import { Runner as CliRecipeGithubSyncIdentity } from './recipe/github/sync-identity.js';
 import { Runner as CliRecipeGithubSyncPolicies } from './recipe/github/sync-policies.js';
+import { Runner as CliRecipeLicenseUpdateCopyright } from './recipe/license/update-copyright.js';
 import { Runner as CliRecipePackageJsonCleanup } from './recipe/package-json/cleanup.js';
 import { Runner as CliRecipePackageJsonNormalizeArtifacts } from './recipe/package-json/normalize-artifacts.js';
 import { Runner as CliRecipePackageJsonNormalizeBundler } from './recipe/package-json/normalize-bundler.js';
@@ -31,6 +32,11 @@ import { Runner as CliRecipePackageJsonNormalizeTooling } from './recipe/package
 import { Runner as CliRecipePackageJsonSyncEnvironment } from './recipe/package-json/sync-environment.js';
 import { Runner as CliRecipePackageJsonSyncIdentity } from './recipe/package-json/sync-identity.js';
 import { Runner as CliRecipePackageJsonSyncOwnership } from './recipe/package-json/sync-ownership.js';
+import { Runner as CliRecipeReadMeUpdateBadges } from './recipe/read-me/update-badges.js';
+import { Runner as CliRecipeReadMeUpdateCredits } from './recipe/read-me/update-credits.js';
+import { Runner as CliRecipeReadMeUpdateDocumentation } from './recipe/read-me/update-documentation.js';
+import { Runner as CliRecipeReadMeUpdateHeader } from './recipe/read-me/update-header.js';
+import { Runner as CliRecipeReadMeUpdateIntroduction } from './recipe/read-me/update-introduction.js';
 import { Runner as CliScaffoldAppExpressjs } from './scaffold/app/expressjs.js';
 import { Runner as CliScaffoldAppNextjs } from './scaffold/app/nextjs.js';
 import { Runner as CliScaffoldAppVite } from './scaffold/app/vite.js';
@@ -85,7 +91,11 @@ import type {
   Cli_Index_CLI_RegisterCommands_Recipe,
   Cli_Index_CLI_RegisterCommands_RecipeGithub,
   Cli_Index_CLI_RegisterCommands_RecipeGithubOptions,
+  Cli_Index_CLI_RegisterCommands_RecipeLicense,
+  Cli_Index_CLI_RegisterCommands_RecipeLicenseOptions,
   Cli_Index_CLI_RegisterCommands_RecipePackageJson,
+  Cli_Index_CLI_RegisterCommands_RecipeReadMe,
+  Cli_Index_CLI_RegisterCommands_RecipeReadMeOptions,
   Cli_Index_CLI_RegisterCommands_Returns,
   Cli_Index_CLI_RegisterCommands_RunRecipesOptions,
   Cli_Index_CLI_RegisterCommands_RunScriptsOptions,
@@ -105,6 +115,14 @@ import type {
   Cli_Index_EnvDir,
 } from '../types/cli/index.d.ts';
 
+/**
+ * CLI - Env Dir.
+ *
+ * Resolves the directory holding the Nova dotenv file by searching the cwd, project
+ * root, and config directory so environment variables load before commands run.
+ *
+ * @since 0.21.0
+ */
 const envDir: Cli_Index_EnvDir = Bootstrap.resolveFileDir('nova', '.env', [
   'cwd',
   'project-root',
@@ -252,7 +270,7 @@ class CLI {
       .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliGenerateGithubWorkflows['run']);
+        await this.executeCommand<typeof options>(options, CliGenerateGithubWorkflowsBlueprint['generate']);
 
         return;
       });
@@ -285,6 +303,7 @@ class CLI {
       .description('Create a .env file for managing local environment secrets')
       .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .option('--prune', 'Remove undeclared keys from the local .env (prompts before stripping)')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliGenerateMustHavesDotenv['run']);
 
@@ -535,6 +554,128 @@ class CLI {
         return;
       });
 
+    const recipeLicense: Cli_Index_CLI_RegisterCommands_RecipeLicense = recipe
+      .command('license')
+      .alias('lic')
+      .usage('[subcommand] [options]')
+      .description('Run all license recipes')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false)
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<Cli_Index_CLI_RegisterCommands_RunRecipesOptions>({
+          ...(options as Cli_Index_CLI_RegisterCommands_RecipeLicenseOptions),
+          category: 'license',
+        }, CliUtilityRunRecipes['run']);
+
+        return;
+      });
+
+    recipeLicense
+      .command('update-copyright')
+      .alias('update-copy')
+      .usage('[options]')
+      .description('Refresh the LICENSE copyright holder and year range from nova.config.json')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliRecipeLicenseUpdateCopyright['run']);
+
+        return;
+      });
+
+    /**
+     * CLI - Register Commands - Recipe Read Me.
+     *
+     * Parent command for the README refresh recipes. Each subcommand splices one marked region
+     * of the README.md in place; the parent runs every read-me recipe via run-recipes.
+     *
+     * @since 0.21.0
+     */
+    const recipeReadMe: Cli_Index_CLI_RegisterCommands_RecipeReadMe = recipe
+      .command('read-me')
+      .alias('read')
+      .usage('[subcommand] [options]')
+      .description('Run all README recipes')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false)
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<Cli_Index_CLI_RegisterCommands_RunRecipesOptions>({
+          ...(options as Cli_Index_CLI_RegisterCommands_RecipeReadMeOptions),
+          category: 'read-me',
+        }, CliUtilityRunRecipes['run']);
+
+        return;
+      });
+
+    recipeReadMe
+      .command('update-badges')
+      .alias('update-badge')
+      .usage('[options]')
+      .description('Refresh the README.md badges region from nova.config.json')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliRecipeReadMeUpdateBadges['run']);
+
+        return;
+      });
+
+    recipeReadMe
+      .command('update-credits')
+      .alias('update-credit')
+      .usage('[options]')
+      .description('Refresh the README.md credits region from nova.config.json')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliRecipeReadMeUpdateCredits['run']);
+
+        return;
+      });
+
+    recipeReadMe
+      .command('update-documentation')
+      .alias('update-doc')
+      .usage('[options]')
+      .description('Refresh the README.md documentation region from nova.config.json')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliRecipeReadMeUpdateDocumentation['run']);
+
+        return;
+      });
+
+    recipeReadMe
+      .command('update-header')
+      .alias('update-head')
+      .usage('[options]')
+      .description('Refresh the README.md header region from nova.config.json')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliRecipeReadMeUpdateHeader['run']);
+
+        return;
+      });
+
+    recipeReadMe
+      .command('update-introduction')
+      .alias('update-intro')
+      .usage('[options]')
+      .description('Refresh the README.md introduction region from nova.config.json')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliRecipeReadMeUpdateIntroduction['run']);
+
+        return;
+      });
+
     /**
      * CLI - Register Commands - Scaffold.
      *
@@ -699,6 +840,7 @@ class CLI {
       .description('Generate a new Nova config for this project')
       .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .option('-s, --status', 'Show the read-only GitHub environment status and exit')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliUtilityInitialize['run']);
 

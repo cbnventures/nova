@@ -65,7 +65,9 @@ for (const file of files) {
 
       if (currentTableLines.length >= 3) {
         tables.push({
-          start: currentTableStart, end: i - 1, lines: currentTableLines,
+          start: currentTableStart,
+          end: i - 1,
+          lines: currentTableLines,
         });
       }
 
@@ -88,7 +90,9 @@ for (const file of files) {
     } else {
       if (currentTableLines.length >= 3) {
         tables.push({
-          start: currentTableStart, end: i - 1, lines: currentTableLines,
+          start: currentTableStart,
+          end: i - 1,
+          lines: currentTableLines,
         });
       }
 
@@ -99,7 +103,9 @@ for (const file of files) {
 
   if (currentTableLines.length >= 3) {
     tables.push({
-      start: currentTableStart, end: lines.length - 1, lines: currentTableLines,
+      start: currentTableStart,
+      end: lines.length - 1,
+      lines: currentTableLines,
     });
   }
 

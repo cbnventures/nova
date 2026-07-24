@@ -131,10 +131,10 @@ export class Runner {
    * the variable definition tied to an identifier. Used
    * by cameFromLoggerCustomize for alias tracking.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Context}    context    - Context.
    * @param {Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Identifier} identifier - Identifier.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Returns}
    *
@@ -167,9 +167,9 @@ export class Runner {
    * call to Logger.customize so that chained usage like
    * Logger.customize().dev can be detected.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_Node} node - Node.
+   *
+   * @private
    *
    * @returns {boolean}
    *
@@ -208,10 +208,10 @@ export class Runner {
    * definition to determine if it was initialized from
    * a Logger.customize call.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Context}    context    - Context.
    * @param {Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Identifier} identifier - Identifier.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Returns}
    *

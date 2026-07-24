@@ -27,6 +27,14 @@ import type {
   Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsEnginesFieldWhenMissing_WorkspaceDirectory,
   Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsEnginesFieldWhenMissing_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsEnginesFieldWhenMissing_WorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_Output,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_PackageManagerValue,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_Parsed,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_ProjectDirectory,
   Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_DoesNotModifyFilesDuringDryRun_NovaConfigContents,
   Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_DoesNotModifyFilesDuringDryRun_NovaConfigPath,
   Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_DoesNotModifyFilesDuringDryRun_Output,
@@ -190,8 +198,14 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'sync-environment': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-environment': {
+              enabled: true,
+            },
           },
         },
       },
@@ -223,6 +237,57 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
     return;
   });
 
+  it('adds packageManager to project role when missing', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_ProjectDirectory = join(sandboxRoot, 'add-pm');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_PackageJsonContents = JSON.stringify({
+      name: 'project',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_NovaConfigContents = JSON.stringify({
+      workspaces: {
+        './': {
+          name: 'project',
+          role: 'project',
+          policy: 'freezable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './': {
+            'sync-environment': {
+              enabled: true,
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonSyncEnvironment.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_Output = await readFile(packageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_Parsed = JSON.parse(output);
+    const packageManagerValue: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_PackageManagerValue = String(parsed['packageManager']);
+
+    strictEqual(packageManagerValue.startsWith('npm@'), true);
+
+    return;
+  });
+
   it('removes packageManager from non-project role', async () => {
     const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_RemovesPackageManagerFromNonProjectRole_ProjectDirectory = join(sandboxRoot, 'remove-pm');
     const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_RemovesPackageManagerFromNonProjectRole_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
@@ -243,8 +308,14 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'sync-environment': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-environment': {
+              enabled: true,
+            },
           },
         },
       },
@@ -297,8 +368,14 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
           name: '@test/core',
           role: 'package',
           policy: 'distributable',
-          recipes: {
-            'sync-environment': [true],
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-environment': {
+              enabled: true,
+            },
           },
         },
       },

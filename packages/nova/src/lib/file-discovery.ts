@@ -20,9 +20,9 @@ import type {
 /**
  * Lib - File Discovery - Discover Content Files.
  *
- * Recursively walks each content directory under the root and returns the relative
- * paths (joined with the content directory) of every file whose extension matches.
- * A missing content directory is skipped via the ENOENT guard rather than throwing.
+ * Recursively walks each content directory under the root, returning relative
+ * paths (joined with the content directory) of every file whose extension matches it.
+ * A missing content directory is skipped via the ENOENT guard.
  *
  * @param {Lib_FileDiscovery_DiscoverContentFiles_Options} [options] - Options.
  *

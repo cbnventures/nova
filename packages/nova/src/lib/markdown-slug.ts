@@ -17,9 +17,9 @@ import type {
 /**
  * Lib - Markdown Slug - Slugify Heading.
  *
- * Turns a heading string into the Docusaurus-style anchor slug used by the link and
- * terminology conformance suites: HTML tags removed, trimmed, lowercased, non-word
- * characters dropped, and whitespace runs collapsed into single hyphens.
+ * Turns a heading string into a Docusaurus-style anchor slug used by
+ * the link and terminology conformance suites: HTML tags are removed, the string is trimmed
+ * and lowercased, non-word characters dropped, and whitespace runs collapsed into hyphens.
  *
  * @param {Lib_MarkdownSlug_SlugifyHeading_Heading} heading - Heading.
  *
@@ -56,7 +56,7 @@ export function stripCodeFences(content: Lib_MarkdownSlug_StripCodeFences_Conten
 
   for (const line of lines) {
     if (line.trimStart().startsWith('```') === true) {
-      inCodeBlock = !inCodeBlock;
+      inCodeBlock = inCodeBlock === false;
 
       continue;
     }

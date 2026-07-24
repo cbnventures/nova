@@ -65,7 +65,8 @@ ruleTester.run('requireMultilineConditionGroups', RequireMultilineConditionGroup
         ') {}',
       ].join('\n'),
       options: [{
-        ignoreFiles: [], groupStyle: 'operator-after-close',
+        ignoreFiles: [],
+        groupStyle: 'operator-after-close',
       }],
     },
     {
@@ -81,13 +82,15 @@ ruleTester.run('requireMultilineConditionGroups', RequireMultilineConditionGroup
         ') {}',
       ].join('\n'),
       options: [{
-        ignoreFiles: [], groupStyle: 'operator-inline',
+        ignoreFiles: [],
+        groupStyle: 'operator-inline',
       }],
     },
     {
       code: 'if ((a && b) || (c && d)) {}',
       options: [{
-        ignoreFiles: ['ignored-file.ts'], groupStyle: 'operator-before-open',
+        ignoreFiles: ['ignored-file.ts'],
+        groupStyle: 'operator-before-open',
       }],
       filename: '/path/to/ignored-file.ts',
     },
@@ -142,7 +145,8 @@ ruleTester.run('requireMultilineConditionGroups', RequireMultilineConditionGroup
         ') {}',
       ].join('\n'),
       options: [{
-        ignoreFiles: [], groupStyle: 'operator-after-close',
+        ignoreFiles: [],
+        groupStyle: 'operator-after-close',
       }],
       errors: [{ messageId: 'requireGroupStyle' }],
     },

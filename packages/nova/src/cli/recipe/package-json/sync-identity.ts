@@ -2,7 +2,7 @@ import {
   dirname,
   join,
   relative,
-} from 'path';
+} from 'node:path';
 
 import chalk from 'chalk';
 
@@ -18,6 +18,8 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ConfigLicense,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_DesiredLicense,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FallbackLicense,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FileContents,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FilePath,
@@ -26,14 +28,15 @@ import type {
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_NormalizedLicenseReference,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDescription,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDirectory,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageJsonRecipes,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageKeywords,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageLicense,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageName,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageVersion,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ProjectRoot,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeEntry,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Recipes,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeSettings,
-  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeTuple,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RelativeLicensePath,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ResolvedLicensePath,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Returns,
@@ -43,19 +46,23 @@ import type {
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidVersion,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Workspace,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkspacePath,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkspaceRecipes,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_CurrentDirectory,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_EligibleWorkspaces,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsAtProjectRoot,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsDryRun,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsReplaceFile,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Options,
-  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipeTuple,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_PackageJsonRecipesFilter,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipeEntryFilter,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipesFilter,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_ReplaceFileNotice,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Returns,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFile,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFileWorkspaces,
-  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceConfig,
-  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceRecipes,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspacePathFilter,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceRecipesFilter,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Workspaces,
 } from '../../../types/cli/recipe/package-json/sync-identity.d.ts';
 
@@ -124,20 +131,22 @@ export class Runner {
 
     // Filter workspaces that have the recipe enabled.
     const eligibleWorkspaces: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceConfig = workspace[1];
-      const workspaceRecipes: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceRecipes = workspaceConfig['recipes'];
+      const workspacePathFilter: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspacePathFilter = workspace[0];
+      const recipesFilter: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipesFilter = workingFile['recipes'];
+      const packageJsonRecipesFilter: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_PackageJsonRecipesFilter = (recipesFilter !== undefined) ? recipesFilter['package-json'] : undefined;
+      const workspaceRecipesFilter: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceRecipesFilter = (packageJsonRecipesFilter !== undefined) ? packageJsonRecipesFilter[workspacePathFilter] : undefined;
 
-      if (workspaceRecipes === undefined) {
+      if (workspaceRecipesFilter === undefined) {
         return false;
       }
 
-      const recipeTuple: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipeTuple = workspaceRecipes['sync-identity'];
+      const recipeEntryFilter: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipeEntryFilter = workspaceRecipesFilter['sync-identity'];
 
-      if (recipeTuple === undefined) {
+      if (recipeEntryFilter === undefined) {
         return false;
       }
 
-      return recipeTuple[0] === true;
+      return recipeEntryFilter['enabled'] === true;
     });
 
     if (eligibleWorkspaces.length === 0) {
@@ -214,9 +223,12 @@ export class Runner {
     const packageLicense: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageLicense = fileContents['license'];
 
     // Get recipe settings for this workspace.
-    const recipes: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Recipes = manifest['recipes'];
-    const recipeTuple: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeTuple = (recipes !== undefined) ? recipes['sync-identity'] : undefined;
-    const recipeSettings: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeSettings = (recipeTuple !== undefined && recipeTuple.length > 1) ? recipeTuple[1] : undefined;
+    const workspacePath: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkspacePath = workspace['workspacePath'];
+    const recipes: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Recipes = workingFile['recipes'];
+    const packageJsonRecipes: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageJsonRecipes = (recipes !== undefined) ? recipes['package-json'] : undefined;
+    const workspaceRecipes: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkspaceRecipes = (packageJsonRecipes !== undefined) ? packageJsonRecipes[workspacePath] : undefined;
+    const recipeEntry: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeEntry = (workspaceRecipes !== undefined) ? workspaceRecipes['sync-identity'] : undefined;
+    const recipeSettings: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeSettings = (recipeEntry !== undefined) ? recipeEntry['settings'] : undefined;
 
     // Sync the "name" field.
     if (
@@ -355,9 +367,19 @@ export class Runner {
 
     // Sync the "license" field.
     const spdxLicenses: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_SpdxLicenses = await ApiSpdxLicenses.fetchLicenses();
+    const configLicense: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ConfigLicense = (workingFile['project'] !== undefined) ? workingFile['project']['license'] : undefined;
+
+    let desiredLicense: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_DesiredLicense = undefined;
 
     if (
-      typeof packageLicense !== 'string' // Package "license" is not a string.
+      configLicense !== undefined // Nova config "project.license" is set.
+      && configLicense !== 'Proprietary' // Nova config "project.license" is a real SPDX identifier.
+    ) {
+      // Nova config "project.license" is authoritative for real SPDX identifiers.
+      desiredLicense = configLicense;
+    } else if (
+      configLicense === 'Proprietary' // Nova config "project.license" is "Proprietary", which is not an SPDX identifier.
+      || typeof packageLicense !== 'string' // Package "license" is not a string.
       || (
         spdxLicenses !== undefined // SPDX license list is available.
         && spdxLicenses.has(packageLicense) === false // Package "license" is not within SPDX specification.
@@ -389,18 +411,22 @@ export class Runner {
         normalizedLicenseReference = (relativeLicensePath.startsWith('.') === true) ? relativeLicensePath : `./${relativeLicensePath}`;
       }
 
+      // Proprietary or non-SPDX licenses point at the LICENSE file, or fall back to "UNLICENSED".
       const fallbackLicense: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FallbackLicense = (normalizedLicenseReference !== undefined) ? `SEE LICENSE IN ${normalizedLicenseReference}` : 'UNLICENSED';
 
-      if (packageLicense === fallbackLicense) {
-        return;
-      }
+      desiredLicense = fallbackLicense;
+    }
 
+    if (
+      desiredLicense !== undefined // A desired "license" value was determined.
+      && packageLicense !== desiredLicense // Package "license" differs from the desired value.
+    ) {
       Logger.customize({
         name: 'Runner.handle',
         purpose: 'license',
-      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "license" to "${fallbackLicense}" ...`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "license" to "${desiredLicense}" ...`);
 
-      Reflect.set(fileContents, 'license', fallbackLicense);
+      Reflect.set(fileContents, 'license', desiredLicense);
     }
 
     return;

@@ -1,5 +1,5 @@
-import { promises as fs } from 'fs';
-import { join } from 'path';
+import { promises as fs } from 'node:fs';
+import { join } from 'node:path';
 
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
@@ -30,9 +30,9 @@ import type {
 /**
  * CLI - Generate - Must Haves - Gitignore.
  *
- * Generates the root .gitignore file from a bundled template and appends the custom
- * patterns declared under "gitignore.projectExcludes" in nova.config.json to the
- * Project Excludes section.
+ * Generates the root .gitignore file from a bundled template, then appends the
+ * custom patterns declared under "gitignore.projectExcludes" in nova.config.json
+ * to the Project Excludes section.
  *
  * @since 0.15.0
  */

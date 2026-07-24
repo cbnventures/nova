@@ -43,7 +43,7 @@ export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression
  */
 export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Fix_Fixer = RuleFixer;
 
-export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Fix_Returns = RuleFix;
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Fix_Returns = RuleFix | null;
 
 /**
  * Rules - ESLint - Patterns - No Bracket Method Call - Create.

@@ -35,6 +35,7 @@ import {
   LIB_REGEX_PATTERN_DTS_PROPERTY_LINE,
   LIB_REGEX_PATTERN_EMPTY_ARRAY_BRACKETS,
   LIB_REGEX_PATTERN_EXPORT_TYPE_NAME,
+  LIB_REGEX_PATTERN_EXT_D_TS_SUFFIX,
   LIB_REGEX_PATTERN_IMPORT_TYPE_BLOCK,
   LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN,
   LIB_REGEX_PATTERN_REGEX_SPECIAL_CHARS,
@@ -246,14 +247,22 @@ import type {
   Lib_TypeDeclarationEngine_FindFirstOccurrence_SourceLines,
   Lib_TypeDeclarationEngine_FindFirstOccurrence_TypeName,
   Lib_TypeDeclarationEngine_FindFirstOccurrence_TypeNamePattern,
+  Lib_TypeDeclarationEngine_IsAliasToForeignType_BraceClose,
+  Lib_TypeDeclarationEngine_IsAliasToForeignType_BraceOpen,
   Lib_TypeDeclarationEngine_IsAliasToForeignType_ClassPrefix,
   Lib_TypeDeclarationEngine_IsAliasToForeignType_DtsContent,
   Lib_TypeDeclarationEngine_IsAliasToForeignType_EscapedTypeName,
+  Lib_TypeDeclarationEngine_IsAliasToForeignType_ImportSource,
+  Lib_TypeDeclarationEngine_IsAliasToForeignType_ImportStart,
   Lib_TypeDeclarationEngine_IsAliasToForeignType_LeftmostType,
   Lib_TypeDeclarationEngine_IsAliasToForeignType_Match,
   Lib_TypeDeclarationEngine_IsAliasToForeignType_Pattern,
+  Lib_TypeDeclarationEngine_IsAliasToForeignType_QuoteEnd,
+  Lib_TypeDeclarationEngine_IsAliasToForeignType_QuoteStart,
   Lib_TypeDeclarationEngine_IsAliasToForeignType_Returns,
   Lib_TypeDeclarationEngine_IsAliasToForeignType_Rhs,
+  Lib_TypeDeclarationEngine_IsAliasToForeignType_Specifiers,
+  Lib_TypeDeclarationEngine_IsAliasToForeignType_StandaloneTypeFiles,
   Lib_TypeDeclarationEngine_IsAliasToForeignType_TypeMatch,
   Lib_TypeDeclarationEngine_IsAliasToForeignType_TypeName,
   Lib_TypeDeclarationEngine_IsLocallyDefined_DtsContent,
@@ -407,10 +416,11 @@ export function deriveClassPrefix(filePath: Lib_TypeDeclarationEngine_DeriveClas
     .join('/')
     .split('/');
 
-  // Mirrors LIB_REGEX_PATTERN_CAMEL_CASE_WORDS in src/lib/regex.ts -- used by the
-  // production require-type-naming rule to normalize PascalCase filenames like
-  // MDXComponents into Mdx + Components. Kept inline so the test file remains
-  // self-contained (test files don't import from other source modules).
+  // Reuses LIB_REGEX_PATTERN_CAMEL_CASE_WORDS from src/lib/regex.ts -- the same
+  // pattern the production require-type-naming rule uses -- so PascalCase
+  // filenames like MDXComponents tokenize into Mdx + Components identically on
+  // both sides. A fresh RegExp is built because the source pattern is reused
+  // with the global flag here.
   const camelCaseWordsPattern: Lib_TypeDeclarationEngine_DeriveClassPrefix_CamelCaseWordsPattern = new RegExp(LIB_REGEX_PATTERN_CAMEL_CASE_WORDS.source, 'g');
 
   return segments.map((segment) => {
@@ -787,14 +797,27 @@ export function extractObjectTypes(lines: Lib_TypeDeclarationEngine_ExtractObjec
 /**
  * Lib - Type Declaration Engine - Source File Cache.
  *
- * Caches SourceFile parses by filePath with a content check to invalidate on edits.
- * The suite parses each file 5 times across rules, so this avoids ~1000 reparses;
+ * Caches SourceFile parses by filePath, invalidating on content edits.
+ * The suite parses each file 5 times across rules, so this avoids roughly 1000 reparses;
  * fixture tests reuse a fake filePath, so the content check forces fresh parses.
  *
  * @since 0.18.0
  */
 const sourceFileCache: Lib_TypeDeclarationEngine_SourceFileCache = new Map();
 
+/**
+ * Lib - Type Declaration Engine - Parse Source File.
+ *
+ * Returns a cached SourceFile for the given filePath, reparsing only when the
+ * content differs. Reused across rules so the same file is not parsed repeatedly.
+ *
+ * @param {Lib_TypeDeclarationEngine_ParseSourceFile_FilePath} filePath - File path.
+ * @param {Lib_TypeDeclarationEngine_ParseSourceFile_Content}  content  - Content.
+ *
+ * @returns {Lib_TypeDeclarationEngine_ParseSourceFile_Returns}
+ *
+ * @since 0.21.0
+ */
 export function parseSourceFile(filePath: Lib_TypeDeclarationEngine_ParseSourceFile_FilePath, content: Lib_TypeDeclarationEngine_ParseSourceFile_Content): Lib_TypeDeclarationEngine_ParseSourceFile_Returns {
   const cached: Lib_TypeDeclarationEngine_ParseSourceFile_Cached = sourceFileCache.get(filePath);
 
@@ -805,7 +828,8 @@ export function parseSourceFile(filePath: Lib_TypeDeclarationEngine_ParseSourceF
   const sourceFile: Lib_TypeDeclarationEngine_ParseSourceFile_SourceFile = createSourceFile(filePath, content, ScriptTarget.Latest, true);
 
   sourceFileCache.set(filePath, {
-    content, sourceFile,
+    content,
+    sourceFile,
   });
 
   return sourceFile;
@@ -823,6 +847,20 @@ export function extractFunctionParams(filePath: Lib_TypeDeclarationEngine_Extrac
   const sourceFile: Lib_TypeDeclarationEngine_ExtractFunctionParams_SourceFile = parseSourceFile(filePath, content);
   const params: Lib_TypeDeclarationEngine_ExtractFunctionParams_Params = [];
 
+  /**
+   * Lib - Type Declaration Engine - Extract Function Params - Visit.
+   *
+   * Recursively walks a node, collecting typed parameters from functions,
+   * methods, constructors, and function-typed consts, then descends into children.
+   *
+   * @param {Lib_TypeDeclarationEngine_ExtractFunctionParams_Visit_Node} node - Node.
+   *
+   * @private
+   *
+   * @returns {Lib_TypeDeclarationEngine_ExtractFunctionParams_VisitReturns}
+   *
+   * @since 0.21.0
+   */
   function visit(node: Lib_TypeDeclarationEngine_ExtractFunctionParams_Visit_Node): Lib_TypeDeclarationEngine_ExtractFunctionParams_VisitReturns {
     let parameterList: Lib_TypeDeclarationEngine_ExtractFunctionParams_Visit_ParameterList = undefined;
 
@@ -932,6 +970,20 @@ export function extractTopLevelIdentifiers(filePath: Lib_TypeDeclarationEngine_E
   const sourceFile: Lib_TypeDeclarationEngine_ExtractTopLevelIdentifiers_SourceFile = parseSourceFile(filePath, content);
   const identifiers: Lib_TypeDeclarationEngine_ExtractTopLevelIdentifiers_Identifiers = [];
 
+  /**
+   * Lib - Type Declaration Engine - Extract Top Level Identifiers - Get Line.
+   *
+   * Returns the one-based source line number where the given node begins,
+   * so each collected identifier record can report a human-friendly position.
+   *
+   * @param {Lib_TypeDeclarationEngine_ExtractTopLevelIdentifiers_GetLine_Node} node - Node.
+   *
+   * @private
+   *
+   * @returns {Lib_TypeDeclarationEngine_ExtractTopLevelIdentifiers_GetLine_Returns}
+   *
+   * @since 0.21.0
+   */
   function getLine(node: Lib_TypeDeclarationEngine_ExtractTopLevelIdentifiers_GetLine_Node): Lib_TypeDeclarationEngine_ExtractTopLevelIdentifiers_GetLine_Returns {
     return sourceFile.getLineAndCharacterOfPosition(node.getStart()).line + 1;
   }
@@ -1006,16 +1058,59 @@ export function buildSourceSectionMap(filePath: Lib_TypeDeclarationEngine_BuildS
   // (10k-level callback chains) would otherwise hit Node's default stack limit (~10k frames).
   const maxDepth: Lib_TypeDeclarationEngine_BuildSourceSectionMap_MaxDepth = 5000;
 
+  /**
+   * Lib - Type Declaration Engine - Build Source Section Map - Get Line.
+   *
+   * Returns the one-based source line number where the given node begins,
+   * used to key the section map so each line can be tagged with its section.
+   *
+   * @param {Lib_TypeDeclarationEngine_BuildSourceSectionMap_GetLine_Node} node - Node.
+   *
+   * @private
+   *
+   * @returns {Lib_TypeDeclarationEngine_BuildSourceSectionMap_GetLine_Returns}
+   *
+   * @since 0.21.0
+   */
   function getLine(node: Lib_TypeDeclarationEngine_BuildSourceSectionMap_GetLine_Node): Lib_TypeDeclarationEngine_BuildSourceSectionMap_GetLine_Returns {
     return sourceFile.getLineAndCharacterOfPosition(node.getStart()).line + 1;
   }
 
+  /**
+   * Lib - Type Declaration Engine - Build Source Section Map - Pascal Case.
+   *
+   * Upper-cases the first character of a name and leaves the remainder intact,
+   * producing the Pascal-cased chunk that each section chain segment is built from.
+   *
+   * @param {Lib_TypeDeclarationEngine_BuildSourceSectionMap_PascalCase_Name} name - Name.
+   *
+   * @private
+   *
+   * @returns {Lib_TypeDeclarationEngine_BuildSourceSectionMap_PascalCaseReturns}
+   *
+   * @since 0.21.0
+   */
   function pascalCase(name: Lib_TypeDeclarationEngine_BuildSourceSectionMap_PascalCase_Name): Lib_TypeDeclarationEngine_BuildSourceSectionMap_PascalCaseReturns {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
   let currentDepth: Lib_TypeDeclarationEngine_BuildSourceSectionMap_CurrentDepth = 0;
 
+  /**
+   * Lib - Type Declaration Engine - Build Source Section Map - Tag All Children.
+   *
+   * Visits every child of a node under the given section, guarding recursion
+   * depth so pathologically deep generated code cannot overflow the call stack.
+   *
+   * @param {Lib_TypeDeclarationEngine_BuildSourceSectionMap_TagAllChildren_Node}    node    - Node.
+   * @param {Lib_TypeDeclarationEngine_BuildSourceSectionMap_TagAllChildren_Section} section - Section.
+   *
+   * @private
+   *
+   * @returns {Lib_TypeDeclarationEngine_BuildSourceSectionMap_TagAllChildrenReturns}
+   *
+   * @since 0.21.0
+   */
   function tagAllChildren(node: Lib_TypeDeclarationEngine_BuildSourceSectionMap_TagAllChildren_Node, section: Lib_TypeDeclarationEngine_BuildSourceSectionMap_TagAllChildren_Section): Lib_TypeDeclarationEngine_BuildSourceSectionMap_TagAllChildrenReturns {
     if (currentDepth >= maxDepth) {
       return;
@@ -1028,6 +1123,21 @@ export function buildSourceSectionMap(filePath: Lib_TypeDeclarationEngine_BuildS
     return;
   }
 
+  /**
+   * Lib - Type Declaration Engine - Build Source Section Map - Visit.
+   *
+   * Tags a node's line with its enclosing section, extending the section chain for
+   * classes, methods, and describe blocks, then recurses into the node's children.
+   *
+   * @param {Lib_TypeDeclarationEngine_BuildSourceSectionMap_Visit_Node}    node    - Node.
+   * @param {Lib_TypeDeclarationEngine_BuildSourceSectionMap_Visit_Section} section - Section.
+   *
+   * @private
+   *
+   * @returns {Lib_TypeDeclarationEngine_BuildSourceSectionMap_VisitReturns}
+   *
+   * @since 0.21.0
+   */
   function visit(node: Lib_TypeDeclarationEngine_BuildSourceSectionMap_Visit_Node, section: Lib_TypeDeclarationEngine_BuildSourceSectionMap_Visit_Section): Lib_TypeDeclarationEngine_BuildSourceSectionMap_VisitReturns {
     // Class declaration: adds class name as a chunk. Anonymous (no name) classes fall through to default tagging.
     if (isClassDeclaration(node) === true && node.name !== undefined) {
@@ -1272,6 +1382,20 @@ export function detectInlineTypedCallbacks(filePath: Lib_TypeDeclarationEngine_D
   const sourceFile: Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_SourceFile = parseSourceFile(filePath, content);
   const callbacks: Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Callbacks = [];
 
+  /**
+   * Lib - Type Declaration Engine - Detect Inline Typed Callbacks - Visit.
+   *
+   * Recursively inspects each node, flagging anonymous arrow or function
+   * callbacks that carry a typed parameter and are not bound to a named const.
+   *
+   * @param {Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Visit_Node} node - Node.
+   *
+   * @private
+   *
+   * @returns {Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_VisitReturns}
+   *
+   * @since 0.21.0
+   */
   function visit(node: Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Visit_Node): Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_VisitReturns {
     if (
       (
@@ -1387,6 +1511,20 @@ export function extractFunctionReturns(filePath: Lib_TypeDeclarationEngine_Extra
   const sourceFile: Lib_TypeDeclarationEngine_ExtractFunctionReturns_SourceFile = parseSourceFile(filePath, content);
   const returnRecords: Lib_TypeDeclarationEngine_ExtractFunctionReturns_ReturnRecords = [];
 
+  /**
+   * Lib - Type Declaration Engine - Extract Function Returns - Visit.
+   *
+   * Recursively walks a node, recording the return type and type-guard
+   * flag of each function, method, and constructor, then descends into children.
+   *
+   * @param {Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_Node} node - Node.
+   *
+   * @private
+   *
+   * @returns {Lib_TypeDeclarationEngine_ExtractFunctionReturns_VisitReturns}
+   *
+   * @since 0.21.0
+   */
   function visit(node: Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_Node): Lib_TypeDeclarationEngine_ExtractFunctionReturns_VisitReturns {
     if (
       isFunctionDeclaration(node) === true
@@ -1444,11 +1582,11 @@ export function extractFunctionReturns(filePath: Lib_TypeDeclarationEngine_Extra
  *
  * Rule 7.2 tightening: detects a local alias whose RHS is a single foreign path-prefixed
  * type, forbidding the "local re-alias" loophole that satisfied 7.2 mechanically. Complex
- * RHS shapes (objects, unions, generics) are not flagged, only direct single-type aliases.
+ * RHS shapes such as objects, unions, or generics are not flagged, only single aliases.
  *
  * @since 0.18.0
  */
-export function isAliasToForeignType(typeName: Lib_TypeDeclarationEngine_IsAliasToForeignType_TypeName, dtsContent: Lib_TypeDeclarationEngine_IsAliasToForeignType_DtsContent, classPrefix: Lib_TypeDeclarationEngine_IsAliasToForeignType_ClassPrefix): Lib_TypeDeclarationEngine_IsAliasToForeignType_Returns {
+export function isAliasToForeignType(typeName: Lib_TypeDeclarationEngine_IsAliasToForeignType_TypeName, dtsContent: Lib_TypeDeclarationEngine_IsAliasToForeignType_DtsContent, classPrefix: Lib_TypeDeclarationEngine_IsAliasToForeignType_ClassPrefix, standaloneTypeFiles: Lib_TypeDeclarationEngine_IsAliasToForeignType_StandaloneTypeFiles = []): Lib_TypeDeclarationEngine_IsAliasToForeignType_Returns {
   // Escape regex special chars in typeName before interpolation. Convention type names are
   // alphanumeric+underscore so this is defensive - no current caller passes special chars, but
   // a future caller passing a malformed name would otherwise silently mismatch instead of erroring.
@@ -1477,15 +1615,53 @@ export function isAliasToForeignType(typeName: Lib_TypeDeclarationEngine_IsAlias
 
   const leftmostType: Lib_TypeDeclarationEngine_IsAliasToForeignType_LeftmostType = typeMatch[1];
 
-  if (leftmostType.includes('_') === false) {
-    return false;
-  }
-
   if (leftmostType.startsWith(`${classPrefix}_`) === true) {
     return false;
   }
 
-  return true;
+  // Resolve where leftmostType is imported from. A type re-aliased from a mirrored twin
+  // is the forbidden loophole, but one imported from a standalone type file (a configured
+  // shared/global home such as shared.d.ts) is the sanctioned cross-module conduit.
+  let importStart: Lib_TypeDeclarationEngine_IsAliasToForeignType_ImportStart = dtsContent.indexOf('import ');
+  let importSource: Lib_TypeDeclarationEngine_IsAliasToForeignType_ImportSource = null;
+
+  while (importStart !== -1) {
+    const braceOpen: Lib_TypeDeclarationEngine_IsAliasToForeignType_BraceOpen = dtsContent.indexOf('{', importStart);
+    const braceClose: Lib_TypeDeclarationEngine_IsAliasToForeignType_BraceClose = dtsContent.indexOf('}', braceOpen);
+    const quoteStart: Lib_TypeDeclarationEngine_IsAliasToForeignType_QuoteStart = dtsContent.indexOf('\'', braceClose);
+    const quoteEnd: Lib_TypeDeclarationEngine_IsAliasToForeignType_QuoteEnd = dtsContent.indexOf('\'', quoteStart + 1);
+
+    if (
+      braceOpen === -1
+      || braceClose === -1
+      || quoteStart === -1
+      || quoteEnd === -1
+    ) {
+      break;
+    }
+
+    const specifiers: Lib_TypeDeclarationEngine_IsAliasToForeignType_Specifiers = dtsContent.slice(braceOpen + 1, braceClose).split(',').map((specifier) => specifier.trim());
+
+    if (specifiers.includes(leftmostType) === true) {
+      importSource = dtsContent.slice(quoteStart + 1, quoteEnd);
+
+      break;
+    }
+
+    importStart = dtsContent.indexOf('import ', quoteEnd + 1);
+  }
+
+  if (importSource === null) {
+    return false;
+  }
+
+  for (const standalonePattern of standaloneTypeFiles) {
+    if (importSource.endsWith(standalonePattern) === true) {
+      return false;
+    }
+  }
+
+  return LIB_REGEX_PATTERN_EXT_D_TS_SUFFIX.test(importSource);
 }
 
 /**

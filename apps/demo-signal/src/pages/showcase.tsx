@@ -13,6 +13,16 @@ import {
 import { translate } from '@docusaurus/Translate';
 import Showcase from '@theme/Showcase';
 
+/**
+ * Pages - Showcase - Page.
+ *
+ * Renders the block showcase page with every block from the Signal preset,
+ * each demonstrated with sample data across its supported variants.
+ *
+ * @returns {JSX.Element}
+ *
+ * @since UNRELEASED
+ */
 function ShowcasePage() {
   return (
     <Showcase

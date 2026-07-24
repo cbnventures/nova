@@ -1,0 +1,87 @@
+---
+id: "bare-mode"
+title: "Bare Mode"
+description: "Strip the site chrome from any page with a query parameter so it can be embedded in a webview."
+sidebar_position: 5
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "bare mode"
+  - "docusaurus-data-bare"
+  - "query parameter"
+  - "webview"
+  - "embedding"
+  - "terms of service"
+  - "privacy policy"
+tags:
+  - "facades"
+  - "bare-mode"
+  - "query-parameter"
+  - "embedding"
+---
+
+Strip the site chrome from any page with a single query parameter so the page can be embedded cleanly inside a webview.
+
+## Summary
+
+- Append `?docusaurus-data-bare=true` to any page URL to hide the navbar, footer, announcement bar, back-to-top button, skip-to-content link, sidebar, breadcrumbs, pagination, table of contents, tags, share buttons, and edit link.
+- The page keeps its title, its content, and the last-updated line.
+- Works on every docs page and every MDX page under `src/pages` with no frontmatter and no configuration; removing the parameter restores the full chrome.
+- Requires JavaScript to run a small inline script on page load, which webviews do by default.
+
+## Why Use This?
+
+- Serves Terms of Service, Privacy Policy, and licensing pages to app webviews without navigation the host app never meant to expose.
+- Keeps one MDX file as the single source of truth instead of maintaining a separate stripped-down copy for embedding.
+- Preserves the last-updated line so embedded legal pages still show when they last changed.
+- Needs no frontmatter, plugin options, or theme configuration — the switch lives in the URL, so the same page serves the site and the webview at once.
+
+## Usage
+
+Point the webview (or a browser tab) at the page URL with the parameter appended:
+
+```text
+https://example.com/docs/legal/privacy-policy?docusaurus-data-bare=true
+```
+
+The same parameter works on a standalone MDX page under `src/pages`:
+
+```text
+https://example.com/terms?docusaurus-data-bare=true
+```
+
+Load the same URLs without the parameter and the full chrome renders as usual.
+
+## How It Works
+
+- The preset injects an inline script into every page that runs before the first paint and maps `docusaurus-data-*` query parameters to `data-*` attributes on the `<html>` element, so `?docusaurus-data-bare=true` becomes `data-bare="true"`.
+- A shared stylesheet keys every rule off `html[data-bare="true"]` and hides the chrome with plain CSS, so there is no React re-render, no hydration mismatch, and no flash of the full layout before the bare view appears.
+- The chrome is hidden, not removed — the page downloads the same HTML, CSS, and JavaScript as its normal rendering, and the parameter changes presentation only.
+- The script runs on a full document load, which is exactly how a webview loads a URL.
+
+## What Gets Hidden
+
+- **Site chrome** — navbar, footer, announcement bar, back-to-top button, and the skip-to-content link.
+- **Docs navigation** — sidebar, breadcrumbs, and the previous/next paginator.
+- **Page extras** — table of contents (desktop and mobile), tags, share buttons, and the edit-this-page link.
+
+## What Stays
+
+- **Title** — the page heading renders as usual.
+- **Content** — the MDX body renders with the preset's normal typography, stretched to a centered full-width reading column.
+- **Last updated** — the last-updated line stays at the bottom of the page when the site emits it (see below).
+
+## Requirements for Last Updated
+
+The last-updated line only appears when the site is configured to produce it:
+
+- **`showLastUpdateTime`** — enable the option in the docs plugin (and `showLastUpdateAuthors` if you also want the author) so Docusaurus emits the metadata.
+- **Full git history** — build from a full-history checkout. Shallow CI checkouts (`fetch-depth: 1`) make every page report the date of the latest commit, so set `fetch-depth: 0` in your checkout step.
+
+## Troubleshooting
+
+- **The chrome is still there** — the parameter must be exactly `docusaurus-data-bare=true`; a different key or value sets a different attribute and no rule matches. The parameter also applies on page load, so navigating to it through an in-site link changes the URL without reloading the document — load the URL directly or open it in a new tab.
+- **The bare view persists after the parameter is gone** — client-side navigation away from a bare page keeps the attribute until the next full load. Webviews and direct visits load each URL fresh, so this only shows up while browsing the site by hand.
+- **No JavaScript** — with scripting disabled the attribute is never set and the page renders with the full chrome. Webviews run JavaScript by default.
+- **No last-updated line** — the docs plugin only emits the metadata when `showLastUpdateTime` is enabled and the build runs from a full-history checkout.
+- **The page still appears in the sidebar and search** — the parameter changes how one visit renders, not whether the page is listed. Combine it with `unlisted: true` or exclude it from the sidebar if it should not be discoverable.

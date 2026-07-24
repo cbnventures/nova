@@ -121,9 +121,9 @@ export class Runner {
    * to find the enclosing class name, producing a qualified
    * name like "ClassName.methodName" for the allow list.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_Returns}
    *
@@ -163,10 +163,10 @@ export class Runner {
    * Checks whether a function name matches any pattern in the allow list. Supports exact
    * matches and wildcard patterns like "Logger.*" for entire classes.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Name}     name     - Name.
    * @param {Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Patterns} patterns - Patterns.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Returns}
    *
@@ -199,9 +199,9 @@ export class Runner {
    * by inspecting its parent: class methods, object methods,
    * variable assignments, and named declarations.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Node} node - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Returns}
    *
@@ -295,11 +295,11 @@ export class Runner {
    * node. Reports each rest parameter unless the function
    * name appears in the configured allow list.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Context}       context       - Context.
    * @param {Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Node}          node          - Node.
    * @param {Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_AllowPatterns} allowPatterns - Allow patterns.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Returns}
    *

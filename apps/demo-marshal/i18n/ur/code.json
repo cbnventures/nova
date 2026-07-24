@@ -1,0 +1,602 @@
+{
+  "home.layout.description": {
+    "message": "Marshal محکمۂ اُمورِ ریپازٹری ہے — اُن منصوبوں کے لیے خودکار نگہبانی جو ہنگامے کے بجائے کاغذی کارروائی کو ترجیح دیتے ہیں۔",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Marshal - درج، مہربند، خودکار",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "ریپازٹری نگہبانی",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "درج، مہربند، خودکار۔",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Marshal محکمۂ اُمورِ ریپازٹری ہے — اُن منصوبوں کے لیے خودکار نگہبانی جو ہنگامے کے بجائے کاغذی کارروائی کو ترجیح دیتے ہیں۔ ہر دھاگہ، ہر ٹکٹ، ہر رسائی درجہ، ترتیب کے ساتھ نمٹایا جاتا ہے۔",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "شروع کریں",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Threadbare پر دیکھیں",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.policies.title": {
+    "message": "پالیسیاں",
+    "description": "Front page Features card title for Policies"
+  },
+  "home.features.policies.description": {
+    "message": "ایک YAML بلاک لکھیں جو بیان کرے کہ Marshal واقعات کی ایک قسم کو کیسے سنبھالتا ہے — باسی دھاگے، مقررہ وقت گزر چکے PRs، درجے کے مطابق معاونت۔ Marshal صرف وہی پڑھتا ہے جو درج ہو اور صرف اُسی پر مہر لگاتا ہے جو مہربند ہو۔",
+    "description": "Front page Features card description for Policies"
+  },
+  "home.features.dockets.title": {
+    "message": "روزنامچے",
+    "description": "Front page Features card title for Dockets"
+  },
+  "home.features.dockets.description": {
+    "message": "Marshal جو بھی کارروائی کرتا ہے وہ عوامی ریکارڈ میں ایک سطر لکھتی ہے۔ بند شدہ دھاگے، مہر شدہ منظوریاں، طے شدہ منتقلیاں — سب صرف-اضافہ، سب قابلِ مشاہدہ، کچھ بھی واپس نہیں لیا جاتا۔",
+    "description": "Front page Features card description for Dockets"
+  },
+  "home.features.accessTiers.title": {
+    "message": "رسائی درجے",
+    "description": "Front page Features card title for Access Tiers"
+  },
+  "home.features.accessTiers.description": {
+    "message": "آنے والے کام کو سرپرست، شراکت دار، یا عوام کے مطابق روانہ کریں۔ لیبل مہر سے لگتا ہے، بات چیت سے نہیں۔ ہر روانگی کا فیصلہ روزنامچے میں درج ہوتا ہے۔",
+    "description": "Front page Features card description for Access Tiers"
+  },
+  "home.features.scheduledStewardship.title": {
+    "message": "طے شدہ نگہبانی",
+    "description": "Front page Features card title for Scheduled Stewardship"
+  },
+  "home.features.scheduledStewardship.description": {
+    "message": "صفائیاں، آڈٹ، اور منتقلیاں cron پر چلائیں۔ Marshal ہر گھنٹے کے آغاز پر کارروائی کرتا ہے، ایک ریکارڈ درج کرتا ہے، اور آگے بڑھ جاتا ہے۔ کچھ بھی کسی انسان کے یاد رکھنے کا منتظر نہیں رہتا۔",
+    "description": "Front page Features card description for Scheduled Stewardship"
+  },
+  "home.features.threadArchival.title": {
+    "message": "دھاگہ محفوظ کاری",
+    "description": "Front page Features card title for Thread Archival"
+  },
+  "home.features.threadArchival.description": {
+    "message": "N دنوں سے غیر فعال دھاگوں کو بند اور مہربند کریں — ہر ایک کے لیے کاغذی سراغ کے ساتھ۔ ہر مہربند دھاگہ محفوظ کاری کی وجہ اور دوبارہ کھولنے کا راستہ رکھتا ہے۔",
+    "description": "Front page Features card description for Thread Archival"
+  },
+  "home.features.automatedStamps.title": {
+    "message": "خودکار مہریں",
+    "description": "Front page Features card title for Automated Stamps"
+  },
+  "home.features.automatedStamps.description": {
+    "message": "Marshal ایک مستقل اجازت نامے کے تحت کارروائی کرتا ہے۔ ہر کارروائی وقت کی مہر، ریکارڈ کا مصنف، اور اُس پالیسی کا حوالہ رکھتی ہے جس نے اسے متحرک کیا۔",
+    "description": "Front page Features card description for Automated Stamps"
+  },
+  "home.stats.heading": {
+    "message": "اعداد کی زبانی",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manualClosures.label": {
+    "message": "دستی بندشیں",
+    "description": "Front page Stats label for manual closures count"
+  },
+  "home.stats.policyFile.label": {
+    "message": "پالیسی فائل",
+    "description": "Front page Stats label for policy file count"
+  },
+  "home.stats.docketEntries.label": {
+    "message": "روزنامچہ اندراجات",
+    "description": "Front page Stats label for docket entries count"
+  },
+  "home.stats.accessTiers.label": {
+    "message": "رسائی درجے",
+    "description": "Front page Stats label for access tiers count"
+  },
+  "home.spotlight.heading": {
+    "message": "ایک پالیسی فائل، ہر چیز مہر شدہ",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "اصول بیان کریں۔ Marshal کاغذی کارروائی درج کرتا ہے۔",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "چلتے پھرتے اپنے روزنامچے کا جائزہ لیں",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "محکمے کی جانب سے مراسلے",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "پالیسیاں درج، روزنامچے مہر شدہ، نگہبانی ریکارڈ پر۔",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Marshal بلاک شوکیس جو docusaurus-preset-nova کے ہر بلاک کو دکھاتا ہے۔",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Marshal پریسیٹ کا ہر بلاک، نمونہ ڈیٹا کے ساتھ پیش کیا گیا۔",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (مکمل)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "بلاک شوکیس",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Marshal کا ہر بلاک، ایک ہی جگہ پر دکھایا گیا۔",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "یہ صفحہ @cbnventures/docusaurus-preset-nova/blocks کے ہر بلاک کو Marshal کی دنیا کے ڈیٹا کے ساتھ پیش کرتا ہے تاکہ آپ دیکھ سکیں کہ وہ کیسے نظر آتے ہیں اور کیسے برتاؤ کرتے ہیں۔",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "دستاویزات پڑھیں",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Threadbare پر دیکھیں",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (سادہ)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "درج، مہربند، خودکار۔",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Marshal محکمۂ اُمورِ ریپازٹری ہے — اُن منصوبوں کے لیے خودکار نگہبانی جو ہنگامے کے بجائے کاغذی کارروائی کو ترجیح دیتے ہیں۔",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "شروع کریں",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (ڈیفالٹ)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "مجھے پسند ہے ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (بغیر سابقہ)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "تیز رفتار",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "لچکدار",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "مفت",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (سست ٹائمنگ)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "بنایا گیا برائے ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "ڈویلپرز",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "ڈیزائنرز",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (بغیر لوپ)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "خوش آمدید ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Spark سے انسٹال کریں",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "یا Loom Registry استعمال کریں",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (بغیر لیبل)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "فوری انسٹال",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (آئیکنز کے ساتھ)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "ریپازٹریاں Marshal کو کیوں چنتی ہیں",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.policies.title": {
+    "message": "پالیسیاں",
+    "description": "Showcase Features (with icons) card title for Policies"
+  },
+  "showcase.featuresIcons.policies.description": {
+    "message": "ایک YAML بلاک لکھیں جو بیان کرے کہ Marshal واقعات کی ایک قسم کو کیسے سنبھالتا ہے۔ Marshal صرف وہی پڑھتا ہے جو درج ہو اور صرف اُسی پر مہر لگاتا ہے جو مہربند ہو۔",
+    "description": "Showcase Features (with icons) card description for Policies"
+  },
+  "showcase.featuresIcons.dockets.title": {
+    "message": "روزنامچے",
+    "description": "Showcase Features (with icons) card title for Dockets"
+  },
+  "showcase.featuresIcons.dockets.description": {
+    "message": "Marshal جو بھی کارروائی کرتا ہے وہ عوامی ریکارڈ میں ایک سطر لکھتی ہے۔ بند شدہ دھاگے، مہر شدہ منظوریاں، طے شدہ منتقلیاں — سب صرف-اضافہ۔",
+    "description": "Showcase Features (with icons) card description for Dockets"
+  },
+  "showcase.featuresIcons.accessTiers.title": {
+    "message": "رسائی درجے",
+    "description": "Showcase Features (with icons) card title for Access Tiers"
+  },
+  "showcase.featuresIcons.accessTiers.description": {
+    "message": "آنے والے کام کو سرپرست، شراکت دار، یا عوام کے مطابق روانہ کریں۔ لیبل مہر سے لگتا ہے، بات چیت سے نہیں۔",
+    "description": "Showcase Features (with icons) card description for Access Tiers"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (بغیر آئیکنز، بغیر عنوان)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.title": {
+    "message": "طے شدہ نگہبانی",
+    "description": "Showcase Features (no icons) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.description": {
+    "message": "صفائیاں، آڈٹ، اور منتقلیاں cron پر چلائیں۔ Marshal ہر گھنٹے کے آغاز پر کارروائی کرتا ہے اور ایک ریکارڈ درج کرتا ہے۔",
+    "description": "Showcase Features (no icons) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.threadArchival.title": {
+    "message": "دھاگہ محفوظ کاری",
+    "description": "Showcase Features (no icons) card title for Thread Archival"
+  },
+  "showcase.featuresNoIcons.threadArchival.description": {
+    "message": "N دنوں سے غیر فعال دھاگوں کو بند اور مہربند کریں — ہر ایک کے لیے کاغذی سراغ اور دوبارہ کھولنے کے راستے کے ساتھ۔",
+    "description": "Showcase Features (no icons) card description for Thread Archival"
+  },
+  "showcase.featuresNoIcons.automatedStamps.title": {
+    "message": "خودکار مہریں",
+    "description": "Showcase Features (no icons) card title for Automated Stamps"
+  },
+  "showcase.featuresNoIcons.automatedStamps.description": {
+    "message": "ہر کارروائی وقت کی مہر، ریکارڈ کا مصنف، اور اُس پالیسی کا حوالہ رکھتی ہے جس نے اسے متحرک کیا۔",
+    "description": "Showcase Features (no icons) card description for Automated Stamps"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (چھ عناصر، ملے جلے آئیکنز)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "سب کچھ ایک ہی محکمے میں",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.policies.title": {
+    "message": "پالیسیاں",
+    "description": "Showcase Features (six items) card title for Policies"
+  },
+  "showcase.featuresSix.policies.description": {
+    "message": "اصول YAML میں بیان کریں۔ Marshal پڑھتا ہے، کارروائی کرتا ہے، اور درج کرتا ہے۔ runtime پر کسی چیز پر بات چیت نہیں ہوتی۔",
+    "description": "Showcase Features (six items) card description for Policies"
+  },
+  "showcase.featuresSix.dockets.title": {
+    "message": "روزنامچے",
+    "description": "Showcase Features (six items) card title for Dockets"
+  },
+  "showcase.featuresSix.dockets.description": {
+    "message": "ہر کارروائی کا صرف-اضافہ عوامی ریکارڈ۔ بند شدہ دھاگے، روانگی کے فیصلے، طے شدہ گشت — سب مہر شدہ۔",
+    "description": "Showcase Features (six items) card description for Dockets"
+  },
+  "showcase.featuresSix.accessTiers.title": {
+    "message": "رسائی درجے",
+    "description": "Showcase Features (six items) card title for Access Tiers"
+  },
+  "showcase.featuresSix.accessTiers.description": {
+    "message": "سرپرست، شراکت دار، عوام — تین درجے، ایک قطار، ایک منشی۔ لیبل وصولی کے وقت تفویض ہوتا ہے۔",
+    "description": "Showcase Features (six items) card description for Access Tiers"
+  },
+  "showcase.featuresSix.scheduledStewardship.title": {
+    "message": "طے شدہ نگہبانی",
+    "description": "Showcase Features (six items) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.scheduledStewardship.description": {
+    "message": "cron سے چلنے والی صفائیاں اور آڈٹ۔ Marshal شیڈول کے مطابق کارروائی کرتا ہے اور کسی انسان کے یاد رکھنے کا انتظار نہیں کرتا۔",
+    "description": "Showcase Features (six items) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.threadArchival.title": {
+    "message": "دھاگہ محفوظ کاری",
+    "description": "Showcase Features (six items) card title for Thread Archival"
+  },
+  "showcase.featuresSix.threadArchival.description": {
+    "message": "غیر فعال دھاگے پالیسی کے تحت بند اور مہربند کیے جاتے ہیں، ہر معاملے پر ایک مہر شدہ نوٹس اور دوبارہ کھولنے کے راستے کے ساتھ۔",
+    "description": "Showcase Features (six items) card description for Thread Archival"
+  },
+  "showcase.featuresSix.automatedStamps.title": {
+    "message": "خودکار مہریں",
+    "description": "Showcase Features (six items) card title for Automated Stamps"
+  },
+  "showcase.featuresSix.automatedStamps.description": {
+    "message": "Marshal کی ہر کارروائی اُس پالیسی کا حوالہ دیتی ہے جس نے اسے مجاز کیا۔ اجازت نامہ عمل سے پہلے درج ہوتا ہے۔",
+    "description": "Showcase Features (six items) card description for Automated Stamps"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (عنوان اور وضاحت کے ساتھ)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Marshal کے اعداد و شمار",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "ایک عام ریپازٹری نگہبانی دور کے دوران اہم اعداد۔",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.threadsArchived.label": {
+    "message": "محفوظ شدہ دھاگے",
+    "description": "Showcase Stats (full) label for threads archived"
+  },
+  "showcase.statsFull.accessTiers.label": {
+    "message": "رسائی درجے",
+    "description": "Showcase Stats (full) label for access tiers"
+  },
+  "showcase.statsFull.manualClosures.label": {
+    "message": "دستی بندشیں",
+    "description": "Showcase Stats (full) label for manual closures"
+  },
+  "showcase.statsFull.policyFile.label": {
+    "message": "پالیسی فائل",
+    "description": "Showcase Stats (full) label for policy file"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (بغیر عنوان)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.policyFile.label": {
+    "message": "پالیسی فائل",
+    "description": "Showcase Stats (no heading) label for policy file"
+  },
+  "showcase.statsNoHeading.manualActions.label": {
+    "message": "دستی کارروائیاں",
+    "description": "Showcase Stats (no heading) label for manual actions"
+  },
+  "showcase.statsNoHeading.docketEntries.label": {
+    "message": "روزنامچہ اندراجات",
+    "description": "Showcase Stats (no heading) label for docket entries"
+  },
+  "showcase.statsNoHeading.accessTiers.label": {
+    "message": "رسائی درجے",
+    "description": "Showcase Stats (no heading) label for access tiers"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (کوڈ کے ساتھ)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "فوری آغاز",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "صفر سے ایک نگہبانی شدہ ریپازٹری تک پہنچنے کے لیے تین کمانڈز۔",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (متن کے ساتھ)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "یہ کیسے کام کرتا ہے",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Marshal آپ کی پالیسی فائل پڑھتا ہے، ہر قابلِ اطلاق ورک فلو کو اگلے گھنٹے کے آغاز پر قطار میں لگاتا ہے، اور ہر کی گئی کارروائی کے لیے ایک روزنامچہ اندراج پر مہر لگاتا ہے۔ روزنامچہ صرف-اضافہ ہے۔ کچھ بھی خاموشی سے بند نہیں ہوتا۔",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (وضاحت کے ساتھ)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "محکمے کی جانب سے مراسلے",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "پالیسیاں درج، روزنامچے مہر شدہ، نگہبانی ریکارڈ پر۔",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "ناقابلِ اندراج کو درج کرنا",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "کچھ آنے والا کام کسی پالیسی میں فٹ نہیں بیٹھتا۔ ایک غلط درج شدہ بگ، درجہ نظام سے باہر کی درخواست، نقل کی نقل۔ Marshal انہیں غیر درجہ بند کے تحت درج کرتا ہے۔",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "ایک سال کے باسی دھاگے، ایک ہی دوپہر میں محفوظ کر دیے گئے",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "ریپازٹری میں ایک سال سے پرانے 2,184 ایشوز تھے۔ Marshal نے ایک ہی رات بھر کے گشت میں 2,108 کو بند اور مہربند کر دیا۔",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "معاونت کے تین درجے، ایک قطار، ایک منشی",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Marshal اب آنے والے معاونتی ٹکٹوں کو رسائی درجے کے مطابق تین لیبلز والی ایک واحد قطار میں روانہ کرتا ہے۔ لیبل مہر سے لگتا ہے، بات چیت سے نہیں۔",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (بغیر وضاحت)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "حالیہ مراسلے",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Marshal 2.4: محتسب کے خودکار درستگی درجے اور منشی کے انحصار گراف",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "محتسب اب ضوابط اور فارمیٹنگ درجوں میں خودکار درستگیاں لاگو کرتا ہے، اور منشی ورک اسپیس کے تمام روزنامچوں میں ایک انحصار گراف پیش کرتا ہے۔",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (متن کے اندر استعمال)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Marshal ریپازٹری پر اپنی کارروائیوں کو چلانے کے لیے ایک ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.policy.title": {
+    "message": "ایک تحریری اصول کہ Marshal واقعات کی ایک قسم کو کیسے سنبھالتا ہے",
+    "description": "Showcase Terminology hover title for policy"
+  },
+  "showcase.terminology.policy.label": {
+    "message": "پالیسی",
+    "description": "Showcase Terminology displayed text for policy"
+  },
+  "showcase.terminology.paragraph1.afterPolicy": {
+    "message": " استعمال کرتا ہے۔ ہر کارروائی ",
+    "description": "Showcase Terminology paragraph 1 fragment after policy"
+  },
+  "showcase.terminology.docket.title": {
+    "message": "ہر کی گئی کارروائی کا صرف-اضافہ عوامی ریکارڈ",
+    "description": "Showcase Terminology hover title for docket"
+  },
+  "showcase.terminology.docket.label": {
+    "message": "روزنامچہ",
+    "description": "Showcase Terminology displayed text for docket"
+  },
+  "showcase.terminology.paragraph1.afterDocket": {
+    "message": " میں درج ہوتی ہے، جہاں ہر اندراج ایک ",
+    "description": "Showcase Terminology paragraph 1 fragment after docket"
+  },
+  "showcase.terminology.stamp.title": {
+    "message": "مکمل شدہ کارروائی پر لگایا گیا وقت کی مہر والا اجازتی نشان",
+    "description": "Showcase Terminology hover title for stamp"
+  },
+  "showcase.terminology.stamp.label": {
+    "message": "مہر",
+    "description": "Showcase Terminology displayed text for stamp"
+  },
+  "showcase.terminology.paragraph1.afterStamp": {
+    "message": " رکھتا ہے جو اُس پالیسی کا حوالہ دیتی ہے جس نے اسے مجاز کیا۔",
+    "description": "Showcase Terminology paragraph 1 fragment after stamp"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "آنے والا کام ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.accessTier.title": {
+    "message": "آنے والے کام کی سرپرستی یا شراکت کی حیثیت کے مطابق درجہ بندی",
+    "description": "Showcase Terminology hover title for access tier"
+  },
+  "showcase.terminology.accessTier.label": {
+    "message": "رسائی درجہ",
+    "description": "Showcase Terminology displayed text for access tier"
+  },
+  "showcase.terminology.paragraph2.afterAccessTier": {
+    "message": " کے مطابق ",
+    "description": "Showcase Terminology paragraph 2 fragment after access tier"
+  },
+  "showcase.terminology.queue.title": {
+    "message": "تمام آنے والے کام کی واحد ترتیب شدہ فہرست",
+    "description": "Showcase Terminology hover title for queue"
+  },
+  "showcase.terminology.queue.label": {
+    "message": "قطار",
+    "description": "Showcase Terminology displayed text for queue"
+  },
+  "showcase.terminology.paragraph2.afterQueue": {
+    "message": " میں روانہ کیا جاتا ہے۔ غیر فعال دھاگے ",
+    "description": "Showcase Terminology paragraph 2 fragment after queue"
+  },
+  "showcase.terminology.threadArchival.title": {
+    "message": "ایک حد سے زیادہ غیر فعال دھاگوں کی پالیسی کے تحت بندش",
+    "description": "Showcase Terminology hover title for thread archival"
+  },
+  "showcase.terminology.threadArchival.label": {
+    "message": "دھاگہ محفوظ کاری",
+    "description": "Showcase Terminology displayed text for thread archival"
+  },
+  "showcase.terminology.paragraph2.afterThreadArchival": {
+    "message": " کے ذریعے بند کیے جاتے ہیں، ہر معاملے پر کاغذی سراغ کے ساتھ۔",
+    "description": "Showcase Terminology paragraph 2 fragment after thread archival"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (کیپشن کے ساتھ)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "ایک Frame بلاک کے اندر درج برانڈ نشان، حوالے کے لیے تیار۔",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Marshal برانڈ تھمب نیل۔",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (بغیر کیپشن)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (دونوں اسٹورز)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "ساتھی ایپ ڈاؤن لوڈ کریں",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (صرف App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "iOS پر دستیاب",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (صرف Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Android پر دستیاب",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (بغیر لیبل)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} منٹ کا مطالعہ",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

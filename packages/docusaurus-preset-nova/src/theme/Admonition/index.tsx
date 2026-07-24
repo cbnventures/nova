@@ -78,8 +78,6 @@ const admonitionTypeLabels: Theme_Admonition_Index_Admonition_TypeLabels = {
  *
  * @param {Theme_Admonition_Index_Admonition_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function Admonition(props: Theme_Admonition_Index_Admonition_Props) {

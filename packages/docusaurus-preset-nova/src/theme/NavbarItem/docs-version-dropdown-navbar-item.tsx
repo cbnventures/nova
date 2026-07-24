@@ -30,8 +30,6 @@ import type {
  *
  * @param {Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocsVersionDropdownNavbarItem(props: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props) {

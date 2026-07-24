@@ -16,8 +16,6 @@ import type {
  *
  * @param {Theme_ContentVisibility_Index_ContentVisibility_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function ContentVisibility(props: Theme_ContentVisibility_Index_ContentVisibility_Props) {

@@ -1,0 +1,32 @@
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-node.json"
+  ],
+  "compilerOptions": {
+    "verbatimModuleSyntax": false,
+    "noEmitOnError": false,
+    "outDir": "./build",
+    "rootDir": "./",
+    "types": [
+      "@docusaurus/types",
+      "@types/node",
+      "@types/prompts"
+    ]
+  },
+  "include": [
+    "./src/cli/**/*",
+    "./src/lib/i18n/**/*",
+    "./src/types/cli/**/*",
+    "./src/types/lib/i18n/**/*",
+    "./src/tests/cli/i18n/**/*",
+    "./src/tests/lib/i18n/**/*",
+    "./src/types/tests/cli/i18n/**/*",
+    "./src/types/tests/lib/i18n/**/*"
+  ],
+  "exclude": [
+    "./build/**",
+    "./node_modules/**"
+  ]
+}

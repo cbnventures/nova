@@ -55,11 +55,13 @@ export type Theme_MdxPage_Index_MdxPageKeywords = string[] | undefined;
 
 export type Theme_MdxPage_Index_MdxPageImage = string | undefined;
 
-export type Theme_MdxPage_Index_MdxPageHideTableOfContents = string | undefined;
+export type Theme_MdxPage_Index_MdxPageHideTableOfContents = boolean | string | undefined;
 
 export type Theme_MdxPage_Index_MdxPageTocMinHeadingLevel = number | undefined;
 
 export type Theme_MdxPage_Index_MdxPageTocMaxHeadingLevel = number | undefined;
+
+export type Theme_MdxPage_Index_MdxPageDisplayEditUrl = string | undefined;
 
 export type Theme_MdxPage_Index_MdxPageCanDisplayEditMetaRow = boolean;
 

@@ -47,8 +47,6 @@ function ViewAllAuthorsLink() {
  *
  * @param {Theme_Blog_Pages_BlogAuthorsPostsPage_Index_BlogAuthorsPostsPage_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.18.0
  */
 function BlogAuthorsPostsPage(props: Theme_Blog_Pages_BlogAuthorsPostsPage_Index_BlogAuthorsPostsPage_Props) {

@@ -130,7 +130,7 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 - **Things to watch**: Naming rules enforced by role (config/app/tool require the project-slug prefix when set); <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology> can opt into syncing selected metadata fields.
 
 :::note Environment variables
-Environment variables are declared per workspace in `nova.config.json` under `workspaces.<path>.dotenv` and are not editable through this command; see the [dotenv generator](/docs/cli/generators/must-haves/dotenv) for the config shape.
+Environment variables and secrets live in the top-level [`environment`](/docs/quickstart/nova-config#environment) block and are editable in the [Environment](#environment) category below.
 :::
 
 ### Workflows
@@ -165,6 +165,12 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 - **Purpose**: Select which AI tools the [agent-conventions generator](/docs/cli/generators/must-haves/agent-conventions) emits files for, saved under the top-level `agents` field. Claude Code writes `CLAUDE.md` and Codex writes `AGENTS.md`; both share `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md`.
 - **Nice to know**: The category is a multiselect that pre-checks whatever is already stored, so reopening it shows your current selection.
 - **Things to watch**: At least one tool must stay selected — the menu will not let you save an empty list, since the generator has nothing to emit for zero tools.
+
+### Environment
+
+- **Purpose**: Manage the [`environment`](/docs/quickstart/nova-config#environment) block — per-app environment values, account-wide `global` keys, and their namespace prefixes — without editing `nova.config.json` by hand.
+- **Nice to know**: Each value is classified by a required `secret` flag (stored as a GitHub Secret when `true`, a GitHub Variable when `false`); app values also declare how they are delivered, and a non-secret value can seed `.env.sample` with a `defaultValue`.
+- **Things to watch**: Removing a value is confirm-gated and offers to drop its local `.env` line as well. On exit, the section can check GitHub status and reconcile — stubbing missing keys and deleting stale ones through the `gh` CLI — so Nova manages key names and existence only, never their values.
 
 ## Saving and Canceling
 

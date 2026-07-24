@@ -525,7 +525,8 @@ describe('resolvePreset', async () => {
       overrides: {
         colors: {
           primary: {
-            light: '#DC2626', dark: '#DC2626',
+            light: '#DC2626',
+            dark: '#DC2626',
           },
           secondary: undefined,
           text: undefined,
@@ -558,10 +559,12 @@ describe('resolvePreset', async () => {
     const resolvedColorsAccent: Tests_Options_ResolvedColorsAccent = result['colors']['accent'];
 
     deepStrictEqual(resolvedColorsPrimary, {
-      light: '#DC2626', dark: '#DC2626',
+      light: '#DC2626',
+      dark: '#DC2626',
     });
     deepStrictEqual(resolvedColorsAccent, {
-      light: '#fbbf24', dark: '#fbbf24',
+      light: '#fbbf24',
+      dark: '#fbbf24',
     });
 
     return;

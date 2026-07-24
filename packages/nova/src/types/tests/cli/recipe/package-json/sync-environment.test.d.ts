@@ -37,6 +37,27 @@ export type Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyn
 export type Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsEnginesFieldWhenMissing_Parsed = Record<string, unknown>;
 
 /**
+ * Tests - CLI - Recipe - package.json - Sync Environment - Run - Adds Package Manager To Project Role When Missing.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_PackageJsonPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_PackageJsonContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_NovaConfigPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_NovaConfigContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_Output = string;
+
+export type Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_Parsed = Record<string, unknown>;
+
+export type Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_AddsPackageManagerToProjectRoleWhenMissing_PackageManagerValue = string;
+
+/**
  * Tests - CLI - Recipe - package.json - Sync Environment - Run - Does Not Modify Files During Dry Run.
  *
  * @since 0.14.0

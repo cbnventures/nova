@@ -1,5 +1,3 @@
-/// <reference path="../../types/worker-globals.d.ts" />
-
 import { LIB_REGEX_PATTERN_REGEX_SPECIAL_CHARS } from '../regex.js';
 
 import type {
@@ -15,6 +13,7 @@ import type {
   Lib_Search_Worker_HandleSearch_Hits,
   Lib_Search_Worker_HandleSearch_Message,
   Lib_Search_Worker_HandleSearch_Returns,
+  Lib_Search_Worker_LunrGlobal,
   Lib_Search_Worker_PerformSearch_A,
   Lib_Search_Worker_PerformSearch_AllResults,
   Lib_Search_Worker_PerformSearch_B,
@@ -66,7 +65,7 @@ import type {
   Lib_Search_Worker_SearchIndex,
 } from '../../types/lib/search/worker.d.ts';
 
-declare const lunr: WorkerGlobals_LunrGlobal;
+declare const lunr: Lib_Search_Worker_LunrGlobal;
 
 importScripts('lunr.min.js');
 
@@ -98,7 +97,9 @@ let searchDocuments: Lib_Search_Worker_SearchDocuments = [];
  * posts a ready response back to the main thread.
  *
  * @param message - Message.
- * @returns       Handle init.
+ *
+ * @returns {Lib_Search_Worker_HandleInit_Returns}
+ *
  * @since 0.15.0
  */
 async function handleInit(message: Lib_Search_Worker_HandleInit_Message): Lib_Search_Worker_HandleInit_Returns {
@@ -125,7 +126,8 @@ async function handleInit(message: Lib_Search_Worker_HandleInit_Message): Lib_Se
     const errorMessage: Lib_Search_Worker_HandleInit_ErrorMessage = (error instanceof Error) ? error['message'] : 'SEARCH_UNKNOWN_INIT_ERROR';
 
     self.postMessage({
-      type: 'error', reason: errorMessage,
+      type: 'error',
+      reason: errorMessage,
     });
   }
 
@@ -140,12 +142,14 @@ async function handleInit(message: Lib_Search_Worker_HandleInit_Message): Lib_Se
  * back to the main thread.
  *
  * @param message - Message.
+ *
  * @since 0.15.0
  */
 function handleSearch(message: Lib_Search_Worker_HandleSearch_Message): Lib_Search_Worker_HandleSearch_Returns {
   if (searchIndex === undefined) {
     self.postMessage({
-      type: 'error', reason: 'SEARCH_INDEX_NOT_INITIALIZED',
+      type: 'error',
+      reason: 'SEARCH_INDEX_NOT_INITIALIZED',
     });
 
     return;
@@ -155,7 +159,8 @@ function handleSearch(message: Lib_Search_Worker_HandleSearch_Message): Lib_Sear
   const hits: Lib_Search_Worker_HandleSearch_Hits = performSearch(searchIndex, searchDocuments, message['query'], message['limit'], fuzzyDistance);
 
   self.postMessage({
-    type: 'results', hits,
+    type: 'results',
+    hits,
   });
 
   return;
@@ -173,7 +178,9 @@ function handleSearch(message: Lib_Search_Worker_HandleSearch_Message): Lib_Sear
  * @param query         - Query.
  * @param limit         - Limit.
  * @param fuzzyDistance - Fuzzy distance.
- * @returns             Perform search.
+ *
+ * @returns {Lib_Search_Worker_PerformSearch_Returns}
+ *
  * @since 0.15.0
  */
 function performSearch(index: Lib_Search_Worker_PerformSearch_Index, documents: Lib_Search_Worker_PerformSearch_Documents, query: Lib_Search_Worker_PerformSearch_Query, limit: Lib_Search_Worker_PerformSearch_Limit, fuzzyDistance: Lib_Search_Worker_PerformSearch_FuzzyDistance): Lib_Search_Worker_PerformSearch_Returns {
@@ -185,17 +192,26 @@ function performSearch(index: Lib_Search_Worker_PerformSearch_Index, documents: 
 
   const typedIndex: Lib_Search_Worker_PerformSearch_TypedIndex = index as Lib_Search_Worker_PerformSearch_TypedIndex;
 
-  const exactResults: Lib_Search_Worker_PerformSearch_ExactResults = typedIndex.search(trimmedQuery);
-  const wildcardQuery: Lib_Search_Worker_PerformSearch_WildcardQuery = `${trimmedQuery}*`;
-  const wildcardResults: Lib_Search_Worker_PerformSearch_WildcardResults = typedIndex.search(wildcardQuery);
-  const fuzzyQuery: Lib_Search_Worker_PerformSearch_FuzzyQuery = `${trimmedQuery}~${fuzzyDistance}`;
-  const fuzzyResults: Lib_Search_Worker_PerformSearch_FuzzyResults = typedIndex.search(fuzzyQuery);
+  let allResults: Lib_Search_Worker_PerformSearch_AllResults = [];
 
-  const allResults: Lib_Search_Worker_PerformSearch_AllResults = [
-    ...exactResults,
-    ...wildcardResults,
-    ...fuzzyResults,
-  ];
+  try {
+    const exactResults: Lib_Search_Worker_PerformSearch_ExactResults = typedIndex.search(trimmedQuery);
+    const wildcardQuery: Lib_Search_Worker_PerformSearch_WildcardQuery = `${trimmedQuery}*`;
+    const wildcardResults: Lib_Search_Worker_PerformSearch_WildcardResults = typedIndex.search(wildcardQuery);
+    const fuzzyQuery: Lib_Search_Worker_PerformSearch_FuzzyQuery = `${trimmedQuery}~${fuzzyDistance}`;
+    const fuzzyResults: Lib_Search_Worker_PerformSearch_FuzzyResults = typedIndex.search(fuzzyQuery);
+
+    allResults = [
+      ...exactResults,
+      ...wildcardResults,
+      ...fuzzyResults,
+    ];
+  } catch {
+    // Lunr throws a QueryParseError when the query contains reserved syntax
+    // characters (for example "9:00", "key:value", or "foo~bar"). Leave the
+    // results empty so the search yields no matches instead of throwing,
+    // letting the worker post a normal empty results message.
+  }
 
   const scoreMap: Lib_Search_Worker_PerformSearch_ScoreMap = new Map();
   const termsMap: Lib_Search_Worker_PerformSearch_TermsMap = new Map();
@@ -337,6 +353,7 @@ function performSearch(index: Lib_Search_Worker_PerformSearch_Index, documents: 
  * the message type field.
  *
  * @param event - Event.
+ *
  * @since 0.15.0
  */
 const handleMessage = (event: Lib_Search_Worker_Event) => {

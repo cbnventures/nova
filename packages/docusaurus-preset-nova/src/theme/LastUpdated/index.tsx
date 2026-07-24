@@ -62,8 +62,6 @@ function LastUpdatedDate(lastUpdatedAt: Theme_LastUpdated_Index_LastUpdatedDate_
  *
  * @param {Theme_LastUpdated_Index_LastUpdated_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function LastUpdated(props: Theme_LastUpdated_Index_LastUpdated_Props) {

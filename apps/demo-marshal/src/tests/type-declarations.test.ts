@@ -1,4 +1,5 @@
 import { registerTypeDeclarationSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 /**
  * Tests - Type Declarations.
@@ -10,10 +11,7 @@ import { registerTypeDeclarationSuite } from '@cbnventures/nova/rules/vitest';
  * @since 0.20.0
  */
 registerTypeDeclarationSuite({
+  vitest,
   enable: 'all',
-  typeRoots: [
-    'src',
-    'utils',
-  ],
-  standaloneTypeFiles: ['/shared.d.ts'],
+  typeRoots: ['src'],
 });

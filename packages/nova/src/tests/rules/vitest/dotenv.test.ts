@@ -3,6 +3,7 @@ import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
+import * as vitest from 'vitest';
 import { describe, it } from 'vitest';
 
 import { findEnvQuoteViolations } from '../../../lib/dotenv.js';
@@ -63,6 +64,7 @@ describe(`dotenv suite helpers${''}`, () => {
 // is fully double-quoted so it passes, and the non-existent `.env.sample` entry is skipped on
 // ENOENT rather than failing, so the registered suite stays green.
 registerDotenvSuite({
+  vitest,
   rootDir: fixtureRoot,
   envPaths: [
     '.env',

@@ -1,6 +1,7 @@
 import { resolve } from 'node:path';
 
 import { registerDotenvSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 /**
  * Tests - Dotenv.
@@ -15,6 +16,7 @@ import { registerDotenvSuite } from '@cbnventures/nova/rules/vitest';
  * @since 0.20.0
  */
 registerDotenvSuite({
+  vitest,
   enable: 'all',
   rootDir: resolve(process.cwd(), '..', '..'),
 });

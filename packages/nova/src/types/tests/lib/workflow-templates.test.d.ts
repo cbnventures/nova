@@ -1,10 +1,18 @@
+import type {
+  Shared_WorkflowTemplateTarget,
+  Shared_WorkflowTemplateVariable,
+} from '../../../types/shared.d.ts';
+import type {
+  Lib_WorkflowTemplates_Entry,
+  Lib_WorkflowTemplates_Entry_Targets,
+} from '../../lib/workflow-templates.d.ts';
+
 export type Tests_Lib_WorkflowTemplates_FilePath = string;
 export type Tests_Lib_WorkflowTemplates_CurrentDirectory = string;
 export type Tests_Lib_WorkflowTemplates_TemplatesDir = string;
-export type Tests_Lib_WorkflowTemplates_CurrentEntry = import('../../../types/lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Entry;
 export type Tests_Lib_WorkflowTemplates_EveryLiteralVariableHasADescription_VariableNames = string[];
 export type Tests_Lib_WorkflowTemplates_EveryLiteralVariableHasADescription_Name = string;
-export type Tests_Lib_WorkflowTemplates_EveryLiteralVariableHasADescription_Variable = import('../../../types/lib/workflow-templates.d.ts').Lib_WorkflowTemplates_Variable;
+export type Tests_Lib_WorkflowTemplates_EveryLiteralVariableHasADescription_Variable = Shared_WorkflowTemplateVariable;
 export type Tests_Lib_WorkflowTemplates_EveryLiteralVariableHasADescription_HasDescription = boolean;
 export type Tests_Lib_WorkflowTemplates_HasADirectoryWithBaseYml_TemplatePath = string;
 export type Tests_Lib_WorkflowTemplates_HasADirectoryWithBaseYml_DirExists = boolean;
@@ -15,3 +23,11 @@ export type Tests_Lib_WorkflowTemplates_HasATargetsDirectoryWithAYAMLFileForEach
 export type Tests_Lib_WorkflowTemplates_HasATargetsDirectoryWithAYAMLFileForEachDeclaredTargetType_TargetName = string;
 export type Tests_Lib_WorkflowTemplates_HasATargetsDirectoryWithAYAMLFileForEachDeclaredTargetType_TargetFilePath = string;
 export type Tests_Lib_WorkflowTemplates_HasATargetsDirectoryWithAYAMLFileForEachDeclaredTargetType_TargetFileExists = boolean;
+export type Tests_Lib_WorkflowTemplates_PublishTargets_FlagRuntimeSecretSyncSupport_PublishEntry = Lib_WorkflowTemplates_Entry | undefined;
+export type Tests_Lib_WorkflowTemplates_PublishTargets_FlagRuntimeSecretSyncSupport_Targets = Lib_WorkflowTemplates_Entry_Targets | undefined;
+export type Tests_Lib_WorkflowTemplates_PublishTargets_FlagRuntimeSecretSyncSupport_OtherTargetNames = string[];
+export type Tests_Lib_WorkflowTemplates_PublishTargets_FlagRuntimeSecretSyncSupport_TargetName = string;
+export type Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_PublishEntry = Lib_WorkflowTemplates_Entry | undefined;
+export type Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_Targets = Lib_WorkflowTemplates_Entry_Targets | undefined;
+export type Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_Vercel = Shared_WorkflowTemplateTarget | undefined;
+export type Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_CloudflareWorkers = Shared_WorkflowTemplateTarget | undefined;

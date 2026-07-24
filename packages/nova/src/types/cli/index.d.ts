@@ -137,6 +137,20 @@ export type Cli_Index_CLI_RegisterCommands_RecipeGithubOptions = {
   dryRun?: true;
 };
 
+export type Cli_Index_CLI_RegisterCommands_RecipeLicense = Command;
+
+export type Cli_Index_CLI_RegisterCommands_RecipeLicenseOptions = {
+  dryRun?: true;
+  replaceFile?: true;
+};
+
+export type Cli_Index_CLI_RegisterCommands_RecipeReadMe = Command;
+
+export type Cli_Index_CLI_RegisterCommands_RecipeReadMeOptions = {
+  dryRun?: true;
+  replaceFile?: true;
+};
+
 export type Cli_Index_CLI_RegisterCommands_Scaffold = Command;
 
 export type Cli_Index_CLI_RegisterCommands_ScaffoldApp = Command;

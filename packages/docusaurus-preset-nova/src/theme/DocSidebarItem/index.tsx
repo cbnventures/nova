@@ -13,8 +13,6 @@ import type { Theme_DocSidebarItem_Index_DocSidebarItem_Props } from '../../type
  *
  * @param {Theme_DocSidebarItem_Index_DocSidebarItem_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocSidebarItem(props: Theme_DocSidebarItem_Index_DocSidebarItem_Props) {

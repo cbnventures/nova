@@ -58,7 +58,8 @@ ruleTester.run('requireHashPrivate', RequireHashPrivate['rule'], {
         '}',
       ].join('\n'),
       options: [{
-        ignoreFiles: ['ignored-file.ts'], skipMethods: true,
+        ignoreFiles: ['ignored-file.ts'],
+        skipMethods: true,
       }],
       filename: '/path/to/ignored-file.ts',
     },

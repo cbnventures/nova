@@ -1,0 +1,148 @@
+---
+id: "require-node-protocol"
+title: "Require Node Protocol"
+description: "Require the node: protocol when importing Node.js built-in modules."
+keywords:
+  - "nova"
+  - "eslint rule"
+  - "node protocol"
+  - "built-in modules"
+  - "code style"
+  - "linting"
+tags:
+  - "rules"
+  - "eslint"
+  - "code style"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require the `node:` protocol when importing a Node.js built-in module because the explicit prefix makes it unambiguous that the import is a built-in and never a userland package.
+
+## Summary
+
+The `require-node-protocol` rule reports any static import, re-export, or dynamic import of a Node.js built-in module that omits the `node:` protocol. It checks the module specifier's base module (before any subpath), so `fs/promises` is treated the same as `fs`.
+
+Relative imports, userland packages, and specifiers that already carry the `node:` prefix are left untouched.
+
+## Why Use This Rule?
+
+1. Makes built-in imports explicit — `import fs from 'node:fs'` cannot be confused with a userland package named `fs`.
+2. Matches the Node.js recommendation for importing built-ins.
+3. Keeps every import consistent across the codebase — every built-in is prefixed, always.
+
+## Examples
+
+<Tabs groupId="require-node-protocol-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    import fs from 'node:fs';
+    import { readFile } from 'node:fs/promises';
+    export * from 'node:path';
+
+    const os = import('node:os');
+
+    // Userland packages and relative imports are not affected.
+    import express from 'express';
+    import { helper } from './helper.js';
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    import fs from 'fs';
+    import { readFile } from 'fs/promises';
+    export * from 'path';
+
+    const os = import('os');
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-node-protocol-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireNodeProtocol } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-node-protocol': RequireNodeProtocol.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-node-protocol': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireNodeProtocol } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-node-protocol': RequireNodeProtocol.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-node-protocol': ['error', {
+            ignoreFiles: [
+              '*.test.ts',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description                                                                                                                               |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/require-node-protocol: error'
+```
+
+The autofix inserts the `node:` prefix and preserves the original quote style.
+
+## Troubleshooting
+
+- **Userland packages are not checked** — Only names that resolve to a Node.js built-in module are reported. A userland package that happens to share a name with a built-in is matched by the built-in list, so disable the rule for that line if you genuinely import such a package.
+- **Subpaths are matched by base module** — `fs/promises` is reported because its base module `fs` is a built-in, and is fixed to `node:fs/promises`.
+- **`require()` calls are not checked** — This rule targets ES module `import`, `export ... from`, and dynamic `import()` specifiers. CommonJS `require()` is not covered.

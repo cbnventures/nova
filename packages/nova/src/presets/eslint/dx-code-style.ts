@@ -396,6 +396,14 @@ const config: Presets_Eslint_DxCodeStyle_Config = [
         },
       ],
 
+      // Force each property onto its own line when the object spans multiple lines so diffs only touch the lines that changed (mirrors array-element-newline).
+      '@stylistic/object-property-newline': [
+        'error',
+        {
+          allowAllPropertiesOnSameLine: false,
+        },
+      ],
+
       // Prefer shorthand properties (e.g., `choices` instead of `choices: choices`) so object literals stay concise and don't repeat names.
       'object-shorthand': [
         'error',

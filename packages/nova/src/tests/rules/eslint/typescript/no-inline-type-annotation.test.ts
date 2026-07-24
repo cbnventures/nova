@@ -99,6 +99,12 @@ ruleTester.run('noInlineTypeAnnotation', NoInlineTypeAnnotation['rule'], {
       options: [{ ignoreFiles: ['ignored.ts'] }],
       filename: '/path/to/ignored.ts',
     },
+
+    // Extracted <script> virtual file is skipped (annotations cannot parse in a plain script block).
+    {
+      code: 'function f() { const x = getValue(); }',
+      filename: '/project/src/components/github.astro/1_1.js',
+    },
   ],
   invalid: [
     {

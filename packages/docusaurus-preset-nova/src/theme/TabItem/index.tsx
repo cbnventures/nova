@@ -17,8 +17,6 @@ import type {
  *
  * @param {Theme_TabItem_Index_TabItem_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function TabItem(props: Theme_TabItem_Index_TabItem_Props) {

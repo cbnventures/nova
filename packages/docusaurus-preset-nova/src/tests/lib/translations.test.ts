@@ -80,10 +80,12 @@ describe('Translations.extract', async () => {
         navbar: {
           items: [
             {
-              label: 'Docs', to: '/docs/',
+              label: 'Docs',
+              to: '/docs/',
             },
             {
-              label: 'Blog', to: '/blog/',
+              label: 'Blog',
+              to: '/blog/',
             },
           ],
         },
@@ -94,10 +96,12 @@ describe('Translations.extract', async () => {
       path: 'navbar',
       content: {
         'item.0.label': {
-          message: 'Docs', description: 'Label of navbar item 1',
+          message: 'Docs',
+          description: 'Label of navbar item 1',
         },
         'item.1.label': {
-          message: 'Blog', description: 'Label of navbar item 2',
+          message: 'Blog',
+          description: 'Label of navbar item 2',
         },
       },
     }]);
@@ -111,17 +115,20 @@ describe('Translations.extract', async () => {
         navbar: {
           items: [
             {
-              label: 'Docs', to: '/docs/',
+              label: 'Docs',
+              to: '/docs/',
             },
             {
               label: 'Resources',
               type: 'dropdown',
               items: [
                 {
-                  label: 'Guide', to: '/guide/',
+                  label: 'Guide',
+                  to: '/guide/',
                 },
                 {
-                  label: 'Reference', to: '/ref/',
+                  label: 'Reference',
+                  to: '/ref/',
                 },
               ],
             },
@@ -134,16 +141,20 @@ describe('Translations.extract', async () => {
       path: 'navbar',
       content: {
         'item.0.label': {
-          message: 'Docs', description: 'Label of navbar item 1',
+          message: 'Docs',
+          description: 'Label of navbar item 1',
         },
         'item.1.label': {
-          message: 'Resources', description: 'Label of navbar item 2',
+          message: 'Resources',
+          description: 'Label of navbar item 2',
         },
         'item.1.items.0.label': {
-          message: 'Guide', description: 'Label of dropdown child 1 under navbar item 2',
+          message: 'Guide',
+          description: 'Label of dropdown child 1 under navbar item 2',
         },
         'item.1.items.1.label': {
-          message: 'Reference', description: 'Label of dropdown child 2 under navbar item 2',
+          message: 'Reference',
+          description: 'Label of dropdown child 2 under navbar item 2',
         },
       },
     }]);
@@ -157,10 +168,12 @@ describe('Translations.extract', async () => {
         navbar: {
           items: [
             {
-              label: 'Docs', to: '/docs/',
+              label: 'Docs',
+              to: '/docs/',
             },
             {
-              type: 'localeDropdown', position: 'right',
+              type: 'localeDropdown',
+              position: 'right',
             },
           ],
         },
@@ -171,7 +184,8 @@ describe('Translations.extract', async () => {
       path: 'navbar',
       content: {
         'item.0.label': {
-          message: 'Docs', description: 'Label of navbar item 1',
+          message: 'Docs',
+          description: 'Label of navbar item 1',
         },
       },
     }]);
@@ -184,7 +198,8 @@ describe('Translations.extract', async () => {
       themeConfig: {
         navbar: {
           items: [{
-            type: 'localeDropdown', position: 'right',
+            type: 'localeDropdown',
+            position: 'right',
           }],
         },
       },
@@ -211,10 +226,12 @@ describe('Translations.extract', async () => {
       path: 'blog',
       content: {
         'layout.heading': {
-          message: 'Our Blog', description: 'The blog list page heading',
+          message: 'Our Blog',
+          description: 'The blog list page heading',
         },
         'layout.description': {
-          message: 'Updates from the team', description: 'The blog list page description below the heading',
+          message: 'Updates from the team',
+          description: 'The blog list page description below the heading',
         },
       },
     }]);
@@ -250,7 +267,8 @@ describe('Translations.extract', async () => {
       path: 'announcementBar',
       content: {
         content: {
-          message: 'Black Friday sale!', description: 'The announcement bar content (may contain HTML)',
+          message: 'Black Friday sale!',
+          description: 'The announcement bar content (may contain HTML)',
         },
       },
     }]);
@@ -272,7 +290,8 @@ describe('Translations.extract', async () => {
       path: 'announcementBar',
       content: {
         content: {
-          message: 'Read our <a href="/blog/">latest post</a>', description: 'The announcement bar content (may contain HTML)',
+          message: 'Read our <a href="/blog/">latest post</a>',
+          description: 'The announcement bar content (may contain HTML)',
         },
       },
     }]);
@@ -387,10 +406,12 @@ describe('Translations.extract', async () => {
         footer: {
           layout: {
             company: {
-              title: 'Company', section: 'company',
+              title: 'Company',
+              section: 'company',
             },
             legal: {
-              title: 'Legal', section: 'legal',
+              title: 'Legal',
+              section: 'legal',
             },
           },
         },
@@ -401,10 +422,12 @@ describe('Translations.extract', async () => {
       path: 'footer',
       content: {
         'layout.company.title': {
-          message: 'Company', description: 'Title of footer column "company"',
+          message: 'Company',
+          description: 'Title of footer column "company"',
         },
         'layout.legal.title': {
-          message: 'Legal', description: 'Title of footer column "legal"',
+          message: 'Legal',
+          description: 'Title of footer column "legal"',
         },
       },
     }]);
@@ -419,10 +442,12 @@ describe('Translations.extract', async () => {
           sections: {
             legal: [
               {
-                label: 'Terms of Use', href: '/terms/',
+                label: 'Terms of Use',
+                href: '/terms/',
               },
               {
-                label: 'Privacy Policy', href: '/privacy/',
+                label: 'Privacy Policy',
+                href: '/privacy/',
               },
             ],
           },
@@ -434,10 +459,12 @@ describe('Translations.extract', async () => {
       path: 'footer',
       content: {
         'sections.legal.0.label': {
-          message: 'Terms of Use', description: 'Label of link 1 in footer section "legal"',
+          message: 'Terms of Use',
+          description: 'Label of link 1 in footer section "legal"',
         },
         'sections.legal.1.label': {
-          message: 'Privacy Policy', description: 'Label of link 2 in footer section "legal"',
+          message: 'Privacy Policy',
+          description: 'Label of link 2 in footer section "legal"',
         },
       },
     }]);
@@ -458,7 +485,8 @@ describe('Translations.extract', async () => {
       path: 'footer',
       content: {
         copyright: {
-          message: 'Copyright 2025 Acme LLC.', description: 'The footer copyright text',
+          message: 'Copyright 2025 Acme LLC.',
+          description: 'The footer copyright text',
         },
       },
     }]);
@@ -479,7 +507,8 @@ describe('Translations.extract', async () => {
       path: 'footer',
       content: {
         cta: {
-          message: 'Ready to deploy?', description: 'The footer call-to-action text',
+          message: 'Ready to deploy?',
+          description: 'The footer call-to-action text',
         },
       },
     }]);
@@ -503,7 +532,8 @@ describe('Translations.extract', async () => {
       path: 'footer',
       content: {
         'cta.label': {
-          message: 'Get started', description: 'The footer call-to-action link label',
+          message: 'Get started',
+          description: 'The footer call-to-action link label',
         },
       },
     }]);
@@ -528,7 +558,8 @@ describe('Translations.extract', async () => {
       themeConfig: {
         navbar: { items: [{ label: 'Docs' }] },
         announcementBar: {
-          id: 'b', content: 'Hi',
+          id: 'b',
+          content: 'Hi',
         },
         footer: { copyright: '2025' },
         blog: { layout: { heading: 'Blog' } },
@@ -604,10 +635,12 @@ describe('Translations.apply', async () => {
         navbar: {
           items: [
             {
-              label: 'Docs', to: '/docs/',
+              label: 'Docs',
+              to: '/docs/',
             },
             {
-              label: 'Blog', to: '/blog/',
+              label: 'Blog',
+              to: '/blog/',
             },
           ],
         },
@@ -625,10 +658,12 @@ describe('Translations.apply', async () => {
       navbar: {
         items: [
           {
-            label: '文档', to: '/docs/',
+            label: '文档',
+            to: '/docs/',
           },
           {
-            label: '博客', to: '/blog/',
+            label: '博客',
+            to: '/blog/',
           },
         ],
       },
@@ -643,10 +678,12 @@ describe('Translations.apply', async () => {
         navbar: {
           items: [
             {
-              label: 'Docs', to: '/docs/',
+              label: 'Docs',
+              to: '/docs/',
             },
             {
-              label: 'Blog', to: '/blog/',
+              label: 'Blog',
+              to: '/blog/',
             },
           ],
         },
@@ -663,10 +700,12 @@ describe('Translations.apply', async () => {
       navbar: {
         items: [
           {
-            label: '文档', to: '/docs/',
+            label: '文档',
+            to: '/docs/',
           },
           {
-            label: 'Blog', to: '/blog/',
+            label: 'Blog',
+            to: '/blog/',
           },
         ],
       },
@@ -683,7 +722,8 @@ describe('Translations.apply', async () => {
             label: 'Resources',
             type: 'dropdown',
             items: [{
-              label: 'Guide', to: '/guide/',
+              label: 'Guide',
+              to: '/guide/',
             }],
           }],
         },
@@ -703,7 +743,8 @@ describe('Translations.apply', async () => {
           label: '资源',
           type: 'dropdown',
           items: [{
-            label: '指南', to: '/guide/',
+            label: '指南',
+            to: '/guide/',
           }],
         }],
       },
@@ -896,12 +937,14 @@ describe('Translations.apply', async () => {
         footer: {
           layout: {
             legal: {
-              title: 'Legal', section: 'legal',
+              title: 'Legal',
+              section: 'legal',
             },
           },
           sections: {
             legal: [{
-              label: 'Terms', href: '/terms/',
+              label: 'Terms',
+              href: '/terms/',
             }],
           },
           copyright: 'Copyright 2025',
@@ -921,12 +964,14 @@ describe('Translations.apply', async () => {
       footer: {
         layout: {
           legal: {
-            title: '法律', section: 'legal',
+            title: '法律',
+            section: 'legal',
           },
         },
         sections: {
           legal: [{
-            label: '条款', href: '/terms/',
+            label: '条款',
+            href: '/terms/',
           }],
         },
         copyright: '版权 2025',
@@ -965,7 +1010,8 @@ describe('Translations.apply', async () => {
       themeConfig: {
         footer: {
           cta: {
-            label: 'Get started', href: 'https://example.com',
+            label: 'Get started',
+            href: 'https://example.com',
           },
         },
       },
@@ -980,7 +1026,8 @@ describe('Translations.apply', async () => {
     deepStrictEqual(result, {
       footer: {
         cta: {
-          label: '开始使用', href: 'https://example.com',
+          label: '开始使用',
+          href: 'https://example.com',
         },
       },
     });

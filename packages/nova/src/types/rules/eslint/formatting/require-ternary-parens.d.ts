@@ -19,11 +19,16 @@ export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditional
 
 export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Returns = void;
 
-export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_SourceText = string;
+/**
+ * Rules - ESLint - Formatting - Require Ternary Parens - Check Conditional Expression - Parenthesization.
+ *
+ * @since 0.21.0
+ */
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_TokenBefore = TSESTree.Token | null;
 
-export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_TestStart = number;
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_TokenAfter = TSESTree.Token | null;
 
-export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_CharBefore = string | undefined;
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_IsParenthesized = boolean;
 
 /**
  * Rules - ESLint - Formatting - Require Ternary Parens - Check Conditional Expression - Fix.

@@ -91,8 +91,6 @@ function useDocsTaggedPlural(): Theme_DocTagDocListPage_Index_UseDocsTaggedPlura
  *
  * @param {Theme_DocTagDocListPage_Index_DocTagDocListPage_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function DocTagDocListPage(props: Theme_DocTagDocListPage_Index_DocTagDocListPage_Props) {

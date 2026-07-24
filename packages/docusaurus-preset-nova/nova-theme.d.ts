@@ -1139,7 +1139,8 @@ declare module 'lunr' {
 
   interface Index {
     search: (query: string) => Array<{
-      ref: string; score: number;
+      ref: string;
+      score: number;
     }>;
   }
 

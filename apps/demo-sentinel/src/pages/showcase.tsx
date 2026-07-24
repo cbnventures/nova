@@ -13,6 +13,17 @@ import {
 import { translate } from '@docusaurus/Translate';
 import Showcase from '@theme/Showcase';
 
+/**
+ * Pages - Showcase - Page.
+ *
+ * Block showcase page for the Sentinel demo site, rendering every
+ * block from the Nova preset with sample data across each of its
+ * supported variants.
+ *
+ * @constructor
+ *
+ * @since UNRELEASED
+ */
 function ShowcasePage() {
   return (
     <Showcase

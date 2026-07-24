@@ -91,11 +91,11 @@ export class Runner {
    * Tests a single Literal node value against the javascript: prefix after lowercasing.
    * Skips the report when the value matches an allowed pattern.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Context}         context         - Context.
    * @param {Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Node}            node            - Node.
    * @param {Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_AllowedPatterns} allowedPatterns - Allowed patterns.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Returns}
    *

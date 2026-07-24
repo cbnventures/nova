@@ -1,8 +1,4 @@
 {
-  "layout.envoy.title": {
-    "message": "Envoy",
-    "description": "Title of footer column \"envoy\""
-  },
   "layout.integrations.title": {
     "message": "集成",
     "description": "Title of footer column \"integrations\""
@@ -26,18 +22,6 @@
   "sections.envoy.2.label": {
     "message": "API 参考",
     "description": "Label of link 3 in footer section \"envoy\""
-  },
-  "sections.integrations.0.label": {
-    "message": "Threadbare",
-    "description": "Label of link 1 in footer section \"integrations\""
-  },
-  "sections.integrations.1.label": {
-    "message": "Glassboard",
-    "description": "Label of link 2 in footer section \"integrations\""
-  },
-  "sections.integrations.2.label": {
-    "message": "Canary",
-    "description": "Label of link 3 in footer section \"integrations\""
   },
   "sections.company.0.label": {
     "message": "关于我们",

@@ -1,3 +1,8 @@
+import type {
+  TranslationFile,
+  TranslationFileContent,
+} from '@docusaurus/types';
+
 /**
  * Shared - Color Scale.
  *
@@ -463,6 +468,17 @@ export type Shared_TocHeading = {
 };
 
 /**
+ * Shared - Toc Overlay Payload.
+ *
+ * @since 0.21.0
+ */
+export type Shared_TocOverlayPayload_TreeItems = Shared_TocHeading[];
+
+export type Shared_TocOverlayPayload = {
+  treeItems: Shared_TocOverlayPayload_TreeItems;
+} | undefined;
+
+/**
  * Shared - Iconify Icon Entry.
  *
  * @since 0.19.0
@@ -546,3 +562,395 @@ export type Shared_IconLoadedCollections = Map<string, Shared_IconifyCollection 
  * @since 0.19.0
  */
 export type Shared_IconSlicedCollection = Record<string, unknown>;
+
+/**
+ * Shared - I18n Classification.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nClassification = 'keep' | 'redundant-live' | 'redundant-stale' | 'orphan' | 'seed';
+
+/**
+ * Shared - I18n Action.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nAction = 'keep' | 'drop' | 'seed' | 'gate';
+
+/**
+ * Shared - I18n Plan Entry.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nPlanEntry_Key = string;
+
+export type Shared_I18nPlanEntry_Classification = Shared_I18nClassification;
+
+export type Shared_I18nPlanEntry_Action = Shared_I18nAction;
+
+export type Shared_I18nPlanEntry_Message = string;
+
+export type Shared_I18nPlanEntry_Description = string | undefined;
+
+export type Shared_I18nPlanEntry = {
+  key: Shared_I18nPlanEntry_Key;
+  classification: Shared_I18nPlanEntry_Classification;
+  action: Shared_I18nPlanEntry_Action;
+  message: Shared_I18nPlanEntry_Message;
+  description: Shared_I18nPlanEntry_Description;
+};
+
+/**
+ * Shared - I18n File Plan.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nFilePlan_Scope = string;
+
+export type Shared_I18nFilePlan_Keep = Shared_I18nPlanEntry[];
+
+export type Shared_I18nFilePlan_Add = Shared_I18nPlanEntry[];
+
+export type Shared_I18nFilePlan_DropRedundant = Shared_I18nPlanEntry[];
+
+export type Shared_I18nFilePlan_Orphan = Shared_I18nPlanEntry[];
+
+export type Shared_I18nFilePlan_Content = TranslationFileContent;
+
+export type Shared_I18nFilePlan = {
+  scope: Shared_I18nFilePlan_Scope;
+  keep: Shared_I18nFilePlan_Keep;
+  add: Shared_I18nFilePlan_Add;
+  dropRedundant: Shared_I18nFilePlan_DropRedundant;
+  orphan: Shared_I18nFilePlan_Orphan;
+  content: Shared_I18nFilePlan_Content;
+};
+
+/**
+ * Shared - I18n Gather Locale.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nGatherLocale_Locale = string;
+
+export type Shared_I18nGatherLocale_LocalizationDir = string;
+
+export type Shared_I18nGatherLocale_IsDefaultLocale = boolean;
+
+export type Shared_I18nGatherLocale_Registry = Record<string, string>;
+
+export type Shared_I18nGatherLocale_AreaFiles = TranslationFile[];
+
+export type Shared_I18nGatherLocale_ExistingCode = TranslationFileContent;
+
+export type Shared_I18nGatherLocale_ExistingArea = Map<string, TranslationFileContent>;
+
+export type Shared_I18nGatherLocale = {
+  locale: Shared_I18nGatherLocale_Locale;
+  localizationDir: Shared_I18nGatherLocale_LocalizationDir;
+  isDefaultLocale: Shared_I18nGatherLocale_IsDefaultLocale;
+  registry: Shared_I18nGatherLocale_Registry;
+  areaFiles: Shared_I18nGatherLocale_AreaFiles;
+  existingCode: Shared_I18nGatherLocale_ExistingCode;
+  existingArea: Shared_I18nGatherLocale_ExistingArea;
+};
+
+/**
+ * Shared - I18n Gather Result.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nGatherResult_SiteDir = string;
+
+export type Shared_I18nGatherResult_DefaultLocale = string;
+
+export type Shared_I18nGatherResult_Locales = string[];
+
+export type Shared_I18nGatherResult_LiveSiteKeys = Set<string>;
+
+export type Shared_I18nGatherResult_ThemeLiveKeys = Set<string>;
+
+export type Shared_I18nGatherResult_SiteExtract = TranslationFileContent;
+
+export type Shared_I18nGatherResult_ThemeDefaults = Record<string, string>;
+
+export type Shared_I18nGatherResult_PerLocale = Shared_I18nGatherLocale[];
+
+export type Shared_I18nGatherResult = {
+  siteDir: Shared_I18nGatherResult_SiteDir;
+  defaultLocale: Shared_I18nGatherResult_DefaultLocale;
+  locales: Shared_I18nGatherResult_Locales;
+  liveSiteKeys: Shared_I18nGatherResult_LiveSiteKeys;
+  themeLiveKeys: Shared_I18nGatherResult_ThemeLiveKeys;
+  siteExtract: Shared_I18nGatherResult_SiteExtract;
+  themeDefaults: Shared_I18nGatherResult_ThemeDefaults;
+  perLocale: Shared_I18nGatherResult_PerLocale;
+};
+
+/**
+ * Shared - I18n Locale Plan.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nLocalePlan_Locale = string;
+
+export type Shared_I18nLocalePlan_LocalizationDir = string;
+
+export type Shared_I18nLocalePlan_IsDefaultLocale = boolean;
+
+export type Shared_I18nLocalePlan_Files = Shared_I18nFilePlan[];
+
+export type Shared_I18nLocalePlan = {
+  locale: Shared_I18nLocalePlan_Locale;
+  localizationDir: Shared_I18nLocalePlan_LocalizationDir;
+  isDefaultLocale: Shared_I18nLocalePlan_IsDefaultLocale;
+  files: Shared_I18nLocalePlan_Files;
+};
+
+/**
+ * Shared - I18n Plan.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nPlan_SiteDir = string;
+
+export type Shared_I18nPlan_Locales = Shared_I18nLocalePlan[];
+
+export type Shared_I18nPlan = {
+  siteDir: Shared_I18nPlan_SiteDir;
+  locales: Shared_I18nPlan_Locales;
+};
+
+/**
+ * Shared - I18n Decision.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nDecision = 'confirm' | 'decline' | 'cancel';
+
+/**
+ * Shared - I18n Confirm.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nConfirm_Locale = string;
+
+export type Shared_I18nConfirm_Scope = string;
+
+export type Shared_I18nConfirm_Entries = Shared_I18nPlanEntry[];
+
+export type Shared_I18nConfirm = (locale: Shared_I18nConfirm_Locale, scope: Shared_I18nConfirm_Scope, entries: Shared_I18nConfirm_Entries) => Promise<Shared_I18nDecision>;
+
+/**
+ * Shared - I18n Apply Result.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nApplyResult_Written = string[];
+
+export type Shared_I18nApplyResult_Removed = string[];
+
+export type Shared_I18nApplyResult_Blocked = boolean;
+
+export type Shared_I18nApplyResult_Cancelled = boolean;
+
+export type Shared_I18nApplyResult = {
+  written: Shared_I18nApplyResult_Written;
+  removed: Shared_I18nApplyResult_Removed;
+  blocked: Shared_I18nApplyResult_Blocked;
+  cancelled: Shared_I18nApplyResult_Cancelled;
+};
+
+/**
+ * Shared - I18n Content Scan Descriptor.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nContentScanDescriptor_PluginName = string;
+
+export type Shared_I18nContentScanDescriptor_PluginId = string;
+
+export type Shared_I18nContentScanDescriptor_Short = string;
+
+export type Shared_I18nContentScanDescriptor_SourceDir = string;
+
+export type Shared_I18nContentScanDescriptor_VersionSegment = string | null;
+
+export type Shared_I18nContentScanDescriptor = {
+  pluginName: Shared_I18nContentScanDescriptor_PluginName;
+  pluginId: Shared_I18nContentScanDescriptor_PluginId;
+  short: Shared_I18nContentScanDescriptor_Short;
+  sourceDir: Shared_I18nContentScanDescriptor_SourceDir;
+  versionSegment: Shared_I18nContentScanDescriptor_VersionSegment;
+};
+
+/**
+ * Shared - I18n Content Scan Result Locale.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nContentScanResultLocale_Locale = string;
+
+export type Shared_I18nContentScanResultLocale_IsDefaultLocale = boolean;
+
+export type Shared_I18nContentScanResultLocale_Present = Set<string>;
+
+export type Shared_I18nContentScanResultLocale = {
+  locale: Shared_I18nContentScanResultLocale_Locale;
+  isDefaultLocale: Shared_I18nContentScanResultLocale_IsDefaultLocale;
+  present: Shared_I18nContentScanResultLocale_Present;
+};
+
+/**
+ * Shared - I18n Content Scan Result.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nContentScanResult_Sources = string[];
+
+export type Shared_I18nContentScanResult_PerLocale = Shared_I18nContentScanResultLocale[];
+
+export type Shared_I18nContentScanResult = {
+  sources: Shared_I18nContentScanResult_Sources;
+  perLocale: Shared_I18nContentScanResult_PerLocale;
+};
+
+/**
+ * Shared - I18n Coverage Content Locale.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nCoverageContentLocale_Locale = string;
+
+export type Shared_I18nCoverageContentLocale_IsDefaultLocale = boolean;
+
+export type Shared_I18nCoverageContentLocale_Present = number;
+
+export type Shared_I18nCoverageContentLocale_Missing = string[];
+
+export type Shared_I18nCoverageContentLocale = {
+  locale: Shared_I18nCoverageContentLocale_Locale;
+  isDefaultLocale: Shared_I18nCoverageContentLocale_IsDefaultLocale;
+  present: Shared_I18nCoverageContentLocale_Present;
+  missing: Shared_I18nCoverageContentLocale_Missing;
+};
+
+/**
+ * Shared - I18n Coverage Content Report.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nCoverageContentReport_Total = number;
+
+export type Shared_I18nCoverageContentReport_Locales = Shared_I18nCoverageContentLocale[];
+
+export type Shared_I18nCoverageContentReport = {
+  total: Shared_I18nCoverageContentReport_Total;
+  locales: Shared_I18nCoverageContentReport_Locales;
+};
+
+/**
+ * Shared - I18n Coverage Input Locale.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nCoverageInputLocale_Locale = string;
+
+export type Shared_I18nCoverageInputLocale_IsDefaultLocale = boolean;
+
+export type Shared_I18nCoverageInputLocale_Translated = Set<string>;
+
+export type Shared_I18nCoverageInputLocale = {
+  locale: Shared_I18nCoverageInputLocale_Locale;
+  isDefaultLocale: Shared_I18nCoverageInputLocale_IsDefaultLocale;
+  translated: Shared_I18nCoverageInputLocale_Translated;
+};
+
+/**
+ * Shared - I18n Coverage Json Locale.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nCoverageJsonLocale_Locale = string;
+
+export type Shared_I18nCoverageJsonLocale_IsDefaultLocale = boolean;
+
+export type Shared_I18nCoverageJsonLocale_Translated = number;
+
+export type Shared_I18nCoverageJsonLocale_DefiniteGaps = string[];
+
+export type Shared_I18nCoverageJsonLocale_SoftGaps = string[];
+
+export type Shared_I18nCoverageJsonLocale = {
+  locale: Shared_I18nCoverageJsonLocale_Locale;
+  isDefaultLocale: Shared_I18nCoverageJsonLocale_IsDefaultLocale;
+  translated: Shared_I18nCoverageJsonLocale_Translated;
+  definiteGaps: Shared_I18nCoverageJsonLocale_DefiniteGaps;
+  softGaps: Shared_I18nCoverageJsonLocale_SoftGaps;
+};
+
+/**
+ * Shared - I18n Coverage Json Report.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nCoverageJsonReport_UniverseSize = number;
+
+export type Shared_I18nCoverageJsonReport_UnionSize = number;
+
+export type Shared_I18nCoverageJsonReport_Locales = Shared_I18nCoverageJsonLocale[];
+
+export type Shared_I18nCoverageJsonReport = {
+  universeSize: Shared_I18nCoverageJsonReport_UniverseSize;
+  unionSize: Shared_I18nCoverageJsonReport_UnionSize;
+  locales: Shared_I18nCoverageJsonReport_Locales;
+};
+
+/**
+ * Shared - I18n Coverage Locale.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nCoverageLocale_Locale = string;
+
+export type Shared_I18nCoverageLocale_IsDefaultLocale = boolean;
+
+export type Shared_I18nCoverageLocale_Percent = number;
+
+export type Shared_I18nCoverageLocale_JsonTranslated = number;
+
+export type Shared_I18nCoverageLocale_JsonTotal = number;
+
+export type Shared_I18nCoverageLocale_ContentPresent = number;
+
+export type Shared_I18nCoverageLocale_ContentTotal = number;
+
+export type Shared_I18nCoverageLocale_DefiniteGaps = string[];
+
+export type Shared_I18nCoverageLocale_SoftGaps = string[];
+
+export type Shared_I18nCoverageLocale_MissingContent = string[];
+
+export type Shared_I18nCoverageLocale = {
+  locale: Shared_I18nCoverageLocale_Locale;
+  isDefaultLocale: Shared_I18nCoverageLocale_IsDefaultLocale;
+  percent: Shared_I18nCoverageLocale_Percent;
+  jsonTranslated: Shared_I18nCoverageLocale_JsonTranslated;
+  jsonTotal: Shared_I18nCoverageLocale_JsonTotal;
+  contentPresent: Shared_I18nCoverageLocale_ContentPresent;
+  contentTotal: Shared_I18nCoverageLocale_ContentTotal;
+  definiteGaps: Shared_I18nCoverageLocale_DefiniteGaps;
+  softGaps: Shared_I18nCoverageLocale_SoftGaps;
+  missingContent: Shared_I18nCoverageLocale_MissingContent;
+};
+
+/**
+ * Shared - I18n Coverage Report.
+ *
+ * @since 0.21.0
+ */
+export type Shared_I18nCoverageReport_Locales = Shared_I18nCoverageLocale[];
+
+export type Shared_I18nCoverageReport = {
+  locales: Shared_I18nCoverageReport_Locales;
+};

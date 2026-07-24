@@ -1,8 +1,8 @@
 import type {
-  Shared_GeneratorRunResult as SharedGeneratorRunResult,
-  Shared_NovaConfig as SharedNovaConfig,
-  Shared_NovaConfig_Gitignore as SharedNovaConfigGitignore,
-  Shared_NovaConfig_Gitignore_ProjectExcludes as SharedNovaConfigGitignoreProjectExcludes,
+  Shared_GeneratorRunResult,
+  Shared_NovaConfig,
+  Shared_NovaConfig_Gitignore,
+  Shared_NovaConfig_Gitignore_ProjectExcludes,
 } from '../../../shared.d.ts';
 
 /**
@@ -19,7 +19,7 @@ export type Cli_Generate_MustHaves_Gitignore_Runner_Run_Options = {
   replaceFile?: Cli_Generate_MustHaves_Gitignore_Runner_Run_Options_ReplaceFile;
 };
 
-export type Cli_Generate_MustHaves_Gitignore_Runner_Run_Returns = Promise<SharedGeneratorRunResult>;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_Returns = Promise<Shared_GeneratorRunResult>;
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_Run_CurrentDirectory = string;
 
@@ -39,10 +39,10 @@ export type Cli_Generate_MustHaves_Gitignore_Runner_Run_TemplatePath = string;
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_Run_Content = string | undefined;
 
-export type Cli_Generate_MustHaves_Gitignore_Runner_Run_WorkingFile = SharedNovaConfig;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_WorkingFile = Shared_NovaConfig;
 
-export type Cli_Generate_MustHaves_Gitignore_Runner_Run_Gitignore = SharedNovaConfigGitignore | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_Gitignore = Shared_NovaConfig_Gitignore | undefined;
 
-export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ProjectExcludes = SharedNovaConfigGitignoreProjectExcludes;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ProjectExcludes = Shared_NovaConfig_Gitignore_ProjectExcludes;
 
 export type Cli_Generate_MustHaves_Gitignore_Runner_Run_FinalContent = string;

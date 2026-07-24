@@ -88,8 +88,10 @@ Each test file collapses to a short import-and-invoke. The suite logic lives in 
 
 ```ts title="src/tests/frontmatter.test.ts"
 import { registerFrontmatterSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 registerFrontmatterSuite({
+  vitest,
   enable: 'all',
   requiredFields: ['id', 'title', 'description', 'keywords', 'tags'],
 });
@@ -108,9 +110,11 @@ Checks are off by default and opt-in, so enabling a check on one project never f
 
 ```ts title="src/tests/link.test.ts"
 import { registerLinkSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
 
 // Run a frozen subset instead of every check.
 registerLinkSuite({
+  vitest,
   enable: [
     'link-internal-doc-target-exists',
     'link-self-anchor-exists',

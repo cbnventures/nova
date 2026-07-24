@@ -79,10 +79,10 @@ export class Runner {
    * Iterates over the template literal expressions and reports any ConditionalExpression node
    * found inside the interpolation slots.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Context} context - Context.
    * @param {Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Returns}
    *

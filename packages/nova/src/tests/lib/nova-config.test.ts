@@ -2,11 +2,13 @@ import {
   deepStrictEqual,
   doesNotThrow,
   fail,
+  ok,
   strictEqual,
 } from 'node:assert/strict';
 import {
   mkdir,
   mkdtemp,
+  readdir,
   readFile,
   rm,
   writeFile,
@@ -25,6 +27,87 @@ import { Runner as LibNovaConfig } from '../../lib/nova-config.js';
 import * as toolkit from '../../toolkit/index.js';
 
 import type {
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppGroupOmitsItsPrefix_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppGroupOmitsItsPrefix_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppGroupOmitsItsPrefix_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppGroupOmitsItsPrefix_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_Loaded,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheSecretFlag_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheSecretFlag_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheSecretFlag_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheSecretFlag_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAResolvedNameBreaksGitHubNameFormat_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAResolvedNameBreaksGitHubNameFormat_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAResolvedNameBreaksGitHubNameFormat_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAResolvedNameBreaksGitHubNameFormat_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_Messages,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_OriginalCwd,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_SandboxPrefix,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_SandboxRoot,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_TemporaryDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_WarnsWhenABrowserExposedKeyIsMarkedSecret_Config,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_WarnsWhenABrowserExposedKeyIsMarkedSecret_ConfigPath,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_WarnsWhenABrowserExposedKeyIsMarkedSecret_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_WarnsWhenABrowserExposedKeyIsMarkedSecret_Warnings,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_AcceptsValidOwnerAndRepoWithHyphensDotsAndUnderscores_Config,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_AcceptsValidOwnerAndRepoWithHyphensDotsAndUnderscores_ConfigContents,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_AcceptsValidOwnerAndRepoWithHyphensDotsAndUnderscores_ConfigPath,
@@ -53,7 +136,6 @@ import type {
   Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_LoadedGithub,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_LoadedMergeMethods,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_LoadedPolicies,
-  Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_LoadedRecipes,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_LoadedTopics,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_ProjectDirectory,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesPartialGithubBlockWithMissingOwnerAndRepo_Config,
@@ -153,25 +235,6 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigAgents_TemporaryDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigConstructor_CreatesInstanceWithoutErrors_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigConstructor_InstanceHasExpectedPublicMethods_Config,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_Config,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ConfigContents,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ConfigPath,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_Loaded,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ProjectDirectory,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_OriginalCwd,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_Config,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ConfigContents,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ConfigPath,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedWarnCalls,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_HasReservedKeyWarning,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_Loaded,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_LoggerCustomizeReturn,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_LoggerCustomizeSpy,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ProjectDirectory,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_SandboxPrefix,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_SandboxRoot,
-  Tests_Lib_NovaConfig_SharedNovaConfigDotenv_TemporaryDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigContents,
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigPath,
@@ -266,6 +329,12 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNameFromWorkspaceConfig_LoadedWorkspaces,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNameFromWorkspaceConfig_ProjectDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNameFromWorkspaceConfig_RootWorkspace,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_Recipes,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersInvalidEmailFormat_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersInvalidEmailFormat_ConfigContents,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersInvalidEmailFormat_ConfigPath,
@@ -286,35 +355,10 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersInvalidPlatformEntries_Loaded,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersInvalidPlatformEntries_LoadedProject,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersInvalidPlatformEntries_ProjectDirectory,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_Config,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_ConfigContents,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_ConfigPath,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_Loaded,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_LoadedWorkspaces,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_ProjectDirectory,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_RootRecipes,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_RootWorkspace,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadHandlesNonObjectConfigGracefully_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadHandlesNonObjectConfigGracefully_ConfigPath,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadHandlesNonObjectConfigGracefully_Loaded,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadHandlesNonObjectConfigGracefully_ProjectDirectory,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_Config,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_ConfigContents,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_ConfigPath,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_Loaded,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_LoadedWorkspaces,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_ProjectDirectory,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_RootRecipes,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_RootWorkspace,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_Config,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_ConfigContents,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_ConfigPath,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_Loaded,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_LoadedWorkspaces,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_ProjectDirectory,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_RecipeKeys,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_RootRecipes,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_RootWorkspace,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_ConfigContents,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_ConfigPath,
@@ -323,15 +367,12 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_LoadedWorkspaces,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_ProjectDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_RootWorkspace,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_Config,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_ConfigContents,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_ConfigPath,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_CoreWorkspace,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_Loaded,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_LoadedWorkspaces,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_ProjectDirectory,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_RootRecipes,
-  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_RootWorkspace,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_Recipes,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadReadsConfigFromFilesystem_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadReadsConfigFromFilesystem_ConfigContents,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadReadsConfigFromFilesystem_ConfigData,
@@ -451,6 +492,12 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_OriginalCwd,
   Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SandboxPrefix,
   Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SandboxRoot,
+  Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_DirectoryEntries,
+  Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_FileContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_FilePath,
+  Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_Parsed,
+  Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_ProjectDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SetAcceptsValidConfigAndSaveWritesFile_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SetAcceptsValidConfigAndSaveWritesFile_FileContents,
   Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SetAcceptsValidConfigAndSaveWritesFile_FilePath,
@@ -570,6 +617,40 @@ describe('Shared_NovaConfig set and save', async () => {
     strictEqual(parsedProjectName['slug'], 'test-project');
     strictEqual(parsedProjectName['title'], 'Test Project');
     strictEqual(parsedProjectDescription['short'], 'A test project.');
+
+    return;
+  });
+
+  it('save skips backup when config file is missing', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_ProjectDirectory = join(sandboxRoot, 'save-missing');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_Config = new LibNovaConfig();
+
+    config.set({
+      project: {
+        name: {
+          slug: 'test-save-missing',
+          title: 'Test Save Missing',
+        },
+      },
+    });
+
+    await config.save(false);
+
+    const filePath: Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_FilePath = join(projectDirectory, 'nova.config.json');
+    const fileContents: Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_FileContents = await readFile(filePath, 'utf-8');
+    const parsed: Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_Parsed = JSON.parse(fileContents);
+
+    strictEqual(typeof parsed['project'], 'object');
+
+    // No backup file should exist because there was nothing to back up.
+    const directoryEntries: Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SaveSkipsBackupWhenConfigFileIsMissing_DirectoryEntries = await readdir(projectDirectory);
+
+    deepStrictEqual(directoryEntries, ['nova.config.json']);
 
     return;
   });
@@ -1059,32 +1140,44 @@ describe('Shared_NovaConfig load', async () => {
     return;
   });
 
-  it('load parses recipes from workspace config', async () => {
-    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_ProjectDirectory = join(sandboxRoot, 'recipes');
+  it('load parses the unified recipes block', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_ProjectDirectory = join(sandboxRoot, 'unified-recipes');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_ConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_ConfigContents = JSON.stringify({
-      workspaces: {
-        '.': {
-          name: 'project',
-          role: 'project',
-          policy: 'freezable',
-          recipes: {
-            'sync-identity': [true],
-            'normalize-dependencies': [
-              true,
-              {
-                pinDependencyVersions: true,
-              },
-            ],
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_ConfigContents = JSON.stringify({
+      recipes: {
+        'github': {
+          'sync-identity': {
+            enabled: true,
+          },
+          'sync-features': {
+            enabled: false,
           },
         },
-        'packages/core': {
-          name: '@test/core',
-          role: 'package',
-          policy: 'distributable',
+        'license': {
+          'update-copyright': {
+            enabled: true,
+          },
+        },
+        'read-me': {
+          'update-badges': {
+            enabled: true,
+          },
+        },
+        'package-json': {
+          '.': {
+            'cleanup': {
+              enabled: true,
+            },
+            'normalize-dependencies': {
+              enabled: true,
+              settings: {
+                pinDependencyVersions: true,
+              },
+            },
+          },
         },
       },
     }, null, 2);
@@ -1093,41 +1186,100 @@ describe('Shared_NovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_Config = new LibNovaConfig();
-    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_Loaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_Loaded = await config.load();
 
-    const loadedWorkspaces: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_LoadedWorkspaces = loaded['workspaces'];
+    const recipes: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_Recipes = loaded['recipes'];
 
-    if (loadedWorkspaces === undefined) {
-      fail('Expected workspaces to be defined');
+    if (recipes === undefined) {
+      fail('Expected recipes to be defined');
     }
 
-    const rootWorkspace: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_RootWorkspace = loadedWorkspaces['.'];
-
-    if (rootWorkspace === undefined) {
-      fail('Expected root workspace to be defined');
-    }
-
-    const coreWorkspace: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_CoreWorkspace = loadedWorkspaces['packages/core'];
-
-    if (coreWorkspace === undefined) {
-      fail('Expected packages/core workspace to be defined');
-    }
-
-    const rootRecipes: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesRecipesFromWorkspaceConfig_RootRecipes = rootWorkspace['recipes'];
-
-    if (rootRecipes === undefined) {
-      fail('Expected root workspace recipes to be defined');
-    }
-
-    deepStrictEqual(rootRecipes['sync-identity'], [true]);
-    deepStrictEqual(rootRecipes['normalize-dependencies'], [
-      true,
-      {
-        pinDependencyVersions: true,
+    deepStrictEqual(recipes['github'], {
+      'sync-features': {
+        enabled: false,
       },
-    ]);
-    strictEqual(coreWorkspace['recipes'], undefined);
+      'sync-identity': {
+        enabled: true,
+      },
+    });
+    deepStrictEqual(recipes['license'], {
+      'update-copyright': {
+        enabled: true,
+      },
+    });
+    deepStrictEqual(recipes['read-me'], {
+      'update-badges': {
+        enabled: true,
+      },
+    });
+    deepStrictEqual(recipes['package-json'], {
+      '.': {
+        'cleanup': {
+          enabled: true,
+        },
+        'normalize-dependencies': {
+          enabled: true,
+          settings: {
+            pinDependencyVersions: true,
+          },
+        },
+      },
+    });
+
+    return;
+  });
+
+  it('load drops malformed entries in the unified recipes block', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_ProjectDirectory = join(sandboxRoot, 'unified-recipes-malformed');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_ConfigContents = JSON.stringify({
+      recipes: {
+        'github': {
+          'sync-identity': {
+            enabled: 'yes',
+          },
+          'sync-features': {
+            enabled: true,
+            settings: {
+              good: true,
+              bad: 'no',
+            },
+          },
+          'not-a-recipe': {
+            enabled: true,
+          },
+        },
+        'license': {},
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_Loaded = await config.load();
+
+    const recipes: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsMalformedEntriesInTheUnifiedRecipesBlock_Recipes = loaded['recipes'];
+
+    if (recipes === undefined) {
+      fail('Expected recipes to be defined');
+    }
+
+    deepStrictEqual(recipes['github'], {
+      'sync-features': {
+        enabled: true,
+        settings: {
+          good: true,
+        },
+      },
+    });
+    strictEqual(recipes['license'], undefined);
+    strictEqual(recipes['read-me'], undefined);
 
     return;
   });
@@ -1235,172 +1387,6 @@ describe('Shared_NovaConfig load', async () => {
 
     strictEqual(rootWorkspace['displayName'], undefined);
     strictEqual(coreWorkspace['displayName'], undefined);
-
-    return;
-  });
-
-  it('load ignores invalid recipe tuples', async () => {
-    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_ProjectDirectory = join(sandboxRoot, 'recipes-invalid');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_ConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_ConfigContents = JSON.stringify({
-      workspaces: {
-        '.': {
-          name: 'project',
-          role: 'project',
-          policy: 'freezable',
-          recipes: {
-            'sync-identity': 'yes',
-            'normalize-modules': [],
-            'normalize-bundler': [true],
-          },
-        },
-      },
-    }, null, 2);
-
-    await writeFile(configPath, configContents, 'utf-8');
-
-    process.chdir(projectDirectory);
-
-    const config: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_Config = new LibNovaConfig();
-    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_Loaded = await config.load();
-
-    const loadedWorkspaces: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_LoadedWorkspaces = loaded['workspaces'];
-
-    if (loadedWorkspaces === undefined) {
-      fail('Expected workspaces to be defined');
-    }
-
-    const rootWorkspace: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_RootWorkspace = loadedWorkspaces['.'];
-
-    if (rootWorkspace === undefined) {
-      fail('Expected root workspace to be defined');
-    }
-
-    const rootRecipes: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresInvalidRecipeTuples_RootRecipes = rootWorkspace['recipes'];
-
-    if (rootRecipes === undefined) {
-      fail('Expected root workspace recipes to be defined');
-    }
-
-    strictEqual(rootRecipes['sync-identity'], undefined);
-    strictEqual(rootRecipes['normalize-modules'], undefined);
-    deepStrictEqual(rootRecipes['normalize-bundler'], [true]);
-
-    return;
-  });
-
-  it('load ignores unknown recipe names', async () => {
-    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_ProjectDirectory = join(sandboxRoot, 'recipes-unknown');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_ConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_ConfigContents = JSON.stringify({
-      workspaces: {
-        '.': {
-          name: 'project',
-          role: 'project',
-          policy: 'freezable',
-          recipes: {
-            'unknown-recipe': [true],
-            'sync-identity': [true],
-          },
-        },
-      },
-    }, null, 2);
-
-    await writeFile(configPath, configContents, 'utf-8');
-
-    process.chdir(projectDirectory);
-
-    const config: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_Config = new LibNovaConfig();
-    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_Loaded = await config.load();
-
-    const loadedWorkspaces: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_LoadedWorkspaces = loaded['workspaces'];
-
-    if (loadedWorkspaces === undefined) {
-      fail('Expected workspaces to be defined');
-    }
-
-    const rootWorkspace: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_RootWorkspace = loadedWorkspaces['.'];
-
-    if (rootWorkspace === undefined) {
-      fail('Expected root workspace to be defined');
-    }
-
-    const rootRecipes: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_RootRecipes = rootWorkspace['recipes'];
-
-    if (rootRecipes === undefined) {
-      fail('Expected root workspace recipes to be defined');
-    }
-
-    const recipeKeys: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadIgnoresUnknownRecipeNames_RecipeKeys = Object.keys(rootRecipes);
-
-    strictEqual(recipeKeys.length, 1);
-    deepStrictEqual(rootRecipes['sync-identity'], [true]);
-
-    return;
-  });
-
-  it('load filters non-boolean recipe settings', async () => {
-    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_ProjectDirectory = join(sandboxRoot, 'recipes-settings-invalid');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_ConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_ConfigContents = JSON.stringify({
-      workspaces: {
-        '.': {
-          name: 'project',
-          role: 'project',
-          policy: 'freezable',
-          recipes: {
-            'normalize-dependencies': [
-              true,
-              {
-                pinDependencyVersions: true,
-                pinDevDependencyVersions: 'yes',
-              },
-            ],
-          },
-        },
-      },
-    }, null, 2);
-
-    await writeFile(configPath, configContents, 'utf-8');
-
-    process.chdir(projectDirectory);
-
-    const config: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_Config = new LibNovaConfig();
-    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_Loaded = await config.load();
-
-    const loadedWorkspaces: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_LoadedWorkspaces = loaded['workspaces'];
-
-    if (loadedWorkspaces === undefined) {
-      fail('Expected workspaces to be defined');
-    }
-
-    const rootWorkspace: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_RootWorkspace = loadedWorkspaces['.'];
-
-    if (rootWorkspace === undefined) {
-      fail('Expected root workspace to be defined');
-    }
-
-    const rootRecipes: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadFiltersNonBooleanRecipeSettings_RootRecipes = rootWorkspace['recipes'];
-
-    if (rootRecipes === undefined) {
-      fail('Expected root workspace recipes to be defined');
-    }
-
-    deepStrictEqual(rootRecipes['normalize-dependencies'], [
-      true,
-      {
-        pinDependencyVersions: true,
-      },
-    ]);
 
     return;
   });
@@ -2195,7 +2181,7 @@ describe('parseWorkflows (via load)', async () => {
       workflows: [
         {
           template: 'deploy',
-          suffix: 'production',
+          name: 'production',
           triggers: ['release'],
           settings: {
             region: 'us-east-1',
@@ -2204,7 +2190,7 @@ describe('parseWorkflows (via load)', async () => {
         },
         {
           'template': 'deploy',
-          'suffix': 'staging',
+          'name': 'staging',
           'triggers': ['push'],
           'depends-on': ['deploy-production'],
         },
@@ -2269,7 +2255,7 @@ describe('parseWorkflows (via load)', async () => {
         },
         {
           template: 'test',
-          suffix: 'valid',
+          name: 'valid',
           triggers: ['push'],
         },
       ],
@@ -2312,11 +2298,11 @@ describe('parseWorkflows (via load)', async () => {
       workflows: [
         {
           template: 'deploy',
-          suffix: 'no-triggers',
+          name: 'no-triggers',
         },
         {
           template: 'test',
-          suffix: 'valid',
+          name: 'valid',
           triggers: ['push'],
         },
       ],
@@ -2358,12 +2344,12 @@ describe('parseWorkflows (via load)', async () => {
       workflows: [
         {
           template: 'publish-to-npm',
-          suffix: 'primary',
+          name: 'primary',
           triggers: ['release'],
         },
         {
           'template': 'publish-to-npm',
-          'suffix': 'secondary',
+          'name': 'secondary',
           'triggers': ['workflow-run-success'],
           'depends-on': ['publish-to-npm-primary'],
         },
@@ -2405,7 +2391,7 @@ describe('parseWorkflows (via load)', async () => {
     const configContents: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadAllowsEmptyTriggersArray_ConfigContents = JSON.stringify({
       workflows: [{
         template: 'check-sponsor-gated-issues',
-        suffix: 'empty-triggers',
+        name: 'empty-triggers',
         triggers: [],
       }],
     }, null, 2);
@@ -2455,7 +2441,7 @@ describe('parseWorkflows (via load)', async () => {
         },
         {
           template: 'valid-entry',
-          suffix: 'valid-entry',
+          name: 'valid-entry',
           triggers: ['release'],
         },
       ],
@@ -2519,7 +2505,7 @@ describe('parseWorkflows (via load)', async () => {
       workflows: [{
         id: 'settings-test',
         template: 'deploy',
-        suffix: 'settings-test',
+        name: 'settings-test',
         triggers: ['release'],
         settings: {
           region: 'us-east-1',
@@ -2619,11 +2605,6 @@ describe('parseGithub (via load)', async () => {
       github: {
         owner: 'acme-org',
         repo: 'my-repo',
-        recipes: {
-          'sync-identity': true,
-          'sync-features': false,
-          'sync-policies': true,
-        },
         topics: [
           'typescript',
           'cli',
@@ -2663,16 +2644,6 @@ describe('parseGithub (via load)', async () => {
 
     strictEqual(loadedGithub['owner'], 'acme-org');
     strictEqual(loadedGithub['repo'], 'my-repo');
-
-    const loadedRecipes: Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_LoadedRecipes = loadedGithub['recipes'];
-
-    if (loadedRecipes === undefined) {
-      fail('Expected github.recipes to be defined');
-    }
-
-    strictEqual(loadedRecipes['sync-identity'], true);
-    strictEqual(loadedRecipes['sync-features'], false);
-    strictEqual(loadedRecipes['sync-policies'], true);
 
     const loadedTopics: Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_LoadedTopics = loadedGithub['topics'];
 
@@ -3042,171 +3013,6 @@ describe('Shared_NovaConfig agents', async () => {
   return;
 });
 
-describe('Shared_NovaConfig dotenv', async () => {
-  const originalCwd: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_OriginalCwd = process.cwd();
-  const temporaryDirectory: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_TemporaryDirectory = tmpdir();
-  const sandboxPrefix: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_SandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_SandboxRoot = await mkdtemp(sandboxPrefix);
-
-  afterAll(async () => {
-    process.chdir(originalCwd);
-
-    await rm(sandboxRoot, {
-      recursive: true,
-      force: true,
-    });
-
-    return;
-  });
-
-  it('drops invalid keys and defaults missing values', async () => {
-    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ProjectDirectory = join(sandboxRoot, 'dotenv-variables');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_ConfigContents = JSON.stringify({
-      project: {
-        name: {
-          slug: 'demo',
-        },
-      },
-      workspaces: {
-        './': {
-          name: 'demo-project',
-          role: 'project',
-          policy: 'freezable',
-          dotenv: {
-            variables: [
-              {
-                key: 'API_KEY',
-                defaultValue: 'abc',
-              },
-              {
-                key: 'NO_DEFAULT',
-              },
-              {
-                key: 'lower_case',
-                defaultValue: 'x',
-              },
-            ],
-          },
-        },
-      },
-    }, null, 2);
-
-    await writeFile(configPath, configContents, 'utf-8');
-
-    process.chdir(projectDirectory);
-
-    const config: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_Config = new LibNovaConfig();
-    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_DropsInvalidKeysAndDefaultsMissingValues_Loaded = await config.load();
-
-    deepStrictEqual(loaded['workspaces'], {
-      './': {
-        role: 'project',
-        policy: 'freezable',
-        name: 'demo-project',
-        dotenv: {
-          variables: [
-            {
-              key: 'API_KEY',
-              defaultValue: 'abc',
-            },
-            {
-              key: 'NO_DEFAULT',
-              defaultValue: '',
-            },
-          ],
-        },
-      },
-    });
-
-    return;
-  });
-
-  it('rejects reserved keys', async () => {
-    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ProjectDirectory = join(sandboxRoot, 'dotenv-reserved-keys');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_ConfigContents = JSON.stringify({
-      project: {
-        name: {
-          slug: 'demo',
-        },
-      },
-      workspaces: {
-        './': {
-          name: 'demo-project',
-          role: 'project',
-          policy: 'freezable',
-          dotenv: {
-            variables: [
-              {
-                key: 'NODE_ENV',
-                defaultValue: 'production',
-              },
-              {
-                key: 'API_KEY',
-                defaultValue: 'abc',
-              },
-            ],
-          },
-        },
-      },
-    }, null, 2);
-
-    await writeFile(configPath, configContents, 'utf-8');
-
-    process.chdir(projectDirectory);
-
-    const customizedLoggerMock: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedLoggerMock = {
-      debug: vi.fn(),
-      dev: vi.fn(),
-      info: vi.fn(),
-      warn: vi.fn(),
-      error: vi.fn(),
-    };
-
-    const loggerCustomizeSpy: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_LoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_LoggerCustomizeReturn);
-
-    const config: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_Config = new LibNovaConfig();
-    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_Loaded = await config.load();
-
-    deepStrictEqual(loaded['workspaces'], {
-      './': {
-        role: 'project',
-        policy: 'freezable',
-        name: 'demo-project',
-        dotenv: {
-          variables: [{
-            key: 'API_KEY',
-            defaultValue: 'abc',
-          }],
-        },
-      },
-    });
-
-    const customizedWarnCalls: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_CustomizedWarnCalls = customizedLoggerMock['warn']['mock']['calls'];
-
-    const hasReservedKeyWarning: Tests_Lib_NovaConfig_SharedNovaConfigDotenv_RejectsReservedKeys_HasReservedKeyWarning = customizedWarnCalls.some((call) => (
-      typeof call[0] === 'string'
-      && call[0].includes('NODE_ENV') === true
-      && call[0].includes('reserved') === true
-    ));
-
-    strictEqual(hasReservedKeyWarning, true);
-
-    loggerCustomizeSpy.mockRestore();
-
-    return;
-  });
-
-  return;
-});
-
 describe('Shared_NovaConfig github issue template', async () => {
   const originalCwd: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_OriginalCwd = process.cwd();
   const temporaryDirectory: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_TemporaryDirectory = tmpdir();
@@ -3262,6 +3068,822 @@ describe('Shared_NovaConfig github issue template', async () => {
         'docker.yml',
       ],
     });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironment (via Load).
+ *
+ * @since 0.21.0
+ */
+describe('parseEnvironment (via load)', async () => {
+  const originalCwd: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_TemporaryDirectory = tmpdir();
+  const sandboxPrefix: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_SandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_SandboxRoot = await mkdtemp(sandboxPrefix);
+
+  afterAll(async () => {
+    process.chdir(originalCwd);
+
+    await rm(sandboxRoot, {
+      recursive: true,
+      force: true,
+    });
+
+    return;
+  });
+
+  it('errors when an app value omits the secret flag', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheSecretFlag_ProjectDirectory = join(sandboxRoot, 'env-secret-omitted');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheSecretFlag_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [{
+              key: 'K',
+              buildOnly: false,
+            }],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheSecretFlag_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheSecretFlag_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('"K"') === true && message.includes('secret') === true), `expected a secret-required error naming K; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when an app value omits the buildOnly flag', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_ProjectDirectory = join(sandboxRoot, 'env-buildonly-omitted');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [{
+              key: 'K',
+              secret: false,
+            }],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('"K"') === true && message.includes('buildOnly') === true), `expected a buildOnly-required error naming K; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when a secret value carries a defaultValue', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_ProjectDirectory = join(sandboxRoot, 'env-secret-default');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [{
+              key: 'K',
+              secret: true,
+              buildOnly: false,
+              defaultValue: 'oops',
+            }],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('"K"') === true && message.includes('defaultValue') === true), `expected a defaultValue-on-secret error naming K; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when an app group omits its prefix', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppGroupOmitsItsPrefix_ProjectDirectory = join(sandboxRoot, 'env-missing-prefix');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppGroupOmitsItsPrefix_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/a': {
+            variables: [{
+              key: 'K',
+              secret: false,
+              buildOnly: false,
+            }],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppGroupOmitsItsPrefix_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppGroupOmitsItsPrefix_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('./apps/a') === true && message.includes('prefix') === true), `expected a missing-prefix error naming the app; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when two prefixes overlap', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_ProjectDirectory = join(sandboxRoot, 'env-overlap');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+        './apps/b': {
+          name: 'app-b',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/a': {
+            prefix: 'CBN_',
+            variables: [],
+          },
+          './apps/b': {
+            prefix: 'CBN_SUB_',
+            variables: [],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoPrefixesOverlap_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('CBN_SUB_') === true && message.includes('overlap') === true), `expected an overlap error naming both prefixes; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when a prefix uses the reserved GITHUB_ namespace', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_ProjectDirectory = join(sandboxRoot, 'env-reserved-prefix');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      environment: {
+        global: {
+          prefix: 'GITHUB_',
+          variables: [],
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('GITHUB_') === true && message.includes('reserved') === true), `expected a reserved-prefix error; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when a key starts with its own prefix', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_ProjectDirectory = join(sandboxRoot, 'env-double-prefix');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [{
+              key: 'A_KEY',
+              secret: false,
+              buildOnly: false,
+            }],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('"A_KEY"') === true && message.includes('prefix') === true), `expected a double-prefix error naming A_KEY; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when a resolved name breaks GitHub name format', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAResolvedNameBreaksGitHubNameFormat_ProjectDirectory = join(sandboxRoot, 'env-bad-format');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAResolvedNameBreaksGitHubNameFormat_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [{
+              key: 'bad-key',
+              secret: false,
+              buildOnly: false,
+            }],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAResolvedNameBreaksGitHubNameFormat_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAResolvedNameBreaksGitHubNameFormat_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('A_bad-key') === true && message.includes('GitHub') === true), `expected a GitHub-format error naming the resolved name; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when an app path matches no workspace', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_ProjectDirectory = join(sandboxRoot, 'env-unknown-app');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/nope': {
+            prefix: 'N_',
+            variables: [],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_Loaded = await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('./apps/nope') === true && message.includes('workspace') === true), `expected an unknown-app error naming the path; got: ${messages.join(' | ')}`);
+
+    ok(JSON.stringify(loaded).includes('./apps/nope') === false, `expected the unknown app path to be excluded from the parsed config; got: ${JSON.stringify(loaded['environment'])}`);
+
+    return;
+  });
+
+  it('errors when a workflow name matches no configured workflow', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_ProjectDirectory = join(sandboxRoot, 'env-unknown-workflow');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workflows: [{
+        template: 'lock-inactive-issues',
+        name: 'ci',
+        triggers: ['schedule-weekly'],
+      }],
+      environment: {
+        workflows: {
+          nope: {
+            prefix: 'N_',
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('"nope"') === true && message.includes('workflow') === true), `expected an unknown-workflow error naming nope; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when two workflows share the referenced name', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_ProjectDirectory = join(sandboxRoot, 'env-duplicate-workflow');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workflows: [
+        {
+          template: 'lock-inactive-issues',
+          name: 'dup',
+          triggers: ['schedule-weekly'],
+        },
+        {
+          template: 'check-sponsor-gated-issues',
+          name: 'dup',
+          triggers: ['issues'],
+        },
+      ],
+      environment: {
+        workflows: {
+          dup: {
+            prefix: 'D_',
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('"dup"') === true && message.includes('more than one') === true), `expected a duplicate-workflow error naming dup; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when a deploy target needs an account credential without a global prefix', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix_ProjectDirectory = join(sandboxRoot, 'env-account-cred-no-global');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workflows: [{
+        template: 'publish',
+        name: 'sites',
+        triggers: ['release'],
+        deploy: [{
+          to: 'cloudflare-workers',
+          path: './apps/a',
+        }],
+      }],
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/a': {
+            prefix: 'A_',
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAccountCredentialWithoutAGlobalPrefix_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('CLOUDFLARE') === true && message.includes('global') === true), `expected an account-credential error naming a Cloudflare credential and global; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when a deploy target needs an app credential without an app prefix', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix_ProjectDirectory = join(sandboxRoot, 'env-app-cred-no-app-prefix');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workflows: [{
+        template: 'publish',
+        name: 'sites',
+        triggers: ['release'],
+        deploy: [{
+          to: 'vercel-nextjs',
+          path: './apps/a',
+        }],
+      }],
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        global: {
+          prefix: 'G_',
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenADeployTargetNeedsAnAppCredentialWithoutAnAppPrefix_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('VERCEL_PROJECT_ID') === true && message.includes('./apps/a') === true), `expected an app-credential error naming VERCEL_PROJECT_ID and the app path; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when an app declares a runtime value but deploys to no server-bearing target', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_ProjectDirectory = join(sandboxRoot, 'env-runtime-no-server');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workflows: [{
+        template: 'publish',
+        name: 'sites',
+        triggers: ['release'],
+        deploy: [{
+          to: 'npm',
+          path: './apps/a',
+        }],
+      }],
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [{
+              key: 'REGION',
+              secret: false,
+              buildOnly: false,
+            }],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('./apps/a') === true && message.includes('server-bearing') === true), `expected a runtime-value-without-server error naming the app; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('warns when a browser-exposed key is marked secret', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_WarnsWhenABrowserExposedKeyIsMarkedSecret_ProjectDirectory = join(sandboxRoot, 'env-public-secret');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_WarnsWhenABrowserExposedKeyIsMarkedSecret_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [{
+              key: 'PUBLIC_TOKEN',
+              secret: true,
+              buildOnly: true,
+            }],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_WarnsWhenABrowserExposedKeyIsMarkedSecret_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const warnings: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_WarnsWhenABrowserExposedKeyIsMarkedSecret_Warnings = config.diagnostics().filter((diagnostic) => diagnostic['severity'] === 'warning').map((diagnostic) => diagnostic['message']);
+
+    ok(warnings.some((message) => message.includes('"PUBLIC_TOKEN"') === true), `expected a browser-exposed-secret warning naming PUBLIC_TOKEN; got: ${warnings.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when a config-key workflow has no environment workflows entry', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_ProjectDirectory = join(sandboxRoot, 'env-workflow-no-prefix');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    // The environment block is present (opted in) but omits this workflow's entry, so the
+    // partial migration must still surface the config-key-contributor error.
+    await writeFile(configPath, JSON.stringify({
+      workflows: [{
+        template: 'check-sponsor-gated-issues',
+        name: 'sponsor-check',
+        triggers: ['issues'],
+      }],
+      environment: {
+        global: {
+          prefix: 'ACCT_',
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAConfigKeyWorkflowHasNoEnvironmentWorkflowsEntry_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('"sponsor-check"') === true && message.includes('config keys') === true), `expected a config-key-contributor error naming sponsor-check; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('does not error for a config-key workflow with no environment block', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_ProjectDirectory = join(sandboxRoot, 'env-workflow-no-environment');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    // No top-level "environment" block means the repo has not opted into the env model, so
+    // the config-key-contributor check must be skipped entirely (keys fall back to naked names).
+    await writeFile(configPath, JSON.stringify({
+      workflows: [{
+        template: 'check-sponsor-gated-issues',
+        name: 'sponsor-check',
+        triggers: ['issues'],
+      }],
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_DoesNotErrorForAConfigKeyWorkflowWithNoEnvironmentBlock_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.every((message) => message.includes('config keys') === false), `expected no config-key-contributor diagnostic without an environment block; got: ${messages.join(' | ')}`);
+    ok(messages.every((message) => message.includes('"workflows" entry') === false), `expected no environment.workflows-entry diagnostic without an environment block; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when two keys in one namespace collide case-folded', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded_ProjectDirectory = join(sandboxRoot, 'env-within-prefix-duplicate');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(configPath, JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [
+              {
+                key: 'AMAZON_REGION',
+                secret: false,
+                buildOnly: true,
+              },
+              {
+                key: 'amazon_region',
+                secret: false,
+                buildOnly: true,
+              },
+            ],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoKeysInOneNamespaceCollideCaseFolded_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('duplicates another') === true), `expected a within-namespace duplicate error; got: ${messages.join(' | ')}`);
+
+    return;
+  });
+
+  it('errors when two format valid keys in one namespace collide exactly', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_ProjectDirectory = join(sandboxRoot, 'env-within-prefix-exact-duplicate');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_ConfigPath = join(projectDirectory, 'nova.config.json');
+
+    // Both keys are valid SCREAMING_SNAKE, so neither trips the format check; the second
+    // resolves to the same case-folded GitHub name and must fail only the collision branch.
+    await writeFile(configPath, JSON.stringify({
+      workspaces: {
+        './apps/a': {
+          name: 'app-a',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      environment: {
+        apps: {
+          './apps/a': {
+            prefix: 'A_',
+            variables: [
+              {
+                key: 'AMAZON_REGION',
+                secret: false,
+                buildOnly: true,
+              },
+              {
+                key: 'AMAZON_REGION',
+                secret: false,
+                buildOnly: true,
+              },
+            ],
+          },
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_Config = new LibNovaConfig();
+
+    await config.load();
+
+    const messages: Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoFormatValidKeysInOneNamespaceCollideExactly_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('duplicates another') === true), `expected a within-namespace duplicate error; got: ${messages.join(' | ')}`);
 
     return;
   });

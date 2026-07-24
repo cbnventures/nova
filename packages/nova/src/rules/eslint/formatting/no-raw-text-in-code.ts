@@ -80,10 +80,10 @@ export class Runner {
    * Checks whether the JSXText node is a direct child of a code
    * JSXElement and reports it so the text is wrapped in a curly-brace expression.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Context} context - Context.
    * @param {Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Node}    node    - Node.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Returns}
    *
@@ -97,6 +97,7 @@ export class Runner {
       && parent.type === 'JSXElement'
       && parent.openingElement.name.type === 'JSXIdentifier'
       && parent.openingElement.name.name === 'code'
+      && node.value.trim() !== ''
     ) {
       context.report({
         node,

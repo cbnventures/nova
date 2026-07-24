@@ -1,5 +1,5 @@
-import { promises as fs } from 'fs';
-import { join, relative, resolve } from 'path';
+import { promises as fs } from 'node:fs';
+import { join, relative, resolve } from 'node:path';
 
 import prompts from 'prompts';
 
@@ -164,7 +164,8 @@ export async function detectMonorepoContext(currentWorkingDirectory: Lib_Scaffol
 
   if (parsedPackageJson['workspaces'] !== undefined) {
     return {
-      context: 'workspace', root: currentWorkingDirectory,
+      context: 'workspace',
+      root: currentWorkingDirectory,
     };
   }
 
@@ -340,6 +341,19 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
     });
   }
 
+  /**
+   * Lib - Scaffold - Prompt Scaffold Options - Resolve Initial Output.
+   *
+   * Computes the initial output directory value shown in the prompt by combining the
+   * resolved workspace name into an apps-relative path.
+   *
+   * @param {Lib_Scaffold_PromptScaffoldOptions_InitialPrev}    _initialPrev   - _initial prev.
+   * @param {Lib_Scaffold_PromptScaffoldOptions_InitialAnswers} initialAnswers - Initial answers.
+   *
+   * @private
+   *
+   * @since 0.21.0
+   */
   const resolveInitialOutput: Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput = (_initialPrev: Lib_Scaffold_PromptScaffoldOptions_InitialPrev, initialAnswers: Lib_Scaffold_PromptScaffoldOptions_InitialAnswers) => {
     const resolvedInitialWorkspaceName: Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput_ResolvedInitialWorkspaceName = (workspaceNameValue ?? initialAnswers['workspaceName']) as Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput_ResolvedInitialWorkspaceName;
 
@@ -602,31 +616,49 @@ export async function promptPostScaffoldGenerators(outputDirectory: Lib_Scaffold
 
   const generatorChoices: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoices = [
     {
-      title: 'editorconfig', description: 'Consistent coding styles across editors', value: 'editorconfig',
+      title: 'editorconfig',
+      description: 'Consistent coding styles across editors',
+      value: 'editorconfig',
     },
     {
-      title: 'gitignore', description: 'Exclude build artifacts and dependencies from Git', value: 'gitignore',
+      title: 'gitignore',
+      description: 'Exclude build artifacts and dependencies from Git',
+      value: 'gitignore',
     },
     {
-      title: 'dotenv', description: 'Environment variable templates for local development', value: 'dotenv',
+      title: 'dotenv',
+      description: 'Environment variable templates for local development',
+      value: 'dotenv',
     },
     {
-      title: 'license', description: 'Open source license file for your project', value: 'license',
+      title: 'license',
+      description: 'Open source license file for your project',
+      value: 'license',
     },
     {
-      title: 'read-me', description: 'Project README with badges and documentation links', value: 'read-me',
+      title: 'read-me',
+      description: 'Project README with badges and documentation links',
+      value: 'read-me',
     },
     {
-      title: 'agent-conventions', description: 'Coding agent rules and conventions', value: 'agent-conventions',
+      title: 'agent-conventions',
+      description: 'Coding agent rules and conventions',
+      value: 'agent-conventions',
     },
     {
-      title: 'funding', description: 'GitHub sponsor and funding links', value: 'funding',
+      title: 'funding',
+      description: 'GitHub sponsor and funding links',
+      value: 'funding',
     },
     {
-      title: 'issue-template', description: 'GitHub issue forms for bugs, features, and support', value: 'issue-template',
+      title: 'issue-template',
+      description: 'GitHub issue forms for bugs, features, and support',
+      value: 'issue-template',
     },
     {
-      title: 'workflows', description: 'GitHub Actions CI/CD automation', value: 'workflows',
+      title: 'workflows',
+      description: 'GitHub Actions CI/CD automation',
+      value: 'workflows',
     },
   ];
 
@@ -768,9 +800,9 @@ async function loadGenerator(name: Lib_Scaffold_LoadGenerator_Name): Lib_Scaffol
     }
 
     case 'workflows': {
-      const workflowsModule: Lib_Scaffold_LoadGenerator_WorkflowsModule = await import('../cli/generate/github/workflows.js');
+      const workflowsModule: Lib_Scaffold_LoadGenerator_WorkflowsModule = await import('../cli/generate/github/workflows-blueprint.js');
 
-      return (options) => workflowsModule['Runner'].run(options);
+      return (options) => workflowsModule['Runner'].generate(options);
     }
 
     default: {

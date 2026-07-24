@@ -1,0 +1,502 @@
+{
+  "home.layout.description": {
+    "message": "Nagsasalin ang Envoy sa pagitan ng mga sistemang hindi kailanman idinisenyong magkaunawaan. Walang iisang format. Walang iisang protocol. Paghahatid lang.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Envoy - Dumarating ang mga Mensahe",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Imprastraktura ng Integrasyon",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Dumarating ang mga mensahe. Iyon ang buong produkto.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Nagsasalin ang Envoy sa pagitan ng mga sistemang hindi kailanman idinisenyong magkaunawaan. Walang iisang format. Walang iisang protocol. Paghahatid lang.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Basahin ang Docs",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Tingnan sa Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.dispatch.description": {
+    "message": "Matalinong routing engine. Sinusuri nito ang bawat papasok na payload at iniruruta ito ayon sa nilalaman, pinagmulan, kalubhaan, o custom na rules. Nananalo ang unang tugma. Walang kalabuan.",
+    "description": "Front page Features card description for Dispatch"
+  },
+  "home.features.courier.description": {
+    "message": "Retry engine na may garantisadong paghahatid. Exponential backoff na may jitter, dead-letter queues para sa mga mensaheng hindi na darating, at resibo ng paghahatid para sa bawat pagtatangka.",
+    "description": "Front page Features card description for Courier"
+  },
+  "home.features.parcel.description": {
+    "message": "Payload transformation pipeline. Muling isinusulat ang mga mensahe sa pagitan ng mga format — JSON papuntang JSON, JSON papuntang plaintext, XML papuntang JSON. Field mapping, lossy at lossless na mga mode.",
+    "description": "Front page Features card description for Parcel"
+  },
+  "home.features.cipher.description": {
+    "message": "Authentication gateway. HMAC-SHA256 signatures, bearer tokens, at IP allowlists. Bini-verify nito ang pagkakakilanlan ng pinagmulan bago pa man makarating ang kahit isang byte sa transformation pipeline.",
+    "description": "Front page Features card description for Cipher"
+  },
+  "home.features.ledger.description": {
+    "message": "Kumpletong audit trail ng paghahatid. Ang bawat mensaheng natanggap, na-transform, na-route, at naihatid ay naitatala sa isang append-only log na may configurable na retention policy.",
+    "description": "Front page Features card description for Ledger"
+  },
+  "home.features.embassy.description": {
+    "message": "Reverse proxy na nagmamaskara sa origin. Inilalayo nito ang iyong internal services sa public internet. Umaabot sa Embassy ang mga panlabas na pinagmulan. Hindi kailanman nalalaman ng internal services na may nasa labas.",
+    "description": "Front page Features card description for Embassy"
+  },
+  "home.stats.heading": {
+    "message": "Batay sa mga Numero",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.translators.label": {
+    "message": "Mga tagasalin ng protocol",
+    "description": "Front page Stats label for protocol translator count"
+  },
+  "home.stats.image.label": {
+    "message": "Laki ng Vial image",
+    "description": "Front page Stats label for Vial image size"
+  },
+  "home.stats.dependencies.label": {
+    "message": "Mga panlabas na dependency",
+    "description": "Front page Stats label for external dependency count"
+  },
+  "home.stats.latency.label": {
+    "message": "Latency ng relay",
+    "description": "Front page Stats label for relay latency"
+  },
+  "home.spotlight.heading": {
+    "message": "Isalin, Iruta, Ihatid",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Nag-trigger ng alert ang Glassboard. Isinasalin ng Envoy ang payload, iniruruta ito sa tamang Canary topic, at kinukumpirma ang paghahatid. Walang panig na nakakaalam sa pag-iral ng isa't isa.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Tumanggap ng mga abiso sa paghahatid",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Mga Dispatch mula sa Relay Room",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Mga release note, malalim na pagsusuri sa integrasyon, at paminsan-minsang dispatch mula sa relay room.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Showcase ng mga Envoy block na nagpapakita ng bawat block mula sa docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Bawat block mula sa Envoy preset, na-render gamit ang sample data.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (buo)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Showcase ng mga Block",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Bawat Envoy block, ipinapakita sa iisang lugar.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Rine-render ng page na ito ang bawat block mula sa @cbnventures/docusaurus-preset-nova/blocks gamit ang data mula sa mundo ng Envoy, para makita mo ang hitsura at kilos ng mga ito.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Basahin ang Docs",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Tingnan sa Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (payak)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Maghatid nang walang palabok.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Nagsasalin ang Envoy sa pagitan ng mga sistemang hindi kailanman idinisenyong magkaunawaan. Walang iisang format. Walang iisang protocol. Paghahatid lang.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Magsimula",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (karaniwan)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Mahal ko ang ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (walang prefix)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Mabilis",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Maaangkop",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Libre",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (mabagal na timing)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Ginawa para sa ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "mga developer",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "mga designer",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (walang loop)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Maligayang pagdating sa ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "I-install gamit ang Vial",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "O gamitin ang Spark CLI",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (walang label)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Mabilisang pag-install",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (may mga icon)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Bakit Pinipili ng mga Team ang Envoy",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.dispatch.description": {
+    "message": "Matalinong routing engine. Sinusuri ang mga payload at iniruruta ayon sa nilalaman, pinagmulan, kalubhaan, o custom na rules.",
+    "description": "Showcase Features (with icons) card description for Dispatch"
+  },
+  "showcase.featuresIcons.courier.description": {
+    "message": "Retry engine na may garantisadong paghahatid. Exponential backoff, dead-letter queues, at mga resibo ng paghahatid.",
+    "description": "Showcase Features (with icons) card description for Courier"
+  },
+  "showcase.featuresIcons.parcel.description": {
+    "message": "Payload transformation pipeline. Muling isinusulat ang mga mensahe sa pagitan ng mga format — JSON, XML, plaintext, form-data.",
+    "description": "Showcase Features (with icons) card description for Parcel"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (walang icon, walang heading)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.cipher.description": {
+    "message": "Authentication gateway. HMAC signatures, bearer tokens, at IP allowlists. Bini-verify ang pagkakakilanlan ng pinagmulan bago mag-proseso.",
+    "description": "Showcase Features (no icons) card description for Cipher"
+  },
+  "showcase.featuresNoIcons.ledger.description": {
+    "message": "Append-only na audit trail ng paghahatid. Naitatala ang bawat mensaheng natanggap, na-transform, na-route, at naihatid.",
+    "description": "Showcase Features (no icons) card description for Ledger"
+  },
+  "showcase.featuresNoIcons.embassy.description": {
+    "message": "Reverse proxy na nagmamaskara sa origin. Lubos na inilalayo ang internal services sa public internet.",
+    "description": "Showcase Features (no icons) card description for Embassy"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (anim na item, magkahalong icon)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Lahat sa Iisang Relay",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.dispatch.description": {
+    "message": "Iniruruta ang mga mensahe ayon sa nilalaman, pinagmulan, kalubhaan, o iskedyul. Nananalo ang unang tumugmang relay.",
+    "description": "Showcase Features (six items) card description for Dispatch"
+  },
+  "showcase.featuresSix.courier.description": {
+    "message": "Exponential backoff na may jitter. Dead-letter queues. Mga resibo ng paghahatid. Garantisadong paghahatid.",
+    "description": "Showcase Features (six items) card description for Courier"
+  },
+  "showcase.featuresSix.parcel.description": {
+    "message": "Tina-transform ang mga payload sa pagitan ng anumang dalawang format. Lossy at lossless na mga mode. Field mapping at template rendering.",
+    "description": "Showcase Features (six items) card description for Parcel"
+  },
+  "showcase.featuresSix.cipher.description": {
+    "message": "Ina-authenticate ang bawat papasok na request. HMAC, bearer, at IP allowlist na mga mode. Token rotation na walang downtime.",
+    "description": "Showcase Features (six items) card description for Cipher"
+  },
+  "showcase.featuresSix.ledger.description": {
+    "message": "Itinatala ang bawat state transition. Append-only. Configurable na retention. Mai-e-export sa pamamagitan ng Spoke API.",
+    "description": "Showcase Features (six items) card description for Ledger"
+  },
+  "showcase.featuresSix.embassy.description": {
+    "message": "Reverse proxy na nagtatago sa internal topology. TLS termination. Header stripping. Origin masking.",
+    "description": "Showcase Features (six items) card description for Embassy"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (may heading at description)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Mga Sukatan ng Relay",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Mga pangunahing performance indicator sa lahat ng aktibong relay pipeline.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Latency ng relay (p99)",
+    "description": "Showcase Stats (full) label for relay latency"
+  },
+  "showcase.statsFull.image.label": {
+    "message": "Laki ng Vial image",
+    "description": "Showcase Stats (full) label for Vial image size"
+  },
+  "showcase.statsFull.delivery.label": {
+    "message": "Rate ng paghahatid",
+    "description": "Showcase Stats (full) label for delivery rate"
+  },
+  "showcase.statsFull.translators.label": {
+    "message": "Mga tagasalin ng protocol",
+    "description": "Showcase Stats (full) label for protocol translator count"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (walang heading)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.translators.label": {
+    "message": "Mga Tagasalin",
+    "description": "Showcase Stats (no heading) label for translators"
+  },
+  "showcase.statsNoHeading.dependencies.label": {
+    "message": "Mga Dependency",
+    "description": "Showcase Stats (no heading) label for dependencies"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "Mga Sub-tool",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (may code)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Mabilisang Simula",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Tatlong command para makarating mula sa zero patungo sa gumaganang relay.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (may text)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Paano Ito Gumagana",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Binabasa ng Envoy ang iyong relay manifest, ini-initialize ang Cipher para sa authentication, kino-compile ang mga transformation rule ng Parcel, at irinerehistro ang mga Dispatch route. Dumadaloy ang mga mensahe sa buong pipeline sa loob ng wala pang limang millisecond.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (may description)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Mga Dispatch mula sa Relay Room",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Mga release note, malalim na pagsusuri sa integrasyon, at paminsan-minsang dispatch mula sa relay room.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Ano ang Nangyayari Kapag Nabigo ang Isang Webhook nang 3 AM",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Nag-trigger ang isang Glassboard alert nang 3:47 AM. Tahimik na nabigo ang webhook papuntang Canary. Walang nagising. Iyon ang problemang nagpasimula sa Envoy.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Mas Mahirap ang Retry Logic Kaysa sa Akala Mo",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Madali ang payak na retry. Ngunit ang maaasahang retry sa ilalim ng mabigat na load — na may backoff, jitter, at dead-letter queues — ay ibang disiplina.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Ang 3MB na Container na Pumalit sa Buong Integration Layer Namin",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Labindalawang service, siyam na cron job, at isang shared database — pinalitan lahat ng iisang 3MB na Vial image.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (walang description)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Mga Kamakailang Dispatch",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Envoy 2.2: Fanout Routing at Ledger Export",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Sinusuportahan na ngayon ng Dispatch ang fanout papunta sa maraming destinasyon mula sa iisang relay. Mai-e-export ang mga Ledger entry sa anumang Spoke endpoint ayon sa configurable na schedule.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (inline na paggamit)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Gumagamit ang Envoy ng ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.relayManifest.title": {
+    "message": "file na nagdedeklara ng relay pipeline",
+    "description": "Showcase Terminology hover title for relay manifest"
+  },
+  "showcase.terminology.relayManifest.label": {
+    "message": "manifest ng relay",
+    "description": "Showcase Terminology displayed text for relay manifest"
+  },
+  "showcase.terminology.paragraph1.afterRelay": {
+    "message": " para tukuyin ang bawat integration pipeline. Ang bawat papasok na mensahe ay ina-authenticate ng ",
+    "description": "Showcase Terminology paragraph 1 fragment after relay manifest"
+  },
+  "showcase.terminology.cipher.title": {
+    "message": "gateway para sa pagpapatotoo",
+    "description": "Showcase Terminology hover title for Cipher"
+  },
+  "showcase.terminology.paragraph1.afterCipher": {
+    "message": " gateway bago ito umabot sa transformation stage. Kapag nabigo ang paghahatid, ang ",
+    "description": "Showcase Terminology paragraph 1 fragment after Cipher"
+  },
+  "showcase.terminology.courier.title": {
+    "message": "retry engine na may garantisadong paghahatid",
+    "description": "Showcase Terminology hover title for Courier"
+  },
+  "showcase.terminology.paragraph1.afterCourier": {
+    "message": " engine ang awtomatikong humahawak sa mga retry.",
+    "description": "Showcase Terminology paragraph 1 fragment after Courier"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Sa tulong ng ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.parcel.title": {
+    "message": "pipeline sa pag-transform ng payload",
+    "description": "Showcase Terminology hover title for Parcel"
+  },
+  "showcase.terminology.paragraph2.afterParcel": {
+    "message": " pipeline, hindi na kailangang magkasundo ang pinagmulan at patutunguhan sa iisang format. ",
+    "description": "Showcase Terminology paragraph 2 fragment after Parcel"
+  },
+  "showcase.terminology.dispatch.title": {
+    "message": "matalinong routing engine",
+    "description": "Showcase Terminology hover title for Dispatch"
+  },
+  "showcase.terminology.paragraph2.afterDispatch": {
+    "message": " ang humahawak sa routing, at ",
+    "description": "Showcase Terminology paragraph 2 fragment after Dispatch"
+  },
+  "showcase.terminology.ledger.title": {
+    "message": "audit trail na append-only",
+    "description": "Showcase Terminology hover title for Ledger"
+  },
+  "showcase.terminology.paragraph2.afterLedger": {
+    "message": " ang nagtatala ng buong kasaysayan ng transaksiyon.",
+    "description": "Showcase Terminology paragraph 2 fragment after Ledger"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (may caption)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Brand mark na iniruta sa Frame block — figure + caption, walang palabok.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Thumbnail ng brand ng Envoy.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (walang caption)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (parehong store)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "I-download ang kasamang app",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (App Store lang)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Makukuha sa iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (Google Play lang)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Makukuha sa Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (walang label)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  }
+}

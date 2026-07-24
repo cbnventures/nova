@@ -34,8 +34,6 @@ import type {
  *
  * @param {Theme_NotFound_Content_Index_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function NotFoundContent(props: Theme_NotFound_Content_Index_Props) {

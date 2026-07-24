@@ -37,3 +37,7 @@ export type Tests_Rules_Vitest_Terminology_ResolvedConfig = {
 export type Tests_Rules_Vitest_Terminology_GoodAnchors = Set<string>;
 
 export type Tests_Rules_Vitest_Terminology_BadAnchors = Set<string>;
+
+export type Tests_Rules_Vitest_Terminology_BareMatch = RegExpExecArray | null;
+
+export type Tests_Rules_Vitest_Terminology_AttrMatch = RegExpExecArray | null;

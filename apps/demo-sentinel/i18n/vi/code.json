@@ -1,0 +1,510 @@
+{
+  "home.layout.description": {
+    "message": "Sentinel đánh giá mọi người dùng, mọi thiết bị, mọi kết nối — liên tục. Truy cập không phải là một cánh cửa. Đó là một cuộc đối thoại không bao giờ kết thúc.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Sentinel - Niềm tin là một lỗ hổng",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Nền tảng bảo mật",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Niềm tin là một lỗ hổng.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Sentinel đánh giá mọi người dùng, mọi thiết bị, mọi kết nối — liên tục. Truy cập không phải là một cánh cửa. Đó là một cuộc đối thoại không bao giờ kết thúc.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Khám phá nền tảng",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "Xem trên Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.watchtower.description": {
+    "message": "Đánh giá liên tục trạng thái bảo mật. Xem xét tình trạng thiết bị, vị trí và hành vi mỗi 90 giây. Điều kiện vừa thay đổi, Watchtower biết ngay.",
+    "description": "Front page Features card description for Watchtower"
+  },
+  "home.features.drawbridge.description": {
+    "message": "Cổng truy cập thích ứng. Cấp, thu hẹp hoặc thu hồi quyền truy cập theo thời gian thực dựa trên ngữ cảnh — danh tính, trạng thái bảo mật, vị trí và thời gian. Không có quy tắc tĩnh.",
+    "description": "Front page Features card description for Drawbridge"
+  },
+  "home.features.garrison.description": {
+    "message": "Công cụ tuân thủ điểm cuối. Thực thi chính sách trên mọi thiết bị được kết nối. Mã hóa ổ đĩa, phiên bản OS, trạng thái tường lửa — tất cả được xác minh trước khi cấp quyền truy cập.",
+    "description": "Front page Features card description for Garrison"
+  },
+  "home.features.rampart.description": {
+    "message": "Lớp phân đoạn vi mô. Cô lập các khối lượng công việc để không thể xảy ra dịch chuyển ngang. Ngay cả khi một phân đoạn bị xâm phạm, cuộc tấn công cũng dừng lại ở đó.",
+    "description": "Front page Features card description for Rampart"
+  },
+  "home.features.spyglass.description": {
+    "message": "Kiểm toán và điều tra số. Tái dựng toàn bộ phiên với nhật ký bất biến lưu giữ 7 năm. Mọi quyết định truy cập, mọi lần đánh giá chính sách, mọi kết nối — đều được ghi lại.",
+    "description": "Front page Features card description for Spyglass"
+  },
+  "home.features.parapet.description": {
+    "message": "Môi trường mô phỏng chính sách. Thử nghiệm quy tắc truy cập với lưu lượng thực trước khi thực thi. Xem ai được cấp quyền, ai bị mất quyền và vì sao — mà không đụng đến môi trường production.",
+    "description": "Front page Features card description for Parapet"
+  },
+  "home.stats.heading": {
+    "message": "Qua những con số",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.cycle.label": {
+    "message": "Chu kỳ đánh giá lại",
+    "description": "Front page Stats label for re-evaluation cycle"
+  },
+  "home.stats.tunnels.label": {
+    "message": "Đường hầm đồng thời",
+    "description": "Front page Stats label for concurrent tunnels"
+  },
+  "home.stats.retention.label": {
+    "message": "Thời gian lưu kiểm toán",
+    "description": "Front page Stats label for audit retention"
+  },
+  "home.stats.latency.label": {
+    "message": "Độ trễ chính sách",
+    "description": "Front page Stats label for policy latency"
+  },
+  "home.spotlight.heading": {
+    "message": "Một chính sách, đánh giá toàn diện",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Định nghĩa niềm tin là gì. Sentinel thực thi điều đó liên tục.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Giám sát đội thiết bị của bạn mọi lúc mọi nơi",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Bản tin bảo mật",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Nghiên cứu mối đe dọa, khuyến cáo trạng thái bảo mật và triết lý về niềm tin liên tục.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Trưng bày block Sentinel, minh họa mọi block từ docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Mọi block từ preset Sentinel, được hiển thị với dữ liệu mẫu.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (đầy đủ)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Trưng bày block",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Mọi block Sentinel, được minh họa tại một nơi.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "Trang này hiển thị từng block từ @cbnventures/docusaurus-preset-nova/blocks với dữ liệu thế giới Sentinel để bạn thấy chúng trông ra sao và hoạt động thế nào.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Đọc tài liệu",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "Xem trên Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (tối giản)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Niềm tin phải được chứng minh liên tục.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Sentinel đánh giá mọi người dùng, mọi thiết bị, mọi kết nối — liên tục. Truy cập không phải là một cánh cửa. Đó là một cuộc đối thoại không bao giờ kết thúc.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Khám phá nền tảng",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (mặc định)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "Tôi yêu ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (không tiền tố)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Nhanh",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Linh hoạt",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Miễn phí",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (tốc độ chậm)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Xây dựng cho ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "nhà phát triển",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "nhà thiết kế",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (không lặp)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Chào mừng đến với ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Cài đặt bằng Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Hoặc dùng container Vial",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (không nhãn)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Cài đặt nhanh",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (có biểu tượng)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Vì sao các đội chọn Sentinel",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.watchtower.description": {
+    "message": "Đánh giá liên tục trạng thái bảo mật. Xem xét tình trạng thiết bị, vị trí và hành vi mỗi 90 giây.",
+    "description": "Showcase Features (with icons) card description for Watchtower"
+  },
+  "showcase.featuresIcons.drawbridge.description": {
+    "message": "Cổng truy cập thích ứng. Cấp, thu hẹp hoặc thu hồi quyền truy cập theo thời gian thực dựa trên đánh giá niềm tin.",
+    "description": "Showcase Features (with icons) card description for Drawbridge"
+  },
+  "showcase.featuresIcons.garrison.description": {
+    "message": "Công cụ tuân thủ điểm cuối. Thực thi chính sách trên mọi thiết bị được kết nối trước khi cấp quyền truy cập.",
+    "description": "Showcase Features (with icons) card description for Garrison"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (không biểu tượng, không tiêu đề)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.rampart.description": {
+    "message": "Lớp phân đoạn vi mô. Cô lập các khối lượng công việc để không thể xảy ra dịch chuyển ngang giữa các vùng.",
+    "description": "Showcase Features (no icons) card description for Rampart"
+  },
+  "showcase.featuresNoIcons.spyglass.description": {
+    "message": "Kiểm toán và điều tra số. Tái dựng toàn bộ phiên với nhật ký bất biến lưu giữ 7 năm.",
+    "description": "Showcase Features (no icons) card description for Spyglass"
+  },
+  "showcase.featuresNoIcons.parapet.description": {
+    "message": "Môi trường mô phỏng chính sách. Thử nghiệm quy tắc truy cập với lưu lượng thực trước khi thực thi.",
+    "description": "Showcase Features (no icons) card description for Parapet"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (sáu mục, biểu tượng hỗn hợp)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "Công cụ niềm tin toàn diện",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.watchtower.description": {
+    "message": "Đánh giá trạng thái bảo mật thiết bị, danh tính người dùng, ngữ cảnh mạng và tín hiệu hành vi theo chu kỳ 90 giây liên tục.",
+    "description": "Showcase Features (six items) card description for Watchtower"
+  },
+  "showcase.featuresSix.drawbridge.description": {
+    "message": "Chuyển các đánh giá của Watchtower thành quyết định truy cập cụ thể — cấp, thu hẹp hoặc thu hồi.",
+    "description": "Showcase Features (six items) card description for Drawbridge"
+  },
+  "showcase.featuresSix.garrison.description": {
+    "message": "Quản lý việc đăng ký thiết bị, chuẩn trạng thái bảo mật và hồ sơ tuân thủ cho mọi điểm cuối.",
+    "description": "Showcase Features (six items) card description for Garrison"
+  },
+  "showcase.featuresSix.rampart.description": {
+    "message": "Chia hạ tầng thành các vùng cô lập. Việc vượt vùng đòi hỏi đánh giá chính sách.",
+    "description": "Showcase Features (six items) card description for Rampart"
+  },
+  "showcase.featuresSix.spyglass.description": {
+    "message": "Ghi lại mọi quyết định truy cập, lần đánh giá chính sách và lần vượt vùng vào một chuỗi kiểm toán bất biến.",
+    "description": "Showcase Features (six items) card description for Spyglass"
+  },
+  "showcase.featuresSix.parapet.description": {
+    "message": "Phát lại lưu lượng thực với các chính sách nháp để cho thấy tác động truy cập chính xác trước khi thực thi.",
+    "description": "Showcase Features (six items) card description for Parapet"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (có tiêu đề và mô tả)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Chỉ số nền tảng",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Các chỉ số hiệu suất chính trên toàn bộ công cụ niềm tin Sentinel.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.cycle.label": {
+    "message": "Chu kỳ đánh giá lại",
+    "description": "Showcase Stats (full) label for re-evaluation cycle"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Độ trễ chính sách",
+    "description": "Showcase Stats (full) label for policy latency"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "Thời gian hoạt động đánh giá",
+    "description": "Showcase Stats (full) label for evaluation uptime"
+  },
+  "showcase.statsFull.retention.label": {
+    "message": "Thời gian lưu kiểm toán",
+    "description": "Showcase Stats (full) label for audit retention"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (không tiêu đề)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.tunnels.label": {
+    "message": "Đường hầm đồng thời",
+    "description": "Showcase Stats (no heading) label for concurrent tunnels"
+  },
+  "showcase.statsNoHeading.components.label": {
+    "message": "Thành phần",
+    "description": "Showcase Stats (no heading) label for components"
+  },
+  "showcase.statsNoHeading.zoneTypes.label": {
+    "message": "Loại vùng",
+    "description": "Showcase Stats (no heading) label for zone types"
+  },
+  "showcase.statsNoHeading.implicitTrust.label": {
+    "message": "Niềm tin ngầm định",
+    "description": "Showcase Stats (no heading) label for implicit trust"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (có code)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Bắt đầu nhanh",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Ba lệnh để đi từ con số không đến đánh giá niềm tin liên tục.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (có văn bản)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "Cách hoạt động",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Sentinel đánh giá niềm tin liên tục. Watchtower tính điểm trạng thái bảo mật mỗi 90 giây. Drawbridge thực thi kết quả theo thời gian thực. Spyglass ghi lại mọi quyết định một cách bất biến. Đầu ra luôn là bằng chứng — không phải giả định.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (có mô tả)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Bản tin bảo mật",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Nghiên cứu mối đe dọa, khuyến cáo trạng thái bảo mật và triết lý về niềm tin liên tục.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "Ngày chúng tôi ngừng tin vào mạng lưới",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "Vành đai bảo mật đã tan biến còn ngành công nghiệp thì vờ như không. Chúng tôi xây dựng Sentinel vì mỗi VPN là một giả định về niềm tin.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Mô phỏng một cuộc tấn công chưa từng xảy ra",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Cách Parapet phát hiện một đường dịch chuyển ngang trong môi trường staging trước khi nó chạm tới production.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Vì sao tuân thủ không phải là bảo mật (nhưng bạn vẫn cần cả hai)",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Vượt qua một cuộc kiểm toán và thực sự an toàn là hai chuyện khác nhau. Spyglass thu hẹp khoảng cách đó.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (không mô tả)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Cập nhật gần đây",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Sentinel 3.4: Phát lại lưu lượng Parapet và cách ly vùng Rampart",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Parapet nay hỗ trợ phát lại toàn bộ lưu lượng với các chính sách nháp, và Rampart có thể tự động cách ly những thiết bị không đạt kiểm tra trạng thái bảo mật.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (dùng nội dòng)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Sentinel dùng một ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.trustPolicy.title": {
+    "message": "khai báo kiểm soát truy cập",
+    "description": "Showcase Terminology hover title for trust policy"
+  },
+  "showcase.terminology.trustPolicy.label": {
+    "message": "chính sách tin cậy",
+    "description": "Showcase Terminology displayed text for trust policy"
+  },
+  "showcase.terminology.paragraph1.afterTrustPolicy": {
+    "message": " để điều khiển mọi quyết định truy cập. Mọi thiết bị đã đăng ký đều được giám sát bởi agent ",
+    "description": "Showcase Terminology paragraph 1 fragment after trust policy"
+  },
+  "showcase.terminology.garrison.title": {
+    "message": "agent tuân thủ điểm cuối",
+    "description": "Showcase Terminology hover title for Garrison"
+  },
+  "showcase.terminology.paragraph1.afterGarrison": {
+    "message": ", báo cáo dữ liệu trạng thái bảo mật về ",
+    "description": "Showcase Terminology paragraph 1 fragment after Garrison"
+  },
+  "showcase.terminology.watchtower.title": {
+    "message": "công cụ đánh giá niềm tin liên tục",
+    "description": "Showcase Terminology hover title for Watchtower"
+  },
+  "showcase.terminology.paragraph1.afterWatchtower": {
+    "message": " để chấm điểm.",
+    "description": "Showcase Terminology paragraph 1 fragment after Watchtower"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "Với hệ thống vùng ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.rampart.title": {
+    "message": "lớp phân đoạn vi mô",
+    "description": "Showcase Terminology hover title for Rampart"
+  },
+  "showcase.terminology.paragraph2.afterRampart": {
+    "message": ", các khối lượng công việc được cô lập để ngay cả một phân đoạn bị xâm phạm cũng không thể ảnh hưởng tới các đường hầm ",
+    "description": "Showcase Terminology paragraph 2 fragment after Rampart"
+  },
+  "showcase.terminology.filament.title": {
+    "message": "giao thức đường hầm mã hóa",
+    "description": "Showcase Terminology hover title for Filament"
+  },
+  "showcase.terminology.paragraph2.afterFilament": {
+    "message": " ở những vùng lân cận. Mọi quyết định đều được ghi lại trong ",
+    "description": "Showcase Terminology paragraph 2 fragment after Filament"
+  },
+  "showcase.terminology.spyglass.title": {
+    "message": "công cụ kiểm toán và điều tra số",
+    "description": "Showcase Terminology hover title for Spyglass"
+  },
+  "showcase.terminology.paragraph2.afterSpyglass": {
+    "message": " để lưu giữ nhật ký kiểm toán bất biến.",
+    "description": "Showcase Terminology paragraph 2 fragment after Spyglass"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (có chú thích)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Nhãn hiệu đặt trên một Frame — viền đặc, vững vàng như tháp canh.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Ảnh thu nhỏ thương hiệu Sentinel.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (không chú thích)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (cả hai cửa hàng)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Tải ứng dụng đồng hành",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (chỉ App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Có trên iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (chỉ Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Có trên Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (không nhãn)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} phút đọc",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

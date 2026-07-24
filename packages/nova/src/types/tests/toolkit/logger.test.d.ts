@@ -4,7 +4,11 @@
  * @since 0.13.0
  */
 export type Tests_Toolkit_Logger_LoggerCustomize_ReturnsObjectWithAllLogMethods_Scoped = {
-  debug(...message: unknown[]): void; dev(...message: unknown[]): void; info(...message: unknown[]): void; warn(...message: unknown[]): void; error(...message: unknown[]): void;
+  debug(...message: unknown[]): void;
+  dev(...message: unknown[]): void;
+  info(...message: unknown[]): void;
+  warn(...message: unknown[]): void;
+  error(...message: unknown[]): void;
 };
 
 /**
@@ -13,7 +17,11 @@ export type Tests_Toolkit_Logger_LoggerCustomize_ReturnsObjectWithAllLogMethods_
  * @since 0.13.0
  */
 export type Tests_Toolkit_Logger_LoggerCustomize_ReturnsObjectWithAllLogMethodsWhenGivenEmptyOptions_Scoped = {
-  debug(...message: unknown[]): void; dev(...message: unknown[]): void; info(...message: unknown[]): void; warn(...message: unknown[]): void; error(...message: unknown[]): void;
+  debug(...message: unknown[]): void;
+  dev(...message: unknown[]): void;
+  info(...message: unknown[]): void;
+  warn(...message: unknown[]): void;
+  error(...message: unknown[]): void;
 };
 
 /**
@@ -22,7 +30,11 @@ export type Tests_Toolkit_Logger_LoggerCustomize_ReturnsObjectWithAllLogMethodsW
  * @since 0.13.0
  */
 export type Tests_Toolkit_Logger_LoggerCustomize_ReturnsObjectWithAllLogMethodsWhenGivenNameAndPurpose_Scoped = {
-  debug(...message: unknown[]): void; dev(...message: unknown[]): void; info(...message: unknown[]): void; warn(...message: unknown[]): void; error(...message: unknown[]): void;
+  debug(...message: unknown[]): void;
+  dev(...message: unknown[]): void;
+  info(...message: unknown[]): void;
+  warn(...message: unknown[]): void;
+  error(...message: unknown[]): void;
 };
 
 /**
@@ -31,7 +43,11 @@ export type Tests_Toolkit_Logger_LoggerCustomize_ReturnsObjectWithAllLogMethodsW
  * @since 0.13.0
  */
 export type Tests_Toolkit_Logger_LoggerCustomize_ReturnsObjectWithAllLogMethodsWhenGivenNameTypeAndPurpose_Scoped = {
-  debug(...message: unknown[]): void; dev(...message: unknown[]): void; info(...message: unknown[]): void; warn(...message: unknown[]): void; error(...message: unknown[]): void;
+  debug(...message: unknown[]): void;
+  dev(...message: unknown[]): void;
+  info(...message: unknown[]): void;
+  warn(...message: unknown[]): void;
+  error(...message: unknown[]): void;
 };
 
 /**
@@ -40,7 +56,11 @@ export type Tests_Toolkit_Logger_LoggerCustomize_ReturnsObjectWithAllLogMethodsW
  * @since 0.13.0
  */
 export type Tests_Toolkit_Logger_LoggerCustomize_ScopedMethodsDoNotThrow_Scoped = {
-  debug(...message: unknown[]): void; dev(...message: unknown[]): void; info(...message: unknown[]): void; warn(...message: unknown[]): void; error(...message: unknown[]): void;
+  debug(...message: unknown[]): void;
+  dev(...message: unknown[]): void;
+  info(...message: unknown[]): void;
+  warn(...message: unknown[]): void;
+  error(...message: unknown[]): void;
 };
 
 /**

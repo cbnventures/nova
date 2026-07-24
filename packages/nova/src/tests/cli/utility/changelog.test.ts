@@ -1,4 +1,4 @@
-import { strictEqual } from 'node:assert/strict';
+import { rejects, strictEqual } from 'node:assert/strict';
 import {
   mkdir,
   mkdtemp,
@@ -61,6 +61,19 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenRecordAndReleaseAreBothSet_PackageJsonContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenRecordAndReleaseAreBothSet_PackageJsonPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenRecordAndReleaseAreBothSet_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_ChangelogDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_ConfigContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_ConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_EntryContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_EntryPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJson,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJsonContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJsonPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJsonRaw,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspaceDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspacePackageContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspacePackagePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_OriginalCwd,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_ChangelogDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_ConfigContents,
@@ -597,6 +610,72 @@ describe('CliUtilityChangelog.run', async () => {
     const remainingMdFiles: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ReleasesAndBumpsVersion_RemainingMdFiles = remainingFiles.filter((file) => file.endsWith('.md') && file !== 'README.md');
 
     strictEqual(remainingMdFiles.length, 0);
+
+    return;
+  });
+
+  it('errors when version is not clean numeric', async () => {
+    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_ProjectDirectory = join(sandboxRoot, 'non-numeric-version');
+    const workspaceDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_ChangelogDirectory = join(projectDirectory, '.changelog');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+    await mkdir(changelogDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJsonContents = JSON.stringify({
+      name: 'test-non-numeric-version',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_ConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    const workspacePackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspacePackagePath = join(workspaceDirectory, 'package.json');
+    const workspacePackageContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspacePackageContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0-rc.1',
+    }, null, 2);
+
+    await writeFile(workspacePackagePath, workspacePackageContents, 'utf-8');
+
+    const entryPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_EntryPath = join(changelogDirectory, 'test-entry.md');
+    const entryContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_EntryContents = [
+      '---',
+      'package: "@test/core"',
+      'category: fixed',
+      'bump: patch',
+      '---',
+      '',
+      'Fixed a bug',
+      '',
+    ].join('\n');
+
+    await writeFile(entryPath, entryContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    // A patch bump on a prerelease version would compute a corrupt "1.0.NaN"; the release
+    // must reject instead of writing that back to "package.json".
+    await rejects(CliUtilityChangelog.run({
+      release: true,
+    }));
+
+    const packageJsonRaw: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJsonRaw = await readFile(workspacePackagePath, 'utf-8');
+    const packageJson: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJson = JSON.parse(packageJsonRaw);
+
+    strictEqual(packageJson['version'], '1.0.0-rc.1');
 
     return;
   });

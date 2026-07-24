@@ -35,8 +35,6 @@ import type {
  *
  * @param {Theme_Footer_Launchpad_Index_Launchpad_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function Launchpad(props: Theme_Footer_Launchpad_Index_Launchpad_Props): Theme_Footer_Launchpad_Index_Launchpad_Returns {

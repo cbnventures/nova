@@ -1,6 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react';
 
 import type { Shared_SearchWorkerSearchHit } from '../../shared.d.ts';
+import type { Theme_SearchBar_SearchContext_Value, Theme_SearchBar_SearchContext_Value_InputRef, Theme_SearchBar_SearchContext_Value_SetIsOpen } from './search-context.d.ts';
 
 /**
  * Theme - Search Bar - Search Results - Search Results.
@@ -9,7 +10,7 @@ import type { Shared_SearchWorkerSearchHit } from '../../shared.d.ts';
  */
 export type Theme_SearchBar_SearchResults_Props = Record<string, unknown>;
 
-export type Theme_SearchBar_SearchResults_SearchContext = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value;
+export type Theme_SearchBar_SearchResults_SearchContext = Theme_SearchBar_SearchContext_Value;
 
 export type Theme_SearchBar_SearchResults_IsOpen = boolean;
 
@@ -25,9 +26,9 @@ export type Theme_SearchBar_SearchResults_SearchedQuery = string;
 
 export type Theme_SearchBar_SearchResults_ActiveIndex = number;
 
-export type Theme_SearchBar_SearchResults_SetIsOpen = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value_SetIsOpen;
+export type Theme_SearchBar_SearchResults_SetIsOpen = Theme_SearchBar_SearchContext_Value_SetIsOpen;
 
-export type Theme_SearchBar_SearchResults_InputRef = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value_InputRef;
+export type Theme_SearchBar_SearchResults_InputRef = Theme_SearchBar_SearchContext_Value_InputRef;
 
 export type Theme_SearchBar_SearchResults_DropdownRef = React.RefObject<HTMLDivElement | null>;
 

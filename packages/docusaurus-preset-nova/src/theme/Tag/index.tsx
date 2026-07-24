@@ -11,8 +11,6 @@ import type { Theme_Tag_Index_Tag_Props } from '../../types/theme/Tag/index.d.ts
  *
  * @param {Theme_Tag_Index_Tag_Props} props - Props.
  *
- * @constructor
- *
  * @since 0.15.0
  */
 function Tag(props: Theme_Tag_Index_Tag_Props) {

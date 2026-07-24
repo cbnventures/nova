@@ -1,0 +1,602 @@
+{
+  "home.layout.description": {
+    "message": "Marshal، اداره‌ی امور مخازن است — سرپرستی خودکار برای پروژه‌هایی که تشریفات اداری را به هیاهو ترجیح می‌دهند.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Marshal - بایگانی‌شده، ممهور، خودکار",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "سرپرستی مخزن",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "بایگانی‌شده، ممهور، خودکار.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Marshal، اداره‌ی امور مخازن است — سرپرستی خودکار برای پروژه‌هایی که تشریفات اداری را به هیاهو ترجیح می‌دهند. هر رشته، هر تیکت و هر رده دسترسی، به‌ترتیب رسیدگی می‌شود.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "شروع کنید",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "مشاهده در Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.policies.title": {
+    "message": "آیین‌نامه‌ها",
+    "description": "Front page Features card title for Policies"
+  },
+  "home.features.policies.description": {
+    "message": "یک بلوک YAML بنویسید که شرح می‌دهد Marshal چگونه به دسته‌ای از رویدادها رسیدگی می‌کند — رشته‌های راکد، PRهای معوق، پشتیبانی بر حسب رده. Marshal تنها آنچه را بایگانی شده می‌خواند و تنها آنچه را مهر و موم شده مُهر می‌زند.",
+    "description": "Front page Features card description for Policies"
+  },
+  "home.features.dockets.title": {
+    "message": "دفترهای ثبت",
+    "description": "Front page Features card title for Dockets"
+  },
+  "home.features.dockets.description": {
+    "message": "هر اقدامی که Marshal انجام می‌دهد، سطری در سابقه‌ی عمومی می‌نویسد. رشته‌های بسته‌شده، تأییدهای ممهور، تمدیدهای زمان‌بندی‌شده — همه فقط‌افزودنی، همه آشکار، هیچ‌چیز پس گرفته نمی‌شود.",
+    "description": "Front page Features card description for Dockets"
+  },
+  "home.features.accessTiers.title": {
+    "message": "رده‌های دسترسی",
+    "description": "Front page Features card title for Access Tiers"
+  },
+  "home.features.accessTiers.description": {
+    "message": "کارهای ورودی را بر اساس حامی، مشارکت‌کننده یا عموم مسیردهی کنید. برچسب مُهر می‌خورد، نه چانه‌زنی. هر تصمیم مسیردهی در دفتر ثبت بایگانی می‌شود.",
+    "description": "Front page Features card description for Access Tiers"
+  },
+  "home.features.scheduledStewardship.title": {
+    "message": "سرپرستی زمان‌بندی‌شده",
+    "description": "Front page Features card title for Scheduled Stewardship"
+  },
+  "home.features.scheduledStewardship.description": {
+    "message": "پاک‌سازی‌ها، ممیزی‌ها و تمدیدها را با cron اجرا کنید. Marshal سرِ ساعت اقدام می‌کند، سابقه‌ای ثبت می‌کند و پیش می‌رود. هیچ‌چیز منتظر یادآوریِ یک انسان نمی‌ماند.",
+    "description": "Front page Features card description for Scheduled Stewardship"
+  },
+  "home.features.threadArchival.title": {
+    "message": "بایگانی رشته‌ها",
+    "description": "Front page Features card title for Thread Archival"
+  },
+  "home.features.threadArchival.description": {
+    "message": "رشته‌های غیرفعال به مدت N روز را ببندید و مهر و موم کنید — با ردی مکتوب برای هر یک. هر رشته‌ی ممهور، دلیل بایگانی و راهی برای بازگشایی را همراه دارد.",
+    "description": "Front page Features card description for Thread Archival"
+  },
+  "home.features.automatedStamps.title": {
+    "message": "مُهرهای خودکار",
+    "description": "Front page Features card title for Automated Stamps"
+  },
+  "home.features.automatedStamps.description": {
+    "message": "Marshal بر اساس یک مجوز دائمی اقدام می‌کند. هر اقدام، یک مُهر زمان، یک مسئولِ رسمی و ارجاعی به آیین‌نامه‌ای که آن را فعال کرده به‌همراه دارد.",
+    "description": "Front page Features card description for Automated Stamps"
+  },
+  "home.stats.heading": {
+    "message": "به روایت اعداد",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manualClosures.label": {
+    "message": "بستن‌های دستی",
+    "description": "Front page Stats label for manual closures count"
+  },
+  "home.stats.policyFile.label": {
+    "message": "پرونده‌ی آیین‌نامه",
+    "description": "Front page Stats label for policy file count"
+  },
+  "home.stats.docketEntries.label": {
+    "message": "مدخل‌های دفتر ثبت",
+    "description": "Front page Stats label for docket entries count"
+  },
+  "home.stats.accessTiers.label": {
+    "message": "رده‌های دسترسی",
+    "description": "Front page Stats label for access tiers count"
+  },
+  "home.spotlight.heading": {
+    "message": "یک پرونده‌ی آیین‌نامه، همه‌چیز ممهور",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "قواعد را شرح دهید؛ Marshal کاغذها را بایگانی می‌کند.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "دفتر ثبت خود را هر کجا که هستید مرور کنید",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "ابلاغیه‌های اداره",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "آیین‌نامه‌ها بایگانی‌شده، دفترهای ثبت ممهور، سرپرستی ثبت‌شده در سوابق.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "نمایشگاه بلوک‌های Marshal که هر بلوک از docusaurus-preset-nova را نشان می‌دهد.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "هر بلوک از پریست Marshal، با داده‌های نمونه رندر شده.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (کامل)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "نمایشگاه بلوک‌ها",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "هر بلوک Marshal، در یک جا به‌نمایش درآمده.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "این صفحه هر بلوک از @cbnventures/docusaurus-preset-nova/blocks را با داده‌های دنیای Marshal رندر می‌کند تا ببینید چگونه به‌نظر می‌رسند و رفتار می‌کنند.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "خواندن مستندات",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "مشاهده در Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (کمینه)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "بایگانی‌شده، ممهور، خودکار.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Marshal، اداره‌ی امور مخازن است — سرپرستی خودکار برای پروژه‌هایی که تشریفات اداری را به هیاهو ترجیح می‌دهند.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "شروع کنید",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (پیش‌فرض)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "من عاشق ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (بدون پیشوند)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "سریع",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "منعطف",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "رایگان",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (زمان‌بندی کند)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "ساخته‌شده برای ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "توسعه‌دهندگان",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "طراحان",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (بدون حلقه)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "به دنیای ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "نصب با Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "یا از Loom Registry استفاده کنید",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (بدون برچسب)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "نصب سریع",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (با آیکون)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "چرا مخازن Marshal را انتخاب می‌کنند",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.policies.title": {
+    "message": "آیین‌نامه‌ها",
+    "description": "Showcase Features (with icons) card title for Policies"
+  },
+  "showcase.featuresIcons.policies.description": {
+    "message": "یک بلوک YAML بنویسید که شرح می‌دهد Marshal چگونه به دسته‌ای از رویدادها رسیدگی می‌کند. Marshal تنها آنچه را بایگانی شده می‌خواند و تنها آنچه را مهر و موم شده مُهر می‌زند.",
+    "description": "Showcase Features (with icons) card description for Policies"
+  },
+  "showcase.featuresIcons.dockets.title": {
+    "message": "دفترهای ثبت",
+    "description": "Showcase Features (with icons) card title for Dockets"
+  },
+  "showcase.featuresIcons.dockets.description": {
+    "message": "هر اقدامی که Marshal انجام می‌دهد سطری در سابقه‌ی عمومی می‌نویسد. رشته‌های بسته‌شده، تأییدهای ممهور، تمدیدهای زمان‌بندی‌شده — همه فقط‌افزودنی.",
+    "description": "Showcase Features (with icons) card description for Dockets"
+  },
+  "showcase.featuresIcons.accessTiers.title": {
+    "message": "رده‌های دسترسی",
+    "description": "Showcase Features (with icons) card title for Access Tiers"
+  },
+  "showcase.featuresIcons.accessTiers.description": {
+    "message": "کارهای ورودی را بر اساس حامی، مشارکت‌کننده یا عموم مسیردهی کنید. برچسب مُهر می‌خورد، نه چانه‌زنی.",
+    "description": "Showcase Features (with icons) card description for Access Tiers"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (بدون آیکون، بدون عنوان)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.title": {
+    "message": "سرپرستی زمان‌بندی‌شده",
+    "description": "Showcase Features (no icons) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.description": {
+    "message": "پاک‌سازی‌ها، ممیزی‌ها و تمدیدها را با cron اجرا کنید. Marshal سرِ ساعت اقدام می‌کند و سابقه‌ای ثبت می‌کند.",
+    "description": "Showcase Features (no icons) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.threadArchival.title": {
+    "message": "بایگانی رشته‌ها",
+    "description": "Showcase Features (no icons) card title for Thread Archival"
+  },
+  "showcase.featuresNoIcons.threadArchival.description": {
+    "message": "رشته‌های غیرفعال به مدت N روز را ببندید و مهر و موم کنید — با ردی مکتوب برای هر یک و راهی برای بازگشایی.",
+    "description": "Showcase Features (no icons) card description for Thread Archival"
+  },
+  "showcase.featuresNoIcons.automatedStamps.title": {
+    "message": "مُهرهای خودکار",
+    "description": "Showcase Features (no icons) card title for Automated Stamps"
+  },
+  "showcase.featuresNoIcons.automatedStamps.description": {
+    "message": "هر اقدام، یک مُهر زمان، یک مسئولِ رسمی و ارجاعی به آیین‌نامه‌ای که آن را فعال کرده به‌همراه دارد.",
+    "description": "Showcase Features (no icons) card description for Automated Stamps"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (شش مورد، آیکون‌های ترکیبی)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "همه‌چیز در یک اداره",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.policies.title": {
+    "message": "آیین‌نامه‌ها",
+    "description": "Showcase Features (six items) card title for Policies"
+  },
+  "showcase.featuresSix.policies.description": {
+    "message": "قواعد را در YAML شرح دهید. Marshal می‌خواند، اقدام می‌کند و بایگانی می‌کند. هیچ‌چیز هنگام اجرا چانه‌زنی نمی‌شود.",
+    "description": "Showcase Features (six items) card description for Policies"
+  },
+  "showcase.featuresSix.dockets.title": {
+    "message": "دفترهای ثبت",
+    "description": "Showcase Features (six items) card title for Dockets"
+  },
+  "showcase.featuresSix.dockets.description": {
+    "message": "سابقه‌ی عمومی و فقط‌افزودنی از هر اقدام. رشته‌های بسته‌شده، تصمیم‌های مسیردهی، گذرهای زمان‌بندی‌شده — همه ممهور.",
+    "description": "Showcase Features (six items) card description for Dockets"
+  },
+  "showcase.featuresSix.accessTiers.title": {
+    "message": "رده‌های دسترسی",
+    "description": "Showcase Features (six items) card title for Access Tiers"
+  },
+  "showcase.featuresSix.accessTiers.description": {
+    "message": "حامی، مشارکت‌کننده، عموم — سه رده، یک صف، یک متصدی. برچسب هنگام دریافت تخصیص می‌یابد.",
+    "description": "Showcase Features (six items) card description for Access Tiers"
+  },
+  "showcase.featuresSix.scheduledStewardship.title": {
+    "message": "سرپرستی زمان‌بندی‌شده",
+    "description": "Showcase Features (six items) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.scheduledStewardship.description": {
+    "message": "پاک‌سازی‌ها و ممیزی‌های مبتنی بر cron. Marshal طبق زمان‌بندی اقدام می‌کند و منتظر یادآوریِ یک انسان نمی‌ماند.",
+    "description": "Showcase Features (six items) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.threadArchival.title": {
+    "message": "بایگانی رشته‌ها",
+    "description": "Showcase Features (six items) card title for Thread Archival"
+  },
+  "showcase.featuresSix.threadArchival.description": {
+    "message": "رشته‌های غیرفعال طبق آیین‌نامه بسته و مهر و موم می‌شوند، همراه با اطلاعیه‌ای ممهور و مسیری برای بازگشایی روی هر پرونده.",
+    "description": "Showcase Features (six items) card description for Thread Archival"
+  },
+  "showcase.featuresSix.automatedStamps.title": {
+    "message": "مُهرهای خودکار",
+    "description": "Showcase Features (six items) card title for Automated Stamps"
+  },
+  "showcase.featuresSix.automatedStamps.description": {
+    "message": "هر اقدام Marshal به آیین‌نامه‌ای که مجوزش را صادر کرده ارجاع می‌دهد. مجوز پیش از انجام اقدام بایگانی می‌شود.",
+    "description": "Showcase Features (six items) card description for Automated Stamps"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (با عنوان و توضیح)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "سنجه‌های Marshal",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "اعداد کلیدی در یک چرخه‌ی معمول سرپرستی مخزن.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.threadsArchived.label": {
+    "message": "رشته‌های بایگانی‌شده",
+    "description": "Showcase Stats (full) label for threads archived"
+  },
+  "showcase.statsFull.accessTiers.label": {
+    "message": "رده‌های دسترسی",
+    "description": "Showcase Stats (full) label for access tiers"
+  },
+  "showcase.statsFull.manualClosures.label": {
+    "message": "بستن‌های دستی",
+    "description": "Showcase Stats (full) label for manual closures"
+  },
+  "showcase.statsFull.policyFile.label": {
+    "message": "پرونده‌ی آیین‌نامه",
+    "description": "Showcase Stats (full) label for policy file"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (بدون عنوان)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.policyFile.label": {
+    "message": "پرونده‌ی آیین‌نامه",
+    "description": "Showcase Stats (no heading) label for policy file"
+  },
+  "showcase.statsNoHeading.manualActions.label": {
+    "message": "اقدامات دستی",
+    "description": "Showcase Stats (no heading) label for manual actions"
+  },
+  "showcase.statsNoHeading.docketEntries.label": {
+    "message": "مدخل‌های دفتر ثبت",
+    "description": "Showcase Stats (no heading) label for docket entries"
+  },
+  "showcase.statsNoHeading.accessTiers.label": {
+    "message": "رده‌های دسترسی",
+    "description": "Showcase Stats (no heading) label for access tiers"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (با کد)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "شروع سریع",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "سه فرمان تا از صفر به یک مخزن تحت سرپرستی برسید.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (با متن)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "چگونه کار می‌کند",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Marshal پرونده‌ی آیین‌نامه‌ی شما را می‌خواند، هر گردش‌کار مرتبط را سرِ ساعتِ بعد در صف می‌گذارد، و برای هر اقدام انجام‌شده یک مدخل در دفتر ثبت مُهر می‌زند. دفتر ثبت فقط‌افزودنی است. هیچ‌چیز بی‌سروصدا بسته نمی‌شود.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (با توضیح)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "ابلاغیه‌های اداره",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "آیین‌نامه‌ها بایگانی‌شده، دفترهای ثبت ممهور، سرپرستی ثبت‌شده در سوابق.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "بایگانیِ آنچه بایگانی‌نشدنی است",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "برخی کارهای ورودی با هیچ آیین‌نامه‌ای جور درنمی‌آیند. یک باگِ اشتباه‌بایگانی‌شده، درخواستی از بیرونِ نظام رده‌بندی، تکراریِ یک تکراری. Marshal آن‌ها را ذیل «طبقه‌بندی‌نشده» بایگانی می‌کند.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "یک سال رشته‌ی راکد، بایگانی‌شده در یک بعدازظهر",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "این مخزن ۲٬۱۸۴ ایشوی قدیمی‌تر از یک سال داشت. Marshal در یک گذرِ شبانه، ۲٬۱۰۸ مورد را بست و مهر و موم کرد.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "سه رده پشتیبانی، یک صف، یک متصدی",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Marshal اکنون تیکت‌های پشتیبانی ورودی را بر اساس رده دسترسی به یک صف واحد با سه برچسب هدایت می‌کند. برچسب مُهر می‌خورد، نه چانه‌زنی.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (بدون توضیح)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "ابلاغیه‌های اخیر",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Marshal 2.4: رده‌های رفعِ خودکارِ ممیز و گراف‌های وابستگیِ متصدی",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "ممیز اکنون رفع‌های خودکار را در سراسر رده‌های قواعد و قالب‌بندی اعمال می‌کند، و متصدی یک گراف وابستگی را در سراسر همه‌ی دفترهای ثبتِ فضای کاری رندر می‌کند.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (استفاده درون‌متنی)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Marshal برای هدایت اقدامات خود روی یک مخزن از یک ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.policy.title": {
+    "message": "قاعده‌ای مکتوب درباره‌ی نحوه‌ی رسیدگی Marshal به دسته‌ای از رویدادها",
+    "description": "Showcase Terminology hover title for policy"
+  },
+  "showcase.terminology.policy.label": {
+    "message": "آیین‌نامه",
+    "description": "Showcase Terminology displayed text for policy"
+  },
+  "showcase.terminology.paragraph1.afterPolicy": {
+    "message": " استفاده می‌کند. هر اقدام در ",
+    "description": "Showcase Terminology paragraph 1 fragment after policy"
+  },
+  "showcase.terminology.docket.title": {
+    "message": "سابقه‌ی عمومی و فقط‌افزودنی از هر اقدام انجام‌شده",
+    "description": "Showcase Terminology hover title for docket"
+  },
+  "showcase.terminology.docket.label": {
+    "message": "دفتر ثبت",
+    "description": "Showcase Terminology displayed text for docket"
+  },
+  "showcase.terminology.paragraph1.afterDocket": {
+    "message": " درج می‌شود، جایی که هر مدخل یک ",
+    "description": "Showcase Terminology paragraph 1 fragment after docket"
+  },
+  "showcase.terminology.stamp.title": {
+    "message": "نشان مجوزِ زمان‌دار که بر یک اقدام تکمیل‌شده اعمال می‌شود",
+    "description": "Showcase Terminology hover title for stamp"
+  },
+  "showcase.terminology.stamp.label": {
+    "message": "مُهر",
+    "description": "Showcase Terminology displayed text for stamp"
+  },
+  "showcase.terminology.paragraph1.afterStamp": {
+    "message": " دارد که به آیین‌نامه‌ی مجوزدهنده ارجاع می‌دهد.",
+    "description": "Showcase Terminology paragraph 1 fragment after stamp"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "کارهای ورودی بر اساس ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.accessTier.title": {
+    "message": "طبقه‌بندی کارهای ورودی بر اساس وضعیت حمایت مالی یا مشارکت",
+    "description": "Showcase Terminology hover title for access tier"
+  },
+  "showcase.terminology.accessTier.label": {
+    "message": "رده دسترسی",
+    "description": "Showcase Terminology displayed text for access tier"
+  },
+  "showcase.terminology.paragraph2.afterAccessTier": {
+    "message": "، به ",
+    "description": "Showcase Terminology paragraph 2 fragment after access tier"
+  },
+  "showcase.terminology.queue.title": {
+    "message": "یک فهرست مرتبِ واحد از همه‌ی کارهای ورودی",
+    "description": "Showcase Terminology hover title for queue"
+  },
+  "showcase.terminology.queue.label": {
+    "message": "صف",
+    "description": "Showcase Terminology displayed text for queue"
+  },
+  "showcase.terminology.paragraph2.afterQueue": {
+    "message": " هدایت می‌شوند. رشته‌های غیرفعال از طریق ",
+    "description": "Showcase Terminology paragraph 2 fragment after queue"
+  },
+  "showcase.terminology.threadArchival.title": {
+    "message": "بستنِ رشته‌های غیرفعال فراتر از یک آستانه، بر پایه‌ی آیین‌نامه",
+    "description": "Showcase Terminology hover title for thread archival"
+  },
+  "showcase.terminology.threadArchival.label": {
+    "message": "بایگانی رشته‌ها",
+    "description": "Showcase Terminology displayed text for thread archival"
+  },
+  "showcase.terminology.paragraph2.afterThreadArchival": {
+    "message": " بسته می‌شوند و برای هر پرونده ردی مکتوب بر جای می‌ماند.",
+    "description": "Showcase Terminology paragraph 2 fragment after thread archival"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (با زیرنویس)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "نشان برند که درون یک بلوک Frame بایگانی شده و آماده‌ی استناد است.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "تصویر بندانگشتیِ برند Marshal.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (بدون زیرنویس)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (هر دو فروشگاه)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "اپلیکیشن همراه را دانلود کنید",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (فقط App Store)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "در دسترس روی iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (فقط Google Play)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "در دسترس روی Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (بدون برچسب)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} دقیقه مطالعه",
+    "description": "The label showing estimated reading time for a blog post"
+  }
+}

@@ -111,11 +111,11 @@ export class Runner {
    * definition and compares source positions. Skips declaration
    * identifiers, imports, and configurable categories.
    *
-   * @private
-   *
    * @param {Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Context} context - Context.
    * @param {Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Node}    node    - Node.
    * @param {Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Options} options - Options.
+   *
+   * @private
    *
    * @returns {Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Returns}
    *

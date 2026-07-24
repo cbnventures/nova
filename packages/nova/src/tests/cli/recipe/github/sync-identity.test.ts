@@ -222,8 +222,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': false,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: false,
+          },
         },
       },
     });
@@ -298,8 +302,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
     const loadSpy: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_OwnerOrRepoMissingLogsWarnAndReturnsWithoutExitCode_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
     });
@@ -347,8 +355,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
     });
@@ -398,8 +410,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
     });
@@ -447,8 +463,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
     });
@@ -518,8 +538,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
     });
@@ -585,8 +609,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: { description: { short: 'A test project' } },
@@ -664,8 +692,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: { description: { short: 'A test project' } },
@@ -755,8 +787,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: { description: { short: 'A test project' } },
@@ -839,8 +875,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: { description: { short: 'A test project' } },
@@ -927,8 +967,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
           'typescript',
           'nodejs',
         ],
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
     });
@@ -1016,8 +1060,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: {
@@ -1105,8 +1153,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
         owner: 'test-owner',
         repo: 'test-repo',
         topics: [],
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
     });
@@ -1187,8 +1239,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: { description: { short: 'A test project' } },
@@ -1260,8 +1316,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
     });
@@ -1357,8 +1417,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
         owner: 'test-owner',
         repo: 'test-repo',
         topics: ['typescript'],
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: { description: { short: 'A test project' } },
@@ -1449,8 +1513,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: { description: { short: 'A test project' } },
@@ -1526,8 +1594,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: { description: { short: 'A test project' } },
@@ -1627,8 +1699,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: { keywords: ['@@@'] },
@@ -1700,8 +1776,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: { keywords: ['a'.repeat(51)] },
@@ -1777,8 +1857,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: {
@@ -1865,8 +1949,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: { keywords },
@@ -1955,8 +2043,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: {
@@ -2046,8 +2138,12 @@ describe('CliRecipeGithubSyncIdentity.run', () => {
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
-        recipes: {
-          'sync-identity': true,
+      },
+      recipes: {
+        github: {
+          'sync-identity': {
+            enabled: true,
+          },
         },
       },
       project: {
