@@ -103,7 +103,7 @@
     },
     {
       "template": "publish",
-      "name": "sites",
+      "name": "project",
       "triggers": [
         "tag-push"
       ],

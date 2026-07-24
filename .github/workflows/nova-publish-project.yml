@@ -4,9 +4,9 @@
 # Run `nova generate github workflows` to regenerate.
 # See: https://nova.cbnventures.io/docs/cli/generators/github/workflows
 
-name: "Publish (sites)"
+name: "Publish (project)"
 
-run-name: "Publishing ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && github.ref_name) || 'manually' }} (sites)${{ github.event_name == 'workflow_dispatch' && inputs.dry-run && ' (dry run)' || '' }}"
+run-name: "Publishing ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && github.ref_name) || 'manually' }} (project)${{ github.event_name == 'workflow_dispatch' && inputs.dry-run && ' (dry run)' || '' }}"
 
 on:
   push:
