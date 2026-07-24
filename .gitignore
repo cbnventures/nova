@@ -190,4 +190,5 @@ firebase-debug.log
 #### Project Excludes ####
 ##########################
 !packages/nova/bin/
+!packages/docusaurus-preset-nova/bin/
 graphify-out/

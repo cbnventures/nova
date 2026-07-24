@@ -81,7 +81,7 @@
     "build:copy-types": "shx rm -rf \"./build/src/types\" && shx cp -r \"./src/types\" \"./build/src/types\"",
     "build:fix-esm-imports": "node ../../scripts/fix-esm-imports.mjs",
     "build:copy-styles": "node ../../scripts/copy-styles.mjs",
-    "build:fix-perms": "shx chmod +x ./bin/theme-nova.mjs ./build/src/cli/index.js",
+    "build:fix-perms": "shx chmod +x ./build/src/cli/index.js",
     "check": "node ../../scripts/nova-run-scripts.mjs --sequential 'check:*'",
     "check:lint": "eslint ./ --max-warnings=0",
     "check:types-plugin": "node ../../scripts/nova-type-check.mjs --project tsconfig.plugin.json",
