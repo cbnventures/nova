@@ -24,6 +24,7 @@ import type {
   Cli_Utility_RunScripts_Runner_Run_Pattern,
   Cli_Utility_RunScripts_Runner_Run_Returns,
   Cli_Utility_RunScripts_Runner_Run_Scripts,
+  Cli_Utility_RunScripts_Runner_Run_SpawnErrorMessage,
   Cli_Utility_RunScripts_Runner_RunParallel_BufferMs,
   Cli_Utility_RunScripts_Runner_RunParallel_Child,
   Cli_Utility_RunScripts_Runner_RunParallel_Children,
@@ -150,17 +151,27 @@ export class Runner {
       for (const matchedScript of matchedScripts) {
         process.stdout.write(`\n┌─ ${chalk.cyan(matchedScript)} ──\n`);
 
-        const exitCode: Cli_Utility_RunScripts_Runner_Run_ExitCode = await Runner.spawnScript(matchedScript);
+        try {
+          const exitCode: Cli_Utility_RunScripts_Runner_Run_ExitCode = await Runner.spawnScript(matchedScript);
 
-        if (exitCode !== 0) {
-          process.stderr.write(`└─ ${chalk.cyan(matchedScript)} ── ${chalk.red(`✗ (exit code ${exitCode})`)}\n`);
+          if (exitCode !== 0) {
+            process.stderr.write(`└─ ${chalk.cyan(matchedScript)} ── ${chalk.red(`✗ (exit code ${exitCode})`)}\n`);
+
+            process.exitCode = 1;
+
+            return;
+          }
+
+          process.stdout.write(`└─ ${chalk.cyan(matchedScript)} ── ${chalk.green('✓')}\n`);
+        } catch (error) {
+          const spawnErrorMessage: Cli_Utility_RunScripts_Runner_Run_SpawnErrorMessage = (error instanceof Error) ? error.message : String(error);
+
+          Logger.error(`Script "${matchedScript}" failed to start: ${spawnErrorMessage}`);
 
           process.exitCode = 1;
 
           return;
         }
-
-        process.stdout.write(`└─ ${chalk.cyan(matchedScript)} ── ${chalk.green('✓')}\n`);
       }
 
       Logger.customize({ padTop: 1 }).info('All scripts completed successfully.');

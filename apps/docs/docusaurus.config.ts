@@ -18,16 +18,16 @@ const identity = new NovaIdentity().forDocs();
  */
 const config: DocusaurusNovaConfig = {
   // Site Metadata.
-  title: identity['title'] ?? 'Nova',
+  title: identity['title'] ?? '',
   titleDelimiter: ' - ',
-  tagline: identity['tagline'] ?? 'Scripts, templates, and project configuration for the common JavaScript and TypeScript developer',
+  tagline: identity['tagline'],
   favicon: './favicon.ico',
 
   // Deployment.
-  url: identity['url'] ?? 'https://nova.cbnventures.io',
-  baseUrl: '/',
-  organizationName: identity['organizationName'] ?? 'cbnventures',
-  projectName: identity['projectName'] ?? 'nova',
+  url: identity['url'] ?? '',
+  baseUrl: identity['baseUrl'] ?? '',
+  organizationName: identity['organizationName'],
+  projectName: identity['projectName'],
   deploymentBranch: undefined,
   githubHost: undefined,
   githubPort: undefined,
@@ -66,7 +66,7 @@ const config: DocusaurusNovaConfig = {
       attributes: {
         rel: 'apple-touch-icon',
         sizes: '180x180',
-        href: '/apple-touch-icon.png',
+        href: `${identity['baseUrl'] ?? '/'}apple-touch-icon.png`,
       },
     },
     {
@@ -75,7 +75,7 @@ const config: DocusaurusNovaConfig = {
         rel: 'icon',
         type: 'image/png',
         sizes: '96x96',
-        href: '/favicon-96x96.png',
+        href: `${identity['baseUrl'] ?? '/'}favicon-96x96.png`,
       },
     },
     {
@@ -83,14 +83,14 @@ const config: DocusaurusNovaConfig = {
       attributes: {
         rel: 'icon',
         type: 'image/svg+xml',
-        href: '/favicon.svg',
+        href: `${identity['baseUrl'] ?? '/'}favicon.svg`,
       },
     },
     {
       tagName: 'link',
       attributes: {
         rel: 'manifest',
-        href: '/site.webmanifest',
+        href: `${identity['baseUrl'] ?? '/'}site.webmanifest`,
       },
     },
   ],
@@ -183,7 +183,7 @@ const config: DocusaurusNovaConfig = {
               'rss',
               'atom',
             ],
-            copyright: identity['copyright'] ?? `Copyright \u00A9 2025-${String(new Date().getFullYear())} CBN Ventures LLC. All Rights Reserved.`,
+            copyright: identity['copyright'],
             limit: 20,
             title: 'Nova Blog',
             description: 'Release notes, tooling insights, and automation patterns for JavaScript and TypeScript monorepos.',
@@ -240,6 +240,9 @@ const config: DocusaurusNovaConfig = {
           dark: undefined,
         },
         href: '/',
+        target: undefined,
+        rel: undefined,
+        ariaLabel: undefined,
         wordmark: {
           light: undefined,
           dark: undefined,
@@ -249,7 +252,7 @@ const config: DocusaurusNovaConfig = {
       metadata: [
         {
           name: 'description',
-          content: 'Scripts, templates, and project configuration for the common JavaScript and TypeScript developer',
+          content: identity['metaDescription'] ?? '',
         },
         {
           name: 'twitter:card',
@@ -486,7 +489,7 @@ const config: DocusaurusNovaConfig = {
           label: 'LinkedIn',
         },
       ],
-      copyright: identity['copyright'] ?? `Copyright \u00A9 2025-${String(new Date().getFullYear())} CBN Ventures LLC. All Rights Reserved.`,
+      copyright: identity['copyright'],
       credit: true,
       cta: undefined,
     },

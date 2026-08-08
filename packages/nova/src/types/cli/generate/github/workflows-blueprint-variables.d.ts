@@ -4,12 +4,12 @@ import type {
   Shared_BlueprintConfigWorkflow_Deploy,
   Shared_BlueprintConfigWorkflow_Name,
   Shared_NovaConfigEnvironment,
-  Shared_NovaConfigEnvironment_Apps,
   Shared_NovaConfigEnvironment_Workflows,
-  Shared_NovaConfigEnvironmentApp,
-  Shared_NovaConfigEnvironmentApp_Prefix,
+  Shared_NovaConfigEnvironment_Workspaces,
   Shared_NovaConfigEnvironmentWorkflow,
   Shared_NovaConfigEnvironmentWorkflow_Prefix,
+  Shared_NovaConfigEnvironmentWorkspace,
+  Shared_NovaConfigEnvironmentWorkspace_Prefix,
   Shared_NovaConfigWorkflow_Scopes,
   Shared_NovaConfigWorkflow_Settings,
   Shared_WorkflowTemplateTarget,
@@ -56,11 +56,11 @@ export type Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupL
 
 export type Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Scopes = Shared_NovaConfigWorkflow_Scopes;
 
-export type Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Apps = Shared_NovaConfigEnvironment_Apps | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Workspaces = Shared_NovaConfigEnvironment_Workspaces | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeApp = Shared_NovaConfigEnvironmentApp | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeWorkspace = Shared_NovaConfigEnvironmentWorkspace | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeAppPrefix = Shared_NovaConfigEnvironmentApp_Prefix;
+export type Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeWorkspacePrefix = Shared_NovaConfigEnvironmentWorkspace_Prefix;
 
 export type Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeBuildName = string;
 

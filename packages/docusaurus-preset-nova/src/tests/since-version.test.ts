@@ -195,7 +195,7 @@ function extractTagValues(filePath: Tests_SinceVersion_ExtractTagValues_FilePath
 /**
  * Tests - Since Version - Since Version Scan.
  *
- * Walks every `src/*.ts`, `*.d.ts`, and `*.tsx` file in this package and asserts
+ * Walks every `src/*.ts`, `*.d.ts`, `*.tsx`, and `*.css` file in this package and asserts
  * that every `@since` and `@deprecated` tag value in a real comment is either
  * "UNRELEASED" or a semver version that is less than or equal to the current
  * package version. Only MultiLineCommentTrivia blocks are inspected; string
@@ -218,6 +218,7 @@ describe('since version scan', () => {
       .filter((entry) => (
         entry.endsWith('.ts') === true
         || entry.endsWith('.tsx') === true
+        || entry.endsWith('.css') === true
       ))
       .map((entry) => join(srcDir, entry));
 

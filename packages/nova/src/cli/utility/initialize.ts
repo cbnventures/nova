@@ -174,22 +174,22 @@ import type {
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidateEntityUrl,
   Cli_Utility_Initialize_Runner_PromptEntitiesForm_ValidRoles,
   Cli_Utility_Initialize_Runner_PromptEnvironment_AppPaths,
-  Cli_Utility_Initialize_Runner_PromptEnvironment_Apps,
   Cli_Utility_Initialize_Runner_PromptEnvironment_AppScope,
   Cli_Utility_Initialize_Runner_PromptEnvironment_AppSummary,
   Cli_Utility_Initialize_Runner_PromptEnvironment_AppVariables,
   Cli_Utility_Initialize_Runner_PromptEnvironment_Choices,
   Cli_Utility_Initialize_Runner_PromptEnvironment_Config,
   Cli_Utility_Initialize_Runner_PromptEnvironment_Environment,
-  Cli_Utility_Initialize_Runner_PromptEnvironment_GlobalScope,
-  Cli_Utility_Initialize_Runner_PromptEnvironment_GlobalSummary,
-  Cli_Utility_Initialize_Runner_PromptEnvironment_GlobalVariables,
   Cli_Utility_Initialize_Runner_PromptEnvironment_MenuOutput,
   Cli_Utility_Initialize_Runner_PromptEnvironment_MenuOutputKey,
   Cli_Utility_Initialize_Runner_PromptEnvironment_MenuOutputResult,
   Cli_Utility_Initialize_Runner_PromptEnvironment_MenuOutputResultValue,
+  Cli_Utility_Initialize_Runner_PromptEnvironment_ProjectScope,
+  Cli_Utility_Initialize_Runner_PromptEnvironment_ProjectSummary,
+  Cli_Utility_Initialize_Runner_PromptEnvironment_ProjectVariables,
   Cli_Utility_Initialize_Runner_PromptEnvironment_Returns,
   Cli_Utility_Initialize_Runner_PromptEnvironment_Workspaces,
+  Cli_Utility_Initialize_Runner_PromptEnvironment_WorkspacesGroup,
   Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_ApplyResult,
   Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_CombinedLines,
   Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_Config,
@@ -225,9 +225,9 @@ import type {
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_EditIndex,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_EditValue,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Environment,
-  Cli_Utility_Initialize_Runner_PromptEnvironmentScope_ExistingApps,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_ExistingBlock,
-  Cli_Utility_Initialize_Runner_PromptEnvironmentScope_IsApp,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentScope_ExistingWorkspaces,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentScope_IsWorkspace,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_MenuOutput,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_MenuOutputKey,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_MenuOutputResult,
@@ -245,32 +245,39 @@ import type {
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_RemoveOutputValue,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Returns,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync,
-  Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_AppBlock,
-  Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_GlobalBlock,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_HasContent,
-  Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_NextApps,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_NextEnvironment,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_NextWorkspaces,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_ProjectBlock,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_Returns,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_WorkspaceBlock,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Variable,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_VariableKind,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_VariableLabel,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Variables,
   Cli_Utility_Initialize_Runner_PromptEnvironmentScope_VariableToRemove,
-  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_BuildOnlyOutput,
-  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_BuildOnlyOutputKey,
-  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_BuildOnlyOutputValue,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValue,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValueInitial,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValueOutput,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValueOutputKey,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValueOutputValue,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Existing,
-  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_IsApp,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ExistingReachIndex,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_IsLocal,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_IsWorkspace,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Key,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_KeyOutput,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_KeyOutputKey,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_KeyOutputValue,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Reach,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachInitial,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachOutput,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachOutputKey,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachOutputValue,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachValues,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Returns,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Secret,
+  Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretInitial,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutput,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutputKey,
   Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutputValue,
@@ -735,9 +742,6 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DependenciesSelectedSettings,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DependenciesSettings,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DependenciesSettingsPrompt,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePrompt,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePromptKey,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePromptValue,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_EnvironmentSelectedSettings,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_EnvironmentSettings,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_EnvironmentSettingsPrompt,
@@ -783,10 +787,6 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedPolicy,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedRecipes,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedRole,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ValidateWorkspaceDisplayName,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_WorkspaceDisplayNameInput,
-  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_WorkspaceDisplayNameValue,
-  Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Apps,
   Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Config,
   Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Environment,
   Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_EnvPath,
@@ -798,6 +798,7 @@ import type {
   Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Result,
   Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Returns,
   Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_SeparatorIndex,
+  Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Workspaces,
   Cli_Utility_Initialize_Runner_Run_CurrentDirectory,
   Cli_Utility_Initialize_Runner_Run_IsDryRun,
   Cli_Utility_Initialize_Runner_Run_IsProjectRoot,
@@ -4489,40 +4490,47 @@ export class Runner {
   private static async promptEnvironment(config: Cli_Utility_Initialize_Runner_PromptEnvironment_Config): Cli_Utility_Initialize_Runner_PromptEnvironment_Returns {
     while (true) {
       const environment: Cli_Utility_Initialize_Runner_PromptEnvironment_Environment = (config['environment'] !== undefined) ? config['environment'] : {};
-      const globalScope: Cli_Utility_Initialize_Runner_PromptEnvironment_GlobalScope = environment['global'];
-      const apps: Cli_Utility_Initialize_Runner_PromptEnvironment_Apps = (environment['apps'] !== undefined) ? environment['apps'] : {};
+      const projectScope: Cli_Utility_Initialize_Runner_PromptEnvironment_ProjectScope = environment['project'];
+      const workspacesGroup: Cli_Utility_Initialize_Runner_PromptEnvironment_WorkspacesGroup = (environment['workspaces'] !== undefined) ? environment['workspaces'] : {};
       const workspaces: Cli_Utility_Initialize_Runner_PromptEnvironment_Workspaces = (config['workspaces'] !== undefined) ? config['workspaces'] : {};
       const appPaths: Cli_Utility_Initialize_Runner_PromptEnvironment_AppPaths = [];
 
-      // Every application-role workspace can carry environment values, plus any path that
-      // already has an "environment.apps" entry (in case the workspace role changed).
+      // Every application-role workspace can carry environment values, plus the repo root
+      // "./" (role "project"), plus any path that already has an "environment.workspaces"
+      // entry (in case the workspace role changed).
       for (const workspaceEntry of Object.entries(workspaces)) {
-        if (workspaceEntry[1]['role'] === 'app' && appPaths.includes(workspaceEntry[0]) === false) {
+        if (
+          (
+            workspaceEntry[1]['role'] === 'app'
+            || workspaceEntry[0] === './'
+          )
+          && appPaths.includes(workspaceEntry[0]) === false
+        ) {
           appPaths.push(workspaceEntry[0]);
         }
       }
 
-      for (const appPath of Object.keys(apps)) {
+      for (const appPath of Object.keys(workspacesGroup)) {
         if (appPaths.includes(appPath) === false) {
           appPaths.push(appPath);
         }
       }
 
       const choices: Cli_Utility_Initialize_Runner_PromptEnvironment_Choices = [];
-      const globalVariables: Cli_Utility_Initialize_Runner_PromptEnvironment_GlobalVariables = (globalScope !== undefined && globalScope['variables'] !== undefined) ? globalScope['variables'] : [];
-      const globalSummary: Cli_Utility_Initialize_Runner_PromptEnvironment_GlobalSummary = (globalScope !== undefined) ? `${globalScope['prefix']} · ${globalVariables.length} value(s)` : 'Not configured yet.';
+      const projectVariables: Cli_Utility_Initialize_Runner_PromptEnvironment_ProjectVariables = (projectScope !== undefined && projectScope['variables'] !== undefined) ? projectScope['variables'] : [];
+      const projectSummary: Cli_Utility_Initialize_Runner_PromptEnvironment_ProjectSummary = (projectScope !== undefined) ? `${projectScope['prefix']} · ${projectVariables.length} value(s)` : 'Not configured yet.';
 
       choices.push({
-        title: 'Global keys',
-        description: globalSummary,
+        title: 'Project keys',
+        description: projectSummary,
         value: {
           kind: 'scope',
-          scope: 'global',
+          scope: 'project',
         },
       });
 
       for (const appPath of appPaths) {
-        const appScope: Cli_Utility_Initialize_Runner_PromptEnvironment_AppScope = apps[appPath];
+        const appScope: Cli_Utility_Initialize_Runner_PromptEnvironment_AppScope = workspacesGroup[appPath];
         const appVariables: Cli_Utility_Initialize_Runner_PromptEnvironment_AppVariables = (appScope !== undefined && appScope['variables'] !== undefined) ? appScope['variables'] : [];
         const appSummary: Cli_Utility_Initialize_Runner_PromptEnvironment_AppSummary = (appScope !== undefined) ? `${appScope['prefix']} · ${appVariables.length} value(s)` : 'Not configured yet.';
 
@@ -4531,7 +4539,7 @@ export class Runner {
           description: appSummary,
           value: {
             kind: 'scope',
-            scope: 'app',
+            scope: 'workspace',
             appPath,
           },
         });
@@ -4618,10 +4626,10 @@ export class Runner {
    */
   private static async readLocalFilledKeys(config: Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Config): Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Returns {
     const environment: Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Environment = config['environment'] ?? {};
-    const apps: Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Apps = environment['apps'] ?? {};
+    const workspaces: Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Workspaces = environment['workspaces'] ?? {};
     const result: Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Result = {};
 
-    for (const appPath of Object.keys(apps)) {
+    for (const appPath of Object.keys(workspaces)) {
       const filled: Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Filled = [];
       const envPath: Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_EnvPath = join(process.cwd(), appPath, '.env');
 
@@ -4823,11 +4831,11 @@ export class Runner {
    * @since 0.21.0
    */
   private static async promptEnvironmentScope(config: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Config, options: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Options): Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Returns {
-    const isApp: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_IsApp = options['scope'] === 'app';
+    const isWorkspace: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_IsWorkspace = options['scope'] === 'workspace';
     const appPath: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_AppPath = options['appPath'];
     const environment: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Environment = (config['environment'] !== undefined) ? config['environment'] : {};
-    const existingApps: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_ExistingApps = (environment['apps'] !== undefined) ? environment['apps'] : {};
-    const existingBlock: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_ExistingBlock = (isApp === true && appPath !== undefined) ? existingApps[appPath] : environment['global'];
+    const existingWorkspaces: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_ExistingWorkspaces = (environment['workspaces'] !== undefined) ? environment['workspaces'] : {};
+    const existingBlock: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_ExistingBlock = (isWorkspace === true && appPath !== undefined) ? existingWorkspaces[appPath] : environment['project'];
 
     let prefix: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Prefix = (existingBlock !== undefined) ? existingBlock['prefix'] : '';
     const variables: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Variables = (existingBlock !== undefined && existingBlock['variables'] !== undefined) ? [...existingBlock['variables']] : [];
@@ -4836,47 +4844,47 @@ export class Runner {
      * CLI - Utility - Initialize - Prompt Environment Scope - Sync.
      *
      * Flushes the working prefix and values back into the config's "environment" block after
-     * every change, deleting the namespace (and the containing block) when it becomes empty so
-     * partial edits are never lost and empty namespaces never persist.
+     * every change, deleting the namespace (and the containing block) when it has no prefix so
+     * a namespace never persists without one.
      *
      * @returns {Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_Returns}
      *
      * @since 0.21.0
      */
     const sync: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync = (): Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_Returns => {
-      const hasContent: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_HasContent = prefix !== '' || variables.length > 0;
+      const hasContent: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_HasContent = prefix !== '';
       const nextEnvironment: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_NextEnvironment = (config['environment'] !== undefined) ? config['environment'] : {};
 
-      if (isApp === true && appPath !== undefined) {
-        const nextApps: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_NextApps = (nextEnvironment['apps'] !== undefined) ? nextEnvironment['apps'] : {};
+      if (isWorkspace === true && appPath !== undefined) {
+        const nextWorkspaces: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_NextWorkspaces = (nextEnvironment['workspaces'] !== undefined) ? nextEnvironment['workspaces'] : {};
 
         if (hasContent === true) {
-          const appBlock: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_AppBlock = { prefix };
+          const workspaceBlock: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_WorkspaceBlock = { prefix };
 
           if (variables.length > 0) {
-            Object.assign(appBlock, { variables: [...variables] });
+            Object.assign(workspaceBlock, { variables: [...variables] });
           }
 
-          Reflect.set(nextApps, appPath, appBlock);
+          Reflect.set(nextWorkspaces, appPath, workspaceBlock);
         } else {
-          Reflect.deleteProperty(nextApps, appPath);
+          Reflect.deleteProperty(nextWorkspaces, appPath);
         }
 
-        if (Object.keys(nextApps).length > 0) {
-          Object.assign(nextEnvironment, { apps: nextApps });
+        if (Object.keys(nextWorkspaces).length > 0) {
+          Object.assign(nextEnvironment, { workspaces: nextWorkspaces });
         } else {
-          Reflect.deleteProperty(nextEnvironment, 'apps');
+          Reflect.deleteProperty(nextEnvironment, 'workspaces');
         }
       } else if (hasContent === true) {
-        const globalBlock: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_GlobalBlock = { prefix };
+        const projectBlock: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_ProjectBlock = { prefix };
 
         if (variables.length > 0) {
-          Object.assign(globalBlock, { variables: [...variables] });
+          Object.assign(projectBlock, { variables: [...variables] });
         }
 
-        Object.assign(nextEnvironment, { global: globalBlock });
+        Object.assign(nextEnvironment, { project: projectBlock });
       } else {
-        Reflect.deleteProperty(nextEnvironment, 'global');
+        Reflect.deleteProperty(nextEnvironment, 'project');
       }
 
       if (Object.keys(nextEnvironment).length > 0) {
@@ -4907,7 +4915,7 @@ export class Runner {
           continue;
         }
 
-        const variableKind: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_VariableKind = (variable['secret'] === true) ? 'secret' : 'variable';
+        const variableKind: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_VariableKind = ('secret' in variable && variable['secret'] === true) ? 'secret' : 'variable';
         const variableLabel: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_VariableLabel = `${variable['key']} (${variableKind})`;
 
         choices.push({
@@ -4948,7 +4956,7 @@ export class Runner {
       const menuOutput: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_MenuOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptEnvironmentScope_MenuOutputKey, Cli_Utility_Initialize_Runner_PromptEnvironmentScope_MenuOutputResult>({
         type: 'select',
         name: 'action',
-        message: (isApp === true && appPath !== undefined) ? `Manage environment for "${appPath}".` : 'Manage the global environment namespace.',
+        message: (isWorkspace === true && appPath !== undefined) ? `Manage environment for "${appPath}".` : 'Manage the project environment namespace.',
         choices,
       });
 
@@ -5014,7 +5022,18 @@ export class Runner {
       }
 
       if (menuOutputResultValue.action['kind'] === 'add') {
-        const addValue: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_AddValue = await Runner.promptEnvironmentValueForm(undefined, isApp);
+        if (prefix === '') {
+          Logger.customize({
+            name: 'Runner.promptEnvironmentScope',
+            purpose: 'prefixRequired',
+            padTop: 1,
+            padBottom: 1,
+          }).error('Set a prefix for this namespace before adding values.');
+
+          continue;
+        }
+
+        const addValue: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_AddValue = await Runner.promptEnvironmentValueForm(undefined, isWorkspace);
 
         if (addValue === undefined) {
           continue;
@@ -5041,7 +5060,7 @@ export class Runner {
           continue;
         }
 
-        const editValue: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_EditValue = await Runner.promptEnvironmentValueForm(variables[editIndex], isApp);
+        const editValue: Cli_Utility_Initialize_Runner_PromptEnvironmentScope_EditValue = await Runner.promptEnvironmentValueForm(variables[editIndex], isWorkspace);
 
         if (editValue === undefined) {
           continue;
@@ -5122,12 +5141,12 @@ export class Runner {
   /**
    * CLI - Utility - Initialize - Prompt Environment Value Form.
    *
-   * Prompts for one value's fields and, for application values, a build-only flag,
-   * plus an optional default for non-secret variables, then returns the built value or
-   * undefined when the user cancels or supplies an illegal key.
+   * Prompts for one value's fields and, for app values, a reach, then gates
+   * the secret prompt on a non-local reach and offers a default for a non-secret value,
+   * returning the built value or undefined on cancel or an illegal key.
    *
-   * @param {Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Existing} existing - Existing.
-   * @param {Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_IsApp}    isApp    - Is app.
+   * @param {Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Existing}    existing    - Existing.
+   * @param {Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_IsWorkspace} isWorkspace - Is workspace.
    *
    * @private
    *
@@ -5135,7 +5154,7 @@ export class Runner {
    *
    * @since 0.21.0
    */
-  private static async promptEnvironmentValueForm(existing: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Existing, isApp: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_IsApp): Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Returns {
+  private static async promptEnvironmentValueForm(existing: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Existing, isWorkspace: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_IsWorkspace): Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Returns {
     const keyOutput: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_KeyOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_KeyOutputKey, Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_KeyOutputValue>({
       type: 'text',
       name: 'key',
@@ -5161,55 +5180,120 @@ export class Runner {
       return undefined;
     }
 
-    const secretOutput: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutputKey, Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutputValue>({
-      type: 'confirm',
-      name: 'secret',
-      message: 'Store as a GitHub Secret (encrypted)? Choose no for a Variable (plaintext).',
-      initial: (existing !== undefined) ? existing['secret'] : true,
-    });
+    // Reach names where the value travels; a workspace value chooses among all four kinds while a
+    // project value is always managed.
+    let reach: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Reach = 'managed';
 
-    if (secretOutput['cancelled'] === true) {
-      return undefined;
-    }
+    if (isWorkspace === true) {
+      const reachValues: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachValues = [
+        'local',
+        'managed',
+        'build',
+        'runtime',
+      ];
+      let reachInitial: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachInitial = reachValues.indexOf('build');
 
-    const secret: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Secret = secretOutput['result'].secret === true;
-    const value: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Value = {
-      key,
-      secret,
-    };
+      if (existing !== undefined) {
+        const existingReachIndex: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ExistingReachIndex = reachValues.indexOf(existing['reach']);
 
-    if (isApp === true) {
-      const buildOnlyOutput: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_BuildOnlyOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_BuildOnlyOutputKey, Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_BuildOnlyOutputValue>({
-        type: 'confirm',
-        name: 'buildOnly',
-        message: 'Deliver only to the build (.env)? Choose no to sync it to the running server.',
-        initial: (existing !== undefined && existing['buildOnly'] !== undefined) ? existing['buildOnly'] : true,
+        if (existingReachIndex !== -1) {
+          reachInitial = existingReachIndex;
+        }
+      }
+
+      const reachOutput: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachOutputKey, Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachOutputValue>({
+        type: 'select',
+        name: 'reach',
+        message: 'Where does this value travel?',
+        choices: [
+          {
+            title: 'local (.env only, never GitHub)',
+            value: 'local',
+          },
+          {
+            title: 'managed (GitHub only, delivered nowhere)',
+            value: 'managed',
+          },
+          {
+            title: 'build (GitHub, baked into the build)',
+            value: 'build',
+          },
+          {
+            title: 'runtime (GitHub, synced to the server)',
+            value: 'runtime',
+          },
+        ],
+        initial: reachInitial,
       });
 
-      if (buildOnlyOutput['cancelled'] === true) {
+      if (reachOutput['cancelled'] === true) {
         return undefined;
       }
 
-      Object.assign(value, {
-        buildOnly: buildOnlyOutput['result'].buildOnly === true,
-      });
+      reach = reachOutput['result'].reach;
     }
 
-    if (secret === false) {
+    const isLocal: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_IsLocal = reach === 'local';
+
+    // Secret is the storage axis and applies only once a value reaches GitHub, so a local
+    // value is never prompted for it.
+    let secret: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Secret = false;
+
+    if (isLocal === false) {
+      let secretInitial: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretInitial = true;
+
+      if (existing !== undefined && 'secret' in existing) {
+        secretInitial = existing['secret'];
+      }
+
+      const secretOutput: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutputKey, Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutputValue>({
+        type: 'confirm',
+        name: 'secret',
+        message: 'Store as a GitHub Secret (encrypted)? Choose no for a Variable (plaintext).',
+        initial: secretInitial,
+      });
+
+      if (secretOutput['cancelled'] === true) {
+        return undefined;
+      }
+
+      secret = secretOutput['result'].secret === true;
+    }
+
+    const value: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Value = {
+      key,
+      reach,
+    } as Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Value;
+
+    if (isLocal === false) {
+      Reflect.set(value, 'secret', secret);
+    }
+
+    // A default lands in the committed ".env.sample"; it is offered only for a non-managed,
+    // non-secret value, because a managed value never reaches a ".env".
+    if (reach !== 'managed' && secret === false) {
+      let defaultValueInitial: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValueInitial = '';
+
+      if (
+        existing !== undefined
+        && 'defaultValue' in existing
+        && existing['defaultValue'] !== undefined
+      ) {
+        defaultValueInitial = existing['defaultValue'];
+      }
+
       const defaultValueOutput: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValueOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValueOutputKey, Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValueOutputValue>({
         type: 'text',
         name: 'defaultValue',
         message: 'Default value for the committed ".env.sample" (optional):',
-        initial: (existing !== undefined && existing['defaultValue'] !== undefined) ? existing['defaultValue'] : '',
+        initial: defaultValueInitial,
       });
 
       if (defaultValueOutput['cancelled'] === false) {
         const defaultValue: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValue = defaultValueOutput['result'].defaultValue.trim();
 
         if (defaultValue !== '') {
-          Object.assign(value, {
-            defaultValue,
-          });
+          Reflect.set(value, 'defaultValue', defaultValue);
         }
       }
     }
@@ -5350,8 +5434,8 @@ export class Runner {
   /**
    * CLI - Utility - Initialize - Prompt Workspaces Form.
    *
-   * Multi-step form for a single workspace. Prompts for role, policy, package name, display
-   * name, recipe selection, and per-recipe settings in sequence.
+   * Multi-step form for a single workspace. Prompts for role, policy, package name,
+   * recipe selection, and per-recipe settings in sequence.
    *
    * @param {Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Options} options - Options.
    *
@@ -5527,36 +5611,6 @@ export class Runner {
       };
     }
 
-    /**
-     * CLI - Utility - Initialize - Prompt Workspaces Form - Validate Workspace Display Name.
-     *
-     * Normalizes the optional workspace display name input as the prompt validator
-     * so the stored label is trimmed and free of stray whitespace before saving.
-     *
-     * @param {Cli_Utility_Initialize_Runner_PromptWorkspacesForm_WorkspaceDisplayNameValue} workspaceDisplayNameValue - Workspace display name value.
-     *
-     * @since 0.11.0
-     */
-    const validateWorkspaceDisplayName: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ValidateWorkspaceDisplayName = (workspaceDisplayNameValue: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_WorkspaceDisplayNameValue) => {
-      return Runner.normalizeText(workspaceDisplayNameValue, Infinity)['result'];
-    };
-
-    const displayNamePrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePromptValue>({
-      type: 'text',
-      name: 'workspaceDisplayName',
-      message: 'Workspace display name (optional)',
-      initial: (options['existingWorkspace'] !== undefined) ? options['existingWorkspace']['displayName'] ?? '' : '',
-      validate: validateWorkspaceDisplayName,
-    });
-
-    if (displayNamePrompt['cancelled'] === true) {
-      return {
-        action: 'back',
-      };
-    }
-
-    const workspaceDisplayNameInput: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_WorkspaceDisplayNameInput = Runner.normalizeText(displayNamePrompt['result'].workspaceDisplayName, Infinity)['sanitized'];
-
     const existingRecipes: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingRecipes = options['existingPackageJsonRecipes'];
 
     const recipesPrompt: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipesPrompt = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipesPromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipesPromptValue>({
@@ -5606,6 +5660,11 @@ export class Runner {
               title: 'keywords',
               value: 'keywords',
               selected: existingSettings !== undefined && existingSettings['keywords'] === true,
+            },
+            {
+              title: 'displayName',
+              value: 'displayName',
+              selected: existingSettings !== undefined && existingSettings['displayName'] === true,
             },
           ],
         });
@@ -5830,7 +5889,6 @@ export class Runner {
       action: 'apply',
       workspace: {
         name: resolvedName,
-        ...(workspaceDisplayNameInput !== undefined) ? { displayName: workspaceDisplayNameInput } : {},
         role: selectedRole,
         policy: selectedPolicy,
       },

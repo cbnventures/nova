@@ -4,16 +4,15 @@ import { libEnvNamespace } from '../../../lib/env-namespace.js';
 import { libWorkflowTemplatesMetadata } from '../../../lib/workflow-templates.js';
 
 import type {
-  Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Apps,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Environment,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Lines,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_OutputFileName,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ResolvedName,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Returns,
-  Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeApp,
-  Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeAppPrefix,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeBuildName,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Scopes,
+  Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeWorkspace,
+  Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeWorkspacePrefix,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_TargetMetadata,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_TargetResolvedName,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Targets,
@@ -31,6 +30,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_WorkflowName,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_WorkflowPrefix,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_WorkflowSettings,
+  Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_GetTargetMetadata_Returns,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_GetTargetMetadata_Targets,
   Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_GetTargetMetadata_TargetType,
@@ -217,27 +217,27 @@ export class Runner {
       }
     }
 
-    // Build-only environment values per scope. Each app's build-only value
+    // Reach "build" environment values per scope. Each workspace's build value
     // names the GitHub Variable or Secret the build-env step reads
     // (prefix + key), so the operator provisions it.
     const scopes: Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Scopes = validatedWorkflow['build'] ?? [];
-    const apps: Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Apps = environment['apps'];
+    const workspaces: Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_Workspaces = environment['workspaces'];
 
     for (const scope of scopes) {
-      const scopeApp: Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeApp = (apps === undefined) ? undefined : apps[scope];
+      const scopeWorkspace: Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeWorkspace = (workspaces === undefined) ? undefined : workspaces[scope];
 
-      if (scopeApp === undefined) {
+      if (scopeWorkspace === undefined) {
         continue;
       }
 
-      const scopeAppPrefix: Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeAppPrefix = scopeApp['prefix'];
+      const scopeWorkspacePrefix: Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeWorkspacePrefix = scopeWorkspace['prefix'];
 
-      for (const scopeBuildVariable of scopeApp['variables'] ?? []) {
-        if (scopeBuildVariable['buildOnly'] !== true) {
+      for (const scopeBuildVariable of scopeWorkspace['variables'] ?? []) {
+        if (scopeBuildVariable['reach'] !== 'build') {
           continue;
         }
 
-        const scopeBuildName: Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeBuildName = libEnvNamespace.githubName(scopeAppPrefix, scopeBuildVariable['key']);
+        const scopeBuildName: Cli_Generate_Github_WorkflowsBlueprintVariables_Runner_CollectSetupLines_ScopeBuildName = libEnvNamespace.githubName(scopeWorkspacePrefix, scopeBuildVariable['key']);
 
         if (scopeBuildVariable['secret'] === true) {
           lines.push(` - ${chalk.cyan(outputFileName)}: Secret ${chalk.yellow(scopeBuildName)}`);

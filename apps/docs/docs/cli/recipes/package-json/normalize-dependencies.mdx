@@ -45,7 +45,7 @@ When `pinDependencyVersions` or `pinDevDependencyVersions` is enabled, the recip
 
 - **Range prefixes** — Characters like `^`, `~`, `>=`, `>`, `<=`, `<` are stripped so the version resolves to an exact match.
 - **`file:` references** — Left untouched.
-- **`*` and `latest`** — Flagged as unpinnable. An error is logged and the process exit code is set to `1`.
+- **`*` and `latest`** — Left untouched (these version specifiers cannot be pinned to an exact version).
 - **Already pinned** — Versions that start with a digit or have no prefix are skipped.
 
 ## Settings

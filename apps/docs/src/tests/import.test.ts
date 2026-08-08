@@ -130,7 +130,11 @@ describe('Import validation', async () => {
     strictEqual(
       failures.length,
       0,
-      `\nInvalid import paths:\n${failures.join('\n')}`,
+      [
+        '',
+        'Invalid import paths:',
+        ...failures,
+      ].join('\n'),
     );
 
     return;

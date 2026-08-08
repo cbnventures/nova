@@ -4,15 +4,14 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "turbo run dev --filter='./packages/*' --filter=nova-docs",
-    "prod": "turbo run prod --filter='./packages/*' --filter=nova-docs",
-    "build": "turbo run build --filter='./packages/*' --filter=nova-docs",
-    "check": "turbo run check --filter='./packages/*' --filter=nova-docs",
-    "deploy": "turbo run deploy --filter='./packages/*' --filter=nova-docs",
-    "clean": "turbo run clean --filter='./packages/*' --filter=nova-docs",
+    "dev": "turbo run dev",
+    "prod": "turbo run prod",
+    "build": "turbo run build --concurrency=2",
+    "check": "turbo run check --concurrency=2 && eslint . --max-warnings=0 && node ./scripts/nova-type-check.mjs --project tsconfig.config.json && node ./scripts/nova-type-check.mjs --project tsconfig.scripts.json",
+    "deploy": "turbo run deploy --concurrency=2",
+    "clean": "turbo run clean",
     "changelog": "nova utility changelog",
     "recipes": "nova utility run-recipes --replace-file",
-    "demos": "node ./scripts/run-demos.mjs",
     "postinstall": "node ./scripts/link-nova.mjs"
   },
   "workspaces": [

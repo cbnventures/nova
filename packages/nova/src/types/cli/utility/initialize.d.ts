@@ -51,10 +51,11 @@ import type {
   Shared_NovaConfigEntity_Roles,
   Shared_NovaConfigEntityRole,
   Shared_NovaConfigEnvironment,
-  Shared_NovaConfigEnvironment_Apps,
-  Shared_NovaConfigEnvironmentApp,
-  Shared_NovaConfigEnvironmentGlobal,
+  Shared_NovaConfigEnvironment_Workspaces,
+  Shared_NovaConfigEnvironmentProject,
   Shared_NovaConfigEnvironmentValue,
+  Shared_NovaConfigEnvironmentValue_Reach,
+  Shared_NovaConfigEnvironmentWorkspace,
   Shared_NovaConfigProjectPlatform,
   Shared_NovaConfigWorkflow_Triggers,
   Shared_NovaConfigWorkflowScope,
@@ -517,9 +518,9 @@ export type Cli_Utility_Initialize_Runner_PromptEnvironment_Returns = Promise<Ex
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironment_Environment = Shared_NovaConfigEnvironment;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironment_GlobalScope = Shared_NovaConfigEnvironmentGlobal | undefined;
+export type Cli_Utility_Initialize_Runner_PromptEnvironment_ProjectScope = Shared_NovaConfigEnvironmentProject | undefined;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironment_Apps = Shared_NovaConfigEnvironment_Apps;
+export type Cli_Utility_Initialize_Runner_PromptEnvironment_WorkspacesGroup = Shared_NovaConfigEnvironment_Workspaces;
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironment_Workspaces = Shared_NovaConfig_Workspaces;
 
@@ -531,7 +532,7 @@ export type Cli_Utility_Initialize_Runner_PromptEnvironment_Choice_Description =
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironment_ChoiceValueScope_Kind = 'scope';
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironment_ChoiceValueScope_Scope = 'global' | 'app';
+export type Cli_Utility_Initialize_Runner_PromptEnvironment_ChoiceValueScope_Scope = 'project' | 'workspace';
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironment_ChoiceValueScope_AppPath = string;
 
@@ -573,11 +574,11 @@ export type Cli_Utility_Initialize_Runner_PromptEnvironment_Choice = {
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironment_Choices = Cli_Utility_Initialize_Runner_PromptEnvironment_Choice[];
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironment_GlobalVariables = Shared_NovaConfigEnvironmentValue[];
+export type Cli_Utility_Initialize_Runner_PromptEnvironment_ProjectVariables = Shared_NovaConfigEnvironmentValue[];
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironment_GlobalSummary = string;
+export type Cli_Utility_Initialize_Runner_PromptEnvironment_ProjectSummary = string;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironment_AppScope = Shared_NovaConfigEnvironmentApp | undefined;
+export type Cli_Utility_Initialize_Runner_PromptEnvironment_AppScope = Shared_NovaConfigEnvironmentWorkspace | undefined;
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironment_AppVariables = Shared_NovaConfigEnvironmentValue[];
 
@@ -594,7 +595,7 @@ export type Cli_Utility_Initialize_Runner_PromptEnvironment_MenuOutputResultValu
 /**
  * CLI - Utility - Initialize - Prompt Environment Reconcile.
  *
- * @since 0.21.0
+ * @since 0.22.0
  */
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_Config = Shared_NovaConfig;
 
@@ -608,7 +609,7 @@ export type Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_ManagedEntr
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_ManagedEntry_Secret = boolean;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_ManagedEntry_Kind = 'app' | 'global' | 'workflow' | 'deploy-cred';
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_ManagedEntry_Kind = 'workspace' | 'project' | 'workflow' | 'deploy-cred';
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_ManagedEntry = {
   name: Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_ManagedEntry_Name;
@@ -632,7 +633,7 @@ export type Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_GithubState
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_StatusEntry_Name = string;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_StatusEntry_State = 'declared' | 'missing' | 'stale' | 'type-mismatch' | 'unmanaged' | 'empty-bake' | 'local-orphan' | 'optional-absent';
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_StatusEntry_State = 'declared' | 'missing' | 'stale' | 'type-mismatch' | 'unmanaged' | 'empty-bake' | 'local-orphan' | 'optional-absent' | 'stub-unreplaced';
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_StatusEntry = {
   name: Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_StatusEntry_Name;
@@ -721,7 +722,7 @@ export type Cli_Utility_Initialize_Runner_PromptEnvironmentReconcileConfirm_Conf
  */
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Config = Shared_NovaConfig;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Options_Scope = 'global' | 'app';
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Options_Scope = 'project' | 'workspace';
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Options_AppPath = string | undefined;
 
@@ -732,15 +733,15 @@ export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Options = {
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_IsApp = boolean;
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_IsWorkspace = boolean;
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_AppPath = string | undefined;
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Environment = Shared_NovaConfigEnvironment;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_ExistingApps = Shared_NovaConfigEnvironment_Apps;
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_ExistingWorkspaces = Shared_NovaConfigEnvironment_Workspaces;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_ExistingBlock = Shared_NovaConfigEnvironmentApp | Shared_NovaConfigEnvironmentGlobal | undefined;
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_ExistingBlock = Shared_NovaConfigEnvironmentWorkspace | Shared_NovaConfigEnvironmentProject | undefined;
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Prefix = string;
 
@@ -860,11 +861,11 @@ export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_HasContent
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_NextEnvironment = Shared_NovaConfigEnvironment;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_NextApps = Shared_NovaConfigEnvironment_Apps;
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_NextWorkspaces = Shared_NovaConfigEnvironment_Workspaces;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_AppBlock = Shared_NovaConfigEnvironmentApp;
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_WorkspaceBlock = Shared_NovaConfigEnvironmentWorkspace;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_GlobalBlock = Shared_NovaConfigEnvironmentGlobal;
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_ProjectBlock = Shared_NovaConfigEnvironmentProject;
 
 /**
  * CLI - Utility - Initialize - Prompt Environment Value Form.
@@ -873,7 +874,7 @@ export type Cli_Utility_Initialize_Runner_PromptEnvironmentScope_Sync_GlobalBloc
  */
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Existing = Shared_NovaConfigEnvironmentValue | undefined;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_IsApp = boolean;
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_IsWorkspace = boolean;
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Returns = Promise<Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Value | undefined>;
 
@@ -885,21 +886,35 @@ export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_KeyOutput =
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Key = string;
 
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Reach = Shared_NovaConfigEnvironmentValue_Reach;
+
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachValues = Shared_NovaConfigEnvironmentValue_Reach[];
+
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachInitial = number;
+
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ExistingReachIndex = number;
+
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachOutputKey = 'reach';
+
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachOutputValue = Shared_NovaConfigEnvironmentValue_Reach;
+
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachOutput = Shared_PromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachOutputKey, Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_ReachOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_IsLocal = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Secret = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretInitial = boolean;
+
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutputKey = 'secret';
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutputValue = boolean;
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutput = Shared_PromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutputKey, Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_SecretOutputValue> | Shared_PromptWithCancelReject;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Secret = boolean;
-
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Value = Shared_NovaConfigEnvironmentValue;
 
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_BuildOnlyOutputKey = 'buildOnly';
-
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_BuildOnlyOutputValue = boolean;
-
-export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_BuildOnlyOutput = Shared_PromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_BuildOnlyOutputKey, Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_BuildOnlyOutputValue> | Shared_PromptWithCancelReject;
+export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValueInitial = string;
 
 export type Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValueOutputKey = 'defaultValue';
 
@@ -2337,18 +2352,6 @@ export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_SelectedPolicy = 
 
 export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolvedName = string | undefined;
 
-export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_WorkspaceDisplayNameValue = unknown;
-
-export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ValidateWorkspaceDisplayName = (workspaceDisplayNameValue: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_WorkspaceDisplayNameValue) => Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ValidateWorkspaceDisplayName_Result;
-
-export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePromptKey = 'workspaceDisplayName';
-
-export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePromptValue = string;
-
-export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePrompt = Shared_PromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePromptKey, Cli_Utility_Initialize_Runner_PromptWorkspacesForm_DisplayNamePromptValue> | Shared_PromptWithCancelReject;
-
-export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_WorkspaceDisplayNameInput = Shared_NormalizedResult_Sanitized<string>;
-
 export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ExistingRecipes = Shared_NovaConfig_Recipes_PackageJsonWorkspace | undefined;
 
 export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_RecipesPromptKey = 'workspaceRecipes';
@@ -2430,13 +2433,6 @@ export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_NameP
 export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ResolveName_ValidateWorkspaceName_Result = Shared_NormalizedResult<string>['result'];
 
 /**
- * CLI - Utility - Initialize - Prompt Workspaces Form - Validate Workspace Display Name.
- *
- * @since 0.11.0
- */
-export type Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ValidateWorkspaceDisplayName_Result = Shared_NormalizedResult<string>['result'];
-
-/**
  * CLI - Utility - Initialize - Read Local Filled Keys.
  *
  * @since 0.21.0
@@ -2447,7 +2443,7 @@ export type Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Returns = Promise<
 
 export type Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Environment = Shared_NovaConfigEnvironment;
 
-export type Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Apps = Shared_NovaConfigEnvironment_Apps;
+export type Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Workspaces = Shared_NovaConfigEnvironment_Workspaces;
 
 export type Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Result = {
   [key: string]: string[];

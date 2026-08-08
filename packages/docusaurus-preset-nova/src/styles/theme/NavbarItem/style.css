@@ -127,3 +127,71 @@
 .nova-version-dropdown-item-link:focus-visible {
   text-decoration: none;
 }
+
+/**
+ * ============================
+ * 3. Dropdown - disclosure with absolute popover
+ *
+ * Unlike the locale/version dropdowns, this component recursively renders
+ * arbitrary child `<NavbarItem>` components instead of owning a `Link`
+ * directly, so there is no dedicated `-item-link` class - item styling
+ * targets the rendered anchor via a descendant selector instead (mirrors
+ * the `.nova-navbar-more-item a` pattern used by the More overflow menu).
+ * ============================
+ */
+
+.nova-dropdown {
+  position: relative;
+}
+
+.nova-dropdown-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.nova-dropdown-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nova-dropdown-summary svg {
+  transition: transform var(--nova-motion-duration) var(--nova-motion-easing);
+}
+
+.nova-dropdown[open] > .nova-dropdown-summary svg {
+  transform: rotate(180deg);
+}
+
+.nova-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  z-index: 100;
+
+  margin: 0;
+  padding: 0.25rem 0;
+  min-width: 8rem;
+
+  list-style: none;
+}
+
+.nova-dropdown-item {
+  display: block;
+}
+
+.nova-dropdown-item a {
+  display: block;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* Override the global `a:hover` underline rule defined in each preset's
+   `preset.css` - utility-component links never get underlined. */
+.nova-dropdown-item a:hover,
+.nova-dropdown-item a:focus-visible {
+  text-decoration: none;
+}

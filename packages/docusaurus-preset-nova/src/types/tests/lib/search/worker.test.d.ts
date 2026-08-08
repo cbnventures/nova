@@ -172,3 +172,16 @@ export type Tests_Lib_Search_Worker_PerformSearchScoreSorting_ReturnsResultsSort
  * @since 0.15.0
  */
 export type Tests_Lib_Search_Worker_PerformSearchWildcard_MatchesPrefixQueriesViaWildcardStrategy_Index = unknown;
+
+/**
+ * Tests - Lib - Search - Worker - Worker Script Compatibility - Contains No ES Module Syntax In The Compiled Output.
+ *
+ * @since 0.21.0
+ */
+export type Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_CurrentDir = string;
+
+export type Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_WorkerPath = string;
+
+export type Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_WorkerSource = string;
+
+export type Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_ImportMatch = RegExpMatchArray | null;

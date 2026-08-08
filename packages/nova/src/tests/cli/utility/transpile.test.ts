@@ -97,7 +97,7 @@ describe('CliUtilityTranspile.run', async () => {
 
     CliUtilityTranspile.run({});
 
-    strictEqual(process.exitCode, undefined);
+    strictEqual(process.exitCode, 1);
 
     return;
   });

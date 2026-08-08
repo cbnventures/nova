@@ -2,19 +2,16 @@ import { libEnvNamespace } from './env-namespace.js';
 import { libWorkflowTemplatesMetadata } from './workflow-templates.js';
 
 import type {
-  Lib_EnvManagedSet_App,
-  Lib_EnvManagedSet_AppPath,
-  Lib_EnvManagedSet_Apps,
   Lib_EnvManagedSet_CandidateName,
   Lib_EnvManagedSet_Candidates,
-  Lib_EnvManagedSet_CredApp,
   Lib_EnvManagedSet_CredMeta,
   Lib_EnvManagedSet_CredName,
   Lib_EnvManagedSet_CredPrefix,
+  Lib_EnvManagedSet_CredWorkspace,
   Lib_EnvManagedSet_Environment,
-  Lib_EnvManagedSet_Global,
   Lib_EnvManagedSet_LibEnvManagedSet,
   Lib_EnvManagedSet_ManagedCred,
+  Lib_EnvManagedSet_Project,
   Lib_EnvManagedSet_ResolvedCred,
   Lib_EnvManagedSet_ResolvedVariable,
   Lib_EnvManagedSet_Results,
@@ -28,13 +25,16 @@ import type {
   Lib_EnvManagedSet_WorkflowEnvironments,
   Lib_EnvManagedSet_WorkflowPrefix,
   Lib_EnvManagedSet_Workflows,
+  Lib_EnvManagedSet_Workspace,
+  Lib_EnvManagedSet_WorkspacePath,
+  Lib_EnvManagedSet_Workspaces,
 } from '../types/lib/env-managed-set.d.ts';
 
 /**
  * Lib - Env Managed Set - Lib Env Managed Set.
  *
- * Computes every GitHub Variable and Secret name Nova manages for a config: app and
- * global values plus workflow-config and deploy-credential keys from the template and
+ * Computes every GitHub Variable and Secret name Nova manages for a config: workspace
+ * and project values plus workflow-config and deploy-credential keys from the template and
  * target metadata, each derived as prefix + key, minus the automatic GITHUB_TOKEN.
  *
  * @since 0.21.0
@@ -43,35 +43,44 @@ export const libEnvManagedSet: Lib_EnvManagedSet_LibEnvManagedSet = {
   compute: (config) => {
     const candidates: Lib_EnvManagedSet_Candidates = [];
     const environment: Lib_EnvManagedSet_Environment = config['environment'] ?? {};
-    const global: Lib_EnvManagedSet_Global = environment['global'];
-    const apps: Lib_EnvManagedSet_Apps = environment['apps'] ?? {};
+    const project: Lib_EnvManagedSet_Project = environment['project'];
+    const workspaces: Lib_EnvManagedSet_Workspaces = environment['workspaces'] ?? {};
 
-    // Global managed keys carry the global prefix.
-    if (global !== undefined) {
-      for (const globalVariable of global['variables'] ?? []) {
+    // Project managed keys carry the project prefix; a reach "local" key never reaches GitHub.
+    if (project !== undefined) {
+      for (const projectVariable of project['variables'] ?? []) {
+        if (projectVariable['reach'] === 'local') {
+          continue;
+        }
+
         candidates.push({
-          name: libEnvNamespace.githubName(global['prefix'], globalVariable['key']),
-          secret: globalVariable['secret'],
-          kind: 'global',
+          name: libEnvNamespace.githubName(project['prefix'], projectVariable['key']),
+          secret: projectVariable['secret'],
+          kind: 'project',
         });
       }
     }
 
-    // App managed keys carry each app's prefix, regardless of buildOnly.
-    for (const appEntry of Object.entries(apps)) {
-      const app: Lib_EnvManagedSet_App = appEntry[1];
+    // Workspace managed keys carry each workspace's prefix, regardless of build vs runtime; a reach
+    // "local" key never reaches GitHub, so it is excluded from the managed set.
+    for (const workspaceEntry of Object.entries(workspaces)) {
+      const workspace: Lib_EnvManagedSet_Workspace = workspaceEntry[1];
 
-      for (const appVariable of app['variables'] ?? []) {
+      for (const workspaceVariable of workspace['variables'] ?? []) {
+        if (workspaceVariable['reach'] === 'local') {
+          continue;
+        }
+
         candidates.push({
-          name: libEnvNamespace.githubName(app['prefix'], appVariable['key']),
-          secret: appVariable['secret'],
-          kind: 'app',
+          name: libEnvNamespace.githubName(workspace['prefix'], workspaceVariable['key']),
+          secret: workspaceVariable['secret'],
+          kind: 'workspace',
         });
       }
     }
 
-    // Workflow config keys carry the workflow prefix; deploy creds carry the global
-    // prefix for account scope or the deploying app's prefix for app scope.
+    // Workflow config keys carry the workflow prefix; deploy creds carry the project
+    // prefix for account scope or the deploying workspace's prefix for app scope.
     const workflows: Lib_EnvManagedSet_Workflows = config['workflows'] ?? [];
     const workflowEnvironments: Lib_EnvManagedSet_WorkflowEnvironments = environment['workflows'] ?? {};
 
@@ -82,7 +91,7 @@ export const libEnvManagedSet: Lib_EnvManagedSet_LibEnvManagedSet = {
         continue;
       }
 
-      const workflowEnvironment: Lib_EnvManagedSet_WorkflowEnvironment = workflowEnvironments[workflow['suffix']];
+      const workflowEnvironment: Lib_EnvManagedSet_WorkflowEnvironment = workflowEnvironments[workflow['name']];
       const workflowPrefix: Lib_EnvManagedSet_WorkflowPrefix = (workflowEnvironment !== undefined) ? workflowEnvironment['prefix'] : undefined;
 
       for (const variableEntry of Object.entries(templateMeta['variables'])) {
@@ -108,14 +117,14 @@ export const libEnvManagedSet: Lib_EnvManagedSet_LibEnvManagedSet = {
         continue;
       }
 
-      for (const workflowTarget of workflow['targets'] ?? []) {
-        const targetMeta: Lib_EnvManagedSet_TargetMeta = templateTargets[workflowTarget['type']];
+      for (const workflowTarget of workflow['deploy'] ?? []) {
+        const targetMeta: Lib_EnvManagedSet_TargetMeta = templateTargets[workflowTarget['to']];
 
         if (targetMeta === undefined) {
           continue;
         }
 
-        const appPath: Lib_EnvManagedSet_AppPath = workflowTarget['workingDir'];
+        const workspacePath: Lib_EnvManagedSet_WorkspacePath = workflowTarget['path'];
 
         for (const credEntry of Object.entries(targetMeta['variables'])) {
           const credName: Lib_EnvManagedSet_CredName = credEntry[0];
@@ -125,13 +134,13 @@ export const libEnvManagedSet: Lib_EnvManagedSet_LibEnvManagedSet = {
             continue;
           }
 
-          const credApp: Lib_EnvManagedSet_CredApp = apps[appPath];
+          const credWorkspace: Lib_EnvManagedSet_CredWorkspace = workspaces[workspacePath];
           let credPrefix: Lib_EnvManagedSet_CredPrefix = undefined;
 
-          if (credMeta['scope'] === 'account' && global !== undefined) {
-            credPrefix = global['prefix'];
-          } else if (credMeta['scope'] === 'app' && credApp !== undefined) {
-            credPrefix = credApp['prefix'];
+          if (credMeta['scope'] === 'account' && project !== undefined) {
+            credPrefix = project['prefix'];
+          } else if (credMeta['scope'] === 'app' && credWorkspace !== undefined) {
+            credPrefix = credWorkspace['prefix'];
           }
 
           const resolvedCred: Lib_EnvManagedSet_ResolvedCred = (credPrefix !== undefined && credPrefix !== '') ? libEnvNamespace.githubName(credPrefix, credName) : (credMeta['default'] ?? credName);

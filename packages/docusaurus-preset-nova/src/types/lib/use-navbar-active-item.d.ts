@@ -77,3 +77,9 @@ export type Lib_UseNavbarActiveItem_NormalizeBase_Returns = string;
 export type Lib_UseNavbarActiveItem_UseNavbarActiveItem_ItemType = string | undefined;
 
 export type Lib_UseNavbarActiveItem_UseNavbarActiveItem_Label = string | undefined;
+
+export type Lib_UseNavbarActiveItem_UseNavbarActiveItem_Children = Record<string, unknown>[];
+
+export type Lib_UseNavbarActiveItem_UseNavbarActiveItem_Child = Record<string, unknown>;
+
+export type Lib_UseNavbarActiveItem_UseNavbarActiveItem_ChildClaim = number | null;

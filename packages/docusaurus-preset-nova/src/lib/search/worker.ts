@@ -1,4 +1,8 @@
-import { LIB_REGEX_PATTERN_REGEX_SPECIAL_CHARS } from '../regex.js';
+// WARNING: This file is deployed as a classic Web Worker script (not an ES module).
+// Do NOT add runtime imports — only `import type` is safe here. The indexer
+// strips the `export {};` that TypeScript emits, but runtime `import` or
+// `export` statements will cause a SyntaxError in the browser. Any shared
+// values this file needs must be inlined as local constants.
 
 import type {
   Lib_Search_Worker_Event,
@@ -61,6 +65,7 @@ import type {
   Lib_Search_Worker_PerformSearch_TypedIndex,
   Lib_Search_Worker_PerformSearch_WildcardQuery,
   Lib_Search_Worker_PerformSearch_WildcardResults,
+  Lib_Search_Worker_RegexSpecialChars,
   Lib_Search_Worker_SearchDocuments,
   Lib_Search_Worker_SearchIndex,
 } from '../../types/lib/search/worker.d.ts';
@@ -68,6 +73,18 @@ import type {
 declare const lunr: Lib_Search_Worker_LunrGlobal;
 
 importScripts('lunr.min.js');
+
+/**
+ * Lib - Search - Worker - Regex Special Chars.
+ *
+ * Matches a single RegExp metacharacter so a search term can be escaped before being
+ * interpolated into a dynamically built pattern. Defined locally because the worker
+ * runs as a classic script that cannot use ES module imports.
+ *
+ * @since 0.15.0
+ */
+// eslint-disable-next-line @cbnventures/nova/no-regex-literals -- Worker is a classic script; it cannot import from regex.ts.
+const regexSpecialChars: Lib_Search_Worker_RegexSpecialChars = /[.*+?^${}()|[\]\\]/;
 
 /**
  * Lib - Search - Worker - Search Index.
@@ -289,13 +306,13 @@ function performSearch(index: Lib_Search_Worker_PerformSearch_Index, documents: 
     if (refTerms !== undefined) {
       for (const matchedTerm of refTerms) {
         const refTerm: Lib_Search_Worker_PerformSearch_RefTerm = matchedTerm;
-        const escapedTerm: Lib_Search_Worker_PerformSearch_EscapedTerm = refTerm.replace(new RegExp(LIB_REGEX_PATTERN_REGEX_SPECIAL_CHARS.source, 'g'), (match) => `\\${match}`);
+        const escapedTerm: Lib_Search_Worker_PerformSearch_EscapedTerm = refTerm.replace(new RegExp(regexSpecialChars.source, 'g'), (match) => `\\${match}`);
 
         termPatterns.push(`${escapedTerm}\\w*`);
       }
     }
 
-    const escapedQuery: Lib_Search_Worker_PerformSearch_EscapedQuery = trimmedQuery.replace(new RegExp(LIB_REGEX_PATTERN_REGEX_SPECIAL_CHARS.source, 'g'), (match) => `\\${match}`);
+    const escapedQuery: Lib_Search_Worker_PerformSearch_EscapedQuery = trimmedQuery.replace(new RegExp(regexSpecialChars.source, 'g'), (match) => `\\${match}`);
 
     termPatterns.push(escapedQuery);
 

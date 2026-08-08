@@ -218,3 +218,36 @@
 .nova-navbar-bridge-menu-item:hover {
   text-decoration: none;
 }
+
+.nova-navbar-bridge-menu-dropdown {
+  display: flex;
+  flex-direction: column;
+}
+
+.nova-navbar-bridge-menu-dropdown-summary {
+  display: flex;
+  align-items: center;
+
+  padding: 0.75rem;
+
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.nova-navbar-bridge-menu-dropdown-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nova-navbar-bridge-menu-dropdown-summary svg {
+  transition: transform var(--nova-motion-duration) var(--nova-motion-easing);
+}
+
+.nova-navbar-bridge-menu-dropdown[open] > .nova-navbar-bridge-menu-dropdown-summary svg {
+  transform: rotate(180deg);
+}
+
+.nova-navbar-bridge-menu-dropdown-children {
+  display: flex;
+  flex-direction: column;
+}

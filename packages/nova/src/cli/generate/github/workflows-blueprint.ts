@@ -24,21 +24,21 @@ import { Runner as Validator } from './workflows-blueprint-validate.js';
 import { Runner as Variables } from './workflows-blueprint-variables.js';
 
 import type {
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_App,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_AppPath,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Apps,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_BuildValue,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Environment,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Prefix,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Results,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Returns,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_App,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Workspace,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_AppPath,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Apps,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Environment,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Prefix,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Results,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Workspace,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_Entry,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_Env,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_Environment,
@@ -64,14 +64,19 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflarePagesDocusaurusTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_AppPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Context,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployEnv,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Environment,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Metadata,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_RuntimeValues,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_SecretRuntimeValues,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Steps,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_SyncStep,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_TargetSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_VarFlags,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Variables,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_VarRuntimeValues,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_AppPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Context,
@@ -150,6 +155,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildJob,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildValues,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Context,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOn,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOnNames,
@@ -325,14 +331,11 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployNeeds_Needs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployNeeds_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployNeeds_Target,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_App,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_AppPath,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_AppPrefix,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Apps,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Environment,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Global,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_GlobalPrefix,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Prefix,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Project,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_ProjectPrefix,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Scope,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_TargetSettings,
@@ -340,6 +343,9 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_VariableName,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_WorkflowSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Workspace,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_WorkspacePrefix,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveVariableExpr_IsPrefixable,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveVariableExpr_Prefix,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveVariableExpr_ResolvedName,
@@ -1261,7 +1267,11 @@ export class Runner {
 
       return workspace['name'];
     });
-    const checkCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = Runner.buildScopeCommand('check', names, useTurbo);
+    const checkNames: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckNames = (useTurbo === true) ? [
+      '//',
+      ...names,
+    ] : names;
+    const checkCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = Runner.buildScopeCommand('check', checkNames, useTurbo);
     const buildCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildCommand = Runner.buildScopeCommand('build', names, useTurbo);
 
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Steps = [
@@ -1325,6 +1335,14 @@ export class Runner {
       runBlock: true,
       workingDirectory: Runner.expr('env.ROOT_DIR'),
     });
+
+    if (useTurbo !== true) {
+      steps.push({
+        name: 'Check root',
+        run: 'npm run check',
+        workingDirectory: Runner.expr('env.ROOT_DIR'),
+      });
+    }
 
     steps.push({
       name: 'Build project',
@@ -1830,6 +1848,34 @@ export class Runner {
     const environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Environment = context['environment'];
     const appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_AppPath = context['workingDir'];
     const runtimeValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_RuntimeValues = Runner.appRuntimeValues(environment, appPath);
+    const secretRuntimeValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_SecretRuntimeValues = runtimeValues.filter((value) => value['secret'] === true);
+    const varRuntimeValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_VarRuntimeValues = runtimeValues.filter((value) => value['secret'] !== true);
+
+    const deployEnv: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployEnv = [
+      {
+        key: 'CLOUDFLARE_API_TOKEN',
+        value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_API_TOKEN', targetSettings, workflowSettings, environment, appPath),
+      },
+      {
+        key: 'CLOUDFLARE_ACCOUNT_ID',
+        value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_ACCOUNT_ID', targetSettings, workflowSettings, environment, appPath),
+      },
+    ];
+
+    let deployRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployRun = 'npm run deploy';
+
+    for (const varValue of varRuntimeValues) {
+      deployEnv.push({
+        key: varValue['key'],
+        value: Runner.expr(`vars.${varValue['name']}`),
+      });
+    }
+
+    if (varRuntimeValues.length > 0) {
+      const varFlags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_VarFlags = varRuntimeValues.map((value) => `--var ${value['key']}:"$${value['key']}"`).join(' ');
+
+      deployRun = `npm run deploy -- ${varFlags}`;
+    }
 
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Steps = [
       {
@@ -1872,29 +1918,29 @@ export class Runner {
       {
         name: 'Deploy to Cloudflare Workers',
         if: Runner.expr('env.PUBLISH == \'true\''),
-        env: [
-          {
-            key: 'CLOUDFLARE_API_TOKEN',
-            value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_API_TOKEN', targetSettings, workflowSettings, environment, appPath),
-          },
-          {
-            key: 'CLOUDFLARE_ACCOUNT_ID',
-            value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_ACCOUNT_ID', targetSettings, workflowSettings, environment, appPath),
-          },
-        ],
-        run: 'npm run deploy',
+        env: deployEnv,
+        run: deployRun,
         workingDirectory: context['workingDir'],
       },
     ];
 
-    // A worker with managed runtime values gets one sync step right after the
-    // deploy, wiping any value the config no longer declares before uploading
-    // the declared set; a worker with none leaves the job unchanged.
+    // Secrets sync via the separate step; non-secret vars already ride
+    // the deploy command. Credentials are forwarded so wrangler secret
+    // commands can authenticate independently from the deploy step.
     const syncStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_SyncStep = Runner.emitRuntimeSyncStep({
       vendor: 'cloudflare',
-      runtimeValues,
+      runtimeValues: secretRuntimeValues,
       workingDir: context['workingDir'],
-      extraEnv: [],
+      extraEnv: [
+        {
+          key: 'CLOUDFLARE_API_TOKEN',
+          value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_API_TOKEN', targetSettings, workflowSettings, environment, appPath),
+        },
+        {
+          key: 'CLOUDFLARE_ACCOUNT_ID',
+          value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_ACCOUNT_ID', targetSettings, workflowSettings, environment, appPath),
+        },
+      ],
     });
 
     if (syncStep !== undefined) {
@@ -2949,7 +2995,7 @@ export class Runner {
   /**
    * CLI - Generate - GitHub - Workflows Blueprint - App Build Values.
    *
-   * Returns an app's build-time values (buildOnly true) from the
+   * Returns an app's build-time values (reach build) from the
    * environment block, each paired with its GitHub name and secret flag,
    * so the build-env step bakes each value from its source.
    *
@@ -2967,22 +3013,22 @@ export class Runner {
       return results;
     }
 
-    const apps: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Apps = environment['apps'];
+    const workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Workspaces = environment['workspaces'];
 
-    if (apps === undefined) {
+    if (workspaces === undefined) {
       return results;
     }
 
-    const app: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_App = apps[appPath];
+    const workspace: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Workspace = workspaces[appPath];
 
-    if (app === undefined) {
+    if (workspace === undefined) {
       return results;
     }
 
-    const prefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Prefix = app['prefix'];
+    const prefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Prefix = workspace['prefix'];
 
-    for (const variable of app['variables'] ?? []) {
-      if (variable['buildOnly'] !== true) {
+    for (const variable of workspace['variables'] ?? []) {
+      if (variable['reach'] !== 'build') {
         continue;
       }
 
@@ -3007,7 +3053,7 @@ export class Runner {
   /**
    * CLI - Generate - GitHub - Workflows Blueprint - App Runtime Values.
    *
-   * Returns an app's runtime values (buildOnly false) from the
+   * Returns a workspace's runtime values (reach runtime) from the
    * environment block, each paired with its GitHub name and secret flag,
    * so the runtime-sync step delivers each on its channel.
    *
@@ -3025,22 +3071,22 @@ export class Runner {
       return results;
     }
 
-    const apps: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Apps = environment['apps'];
+    const workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Workspaces = environment['workspaces'];
 
-    if (apps === undefined) {
+    if (workspaces === undefined) {
       return results;
     }
 
-    const app: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_App = apps[appPath];
+    const workspace: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Workspace = workspaces[appPath];
 
-    if (app === undefined) {
+    if (workspace === undefined) {
       return results;
     }
 
-    const prefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Prefix = app['prefix'];
+    const prefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Prefix = workspace['prefix'];
 
-    for (const variable of app['variables'] ?? []) {
-      if (variable['buildOnly'] !== false) {
+    for (const variable of workspace['variables'] ?? []) {
+      if (variable['reach'] !== 'runtime') {
         continue;
       }
 
@@ -3810,19 +3856,19 @@ export class Runner {
     let prefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Prefix = undefined;
 
     if (scope === 'account' && environment !== undefined) {
-      const global: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Global = environment['global'];
-      const globalPrefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_GlobalPrefix = (global === undefined) ? undefined : global['prefix'];
+      const project: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Project = environment['project'];
+      const projectPrefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_ProjectPrefix = (project === undefined) ? undefined : project['prefix'];
 
-      if (globalPrefix !== undefined && globalPrefix !== '') {
-        prefix = globalPrefix;
+      if (projectPrefix !== undefined && projectPrefix !== '') {
+        prefix = projectPrefix;
       }
     } else if (scope === 'app' && environment !== undefined) {
-      const apps: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Apps = environment['apps'];
-      const app: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_App = (apps === undefined) ? undefined : apps[appPath];
-      const appPrefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_AppPrefix = (app === undefined) ? undefined : app['prefix'];
+      const workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Workspaces = environment['workspaces'];
+      const workspace: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Workspace = (workspaces === undefined) ? undefined : workspaces[appPath];
+      const workspacePrefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_WorkspacePrefix = (workspace === undefined) ? undefined : workspace['prefix'];
 
-      if (appPrefix !== undefined && appPrefix !== '') {
-        prefix = appPrefix;
+      if (workspacePrefix !== undefined && workspacePrefix !== '') {
+        prefix = workspacePrefix;
       }
     }
 

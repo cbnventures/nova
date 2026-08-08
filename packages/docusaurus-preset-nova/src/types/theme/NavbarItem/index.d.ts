@@ -240,6 +240,18 @@ export type Theme_NavbarItem_DropdownNavbarItem_Label = string | undefined;
 
 export type Theme_NavbarItem_DropdownNavbarItem_Items = Theme_NavbarItem_DropdownNavbarItem_ChildItem[];
 
+export type Theme_NavbarItem_DropdownNavbarItem_IsActive = boolean;
+
+export type Theme_NavbarItem_DropdownNavbarItem_Pathname = string;
+
+export type Theme_NavbarItem_DropdownNavbarItem_DetailsClassName = string;
+
+export type Theme_NavbarItem_DropdownNavbarItem_DetailsRef = React.RefObject<HTMLDetailsElement | null>;
+
+export type Theme_NavbarItem_DropdownNavbarItem_ChildTo = string | undefined;
+
+export type Theme_NavbarItem_DropdownNavbarItem_ChildIsActive = boolean;
+
 /**
  * Theme - Navbar Item - HTML Navbar Item.
  *

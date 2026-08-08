@@ -28,6 +28,7 @@ import type {
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_NormalizedLicenseReference,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDescription,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDirectory,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDisplayName,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageJsonRecipes,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageKeywords,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageLicense,
@@ -42,6 +43,7 @@ import type {
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Returns,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_SpdxLicenses,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidDescription,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidDisplayName,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidKeywords,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidVersion,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile,
@@ -199,8 +201,8 @@ export class Runner {
   /**
    * CLI - Recipe - package.json - Sync Identity - Handle.
    *
-   * Processes one workspace manifest to sync name, version, description, keywords, and
-   * license. Resolves license paths and validates SPDX.
+   * Processes one workspace manifest to sync name, version, description, keywords,
+   * displayName, and license. Resolves license paths and validates SPDX.
    *
    * @param {Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Workspace}   workspace   - Workspace.
    * @param {Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile} workingFile - Working file.
@@ -220,6 +222,7 @@ export class Runner {
     const packageVersion: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageVersion = fileContents['version'];
     const packageDescription: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDescription = fileContents['description'];
     const packageKeywords: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageKeywords = fileContents['keywords'];
+    const packageDisplayName: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDisplayName = fileContents['displayName'];
     const packageLicense: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageLicense = fileContents['license'];
 
     // Get recipe settings for this workspace.
@@ -362,6 +365,72 @@ export class Runner {
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "keywords". No keywords are defined.`);
 
         Reflect.deleteProperty(fileContents, 'keywords');
+      }
+    }
+
+    // Sync the "displayName" field.
+    if (
+      packageDisplayName !== undefined // Package "displayName" is defined.
+      && manifest['policy'] !== 'distributable' // Workspace policy is not "distributable".
+    ) {
+      Logger.customize({
+        name: 'Runner.handle',
+        purpose: 'displayName',
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "displayName". Workspace policy "${manifest['policy']}" does not allow it.`);
+
+      Reflect.deleteProperty(fileContents, 'displayName');
+    } else {
+      const validDisplayName: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidDisplayName = (workingFile['project'] !== undefined && workingFile['project']['name'] !== undefined) ? workingFile['project']['name']['title'] : undefined;
+
+      if (
+        (
+          manifest['policy'] === 'distributable' // Workspace policy is "distributable".
+          && recipeSettings !== undefined // Recipe settings are defined.
+          && recipeSettings['displayName'] === true // Recipe settings includes "displayName".
+          && validDisplayName !== undefined // Nova config "project.name.title" setting is set.
+        )
+        && (
+          typeof packageDisplayName !== 'string' // Package "displayName" is not a string.
+          || packageDisplayName !== validDisplayName // Package "displayName" differs from "validDisplayName".
+        )
+      ) {
+        Logger.customize({
+          name: 'Runner.handle',
+          purpose: 'displayName',
+        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "displayName" from workspace manifest ...`);
+
+        Reflect.set(fileContents, 'displayName', validDisplayName);
+      }
+
+      if (
+        packageDisplayName !== undefined // Package "displayName" is defined.
+        && manifest['policy'] === 'distributable' // Workspace policy is "distributable".
+        && recipeSettings !== undefined // Recipe settings are defined.
+        && recipeSettings['displayName'] === true // Recipe settings includes "displayName".
+        && validDisplayName === undefined // Nova config "project.name.title" setting is not set.
+      ) {
+        Logger.customize({
+          name: 'Runner.handle',
+          purpose: 'displayName',
+        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "displayName". No display name is defined.`);
+
+        Reflect.deleteProperty(fileContents, 'displayName');
+      }
+
+      if (
+        packageDisplayName !== undefined // Package "displayName" is defined.
+        && manifest['policy'] === 'distributable' // Workspace policy is "distributable".
+        && (
+          recipeSettings === undefined // Recipe settings are not defined.
+          || recipeSettings['displayName'] !== true // Recipe settings does not include "displayName".
+        )
+      ) {
+        Logger.customize({
+          name: 'Runner.handle',
+          purpose: 'displayName',
+        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "displayName". Not managed for this workspace.`);
+
+        Reflect.deleteProperty(fileContents, 'displayName');
       }
     }
 

@@ -34,18 +34,18 @@ export type Toolkit_NovaIdentity_Runner_LegalName = string | undefined;
 export type Toolkit_NovaIdentity_Runner_StartingYear = number | undefined;
 
 /**
+ * Toolkit - Nova Identity - License.
+ *
+ * @since 0.22.0
+ */
+export type Toolkit_NovaIdentity_Runner_License = string | undefined;
+
+/**
  * Toolkit - Nova Identity - Owner.
  *
  * @since 0.21.0
  */
 export type Toolkit_NovaIdentity_Runner_Owner = string | undefined;
-
-/**
- * Toolkit - Nova Identity - Homepage.
- *
- * @since 0.21.0
- */
-export type Toolkit_NovaIdentity_Runner_Homepage = string | undefined;
 
 /**
  * Toolkit - Nova Identity - Logo.
@@ -112,9 +112,23 @@ export type Toolkit_NovaIdentity_Runner_ComposeCopyright_StartingYear = number;
 
 export type Toolkit_NovaIdentity_Runner_ComposeCopyright_LegalName = string;
 
+/**
+ * Toolkit - Nova Identity - Compose Copyright - License.
+ *
+ * @since 0.22.0
+ */
+export type Toolkit_NovaIdentity_Runner_ComposeCopyright_License = string | undefined;
+
 export type Toolkit_NovaIdentity_Runner_ComposeCopyright_Returns = string;
 
 export type Toolkit_NovaIdentity_Runner_ComposeCopyright_YearRange = string;
+
+/**
+ * Toolkit - Nova Identity - Compose Copyright - Notice.
+ *
+ * @since 0.22.0
+ */
+export type Toolkit_NovaIdentity_Runner_ComposeCopyright_Notice = string;
 
 /**
  * Toolkit - Nova Identity - Constructor.
@@ -151,6 +165,26 @@ export type Toolkit_NovaIdentity_Runner_CopyrightYearRange_Returns = string;
 export type Toolkit_NovaIdentity_Runner_CopyrightYearRange_CurrentYear = number;
 
 /**
+ * Toolkit - Nova Identity - Docs Base URL.
+ *
+ * @since 0.22.0
+ */
+export type Toolkit_NovaIdentity_Runner_DocsBaseUrl_Documentation = string;
+
+export type Toolkit_NovaIdentity_Runner_DocsBaseUrl_Returns = string | undefined;
+
+export type Toolkit_NovaIdentity_Runner_DocsBaseUrl_Pathname = string;
+
+/**
+ * Toolkit - Nova Identity - Docs URL.
+ *
+ * @since 0.22.0
+ */
+export type Toolkit_NovaIdentity_Runner_DocsUrl_Documentation = string;
+
+export type Toolkit_NovaIdentity_Runner_DocsUrl_Returns = string | undefined;
+
+/**
  * Toolkit - Nova Identity - For Docs.
  *
  * @since 0.21.0
@@ -164,6 +198,13 @@ export type Toolkit_NovaIdentity_Runner_ForDocs_Returns_OrganizationName = strin
 export type Toolkit_NovaIdentity_Runner_ForDocs_Returns_Tagline = string | undefined;
 
 export type Toolkit_NovaIdentity_Runner_ForDocs_Returns_Url = string | undefined;
+
+/**
+ * Toolkit - Nova Identity - For Docs - Returns - Base Url.
+ *
+ * @since 0.22.0
+ */
+export type Toolkit_NovaIdentity_Runner_ForDocs_Returns_BaseUrl = string | undefined;
 
 export type Toolkit_NovaIdentity_Runner_ForDocs_Returns_Logo = string | undefined;
 
@@ -195,6 +236,7 @@ export type Toolkit_NovaIdentity_Runner_ForDocs_Returns = {
   organizationName: Toolkit_NovaIdentity_Runner_ForDocs_Returns_OrganizationName;
   tagline: Toolkit_NovaIdentity_Runner_ForDocs_Returns_Tagline;
   url: Toolkit_NovaIdentity_Runner_ForDocs_Returns_Url;
+  baseUrl: Toolkit_NovaIdentity_Runner_ForDocs_Returns_BaseUrl;
   logo: Toolkit_NovaIdentity_Runner_ForDocs_Returns_Logo;
   metaDescription: Toolkit_NovaIdentity_Runner_ForDocs_Returns_MetaDescription;
   copyright: Toolkit_NovaIdentity_Runner_ForDocs_Returns_Copyright;

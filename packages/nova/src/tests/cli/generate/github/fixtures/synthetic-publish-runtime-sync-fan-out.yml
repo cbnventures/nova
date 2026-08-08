@@ -57,7 +57,7 @@ jobs:
 
       - name: "Check project"
         run: |
-          npx turbo run check --filter=synthetic-app-api --concurrency=2
+          npx turbo run check --filter=// --filter=synthetic-app-api --concurrency=2
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
@@ -121,6 +121,8 @@ jobs:
       - name: "Sync worker runtime secrets"
         if: "${{ env.PUBLISH == 'true' }}"
         env:
+          CLOUDFLARE_API_TOKEN: "${{ secrets.PF_CLOUDFLARE_API_TOKEN }}"
+          CLOUDFLARE_ACCOUNT_ID: "${{ vars.PF_CLOUDFLARE_ACCOUNT_ID }}"
           SESSION_SECRET: "${{ secrets.API_SESSION_SECRET }}"
           DATABASE_URL: "${{ secrets.API_DATABASE_URL }}"
         run: |

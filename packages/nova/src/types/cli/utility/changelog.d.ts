@@ -270,6 +270,38 @@ export type Cli_Utility_Changelog_Runner_Release_VersionPartsPatch = number;
 
 export type Cli_Utility_Changelog_Runner_Release_NewVersion = string;
 
+export type Cli_Utility_Changelog_Runner_Release_LockStepVersioning = boolean;
+
+export type Cli_Utility_Changelog_Runner_Release_HighestNewVersion = string;
+
+export type Cli_Utility_Changelog_Runner_Release_ReleaseParts = number[];
+
+export type Cli_Utility_Changelog_Runner_Release_HighestParts = number[];
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepI = number;
+
+export type Cli_Utility_Changelog_Runner_Release_ReleasedNames = Set<string>;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePath = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceConfig = Shared_NovaConfigWorkspace;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceName = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePolicy = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepCurrentDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepPackageDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonPath = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonRaw = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepParsedPackageJson = Record<string, unknown> | undefined;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepCurrentVersion = string | undefined;
+
 export type Cli_Utility_Changelog_Runner_Release_CategoryOrder = string[];
 
 export type Cli_Utility_Changelog_Runner_Release_SummaryReleasePackageName = string;

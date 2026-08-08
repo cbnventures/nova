@@ -1,7 +1,7 @@
 ---
 id: "sync-identity"
 title: "Sync Identity"
-description: "Sync name, version, description, keywords, and license fields in workspace package.json files using nova.config.json as the source of truth."
+description: "Sync name, version, description, keywords, displayName, and license fields in workspace package.json files using nova.config.json as the source of truth."
 keywords:
   - "nova"
   - "sync-identity"
@@ -10,6 +10,7 @@ keywords:
   - "version"
   - "description"
   - "keywords"
+  - "displayName"
   - "license"
 tags:
   - "cli"
@@ -22,13 +23,13 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Sync **name**, **version**, **description**, **keywords**, and **license** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
+Sync **name**, **version**, **description**, **keywords**, **displayName**, and **license** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
 The `sync-identity` recipe ensures that identity-related fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` match the conventions defined in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 
-It enforces consistent naming, valid <Terminology title="semantic versioning" to="/docs/quickstart/terminology#fundamentals" color={true}>semver</Terminology> versions, and (for <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> workspaces with the setting enabled) syncs description and keywords from the project-level config.
+It enforces consistent naming, valid <Terminology title="semantic versioning" to="/docs/quickstart/terminology#fundamentals" color={true}>semver</Terminology> versions, and (for <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> workspaces with the setting enabled) syncs description, keywords, and displayName from the project-level config.
 
 ## Behavior
 
@@ -38,16 +39,20 @@ For each eligible <Terminology title="package" to="/docs/quickstart/terminology#
 - **`version` (Required)** — Must be valid <Terminology title="semantic versioning" to="/docs/quickstart/terminology#fundamentals" color={true}>semver</Terminology>. Workspaces with a `freezable` policy must stay at `0.0.0`. Workspaces with a `trackable` or `distributable` policy cannot be `0.0.0`. Invalid or mismatched versions are reset to `0.0.0` (freezable) or `0.0.1` (all others).
 - **`description` (Conditional)** — Removed if the workspace policy is not `distributable`. For distributable workspaces with the `description` setting enabled, the value is synced from `project.description.short` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. If no description is defined, the field is removed.
 - **`keywords` (Conditional)** — Removed if the workspace policy is not `distributable`. For distributable workspaces with the `keywords` setting enabled, the value is synced from `project.keywords` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. If no keywords are defined, the field is removed.
+- **`displayName` (Conditional)** — Removed if the workspace policy is not `distributable`. For distributable workspaces with the `displayName` setting enabled, the value is synced from `project.name.title` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>; if the setting is absent, false, or no title is defined, the field is removed. It is an ecosystem field read by Homebridge plugins and VS Code extensions, not part of the npm `package.json` specification.
 - **`license` (Required)** — Validated against the SPDX license list. If the value is not a string or not a recognized SPDX identifier, the recipe searches for a `LICENSE` or `LICENSE.md` file in the package directory and then the project root. If found, the field is set to `SEE LICENSE IN ./path`. If no license file is found, the field is set to `UNLICENSED`.
 
 ## Settings
 
 Settings are configured per workspace in `nova.config.json` under the `recipes` key:
 
-| Setting       | Type    | Description                                                   |
-|---------------|---------|---------------------------------------------------------------|
-| `description` | boolean | Sync the `description` field (distributable workspaces only). |
-| `keywords`    | boolean | Sync the `keywords` field (distributable workspaces only).    |
+| Setting       | Type    | Description                                                                             |
+|---------------|---------|-----------------------------------------------------------------------------------------|
+| `description` | boolean | Sync the `description` field (distributable workspaces only).                           |
+| `keywords`    | boolean | Sync the `keywords` field (distributable workspaces only).                              |
+| `displayName` | boolean | Sync the `displayName` field from `project.name.title` (distributable workspaces only). |
+
+`displayName` is an ecosystem field read by tools like Homebridge plugins and VS Code extensions — it is not part of the npm `package.json` spec. Leaving the setting off (or unset) actively removes an existing `displayName` value rather than leaving it untouched.
 
 ## Usage
 

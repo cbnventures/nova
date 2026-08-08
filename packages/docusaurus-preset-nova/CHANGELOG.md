@@ -1,5 +1,20 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.22.0 - 2026-08-08
+
+### UPDATED
+- The footer call-to-action (`themeConfig.footer.cta`) now accepts an object with `label` and `href` fields in addition to a plain string, so the CTA can render as a linked button instead of static text.
+
+### FIXED
+- The search worker is now deployed as a clean classic script. A runtime import from the shared regex module and an ES module export statement emitted by TypeScript caused a SyntaxError when the browser loaded the worker, breaking full-text search in production builds.
+- Navbar translation keys now use label content (item.label.Docs) instead of positional indices (item.0.label), matching the Docusaurus upstream convention. Inserting, removing, or reordering navbar items no longer causes stale translation files to apply wrong labels. Existing navbar.json files with positional keys become inert and are regenerated on the next i18n sync.
+- The blog archive page now displays posts in reverse chronological order within each year group. Previously, posts were prepended instead of appended, causing each year to render oldest-first.
+
+### ADDED
+- A new `./types/sidebars` export re-exports Docusaurus's `SidebarsConfig` type so consumers can import sidebar types from the preset package instead of depending on `@docusaurus/plugin-content-docs` directly.
+- The dropdown navbar item (`type: 'dropdown'`) is now fully styled across all 6 presets and all 4 navbar variants (24 combinations). Desktop renders a `<details>/<summary>` trigger with a chevron indicator, click-outside dismiss, and active-state highlighting driven by the coordinator's specificity contest. Mobile renders a collapsible accordion inside the hamburger menu with per-preset spacing and stagger animations. The active-item coordinator now walks dropdown children so the trigger highlights when a child page is current, with no double-highlight against sibling items.
+- A new bin-git-tracked meta-test verifies that every package.json bin entry is tracked by git, preventing publish failures caused by gitignored CLI wrappers that exist on disk but are absent from CI checkouts.
+
 ## 0.21.0 - 2026-07-24
 
 ### UPDATED

@@ -30,6 +30,8 @@ export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_Items = Theme_Navbar_Ind
 
 export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ActiveItemLabel = string | null;
 
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_Pathname = string;
+
 export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_PanelRef = React.RefObject<HTMLDivElement | null>;
 
 export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsClosing = boolean;
@@ -70,18 +72,32 @@ export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_AnimationEvent = React.A
 
 export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIndex = number;
 
-export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIcon = string | undefined;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_NavItemType = string | undefined;
 
-export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_DefaultIcon = string;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_NavItemChildren = Record<string, unknown>[] | undefined;
 
 export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemStyle = React.CSSProperties;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIcon = string | undefined;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ChildItem = Record<string, unknown>;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_LinkProps = Record<string, string>;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ChildTo = string | undefined;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ChildIsActive = boolean;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ChildKey = string;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_LinkSpread = Record<string, string>;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ChildLabel = string;
+
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_DefaultIcon = string;
 
 export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemTo = string;
 
 export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemHref = string;
 
-export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_LinkProps = Record<string, string>;
-
 export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIsActive = boolean;
-
-export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_LinkSpread = Record<string, string>;

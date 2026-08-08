@@ -63,6 +63,7 @@ Examples use TypeScript, but the <Terminology title="application programming int
       title: identity['title'] ?? 'My Docs',
       tagline: identity['tagline'] ?? 'Documentation',
       url: identity['url'] ?? 'https://example.com',
+      baseUrl: identity['baseUrl'] ?? '/',
       organizationName: identity['organizationName'] ?? 'your-org',
       projectName: identity['projectName'] ?? 'my-docs',
     };
@@ -77,7 +78,7 @@ Examples use TypeScript, but the <Terminology title="application programming int
     import { NovaIdentity } from '@cbnventures/nova/toolkit';
 
     // Compose the same copyright line the site footer and the license file use.
-    const line = NovaIdentity.composeCopyright(2025, 'CBN Ventures LLC');
+    const line = NovaIdentity.composeCopyright(2025, 'CBN Ventures LLC', 'MIT');
 
     // Turn a package "repository" URL into a browsable https URL.
     const repo = NovaIdentity.normalizeRepoUrl('git+https://github.com/cbnventures/nova.git');
@@ -107,17 +108,19 @@ Examples use TypeScript, but the <Terminology title="application programming int
 `forDocs()` returns a flat object ready to spread into a Docusaurus config. Each field is optional, so pair it with a fallback using the `??` operator:
 
 - `title`, `tagline`, and `projectName` come straight from `project.name` and `project.description`.
-- `url` is the homepage with any trailing slash removed.
+- `url` and `baseUrl` are split from `urls.documentation`: the origin becomes `url`, and the path prefix becomes `baseUrl` (normalized with a leading and trailing slash, so a subpath deployment resolves and a root deployment becomes `/`). Both are `undefined` when `urls.documentation` is absent.
 - `organizationName` is the GitHub owner, and `github` is the owner's profile URL.
-- `copyright` is the composed line, present only when both `project.startingYear` and `project.legalName` exist.
+- `copyright` is the composed line, present only when both `project.startingYear` and `project.legalName` exist; its notice reflects `project.license` — an SPDX identifier reads `Licensed under the <id> License.`, while `Proprietary` or an absent license reads `All Rights Reserved.`
 - `editUrl` and `repository` are the normalized repository URL; `npm`, `bugs`, `documentation`, `privacyPolicy`, and `termsOfUse` come from `urls`; `funding` is the list of funding URLs.
 
 ## Static Transforms
 
 Every transform is pure and available without constructing an instance:
 
-- `composeCopyright(startingYear, legalName)` builds the full copyright line.
+- `composeCopyright(startingYear, legalName, license?)` builds the full copyright line, closing with a license-aware notice.
 - `copyrightYearRange(startingYear)` returns a single year, or a `start-current` range, computing the current year at call time.
+- `docsUrl(documentation)` returns the origin (scheme and host) of a documentation URL, or `undefined` when it cannot be parsed.
+- `docsBaseUrl(documentation)` returns a documentation URL's path prefix as a Docusaurus `baseUrl`, normalized with a leading and trailing slash.
 - `normalizeRepoUrl(repositoryUrl)` strips a leading `git+` and a trailing `.git`.
 - `githubUserUrl(owner)` builds the canonical GitHub profile URL.
 - `stripTrailingSlash(url)` removes a single trailing slash.

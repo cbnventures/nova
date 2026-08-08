@@ -53,9 +53,11 @@ import type {
   Lib_Translations_Runner_ApplyFooter_TitleMessage,
   Lib_Translations_Runner_ApplyFooter_Translations,
   Lib_Translations_Runner_ApplyNavbar_Child,
+  Lib_Translations_Runner_ApplyNavbar_ChildLabel,
   Lib_Translations_Runner_ApplyNavbar_ChildMessage,
   Lib_Translations_Runner_ApplyNavbar_Children,
   Lib_Translations_Runner_ApplyNavbar_Item,
+  Lib_Translations_Runner_ApplyNavbar_ItemLabel,
   Lib_Translations_Runner_ApplyNavbar_Items,
   Lib_Translations_Runner_ApplyNavbar_LabelMessage,
   Lib_Translations_Runner_ApplyNavbar_Navbar,
@@ -314,7 +316,7 @@ export class Runner {
 
     const fileContent: Lib_Translations_Runner_ExtractNavbar_FileContent = {};
 
-    items.forEach((rawItem, itemIndex) => {
+    items.forEach((rawItem, _itemIndex) => {
       if (rawItem === null || typeof rawItem !== 'object') {
         return undefined;
       }
@@ -323,16 +325,16 @@ export class Runner {
       const labelValue: Lib_Translations_Runner_ExtractNavbar_LabelValue = item['label'];
 
       if (typeof labelValue === 'string') {
-        Reflect.set(fileContent, `item.${itemIndex}.label`, {
+        Reflect.set(fileContent, `item.label.${labelValue}`, {
           message: labelValue,
-          description: `Label of navbar item ${itemIndex + 1}`,
+          description: `Navbar item with label "${labelValue}"`,
         });
       }
 
       const children: Lib_Translations_Runner_ExtractNavbar_Children = item['items'];
 
       if (Array.isArray(children) === true) {
-        children.forEach((rawChild, childIndex) => {
+        children.forEach((rawChild, _childIndex) => {
           if (rawChild === null || typeof rawChild !== 'object') {
             return undefined;
           }
@@ -341,9 +343,9 @@ export class Runner {
           const childLabelValue: Lib_Translations_Runner_ExtractNavbar_ChildLabelValue = child['label'];
 
           if (typeof childLabelValue === 'string') {
-            Reflect.set(fileContent, `item.${itemIndex}.items.${childIndex}.label`, {
+            Reflect.set(fileContent, `item.label.${childLabelValue}`, {
               message: childLabelValue,
-              description: `Label of dropdown child ${childIndex + 1} under navbar item ${itemIndex + 1}`,
+              description: `Navbar item with label "${childLabelValue}"`,
             });
           }
 
@@ -732,31 +734,39 @@ export class Runner {
       return undefined;
     }
 
-    items.forEach((rawItem, itemIndex) => {
+    items.forEach((rawItem, _itemIndex) => {
       if (rawItem === null || typeof rawItem !== 'object') {
         return undefined;
       }
 
       const item: Lib_Translations_Runner_ApplyNavbar_Item = rawItem;
-      const labelMessage: Lib_Translations_Runner_ApplyNavbar_LabelMessage = translations[`item.${itemIndex}.label`];
+      const itemLabel: Lib_Translations_Runner_ApplyNavbar_ItemLabel = item['label'] as Lib_Translations_Runner_ApplyNavbar_ItemLabel;
 
-      if (labelMessage !== undefined) {
-        Reflect.set(item, 'label', labelMessage['message']);
+      if (typeof itemLabel === 'string') {
+        const labelMessage: Lib_Translations_Runner_ApplyNavbar_LabelMessage = translations[`item.label.${itemLabel}`];
+
+        if (labelMessage !== undefined) {
+          Reflect.set(item, 'label', labelMessage['message']);
+        }
       }
 
       const children: Lib_Translations_Runner_ApplyNavbar_Children = item['items'] as Lib_Translations_Runner_ApplyNavbar_Children;
 
       if (children !== undefined && Array.isArray(children) === true) {
-        children.forEach((rawChild, childIndex) => {
+        children.forEach((rawChild, _childIndex) => {
           if (rawChild === null || typeof rawChild !== 'object') {
             return undefined;
           }
 
           const child: Lib_Translations_Runner_ApplyNavbar_Child = rawChild;
-          const childMessage: Lib_Translations_Runner_ApplyNavbar_ChildMessage = translations[`item.${itemIndex}.items.${childIndex}.label`];
+          const childLabel: Lib_Translations_Runner_ApplyNavbar_ChildLabel = child['label'] as Lib_Translations_Runner_ApplyNavbar_ChildLabel;
 
-          if (childMessage !== undefined) {
-            Reflect.set(child, 'label', childMessage['message']);
+          if (typeof childLabel === 'string') {
+            const childMessage: Lib_Translations_Runner_ApplyNavbar_ChildMessage = translations[`item.label.${childLabel}`];
+
+            if (childMessage !== undefined) {
+              Reflect.set(child, 'label', childMessage['message']);
+            }
           }
 
           return undefined;

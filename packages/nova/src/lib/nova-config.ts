@@ -119,6 +119,7 @@ import type {
   Lib_NovaConfig_Runner_Parse_Recipes,
   Lib_NovaConfig_Runner_Parse_Result,
   Lib_NovaConfig_Runner_Parse_Returns,
+  Lib_NovaConfig_Runner_Parse_Settings,
   Lib_NovaConfig_Runner_Parse_Urls,
   Lib_NovaConfig_Runner_Parse_Value,
   Lib_NovaConfig_Runner_Parse_Workflows,
@@ -142,23 +143,16 @@ import type {
   Lib_NovaConfig_Runner_ParseEntities_Roles,
   Lib_NovaConfig_Runner_ParseEntities_Url,
   Lib_NovaConfig_Runner_ParseEntities_Value,
-  Lib_NovaConfig_Runner_ParseEnvironment_AppOptions,
-  Lib_NovaConfig_Runner_ParseEnvironment_AppPath,
-  Lib_NovaConfig_Runner_ParseEnvironment_AppPrefix,
-  Lib_NovaConfig_Runner_ParseEnvironment_AppResult,
-  Lib_NovaConfig_Runner_ParseEnvironment_Apps,
-  Lib_NovaConfig_Runner_ParseEnvironment_AppsValue,
-  Lib_NovaConfig_Runner_ParseEnvironment_AppVariables,
   Lib_NovaConfig_Runner_ParseEnvironment_CollectedPrefixes,
-  Lib_NovaConfig_Runner_ParseEnvironment_GlobalPrefix,
-  Lib_NovaConfig_Runner_ParseEnvironment_GlobalResult,
-  Lib_NovaConfig_Runner_ParseEnvironment_GlobalValue,
-  Lib_NovaConfig_Runner_ParseEnvironment_GlobalVariables,
   Lib_NovaConfig_Runner_ParseEnvironment_I,
   Lib_NovaConfig_Runner_ParseEnvironment_J,
   Lib_NovaConfig_Runner_ParseEnvironment_MatchCount,
   Lib_NovaConfig_Runner_ParseEnvironment_PrefixA,
   Lib_NovaConfig_Runner_ParseEnvironment_PrefixB,
+  Lib_NovaConfig_Runner_ParseEnvironment_ProjectPrefix,
+  Lib_NovaConfig_Runner_ParseEnvironment_ProjectResult,
+  Lib_NovaConfig_Runner_ParseEnvironment_ProjectValue,
+  Lib_NovaConfig_Runner_ParseEnvironment_ProjectVariables,
   Lib_NovaConfig_Runner_ParseEnvironment_Result,
   Lib_NovaConfig_Runner_ParseEnvironment_Returns,
   Lib_NovaConfig_Runner_ParseEnvironment_Value,
@@ -169,19 +163,27 @@ import type {
   Lib_NovaConfig_Runner_ParseEnvironment_Workflows,
   Lib_NovaConfig_Runner_ParseEnvironment_WorkflowsResult,
   Lib_NovaConfig_Runner_ParseEnvironment_WorkflowsValue,
+  Lib_NovaConfig_Runner_ParseEnvironment_WorkspaceOptions,
+  Lib_NovaConfig_Runner_ParseEnvironment_WorkspacePath,
   Lib_NovaConfig_Runner_ParseEnvironment_WorkspacePaths,
+  Lib_NovaConfig_Runner_ParseEnvironment_WorkspacePrefix,
+  Lib_NovaConfig_Runner_ParseEnvironment_WorkspaceResult,
   Lib_NovaConfig_Runner_ParseEnvironment_Workspaces,
-  Lib_NovaConfig_Runner_ParseEnvironmentValues_BuildOnlyCandidate,
+  Lib_NovaConfig_Runner_ParseEnvironment_WorkspacesResult,
+  Lib_NovaConfig_Runner_ParseEnvironment_WorkspacesValue,
+  Lib_NovaConfig_Runner_ParseEnvironment_WorkspaceVariables,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Context,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_DefaultValueCandidate,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_FoldedName,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_HasError,
+  Lib_NovaConfig_Runner_ParseEnvironmentValues_IsLocal,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Key,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Name,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Prefix,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Raw,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_RawVariables,
-  Lib_NovaConfig_Runner_ParseEnvironmentValues_RequireBuildOnly,
+  Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachCandidate,
+  Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachValues,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Returns,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_SecretCandidate,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_SeenNames,
@@ -231,6 +233,10 @@ import type {
   Lib_NovaConfig_Runner_ParseRecipes_Result,
   Lib_NovaConfig_Runner_ParseRecipes_Returns,
   Lib_NovaConfig_Runner_ParseRecipes_Value,
+  Lib_NovaConfig_Runner_ParseSettings_LockStepVersioning,
+  Lib_NovaConfig_Runner_ParseSettings_Result,
+  Lib_NovaConfig_Runner_ParseSettings_Returns,
+  Lib_NovaConfig_Runner_ParseSettings_Value,
   Lib_NovaConfig_Runner_ParseUrls_FundSources,
   Lib_NovaConfig_Runner_ParseUrls_LoopIndex,
   Lib_NovaConfig_Runner_ParseUrls_ParsedUrl,
@@ -240,38 +246,42 @@ import type {
   Lib_NovaConfig_Runner_ParseUrls_UrlFieldsFundSourcesIndex,
   Lib_NovaConfig_Runner_ParseUrls_Urls,
   Lib_NovaConfig_Runner_ParseUrls_Value,
+  Lib_NovaConfig_Runner_ParseWorkflows_Build,
   Lib_NovaConfig_Runner_ParseWorkflows_CastItem,
   Lib_NovaConfig_Runner_ParseWorkflows_DependsOn,
-  Lib_NovaConfig_Runner_ParseWorkflows_ParsedSettings,
+  Lib_NovaConfig_Runner_ParseWorkflows_Deploy,
+  Lib_NovaConfig_Runner_ParseWorkflows_DeployAfter,
+  Lib_NovaConfig_Runner_ParseWorkflows_DeployPath,
+  Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget,
+  Lib_NovaConfig_Runner_ParseWorkflows_DeployTo,
+  Lib_NovaConfig_Runner_ParseWorkflows_DeployWith,
+  Lib_NovaConfig_Runner_ParseWorkflows_Name,
+  Lib_NovaConfig_Runner_ParseWorkflows_NameA,
+  Lib_NovaConfig_Runner_ParseWorkflows_NameB,
+  Lib_NovaConfig_Runner_ParseWorkflows_ParsedDeployWith,
+  Lib_NovaConfig_Runner_ParseWorkflows_ParsedWith,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawBuild,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDependsOn,
-  Lib_NovaConfig_Runner_ParseWorkflows_RawScopes,
-  Lib_NovaConfig_Runner_ParseWorkflows_RawTargetNeeds,
-  Lib_NovaConfig_Runner_ParseWorkflows_RawTargets,
-  Lib_NovaConfig_Runner_ParseWorkflows_RawTargetValue,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawDeploy,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawDeployAfter,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawDeployValue,
   Lib_NovaConfig_Runner_ParseWorkflows_RawTriggers,
   Lib_NovaConfig_Runner_ParseWorkflows_Returns,
-  Lib_NovaConfig_Runner_ParseWorkflows_Scopes,
-  Lib_NovaConfig_Runner_ParseWorkflows_Settings,
-  Lib_NovaConfig_Runner_ParseWorkflows_SettingsKey,
-  Lib_NovaConfig_Runner_ParseWorkflows_SettingsValue,
-  Lib_NovaConfig_Runner_ParseWorkflows_SortedSettingsEntries,
-  Lib_NovaConfig_Runner_ParseWorkflows_Suffix,
-  Lib_NovaConfig_Runner_ParseWorkflows_SuffixA,
-  Lib_NovaConfig_Runner_ParseWorkflows_SuffixB,
-  Lib_NovaConfig_Runner_ParseWorkflows_Target,
-  Lib_NovaConfig_Runner_ParseWorkflows_TargetNeeds,
-  Lib_NovaConfig_Runner_ParseWorkflows_Targets,
-  Lib_NovaConfig_Runner_ParseWorkflows_TargetType,
-  Lib_NovaConfig_Runner_ParseWorkflows_TargetWorkingDir,
   Lib_NovaConfig_Runner_ParseWorkflows_Template,
   Lib_NovaConfig_Runner_ParseWorkflows_TemplateCompare,
   Lib_NovaConfig_Runner_ParseWorkflows_Triggers,
   Lib_NovaConfig_Runner_ParseWorkflows_TriggerValue,
   Lib_NovaConfig_Runner_ParseWorkflows_Value,
+  Lib_NovaConfig_Runner_ParseWorkflows_WithMap,
   Lib_NovaConfig_Runner_ParseWorkflows_Workflow,
   Lib_NovaConfig_Runner_ParseWorkflows_Workflows,
+  Lib_NovaConfig_Runner_ParseWorkflowWith_EntryKey,
+  Lib_NovaConfig_Runner_ParseWorkflowWith_EntryValue,
+  Lib_NovaConfig_Runner_ParseWorkflowWith_Parsed,
+  Lib_NovaConfig_Runner_ParseWorkflowWith_Returns,
+  Lib_NovaConfig_Runner_ParseWorkflowWith_SortedEntries,
+  Lib_NovaConfig_Runner_ParseWorkflowWith_Value,
   Lib_NovaConfig_Runner_ParseWorkspaces_AllowedPolicies,
-  Lib_NovaConfig_Runner_ParseWorkspaces_DisplayNameCandidate,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Base,
   Lib_NovaConfig_Runner_ParseWorkspaces_IsNameAllowed_Descriptor,
@@ -306,27 +316,24 @@ import type {
   Lib_NovaConfig_Runner_Save_Returns,
   Lib_NovaConfig_Runner_Set_Config,
   Lib_NovaConfig_Runner_Set_Returns,
-  Lib_NovaConfig_Runner_ValidateCredContributors_App,
-  Lib_NovaConfig_Runner_ValidateCredContributors_AppMessage,
-  Lib_NovaConfig_Runner_ValidateCredContributors_AppsGroup,
   Lib_NovaConfig_Runner_ValidateCredContributors_DeployEntry,
   Lib_NovaConfig_Runner_ValidateCredContributors_DeployList,
   Lib_NovaConfig_Runner_ValidateCredContributors_DeployTargets,
   Lib_NovaConfig_Runner_ValidateCredContributors_Environment,
-  Lib_NovaConfig_Runner_ValidateCredContributors_GlobalGroup,
-  Lib_NovaConfig_Runner_ValidateCredContributors_HasGlobalPrefix,
+  Lib_NovaConfig_Runner_ValidateCredContributors_HasProjectPrefix,
   Lib_NovaConfig_Runner_ValidateCredContributors_HasRuntimeValue,
   Lib_NovaConfig_Runner_ValidateCredContributors_Message,
   Lib_NovaConfig_Runner_ValidateCredContributors_OwnsConfigKeys,
   Lib_NovaConfig_Runner_ValidateCredContributors_Path,
+  Lib_NovaConfig_Runner_ValidateCredContributors_ProjectGroup,
   Lib_NovaConfig_Runner_ValidateCredContributors_RawWorkflow,
   Lib_NovaConfig_Runner_ValidateCredContributors_RawWorkflows,
   Lib_NovaConfig_Runner_ValidateCredContributors_Reported,
   Lib_NovaConfig_Runner_ValidateCredContributors_Returns,
-  Lib_NovaConfig_Runner_ValidateCredContributors_RuntimeApp,
-  Lib_NovaConfig_Runner_ValidateCredContributors_RuntimeAppPath,
+  Lib_NovaConfig_Runner_ValidateCredContributors_RuntimeWorkspace,
+  Lib_NovaConfig_Runner_ValidateCredContributors_RuntimeWorkspacePath,
   Lib_NovaConfig_Runner_ValidateCredContributors_Scope,
-  Lib_NovaConfig_Runner_ValidateCredContributors_ServerBearingApps,
+  Lib_NovaConfig_Runner_ValidateCredContributors_ServerBearingWorkspaces,
   Lib_NovaConfig_Runner_ValidateCredContributors_TargetEntry,
   Lib_NovaConfig_Runner_ValidateCredContributors_TargetList,
   Lib_NovaConfig_Runner_ValidateCredContributors_TargetMeta,
@@ -343,6 +350,9 @@ import type {
   Lib_NovaConfig_Runner_ValidateCredContributors_WorkflowName,
   Lib_NovaConfig_Runner_ValidateCredContributors_WorkflowsGroup,
   Lib_NovaConfig_Runner_ValidateCredContributors_WorkingDir,
+  Lib_NovaConfig_Runner_ValidateCredContributors_Workspace,
+  Lib_NovaConfig_Runner_ValidateCredContributors_WorkspaceMessage,
+  Lib_NovaConfig_Runner_ValidateCredContributors_WorkspacesGroup,
 } from '../types/lib/nova-config.d.ts';
 
 /**
@@ -538,6 +548,7 @@ export class Runner {
     const agents: Lib_NovaConfig_Runner_Parse_Agents = this.parseAgents(value['agents']);
     const recipes: Lib_NovaConfig_Runner_Parse_Recipes = this.parseRecipes(value['recipes']);
     const environment: Lib_NovaConfig_Runner_Parse_Environment = this.parseEnvironment(value['environment'], workspaces, workflows);
+    const settings: Lib_NovaConfig_Runner_Parse_Settings = this.parseSettings(value['settings']);
 
     // Cross-check deploy-credential scope against the environment namespaces so a
     // scoped target without its required prefix fails at load instead of silently
@@ -586,6 +597,10 @@ export class Runner {
 
     if (environment !== undefined) {
       result.environment = environment;
+    }
+
+    if (settings !== undefined) {
+      result.settings = settings;
     }
 
     return result;
@@ -936,8 +951,8 @@ export class Runner {
   /**
    * Lib - Nova Config - Parse Workspaces.
    *
-   * Maps workspace paths to their name, role, policy, and optional display name. Enforces
-   * naming conventions that depend on the project slug.
+   * Maps workspace paths to their name, role, and policy. Enforces naming conventions
+   * that depend on the project slug.
    *
    * @param {Lib_NovaConfig_Runner_ParseWorkspaces_Value} value - Value.
    * @param {Lib_NovaConfig_Runner_ParseWorkspaces_Slug}  slug  - Slug.
@@ -1027,7 +1042,6 @@ export class Runner {
       }
 
       const nameCandidate: Lib_NovaConfig_Runner_ParseWorkspaces_NameCandidate = this.getNonEmptyString(options['name']);
-      const displayNameCandidate: Lib_NovaConfig_Runner_ParseWorkspaces_DisplayNameCandidate = this.getNonEmptyString(options['displayName']);
       const roleCandidate: Lib_NovaConfig_Runner_ParseWorkspaces_RoleCandidate = this.getNonEmptyString(options['role']);
       const policyCandidate: Lib_NovaConfig_Runner_ParseWorkspaces_PolicyCandidate = this.getNonEmptyString(options['policy']);
 
@@ -1094,7 +1108,6 @@ export class Runner {
         role: matchedRole,
         policy,
         name: nameCandidate,
-        ...(displayNameCandidate !== undefined) ? { displayName: displayNameCandidate } : {},
       });
     }
 
@@ -1138,81 +1151,83 @@ export class Runner {
 
     const result: Lib_NovaConfig_Runner_ParseEnvironment_Result = {};
     const workspacePaths: Lib_NovaConfig_Runner_ParseEnvironment_WorkspacePaths = (workspaces !== undefined) ? Object.keys(workspaces) : [];
-    const workflowNames: Lib_NovaConfig_Runner_ParseEnvironment_WorkflowNames = (workflows !== undefined) ? workflows.map((workflow) => workflow['suffix']) : [];
+    const workflowNames: Lib_NovaConfig_Runner_ParseEnvironment_WorkflowNames = (workflows !== undefined) ? workflows.map((workflow) => workflow['name']) : [];
     const collectedPrefixes: Lib_NovaConfig_Runner_ParseEnvironment_CollectedPrefixes = [];
 
-    // Global managed-only keys carry a prefix and optional values (no buildOnly delivery axis).
-    const globalValue: Lib_NovaConfig_Runner_ParseEnvironment_GlobalValue = value['global'];
+    // Project keys carry a prefix and optional values; in practice they are reach "managed".
+    const projectValue: Lib_NovaConfig_Runner_ParseEnvironment_ProjectValue = value['project'];
 
-    if (isPlainObject(globalValue) === true) {
-      const globalPrefix: Lib_NovaConfig_Runner_ParseEnvironment_GlobalPrefix = this.getNonEmptyString(globalValue['prefix']);
+    if (isPlainObject(projectValue) === true) {
+      const projectPrefix: Lib_NovaConfig_Runner_ParseEnvironment_ProjectPrefix = this.getNonEmptyString(projectValue['prefix']);
 
-      if (globalPrefix === undefined) {
-        this.pushError('Runner.parseEnvironment', 'environment', 'Environment "global" has no prefix. Skipping ...');
-      } else if (libEnvNamespace.isReservedPrefix(globalPrefix) === true) {
-        this.pushError('Runner.parseEnvironment', 'environment', `Environment "global" prefix "${globalPrefix}" is reserved and cannot be used. Skipping ...`);
+      if (projectPrefix === undefined) {
+        this.pushError('Runner.parseEnvironment', 'environment', 'Environment "project" has no prefix. Skipping ...');
+      } else if (libEnvNamespace.isReservedPrefix(projectPrefix) === true) {
+        this.pushError('Runner.parseEnvironment', 'environment', `Environment "project" prefix "${projectPrefix}" is reserved and cannot be used. Skipping ...`);
       } else {
-        collectedPrefixes.push(globalPrefix);
+        collectedPrefixes.push(projectPrefix);
 
-        const globalVariables: Lib_NovaConfig_Runner_ParseEnvironment_GlobalVariables = this.parseEnvironmentValues(globalValue['variables'], globalPrefix, 'global', false);
-        const globalResult: Lib_NovaConfig_Runner_ParseEnvironment_GlobalResult = { prefix: globalPrefix };
+        const projectVariables: Lib_NovaConfig_Runner_ParseEnvironment_ProjectVariables = this.parseEnvironmentValues(projectValue['variables'], projectPrefix, 'project');
+        const projectResult: Lib_NovaConfig_Runner_ParseEnvironment_ProjectResult = { prefix: projectPrefix };
 
-        if (globalVariables !== undefined) {
-          globalResult.variables = globalVariables;
+        if (projectVariables !== undefined) {
+          projectResult.variables = projectVariables;
         }
 
-        result.global = globalResult;
+        result.project = projectResult;
       }
     }
 
-    // Per-app keys must reference a real workspace path and carry both storage and delivery axes.
-    const appsValue: Lib_NovaConfig_Runner_ParseEnvironment_AppsValue = value['apps'];
+    // Per-workspace keys must reference a real workspace path and carry both storage and delivery axes.
+    const workspacesValue: Lib_NovaConfig_Runner_ParseEnvironment_WorkspacesValue = value['workspaces'];
 
-    if (isPlainObject(appsValue) === true) {
-      const apps: Lib_NovaConfig_Runner_ParseEnvironment_Apps = {};
+    if (isPlainObject(workspacesValue) === true) {
+      const workspacesResult: Lib_NovaConfig_Runner_ParseEnvironment_WorkspacesResult = {};
 
-      for (const appEntry of Object.entries(appsValue)) {
-        const appPath: Lib_NovaConfig_Runner_ParseEnvironment_AppPath = appEntry[0];
-        const appOptions: Lib_NovaConfig_Runner_ParseEnvironment_AppOptions = appEntry[1];
+      for (const workspaceEntry of Object.entries(workspacesValue)) {
+        const workspacePath: Lib_NovaConfig_Runner_ParseEnvironment_WorkspacePath = workspaceEntry[0];
+        const workspaceOptions: Lib_NovaConfig_Runner_ParseEnvironment_WorkspaceOptions = workspaceEntry[1];
 
-        if (isPlainObject(appOptions) === false) {
+        if (isPlainObject(workspaceOptions) === false) {
           continue;
         }
 
-        if (workspacePaths.includes(appPath) === false) {
-          this.pushError('Runner.parseEnvironment', 'environment', `Environment app "${appPath}" does not match a configured workspace. Skipping ...`);
-
-          continue;
-        }
-
-        const appPrefix: Lib_NovaConfig_Runner_ParseEnvironment_AppPrefix = this.getNonEmptyString(appOptions['prefix']);
-
-        if (appPrefix === undefined) {
-          this.pushError('Runner.parseEnvironment', 'environment', `Environment app "${appPath}" has no prefix. Skipping ...`);
+        if (workspacePaths.includes(workspacePath) === false) {
+          this.pushError('Runner.parseEnvironment', 'environment', `Environment workspace "${workspacePath}" does not match a configured workspace. Skipping ...`);
 
           continue;
         }
 
-        if (libEnvNamespace.isReservedPrefix(appPrefix) === true) {
-          this.pushError('Runner.parseEnvironment', 'environment', `Environment app "${appPath}" prefix "${appPrefix}" is reserved and cannot be used. Skipping ...`);
+        // Every workspace entry must carry a prefix so a value that later flips from reach
+        // "local" to a managed reach already has a valid, prefixed GitHub name.
+        const workspacePrefix: Lib_NovaConfig_Runner_ParseEnvironment_WorkspacePrefix = this.getNonEmptyString(workspaceOptions['prefix']);
+
+        if (workspacePrefix === undefined) {
+          this.pushError('Runner.parseEnvironment', 'environment', `Environment workspace "${workspacePath}" has no prefix. Skipping ...`);
 
           continue;
         }
 
-        collectedPrefixes.push(appPrefix);
+        if (libEnvNamespace.isReservedPrefix(workspacePrefix) === true) {
+          this.pushError('Runner.parseEnvironment', 'environment', `Environment workspace "${workspacePath}" prefix "${workspacePrefix}" is reserved and cannot be used. Skipping ...`);
 
-        const appVariables: Lib_NovaConfig_Runner_ParseEnvironment_AppVariables = this.parseEnvironmentValues(appOptions['variables'], appPrefix, `app "${appPath}"`, true);
-        const appResult: Lib_NovaConfig_Runner_ParseEnvironment_AppResult = { prefix: appPrefix };
-
-        if (appVariables !== undefined) {
-          appResult.variables = appVariables;
+          continue;
         }
 
-        Reflect.set(apps, appPath, appResult);
+        collectedPrefixes.push(workspacePrefix);
+
+        const workspaceVariables: Lib_NovaConfig_Runner_ParseEnvironment_WorkspaceVariables = this.parseEnvironmentValues(workspaceOptions['variables'], workspacePrefix, `workspace "${workspacePath}"`);
+        const workspaceResult: Lib_NovaConfig_Runner_ParseEnvironment_WorkspaceResult = { prefix: workspacePrefix };
+
+        if (workspaceVariables !== undefined) {
+          workspaceResult.variables = workspaceVariables;
+        }
+
+        Reflect.set(workspacesResult, workspacePath, workspaceResult);
       }
 
-      if (Object.keys(apps).length > 0) {
-        result.apps = apps;
+      if (Object.keys(workspacesResult).length > 0) {
+        result.workspaces = workspacesResult;
       }
     }
 
@@ -1290,13 +1305,13 @@ export class Runner {
   /**
    * Lib - Nova Config - Parse Environment Values.
    *
-   * Validates one group's environment values against the per-value rules for the secret and
-   * buildOnly flags, defaultValue, prefix repetition, and GitHub name; drops invalid values.
+   * Validates one group's environment values against the per-value rules for the required
+   * reach discriminant, the secret flag, defaultValue, prefix repetition, and GitHub name;
+   * drops invalid values.
    *
-   * @param {Lib_NovaConfig_Runner_ParseEnvironmentValues_RawVariables}     rawVariables     - Raw variables.
-   * @param {Lib_NovaConfig_Runner_ParseEnvironmentValues_Prefix}           prefix           - Prefix.
-   * @param {Lib_NovaConfig_Runner_ParseEnvironmentValues_Context}          context          - Context.
-   * @param {Lib_NovaConfig_Runner_ParseEnvironmentValues_RequireBuildOnly} requireBuildOnly - Require build only.
+   * @param {Lib_NovaConfig_Runner_ParseEnvironmentValues_RawVariables} rawVariables - Raw variables.
+   * @param {Lib_NovaConfig_Runner_ParseEnvironmentValues_Prefix}       prefix       - Prefix.
+   * @param {Lib_NovaConfig_Runner_ParseEnvironmentValues_Context}      context      - Context.
    *
    * @private
    *
@@ -1304,7 +1319,7 @@ export class Runner {
    *
    * @since 0.21.0
    */
-  private parseEnvironmentValues(rawVariables: Lib_NovaConfig_Runner_ParseEnvironmentValues_RawVariables, prefix: Lib_NovaConfig_Runner_ParseEnvironmentValues_Prefix, context: Lib_NovaConfig_Runner_ParseEnvironmentValues_Context, requireBuildOnly: Lib_NovaConfig_Runner_ParseEnvironmentValues_RequireBuildOnly): Lib_NovaConfig_Runner_ParseEnvironmentValues_Returns {
+  private parseEnvironmentValues(rawVariables: Lib_NovaConfig_Runner_ParseEnvironmentValues_RawVariables, prefix: Lib_NovaConfig_Runner_ParseEnvironmentValues_Prefix, context: Lib_NovaConfig_Runner_ParseEnvironmentValues_Context): Lib_NovaConfig_Runner_ParseEnvironmentValues_Returns {
     if (Array.isArray(rawVariables) === false) {
       return undefined;
     }
@@ -1327,9 +1342,29 @@ export class Runner {
         continue;
       }
 
+      // Reach names where the key travels and is the required discriminant; without a valid
+      // one the value cannot be routed (spec 2.1).
+      const reachValues: Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachValues = [
+        'local',
+        'managed',
+        'build',
+        'runtime',
+      ];
+      const reachCandidate: Lib_NovaConfig_Runner_ParseEnvironmentValues_ReachCandidate = reachValues.find((reachValue) => reachValue === raw['reach']);
+
+      if (reachCandidate === undefined) {
+        this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" has no valid "reach" (local | managed | build | runtime). Skipping ...`);
+
+        continue;
+      }
+
+      const isLocal: Lib_NovaConfig_Runner_ParseEnvironmentValues_IsLocal = reachCandidate === 'local';
+
+      // Secret is the storage axis and applies only once a key reaches GitHub, so a non-local
+      // value must declare it while a local value must not (spec 2.2).
       const secretCandidate: Lib_NovaConfig_Runner_ParseEnvironmentValues_SecretCandidate = (typeof raw['secret'] === 'boolean') ? raw['secret'] : undefined;
 
-      if (secretCandidate === undefined) {
+      if (isLocal === false && secretCandidate === undefined) {
         this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" has no boolean "secret" flag. Skipping ...`);
 
         continue;
@@ -1349,15 +1384,20 @@ export class Runner {
 
       let hasError: Lib_NovaConfig_Runner_ParseEnvironmentValues_HasError = false;
 
-      const buildOnlyCandidate: Lib_NovaConfig_Runner_ParseEnvironmentValues_BuildOnlyCandidate = (typeof raw['buildOnly'] === 'boolean') ? raw['buildOnly'] : undefined;
-
-      if (requireBuildOnly === true && buildOnlyCandidate === undefined) {
-        this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" has no boolean "buildOnly" flag. Skipping ...`);
+      if (isLocal === true && secretCandidate !== undefined) {
+        this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" is reach "local" and cannot declare "secret". Skipping ...`);
 
         hasError = true;
       }
 
       const defaultValueCandidate: Lib_NovaConfig_Runner_ParseEnvironmentValues_DefaultValueCandidate = (typeof raw['defaultValue'] === 'string') ? raw['defaultValue'] : undefined;
+
+      // A managed key never reaches a ".env" or a build, so it carries no default (spec 5).
+      if (reachCandidate === 'managed' && defaultValueCandidate !== undefined) {
+        this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" is reach "managed" and cannot declare a "defaultValue". Skipping ...`);
+
+        hasError = true;
+      }
 
       if (secretCandidate === true && defaultValueCandidate !== undefined) {
         this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" is a secret and cannot declare a "defaultValue". Skipping ...`);
@@ -1365,47 +1405,55 @@ export class Runner {
         hasError = true;
       }
 
-      if (libEnvNamespace.startsWithPrefix(key, prefix) === true) {
-        this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" starts with its own prefix "${prefix}". Skipping ...`);
+      // Prefix, GitHub name, and within-namespace uniqueness only apply to a key that gets a
+      // GitHub name; a local key has none, so these checks are skipped for it (spec 2.4).
+      if (isLocal === false) {
+        if (libEnvNamespace.startsWithPrefix(key, prefix) === true) {
+          this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" starts with its own prefix "${prefix}". Skipping ...`);
 
-        hasError = true;
-      }
+          hasError = true;
+        }
 
-      const name: Lib_NovaConfig_Runner_ParseEnvironmentValues_Name = libEnvNamespace.githubName(prefix, key);
+        const name: Lib_NovaConfig_Runner_ParseEnvironmentValues_Name = libEnvNamespace.githubName(prefix, key);
 
-      if (libEnvNamespace.isGithubLegalName(name) === false) {
-        this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" resolves to GitHub name "${name}" which is not a valid GitHub variable or secret name. Skipping ...`);
+        if (libEnvNamespace.isGithubLegalName(name) === false) {
+          this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" resolves to GitHub name "${name}" which is not a valid GitHub variable or secret name. Skipping ...`);
 
-        hasError = true;
-      }
+          hasError = true;
+        }
 
-      // GitHub folds case, so two keys in one namespace resolving to the same case-folded name
-      // would collide; the second is dropped (spec 3.3 within-prefix uniqueness).
-      const foldedName: Lib_NovaConfig_Runner_ParseEnvironmentValues_FoldedName = name.toUpperCase();
+        // GitHub folds case, so two keys in one namespace resolving to the same case-folded name
+        // would collide; the second is dropped (spec 3.3 within-prefix uniqueness).
+        const foldedName: Lib_NovaConfig_Runner_ParseEnvironmentValues_FoldedName = name.toUpperCase();
 
-      if (seenNames.has(foldedName) === true) {
-        this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" resolves to GitHub name "${name}" which duplicates another value in the same namespace. Skipping ...`);
+        if (seenNames.has(foldedName) === true) {
+          this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" resolves to GitHub name "${name}" which duplicates another value in the same namespace. Skipping ...`);
 
-        hasError = true;
+          hasError = true;
+        }
+
+        if (hasError === false) {
+          seenNames.add(foldedName);
+        }
       }
 
       if (hasError === true) {
         continue;
       }
 
-      seenNames.add(foldedName);
-
+      // Assemble the value for its reach variant; the discriminant is validated runtime data,
+      // so the object is built dynamically and cast to the union once.
       const value: Lib_NovaConfig_Runner_ParseEnvironmentValues_Value = {
         key,
-        secret: secretCandidate,
-      };
+        reach: reachCandidate,
+      } as Lib_NovaConfig_Runner_ParseEnvironmentValues_Value;
 
-      if (buildOnlyCandidate !== undefined) {
-        value.buildOnly = buildOnlyCandidate;
+      if (isLocal === false) {
+        Reflect.set(value, 'secret', secretCandidate);
       }
 
-      if (defaultValueCandidate !== undefined) {
-        value.defaultValue = defaultValueCandidate;
+      if (reachCandidate !== 'managed' && defaultValueCandidate !== undefined) {
+        Reflect.set(value, 'defaultValue', defaultValueCandidate);
       }
 
       values.push(value);
@@ -1442,14 +1490,14 @@ export class Runner {
       return;
     }
 
-    // A validated global group is only present when its prefix passed parsing, so
+    // A validated project group is only present when its prefix passed parsing, so
     // its mere existence proves an account credential can resolve a namespace.
-    const globalGroup: Lib_NovaConfig_Runner_ValidateCredContributors_GlobalGroup = (environment !== undefined) ? environment['global'] : undefined;
-    const hasGlobalPrefix: Lib_NovaConfig_Runner_ValidateCredContributors_HasGlobalPrefix = globalGroup !== undefined;
-    const appsGroup: Lib_NovaConfig_Runner_ValidateCredContributors_AppsGroup = (environment !== undefined) ? environment['apps'] : undefined;
+    const projectGroup: Lib_NovaConfig_Runner_ValidateCredContributors_ProjectGroup = (environment !== undefined) ? environment['project'] : undefined;
+    const hasProjectPrefix: Lib_NovaConfig_Runner_ValidateCredContributors_HasProjectPrefix = projectGroup !== undefined;
+    const workspacesGroup: Lib_NovaConfig_Runner_ValidateCredContributors_WorkspacesGroup = (environment !== undefined) ? environment['workspaces'] : undefined;
     const workflowsGroup: Lib_NovaConfig_Runner_ValidateCredContributors_WorkflowsGroup = (environment !== undefined) ? environment['workflows'] : undefined;
     const reported: Lib_NovaConfig_Runner_ValidateCredContributors_Reported = new Set();
-    const serverBearingApps: Lib_NovaConfig_Runner_ValidateCredContributors_ServerBearingApps = new Set();
+    const serverBearingWorkspaces: Lib_NovaConfig_Runner_ValidateCredContributors_ServerBearingWorkspaces = new Set();
 
     for (const rawWorkflowItem of rawWorkflows) {
       const rawWorkflow: Lib_NovaConfig_Runner_ValidateCredContributors_RawWorkflow = rawWorkflowItem;
@@ -1551,10 +1599,10 @@ export class Runner {
           continue;
         }
 
-        // A target that syncs runtime secrets gives its app a live server env, so a runtime
-        // value (buildOnly false) declared for that app has somewhere to land (spec 7).
+        // A target that syncs runtime secrets gives its workspace a live server env, so a reach
+        // "runtime" value declared for that workspace has somewhere to land (spec 7).
         if (targetMeta['supportsRuntimeSecretSync'] === true) {
-          serverBearingApps.add(deployTarget['appPath']);
+          serverBearingWorkspaces.add(deployTarget['appPath']);
         }
 
         const targetVariables: Lib_NovaConfig_Runner_ValidateCredContributors_TargetVariables = targetMeta['variables'];
@@ -1564,8 +1612,8 @@ export class Runner {
           const variableMeta: Lib_NovaConfig_Runner_ValidateCredContributors_VariableMeta = variableEntry[1];
           const scope: Lib_NovaConfig_Runner_ValidateCredContributors_Scope = variableMeta['scope'];
 
-          if (scope === 'account' && hasGlobalPrefix === false) {
-            const message: Lib_NovaConfig_Runner_ValidateCredContributors_Message = `Environment deploy target "${deployTarget['targetType']}" needs the account credential "${variableName}", but "global" has no prefix. Skipping ...`;
+          if (scope === 'account' && hasProjectPrefix === false) {
+            const message: Lib_NovaConfig_Runner_ValidateCredContributors_Message = `Environment deploy target "${deployTarget['targetType']}" needs the account credential "${variableName}", but "project" has no prefix. Skipping ...`;
 
             if (reported.has(message) === false) {
               reported.add(message);
@@ -1573,15 +1621,15 @@ export class Runner {
               this.pushError('Runner.validateCredContributors', 'environment', message);
             }
           } else if (scope === 'app') {
-            const app: Lib_NovaConfig_Runner_ValidateCredContributors_App = (appsGroup !== undefined) ? appsGroup[deployTarget['appPath']] : undefined;
+            const workspace: Lib_NovaConfig_Runner_ValidateCredContributors_Workspace = (workspacesGroup !== undefined) ? workspacesGroup[deployTarget['appPath']] : undefined;
 
-            if (app === undefined) {
-              const appMessage: Lib_NovaConfig_Runner_ValidateCredContributors_AppMessage = `Environment deploy target "${deployTarget['targetType']}" needs the app credential "${variableName}" for "${deployTarget['appPath']}", but that app has no prefix. Skipping ...`;
+            if (workspace === undefined) {
+              const workspaceMessage: Lib_NovaConfig_Runner_ValidateCredContributors_WorkspaceMessage = `Environment deploy target "${deployTarget['targetType']}" needs the app credential "${variableName}" for "${deployTarget['appPath']}", but that workspace has no prefix. Skipping ...`;
 
-              if (reported.has(appMessage) === false) {
-                reported.add(appMessage);
+              if (reported.has(workspaceMessage) === false) {
+                reported.add(workspaceMessage);
 
-                this.pushError('Runner.validateCredContributors', 'environment', appMessage);
+                this.pushError('Runner.validateCredContributors', 'environment', workspaceMessage);
               }
             }
           }
@@ -1589,16 +1637,16 @@ export class Runner {
       }
     }
 
-    // A runtime value (buildOnly false) needs a live server env to land in; an app declaring
-    // one but deploying to no server-bearing target would deliver it nowhere (spec 7).
-    if (appsGroup !== undefined) {
-      for (const appEntry of Object.entries(appsGroup)) {
-        const runtimeAppPath: Lib_NovaConfig_Runner_ValidateCredContributors_RuntimeAppPath = appEntry[0];
-        const runtimeApp: Lib_NovaConfig_Runner_ValidateCredContributors_RuntimeApp = appEntry[1];
-        const hasRuntimeValue: Lib_NovaConfig_Runner_ValidateCredContributors_HasRuntimeValue = (runtimeApp['variables'] ?? []).some((variable) => variable['buildOnly'] === false);
+    // A reach "runtime" value needs a live server env to land in; a workspace declaring one but
+    // deploying to no server-bearing target would deliver it nowhere (spec 7).
+    if (workspacesGroup !== undefined) {
+      for (const workspaceEntry of Object.entries(workspacesGroup)) {
+        const runtimeWorkspacePath: Lib_NovaConfig_Runner_ValidateCredContributors_RuntimeWorkspacePath = workspaceEntry[0];
+        const runtimeWorkspace: Lib_NovaConfig_Runner_ValidateCredContributors_RuntimeWorkspace = workspaceEntry[1];
+        const hasRuntimeValue: Lib_NovaConfig_Runner_ValidateCredContributors_HasRuntimeValue = (runtimeWorkspace['variables'] ?? []).some((variable) => variable['reach'] === 'runtime');
 
-        if (hasRuntimeValue === true && serverBearingApps.has(runtimeAppPath) === false) {
-          this.pushError('Runner.validateCredContributors', 'environment', `Environment app "${runtimeAppPath}" declares a runtime value (buildOnly false), but deploys to no server-bearing target. Skipping ...`);
+        if (hasRuntimeValue === true && serverBearingWorkspaces.has(runtimeWorkspacePath) === false) {
+          this.pushError('Runner.validateCredContributors', 'environment', `Environment workspace "${runtimeWorkspacePath}" declares a reach "runtime" value, but deploys to no server-bearing target. Skipping ...`);
         }
       }
     }
@@ -1641,9 +1689,9 @@ export class Runner {
         continue;
       }
 
-      const suffix: Lib_NovaConfig_Runner_ParseWorkflows_Suffix = this.getNonEmptyString(castItem['name']);
+      const name: Lib_NovaConfig_Runner_ParseWorkflows_Name = this.getNonEmptyString(castItem['name']);
 
-      if (suffix === undefined) {
+      if (name === undefined) {
         continue;
       }
 
@@ -1665,48 +1713,55 @@ export class Runner {
 
       const rawDependsOn: Lib_NovaConfig_Runner_ParseWorkflows_RawDependsOn = castItem['depends-on'];
       const dependsOn: Lib_NovaConfig_Runner_ParseWorkflows_DependsOn = (Array.isArray(rawDependsOn) === true) ? rawDependsOn.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as Lib_NovaConfig_Runner_ParseWorkflows_DependsOn : [];
-      const rawScopes: Lib_NovaConfig_Runner_ParseWorkflows_RawScopes = castItem['scopes'];
-      const scopes: Lib_NovaConfig_Runner_ParseWorkflows_Scopes = (Array.isArray(rawScopes) === true) ? rawScopes.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as Lib_NovaConfig_Runner_ParseWorkflows_Scopes : [];
-      const rawTargets: Lib_NovaConfig_Runner_ParseWorkflows_RawTargets = castItem['targets'];
-      const targets: Lib_NovaConfig_Runner_ParseWorkflows_Targets = [];
+      const rawBuild: Lib_NovaConfig_Runner_ParseWorkflows_RawBuild = castItem['build'];
+      const build: Lib_NovaConfig_Runner_ParseWorkflows_Build = (Array.isArray(rawBuild) === true) ? rawBuild.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as Lib_NovaConfig_Runner_ParseWorkflows_Build : [];
+      const rawDeploy: Lib_NovaConfig_Runner_ParseWorkflows_RawDeploy = castItem['deploy'];
+      const deploy: Lib_NovaConfig_Runner_ParseWorkflows_Deploy = [];
 
-      if (Array.isArray(rawTargets) === true) {
-        for (const rawTarget of rawTargets) {
-          const rawTargetValue: Lib_NovaConfig_Runner_ParseWorkflows_RawTargetValue = rawTarget;
+      if (Array.isArray(rawDeploy) === true) {
+        for (const rawDeployEntry of rawDeploy) {
+          const rawDeployValue: Lib_NovaConfig_Runner_ParseWorkflows_RawDeployValue = rawDeployEntry;
 
-          if (isPlainObject(rawTargetValue) === false) {
+          if (isPlainObject(rawDeployValue) === false) {
             continue;
           }
 
-          const targetType: Lib_NovaConfig_Runner_ParseWorkflows_TargetType = this.getNonEmptyString(rawTargetValue['type']);
-          const targetWorkingDir: Lib_NovaConfig_Runner_ParseWorkflows_TargetWorkingDir = this.getNonEmptyString(rawTargetValue['workingDir']);
+          const deployTo: Lib_NovaConfig_Runner_ParseWorkflows_DeployTo = this.getNonEmptyString(rawDeployValue['to']);
+          const deployPath: Lib_NovaConfig_Runner_ParseWorkflows_DeployPath = this.getNonEmptyString(rawDeployValue['path']);
 
-          if (targetType === undefined || targetWorkingDir === undefined) {
+          if (deployTo === undefined || deployPath === undefined) {
             continue;
           }
 
-          const rawTargetNeeds: Lib_NovaConfig_Runner_ParseWorkflows_RawTargetNeeds = rawTargetValue['needs'];
-          const targetNeeds: Lib_NovaConfig_Runner_ParseWorkflows_TargetNeeds = (Array.isArray(rawTargetNeeds) === true) ? rawTargetNeeds.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as Lib_NovaConfig_Runner_ParseWorkflows_TargetNeeds : [];
+          const rawDeployAfter: Lib_NovaConfig_Runner_ParseWorkflows_RawDeployAfter = rawDeployValue['after'];
+          const deployAfter: Lib_NovaConfig_Runner_ParseWorkflows_DeployAfter = (Array.isArray(rawDeployAfter) === true) ? rawDeployAfter.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as Lib_NovaConfig_Runner_ParseWorkflows_DeployAfter : [];
 
-          const target: Lib_NovaConfig_Runner_ParseWorkflows_Target = {
-            type: targetType,
-            workingDir: targetWorkingDir,
+          const deployTarget: Lib_NovaConfig_Runner_ParseWorkflows_DeployTarget = {
+            to: deployTo,
+            path: deployPath,
           };
 
-          if (targetNeeds.length > 0) {
-            Reflect.set(target, 'needs', targetNeeds);
+          if (deployAfter.length > 0) {
+            Reflect.set(deployTarget, 'after', deployAfter);
           }
 
-          targets.push(target);
+          const deployWith: Lib_NovaConfig_Runner_ParseWorkflows_DeployWith = rawDeployValue['with'];
+          const parsedDeployWith: Lib_NovaConfig_Runner_ParseWorkflows_ParsedDeployWith = this.parseWorkflowWith(deployWith);
+
+          if (parsedDeployWith !== undefined) {
+            Reflect.set(deployTarget, 'with', parsedDeployWith);
+          }
+
+          deploy.push(deployTarget);
         }
       }
 
-      const settings: Lib_NovaConfig_Runner_ParseWorkflows_Settings = castItem['settings'];
+      const withMap: Lib_NovaConfig_Runner_ParseWorkflows_WithMap = castItem['with'];
 
-      // Build workflow object with properties in type-definition order: template, suffix, triggers, depends-on, scopes, targets, settings.
+      // Build workflow object with properties in type-definition order: template, name, triggers, depends-on, build, deploy, with.
       const workflow: Lib_NovaConfig_Runner_ParseWorkflows_Workflow = {
         template,
-        suffix,
+        name,
         triggers,
       };
 
@@ -1714,32 +1769,18 @@ export class Runner {
         Reflect.set(workflow, 'depends-on', dependsOn);
       }
 
-      if (scopes.length > 0) {
-        Reflect.set(workflow, 'scopes', scopes);
+      if (build.length > 0) {
+        Reflect.set(workflow, 'build', build);
       }
 
-      if (targets.length > 0) {
-        Reflect.set(workflow, 'targets', targets);
+      if (deploy.length > 0) {
+        Reflect.set(workflow, 'deploy', deploy);
       }
 
-      if (isPlainObject(settings) === true) {
-        const parsedSettings: Lib_NovaConfig_Runner_ParseWorkflows_ParsedSettings = {};
-        const sortedSettingsEntries: Lib_NovaConfig_Runner_ParseWorkflows_SortedSettingsEntries = Object.entries(settings).sort(
-          (a, b) => a[0].localeCompare(b[0]),
-        );
+      const parsedWith: Lib_NovaConfig_Runner_ParseWorkflows_ParsedWith = this.parseWorkflowWith(withMap);
 
-        for (const settingsEntry of sortedSettingsEntries) {
-          const settingsKey: Lib_NovaConfig_Runner_ParseWorkflows_SettingsKey = settingsEntry[0];
-          const settingsValue: Lib_NovaConfig_Runner_ParseWorkflows_SettingsValue = settingsEntry[1];
-
-          if (typeof settingsValue === 'string') {
-            Reflect.set(parsedSettings, settingsKey, settingsValue);
-          }
-        }
-
-        if (Object.keys(parsedSettings).length > 0) {
-          workflow.settings = parsedSettings;
-        }
+      if (parsedWith !== undefined) {
+        workflow.with = parsedWith;
       }
 
       workflows.push(workflow);
@@ -1749,7 +1790,7 @@ export class Runner {
       return undefined;
     }
 
-    // Sort workflows by template, then by suffix.
+    // Sort workflows by template, then by name.
     workflows.sort((a, b) => {
       const templateCompare: Lib_NovaConfig_Runner_ParseWorkflows_TemplateCompare = a['template'].localeCompare(b['template']);
 
@@ -1757,13 +1798,54 @@ export class Runner {
         return templateCompare;
       }
 
-      const suffixA: Lib_NovaConfig_Runner_ParseWorkflows_SuffixA = a['suffix'] ?? '';
-      const suffixB: Lib_NovaConfig_Runner_ParseWorkflows_SuffixB = b['suffix'] ?? '';
+      const nameA: Lib_NovaConfig_Runner_ParseWorkflows_NameA = a['name'] ?? '';
+      const nameB: Lib_NovaConfig_Runner_ParseWorkflows_NameB = b['name'] ?? '';
 
-      return suffixA.localeCompare(suffixB);
+      return nameA.localeCompare(nameB);
     });
 
     return workflows;
+  }
+
+  /**
+   * Lib - Nova Config - Parse Workflow With.
+   *
+   * Parses a workflow or deploy-target "with" block into a key-sorted map of string
+   * values. Returns undefined when the block is absent, not a plain object, or holds
+   * no string values.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseWorkflowWith_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseWorkflowWith_Returns}
+   *
+   * @since 0.22.0
+   */
+  private parseWorkflowWith(value: Lib_NovaConfig_Runner_ParseWorkflowWith_Value): Lib_NovaConfig_Runner_ParseWorkflowWith_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const parsed: Lib_NovaConfig_Runner_ParseWorkflowWith_Parsed = {};
+    const sortedEntries: Lib_NovaConfig_Runner_ParseWorkflowWith_SortedEntries = Object.entries(value).sort(
+      (a, b) => a[0].localeCompare(b[0]),
+    );
+
+    for (const entry of sortedEntries) {
+      const entryKey: Lib_NovaConfig_Runner_ParseWorkflowWith_EntryKey = entry[0];
+      const entryValue: Lib_NovaConfig_Runner_ParseWorkflowWith_EntryValue = entry[1];
+
+      if (typeof entryValue === 'string') {
+        Reflect.set(parsed, entryKey, entryValue);
+      }
+    }
+
+    if (Object.keys(parsed).length === 0) {
+      return undefined;
+    }
+
+    return parsed;
   }
 
   /**
@@ -2020,6 +2102,35 @@ export class Runner {
 
     if (projectExcludes !== undefined) {
       result.projectExcludes = projectExcludes;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Parse Settings.
+   *
+   * Parses the top-level "settings" field into project-wide behavior toggles.
+   * Returns undefined when the input is not a plain object or holds no recognized keys.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseSettings_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseSettings_Returns}
+   *
+   * @since 0.22.0
+   */
+  private parseSettings(value: Lib_NovaConfig_Runner_ParseSettings_Value): Lib_NovaConfig_Runner_ParseSettings_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_ParseSettings_Result = {};
+    const lockStepVersioning: Lib_NovaConfig_Runner_ParseSettings_LockStepVersioning = (value['lockStepVersioning'] === true) ? true : undefined;
+
+    if (lockStepVersioning !== undefined) {
+      result.lockStepVersioning = lockStepVersioning;
     }
 
     return (Object.keys(result).length > 0) ? result : undefined;

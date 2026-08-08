@@ -6,7 +6,7 @@ import { dirname, join, resolve } from 'node:path';
 
 import * as cheerio from 'cheerio';
 
-import { LIB_REGEX_WILDCARD_ASTERISK } from '../regex.js';
+import { LIB_REGEX_PATTERN_EXPORT_EMPTY, LIB_REGEX_WILDCARD_ASTERISK } from '../regex.js';
 
 import type {
   Lib_Search_Indexer_BuildSearchIndex_BaseUrlPrefixedRoute,
@@ -73,6 +73,8 @@ import type {
   Lib_Search_Indexer_BuildSearchIndex_TypedLunrIndex,
   Lib_Search_Indexer_BuildSearchIndex_TypedRoutePath,
   Lib_Search_Indexer_BuildSearchIndex_WorkerDestinationPath,
+  Lib_Search_Indexer_BuildSearchIndex_WorkerScript,
+  Lib_Search_Indexer_BuildSearchIndex_WorkerSource,
   Lib_Search_Indexer_BuildSearchIndex_WorkerSourcePath,
   Lib_Search_Indexer_ExtractDocument_ArticleText,
   Lib_Search_Indexer_ExtractDocument_Body,
@@ -475,7 +477,10 @@ export function buildSearchIndex(options: Lib_Search_Indexer_BuildSearchIndex_Op
   const workerDestinationPath: Lib_Search_Indexer_BuildSearchIndex_WorkerDestinationPath = join(options['outDir'], 'search-worker.js');
 
   if (existsSync(workerSourcePath) === true) {
-    copyFileSync(workerSourcePath, workerDestinationPath);
+    const workerSource: Lib_Search_Indexer_BuildSearchIndex_WorkerSource = readFileSync(workerSourcePath, 'utf-8');
+    const workerScript: Lib_Search_Indexer_BuildSearchIndex_WorkerScript = `${workerSource.replace(new RegExp(LIB_REGEX_PATTERN_EXPORT_EMPTY.source, 'gm'), '').trimEnd()}\n`;
+
+    writeFileSync(workerDestinationPath, workerScript, 'utf-8');
   }
 
   return;

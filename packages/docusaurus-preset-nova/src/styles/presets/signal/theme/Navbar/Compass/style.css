@@ -81,7 +81,8 @@
 }
 
 .nova-navbar-compass-items a,
-.nova-navbar-compass-items .nova-navbar-more-summary {
+.nova-navbar-compass-items .nova-navbar-more-summary,
+.nova-navbar-compass-items .nova-dropdown-summary {
   display: inline-flex;
   align-items: center;
   min-height: 2.25rem;
@@ -99,14 +100,18 @@
 .nova-navbar-compass-items a:not(.navbar__link--active):not([aria-current="page"]):focus-visible,
 .nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:hover,
 .nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:focus-visible,
-.nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary {
+.nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary,
+.nova-navbar-compass-items .nova-dropdown:not(.nova-dropdown--active) > .nova-dropdown-summary:hover,
+.nova-navbar-compass-items .nova-dropdown:not(.nova-dropdown--active) > .nova-dropdown-summary:focus-visible,
+.nova-navbar-compass-items .nova-dropdown:not(.nova-dropdown--active)[open] > .nova-dropdown-summary {
   color: var(--nova-color-primary-600);
   background-color: var(--nova-color-surface-raised);
   text-decoration: none;
 }
 
 [data-theme="dark"] .nova-navbar-compass-items a,
-[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more-summary {
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more-summary,
+[data-theme="dark"] .nova-navbar-compass-items .nova-dropdown-summary {
   color: var(--nova-color-text-muted);
 }
 
@@ -114,7 +119,10 @@
 [data-theme="dark"] .nova-navbar-compass-items a:not(.navbar__link--active):not([aria-current="page"]):focus-visible,
 [data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:hover,
 [data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:focus-visible,
-[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary {
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary,
+[data-theme="dark"] .nova-navbar-compass-items .nova-dropdown:not(.nova-dropdown--active) > .nova-dropdown-summary:hover,
+[data-theme="dark"] .nova-navbar-compass-items .nova-dropdown:not(.nova-dropdown--active) > .nova-dropdown-summary:focus-visible,
+[data-theme="dark"] .nova-navbar-compass-items .nova-dropdown:not(.nova-dropdown--active)[open] > .nova-dropdown-summary {
   color: var(--nova-color-primary-400);
   background-color: var(--nova-color-text);
 }
@@ -126,7 +134,8 @@
 .nova-navbar-compass-items a[aria-current="page"],
 .nova-navbar-compass-items a.navbar__link--active,
 .nova-navbar-compass-items .nova-navbar-more:has(a[aria-current="page"]) > .nova-navbar-more-summary,
-.nova-navbar-compass-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary {
+.nova-navbar-compass-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary,
+.nova-navbar-compass-items .nova-dropdown--active > .nova-dropdown-summary {
   font-weight: 600;
   color: var(--nova-color-primary-600);
   background-color: var(--nova-color-primary-50);
@@ -135,7 +144,8 @@
 [data-theme="dark"] .nova-navbar-compass-items a[aria-current="page"],
 [data-theme="dark"] .nova-navbar-compass-items a.navbar__link--active,
 [data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:has(a[aria-current="page"]) > .nova-navbar-more-summary,
-[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary {
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary,
+[data-theme="dark"] .nova-navbar-compass-items .nova-dropdown--active > .nova-dropdown-summary {
   color: var(--nova-color-primary-400);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
 }
@@ -265,13 +275,14 @@
   gap: 0;
 }
 
-.nova-navbar-compass-menu-item {
+.nova-navbar-compass-menu-item,
+.nova-navbar-compass-menu-dropdown-summary {
   gap: 0.625rem;
   padding: 0.625rem 0.75rem;
   font-family: var(--nova-font-code);
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--nova-signal-text-muted);
+  color: var(--nova-color-primary-700);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-bottom: 1px solid var(--nova-color-border);
@@ -284,12 +295,15 @@
 }
 
 .nova-navbar-compass-menu-item:hover,
-.nova-navbar-compass-menu-item:focus-visible {
+.nova-navbar-compass-menu-item:focus-visible,
+.nova-navbar-compass-menu-dropdown-summary:hover,
+.nova-navbar-compass-menu-dropdown-summary:focus-visible {
   color: var(--nova-color-primary-600);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
 }
 
-[data-theme="dark"] .nova-navbar-compass-menu-item {
+[data-theme="dark"] .nova-navbar-compass-menu-item,
+[data-theme="dark"] .nova-navbar-compass-menu-dropdown-summary {
   color: var(--nova-color-text-muted);
   border-bottom-color: var(--nova-color-border);
 }
@@ -299,7 +313,9 @@
 }
 
 [data-theme="dark"] .nova-navbar-compass-menu-item:hover,
-[data-theme="dark"] .nova-navbar-compass-menu-item:focus-visible {
+[data-theme="dark"] .nova-navbar-compass-menu-item:focus-visible,
+[data-theme="dark"] .nova-navbar-compass-menu-dropdown-summary:hover,
+[data-theme="dark"] .nova-navbar-compass-menu-dropdown-summary:focus-visible {
   color: var(--nova-color-primary-400);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
 }
@@ -329,8 +345,21 @@
   animation: signal-snap 150ms ease;
 }
 
-.nova-navbar-compass-menu-item {
+.nova-navbar-compass-menu-item,
+.nova-navbar-compass-menu-dropdown {
   opacity: 0;
 
   animation: signal-snap 150ms ease forwards;
+}
+
+/* ============================
+ * 12. Mobile Menu - Dropdown Spacing & Dark Mode Summary
+ * ============================ */
+
+[data-theme="dark"] .nova-navbar-compass-menu-dropdown-summary {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-navbar-compass-menu-dropdown-children {
+  padding-inline-start: 1.75rem;
 }

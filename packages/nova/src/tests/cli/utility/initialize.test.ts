@@ -37,6 +37,14 @@ import type {
   Tests_Cli_Utility_Initialize_PromptEnvironmentSection_AddsAGlobalSecretValue_Next,
   Tests_Cli_Utility_Initialize_PromptEnvironmentSection_AddsAGlobalSecretValue_PromptEnvironment,
   Tests_Cli_Utility_Initialize_PromptEnvironmentSection_AddsAGlobalSecretValue_Responses,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_CapturedQuestions,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_Config,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_Next,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_PromptEnvironment,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_Question,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_Responses,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_RootBlock,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_RootQuestion,
   Tests_Cli_Utility_Initialize_PromptEnvironmentSection_PromptsBeforeRemovingAValue_CapturedQuestions,
   Tests_Cli_Utility_Initialize_PromptEnvironmentSection_PromptsBeforeRemovingAValue_Config,
   Tests_Cli_Utility_Initialize_PromptEnvironmentSection_PromptsBeforeRemovingAValue_GlobalBlock,
@@ -45,52 +53,29 @@ import type {
   Tests_Cli_Utility_Initialize_PromptEnvironmentSection_PromptsBeforeRemovingAValue_Question,
   Tests_Cli_Utility_Initialize_PromptEnvironmentSection_PromptsBeforeRemovingAValue_RemoveQuestion,
   Tests_Cli_Utility_Initialize_PromptEnvironmentSection_PromptsBeforeRemovingAValue_Responses,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Answer,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Form,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_FormOptions,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_FormResult,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_HasAnswer,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Name,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Question,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_RawName,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Response,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_ScriptedAnswers,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Answer,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_CapturedQuestions,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_DisplayNameIndex,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_DisplayNameQuestion,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Form,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_FormOptions,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_FormResult,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_HasAnswer,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Name,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_NameIndex,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Question,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_RawName,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Response,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_ScriptedAnswers,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_Answer,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_Form,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_FormOptions,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_FormResult,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_HasAnswer,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_Name,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_Question,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_RawName,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_Response,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_ScriptedAnswers,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Answer,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_CapturedQuestions,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_DisplayNameQuestion,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Form,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_FormOptions,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_HasAnswer,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Initial,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Name,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Question,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_RawName,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Response,
-  Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_ScriptedAnswers,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Config,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_CustomizedLoggerMock,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_ErrorCalls,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_LoggerCustomizeReturn,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_LoggerCustomizeSpy,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Next,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_PromptEnvironment,
+  Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Responses,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_FormResult,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_Next,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_PackageJsonRecipes,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_PromptWorkspacesForm,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_Responses,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_Workspace,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_CapturedQuestions,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_ExistingPackageJsonRecipes,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_FormResult,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_IdentityQuestion,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_Next,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_PackageJsonRecipes,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_PromptWorkspacesForm,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_Question,
+  Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_Responses,
   Tests_Cli_Utility_Initialize_ReadLocalFilledKeys_ReturnsOnlyGenuinelyFilledKeys_AppDirectory,
   Tests_Cli_Utility_Initialize_ReadLocalFilledKeys_ReturnsOnlyGenuinelyFilledKeys_Config,
   Tests_Cli_Utility_Initialize_ReadLocalFilledKeys_ReturnsOnlyGenuinelyFilledKeys_CwdSpy,
@@ -161,223 +146,6 @@ describe('CliUtilityInitialize.run', async () => {
 });
 
 /**
- * Tests - CLI - Utility - Initialize - Prompt Workspaces Form Display Name Capture.
- *
- * @since 0.18.0
- */
-describe('prompt workspaces form display name capture', () => {
-  it('prompts for workspaceDisplayName and persists the captured value', async () => {
-    const capturedQuestions: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_CapturedQuestions = [];
-    const scriptedAnswers: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_ScriptedAnswers = {
-      workspaceRole: 'app',
-      workspacePolicy: 'freezable',
-      workspaceDisplayName: 'Test Display',
-      workspaceName: 'app-demo',
-      workspaceRecipes: [],
-    };
-
-    vi.mocked(prompts).mockImplementation((questions) => {
-      const question: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Question = (Array.isArray(questions) === true) ? questions[0] as Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Question : questions;
-
-      capturedQuestions.push(question);
-
-      const rawName: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_RawName = question['name'];
-      const name: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Name = (typeof rawName === 'string') ? rawName : '';
-      const hasAnswer: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_HasAnswer = Reflect.has(scriptedAnswers, name);
-      const answer: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Answer = (hasAnswer === true) ? Reflect.get(scriptedAnswers, name) : undefined;
-      const response: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Response = {};
-
-      if (hasAnswer === true) {
-        Reflect.set(response, name, answer);
-      }
-
-      return Promise.resolve(response);
-    });
-
-    const form: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Form = Reflect.get(CliUtilityInitialize, 'promptWorkspacesForm') as Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_Form;
-
-    const formOptions: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_FormOptions = {
-      workspacePath: './packages/demo-app',
-      existingWorkspace: undefined,
-      existingPackageJsonRecipes: undefined,
-      projectSlug: undefined,
-    };
-
-    const formResult: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_FormResult = await form(formOptions);
-
-    const displayNameQuestion: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_DisplayNameQuestion = capturedQuestions.find((entry) => entry['name'] === 'workspaceDisplayName');
-    const nameIndex: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_NameIndex = capturedQuestions.findIndex((entry) => entry['name'] === 'workspaceName');
-    const displayNameIndex: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_PromptsForWorkspaceDisplayNameAndPersistsTheCapturedValue_DisplayNameIndex = capturedQuestions.findIndex((entry) => entry['name'] === 'workspaceDisplayName');
-
-    ok(displayNameQuestion !== undefined, 'Expected a workspaceDisplayName question to be presented');
-    ok(
-      nameIndex !== -1
-      && displayNameIndex !== -1
-      && nameIndex < displayNameIndex,
-      'Expected workspaceName to be presented before workspaceDisplayName',
-    );
-
-    strictEqual(displayNameQuestion['type'], 'text');
-    strictEqual(formResult['action'], 'apply');
-
-    if (formResult['action'] === 'apply') {
-      strictEqual(formResult['workspace']['displayName'], 'Test Display');
-    }
-
-    return;
-  });
-
-  it('omits displayName when input is whitespace only', async () => {
-    const scriptedAnswers: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_ScriptedAnswers = {
-      workspaceRole: 'app',
-      workspacePolicy: 'freezable',
-      workspaceDisplayName: '   ',
-      workspaceName: 'app-demo',
-      workspaceRecipes: [],
-    };
-
-    vi.mocked(prompts).mockImplementation((questions) => {
-      const question: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Question = (Array.isArray(questions) === true) ? questions[0] as Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Question : questions;
-
-      const rawName: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_RawName = question['name'];
-      const name: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Name = (typeof rawName === 'string') ? rawName : '';
-      const hasAnswer: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_HasAnswer = Reflect.has(scriptedAnswers, name);
-      const answer: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Answer = (hasAnswer === true) ? Reflect.get(scriptedAnswers, name) : undefined;
-      const response: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Response = {};
-
-      if (hasAnswer === true) {
-        Reflect.set(response, name, answer);
-      }
-
-      return Promise.resolve(response);
-    });
-
-    const form: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Form = Reflect.get(CliUtilityInitialize, 'promptWorkspacesForm') as Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_Form;
-
-    const formOptions: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_FormOptions = {
-      workspacePath: './packages/demo-app',
-      existingWorkspace: undefined,
-      existingPackageJsonRecipes: undefined,
-      projectSlug: undefined,
-    };
-
-    const formResult: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_OmitsDisplayNameWhenInputIsWhitespaceOnly_FormResult = await form(formOptions);
-
-    strictEqual(formResult['action'], 'apply');
-
-    if (formResult['action'] === 'apply') {
-      ok(Reflect.has(formResult['workspace'], 'displayName') === false, 'Expected workspace to omit displayName when input is whitespace');
-    }
-
-    return;
-  });
-
-  it('seeds displayName prompt initial from existingWorkspace.displayName', async () => {
-    const capturedQuestions: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_CapturedQuestions = [];
-    const scriptedAnswers: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_ScriptedAnswers = {
-      workspaceRole: 'app',
-      workspacePolicy: 'freezable',
-      workspaceDisplayName: 'Foo',
-      workspaceName: 'app-demo',
-      workspaceRecipes: [],
-    };
-
-    vi.mocked(prompts).mockImplementation((questions) => {
-      const question: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Question = (Array.isArray(questions) === true) ? questions[0] as Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Question : questions;
-
-      capturedQuestions.push(question);
-
-      const rawName: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_RawName = question['name'];
-      const name: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Name = (typeof rawName === 'string') ? rawName : '';
-      const hasAnswer: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_HasAnswer = Reflect.has(scriptedAnswers, name);
-      const answer: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Answer = (hasAnswer === true) ? Reflect.get(scriptedAnswers, name) : undefined;
-      const response: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Response = {};
-
-      if (hasAnswer === true) {
-        Reflect.set(response, name, answer);
-      }
-
-      return Promise.resolve(response);
-    });
-
-    const form: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Form = Reflect.get(CliUtilityInitialize, 'promptWorkspacesForm') as Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Form;
-
-    const formOptions: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_FormOptions = {
-      workspacePath: './packages/demo-app',
-
-      // Inlined literal avoids a typed body var aliasing the foreign existingWorkspace option type (rule 7.2).
-      existingWorkspace: {
-        name: 'app-demo',
-        displayName: 'Foo',
-        role: 'app',
-        policy: 'freezable',
-      },
-      existingPackageJsonRecipes: undefined,
-      projectSlug: undefined,
-    };
-
-    await form(formOptions);
-
-    const displayNameQuestion: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_DisplayNameQuestion = capturedQuestions.find((entry) => entry['name'] === 'workspaceDisplayName');
-
-    ok(displayNameQuestion !== undefined, 'Expected a workspaceDisplayName question to be presented');
-
-    const initial: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_SeedsDisplayNamePromptInitialFromExistingWorkspaceDisplayName_Initial = displayNameQuestion['initial'];
-
-    strictEqual(initial, 'Foo');
-
-    return;
-  });
-
-  it('returns back action when user cancels at displayName prompt', async () => {
-    const scriptedAnswers: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_ScriptedAnswers = {
-      workspaceRole: 'app',
-      workspacePolicy: 'freezable',
-      workspaceName: 'app-demo',
-    };
-
-    vi.mocked(prompts).mockImplementation((questions) => {
-      const question: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_Question = (Array.isArray(questions) === true) ? questions[0] as Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_Question : questions;
-
-      const rawName: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_RawName = question['name'];
-      const name: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_Name = (typeof rawName === 'string') ? rawName : '';
-
-      // Simulates Ctrl+C / ESC at the workspaceDisplayName step — promptWithCancel reads an empty result as cancelled.
-      if (name === 'workspaceDisplayName') {
-        return Promise.resolve({});
-      }
-
-      const hasAnswer: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_HasAnswer = Reflect.has(scriptedAnswers, name);
-      const answer: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_Answer = (hasAnswer === true) ? Reflect.get(scriptedAnswers, name) : undefined;
-      const response: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_Response = {};
-
-      if (hasAnswer === true) {
-        Reflect.set(response, name, answer);
-      }
-
-      return Promise.resolve(response);
-    });
-
-    const form: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_Form = Reflect.get(CliUtilityInitialize, 'promptWorkspacesForm') as Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_Form;
-
-    const formOptions: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_FormOptions = {
-      workspacePath: './packages/demo-app',
-      existingWorkspace: undefined,
-      existingPackageJsonRecipes: undefined,
-      projectSlug: undefined,
-    };
-
-    const formResult: Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ReturnsBackActionWhenUserCancelsAtDisplayNamePrompt_FormResult = await form(formOptions);
-
-    strictEqual(formResult['action'], 'back');
-
-    return;
-  });
-
-  return;
-});
-
-/**
  * Tests - CLI - Utility - Initialize - Is Non Empty Literal Input.
  *
  * @since 0.18.0
@@ -429,9 +197,11 @@ describe('prompt environment section', () => {
       {
         action: {
           kind: 'scope',
-          scope: 'global',
+          scope: 'project',
         },
       },
+      { action: { kind: 'prefix' } },
+      { prefix: 'ACME_' },
       { action: { kind: 'add' } },
       { key: 'MY_SECRET' },
       { secret: true },
@@ -448,10 +218,11 @@ describe('prompt environment section', () => {
 
     await promptEnvironment(config);
 
-    const globalVariables: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_AddsAGlobalSecretValue_GlobalVariables = (config['environment'] !== undefined && config['environment']['global'] !== undefined) ? config['environment']['global']['variables'] : undefined;
+    const globalVariables: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_AddsAGlobalSecretValue_GlobalVariables = (config['environment'] !== undefined && config['environment']['project'] !== undefined) ? config['environment']['project']['variables'] : undefined;
 
     deepStrictEqual(globalVariables, [{
       key: 'MY_SECRET',
+      reach: 'managed',
       secret: true,
     }]);
 
@@ -463,7 +234,7 @@ describe('prompt environment section', () => {
       {
         action: {
           kind: 'scope',
-          scope: 'global',
+          scope: 'project',
         },
       },
       {
@@ -489,10 +260,11 @@ describe('prompt environment section', () => {
 
     const config: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_PromptsBeforeRemovingAValue_Config = {
       environment: {
-        global: {
+        project: {
           prefix: 'G_',
           variables: [{
             key: 'OLD',
+            reach: 'managed',
             secret: true,
           }],
         },
@@ -503,10 +275,105 @@ describe('prompt environment section', () => {
     await promptEnvironment(config);
 
     const removeQuestion: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_PromptsBeforeRemovingAValue_RemoveQuestion = capturedQuestions.find((entry) => entry['type'] === 'confirm' && String(entry['message']).includes('Remove'));
-    const globalBlock: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_PromptsBeforeRemovingAValue_GlobalBlock = (config['environment'] !== undefined) ? config['environment']['global'] : undefined;
+    const globalBlock: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_PromptsBeforeRemovingAValue_GlobalBlock = (config['environment'] !== undefined) ? config['environment']['project'] : undefined;
 
     ok(removeQuestion !== undefined, 'Expected a removal confirmation prompt before deleting the value');
-    ok(globalBlock !== undefined && globalBlock['variables'] === undefined, 'Expected the removed value to be gone from the global block');
+    ok(globalBlock !== undefined && globalBlock['variables'] === undefined, 'Expected the removed value to be gone from the project block');
+
+    return;
+  });
+
+  it('offers the repo root workspace and adds its namespace', async () => {
+    const responses: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_Responses = [
+      {
+        action: {
+          kind: 'scope',
+          scope: 'workspace',
+          appPath: './',
+        },
+      },
+      { action: { kind: 'prefix' } },
+      { prefix: 'ROOT_' },
+    ];
+    const capturedQuestions: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_CapturedQuestions = [];
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      const question: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_Question = (Array.isArray(questions) === true) ? questions[0] as Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_Question : questions;
+
+      capturedQuestions.push(question);
+
+      const next: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const config: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_Config = {
+      workspaces: {
+        './': {
+          name: 'project',
+          role: 'project',
+          policy: 'freezable',
+        },
+        './packages/lib': {
+          name: 'lib',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    };
+    const promptEnvironment: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_PromptEnvironment = Reflect.get(CliUtilityInitialize, 'promptEnvironment') as Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_PromptEnvironment;
+
+    await promptEnvironment(config);
+
+    const rootQuestion: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_RootQuestion = capturedQuestions.find((entry) => entry['type'] === 'select' && JSON.stringify(entry['choices']).includes('"appPath":"./"') === true);
+    const rootBlock: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_OffersTheRepoRootWorkspaceAndAddsItsNamespace_RootBlock = (config['environment'] !== undefined && config['environment']['workspaces'] !== undefined) ? config['environment']['workspaces']['./'] : undefined;
+
+    ok(rootQuestion !== undefined, 'Expected the environment menu to offer the repo root "./" workspace');
+    ok(rootBlock !== undefined && rootBlock['prefix'] === 'ROOT_', 'Expected the repo root namespace to be saved with its prefix');
+
+    return;
+  });
+
+  it('rejects adding a value when the namespace has no prefix', async () => {
+    const responses: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Responses = [
+      {
+        action: {
+          kind: 'scope',
+          scope: 'project',
+        },
+      },
+      { action: { kind: 'add' } },
+      { action: { kind: 'back' } },
+    ];
+
+    vi.mocked(prompts).mockImplementation(() => {
+      const next: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const customizedLoggerMock: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_CustomizedLoggerMock = {
+      debug: vi.fn(),
+      dev: vi.fn(),
+      info: vi.fn(),
+      warn: vi.fn(),
+      error: vi.fn(),
+    };
+    const loggerCustomizeSpy: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_LoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_LoggerCustomizeReturn);
+    const config: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Config = {};
+    const promptEnvironment: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_PromptEnvironment = Reflect.get(CliUtilityInitialize, 'promptEnvironment') as Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_PromptEnvironment;
+
+    await promptEnvironment(config);
+
+    const errorCalls: Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_ErrorCalls = customizedLoggerMock['error']['mock']['calls'];
+
+    loggerCustomizeSpy.mockRestore();
+
+    ok(
+      errorCalls.some((call) => typeof call[0] === 'string' && call[0].includes('prefix') === true),
+      'Expected a rejection telling the user to set a prefix before adding values',
+    );
+    ok(config['environment'] === undefined, 'Expected no namespace to persist without a prefix');
 
     return;
   });
@@ -523,10 +390,11 @@ describe('standalone environment status', () => {
   it('runs the status computation without entering the interactive flow', async () => {
     const config: Tests_Cli_Utility_Initialize_StandaloneEnvironmentStatus_RunsTheStatusComputationWithoutEnteringTheInteractiveFlow_Config = {
       environment: {
-        global: {
+        project: {
           prefix: 'ACME_',
           variables: [{
             key: 'TOKEN',
+            reach: 'managed',
             secret: true,
           }],
         },
@@ -573,10 +441,11 @@ describe('reconcile stub notice', () => {
   it('lists the created placeholder stubs and tells the user to set real values', async () => {
     const config: Tests_Cli_Utility_Initialize_ReconcileStubNotice_ListsTheCreatedPlaceholderStubsAndTellsTheUserToSetRealValues_Config = {
       environment: {
-        global: {
+        project: {
           prefix: 'ACME_',
           variables: [{
             key: 'TOKEN',
+            reach: 'managed',
             secret: true,
           }],
         },
@@ -657,7 +526,7 @@ describe('read local filled keys', () => {
 
     const config: Tests_Cli_Utility_Initialize_ReadLocalFilledKeys_ReturnsOnlyGenuinelyFilledKeys_Config = {
       environment: {
-        apps: {
+        workspaces: {
           './apps/site': {
             prefix: 'CBN_',
             variables: [],
@@ -677,6 +546,109 @@ describe('read local filled keys', () => {
       recursive: true,
       force: true,
     });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Initialize - Prompt Workspaces Form.
+ *
+ * @since 0.22.0
+ */
+describe('prompt workspaces form', () => {
+  it('builds the workspace from role, policy, name, and recipe selection', async () => {
+    const responses: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_Responses = [
+      { workspaceRole: 'package' },
+      { workspacePolicy: 'trackable' },
+      { workspaceName: 'my-lib' },
+      { workspaceRecipes: ['normalize-bundler'] },
+    ];
+
+    vi.mocked(prompts).mockImplementation(() => {
+      const next: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const promptWorkspacesForm: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_PromptWorkspacesForm = Reflect.get(CliUtilityInitialize, 'promptWorkspacesForm') as Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_PromptWorkspacesForm;
+    const formResult: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_FormResult = await promptWorkspacesForm({
+      workspacePath: './packages/my-lib',
+      existingWorkspace: undefined,
+      existingPackageJsonRecipes: undefined,
+      projectSlug: undefined,
+    });
+    const workspace: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_Workspace = (formResult['action'] === 'apply') ? formResult['workspace'] : undefined;
+    const packageJsonRecipes: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_PackageJsonRecipes = (formResult['action'] === 'apply') ? formResult['packageJsonRecipes'] : undefined;
+
+    deepStrictEqual(workspace, {
+      name: 'my-lib',
+      role: 'package',
+      policy: 'trackable',
+    }, 'Expected the role, policy, and normalized name to be captured from the prompts');
+
+    deepStrictEqual(packageJsonRecipes, {
+      'normalize-bundler': {
+        enabled: true,
+      },
+    }, 'Expected the selected recipe to be recorded as enabled');
+
+    return;
+  });
+
+  it('offers and preserves displayName for an enabled sync-identity workspace', async () => {
+    const responses: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_Responses = [
+      { workspaceRole: 'package' },
+      { workspacePolicy: 'distributable' },
+      { workspaceName: 'my-lib' },
+      { workspaceRecipes: ['sync-identity'] },
+      { workspaceRecipeSettings: ['displayName'] },
+    ];
+    const capturedQuestions: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_CapturedQuestions = [];
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      const question: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_Question = (Array.isArray(questions) === true) ? questions[0] as Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_Question : questions;
+
+      capturedQuestions.push(question);
+
+      const next: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const existingPackageJsonRecipes: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_ExistingPackageJsonRecipes = {
+      'sync-identity': {
+        enabled: true,
+        settings: {
+          displayName: true,
+        },
+      },
+    };
+
+    const promptWorkspacesForm: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_PromptWorkspacesForm = Reflect.get(CliUtilityInitialize, 'promptWorkspacesForm') as Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_PromptWorkspacesForm;
+    const formResult: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_FormResult = await promptWorkspacesForm({
+      workspacePath: './packages/my-lib',
+      existingWorkspace: undefined,
+      existingPackageJsonRecipes,
+      projectSlug: undefined,
+    });
+    const packageJsonRecipes: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_PackageJsonRecipes = (formResult['action'] === 'apply') ? formResult['packageJsonRecipes'] : undefined;
+
+    const identityQuestion: Tests_Cli_Utility_Initialize_PromptWorkspacesForm_OffersAndPreservesDisplayNameForAnEnabledSyncIdentityWorkspace_IdentityQuestion = capturedQuestions.find((entry) => entry['name'] === 'workspaceRecipeSettings' && JSON.stringify(entry['choices']).includes('"value":"displayName"') === true);
+
+    ok(identityQuestion !== undefined, 'Expected the sync-identity settings prompt to offer a "displayName" choice');
+    ok(JSON.stringify(identityQuestion['choices']).includes('"title":"displayName","value":"displayName","selected":true') === true, 'Expected the "displayName" choice to start pre-selected when already enabled');
+
+    deepStrictEqual(packageJsonRecipes, {
+      'sync-identity': {
+        enabled: true,
+        settings: {
+          displayName: true,
+        },
+      },
+    }, 'Expected the selected "displayName" setting to be recorded as enabled');
 
     return;
   });

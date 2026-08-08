@@ -28,6 +28,25 @@ export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_Dr
 export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_EnvTargetCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
 
 /**
+ * Tests - CLI - Generate - Must Haves - Dotenv - Run - Keeps Managed Values In The Sample.
+ *
+ * @since 0.22.0
+ */
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_SaveSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_ActualReadFile = typeof promises['readFile'];
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_ReadFileSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_Calls = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined][];
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_SampleTargetCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
+
+/**
  * Tests - CLI - Generate - Must Haves - Dotenv - Run - Preserves Existing Env Values.
  *
  * @since 0.20.0
@@ -153,6 +172,27 @@ export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_Wr
 export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_EnvTargetCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
 
 export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_SampleTargetCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Dotenv - Run - Writes The Root Env When The Root Workspace Is Declared With No Variables.
+ *
+ * @since 0.22.0
+ */
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_SaveSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_ActualReadFile = typeof promises['readFile'];
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_ReadFileSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_Calls = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined][];
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_EnvTargetCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
+
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_SampleTargetCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
 
 /**
  * Tests - CLI - Generate - Must Haves - Dotenv - Prompts.

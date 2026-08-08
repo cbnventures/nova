@@ -7,7 +7,7 @@ import { libEnvStatus } from '../../lib/env-status.js';
 /**
  * Tests - Lib - Env Status - Lib Env Status.
  *
- * @since 0.21.0
+ * @since 0.22.0
  */
 describe('libEnvStatus', () => {
   it('classifies declared, stale, and unmanaged names', () => {
@@ -16,7 +16,7 @@ describe('libEnvStatus', () => {
         [{
           name: 'CBN_A',
           secret: true,
-          kind: 'app',
+          kind: 'workspace',
         }],
         {
           available: true,
@@ -28,7 +28,7 @@ describe('libEnvStatus', () => {
           ],
         },
         {
-          apps: {
+          workspaces: {
             './apps/a': { prefix: 'CBN_' },
           },
         },
@@ -58,7 +58,7 @@ describe('libEnvStatus', () => {
         [{
           name: 'CBN_MISSING',
           secret: false,
-          kind: 'app',
+          kind: 'workspace',
         }],
         {
           available: true,
@@ -66,7 +66,7 @@ describe('libEnvStatus', () => {
           secrets: [],
         },
         {
-          apps: {
+          workspaces: {
             './apps/a': { prefix: 'CBN_' },
           },
         },
@@ -108,28 +108,28 @@ describe('libEnvStatus', () => {
     return;
   });
 
-  it('flags a non-secret Variable with an empty value and no default as an empty bake', () => {
+  it('flags a non-secret Variable holding the NOVA_PLACEHOLDER stub value as stub-unreplaced', () => {
     deepStrictEqual(
       libEnvStatus.classify(
         [{
           name: 'CBN_REGION',
           secret: false,
-          kind: 'app',
+          kind: 'workspace',
         }],
         {
           available: true,
           variables: ['CBN_REGION'],
           secrets: [],
-          variableValues: { CBN_REGION: '' },
+          variableValues: { CBN_REGION: 'NOVA_PLACEHOLDER' },
         },
         {
-          apps: {
+          workspaces: {
             './apps/a': {
               prefix: 'CBN_',
               variables: [{
                 key: 'REGION',
                 secret: false,
-                buildOnly: true,
+                reach: 'build',
               }],
             },
           },
@@ -137,36 +137,70 @@ describe('libEnvStatus', () => {
       ),
       [{
         name: 'CBN_REGION',
-        state: 'empty-bake',
+        state: 'stub-unreplaced',
       }],
     );
 
     return;
   });
 
-  it('treats an empty Variable with a declared default as declared', () => {
+  it('treats a non-secret Variable holding a real value as declared', () => {
     deepStrictEqual(
       libEnvStatus.classify(
         [{
           name: 'CBN_REGION',
           secret: false,
-          kind: 'app',
+          kind: 'workspace',
         }],
         {
           available: true,
           variables: ['CBN_REGION'],
           secrets: [],
-          variableValues: { CBN_REGION: '' },
+          variableValues: { CBN_REGION: 'us-east-1' },
         },
         {
-          apps: {
+          workspaces: {
             './apps/a': {
               prefix: 'CBN_',
               variables: [{
                 key: 'REGION',
                 secret: false,
-                buildOnly: true,
-                defaultValue: 'us-east-1',
+                reach: 'build',
+              }],
+            },
+          },
+        },
+      ),
+      [{
+        name: 'CBN_REGION',
+        state: 'declared',
+      }],
+    );
+
+    return;
+  });
+
+  it('treats a non-secret Variable as declared when variableValues is unavailable', () => {
+    deepStrictEqual(
+      libEnvStatus.classify(
+        [{
+          name: 'CBN_REGION',
+          secret: false,
+          kind: 'workspace',
+        }],
+        {
+          available: true,
+          variables: ['CBN_REGION'],
+          secrets: [],
+        },
+        {
+          workspaces: {
+            './apps/a': {
+              prefix: 'CBN_',
+              variables: [{
+                key: 'REGION',
+                secret: false,
+                reach: 'build',
               }],
             },
           },
@@ -185,13 +219,13 @@ describe('libEnvStatus', () => {
     deepStrictEqual(
       libEnvStatus.localOrphans(
         {
-          apps: {
+          workspaces: {
             './apps/a': {
               prefix: 'CBN_',
               variables: [{
                 key: 'REGION',
                 secret: false,
-                buildOnly: false,
+                reach: 'runtime',
               }],
             },
           },
@@ -235,7 +269,7 @@ describe('libEnvStatus', () => {
           secrets: [],
         },
         {
-          global: { prefix: 'G_' },
+          project: { prefix: 'G_' },
         },
       ),
       [

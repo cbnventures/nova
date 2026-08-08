@@ -41,14 +41,14 @@ import type {
   Shared_NovaConfig,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigEnvironment,
-  Shared_NovaConfigEnvironment_Apps,
   Shared_NovaConfigEnvironment_Workflows,
-  Shared_NovaConfigEnvironmentApp,
-  Shared_NovaConfigEnvironmentApp_Prefix,
-  Shared_NovaConfigEnvironmentGlobal,
-  Shared_NovaConfigEnvironmentGlobal_Prefix,
+  Shared_NovaConfigEnvironment_Workspaces,
+  Shared_NovaConfigEnvironmentProject,
+  Shared_NovaConfigEnvironmentProject_Prefix,
   Shared_NovaConfigEnvironmentWorkflow,
   Shared_NovaConfigEnvironmentWorkflow_Prefix,
+  Shared_NovaConfigEnvironmentWorkspace,
+  Shared_NovaConfigEnvironmentWorkspace_Prefix,
   Shared_NovaConfigWorkflow_DependsOn,
   Shared_NovaConfigWorkflow_Settings,
   Shared_NovaConfigWorkflow_Suffix,
@@ -82,11 +82,11 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Returns
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Results = Shared_BlueprintDeliveryValues;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Apps = Shared_NovaConfigEnvironment_Apps | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Workspaces = Shared_NovaConfigEnvironment_Workspaces | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_App = Shared_NovaConfigEnvironmentApp | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Workspace = Shared_NovaConfigEnvironmentWorkspace | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Prefix = Shared_NovaConfigEnvironmentApp_Prefix;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_Prefix = Shared_NovaConfigEnvironmentWorkspace_Prefix;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppBuildValues_BuildValue = Shared_BlueprintDeliveryValue;
 
@@ -103,11 +103,11 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Retur
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Results = Shared_BlueprintDeliveryValues;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Apps = Shared_NovaConfigEnvironment_Apps | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Workspaces = Shared_NovaConfigEnvironment_Workspaces | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_App = Shared_NovaConfigEnvironmentApp | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Workspace = Shared_NovaConfigEnvironmentWorkspace | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Prefix = Shared_NovaConfigEnvironmentApp_Prefix;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_AppRuntimeValues_Prefix = Shared_NovaConfigEnvironmentWorkspace_Prefix;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -187,6 +187,16 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkers
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_AppPath = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_RuntimeValues = Shared_BlueprintDeliveryValues;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_SecretRuntimeValues = Shared_BlueprintDeliveryValues;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_VarRuntimeValues = Shared_BlueprintDeliveryValues;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployEnv = Shared_BlueprintEnvMap;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployRun = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_VarFlags = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Steps = Shared_BlueprintSteps;
 
@@ -471,6 +481,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Scopes = 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Names = string[];
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspace = Shared_NovaConfigWorkspace;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckNames = string[];
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = string;
 
@@ -927,17 +939,17 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Scope = Shared_WorkflowTemplateVariable_Scope | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Prefix = Shared_NovaConfigEnvironmentApp_Prefix | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Prefix = Shared_NovaConfigEnvironmentWorkspace_Prefix | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Global = Shared_NovaConfigEnvironmentGlobal | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Project = Shared_NovaConfigEnvironmentProject | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_GlobalPrefix = Shared_NovaConfigEnvironmentGlobal_Prefix | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_ProjectPrefix = Shared_NovaConfigEnvironmentProject_Prefix | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Apps = Shared_NovaConfigEnvironment_Apps | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Workspaces = Shared_NovaConfigEnvironment_Workspaces | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_App = Shared_NovaConfigEnvironmentApp | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_Workspace = Shared_NovaConfigEnvironmentWorkspace | undefined;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_AppPrefix = Shared_NovaConfigEnvironmentApp_Prefix | undefined;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveScopedCredExpr_WorkspacePrefix = Shared_NovaConfigEnvironmentWorkspace_Prefix | undefined;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.

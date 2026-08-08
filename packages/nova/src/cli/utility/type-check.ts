@@ -66,6 +66,8 @@ export class Runner {
 
     if (configPath === undefined) {
       Logger.error('No tsconfig.json found. Use --project to specify a path.');
+      process.exitCode = 1;
+
       return;
     }
 

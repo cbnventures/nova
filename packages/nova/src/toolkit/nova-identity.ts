@@ -12,6 +12,8 @@ import { isPlainObject } from '../lib/utility.js';
 import type {
   Toolkit_NovaIdentity_Runner_Bugs,
   Toolkit_NovaIdentity_Runner_ComposeCopyright_LegalName,
+  Toolkit_NovaIdentity_Runner_ComposeCopyright_License,
+  Toolkit_NovaIdentity_Runner_ComposeCopyright_Notice,
   Toolkit_NovaIdentity_Runner_ComposeCopyright_Returns,
   Toolkit_NovaIdentity_Runner_ComposeCopyright_StartingYear,
   Toolkit_NovaIdentity_Runner_ComposeCopyright_YearRange,
@@ -27,13 +29,18 @@ import type {
   Toolkit_NovaIdentity_Runner_CopyrightYearRange_CurrentYear,
   Toolkit_NovaIdentity_Runner_CopyrightYearRange_Returns,
   Toolkit_NovaIdentity_Runner_CopyrightYearRange_StartingYear,
+  Toolkit_NovaIdentity_Runner_DocsBaseUrl_Documentation,
+  Toolkit_NovaIdentity_Runner_DocsBaseUrl_Pathname,
+  Toolkit_NovaIdentity_Runner_DocsBaseUrl_Returns,
+  Toolkit_NovaIdentity_Runner_DocsUrl_Documentation,
+  Toolkit_NovaIdentity_Runner_DocsUrl_Returns,
   Toolkit_NovaIdentity_Runner_Documentation,
   Toolkit_NovaIdentity_Runner_ForDocs_Returns,
   Toolkit_NovaIdentity_Runner_FundSources,
   Toolkit_NovaIdentity_Runner_GithubUserUrl_Owner,
   Toolkit_NovaIdentity_Runner_GithubUserUrl_Returns,
-  Toolkit_NovaIdentity_Runner_Homepage,
   Toolkit_NovaIdentity_Runner_LegalName,
+  Toolkit_NovaIdentity_Runner_License,
   Toolkit_NovaIdentity_Runner_Logo,
   Toolkit_NovaIdentity_Runner_NormalizeRepoUrl_RepositoryUrl,
   Toolkit_NovaIdentity_Runner_NormalizeRepoUrl_Returns,
@@ -144,6 +151,18 @@ class Runner {
   readonly #startingYear: Toolkit_NovaIdentity_Runner_StartingYear;
 
   /**
+   * Toolkit - Nova Identity - License.
+   *
+   * The SPDX license identifier from "project.license", or "Proprietary", used
+   * to compose the copyright notice so the footer matches the LICENSE file.
+   *
+   * @private
+   *
+   * @since 0.22.0
+   */
+  readonly #license: Toolkit_NovaIdentity_Runner_License;
+
+  /**
    * Toolkit - Nova Identity - Owner.
    *
    * The github owner handle from "github.owner", used for the organization name
@@ -154,18 +173,6 @@ class Runner {
    * @since 0.21.0
    */
   readonly #owner: Toolkit_NovaIdentity_Runner_Owner;
-
-  /**
-   * Toolkit - Nova Identity - Homepage.
-   *
-   * The canonical homepage url from "urls.homepage", before trailing-slash
-   * normalization.
-   *
-   * @private
-   *
-   * @since 0.21.0
-   */
-  readonly #homepage: Toolkit_NovaIdentity_Runner_Homepage;
 
   /**
    * Toolkit - Nova Identity - Logo.
@@ -288,8 +295,8 @@ class Runner {
     this.#tagline = Runner.optionalString(projectDescription['short'], 'project.description.short', resolvedConfigPath);
     this.#legalName = Runner.optionalString(project['legalName'], 'project.legalName', resolvedConfigPath);
     this.#startingYear = Runner.optionalNumber(project['startingYear'], 'project.startingYear', resolvedConfigPath);
+    this.#license = Runner.optionalString(project['license'], 'project.license', resolvedConfigPath);
     this.#owner = Runner.optionalString(github['owner'], 'github.owner', resolvedConfigPath);
-    this.#homepage = Runner.optionalString(urls['homepage'], 'urls.homepage', resolvedConfigPath);
     this.#logo = Runner.optionalString(urls['logo'], 'urls.logo', resolvedConfigPath);
     this.#repository = Runner.optionalString(urls['repository'], 'urls.repository', resolvedConfigPath);
     this.#npm = Runner.optionalString(urls['npm'], 'urls.npm', resolvedConfigPath);
@@ -318,10 +325,11 @@ class Runner {
       projectName: this.#slug,
       organizationName: this.#owner,
       tagline: this.#tagline,
-      url: (this.#homepage !== undefined) ? Runner.stripTrailingSlash(this.#homepage) : undefined,
+      url: (this.#documentation !== undefined) ? Runner.docsUrl(this.#documentation) : undefined,
+      baseUrl: (this.#documentation !== undefined) ? Runner.docsBaseUrl(this.#documentation) : undefined,
       logo: this.#logo,
       metaDescription: this.#tagline,
-      copyright: (this.#startingYear !== undefined && this.#legalName !== undefined) ? Runner.composeCopyright(this.#startingYear, this.#legalName) : undefined,
+      copyright: (this.#startingYear !== undefined && this.#legalName !== undefined) ? Runner.composeCopyright(this.#startingYear, this.#legalName, this.#license) : undefined,
       editUrl: (this.#repository !== undefined) ? Runner.normalizeRepoUrl(this.#repository) : undefined,
       repository: (this.#repository !== undefined) ? Runner.normalizeRepoUrl(this.#repository) : undefined,
       github: (this.#owner !== undefined) ? Runner.githubUserUrl(this.#owner) : undefined,
@@ -338,19 +346,22 @@ class Runner {
    * Toolkit - Nova Identity - Compose Copyright.
    *
    * Builds the full copyright line from the project starting year and legal
-   * name. Delegates the year range so both consumers share one format.
+   * name, closing with a license-aware notice. Delegates the year range so both
+   * consumers share one format.
    *
    * @param {Toolkit_NovaIdentity_Runner_ComposeCopyright_StartingYear} startingYear - Starting year.
    * @param {Toolkit_NovaIdentity_Runner_ComposeCopyright_LegalName}    legalName    - Legal name.
+   * @param {Toolkit_NovaIdentity_Runner_ComposeCopyright_License}      [license]    - License.
    *
    * @returns {Toolkit_NovaIdentity_Runner_ComposeCopyright_Returns}
    *
    * @since 0.21.0
    */
-  public static composeCopyright(startingYear: Toolkit_NovaIdentity_Runner_ComposeCopyright_StartingYear, legalName: Toolkit_NovaIdentity_Runner_ComposeCopyright_LegalName): Toolkit_NovaIdentity_Runner_ComposeCopyright_Returns {
+  public static composeCopyright(startingYear: Toolkit_NovaIdentity_Runner_ComposeCopyright_StartingYear, legalName: Toolkit_NovaIdentity_Runner_ComposeCopyright_LegalName, license?: Toolkit_NovaIdentity_Runner_ComposeCopyright_License): Toolkit_NovaIdentity_Runner_ComposeCopyright_Returns {
     const yearRange: Toolkit_NovaIdentity_Runner_ComposeCopyright_YearRange = Runner.copyrightYearRange(startingYear);
+    const notice: Toolkit_NovaIdentity_Runner_ComposeCopyright_Notice = (license !== undefined && license !== 'Proprietary') ? `Licensed under the ${license} License.` : 'All Rights Reserved.';
 
-    return `Copyright © ${yearRange} ${legalName}. All Rights Reserved.`;
+    return `Copyright © ${yearRange} ${legalName}. ${notice}`;
   }
 
   /**
@@ -369,6 +380,50 @@ class Runner {
     const currentYear: Toolkit_NovaIdentity_Runner_CopyrightYearRange_CurrentYear = new Date().getFullYear();
 
     return (startingYear === currentYear) ? String(currentYear) : `${startingYear}-${currentYear}`;
+  }
+
+  /**
+   * Toolkit - Nova Identity - Docs URL.
+   *
+   * Extracts the origin (scheme and host) from the documentation url so the
+   * Docusaurus "url" carries the docs deployment origin, returning undefined
+   * when the documentation url cannot be parsed.
+   *
+   * @param {Toolkit_NovaIdentity_Runner_DocsUrl_Documentation} documentation - Documentation.
+   *
+   * @returns {Toolkit_NovaIdentity_Runner_DocsUrl_Returns}
+   *
+   * @since 0.22.0
+   */
+  public static docsUrl(documentation: Toolkit_NovaIdentity_Runner_DocsUrl_Documentation): Toolkit_NovaIdentity_Runner_DocsUrl_Returns {
+    try {
+      return new URL(documentation).origin;
+    } catch {
+      return undefined;
+    }
+  }
+
+  /**
+   * Toolkit - Nova Identity - Docs Base URL.
+   *
+   * Extracts the path prefix from the documentation url as a Docusaurus
+   * "baseUrl", normalized with a leading and trailing slash (root becomes "/"),
+   * or undefined when the documentation url cannot be parsed.
+   *
+   * @param {Toolkit_NovaIdentity_Runner_DocsBaseUrl_Documentation} documentation - Documentation.
+   *
+   * @returns {Toolkit_NovaIdentity_Runner_DocsBaseUrl_Returns}
+   *
+   * @since 0.22.0
+   */
+  public static docsBaseUrl(documentation: Toolkit_NovaIdentity_Runner_DocsBaseUrl_Documentation): Toolkit_NovaIdentity_Runner_DocsBaseUrl_Returns {
+    try {
+      const pathname: Toolkit_NovaIdentity_Runner_DocsBaseUrl_Pathname = new URL(documentation).pathname;
+
+      return (pathname.endsWith('/') === true) ? pathname : `${pathname}/`;
+    } catch {
+      return undefined;
+    }
   }
 
   /**

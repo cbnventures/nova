@@ -484,9 +484,9 @@ export class Runner {
       return version;
     }
 
-    // Wildcard and "latest" are unpinnable.
+    // Wildcard and "latest" cannot be pinned; skip without error.
     if (version === '*' || version === 'latest') {
-      return undefined;
+      return version;
     }
 
     // Strip range prefix if present.

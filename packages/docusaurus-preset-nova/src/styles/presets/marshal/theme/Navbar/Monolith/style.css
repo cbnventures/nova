@@ -190,17 +190,39 @@
   transition: color var(--nova-marshal-transition);
 }
 
+.nova-navbar-monolith-menu-dropdown-summary {
+  gap: 0.75rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nova-color-primary-700);
+  border-radius: 2px;
+
+  transition: color var(--nova-marshal-transition);
+}
+
 .nova-navbar-monolith-menu-item:hover,
-.nova-navbar-monolith-menu-item:focus-visible {
+.nova-navbar-monolith-menu-item:focus-visible,
+.nova-navbar-monolith-menu-dropdown-summary:hover,
+.nova-navbar-monolith-menu-dropdown-summary:focus-visible {
   color: var(--nova-color-primary-800);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
   text-decoration: none;
 }
 
 [data-theme="dark"] .nova-navbar-monolith-menu-item:hover,
-[data-theme="dark"] .nova-navbar-monolith-menu-item:focus-visible {
+[data-theme="dark"] .nova-navbar-monolith-menu-item:focus-visible,
+[data-theme="dark"] .nova-navbar-monolith-menu-dropdown-summary:hover,
+[data-theme="dark"] .nova-navbar-monolith-menu-dropdown-summary:focus-visible {
   color: var(--nova-color-primary-300);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-dropdown-summary {
+  color: var(--nova-color-primary-300);
 }
 
 .nova-navbar-monolith-menu-item[aria-current="page"] {
@@ -230,8 +252,17 @@
  * `motion.staggeredReveals: false` so items reveal together.
  * ============================ */
 
-.nova-navbar-monolith-menu-item {
+.nova-navbar-monolith-menu-item,
+.nova-navbar-monolith-menu-dropdown {
   opacity: 0;
 
   animation: marshal-fade-in var(--nova-marshal-transition) forwards;
+}
+
+/* ============================
+ * 9. Mobile menu dropdown children - indent
+ * ============================ */
+
+.nova-navbar-monolith-menu-dropdown-children {
+  padding-inline-start: 1.75rem;
 }

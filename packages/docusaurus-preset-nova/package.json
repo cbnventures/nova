@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/docusaurus-preset-nova",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",
@@ -52,13 +52,15 @@
     "./blocks": "./build/src/blocks/index.js",
     "./icons": "./build/src/icons.js",
     "./types/theme": "./nova-theme.d.ts",
-    "./types/config": "./nova-config.d.ts"
+    "./types/config": "./nova-config.d.ts",
+    "./types/sidebars": "./nova-sidebars.d.ts"
   },
   "files": [
     "./assets",
     "./bin",
     "./build",
     "./nova-config.d.ts",
+    "./nova-sidebars.d.ts",
     "./nova-theme.d.ts",
     "./translations"
   ],
@@ -72,14 +74,14 @@
     "dev:watch-styles": "node ../../scripts/copy-styles.mjs --watch",
     "dev:watch-theme": "tsc --project tsconfig.theme.json --watch",
     "dev:watch-cli": "tsc --project tsconfig.cli.json --watch",
-    "dev:fix-esm-imports": "node ../../scripts/fix-esm-imports.mjs --watch",
+    "dev:fix-shiki-import": "node ../../scripts/fix-shiki-import.mjs --watch",
     "build": "node ../../scripts/nova-run-scripts.mjs --sequential 'build:*'",
     "build:transpile-theme": "tsc --project tsconfig.theme.json --outDir ./build --skipLibCheck",
     "build:transpile-plugin": "tsc --project tsconfig.plugin.json --outDir ./build --skipLibCheck",
     "build:transpile-worker": "tsc --project tsconfig.worker.json --outDir ./build --skipLibCheck",
     "build:transpile-cli": "tsc --project tsconfig.cli.json --outDir ./build --skipLibCheck",
     "build:copy-types": "shx rm -rf \"./build/src/types\" && shx cp -r \"./src/types\" \"./build/src/types\"",
-    "build:fix-esm-imports": "node ../../scripts/fix-esm-imports.mjs",
+    "build:fix-shiki-import": "node ../../scripts/fix-shiki-import.mjs",
     "build:copy-styles": "node ../../scripts/copy-styles.mjs",
     "build:fix-perms": "shx chmod +x ./build/src/cli/index.js",
     "check": "node ../../scripts/nova-run-scripts.mjs --sequential 'check:*'",
@@ -88,6 +90,7 @@
     "check:types-theme": "node ../../scripts/nova-type-check.mjs --project tsconfig.theme.json",
     "check:types-worker": "node ../../scripts/nova-type-check.mjs --project tsconfig.worker.json",
     "check:types-cli": "node ../../scripts/nova-type-check.mjs --project tsconfig.cli.json",
+    "check:types-config": "node ../../scripts/nova-type-check.mjs --project tsconfig.config.json",
     "check:test": "vitest run",
     "clean": "node ../../scripts/nova-run-scripts.mjs --parallel 'clean:*'",
     "clean:build": "shx rm -rf ./build"
@@ -96,7 +99,7 @@
     "node": "^22 || ^24"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.21.0",
+    "@cbnventures/nova": "0.22.0",
     "@codesandbox/sandpack-react": "2.20.0",
     "@docusaurus/plugin-content-blog": "3.10.0",
     "@docusaurus/plugin-content-docs": "3.10.0",

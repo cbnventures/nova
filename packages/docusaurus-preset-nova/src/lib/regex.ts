@@ -179,7 +179,7 @@ export const LIB_REGEX_PRESET_PATH_SEGMENT = /presets\/([^/]+)\//;
  * Lib - Regex - Nova Theme Config Object Type.
  *
  * Captures the type-name and body of every `export type NovaThemeConfig... = { ... }`
- * object-shape declaration. Used by the demo-coverage registry-coverage check.
+ * object-shape declaration. Now unused here; the leaf walk lives in nova-demos.
  *
  * @since 0.18.0
  */
@@ -433,6 +433,28 @@ export const LIB_REGEX_PATTERN_JSDOC_TAG_SCAN = /(?:\/\*+\s*|\n\s*\*\s*)@(?:sinc
  * @since 0.20.0
  */
 export const LIB_REGEX_PATTERN_REGEX_SPECIAL_CHARS = /[.*+?^${}()|[\]\\]/;
+
+/**
+ * Lib - Regex - Pattern Export Empty.
+ *
+ * Matches a standalone ES module `export {};` statement on its own line so the
+ * search worker deploy step can strip the artifact TypeScript emits for files
+ * that contain only `import type` declarations.
+ *
+ * @since 0.22.0
+ */
+export const LIB_REGEX_PATTERN_EXPORT_EMPTY = /^export\s*\{\s*\}\s*;?\s*$/;
+
+/**
+ * Lib - Regex - Pattern Import Statement.
+ *
+ * Matches a line that starts with an ES module `import` keyword followed by
+ * whitespace, distinguishing runtime imports from `importScripts` calls so the
+ * search worker regression test can assert the compiled output is module-free.
+ *
+ * @since 0.22.0
+ */
+export const LIB_REGEX_PATTERN_IMPORT_STATEMENT = /^import\s/;
 
 /**
  * Lib - Regex - Pattern Semver Leading.

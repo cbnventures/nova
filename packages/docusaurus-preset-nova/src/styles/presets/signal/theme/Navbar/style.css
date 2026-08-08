@@ -54,6 +54,7 @@
 /* Popover menu - mirrors search-dropdown sharp ledger surface. */
 .nova-locale-dropdown-menu,
 .nova-version-dropdown-menu,
+.nova-dropdown-menu,
 .nova-navbar-more-menu {
   padding: 0;
 
@@ -65,6 +66,7 @@
 
 [data-theme="dark"] .nova-locale-dropdown-menu,
 [data-theme="dark"] .nova-version-dropdown-menu,
+[data-theme="dark"] .nova-dropdown-menu,
 [data-theme="dark"] .nova-navbar-more-menu {
   border-color: var(--nova-color-border);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
@@ -73,37 +75,42 @@
 /* Item link - dense rows separated by hairline borders. */
 .nova-locale-dropdown-item,
 .nova-version-dropdown-item,
+.nova-dropdown-item,
 .nova-navbar-more-item {
   border-bottom: 1px solid var(--nova-color-border);
 }
 
 .nova-locale-dropdown-item:last-child,
 .nova-version-dropdown-item:last-child,
+.nova-dropdown-item:last-child,
 .nova-navbar-more-item:last-child {
   border-bottom: none;
 }
 
 [data-theme="dark"] .nova-locale-dropdown-item,
 [data-theme="dark"] .nova-version-dropdown-item,
+[data-theme="dark"] .nova-dropdown-item,
 [data-theme="dark"] .nova-navbar-more-item {
   border-bottom-color: var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-locale-dropdown-item:last-child,
 [data-theme="dark"] .nova-version-dropdown-item:last-child,
+[data-theme="dark"] .nova-dropdown-item:last-child,
 [data-theme="dark"] .nova-navbar-more-item:last-child {
   border-bottom: none;
 }
 
 /* Item link - body voice, dense rows.
    Explicit `display: block`, `border-radius: 0`, `text-transform: none`,
-   `letter-spacing: normal`, `font-weight: 500` defend the More popover
-   items from the variant nav-item cluster rule (`.nova-navbar-{v}-items a`)
-   which would otherwise leak inline-flex, uppercase, and 0.05em tracking
-   onto items rendered inside the popover. No-op for locale/version where
-   no variant rule competes. */
+   `letter-spacing: normal`, `font-weight: 500` defend the More and
+   generic dropdown popover items from the variant nav-item cluster rule
+   (`.nova-navbar-{v}-items a`) which would otherwise leak inline-flex,
+   uppercase, and 0.05em tracking onto items rendered inside the popover.
+   No-op for locale/version where no variant rule competes. */
 .nova-locale-dropdown-item-link,
 .nova-version-dropdown-item-link,
+.nova-dropdown-menu .nova-dropdown-item a,
 .nova-navbar-more-menu .nova-navbar-more-item a {
   display: block;
   padding: 0.375rem 0.75rem;
@@ -126,6 +133,8 @@
 .nova-locale-dropdown-item-link:focus-visible,
 .nova-version-dropdown-item-link:hover,
 .nova-version-dropdown-item-link:focus-visible,
+.nova-dropdown-menu .nova-dropdown-item a:hover,
+.nova-dropdown-menu .nova-dropdown-item a:focus-visible,
 .nova-navbar-more-menu .nova-navbar-more-item a:hover,
 .nova-navbar-more-menu .nova-navbar-more-item a:focus-visible {
   text-decoration: none;
@@ -135,6 +144,8 @@
 .nova-locale-dropdown-item:not(.nova-locale-dropdown-item--active) > .nova-locale-dropdown-item-link:focus-visible,
 .nova-version-dropdown-item:not(.nova-version-dropdown-item--active) > .nova-version-dropdown-item-link:hover,
 .nova-version-dropdown-item:not(.nova-version-dropdown-item--active) > .nova-version-dropdown-item-link:focus-visible,
+.nova-dropdown-menu .nova-dropdown-item a:not(.navbar__link--active):not([aria-current="page"]):hover,
+.nova-dropdown-menu .nova-dropdown-item a:not(.navbar__link--active):not([aria-current="page"]):focus-visible,
 .nova-navbar-more-menu .nova-navbar-more-item a:not(.navbar__link--active):not([aria-current="page"]):hover,
 .nova-navbar-more-menu .nova-navbar-more-item a:not(.navbar__link--active):not([aria-current="page"]):focus-visible {
   color: var(--nova-color-primary-600);
@@ -143,6 +154,7 @@
 
 [data-theme="dark"] .nova-locale-dropdown-item-link,
 [data-theme="dark"] .nova-version-dropdown-item-link,
+[data-theme="dark"] .nova-dropdown-menu .nova-dropdown-item a,
 [data-theme="dark"] .nova-navbar-more-menu .nova-navbar-more-item a {
   color: var(--nova-color-text);
 }
@@ -151,6 +163,8 @@
 [data-theme="dark"] .nova-locale-dropdown-item:not(.nova-locale-dropdown-item--active) > .nova-locale-dropdown-item-link:focus-visible,
 [data-theme="dark"] .nova-version-dropdown-item:not(.nova-version-dropdown-item--active) > .nova-version-dropdown-item-link:hover,
 [data-theme="dark"] .nova-version-dropdown-item:not(.nova-version-dropdown-item--active) > .nova-version-dropdown-item-link:focus-visible,
+[data-theme="dark"] .nova-dropdown-menu .nova-dropdown-item a:not(.navbar__link--active):not([aria-current="page"]):hover,
+[data-theme="dark"] .nova-dropdown-menu .nova-dropdown-item a:not(.navbar__link--active):not([aria-current="page"]):focus-visible,
 [data-theme="dark"] .nova-navbar-more-menu .nova-navbar-more-item a:not(.navbar__link--active):not([aria-current="page"]):hover,
 [data-theme="dark"] .nova-navbar-more-menu .nova-navbar-more-item a:not(.navbar__link--active):not([aria-current="page"]):focus-visible {
   color: var(--nova-color-primary-400);

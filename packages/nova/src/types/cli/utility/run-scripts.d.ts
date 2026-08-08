@@ -54,6 +54,8 @@ export type Cli_Utility_RunScripts_Runner_Run_MatchedScripts = string[];
 
 export type Cli_Utility_RunScripts_Runner_Run_ExitCode = number;
 
+export type Cli_Utility_RunScripts_Runner_Run_SpawnErrorMessage = string;
+
 export type Cli_Utility_RunScripts_Runner_Run_BufferMs = number;
 
 /**

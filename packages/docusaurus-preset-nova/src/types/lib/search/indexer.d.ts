@@ -225,6 +225,10 @@ export type Lib_Search_Indexer_BuildSearchIndex_WorkerSourcePath = string;
 
 export type Lib_Search_Indexer_BuildSearchIndex_WorkerDestinationPath = string;
 
+export type Lib_Search_Indexer_BuildSearchIndex_WorkerSource = string;
+
+export type Lib_Search_Indexer_BuildSearchIndex_WorkerScript = string;
+
 /**
  * Lib - Search - Indexer - Build Search Index - Index Builder.
  *

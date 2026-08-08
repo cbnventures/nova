@@ -57,7 +57,7 @@ jobs:
 
       - name: "Check project"
         run: |
-          npx turbo run check --filter=sandbox-action --concurrency=2
+          npx turbo run check --filter=// --filter=sandbox-action --concurrency=2
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"

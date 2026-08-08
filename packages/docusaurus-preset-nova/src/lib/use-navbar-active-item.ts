@@ -29,6 +29,9 @@ import type {
   Lib_UseNavbarActiveItem_NormalizeBase_Returns,
   Lib_UseNavbarActiveItem_Pathname,
   Lib_UseNavbarActiveItem_Returns,
+  Lib_UseNavbarActiveItem_UseNavbarActiveItem_Child,
+  Lib_UseNavbarActiveItem_UseNavbarActiveItem_ChildClaim,
+  Lib_UseNavbarActiveItem_UseNavbarActiveItem_Children,
   Lib_UseNavbarActiveItem_UseNavbarActiveItem_ItemType,
   Lib_UseNavbarActiveItem_UseNavbarActiveItem_Label,
 } from '../types/lib/use-navbar-active-item.d.ts';
@@ -43,7 +46,6 @@ import type {
  * @since 0.18.0
  */
 const nonLinkTypes: Lib_UseNavbarActiveItem_NonLinkTypes = new Set([
-  'dropdown',
   'docsVersionDropdown',
   'localeDropdown',
   'html',
@@ -153,6 +155,22 @@ export function useNavbarActiveItem(items: Lib_UseNavbarActiveItem_Items): Lib_U
     const label: Lib_UseNavbarActiveItem_UseNavbarActiveItem_Label = item['label'];
 
     if (label === undefined) {
+      continue;
+    }
+
+    if (itemType === 'dropdown') {
+      const children: Lib_UseNavbarActiveItem_UseNavbarActiveItem_Children = (item['items'] ?? []) as Lib_UseNavbarActiveItem_UseNavbarActiveItem_Children;
+
+      for (let j = 0; j < children.length; j += 1) {
+        const child: Lib_UseNavbarActiveItem_UseNavbarActiveItem_Child = children[j] as Lib_UseNavbarActiveItem_UseNavbarActiveItem_Child;
+        const childClaim: Lib_UseNavbarActiveItem_UseNavbarActiveItem_ChildClaim = getClaimLength(child, pathname);
+
+        if (childClaim !== null && childClaim > bestScore) {
+          bestKey = label;
+          bestScore = childClaim;
+        }
+      }
+
       continue;
     }
 

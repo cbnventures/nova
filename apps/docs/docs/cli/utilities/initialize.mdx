@@ -168,9 +168,9 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 
 ### Environment
 
-- **Purpose**: Manage the [`environment`](/docs/quickstart/nova-config#environment) block — per-app environment values, account-wide `global` keys, and their namespace prefixes — without editing `nova.config.json` by hand.
-- **Nice to know**: Each value is classified by a required `secret` flag (stored as a GitHub Secret when `true`, a GitHub Variable when `false`); app values also declare how they are delivered, and a non-secret value can seed `.env.sample` with a `defaultValue`.
-- **Things to watch**: Removing a value is confirm-gated and offers to drop its local `.env` line as well. On exit, the section can check GitHub status and reconcile — stubbing missing keys and deleting stale ones through the `gh` CLI — so Nova manages key names and existence only, never their values.
+- **Purpose**: Manage the [`environment`](/docs/quickstart/nova-config#environment) block — per-workspace environment values, project-wide keys, and their namespace prefixes — without editing `nova.config.json` by hand.
+- **Nice to know**: Each value is classified by a required `secret` flag (stored as a GitHub Secret when `true`, a GitHub Variable when `false`); workspace values also declare how they are delivered, and a non-secret value can seed `.env.sample` with a `defaultValue`. The wizard can add the repo root `./` workspace alongside the others, bringing its `.env` under management.
+- **Things to watch**: Removing a value is confirm-gated and offers to drop its local `.env` line as well. Every namespace — the `project` group, each workspace (including the root `./`), and each workflow — requires a non-empty `prefix` before it can be saved. On exit, the section can check GitHub status and reconcile — stubbing missing keys and deleting stale ones through the `gh` CLI — so Nova manages key names and existence only, never their values.
 
 ## Saving and Canceling
 
@@ -406,7 +406,8 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
           true,
           {
             "description": true,
-            "keywords": true
+            "keywords": true,
+            "displayName": true
           }
         ],
         "sync-ownership": [

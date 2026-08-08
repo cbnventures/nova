@@ -194,54 +194,54 @@ describe('WorkflowsBlueprint.generate', async () => {
         },
       ],
       environment: {
-        apps: {
+        workspaces: {
           './apps/cbnventures': {
             prefix: 'CBN_',
             variables: [
               {
                 key: 'PUBLIC_GOOGLE_TAG_MANAGER_ID',
                 secret: false,
-                buildOnly: true,
+                reach: 'build',
               },
               {
                 key: 'PUBLIC_TURNSTILE_SITE_KEY',
                 secret: false,
-                buildOnly: true,
+                reach: 'build',
               },
               {
                 key: 'PUBLIC_STRIPE_PUBLISHABLE_KEY',
                 secret: false,
-                buildOnly: true,
+                reach: 'build',
               },
               {
                 key: 'TURNSTILE_SECRET_KEY',
                 secret: true,
-                buildOnly: false,
+                reach: 'runtime',
               },
               {
                 key: 'STRIPE_SECRET_KEY',
                 secret: true,
-                buildOnly: false,
+                reach: 'runtime',
               },
               {
                 key: 'STRIPE_WEBHOOK_SECRET',
                 secret: true,
-                buildOnly: false,
+                reach: 'runtime',
               },
               {
                 key: 'AMAZON_ACCESS_KEY_ID',
                 secret: true,
-                buildOnly: false,
+                reach: 'runtime',
               },
               {
                 key: 'AMAZON_ACCESS_KEY_SECRET',
                 secret: true,
-                buildOnly: false,
+                reach: 'runtime',
               },
               {
                 key: 'AMAZON_REGION',
                 secret: true,
-                buildOnly: false,
+                reach: 'runtime',
               },
             ],
           },
@@ -251,32 +251,32 @@ describe('WorkflowsBlueprint.generate', async () => {
               {
                 key: 'PUBLIC_GOOGLE_TAG_MANAGER_ID',
                 secret: false,
-                buildOnly: true,
+                reach: 'build',
               },
               {
                 key: 'PUBLIC_TURNSTILE_SITE_KEY',
                 secret: false,
-                buildOnly: true,
+                reach: 'build',
               },
               {
                 key: 'TURNSTILE_SECRET_KEY',
                 secret: true,
-                buildOnly: false,
+                reach: 'runtime',
               },
               {
                 key: 'AMAZON_ACCESS_KEY_ID',
                 secret: true,
-                buildOnly: false,
+                reach: 'runtime',
               },
               {
                 key: 'AMAZON_ACCESS_KEY_SECRET',
                 secret: true,
-                buildOnly: false,
+                reach: 'runtime',
               },
               {
                 key: 'AMAZON_REGION',
                 secret: true,
-                buildOnly: false,
+                reach: 'runtime',
               },
             ],
           },
@@ -746,19 +746,19 @@ describe('WorkflowsBlueprint.generate', async () => {
         with: {},
       }],
       environment: {
-        apps: {
+        workspaces: {
           './apps/cbnventures': {
             prefix: 'CBN_',
             variables: [
               {
                 key: 'PUBLIC_SITE_KEY',
                 secret: false,
-                buildOnly: true,
+                reach: 'build',
               },
               {
                 key: 'PUBLIC_GTM_ID',
                 secret: false,
-                buildOnly: true,
+                reach: 'build',
               },
             ],
           },

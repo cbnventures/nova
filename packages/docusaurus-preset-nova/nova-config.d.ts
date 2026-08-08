@@ -1186,8 +1186,20 @@ export type NovaThemeConfigFooterCopyright = string | undefined;
 // Show "Built with Nova" credit in the footer. Defaults to true.
 export type NovaThemeConfigFooterCredit = boolean | undefined;
 
-// Call-to-action text displayed in the footer (e.g., "Ready to deploy?", "Get started").
-export type NovaThemeConfigFooterCta = string | undefined;
+// Call-to-action label for the footer CTA button.
+export type NovaThemeConfigFooterCtaLabel = string;
+
+// Call-to-action href for the footer CTA button.
+export type NovaThemeConfigFooterCtaHref = string;
+
+// Call-to-action object with a label and link displayed in the footer.
+export type NovaThemeConfigFooterCtaObject = {
+  label: NovaThemeConfigFooterCtaLabel;
+  href: NovaThemeConfigFooterCtaHref;
+};
+
+// Call-to-action displayed in the footer. Can be a plain string, an object with label and href, or undefined.
+export type NovaThemeConfigFooterCta = string | NovaThemeConfigFooterCtaObject | undefined;
 
 // Footer configuration. Set as false to disable the footer entirely. Defaults to false.
 export type NovaThemeConfigFooter = {

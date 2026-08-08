@@ -52,6 +52,7 @@ import type {
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_TemplateDirectory,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_TemplateFileName,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_TemplatePath,
+  Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_VariableDefault,
   Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Variables,
   Cli_Generate_MustHaves_Dotenv_Runner_IsQuoteOpen_Escaped,
   Cli_Generate_MustHaves_Dotenv_Runner_IsQuoteOpen_InQuote,
@@ -71,9 +72,6 @@ import type {
   Cli_Generate_MustHaves_Dotenv_Runner_ParseExistingEnv_Raw,
   Cli_Generate_MustHaves_Dotenv_Runner_ParseExistingEnv_Returns,
   Cli_Generate_MustHaves_Dotenv_Runner_ParseExistingEnv_ValuePortion,
-  Cli_Generate_MustHaves_Dotenv_Runner_Run_App,
-  Cli_Generate_MustHaves_Dotenv_Runner_Run_AppPath,
-  Cli_Generate_MustHaves_Dotenv_Runner_Run_Apps,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_CurrentDirectory,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_Environment,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_GeneratedCount,
@@ -86,14 +84,17 @@ import type {
   Cli_Generate_MustHaves_Dotenv_Runner_Run_Returns,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_Variables,
   Cli_Generate_MustHaves_Dotenv_Runner_Run_WorkingFile,
+  Cli_Generate_MustHaves_Dotenv_Runner_Run_Workspace,
+  Cli_Generate_MustHaves_Dotenv_Runner_Run_WorkspacePath,
+  Cli_Generate_MustHaves_Dotenv_Runner_Run_Workspaces,
 } from '../../../types/cli/generate/must-haves/dotenv.d.ts';
 
 /**
  * CLI - Generate - Must Haves - Dotenv.
  *
- * Generates .env and .env.sample files for every app declared under "environment.apps"
- * in nova.config.json, appending each app's configured variables. The .env file preserves
- * filled values from an existing .env; .env.sample keeps each non-secret default value.
+ * Generates ".env" and ".env.sample" for every declared workspace, appending
+ * each workspace's configured variables from "environment.workspaces" in nova.config.json.
+ * The ".env" preserves filled values; ".env.sample" keeps non-secret defaults.
  *
  * @since 0.15.0
  */
@@ -101,9 +102,9 @@ export class Runner {
   /**
    * CLI - Generate - Must Haves - Dotenv - Run.
    *
-   * Called by the CLI index via executeCommand. Loads nova.config.json and generates
-   * env files for each app declared under "environment.apps", delegating per-directory work
-   * to generateForTarget. Warns and no-ops when no app declares environment variables.
+   * Called by the CLI index via executeCommand. Loads nova.config.json and then
+   * generates env files for each workspace under "environment.workspaces", delegating the
+   * per-directory work to generateForTarget, warning when no workspace declares values.
    *
    * @param {Cli_Generate_MustHaves_Dotenv_Runner_Run_Options} options - Options.
    *
@@ -143,20 +144,20 @@ export class Runner {
 
     const workingFile: Cli_Generate_MustHaves_Dotenv_Runner_Run_WorkingFile = await new LibNovaConfig().load();
     const environment: Cli_Generate_MustHaves_Dotenv_Runner_Run_Environment = workingFile['environment'] ?? {};
-    const apps: Cli_Generate_MustHaves_Dotenv_Runner_Run_Apps = environment['apps'] ?? {};
+    const workspaces: Cli_Generate_MustHaves_Dotenv_Runner_Run_Workspaces = environment['workspaces'] ?? {};
 
     let generatedCount: Cli_Generate_MustHaves_Dotenv_Runner_Run_GeneratedCount = 0;
 
-    // Generate ".env"/".env.sample" for every app declared under "environment.apps"; the root app uses the "./" path.
-    for (const appEntry of Object.entries(apps)) {
-      const appPath: Cli_Generate_MustHaves_Dotenv_Runner_Run_AppPath = appEntry[0];
-      const app: Cli_Generate_MustHaves_Dotenv_Runner_Run_App = appEntry[1];
-      const variables: Cli_Generate_MustHaves_Dotenv_Runner_Run_Variables = app['variables'] ?? [];
+    // Generate ".env"/".env.sample" for every workspace declared under "environment.workspaces"; the repo root uses the "./" path.
+    for (const workspaceEntry of Object.entries(workspaces)) {
+      const workspacePath: Cli_Generate_MustHaves_Dotenv_Runner_Run_WorkspacePath = workspaceEntry[0];
+      const workspace: Cli_Generate_MustHaves_Dotenv_Runner_Run_Workspace = workspaceEntry[1];
+      const variables: Cli_Generate_MustHaves_Dotenv_Runner_Run_Variables = workspace['variables'] ?? [];
 
       generatedCount += 1;
 
       await Runner.generateForTarget({
-        targetDirectory: join(currentDirectory, appPath),
+        targetDirectory: join(currentDirectory, workspacePath),
         variables,
         isDryRun,
         isReplaceFile,
@@ -168,7 +169,7 @@ export class Runner {
       Logger.customize({
         name: 'Runner.run',
         purpose: 'environment',
-      }).warn('No apps declare environment variables. Nothing to generate.');
+      }).warn('No workspaces declare environment variables. Nothing to generate.');
     }
 
     return 'completed';
@@ -177,7 +178,7 @@ export class Runner {
   /**
    * CLI - Generate - Must Haves - Dotenv - Generate For Target.
    *
-   * Writes ".env" and ".env.sample" for one app directory from the bundled templates,
+   * Writes ".env" and ".env.sample" for one workspace directory from the bundled templates,
    * appending the configured variables and preserving filled ".env" values.
    *
    * @param {Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_Options} options - Options.
@@ -232,7 +233,10 @@ export class Runner {
 
       envLines.push(`${variable['key']}=""`);
 
-      sampleLines.push(`${variable['key']}="${Runner.escapeSampleValue(variable['defaultValue'] ?? '')}"`);
+      // A managed value carries no default; every other reach may declare one.
+      const variableDefault: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_VariableDefault = ('defaultValue' in variable && variable['defaultValue'] !== undefined) ? variable['defaultValue'] : '';
+
+      sampleLines.push(`${variable['key']}="${Runner.escapeSampleValue(variableDefault)}"`);
     }
 
     const customSection: Cli_Generate_MustHaves_Dotenv_Runner_GenerateForTarget_CustomSection = envLines.join('\n');

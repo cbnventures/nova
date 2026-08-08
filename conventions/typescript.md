@@ -244,18 +244,18 @@ src/toolkit/index.ts                   → Toolkit_Index
 
 Type prefixes are built from the source mechanically. Each level adds a chunk:
 
-| Source | Adds a chunk | Chunk content |
-|---|---|---|
-| File path segment | yes | segment PascalCased (verbatim, no segments stripped) |
-| Class declaration | yes | class name PascalCased |
-| Constructor | yes | literal `Constructor` |
-| Method declaration | yes | method name PascalCased (incl. private `#name`) |
-| Top-level function declaration | yes | function name PascalCased |
-| Top-level function-typed `const` | yes | const name PascalCased |
-| Nested function declaration / function-typed `const` | yes | name PascalCased |
-| `(string, fn)` call expression | yes | string parsed (split on non-word, PascalCase each part, concatenate) |
-| Body variable / parameter | yes | title-cased var/param name (the leaf) |
-| Object property | yes | property key PascalCased (chained on the parent object's type name) |
+| Source                                               | Adds a chunk | Chunk content                                                        |
+|------------------------------------------------------|--------------|----------------------------------------------------------------------|
+| File path segment                                    | yes          | segment PascalCased (verbatim, no segments stripped)                 |
+| Class declaration                                    | yes          | class name PascalCased                                               |
+| Constructor                                          | yes          | literal `Constructor`                                                |
+| Method declaration                                   | yes          | method name PascalCased (incl. private `#name`)                      |
+| Top-level function declaration                       | yes          | function name PascalCased                                            |
+| Top-level function-typed `const`                     | yes          | const name PascalCased                                               |
+| Nested function declaration / function-typed `const` | yes          | name PascalCased                                                     |
+| `(string, fn)` call expression                       | yes          | string parsed (split on non-word, PascalCase each part, concatenate) |
+| Body variable / parameter                            | yes          | title-cased var/param name (the leaf)                                |
+| Object property                                      | yes          | property key PascalCased (chained on the parent object's type name)  |
 
 ```
 Cli_Utility_Changelog                  → file path

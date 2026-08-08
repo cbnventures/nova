@@ -1,8 +1,12 @@
 import { deepStrictEqual, ok, strictEqual } from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import lunr from 'lunr';
 import { describe, it } from 'vitest';
 
+import { LIB_REGEX_PATTERN_IMPORT_STATEMENT } from '../../../lib/regex.js';
 import { performSearch } from '../../../lib/search/perform-search.js';
 
 import type {
@@ -32,6 +36,10 @@ import type {
   Tests_Lib_Search_Worker_TestData,
   Tests_Lib_Search_Worker_UniquePaths,
   Tests_Lib_Search_Worker_WiderResults,
+  Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_CurrentDir,
+  Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_ImportMatch,
+  Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_WorkerPath,
+  Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_WorkerSource,
 } from '../../../types/tests/lib/search/worker.test.d.ts';
 
 /**
@@ -308,6 +316,29 @@ describe('performSearch reserved syntax', async () => {
     const results: Tests_Lib_Search_Worker_Results = performSearch(index, documents, '9:00', 10, 1);
 
     deepStrictEqual(results, []);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Search - Worker - Worker Script Compatibility.
+ *
+ * @since 0.21.0
+ */
+describe('worker script compatibility', async () => {
+  it('contains no ES module syntax in the compiled output', () => {
+    const currentDir: Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_CurrentDir = dirname(fileURLToPath(import.meta.url));
+    const workerPath: Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_WorkerPath = resolve(currentDir, '../../../../build/src/lib/search/worker.js');
+    const workerSource: Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_WorkerSource = readFileSync(workerPath, 'utf-8');
+    const importMatch: Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_ImportMatch = workerSource.match(new RegExp(LIB_REGEX_PATTERN_IMPORT_STATEMENT.source, 'm'));
+
+    // TypeScript emits `export {};` for files with `import type` — the indexer
+    // strips it when copying the worker to the Docusaurus output directory.
+    // Only runtime import statements need to be caught here.
+    ok(importMatch === null, 'Compiled worker must not contain import statements (classic workers do not support ES module syntax)');
 
     return;
   });

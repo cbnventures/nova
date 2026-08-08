@@ -5,16 +5,22 @@
     "@cbnventures/nova/presets/tsconfig/fw-docusaurus.json"
   ],
   "compilerOptions": {
+    "baseUrl": "./",
     "declaration": false,
     "declarationMap": false,
     "noEmit": true,
+    "paths": {
+      "@site/*": [
+        "./*"
+      ]
+    },
     "types": [
       "@types/node"
     ]
   },
   "include": [
     "./docusaurus.config.ts",
-    "./eslint.config.ts",
+    "./eslint.config.mts",
     "./sidebars.ts",
     "./vitest.config.ts",
     "./vitest.setup.ts"

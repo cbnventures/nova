@@ -2,11 +2,11 @@ import type {
   Shared_NovaConfig,
   Shared_NovaConfig_Workflows,
   Shared_NovaConfigEnvironment,
-  Shared_NovaConfigEnvironment_Apps,
   Shared_NovaConfigEnvironment_Workflows,
-  Shared_NovaConfigEnvironmentApp,
-  Shared_NovaConfigEnvironmentGlobal,
+  Shared_NovaConfigEnvironment_Workspaces,
+  Shared_NovaConfigEnvironmentProject,
   Shared_NovaConfigEnvironmentWorkflow,
+  Shared_NovaConfigEnvironmentWorkspace,
   Shared_WorkflowTemplateTarget,
   Shared_WorkflowTemplateTargets,
   Shared_WorkflowTemplateVariable,
@@ -18,7 +18,7 @@ import type { Lib_WorkflowTemplates_Entry } from './workflow-templates.d.ts';
  *
  * @since 0.21.0
  */
-export type Lib_EnvManagedSet_LibEnvManagedSet_ManagedKeyKind = 'app' | 'global' | 'workflow' | 'deploy-cred';
+export type Lib_EnvManagedSet_LibEnvManagedSet_ManagedKeyKind = 'workspace' | 'project' | 'workflow' | 'deploy-cred';
 
 export type Lib_EnvManagedSet_LibEnvManagedSet_ManagedKeyName = string;
 
@@ -43,11 +43,11 @@ export type Lib_EnvManagedSet_Candidates = Lib_EnvManagedSet_LibEnvManagedSet_Ma
 
 export type Lib_EnvManagedSet_Environment = Shared_NovaConfigEnvironment;
 
-export type Lib_EnvManagedSet_Global = Shared_NovaConfigEnvironmentGlobal | undefined;
+export type Lib_EnvManagedSet_Project = Shared_NovaConfigEnvironmentProject | undefined;
 
-export type Lib_EnvManagedSet_Apps = Shared_NovaConfigEnvironment_Apps;
+export type Lib_EnvManagedSet_Workspaces = Shared_NovaConfigEnvironment_Workspaces;
 
-export type Lib_EnvManagedSet_App = Shared_NovaConfigEnvironmentApp;
+export type Lib_EnvManagedSet_Workspace = Shared_NovaConfigEnvironmentWorkspace;
 
 export type Lib_EnvManagedSet_Workflows = Shared_NovaConfig_Workflows;
 
@@ -69,13 +69,13 @@ export type Lib_EnvManagedSet_TemplateTargets = Shared_WorkflowTemplateTargets |
 
 export type Lib_EnvManagedSet_TargetMeta = Shared_WorkflowTemplateTarget | undefined;
 
-export type Lib_EnvManagedSet_AppPath = string;
+export type Lib_EnvManagedSet_WorkspacePath = string;
 
 export type Lib_EnvManagedSet_CredName = string;
 
 export type Lib_EnvManagedSet_CredMeta = Shared_WorkflowTemplateVariable;
 
-export type Lib_EnvManagedSet_CredApp = Shared_NovaConfigEnvironmentApp | undefined;
+export type Lib_EnvManagedSet_CredWorkspace = Shared_NovaConfigEnvironmentWorkspace | undefined;
 
 export type Lib_EnvManagedSet_CredPrefix = string | undefined;
 

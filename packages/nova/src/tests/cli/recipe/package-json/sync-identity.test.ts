@@ -4,6 +4,7 @@ import {
   mkdtemp,
   readFile,
   rm,
+  stat,
   writeFile,
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -27,7 +28,48 @@ import type {
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_DoesNotModifyFilesDuringDryRun_WorkspaceDirectory,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_DoesNotModifyFilesDuringDryRun_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_DoesNotModifyFilesDuringDryRun_WorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_LogOutput,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_Output,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_Parsed,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_WorkspacePackageJsonPath,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_OriginalCwd,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_Output,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_Parsed,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_WorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_Output,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_Parsed,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_WorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_Output,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_Parsed,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_WorkspacePackageJsonPath,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SandboxPath,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SandboxRoot,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SetsExitCodeWhenNotAtProjectRoot_ProjectDirectory,
@@ -51,6 +93,19 @@ import type {
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SkipsWhenNoWorkspacesHaveTheRecipeEnabled_WorkspaceDirectory,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SkipsWhenNoWorkspacesHaveTheRecipeEnabled_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SkipsWhenNoWorkspacesHaveTheRecipeEnabled_WorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_MtimeAfterSecondRun,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_MtimeBeforeSecondRun,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_Output,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_Parsed,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_SecondRunLogOutput,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_WorkspacePackageJsonPath,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_LicensePath,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_NovaConfigContents,
   Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsLicenseToProprietaryReferenceFromNovaConfig_NovaConfigPath,
@@ -496,6 +551,360 @@ describe('CliRecipePackageJsonSyncIdentity.run', async () => {
     const parsed: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_DoesNotModifyFilesDuringDryRun_Parsed = JSON.parse(output);
 
     strictEqual(parsed['name'], 'wrong-name');
+
+    return;
+  });
+
+  it('syncs displayName from project title', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_ProjectDirectory = join(sandboxRoot, 'sync-display-name');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_PackageJsonContents = JSON.stringify({
+      name: 'test-display-name',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_NovaConfigContents = JSON.stringify({
+      project: {
+        name: {
+          title: 'Example Plugin',
+          slug: 'example-plugin',
+        },
+      },
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-identity': {
+              enabled: true,
+              settings: {
+                displayName: true,
+              },
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_WorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+    }, null, 2);
+
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonSyncIdentity.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_Parsed = JSON.parse(output);
+
+    strictEqual(parsed['displayName'], 'Example Plugin');
+
+    // Re-run the recipe to confirm it is idempotent once "displayName" already matches.
+    const mtimeBeforeSecondRun: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_MtimeBeforeSecondRun = (await stat(workspacePackageJsonPath)).mtimeMs;
+
+    vi.mocked(process.stdout.write).mockClear();
+
+    await CliRecipePackageJsonSyncIdentity.run({
+      replaceFile: true,
+    });
+
+    const mtimeAfterSecondRun: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_MtimeAfterSecondRun = (await stat(workspacePackageJsonPath)).mtimeMs;
+
+    strictEqual(mtimeAfterSecondRun, mtimeBeforeSecondRun);
+
+    const secondRunLogOutput: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SyncsDisplayNameFromProjectTitle_SecondRunLogOutput = vi.mocked(process.stdout.write).mock.calls.map((call) => String(call[0])).join('');
+
+    strictEqual(secondRunLogOutput.includes('Syncing "displayName"'), false);
+
+    return;
+  });
+
+  it('removes displayName when workspace policy disallows it', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_ProjectDirectory = join(sandboxRoot, 'remove-display-name-policy');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_PackageJsonContents = JSON.stringify({
+      name: 'test-remove-display-name-policy',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_NovaConfigContents = JSON.stringify({
+      project: {
+        name: {
+          title: 'Example Plugin',
+          slug: 'example-plugin',
+        },
+      },
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'template',
+          policy: 'freezable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-identity': {
+              enabled: true,
+              settings: {
+                displayName: true,
+              },
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_WorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '0.0.0',
+      displayName: 'Stale Name',
+    }, null, 2);
+
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonSyncIdentity.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenWorkspacePolicyDisallowsIt_Parsed = JSON.parse(output);
+
+    strictEqual('displayName' in parsed, false);
+
+    return;
+  });
+
+  it('removes displayName when not managed for the workspace', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_ProjectDirectory = join(sandboxRoot, 'remove-display-name-not-managed');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_PackageJsonContents = JSON.stringify({
+      name: 'test-remove-display-name-not-managed',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_NovaConfigContents = JSON.stringify({
+      project: {
+        name: {
+          title: 'Example Plugin',
+          slug: 'example-plugin',
+        },
+      },
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-identity': {
+              enabled: true,
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_WorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '0.0.1',
+      displayName: 'Stale Name',
+    }, null, 2);
+
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonSyncIdentity.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNotManagedForTheWorkspace_Parsed = JSON.parse(output);
+
+    strictEqual('displayName' in parsed, false);
+
+    return;
+  });
+
+  it('removes displayName when no project title is defined', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_ProjectDirectory = join(sandboxRoot, 'remove-display-name-no-title');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_PackageJsonContents = JSON.stringify({
+      name: 'test-remove-display-name-no-title',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_NovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-identity': {
+              enabled: true,
+              settings: {
+                displayName: true,
+              },
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_WorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '0.0.1',
+      displayName: 'Stale Name',
+    }, null, 2);
+
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonSyncIdentity.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_RemovesDisplayNameWhenNoProjectTitleIsDefined_Parsed = JSON.parse(output);
+
+    strictEqual('displayName' in parsed, false);
+
+    return;
+  });
+
+  it('leaves an unmanaged manifest without displayName untouched', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_ProjectDirectory = join(sandboxRoot, 'leave-unmanaged-display-name');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_PackageJsonContents = JSON.stringify({
+      name: 'test-leave-unmanaged-display-name',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_NovaConfigContents = JSON.stringify({
+      project: {
+        name: {
+          title: 'Example Plugin',
+          slug: 'example-plugin',
+        },
+      },
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'sync-identity': {
+              enabled: true,
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_WorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '0.0.1',
+    }, null, 2);
+
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    vi.mocked(process.stdout.write).mockClear();
+
+    await CliRecipePackageJsonSyncIdentity.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_Parsed = JSON.parse(output);
+
+    strictEqual('displayName' in parsed, false);
+
+    const logOutput: Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_LeavesAnUnmanagedManifestWithoutDisplayNameUntouched_LogOutput = vi.mocked(process.stdout.write).mock.calls.map((call) => String(call[0])).join('');
+
+    strictEqual(logOutput.includes('Removing "displayName"'), false);
 
     return;
   });

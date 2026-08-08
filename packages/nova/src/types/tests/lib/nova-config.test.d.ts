@@ -14,11 +14,9 @@ import type {
   Shared_NovaConfig_Recipes,
   Shared_NovaConfig_Urls,
   Shared_NovaConfig_Workflows,
-  Shared_NovaConfig_Workspaces,
   Shared_NovaConfigConfig,
   Shared_NovaConfigEntity,
   Shared_NovaConfigWorkflow,
-  Shared_NovaConfigWorkspace,
 } from '../../shared.d.ts';
 
 import type { Toolkit_Logger_Runner_Customize_Returns } from '../../toolkit/logger.d.ts';
@@ -102,6 +100,17 @@ export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWit
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAKeyStartsWithItsOwnPrefix_Messages = string[];
 
 /**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAnAllLocalWorkspaceGroupOmitsItsPrefix.
+ *
+ * @since 0.22.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAllLocalWorkspaceGroupOmitsItsPrefix_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAllLocalWorkspaceGroupOmitsItsPrefix_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAllLocalWorkspaceGroupOmitsItsPrefix_Messages = string[];
+
+/**
  * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAnAppDeclaresARuntimeValueButDeploysToNoServerBearingTarget.
  *
  * @since 0.21.0
@@ -143,19 +152,6 @@ export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatc
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppPathMatchesNoWorkspace_Messages = string[];
 
 /**
- * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag.
- *
- * @since 0.21.0
- */
-export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_ProjectDirectory = string;
-
-export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_ConfigPath = string;
-
-export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_Config = LibNovaConfig;
-
-export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAnAppValueOmitsTheBuildOnlyFlag_Messages = string[];
-
-/**
  * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAnAppValueOmitsTheSecretFlag.
  *
  * @since 0.21.0
@@ -182,6 +178,17 @@ export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTh
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAPrefixUsesTheReservedGITHUBNamespace_Messages = string[];
 
 /**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAReachLocalValueDeclaresSecret.
+ *
+ * @since 0.22.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachLocalValueDeclaresSecret_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachLocalValueDeclaresSecret_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAReachLocalValueDeclaresSecret_Messages = string[];
+
+/**
  * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAResolvedNameBreaksGitHubNameFormat.
  *
  * @since 0.21.0
@@ -206,6 +213,19 @@ export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueC
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_Config = LibNovaConfig;
 
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenASecretValueCarriesADefaultValue_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAValueOmitsReach.
+ *
+ * @since 0.22.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAValueOmitsReach_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAValueOmitsReach_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAValueOmitsReach_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenAValueOmitsReach_Messages = string[];
 
 /**
  * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ErrorsWhenAWorkflowNameMatchesNoConfiguredWorkflow.
@@ -271,6 +291,33 @@ export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsS
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_Config = LibNovaConfig;
 
 export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ErrorsWhenTwoWorkflowsShareTheReferencedName_Messages = string[];
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - IgnoresLegacyEnvironmentGlobalAndAppsKeys.
+ *
+ * @since 0.22.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_IgnoresLegacyEnvironmentGlobalAndAppsKeys_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_IgnoresLegacyEnvironmentGlobalAndAppsKeys_Serialized = string;
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ParsesAReachLocalValueWithNoSecret.
+ *
+ * @since 0.22.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesAReachLocalValueWithNoSecret_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesAReachLocalValueWithNoSecret_Serialized = string;
+
+/**
+ * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - ParsesARootWorkspaceDeclaredWithNoVariables.
+ *
+ * @since 0.22.0
+ */
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesARootWorkspaceDeclaredWithNoVariables_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseEnvironmentViaLoad_ParsesARootWorkspaceDeclaredWithNoVariables_Serialized = string;
 
 /**
  * Tests - Lib - Nova Config - ParseEnvironmentViaLoad - WarnsWhenABrowserExposedKeyIsMarkedSecret.
@@ -608,6 +655,27 @@ export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_ReturnsUndefinedForNonArr
 export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_ReturnsUndefinedForNonArrayWorkflows_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
 
 /**
+ * Tests - Lib - Nova Config - ParseWorkflowsViaLoad - SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser.
+ *
+ * @since 0.22.0
+ */
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_Reloaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_ReloadedWorkflows = Shared_NovaConfig_Workflows | undefined;
+
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_ReloadedWorkflow = Shared_NovaConfigWorkflow | undefined;
+
+/**
  * Tests - Lib - Nova Config - SharedNovaConfigAgents.
  *
  * @since 0.20.0
@@ -910,27 +978,6 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadAcceptsValidStartingYe
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadAcceptsValidStartingYear_LoadedProject = Shared_NovaConfig_Project | undefined;
 
 /**
- * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadDropsInvalidDisplayNameFromWorkspaceConfig.
- *
- * @since 0.13.0
- */
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNameFromWorkspaceConfig_ProjectDirectory = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNameFromWorkspaceConfig_ConfigPath = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNameFromWorkspaceConfig_ConfigContents = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNameFromWorkspaceConfig_Config = LibNovaConfig;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNameFromWorkspaceConfig_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNameFromWorkspaceConfig_LoadedWorkspaces = Shared_NovaConfig_Workspaces | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNameFromWorkspaceConfig_RootWorkspace = Shared_NovaConfigWorkspace | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadDropsInvalidDisplayNameFromWorkspaceConfig_CoreWorkspace = Shared_NovaConfigWorkspace | undefined;
-
-/**
  * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadDropsMalformedEntriesInTheUnifiedRecipesBlock.
  *
  * @since 0.21.0
@@ -1014,27 +1061,6 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadHandlesNonObjectConfig
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadHandlesNonObjectConfigGracefully_Config = LibNovaConfig;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadHandlesNonObjectConfigGracefully_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
-
-/**
- * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadParsesDisplayNameFromWorkspaceConfig.
- *
- * @since 0.13.0
- */
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_ProjectDirectory = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_ConfigPath = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_ConfigContents = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_Config = LibNovaConfig;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_LoadedWorkspaces = Shared_NovaConfig_Workspaces | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_RootWorkspace = Shared_NovaConfigWorkspace | undefined;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesDisplayNameFromWorkspaceConfig_CoreWorkspace = Shared_NovaConfigWorkspace | undefined;
 
 /**
  * Tests - Lib - Nova Config - SharedNovaConfigLoad - LoadParsesTheUnifiedRecipesBlock.

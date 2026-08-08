@@ -288,7 +288,7 @@ The three `workflow-run-*` triggers chain a publish workflow to one or more upst
 
 ## Environment Variables and Secrets
 
-A publish workflow delivers every app environment value declared under [`environment.apps`](/docs/quickstart/nova-config#environment). Each value carries two independent, required flags — `secret` (storage) and `buildOnly` (delivery) — and Nova routes delivery entirely off `buildOnly`, never off `secret`.
+A publish workflow delivers every workspace environment value declared under [`environment.workspaces`](/docs/quickstart/nova-config#environment). Each value carries two independent, required flags — `secret` (storage) and `buildOnly` (delivery) — and Nova routes delivery entirely off `buildOnly`, never off `secret`.
 
 The difference between the two `buildOnly` destinations is *when there is a live environment to read the value*. A **running server** has one, so a `buildOnly: false` value sits in its env and the code reads it by reference (`env.X`) each run — never in a file. A **build** has one only while it runs on the CI runner, so a `buildOnly: true` value is placed in the build's env there; a Variable the code inlines (`import.meta.env.X`) gets *baked* into the output, a Secret used for auth is *consumed and not emitted*. **"Build" means "available to the build process," not "baked into the shipped output"** — that is why `secret + buildOnly` is valid, and why the only leak risk (a secret inlined into *client* output) is a code choice, not the delivery's fault.
 
@@ -299,17 +299,17 @@ The difference between the two `buildOnly` destinations is *when there is a live
 | `secret: false` (Variable) | baked into the build (a `PUBLIC_` client key)                                        | synced to the server as **plaintext** (`AMAZON_REGION`)   |
 | `secret: true` (Secret)    | available to the CI build, used transiently, **not shipped** (a private build token) | synced to the server, **encrypted** (`STRIPE_SECRET_KEY`) |
 
-Every GitHub name is the app's `prefix` joined to the `key` (e.g. `CBN_` joined to `PUBLIC_SITE_KEY` becomes `CBN_PUBLIC_SITE_KEY`).
+Every GitHub name is the workspace's `prefix` joined to the `key` (e.g. `CBN_` joined to `PUBLIC_SITE_KEY` becomes `CBN_PUBLIC_SITE_KEY`).
 
 ### Build Delivery
 
-Every `buildOnly: true` app value is written into the build `.env` before `check` / `build`. Nova reads it from its GitHub **Variable** (`${{ vars.<name> }}`) when `secret: false`, or its GitHub **Secret** (`${{ secrets.<name> }}`) when `secret: true`. A `secret: false` Variable falls back to its `defaultValue` when the Variable is unset. Deploy credentials and workflow-config keys never reach the build.
+Every `buildOnly: true` workspace value is written into the build `.env` before `check` / `build`. Nova reads it from its GitHub **Variable** (`${{ vars.<name> }}`) when `secret: false`, or its GitHub **Secret** (`${{ secrets.<name> }}`) when `secret: true`. A `secret: false` Variable falls back to its `defaultValue` when the Variable is unset. Deploy credentials and workflow-config keys never reach the build.
 
 The [Setup report](#setup-instructions) lists every GitHub Variable and Secret to create.
 
 ### Runtime Secret Sync
 
-On each deploy, Nova reconciles every `buildOnly: false` app value into the runtime store of **every server-bearing target** in the app's `deploy[]`. `secret` picks the channel: a `secret: true` value is stored **encrypted**, a `secret: false` value as a **plaintext** runtime variable.
+On each deploy, Nova reconciles every `buildOnly: false` workspace value into the runtime store of **every server-bearing target** in the workspace's `deploy[]`. `secret` picks the channel: a `secret: true` value is stored **encrypted**, a `secret: false` value as a **plaintext** runtime variable.
 
 - **Upsert** — Every declared `buildOnly: false` value is pushed to the destination under its prefixed name, and the running app reads it as `env.NAME` on Workers or `process.env.NAME` on Vercel.
 - **Delete** — Any value already in the destination store but no longer declared in the config is removed, since Nova is the single source of truth for that target's runtime env.
@@ -390,7 +390,7 @@ When the config is clean, the generator scans `.github/workflows/` for existing 
 
 ### Setup Instructions
 
-After all files are generated, the generator prints a Setup report of the secrets and variables to configure on GitHub. This covers every non-automatic `secret` and `var`, plus every `buildOnly: true` app value each build scope reads — listed under its prefixed GitHub name as a Variable (`secret: false`) or a Secret (`secret: true`).
+After all files are generated, the generator prints a Setup report of the secrets and variables to configure on GitHub. This covers every non-automatic `secret` and `var`, plus every `buildOnly: true` workspace value each build scope reads — listed under its prefixed GitHub name as a Variable (`secret: false`) or a Secret (`secret: true`).
 
 Entries are deduplicated and listed once per output file, so a value used by two destinations in the same workflow appears a single time.
 

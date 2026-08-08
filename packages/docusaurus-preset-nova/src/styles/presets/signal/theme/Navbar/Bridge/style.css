@@ -77,7 +77,8 @@
 
 .nova-navbar-bridge-items a,
 .nova-navbar-bridge-items button,
-.nova-navbar-bridge-items .nova-navbar-more-summary {
+.nova-navbar-bridge-items .nova-navbar-more-summary,
+.nova-navbar-bridge-items .nova-dropdown-summary {
   display: inline-flex;
   align-items: center;
   min-height: 2.25rem;
@@ -99,7 +100,10 @@
 .nova-navbar-bridge-items button:focus-visible,
 .nova-navbar-bridge-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:hover,
 .nova-navbar-bridge-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:focus-visible,
-.nova-navbar-bridge-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary {
+.nova-navbar-bridge-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary,
+.nova-navbar-bridge-items .nova-dropdown:not(.nova-dropdown--active) > .nova-dropdown-summary:hover,
+.nova-navbar-bridge-items .nova-dropdown:not(.nova-dropdown--active) > .nova-dropdown-summary:focus-visible,
+.nova-navbar-bridge-items .nova-dropdown:not(.nova-dropdown--active)[open] > .nova-dropdown-summary {
   color: var(--nova-color-primary-600);
   background-color: var(--nova-color-surface-raised);
   text-decoration: none;
@@ -107,7 +111,8 @@
 
 [data-theme="dark"] .nova-navbar-bridge-items a,
 [data-theme="dark"] .nova-navbar-bridge-items button,
-[data-theme="dark"] .nova-navbar-bridge-items .nova-navbar-more-summary {
+[data-theme="dark"] .nova-navbar-bridge-items .nova-navbar-more-summary,
+[data-theme="dark"] .nova-navbar-bridge-items .nova-dropdown-summary {
   color: var(--nova-color-text-muted);
 }
 
@@ -117,7 +122,10 @@
 [data-theme="dark"] .nova-navbar-bridge-items button:focus-visible,
 [data-theme="dark"] .nova-navbar-bridge-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:hover,
 [data-theme="dark"] .nova-navbar-bridge-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:focus-visible,
-[data-theme="dark"] .nova-navbar-bridge-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary {
+[data-theme="dark"] .nova-navbar-bridge-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary,
+[data-theme="dark"] .nova-navbar-bridge-items .nova-dropdown:not(.nova-dropdown--active) > .nova-dropdown-summary:hover,
+[data-theme="dark"] .nova-navbar-bridge-items .nova-dropdown:not(.nova-dropdown--active) > .nova-dropdown-summary:focus-visible,
+[data-theme="dark"] .nova-navbar-bridge-items .nova-dropdown:not(.nova-dropdown--active)[open] > .nova-dropdown-summary {
   color: var(--nova-color-primary-400);
   background-color: var(--nova-color-text);
 }
@@ -129,7 +137,8 @@
 .nova-navbar-bridge-items a[aria-current="page"],
 .nova-navbar-bridge-items a.navbar__link--active,
 .nova-navbar-bridge-items .nova-navbar-more:has(a[aria-current="page"]) > .nova-navbar-more-summary,
-.nova-navbar-bridge-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary {
+.nova-navbar-bridge-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary,
+.nova-navbar-bridge-items .nova-dropdown--active > .nova-dropdown-summary {
   font-weight: 600;
   color: var(--nova-color-primary-600);
   background-color: var(--nova-color-primary-50);
@@ -138,7 +147,8 @@
 [data-theme="dark"] .nova-navbar-bridge-items a[aria-current="page"],
 [data-theme="dark"] .nova-navbar-bridge-items a.navbar__link--active,
 [data-theme="dark"] .nova-navbar-bridge-items .nova-navbar-more:has(a[aria-current="page"]) > .nova-navbar-more-summary,
-[data-theme="dark"] .nova-navbar-bridge-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary {
+[data-theme="dark"] .nova-navbar-bridge-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary,
+[data-theme="dark"] .nova-navbar-bridge-items .nova-dropdown--active > .nova-dropdown-summary {
   color: var(--nova-color-primary-400);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
 }
@@ -272,7 +282,8 @@
   gap: 0;
 }
 
-.nova-navbar-bridge-menu-item {
+.nova-navbar-bridge-menu-item,
+.nova-navbar-bridge-menu-dropdown-summary {
   gap: 0.625rem;
   padding: 0.625rem 0.75rem;
   font-family: var(--nova-font-code);
@@ -286,27 +297,34 @@
               background-color var(--nova-motion-duration) ease;
 }
 
-.nova-navbar-bridge-menu-item:last-child {
+.nova-navbar-bridge-menu-item:last-child,
+.nova-navbar-bridge-menu-dropdown-summary:last-child {
   border-bottom: none;
 }
 
 .nova-navbar-bridge-menu-item:hover,
-.nova-navbar-bridge-menu-item:focus-visible {
+.nova-navbar-bridge-menu-item:focus-visible,
+.nova-navbar-bridge-menu-dropdown-summary:hover,
+.nova-navbar-bridge-menu-dropdown-summary:focus-visible {
   color: var(--nova-color-primary-600);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
 }
 
-[data-theme="dark"] .nova-navbar-bridge-menu-item {
+[data-theme="dark"] .nova-navbar-bridge-menu-item,
+[data-theme="dark"] .nova-navbar-bridge-menu-dropdown-summary {
   color: var(--nova-color-text-muted);
   border-bottom-color: var(--nova-color-border);
 }
 
-[data-theme="dark"] .nova-navbar-bridge-menu-item:last-child {
+[data-theme="dark"] .nova-navbar-bridge-menu-item:last-child,
+[data-theme="dark"] .nova-navbar-bridge-menu-dropdown-summary:last-child {
   border-bottom: none;
 }
 
 [data-theme="dark"] .nova-navbar-bridge-menu-item:hover,
-[data-theme="dark"] .nova-navbar-bridge-menu-item:focus-visible {
+[data-theme="dark"] .nova-navbar-bridge-menu-item:focus-visible,
+[data-theme="dark"] .nova-navbar-bridge-menu-dropdown-summary:hover,
+[data-theme="dark"] .nova-navbar-bridge-menu-dropdown-summary:focus-visible {
   color: var(--nova-color-primary-400);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
 }
@@ -333,8 +351,13 @@
   animation: signal-snap 150ms ease;
 }
 
-.nova-navbar-bridge-menu-item {
+.nova-navbar-bridge-menu-item,
+.nova-navbar-bridge-menu-dropdown {
   opacity: 0;
 
   animation: signal-snap 150ms ease forwards;
+}
+
+.nova-navbar-bridge-menu-dropdown-children {
+  padding-inline-start: 1.75rem;
 }

@@ -889,8 +889,6 @@ export type Shared_NovaConfig_Urls = {
 
 export type Shared_NovaConfigWorkspace_Name = string;
 
-export type Shared_NovaConfigWorkspace_DisplayName = string;
-
 export type Shared_NovaConfigWorkspace_Role = 'project' | 'docs' | 'config' | 'app' | 'package' | 'tool' | 'template';
 
 export type Shared_NovaConfigWorkspace_Policy = 'freezable' | 'trackable' | 'distributable';
@@ -910,7 +908,6 @@ export type Shared_NovaConfigWorkspaceRecipeSettings = Record<string, boolean>;
 
 export type Shared_NovaConfigWorkspace = {
   name: Shared_NovaConfigWorkspace_Name;
-  displayName?: Shared_NovaConfigWorkspace_DisplayName;
   role: Shared_NovaConfigWorkspace_Role;
   policy: Shared_NovaConfigWorkspace_Policy;
 };
@@ -919,7 +916,7 @@ export type Shared_NovaConfig_Workspaces = {
   [key: string]: Shared_NovaConfigWorkspace;
 };
 
-export type Shared_NovaConfigWorkflow_Suffix = string;
+export type Shared_NovaConfigWorkflow_Name = string;
 
 export type Shared_NovaConfigWorkflow_Template = string;
 
@@ -954,54 +951,74 @@ export type Shared_NovaConfigWorkflowTriggersWide = Shared_NovaConfigWorkflowTri
 
 export type Shared_NovaConfigWorkflow_DependsOn = string[];
 
-export type Shared_NovaConfigWorkflowScope = string;
+export type Shared_NovaConfigWorkflowBuildEntry = string;
 
-export type Shared_NovaConfigWorkflow_Scopes = Shared_NovaConfigWorkflowScope[];
+export type Shared_NovaConfigWorkflow_Build = Shared_NovaConfigWorkflowBuildEntry[];
 
-export type Shared_NovaConfigWorkflowSettingsKey = string;
+export type Shared_NovaConfigWorkflowWithKey = string;
 
-export type Shared_NovaConfigWorkflowSettingsValue = string;
+export type Shared_NovaConfigWorkflowWithValue = string;
 
-export type Shared_NovaConfigWorkflowTarget_Type = string;
+export type Shared_NovaConfigWorkflowDeployTarget_To = string;
 
-export type Shared_NovaConfigWorkflowTarget_WorkingDir = string;
+export type Shared_NovaConfigWorkflowDeployTarget_Path = string;
 
-export type Shared_NovaConfigWorkflowTargetNeedsEntry = string;
+export type Shared_NovaConfigWorkflowDeployTargetAfterEntry = string;
 
-export type Shared_NovaConfigWorkflowTarget_Needs = Shared_NovaConfigWorkflowTargetNeedsEntry[];
+export type Shared_NovaConfigWorkflowDeployTarget_After = Shared_NovaConfigWorkflowDeployTargetAfterEntry[];
 
-export type Shared_NovaConfigWorkflowTarget_Settings = {
-  [key: Shared_NovaConfigWorkflowSettingsKey]: Shared_NovaConfigWorkflowSettingsValue;
+export type Shared_NovaConfigWorkflowDeployTarget_With = {
+  [key: Shared_NovaConfigWorkflowWithKey]: Shared_NovaConfigWorkflowWithValue;
 };
 
-export type Shared_NovaConfigWorkflowTarget = {
-  type: Shared_NovaConfigWorkflowTarget_Type;
-  workingDir: Shared_NovaConfigWorkflowTarget_WorkingDir;
-  needs?: Shared_NovaConfigWorkflowTarget_Needs;
-  settings?: Shared_NovaConfigWorkflowTarget_Settings;
+export type Shared_NovaConfigWorkflowDeployTarget = {
+  to: Shared_NovaConfigWorkflowDeployTarget_To;
+  path: Shared_NovaConfigWorkflowDeployTarget_Path;
+  after?: Shared_NovaConfigWorkflowDeployTarget_After;
+  with?: Shared_NovaConfigWorkflowDeployTarget_With;
 };
 
-export type Shared_NovaConfigWorkflow_Targets = Shared_NovaConfigWorkflowTarget[];
+export type Shared_NovaConfigWorkflow_Deploy = Shared_NovaConfigWorkflowDeployTarget[];
 
-export type Shared_NovaConfigWorkflow_Settings = {
-  [key: Shared_NovaConfigWorkflowSettingsKey]: Shared_NovaConfigWorkflowSettingsValue;
+export type Shared_NovaConfigWorkflow_With = {
+  [key: Shared_NovaConfigWorkflowWithKey]: Shared_NovaConfigWorkflowWithValue;
 };
 
 export type Shared_NovaConfigWorkflow = {
   'template': Shared_NovaConfigWorkflow_Template;
-  'suffix': Shared_NovaConfigWorkflow_Suffix;
+  'name': Shared_NovaConfigWorkflow_Name;
   'triggers': Shared_NovaConfigWorkflow_Triggers;
   'depends-on'?: Shared_NovaConfigWorkflow_DependsOn;
-  'scopes'?: Shared_NovaConfigWorkflow_Scopes;
-  'targets'?: Shared_NovaConfigWorkflow_Targets;
-  'settings'?: Shared_NovaConfigWorkflow_Settings;
+  'build'?: Shared_NovaConfigWorkflow_Build;
+  'deploy'?: Shared_NovaConfigWorkflow_Deploy;
+  'with'?: Shared_NovaConfigWorkflow_With;
 };
+
+// The workflow generator keeps its own vocabulary for several of the values above. A workflow
+// name is the trailing segment of the generated file name ("project" in
+// "nova-publish-project.yml"), a build entry is the scope a setup step runs in, a "with" map is
+// a settings map, and a deploy target's "after" list is the jobs it needs. The aliases below let
+// the generator keep those names while the config types stay named after the fields on disk.
+
+export type Shared_NovaConfigWorkflow_Suffix = Shared_NovaConfigWorkflow_Name;
+
+export type Shared_NovaConfigWorkflowScope = Shared_NovaConfigWorkflowBuildEntry;
+
+export type Shared_NovaConfigWorkflow_Scopes = Shared_NovaConfigWorkflow_Build;
+
+export type Shared_NovaConfigWorkflow_Settings = Shared_NovaConfigWorkflow_With;
+
+export type Shared_NovaConfigWorkflowTarget_Settings = Shared_NovaConfigWorkflowDeployTarget_With;
+
+export type Shared_NovaConfigWorkflowTargetNeedsEntry = Shared_NovaConfigWorkflowDeployTargetAfterEntry;
+
+export type Shared_NovaConfigWorkflowTarget_Needs = Shared_NovaConfigWorkflowDeployTarget_After;
 
 export type Shared_NovaConfig_Workflows = Shared_NovaConfigWorkflow[];
 
 export type Shared_BlueprintConfigWorkflow_Template = Shared_NovaConfigWorkflow_Template;
 
-export type Shared_BlueprintConfigWorkflow_Name = Shared_NovaConfigWorkflow_Suffix;
+export type Shared_BlueprintConfigWorkflow_Name = Shared_NovaConfigWorkflow_Name;
 
 export type Shared_BlueprintConfigTriggerObjectWorkflow = string;
 
@@ -1027,15 +1044,15 @@ export type Shared_BlueprintConfigTriggerWideEntry = Shared_NovaConfigWorkflowTr
 
 export type Shared_BlueprintConfigWorkflow_Triggers = Shared_BlueprintConfigTriggerWideEntry[];
 
-export type Shared_BlueprintConfigWorkflow_Build = Shared_NovaConfigWorkflow_Scopes;
+export type Shared_BlueprintConfigWorkflow_Build = Shared_NovaConfigWorkflow_Build;
 
-export type Shared_BlueprintConfigDeployTarget_To = Shared_NovaConfigWorkflowTarget_Type;
+export type Shared_BlueprintConfigDeployTarget_To = Shared_NovaConfigWorkflowDeployTarget_To;
 
-export type Shared_BlueprintConfigDeployTarget_Path = Shared_NovaConfigWorkflowTarget_WorkingDir;
+export type Shared_BlueprintConfigDeployTarget_Path = Shared_NovaConfigWorkflowDeployTarget_Path;
 
-export type Shared_BlueprintConfigDeployTarget_After = Shared_NovaConfigWorkflowTarget_Needs;
+export type Shared_BlueprintConfigDeployTarget_After = Shared_NovaConfigWorkflowDeployTarget_After;
 
-export type Shared_BlueprintConfigDeployTarget_With = Shared_NovaConfigWorkflowTarget_Settings;
+export type Shared_BlueprintConfigDeployTarget_With = Shared_NovaConfigWorkflowDeployTarget_With;
 
 export type Shared_BlueprintConfigDeployTarget = {
   to: Shared_BlueprintConfigDeployTarget_To;
@@ -1046,7 +1063,7 @@ export type Shared_BlueprintConfigDeployTarget = {
 
 export type Shared_BlueprintConfigWorkflow_Deploy = Shared_BlueprintConfigDeployTarget[];
 
-export type Shared_BlueprintConfigWorkflow_With = Shared_NovaConfigWorkflow_Settings;
+export type Shared_BlueprintConfigWorkflow_With = Shared_NovaConfigWorkflow_With;
 
 export type Shared_BlueprintConfigWorkflow = {
   'template': Shared_BlueprintConfigWorkflow_Template;
@@ -1088,9 +1105,9 @@ export type Shared_BlueprintPublishTargetContext_ArtifactName = string;
 
 export type Shared_BlueprintPublishTargetContext_Needs = Shared_BlueprintJob_Needs;
 
-export type Shared_BlueprintPublishTargetContext_TargetSettings = Shared_NovaConfigWorkflowTarget_Settings | undefined;
+export type Shared_BlueprintPublishTargetContext_TargetSettings = Shared_NovaConfigWorkflowDeployTarget_With | undefined;
 
-export type Shared_BlueprintPublishTargetContext_WorkflowSettings = Shared_NovaConfigWorkflow_Settings | undefined;
+export type Shared_BlueprintPublishTargetContext_WorkflowSettings = Shared_NovaConfigWorkflow_With | undefined;
 
 export type Shared_BlueprintPublishTargetContext_Workspace = Shared_NovaConfigWorkspace | undefined;
 
@@ -1171,33 +1188,121 @@ export type Shared_NovaConfigEnvironmentValue_Key = string;
 
 export type Shared_NovaConfigEnvironmentValue_Secret = boolean;
 
-export type Shared_NovaConfigEnvironmentValue_BuildOnly = boolean;
-
 export type Shared_NovaConfigEnvironmentValue_DefaultValue = string;
 
-export type Shared_NovaConfigEnvironmentValue = {
-  key: Shared_NovaConfigEnvironmentValue_Key;
-  secret: Shared_NovaConfigEnvironmentValue_Secret;
-  buildOnly?: Shared_NovaConfigEnvironmentValue_BuildOnly;
-  defaultValue?: Shared_NovaConfigEnvironmentValue_DefaultValue;
+/**
+ * Shared - Nova Config Environment Value Reach.
+ *
+ * @since 0.22.0
+ */
+export type Shared_NovaConfigEnvironmentValue_Reach = 'local' | 'managed' | 'build' | 'runtime';
+
+/**
+ * Shared - Nova Config Environment Value Local.
+ *
+ * A key that lives only in ".env" / ".env.sample" and never reaches GitHub, so it
+ * has no secret slot (the structure is the guard against a local secret).
+ *
+ * @since 0.22.0
+ */
+export type Shared_NovaConfigEnvironmentValueLocal_Key = Shared_NovaConfigEnvironmentValue_Key;
+
+export type Shared_NovaConfigEnvironmentValueLocal_Reach = 'local';
+
+export type Shared_NovaConfigEnvironmentValueLocal_DefaultValue = Shared_NovaConfigEnvironmentValue_DefaultValue;
+
+export type Shared_NovaConfigEnvironmentValueLocal = {
+  key: Shared_NovaConfigEnvironmentValueLocal_Key;
+  reach: Shared_NovaConfigEnvironmentValueLocal_Reach;
+  defaultValue?: Shared_NovaConfigEnvironmentValueLocal_DefaultValue;
 };
 
-export type Shared_NovaConfigEnvironmentApp_Prefix = string;
+/**
+ * Shared - Nova Config Environment Value Managed.
+ *
+ * A key provisioned as a GitHub Variable or Secret but delivered nowhere; it carries
+ * no "defaultValue" because it never reaches a ".env" or a build.
+ *
+ * @since 0.22.0
+ */
+export type Shared_NovaConfigEnvironmentValueManaged_Key = Shared_NovaConfigEnvironmentValue_Key;
 
-export type Shared_NovaConfigEnvironmentApp_Variables = Shared_NovaConfigEnvironmentValue[];
+export type Shared_NovaConfigEnvironmentValueManaged_Reach = 'managed';
 
-export type Shared_NovaConfigEnvironmentApp = {
-  prefix: Shared_NovaConfigEnvironmentApp_Prefix;
-  variables?: Shared_NovaConfigEnvironmentApp_Variables;
+export type Shared_NovaConfigEnvironmentValueManaged_Secret = Shared_NovaConfigEnvironmentValue_Secret;
+
+export type Shared_NovaConfigEnvironmentValueManaged = {
+  key: Shared_NovaConfigEnvironmentValueManaged_Key;
+  reach: Shared_NovaConfigEnvironmentValueManaged_Reach;
+  secret: Shared_NovaConfigEnvironmentValueManaged_Secret;
 };
 
-export type Shared_NovaConfigEnvironmentGlobal_Prefix = string;
+/**
+ * Shared - Nova Config Environment Value Build.
+ *
+ * The former "buildOnly: true" kind: provisioned on GitHub and baked into the build.
+ *
+ * @since 0.22.0
+ */
+export type Shared_NovaConfigEnvironmentValueBuild_Key = Shared_NovaConfigEnvironmentValue_Key;
 
-export type Shared_NovaConfigEnvironmentGlobal_Variables = Shared_NovaConfigEnvironmentValue[];
+export type Shared_NovaConfigEnvironmentValueBuild_Reach = 'build';
 
-export type Shared_NovaConfigEnvironmentGlobal = {
-  prefix: Shared_NovaConfigEnvironmentGlobal_Prefix;
-  variables?: Shared_NovaConfigEnvironmentGlobal_Variables;
+export type Shared_NovaConfigEnvironmentValueBuild_Secret = Shared_NovaConfigEnvironmentValue_Secret;
+
+export type Shared_NovaConfigEnvironmentValueBuild_DefaultValue = Shared_NovaConfigEnvironmentValue_DefaultValue;
+
+export type Shared_NovaConfigEnvironmentValueBuild = {
+  key: Shared_NovaConfigEnvironmentValueBuild_Key;
+  reach: Shared_NovaConfigEnvironmentValueBuild_Reach;
+  secret: Shared_NovaConfigEnvironmentValueBuild_Secret;
+  defaultValue?: Shared_NovaConfigEnvironmentValueBuild_DefaultValue;
+};
+
+/**
+ * Shared - Nova Config Environment Value Runtime.
+ *
+ * The former "buildOnly: false" kind: provisioned on GitHub and synced to server(s).
+ *
+ * @since 0.22.0
+ */
+export type Shared_NovaConfigEnvironmentValueRuntime_Key = Shared_NovaConfigEnvironmentValue_Key;
+
+export type Shared_NovaConfigEnvironmentValueRuntime_Reach = 'runtime';
+
+export type Shared_NovaConfigEnvironmentValueRuntime_Secret = Shared_NovaConfigEnvironmentValue_Secret;
+
+export type Shared_NovaConfigEnvironmentValueRuntime_DefaultValue = Shared_NovaConfigEnvironmentValue_DefaultValue;
+
+export type Shared_NovaConfigEnvironmentValueRuntime = {
+  key: Shared_NovaConfigEnvironmentValueRuntime_Key;
+  reach: Shared_NovaConfigEnvironmentValueRuntime_Reach;
+  secret: Shared_NovaConfigEnvironmentValueRuntime_Secret;
+  defaultValue?: Shared_NovaConfigEnvironmentValueRuntime_DefaultValue;
+};
+
+export type Shared_NovaConfigEnvironmentValue =
+  | Shared_NovaConfigEnvironmentValueLocal
+  | Shared_NovaConfigEnvironmentValueManaged
+  | Shared_NovaConfigEnvironmentValueBuild
+  | Shared_NovaConfigEnvironmentValueRuntime;
+
+export type Shared_NovaConfigEnvironmentWorkspace_Prefix = string;
+
+export type Shared_NovaConfigEnvironmentWorkspace_Variables = Shared_NovaConfigEnvironmentValue[];
+
+export type Shared_NovaConfigEnvironmentWorkspace = {
+  prefix: Shared_NovaConfigEnvironmentWorkspace_Prefix;
+  variables?: Shared_NovaConfigEnvironmentWorkspace_Variables;
+};
+
+export type Shared_NovaConfigEnvironmentProject_Prefix = string;
+
+export type Shared_NovaConfigEnvironmentProject_Variables = Shared_NovaConfigEnvironmentValue[];
+
+export type Shared_NovaConfigEnvironmentProject = {
+  prefix: Shared_NovaConfigEnvironmentProject_Prefix;
+  variables?: Shared_NovaConfigEnvironmentProject_Variables;
 };
 
 export type Shared_NovaConfigEnvironmentWorkflow_Prefix = string;
@@ -1206,10 +1311,10 @@ export type Shared_NovaConfigEnvironmentWorkflow = {
   prefix: Shared_NovaConfigEnvironmentWorkflow_Prefix;
 };
 
-export type Shared_NovaConfigEnvironment_Global = Shared_NovaConfigEnvironmentGlobal;
+export type Shared_NovaConfigEnvironment_Project = Shared_NovaConfigEnvironmentProject;
 
-export type Shared_NovaConfigEnvironment_Apps = {
-  [key: string]: Shared_NovaConfigEnvironmentApp;
+export type Shared_NovaConfigEnvironment_Workspaces = {
+  [key: string]: Shared_NovaConfigEnvironmentWorkspace;
 };
 
 export type Shared_NovaConfigEnvironment_Workflows = {
@@ -1217,8 +1322,8 @@ export type Shared_NovaConfigEnvironment_Workflows = {
 };
 
 export type Shared_NovaConfigEnvironment = {
-  global?: Shared_NovaConfigEnvironment_Global;
-  apps?: Shared_NovaConfigEnvironment_Apps;
+  project?: Shared_NovaConfigEnvironment_Project;
+  workspaces?: Shared_NovaConfigEnvironment_Workspaces;
   workflows?: Shared_NovaConfigEnvironment_Workflows;
 };
 
@@ -1275,6 +1380,10 @@ export type Shared_NovaConfig_Recipes = {
   'package-json'?: Shared_NovaConfig_Recipes_PackageJson;
 };
 
+export type Shared_NovaConfig_Settings = {
+  lockStepVersioning?: boolean;
+};
+
 export type Shared_NovaConfig = {
   project?: Shared_NovaConfig_Project;
   entities?: Shared_NovaConfig_Entities;
@@ -1287,6 +1396,7 @@ export type Shared_NovaConfig = {
   agents?: Shared_NovaConfig_Agents;
   recipes?: Shared_NovaConfig_Recipes;
   environment?: Shared_NovaConfig_Environment;
+  settings?: Shared_NovaConfig_Settings;
 };
 
 export type Shared_NovaConfigConfig = Shared_NovaConfig;

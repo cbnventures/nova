@@ -222,54 +222,54 @@ describe('WorkflowsBlueprintPublishParity.sites', () => {
   };
 
   const environment: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParitySites_Environment = {
-    apps: {
+    workspaces: {
       './apps/cbnventures': {
         prefix: 'CBN_',
         variables: [
           {
             key: 'PUBLIC_GOOGLE_TAG_MANAGER_ID',
             secret: false,
-            buildOnly: true,
+            reach: 'build',
           },
           {
             key: 'PUBLIC_TURNSTILE_SITE_KEY',
             secret: false,
-            buildOnly: true,
+            reach: 'build',
           },
           {
             key: 'PUBLIC_STRIPE_PUBLISHABLE_KEY',
             secret: false,
-            buildOnly: true,
+            reach: 'build',
           },
           {
             key: 'TURNSTILE_SECRET_KEY',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
           {
             key: 'STRIPE_SECRET_KEY',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
           {
             key: 'STRIPE_WEBHOOK_SECRET',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
           {
             key: 'AMAZON_ACCESS_KEY_ID',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
           {
             key: 'AMAZON_ACCESS_KEY_SECRET',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
           {
             key: 'AMAZON_REGION',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
         ],
       },
@@ -279,32 +279,32 @@ describe('WorkflowsBlueprintPublishParity.sites', () => {
           {
             key: 'PUBLIC_GOOGLE_TAG_MANAGER_ID',
             secret: false,
-            buildOnly: true,
+            reach: 'build',
           },
           {
             key: 'PUBLIC_TURNSTILE_SITE_KEY',
             secret: false,
-            buildOnly: true,
+            reach: 'build',
           },
           {
             key: 'TURNSTILE_SECRET_KEY',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
           {
             key: 'AMAZON_ACCESS_KEY_ID',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
           {
             key: 'AMAZON_ACCESS_KEY_SECRET',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
           {
             key: 'AMAZON_REGION',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
         ],
       },
@@ -364,19 +364,19 @@ describe('WorkflowsBlueprintPublishParity.cloudflareWorkersSecretSync', () => {
   };
 
   const environment: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityCloudflareWorkersSecretSync_Environment = {
-    apps: {
+    workspaces: {
       './apps/portal': {
         prefix: 'CBN_',
         variables: [
           {
             key: 'STRIPE_SECRET_KEY',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
           {
             key: 'TURNSTILE_SECRET_KEY',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
         ],
       },
@@ -671,10 +671,10 @@ describe('WorkflowsBlueprintPublishParity.vercelScope', () => {
   };
 
   const environment: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelScope_Environment = {
-    global: {
+    project: {
       prefix: 'PF_',
     },
-    apps: {
+    workspaces: {
       './apps/web': {
         prefix: 'WEB_',
       },
@@ -722,19 +722,19 @@ describe('WorkflowsBlueprintPublishParity.vercelSecretSync', () => {
   };
 
   const environment: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityVercelSecretSync_Environment = {
-    apps: {
+    workspaces: {
       './apps/web': {
         prefix: 'CBN_',
         variables: [
           {
             key: 'STRIPE_SECRET_KEY',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
           {
             key: 'TURNSTILE_SECRET_KEY',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
         ],
       },
@@ -808,22 +808,22 @@ describe('WorkflowsBlueprintPublishParity.runtimeSyncFanOut', () => {
   };
 
   const environment: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityRuntimeSyncFanOut_Environment = {
-    global: {
+    project: {
       prefix: 'PF_',
     },
-    apps: {
+    workspaces: {
       './apps/api': {
         prefix: 'API_',
         variables: [
           {
             key: 'SESSION_SECRET',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
           {
             key: 'DATABASE_URL',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
         ],
       },
@@ -974,10 +974,10 @@ describe('WorkflowsBlueprintPublishParity.invariant', () => {
   };
 
   const environment: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityInvariant_Environment = {
-    global: {
+    project: {
       prefix: 'PF_',
     },
-    apps: {
+    workspaces: {
       './apps/docs': {
         prefix: 'DOCS_',
       },
@@ -1002,11 +1002,11 @@ describe('WorkflowsBlueprintPublishParity.invariant', () => {
       environment,
       workflows: [{
         template: 'publish',
-        suffix: 'invariant',
+        name: 'invariant',
         triggers: ['release'],
-        targets: [{
-          type: 'cloudflare-pages-docusaurus',
-          workingDir: './apps/docs',
+        deploy: [{
+          to: 'cloudflare-pages-docusaurus',
+          path: './apps/docs',
         }],
       }],
     }).map((candidate) => candidate['name']);

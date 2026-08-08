@@ -121,8 +121,22 @@ import type {
   Cli_Utility_Changelog_Runner_Release_FindWorkspaceConfigName,
   Cli_Utility_Changelog_Runner_Release_Groups,
   Cli_Utility_Changelog_Runner_Release_HighestBump,
+  Cli_Utility_Changelog_Runner_Release_HighestNewVersion,
+  Cli_Utility_Changelog_Runner_Release_HighestParts,
   Cli_Utility_Changelog_Runner_Release_IsDryRun,
   Cli_Utility_Changelog_Runner_Release_IsNonInteractive,
+  Cli_Utility_Changelog_Runner_Release_LockStepCurrentDirectory,
+  Cli_Utility_Changelog_Runner_Release_LockStepCurrentVersion,
+  Cli_Utility_Changelog_Runner_Release_LockStepI,
+  Cli_Utility_Changelog_Runner_Release_LockStepPackageDirectory,
+  Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonPath,
+  Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonRaw,
+  Cli_Utility_Changelog_Runner_Release_LockStepParsedPackageJson,
+  Cli_Utility_Changelog_Runner_Release_LockStepVersioning,
+  Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceConfig,
+  Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceName,
+  Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePath,
+  Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePolicy,
   Cli_Utility_Changelog_Runner_Release_NewVersion,
   Cli_Utility_Changelog_Runner_Release_Options,
   Cli_Utility_Changelog_Runner_Release_PackageDirectory,
@@ -132,7 +146,9 @@ import type {
   Cli_Utility_Changelog_Runner_Release_PackageJsonRaw,
   Cli_Utility_Changelog_Runner_Release_PackageName,
   Cli_Utility_Changelog_Runner_Release_ParsedPackageJson,
+  Cli_Utility_Changelog_Runner_Release_ReleasedNames,
   Cli_Utility_Changelog_Runner_Release_ReleasedVersions,
+  Cli_Utility_Changelog_Runner_Release_ReleaseParts,
   Cli_Utility_Changelog_Runner_Release_Releases,
   Cli_Utility_Changelog_Runner_Release_Returns,
   Cli_Utility_Changelog_Runner_Release_SummaryReleaseCurrentVersion,
@@ -845,6 +861,87 @@ export class Runner {
       });
     }
 
+    // Lock-step versioning: include distributable packages that had no changelog entries.
+    const lockStepVersioning: Cli_Utility_Changelog_Runner_Release_LockStepVersioning = config['settings'] !== undefined && config['settings']['lockStepVersioning'] === true;
+
+    if (lockStepVersioning === true && releases.length > 0) {
+      // Safe: the length > 0 guard above guarantees releases[0] is defined.
+      const highestNewVersion: Cli_Utility_Changelog_Runner_Release_HighestNewVersion = releases.reduce((highest, release) => {
+        const releaseParts: Cli_Utility_Changelog_Runner_Release_ReleaseParts = release['newVersion'].split('.').map(Number);
+        const highestParts: Cli_Utility_Changelog_Runner_Release_HighestParts = highest.split('.').map(Number);
+
+        for (let i: Cli_Utility_Changelog_Runner_Release_LockStepI = 0; i < 3; i += 1) {
+          if ((releaseParts[i] ?? 0) > (highestParts[i] ?? 0)) {
+            return release['newVersion'];
+          }
+
+          if ((releaseParts[i] ?? 0) < (highestParts[i] ?? 0)) {
+            return highest;
+          }
+        }
+
+        return highest;
+      }, releases[0]!['newVersion']);
+
+      // Align all releases to the highest version.
+      for (const release of releases) {
+        Reflect.set(release, 'newVersion', highestNewVersion);
+      }
+
+      // Add synthetic entries for distributable packages not already in releases.
+      const releasedNames: Cli_Utility_Changelog_Runner_Release_ReleasedNames = new Set(releases.map((release) => release['packageName']));
+
+      for (const workspaceEntry of Object.entries(workspaces)) {
+        const lockStepWorkspacePath: Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePath = workspaceEntry[0];
+        const lockStepWorkspaceConfig: Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceConfig = workspaceEntry[1];
+        const lockStepWorkspaceName: Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceName = lockStepWorkspaceConfig['name'];
+        const lockStepWorkspacePolicy: Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePolicy = lockStepWorkspaceConfig['policy'];
+
+        if (lockStepWorkspacePolicy !== 'distributable' || releasedNames.has(lockStepWorkspaceName) === true) {
+          continue;
+        }
+
+        const lockStepCurrentDirectory: Cli_Utility_Changelog_Runner_Release_LockStepCurrentDirectory = process.cwd();
+        const lockStepPackageDirectory: Cli_Utility_Changelog_Runner_Release_LockStepPackageDirectory = resolve(lockStepCurrentDirectory, lockStepWorkspacePath);
+        const lockStepPackageJsonPath: Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonPath = join(lockStepPackageDirectory, 'package.json');
+
+        let lockStepPackageJsonRaw: Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonRaw = undefined;
+
+        try {
+          lockStepPackageJsonRaw = await fs.readFile(lockStepPackageJsonPath, 'utf-8');
+        } catch {
+          continue;
+        }
+
+        let lockStepParsedPackageJson: Cli_Utility_Changelog_Runner_Release_LockStepParsedPackageJson = undefined;
+
+        try {
+          lockStepParsedPackageJson = JSON.parse(lockStepPackageJsonRaw);
+        } catch {
+          continue;
+        }
+
+        if (lockStepParsedPackageJson === undefined) {
+          continue;
+        }
+
+        const lockStepCurrentVersion: Cli_Utility_Changelog_Runner_Release_LockStepCurrentVersion = (typeof lockStepParsedPackageJson['version'] === 'string') ? lockStepParsedPackageJson['version'] : undefined;
+
+        if (lockStepCurrentVersion === undefined) {
+          continue;
+        }
+
+        releases.push({
+          packageName: lockStepWorkspaceName,
+          packageDirectory: lockStepPackageDirectory,
+          currentVersion: lockStepCurrentVersion,
+          newVersion: highestNewVersion,
+          highestBump: 'patch',
+          entries: [],
+        });
+      }
+    }
+
     // Show summary.
     Logger.customize({
       name: 'Runner.release',
@@ -867,21 +964,25 @@ export class Runner {
 
       process.stdout.write(`\n  ${chalk.bold(summaryReleasePackageName)}: ${summaryReleaseCurrentVersion} → ${chalk.green(summaryReleaseNewVersion)} (${summaryReleaseHighestBump})\n`);
 
-      for (const category of categoryOrder) {
-        const categoryEntries: Cli_Utility_Changelog_Runner_Release_CategoryEntries = summaryReleaseEntries.filter((releaseEntry) => releaseEntry['category'] === category);
+      if (summaryReleaseEntries.length === 0) {
+        process.stdout.write(`    ${chalk.dim('No changes.')}\n`);
+      } else {
+        for (const category of categoryOrder) {
+          const categoryEntries: Cli_Utility_Changelog_Runner_Release_CategoryEntries = summaryReleaseEntries.filter((releaseEntry) => releaseEntry['category'] === category);
 
-        if (categoryEntries.length === 0) {
-          continue;
-        }
+          if (categoryEntries.length === 0) {
+            continue;
+          }
 
-        const categoryLabel: Cli_Utility_Changelog_Runner_Release_CategoryLabel = category.toUpperCase();
+          const categoryLabel: Cli_Utility_Changelog_Runner_Release_CategoryLabel = category.toUpperCase();
 
-        process.stdout.write(`    ${chalk.yellow(categoryLabel)}:\n`);
+          process.stdout.write(`    ${chalk.yellow(categoryLabel)}:\n`);
 
-        for (const categoryEntry of categoryEntries) {
-          const categoryEntryMessage: Cli_Utility_Changelog_Runner_Release_CategoryEntryMessage = categoryEntry['message'];
+          for (const categoryEntry of categoryEntries) {
+            const categoryEntryMessage: Cli_Utility_Changelog_Runner_Release_CategoryEntryMessage = categoryEntry['message'];
 
-          process.stdout.write(`      - ${categoryEntryMessage}\n`);
+            process.stdout.write(`      - ${categoryEntryMessage}\n`);
+          }
         }
       }
     }
@@ -1155,7 +1256,11 @@ export class Runner {
       for (const relativePath of relativePaths) {
         const rp: Cli_Utility_Changelog_Runner_StampUnreleased_Rp = relativePath;
 
-        if (rp.endsWith('.ts') === true || rp.endsWith('.tsx') === true) {
+        if (
+          rp.endsWith('.ts') === true
+          || rp.endsWith('.tsx') === true
+          || rp.endsWith('.css') === true
+        ) {
           sourceFiles.push(join(srcDirectory, rp));
         }
       }
@@ -1396,18 +1501,23 @@ export class Runner {
 
     sectionParts.push(`## ${version} - ${dateString}`);
 
-    for (const category of categoryOrder) {
-      const messages: Cli_Utility_Changelog_Runner_WriteChangelog_Messages = byCategory.get(category);
-
-      if (messages === undefined || messages.length === 0) {
-        continue;
-      }
-
+    if (entries.length === 0) {
       sectionParts.push('');
-      sectionParts.push(`### ${category.toUpperCase()}`);
+      sectionParts.push('No changes.');
+    } else {
+      for (const category of categoryOrder) {
+        const messages: Cli_Utility_Changelog_Runner_WriteChangelog_Messages = byCategory.get(category);
 
-      for (const message of messages) {
-        sectionParts.push(`- ${message}`);
+        if (messages === undefined || messages.length === 0) {
+          continue;
+        }
+
+        sectionParts.push('');
+        sectionParts.push(`### ${category.toUpperCase()}`);
+
+        for (const message of messages) {
+          sectionParts.push(`- ${message}`);
+        }
       }
     }
 

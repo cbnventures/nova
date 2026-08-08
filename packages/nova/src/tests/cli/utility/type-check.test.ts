@@ -124,7 +124,7 @@ describe('CliUtilityTypeCheck.run', async () => {
 
     CliUtilityTypeCheck.run({});
 
-    strictEqual(process.exitCode, undefined);
+    strictEqual(process.exitCode, 1);
 
     return;
   });

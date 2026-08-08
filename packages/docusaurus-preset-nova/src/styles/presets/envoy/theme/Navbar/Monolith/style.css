@@ -212,7 +212,8 @@
   gap: 0.125rem;
 }
 
-.nova-navbar-monolith-menu-item {
+.nova-navbar-monolith-menu-item,
+.nova-navbar-monolith-menu-dropdown-summary {
   gap: 0.75rem;
   font-family: var(--nova-font-body);
   font-size: 1rem;
@@ -225,17 +226,22 @@
 }
 
 .nova-navbar-monolith-menu-item:hover,
-.nova-navbar-monolith-menu-item:focus-visible {
+.nova-navbar-monolith-menu-item:focus-visible,
+.nova-navbar-monolith-menu-dropdown-summary:hover,
+.nova-navbar-monolith-menu-dropdown-summary:focus-visible {
   color: var(--nova-color-primary-600);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
 }
 
-[data-theme="dark"] .nova-navbar-monolith-menu-item {
+[data-theme="dark"] .nova-navbar-monolith-menu-item,
+[data-theme="dark"] .nova-navbar-monolith-menu-dropdown-summary {
   color: var(--nova-color-text-muted);
 }
 
 [data-theme="dark"] .nova-navbar-monolith-menu-item:hover,
-[data-theme="dark"] .nova-navbar-monolith-menu-item:focus-visible {
+[data-theme="dark"] .nova-navbar-monolith-menu-item:focus-visible,
+[data-theme="dark"] .nova-navbar-monolith-menu-dropdown-summary:hover,
+[data-theme="dark"] .nova-navbar-monolith-menu-dropdown-summary:focus-visible {
   color: var(--nova-color-primary-400);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
 }
@@ -257,8 +263,17 @@
  * declares `motion.staggeredReveals: true`.
  * ============================ */
 
-.nova-navbar-monolith-menu-item {
+.nova-navbar-monolith-menu-item,
+.nova-navbar-monolith-menu-dropdown {
   opacity: 0;
   animation: envoy-fade-in-up 400ms var(--nova-motion-easing) forwards;
   animation-delay: calc(var(--nova-item-index, 0) * 50ms + 50ms);
+}
+
+/* ============================
+ * 10. Mobile Menu - Dropdown Children
+ * ============================ */
+
+.nova-navbar-monolith-menu-dropdown-children {
+  padding-inline-start: 1.75rem;
 }

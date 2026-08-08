@@ -307,14 +307,13 @@ Canonical links with validation and normalization.
 
 A map of relative paths to <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> definitions. Each key is a path from the <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root (e.g., `"./"`, `"./apps/docs"`, `"./packages/nova"`).
 
-| Field         | Type     | Description                                                                                                                                                                                                                                       |
-|---------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`        | `string` | Package name for `package.json`. Must follow the naming pattern for its role. See [Workspace Rules](/docs/quickstart/workspace-rules#workspace-naming) for details.                                                                               |
-| `displayName` | `string` | Optional. Human-readable label used by Nova commands and tooling (e.g., status output, generated docs).                                                                                                                                           |
-| `role`        | `string` | Workspace role: `"project"`, `"docs"`, `"config"`, `"app"`, `"package"`, `"tool"`, or `"template"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                          |
-| `policy`      | `string` | Workspace policy: `"freezable"`, `"trackable"`, or `"distributable"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                                                        |
-| `recipes`     | `object` | Optional. Enabled <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> and their settings, keyed by recipe name. Each value is a tuple: `[enabled]` or `[enabled, settings]`. |
-| `dotenv`      | `object` | Optional. Environment variables for the workspace's generated `.env` files and, on a publish `build` scope, its build-time environment. See [Dotenv Fields](#dotenv-fields) below.                                                                |
+| Field     | Type     | Description                                                                                                                                                                                                                                       |
+|-----------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`    | `string` | Package name for `package.json`. Must follow the naming pattern for its role. See [Workspace Rules](/docs/quickstart/workspace-rules#workspace-naming) for details.                                                                               |
+| `role`    | `string` | Workspace role: `"project"`, `"docs"`, `"config"`, `"app"`, `"package"`, `"tool"`, or `"template"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                          |
+| `policy`  | `string` | Workspace policy: `"freezable"`, `"trackable"`, or `"distributable"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                                                        |
+| `recipes` | `object` | Optional. Enabled <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> and their settings, keyed by recipe name. Each value is a tuple: `[enabled]` or `[enabled, settings]`. |
+| `dotenv`  | `object` | Optional. Environment variables for the workspace's generated `.env` files and, on a publish `build` scope, its build-time environment. See [Dotenv Fields](#dotenv-fields) below.                                                                |
 
 ### Dotenv Fields
 
@@ -354,12 +353,11 @@ Set `from` on a `public` variable when two apps declare the same `key` but need 
     },
     "./packages/nova": {
       "name": "@company/example",
-      "displayName": "Example Core",
       "role": "package",
       "policy": "distributable",
       "recipes": {
         "cleanup": [true, { "removeUnknownKeys": true, "reorderKeys": true }],
-        "sync-identity": [true, { "description": true, "keywords": true }],
+        "sync-identity": [true, { "description": true, "keywords": true, "displayName": true }],
         "sync-ownership": [true, { "homepage": true, "bugs": true, "author": true }]
       }
     },
@@ -374,42 +372,42 @@ Set `from` on a `public` variable when two apps declare the same `key` but need 
 
 ## `environment`
 
-Every environment variable and secret in the repository lives here, classified by a required `secret` flag and grouped by namespace. The [`nova generate must-haves dotenv`](/docs/cli/generators/must-haves/dotenv) command reads `environment.apps` to write each app's `.env` and `.env.sample`, and the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) delivers each value by kind.
+Every environment variable and secret in the repository lives here, classified by a required `secret` flag and grouped by namespace. The [`nova generate must-haves dotenv`](/docs/cli/generators/must-haves/dotenv) command reads `environment.workspaces` to write each workspace's `.env` and `.env.sample` (including the repo root `./` when it is declared), and the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) delivers each value by kind.
 
-| Field       | Type     | Description                                                                                                                            |
-|-------------|----------|----------------------------------------------------------------------------------------------------------------------------------------|
-| `global`    | `object` | Optional. Account-wide keys (deploy credentials, managed-only secrets) under one shared `prefix`. See [Global Fields](#global-fields). |
-| `apps`      | `object` | Optional. Per-app environment values, keyed by the app's workspace path. See [Apps Fields](#apps-fields).                              |
-| `workflows` | `object` | Optional. Workflow-config prefixes, keyed by workflow name. See [Workflows Fields](#workflows-fields).                                 |
+| Field        | Type     | Description                                                                                                                                          |
+|--------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `project`    | `object` | Optional. Project-wide keys (deploy credentials, managed-only secrets) under one shared `prefix`. See [Project Fields](#project-fields).             |
+| `workspaces` | `object` | Optional. Per-workspace environment values, keyed by the workspace path (including the repo root `./`). See [Workspaces Fields](#workspaces-fields). |
+| `workflows`  | `object` | Optional. Workflow-config prefixes, keyed by workflow name. See [Workflows Fields](#workflows-fields).                                               |
 
-Each group declares a `prefix` that Nova joins to every `key` to form its GitHub name (for example, `CBN_` joined to `PUBLIC_SITE_KEY` becomes `CBN_PUBLIC_SITE_KEY`). Prefixes must be disjoint, must not reuse the reserved `GITHUB_` namespace, and a `key` must not repeat its own prefix.
+Every declared `environment.project`, `environment.workspaces.<path>` (including the repo root `./`), and `environment.workflows.<name>` entry must declare a `prefix` — there is no exception for a group whose keys are all `local`. Nova joins that `prefix` to every `key` to form its GitHub name (for example, `CBN_` joined to `PUBLIC_SITE_KEY` becomes `CBN_PUBLIC_SITE_KEY`). Prefixes must be disjoint, must not reuse the reserved `GITHUB_` namespace, and a `key` must not repeat its own prefix. The reserved dotenv keys `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` are the only unprefixed, template-managed keys.
 
-### Global Fields
+### Project Fields
 
-`global` holds account-wide keys under a single `prefix`. Its `variables` are managed-only — provisioned on GitHub but not delivered to a build or server — so each carries only `secret`. Account-scoped deploy credentials (such as a Cloudflare API token) also derive their GitHub name from this `prefix`.
+`project` holds project-wide keys under a single `prefix`. Its `variables` are managed-only — provisioned on GitHub but not delivered to a build or server — so each carries only `secret`. Project-scoped deploy credentials (such as a Cloudflare API token) also derive their GitHub name from this `prefix`.
 
 | Field       | Type     | Description                                                           |
 |-------------|----------|-----------------------------------------------------------------------|
 | `prefix`    | `string` | Required. The uppercase namespace joined to every `key`.              |
 | `variables` | `array`  | Optional. Managed-only values, each with a `key` and a `secret` flag. |
 
-### Apps Fields
+### Workspaces Fields
 
-`apps` is keyed by an app workspace path that matches a `workspaces` entry. Each app declares a `prefix` and the `variables` delivered to its build and servers.
+`environment.workspaces` is keyed by a workspace path that matches a top-level `workspaces` entry (including the repo root `./`). Each workspace declares a `prefix` and the `variables` delivered to its build and servers.
 
-| Field       | Type     | Description                                                          |
-|-------------|----------|----------------------------------------------------------------------|
-| `prefix`    | `string` | Required. The uppercase namespace joined to every `key`.             |
-| `variables` | `array`  | Optional. App environment values. See [Value Fields](#value-fields). |
+| Field       | Type     | Description                                                                |
+|-------------|----------|----------------------------------------------------------------------------|
+| `prefix`    | `string` | Required. The uppercase namespace joined to every `key`.                   |
+| `variables` | `array`  | Optional. Workspace environment values. See [Value Fields](#value-fields). |
 
 ### Value Fields
 
-| Field          | Type      | Description                                                                                                                                                                                                                          |
-|----------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `key`          | `string`  | Environment variable name, joined to the group's `prefix` to form the GitHub name.                                                                                                                                                   |
-| `secret`       | `boolean` | Required. `true` stores the value as a GitHub Secret (encrypted); `false` as a GitHub Variable (plaintext).                                                                                                                          |
-| `buildOnly`    | `boolean` | Required on an app value. `true` delivers it to the build; `false` syncs it to every server-bearing deploy target. See [Environment Variables and Secrets](/docs/cli/generators/github/workflows#environment-variables-and-secrets). |
-| `defaultValue` | `string`  | Optional, non-secret only. Seeds `.env.sample`; on a `buildOnly: true` value it is also the build fallback. Rejected on a `secret: true` value.                                                                                      |
+| Field          | Type      | Description                                                                                                                                                                                                                               |
+|----------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `key`          | `string`  | Environment variable name, joined to the group's `prefix` to form the GitHub name.                                                                                                                                                        |
+| `secret`       | `boolean` | Required. `true` stores the value as a GitHub Secret (encrypted); `false` as a GitHub Variable (plaintext).                                                                                                                               |
+| `buildOnly`    | `boolean` | Required on a workspace value. `true` delivers it to the build; `false` syncs it to every server-bearing deploy target. See [Environment Variables and Secrets](/docs/cli/generators/github/workflows#environment-variables-and-secrets). |
+| `defaultValue` | `string`  | Optional, non-secret only. Seeds `.env.sample`; on a `buildOnly: true` value it is also the build fallback. Rejected on a `secret: true` value.                                                                                           |
 
 ### Workflows Fields
 
@@ -422,13 +420,16 @@ Each group declares a `prefix` that Nova joins to every `key` to form its GitHub
 ```json
 {
   "environment": {
-    "global": {
+    "project": {
       "prefix": "ACCT_",
       "variables": [
         { "key": "NPM_TOKEN", "secret": true }
       ]
     },
-    "apps": {
+    "workspaces": {
+      "./": {
+        "prefix": "ROOT_"
+      },
       "./apps/web": {
         "prefix": "WEB_",
         "variables": [
@@ -443,6 +444,22 @@ Each group declares a `prefix` that Nova joins to every `key` to form its GitHub
         "prefix": "SGI_"
       }
     }
+  }
+}
+```
+
+## `settings`
+
+Project-wide behavior toggles that affect how Nova commands operate.
+
+| Field                | Type      | Description                                                                                                                                                                                                                    |
+|----------------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `lockStepVersioning` | `boolean` | When `true`, `nova utility changelog --release` bumps every distributable workspace to the same version, even if some had no recorded changes. Packages without changes receive a "No changes." entry in their `CHANGELOG.md`. |
+
+```json title="nova.config.json"
+{
+  "settings": {
+    "lockStepVersioning": true
   }
 }
 ```

@@ -111,8 +111,8 @@ function listPostsByYears(blogPosts: Theme_BlogArchivePage_Index_ListPostsByYear
     const existingPosts: Theme_BlogArchivePage_Index_ListPostsByYears_ExistingPosts = postsByYear.get(year) ?? [];
 
     postsByYear.set(year, [
-      post,
       ...existingPosts,
+      post,
     ]);
   }
 

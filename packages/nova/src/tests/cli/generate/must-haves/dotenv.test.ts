@@ -21,6 +21,13 @@ import type {
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_LoadSpy,
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_ReadFileSpy,
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_SaveSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_ActualReadFile,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_Calls,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_IsProjectRootSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_LoadSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_ReadFileSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_SampleTargetCall,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_SaveSpy,
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_ActualReadFile,
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_Calls,
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_EnvTargetCall,
@@ -67,6 +74,14 @@ import type {
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_ReadFileSpy,
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_SampleTargetCall,
   Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_SaveSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_ActualReadFile,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_Calls,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_EnvTargetCall,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_IsProjectRootSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_LoadSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_ReadFileSpy,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_SampleTargetCall,
+  Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_SaveSpy,
 } from '../../../../types/tests/cli/generate/must-haves/dotenv.test.d.ts';
 
 vi.mock('prompts', () => {
@@ -85,20 +100,20 @@ describe('CliGenerateMustHavesDotenv.run', () => {
     const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
     const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       environment: {
-        apps: {
+        workspaces: {
           './': {
             prefix: 'DEMO_',
             variables: [
               {
                 key: 'CLOUDFLARE_API_TOKEN',
                 secret: false,
-                buildOnly: false,
+                reach: 'runtime',
                 defaultValue: 'changeme',
               },
               {
                 key: 'NEW_KEY',
                 secret: false,
-                buildOnly: false,
+                reach: 'runtime',
                 defaultValue: 'fresh',
               },
             ],
@@ -158,13 +173,13 @@ describe('CliGenerateMustHavesDotenv.run', () => {
     const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
     const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       environment: {
-        apps: {
+        workspaces: {
           './': {
             prefix: 'DEMO_',
             variables: [{
               key: 'API_KEY',
               secret: false,
-              buildOnly: false,
+              reach: 'runtime',
               defaultValue: 'abc',
             }],
           },
@@ -223,13 +238,13 @@ describe('CliGenerateMustHavesDotenv.run', () => {
     const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
     const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       environment: {
-        apps: {
+        workspaces: {
           './': {
             prefix: 'DEMO_',
             variables: [{
               key: 'API_KEY',
               secret: false,
-              buildOnly: false,
+              reach: 'runtime',
               defaultValue: 'abc',
             }],
           },
@@ -280,13 +295,13 @@ describe('CliGenerateMustHavesDotenv.run', () => {
     const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesMultiLineQuotedValues_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
     const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesMultiLineQuotedValues_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       environment: {
-        apps: {
+        workspaces: {
           './': {
             prefix: 'DEMO_',
             variables: [{
               key: 'CLOUDFLARE_API_TOKEN',
               secret: false,
-              buildOnly: false,
+              reach: 'runtime',
               defaultValue: 'changeme',
             }],
           },
@@ -356,20 +371,20 @@ describe('CliGenerateMustHavesDotenv.run', () => {
     const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
     const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       environment: {
-        apps: {
+        workspaces: {
           './': {
             prefix: 'DEMO_',
             variables: [
               {
                 key: 'API_KEY',
                 secret: false,
-                buildOnly: false,
+                reach: 'runtime',
                 defaultValue: 'abc',
               },
               {
                 key: 'SECRET_TOKEN',
                 secret: true,
-                buildOnly: false,
+                reach: 'runtime',
               },
             ],
           },
@@ -455,13 +470,13 @@ describe('CliGenerateMustHavesDotenv.run', () => {
     const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesAFileForEachWorkspaceThatDeclaresDotenv_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
     const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesAFileForEachWorkspaceThatDeclaresDotenv_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       environment: {
-        apps: {
+        workspaces: {
           './': {
             prefix: 'ROOT_',
             variables: [{
               key: 'ROOT_KEY',
               secret: false,
-              buildOnly: false,
+              reach: 'runtime',
               defaultValue: 'root',
             }],
           },
@@ -470,7 +485,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
             variables: [{
               key: 'WEB_KEY',
               secret: false,
-              buildOnly: false,
+              reach: 'runtime',
               defaultValue: 'web',
             }],
           },
@@ -504,6 +519,131 @@ describe('CliGenerateMustHavesDotenv.run', () => {
     ok(webEnvCall !== undefined, 'Expected saveGeneratedFile to be called for the apps/web .env');
 
     ok(webEnvCall[1].includes('WEB_KEY=""'), 'Expected the apps/web .env to include the web workspace variable');
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    readFileSpy.mockRestore();
+
+    saveSpy.mockRestore();
+
+    return;
+  });
+
+  it('keeps managed values in the sample', async () => {
+    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+      environment: {
+        workspaces: {
+          './': {
+            prefix: 'DEMO_',
+            variables: [
+              {
+                key: 'MANAGED_KEY',
+                secret: false,
+                reach: 'managed',
+              },
+              {
+                key: 'LOCAL_KEY',
+                reach: 'local',
+                defaultValue: 'here',
+              },
+            ],
+          },
+        },
+      },
+    });
+    const saveSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+
+    // Force the existing ".env" read to resolve empty so the sample assertions stay deterministic.
+    const actualReadFile: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_ActualReadFile = fsPromises.readFile;
+    const readFileSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_ReadFileSpy = vi.spyOn(fsPromises, 'readFile').mockImplementation((filePath, encoding) => {
+      if (typeof filePath === 'string' && filePath.endsWith('/.env') === true) {
+        return Promise.resolve('');
+      }
+
+      return actualReadFile(filePath, encoding);
+    });
+
+    await CliGenerateMustHavesDotenv.run({ replaceFile: true });
+
+    const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_Calls = saveSpy['mock']['calls'];
+
+    const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env.sample'));
+
+    ok(sampleTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env.sample');
+
+    ok(sampleTargetCall[1].includes('LOCAL_KEY="here"'), 'Expected .env.sample content to include the local value line');
+
+    // A managed app value belongs in the universal ".env"/".env.sample" scaffold; "reach" governs only GitHub provisioning + CI delivery.
+    ok(sampleTargetCall[1].includes('MANAGED_KEY=""'), 'Expected .env.sample content to keep the managed value line');
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    readFileSpy.mockRestore();
+
+    saveSpy.mockRestore();
+
+    return;
+  });
+
+  it('writes the root env when the root workspace is declared with no variables', async () => {
+    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+      environment: {
+        workspaces: {
+          './': {
+            prefix: 'ROOT_',
+          },
+        },
+      },
+    });
+    const saveSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+
+    // Force the existing target reads to resolve empty so only the reserved-key template baseline remains.
+    const actualReadFile: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_ActualReadFile = fsPromises.readFile;
+    const readFileSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_ReadFileSpy = vi.spyOn(fsPromises, 'readFile').mockImplementation((filePath, encoding) => {
+      if (
+        typeof filePath === 'string'
+        && (
+          filePath.endsWith('/.env') === true
+          || filePath.endsWith('/.env.sample') === true
+        )
+      ) {
+        return Promise.resolve('');
+      }
+
+      return actualReadFile(filePath, encoding);
+    });
+
+    await CliGenerateMustHavesDotenv.run({ replaceFile: true });
+
+    const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_Calls = saveSpy['mock']['calls'];
+
+    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env'));
+
+    ok(envTargetCall !== undefined, 'Expected saveGeneratedFile to be called for the root .env');
+
+    ok(
+      envTargetCall[1].includes('NODE_ENV=') === true
+      && envTargetCall[1].includes('LOG_LEVEL=') === true
+      && envTargetCall[1].includes('LOG_TIME=') === true,
+      'Expected the root .env to carry the reserved keys',
+    );
+
+    const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env.sample'));
+
+    ok(sampleTargetCall !== undefined, 'Expected saveGeneratedFile to be called for the root .env.sample');
+
+    ok(
+      sampleTargetCall[1].includes('NODE_ENV=') === true
+      && sampleTargetCall[1].includes('LOG_LEVEL=') === true
+      && sampleTargetCall[1].includes('LOG_TIME=') === true,
+      'Expected the root .env.sample to carry the reserved keys',
+    );
 
     isProjectRootSpy.mockRestore();
 

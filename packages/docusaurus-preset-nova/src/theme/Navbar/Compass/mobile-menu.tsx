@@ -1,4 +1,5 @@
 import Link from '@docusaurus/Link';
+import { useLocation } from '@docusaurus/router';
 import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
 import Logo from '@theme/Logo';
@@ -16,6 +17,11 @@ import type {
   Theme_Navbar_Compass_MobileMenu_MobileMenu_ActiveItemLabel,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_AnimationEvent,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_AriaLabel,
+  Theme_Navbar_Compass_MobileMenu_MobileMenu_ChildIsActive,
+  Theme_Navbar_Compass_MobileMenu_MobileMenu_ChildItem,
+  Theme_Navbar_Compass_MobileMenu_MobileMenu_ChildKey,
+  Theme_Navbar_Compass_MobileMenu_MobileMenu_ChildLabel,
+  Theme_Navbar_Compass_MobileMenu_MobileMenu_ChildTo,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_DefaultIcon,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_FocusTarget,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_HandleClickOutsideFunction,
@@ -33,9 +39,12 @@ import type {
   Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemStyle,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_LinkProps,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_LinkSpread,
+  Theme_Navbar_Compass_MobileMenu_MobileMenu_NavItemChildren,
+  Theme_Navbar_Compass_MobileMenu_MobileMenu_NavItemType,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_OnClose,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_OverlayClassName,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_PanelRef,
+  Theme_Navbar_Compass_MobileMenu_MobileMenu_Pathname,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_Props,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_Returns,
   Theme_Navbar_Compass_MobileMenu_MobileMenu_SetIsClosing,
@@ -61,6 +70,7 @@ function MobileMenu(props: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props): Th
   const items: Theme_Navbar_Compass_MobileMenu_MobileMenu_Items = props['items'];
   const siteLogo: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo = props['siteLogo'];
   const activeItemLabel: Theme_Navbar_Compass_MobileMenu_MobileMenu_ActiveItemLabel = props['activeItemLabel'];
+  const pathname: Theme_Navbar_Compass_MobileMenu_MobileMenu_Pathname = useLocation()['pathname'];
   const panelRef: Theme_Navbar_Compass_MobileMenu_MobileMenu_PanelRef = useRef<HTMLDivElement>(null);
   const isClosingState: Theme_Navbar_Compass_MobileMenu_MobileMenu_IsClosingState = useState<Theme_Navbar_Compass_MobileMenu_MobileMenu_IsClosing>(false);
   const isClosing: Theme_Navbar_Compass_MobileMenu_MobileMenu_IsClosing = isClosingState[0];
@@ -208,9 +218,69 @@ function MobileMenu(props: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props): Th
             <div className="nova-navbar-compass-menu-items nova-mobile-menu-items">
               {
                 items.map((navItem: Theme_Navbar_Index_Navbar_Item, itemIndex: Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemIndex) => {
+                  const navItemType: Theme_Navbar_Compass_MobileMenu_MobileMenu_NavItemType = navItem['type'] as Theme_Navbar_Compass_MobileMenu_MobileMenu_NavItemType;
+                  const navItemChildren: Theme_Navbar_Compass_MobileMenu_MobileMenu_NavItemChildren = navItem['items'] as Theme_Navbar_Compass_MobileMenu_MobileMenu_NavItemChildren;
+                  const itemStyle: Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemStyle = { '--nova-item-index': itemIndex } as Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemStyle;
+
+                  if (
+                    navItemType === 'dropdown'
+                    || (
+                      navItemType === undefined
+                      && Array.isArray(navItemChildren) === true
+                    )
+                  ) {
+                    const dropdownIcon: Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemIcon = navItem['icon'] as Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemIcon;
+
+                    return (
+                      <details key={navItem['label']} className="nova-navbar-compass-menu-dropdown" style={itemStyle}>
+                        <summary className="nova-navbar-compass-menu-dropdown-summary">
+                          <Icon icon={dropdownIcon ?? 'lucide:chevron-down'} width="18" height="18" aria-hidden="true" />
+                          <span>{navItem['label']}</span>
+                        </summary>
+                        <div className="nova-navbar-compass-menu-dropdown-children">
+                          {
+                            (navItemChildren ?? []).map((childItem: Theme_Navbar_Compass_MobileMenu_MobileMenu_ChildItem) => {
+                              const childIcon: Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemIcon = childItem['icon'] as Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemIcon;
+                              const childLinkProps: Theme_Navbar_Compass_MobileMenu_MobileMenu_LinkProps = {};
+                              const childTo: Theme_Navbar_Compass_MobileMenu_MobileMenu_ChildTo = childItem['to'] as Theme_Navbar_Compass_MobileMenu_MobileMenu_ChildTo;
+                              const childIsActive: Theme_Navbar_Compass_MobileMenu_MobileMenu_ChildIsActive = (typeof childTo === 'string' && pathname.startsWith(childTo) === true);
+
+                              if (childTo !== undefined) {
+                                Reflect.set(childLinkProps, 'to', childTo);
+                              }
+
+                              if (childItem['href'] !== undefined) {
+                                Reflect.set(childLinkProps, 'href', childItem['href']);
+                              }
+
+                              if (childIsActive === true) {
+                                Reflect.set(childLinkProps, 'aria-current', 'page');
+                              }
+
+                              return (
+                                <Link
+                                  className="nova-navbar-compass-menu-item"
+                                  key={childItem['label'] as Theme_Navbar_Compass_MobileMenu_MobileMenu_ChildKey}
+                                  {...(childLinkProps as Theme_Navbar_Compass_MobileMenu_MobileMenu_LinkSpread)}
+                                  onClick={() => {
+                                    setIsClosing(true);
+
+                                    return undefined;
+                                  }}
+                                >
+                                  <Icon icon={childIcon ?? 'lucide:link'} width="18" height="18" aria-hidden="true" />
+                                  <span>{childItem['label'] as Theme_Navbar_Compass_MobileMenu_MobileMenu_ChildLabel}</span>
+                                </Link>
+                              );
+                            })
+                          }
+                        </div>
+                      </details>
+                    );
+                  }
+
                   const itemIcon: Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemIcon = navItem['icon'] as Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemIcon;
                   const defaultIcon: Theme_Navbar_Compass_MobileMenu_MobileMenu_DefaultIcon = 'lucide:link';
-                  const itemStyle: Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemStyle = { '--nova-item-index': itemIndex } as Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemStyle;
                   const linkProps: Theme_Navbar_Compass_MobileMenu_MobileMenu_LinkProps = {};
                   const isActive: Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemIsActive = navItem['label'] === activeItemLabel;
 

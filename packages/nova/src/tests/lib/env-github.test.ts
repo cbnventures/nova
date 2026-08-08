@@ -19,7 +19,7 @@ import * as utility from '../../lib/utility.js';
 /**
  * Tests - Lib - Env GitHub - Lib Env GitHub.
  *
- * @since 0.21.0
+ * @since 0.22.0
  */
 describe('libEnvGithub', () => {
   it('reports gh as unavailable when the CLI is missing', async () => {
@@ -36,10 +36,27 @@ describe('libEnvGithub', () => {
     return;
   });
 
-  it('lists variable and secret names when gh is available', async () => {
+  it('lists variable and secret names and variable values when gh is available', async () => {
     vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
     vi.spyOn(utility, 'executeShell').mockImplementation(async (command) => {
+      if (command.includes('--json name,value') === true) {
+        return {
+          textOut: JSON.stringify([
+            {
+              name: 'CBN_A',
+              value: 'us-east-1',
+            },
+            {
+              name: 'CBN_B',
+              value: 'NOVA_PLACEHOLDER',
+            },
+          ]),
+          textError: '',
+          code: 0,
+        };
+      }
+
       if (command.includes('variable list') === true) {
         return {
           textOut: JSON.stringify([
@@ -73,6 +90,10 @@ describe('libEnvGithub', () => {
         'CBN_B',
       ],
       secrets: ['CBN_S'],
+      variableValues: {
+        CBN_A: 'us-east-1',
+        CBN_B: 'NOVA_PLACEHOLDER',
+      },
     });
 
     vi.restoreAllMocks();

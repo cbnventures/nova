@@ -6,7 +6,7 @@
     },
     "description": {
       "short": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
-      "long": "Nova is a JavaScript and TypeScript monorepo suite, offering strict presets and guided tooling to help you build with confidence, predictability, and minimal setup. It delivers strong defaults, robust linting and typing, and scaffolded project generators — all wrapped in guardrails that keep your workflow safe without sacrificing flexibility."
+      "long": "Nova is a JavaScript and TypeScript monorepo suite, offering strict presets and guided tooling to help you build with confidence, predictability, and minimal setup. It delivers strong defaults, robust linting and typing, and scaffolded project generators \u2014 all wrapped in guardrails that keep your workflow safe without sacrificing flexibility."
     },
     "keywords": [
       "eslint",
@@ -142,21 +142,6 @@
       ]
     }
   ],
-  "environment": {
-    "global": {
-      "prefix": "PROJECT_"
-    },
-    "apps": {
-      "./apps/docs": {
-        "prefix": "DOCS_"
-      }
-    },
-    "workflows": {
-      "sponsor-check": {
-        "prefix": "SGI_"
-      }
-    }
-  },
   "urls": {
     "homepage": "https://nova.cbnventures.io/",
     "repository": "git+https://github.com/cbnventures/nova.git",
@@ -177,36 +162,6 @@
       "role": "project",
       "policy": "freezable",
       "name": "nova-project"
-    },
-    "./apps/demo-envoy": {
-      "role": "template",
-      "policy": "freezable",
-      "name": "demo-envoy"
-    },
-    "./apps/demo-foundry": {
-      "role": "template",
-      "policy": "freezable",
-      "name": "demo-foundry"
-    },
-    "./apps/demo-lantern": {
-      "role": "template",
-      "policy": "freezable",
-      "name": "demo-lantern"
-    },
-    "./apps/demo-marshal": {
-      "role": "template",
-      "policy": "freezable",
-      "name": "demo-marshal"
-    },
-    "./apps/demo-sentinel": {
-      "role": "template",
-      "policy": "freezable",
-      "name": "demo-sentinel"
-    },
-    "./apps/demo-signal": {
-      "role": "template",
-      "policy": "freezable",
-      "name": "demo-signal"
     },
     "./apps/docs": {
       "role": "docs",
@@ -252,248 +207,25 @@
         "enabled": true
       }
     },
+    "read-me": {
+      "update-badges": {
+        "enabled": true
+      },
+      "update-credits": {
+        "enabled": true
+      },
+      "update-documentation": {
+        "enabled": true
+      },
+      "update-header": {
+        "enabled": true
+      },
+      "update-introduction": {
+        "enabled": true
+      }
+    },
     "package-json": {
       "./": {
-        "cleanup": {
-          "enabled": true,
-          "settings": {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        },
-        "normalize-artifacts": {
-          "enabled": true
-        },
-        "normalize-bundler": {
-          "enabled": true
-        },
-        "normalize-dependencies": {
-          "enabled": true,
-          "settings": {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        },
-        "normalize-modules": {
-          "enabled": true
-        },
-        "normalize-tooling": {
-          "enabled": true
-        },
-        "sync-environment": {
-          "enabled": true,
-          "settings": {
-            "trackNodeLtsVersions": true
-          }
-        },
-        "sync-identity": {
-          "enabled": true
-        },
-        "sync-ownership": {
-          "enabled": true
-        }
-      },
-      "./apps/demo-envoy": {
-        "cleanup": {
-          "enabled": true,
-          "settings": {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        },
-        "normalize-artifacts": {
-          "enabled": true
-        },
-        "normalize-bundler": {
-          "enabled": true
-        },
-        "normalize-dependencies": {
-          "enabled": true,
-          "settings": {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        },
-        "normalize-modules": {
-          "enabled": true
-        },
-        "normalize-tooling": {
-          "enabled": true
-        },
-        "sync-environment": {
-          "enabled": true,
-          "settings": {
-            "trackNodeLtsVersions": true
-          }
-        },
-        "sync-identity": {
-          "enabled": true
-        },
-        "sync-ownership": {
-          "enabled": true
-        }
-      },
-      "./apps/demo-foundry": {
-        "cleanup": {
-          "enabled": true,
-          "settings": {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        },
-        "normalize-artifacts": {
-          "enabled": true
-        },
-        "normalize-bundler": {
-          "enabled": true
-        },
-        "normalize-dependencies": {
-          "enabled": true,
-          "settings": {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        },
-        "normalize-modules": {
-          "enabled": true
-        },
-        "normalize-tooling": {
-          "enabled": true
-        },
-        "sync-environment": {
-          "enabled": true,
-          "settings": {
-            "trackNodeLtsVersions": true
-          }
-        },
-        "sync-identity": {
-          "enabled": true
-        },
-        "sync-ownership": {
-          "enabled": true
-        }
-      },
-      "./apps/demo-lantern": {
-        "cleanup": {
-          "enabled": true,
-          "settings": {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        },
-        "normalize-artifacts": {
-          "enabled": true
-        },
-        "normalize-bundler": {
-          "enabled": true
-        },
-        "normalize-dependencies": {
-          "enabled": true,
-          "settings": {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        },
-        "normalize-modules": {
-          "enabled": true
-        },
-        "normalize-tooling": {
-          "enabled": true
-        },
-        "sync-environment": {
-          "enabled": true,
-          "settings": {
-            "trackNodeLtsVersions": true
-          }
-        },
-        "sync-identity": {
-          "enabled": true
-        },
-        "sync-ownership": {
-          "enabled": true
-        }
-      },
-      "./apps/demo-marshal": {
-        "cleanup": {
-          "enabled": true,
-          "settings": {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        },
-        "normalize-artifacts": {
-          "enabled": true
-        },
-        "normalize-bundler": {
-          "enabled": true
-        },
-        "normalize-dependencies": {
-          "enabled": true,
-          "settings": {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        },
-        "normalize-modules": {
-          "enabled": true
-        },
-        "normalize-tooling": {
-          "enabled": true
-        },
-        "sync-environment": {
-          "enabled": true,
-          "settings": {
-            "trackNodeLtsVersions": true
-          }
-        },
-        "sync-identity": {
-          "enabled": true
-        },
-        "sync-ownership": {
-          "enabled": true
-        }
-      },
-      "./apps/demo-sentinel": {
-        "cleanup": {
-          "enabled": true,
-          "settings": {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        },
-        "normalize-artifacts": {
-          "enabled": true
-        },
-        "normalize-bundler": {
-          "enabled": true
-        },
-        "normalize-dependencies": {
-          "enabled": true,
-          "settings": {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        },
-        "normalize-modules": {
-          "enabled": true
-        },
-        "normalize-tooling": {
-          "enabled": true
-        },
-        "sync-environment": {
-          "enabled": true,
-          "settings": {
-            "trackNodeLtsVersions": true
-          }
-        },
-        "sync-identity": {
-          "enabled": true
-        },
-        "sync-ownership": {
-          "enabled": true
-        }
-      },
-      "./apps/demo-signal": {
         "cleanup": {
           "enabled": true,
           "settings": {
@@ -678,5 +410,26 @@
         }
       }
     }
+  },
+  "environment": {
+    "project": {
+      "prefix": "PROJECT_"
+    },
+    "workspaces": {
+      "./": {
+        "prefix": "ROOT_"
+      },
+      "./apps/docs": {
+        "prefix": "DOCS_"
+      }
+    },
+    "workflows": {
+      "sponsor-check": {
+        "prefix": "SGS_"
+      }
+    }
+  },
+  "settings": {
+    "lockStepVersioning": true
   }
 }

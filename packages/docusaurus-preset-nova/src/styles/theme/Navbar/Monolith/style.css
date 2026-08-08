@@ -197,3 +197,36 @@
 .nova-navbar-monolith-menu-item:hover {
   text-decoration: none;
 }
+
+.nova-navbar-monolith-menu-dropdown {
+  display: flex;
+  flex-direction: column;
+}
+
+.nova-navbar-monolith-menu-dropdown-summary {
+  display: flex;
+  align-items: center;
+
+  padding: 0.75rem;
+
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.nova-navbar-monolith-menu-dropdown-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nova-navbar-monolith-menu-dropdown-summary svg {
+  transition: transform var(--nova-motion-duration) var(--nova-motion-easing);
+}
+
+.nova-navbar-monolith-menu-dropdown[open] > .nova-navbar-monolith-menu-dropdown-summary svg {
+  transform: rotate(180deg);
+}
+
+.nova-navbar-monolith-menu-dropdown-children {
+  display: flex;
+  flex-direction: column;
+}

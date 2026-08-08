@@ -11,7 +11,7 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_CarriesANonSecretBuildDefaultAndBakesItAsAShellFallback_Values,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_CarriesANonSecretBuildDefaultAndBakesItAsAShellFallback_WriteEnvRun,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_RuntimeValues,
-  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_SplitsAppValuesByBuildOnlyAndDerivesPrefixedNames_Environment,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_SplitsAppValuesByReachAndDerivesPrefixedNames_Environment,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildCheckSponsorGatedIssues_EmitsTheCheckIssuesJobWithReadWritePermissions_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildCheckSponsorGatedIssues_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildCheckSponsorGatedIssues_MergesBothTriggersInConfigOrder_Ir,
@@ -24,15 +24,15 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AddsNoStepForADotenvLessScope_PlainStep,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AddsNoStepForADotenvLessScope_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AppliesNoJobsConditionForTheAnyVariant_Ir,
-  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_BuildJob,
-  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_DefaultEnvironment,
-  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_DollarBrace,
-  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_ExpectedFallback,
-  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_Ir,
-  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_RegionEntry,
-  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_Result,
-  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_StepEnv,
-  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_WriteEnvStep,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_BuildJob,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_DefaultEnvironment,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_DollarBrace,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_ExpectedFallback,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_Ir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_RegionEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_StepEnv,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_WriteEnvStep,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesOnlyPublicVariablesIntoTheScopeEnvFile_BuildJob,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesOnlyPublicVariablesIntoTheScopeEnvFile_GtmEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesOnlyPublicVariablesIntoTheScopeEnvFile_Ir,
@@ -494,24 +494,24 @@ describe('WorkflowsBlueprint.buildPublish', () => {
     },
   };
   const environment: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_Environment = {
-    apps: {
+    workspaces: {
       './apps/public-app': {
         prefix: 'CBN_',
         variables: [
           {
             key: 'PUBLIC_SITE_KEY',
             secret: false,
-            buildOnly: true,
+            reach: 'build',
           },
           {
             key: 'PUBLIC_GTM_ID',
             secret: false,
-            buildOnly: true,
+            reach: 'build',
           },
           {
             key: 'SECRET_TOKEN',
             secret: true,
-            buildOnly: false,
+            reach: 'runtime',
           },
         ],
       },
@@ -571,45 +571,45 @@ describe('WorkflowsBlueprint.buildPublish', () => {
     return;
   });
 
-  it('bakes a build-only default as an escaped shell fallback', () => {
-    const defaultEnvironment: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_DefaultEnvironment = {
-      apps: {
+  it('bakes a build default as an escaped shell fallback', () => {
+    const defaultEnvironment: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_DefaultEnvironment = {
+      workspaces: {
         './apps/public-app': {
           prefix: 'CBN_',
           variables: [{
             key: 'PUBLIC_REGION',
             secret: false,
-            buildOnly: true,
+            reach: 'build',
             defaultValue: 'x"$y',
           }],
         },
       },
     };
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces, defaultEnvironment);
-    const buildJob: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_BuildJob = ir['jobs'].find((job) => job['id'] === 'build');
+    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces, defaultEnvironment);
+    const buildJob: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_BuildJob = ir['jobs'].find((job) => job['id'] === 'build');
 
     ok(buildJob !== undefined, 'the build job exists');
 
-    const writeEnvStep: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_WriteEnvStep = buildJob['steps'].find((step) => step['name'] === 'Write environment file (apps-public-app)');
+    const writeEnvStep: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_WriteEnvStep = buildJob['steps'].find((step) => step['name'] === 'Write environment file (apps-public-app)');
 
     ok(writeEnvStep !== undefined, 'the public-app scope adds a write-env step');
 
-    const stepEnv: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_StepEnv = writeEnvStep['env'] ?? [];
-    const regionEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_RegionEntry = stepEnv.find((entryPair) => entryPair['key'] === 'PUBLIC_REGION');
+    const stepEnv: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_StepEnv = writeEnvStep['env'] ?? [];
+    const regionEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_RegionEntry = stepEnv.find((entryPair) => entryPair['key'] === 'PUBLIC_REGION');
 
     ok(regionEntry !== undefined, 'the build-only default entry is present');
 
     ok(String(regionEntry['value']).includes('vars.CBN_PUBLIC_REGION'), 'the default var sources from its prefixed name');
 
-    const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_Result = WorkflowsBlueprint.serialize(ir);
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_Result = WorkflowsBlueprint.serialize(ir);
 
     // Assemble the "${" opener with the join trick so the literal placeholder
     // does not trip the template-curly lint rule.
-    const dollarBrace: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_DollarBrace = [
+    const dollarBrace: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_DollarBrace = [
       '$',
       '{',
     ].join('');
-    const expectedFallback: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildOnlyDefaultAsAnEscapedShellFallback_ExpectedFallback = `echo "PUBLIC_REGION=${dollarBrace}PUBLIC_REGION:-x\\"\\$y}"`;
+    const expectedFallback: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_ExpectedFallback = `echo "PUBLIC_REGION=${dollarBrace}PUBLIC_REGION:-x\\"\\$y}"`;
 
     ok(result.includes(expectedFallback), `expected an escaped shell default fallback; got: ${result}`);
 
@@ -1087,33 +1087,33 @@ describe('WorkflowsBlueprint.appBuildValues', () => {
   const buildValues: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_BuildValues = Reflect.get(WorkflowsBlueprint, 'appBuildValues') as Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_BuildValues;
   const runtimeValues: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_RuntimeValues = Reflect.get(WorkflowsBlueprint, 'appRuntimeValues') as Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_RuntimeValues;
 
-  it('splits app values by buildOnly and derives prefixed names', () => {
-    const environment: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_SplitsAppValuesByBuildOnlyAndDerivesPrefixedNames_Environment = {
-      apps: {
+  it('splits app values by reach and derives prefixed names', () => {
+    const environment: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_SplitsAppValuesByReachAndDerivesPrefixedNames_Environment = {
+      workspaces: {
         './apps/cbnventures': {
           prefix: 'CBN_',
           variables: [
             {
               key: 'PUBLIC_X',
               secret: false,
-              buildOnly: true,
+              reach: 'build',
             },
             {
               key: 'REGION',
               secret: false,
-              buildOnly: false,
+              reach: 'runtime',
             },
             {
               key: 'SECRET_Y',
               secret: true,
-              buildOnly: false,
+              reach: 'runtime',
             },
           ],
         },
       },
     };
 
-    // appBuildValues keeps only buildOnly:true values; appRuntimeValues keeps buildOnly:false.
+    // appBuildValues keeps only reach:'build' values; appRuntimeValues keeps reach:'runtime'.
     // Both derive name = prefix + key and carry secret through unchanged (it only picks the source).
     deepStrictEqual(buildValues(environment, './apps/cbnventures'), [{
       key: 'PUBLIC_X',
@@ -1140,13 +1140,13 @@ describe('WorkflowsBlueprint.appBuildValues', () => {
   it('carries a non-secret build default and bakes it as a shell fallback', () => {
     const writeEnvRun: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_CarriesANonSecretBuildDefaultAndBakesItAsAShellFallback_WriteEnvRun = Reflect.get(WorkflowsBlueprint, 'writeEnvRun') as Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_CarriesANonSecretBuildDefaultAndBakesItAsAShellFallback_WriteEnvRun;
     const environment: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintAppBuildValues_CarriesANonSecretBuildDefaultAndBakesItAsAShellFallback_Environment = {
-      apps: {
+      workspaces: {
         './apps/cbnventures': {
           prefix: 'CBN_',
           variables: [{
             key: 'PUBLIC_REGION',
             secret: false,
-            buildOnly: true,
+            reach: 'build',
             defaultValue: 'us-east-1',
           }],
         },

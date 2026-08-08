@@ -169,11 +169,15 @@ export type Lib_Translations_Runner_ApplyNavbar_Items = Record<string, unknown>[
 
 export type Lib_Translations_Runner_ApplyNavbar_Item = Record<string, unknown>;
 
+export type Lib_Translations_Runner_ApplyNavbar_ItemLabel = string | undefined;
+
 export type Lib_Translations_Runner_ApplyNavbar_LabelMessage = TranslationMessage | undefined;
 
 export type Lib_Translations_Runner_ApplyNavbar_Children = Record<string, unknown>[] | undefined;
 
 export type Lib_Translations_Runner_ApplyNavbar_Child = Record<string, unknown>;
+
+export type Lib_Translations_Runner_ApplyNavbar_ChildLabel = string | undefined;
 
 export type Lib_Translations_Runner_ApplyNavbar_ChildMessage = TranslationMessage | undefined;
 

@@ -84,7 +84,8 @@
  * ============================ */
 
 .nova-navbar-canopy-items a,
-.nova-navbar-canopy-items .nova-navbar-more-summary {
+.nova-navbar-canopy-items .nova-navbar-more-summary,
+.nova-navbar-canopy-items .nova-dropdown-summary {
   display: inline-flex;
   align-items: center;
   min-height: 2.25rem;
@@ -109,7 +110,10 @@
 .nova-navbar-canopy-items a:not(.navbar__link--active):not([aria-current="page"]):focus-visible,
 .nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:hover,
 .nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:focus-visible,
-.nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary {
+.nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary,
+.nova-navbar-canopy-items .nova-dropdown:not(.nova-dropdown--active) > .nova-dropdown-summary:hover,
+.nova-navbar-canopy-items .nova-dropdown:not(.nova-dropdown--active) > .nova-dropdown-summary:focus-visible,
+.nova-navbar-canopy-items .nova-dropdown:not(.nova-dropdown--active)[open] > .nova-dropdown-summary {
   color: var(--nova-color-primary-700);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
   text-decoration: none;
@@ -120,7 +124,10 @@
 [data-theme="dark"] .nova-navbar-canopy-items a:not(.navbar__link--active):not([aria-current="page"]):focus-visible,
 [data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:hover,
 [data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:focus-visible,
-[data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary {
+[data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary,
+[data-theme="dark"] .nova-navbar-canopy-items .nova-dropdown:not(.nova-dropdown--active) > .nova-dropdown-summary:hover,
+[data-theme="dark"] .nova-navbar-canopy-items .nova-dropdown:not(.nova-dropdown--active) > .nova-dropdown-summary:focus-visible,
+[data-theme="dark"] .nova-navbar-canopy-items .nova-dropdown:not(.nova-dropdown--active)[open] > .nova-dropdown-summary {
   color: var(--nova-color-primary-300);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
 }
@@ -148,7 +155,8 @@
 .nova-navbar-canopy-items a[aria-current="page"],
 .nova-navbar-canopy-items a.navbar__link--active,
 .nova-navbar-canopy-items .nova-navbar-more:has(a[aria-current="page"]) > .nova-navbar-more-summary,
-.nova-navbar-canopy-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary {
+.nova-navbar-canopy-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary,
+.nova-navbar-canopy-items .nova-dropdown--active > .nova-dropdown-summary {
   font-weight: 600;
   color: var(--nova-color-primary-800);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
@@ -157,7 +165,8 @@
 [data-theme="dark"] .nova-navbar-canopy-items a[aria-current="page"],
 [data-theme="dark"] .nova-navbar-canopy-items a.navbar__link--active,
 [data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more:has(a[aria-current="page"]) > .nova-navbar-more-summary,
-[data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary {
+[data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary,
+[data-theme="dark"] .nova-navbar-canopy-items .nova-dropdown--active > .nova-dropdown-summary {
   color: var(--nova-color-primary-200);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 76%);
 }
@@ -340,7 +349,8 @@
   gap: 0.5rem;
 }
 
-.nova-navbar-canopy-menu-item {
+.nova-navbar-canopy-menu-item,
+.nova-navbar-canopy-menu-dropdown-summary {
   flex-direction: column;
   justify-content: center;
   gap: 0.5rem;
@@ -353,7 +363,7 @@
   font-variation-settings: "opsz" 36;
   font-size: 1rem;
   text-align: center;
-  color: var(--nova-lantern-ink);
+  color: var(--nova-color-primary-700);
 
   background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
   border: 1px solid var(--nova-lantern-border);
@@ -368,14 +378,18 @@
 }
 
 .nova-navbar-canopy-menu-item:hover,
-.nova-navbar-canopy-menu-item:focus-visible {
+.nova-navbar-canopy-menu-item:focus-visible,
+.nova-navbar-canopy-menu-dropdown-summary:hover,
+.nova-navbar-canopy-menu-dropdown-summary:focus-visible {
   color: var(--nova-color-primary-700);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
   text-decoration: none;
 }
 
 [data-theme="dark"] .nova-navbar-canopy-menu-item:hover,
-[data-theme="dark"] .nova-navbar-canopy-menu-item:focus-visible {
+[data-theme="dark"] .nova-navbar-canopy-menu-item:focus-visible,
+[data-theme="dark"] .nova-navbar-canopy-menu-dropdown-summary:hover,
+[data-theme="dark"] .nova-navbar-canopy-menu-dropdown-summary:focus-visible {
   color: var(--nova-color-primary-300);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
 }
@@ -390,11 +404,17 @@
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 76%);
 }
 
-.nova-navbar-canopy-menu-item svg {
+[data-theme="dark"] .nova-navbar-canopy-menu-dropdown-summary {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-navbar-canopy-menu-item svg,
+.nova-navbar-canopy-menu-dropdown-summary svg {
   color: var(--nova-color-primary-600);
 }
 
-[data-theme="dark"] .nova-navbar-canopy-menu-item svg {
+[data-theme="dark"] .nova-navbar-canopy-menu-item svg,
+[data-theme="dark"] .nova-navbar-canopy-menu-dropdown-summary svg {
   color: var(--nova-color-primary-400);
 }
 
@@ -413,11 +433,24 @@
  * preset declares `motion.staggeredReveals: true`.
  * ============================ */
 
-.nova-navbar-canopy-menu-item {
+.nova-navbar-canopy-menu-item,
+.nova-navbar-canopy-menu-dropdown {
   opacity: 0;
 
   animation: lantern-fade-in-up var(--nova-lantern-transition) forwards;
   animation-delay: calc(var(--nova-item-index, 0) * 50ms + 50ms);
+}
+
+/* ============================
+ * 13. Mobile Menu - Dropdown Spacing
+ * ============================ */
+
+.nova-navbar-canopy-menu-dropdown[open] > .nova-navbar-canopy-menu-dropdown-summary {
+  margin-bottom: 0.5rem;
+}
+
+.nova-navbar-canopy-menu-dropdown-children {
+  gap: 0.5rem;
 }
 
 /* Brand sizes scale up on tablet+. */

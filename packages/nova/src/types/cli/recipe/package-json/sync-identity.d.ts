@@ -37,6 +37,17 @@ export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDescription
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageKeywords = unknown;
 
+/**
+ * CLI - Recipe - package.json - Sync Identity - Handle.
+ *
+ * Current "displayName" value read from the workspace manifest, before any
+ * synchronization runs. Typed as unknown because a hand-authored manifest
+ * may hold any JSON value here.
+ *
+ * @since 0.22.0
+ */
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDisplayName = unknown;
+
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageLicense = unknown;
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkspacePath = string;
@@ -56,6 +67,17 @@ export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidVersion = str
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidDescription = string | undefined;
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidKeywords = string[] | undefined;
+
+/**
+ * CLI - Recipe - package.json - Sync Identity - Handle.
+ *
+ * Display name resolved from the Nova config "project.name.title" setting.
+ * Undefined when the project declares no title, which drives removal
+ * instead of synchronization.
+ *
+ * @since 0.22.0
+ */
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidDisplayName = string | undefined;
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_SpdxLicenses = Set<string> | undefined;
 

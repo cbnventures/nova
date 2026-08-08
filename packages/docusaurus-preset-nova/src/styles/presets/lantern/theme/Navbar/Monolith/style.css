@@ -224,7 +224,8 @@
  * 8. Mobile menu items - mono uppercase carved labels
  * ============================ */
 
-.nova-navbar-monolith-menu-item {
+.nova-navbar-monolith-menu-item,
+.nova-navbar-monolith-menu-dropdown-summary {
   gap: 0.75rem;
 
   font-family: var(--nova-font-display);
@@ -232,7 +233,7 @@
   font-weight: 500;
   font-variation-settings: "opsz" 36;
   font-size: 1rem;
-  color: var(--nova-lantern-ink);
+  color: var(--nova-color-primary-700);
   border-radius: 6px;
 
   transition:
@@ -241,16 +242,24 @@
 }
 
 .nova-navbar-monolith-menu-item:hover,
-.nova-navbar-monolith-menu-item:focus-visible {
+.nova-navbar-monolith-menu-item:focus-visible,
+.nova-navbar-monolith-menu-dropdown-summary:hover,
+.nova-navbar-monolith-menu-dropdown-summary:focus-visible {
   color: var(--nova-color-primary-700);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
   text-decoration: none;
 }
 
 [data-theme="dark"] .nova-navbar-monolith-menu-item:hover,
-[data-theme="dark"] .nova-navbar-monolith-menu-item:focus-visible {
+[data-theme="dark"] .nova-navbar-monolith-menu-item:focus-visible,
+[data-theme="dark"] .nova-navbar-monolith-menu-dropdown-summary:hover,
+[data-theme="dark"] .nova-navbar-monolith-menu-dropdown-summary:focus-visible {
   color: var(--nova-color-primary-300);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-dropdown-summary {
+  color: var(--nova-color-primary-400);
 }
 
 .nova-navbar-monolith-menu-item[aria-current="page"] {
@@ -278,9 +287,18 @@
  * preset declares `motion.staggeredReveals: true`.
  * ============================ */
 
-.nova-navbar-monolith-menu-item {
+.nova-navbar-monolith-menu-item,
+.nova-navbar-monolith-menu-dropdown {
   opacity: 0;
 
   animation: lantern-fade-in-up var(--nova-lantern-transition) forwards;
   animation-delay: calc(var(--nova-item-index, 0) * 50ms + 50ms);
+}
+
+/* ============================
+ * 9. Mobile menu dropdown spacing
+ * ============================ */
+
+.nova-navbar-monolith-menu-dropdown-children {
+  padding-inline-start: 1.75rem;
 }

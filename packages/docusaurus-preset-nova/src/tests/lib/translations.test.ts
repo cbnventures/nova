@@ -95,13 +95,13 @@ describe('Translations.extract', async () => {
     deepStrictEqual(result, [{
       path: 'navbar',
       content: {
-        'item.0.label': {
+        'item.label.Docs': {
           message: 'Docs',
-          description: 'Label of navbar item 1',
+          description: 'Navbar item with label "Docs"',
         },
-        'item.1.label': {
+        'item.label.Blog': {
           message: 'Blog',
-          description: 'Label of navbar item 2',
+          description: 'Navbar item with label "Blog"',
         },
       },
     }]);
@@ -140,21 +140,21 @@ describe('Translations.extract', async () => {
     deepStrictEqual(result, [{
       path: 'navbar',
       content: {
-        'item.0.label': {
+        'item.label.Docs': {
           message: 'Docs',
-          description: 'Label of navbar item 1',
+          description: 'Navbar item with label "Docs"',
         },
-        'item.1.label': {
+        'item.label.Resources': {
           message: 'Resources',
-          description: 'Label of navbar item 2',
+          description: 'Navbar item with label "Resources"',
         },
-        'item.1.items.0.label': {
+        'item.label.Guide': {
           message: 'Guide',
-          description: 'Label of dropdown child 1 under navbar item 2',
+          description: 'Navbar item with label "Guide"',
         },
-        'item.1.items.1.label': {
+        'item.label.Reference': {
           message: 'Reference',
-          description: 'Label of dropdown child 2 under navbar item 2',
+          description: 'Navbar item with label "Reference"',
         },
       },
     }]);
@@ -183,9 +183,9 @@ describe('Translations.extract', async () => {
     deepStrictEqual(result, [{
       path: 'navbar',
       content: {
-        'item.0.label': {
+        'item.label.Docs': {
           message: 'Docs',
-          description: 'Label of navbar item 1',
+          description: 'Navbar item with label "Docs"',
         },
       },
     }]);
@@ -613,7 +613,7 @@ describe('Translations.apply', async () => {
       translationFiles: [{
         path: 'navbar',
         content: {
-          'item.0.label': { message: '文档' },
+          'item.label.Docs': { message: '文档' },
         },
       }],
     });
@@ -648,8 +648,8 @@ describe('Translations.apply', async () => {
       translationFiles: [{
         path: 'navbar',
         content: {
-          'item.0.label': { message: '文档' },
-          'item.1.label': { message: '博客' },
+          'item.label.Docs': { message: '文档' },
+          'item.label.Blog': { message: '博客' },
         },
       }],
     });
@@ -691,7 +691,7 @@ describe('Translations.apply', async () => {
       translationFiles: [{
         path: 'navbar',
         content: {
-          'item.0.label': { message: '文档' },
+          'item.label.Docs': { message: '文档' },
         },
       }],
     });
@@ -731,8 +731,8 @@ describe('Translations.apply', async () => {
       translationFiles: [{
         path: 'navbar',
         content: {
-          'item.0.label': { message: '资源' },
-          'item.0.items.0.label': { message: '指南' },
+          'item.label.Resources': { message: '资源' },
+          'item.label.Guide': { message: '指南' },
         },
       }],
     });

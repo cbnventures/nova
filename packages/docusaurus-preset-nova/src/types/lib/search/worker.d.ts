@@ -24,6 +24,13 @@ export type Lib_Search_Worker_LunrGlobal = {
 };
 
 /**
+ * Lib - Search - Worker - Regex Special Chars.
+ *
+ * @since 0.15.0
+ */
+export type Lib_Search_Worker_RegexSpecialChars = RegExp;
+
+/**
  * Lib - Search - Worker - Search Index.
  *
  * @since 0.15.0

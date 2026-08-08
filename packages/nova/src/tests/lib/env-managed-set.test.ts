@@ -14,26 +14,27 @@ describe('libEnvManagedSet', () => {
     deepStrictEqual(
       libEnvManagedSet.compute({
         environment: {
-          global: {
+          project: {
             prefix: 'G_',
             variables: [{
               key: 'SHARED',
+              reach: 'managed',
               secret: true,
             }],
           },
-          apps: {
+          workspaces: {
             './apps/a': {
               prefix: 'A_',
               variables: [
                 {
                   key: 'PUBLIC_X',
                   secret: false,
-                  buildOnly: true,
+                  reach: 'build',
                 },
                 {
                   key: 'SECRET_Y',
                   secret: true,
-                  buildOnly: false,
+                  reach: 'runtime',
                 },
               ],
             },
@@ -44,17 +45,17 @@ describe('libEnvManagedSet', () => {
         {
           name: 'G_SHARED',
           secret: true,
-          kind: 'global',
+          kind: 'project',
         },
         {
           name: 'A_PUBLIC_X',
           secret: false,
-          kind: 'app',
+          kind: 'workspace',
         },
         {
           name: 'A_SECRET_Y',
           secret: true,
-          kind: 'app',
+          kind: 'workspace',
         },
       ],
     );
@@ -72,7 +73,7 @@ describe('libEnvManagedSet', () => {
         },
         workflows: [{
           template: 'check-sponsor-gated-issues',
-          suffix: 'sponsor',
+          name: 'sponsor',
           triggers: ['schedule'],
         }],
       }),
@@ -137,18 +138,18 @@ describe('libEnvManagedSet', () => {
     deepStrictEqual(
       libEnvManagedSet.compute({
         environment: {
-          global: { prefix: 'G_' },
-          apps: {
+          project: { prefix: 'G_' },
+          workspaces: {
             './apps/a': { prefix: 'A_' },
           },
         },
         workflows: [{
           template: 'publish',
-          suffix: 'release',
+          name: 'release',
           triggers: ['push'],
-          targets: [{
-            type: 'vercel-nextjs',
-            workingDir: './apps/a',
+          deploy: [{
+            to: 'vercel-nextjs',
+            path: './apps/a',
           }],
         }],
       }),
@@ -178,18 +179,18 @@ describe('libEnvManagedSet', () => {
     deepStrictEqual(
       libEnvManagedSet.compute({
         environment: {
-          global: { prefix: 'G_' },
-          apps: {
+          project: { prefix: 'G_' },
+          workspaces: {
             './packages/pkg': { prefix: 'P_' },
           },
         },
         workflows: [{
           template: 'publish',
-          suffix: 'release',
+          name: 'release',
           triggers: ['push'],
-          targets: [{
-            type: 'npm',
-            workingDir: './packages/pkg',
+          deploy: [{
+            to: 'npm',
+            path: './packages/pkg',
           }],
         }],
       }),
@@ -198,6 +199,40 @@ describe('libEnvManagedSet', () => {
         secret: true,
         kind: 'deploy-cred',
         optional: true,
+      }],
+    );
+
+    return;
+  });
+
+  it('excludes reach:"local" app values from the managed set', () => {
+    deepStrictEqual(
+      libEnvManagedSet.compute({
+        environment: {
+          workspaces: {
+            './packages/act': {
+              prefix: 'ACT_',
+              variables: [
+                {
+                  key: 'INPUT_DRY_RUN',
+                  reach: 'local',
+                  defaultValue: 'false',
+                },
+                {
+                  key: 'API_KEY',
+                  reach: 'runtime',
+                  secret: true,
+                },
+              ],
+            },
+          },
+        },
+        workflows: [],
+      }),
+      [{
+        name: 'ACT_API_KEY',
+        secret: true,
+        kind: 'workspace',
       }],
     );
 

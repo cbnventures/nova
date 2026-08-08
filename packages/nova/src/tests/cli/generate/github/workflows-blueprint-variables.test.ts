@@ -275,24 +275,24 @@ describe('Variables.collectSetupLines', () => {
       }],
     };
     const environment: Tests_Cli_Generate_Github_WorkflowsBlueprintVariables_VariablesCollectSetupLines_ListsPublicDotenvVariablesForPublishScopes_Environment = {
-      apps: {
+      workspaces: {
         './packages/pkg-a': {
           prefix: 'PKG_A_',
           variables: [
             {
               key: 'PUBLIC_SITE_KEY',
               secret: false,
-              buildOnly: true,
+              reach: 'build',
             },
             {
               key: 'PUBLIC_GTM_ID',
               secret: false,
-              buildOnly: true,
+              reach: 'build',
             },
             {
               key: 'RUNTIME_TOKEN',
               secret: true,
-              buildOnly: false,
+              reach: 'runtime',
             },
           ],
         },

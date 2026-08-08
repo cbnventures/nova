@@ -1,116 +1,303 @@
+import {
+  copyFile,
+  mkdir,
+  readdir,
+  rename,
+  rm,
+  stat,
+} from 'node:fs/promises';
+import {
+  dirname,
+  join,
+  relative,
+  resolve,
+} from 'node:path';
+
 import chokidar from 'chokidar';
-import { cp, mkdir, rename, rm, stat } from 'fs/promises';
-import { dirname, relative, resolve } from 'path';
 
 /**
- * Copy `src/styles/` -> `build/src/styles/` for the docusaurus-preset-nova
- * package. Two modes:
+ * Copy Styles - Src.
  *
- *   - one-shot (default): atomic full-tree copy via a staging dir, used by
- *     `build:copy-styles` during production builds. Webpack watchers reading
- *     during the swap window always see one of two complete dir states -
- *     never a partial one.
+ * Absolute path to the preset's source styles tree, resolved from the current
+ * working directory so the script works regardless of the invocation cwd.
  *
- *   - --watch: does an initial one-shot copy, then watches `src/styles/` with
- *     chokidar and applies per-file incremental updates so dev demos see CSS
- *     edits without a manual rebuild. Used by `dev:watch-styles`.
- *
- * Cross-platform via `fs/promises` (Node 16.7+); engines pin is `^20 || ^22 || ^24`.
+ * @since 0.0.0
  */
+const src = resolve('./src/styles');
 
-const SRC = resolve('./src/styles');
-const DEST = resolve('./build/src/styles');
-const STAGING = resolve('./build/src/.styles-new');
-const BACKUP = resolve('./build/src/.styles-old');
+/**
+ * Copy Styles - Dest.
+ *
+ * Absolute path to the built styles tree that webpack and the demos read from,
+ * kept as a sibling of the source tree under `build/src/`.
+ *
+ * @since 0.0.0
+ */
+const dest = resolve('./build/src/styles');
 
-const WATCH_MODE = process.argv.includes('--watch');
+/**
+ * Copy Styles - Staging.
+ *
+ * Scratch directory the source tree is copied into before the atomic swap, so
+ * readers never observe a partially written destination.
+ *
+ * @since 0.0.0
+ */
+const staging = resolve('./build/src/.styles-new');
 
+/**
+ * Copy Styles - Backup.
+ *
+ * Holds the previous destination during the swap window, letting the rename
+ * dance stay atomic before the old tree is discarded.
+ *
+ * @since 0.0.0
+ */
+const backup = resolve('./build/src/.styles-old');
+
+/**
+ * Copy Styles - Watch Mode.
+ *
+ * True when invoked with `--watch`, selecting the incremental chokidar path
+ * used by `dev:watch-styles` instead of a single one-shot copy.
+ *
+ * @since 0.0.0
+ */
+const watchMode = process.argv.includes('--watch');
+
+/**
+ * Copy Styles - Exists.
+ *
+ * Resolves whether a path is present on disk, swallowing the stat rejection so
+ * callers can branch without a try/catch.
+ *
+ * @param {string} path - Path.
+ *
+ * @returns {Promise<boolean>}
+ *
+ * @since 0.0.0
+ */
 async function exists(path) {
   return stat(path).then(() => true).catch(() => false);
 }
 
+/**
+ * Copy Styles - Copy Dir.
+ *
+ * Recursively copies a directory tree using only stable fs/promises primitives
+ * (readdir + copyFile), so the engines range can stay at `^22` without relying
+ * on `cp`, which remains experimental until Node.js 22.3.
+ *
+ * @param {string} from - From.
+ * @param {string} to   - To.
+ *
+ * @returns {Promise<void>}
+ *
+ * @since 0.0.0
+ */
+async function copyDir(from, to) {
+  await mkdir(to, { recursive: true });
+
+  const entries = await readdir(from, { withFileTypes: true });
+
+  await Promise.all(entries.map((entry) => {
+    const fromPath = join(from, entry.name);
+    const toPath = join(to, entry.name);
+
+    if (entry.isDirectory() === true) {
+      return copyDir(fromPath, toPath);
+    }
+
+    return copyFile(fromPath, toPath);
+  }));
+
+  return;
+}
+
+/**
+ * Copy Styles - One Shot Copy.
+ *
+ * Copies the source tree into a staging dir then atomically swaps it into
+ * place, so webpack watchers only ever see a complete destination.
+ *
+ * @returns {Promise<void>}
+ *
+ * @since 0.0.0
+ */
 async function oneShotCopy() {
   // Clean any leftover staging or backup from a prior failure.
-  await rm(STAGING, { recursive: true, force: true });
-  await rm(BACKUP, { recursive: true, force: true });
+  await rm(staging, {
+    recursive: true,
+    force: true,
+  });
+
+  await rm(backup, {
+    recursive: true,
+    force: true,
+  });
 
   // Ensure build/src/ exists so the renames below have a destination.
   await mkdir(resolve('./build/src'), { recursive: true });
 
   // Copy the source tree into staging. Target is untouched during this step.
-  await cp(SRC, STAGING, { recursive: true });
+  await copyDir(src, staging);
 
   // Atomic swap: target -> backup, then staging -> target.
-  if (await exists(DEST)) {
-    await rename(DEST, BACKUP);
+  if (await exists(dest) === true) {
+    await rename(dest, backup);
   }
-  await rename(STAGING, DEST);
+
+  await rename(staging, dest);
 
   // Remove the old backup. Failure here doesn't affect correctness.
-  await rm(BACKUP, { recursive: true, force: true });
+  await rm(backup, {
+    recursive: true,
+    force: true,
+  });
+
+  return;
 }
 
+/**
+ * Copy Styles - Dest Of.
+ *
+ * Maps a source path to its matching destination path by rebasing it from the
+ * source tree onto the built tree.
+ *
+ * @param {string} srcPath - Src path.
+ *
+ * @returns {string}
+ *
+ * @since 0.0.0
+ */
 function destOf(srcPath) {
-  return resolve(DEST, relative(SRC, srcPath));
+  return resolve(dest, relative(src, srcPath));
 }
 
+/**
+ * Copy Styles - Log.
+ *
+ * Writes a single watch-mode line to stdout describing which file changed,
+ * normalizing the path to be relative to the source tree.
+ *
+ * @param {string} action  - Action.
+ * @param {string} srcPath - Src path.
+ *
+ * @returns {void}
+ *
+ * @since 0.0.0
+ */
 function log(action, srcPath) {
-  console.log(`[copy-styles:watch] ${action}: ${relative(SRC, srcPath) || '.'}`);
+  process.stdout.write(`[copy-styles:watch] ${action}: ${relative(src, srcPath) || '.'}\n`);
+
+  return;
 }
 
+/**
+ * Copy Styles - Start Watcher.
+ *
+ * Watches the source tree with chokidar and mirrors each add, change, and
+ * removal into the built tree so dev demos see edits without a rebuild.
+ *
+ * @returns {Promise<void>}
+ *
+ * @since 0.0.0
+ */
 async function startWatcher() {
-  const watcher = chokidar.watch(SRC, { ignoreInitial: true });
+  const watcher = chokidar.watch(src, { ignoreInitial: true });
 
   watcher.on('add', async (path) => {
     const target = destOf(path);
+
     await mkdir(dirname(target), { recursive: true });
-    await cp(path, target);
+    await copyFile(path, target);
     log('add', path);
+
+    return;
   });
 
   watcher.on('change', async (path) => {
     const target = destOf(path);
-    await cp(path, target);
+
+    await copyFile(path, target);
     log('change', path);
+
+    return;
   });
 
   watcher.on('unlink', async (path) => {
     const target = destOf(path);
+
     await rm(target, { force: true });
     log('unlink', path);
+
+    return;
   });
 
   watcher.on('addDir', async (path) => {
-    if (path === SRC) return;
+    if (path === src) {
+      return;
+    }
+
     const target = destOf(path);
+
     await mkdir(target, { recursive: true });
     log('addDir', path);
+
+    return;
   });
 
   watcher.on('unlinkDir', async (path) => {
     const target = destOf(path);
-    await rm(target, { recursive: true, force: true });
+
+    await rm(target, {
+      recursive: true,
+      force: true,
+    });
     log('unlinkDir', path);
+
+    return;
   });
 
   watcher.on('error', (err) => {
-    console.error('[copy-styles:watch] error:', err);
+    process.stderr.write(`[copy-styles:watch] error: ${err}\n`);
+
+    return;
   });
 
   watcher.on('ready', () => {
-    console.log(`[copy-styles:watch] ready - watching ${relative(process.cwd(), SRC)}`);
+    process.stdout.write(`[copy-styles:watch] ready - watching ${relative(process.cwd(), src)}\n`);
+
+    return;
   });
+
+  return;
 }
 
+/**
+ * Copy Styles - Run.
+ *
+ * Performs the initial one-shot copy and, in watch mode, hands off to the
+ * chokidar watcher for incremental updates.
+ *
+ * @returns {Promise<void>}
+ *
+ * @since 0.0.0
+ */
 async function run() {
   await oneShotCopy();
 
-  if (WATCH_MODE) {
+  if (watchMode === true) {
     await startWatcher();
   }
+
+  return;
 }
 
 run().catch((err) => {
-  console.error(WATCH_MODE ? 'dev:watch-styles failed:' : 'build:copy-styles failed:', err);
-  process.exit(1);
+  const failureLabel = (watchMode === true) ? 'dev:watch-styles failed:' : 'build:copy-styles failed:';
+
+  process.stderr.write(`${failureLabel} ${err}\n`);
+
+  return process.exit(1);
 });

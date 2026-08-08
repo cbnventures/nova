@@ -60,6 +60,10 @@ jobs:
           npm run check -w sandbox-plain
         working-directory: "${{ env.ROOT_DIR }}"
 
+      - name: "Check root"
+        run: "npm run check"
+        working-directory: "${{ env.ROOT_DIR }}"
+
       - name: "Build project"
         run: |
           npm run build -w sandbox-plain
