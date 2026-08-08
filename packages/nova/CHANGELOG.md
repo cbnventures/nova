@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.22.1 - 2026-08-08
+
+### FIXED
+- The Cloudflare Pages deploy step in the publish workflow now uses `npx -y wrangler@3` instead of `cloudflare/wrangler-action@v3`. The action's fallback `npm install wrangler` crashes npm's arborist in workspace monorepos with `Cannot read properties of null (reading 'edgesOut')`, a known npm CLI bug. The direct `npx` invocation installs to a temporary directory and bypasses the workspace dependency graph entirely.
+
 ## 0.22.0 - 2026-08-08
 
 ### UPDATED

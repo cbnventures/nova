@@ -12,13 +12,13 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@cbnventures/docusaurus-preset-nova": "0.22.0",
+    "@cbnventures/docusaurus-preset-nova": "0.22.1",
     "@docusaurus/core": "3.7.0",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "@cbnventures/nova": "0.22.0",
+    "@cbnventures/nova": "0.22.1",
     "@docusaurus/types": "3.7.0",
     "glob": "13.0.6",
     "typescript": "5.8.3",

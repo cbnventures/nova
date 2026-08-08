@@ -1804,25 +1804,17 @@ export class Runner {
         {
           name: 'Deploy to Cloudflare Pages',
           if: Runner.expr('env.PUBLISH == \'true\''),
-          uses: 'cloudflare/wrangler-action@v3',
-          env: [{
-            key: 'CLOUDFLARE_API_TOKEN',
-            value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_API_TOKEN', targetSettings, workflowSettings, environment, appPath),
-          }],
-          with: [
+          env: [
             {
-              key: 'apiToken',
-              value: Runner.expr('env.CLOUDFLARE_API_TOKEN'),
+              key: 'CLOUDFLARE_API_TOKEN',
+              value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_API_TOKEN', targetSettings, workflowSettings, environment, appPath),
             },
             {
-              key: 'accountId',
+              key: 'CLOUDFLARE_ACCOUNT_ID',
               value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_ACCOUNT_ID', targetSettings, workflowSettings, environment, appPath),
             },
-            {
-              key: 'command',
-              value: `pages deploy ${context['workingDir']}/build --project-name=${Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_PROJECT_NAME', targetSettings, workflowSettings, environment, appPath)} --branch=${Runner.expr('github.event.repository.default_branch')}`,
-            },
           ],
+          run: `npx -y wrangler@3 pages deploy ${context['workingDir']}/build --project-name=${Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_PROJECT_NAME', targetSettings, workflowSettings, environment, appPath)} --branch=${Runner.expr('github.event.repository.default_branch')}`,
         },
       ],
     };
