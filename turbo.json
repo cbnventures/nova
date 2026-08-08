@@ -41,7 +41,7 @@
     "check": {
       "cache": true,
       "dependsOn": [
-        "^build"
+        "build"
       ],
       "inputs": [
         "!./.*/**/*",
