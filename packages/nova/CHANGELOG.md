@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.22.6 - 2026-08-09
+
+### FIXED
+- Standalone-file rule S2 no longer rejects types whose prefix matches a bare classPrefix like Index, fixing a false conflict between variable-type-symmetry and standalone-file-rules for index.ts files in non-src typeRoots
+
 ## 0.22.5 - 2026-08-09
 
 ### FIXED

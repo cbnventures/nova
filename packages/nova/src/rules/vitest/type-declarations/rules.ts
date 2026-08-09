@@ -1241,7 +1241,11 @@ export async function standaloneTypeFiles(config: Rules_Vitest_TypeDeclarations_
     const sourceClassPrefix: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_SourceClassPrefix = deriveClassPrefix(sourceFile, config);
     const firstChunk: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_FirstChunk = sourceClassPrefix.split('_')[0];
 
-    if (firstChunk !== undefined && firstChunk !== '') {
+    if (
+      firstChunk !== undefined
+      && firstChunk !== ''
+      && sourceClassPrefix.includes('_') === true
+    ) {
       topLevelPathPrefixes.add(firstChunk);
     }
   }
