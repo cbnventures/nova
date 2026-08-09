@@ -71,13 +71,10 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Metadata,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_RuntimeValues,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_SecretRuntimeValues,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Steps,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_SyncStep,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_TargetSettings,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_VarFlags,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Variables,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_VarRuntimeValues,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_AppPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Context,
@@ -1841,8 +1838,6 @@ export class Runner {
     const environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Environment = context['environment'];
     const appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_AppPath = context['workingDir'];
     const runtimeValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_RuntimeValues = Runner.appRuntimeValues(environment, appPath);
-    const secretRuntimeValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_SecretRuntimeValues = runtimeValues.filter((value) => value['secret'] === true);
-    const varRuntimeValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_VarRuntimeValues = runtimeValues.filter((value) => value['secret'] !== true);
 
     const deployEnv: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployEnv = [
       {
@@ -1855,20 +1850,7 @@ export class Runner {
       },
     ];
 
-    let deployRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployRun = 'npm run deploy';
-
-    for (const varValue of varRuntimeValues) {
-      deployEnv.push({
-        key: varValue['key'],
-        value: Runner.expr(`vars.${varValue['name']}`),
-      });
-    }
-
-    if (varRuntimeValues.length > 0) {
-      const varFlags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_VarFlags = varRuntimeValues.map((value) => `--var ${value['key']}:"$${value['key']}"`).join(' ');
-
-      deployRun = `npm run deploy -- ${varFlags}`;
-    }
+    const deployRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployRun = 'npm run deploy';
 
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Steps = [
       {
@@ -1917,12 +1899,13 @@ export class Runner {
       },
     ];
 
-    // Secrets sync via the separate step; non-secret vars already ride
-    // the deploy command. Credentials are forwarded so wrangler secret
-    // commands can authenticate independently from the deploy step.
+    // Runtime values sync via a separate step: secrets through wrangler
+    // secret bulk, non-secret vars through a direct wrangler deploy --var.
+    // Credentials are forwarded so wrangler commands can authenticate
+    // independently from the deploy step.
     const syncStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_SyncStep = Runner.emitRuntimeSyncStep({
       vendor: 'cloudflare',
-      runtimeValues: secretRuntimeValues,
+      runtimeValues,
       workingDir: context['workingDir'],
       extraEnv: [
         {

@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.22.3 - 2026-08-09
+
+### FIXED
+- Cloudflare Workers deploy step no longer passes --var flags through npm run deploy, which broke when the deploy script wraps nova utility run-scripts. Non-secret runtime vars now route through the sync step where wrangler deploy --var is called directly.
+
 ## 0.22.2 - 2026-08-08
 
 ### FIXED
