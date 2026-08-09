@@ -62,9 +62,9 @@ jobs:
           PUBLIC_STRIPE_PUBLISHABLE_KEY: "${{ vars.CBN_PUBLIC_STRIPE_PUBLISHABLE_KEY }}"
         run: |
           {
-            echo "PUBLIC_GOOGLE_TAG_MANAGER_ID=$PUBLIC_GOOGLE_TAG_MANAGER_ID"
-            echo "PUBLIC_TURNSTILE_SITE_KEY=$PUBLIC_TURNSTILE_SITE_KEY"
-            echo "PUBLIC_STRIPE_PUBLISHABLE_KEY=$PUBLIC_STRIPE_PUBLISHABLE_KEY"
+            echo "PUBLIC_GOOGLE_TAG_MANAGER_ID=\"$PUBLIC_GOOGLE_TAG_MANAGER_ID\""
+            echo "PUBLIC_TURNSTILE_SITE_KEY=\"$PUBLIC_TURNSTILE_SITE_KEY\""
+            echo "PUBLIC_STRIPE_PUBLISHABLE_KEY=\"$PUBLIC_STRIPE_PUBLISHABLE_KEY\""
           } > .env
         working-directory: "./apps/cbnventures"
 
@@ -74,8 +74,8 @@ jobs:
           PUBLIC_TURNSTILE_SITE_KEY: "${{ vars.MJL_PUBLIC_TURNSTILE_SITE_KEY }}"
         run: |
           {
-            echo "PUBLIC_GOOGLE_TAG_MANAGER_ID=$PUBLIC_GOOGLE_TAG_MANAGER_ID"
-            echo "PUBLIC_TURNSTILE_SITE_KEY=$PUBLIC_TURNSTILE_SITE_KEY"
+            echo "PUBLIC_GOOGLE_TAG_MANAGER_ID=\"$PUBLIC_GOOGLE_TAG_MANAGER_ID\""
+            echo "PUBLIC_TURNSTILE_SITE_KEY=\"$PUBLIC_TURNSTILE_SITE_KEY\""
           } > .env
         working-directory: "./apps/mrjackyliang"
 

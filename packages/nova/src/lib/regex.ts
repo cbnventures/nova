@@ -1840,3 +1840,13 @@ export const LIB_REGEX_PATTERN_TOPIC_FLAG = /-f "names\[\]=/;
  * @since 0.18.0
  */
 export const LIB_REGEX_PATTERN_TOPIC_TYPESCRIPT = /typescript/;
+
+/**
+ * Lib - Regex - Pattern Double Quote.
+ *
+ * Matches a double-quote character for escaping inside YAML
+ * double-quoted scalars.
+ *
+ * @since 0.22.2
+ */
+export const LIB_REGEX_PATTERN_DOUBLE_QUOTE = /"/;

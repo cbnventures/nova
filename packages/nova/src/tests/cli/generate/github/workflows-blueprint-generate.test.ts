@@ -809,7 +809,7 @@ describe('WorkflowsBlueprint.generate', async () => {
     // The generated publish workflow bakes the public keys into the scope .env.
     ok(publishContent.includes('Write environment file') === true, 'missing write-env step in generated publish workflow');
 
-    ok(publishContent.includes('echo "PUBLIC_SITE_KEY=$PUBLIC_SITE_KEY"') === true, 'missing public site key echo in write-env step');
+    ok(publishContent.includes('echo "PUBLIC_SITE_KEY=\\"$PUBLIC_SITE_KEY\\""') === true, 'missing public site key echo in write-env step');
 
     // The private key is never baked into the build's write-env step. It
     // legitimately appears in the deploy job's secret-sync step under its

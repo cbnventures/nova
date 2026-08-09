@@ -11,6 +11,7 @@ import {
   LIB_REGEX_CHARACTER_DOLLAR,
   LIB_REGEX_CHARACTER_DOUBLE_QUOTE,
   LIB_REGEX_CHARACTER_FORWARD_SLASH,
+  LIB_REGEX_PATTERN_DOUBLE_QUOTE,
   LIB_REGEX_PATTERN_LEADING_DOT_SLASH,
 } from '../../../lib/regex.js';
 import {
@@ -3743,7 +3744,7 @@ export class Runner {
    * @since 0.21.0
    */
   private static quote(value: Cli_Generate_Github_WorkflowsBlueprint_Runner_Quote_Value): Cli_Generate_Github_WorkflowsBlueprint_Runner_Quote_Returns {
-    return `"${value.replace(/"/g, '\\"')}"`;
+    return `"${value.replace(new RegExp(LIB_REGEX_PATTERN_DOUBLE_QUOTE, 'g'), '\\"')}"`;
   }
 
   /**

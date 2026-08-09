@@ -562,9 +562,9 @@ describe('WorkflowsBlueprint.buildPublish', () => {
 
     const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesOnlyPublicVariablesIntoTheScopeEnvFile_Result = WorkflowsBlueprint.serialize(ir);
 
-    ok(result.includes('echo "PUBLIC_SITE_KEY=$PUBLIC_SITE_KEY"'), 'echoes the plain public key');
+    ok(result.includes('echo "PUBLIC_SITE_KEY=\\"$PUBLIC_SITE_KEY\\""'), 'echoes the plain public key');
 
-    ok(result.includes('echo "PUBLIC_GTM_ID=$PUBLIC_GTM_ID"'), 'echoes the override public key');
+    ok(result.includes('echo "PUBLIC_GTM_ID=\\"$PUBLIC_GTM_ID\\""'), 'echoes the override public key');
 
     ok(result.includes('SECRET_TOKEN') === false, 'never echoes the private key');
 
@@ -609,7 +609,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       '$',
       '{',
     ].join('');
-    const expectedFallback: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_ExpectedFallback = `echo "PUBLIC_REGION=${dollarBrace}PUBLIC_REGION:-x\\"\\$y}"`;
+    const expectedFallback: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_ExpectedFallback = `echo "PUBLIC_REGION=\\"${dollarBrace}PUBLIC_REGION:-x\\"\\$y}\\""`;
 
     ok(result.includes(expectedFallback), `expected an escaped shell default fallback; got: ${result}`);
 
