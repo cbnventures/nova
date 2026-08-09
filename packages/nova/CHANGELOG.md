@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.22.4 - 2026-08-09
+
+### FIXED
+- Workflow sync step now invokes npx wrangler instead of bare wrangler, fixing command-not-found errors when wrangler is installed as a workspace devDependency
+
 ## 0.22.3 - 2026-08-09
 
 ### FIXED

@@ -1020,8 +1020,8 @@ describe('WorkflowsBlueprint.emitRuntimeSyncStep', () => {
     ok(((step['env'] ?? [])[1] ?? { value: '' })['value'].includes('vars.API_AWS_REGION'), 'the variable sources from the vars store');
 
     // The Secret rides the encrypted bulk channel; the Variable rides a deploy --var.
-    ok((step['run'] ?? '').includes('| wrangler secret bulk /dev/stdin'), 'the secret rides wrangler secret bulk');
-    ok((step['run'] ?? '').includes('wrangler deploy --var AWS_REGION:"$AWS_REGION"'), 'the variable rides wrangler deploy --var');
+    ok((step['run'] ?? '').includes('| npx wrangler secret bulk /dev/stdin'), 'the secret rides wrangler secret bulk');
+    ok((step['run'] ?? '').includes('npx wrangler deploy --var AWS_REGION:"$AWS_REGION"'), 'the variable rides wrangler deploy --var');
 
     return;
   });

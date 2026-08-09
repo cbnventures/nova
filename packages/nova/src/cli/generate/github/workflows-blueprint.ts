@@ -2896,14 +2896,14 @@ export class Runner {
         const jqObject: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_JqObject = secretValues.map((value) => value['key']).join(', ');
 
         lines.push(`DECLARED="${secretDeclared}"`);
-        lines.push('wrangler secret list | jq -r \'.[].name\' | while read -r name; do');
+        lines.push('npx wrangler secret list | jq -r \'.[].name\' | while read -r name; do');
         lines.push('  case " $DECLARED " in');
         lines.push('    *" $name "*) ;;');
-        lines.push('    *) echo "Removing undeclared secret: $name"; wrangler secret delete "$name" --force ;;');
+        lines.push('    *) echo "Removing undeclared secret: $name"; npx wrangler secret delete "$name" --force ;;');
         lines.push('  esac');
         lines.push('done');
         lines.push('echo "Syncing declared secrets: $DECLARED"');
-        lines.push(`jq -n 'env | {${jqObject}}' | wrangler secret bulk /dev/stdin`);
+        lines.push(`jq -n 'env | {${jqObject}}' | npx wrangler secret bulk /dev/stdin`);
       }
 
       // Variable channel: a plaintext runtime var rides the deploy, one redeploy
@@ -2913,7 +2913,7 @@ export class Runner {
         const varFlags: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_VarFlags = variableValues.map((value) => `--var ${value['key']}:"$${value['key']}"`).join(' ');
 
         lines.push(`echo "Syncing declared vars: ${varDeclared}"`);
-        lines.push(`wrangler deploy ${varFlags}`);
+        lines.push(`npx wrangler deploy ${varFlags}`);
       }
     } else {
       // Vercel keeps one env store per deployment, so removal runs once over the

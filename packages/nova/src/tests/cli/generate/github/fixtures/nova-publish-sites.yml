@@ -154,14 +154,14 @@ jobs:
           AMAZON_REGION: "${{ secrets.CBN_AMAZON_REGION }}"
         run: |
           DECLARED="TURNSTILE_SECRET_KEY STRIPE_SECRET_KEY STRIPE_WEBHOOK_SECRET AMAZON_ACCESS_KEY_ID AMAZON_ACCESS_KEY_SECRET AMAZON_REGION"
-          wrangler secret list | jq -r '.[].name' | while read -r name; do
+          npx wrangler secret list | jq -r '.[].name' | while read -r name; do
             case " $DECLARED " in
               *" $name "*) ;;
-              *) echo "Removing undeclared secret: $name"; wrangler secret delete "$name" --force ;;
+              *) echo "Removing undeclared secret: $name"; npx wrangler secret delete "$name" --force ;;
             esac
           done
           echo "Syncing declared secrets: $DECLARED"
-          jq -n 'env | {TURNSTILE_SECRET_KEY, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, AMAZON_ACCESS_KEY_ID, AMAZON_ACCESS_KEY_SECRET, AMAZON_REGION}' | wrangler secret bulk /dev/stdin
+          jq -n 'env | {TURNSTILE_SECRET_KEY, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, AMAZON_ACCESS_KEY_ID, AMAZON_ACCESS_KEY_SECRET, AMAZON_REGION}' | npx wrangler secret bulk /dev/stdin
         working-directory: "./apps/cbnventures"
 
   publish-cloudflare-workers-apps-mrjackyliang:
@@ -211,12 +211,12 @@ jobs:
           AMAZON_REGION: "${{ secrets.MJL_AMAZON_REGION }}"
         run: |
           DECLARED="TURNSTILE_SECRET_KEY AMAZON_ACCESS_KEY_ID AMAZON_ACCESS_KEY_SECRET AMAZON_REGION"
-          wrangler secret list | jq -r '.[].name' | while read -r name; do
+          npx wrangler secret list | jq -r '.[].name' | while read -r name; do
             case " $DECLARED " in
               *" $name "*) ;;
-              *) echo "Removing undeclared secret: $name"; wrangler secret delete "$name" --force ;;
+              *) echo "Removing undeclared secret: $name"; npx wrangler secret delete "$name" --force ;;
             esac
           done
           echo "Syncing declared secrets: $DECLARED"
-          jq -n 'env | {TURNSTILE_SECRET_KEY, AMAZON_ACCESS_KEY_ID, AMAZON_ACCESS_KEY_SECRET, AMAZON_REGION}' | wrangler secret bulk /dev/stdin
+          jq -n 'env | {TURNSTILE_SECRET_KEY, AMAZON_ACCESS_KEY_ID, AMAZON_ACCESS_KEY_SECRET, AMAZON_REGION}' | npx wrangler secret bulk /dev/stdin
         working-directory: "./apps/mrjackyliang"
