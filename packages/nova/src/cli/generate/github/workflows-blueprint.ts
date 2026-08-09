@@ -3118,12 +3118,12 @@ export class Runner {
       if (variable['defaultValue'] !== undefined) {
         const escapedDefault: Cli_Generate_Github_WorkflowsBlueprint_Runner_WriteEnvRun_EscapedDefault = Runner.escapeShellDefault(variable['defaultValue']);
 
-        lines.push(`  echo "${variable['key']}=${dollar}${variable['key']}:-${escapedDefault}}"`);
+        lines.push(`  echo "${variable['key']}=\\"${dollar}${variable['key']}:-${escapedDefault}}\\""`);
 
         continue;
       }
 
-      lines.push(`  echo "${variable['key']}=$${variable['key']}"`);
+      lines.push(`  echo "${variable['key']}=\\"$${variable['key']}\\""`);
     }
 
     lines.push('} > .env');
@@ -3743,7 +3743,7 @@ export class Runner {
    * @since 0.21.0
    */
   private static quote(value: Cli_Generate_Github_WorkflowsBlueprint_Runner_Quote_Value): Cli_Generate_Github_WorkflowsBlueprint_Runner_Quote_Returns {
-    return `"${value}"`;
+    return `"${value.replace(/"/g, '\\"')}"`;
   }
 
   /**

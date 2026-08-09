@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.22.2 - 2026-08-08
+
+### FIXED
+- Workflow generator now escapes inner double quotes in Runner.quote() and double-quotes .env values in the Write environment file step, fixing invalid YAML syntax for --var flags and unquoted dotenv values in CI
+
 ## 0.22.1 - 2026-08-08
 
 ### FIXED
