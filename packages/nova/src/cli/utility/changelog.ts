@@ -897,7 +897,7 @@ export class Runner {
         const lockStepWorkspaceName: Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceName = lockStepWorkspaceConfig['name'];
         const lockStepWorkspacePolicy: Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePolicy = lockStepWorkspaceConfig['policy'];
 
-        if (lockStepWorkspacePolicy !== 'distributable' || releasedNames.has(lockStepWorkspaceName) === true) {
+        if (lockStepWorkspacePolicy === 'freezable' || releasedNames.has(lockStepWorkspaceName) === true) {
           continue;
         }
 

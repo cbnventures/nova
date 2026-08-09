@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.22.5 - 2026-08-09
+
+### FIXED
+- Lock-step versioning now includes trackable workspaces, not just distributable ones, so all non-freezable workspaces bump together during a release
+
 ## 0.22.4 - 2026-08-09
 
 ### FIXED
