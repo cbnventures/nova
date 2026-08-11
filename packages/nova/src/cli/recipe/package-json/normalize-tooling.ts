@@ -7,6 +7,7 @@ import chalk from 'chalk';
 
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
+  isEmpty,
   isPlainObject,
   isProjectRoot,
   loadWorkspaceManifests,
@@ -26,8 +27,6 @@ import type {
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageWorkspaces,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Returns,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Workspace,
-  Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Returns,
-  Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Value,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_ConfigRecipes,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_ConfigRecipesPackageJson,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_CurrentDirectory,
@@ -254,7 +253,7 @@ export class Runner {
     // Sync the "config" field.
     if (
       packageConfig !== undefined // Package "config" is defined.
-      && Runner.isEmpty(packageConfig) === true // Package "config" is empty.
+      && isEmpty(packageConfig) === true // Package "config" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -288,40 +287,5 @@ export class Runner {
     }
 
     return;
-  }
-
-  /**
-   * CLI - Recipe - package.json - Normalize Tooling - Is Empty.
-   *
-   * Checks whether a value is null, undefined, a blank
-   * string, an empty array, or an object with no keys.
-   * Used by handle to decide when to remove fields.
-   *
-   * @param {Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Value} value - Value.
-   *
-   * @private
-   *
-   * @returns {Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Returns}
-   *
-   * @since 0.14.0
-   */
-  private static isEmpty(value: Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Value): Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Returns {
-    if (value === null || value === undefined) {
-      return true;
-    }
-
-    if (typeof value === 'string') {
-      return value.trim() === '';
-    }
-
-    if (Array.isArray(value) === true) {
-      return value.length === 0;
-    }
-
-    if (typeof value === 'object') {
-      return Object.keys(value).length === 0;
-    }
-
-    return false;
   }
 }

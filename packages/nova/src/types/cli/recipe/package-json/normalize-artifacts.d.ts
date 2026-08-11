@@ -55,15 +55,6 @@ export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Packa
 export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_PrivateValue = boolean;
 
 /**
- * CLI - Recipe - package.json - Normalize Artifacts - Is Empty.
- *
- * @since 0.14.0
- */
-export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Value = unknown;
-
-export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Returns = boolean;
-
-/**
  * CLI - Recipe - package.json - Normalize Artifacts - Run.
  *
  * @since 0.14.0

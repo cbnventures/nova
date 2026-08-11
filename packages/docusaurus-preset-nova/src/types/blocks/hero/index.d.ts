@@ -39,3 +39,5 @@ export type Blocks_Hero_Index_BlocksHero_Props = {
   className?: Blocks_Hero_Index_BlocksHero_Props_ClassName;
   style?: Blocks_Hero_Index_BlocksHero_Props_Style;
 };
+
+export type Blocks_Hero_Index_BlocksHero_InnerContent = React.JSX.Element;

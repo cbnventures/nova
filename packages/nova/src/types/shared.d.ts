@@ -65,7 +65,7 @@ export type Shared_ChangelogEntry_FilePath = string;
 export type Shared_ChangelogEntry = {
   package: Shared_ChangelogEntry_Package;
   category: Shared_ChangelogEntry_Category;
-  bump: Shared_ChangelogEntry_Bump;
+  bump?: Shared_ChangelogEntry_Bump;
   message: Shared_ChangelogEntry_Message;
   filePath: Shared_ChangelogEntry_FilePath;
 };
@@ -1380,8 +1380,16 @@ export type Shared_NovaConfig_Recipes = {
   'package-json'?: Shared_NovaConfig_Recipes_PackageJson;
 };
 
+/**
+ * Shared - Nova Config Settings - Version Strategy.
+ *
+ * @since 0.23.0
+ */
+export type Shared_NovaConfigSettings_VersionStrategy = 'semver' | 'calver';
+
 export type Shared_NovaConfig_Settings = {
   lockStepVersioning?: boolean;
+  versionStrategy?: Shared_NovaConfigSettings_VersionStrategy;
 };
 
 export type Shared_NovaConfig = {
@@ -1406,7 +1414,7 @@ export type Shared_NovaConfigConfig = Shared_NovaConfig;
  *
  * @since 0.11.0
  */
-export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'workspaces' | 'workflows' | 'gitignore' | 'agents' | 'environment';
+export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'workspaces' | 'workflows' | 'gitignore' | 'agents' | 'environment' | 'settings';
 
 /**
  * Shared - Prompt With Cancel.

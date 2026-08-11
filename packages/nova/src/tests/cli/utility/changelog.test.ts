@@ -15,6 +15,72 @@ import { afterAll, describe, it } from 'vitest';
 import { Runner as CliUtilityChangelog } from '../../../cli/utility/changelog.js';
 
 import type {
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_ChangelogDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_ConfigContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_ConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_EntryContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_EntryPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_PackageJsonContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_PackageJsonPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_WorkspaceDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_WorkspacePackageContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_WorkspacePackagePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_ChangelogDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_ConfigContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_ConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_Content,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_EntryPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_Files,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_HasBump,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_HasCategory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_HasPackage,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_MdFile,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_MdFiles,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_PackageJsonContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_PackageJsonPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ChangelogContent,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ChangelogDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ChangelogPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ConfigContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_EntryContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_EntryPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedMonth,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedVersion,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedYear,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_HasDateSuffix,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_HasVersionHeading,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJson,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJsonContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJsonPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJsonRaw,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_RemainingFiles,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_RemainingMdFiles,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_UpdatedPackagePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspaceDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspacePackageContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspacePackagePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ChangelogDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ConfigContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentMonth,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentVersion,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentYear,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_EntryContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_EntryPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ExpectedVersion,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJson,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJsonContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJsonPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJsonRaw,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_UpdatedPackagePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_WorkspaceDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_WorkspacePackageContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_WorkspacePackagePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_DryRunLeavesUNRELEASEDTokensInPlace_ChangelogDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_DryRunLeavesUNRELEASEDTokensInPlace_ConfigContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_DryRunLeavesUNRELEASEDTokensInPlace_ConfigPath,
@@ -128,6 +194,17 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ReleasesAndBumpsVersion_WorkspacePackagePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SandboxPrefix,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SandboxRoot,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_ChangelogDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_ConfigContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_ConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_EntryContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_EntryPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_PackageJsonContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_PackageJsonPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_WorkspaceDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_WorkspacePackageContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_WorkspacePackagePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SkipsReleaseWhenNoEntriesExist_ConfigContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SkipsReleaseWhenNoEntriesExist_ConfigPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SkipsReleaseWhenNoEntriesExist_PackageJsonContents,
@@ -1274,6 +1351,359 @@ describe('CliUtilityChangelog.run', async () => {
     const stampWasApplied: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_StampWasApplied = sourceAfterRelease.includes('@since 2.0.1') === true && sourceAfterRelease.includes('UNRELEASED') === false;
 
     strictEqual(stampWasApplied, true);
+
+    return;
+  });
+
+  it('calver release computes version from date', async () => {
+    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ProjectDirectory = join(sandboxRoot, 'calver-release');
+    const workspaceDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ChangelogDirectory = join(projectDirectory, '.changelog');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+    await mkdir(changelogDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJsonContents = JSON.stringify({
+      name: 'test-calver-release',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'trackable',
+        },
+      },
+      settings: {
+        versionStrategy: 'calver',
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    const workspacePackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspacePackagePath = join(workspaceDirectory, 'package.json');
+    const workspacePackageContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspacePackageContents = JSON.stringify({
+      name: '@test/core',
+      version: '0.0.0',
+    }, null, 2);
+
+    await writeFile(workspacePackagePath, workspacePackageContents, 'utf-8');
+
+    const entryPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_EntryPath = join(changelogDirectory, 'calver-entry.md');
+    const entryContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_EntryContents = [
+      '---',
+      'package: "@test/core"',
+      'category: added',
+      '---',
+      '',
+      'Added a CalVer feature',
+      '',
+    ].join('\n');
+
+    await writeFile(entryPath, entryContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    process.exitCode = undefined;
+
+    await CliUtilityChangelog.run({
+      release: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const updatedPackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_UpdatedPackagePath = join(workspaceDirectory, 'package.json');
+    const packageJsonRaw: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJsonRaw = await readFile(updatedPackagePath, 'utf-8');
+    const packageJson: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJson = JSON.parse(packageJsonRaw);
+
+    const expectedYear: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedYear = new Date().getFullYear();
+    const expectedMonth: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedMonth = new Date().getMonth() + 1;
+    const expectedVersion: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedVersion = `${expectedYear}.${expectedMonth}.0`;
+
+    strictEqual(packageJson['version'], expectedVersion);
+
+    const changelogPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ChangelogPath = join(workspaceDirectory, 'CHANGELOG.md');
+    const changelogContent: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ChangelogContent = await readFile(changelogPath, 'utf-8');
+
+    const hasVersionHeading: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_HasVersionHeading = changelogContent.includes(`## ${expectedVersion}`);
+    const hasDateSuffix: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_HasDateSuffix = changelogContent.includes(`## ${expectedVersion} - `);
+
+    strictEqual(hasVersionHeading, true);
+    strictEqual(hasDateSuffix, false);
+
+    const remainingFiles: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_RemainingFiles = await readdir(changelogDirectory);
+    const remainingMdFiles: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_RemainingMdFiles = remainingFiles.filter((file) => file.endsWith('.md') && file !== 'README.md');
+
+    strictEqual(remainingMdFiles.length, 0);
+
+    return;
+  });
+
+  it('calver release increments micro within same month', async () => {
+    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ProjectDirectory = join(sandboxRoot, 'calver-increment');
+    const workspaceDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ChangelogDirectory = join(projectDirectory, '.changelog');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+    await mkdir(changelogDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJsonContents = JSON.stringify({
+      name: 'test-calver-increment',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'trackable',
+        },
+      },
+      settings: {
+        versionStrategy: 'calver',
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    const currentYear: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentYear = new Date().getFullYear();
+    const currentMonth: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentMonth = new Date().getMonth() + 1;
+    const currentVersion: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentVersion = `${currentYear}.${currentMonth}.0`;
+
+    const workspacePackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_WorkspacePackagePath = join(workspaceDirectory, 'package.json');
+    const workspacePackageContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_WorkspacePackageContents = JSON.stringify({
+      name: '@test/core',
+      version: currentVersion,
+    }, null, 2);
+
+    await writeFile(workspacePackagePath, workspacePackageContents, 'utf-8');
+
+    const entryPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_EntryPath = join(changelogDirectory, 'calver-increment-entry.md');
+    const entryContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_EntryContents = [
+      '---',
+      'package: "@test/core"',
+      'category: added',
+      '---',
+      '',
+      'Added another CalVer feature',
+      '',
+    ].join('\n');
+
+    await writeFile(entryPath, entryContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliUtilityChangelog.run({
+      release: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const updatedPackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_UpdatedPackagePath = join(workspaceDirectory, 'package.json');
+    const packageJsonRaw: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJsonRaw = await readFile(updatedPackagePath, 'utf-8');
+    const packageJson: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJson = JSON.parse(packageJsonRaw);
+
+    const expectedVersion: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ExpectedVersion = `${currentYear}.${currentMonth}.1`;
+
+    strictEqual(packageJson['version'], expectedVersion);
+
+    return;
+  });
+
+  it('calver entry with bump field errors', async () => {
+    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_ProjectDirectory = join(sandboxRoot, 'calver-bump-error');
+    const workspaceDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_ChangelogDirectory = join(projectDirectory, '.changelog');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+    await mkdir(changelogDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_PackageJsonContents = JSON.stringify({
+      name: 'test-calver-bump-error',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_ConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'trackable',
+        },
+      },
+      settings: {
+        versionStrategy: 'calver',
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    const workspacePackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_WorkspacePackagePath = join(workspaceDirectory, 'package.json');
+    const workspacePackageContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_WorkspacePackageContents = JSON.stringify({
+      name: '@test/core',
+      version: '0.0.0',
+    }, null, 2);
+
+    await writeFile(workspacePackagePath, workspacePackageContents, 'utf-8');
+
+    const entryPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_EntryPath = join(changelogDirectory, 'calver-bump-entry.md');
+    const entryContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_EntryContents = [
+      '---',
+      'package: "@test/core"',
+      'category: added',
+      'bump: minor',
+      '---',
+      '',
+      'Added a CalVer feature with bump',
+      '',
+    ].join('\n');
+
+    await writeFile(entryPath, entryContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliUtilityChangelog.run({
+      release: true,
+    });
+
+    strictEqual(process.exitCode, 1);
+
+    return;
+  });
+
+  it('semver entry without bump field errors', async () => {
+    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_ProjectDirectory = join(sandboxRoot, 'semver-no-bump-error');
+    const workspaceDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_ChangelogDirectory = join(projectDirectory, '.changelog');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+    await mkdir(changelogDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_PackageJsonContents = JSON.stringify({
+      name: 'test-semver-no-bump-error',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_ConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+      settings: {
+        versionStrategy: 'semver',
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    const workspacePackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_WorkspacePackagePath = join(workspaceDirectory, 'package.json');
+    const workspacePackageContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_WorkspacePackageContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+    }, null, 2);
+
+    await writeFile(workspacePackagePath, workspacePackageContents, 'utf-8');
+
+    const entryPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_EntryPath = join(changelogDirectory, 'semver-no-bump-entry.md');
+    const entryContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_EntryContents = [
+      '---',
+      'package: "@test/core"',
+      'category: added',
+      '---',
+      '',
+      'Added a semver feature without bump',
+      '',
+    ].join('\n');
+
+    await writeFile(entryPath, entryContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliUtilityChangelog.run({
+      release: true,
+    });
+
+    strictEqual(process.exitCode, 1);
+
+    return;
+  });
+
+  it('calver record omits bump from entry file', async () => {
+    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_ProjectDirectory = join(sandboxRoot, 'calver-record');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_PackageJsonContents = JSON.stringify({
+      name: 'test-calver-record',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_ConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'trackable',
+        },
+      },
+      settings: {
+        versionStrategy: 'calver',
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    process.exitCode = undefined;
+
+    await CliUtilityChangelog.run({
+      record: true,
+      package: '@test/core',
+      category: 'added',
+      message: 'New feature',
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_ChangelogDirectory = join(projectDirectory, '.changelog');
+    const files: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_Files = await readdir(changelogDirectory);
+    const mdFiles: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_MdFiles = files.filter((file) => file.endsWith('.md') && file !== 'README.md');
+
+    strictEqual(mdFiles.length, 1);
+
+    const mdFile: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_MdFile = mdFiles[0] as Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_MdFile;
+    const entryPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_EntryPath = join(changelogDirectory, mdFile);
+    const content: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_Content = await readFile(entryPath, 'utf-8');
+
+    const hasBump: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_HasBump = content.includes('bump:');
+    const hasPackage: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_HasPackage = content.includes('package:');
+    const hasCategory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_HasCategory = content.includes('category:');
+
+    strictEqual(hasBump, false);
+    strictEqual(hasPackage, true);
+    strictEqual(hasCategory, true);
 
     return;
   });

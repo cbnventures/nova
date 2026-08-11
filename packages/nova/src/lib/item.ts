@@ -62,7 +62,10 @@ export const libItemAllowedPoliciesByRole: Lib_Item_AllowedPoliciesByRole = {
     'freezable',
     'trackable',
   ],
-  template: ['freezable'],
+  template: [
+    'freezable',
+    'trackable',
+  ],
 };
 
 /**

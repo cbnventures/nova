@@ -1,4 +1,4 @@
-import type { MouseEvent, RefObject } from 'react';
+import type { Lib_UseOverlayPanel_Returns } from '../../lib/use-overlay-panel.d.ts';
 
 /**
  * Theme - Doc Sidebar Mobile - Panel - Doc Sidebar Mobile Panel.
@@ -11,35 +11,15 @@ export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_Pathname = string
 
 export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_IsOpen = boolean;
 
-export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_IsClosingState = [boolean, Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_SetIsClosing];
+export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_OverlayPanel = Lib_UseOverlayPanel_Returns;
 
-export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_IsClosing = boolean;
+export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_IsClosing = Lib_UseOverlayPanel_Returns['isClosing'];
 
-export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_SetIsClosing = React.Dispatch<React.SetStateAction<boolean>>;
+export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_SetIsClosing = Lib_UseOverlayPanel_Returns['setIsClosing'];
 
-export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_PanelRef = RefObject<HTMLDivElement | null>;
+export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideFunction = Lib_UseOverlayPanel_Returns['handleClickOutside'];
 
-/**
- * Theme - Doc Sidebar Mobile - Panel - Doc Sidebar Mobile Panel - Handle Escape.
- *
- * @since 0.21.0
- */
-export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleEscapeFunction = (event: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleEscapeKeyboardEvent) => void;
-
-export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleEscapeKeyboardEvent = KeyboardEvent;
-
-/**
- * Theme - Doc Sidebar Mobile - Panel - Doc Sidebar Mobile Panel - Handle Click Outside.
- *
- * @since 0.21.0
- */
-export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideFunction = (event: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideMouseEvent) => void;
-
-export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideMouseEvent = MouseEvent<HTMLDivElement>;
-
-export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideMouseTarget = EventTarget;
-
-export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_FocusTarget = HTMLButtonElement | null;
+export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_PanelRef = Lib_UseOverlayPanel_Returns['panelRef'];
 
 export type Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_PanelAriaLabel = string;
 

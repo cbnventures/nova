@@ -3,13 +3,7 @@ import { useLocation } from '@docusaurus/router';
 import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
 import DocSidebar from '@theme/DocSidebar';
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from 'react';
+import { useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import {
@@ -17,21 +11,17 @@ import {
   sidebarMobileSetOpen,
   sidebarMobileSubscribe,
 } from '../../lib/sidebar-mobile-store.js';
+import { useOverlayPanel } from '../../lib/use-overlay-panel.js';
 
 import type {
   Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_AnimationEvent,
   Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_CloseAriaLabel,
-  Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_FocusTarget,
   Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideFunction,
-  Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideMouseEvent,
-  Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideMouseTarget,
-  Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleEscapeFunction,
-  Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleEscapeKeyboardEvent,
   Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HeaderTitle,
   Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_IsClosing,
-  Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_IsClosingState,
   Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_IsOpen,
   Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_OverlayClassName,
+  Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_OverlayPanel,
   Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_PanelAriaLabel,
   Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_PanelRef,
   Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_Pathname,
@@ -55,73 +45,11 @@ function DocSidebarMobilePanel() {
 
   const isOpen: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_IsOpen = useSyncExternalStore(sidebarMobileSubscribe, sidebarMobileGetSnapshot, sidebarMobileGetSnapshot);
 
-  const isClosingState: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_IsClosingState = useState<Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_IsClosing>(false);
-  const isClosing: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_IsClosing = isClosingState[0];
-  const setIsClosing: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_SetIsClosing = isClosingState[1];
-
-  const panelRef: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_PanelRef = useRef<HTMLDivElement>(null);
-
-  /**
-   * Theme - Doc Sidebar Mobile - Panel - Doc Sidebar Mobile Panel - Handle Escape.
-   *
-   * Closes the sidebar overlay when the user presses the Escape
-   * key, providing a standard keyboard-accessible dismiss mechanism.
-   *
-   * @since 0.21.0
-   */
-  const handleEscape: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleEscapeFunction = useCallback((event: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleEscapeKeyboardEvent) => {
-    if (event.key === 'Escape') {
-      setIsClosing(true);
-    }
-
-    return undefined;
-  }, []);
-
-  /**
-   * Theme - Doc Sidebar Mobile - Panel - Doc Sidebar Mobile Panel - Handle Click Outside.
-   *
-   * Closes the sidebar overlay when the user clicks on the
-   * backdrop area outside the panel, providing an intuitive dismiss.
-   *
-   * @since 0.21.0
-   */
-  const handleClickOutside: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideFunction = useCallback((event: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideMouseEvent) => {
-    const mouseTarget: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideMouseTarget = event.target;
-
-    if (mouseTarget === event.currentTarget) {
-      setIsClosing(true);
-    }
-
-    return undefined;
-  }, []);
-
-  useEffect(() => {
-    if (isOpen === true) {
-      document.addEventListener('keydown', handleEscape);
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-
-      return undefined;
-    };
-  }, [
-    isOpen,
-    handleEscape,
-  ]);
-
-  // Focus close button when dialog opens.
-  useEffect(() => {
-    if (isOpen === true && panelRef['current'] !== null) {
-      const focusTarget: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_FocusTarget = panelRef['current'].querySelector('.nova-sidebar-mobile-close') as Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_FocusTarget;
-
-      if (focusTarget !== null) {
-        focusTarget.focus();
-      }
-    }
-
-    return undefined;
-  }, [isOpen]);
+  const overlayPanel: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_OverlayPanel = useOverlayPanel(isOpen, '.nova-sidebar-mobile-close');
+  const isClosing: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_IsClosing = overlayPanel['isClosing'];
+  const setIsClosing: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_SetIsClosing = overlayPanel['setIsClosing'];
+  const handleClickOutside: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideFunction = overlayPanel['handleClickOutside'];
+  const panelRef: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_PanelRef = overlayPanel['panelRef'];
 
   if (
     isOpen !== true

@@ -1,7 +1,7 @@
 ---
 id: "workflows"
 title: "Workflows"
-description: "Generate GitHub Actions workflow files from nova.config.json for CI/CD automation."
+description: "Generate GitHub Actions workflow files from nova.config.json for CI/CD automation including checks, publishing, and issue management."
 keywords:
   - "nova"
   - "nova generate"
@@ -345,7 +345,7 @@ Each template declares variables with one of three formats. The format determine
 
 Generated files are written to `.github/workflows/` with the naming pattern:
 
-```
+```text
 nova-{template}-{name}.yml
 ```
 

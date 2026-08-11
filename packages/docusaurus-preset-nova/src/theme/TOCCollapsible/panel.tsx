@@ -1,12 +1,6 @@
 import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from 'react';
+import { useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import {
@@ -15,21 +9,17 @@ import {
   tocCollapsibleSetOpen,
   tocCollapsibleSubscribe,
 } from '../../lib/toc-collapsible-store.js';
+import { useOverlayPanel } from '../../lib/use-overlay-panel.js';
 
 import type {
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_AnimationEvent,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_CloseAriaLabel,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_DialogAriaLabel,
-  Theme_TocCollapsible_Panel_TOCCollapsiblePanel_FocusTarget,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideFunction,
-  Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideMouseEvent,
-  Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideMouseTarget,
-  Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleEscapeFunction,
-  Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleEscapeKeyboardEvent,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsClosing,
-  Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsClosingState,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsOpen,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_OverlayClassName,
+  Theme_TocCollapsible_Panel_TOCCollapsiblePanel_OverlayPanel,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_PanelRef,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_Payload,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_SetIsClosing,
@@ -83,75 +73,11 @@ function TOCCollapsiblePanel() {
   const isOpen: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsOpen = useSyncExternalStore(tocCollapsibleSubscribe, tocCollapsibleGetOpenSnapshot, tocCollapsibleGetOpenSnapshot);
   const payload: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_Payload = useSyncExternalStore(tocCollapsibleSubscribe, tocCollapsibleGetPayloadSnapshot, tocCollapsibleGetPayloadSnapshot);
 
-  const isClosingState: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsClosingState = useState<Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsClosing>(false);
-  const isClosing: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsClosing = isClosingState[0];
-  const setIsClosing: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_SetIsClosing = isClosingState[1];
-
-  const panelRef: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_PanelRef = useRef<HTMLDivElement>(null);
-
-  /**
-   * Theme - Toc Collapsible - Panel - Toc Collapsible Panel - Handle Escape.
-   *
-   * Closes the table of contents overlay when the user presses
-   * the Escape key, providing a standard keyboard-accessible
-   * dismiss mechanism.
-   *
-   * @since 0.21.0
-   */
-  const handleEscape: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleEscapeFunction = useCallback((event: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleEscapeKeyboardEvent) => {
-    if (event.key === 'Escape') {
-      setIsClosing(true);
-    }
-
-    return undefined;
-  }, []);
-
-  /**
-   * Theme - Toc Collapsible - Panel - Toc Collapsible Panel - Handle Click Outside.
-   *
-   * Closes the table of contents overlay when the user clicks
-   * on the backdrop area outside the panel, providing an
-   * intuitive dismiss.
-   *
-   * @since 0.21.0
-   */
-  const handleClickOutside: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideFunction = useCallback((event: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideMouseEvent) => {
-    const mouseTarget: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideMouseTarget = event.target;
-
-    if (mouseTarget === event.currentTarget) {
-      setIsClosing(true);
-    }
-
-    return undefined;
-  }, []);
-
-  useEffect(() => {
-    if (isOpen === true) {
-      document.addEventListener('keydown', handleEscape);
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-
-      return undefined;
-    };
-  }, [
-    isOpen,
-    handleEscape,
-  ]);
-
-  // Focus close button when dialog opens.
-  useEffect(() => {
-    if (isOpen === true && panelRef['current'] !== null) {
-      const focusTarget: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_FocusTarget = panelRef['current'].querySelector('.nova-toc-collapsible-close') as Theme_TocCollapsible_Panel_TOCCollapsiblePanel_FocusTarget;
-
-      if (focusTarget !== null) {
-        focusTarget.focus();
-      }
-    }
-
-    return undefined;
-  }, [isOpen]);
+  const overlayPanel: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_OverlayPanel = useOverlayPanel(isOpen, '.nova-toc-collapsible-close');
+  const isClosing: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsClosing = overlayPanel['isClosing'];
+  const setIsClosing: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_SetIsClosing = overlayPanel['setIsClosing'];
+  const handleClickOutside: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideFunction = overlayPanel['handleClickOutside'];
+  const panelRef: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_PanelRef = overlayPanel['panelRef'];
 
   if (
     isOpen !== true

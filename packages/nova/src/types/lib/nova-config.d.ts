@@ -40,6 +40,7 @@ import type {
   Shared_NovaConfigEnvironmentWorkflow,
   Shared_NovaConfigEnvironmentWorkspace,
   Shared_NovaConfigProjectPlatform,
+  Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkflowDeployTarget,
   Shared_NovaConfigWorkspace,
   Shared_NovaConfigWorkspace_Name,
@@ -694,9 +695,12 @@ export type Lib_NovaConfig_Runner_ParseSettings_Returns = Shared_NovaConfig_Sett
 
 export type Lib_NovaConfig_Runner_ParseSettings_Result = {
   lockStepVersioning?: boolean;
+  versionStrategy?: Shared_NovaConfigSettings_VersionStrategy;
 };
 
 export type Lib_NovaConfig_Runner_ParseSettings_LockStepVersioning = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_ParseSettings_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy | undefined;
 
 /**
  * Lib - Nova Config - Parse URLs.

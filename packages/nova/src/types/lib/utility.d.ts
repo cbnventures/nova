@@ -383,6 +383,15 @@ export type Lib_Utility_IsCommandExists_Error_Returns = void;
 export type Lib_Utility_IsCommandExists_Exit_Returns = void;
 
 /**
+ * Lib - Utility - Is Empty.
+ *
+ * @since 0.23.0
+ */
+export type Lib_Utility_IsEmpty_Value = unknown;
+
+export type Lib_Utility_IsEmpty_Returns = boolean;
+
+/**
  * Lib - Utility - Is Execute Shell Error.
  *
  * @since 0.11.0

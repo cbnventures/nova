@@ -237,6 +237,7 @@ import type {
   Lib_NovaConfig_Runner_ParseSettings_Result,
   Lib_NovaConfig_Runner_ParseSettings_Returns,
   Lib_NovaConfig_Runner_ParseSettings_Value,
+  Lib_NovaConfig_Runner_ParseSettings_VersionStrategy,
   Lib_NovaConfig_Runner_ParseUrls_FundSources,
   Lib_NovaConfig_Runner_ParseUrls_LoopIndex,
   Lib_NovaConfig_Runner_ParseUrls_ParsedUrl,
@@ -2128,9 +2129,14 @@ export class Runner {
 
     const result: Lib_NovaConfig_Runner_ParseSettings_Result = {};
     const lockStepVersioning: Lib_NovaConfig_Runner_ParseSettings_LockStepVersioning = (value['lockStepVersioning'] === true) ? true : undefined;
+    const versionStrategy: Lib_NovaConfig_Runner_ParseSettings_VersionStrategy = (value['versionStrategy'] === 'semver' || value['versionStrategy'] === 'calver') ? value['versionStrategy'] : undefined;
 
     if (lockStepVersioning !== undefined) {
       result.lockStepVersioning = lockStepVersioning;
+    }
+
+    if (versionStrategy !== undefined) {
+      result.versionStrategy = versionStrategy;
     }
 
     return (Object.keys(result).length > 0) ? result : undefined;

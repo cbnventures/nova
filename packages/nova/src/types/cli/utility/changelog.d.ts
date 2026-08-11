@@ -11,6 +11,7 @@ import type {
   Shared_ChangelogOptions,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigConfig,
+  Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkspace,
   Shared_PromptWithCancelReject,
   Shared_PromptWithCancelResolved,
@@ -70,6 +71,8 @@ export type Cli_Utility_Changelog_Runner_ParseEntries_Value = string;
 
 export type Cli_Utility_Changelog_Runner_ParseEntries_Message = string;
 
+export type Cli_Utility_Changelog_Runner_ParseEntries_Entry = Shared_ChangelogEntry;
+
 /**
  * CLI - Utility - Changelog - Prompt With Cancel.
  *
@@ -99,6 +102,8 @@ export type Cli_Utility_Changelog_Runner_Record_NovaConfig = LibNovaConfig;
 export type Cli_Utility_Changelog_Runner_Record_Config = Shared_NovaConfigConfig;
 
 export type Cli_Utility_Changelog_Runner_Record_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Cli_Utility_Changelog_Runner_Record_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
 
 export type Cli_Utility_Changelog_Runner_Record_EligibleWorkspaces = [string, Shared_NovaConfigWorkspace][];
 
@@ -209,6 +214,8 @@ export type Cli_Utility_Changelog_Runner_Release_Config = Shared_NovaConfigConfi
 
 export type Cli_Utility_Changelog_Runner_Release_Workspaces = Shared_NovaConfig_Workspaces;
 
+export type Cli_Utility_Changelog_Runner_Release_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
 export type Cli_Utility_Changelog_Runner_Release_BumpPriority = Record<Shared_ChangelogEntry_Bump, number>;
 
 export type Cli_Utility_Changelog_Runner_Release_Release_PackageName = Shared_ChangelogEntry_Package;
@@ -260,6 +267,22 @@ export type Cli_Utility_Changelog_Runner_Release_CurrentVersion = string | undef
 
 export type Cli_Utility_Changelog_Runner_Release_HighestBump = Shared_ChangelogEntry_Bump;
 
+export type Cli_Utility_Changelog_Runner_Release_NewVersion = string;
+
+export type Cli_Utility_Changelog_Runner_Release_CalverToday = Date;
+
+export type Cli_Utility_Changelog_Runner_Release_CalverYear = number;
+
+export type Cli_Utility_Changelog_Runner_Release_CalverMonth = number;
+
+export type Cli_Utility_Changelog_Runner_Release_CalverCurrentParts = number[];
+
+export type Cli_Utility_Changelog_Runner_Release_CalverCurrentYear = number;
+
+export type Cli_Utility_Changelog_Runner_Release_CalverCurrentMonth = number;
+
+export type Cli_Utility_Changelog_Runner_Release_CalverCurrentMicro = number;
+
 export type Cli_Utility_Changelog_Runner_Release_VersionParts = number[];
 
 export type Cli_Utility_Changelog_Runner_Release_VersionPartsMajor = number;
@@ -267,8 +290,6 @@ export type Cli_Utility_Changelog_Runner_Release_VersionPartsMajor = number;
 export type Cli_Utility_Changelog_Runner_Release_VersionPartsMinor = number;
 
 export type Cli_Utility_Changelog_Runner_Release_VersionPartsPatch = number;
-
-export type Cli_Utility_Changelog_Runner_Release_NewVersion = string;
 
 export type Cli_Utility_Changelog_Runner_Release_LockStepVersioning = boolean;
 
@@ -478,6 +499,8 @@ export type Cli_Utility_Changelog_Runner_WriteChangelog_PackageName = Shared_Cha
 export type Cli_Utility_Changelog_Runner_WriteChangelog_Version = string;
 
 export type Cli_Utility_Changelog_Runner_WriteChangelog_Entries = Shared_ChangelogEntry[];
+
+export type Cli_Utility_Changelog_Runner_WriteChangelog_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
 
 export type Cli_Utility_Changelog_Runner_WriteChangelog_Returns = Promise<void>;
 

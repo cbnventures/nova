@@ -6,6 +6,7 @@ import {
   LIB_REGEX_PATTERN_SEMVER_STRICT,
 } from '../../../lib/regex.js';
 import {
+  isEmpty,
   isPlainObject,
   isProjectRoot,
   loadWorkspaceManifests,
@@ -29,8 +30,6 @@ import type {
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_PackagePeerDependenciesMeta,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_Returns,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_Workspace,
-  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_IsEmpty_Returns,
-  Cli_Recipe_PackageJson_NormalizeDependencies_Runner_IsEmpty_Value,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_DepGroups,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_DepName,
   Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_Deps,
@@ -256,7 +255,7 @@ export class Runner {
     // Sync the "dependencies" field (Conditional).
     if (
       packageDependencies !== undefined // Package "dependencies" is defined.
-      && Runner.isEmpty(packageDependencies) === true // Package "dependencies" is empty.
+      && isEmpty(packageDependencies) === true // Package "dependencies" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -269,7 +268,7 @@ export class Runner {
     // Sync the "devDependencies" field (Conditional).
     if (
       packageDevDependencies !== undefined // Package "devDependencies" is defined.
-      && Runner.isEmpty(packageDevDependencies) === true // Package "devDependencies" is empty.
+      && isEmpty(packageDevDependencies) === true // Package "devDependencies" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -282,7 +281,7 @@ export class Runner {
     // Sync the "peerDependencies" field (Conditional).
     if (
       packagePeerDependencies !== undefined // Package "peerDependencies" is defined.
-      && Runner.isEmpty(packagePeerDependencies) === true // Package "peerDependencies" is empty.
+      && isEmpty(packagePeerDependencies) === true // Package "peerDependencies" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -295,7 +294,7 @@ export class Runner {
     // Sync the "peerDependenciesMeta" field (Conditional).
     if (
       packagePeerDependenciesMeta !== undefined // Package "peerDependenciesMeta" is defined.
-      && Runner.isEmpty(packagePeerDependenciesMeta) === true // Package "peerDependenciesMeta" is empty.
+      && isEmpty(packagePeerDependenciesMeta) === true // Package "peerDependenciesMeta" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -334,7 +333,7 @@ export class Runner {
     // Sync the "bundleDependencies" field (Conditional).
     if (
       fileContents['bundleDependencies'] !== undefined // Package "bundleDependencies" is defined.
-      && Runner.isEmpty(fileContents['bundleDependencies']) === true // Package "bundleDependencies" is empty.
+      && isEmpty(fileContents['bundleDependencies']) === true // Package "bundleDependencies" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -347,7 +346,7 @@ export class Runner {
     // Sync the "optionalDependencies" field (Conditional).
     if (
       packageOptionalDependencies !== undefined // Package "optionalDependencies" is defined.
-      && Runner.isEmpty(packageOptionalDependencies) === true // Package "optionalDependencies" is empty.
+      && isEmpty(packageOptionalDependencies) === true // Package "optionalDependencies" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -360,7 +359,7 @@ export class Runner {
     // Sync the "overrides" field (Conditional).
     if (
       packageOverrides !== undefined // Package "overrides" is defined.
-      && Runner.isEmpty(packageOverrides) === true // Package "overrides" is empty.
+      && isEmpty(packageOverrides) === true // Package "overrides" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -504,40 +503,5 @@ export class Runner {
 
     // Already pinned (starts with a digit or is some other format).
     return version;
-  }
-
-  /**
-   * CLI - Recipe - package.json - Normalize Dependencies - Is Empty.
-   *
-   * Checks whether a value is null, undefined, a blank
-   * string, an empty array, or an object with no keys.
-   * Used by handle to decide when to remove fields.
-   *
-   * @param {Cli_Recipe_PackageJson_NormalizeDependencies_Runner_IsEmpty_Value} value - Value.
-   *
-   * @private
-   *
-   * @returns {Cli_Recipe_PackageJson_NormalizeDependencies_Runner_IsEmpty_Returns}
-   *
-   * @since 0.14.0
-   */
-  private static isEmpty(value: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_IsEmpty_Value): Cli_Recipe_PackageJson_NormalizeDependencies_Runner_IsEmpty_Returns {
-    if (value === null || value === undefined) {
-      return true;
-    }
-
-    if (typeof value === 'string') {
-      return value.trim() === '';
-    }
-
-    if (Array.isArray(value) === true) {
-      return value.length === 0;
-    }
-
-    if (typeof value === 'object') {
-      return Object.keys(value).length === 0;
-    }
-
-    return false;
   }
 }

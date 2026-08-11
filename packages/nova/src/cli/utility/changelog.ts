@@ -34,6 +34,7 @@ import type {
   Cli_Utility_Changelog_Runner_ParseEntries_CurrentDirectory,
   Cli_Utility_Changelog_Runner_ParseEntries_EndIndex,
   Cli_Utility_Changelog_Runner_ParseEntries_Entries,
+  Cli_Utility_Changelog_Runner_ParseEntries_Entry,
   Cli_Utility_Changelog_Runner_ParseEntries_EntryBump,
   Cli_Utility_Changelog_Runner_ParseEntries_EntryCategory,
   Cli_Utility_Changelog_Runner_ParseEntries_EntryFiles,
@@ -95,6 +96,7 @@ import type {
   Cli_Utility_Changelog_Runner_Record_ValidMessage,
   Cli_Utility_Changelog_Runner_Record_ValidPackage,
   Cli_Utility_Changelog_Runner_Record_ValidPackageEntry,
+  Cli_Utility_Changelog_Runner_Record_VersionStrategy,
   Cli_Utility_Changelog_Runner_Record_Workspaces,
   Cli_Utility_Changelog_Runner_Release_ApplyPackageJsonPath,
   Cli_Utility_Changelog_Runner_Release_ApplyReleaseEntries,
@@ -104,6 +106,13 @@ import type {
   Cli_Utility_Changelog_Runner_Release_ApplyUpdatedContents,
   Cli_Utility_Changelog_Runner_Release_ApplyUpdatedPackageJson,
   Cli_Utility_Changelog_Runner_Release_BumpPriority,
+  Cli_Utility_Changelog_Runner_Release_CalverCurrentMicro,
+  Cli_Utility_Changelog_Runner_Release_CalverCurrentMonth,
+  Cli_Utility_Changelog_Runner_Release_CalverCurrentParts,
+  Cli_Utility_Changelog_Runner_Release_CalverCurrentYear,
+  Cli_Utility_Changelog_Runner_Release_CalverMonth,
+  Cli_Utility_Changelog_Runner_Release_CalverToday,
+  Cli_Utility_Changelog_Runner_Release_CalverYear,
   Cli_Utility_Changelog_Runner_Release_CategoryEntries,
   Cli_Utility_Changelog_Runner_Release_CategoryEntryMessage,
   Cli_Utility_Changelog_Runner_Release_CategoryLabel,
@@ -160,6 +169,7 @@ import type {
   Cli_Utility_Changelog_Runner_Release_VersionPartsMajor,
   Cli_Utility_Changelog_Runner_Release_VersionPartsMinor,
   Cli_Utility_Changelog_Runner_Release_VersionPartsPatch,
+  Cli_Utility_Changelog_Runner_Release_VersionStrategy,
   Cli_Utility_Changelog_Runner_Release_WorkspaceEntry,
   Cli_Utility_Changelog_Runner_Release_WorkspacePath,
   Cli_Utility_Changelog_Runner_Release_Workspaces,
@@ -233,6 +243,7 @@ import type {
   Cli_Utility_Changelog_Runner_WriteChangelog_Today,
   Cli_Utility_Changelog_Runner_WriteChangelog_TrimmedAfterHeading,
   Cli_Utility_Changelog_Runner_WriteChangelog_Version,
+  Cli_Utility_Changelog_Runner_WriteChangelog_VersionStrategy,
 } from '../../types/cli/utility/changelog.d.ts';
 
 /**
@@ -285,7 +296,6 @@ export class Runner {
         (
           options['package'] === undefined
           || options['category'] === undefined
-          || options['bump'] === undefined
           || options['message'] === undefined
         )
         && (
@@ -298,7 +308,7 @@ export class Runner {
         Logger.customize({
           name: 'Runner.run',
           purpose: 'validate',
-        }).error('Non-interactive record requires --package, --category, --bump, and --message.');
+        }).error('Non-interactive record requires at least --package, --category, and --message.');
 
         process.exitCode = 1;
 
@@ -373,6 +383,7 @@ export class Runner {
     // Load "nova.config.json" for workspace list.
     const config: Cli_Utility_Changelog_Runner_Record_Config = await new LibNovaConfig().load();
     const workspaces: Cli_Utility_Changelog_Runner_Record_Workspaces = config['workspaces'] ?? {};
+    const versionStrategy: Cli_Utility_Changelog_Runner_Record_VersionStrategy = (config['settings'] !== undefined && config['settings']['versionStrategy'] !== undefined) ? config['settings']['versionStrategy'] : 'semver';
 
     // Filter to non-freezable workspaces.
     const eligibleWorkspaces: Cli_Utility_Changelog_Runner_Record_EligibleWorkspaces = Object.entries(workspaces).filter((workspace) => {
@@ -398,11 +409,42 @@ export class Runner {
     let selectedBump: Cli_Utility_Changelog_Runner_Record_SelectedBump = undefined;
     let selectedMessage: Cli_Utility_Changelog_Runner_Record_SelectedMessage = undefined;
 
+    if (versionStrategy === 'calver' && options['bump'] !== undefined) {
+      Logger.customize({
+        name: 'Runner.record',
+        purpose: 'validate',
+      }).error('CalVer entries do not use the --bump flag.');
+
+      process.exitCode = 1;
+
+      return;
+    }
+
+    if (
+      versionStrategy !== 'calver'
+      && options['package'] !== undefined
+      && options['category'] !== undefined
+      && options['bump'] === undefined
+      && options['message'] !== undefined
+    ) {
+      Logger.customize({
+        name: 'Runner.record',
+        purpose: 'validate',
+      }).error('Non-interactive record requires --package, --category, --bump, and --message.');
+
+      process.exitCode = 1;
+
+      return;
+    }
+
     // Non-interactive mode.
     if (
       options['package'] !== undefined
       && options['category'] !== undefined
-      && options['bump'] !== undefined
+      && (
+        versionStrategy === 'calver'
+        || options['bump'] !== undefined
+      )
       && options['message'] !== undefined
     ) {
       // Validate package.
@@ -439,18 +481,22 @@ export class Runner {
         return;
       }
 
-      // Validate bump.
-      const validBump: Cli_Utility_Changelog_Runner_Record_ValidBump = libItemChangelogValidBumps.find((libItemChangelogValidBump) => libItemChangelogValidBump === options['bump']);
+      if (versionStrategy !== 'calver') {
+        // Validate bump.
+        const validBump: Cli_Utility_Changelog_Runner_Record_ValidBump = libItemChangelogValidBumps.find((libItemChangelogValidBump) => libItemChangelogValidBump === options['bump']);
 
-      if (validBump === undefined) {
-        Logger.customize({
-          name: 'Runner.record',
-          purpose: 'validate',
-        }).error(`Bump type "${options['bump']}" is invalid. Use: ${libItemChangelogValidBumps.join(', ')}.`);
+        if (validBump === undefined) {
+          Logger.customize({
+            name: 'Runner.record',
+            purpose: 'validate',
+          }).error(`Bump type "${options['bump']}" is invalid. Use: ${libItemChangelogValidBumps.join(', ')}.`);
 
-        process.exitCode = 1;
+          process.exitCode = 1;
 
-        return;
+          return;
+        }
+
+        selectedBump = validBump;
       }
 
       // Validate message.
@@ -469,7 +515,6 @@ export class Runner {
 
       selectedPackage = validPackage;
       selectedCategory = validCategory;
-      selectedBump = validBump;
       selectedMessage = validMessage;
     } else {
       // Select package.
@@ -573,44 +618,46 @@ export class Runner {
 
       selectedMessage = messageOutputResult.message.trim();
 
-      // Select bump type (auto-suggested based on category).
-      const suggestedBump: Cli_Utility_Changelog_Runner_Record_SuggestedBump = libItemChangelogCategoryBumpMap[selectedCategory];
+      if (versionStrategy !== 'calver') {
+        // Select bump type (auto-suggested based on category).
+        const suggestedBump: Cli_Utility_Changelog_Runner_Record_SuggestedBump = libItemChangelogCategoryBumpMap[selectedCategory];
 
-      const bumpOutput: Cli_Utility_Changelog_Runner_Record_BumpOutput = await Runner.promptWithCancel<Cli_Utility_Changelog_Runner_Record_BumpOutputKey, Cli_Utility_Changelog_Runner_Record_BumpOutputValue>({
-        type: 'select',
-        name: 'bump',
-        message: 'Select version bump type.',
-        choices: [
-          {
-            title: 'Major',
-            description: 'Breaking change.',
-            value: 'major' as const,
-          },
-          {
-            title: 'Minor',
-            description: 'New feature.',
-            value: 'minor' as const,
-          },
-          {
-            title: 'Patch',
-            description: 'Bug fix.',
-            value: 'patch' as const,
-          },
-        ],
-        initial: libItemChangelogValidBumps.indexOf(suggestedBump),
-      });
+        const bumpOutput: Cli_Utility_Changelog_Runner_Record_BumpOutput = await Runner.promptWithCancel<Cli_Utility_Changelog_Runner_Record_BumpOutputKey, Cli_Utility_Changelog_Runner_Record_BumpOutputValue>({
+          type: 'select',
+          name: 'bump',
+          message: 'Select version bump type.',
+          choices: [
+            {
+              title: 'Major',
+              description: 'Breaking change.',
+              value: 'major' as const,
+            },
+            {
+              title: 'Minor',
+              description: 'New feature.',
+              value: 'minor' as const,
+            },
+            {
+              title: 'Patch',
+              description: 'Bug fix.',
+              value: 'patch' as const,
+            },
+          ],
+          initial: libItemChangelogValidBumps.indexOf(suggestedBump),
+        });
 
-      if (bumpOutput['cancelled'] === true) {
-        return;
+        if (bumpOutput['cancelled'] === true) {
+          return;
+        }
+
+        const bumpOutputResult: Cli_Utility_Changelog_Runner_Record_BumpOutputResult = bumpOutput['result'];
+
+        if (bumpOutputResult.bump === undefined) {
+          return;
+        }
+
+        selectedBump = bumpOutputResult.bump;
       }
-
-      const bumpOutputResult: Cli_Utility_Changelog_Runner_Record_BumpOutputResult = bumpOutput['result'];
-
-      if (bumpOutputResult.bump === undefined) {
-        return;
-      }
-
-      selectedBump = bumpOutputResult.bump;
     }
 
     // Write entry file.
@@ -619,16 +666,30 @@ export class Runner {
     const changelogDirectory: Cli_Utility_Changelog_Runner_Record_ChangelogDirectory = join(currentDirectory, '.changelog');
     const filePath: Cli_Utility_Changelog_Runner_Record_FilePath = join(changelogDirectory, `${fileName}.md`);
 
-    const content: Cli_Utility_Changelog_Runner_Record_Content = [
-      '---',
-      `package: "${selectedPackage}"`,
-      `category: ${selectedCategory}`,
-      `bump: ${selectedBump}`,
-      '---',
-      '',
-      selectedMessage,
-      '',
-    ].join('\n');
+    let content: Cli_Utility_Changelog_Runner_Record_Content = '';
+
+    if (versionStrategy === 'calver') {
+      content = [
+        '---',
+        `package: "${selectedPackage}"`,
+        `category: ${selectedCategory}`,
+        '---',
+        '',
+        selectedMessage,
+        '',
+      ].join('\n');
+    } else {
+      content = [
+        '---',
+        `package: "${selectedPackage}"`,
+        `category: ${selectedCategory}`,
+        `bump: ${selectedBump}`,
+        '---',
+        '',
+        selectedMessage,
+        '',
+      ].join('\n');
+    }
 
     if (isDryRun === true) {
       Logger.customize({
@@ -715,6 +776,35 @@ export class Runner {
     // Load "nova.config.json" for workspace paths.
     const config: Cli_Utility_Changelog_Runner_Release_Config = await new LibNovaConfig().load();
     const workspaces: Cli_Utility_Changelog_Runner_Release_Workspaces = config['workspaces'] ?? {};
+    const versionStrategy: Cli_Utility_Changelog_Runner_Release_VersionStrategy = (config['settings'] !== undefined && config['settings']['versionStrategy'] !== undefined) ? config['settings']['versionStrategy'] : 'semver';
+
+    if (versionStrategy === 'calver') {
+      for (const validateEntry of entries) {
+        if (validateEntry['bump'] !== undefined) {
+          Logger.customize({
+            name: 'Runner.release',
+            purpose: 'validate',
+          }).error(`CalVer entries do not use the \`bump\` field. Remove it from "${basename(validateEntry['filePath'])}".`);
+
+          process.exitCode = 1;
+
+          return;
+        }
+      }
+    } else {
+      for (const validateEntry of entries) {
+        if (validateEntry['bump'] === undefined) {
+          Logger.customize({
+            name: 'Runner.release',
+            purpose: 'validate',
+          }).error(`Semver entries require the \`bump\` field. Add it to "${basename(validateEntry['filePath'])}".`);
+
+          process.exitCode = 1;
+
+          return;
+        }
+      }
+    }
 
     // Compute version bumps per package.
     const bumpPriority: Cli_Utility_Changelog_Runner_Release_BumpPriority = {
@@ -802,52 +892,62 @@ export class Runner {
         return;
       }
 
-      // Compute the highest bump.
       let highestBump: Cli_Utility_Changelog_Runner_Release_HighestBump = 'patch';
-
-      for (const packageEntry of packageEntries) {
-        if (bumpPriority[packageEntry['bump']] > bumpPriority[highestBump]) {
-          highestBump = packageEntry['bump'];
-        }
-      }
-
-      // Compute new version.
-      const versionParts: Cli_Utility_Changelog_Runner_Release_VersionParts = currentVersion.split('.').map(Number);
-
-      // A releasable version must be a clean numeric "x.y.z" with exactly three finite integer
-      // parts. Anything else (e.g. a prerelease like "1.0.0-rc.1") yields a NaN part that "?? 0"
-      // cannot recover, so a patch bump would write a corrupt "1.0.NaN". Surface it instead.
-      if (
-        versionParts.length !== 3
-        || versionParts.some((versionPart) => Number.isInteger(versionPart) === false) === true
-      ) {
-        throw new Error(`Invalid version "${currentVersion}" in "${packageJsonPath}": expected a clean numeric "x.y.z" to bump.`);
-      }
-
-      const versionPartsMajor: Cli_Utility_Changelog_Runner_Release_VersionPartsMajor = versionParts[0] ?? 0;
-      const versionPartsMinor: Cli_Utility_Changelog_Runner_Release_VersionPartsMinor = versionParts[1] ?? 0;
-      const versionPartsPatch: Cli_Utility_Changelog_Runner_Release_VersionPartsPatch = versionParts[2] ?? 0;
-
       let newVersion: Cli_Utility_Changelog_Runner_Release_NewVersion = currentVersion;
 
-      switch (highestBump) {
-        case 'major': {
-          newVersion = `${versionPartsMajor + 1}.0.0`;
-          break;
+      if (versionStrategy === 'calver') {
+        const calverToday: Cli_Utility_Changelog_Runner_Release_CalverToday = new Date();
+        const calverYear: Cli_Utility_Changelog_Runner_Release_CalverYear = calverToday.getFullYear();
+        const calverMonth: Cli_Utility_Changelog_Runner_Release_CalverMonth = calverToday.getMonth() + 1;
+        const calverCurrentParts: Cli_Utility_Changelog_Runner_Release_CalverCurrentParts = currentVersion.split('.').map(Number);
+        const calverCurrentYear: Cli_Utility_Changelog_Runner_Release_CalverCurrentYear = calverCurrentParts[0] ?? 0;
+        const calverCurrentMonth: Cli_Utility_Changelog_Runner_Release_CalverCurrentMonth = calverCurrentParts[1] ?? 0;
+        const calverCurrentMicro: Cli_Utility_Changelog_Runner_Release_CalverCurrentMicro = calverCurrentParts[2] ?? 0;
+
+        if (calverYear === calverCurrentYear && calverMonth === calverCurrentMonth) {
+          newVersion = `${calverYear}.${calverMonth}.${calverCurrentMicro + 1}`;
+        } else {
+          newVersion = `${calverYear}.${calverMonth}.0`;
+        }
+      } else {
+        for (const packageEntry of packageEntries) {
+          if (packageEntry['bump'] !== undefined && bumpPriority[packageEntry['bump']] > bumpPriority[highestBump]) {
+            highestBump = packageEntry['bump'];
+          }
         }
 
-        case 'minor': {
-          newVersion = `${versionPartsMajor}.${versionPartsMinor + 1}.0`;
-          break;
+        const versionParts: Cli_Utility_Changelog_Runner_Release_VersionParts = currentVersion.split('.').map(Number);
+
+        if (
+          versionParts.length !== 3
+          || versionParts.some((versionPart) => Number.isInteger(versionPart) === false) === true
+        ) {
+          throw new Error(`Invalid version "${currentVersion}" in "${packageJsonPath}": expected a clean numeric "x.y.z" to bump.`);
         }
 
-        case 'patch': {
-          newVersion = `${versionPartsMajor}.${versionPartsMinor}.${versionPartsPatch + 1}`;
-          break;
-        }
+        const versionPartsMajor: Cli_Utility_Changelog_Runner_Release_VersionPartsMajor = versionParts[0] ?? 0;
+        const versionPartsMinor: Cli_Utility_Changelog_Runner_Release_VersionPartsMinor = versionParts[1] ?? 0;
+        const versionPartsPatch: Cli_Utility_Changelog_Runner_Release_VersionPartsPatch = versionParts[2] ?? 0;
 
-        default: {
-          break;
+        switch (highestBump) {
+          case 'major': {
+            newVersion = `${versionPartsMajor + 1}.0.0`;
+            break;
+          }
+
+          case 'minor': {
+            newVersion = `${versionPartsMajor}.${versionPartsMinor + 1}.0`;
+            break;
+          }
+
+          case 'patch': {
+            newVersion = `${versionPartsMajor}.${versionPartsMinor}.${versionPartsPatch + 1}`;
+            break;
+          }
+
+          default: {
+            break;
+          }
         }
       }
 
@@ -962,7 +1062,11 @@ export class Runner {
       const summaryReleaseHighestBump: Cli_Utility_Changelog_Runner_Release_SummaryReleaseHighestBump = release['highestBump'];
       const summaryReleaseEntries: Cli_Utility_Changelog_Runner_Release_SummaryReleaseEntries = release['entries'];
 
-      process.stdout.write(`\n  ${chalk.bold(summaryReleasePackageName)}: ${summaryReleaseCurrentVersion} → ${chalk.green(summaryReleaseNewVersion)} (${summaryReleaseHighestBump})\n`);
+      if (versionStrategy === 'calver') {
+        process.stdout.write(`\n  ${chalk.bold(summaryReleasePackageName)}: ${summaryReleaseCurrentVersion} → ${chalk.green(summaryReleaseNewVersion)}\n`);
+      } else {
+        process.stdout.write(`\n  ${chalk.bold(summaryReleasePackageName)}: ${summaryReleaseCurrentVersion} → ${chalk.green(summaryReleaseNewVersion)} (${summaryReleaseHighestBump})\n`);
+      }
 
       if (summaryReleaseEntries.length === 0) {
         process.stdout.write(`    ${chalk.dim('No changes.')}\n`);
@@ -1075,6 +1179,7 @@ export class Runner {
         applyReleasePackageName,
         applyReleaseNewVersion,
         applyReleaseEntries,
+        versionStrategy,
       );
 
       Logger.customize({
@@ -1435,7 +1540,6 @@ export class Runner {
       if (
         entryPackage === undefined
         || entryCategory === undefined
-        || entryBump === undefined
         || message === ''
       ) {
         Logger.customize({
@@ -1446,13 +1550,18 @@ export class Runner {
         continue;
       }
 
-      entries.push({
+      const entry: Cli_Utility_Changelog_Runner_ParseEntries_Entry = {
         package: entryPackage,
         category: entryCategory,
-        bump: entryBump,
         message,
         filePath,
-      });
+      };
+
+      if (entryBump !== undefined) {
+        Reflect.set(entry, 'bump', entryBump);
+      }
+
+      entries.push(entry);
     }
 
     return entries;
@@ -1464,10 +1573,11 @@ export class Runner {
    * Builds a dated version section grouped by category order and prepends it to the existing
    * CHANGELOG.md or creates the file if it does not exist.
    *
-   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_PackageDirectory} packageDirectory - Package directory.
-   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_PackageName}      packageName      - Package name.
-   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_Version}          version          - Version.
-   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_Entries}          entries          - Entries.
+   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_PackageDirectory}  packageDirectory - Package directory.
+   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_PackageName}       packageName      - Package name.
+   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_Version}           version          - Version.
+   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_Entries}           entries          - Entries.
+   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_VersionStrategy}   versionStrategy  - Version strategy.
    *
    * @private
    *
@@ -1475,7 +1585,7 @@ export class Runner {
    *
    * @since 0.13.0
    */
-  private static async writeChangelog(packageDirectory: Cli_Utility_Changelog_Runner_WriteChangelog_PackageDirectory, packageName: Cli_Utility_Changelog_Runner_WriteChangelog_PackageName, version: Cli_Utility_Changelog_Runner_WriteChangelog_Version, entries: Cli_Utility_Changelog_Runner_WriteChangelog_Entries): Cli_Utility_Changelog_Runner_WriteChangelog_Returns {
+  private static async writeChangelog(packageDirectory: Cli_Utility_Changelog_Runner_WriteChangelog_PackageDirectory, packageName: Cli_Utility_Changelog_Runner_WriteChangelog_PackageName, version: Cli_Utility_Changelog_Runner_WriteChangelog_Version, entries: Cli_Utility_Changelog_Runner_WriteChangelog_Entries, versionStrategy: Cli_Utility_Changelog_Runner_WriteChangelog_VersionStrategy): Cli_Utility_Changelog_Runner_WriteChangelog_Returns {
     const changelogPath: Cli_Utility_Changelog_Runner_WriteChangelog_ChangelogPath = join(packageDirectory, 'CHANGELOG.md');
     const today: Cli_Utility_Changelog_Runner_WriteChangelog_Today = new Date();
     const dateString: Cli_Utility_Changelog_Runner_WriteChangelog_DateString = [
@@ -1499,7 +1609,11 @@ export class Runner {
     const categoryOrder: Cli_Utility_Changelog_Runner_WriteChangelog_CategoryOrder = [...libItemChangelogOrderedCategories];
     const sectionParts: Cli_Utility_Changelog_Runner_WriteChangelog_SectionParts = [];
 
-    sectionParts.push(`## ${version} - ${dateString}`);
+    if (versionStrategy === 'calver') {
+      sectionParts.push(`## ${version}`);
+    } else {
+      sectionParts.push(`## ${version} - ${dateString}`);
+    }
 
     if (entries.length === 0) {
       sectionParts.push('');

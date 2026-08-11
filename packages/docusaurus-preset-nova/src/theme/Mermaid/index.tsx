@@ -1,21 +1,17 @@
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
 import ErrorPageContent from '@theme/ErrorPageContent';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import {
   MERMAID_CONTAINER_CLASS_NAME,
   useMermaidRenderResult,
 } from '../../lib/mermaid.js';
+import { useColorModeObserver } from '../../lib/use-color-mode-observer.js';
 
 import type {
   Theme_Mermaid_Index_Mermaid_ColorMode,
-  Theme_Mermaid_Index_Mermaid_ColorModeState,
-  Theme_Mermaid_Index_Mermaid_CurrentTheme,
-  Theme_Mermaid_Index_Mermaid_Observer,
   Theme_Mermaid_Index_Mermaid_Props,
   Theme_Mermaid_Index_Mermaid_Returns,
-  Theme_Mermaid_Index_Mermaid_SetColorMode,
-  Theme_Mermaid_Index_Mermaid_Theme,
   Theme_Mermaid_Index_MermaidContent_ClassName,
   Theme_Mermaid_Index_MermaidContent_ContainerRef,
   Theme_Mermaid_Index_MermaidContent_Props,
@@ -76,38 +72,7 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
  * @since 0.15.0
  */
 function Mermaid(props: Theme_Mermaid_Index_Mermaid_Props): Theme_Mermaid_Index_Mermaid_Returns {
-  const colorModeState: Theme_Mermaid_Index_Mermaid_ColorModeState = useState<Theme_Mermaid_Index_Mermaid_ColorMode>('light');
-  const colorMode: Theme_Mermaid_Index_Mermaid_ColorMode = colorModeState[0];
-  const setColorMode: Theme_Mermaid_Index_Mermaid_SetColorMode = colorModeState[1];
-
-  useEffect(() => {
-    const currentTheme: Theme_Mermaid_Index_Mermaid_CurrentTheme = document.documentElement.getAttribute('data-theme');
-
-    if (currentTheme !== null) {
-      setColorMode(currentTheme);
-    }
-
-    const observer: Theme_Mermaid_Index_Mermaid_Observer = new MutationObserver(() => {
-      const theme: Theme_Mermaid_Index_Mermaid_Theme = document.documentElement.getAttribute('data-theme');
-
-      if (theme !== null) {
-        setColorMode(theme);
-      }
-
-      return undefined;
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme'],
-    });
-
-    return () => {
-      observer.disconnect();
-
-      return undefined;
-    };
-  }, []);
+  const colorMode: Theme_Mermaid_Index_Mermaid_ColorMode = useColorModeObserver();
 
   return (
     <ErrorBoundary

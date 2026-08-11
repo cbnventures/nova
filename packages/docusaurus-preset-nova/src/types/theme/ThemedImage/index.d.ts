@@ -36,16 +36,6 @@ export type Theme_ThemedImage_Index_ThemedImage_Props = {
 
 export type Theme_ThemedImage_Index_ThemedImage_Returns = React.JSX.Element;
 
-export type Theme_ThemedImage_Index_ThemedImage_ColorModeState = [Theme_ThemedImage_Index_ThemedImage_ColorMode, Theme_ThemedImage_Index_ThemedImage_SetColorMode];
-
 export type Theme_ThemedImage_Index_ThemedImage_ColorMode = string;
-
-export type Theme_ThemedImage_Index_ThemedImage_SetColorMode = React.Dispatch<React.SetStateAction<Theme_ThemedImage_Index_ThemedImage_ColorMode>>;
-
-export type Theme_ThemedImage_Index_ThemedImage_CurrentTheme = string | null;
-
-export type Theme_ThemedImage_Index_ThemedImage_Observer = MutationObserver;
-
-export type Theme_ThemedImage_Index_ThemedImage_Theme = string | null;
 
 export type Theme_ThemedImage_Index_ThemedImage_Src = string;

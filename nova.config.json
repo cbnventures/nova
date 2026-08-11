@@ -430,6 +430,7 @@
     }
   },
   "settings": {
-    "lockStepVersioning": true
+    "lockStepVersioning": true,
+    "versionStrategy": "semver"
   }
 }

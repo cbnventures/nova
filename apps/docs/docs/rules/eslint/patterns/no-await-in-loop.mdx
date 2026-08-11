@@ -1,7 +1,7 @@
 ---
 id: "no-await-in-loop"
 title: "No Await In Loop"
-description: "Disallow await inside loops so sequential calls that should be parallelized with Promise.all are caught early."
+description: "Disallow await inside loops so sequential async calls that could be parallelized with Promise.all are caught early during linting."
 keywords:
   - "nova"
   - "eslint rule"

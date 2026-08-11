@@ -8,6 +8,7 @@ keywords:
   - "changeset alternative"
   - "version bump"
   - "semver"
+  - "calver"
   - "release workflow"
 tags:
   - "cli"
@@ -16,6 +17,7 @@ tags:
   - "versioning"
   - "release"
   - "semver"
+  - "calver"
 ---
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
@@ -41,6 +43,7 @@ Recorded entries are stored as individual `.md` files in a `.changelog/` directo
 - Interactive prompts guide you through package selection, category, description, and <Terminology title="semantic versioning" to="/docs/quickstart/terminology#fundamentals" color={true}>SemVer</Terminology> bump type. No flags to memorize.
 - The `--record` and `--release` flags enable the same workflow in <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> without prompts.
 - The **dry run** option lets you preview every change before any file is touched.
+- Supports both **SemVer** and **CalVer** strategies, configured per-project in `nova.config.json`.
 
 ## Use Cases
 
@@ -90,15 +93,15 @@ You can run this command in two ways:
 
 ## Options
 
-| Flag                        | Description                                                                |
-|-----------------------------|----------------------------------------------------------------------------|
-| `--record`                  | Record a change. Prompts for missing values unless all flags are provided. |
-| `--release`                 | Release accumulated changes.                                               |
-| `-p, --package <name>`      | Package name for recording.                                                |
-| `-c, --category <category>` | Category: `updated`, `fixed`, `added`, `removed`.                          |
-| `-b, --bump <type>`         | Bump type: `major`, `minor`, `patch`.                                      |
-| `-m, --message <message>`   | Change description.                                                        |
-| `-d, --dry-run`             | Run without writing any files.                                             |
+| Flag                        | Description                                                                       |
+|-----------------------------|-----------------------------------------------------------------------------------|
+| `--record`                  | Record a change. Prompts for missing values unless all flags are provided.        |
+| `--release`                 | Release accumulated changes.                                                      |
+| `-p, --package <name>`      | Package name for recording.                                                       |
+| `-c, --category <category>` | Category: `updated`, `fixed`, `added`, `removed`.                                 |
+| `-b, --bump <type>`         | Bump type: `major`, `minor`, `patch`. Semver only — not available in CalVer mode. |
+| `-m, --message <message>`   | Change description.                                                               |
+| `-d, --dry-run`             | Run without writing any files.                                                    |
 
 ## How It Works
 
@@ -107,7 +110,7 @@ You can run this command in two ways:
 1. **Select package** — Auto-selects if only one non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> exists. Otherwise prompts.
 2. **Select category** — Choose from Updated, Fixed, Added, or Removed.
 3. **Enter description** — Free-text description of the change.
-4. **Select bump type** — Pre-selected based on category (Added/Updated = minor, Fixed = patch, Removed = major). Override if needed.
+4. **Select bump type** — Pre-selected based on category (Added/Updated = minor, Fixed = patch, Removed = major). Override if needed. (Skipped in CalVer mode.)
 5. **Save** — Writes an entry file to `.changelog/` with a random adjective-noun-verb filename.
 
 ### Release Flow
@@ -168,6 +171,37 @@ bump: minor
 
 New ESLint rule for switch case blocks.
 ```
+
+### CalVer Mode
+
+When `settings.versionStrategy` is `"calver"` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, the changelog command switches to calendar-based versioning:
+
+- **Version format:** `YYYY.MM.MICRO` — full year, unpadded month, micro counter that resets each new month.
+- **No bump field:** Changelog entries omit the `bump` field entirely. The `--bump` flag is not available in CalVer mode.
+- **Automatic version:** `--release` computes the version from today's date with no user prompt. If the current version shares the same year and month, the micro counter increments. Otherwise, the micro resets to `0`.
+- **Heading format:** CalVer changelog headings omit the date suffix since the date is already embedded in the version number.
+
+```markdown title=".changelog/brave-cats-jump.md"
+---
+package: "demo-envoy"
+category: added
+---
+
+Added dark mode support.
+```
+
+```markdown title="templates/demo-envoy/CHANGELOG.md"
+# demo-envoy
+
+## 2026.8.0
+
+### ADDED
+- Added dark mode support.
+```
+
+#### Strategy Lock
+
+Once `CHANGELOG.md` contains at least one released version heading, the `versionStrategy` value in `nova.config.json` becomes immutable. Changing it after a release triggers a hard error during config parsing.
 
 ### CHANGELOG.md Format
 
@@ -300,7 +334,7 @@ Then run `npm run changelog:record` or `npm run changelog:release`.
 
 - **"No eligible (non-freezable) workspaces found"** — Confirm that <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> has at least one <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> with a <Terminology title="private workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>trackable</Terminology> or <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> <Terminology title="workspace label" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace policy</Terminology>.
 - **"Cannot use --record and --release together"** — These flags are mutually exclusive. Run them as separate commands.
-- **"Non-interactive record requires --package, --category, --bump, and --message"** — All four flags are required when using `--record`. Omit `--record` for interactive mode.
+- **"Non-interactive record requires --package, --category, --bump, and --message"** — In semver mode, all four flags are required when using `--record`. In CalVer mode, only `--package`, `--category`, and `--message` are required (no `--bump`). Omit `--record` for interactive mode.
 - **"No changelog entries found"** — The `.changelog/` directory is empty or does not exist. Record at least one change before releasing.
 - **"Package not found in nova.config.json"** — The `--package` value must match the `name` field of a non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 - **"UNRELEASED sentinel survived stamping"** — The release step found one or more `@since UNRELEASED` or `@deprecated UNRELEASED` tags in `src/` that were not replaced. This means a file was added or moved after the stamp pass searched it, or the file extension is not `.ts` or `.tsx`. Locate the surviving tag with `grep -r "UNRELEASED" src/` and update it manually to the released version, then re-run any post-release steps.

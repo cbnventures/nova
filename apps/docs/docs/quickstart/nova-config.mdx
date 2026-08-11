@@ -2,7 +2,7 @@
 id: "nova-config"
 title: "Nova Config Reference"
 sidebar_position: 4
-description: "Complete reference for every section and field in the nova.config.json configuration file."
+description: "Complete reference for every section and field in the nova.config.json configuration file including project, entities, workflows, and workspaces."
 keywords:
   - "nova"
   - "nova config"
@@ -452,14 +452,16 @@ Every declared `environment.project`, `environment.workspaces.<path>` (including
 
 Project-wide behavior toggles that affect how Nova commands operate.
 
-| Field                | Type      | Description                                                                                                                                                                                                                    |
-|----------------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `lockStepVersioning` | `boolean` | When `true`, `nova utility changelog --release` bumps every distributable workspace to the same version, even if some had no recorded changes. Packages without changes receive a "No changes." entry in their `CHANGELOG.md`. |
+| Field                | Type      | Description                                                                                                                                                                                                                                        |
+|----------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `lockStepVersioning` | `boolean` | When `true`, `nova utility changelog --release` bumps every distributable workspace to the same version, even if some had no recorded changes. Packages without changes receive a "No changes." entry in their `CHANGELOG.md`.                     |
+| `versionStrategy`    | `string`  | Version strategy for the project: `"semver"` (default) or `"calver"`. Semver uses major.minor.patch with bump types. CalVer uses YYYY.MM.MICRO with automatic date-based versioning. Locked after the first release is recorded in `CHANGELOG.md`. |
 
 ```json title="nova.config.json"
 {
   "settings": {
-    "lockStepVersioning": true
+    "lockStepVersioning": true,
+    "versionStrategy": "semver"
   }
 }
 ```

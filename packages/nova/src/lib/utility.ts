@@ -144,6 +144,8 @@ import type {
   Lib_Utility_IsCommandExists_Exit_Returns,
   Lib_Utility_IsCommandExists_IsWin,
   Lib_Utility_IsCommandExists_Returns,
+  Lib_Utility_IsEmpty_Returns,
+  Lib_Utility_IsEmpty_Value,
   Lib_Utility_IsExecuteShellError_Error,
   Lib_Utility_IsExecuteShellError_HasCode,
   Lib_Utility_IsExecuteShellError_HasCommand,
@@ -825,6 +827,38 @@ export async function isCommandExists(command: Lib_Utility_IsCommandExists_Comma
 
     return;
   });
+}
+
+/**
+ * Lib - Utility - Is Empty.
+ *
+ * Checks whether a value is null, undefined, a blank
+ * string, an empty array, or an object with no keys.
+ *
+ * @param {Lib_Utility_IsEmpty_Value} value - Value.
+ *
+ * @returns {Lib_Utility_IsEmpty_Returns}
+ *
+ * @since 0.23.0
+ */
+export function isEmpty(value: Lib_Utility_IsEmpty_Value): Lib_Utility_IsEmpty_Returns {
+  if (value === null || value === undefined) {
+    return true;
+  }
+
+  if (typeof value === 'string') {
+    return value.trim() === '';
+  }
+
+  if (Array.isArray(value) === true) {
+    return value.length === 0;
+  }
+
+  if (typeof value === 'object') {
+    return Object.keys(value).length === 0;
+  }
+
+  return false;
 }
 
 /**

@@ -12,6 +12,158 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SandboxPrefix = s
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SandboxRoot = string;
 
 /**
+ * Tests - CLI - Utility - Changelog - Run - CalVer Entry With Bump Field Errors.
+ *
+ * @since 0.23.0
+ */
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_WorkspaceDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_ChangelogDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_PackageJsonContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_ConfigPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_ConfigContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_WorkspacePackagePath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_WorkspacePackageContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_EntryPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverEntryWithBumpFieldErrors_EntryContents = string;
+
+/**
+ * Tests - CLI - Utility - Changelog - Run - CalVer Record Omits Bump From Entry File.
+ *
+ * @since 0.23.0
+ */
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_PackageJsonContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_ConfigPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_ConfigContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_ChangelogDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_Files = string[];
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_MdFiles = string[];
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_MdFile = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_EntryPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_Content = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_HasBump = boolean;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_HasPackage = boolean;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverRecordOmitsBumpFromEntryFile_HasCategory = boolean;
+
+/**
+ * Tests - CLI - Utility - Changelog - Run - CalVer Release Computes Version From Date.
+ *
+ * @since 0.23.0
+ */
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspaceDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ChangelogDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJsonContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ConfigPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ConfigContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspacePackagePath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspacePackageContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_EntryPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_EntryContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_UpdatedPackagePath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJsonRaw = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedYear = number;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedMonth = number;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedVersion = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ChangelogPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ChangelogContent = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_HasVersionHeading = boolean;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_HasDateSuffix = boolean;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_RemainingFiles = string[];
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_RemainingMdFiles = string[];
+
+/**
+ * Tests - CLI - Utility - Changelog - Run - CalVer Release Increments Micro Within Same Month.
+ *
+ * @since 0.23.0
+ */
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_WorkspaceDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ChangelogDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJsonContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ConfigPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ConfigContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentYear = number;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentMonth = number;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentVersion = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_WorkspacePackagePath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_WorkspacePackageContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_EntryPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_EntryContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_UpdatedPackagePath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJsonRaw = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJson = Record<string, unknown>;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ExpectedVersion = string;
+
+/**
  * Tests - CLI - Utility - Changelog - Run - Dry Run Leaves UNRELEASED Tokens In Place.
  *
  * @since 0.20.0
@@ -291,6 +443,33 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ReleasesAndBumpsV
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ReleasesAndBumpsVersion_RemainingFiles = string[];
 
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ReleasesAndBumpsVersion_RemainingMdFiles = string[];
+
+/**
+ * Tests - CLI - Utility - Changelog - Run - SemVer Entry Without Bump Field Errors.
+ *
+ * @since 0.23.0
+ */
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_WorkspaceDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_ChangelogDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_PackageJsonContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_ConfigPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_ConfigContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_WorkspacePackagePath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_WorkspacePackageContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_EntryPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SemverEntryWithoutBumpFieldErrors_EntryContents = string;
 
 /**
  * Tests - CLI - Utility - Changelog - Run - Skips Release When No Entries Exist.

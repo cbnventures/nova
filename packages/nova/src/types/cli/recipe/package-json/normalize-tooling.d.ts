@@ -40,15 +40,6 @@ export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_BindingGypPath
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasBindingGyp = boolean;
 
 /**
- * CLI - Recipe - package.json - Normalize Tooling - Is Empty.
- *
- * @since 0.14.0
- */
-export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Value = unknown;
-
-export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Returns = boolean;
-
-/**
  * CLI - Recipe - package.json - Normalize Tooling - Run.
  *
  * @since 0.14.0

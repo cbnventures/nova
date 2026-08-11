@@ -501,6 +501,23 @@ import type {
   Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear,
   Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear_Parsed,
   Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear_Trimmed,
+  Cli_Utility_Initialize_Runner_PromptSettings_ChangelogContent,
+  Cli_Utility_Initialize_Runner_PromptSettings_ChangelogPath,
+  Cli_Utility_Initialize_Runner_PromptSettings_Config,
+  Cli_Utility_Initialize_Runner_PromptSettings_CurrentDirectory,
+  Cli_Utility_Initialize_Runner_PromptSettings_CurrentStrategy,
+  Cli_Utility_Initialize_Runner_PromptSettings_HasRelease,
+  Cli_Utility_Initialize_Runner_PromptSettings_IsLocked,
+  Cli_Utility_Initialize_Runner_PromptSettings_Returns,
+  Cli_Utility_Initialize_Runner_PromptSettings_Settings,
+  Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoices,
+  Cli_Utility_Initialize_Runner_PromptSettings_StrategyInitial,
+  Cli_Utility_Initialize_Runner_PromptSettings_StrategyInput,
+  Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutput,
+  Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputKey,
+  Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputResult,
+  Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputValue,
+  Cli_Utility_Initialize_Runner_PromptSettings_UpdatedSettings,
   Cli_Utility_Initialize_Runner_PromptUrls_Config,
   Cli_Utility_Initialize_Runner_PromptUrls_ExistingUrls,
   Cli_Utility_Initialize_Runner_PromptUrls_QuestionsOutput,
@@ -985,6 +1002,11 @@ export class Runner {
         label: 'Environment',
         description: 'Manage environment variables and secrets, prefixes, and GitHub provisioning.',
         handler: Runner['promptEnvironment'],
+      },
+      settings: {
+        label: 'Settings',
+        description: 'Configure version strategy and release settings.',
+        handler: Runner['promptSettings'],
       },
     };
 
@@ -5299,6 +5321,90 @@ export class Runner {
     }
 
     return value;
+  }
+
+  /**
+   * CLI - Utility - Initialize - Prompt Settings.
+   *
+   * Presents the version strategy selector. When CHANGELOG.md already contains at least one
+   * release heading, the strategy is locked and the pane is read-only.
+   *
+   * @param {Cli_Utility_Initialize_Runner_PromptSettings_Config} config - Config.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Initialize_Runner_PromptSettings_Returns}
+   *
+   * @since 0.23.0
+   */
+  private static async promptSettings(config: Cli_Utility_Initialize_Runner_PromptSettings_Config): Cli_Utility_Initialize_Runner_PromptSettings_Returns {
+    const settings: Cli_Utility_Initialize_Runner_PromptSettings_Settings = (config['settings'] !== undefined) ? { ...config['settings'] } : {};
+    const currentStrategy: Cli_Utility_Initialize_Runner_PromptSettings_CurrentStrategy = settings['versionStrategy'] ?? 'semver';
+    const currentDirectory: Cli_Utility_Initialize_Runner_PromptSettings_CurrentDirectory = process.cwd();
+
+    let isLocked: Cli_Utility_Initialize_Runner_PromptSettings_IsLocked = false;
+
+    try {
+      const changelogPath: Cli_Utility_Initialize_Runner_PromptSettings_ChangelogPath = join(currentDirectory, 'CHANGELOG.md');
+      const changelogContent: Cli_Utility_Initialize_Runner_PromptSettings_ChangelogContent = await fs.readFile(changelogPath, 'utf-8');
+      const hasRelease: Cli_Utility_Initialize_Runner_PromptSettings_HasRelease = changelogContent.split('\n').some((line) => line.startsWith('## '));
+
+      isLocked = hasRelease;
+    } catch {
+      /* empty */
+    }
+
+    if (isLocked === true) {
+      Logger.customize({
+        name: 'Runner.promptSettings',
+        purpose: 'locked',
+      }).info(`Version strategy cannot be changed — this repo has an existing "${currentStrategy}" release.`);
+
+      return 'back';
+    }
+
+    const strategyChoices: Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoices = [
+      {
+        title: 'SemVer',
+        description: 'Semantic versioning (major.minor.patch).',
+        value: 'semver',
+      },
+      {
+        title: 'CalVer',
+        description: 'Calendar versioning (YYYY.MM.MICRO).',
+        value: 'calver',
+      },
+    ];
+
+    const strategyInitial: Cli_Utility_Initialize_Runner_PromptSettings_StrategyInitial = strategyChoices.findIndex((choice) => choice['value'] === currentStrategy);
+
+    const strategyOutput: Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputKey, Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputValue>({
+      type: 'select',
+      name: 'versionStrategy',
+      message: 'Select version strategy.',
+      choices: strategyChoices,
+      initial: (strategyInitial !== -1) ? strategyInitial : 0,
+    });
+
+    if (strategyOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const strategyOutputResult: Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputResult = strategyOutput['result'];
+    const strategyInput: Cli_Utility_Initialize_Runner_PromptSettings_StrategyInput = strategyOutputResult.versionStrategy;
+
+    if (strategyInput !== undefined) {
+      const updatedSettings: Cli_Utility_Initialize_Runner_PromptSettings_UpdatedSettings = {
+        ...settings,
+        versionStrategy: strategyInput,
+      };
+
+      Object.assign(config, {
+        settings: updatedSettings,
+      });
+    }
+
+    return 'back';
   }
 
   /**

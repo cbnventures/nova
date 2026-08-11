@@ -435,31 +435,6 @@ function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
   );
 
   switch (navbarVariant) {
-    case 'bridge': {
-      return (
-        <>
-          {svgFilterDefinition}
-          <div
-            className={navbarClassName}
-            style={props['style']}
-          >
-            <Bridge {...variantProps} />
-          </div>
-          <BridgeMobileMenu
-            isOpen={isMenuOpen}
-            onClose={() => {
-              setIsMenuOpen(false);
-
-              return undefined;
-            }}
-            items={resolvedItems}
-            siteLogo={siteLogo}
-            activeItemLabel={activeItemLabel}
-          />
-        </>
-      );
-    }
-
     case 'canopy': {
       return (
         <>
@@ -534,6 +509,7 @@ function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
       );
     }
 
+    case 'bridge':
     default: {
       return (
         <>

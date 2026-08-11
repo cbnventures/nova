@@ -1,325 +1,73 @@
 import Link from '@docusaurus/Link';
-import { useLocation } from '@docusaurus/router';
-import { translate } from '@docusaurus/Translate';
-import { Icon } from '@iconify/react/offline';
 import Logo from '@theme/Logo';
-import { SearchInput, SearchProvider, SearchResults } from '@theme/SearchBar';
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { createPortal } from 'react-dom';
+import { SearchInput } from '@theme/SearchBar';
+
+import MobileMenuBase from '../shared/mobile-menu-base.js';
 
 import type {
-  Theme_Navbar_Bridge_MobileMenu_CloseMenuAriaLabel,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ActiveItemLabel,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_AnimationEvent,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_AriaLabel,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ChildIsActive,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ChildItem,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ChildKey,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ChildLabel,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ChildTo,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_DefaultIcon,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_FocusTarget,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleClickOutsideFunction,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleClickOutsideMouseTarget,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleEscapeFunction,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsClosing,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsClosingState,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsOpen,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIcon,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIndex,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIsActive,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_Items,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemStyle,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_LinkProps,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_LinkSpread,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_NavItemChildren,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_NavItemType,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_OnClose,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_OverlayClassName,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_PanelRef,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_Pathname,
   Theme_Navbar_Bridge_MobileMenu_MobileMenu_Props,
   Theme_Navbar_Bridge_MobileMenu_MobileMenu_Returns,
-  Theme_Navbar_Bridge_MobileMenu_MobileMenu_SetIsClosing,
   Theme_Navbar_Bridge_MobileMenu_MobileMenu_SiteLogo,
 } from '../../../types/theme/Navbar/Bridge/mobile-menu.d.ts';
 
-import type { Theme_Navbar_Index_Navbar_Item } from '../../../types/theme/Navbar/index.d.ts';
+import type {
+  Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_RenderHeaderProps,
+  Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_RenderHeaderProps_CloseButton,
+  Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_RenderHeaderProps_StartClosing,
+} from '../../../types/theme/Navbar/shared/mobile-menu-base.d.ts';
 
 /**
  * Theme - Navbar - Bridge - Mobile Menu - Mobile Menu.
  *
- * Renders a full-screen or floating menu panel with an overlay backdrop,
- * a close button, and navigation items. The panel layout and visual
- * styling are controlled entirely by per-preset CSS.
+ * Renders the Bridge variant of the mobile navigation menu by
+ * delegating shared panel logic to MobileMenuBase and providing
+ * a variant-specific header with brand logo and search below.
  *
  * @param {Theme_Navbar_Bridge_MobileMenu_MobileMenu_Props} props - Props.
  *
  * @since 0.15.0
  */
 function MobileMenu(props: Theme_Navbar_Bridge_MobileMenu_MobileMenu_Props): Theme_Navbar_Bridge_MobileMenu_MobileMenu_Returns {
-  const isOpen: Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsOpen = props['isOpen'];
-  const onClose: Theme_Navbar_Bridge_MobileMenu_MobileMenu_OnClose = props['onClose'];
-  const items: Theme_Navbar_Bridge_MobileMenu_MobileMenu_Items = props['items'];
   const siteLogo: Theme_Navbar_Bridge_MobileMenu_MobileMenu_SiteLogo = props['siteLogo'];
-  const activeItemLabel: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ActiveItemLabel = props['activeItemLabel'];
-  const pathname: Theme_Navbar_Bridge_MobileMenu_MobileMenu_Pathname = useLocation()['pathname'];
-  const panelRef: Theme_Navbar_Bridge_MobileMenu_MobileMenu_PanelRef = useRef<HTMLDivElement>(null);
-  const isClosingState: Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsClosingState = useState<Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsClosing>(false);
-  const isClosing: Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsClosing = isClosingState[0];
-  const setIsClosing: Theme_Navbar_Bridge_MobileMenu_MobileMenu_SetIsClosing = isClosingState[1];
 
-  /**
-   * Theme - Navbar - Bridge - Mobile Menu - Mobile Menu - Handle Escape.
-   *
-   * Closes the mobile menu when the user presses the Escape key,
-   * providing a standard keyboard-accessible dismiss mechanism.
-   *
-   * @since 0.15.0
-   */
-  const handleEscape: Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleEscapeFunction = useCallback((event: Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent) => {
-    if (event.key === 'Escape') {
-      setIsClosing(true);
-    }
+  return (
+    <MobileMenuBase
+      variantPrefix="nova-navbar-bridge-menu"
+      renderHeader={(renderHeaderProps: Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_RenderHeaderProps) => {
+        const closeButton: Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_RenderHeaderProps_CloseButton = renderHeaderProps['closeButton'];
+        const startClosing: Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_RenderHeaderProps_StartClosing = renderHeaderProps['startClosing'];
 
-    return undefined;
-  }, []);
+        return (
+          <>
+            <div className="nova-navbar-bridge-menu-header">
+              <div className="nova-navbar-bridge-menu-brand">
+                <Link
+                  to={siteLogo['href'] ?? '/'}
+                  target={siteLogo['target']}
+                  rel={siteLogo['rel']}
+                  aria-label={siteLogo['ariaLabel']}
+                  onClick={() => {
+                    startClosing();
 
-  /**
-   * Theme - Navbar - Bridge - Mobile Menu - Mobile Menu - Handle Click Outside.
-   *
-   * Closes the mobile menu when the user clicks on the overlay backdrop
-   * area outside the panel, providing an intuitive dismiss mechanism.
-   *
-   * @since 0.15.0
-   */
-  const handleClickOutside: Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleClickOutsideFunction = useCallback((event: Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent) => {
-    const mouseTarget: Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleClickOutsideMouseTarget = event.target;
-
-    if (mouseTarget === event.currentTarget) {
-      setIsClosing(true);
-    }
-
-    return undefined;
-  }, []);
-
-  useEffect(() => {
-    if (isOpen === true) {
-      document.addEventListener('keydown', handleEscape);
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-
-      return undefined;
-    };
-  }, [
-    isOpen,
-    handleEscape,
-  ]);
-
-  // Focus close button when menu opens.
-  useEffect(() => {
-    if (isOpen === true && panelRef['current'] !== null) {
-      const focusTarget: Theme_Navbar_Bridge_MobileMenu_MobileMenu_FocusTarget = panelRef['current'].querySelector('.nova-navbar-bridge-menu-close') as Theme_Navbar_Bridge_MobileMenu_MobileMenu_FocusTarget;
-
-      if (focusTarget !== null) {
-        focusTarget.focus();
-      }
-    }
-
-    return undefined;
-  }, [isOpen]);
-
-  const mobileMenuAriaLabel: Theme_Navbar_Bridge_MobileMenu_MobileMenu_AriaLabel = translate({
-    id: 'theme.navbar.mobileMenuAriaLabel',
-    message: 'Navigation menu',
-    description: 'The ARIA label for the mobile navigation menu dialog',
-  });
-  const closeMenuAriaLabel: Theme_Navbar_Bridge_MobileMenu_CloseMenuAriaLabel = translate({
-    id: 'theme.navbar.closeMenuAriaLabel',
-    message: 'Close menu',
-    description: 'The ARIA label for the button that closes the mobile navigation menu',
-  });
-
-  if (isOpen === false) {
-    return null;
-  }
-
-  let overlayClassName: Theme_Navbar_Bridge_MobileMenu_MobileMenu_OverlayClassName = 'nova-navbar-bridge-menu-overlay nova-navbar-bridge-menu-open';
-
-  if (isClosing === true) {
-    overlayClassName = 'nova-navbar-bridge-menu-overlay nova-navbar-bridge-menu-closing';
-  }
-
-  return createPortal(
-    <div
-      className={overlayClassName}
-      onClick={handleClickOutside}
-      role="presentation"
-      onAnimationEnd={(_event: Theme_Navbar_Bridge_MobileMenu_MobileMenu_AnimationEvent) => {
-        if (isClosing === true) {
-          onClose();
-          setIsClosing(false);
-        }
-
-        return undefined;
+                    return undefined;
+                  }}
+                >
+                  <Logo siteLogo={siteLogo} />
+                </Link>
+              </div>
+              {closeButton}
+            </div>
+            <div className="nova-navbar-bridge-menu-search nova-mobile-menu-search">
+              <SearchInput />
+            </div>
+          </>
+        );
       }}
-    >
-      <div
-        className="nova-navbar-bridge-menu-panel nova-mobile-menu-panel"
-        ref={panelRef}
-        role="dialog"
-        aria-modal="true"
-        aria-label={mobileMenuAriaLabel}
-      >
-        <SearchProvider>
-          <div className="nova-navbar-bridge-menu-header">
-            <div className="nova-navbar-bridge-menu-brand">
-              <Link
-                to={siteLogo['href'] ?? '/'}
-                target={siteLogo['target']}
-                rel={siteLogo['rel']}
-                aria-label={siteLogo['ariaLabel']}
-                onClick={() => {
-                  setIsClosing(true);
-
-                  return undefined;
-                }}
-              >
-                <Logo siteLogo={siteLogo} />
-              </Link>
-            </div>
-            <button
-              className="nova-navbar-bridge-menu-close"
-              type="button"
-              onClick={() => {
-                setIsClosing(true);
-
-                return undefined;
-              }}
-              aria-label={closeMenuAriaLabel}
-            >
-              <Icon icon="lucide:x" width="20" height="20" aria-hidden="true" />
-            </button>
-          </div>
-          <div className="nova-navbar-bridge-menu-search nova-mobile-menu-search">
-            <SearchInput />
-          </div>
-          <div className="nova-navbar-bridge-menu-body nova-mobile-menu-body">
-            <SearchResults />
-            <div className="nova-navbar-bridge-menu-items nova-mobile-menu-items">
-              {
-                items.map((navItem: Theme_Navbar_Index_Navbar_Item, itemIndex: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIndex) => {
-                  const navItemType: Theme_Navbar_Bridge_MobileMenu_MobileMenu_NavItemType = navItem['type'] as Theme_Navbar_Bridge_MobileMenu_MobileMenu_NavItemType;
-                  const navItemChildren: Theme_Navbar_Bridge_MobileMenu_MobileMenu_NavItemChildren = navItem['items'] as Theme_Navbar_Bridge_MobileMenu_MobileMenu_NavItemChildren;
-                  const itemStyle: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemStyle = { '--nova-item-index': itemIndex } as Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemStyle;
-
-                  if (
-                    navItemType === 'dropdown'
-                    || (
-                      navItemType === undefined
-                      && Array.isArray(navItemChildren) === true
-                    )
-                  ) {
-                    const dropdownIcon: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIcon = navItem['icon'] as Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIcon;
-
-                    return (
-                      <details key={navItem['label']} className="nova-navbar-bridge-menu-dropdown" style={itemStyle}>
-                        <summary className="nova-navbar-bridge-menu-dropdown-summary">
-                          <Icon icon={dropdownIcon ?? 'lucide:chevron-down'} width="18" height="18" aria-hidden="true" />
-                          <span>{navItem['label']}</span>
-                        </summary>
-                        <div className="nova-navbar-bridge-menu-dropdown-children">
-                          {
-                            (navItemChildren ?? []).map((childItem: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ChildItem) => {
-                              const childIcon: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIcon = childItem['icon'] as Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIcon;
-                              const childLinkProps: Theme_Navbar_Bridge_MobileMenu_MobileMenu_LinkProps = {};
-                              const childTo: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ChildTo = childItem['to'] as Theme_Navbar_Bridge_MobileMenu_MobileMenu_ChildTo;
-                              const childIsActive: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ChildIsActive = (typeof childTo === 'string' && pathname.startsWith(childTo) === true);
-
-                              if (childTo !== undefined) {
-                                Reflect.set(childLinkProps, 'to', childTo);
-                              }
-
-                              if (childItem['href'] !== undefined) {
-                                Reflect.set(childLinkProps, 'href', childItem['href']);
-                              }
-
-                              if (childIsActive === true) {
-                                Reflect.set(childLinkProps, 'aria-current', 'page');
-                              }
-
-                              return (
-                                <Link
-                                  className="nova-navbar-bridge-menu-item"
-                                  key={childItem['label'] as Theme_Navbar_Bridge_MobileMenu_MobileMenu_ChildKey}
-                                  {...(childLinkProps as Theme_Navbar_Bridge_MobileMenu_MobileMenu_LinkSpread)}
-                                  onClick={() => {
-                                    setIsClosing(true);
-
-                                    return undefined;
-                                  }}
-                                >
-                                  <Icon icon={childIcon ?? 'lucide:link'} width="18" height="18" aria-hidden="true" />
-                                  <span>{childItem['label'] as Theme_Navbar_Bridge_MobileMenu_MobileMenu_ChildLabel}</span>
-                                </Link>
-                              );
-                            })
-                          }
-                        </div>
-                      </details>
-                    );
-                  }
-
-                  const itemIcon: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIcon = navItem['icon'] as Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIcon;
-                  const defaultIcon: Theme_Navbar_Bridge_MobileMenu_MobileMenu_DefaultIcon = 'lucide:link';
-                  const linkProps: Theme_Navbar_Bridge_MobileMenu_MobileMenu_LinkProps = {};
-                  const isActive: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIsActive = navItem['label'] === activeItemLabel;
-
-                  if (navItem['to'] !== undefined) {
-                    Reflect.set(linkProps, 'to', navItem['to']);
-                  }
-
-                  if (navItem['href'] !== undefined) {
-                    Reflect.set(linkProps, 'href', navItem['href']);
-                  }
-
-                  if (isActive === true) {
-                    Reflect.set(linkProps, 'aria-current', 'page');
-                  }
-
-                  return (
-                    <Link
-                      className="nova-navbar-bridge-menu-item"
-                      key={navItem['label']}
-                      style={itemStyle}
-                      {...(linkProps as Theme_Navbar_Bridge_MobileMenu_MobileMenu_LinkSpread)}
-                      onClick={() => {
-                        setIsClosing(true);
-
-                        return undefined;
-                      }}
-                    >
-                      <Icon icon={itemIcon ?? defaultIcon} width="18" height="18" aria-hidden="true" />
-                      <span>{navItem['label']}</span>
-                    </Link>
-                  );
-                })
-              }
-            </div>
-          </div>
-        </SearchProvider>
-      </div>
-    </div>,
-    document.body,
+      isOpen={props['isOpen']}
+      onClose={props['onClose']}
+      items={props['items']}
+      activeItemLabel={props['activeItemLabel']}
+    />
   );
 }
 

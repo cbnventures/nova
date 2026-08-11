@@ -11,6 +11,7 @@ import {
 } from '../../../lib/regex.js';
 import {
   executeShell,
+  isEmpty,
   isPlainObject,
   isProjectRoot,
   loadWorkspaceManifests,
@@ -51,8 +52,6 @@ import type {
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_PackageManager,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Returns,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Workspace,
-  Cli_Recipe_PackageJson_SyncEnvironment_Runner_IsEmpty_Returns,
-  Cli_Recipe_PackageJson_SyncEnvironment_Runner_IsEmpty_Value,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_CurrentDirectory,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_EligibleWorkspaces,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_IsAtProjectRoot,
@@ -348,7 +347,7 @@ export class Runner {
     // Sync the "os" field (Conditional).
     if (
       packageOs !== undefined // Package "os" is defined.
-      && Runner.isEmpty(packageOs) === true // Package "os" is empty.
+      && isEmpty(packageOs) === true // Package "os" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -361,7 +360,7 @@ export class Runner {
     // Sync the "cpu" field (Conditional).
     if (
       packageCpu !== undefined // Package "cpu" is defined.
-      && Runner.isEmpty(packageCpu) === true // Package "cpu" is empty.
+      && isEmpty(packageCpu) === true // Package "cpu" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -403,7 +402,7 @@ export class Runner {
     // Sync the "devEngines" field (Conditional).
     if (
       packageDevEngines !== undefined // Package "devEngines" is defined.
-      && Runner.isEmpty(packageDevEngines) === true // Package "devEngines" is empty.
+      && isEmpty(packageDevEngines) === true // Package "devEngines" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -563,40 +562,5 @@ export class Runner {
     }).info(`${chalk.magenta(`"${workspace['manifest']['name']}" workspace`)} → Updated "engines.node" from "${previous}" to "${constraint}".`);
 
     return;
-  }
-
-  /**
-   * CLI - Recipe - package.json - Sync Environment - Is Empty.
-   *
-   * Checks whether a value is null, undefined, a blank
-   * string, an empty array, or an object with no keys.
-   * Used by handle to decide when to remove fields.
-   *
-   * @param {Cli_Recipe_PackageJson_SyncEnvironment_Runner_IsEmpty_Value} value - Value.
-   *
-   * @private
-   *
-   * @returns {Cli_Recipe_PackageJson_SyncEnvironment_Runner_IsEmpty_Returns}
-   *
-   * @since 0.14.0
-   */
-  private static isEmpty(value: Cli_Recipe_PackageJson_SyncEnvironment_Runner_IsEmpty_Value): Cli_Recipe_PackageJson_SyncEnvironment_Runner_IsEmpty_Returns {
-    if (value === null || value === undefined) {
-      return true;
-    }
-
-    if (typeof value === 'string') {
-      return value.trim() === '';
-    }
-
-    if (Array.isArray(value) === true) {
-      return value.length === 0;
-    }
-
-    if (typeof value === 'object') {
-      return Object.keys(value).length === 0;
-    }
-
-    return false;
   }
 }

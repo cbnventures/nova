@@ -1,5 +1,4 @@
-import type { MouseEvent, RefObject } from 'react';
-
+import type { Lib_UseOverlayPanel_Returns } from '../../lib/use-overlay-panel.d.ts';
 import type { Shared_TocHeading } from '../../shared.d.ts';
 
 /**
@@ -15,25 +14,15 @@ export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_Payload = {
   treeItems: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_Payload_TreeItems;
 } | undefined;
 
-export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsClosingState = [boolean, Theme_TocCollapsible_Panel_TOCCollapsiblePanel_SetIsClosing];
+export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_OverlayPanel = Lib_UseOverlayPanel_Returns;
 
-export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsClosing = boolean;
+export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsClosing = Lib_UseOverlayPanel_Returns['isClosing'];
 
-export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_SetIsClosing = React.Dispatch<React.SetStateAction<boolean>>;
+export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_SetIsClosing = Lib_UseOverlayPanel_Returns['setIsClosing'];
 
-export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_PanelRef = RefObject<HTMLDivElement | null>;
+export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideFunction = Lib_UseOverlayPanel_Returns['handleClickOutside'];
 
-export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleEscapeFunction = (event: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleEscapeKeyboardEvent) => void;
-
-export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleEscapeKeyboardEvent = KeyboardEvent;
-
-export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideFunction = (event: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideMouseEvent) => void;
-
-export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideMouseEvent = MouseEvent<HTMLDivElement>;
-
-export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideMouseTarget = EventTarget;
-
-export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_FocusTarget = HTMLButtonElement | null;
+export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_PanelRef = Lib_UseOverlayPanel_Returns['panelRef'];
 
 export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_TriggerLabel = string;
 

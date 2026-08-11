@@ -47,15 +47,6 @@ export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_BundledDe
 export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_MergedBundleDependencies = unknown[];
 
 /**
- * CLI - Recipe - package.json - Normalize Dependencies - Is Empty.
- *
- * @since 0.14.0
- */
-export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_IsEmpty_Value = unknown;
-
-export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_IsEmpty_Returns = boolean;
-
-/**
  * CLI - Recipe - package.json - Normalize Dependencies - Pin Dependencies.
  *
  * @since 0.14.0

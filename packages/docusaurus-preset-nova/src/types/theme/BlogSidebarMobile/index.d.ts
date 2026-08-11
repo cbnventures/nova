@@ -1,5 +1,7 @@
 import type { BlogSidebar } from '@docusaurus/plugin-content-blog';
-import type { CSSProperties, MouseEvent, RefObject } from 'react';
+import type { CSSProperties } from 'react';
+
+import type { Lib_UseOverlayPanel_Returns } from '../../lib/use-overlay-panel.d.ts';
 
 /**
  * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile.
@@ -27,35 +29,15 @@ export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsOpen = boolean;
 
 export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsOpen = React.Dispatch<React.SetStateAction<boolean>>;
 
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosingState = [boolean, Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsClosing];
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OverlayPanel = Lib_UseOverlayPanel_Returns;
 
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosing = boolean;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosing = Lib_UseOverlayPanel_Returns['isClosing'];
 
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsClosing = React.Dispatch<React.SetStateAction<boolean>>;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsClosing = Lib_UseOverlayPanel_Returns['setIsClosing'];
 
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelRef = RefObject<HTMLDivElement | null>;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideFunction = Lib_UseOverlayPanel_Returns['handleClickOutside'];
 
-/**
- * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile - Handle Escape.
- *
- * @since 0.15.0
- */
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeFunction = (event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeKeyboardEvent) => void;
-
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeKeyboardEvent = KeyboardEvent;
-
-/**
- * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile - Handle Click Outside.
- *
- * @since 0.15.0
- */
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideFunction = (event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseEvent) => void;
-
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseEvent = MouseEvent<HTMLDivElement>;
-
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseTarget = EventTarget;
-
-export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_FocusTarget = HTMLButtonElement | null;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelRef = Lib_UseOverlayPanel_Returns['panelRef'];
 
 export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_TriggerLabel = string;
 

@@ -1,12 +1,9 @@
 import type {
   Shared_NovaConfig_Github,
   Shared_NovaConfig_Github_Features,
-  Shared_NovaConfig_RecipeEntry,
-  Shared_NovaConfig_Recipes,
-  Shared_NovaConfig_Recipes_Github,
-  Shared_NovaConfigConfig,
   Shared_ShellOutput,
 } from '../../../shared.d.ts';
+import type { Cli_Recipe_Github_GhPrecheck_GhPrecheck_Result } from './gh-precheck.d.ts';
 
 /**
  * CLI - Recipe - GitHub - Sync Features - Run.
@@ -21,49 +18,15 @@ export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Options = {
 
 export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Returns = Promise<void>;
 
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_CurrentDirectory = string;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Precheck = Cli_Recipe_Github_GhPrecheck_GhPrecheck_Result | undefined;
 
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_IsAtProjectRoot = boolean;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Github = Shared_NovaConfig_Github;
+
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Owner = string;
+
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Repo = string;
 
 export type Cli_Recipe_Github_SyncFeatures_Runner_Run_IsDryRun = boolean;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_WorkingFile = Shared_NovaConfigConfig;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Github = Shared_NovaConfig_Github | undefined;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Recipes = Shared_NovaConfig_Recipes | undefined;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_GithubRecipes = Shared_NovaConfig_Recipes_Github | undefined;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_SyncFeatures = Shared_NovaConfig_RecipeEntry | undefined;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Owner = string | undefined;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Repo = string | undefined;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_IsCommandOnPath = boolean;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_GhVersionOutput = Shared_ShellOutput;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_GhVersionPattern = RegExp;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_GhVersionMatch = RegExpMatchArray | null;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_GhVersion = string;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_AuthStatus = Shared_ShellOutput;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewResult = Shared_ShellOutput;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewerPermission = string | undefined;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Parsed_ViewerPermission = string | undefined;
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Parsed = {
-  viewerPermission?: Cli_Recipe_Github_SyncFeatures_Runner_Run_Parsed_ViewerPermission;
-};
-
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Permission = string[];
 
 export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Features = Shared_NovaConfig_Github_Features | undefined;
 

@@ -1,5 +1,14 @@
 # @cbnventures/nova
 
+## 0.23.0 - 2026-08-11
+
+### UPDATED
+- The documentation convention template now differentiates frontmatter rules for documentation pages and blog posts. Documentation page titles accept 1-5 words (was 2-5), description minimum raised to 120 characters (was 50) to ensure mobile-readable search snippets, keywords reduced to 3-8 terms (was 5-15) reflecting that Google has not used meta keywords for ranking since 2009, and tags adjusted to 1-5 terms (was 3-7). Blog posts get their own section with no word limit on titles (targeting under 60 characters for search display) and the same description and keyword ranges.
+- Extracted isEmpty helper from 4 package-json recipes into a shared lib/utility function, and extracted the 143-line GitHub precheck sequence from sync-features, sync-identity, and sync-policies into a shared gh-precheck module.
+
+### ADDED
+- CalVer (YYYY.MM.MICRO) version strategy as an alternative to semver, configured per-repo via settings.versionStrategy in nova.config.json. In CalVer mode the changelog record step omits the bump field and prompt, the release step computes the next version from today's date (incrementing micro within the same month, resetting to 0 on a new month), and changelog headings omit the redundant date suffix. Entries are validated at both record and release time — CalVer entries that include a bump field hard-error, and semver entries that omit it hard-error. The template workspace role now accepts the trackable policy alongside freezable, allowing template repos to opt into changelog tracking. The initialize wizard gains a Settings pane where users can select their version strategy; once CHANGELOG.md contains a released heading, the strategy is locked and the pane shows the current value as read-only.
+
 ## 0.22.6 - 2026-08-09
 
 ### FIXED

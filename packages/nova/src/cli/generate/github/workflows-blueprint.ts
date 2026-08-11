@@ -76,17 +76,24 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_TargetSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_WorkflowSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_AttestationSubjectPrefix,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Context,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ExtraPermissions,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageTagPrefix,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageTags,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_LoginStep,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_RegistrySlug,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_AppPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Context,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Environment,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageTags,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Metadata,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_TargetSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_Context,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_ImageTags,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_Metadata,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_TargetSettings,
@@ -1955,103 +1962,30 @@ export class Runner {
     const environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Environment = context['environment'];
     const appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_AppPath = context['workingDir'];
 
-    // The image is tagged latest plus the release tag, falling back to
-    // manual for workflow_dispatch runs without a release context.
-    const imageTags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageTags = [
-      `${Runner.expr('github.repository')}:latest`,
-      `${Runner.expr('github.repository')}:${Runner.expr('github.event.release.tag_name || \'manual\'')}`,
-    ].join('\n');
-
-    return {
-      id: `publish-docker-hub-${Runner.slugifyWorkingDir(context['workingDir'])}`,
-      needs: context['needs'],
-      runsOn: 'ubuntu-latest',
-      timeoutMinutes: 15,
-      permissions: {
-        'contents': 'read',
-        'attestations': 'write',
-        'id-token': 'write',
+    return Runner.buildContainerRegistryTarget(context, {
+      registrySlug: 'docker-hub',
+      imageTagPrefix: '',
+      loginStep: {
+        name: 'Login to Docker Hub',
+        uses: 'docker/login-action@v3',
+        env: [{
+          key: 'DOCKERHUB_TOKEN',
+          value: Runner.resolveScopedCredExpr(variables, 'DOCKERHUB_TOKEN', targetSettings, workflowSettings, environment, appPath),
+        }],
+        with: [
+          {
+            key: 'username',
+            value: Runner.resolveScopedCredExpr(variables, 'DOCKERHUB_USERNAME', targetSettings, workflowSettings, environment, appPath),
+          },
+          {
+            key: 'password',
+            value: Runner.expr('env.DOCKERHUB_TOKEN'),
+          },
+        ],
       },
-      steps: [
-        {
-          name: 'Checkout repository',
-          uses: 'actions/checkout@v7',
-        },
-        {
-          name: 'Set up QEMU',
-          uses: 'docker/setup-qemu-action@v3',
-          with: [{
-            key: 'platforms',
-            value: 'linux/amd64,linux/arm64',
-          }],
-        },
-        {
-          name: 'Set up Docker Buildx',
-          uses: 'docker/setup-buildx-action@v3',
-        },
-        {
-          name: 'Login to Docker Hub',
-          uses: 'docker/login-action@v3',
-          env: [{
-            key: 'DOCKERHUB_TOKEN',
-            value: Runner.resolveScopedCredExpr(variables, 'DOCKERHUB_TOKEN', targetSettings, workflowSettings, environment, appPath),
-          }],
-          with: [
-            {
-              key: 'username',
-              value: Runner.resolveScopedCredExpr(variables, 'DOCKERHUB_USERNAME', targetSettings, workflowSettings, environment, appPath),
-            },
-            {
-              key: 'password',
-              value: Runner.expr('env.DOCKERHUB_TOKEN'),
-            },
-          ],
-        },
-        {
-          name: 'Build and push',
-          id: 'build-push',
-          uses: 'docker/build-push-action@v6',
-          with: [
-            {
-              key: 'context',
-              value: context['workingDir'],
-            },
-            {
-              key: 'platforms',
-              value: 'linux/amd64,linux/arm64',
-            },
-            {
-              key: 'push',
-              value: Runner.expr('env.PUBLISH'),
-            },
-            {
-              key: 'tags',
-              value: imageTags,
-              block: true,
-            },
-          ],
-        },
-        {
-          name: 'Generate build provenance',
-          if: Runner.expr('env.PUBLISH == \'true\''),
-          uses: 'actions/attest-build-provenance@v2',
-          with: [
-            {
-              key: 'subject-name',
-              value: `docker.io/${Runner.expr('github.repository')}`,
-            },
-            {
-              key: 'subject-digest',
-              value: Runner.expr('steps.build-push.outputs.digest'),
-            },
-            {
-              key: 'push-to-registry',
-              value: true,
-            },
-          ],
-        },
-      ],
-    };
+      extraPermissions: {},
+      attestationSubjectPrefix: 'docker.io/',
+    });
   }
 
   /**
@@ -2072,104 +2006,30 @@ export class Runner {
     const metadata: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_Metadata = Variables.getTargetMetadata('publish', 'ghcr');
     const variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_Variables = (metadata === undefined) ? {} : metadata['variables'];
 
-    // The image is tagged latest plus the release tag, falling back to
-    // manual for workflow_dispatch runs without a release context.
-    const imageTags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_ImageTags = [
-      `ghcr.io/${Runner.expr('github.repository')}:latest`,
-      `ghcr.io/${Runner.expr('github.repository')}:${Runner.expr('github.event.release.tag_name || \'manual\'')}`,
-    ].join('\n');
-
-    return {
-      id: `publish-ghcr-${Runner.slugifyWorkingDir(context['workingDir'])}`,
-      needs: context['needs'],
-      runsOn: 'ubuntu-latest',
-      timeoutMinutes: 15,
-      permissions: {
-        'contents': 'read',
-        'packages': 'write',
-        'attestations': 'write',
-        'id-token': 'write',
+    return Runner.buildContainerRegistryTarget(context, {
+      registrySlug: 'ghcr',
+      imageTagPrefix: 'ghcr.io/',
+      loginStep: {
+        name: 'Login to GitHub Container Registry',
+        uses: 'docker/login-action@v3',
+        with: [
+          {
+            key: 'registry',
+            value: 'ghcr.io',
+          },
+          {
+            key: 'username',
+            value: Runner.expr('github.repository_owner'),
+          },
+          {
+            key: 'password',
+            value: Runner.resolveVariableExpr(variables, 'GITHUB_TOKEN', targetSettings, workflowSettings),
+          },
+        ],
       },
-      steps: [
-        {
-          name: 'Checkout repository',
-          uses: 'actions/checkout@v7',
-        },
-        {
-          name: 'Set up QEMU',
-          uses: 'docker/setup-qemu-action@v3',
-          with: [{
-            key: 'platforms',
-            value: 'linux/amd64,linux/arm64',
-          }],
-        },
-        {
-          name: 'Set up Docker Buildx',
-          uses: 'docker/setup-buildx-action@v3',
-        },
-        {
-          name: 'Login to GitHub Container Registry',
-          uses: 'docker/login-action@v3',
-          with: [
-            {
-              key: 'registry',
-              value: 'ghcr.io',
-            },
-            {
-              key: 'username',
-              value: Runner.expr('github.repository_owner'),
-            },
-            {
-              key: 'password',
-              value: Runner.resolveVariableExpr(variables, 'GITHUB_TOKEN', targetSettings, workflowSettings),
-            },
-          ],
-        },
-        {
-          name: 'Build and push',
-          id: 'build-push',
-          uses: 'docker/build-push-action@v6',
-          with: [
-            {
-              key: 'context',
-              value: context['workingDir'],
-            },
-            {
-              key: 'platforms',
-              value: 'linux/amd64,linux/arm64',
-            },
-            {
-              key: 'push',
-              value: Runner.expr('env.PUBLISH'),
-            },
-            {
-              key: 'tags',
-              value: imageTags,
-              block: true,
-            },
-          ],
-        },
-        {
-          name: 'Generate build provenance',
-          if: Runner.expr('env.PUBLISH == \'true\''),
-          uses: 'actions/attest-build-provenance@v2',
-          with: [
-            {
-              key: 'subject-name',
-              value: `ghcr.io/${Runner.expr('github.repository')}`,
-            },
-            {
-              key: 'subject-digest',
-              value: Runner.expr('steps.build-push.outputs.digest'),
-            },
-            {
-              key: 'push-to-registry',
-              value: true,
-            },
-          ],
-        },
-      ],
-    };
+      extraPermissions: { 'packages': 'write' },
+      attestationSubjectPrefix: 'ghcr.io/',
+    });
   }
 
   /**
@@ -2611,6 +2471,111 @@ export class Runner {
         contents: 'read',
       },
       steps,
+    };
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Container Registry Target.
+   *
+   * Returns a container registry deploy job that rebuilds the image from
+   * the checkout with Buildx, pushes it, and attests provenance.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Context} context - Context.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config}  config  - Config.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Returns}
+   *
+   * @since 0.23.0
+   */
+  private static buildContainerRegistryTarget(context: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Context, config: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Returns {
+    const registrySlug: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_RegistrySlug = config['registrySlug'];
+    const imageTagPrefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageTagPrefix = config['imageTagPrefix'];
+    const loginStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_LoginStep = config['loginStep'];
+    const extraPermissions: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ExtraPermissions = config['extraPermissions'];
+    const attestationSubjectPrefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_AttestationSubjectPrefix = config['attestationSubjectPrefix'];
+
+    // The image is tagged latest plus the release tag, falling back to
+    // manual for workflow_dispatch runs without a release context.
+    const imageTags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageTags = [
+      `${imageTagPrefix}${Runner.expr('github.repository')}:latest`,
+      `${imageTagPrefix}${Runner.expr('github.repository')}:${Runner.expr('github.event.release.tag_name || \'manual\'')}`,
+    ].join('\n');
+
+    return {
+      id: `publish-${registrySlug}-${Runner.slugifyWorkingDir(context['workingDir'])}`,
+      needs: context['needs'],
+      runsOn: 'ubuntu-latest',
+      timeoutMinutes: 15,
+      permissions: {
+        'contents': 'read',
+        ...extraPermissions,
+        'attestations': 'write',
+        'id-token': 'write',
+      },
+      steps: [
+        {
+          name: 'Checkout repository',
+          uses: 'actions/checkout@v7',
+        },
+        {
+          name: 'Set up QEMU',
+          uses: 'docker/setup-qemu-action@v3',
+          with: [{
+            key: 'platforms',
+            value: 'linux/amd64,linux/arm64',
+          }],
+        },
+        {
+          name: 'Set up Docker Buildx',
+          uses: 'docker/setup-buildx-action@v3',
+        },
+        loginStep,
+        {
+          name: 'Build and push',
+          id: 'build-push',
+          uses: 'docker/build-push-action@v6',
+          with: [
+            {
+              key: 'context',
+              value: context['workingDir'],
+            },
+            {
+              key: 'platforms',
+              value: 'linux/amd64,linux/arm64',
+            },
+            {
+              key: 'push',
+              value: Runner.expr('env.PUBLISH'),
+            },
+            {
+              key: 'tags',
+              value: imageTags,
+              block: true,
+            },
+          ],
+        },
+        {
+          name: 'Generate build provenance',
+          if: Runner.expr('env.PUBLISH == \'true\''),
+          uses: 'actions/attest-build-provenance@v2',
+          with: [
+            {
+              key: 'subject-name',
+              value: `${attestationSubjectPrefix}${Runner.expr('github.repository')}`,
+            },
+            {
+              key: 'subject-digest',
+              value: Runner.expr('steps.build-push.outputs.digest'),
+            },
+            {
+              key: 'push-to-registry',
+              value: true,
+            },
+          ],
+        },
+      ],
     };
   }
 

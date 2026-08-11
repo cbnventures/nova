@@ -41,6 +41,20 @@ export type Tests_Lib_Item_AllowedRolesAndPolicies_LibItemAllowedRolesContainsEx
 export type Tests_Lib_Item_AllowedRolesAndPolicies_LibItemAllowedRolesHasNoDuplicates_Unique = Set<string>;
 
 /**
+ * Tests - Lib - Item - Allowed Roles And Policies - Template Role Accepts Freezable.
+ *
+ * @since 0.23.0
+ */
+export type Tests_Lib_Item_AllowedRolesAndPolicies_TemplateRoleAcceptsFreezable_HasFreezable = boolean;
+
+/**
+ * Tests - Lib - Item - Allowed Roles And Policies - Template Role Accepts Trackable.
+ *
+ * @since 0.23.0
+ */
+export type Tests_Lib_Item_AllowedRolesAndPolicies_TemplateRoleAcceptsTrackable_HasTrackable = boolean;
+
+/**
  * Tests - Lib - Item - Changelog Constants - libItemChangelogAdjectives Has No Duplicates.
  *
  * @since 0.13.0

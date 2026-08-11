@@ -1,5 +1,10 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.23.0 - 2026-08-11
+
+### UPDATED
+- Extracted shared overlay panel behavior into a useOverlayPanel hook (TOCCollapsible, DocSidebarMobile, BlogSidebarMobile), extracted color-mode MutationObserver into a useColorModeObserver hook (ThemedImage, Mermaid), de-duplicated hero block inner JSX via const extraction, merged the identical Navbar default/bridge switch cases via fallthrough, extracted shared mobile menu base component from the 4 navbar variants (Bridge, Canopy, Compass, Monolith), and extracted shared container registry target builder from the DockerHub and GHCR workflow blueprint methods.
+
 ## 0.22.6 - 2026-08-09
 
 No changes.

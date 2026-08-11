@@ -2,6 +2,7 @@ import chalk from 'chalk';
 
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
+  isEmpty,
   isProjectRoot,
   loadWorkspaceManifests,
   saveWorkspaceManifest,
@@ -26,8 +27,6 @@ import type {
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_PrivateValue,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Returns,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Workspace,
-  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Returns,
-  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Value,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_ConfigRecipes,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_ConfigRecipesPackageJson,
   Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_CurrentDirectory,
@@ -226,7 +225,7 @@ export class Runner {
         || manifest['role'] === 'tool' // Workspace role is "tool".
       )
       && packageFiles !== undefined // Package "files" is defined.
-      && Runner.isEmpty(packageFiles) === true // Package "files" is empty.
+      && isEmpty(packageFiles) === true // Package "files" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -271,7 +270,7 @@ export class Runner {
         Reflect.set(fileContents, 'bin', {
           [binName ?? packageName]: packageBin,
         });
-      } else if (Runner.isEmpty(packageBin) === true) {
+      } else if (isEmpty(packageBin) === true) {
         Logger.customize({
           name: 'Runner.handle',
           purpose: 'bin',
@@ -311,7 +310,7 @@ export class Runner {
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Normalizing "man" from string to array ...`);
 
         Reflect.set(fileContents, 'man', [packageMan]);
-      } else if (Runner.isEmpty(packageMan) === true) {
+      } else if (isEmpty(packageMan) === true) {
         Logger.customize({
           name: 'Runner.handle',
           purpose: 'man',
@@ -341,7 +340,7 @@ export class Runner {
         || manifest['role'] === 'tool' // Workspace role is "tool".
       )
       && packageDirectories !== undefined // Package "directories" is defined.
-      && Runner.isEmpty(packageDirectories) === true // Package "directories" is empty.
+      && isEmpty(packageDirectories) === true // Package "directories" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handle',
@@ -411,7 +410,7 @@ export class Runner {
     } else if (
       manifest['policy'] === 'distributable' // Workspace policy is "distributable".
       && packagePublishConfig !== undefined // Package "publishConfig" is defined.
-      && Runner.isEmpty(packagePublishConfig) === true // Package "publishConfig" is empty.
+      && isEmpty(packagePublishConfig) === true // Package "publishConfig" is empty.
     ) {
       Logger.customize({
         name: 'Runner.handlePublish',
@@ -422,40 +421,5 @@ export class Runner {
     }
 
     return;
-  }
-
-  /**
-   * CLI - Recipe - package.json - Normalize Artifacts - Is Empty.
-   *
-   * Checks whether a value is null, undefined, a blank
-   * string, an empty array, or an object with no keys.
-   * Used by handle and handlePublish to prune fields.
-   *
-   * @param {Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Value} value - Value.
-   *
-   * @private
-   *
-   * @returns {Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Returns}
-   *
-   * @since 0.14.0
-   */
-  private static isEmpty(value: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Value): Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Returns {
-    if (value === null || value === undefined) {
-      return true;
-    }
-
-    if (typeof value === 'string') {
-      return value.trim() === '';
-    }
-
-    if (Array.isArray(value) === true) {
-      return value.length === 0;
-    }
-
-    if (typeof value === 'object') {
-      return Object.keys(value).length === 0;
-    }
-
-    return false;
   }
 }

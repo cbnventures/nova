@@ -41,6 +41,8 @@ import type {
   Tests_Lib_Item_AllowedRolesAndPolicies_LibItemAllowedRolesContainsExpectedRoles_IncludesTemplate,
   Tests_Lib_Item_AllowedRolesAndPolicies_LibItemAllowedRolesContainsExpectedRoles_IncludesTool,
   Tests_Lib_Item_AllowedRolesAndPolicies_LibItemAllowedRolesHasNoDuplicates_Unique,
+  Tests_Lib_Item_AllowedRolesAndPolicies_TemplateRoleAcceptsFreezable_HasFreezable,
+  Tests_Lib_Item_AllowedRolesAndPolicies_TemplateRoleAcceptsTrackable_HasTrackable,
   Tests_Lib_Item_ChangelogConstants_LibItemChangelogAdjectivesHasNoDuplicates_Unique,
   Tests_Lib_Item_ChangelogConstants_LibItemChangelogCategoryBumpMapCoversAllCategories_Categories,
   Tests_Lib_Item_ChangelogConstants_LibItemChangelogCategoryBumpMapValuesAreValidBumps_Bump,
@@ -148,6 +150,22 @@ describe('allowed roles and policies', async () => {
 
       ok(found !== undefined, `Unexpected role "${role}" in policies`);
     }
+
+    return;
+  });
+
+  it('template role accepts trackable', () => {
+    const hasTrackable: Tests_Lib_Item_AllowedRolesAndPolicies_TemplateRoleAcceptsTrackable_HasTrackable = libItemAllowedPoliciesByRole['template'].includes('trackable');
+
+    strictEqual(hasTrackable, true);
+
+    return;
+  });
+
+  it('template role accepts freezable', () => {
+    const hasFreezable: Tests_Lib_Item_AllowedRolesAndPolicies_TemplateRoleAcceptsFreezable_HasFreezable = libItemAllowedPoliciesByRole['template'].includes('freezable');
+
+    strictEqual(hasFreezable, true);
 
     return;
   });

@@ -92,15 +92,6 @@ export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_NpmMatc
 export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_NpmMatch = string | undefined;
 
 /**
- * CLI - Recipe - package.json - Sync Environment - Is Empty.
- *
- * @since 0.14.0
- */
-export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_IsEmpty_Value = unknown;
-
-export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_IsEmpty_Returns = boolean;
-
-/**
  * CLI - Recipe - package.json - Sync Environment - Run.
  *
  * @since 0.14.0

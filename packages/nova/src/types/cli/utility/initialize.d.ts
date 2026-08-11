@@ -43,6 +43,7 @@ import type {
   Shared_NovaConfig_Recipes_Github,
   Shared_NovaConfig_Recipes_PackageJson,
   Shared_NovaConfig_Recipes_PackageJsonWorkspace,
+  Shared_NovaConfig_Settings,
   Shared_NovaConfig_Urls,
   Shared_NovaConfig_Workspaces,
   Shared_NovaConfigAgent,
@@ -57,6 +58,7 @@ import type {
   Shared_NovaConfigEnvironmentValue_Reach,
   Shared_NovaConfigEnvironmentWorkspace,
   Shared_NovaConfigProjectPlatform,
+  Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkflow_Triggers,
   Shared_NovaConfigWorkflowScope,
   Shared_NovaConfigWorkflowTarget_Needs,
@@ -1512,6 +1514,57 @@ export type Cli_Utility_Initialize_Runner_PromptProject_PreviousLabel = string;
 export type Cli_Utility_Initialize_Runner_PromptProject_CurrentLabel = string;
 
 export type Cli_Utility_Initialize_Runner_PromptProject_Name = string;
+
+/**
+ * CLI - Utility - Initialize - Prompt Settings.
+ *
+ * @since 0.23.0
+ */
+export type Cli_Utility_Initialize_Runner_PromptSettings_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_Settings = Shared_NovaConfig_Settings;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_CurrentStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_CurrentDirectory = string;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_IsLocked = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_ChangelogPath = string;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_ChangelogContent = string;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_HasRelease = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoice_Title = string;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoice_Description = string;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoice_Value = Shared_NovaConfigSettings_VersionStrategy;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoice = {
+  title: Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoice_Title;
+  description: Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoice_Description;
+  value: Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoice_Value;
+};
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoices = Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoice[];
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_StrategyInitial = number;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputKey = 'versionStrategy';
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputValue = Shared_NovaConfigSettings_VersionStrategy;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutput = Shared_PromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputKey, Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputResult = Record<Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputKey, Cli_Utility_Initialize_Runner_PromptSettings_StrategyOutputValue>;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_StrategyInput = Shared_NovaConfigSettings_VersionStrategy;
+
+export type Cli_Utility_Initialize_Runner_PromptSettings_UpdatedSettings = Shared_NovaConfig_Settings;
 
 /**
  * CLI - Utility - Initialize - Prompt URLs.

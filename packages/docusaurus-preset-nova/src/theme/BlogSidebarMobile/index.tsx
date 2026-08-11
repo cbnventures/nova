@@ -3,29 +3,24 @@ import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
 import BlogSidebar from '@theme/BlogSidebar';
 import {
-  useCallback,
   useEffect,
-  useRef,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 
+import { useOverlayPanel } from '../../lib/use-overlay-panel.js';
+
 import type {
   Theme_BlogSidebarMobile_Index_BlogSidebarMobile_AnimationEvent,
   Theme_BlogSidebarMobile_Index_BlogSidebarMobile_CloseAriaLabel,
-  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_FocusTarget,
   Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideFunction,
-  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseEvent,
-  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseTarget,
-  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeFunction,
-  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeKeyboardEvent,
   Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HeaderTitle,
   Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosing,
-  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosingState,
   Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsOpen,
   Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsOpenState,
   Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OpenAriaLabel,
   Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OverlayClassName,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OverlayPanel,
   Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelAriaLabel,
   Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelRef,
   Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Pathname,
@@ -53,60 +48,11 @@ function BlogSidebarMobile(props: Theme_BlogSidebarMobile_Index_BlogSidebarMobil
   const isOpen: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsOpen = isOpenState[0];
   const setIsOpen: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsOpen = isOpenState[1];
 
-  const isClosingState: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosingState = useState<Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosing>(false);
-  const isClosing: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosing = isClosingState[0];
-  const setIsClosing: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsClosing = isClosingState[1];
-
-  const panelRef: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelRef = useRef<HTMLDivElement>(null);
-
-  /**
-   * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile - Handle Escape.
-   *
-   * Closes the sidebar overlay when the user presses the Escape
-   * key, providing a standard keyboard-accessible dismiss mechanism.
-   *
-   * @since 0.15.0
-   */
-  const handleEscape: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeFunction = useCallback((event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeKeyboardEvent) => {
-    if (event.key === 'Escape') {
-      setIsClosing(true);
-    }
-
-    return undefined;
-  }, []);
-
-  /**
-   * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile - Handle Click Outside.
-   *
-   * Closes the sidebar overlay when the user clicks on the
-   * backdrop area outside the panel, providing an intuitive dismiss.
-   *
-   * @since 0.15.0
-   */
-  const handleClickOutside: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideFunction = useCallback((event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseEvent) => {
-    const mouseTarget: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseTarget = event.target;
-
-    if (mouseTarget === event.currentTarget) {
-      setIsClosing(true);
-    }
-
-    return undefined;
-  }, []);
-
-  useEffect(() => {
-    if (isOpen === true) {
-      document.addEventListener('keydown', handleEscape);
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-
-      return undefined;
-    };
-  }, [
-    isOpen,
-    handleEscape,
-  ]);
+  const overlayPanel: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OverlayPanel = useOverlayPanel(isOpen, '.nova-sidebar-mobile-close');
+  const isClosing: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosing = overlayPanel['isClosing'];
+  const setIsClosing: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsClosing = overlayPanel['setIsClosing'];
+  const handleClickOutside: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideFunction = overlayPanel['handleClickOutside'];
+  const panelRef: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelRef = overlayPanel['panelRef'];
 
   // Close overlay on navigation.
   useEffect(() => {
@@ -116,19 +62,6 @@ function BlogSidebarMobile(props: Theme_BlogSidebarMobile_Index_BlogSidebarMobil
 
     return undefined;
   }, [pathname]);
-
-  // Focus close button when dialog opens.
-  useEffect(() => {
-    if (isOpen === true && panelRef['current'] !== null) {
-      const focusTarget: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_FocusTarget = panelRef['current'].querySelector('.nova-sidebar-mobile-close') as Theme_BlogSidebarMobile_Index_BlogSidebarMobile_FocusTarget;
-
-      if (focusTarget !== null) {
-        focusTarget.focus();
-      }
-    }
-
-    return undefined;
-  }, [isOpen]);
 
   if (
     props['sidebar'] === undefined

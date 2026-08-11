@@ -1,7 +1,7 @@
 ---
 id: "color-pipeline"
 title: "Color Pipeline"
-description: "How a single hex color is converted through HSL into an 11-level shade scale for CSS custom properties."
+description: "Convert a single hex color through HSL into an 11-level shade scale used as CSS custom properties across every preset layer."
 sidebar_position: 3
 keywords:
   - "nova"
@@ -11,7 +11,6 @@ keywords:
   - "shade scale"
   - "color generation"
   - "css custom properties"
-  - "design tokens"
   - "perceptual lightness"
 tags:
   - "facades"
@@ -45,7 +44,7 @@ flowchart TD
 
 The input hex color (e.g., `#ea580c`) is parsed into RGB channels, then converted to HSL (hue, saturation, lightness) using standard color math.
 
-```
+```text
 #ea580c → RGB(234, 88, 12) → HSL(20.5°, 90.2%, 48.2%)
 ```
 

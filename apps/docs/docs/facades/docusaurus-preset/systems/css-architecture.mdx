@@ -1,7 +1,7 @@
 ---
 id: "css-architecture"
 title: "CSS Architecture"
-description: "Three-layer CSS system with base resets, component structure, and preset visual identity explained."
+description: "Three-layer CSS system with base resets, component structure, and preset visual identity that controls load order and specificity."
 sidebar_position: 1
 keywords:
   - "nova"
@@ -12,8 +12,6 @@ keywords:
   - "css custom properties"
   - "css load order"
   - "preset styling"
-  - "base layer"
-  - "block layer"
 tags:
   - "facades"
   - "systems"
@@ -64,7 +62,7 @@ Structural styles for the 10 Nova blocks. No colors, no shadows, no preset-speci
 
 Visual identity for each preset. Each preset directory contains its own `preset.css`, block overrides, and navbar/footer variant styles.
 
-```
+```text
 styles/presets/{envoy|foundry|lantern|marshal|sentinel|signal}/
 ├── preset.css                     (root variables and base overrides)
 ├── blocks/                        (per-block visual overrides)

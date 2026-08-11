@@ -22,17 +22,7 @@ export type Theme_Mermaid_Index_Mermaid_Props = {
 
 export type Theme_Mermaid_Index_Mermaid_Returns = React.JSX.Element;
 
-export type Theme_Mermaid_Index_Mermaid_ColorModeState = [Theme_Mermaid_Index_Mermaid_ColorMode, Theme_Mermaid_Index_Mermaid_SetColorMode];
-
 export type Theme_Mermaid_Index_Mermaid_ColorMode = string;
-
-export type Theme_Mermaid_Index_Mermaid_SetColorMode = React.Dispatch<React.SetStateAction<Theme_Mermaid_Index_Mermaid_ColorMode>>;
-
-export type Theme_Mermaid_Index_Mermaid_CurrentTheme = string | null;
-
-export type Theme_Mermaid_Index_Mermaid_Observer = MutationObserver;
-
-export type Theme_Mermaid_Index_Mermaid_Theme = string | null;
 
 /**
  * Theme - Mermaid - Content.

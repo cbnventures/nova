@@ -9,13 +9,6 @@ keywords:
   - "workspace policy"
   - "required field"
   - "conditional field"
-  - "project"
-  - "docs"
-  - "config"
-  - "app"
-  - "package"
-  - "tool"
-  - "template"
   - "freezable"
   - "trackable"
   - "distributable"
@@ -25,8 +18,6 @@ tags:
   - "rules"
   - "roles"
   - "policies"
-  - "reference"
-  - "nova"
 ---
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
@@ -92,6 +83,20 @@ The following table shows which `package.json` fields are retained or removed ba
 | `funding`       | `distributable` | Yes                     |
 | `repository`    | `distributable` | Yes                     |
 | `publishConfig` | `distributable` | Yes                     |
+
+### Allowed Policies by Role
+
+Not every policy is available to every role. The following table shows which policies each role supports:
+
+| Role       | `freezable` | `trackable` | `distributable` |
+|------------|-------------|-------------|-----------------|
+| `project`  | Yes         |             |                 |
+| `docs`     | Yes         | Yes         |                 |
+| `config`   | Yes         | Yes         |                 |
+| `app`      |             | Yes         |                 |
+| `package`  |             | Yes         | Yes             |
+| `tool`     | Yes         | Yes         |                 |
+| `template` | Yes         | Yes         |                 |
 
 ## Workspace Naming
 
