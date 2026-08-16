@@ -14,10 +14,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
 }
 
 .nova-navbar-bridge-brand {
-  flex-shrink: 0;
+  min-width: 0;
+}
+
+.nova-navbar-bridge-brand a {
+  min-width: 0;
+}
+
+.nova-navbar-bridge-brand a > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .nova-navbar-bridge-items {
@@ -141,15 +152,29 @@
  * ============================
  */
 
+.nova-navbar-bridge-menu-brand {
+  min-width: 0;
+}
+
 .nova-navbar-bridge-menu-brand a {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 
+  min-width: 0;
+
   text-decoration: none;
 }
 
+.nova-navbar-bridge-menu-brand a > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .nova-navbar-bridge-menu-brand img {
+  flex-shrink: 0;
+
   height: 1.75rem;
   width: auto;
 }

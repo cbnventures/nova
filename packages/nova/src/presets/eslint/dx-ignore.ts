@@ -33,6 +33,10 @@ const config: Presets_Eslint_DxIgnore_Config = [
       '**/next-env.d.ts',
     ],
   },
+  {
+    name: 'nova/dx-ignore/wrangler',
+    ignores: ['**/.wrangler/**'],
+  },
 ];
 
 export default config;

@@ -1,8 +1,8 @@
 ---
 id: "overview"
-title: "Custom ESLint Rules"
+title: "Rules and Suites"
 sidebar_label: "Overview"
-description: "Custom ESLint rules for catching unsafe patterns and enforcing consistent code style across JavaScript and TypeScript projects."
+description: "Catch unsafe patterns and enforce consistent code style with custom ESLint rules, and hold docs and types to Nova's conventions with importable Vitest conformance suites."
 sidebar_position: 1
 keywords:
   - "nova"
@@ -13,12 +13,16 @@ keywords:
   - "formatting"
   - "type safety"
   - "autofix"
+  - "vitest"
+  - "conformance"
 tags:
   - "rules"
   - "overview"
   - "eslint"
+  - "vitest"
   - "code quality"
   - "linting"
+  - "conformance"
 ---
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
@@ -27,14 +31,14 @@ import TabItem from '@theme/TabItem';
 
 # Overview
 
-Use **Nova Rules** to catch unsafe patterns and enforce consistent code style. Pick the rules that match your workflow.
+Nova ships two kinds of checks. **ESLint rules** are individual, per-file checks you enable one at a time in your flat config. **Vitest conformance suites** are importable test suites that each scan across multiple files at once — frontmatter, links, tables, and type declarations.
 
 ## Install
 
 If the package is not in your repo yet, go to **[Setup and Configure](/docs/quickstart/setup#choose-your-path)** and choose **Install into project**.
 
 :::warning
-**Nova** must be installed **in your project** before importing rules. This is because Node.js resolves imports from your project's `node_modules` folder.
+**Nova** must be installed **in your project** before importing rules and suites. This is because Node.js resolves imports from your project's `node_modules` folder.
 :::
 
 :::info
@@ -46,41 +50,35 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
 <Tabs groupId="rules-purpose">
   <TabItem value="what" label="What" default>
     <ul>
-      <li><strong>Custom ESLint rules</strong> that catch patterns the built-in rule set does not cover.</li>
-      <li><strong>Focused checks</strong> that target specific risks like leaked dev logging and unscoped switch cases.</li>
-      <li><strong>No extra options</strong> required — enable each rule in your <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> and it works.</li>
-      <li>Designed to complement existing ESLint rules, not replace them.</li>
+      <li><strong>ESLint rules</strong> that catch patterns the built-in rule set does not cover — each rule targets a single concern.</li>
+      <li><strong>Vitest suites</strong> that scan across multiple files at once to enforce conventions on frontmatter, links, tables, and type declarations.</li>
+      <li><strong>No extra options</strong> required — enable each ESLint rule in your <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>, or register each Vitest suite in a short test file.</li>
+      <li>Designed to complement existing tools, not replace them.</li>
     </ul>
   </TabItem>
   <TabItem value="when" label="When">
     <ul>
       <li>When built-in ESLint rules leave gaps in your project's conventions.</li>
+      <li>When you need cross-file conformance checks that a linter cannot express.</li>
       <li>When you want consistent patterns across teams and projects.</li>
-      <li>When you prefer targeted rules over broad presets.</li>
-      <li>When you want each rule to focus on a single, well-defined concern.</li>
+      <li>When you want each check to focus on a single, well-defined concern.</li>
     </ul>
   </TabItem>
   <TabItem value="where" label="Where">
     <ul>
       <li>In new or existing codebases.</li>
-      <li>In local development, <Terminology title="continuous integration" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, and code review workflows.</li>
+      <li>In local development, <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, and code review workflows.</li>
       <li>In any repository structure.</li>
-      <li>Alongside existing ESLint configs, plugins, and formatters.</li>
+      <li>Alongside existing ESLint configs, plugins, formatters, and test runners.</li>
     </ul>
   </TabItem>
 </Tabs>
 
-## Rules
+## ESLint Rules
 
-All items below are **targeted**, **independent**, and **safe to adopt**. Enable only what you need.
+Custom rules for JavaScript and TypeScript projects. Each rule is **targeted**, **independent**, and **safe to adopt** — enable only what you need. Each rule focuses on a single concern.
 
-Each rule focuses on a single concern.
-
-### ESLint
-
-Custom rules for JavaScript and TypeScript projects.
-
-#### Conventions
+### Conventions
 
 | Rule                                                                                          | Synopsis                                                                     |
 |-----------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
@@ -90,10 +88,11 @@ Custom rules for JavaScript and TypeScript projects.
 | [Require Hash Private](/docs/rules/eslint/conventions/require-hash-private)                   | Require `#hash` notation for private class members.                          |
 | [Require Kebab Case Filename](/docs/rules/eslint/conventions/require-kebab-case-filename)     | Require kebab-case file names for TypeScript files.                          |
 | [Require Naming Convention](/docs/rules/eslint/conventions/require-naming-convention)         | Enforce context-aware naming conventions for identifiers.                    |
+| [Require Node Protocol](/docs/rules/eslint/conventions/require-node-protocol)                 | Require `node:` protocol when importing Node.js built-in modules.            |
 | [Require Undefined Init](/docs/rules/eslint/conventions/require-undefined-init)               | Require `= undefined` when declaring uninitialized variables.                |
 | [Switch Case Blocks](/docs/rules/eslint/conventions/switch-case-blocks)                       | Require block-wrapped switch cases so declarations stay scoped per branch.   |
 
-#### Formatting
+### Formatting
 
 | Rule                                                                                                   | Synopsis                                                                                    |
 |--------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
@@ -107,7 +106,7 @@ Custom rules for JavaScript and TypeScript projects.
 | [Require Padding Lines](/docs/rules/eslint/formatting/require-padding-lines)                           | Require blank lines between specific statement patterns for readability.                    |
 | [Require Ternary Parens](/docs/rules/eslint/formatting/require-ternary-parens)                         | Require parenthesized condition in ternaries.                                               |
 
-#### JSDoc
+### JSDoc
 
 | Rule                                                                                    | Synopsis                                                                                |
 |-----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
@@ -121,13 +120,13 @@ Custom rules for JavaScript and TypeScript projects.
 | [Require JSDoc Since](/docs/rules/eslint/jsdoc/require-jsdoc-since)                     | Require a valid `@since` tag (a released version or `UNRELEASED`) in every JSDoc block. |
 | [Require JSDoc Tag Order](/docs/rules/eslint/jsdoc/require-jsdoc-tag-order)             | Require JSDoc tags to follow canonical order with one blank line between groups.        |
 
-#### Nova
+### Nova
 
 | Rule                                                   | Synopsis                                                                   |
 |--------------------------------------------------------|----------------------------------------------------------------------------|
 | [No Logger.dev](/docs/rules/eslint/nova/no-logger-dev) | Flag `Logger.dev` calls so dev-only logging gets caught before production. |
 
-#### Patterns
+### Patterns
 
 | Rule                                                                                   | Synopsis                                                                                |
 |----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
@@ -139,20 +138,20 @@ Custom rules for JavaScript and TypeScript projects.
 | [No Template Curly in String](/docs/rules/eslint/patterns/no-template-curly-in-string) | Catch `${...}` in regular strings so missing backticks are found early.                 |
 | [No Use Before Define](/docs/rules/eslint/patterns/no-use-before-define)               | Catch identifiers used before declaration so read order matches definition order.       |
 
-#### Regex
+### Regex
 
 | Rule                                                                      | Synopsis                                                                |
 |---------------------------------------------------------------------------|-------------------------------------------------------------------------|
 | [No Regex Literal Flags](/docs/rules/eslint/regex/no-regex-literal-flags) | Ban flags on regex literals so callers add flags at the call site.      |
 | [No Regex Literals](/docs/rules/eslint/regex/no-regex-literals)           | Ban inline regex literals so patterns are centralized in a shared file. |
 
-#### Safety
+### Safety
 
 | Rule                                                     | Synopsis                                     |
 |----------------------------------------------------------|----------------------------------------------|
 | [No Script URL](/docs/rules/eslint/safety/no-script-url) | Block `javascript:` URLs in string literals. |
 
-#### Syntax
+### Syntax
 
 | Rule                                                                   | Synopsis                                                                          |
 |------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
@@ -161,7 +160,7 @@ Custom rules for JavaScript and TypeScript projects.
 | [No Optional Chaining](/docs/rules/eslint/syntax/no-optional-chaining) | Ban the `?.` operator so null/undefined checks are explicit.                      |
 | [No Rest Params](/docs/rules/eslint/syntax/no-rest-params)             | Ban rest parameters so function signatures list parameters explicitly.            |
 
-#### TypeScript
+### TypeScript
 
 | Rule                                                                                             | Synopsis                                                                     |
 |--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
@@ -172,17 +171,59 @@ Custom rules for JavaScript and TypeScript projects.
 | [Require Bracket Property Access](/docs/rules/eslint/typescript/require-bracket-property-access) | Require bracket notation instead of dot notation on project-defined objects. |
 | [Require Type Naming](/docs/rules/eslint/typescript/require-type-naming)                         | Require type alias names to start with the class name prefix from file path. |
 
-### Vitest
+## Vitest Conformance Suites
 
-Importable conformance suites that enforce Nova's docs and type conventions through the test runner.
+Importable test suites that each scan across multiple files to hold your project's docs and types to the same conventions Nova enforces on itself — frontmatter, internal links, table formatting, glossary references, and type declarations.
+
+Unlike ESLint rules, which check one file at a time, each Vitest suite walks an entire directory tree and reports every violation in a single test run.
+
+:::info
+Each suite imports `describe` and `it` from <Terminology title="next-generation test runner" to="/docs/quickstart/terminology#testing" color={true}>Vitest</Terminology>. Your project must already use Vitest as its test runner.
+:::
+
+Each test file collapses to a short import-and-invoke. The suite logic lives in the package; your wrapper supplies the configuration.
+
+```ts title="src/tests/frontmatter.test.ts"
+import { registerFrontmatterSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
+
+registerFrontmatterSuite({
+  vitest,
+  enable: 'all',
+  requiredFields: ['id', 'title', 'description', 'keywords', 'tags'],
+});
+```
+
+### Enable API
+
+Every register function takes an `enable` field that selects which checks run. The field is required so a bare call is a compile error, never a silent no-op.
+
+- `enable: 'all'` runs every check the suite defines, including checks added in future versions.
+- `enable: ['key-one', 'key-two']` runs exactly the listed checks and ignores the rest.
+
+```ts title="src/tests/link.test.ts"
+import { registerLinkSuite } from '@cbnventures/nova/rules/vitest';
+import * as vitest from 'vitest';
+
+// Run a frozen subset instead of every check.
+registerLinkSuite({
+  vitest,
+  enable: [
+    'link-internal-doc-target-exists',
+    'link-self-anchor-exists',
+  ],
+});
+```
+
+### Suites
 
 | Suite                                                     | Synopsis                                                                           |
 |-----------------------------------------------------------|------------------------------------------------------------------------------------|
-| [Overview](/docs/rules/vitest/)                           | Adopt the conformance kit and learn the off-by-default `enable` API.               |
-| [Type Declarations](/docs/rules/vitest/type-declarations) | Audit `.d.ts` mirror files against their sources for structure, order, and naming. |
+| [Dotenv](/docs/rules/vitest/dotenv)                       | Enforce double-quoted values in .env and .env.sample files.                        |
 | [Frontmatter](/docs/rules/vitest/frontmatter)             | Require valid frontmatter fields on every Markdown and MDX content file.           |
 | [Link](/docs/rules/vitest/link)                           | Verify internal documentation links and anchors resolve to real targets.           |
 | [Markdown Table](/docs/rules/vitest/markdown-table)       | Require tables to match canonical `MarkdownTable` output.                          |
 | [Terminology](/docs/rules/vitest/terminology)             | Validate `<Terminology>` components against a glossary page.                       |
+| [Type Declarations](/docs/rules/vitest/type-declarations) | Audit `.d.ts` mirror files against their sources for structure, order, and naming. |
 
 > Using Nova presets? See **[Presets](/docs/presets/)** for composable ESLint and TSConfig layers.

@@ -2,7 +2,7 @@
 id: "workspace-rules"
 title: "Workspace Rules"
 sidebar_position: 5
-description: "How Nova governs workspaces using roles, policies, and field handling rules that determine what each package.json recipe enforces."
+description: "Understand how Nova governs workspaces using roles, policies, and field handling rules that determine what each package.json recipe enforces."
 keywords:
   - "nova"
   - "workspace role"
@@ -24,7 +24,7 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 # Workspace Rules
 
-Every <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in a Nova monorepo is classified by a **role** and a **policy**.
+Every <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in a Nova <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> is classified by a **role** and a **policy**.
 
 These two properties, defined in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, control how <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> read, create, modify, and remove fields in each workspace's `package.json`.
 

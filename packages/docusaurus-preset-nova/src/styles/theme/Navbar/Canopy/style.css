@@ -18,6 +18,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.nova-navbar-canopy-brand {
+  min-width: 0;
+}
+
+.nova-navbar-canopy-brand a {
+  min-width: 0;
+}
+
+.nova-navbar-canopy-brand a > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (min-width: 1024px) {
@@ -160,15 +175,29 @@
  * ============================
  */
 
+.nova-navbar-canopy-menu-brand {
+  min-width: 0;
+}
+
 .nova-navbar-canopy-menu-brand a {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 
+  min-width: 0;
+
   text-decoration: none;
 }
 
+.nova-navbar-canopy-menu-brand a > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .nova-navbar-canopy-menu-brand img {
+  flex-shrink: 0;
+
   height: 1.75rem;
   width: auto;
 }

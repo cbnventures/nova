@@ -12,10 +12,22 @@
 .nova-navbar-compass > .nova-container {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
 }
 
 .nova-navbar-compass-brand {
   margin-right: auto;
+  min-width: 0;
+}
+
+.nova-navbar-compass-brand a {
+  min-width: 0;
+}
+
+.nova-navbar-compass-brand a > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .nova-navbar-compass-items {
@@ -135,15 +147,29 @@
  * ============================
  */
 
+.nova-navbar-compass-menu-brand {
+  min-width: 0;
+}
+
 .nova-navbar-compass-menu-brand a {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 
+  min-width: 0;
+
   text-decoration: none;
 }
 
+.nova-navbar-compass-menu-brand a > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .nova-navbar-compass-menu-brand img {
+  flex-shrink: 0;
+
   height: 1.75rem;
   width: auto;
 }

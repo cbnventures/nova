@@ -17,6 +17,7 @@ tags:
   - "runtime"
   - "node"
 ---
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 Lint Node.js code with the recommended `eslint-plugin-n` ruleset, guard against raw `console` and `process.exit`, and relax hashbang enforcement on source-level CLI entry points.
 
@@ -26,11 +27,11 @@ Lint Node.js code with the recommended `eslint-plugin-n` ruleset, guard against 
 2. Bans raw `console` output so logging flows through the Logger toolkit battery instead.
 3. Disallows `process.exit()` so error handling stays structured rather than terminating abruptly.
 4. Warns on synchronous APIs so you avoid blocking the event loop.
-5. Turns off hashbang enforcement for source-level CLI entry points, since the `bin` field points to the build output rather than the source file.
+5. Turns off hashbang enforcement for source-level <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> entry points, since the `bin` field points to the build output rather than the source file.
 
 ## Usage
 
-Import `runtimeNode` from the ESLint presets entry and spread it into your flat config after the language layer, in the documented layer order.
+Import `runtimeNode` from the ESLint presets entry and spread it into your <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> after the language layer, in the documented layer order.
 
 ```ts title="eslint.config.ts"
 import {
@@ -50,7 +51,7 @@ export default [
 
 ## What This Preset Configures
 
-The preset registers `eslint-plugin-n` and applies its recommended Node.js ruleset, then adds project-specific rules and one scoped exception. Each group targets every script extension, except the CLI hashbang exception, which applies only to CLI entry points.
+The preset registers `eslint-plugin-n` and applies its recommended Node.js ruleset, then adds project-specific rules and one scoped exception. Each group targets every script extension, except the <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> hashbang exception, which applies only to <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> entry points.
 
 ### Recommended rules
 

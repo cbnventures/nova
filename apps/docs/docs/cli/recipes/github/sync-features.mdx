@@ -37,7 +37,9 @@ If the `github.features` block is missing entirely, or all four feature fields a
 
 ## Behavior
 
-Each feature field is independently optional. When a field is defined, the recipe passes the corresponding flag to `gh repo edit`. When a field is undefined, that flag is omitted entirely and GitHub's current value is preserved.
+Each feature field is independently optional. When a field is defined, the recipe passes the corresponding flag to `gh repo edit`.
+
+When a field is undefined, that flag is omitted entirely and GitHub's current value is preserved.
 
 - **`github.features.issues`** — Controls the Issues tab. Emits `--enable-issues=<bool>` when defined.
 - **`github.features.wiki`** — Controls the Wiki tab. Emits `--enable-wiki=<bool>` when defined.

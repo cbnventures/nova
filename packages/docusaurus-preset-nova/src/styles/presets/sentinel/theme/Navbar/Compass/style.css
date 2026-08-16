@@ -283,6 +283,8 @@
 
 .nova-navbar-compass-menu-items {
   gap: 0.125rem;
+
+  padding-bottom: 0.5rem;
 }
 
 .nova-navbar-compass-menu-item,

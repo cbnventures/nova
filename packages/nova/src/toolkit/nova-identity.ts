@@ -359,7 +359,7 @@ class Runner {
    */
   public static composeCopyright(startingYear: Toolkit_NovaIdentity_Runner_ComposeCopyright_StartingYear, legalName: Toolkit_NovaIdentity_Runner_ComposeCopyright_LegalName, license?: Toolkit_NovaIdentity_Runner_ComposeCopyright_License): Toolkit_NovaIdentity_Runner_ComposeCopyright_Returns {
     const yearRange: Toolkit_NovaIdentity_Runner_ComposeCopyright_YearRange = Runner.copyrightYearRange(startingYear);
-    const notice: Toolkit_NovaIdentity_Runner_ComposeCopyright_Notice = (license !== undefined && license !== 'Proprietary') ? `Licensed under the ${license} License.` : 'All Rights Reserved.';
+    const notice: Toolkit_NovaIdentity_Runner_ComposeCopyright_Notice = (license !== undefined && license !== 'Proprietary') ? `Released under ${license}.` : 'All Rights Reserved.';
 
     return `Copyright © ${yearRange} ${legalName}. ${notice}`;
   }

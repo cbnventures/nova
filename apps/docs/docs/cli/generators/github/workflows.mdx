@@ -189,7 +189,9 @@ The generator bundles three templates, each with its own trigger set.
 
 #### `check-sponsor-gated-issues` Variables
 
-This template declares the following variables. `GITHUB_TOKEN` is supplied automatically, so the only `secret` you create manually is `PERSONAL_ACCESS_TOKEN`. The remaining values are `var`-format, not `literal` - they resolve to `${{ vars.NAME }}` references and are configured as GitHub repository variables.
+This template declares the following variables. `GITHUB_TOKEN` is supplied automatically, so the only `secret` you create manually is `PERSONAL_ACCESS_TOKEN`.
+
+The remaining values are `var`-format, not `literal` - they resolve to `${{ vars.NAME }}` references and are configured as GitHub repository variables.
 
 | Variable                       | Format   | Description                                                                       |
 |--------------------------------|----------|-----------------------------------------------------------------------------------|
@@ -290,7 +292,9 @@ The three `workflow-run-*` triggers chain a publish workflow to one or more upst
 
 A publish workflow delivers every workspace environment value declared under [`environment.workspaces`](/docs/quickstart/nova-config#environment). Each value carries two independent, required flags — `secret` (storage) and `buildOnly` (delivery) — and Nova routes delivery entirely off `buildOnly`, never off `secret`.
 
-The difference between the two `buildOnly` destinations is *when there is a live environment to read the value*. A **running server** has one, so a `buildOnly: false` value sits in its env and the code reads it by reference (`env.X`) each run — never in a file. A **build** has one only while it runs on the CI runner, so a `buildOnly: true` value is placed in the build's env there; a Variable the code inlines (`import.meta.env.X`) gets *baked* into the output, a Secret used for auth is *consumed and not emitted*. **"Build" means "available to the build process," not "baked into the shipped output"** — that is why `secret + buildOnly` is valid, and why the only leak risk (a secret inlined into *client* output) is a code choice, not the delivery's fault.
+The difference between the two `buildOnly` destinations is *when there is a live environment to read the value*. A **running server** has one, so a `buildOnly: false` value sits in its env and the code reads it by reference (`env.X`) each run — never in a file.
+
+A **build** has one only while it runs on the <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> runner, so a `buildOnly: true` value is placed in the build's env there; a Variable the code inlines (`import.meta.env.X`) gets *baked* into the output, a Secret used for auth is *consumed and not emitted*. **"Build" means "available to the build process," not "baked into the shipped output"** — that is why `secret + buildOnly` is valid, and why the only leak risk (a secret inlined into *client* output) is a code choice, not the delivery's fault.
 
 `secret` never changes *where* a value goes; `buildOnly` never changes *how* it is stored and moved. All four combinations are real:
 
@@ -303,7 +307,9 @@ Every GitHub name is the workspace's `prefix` joined to the `key` (e.g. `CBN_` j
 
 ### Build Delivery
 
-Every `buildOnly: true` workspace value is written into the build `.env` before `check` / `build`. Nova reads it from its GitHub **Variable** (`${{ vars.<name> }}`) when `secret: false`, or its GitHub **Secret** (`${{ secrets.<name> }}`) when `secret: true`. A `secret: false` Variable falls back to its `defaultValue` when the Variable is unset. Deploy credentials and workflow-config keys never reach the build.
+Every `buildOnly: true` workspace value is written into the build `.env` before `check` / `build`. Nova reads it from its GitHub **Variable** (`${{ vars.<name> }}`) when `secret: false`, or its GitHub **Secret** (`${{ secrets.<name> }}`) when `secret: true`.
+
+A `secret: false` Variable falls back to its `defaultValue` when the Variable is unset. Deploy credentials and workflow-config keys never reach the build.
 
 The [Setup report](#setup-instructions) lists every GitHub Variable and Secret to create.
 
@@ -317,7 +323,7 @@ On each deploy, Nova reconciles every `buildOnly: false` workspace value into th
 
 :::warning Sync makes Nova authoritative
 
-Nova has full authority over each server's runtime env. Removing a `buildOnly: false` value from the config deletes it from every server on the next deploy, and any value set out-of-band is reconciled away. The sync runs unattended in CI, so there is no interactive confirm — the deploy log records every change.
+Nova has full authority over each server's runtime env — removing a `buildOnly: false` value from the config deletes it from every server on the next deploy, and any value set out-of-band is reconciled away. The sync runs unattended in <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, so there is no interactive confirm — the deploy log records every change.
 :::
 
 #### Per-Target Mechanism
@@ -396,7 +402,9 @@ Entries are deduplicated and listed once per output file, so a value used by two
 
 ## Publishing GitHub Actions
 
-The `github-action` destination distributes a JavaScript GitHub Action by maintaining an orphan `releases` branch whose commits contain only the runtime files needed by consumers. Each release is tagged with its semver (e.g., `v2.1.0`), and the floating major tag (`v2`) is force-moved to the latest release commit. Older frozen major tags (e.g., `v1`) are never touched.
+The `github-action` destination distributes a JavaScript GitHub Action by maintaining an orphan `releases` branch whose commits contain only the runtime files needed by consumers. Each release is tagged with its semver (e.g., `v2.1.0`), and the floating major tag (`v2`) is force-moved to the latest release commit.
+
+Older frozen major tags (e.g., `v1`) are never touched.
 
 ### Expected Repo Shape
 
@@ -483,7 +491,9 @@ A few non-obvious consequences worth knowing:
 
 If a repo ships more than one GitHub Action (rare), each `github-action` destination must declare a distinct `RELEASE_BRANCH_NAME` across the entire `nova.config.json`. Two `github-action` destinations sharing the same release branch will race on push — both jobs run in parallel and force-push to the same branch, so the second writer overwrites the first.
 
-Nova validates destination uniqueness across the entire `workflows[]` array, not just within a single workflow: declaring two `github-action` destinations anywhere in your config — same workflow or separate workflows — with overlapping `RELEASE_BRANCH_NAME` values fails the generator with a clear error message and rejects both colliding workflows. To ship two actions from one repo, use distinct `RELEASE_BRANCH_NAME` values (e.g., `releases-primary`, `releases-secondary`) — typically each in its own workflow with its own `name`. Example layout:
+Nova validates destination uniqueness across the entire `workflows[]` array, not just within a single workflow: declaring two `github-action` destinations anywhere in your config — same workflow or separate workflows — with overlapping `RELEASE_BRANCH_NAME` values fails the generator with a clear error message and rejects both colliding workflows. To ship two actions from one repo, use distinct `RELEASE_BRANCH_NAME` values (e.g., `releases-primary`, `releases-secondary`) — typically each in its own workflow with its own `name`.
+
+Example layout:
 
 ```json
 {
@@ -526,7 +536,9 @@ Nova validates destination uniqueness across the entire `workflows[]` array, not
 }
 ```
 
-Each action gets its own publish workflow with a distinct `RELEASE_BRANCH_NAME`, and the GitHub Releases for each action use a uniquely-prefixed tag (e.g., `primary-v1.2.3`, `secondary-v1.0.0`). Nova's force-retag step is prefix-aware: the floating major derivation matches an optional alphanumeric prefix before the `v` (so `primary-v1.2.3` → `primary-v1`, `v2.1.3` → `v2`). Consumers reference each action via its prefixed tag: `uses: owner/repo@primary-v1`, `uses: owner/repo@secondary-v1`.
+Each action gets its own publish workflow with a distinct `RELEASE_BRANCH_NAME`, and the GitHub Releases for each action use a uniquely-prefixed tag (e.g., `primary-v1.2.3`, `secondary-v1.0.0`). Nova's force-retag step is prefix-aware: the floating major derivation matches an optional alphanumeric prefix before the `v` (so `primary-v1.2.3` → `primary-v1`, `v2.1.3` → `v2`).
+
+Consumers reference each action via its prefixed tag: `uses: owner/repo@primary-v1`, `uses: owner/repo@secondary-v1`.
 
 Similarly, only one `github-pages-docusaurus` destination may be declared across all workflows in your `nova.config.json` — GitHub Pages is repo-scoped, so two deployments would overwrite each other regardless of whether they live in the same workflow or separate ones. Nova validates this at workflow-generation time.
 
@@ -541,5 +553,7 @@ The same cross-workflow uniqueness check applies to these other publish targets:
 
 :::note Tag protection rules
 
-The force-retag steps require permission to overwrite existing tags. If the consuming repo has [tag protection rules](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-security/managing-repository-settings/configuring-tag-protection-rules) covering the `v*` pattern, the workflow's default `GITHUB_TOKEN` will be denied — even with `contents: write` permission. Either disable tag protection for the patterns you ship, or replace `GITHUB_TOKEN` with a [GitHub App token](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/about-authentication-with-a-github-app) that has the required maintain-permission scope.
+The force-retag steps require permission to overwrite existing tags. If the consuming repo has [tag protection rules](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-security/managing-repository-settings/configuring-tag-protection-rules) covering the `v*` pattern, the workflow's default `GITHUB_TOKEN` will be denied — even with `contents: write` permission.
+
+Either disable tag protection for the patterns you ship, or replace `GITHUB_TOKEN` with a [GitHub App token](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/about-authentication-with-a-github-app) that has the required maintain-permission scope.
 :::

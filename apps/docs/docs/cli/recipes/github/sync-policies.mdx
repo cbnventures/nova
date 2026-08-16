@@ -37,7 +37,9 @@ If the `github.policies` block is missing entirely, or all policy fields are und
 
 ## Behavior
 
-Each policy field is independently optional. When a field is defined, the recipe passes the corresponding flag to `gh repo edit`. When a field is undefined, that flag is omitted entirely and GitHub's current value is preserved.
+Each policy field is independently optional. When a field is defined, the recipe passes the corresponding flag to `gh repo edit`.
+
+When a field is undefined, that flag is omitted entirely and GitHub's current value is preserved.
 
 - **`github.policies.visibility`** — Repository visibility. Emits `--visibility=<value>` (`public`, `private`, or `internal`) when defined.
 - **`github.policies.defaultBranch`** — The default branch name. Emits `--default-branch=<value>` when defined.

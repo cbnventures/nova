@@ -1,4 +1,11 @@
 /**
+ * Tests - Lib - Markdown Slug - SlugifyHeading - PreservesConsecutiveHyphensFromPunctuationAdjacentToSpaces.
+ *
+ * @since 0.24.0
+ */
+export type Tests_Lib_MarkdownSlug_SlugifyHeading_PreservesConsecutiveHyphensFromPunctuationAdjacentToSpaces_Slug = string;
+
+/**
  * Tests - Lib - Markdown Slug - SlugifyHeading - ProducesADocusaurusStyleSlugFromAHeading.
  *
  * @since 0.19.0

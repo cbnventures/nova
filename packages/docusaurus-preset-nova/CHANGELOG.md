@@ -1,5 +1,19 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.24.0 - 2026-08-16
+
+### FIXED
+- Fixed navbar brand title ellipsis truncating against action buttons with no gap
+- Fixed mobile menu brand title missing ellipsis truncation
+- Fixed blog post dates rolling back one day for users in negative-UTC timezones
+- Fixed mobile menu items clipping during slide-up animation
+- Navbar brand title no longer overflows or wraps at narrow viewport widths; long site titles now truncate with an ellipsis
+- InstallStrip copy button threw an uncaught TypeError when the Clipboard API was unavailable (e.g. non-HTTPS contexts); now shows an alert explaining that clipboard requires a secure context and to copy the command manually.
+
+### ADDED
+- Added Canvas freeform container block for custom homepage sections
+- Added max-height scroll to locale dropdown menu
+
 ## 0.23.0 - 2026-08-11
 
 ### UPDATED

@@ -25,7 +25,7 @@ Add the DOM-compatible type definitions and bundler module resolution that edge 
 ## Why Use This Preset?
 
 1. Loads the `DOM` and `DOM.Iterable` libs so the Web-standard globals edge runtimes expose type-check without manual wiring.
-2. Sets `moduleResolution` to `Bundler` so imports resolve the way a <Terminology title="build artifact tool" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>bundler</Terminology> resolves them rather than the way Node does.
+2. Sets `moduleResolution` to `Bundler` so imports resolve the way a <Terminology title="build tool" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>bundler</Terminology> resolves them rather than the way Node does.
 3. Uses `ESNext` modules so the platform's bundler controls the final output format instead of TypeScript downleveling it.
 4. Drops in as the environment layer after the essentials and strict presets so you only declare where the code runs.
 

@@ -1,16 +1,21 @@
 import {
   BlogPreview,
+  Canvas,
   Features,
-  Hero,
   InstallStrip,
   Stats,
   Typewriter,
 } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Head from '@docusaurus/Head';
+import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Heading from '@theme/Heading';
 import Layout from '@theme/Layout';
 
+import styles from './index.module.css';
+
 import type {
+  PagesConfigSnippets,
   PagesContext,
   PagesCustomFields,
   PagesFeatureItems,
@@ -110,6 +115,125 @@ function Home() {
     },
   ];
 
+  const configSnippets: PagesConfigSnippets = [
+    {
+      content: [
+        '// .eslintrc.json',
+        '{',
+        '  "extends": "next/core-web-vitals",',
+        '  "rules": { "semi": "error" }',
+        '}',
+      ].join('\n'),
+      style: {
+        top: '6%',
+        left: '5%',
+        transform: 'rotate(-2deg)',
+      },
+    },
+    {
+      content: [
+        '// tsconfig.json',
+        '{',
+        '  "compilerOptions": {',
+        '    "target": "ES2022",',
+        '    "strict": true',
+        '  }',
+        '}',
+      ].join('\n'),
+      style: {
+        top: '4%',
+        left: '50%',
+        transform: 'rotate(1.5deg)',
+      },
+    },
+    {
+      content: [
+        '// .prettierrc',
+        '{',
+        '  "semi": true,',
+        '  "singleQuote": true,',
+        '  "tabWidth": 2,',
+        '  "trailingComma": "all"',
+        '}',
+      ].join('\n'),
+      style: {
+        top: '30%',
+        left: '12%',
+        transform: 'rotate(-1deg)',
+      },
+    },
+    {
+      content: [
+        '// jest.config.js',
+        'module.exports = {',
+        '  preset: \'ts-jest\',',
+        '  testEnvironment: \'node\'',
+        '};',
+      ].join('\n'),
+      style: {
+        top: '35%',
+        left: '54%',
+        transform: 'rotate(2deg)',
+      },
+    },
+    {
+      content: [
+        '// .env.local',
+        'API_KEY=sk_live_xxxx',
+        'DATABASE_URL=postgres://',
+        'REDIS_HOST=127.0.0.1',
+        'NODE_ENV=production',
+      ].join('\n'),
+      style: {
+        top: '56%',
+        left: '6%',
+        transform: 'rotate(1deg)',
+      },
+    },
+    {
+      content: [
+        '// .lintstagedrc',
+        '{',
+        '  "*.{ts,tsx}": "eslint --fix",',
+        '  "*.css": "prettier --write"',
+        '}',
+      ].join('\n'),
+      style: {
+        top: '62%',
+        left: '46%',
+        transform: 'rotate(-1.5deg)',
+      },
+    },
+    {
+      content: [
+        '// commitlint.config.js',
+        'module.exports = {',
+        '  extends: [\'@commitlint/conventional\'],',
+        '  rules: {}',
+        '};',
+      ].join('\n'),
+      style: {
+        top: '80%',
+        left: '20%',
+        transform: 'rotate(0.5deg)',
+      },
+    },
+    {
+      content: [
+        '// ci.yml',
+        'name: CI',
+        'on: [push, pull_request]',
+        'jobs:',
+        '  build:',
+      ].join('\n'),
+      style: {
+        top: '76%',
+        left: '58%',
+        transform: 'rotate(-2.5deg)',
+      },
+    },
+  ];
+
   /**
    * Pages - Home - Blog Posts.
    *
@@ -123,23 +247,39 @@ function Home() {
       <Head>
         <title>Nova - Your Config Is Technical Debt</title>
       </Head>
-      <Hero
-        eyebrow="ESM and Beyond"
-        heading={(
-          <Typewriter>
-            <Typewriter.Prefix>Your config is </Typewriter.Prefix>
-            <Typewriter.Word>technical debt.</Typewriter.Word>
-            <Typewriter.Word>a liability.</Typewriter.Word>
-            <Typewriter.Word>slowing you down.</Typewriter.Word>
-            <Typewriter.Word>yesterday&apos;s problem.</Typewriter.Word>
-          </Typewriter>
-        )}
-        tagline="Every hand-wired ESLint rule, every copied TSConfig, every scaffold you'll forget to update. Nova replaces all of it with one opinionated package."
-        ctaLabel="Get Started"
-        ctaLink="/docs/quickstart/"
-        secondaryCtaLabel="View on GitHub"
-        secondaryCtaLink="https://github.com/cbnventures/nova"
-      />
+      <Canvas container="full" className={styles['hero']}>
+        <div className={styles['heroInner']}>
+          <div className={styles['heroContent']}>
+            <p className="nova-hero-eyebrow">Developer Toolkit</p>
+            <Heading as="h1" className={`nova-hero-heading ${styles['heroHeading']}`}>
+              <Typewriter>
+                <Typewriter.Prefix>
+                  Your config is
+                  <br />
+                </Typewriter.Prefix>
+                <Typewriter.Word>technical debt.</Typewriter.Word>
+                <Typewriter.Word>a liability.</Typewriter.Word>
+                <Typewriter.Word>slowing you down.</Typewriter.Word>
+                <Typewriter.Word>yesterday&apos;s problem.</Typewriter.Word>
+              </Typewriter>
+            </Heading>
+            <p className="nova-hero-tagline">
+              Every hand-wired ESLint rule, every copied TSConfig, every scaffold you&apos;ll forget to update. Nova replaces all of it with one opinionated package.
+            </p>
+            <div className={`nova-hero-actions ${styles['heroActions']}`}>
+              <Link className="nova-cta-primary" to="/docs/quickstart/">Get Started</Link>
+              <Link className="nova-cta-secondary" to="https://github.com/cbnventures/nova">View on GitHub</Link>
+            </div>
+          </div>
+          <div className={styles['heroConfigs']} aria-hidden="true">
+            {configSnippets.map((snippet, index) => (
+              <div key={index} className={styles['configSnippet']} style={snippet['style']}>
+                {snippet['content']}
+              </div>
+            ))}
+          </div>
+        </div>
+      </Canvas>
       <main>
         <InstallStrip command="npm install -g @cbnventures/nova" copyTarget="block" />
         <Features items={featureItems} />

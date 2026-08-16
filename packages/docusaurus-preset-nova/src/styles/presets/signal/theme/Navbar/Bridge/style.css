@@ -280,6 +280,8 @@
 
 .nova-navbar-bridge-menu-items {
   gap: 0;
+
+  padding-top: 0.25rem;
 }
 
 .nova-navbar-bridge-menu-item,

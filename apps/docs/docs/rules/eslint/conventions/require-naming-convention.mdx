@@ -27,7 +27,9 @@ Enforce context-aware naming conventions because consistent casing per identifie
 
 The `require-naming-convention` rule checks identifier names against the expected casing for their declaration context.
 
-`UPPER_SNAKE_CASE` is reserved for `const` declarations with immutable values (primitives and regex literals). Arrays, objects, instances, and function return values use `camelCase` even when declared with `const`. A `const` with an immutable value may use either `UPPER_SNAKE_CASE` or `camelCase` — both are accepted (so `const apiUrl = 'x'` is fine).
+`UPPER_SNAKE_CASE` is reserved for `const` declarations with immutable values (primitives and regex literals). Arrays, objects, instances, and function return values use `camelCase` even when declared with `const`.
+
+A `const` with an immutable value may use either `UPPER_SNAKE_CASE` or `camelCase` — both are accepted (so `const apiUrl = 'x'` is fine).
 
 Type aliases default to `UnderscorePascalCase` — segments are individually PascalCased and joined with underscores (for example, `Tests_TypeDeclarations_ExtractObjectTypes_ObjectType`). This pairs with the `require-type-naming` rule, which derives prefixes from the file path in the same format.
 

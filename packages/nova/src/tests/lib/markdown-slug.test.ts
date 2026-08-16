@@ -5,6 +5,7 @@ import { describe, it } from 'vitest';
 import { slugifyHeading, stripCodeFences } from '../../lib/markdown-slug.js';
 
 import type {
+  Tests_Lib_MarkdownSlug_SlugifyHeading_PreservesConsecutiveHyphensFromPunctuationAdjacentToSpaces_Slug,
   Tests_Lib_MarkdownSlug_SlugifyHeading_ProducesADocusaurusStyleSlugFromAHeading_Slug,
   Tests_Lib_MarkdownSlug_SlugifyHeading_StripsHtmlTagsAndPunctuation_Slug,
   Tests_Lib_MarkdownSlug_StripCodeFences_RemovesFencedCodeBlocksFromContent_Lines,
@@ -25,10 +26,18 @@ describe('slugifyHeading', () => {
     return;
   });
 
+  it('preserves consecutive hyphens from punctuation adjacent to spaces', () => {
+    const slug: Tests_Lib_MarkdownSlug_SlugifyHeading_PreservesConsecutiveHyphensFromPunctuationAdjacentToSpaces_Slug = slugifyHeading('Forge / Ignite');
+
+    strictEqual(slug, 'forge--ignite');
+
+    return;
+  });
+
   it('strips html tags and punctuation', () => {
     const slug: Tests_Lib_MarkdownSlug_SlugifyHeading_StripsHtmlTagsAndPunctuation_Slug = slugifyHeading('Config & <code>Options</code>!');
 
-    strictEqual(slug, 'config-options');
+    strictEqual(slug, 'config--options');
 
     return;
   });

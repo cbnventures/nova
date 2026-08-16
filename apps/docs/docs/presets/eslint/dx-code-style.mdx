@@ -19,6 +19,8 @@ tags:
   - "formatting"
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+
 Enforce a consistent code style across every JavaScript and TypeScript file by combining a `@stylistic` formatting baseline with focused groups of core ESLint rules for control flow, safety, and conventions.
 
 ## Why Use This Preset?
@@ -27,7 +29,7 @@ Enforce a consistent code style across every JavaScript and TypeScript file by c
 2. Groups rules by theme (arrows, objects, operators, safety, and more) so the intent of each ruleset is visible and easy to inspect.
 3. Targets all script extensions (`.js`, `.ts`, `.jsx`, `.tsx`, `.cjs`, `.cts`, `.mjs`, `.mts`) so mixed-module projects share one style.
 4. Catches unsafe patterns like `eval`, implied-eval calls, and throwing non-`Error` values so common runtime footguns are flagged early.
-5. Sits at the code-style layer so it composes cleanly above ignores and below your language and runtime presets.
+5. Sits at the code-style layer so it composes cleanly above ignores and below your language and runtime <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology>.
 
 ## Usage
 

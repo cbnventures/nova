@@ -96,7 +96,7 @@ describe('NovaIdentity.composeCopyright', () => {
     const copyright: Tests_Toolkit_NovaIdentity_NovaIdentityComposeCopyright_UsesTheLicenseNoticeForAnOssLicense_Copyright = NovaIdentity.composeCopyright(2020, 'Acme LLC', 'MIT');
 
     ok(copyright.startsWith('Copyright © 2020-'));
-    ok(copyright.endsWith('Acme LLC. Licensed under the MIT License.'));
+    ok(copyright.endsWith('Acme LLC. Released under MIT.'));
 
     return;
   });
@@ -295,7 +295,7 @@ describe('NovaIdentity.constructor', () => {
     strictEqual(baseUrl, '/');
     strictEqual(organizationName, 'acme');
     strictEqual(editUrl, 'https://github.com/acme/fixture');
-    ok((copyright !== undefined) && copyright.endsWith('Fixture LLC. Licensed under the MIT License.'));
+    ok((copyright !== undefined) && copyright.endsWith('Fixture LLC. Released under MIT.'));
 
     return;
   });

@@ -32,7 +32,9 @@ For <Terminology title="publishable workspace" to="/docs/quickstart/terminology#
 
 ## Behavior
 
-For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects ownership fields and applies the following rules. Every field below is removed if the workspace policy is not `distributable`. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
+For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects ownership fields and applies the following rules. Every field below is removed if the workspace policy is not `distributable`.
+
+See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
 
 For distributable workspaces with the respective setting enabled, the value is synced from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. If the source value is not defined, the field is removed.
 

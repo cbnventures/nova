@@ -23,7 +23,7 @@ Create `.env` and `.env.sample` files pre-populated with Nova-related environmen
 
 ## Why Use This Command?
 
-- Generates `.env` and `.env.sample` for every workspace that declares `environment.workspaces` values, so each workspace in a monorepo gets its own files (including the repo root `./` when it is declared).
+- Generates `.env` and `.env.sample` for every workspace that declares `environment.workspaces` values, so each workspace in a <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> gets its own files (including the repo root `./` when it is declared).
 - Pre-populates Nova CLI logger settings and Node.js defaults so contributors know which variables are available.
 - Keeps sensitive values out of version control while documenting the expected shape.
 - Reads each workspace's environment values from `nova.config.json` so the same keys and defaults apply on every run.
@@ -70,15 +70,21 @@ Create `.env` and `.env.sample` files pre-populated with Nova-related environmen
 
 ## Config Fields
 
-Declare workspace environment values under `environment.workspaces.<path>.variables` in `nova.config.json`, keyed by the workspace path. Any workspace without an `environment.workspaces` entry is skipped — the repo root included. The repo root gets `.env`/`.env.sample` only when you declare `environment.workspaces["./"]` (for example, `prefix "ROOT_"` with no variables).
+Declare workspace environment values under `environment.workspaces.<path>.variables` in `nova.config.json`, keyed by the workspace path. Any workspace without an `environment.workspaces` entry is skipped — the repo root included.
+
+The repo root gets `.env`/`.env.sample` only when you declare `environment.workspaces["./"]` (for example, `prefix "ROOT_"` with no variables).
 
 | Field                                     | Description                                                                                                                       |
 |-------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
 | `environment.workspaces.<path>.variables` | The variables appended to that workspace's generated `.env` files. See [Value Fields](/docs/quickstart/nova-config#value-fields). |
 
-This command reads only each variable's `key` and `defaultValue`. A variable may also declare `secret` and `buildOnly`, which this command ignores — the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) uses them to deliver each value to the build or the running server. A non-secret `defaultValue` seeds `.env.sample`; the `.env` entry is always left blank so real secrets stay out of version control.
+This command reads only each variable's `key` and `defaultValue`. A variable may also declare `secret` and `buildOnly`, which this command ignores — the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) uses them to deliver each value to the build or the running server.
 
-The `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` keys are reserved. The template manages them, so declaring any of them under `environment.workspaces.<path>.variables` is rejected when the config loads, with a warning naming the reserved key. These three remain the only unprefixed, template-managed keys.
+A non-secret `defaultValue` seeds `.env.sample`; the `.env` entry is always left blank so real secrets stay out of version control.
+
+The `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` keys are reserved. The template manages them, so declaring any of them under `environment.workspaces.<path>.variables` is rejected when the config loads, with a warning naming the reserved key.
+
+These three remain the only unprefixed, template-managed keys.
 
 ## Output Files
 
@@ -105,4 +111,6 @@ When a workspace declares no `variables`, the generator emits the template only.
 
 ### Value Preservation
 
-For `.env`, the generator reads any existing file in the workspace first and keeps the values already filled in for every declared key — including the reserved `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` keys. Only newly-added keys are written blank as `KEY=""`, so regenerating after editing the config never overwrites a real secret. The `.env.sample` file is always rebuilt from the config defaults, since it holds no secrets.
+For `.env`, the generator reads any existing file in the workspace first and keeps the values already filled in for every declared key — including the reserved `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` keys. Only newly-added keys are written blank as `KEY=""`, so regenerating after editing the config never overwrites a real secret.
+
+The `.env.sample` file is always rebuilt from the config defaults, since it holds no secrets.

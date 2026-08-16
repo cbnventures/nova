@@ -2,7 +2,7 @@
 id: "terminology"
 title: "Terminology"
 sidebar_position: 3
-description: "Developer terminology and Nova concepts with clear definitions for APIs, modules, build tools, Git workflow, testing, and security."
+description: "Learn developer terminology and Nova concepts with clear definitions for APIs, modules, build tools, Git workflow, testing, and security."
 keywords:
   - "nova"
   - "developer glossary"
@@ -32,21 +32,25 @@ Throughout the docs, you will see <Terminology title="like this one" to="/docs/q
 
 ## Nova Concepts
 
-| Term                 | Also known as         | Definition                                                                                                  |
-|----------------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
-| **workspace**        | package               | A directory inside a monorepo with its own `package.json`, representing one unit of code.                   |
-| **workspace policy** | —                     | A label that controls how Nova treats a workspace: `freezable`, `trackable`, or `distributable`.            |
-| **freezable**        | locked workspace      | A workspace whose version stays at `0.0.0` and is never published (e.g., the monorepo root, docs).          |
-| **trackable**        | private workspace     | A workspace whose version is tracked but remains private (not published to a registry).                     |
-| **distributable**    | publishable workspace | A workspace whose version is tracked and can be published to a package registry.                            |
-| **nova.config.json** | Nova config           | The configuration file at the monorepo root that defines workspaces, roles, policies, and project metadata. |
-| **battery**          | toolkit utility       | A modular, importable utility shipped with Nova (e.g., Logger, CLIHeader, MarkdownTable).                   |
-| **preset**           | config layer          | A ready-made configuration layer you compose into your setup (e.g., ESLint presets, TSConfig presets).      |
-| **layer**            | preset layer          | A single preset within a composition, stacked in order: ignores, code style, language, environment, tool.   |
-| **rule**             | ESLint rule           | A custom ESLint rule shipped with Nova (e.g., `no-logger-dev`, `switch-case-blocks`).                       |
-| **recipe**           | transform script      | A script that reads and transforms workspace files according to rules in `nova.config.json`.                |
-| **generator**        | template command      | A command that creates configuration files from built-in templates (e.g., license files, GitHub workflows). |
-| **scaffold**         | project starter       | A command that creates an entire project structure with folders, starter files, and wired configuration.    |
+| Term                 | Also known as         | Definition                                                                                                                                                         |
+|----------------------|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **workspace**        | package               | A directory inside a monorepo with its own `package.json`, representing one unit of code.                                                                          |
+| **workspace role**   | —                     | A label that controls which `package.json` fields a workspace retains: `project`, `docs`, `config`, `app`, `package`, `tool`, or `template`.                       |
+| **workspace policy** | —                     | A label that controls how Nova treats a workspace: `freezable`, `trackable`, or `distributable`.                                                                   |
+| **freezable**        | locked workspace      | A workspace whose version stays at `0.0.0` and is never published (e.g., the monorepo root, docs).                                                                 |
+| **trackable**        | private workspace     | A workspace whose version is tracked but remains private (not published to a registry).                                                                            |
+| **distributable**    | publishable workspace | A workspace whose version is tracked and can be published to a package registry.                                                                                   |
+| **nova.config.json** | Nova config           | The configuration file at the monorepo root that defines workspaces, roles, policies, and project metadata.                                                        |
+| **battery**          | toolkit utility       | A modular, importable utility shipped with Nova (e.g., Logger, CLIHeader, MarkdownTable).                                                                          |
+| **preset**           | config layer          | A ready-made configuration layer you compose into your setup (e.g., ESLint presets, TSConfig presets).                                                             |
+| **layer**            | preset layer          | A single preset within a composition, stacked in order: ignores, code style, language, environment, tool.                                                          |
+| **rule**             | ESLint rule           | A custom ESLint rule shipped with Nova (e.g., `no-logger-dev`, `switch-case-blocks`).                                                                              |
+| **recipe**           | transform script      | A script that reads and transforms workspace files according to rules in `nova.config.json`.                                                                       |
+| **generator**        | template command      | A command that creates configuration files from built-in templates (e.g., license files, GitHub workflows).                                                        |
+| **scaffold**         | project starter       | A command that creates an entire project structure with folders, starter files, and wired configuration.                                                           |
+| **utility**          | diagnostic command    | A CLI command for diagnostics and quick checks (e.g., `changelog`, `initialize`, `run-recipes`).                                                                   |
+| **facade**           | visual identity layer | An opinionated visual identity layer (colors, fonts, shape, depth, motion, navbar, footer) applied on top of a framework. Not a design system or starter template. |
+| **block**            | facade component      | A pre-built component (Hero, Features, Stats, Frame, Terminology, etc.) that respects the active preset.                                                           |
 
 ## Fundamentals
 

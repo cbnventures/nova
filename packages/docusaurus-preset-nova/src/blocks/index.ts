@@ -9,6 +9,7 @@
  */
 export { default as AppMarketDownload } from './app-market-download/index.js';
 export { default as BlogPreview } from './blog-preview/index.js';
+export { default as Canvas } from './canvas/index.js';
 export { default as Features } from './features/index.js';
 export { default as Frame } from './frame/index.js';
 export { default as Hero } from './hero/index.js';

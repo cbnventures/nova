@@ -2,7 +2,7 @@
 id: "overview"
 title: "ESLint and TSConfig Presets"
 sidebar_label: "Overview"
-description: "Composable ESLint and TSConfig presets with strict defaults and ordered layers for consistent style and predictable builds."
+description: "Compose ESLint and TSConfig presets with strict defaults and ordered layers for consistent style and predictable builds across workspaces."
 sidebar_position: 1
 keywords:
   - "nova"
@@ -24,7 +24,9 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 # Overview
 
-Use **Nova Presets** to lock in strict TypeScript, consistent style, and predictable builds. Pick the layers that match your stack. Each <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> is an <Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology> module designed for modern <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology>.
+Use **Nova Presets** to lock in strict TypeScript, consistent style, and predictable builds. Pick the layers that match your stack.
+
+Each <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> is an <Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology> module designed for modern <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology>.
 
 ## Install
 
@@ -43,7 +45,9 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
 Configure ESLint by **composing small layers** into a single <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> export. The goal is clear rules, low noise, and fast composition.
 
 ### Mental Model
-Nova's ESLint <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> are <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> layers that you **spread** into one export. Think of them as small building blocks. Each layer states intent and adds a focused set of opinions without hiding magic.
+Nova's ESLint <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> are <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> layers that you **spread** into one export. Think of them as small building blocks.
+
+Each layer states intent and adds a focused set of opinions without hiding magic.
 
 Composition follows a simple order:
 

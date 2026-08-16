@@ -85,7 +85,7 @@ The preset sets the following `compilerOptions` on top of the essentials baselin
 | `useUnknownInCatchVariables`         | `true`  | Types `catch` clause variables as `unknown` instead of `any`.                      |
 
 :::info
-`allowSyntheticDefaultImports` is kept `true` here on purpose. With `skipLibCheck: false`, TypeScript checks third-party declaration files such as Zod's `.d.cts` types, which use default-import syntax internally. Turning it off would surface errors in dependency types you do not control.
+`allowSyntheticDefaultImports` is kept `true` here on purpose. With `skipLibCheck: false`, TypeScript checks third-party declaration files such as Zod's `.d.cts` types, which use default-import syntax internally, and turning it off would surface errors in dependency types you do not control.
 :::
 
 ## Related

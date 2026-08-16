@@ -23,7 +23,9 @@ Require expanded formatting for parenthesized groups in mixed-operator logical e
 
 ## Summary
 
-The `require-multiline-condition-groups` rule checks `LogicalExpression` nodes that mix operators (e.g., `&&` inside `||`). When a logical expression is a parenthesized group within a parent expression using a different operator, each operand in the group must start on its own line. No threshold — groups are always expanded.
+The `require-multiline-condition-groups` rule checks `LogicalExpression` nodes that mix operators (e.g., `&&` inside `||`). When a logical expression is a parenthesized group within a parent expression using a different operator, each operand in the group must start on its own line.
+
+No threshold — groups are always expanded.
 
 This covers every context — `if`, `while`, `do...while`, `for`, ternary, `return`, variable declarations, and standalone expressions.
 

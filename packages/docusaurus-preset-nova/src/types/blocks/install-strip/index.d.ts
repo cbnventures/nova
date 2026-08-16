@@ -32,7 +32,7 @@ export type Blocks_InstallStrip_Index_BlocksInstallStrip_State = [Blocks_Install
 
 export type Blocks_InstallStrip_Index_BlocksInstallStrip_SetCopied = Dispatch<SetStateAction<Blocks_InstallStrip_Index_BlocksInstallStrip_Copied>>;
 
-export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_CopyTarget = 'block' | 'icon' | 'text';
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_CopyTarget = 'block' | 'icon' | 'text' | undefined;
 
 export type Blocks_InstallStrip_Index_BlocksInstallStrip_Icon = string;
 

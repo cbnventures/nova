@@ -145,4 +145,4 @@ The autofix inserts the `node:` prefix and preserves the original quote style.
 
 - **Userland packages are not checked** — Only names that resolve to a Node.js built-in module are reported. A userland package that happens to share a name with a built-in is matched by the built-in list, so disable the rule for that line if you genuinely import such a package.
 - **Subpaths are matched by base module** — `fs/promises` is reported because its base module `fs` is a built-in, and is fixed to `node:fs/promises`.
-- **`require()` calls are not checked** — This rule targets ES module `import`, `export ... from`, and dynamic `import()` specifiers. CommonJS `require()` is not covered.
+- **`require()` calls are not checked** — This rule targets ES module `import`, `export ... from`, and dynamic `import()` specifiers. <Terminology title="CJS" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>CommonJS</Terminology> `require()` is not covered.

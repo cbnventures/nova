@@ -18,6 +18,7 @@ tags:
   - "typescript"
   - "type-aware"
 ---
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 Enable the `typescript-eslint` parser and type-aware rules across your TypeScript files so classes, overrides, and declaration files stay consistent.
 
@@ -30,7 +31,7 @@ Enable the `typescript-eslint` parser and type-aware rules across your TypeScrip
 
 ## Usage
 
-Import `langTypescript` from the ESLint presets and spread it into your flat config after the code-style layer, in the documented layer order.
+Import `langTypescript` from the ESLint presets and spread it into your <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> after the code-style layer, in the documented layer order.
 
 ```ts title="eslint.config.ts"
 import {

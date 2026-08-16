@@ -32,6 +32,32 @@ export type Pages_Index_Home_FeatureItems = PagesFeatureItems;
 export type Pages_Index_Home_IncludedItems = PagesIncludedItems;
 
 /**
+ * Pages - Home - Config Snippets.
+ *
+ * @since 0.15.0
+ */
+export type PagesConfigSnippetContent = string;
+
+export type PagesConfigSnippetStyleTop = string;
+
+export type PagesConfigSnippetStyleLeft = string;
+
+export type PagesConfigSnippetStyleTransform = string;
+
+export type PagesConfigSnippetStyle = {
+  top: PagesConfigSnippetStyleTop;
+  left: PagesConfigSnippetStyleLeft;
+  transform: PagesConfigSnippetStyleTransform;
+};
+
+export type PagesConfigSnippet = {
+  content: PagesConfigSnippetContent;
+  style: PagesConfigSnippetStyle;
+};
+
+export type PagesConfigSnippets = PagesConfigSnippet[];
+
+/**
  * Pages - Home - Blog Posts.
  *
  * @since 0.15.0

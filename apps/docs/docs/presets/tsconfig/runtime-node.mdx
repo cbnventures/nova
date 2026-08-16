@@ -26,7 +26,7 @@ Add the Node <Terminology title="ECMAScript Modules" to="/docs/quickstart/termin
 
 1. Pairs `module` and `moduleResolution` as `NodeNext` so imports resolve the same way TypeScript and Node do at runtime.
 2. Loads the `ESNext` lib alone, with no DOM globals, so browser-only APIs stay out of server code.
-3. Uses Node's current module detection so emitted ESM and CommonJS match how Node treats each file.
+3. Uses Node's current module detection so emitted <Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology> and <Terminology title="CJS" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>CommonJS</Terminology> match how Node treats each file.
 4. Drops in as the environment layer after the essentials and strict presets so you only declare where the code runs.
 
 ## Usage

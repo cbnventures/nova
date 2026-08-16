@@ -1,6 +1,6 @@
 ---
 title: "Introducing Nova: Stop Configuring, Start Building"
-description: "Nova is a batteries-included JavaScript and TypeScript monorepo toolkit with composable presets, guided CLI tooling, and importable utilities."
+description: "Discover a batteries-included JavaScript and TypeScript monorepo toolkit with composable presets, guided CLI tooling, and importable utilities."
 slug: "introducing-nova"
 authors:
   - "mrjackyliang"
@@ -18,10 +18,13 @@ tags:
   - "eslint"
   - "tooling"
 ---
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-You know the routine. New repo, new hour of setup. Copy your ESLint config from the last project, update the deprecated rules, wire up TypeScript, realize the TSConfig options changed again, scaffold the folder structure from memory, forget half the fields in `package.json`, and finally — an hour later — write your first line of actual code.
+You know the routine. New repo, new hour of setup.
 
-Now multiply that by every workspace in a monorepo.
+Copy your ESLint config from the last project, update the deprecated rules, wire up TypeScript, realize the TSConfig options changed again, scaffold the folder structure from memory, forget half the fields in `package.json`, and finally — an hour later — write your first line of actual code.
+
+Now multiply that by every <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in a <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology>.
 
 Nova exists because that hour should be zero.
 
@@ -29,7 +32,9 @@ Nova exists because that hour should be zero.
 
 ## The Real Cost of Config Grind
 
-The obvious cost is time. The less obvious cost is what you don't build. Every project that stays in the "I'll set it up this weekend" phase is a project that never ships. If you're a JavaScript or TypeScript developer with ideas that span beyond the JS ecosystem — a mobile app, a docs site, an edge worker — the last thing you need is tooling overhead pulling you back into configuration files.
+The obvious cost is time. The less obvious cost is what you don't build.
+
+Every project that stays in the "I'll set it up this weekend" phase is a project that never ships. If you're a JavaScript or TypeScript developer with ideas that span beyond the JS ecosystem — a mobile app, a docs site, an edge worker — the last thing you need is tooling overhead pulling you back into configuration files.
 
 Nova is a single package that handles the infrastructure so you can focus on the product.
 
@@ -41,19 +46,21 @@ npm install -g @cbnventures/nova
 
 ### Composable Presets
 
-ESLint and TSConfig presets that stack in layers. Pick a language (TypeScript, JavaScript, MDX), add an environment (Node, browser, edge), then a framework (Next.js, Express, Docusaurus). Each layer is independent — no hidden base configs, no inheritance chains to debug.
+ESLint and TSConfig <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> that stack in layers. Pick a language (TypeScript, JavaScript, MDX), add an environment (Node, browser, edge), then a framework (Next.js, Express, Docusaurus).
+
+Each layer is independent — no hidden base configs, no inheritance chains to debug.
 
 ```javascript
 import {
   dxCodeStyle,
-  envNode,
   langTypescript,
+  runtimeNode,
 } from '@cbnventures/nova/presets/eslint';
 
 export default [
   ...dxCodeStyle,
   ...langTypescript,
-  ...envNode,
+  ...runtimeNode,
 ];
 ```
 
@@ -61,14 +68,14 @@ export default [
 
 Guided commands for routine maintenance and setup:
 
-- **Recipe** — Keep workspace manifests aligned with repository conventions and version policies
-- **Utility** — Initialize your config, check your development stack versions, and get your monorepo wired up
+- **Recipe** — Keep <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> manifests aligned with repository conventions and version policies
+- **Utility** — Initialize your config, check your development stack versions, and get your <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> wired up
 
-Every command reads from a single `nova.config.json` at your monorepo root. Project metadata stays in one place and flows everywhere it needs to go.
+Every command reads from a single `nova.config.json` at your <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root. Project metadata stays in one place and flows everywhere it needs to go.
 
 ### Toolkit Utilities
 
-Importable modules for common tasks: structured logging with `Logger`, formatted CLI output with `CLIHeader`, and copy-pastable tables with `MarkdownTable`. Small, focused, and ready to drop into your own scripts.
+Importable modules for common tasks: structured logging with `Logger`, formatted <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> output with `CLIHeader`, and copy-pastable tables with `MarkdownTable`. Small, focused, and ready to drop into your own scripts.
 
 ## The Philosophy
 
@@ -77,7 +84,7 @@ Nova is opinionated on purpose:
 - **Explicit over implicit.** Every configuration detail is visible. No hidden defaults.
 - **Strict by default.** Catch problems early. Loosen only when you have a reason.
 - **Predictable output.** Same inputs, same results. No surprises across environments.
-- **Modern but stable.** ESM-only, Node.js LTS, officially supported features only.
+- **Modern but stable.** <Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology>-only, Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology>, officially supported features only.
 
 ## Get Started
 
@@ -86,4 +93,4 @@ npm install -g @cbnventures/nova
 nova utility initialize
 ```
 
-The initializer walks you through `nova.config.json`, then you're ready to start running recipes and keeping your workspaces in sync. Check out the [quickstart guide](/docs/quickstart/) to dive in.
+The initializer walks you through `nova.config.json`, then you're ready to start running recipes and keeping your <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology> in sync. Check out the [quickstart guide](/docs/quickstart/) to dive in.

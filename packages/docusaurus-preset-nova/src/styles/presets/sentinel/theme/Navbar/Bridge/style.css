@@ -305,6 +305,8 @@
 
 .nova-navbar-bridge-menu-items {
   gap: 0.125rem;
+
+  padding-bottom: 0.5rem;
 }
 
 .nova-navbar-bridge-menu-item,

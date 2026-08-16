@@ -19,6 +19,8 @@ tags:
   - "embedding"
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+
 Strip the site chrome from any page with a single query parameter so the page can be embedded cleanly inside a webview.
 
 ## Summary
@@ -75,7 +77,7 @@ Load the same URLs without the parameter and the full chrome renders as usual.
 The last-updated line only appears when the site is configured to produce it:
 
 - **`showLastUpdateTime`** — enable the option in the docs plugin (and `showLastUpdateAuthors` if you also want the author) so Docusaurus emits the metadata.
-- **Full git history** — build from a full-history checkout. Shallow CI checkouts (`fetch-depth: 1`) make every page report the date of the latest commit, so set `fetch-depth: 0` in your checkout step.
+- **Full git history** — build from a full-history checkout. Shallow <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> checkouts (`fetch-depth: 1`) make every page report the date of the latest commit, so set `fetch-depth: 0` in your checkout step.
 
 ## Troubleshooting
 

@@ -92,6 +92,7 @@ function BlocksBlogPreview(props: Blocks_BlogPreview_Index_BlocksBlogPreview_Pro
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
+                  timeZone: 'UTC',
                 });
 
                 return (
@@ -136,6 +137,7 @@ function BlocksBlogPreview(props: Blocks_BlogPreview_Index_BlocksBlogPreview_Pro
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
+                timeZone: 'UTC',
               });
 
               return (

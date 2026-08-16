@@ -334,6 +334,8 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
+
+  padding-bottom: 0.5rem;
 }
 
 .nova-navbar-canopy-menu-item,

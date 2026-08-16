@@ -1,7 +1,7 @@
 ---
 id: "initialize"
 title: "Initialize Config"
-description: "Interactive wizard that loads, edits, and saves the Nova config file with project details, entities, and canonical URLs straight from the terminal."
+description: "Launch an interactive wizard that loads, edits, and saves the Nova config file with project details, entities, and canonical URLs from the terminal."
 keywords:
   - "nova"
   - "nova initialize"
@@ -140,7 +140,9 @@ Environment variables and secrets live in the top-level [`environment`](/docs/qu
 - **Things to watch**: The suffix must be unique within the same template so the output filenames remain distinct. When using `workflow-run-*` triggers, the depends-on field references other workflows by their `{template}-{suffix}` composite key.
 
 :::note Multiline values
-The interactive prompt is single-line. To include line breaks in a setting value (e.g., issue messages with paragraphs), type `\n` where you want a newline. The wizard converts `\n` sequences to actual line breaks when saving. Alternatively, edit `nova.config.json` directly.
+The interactive prompt is single-line. To include line breaks in a setting value (e.g., issue messages with paragraphs), type `\n` where you want a newline.
+
+The wizard converts `\n` sequences to actual line breaks when saving. Alternatively, edit `nova.config.json` directly.
 :::
 
 ### GitHub

@@ -43,7 +43,7 @@ Recorded entries are stored as individual `.md` files in a `.changelog/` directo
 - Interactive prompts guide you through package selection, category, description, and <Terminology title="semantic versioning" to="/docs/quickstart/terminology#fundamentals" color={true}>SemVer</Terminology> bump type. No flags to memorize.
 - The `--record` and `--release` flags enable the same workflow in <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> without prompts.
 - The **dry run** option lets you preview every change before any file is touched.
-- Supports both **SemVer** and **CalVer** strategies, configured per-project in `nova.config.json`.
+- Supports both **<Terminology title="semantic versioning" to="/docs/quickstart/terminology#fundamentals" color={true}>SemVer</Terminology>** and **CalVer** strategies, configured per-project in `nova.config.json`.
 
 ## Use Cases
 
@@ -127,7 +127,7 @@ Steps 4–6 run once per releasing package in a loop. Step 7 runs once after all
 8. **Clean up** — Deletes consumed entry files from `.changelog/`.
 
 :::danger Non-Zero Exit Code
-The command exits with code **1** when validation fails (invalid flags, missing config, unknown package). <Terminology title="continuous integration" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> pipelines that use this command will fail the step on errors.
+The command exits with code **1** when validation fails (invalid flags, missing config, unknown package). <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> pipelines that use this command will fail the step on errors.
 :::
 
 ### UNRELEASED Sentinel Convention

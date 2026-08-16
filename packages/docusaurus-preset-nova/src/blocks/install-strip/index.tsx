@@ -59,6 +59,16 @@ function BlocksInstallStrip(props: Blocks_InstallStrip_Index_BlocksInstallStrip_
    * @since 0.15.0
    */
   function handleCopy(): Blocks_InstallStrip_Index_BlocksInstallStrip_HandleCopy_Returns {
+    if (navigator.clipboard === undefined) {
+      window.alert(translate({
+        id: 'theme.InstallStrip.clipboardUnavailable',
+        message: 'Clipboard requires a secure context (HTTPS). Copy the command manually.',
+        description: 'Alert shown when the clipboard API is unavailable (e.g. non-HTTPS)',
+      }));
+
+      return undefined;
+    }
+
     void navigator.clipboard.writeText(props['command']);
 
     setCopied(true);

@@ -17,6 +17,7 @@ tags:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 Require every value in `.env` and `.env.sample` files to be wrapped in double quotes with `registerDotenvSuite`.
 
@@ -30,7 +31,7 @@ Require every value in `.env` and `.env.sample` files to be wrapped in double qu
 
 1. Keeps a single source of truth alongside the dotenv generator, which already writes every value double-quoted.
 2. Catches a hand-edited file that has drifted away from the convention during the test run.
-3. Holds the same quoting standard across the monorepo, so env files never vary from one project to the next.
+3. Holds the same quoting standard across the <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology>, so env files never vary from one project to the next.
 
 ## Examples
 
@@ -69,7 +70,7 @@ registerDotenvSuite({
 });
 ```
 
-The defaults resolve `envPaths` against `rootDir`, scanning `.env` and `.env.sample` from the project root. In a monorepo, Vitest runs in the workspace directory but the `.env` can live at the repo root, so set `rootDir` to the repo root and list every env file in `envPaths`.
+The defaults resolve `envPaths` against `rootDir`, scanning `.env` and `.env.sample` from the project root. In a <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology>, Vitest runs in the <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> directory but the `.env` can live at the repo root, so set `rootDir` to the repo root and list every env file in `envPaths`.
 
 ## Configuration
 
@@ -87,5 +88,5 @@ The defaults resolve `envPaths` against `rootDir`, scanning `.env` and `.env.sam
 
 ## Troubleshooting
 
-- **Root `.env` not checked** — Set `rootDir` to the repo root and list the file in `envPaths`, since Vitest runs in the workspace directory.
+- **Root `.env` not checked** — Set `rootDir` to the repo root and list the file in `envPaths`, since Vitest runs in the <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> directory.
 - **`.dev.vars` flagged** — Only the entries in `envPaths` are checked, so a `.dev.vars` file is never targeted unless you add it.

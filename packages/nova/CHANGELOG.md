@@ -1,5 +1,16 @@
 # @cbnventures/nova
 
+## 0.24.0 - 2026-08-16
+
+### UPDATED
+- Copyright notice wording was changed from "Licensed under the X License" to "Released under X" for a cleaner, more standard phrasing across all SPDX identifiers.
+
+### FIXED
+- Fixed anchor link mismatches for headings containing punctuation adjacent to spaces
+
+### ADDED
+- Added .wrangler/** to the dxIgnore ESLint preset
+
 ## 0.23.0 - 2026-08-11
 
 ### UPDATED

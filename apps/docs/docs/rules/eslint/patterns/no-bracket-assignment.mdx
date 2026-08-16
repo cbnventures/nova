@@ -128,7 +128,7 @@ It is recommended to use `Reflect.set(target, key, value)` instead.
 
 ## Autofix
 
-This rule provides automatic fixes for simple `=` assignments. Compound operators (`+=`, `-=`, `*=`, etc.) are reported but not auto-fixed. Run ESLint with the `--fix` flag:
+This rule provides automatic fixes for simple `=` assignments. Compound operators (`+=`, `-=`, `*=`, etc.) are reported but not auto-fixed — run ESLint with the `--fix` flag:
 
 ```bash
 npx eslint --fix . --rule '@cbnventures/nova/no-bracket-assignment: error'

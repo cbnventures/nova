@@ -21,12 +21,15 @@ tags:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 The `theme-nova` binary reconciles a site's translation tree. It regenerates the extractable keys, drops copies that merely duplicate a default, and preserves every real translation, replacing `docusaurus write-translations` for Nova sites.
 
 ## Summary
 
-Docusaurus `write-translations` only ever adds keys. Over time the translation tree fills with `theme.*` copies that duplicate the built-in defaults and with keys whose source strings have been removed. `theme-nova i18n` reconciles the tree in both directions: it seeds new keys, prunes redundant copies, and surfaces orphaned keys for review before anything is deleted.
+Docusaurus `write-translations` only ever adds keys. Over time the translation tree fills with `theme.*` copies that duplicate the built-in defaults and with keys whose source strings have been removed.
+
+`theme-nova i18n` reconciles the tree in both directions: it seeds new keys, prunes redundant copies, and surfaces orphaned keys for review before anything is deleted.
 
 Two subcommands share one engine:
 
@@ -76,7 +79,9 @@ flowchart LR
 | Theme registry    | `@docusaurus/theme-translations` for the active locale                           | The upstream localized default for each `theme.*` key. |
 | User translations | The on-disk `code.json` and `docusaurus-theme-nova/<area>.json` bundles          | Your edits — these always win.                         |
 
-**User translations always win.** Reconciliation never overwrites a message that differs from its resolved default. A value that matches the default exactly is a redundant copy and can be pruned; any other value is treated as a deliberate translation or override and is kept verbatim.
+**User translations always win.** Reconciliation never overwrites a message that differs from its resolved default.
+
+A value that matches the default exactly is a redundant copy and can be pruned; any other value is treated as a deliberate translation or override and is kept verbatim.
 
 ## How Reconciliation Classifies Each Key
 
@@ -92,7 +97,7 @@ For every key already on disk, the engine compares the stored message against th
 The default locale keeps redundant `theme.*` copies out of `code.json` because their message equals the extracted source, so English sites shrink to only the keys that carry real content. Non-default locales drop the same redundant copies because a message identical to the localized default carries no translation.
 
 :::info Precedence is exact
-The comparison is an exact match on the message string. Any difference — whitespace, plural form, placeholder order — counts as an override and is kept. Reconciliation only ever drops a copy that is byte-for-byte identical to its default, so a real translation is never mistaken for a redundant one.
+The comparison is an exact match on the message string — any difference in whitespace, plural form, or placeholder order counts as an override and is kept. Reconciliation only ever drops a copy that is byte-for-byte identical to its default, so a real translation is never mistaken for a redundant one.
 :::
 
 ## Orphan Handling
@@ -100,7 +105,7 @@ The comparison is an exact match on the message string. Any difference — white
 An orphan is a key on disk that no live source emits and whose message is not a plain default copy — for example, a translation for a component that was removed. Because an orphan may hold real translated content, it is never deleted silently.
 
 - **Interactive terminal** — `sync` prompts once per file, listing the orphaned keys and asking whether to delete them. Declining keeps them; cancelling aborts the run without writing anything.
-- **Non-interactive (CI, no TTY)** — `sync` blocks, writes nothing, and exits `1`, printing every orphan so the drift is visible in the log.
+- **Non-interactive (<Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, no TTY)** — `sync` blocks, writes nothing, and exits `1`, printing every orphan so the drift is visible in the log.
 - **`--delete-defunct`** — opt in to deleting orphans during a non-interactive run.
 
 This gate is the tool's core safety guarantee: a genuine translation is never dropped without either an interactive confirmation or an explicit `--delete-defunct` flag.
@@ -121,10 +126,10 @@ Regenerate and reconcile the translation tree, writing the reconciled `code.json
     ```
 
   </TabItem>
-  <TabItem value="npx" label="npx">
+  <TabItem value="direct" label="Direct">
 
     ```bash
-    npx theme-nova i18n sync [options]
+    theme-nova i18n sync [options]
     ```
 
   </TabItem>
@@ -162,10 +167,10 @@ Compute the reconciliation plan without writing, and exit non-zero when the tree
     ```
 
   </TabItem>
-  <TabItem value="npx" label="npx">
+  <TabItem value="direct" label="Direct">
 
     ```bash
-    npx theme-nova i18n check [options]
+    theme-nova i18n check [options]
     ```
 
   </TabItem>
@@ -213,10 +218,10 @@ The default (source) locale is the reference and always reads as fully covered. 
     ```
 
   </TabItem>
-  <TabItem value="npx" label="npx">
+  <TabItem value="direct" label="Direct">
 
     ```bash
-    npx theme-nova i18n coverage [options]
+    theme-nova i18n coverage [options]
     ```
 
   </TabItem>
@@ -240,4 +245,6 @@ The default (source) locale is the reference and always reads as fully covered. 
 
 ## Replacing `write-translations`
 
-`theme-nova i18n sync` is a complete replacement for `docusaurus write-translations` on Nova sites. It performs the same extraction and seeding, then adds the pruning and orphan-gating that `write-translations` lacks. There is no separate post-prune step to run afterward — the single `sync` command both writes new keys and removes the redundant ones in one pass. Point your `i18n` scripts at `theme-nova i18n sync` and drop `docusaurus write-translations`.
+`theme-nova i18n sync` is a complete replacement for `docusaurus write-translations` on Nova sites. It performs the same extraction and seeding, then adds the pruning and orphan-gating that `write-translations` lacks.
+
+There is no separate post-prune step to run afterward — the single `sync` command both writes new keys and removes the redundant ones in one pass. Point your `i18n` scripts at `theme-nova i18n sync` and drop `docusaurus write-translations`.

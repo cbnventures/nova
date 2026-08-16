@@ -11,7 +11,7 @@ export type Blocks_Stats_Index_BlocksStats_Item_Value = string;
 
 export type Blocks_Stats_Index_BlocksStats_Item_Label = string;
 
-export type Blocks_Stats_Index_BlocksStats_Item_Color = 'primary' | 'accent';
+export type Blocks_Stats_Index_BlocksStats_Item_Color = 'primary' | 'accent' | undefined;
 
 export type Blocks_Stats_Index_BlocksStats_Item = {
   value: Blocks_Stats_Index_BlocksStats_Item_Value;

@@ -1,7 +1,7 @@
 import {
+  LIB_REGEX_CHARACTER_SPACE,
   LIB_REGEX_PATTERN_HTML_TAGS,
   LIB_REGEX_PATTERN_NON_WORD_CHARS,
-  LIB_REGEX_PATTERN_WHITESPACE,
 } from './regex.js';
 
 import type {
@@ -19,7 +19,7 @@ import type {
  *
  * Turns a heading string into a Docusaurus-style anchor slug used by
  * the link and terminology conformance suites: HTML tags are removed, the string is trimmed
- * and lowercased, non-word characters dropped, and whitespace runs collapsed into hyphens.
+ * and lowercased, non-word characters dropped, and each space replaced with a hyphen.
  *
  * @param {Lib_MarkdownSlug_SlugifyHeading_Heading} heading - Heading.
  *
@@ -33,7 +33,7 @@ export function slugifyHeading(heading: Lib_MarkdownSlug_SlugifyHeading_Heading)
     .trim()
     .toLowerCase()
     .replace(new RegExp(LIB_REGEX_PATTERN_NON_WORD_CHARS, 'g'), '')
-    .replace(new RegExp(LIB_REGEX_PATTERN_WHITESPACE, 'g'), '-');
+    .replace(new RegExp(LIB_REGEX_CHARACTER_SPACE, 'g'), '-');
 }
 
 /**

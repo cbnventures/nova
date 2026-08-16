@@ -2,7 +2,7 @@
 id: "nova-config"
 title: "Nova Config Reference"
 sidebar_position: 4
-description: "Complete reference for every section and field in the nova.config.json configuration file including project, entities, workflows, and workspaces."
+description: "Look up every section and field in the nova.config.json configuration file including project, entities, workflows, and workspaces."
 keywords:
   - "nova"
   - "nova config"
@@ -319,7 +319,9 @@ A map of relative paths to <Terminology title="package" to="/docs/quickstart/ter
 
 :::warning Retired — use [`environment`](#environment) instead
 
-The per-workspace `dotenv` block is retired. Environment variables and secrets now live in the top-level [`environment`](#environment) block, classified by a required `secret` flag and delivered by a required `buildOnly` flag. A config that still declares `dotenv`, `visibility`, or `from` is a load-time error. The fields below document the old shape for reference only.
+The per-workspace `dotenv` block is retired. Environment variables and secrets now live in the top-level [`environment`](#environment) block, classified by a required `secret` flag and delivered by a required `buildOnly` flag.
+
+A config that still declares `dotenv`, `visibility`, or `from` is a load-time error. The fields below document the old shape for reference only.
 :::
 
 A `dotenv` block holds a `variables` array, and each entry describes one environment variable. The [`nova generate must-haves dotenv`](/docs/cli/generators/must-haves/dotenv) command reads these to write `.env` and `.env.sample`, while the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) reads the visibility to decide what gets baked into a static build.
@@ -380,11 +382,15 @@ Every environment variable and secret in the repository lives here, classified b
 | `workspaces` | `object` | Optional. Per-workspace environment values, keyed by the workspace path (including the repo root `./`). See [Workspaces Fields](#workspaces-fields). |
 | `workflows`  | `object` | Optional. Workflow-config prefixes, keyed by workflow name. See [Workflows Fields](#workflows-fields).                                               |
 
-Every declared `environment.project`, `environment.workspaces.<path>` (including the repo root `./`), and `environment.workflows.<name>` entry must declare a `prefix` — there is no exception for a group whose keys are all `local`. Nova joins that `prefix` to every `key` to form its GitHub name (for example, `CBN_` joined to `PUBLIC_SITE_KEY` becomes `CBN_PUBLIC_SITE_KEY`). Prefixes must be disjoint, must not reuse the reserved `GITHUB_` namespace, and a `key` must not repeat its own prefix. The reserved dotenv keys `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` are the only unprefixed, template-managed keys.
+Every declared `environment.project`, `environment.workspaces.<path>` (including the repo root `./`), and `environment.workflows.<name>` entry must declare a `prefix` — there is no exception for a group whose keys are all `local`. Nova joins that `prefix` to every `key` to form its GitHub name (for example, `CBN_` joined to `PUBLIC_SITE_KEY` becomes `CBN_PUBLIC_SITE_KEY`).
+
+Prefixes must be disjoint, must not reuse the reserved `GITHUB_` namespace, and a `key` must not repeat its own prefix. The reserved dotenv keys `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` are the only unprefixed, template-managed keys.
 
 ### Project Fields
 
-`project` holds project-wide keys under a single `prefix`. Its `variables` are managed-only — provisioned on GitHub but not delivered to a build or server — so each carries only `secret`. Project-scoped deploy credentials (such as a Cloudflare API token) also derive their GitHub name from this `prefix`.
+`project` holds project-wide keys under a single `prefix`. Its `variables` are managed-only — provisioned on GitHub but not delivered to a build or server — so each carries only `secret`.
+
+Project-scoped deploy credentials (such as a Cloudflare API token) also derive their GitHub name from this `prefix`.
 
 | Field       | Type     | Description                                                           |
 |-------------|----------|-----------------------------------------------------------------------|

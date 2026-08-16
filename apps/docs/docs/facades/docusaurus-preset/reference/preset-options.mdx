@@ -1,7 +1,7 @@
 ---
 id: "preset-options"
 title: "Preset Options"
-description: "Full reference for the Nova Docusaurus preset options including preset selection, overrides, analytics, search, and progress bar."
+description: "Configure the Nova Docusaurus preset with this full reference covering preset selection, overrides, analytics, search, and progress bar."
 sidebar_position: 1
 keywords:
   - "nova"
@@ -126,7 +126,9 @@ Use `iconSafelist` for the one case the scan can't see: an icon identifier assem
 
 ## Bundle Size
 
-A production build (`docusaurus build`) fails if any emitted JavaScript file is larger than `maxBundleFileSize` mebibytes (MiB) (default `3`). This catches a bundle-size regression — an accidentally eager import, an un-tree-shaken dependency — at build time, long before it slows real page loads or trips a host's per-file limit. The error names the offending files.
+A production build (`docusaurus build`) fails if any emitted JavaScript file is larger than `maxBundleFileSize` mebibytes (MiB) (default `3`). This catches a bundle-size regression — an accidentally eager import, an un-tree-shaken dependency — at build time, long before it slows real page loads or trips a host's per-file limit.
+
+The error names the offending files.
 
 Raise the limit if a site has a genuinely large legitimate chunk, or set it to `false` to turn the check off entirely.
 

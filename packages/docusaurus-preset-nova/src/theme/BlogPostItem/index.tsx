@@ -96,6 +96,7 @@ function BlogPostItem(props: Theme_BlogPostItem_Index_BlogPostItem_Props) {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    timeZone: 'UTC',
   });
   const readingTime: Theme_BlogPostItem_Index_BlogPostItem_ReadingTime = blogPost['metadata']['readingTime'];
   const readingTimePlural: Theme_BlogPostItem_Index_UseReadingTimePlural_SelectMessage = useReadingTimePlural();

@@ -1,0 +1,89 @@
+---
+id: "canvas"
+title: "Canvas"
+description: "Freeform container block that accepts arbitrary JSX children for fully custom homepage sections like hero replacements."
+sidebar_position: 11
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "canvas block"
+  - "freeform"
+  - "custom section"
+  - "hero replacement"
+tags:
+  - "facades"
+  - "block"
+  - "component"
+  - "canvas"
+  - "landing page"
+---
+
+# Canvas
+
+Freeform container block that accepts arbitrary JSX children.
+
+Use it to build fully custom homepage sections — hero replacements, bespoke landing areas, or any layout that the structured blocks do not cover.
+
+## Summary
+
+The Canvas block renders a `<section>` with your children inside. Unlike Hero or Features, it imposes no internal structure — you control the entire layout. Nova tokens and grid classes are available via CSS custom properties but not enforced.
+
+## Why Use This Block?
+
+- **Complete freedom** — pass any JSX as children. No fixed heading, tagline, or grid to work around.
+- **Preset-aware** — your content inherits the active preset's design tokens (colors, fonts, spacing, motion).
+- **Container control** — choose between contained (max-width) or full-bleed edge-to-edge layout.
+- **Surface toggle** — switch between the default and alternate surface backgrounds.
+
+## Usage
+
+### Contained section (default)
+
+```tsx title="src/pages/index.tsx"
+import { Canvas } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+<Canvas container="contained" surface="default">
+  <div style={{ textAlign: 'center', padding: '4rem 0' }}>
+    <h1>Your Custom Heading</h1>
+    <p>Completely freeform content using preset tokens.</p>
+  </div>
+</Canvas>
+```
+
+### Full-bleed alternate surface
+
+```tsx title="src/pages/index.tsx"
+import { Canvas } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+<Canvas container="full" surface="alt">
+  <div className="my-custom-banner">
+    {/* Edge-to-edge content with alternate background */}
+  </div>
+</Canvas>
+```
+
+### Hero replacement
+
+```tsx title="src/pages/index.tsx"
+import { Canvas } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Layout from '@theme/Layout';
+
+<Layout>
+  <Canvas container="contained" surface="default">
+    {/* Your fully custom hero section */}
+  </Canvas>
+  <main>
+    {/* Other blocks */}
+  </main>
+</Layout>
+```
+
+## Options
+
+| Prop        | Type                                 | Default       | Description                                                                   |
+|-------------|--------------------------------------|---------------|-------------------------------------------------------------------------------|
+| `children`  | `ReactNode`                          | —             | Freeform content. Required.                                                   |
+| `container` | `'contained' \| 'full' \| undefined` | `'contained'` | `'contained'` wraps in a max-width container. `'full'` renders edge-to-edge.  |
+| `surface`   | `'default' \| 'alt' \| undefined`    | `'default'`   | `'default'` uses the standard background. `'alt'` uses the alternate surface. |
+| `className` | `string \| undefined`                | `undefined`   | Additional class names merged with the base `nova-canvas` class.              |
+| `style`     | `CSSProperties \| undefined`         | `undefined`   | Inline style overrides applied to the root element.                           |

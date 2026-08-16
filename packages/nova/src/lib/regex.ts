@@ -69,6 +69,16 @@ export const LIB_REGEX_CHARACTER_PIPE = /\|/;
 export const LIB_REGEX_CHARACTER_SINGLE_QUOTE = /'/;
 
 /**
+ * Lib - Regex - Character Space.
+ *
+ * Matches a single literal space character. Used by slugifyHeading to replace
+ * each space with a hyphen without collapsing consecutive spaces.
+ *
+ * @since 0.24.0
+ */
+export const LIB_REGEX_CHARACTER_SPACE = / /;
+
+/**
  * Lib - Regex - Linebreak CRLF Or LF.
  *
  * Splits text into lines across platforms. Used by the logger, markdown table,

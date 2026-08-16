@@ -27,23 +27,23 @@ import markdownTableBasic from './_assets_/markdown-table-1.png';
 import markdownTableAnsi from './_assets_/markdown-table-2.png';
 import markdownTableObjects from './_assets_/markdown-table-3.png';
 
-Generate copy-ready Markdown tables without juggling column widths or accidentally breaking <Terminology title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology>-colored strings.
+Generate copy-ready Markdown tables without juggling column widths or accidentally breaking <Terminology title="escape codes" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology>-colored strings.
 
 ## Summary
 
 The `MarkdownTable` battery turns rows of text into perfectly aligned Markdown tables.
 
-It returns a ready-to-print string you can drop into terminal logs, <Terminology title="continuous integration" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> updates, or support runbooks without hand-tuning spacing.
+It returns a ready-to-print string you can drop into terminal logs, <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> updates, or support runbooks without hand-tuning spacing.
 
 ## Why Use This Battery?
 
 1. Produces output that is easier to scan than raw JSON or console log dumps.
-2. Supports <Terminology title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology> for terminals and produces clean, copy-ready Markdown for docs.
+2. Supports <Terminology title="escape codes" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology> for terminals and produces clean, copy-ready Markdown for docs.
 3. Keeps diffs tidy in Git, so reviewers spot row-level changes fast.
 
 ## Capabilities
 
-- Accounts for <Terminology title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology> colors and escapes special characters so tables align correctly and render cleanly.
+- Accounts for <Terminology title="escape codes" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology> colors and escapes special characters so tables align correctly and render cleanly.
 - Enforces header and row parity to prevent malformed tables from being generated.
 - Built-in minimum column sizing and optional padded separators create copy-paste-ready tables.
 - Chained row insertion lets automation pipelines stream data directly into reports with ease.

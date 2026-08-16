@@ -25,7 +25,9 @@ Refresh the **copyright holder and year range** in your `LICENSE` from <Terminol
 
 The `update-copyright` recipe rewrites the copyright line of a `LICENSE` file so the holder name and year range stay in sync with `project.legalName` and `project.startingYear` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. It reuses the exact substitution the `generate must-haves license` command uses, so the regenerated body is byte-identical except for the holder and year.
 
-The recipe never mangles a `LICENSE` that was not produced by Nova. Before writing, it fingerprints the on-disk file against the bundled template for the configured license. If the file has been hand-edited, is a custom license, or does not match the template for `project.license`, the recipe skips it and leaves it untouched.
+The recipe never mangles a `LICENSE` that was not produced by Nova. Before writing, it fingerprints the on-disk file against the bundled template for the configured license.
+
+If the file has been hand-edited, is a custom license, or does not match the template for `project.license`, the recipe skips it and leaves it untouched.
 
 ## Prerequisites
 

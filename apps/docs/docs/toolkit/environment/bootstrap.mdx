@@ -145,7 +145,9 @@ App-scoped keywords (`config-dir`, `data-dir`, `cache-dir`) use the `appName` pa
 | `getDataDir`   | `~/Library/Application Support/<app>` | `~/.local/share/<app>` | `%APPDATA%/<app>`           |
 | `getCacheDir`  | `~/Library/Caches/<app>`              | `~/.cache/<app>`       | `%LOCALAPPDATA%/Temp/<app>` |
 
-`XDG_CONFIG_HOME` is respected on macOS and Linux. `XDG_DATA_HOME` and `XDG_CACHE_HOME` are respected on Linux only — macOS uses native `~/Library` paths. `APPDATA` and `LOCALAPPDATA` are respected on Windows.
+`XDG_CONFIG_HOME` is respected on macOS and Linux. `XDG_DATA_HOME` and `XDG_CACHE_HOME` are respected on Linux only — macOS uses native `~/Library` paths.
+
+`APPDATA` and `LOCALAPPDATA` are respected on Windows.
 
 ## .env File Format
 
