@@ -38,6 +38,16 @@ import type {
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_WorkspacePackageJsonPath,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_OriginalCwd,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_Output,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_Parsed,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_WorkspacePackageJsonPath,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyConfig_NovaConfigContents,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyConfig_NovaConfigPath,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyConfig_Output,
@@ -337,6 +347,66 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
     const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyConfig_Parsed = JSON.parse(output);
 
     strictEqual(parsed['config'], undefined);
+
+    return;
+  });
+
+  it('removes empty allowScripts', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_ProjectDirectory = join(sandboxRoot, 'remove-allow-scripts');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_PackageJsonContents = JSON.stringify({
+      name: 'test-remove-allow-scripts',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_NovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-tooling': {
+              enabled: true,
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_WorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+      allowScripts: {},
+    }, null, 2);
+
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonNormalizeTooling.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_Parsed = JSON.parse(output);
+
+    strictEqual(parsed['allowScripts'], undefined);
 
     return;
   });

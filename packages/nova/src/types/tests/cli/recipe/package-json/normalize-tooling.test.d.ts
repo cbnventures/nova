@@ -62,6 +62,31 @@ export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNo
 export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_Parsed = Record<string, unknown>;
 
 /**
+ * Tests - CLI - Recipe - package.json - Normalize Tooling - Run - Removes Empty Allow Scripts.
+ *
+ * @since 0.25.0
+ */
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_WorkspaceDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_PackageJsonPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_PackageJsonContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_NovaConfigPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_NovaConfigContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_WorkspacePackageJsonPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_WorkspacePackageJsonContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_Output = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesEmptyAllowScripts_Parsed = Record<string, unknown>;
+
+/**
  * Tests - CLI - Recipe - package.json - Normalize Tooling - Run - Removes Empty Config.
  *
  * @since 0.14.0

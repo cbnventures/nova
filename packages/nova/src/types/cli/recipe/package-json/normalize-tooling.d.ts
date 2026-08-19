@@ -27,6 +27,8 @@ export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Manifest = Sha
 
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageScripts = unknown;
 
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageAllowScripts = unknown;
+
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageGypfile = unknown;
 
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageConfig = unknown;

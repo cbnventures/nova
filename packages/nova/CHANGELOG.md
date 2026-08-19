@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.25.0 - 2026-08-18
+
+### ADDED
+- Added allowScripts as a recognized npm package.json field. The cleanup recipe no longer strips the field, and the normalize-tooling recipe removes it when empty.
+
 ## 0.24.0 - 2026-08-16
 
 ### UPDATED

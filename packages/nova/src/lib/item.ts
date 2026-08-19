@@ -614,6 +614,7 @@ export const libItemNpmKeys: Lib_Item_NpmKeys = [
 
   // Workspace & Tooling.
   'scripts',
+  'allowScripts',
   'gypfile',
   'config',
   'workspaces',
@@ -685,6 +686,7 @@ export const libItemSortOrderKeys: Lib_Item_SortOrderKeys = [
 
   // Tooling.
   'scripts',
+  'allowScripts',
   'gypfile',
   'config',
   'workspaces',

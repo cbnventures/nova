@@ -21,6 +21,7 @@ import type {
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_FilePath,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasBindingGyp,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Manifest,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageAllowScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageConfig,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageGypfile,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageScripts,
@@ -48,8 +49,8 @@ import type {
 /**
  * CLI - Recipe - package.json - Normalize Tooling.
  *
- * Enforces scripts, gypfile, config, and workspaces
- * fields based on workspace role. Ensures project-role
+ * Enforces scripts, allowScripts, gypfile, config,
+ * workspaces fields based on workspace role. Ensures project-role
  * workspaces always have a workspaces array.
  *
  * @since 0.14.0
@@ -184,8 +185,8 @@ export class Runner {
   /**
    * CLI - Recipe - package.json - Normalize Tooling - Handle.
    *
-   * Processes scripts, gypfile, config, and workspaces for one workspace. Adds gypfile when
-   * binding.gyp exists and no install scripts.
+   * Processes scripts, allowScripts, gypfile, config, and workspaces for one workspace. Adds
+   * gypfile when binding.gyp exists and no install scripts.
    *
    * @param {Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Workspace} workspace - Workspace.
    *
@@ -201,6 +202,7 @@ export class Runner {
     const manifest: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Manifest = workspace['manifest'];
 
     const packageScripts: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageScripts = fileContents['scripts'];
+    const packageAllowScripts: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageAllowScripts = fileContents['allowScripts'];
     const packageGypfile: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageGypfile = fileContents['gypfile'];
     const packageConfig: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageConfig = fileContents['config'];
     const packageWorkspaces: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageWorkspaces = fileContents['workspaces'];
@@ -217,6 +219,19 @@ export class Runner {
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding "scripts" as an empty object ...`);
 
       Reflect.set(fileContents, 'scripts', {});
+    }
+
+    // Sync the "allowScripts" field (Conditional).
+    if (
+      packageAllowScripts !== undefined // Package "allowScripts" is defined.
+      && isEmpty(packageAllowScripts) === true // Package "allowScripts" is empty.
+    ) {
+      Logger.customize({
+        name: 'Runner.handle',
+        purpose: 'allowScripts',
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "allowScripts" ...`);
+
+      Reflect.deleteProperty(fileContents, 'allowScripts');
     }
 
     // Sync the "gypfile" field.

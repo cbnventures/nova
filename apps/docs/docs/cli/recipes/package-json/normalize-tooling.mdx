@@ -1,12 +1,13 @@
 ---
 id: "normalize-tooling"
 title: "Normalize Tooling"
-description: "Normalize scripts, gypfile, config, and workspaces fields in workspace package.json files according to workspace role conventions."
+description: "Normalize scripts, allowScripts, gypfile, config, and workspaces fields in workspace package.json files according to workspace role conventions."
 keywords:
   - "nova"
   - "normalize-tooling"
   - "package.json"
   - "scripts"
+  - "allowScripts"
   - "gypfile"
   - "config"
   - "workspaces"
@@ -21,19 +22,20 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Normalize **scripts**, **gypfile**, **config**, and **workspaces** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
+Normalize **scripts**, **allowScripts**, **gypfile**, **config**, and **workspaces** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
 The `normalize-tooling` recipe handles tooling-related fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json`.
 
-It normalizes the `scripts` object, `gypfile` flag, `config` object, and `workspaces` field according to workspace role conventions.
+It normalizes the `scripts` object, `allowScripts` object, `gypfile` flag, `config` object, and `workspaces` field according to workspace role conventions.
 
 ## Behavior
 
 For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects tooling-related fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
 
 - **`scripts` (Required)** — If the field is missing, it is added as an empty object `{}`.
+- **`allowScripts` (Conditional)** — Removed if the field is present but empty.
 - **`gypfile` (Required)** — If present but no `binding.gyp` file exists in the workspace directory, the field is removed. If missing but `binding.gyp` exists and neither `scripts.preinstall` nor `scripts.install` are defined, it is added as `true`.
 - **`config` (Conditional)** — Removed if the field is present but empty.
 - **`workspaces` (Required)** — Removed if the workspace role is not `project`. If the role is `project` and the field is missing, it is added as an empty array `[]`.
