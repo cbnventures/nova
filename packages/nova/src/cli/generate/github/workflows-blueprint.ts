@@ -813,7 +813,7 @@ export class Runner {
 
     const step: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_Step = {
       name: 'Check support issues',
-      uses: 'mrjackyliang/sponsor-gated-support@v1.0.1',
+      uses: 'mrjackyliang/sponsor-gated-support@v2',
       env: [
         {
           key: 'GITHUB_TOKEN',

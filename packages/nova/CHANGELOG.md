@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.25.1 - 2026-08-20
+
+### UPDATED
+- Updated the check-sponsor-gated-issues workflow template from the exact semver pin @v1.0.1 to the floating major tag @v2 to match the lock-inactive-issues convention.
+
 ## 0.25.0 - 2026-08-18
 
 ### ADDED
