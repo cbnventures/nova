@@ -1,5 +1,13 @@
 # @cbnventures/nova
 
+## 0.25.2 - 2026-08-20
+
+### UPDATED
+- GitHub Action publish workflow now prefers workspace-level community files (README.md, LICENSE, SECURITY.md, NOTICE, CHANGELOG.md) over monorepo root copies, so the releases branch carries the package's own documentation instead of the project-level files.
+
+### ADDED
+- GitHub Action publish workflow now detects when a version was already published to the releases branch and exits with a clear error instead of failing silently at the git commit step.
+
 ## 0.25.1 - 2026-08-20
 
 ### UPDATED

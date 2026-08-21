@@ -116,6 +116,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_VerifyReleaseContextRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_WorkflowSettings,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_WorkspaceDir,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPackagesTarget_Context,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPackagesTarget_Metadata,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubPackagesTarget_Returns,
@@ -2155,6 +2156,7 @@ export class Runner {
     const actionOutputPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_ActionOutputPath = Runner.resolveVariableExpr(variables, 'ACTION_OUTPUT_PATH', targetSettings, workflowSettings);
     const actionYmlPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_ActionYmlPath = Runner.resolveVariableExpr(variables, 'ACTION_YML_PATH', targetSettings, workflowSettings);
     const releaseBranchName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_ReleaseBranchName = Runner.resolveVariableExpr(variables, 'RELEASE_BRANCH_NAME', targetSettings, workflowSettings);
+    const workspaceDir: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_WorkspaceDir = context['workingDir'];
 
     const configureGitIdentityRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGithubActionTarget_ConfigureGitIdentityRun = [
       'set -euo pipefail',
@@ -2183,6 +2185,14 @@ export class Runner {
       `if git ls-remote --exit-code --heads origin "${releaseBranchName}" > /dev/null; then`,
       `  git fetch origin "${releaseBranchName}"`,
       `  git reset --hard "origin/${releaseBranchName}"`,
+      '',
+      '  # Guard: block re-releases when the releases branch already carries this version.',
+      '  LAST_MSG="$(git log -1 --format=\'%s\' 2>/dev/null || true)"',
+      '  if [ "$LAST_MSG" = "Release $TAG_NAME" ]; then',
+      `    echo "::error::Version $TAG_NAME was already published to the ${releaseBranchName} branch. Delete the existing release before re-publishing."`,
+      '    exit 1',
+      '  fi',
+      '',
       '  git rm -rf . > /dev/null 2>&1 || true',
       'fi',
     ].join('\n');
@@ -2203,9 +2213,11 @@ export class Runner {
       '# resolve there instead. Only the main key inside the runs block is rewritten.',
       `sed -i -E '/^runs:/,$ s#^([[:space:]]+main:[[:space:]]*).*#\\1"action/${actionEntryPoint}"#' "$STAGE/action.yml"`,
       '',
-      '# Optional: common community-repo files. Copy if present on main, skip silently if not.',
+      '# Optional: common community-repo files. Prefer workspace-level over root.',
       'for optional in README.md LICENSE SECURITY.md NOTICE CHANGELOG.md; do',
-      '  if [ -f "$optional" ]; then',
+      `  if [ -f "${workspaceDir}/$optional" ]; then`,
+      `    cp "${workspaceDir}/$optional" "$STAGE/$optional"`,
+      '  elif [ -f "$optional" ]; then',
       '    cp "$optional" "$STAGE/$optional"',
       '  fi',
       'done',
@@ -2292,10 +2304,16 @@ export class Runner {
         {
           name: 'Initialize release workspace',
           if: Runner.expr('env.PUBLISH == \'true\''),
-          env: [{
-            key: 'GITHUB_TOKEN',
-            value: Runner.expr('secrets.GITHUB_TOKEN'),
-          }],
+          env: [
+            {
+              key: 'GITHUB_TOKEN',
+              value: Runner.expr('secrets.GITHUB_TOKEN'),
+            },
+            {
+              key: 'TAG_NAME',
+              value: Runner.expr('github.event.release.tag_name'),
+            },
+          ],
           run: initializeReleaseWorkspaceRun,
         },
         {
