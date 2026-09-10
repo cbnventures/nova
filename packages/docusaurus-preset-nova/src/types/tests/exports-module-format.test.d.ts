@@ -1,56 +1,54 @@
 import type { ModuleKind, ParsedCommandLine } from 'typescript';
 
 /**
- * Tests - Exports Module Format - Collect Non Esm Browser Exports.
+ * Tests - Exports Module Format - Collect Non Esm Package Exports.
  *
  * @since 0.21.0
  */
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_PackageRoot = string;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_PackageRoot = string;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Returns = Promise<string[]>;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Returns = Promise<string[]>;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_PackageJsonPath = string;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_PackageJsonPath = string;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_PackageJsonText = string;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_PackageJsonText = string;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_PackageJson_Type = string;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_PackageJson_Type = string;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_PackageJson_Exports = Record<string, unknown>;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_PackageJson_Exports = Record<string, unknown>;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_PackageJson = {
-  type?: Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_PackageJson_Type;
-  exports?: Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_PackageJson_Exports;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_PackageJson = {
+  type?: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_PackageJson_Type;
+  exports?: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_PackageJson_Exports;
 };
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_PackageType = string | undefined;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_PackageType = string | undefined;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_ExportsMap = Record<string, unknown>;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_ExportsMap = Record<string, unknown>;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_NodeExports = Set<string>;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Violations = string[];
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Project_Name = string;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Project_Name = string;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Project_Esm = boolean;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Project_Esm = boolean;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Project_Files = Set<string>;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Project_Files = Set<string>;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Project = {
-  name: Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Project_Name;
-  esm: Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Project_Esm;
-  files: Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Project_Files;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Project = {
+  name: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Project_Name;
+  esm: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Project_Esm;
+  files: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Project_Files;
 };
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Projects = Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Project[];
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Projects = Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Project[];
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Violations = string[];
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Target = unknown;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Target = unknown;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_SourcePath = string | undefined;
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_SourcePath = string | undefined;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_OwningProjects = Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Project[];
 
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_OwningProjects = Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Project[];
-
-export type Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_OwningProject = Tests_ExportsModuleFormat_CollectNonEsmBrowserExports_Project | undefined;
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_OwningProject = Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Project | undefined;
 
 /**
  * Tests - Exports Module Format - Emits Esm.
@@ -64,15 +62,15 @@ export type Tests_ExportsModuleFormat_EmitsEsm_PackageType = string | undefined;
 export type Tests_ExportsModuleFormat_EmitsEsm_Returns = boolean;
 
 /**
- * Tests - Exports Module Format - Exports Module Format - Emits Every Browser Facing Package Export As Esm.
+ * Tests - Exports Module Format - Exports Module Format - Emits Every Build Facing Package Export As Esm.
  *
  * @since 0.21.0
  */
-export type Tests_ExportsModuleFormat_ExportsModuleFormat_EmitsEveryBrowserFacingPackageExportAsEsm_PackageRoot = string;
+export type Tests_ExportsModuleFormat_ExportsModuleFormat_EmitsEveryBuildFacingPackageExportAsEsm_PackageRoot = string;
 
-export type Tests_ExportsModuleFormat_ExportsModuleFormat_EmitsEveryBrowserFacingPackageExportAsEsm_Violations = string[];
+export type Tests_ExportsModuleFormat_ExportsModuleFormat_EmitsEveryBuildFacingPackageExportAsEsm_Violations = string[];
 
-export type Tests_ExportsModuleFormat_ExportsModuleFormat_EmitsEveryBrowserFacingPackageExportAsEsm_Message = string;
+export type Tests_ExportsModuleFormat_ExportsModuleFormat_EmitsEveryBuildFacingPackageExportAsEsm_Message = string;
 
 /**
  * Tests - Exports Module Format - Get Package Root.

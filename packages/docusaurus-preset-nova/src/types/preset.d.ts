@@ -4,6 +4,7 @@ import type {
 } from './lib/rehype-shiki.d.ts';
 import type {
   Options_PluginOptions_Preset,
+  Options_PluginOptions_ProgressBar,
   Options_PluginOptions_Search,
 } from './options.d.ts';
 
@@ -32,21 +33,23 @@ export type Preset_Preset_OptionsPluginsPages = Record<string, unknown> | false 
 export type Preset_Preset_OptionsPluginsSitemap = Record<string, unknown> | false | undefined;
 
 export type Preset_Preset_OptionsPlugins = {
-  docs: Preset_Preset_OptionsPluginsDocs;
-  blog: Preset_Preset_OptionsPluginsBlog;
-  pages: Preset_Preset_OptionsPluginsPages;
-  sitemap: Preset_Preset_OptionsPluginsSitemap;
+  docs?: Preset_Preset_OptionsPluginsDocs;
+  blog?: Preset_Preset_OptionsPluginsBlog;
+  pages?: Preset_Preset_OptionsPluginsPages;
+  sitemap?: Preset_Preset_OptionsPluginsSitemap;
 };
 
 export type Preset_Preset_OptionsAnalyticsGtm = Record<string, unknown> | undefined;
 
 export type Preset_Preset_OptionsAnalytics = {
-  gtm: Preset_Preset_OptionsAnalyticsGtm;
+  gtm?: Preset_Preset_OptionsAnalyticsGtm;
 };
 
 export type Preset_Preset_OptionsSearch = Record<string, unknown> | false | undefined;
 
-export type Preset_Preset_OptionsProgressBar = boolean | undefined;
+export type Preset_Preset_OptionsPersistentCache = boolean | undefined;
+
+export type Preset_Preset_OptionsProgressBar = Options_PluginOptions_ProgressBar | undefined;
 
 export type Preset_Preset_OptionsIconSafelist = string[] | undefined;
 
@@ -54,11 +57,12 @@ export type Preset_Preset_OptionsMaxBundleFileSize = number | false | undefined;
 
 export type Preset_Preset_Options = {
   preset: Preset_Preset_OptionsPreset;
-  overrides: Preset_Preset_OptionsOverrides;
-  plugins: Preset_Preset_OptionsPlugins;
-  analytics: Preset_Preset_OptionsAnalytics;
-  search: Preset_Preset_OptionsSearch;
-  progressBar: Preset_Preset_OptionsProgressBar;
+  overrides?: Preset_Preset_OptionsOverrides;
+  plugins?: Preset_Preset_OptionsPlugins;
+  analytics?: Preset_Preset_OptionsAnalytics;
+  persistentCache?: Preset_Preset_OptionsPersistentCache;
+  search?: Preset_Preset_OptionsSearch;
+  progressBar?: Preset_Preset_OptionsProgressBar;
   iconSafelist?: Preset_Preset_OptionsIconSafelist;
   maxBundleFileSize?: Preset_Preset_OptionsMaxBundleFileSize;
   [key: string]: unknown;
@@ -80,6 +84,12 @@ export type Preset_Preset_Returns = {
 export type Preset_Preset_Plugins = Preset_Preset_Plugin[];
 
 export type Preset_Preset_Themes = Preset_Preset_Theme[];
+
+export type Preset_Preset_PluginOptions = Preset_Preset_OptionsPlugins;
+
+export type Preset_Preset_AnalyticsOptions = Preset_Preset_OptionsAnalytics;
+
+export type Preset_Preset_CurrentFilePath = string;
 
 export type Preset_Preset_CurrentDirectory = string;
 
@@ -136,6 +146,8 @@ export type Preset_Preset_ThemeOptionsPreset = Options_PluginOptions_Preset;
 
 export type Preset_Preset_ThemeOptionsOverrides = Preset_Preset_OptionsOverrides;
 
+export type Preset_Preset_ThemeOptionsPersistentCache = Preset_Preset_OptionsPersistentCache;
+
 export type Preset_Preset_ThemeOptionsProgressBar = Preset_Preset_OptionsProgressBar;
 
 export type Preset_Preset_ThemeOptionsSearch = Options_PluginOptions_Search | undefined;
@@ -143,6 +155,7 @@ export type Preset_Preset_ThemeOptionsSearch = Options_PluginOptions_Search | un
 export type Preset_Preset_ThemeOptions = {
   preset: Preset_Preset_ThemeOptionsPreset;
   overrides: Preset_Preset_ThemeOptionsOverrides;
+  persistentCache: Preset_Preset_ThemeOptionsPersistentCache;
   progressBar: Preset_Preset_ThemeOptionsProgressBar;
   search: Preset_Preset_ThemeOptionsSearch;
 };

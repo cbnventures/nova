@@ -204,17 +204,63 @@ export type Cli_Utility_Changelog_Runner_Release_IsNonInteractive = boolean;
 
 export type Cli_Utility_Changelog_Runner_Release_Entries = Shared_ChangelogEntry[];
 
+export type Cli_Utility_Changelog_Runner_Release_Config = Shared_NovaConfigConfig;
+
+export type Cli_Utility_Changelog_Runner_Release_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Cli_Utility_Changelog_Runner_Release_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
 export type Cli_Utility_Changelog_Runner_Release_Groups = Map<Shared_ChangelogEntry_Package, Shared_ChangelogEntry[]>;
 
 export type Cli_Utility_Changelog_Runner_Release_Existing = Shared_ChangelogEntry[];
 
 export type Cli_Utility_Changelog_Runner_Release_NovaConfig = LibNovaConfig;
 
-export type Cli_Utility_Changelog_Runner_Release_Config = Shared_NovaConfigConfig;
+export type Cli_Utility_Changelog_Runner_Release_LockStepVersioning = boolean;
 
-export type Cli_Utility_Changelog_Runner_Release_Workspaces = Shared_NovaConfig_Workspaces;
+export type Cli_Utility_Changelog_Runner_Release_LockStepPackage_PackageName = string;
 
-export type Cli_Utility_Changelog_Runner_Release_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
+export type Cli_Utility_Changelog_Runner_Release_LockStepPackage_PackageDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepPackage_CurrentVersion = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepPackage = {
+  packageName: Cli_Utility_Changelog_Runner_Release_LockStepPackage_PackageName;
+  packageDirectory: Cli_Utility_Changelog_Runner_Release_LockStepPackage_PackageDirectory;
+  currentVersion: Cli_Utility_Changelog_Runner_Release_LockStepPackage_CurrentVersion;
+};
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepPackages = Cli_Utility_Changelog_Runner_Release_LockStepPackage[];
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepWorkspaces = [string, Shared_NovaConfigWorkspace][];
+
+export type Cli_Utility_Changelog_Runner_Release_FilterLockStepWorkspaceConfig = Shared_NovaConfigWorkspace;
+
+export type Cli_Utility_Changelog_Runner_Release_FilterLockStepWorkspacePolicy = Shared_NovaConfigWorkspace['policy'];
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePath = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceConfig = Shared_NovaConfigWorkspace;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceName = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepCurrentDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepPackageDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonPath = string;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonRaw = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepParsedPackageJson = Record<string, unknown> | undefined;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepCurrentVersion = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepVersions = Set<string>;
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepVersionRows = string[];
+
+export type Cli_Utility_Changelog_Runner_Release_LockStepErrorLines = string[];
 
 export type Cli_Utility_Changelog_Runner_Release_BumpPriority = Record<Shared_ChangelogEntry_Bump, number>;
 
@@ -291,8 +337,6 @@ export type Cli_Utility_Changelog_Runner_Release_VersionPartsMinor = number;
 
 export type Cli_Utility_Changelog_Runner_Release_VersionPartsPatch = number;
 
-export type Cli_Utility_Changelog_Runner_Release_LockStepVersioning = boolean;
-
 export type Cli_Utility_Changelog_Runner_Release_HighestNewVersion = string;
 
 export type Cli_Utility_Changelog_Runner_Release_ReleaseParts = number[];
@@ -302,26 +346,6 @@ export type Cli_Utility_Changelog_Runner_Release_HighestParts = number[];
 export type Cli_Utility_Changelog_Runner_Release_LockStepI = number;
 
 export type Cli_Utility_Changelog_Runner_Release_ReleasedNames = Set<string>;
-
-export type Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePath = string;
-
-export type Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceConfig = Shared_NovaConfigWorkspace;
-
-export type Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceName = string;
-
-export type Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePolicy = string;
-
-export type Cli_Utility_Changelog_Runner_Release_LockStepCurrentDirectory = string;
-
-export type Cli_Utility_Changelog_Runner_Release_LockStepPackageDirectory = string;
-
-export type Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonPath = string;
-
-export type Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonRaw = string | undefined;
-
-export type Cli_Utility_Changelog_Runner_Release_LockStepParsedPackageJson = Record<string, unknown> | undefined;
-
-export type Cli_Utility_Changelog_Runner_Release_LockStepCurrentVersion = string | undefined;
 
 export type Cli_Utility_Changelog_Runner_Release_CategoryOrder = string[];
 
@@ -369,6 +393,8 @@ export type Cli_Utility_Changelog_Runner_Release_ApplyUpdatedPackageJson = strin
 
 export type Cli_Utility_Changelog_Runner_Release_ApplyUpdatedContents = string;
 
+export type Cli_Utility_Changelog_Runner_Release_StampSucceeded = boolean;
+
 /**
  * CLI - Utility - Changelog - Run.
  *
@@ -397,7 +423,7 @@ export type Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory = stri
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion = string;
 
-export type Cli_Utility_Changelog_Runner_StampUnreleased_Returns = Promise<void>;
+export type Cli_Utility_Changelog_Runner_StampUnreleased_Returns = Promise<boolean>;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_IsPrerelease = boolean;
 
@@ -429,6 +455,10 @@ export type Cli_Utility_Changelog_Runner_StampUnreleased_HasDeprecated = boolean
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_UpdatedContent = string;
 
+export type Cli_Utility_Changelog_Runner_StampUnreleased_StampError = unknown;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_StampErrorMessage = string;
+
 export type Cli_Utility_Changelog_Runner_StampUnreleased_SurvivingFiles = string[];
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckFp = string;
@@ -438,6 +468,10 @@ export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckContent = string;
 export type Cli_Utility_Changelog_Runner_StampUnreleased_StillHasSince = boolean;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_StillHasDeprecated = boolean;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckError = unknown;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckErrorMessage = string;
 
 /**
  * CLI - Utility - Changelog - Sync Package References.
@@ -486,6 +520,33 @@ export type Cli_Utility_Changelog_Runner_SyncPackageReferences_DependencyValue =
 export type Cli_Utility_Changelog_Runner_ValidateMessage_MessageValue = unknown;
 
 export type Cli_Utility_Changelog_Runner_ValidateMessage_Returns = string | true;
+
+/**
+ * CLI - Utility - Changelog - Validate Version.
+ *
+ * @since 0.26.0
+ */
+export type Cli_Utility_Changelog_Runner_ValidateVersion_CurrentVersion = string;
+
+export type Cli_Utility_Changelog_Runner_ValidateVersion_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
+export type Cli_Utility_Changelog_Runner_ValidateVersion_PackageJsonPath = string;
+
+export type Cli_Utility_Changelog_Runner_ValidateVersion_Returns = void;
+
+export type Cli_Utility_Changelog_Runner_ValidateVersion_CalverParts = number[];
+
+export type Cli_Utility_Changelog_Runner_ValidateVersion_CalverToday = Date;
+
+export type Cli_Utility_Changelog_Runner_ValidateVersion_CalverYear = number;
+
+export type Cli_Utility_Changelog_Runner_ValidateVersion_CalverMonth = number;
+
+export type Cli_Utility_Changelog_Runner_ValidateVersion_CalverCurrentYear = number;
+
+export type Cli_Utility_Changelog_Runner_ValidateVersion_CalverCurrentMonth = number;
+
+export type Cli_Utility_Changelog_Runner_ValidateVersion_SemverParts = number[];
 
 /**
  * CLI - Utility - Changelog - Write Changelog.

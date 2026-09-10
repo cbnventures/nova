@@ -1,3 +1,9 @@
+import { statSync } from 'node:fs';
+import {
+  basename,
+  resolve,
+} from 'node:path';
+
 import { ESLintUtils } from '@typescript-eslint/utils';
 
 import { isIgnoredFile } from '../../../lib/utility.js';
@@ -15,6 +21,13 @@ import type {
   Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_ImportDeclaration_Returns,
   Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_NormalizedFilename,
   Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_Options,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_SharedFiles,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_Context,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_IsSharedFile,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_Returns,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_SharedFilePath,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_SharedFiles,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_SharedFileStats,
   Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsSharedFiles,
 } from '../../../types/rules/eslint/typescript/no-shared-type-import.d.ts';
@@ -71,6 +84,7 @@ export class Runner {
     }],
     create(context, defaultOptions) {
       const options: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_Options = defaultOptions[0];
+      const sharedFiles: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_SharedFiles = Runner.resolveSharedFiles(context, options['sharedFiles']);
       const normalizedFilename: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_NormalizedFilename = context.filename.replaceAll('\\', '/');
 
       // Skip .d.ts files - they are allowed to import shared types.
@@ -85,7 +99,7 @@ export class Runner {
 
       return {
         ImportDeclaration(node: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_ImportDeclaration_Node): Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_ImportDeclaration_Returns {
-          Runner.checkImport(context, node, options['sharedFiles']);
+          Runner.checkImport(context, node, sharedFiles);
 
           return;
         },
@@ -129,5 +143,39 @@ export class Runner {
     }
 
     return;
+  }
+
+  /**
+   * Rules - ESLint - TypeScript - No Shared Type Import - Resolve Shared Files.
+   *
+   * Resolves every configured path from ESLint's working directory and returns
+   * validated filenames for import-source matching. An empty list stays valid.
+   *
+   * @param {Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_Context}     context     - Context.
+   * @param {Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_SharedFiles} sharedFiles - Shared files.
+   *
+   * @private
+   *
+   * @returns {Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static resolveSharedFiles(context: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_Context, sharedFiles: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_SharedFiles): Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_Returns {
+    return sharedFiles.map((sharedFile) => {
+      const sharedFilePath: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_SharedFilePath = resolve(context.cwd, sharedFile);
+
+      try {
+        const sharedFileStats: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_SharedFileStats = statSync(sharedFilePath);
+        const isSharedFile: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_IsSharedFile = sharedFileStats.isFile();
+
+        if (isSharedFile === true) {
+          return basename(sharedFilePath);
+        }
+      } catch {
+        // Fall through to the configuration error below.
+      }
+
+      throw new Error(`Configured "sharedFiles" path "${sharedFile}" must resolve to an existing file from "${context.cwd}".`);
+    });
   }
 }

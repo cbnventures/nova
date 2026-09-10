@@ -1,7 +1,7 @@
 ---
 id: "run-recipes"
 title: "Run Recipes"
-description: "Run all configured recipes in sequence across both GitHub and package-json categories so every workspace stays consistent with a single command."
+description: "Run all configured recipes in sequence across the GitHub, license, read-me, and package-json categories with a single command."
 keywords:
   - "nova"
   - "nova run-recipes"
@@ -25,13 +25,17 @@ Run all configured <Terminology title="transform script" to="/docs/quickstart/te
 
 The `run-recipes` command discovers and executes all registered <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> in sequence. This is the single command that replaces chaining individual <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> commands.
 
-There is no category flag, so every invocation runs all recipes across both the `github` and `package-json` categories.
+There is no category flag, so every invocation runs all recipes across the `github`, `license`, `read-me`, and `package-json` categories.
+
+Recipes reconcile settings or existing content and are safe to run again. They do not invoke <Terminology title="template command" to="/docs/quickstart/terminology#nova-concepts" color={true}>generators</Terminology>; generated files remain an explicit `nova generate ...` action.
 
 ## Recipe Categories
 
 | Category       | Recipes                                                                                                                                                                          |
 |----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `github`       | `sync-features`, `sync-identity`, `sync-policies`                                                                                                                                |
+| `github`       | `sync-actions`, `sync-features`, `sync-identity`, `sync-labels`, `sync-policies`, `sync-rulesets`, `sync-security`                                                               |
+| `license`      | `update-copyright`                                                                                                                                                               |
+| `read-me`      | `update-badges`, `update-credits`, `update-documentation`, `update-header`, `update-introduction`                                                                                |
 | `package-json` | `sync-identity`, `sync-ownership`, `normalize-modules`, `normalize-artifacts`, `sync-environment`, `normalize-dependencies`, `normalize-bundler`, `normalize-tooling`, `cleanup` |
 
 ## Why Use This Command?
@@ -75,5 +79,5 @@ There is no category flag, so every invocation runs all recipes across both the 
 
 | Flag                 | Description                                                            |
 |----------------------|------------------------------------------------------------------------|
-| `-d, --dry-run`      | Run without writing any files.                                         |
+| `-d, --dry-run`      | Preview file and GitHub changes without sending mutations.             |
 | `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

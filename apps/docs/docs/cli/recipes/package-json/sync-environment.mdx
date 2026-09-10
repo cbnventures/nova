@@ -29,11 +29,24 @@ The `sync-environment` recipe ensures that runtime environment fields in each <T
 
 When the `trackNodeLtsVersions` setting is enabled, it automatically updates the `engines.node` constraint to match all currently active Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> versions.
 
+## Why Use This Command?
+
+1. Keeps Node.js engine support aligned with the active LTS policy chosen for each workspace.
+2. Normalizes platform constraints so package managers receive consistent runtime metadata.
+3. Keeps the project root on one validated Corepack client while removing duplicate manager declarations from child workspaces.
+4. Warns about incomplete LTS coverage before an outdated engine range reaches consumers.
+
+## Requirements
+
+- **Node.js runtime** — Use a supported Node.js LTS release with the Nova CLI available.
+- **Project config** — Register the workspace and enable `recipes.package-json.<workspace>.sync-environment` in `nova.config.json`.
+- **Workspace manifest** — The configured workspace must contain a readable `package.json` file.
+
 ## Behavior
 
 For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects environment and runtime fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
 
-- **`packageManager` (Conditional)** — Removed if the workspace role is not `project`. If the role is `project` but the value is not a string in `name@version` format, it is removed.
+- **`packageManager` (Required for `project`)** — The project root accepts only an exact `npm@version`, `pnpm@version`, or `yarn@version` Corepack descriptor. A valid descriptor is preserved. A missing, ranged, partial, or unsupported value is replaced with the locally detected exact npm version in the same run. If npm version detection fails, Nova warns and leaves the field absent instead of guessing. Every non-project workspace has this field removed so the root remains the single source of truth.
 - **`engines` (Required)** — If missing, it is created. When active Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> versions are available, `engines.node` is set to the computed constraint. If `engines` exists but `engines.node` is missing, the constraint is added.
 - **`engines.node` tracking** — When `trackNodeLtsVersions` is enabled, the recipe checks whether the current `engines.node` value covers all active <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> major versions using `>=N`, `^N`, `~N`, `N.x`, or `*` patterns. If coverage is incomplete, a warning is logged. The value is then synced to the computed constraint.
 - **`os` (Conditional)** — Removed if the field is present but empty.

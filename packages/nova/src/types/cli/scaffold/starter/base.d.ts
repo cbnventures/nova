@@ -11,11 +11,14 @@ export type Cli_Scaffold_Starter_Base_Runner_Run_Options_DryRun = true;
 
 export type Cli_Scaffold_Starter_Base_Runner_Run_Options_Name = string;
 
+export type Cli_Scaffold_Starter_Base_Runner_Run_Options_NonInteractive = true;
+
 export type Cli_Scaffold_Starter_Base_Runner_Run_Options_Output = string;
 
 export type Cli_Scaffold_Starter_Base_Runner_Run_Options = {
   dryRun?: Cli_Scaffold_Starter_Base_Runner_Run_Options_DryRun;
   name?: Cli_Scaffold_Starter_Base_Runner_Run_Options_Name;
+  nonInteractive?: Cli_Scaffold_Starter_Base_Runner_Run_Options_NonInteractive;
   output?: Cli_Scaffold_Starter_Base_Runner_Run_Options_Output;
 };
 
@@ -24,6 +27,8 @@ export type Cli_Scaffold_Starter_Base_Runner_Run_Returns = Promise<void>;
 export type Cli_Scaffold_Starter_Base_Runner_Run_CurrentDirectory = string;
 
 export type Cli_Scaffold_Starter_Base_Runner_Run_IsDryRun = boolean;
+
+export type Cli_Scaffold_Starter_Base_Runner_Run_IsNonInteractive = boolean;
 
 export type Cli_Scaffold_Starter_Base_Runner_Run_Context = Shared_MonorepoContext;
 
@@ -55,3 +60,9 @@ export type Cli_Scaffold_Starter_Base_Runner_Run_SelectedDirectoryChoice = strin
 export type Cli_Scaffold_Starter_Base_Runner_Run_OutputAnswers = Record<string, unknown>;
 
 export type Cli_Scaffold_Starter_Base_Runner_Run_ResolvedOutput = string;
+
+export type Cli_Scaffold_Starter_Base_Runner_Run_PlannedPaths = string[];
+
+export type Cli_Scaffold_Starter_Base_Runner_Run_ConflictingPaths = string[];
+
+export type Cli_Scaffold_Starter_Base_Runner_Run_ConflictMessage = string;

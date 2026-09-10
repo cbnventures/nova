@@ -14,11 +14,44 @@ export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SandboxDirectory 
 export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SandboxRoot = string;
 
 /**
+ * Tests - CLI - Utility - Type Check - Run - Delegates The Repository Bootstrap To The Shared Checker.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_DelegatesTheRepositoryBootstrapToTheSharedChecker_BootstrapScriptPath = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_DelegatesTheRepositoryBootstrapToTheSharedChecker_BootstrapScriptContents = string;
+
+/**
  * Tests - CLI - Utility - Type Check - Run - Errors When No Tsconfig Json Found.
  *
  * @since 0.14.0
  */
 export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ErrorsWhenNoTsconfigJsonFound_ProjectDirectory = string;
+
+/**
+ * Tests - CLI - Utility - Type Check - Run - Rejects Invalid Compiler Option.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RejectsAnInvalidCompilerOption_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RejectsAnInvalidCompilerOption_TsconfigPath = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RejectsAnInvalidCompilerOption_TsconfigContents = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RejectsAnInvalidCompilerOption_IndexPath = string;
+
+/**
+ * Tests - CLI - Utility - Type Check - Run - Rejects Invalid Json.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RejectsInvalidJSON_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RejectsInvalidJSON_TsconfigPath = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RejectsInvalidJSON_TsconfigContents = string;
 
 /**
  * Tests - CLI - Utility - Type Check - Run - Reports No Errors For Valid TypeScript.

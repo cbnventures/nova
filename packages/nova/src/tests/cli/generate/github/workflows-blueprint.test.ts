@@ -549,14 +549,14 @@ describe('WorkflowsBlueprint.buildPublish', () => {
 
     const stepEnv: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesOnlyPublicVariablesIntoTheScopeEnvFile_StepEnv = writeEnvStep['env'] ?? [];
 
-    strictEqual(stepEnv.map((entryPair) => entryPair['key']).join(','), 'PUBLIC_SITE_KEY,PUBLIC_GTM_ID', 'only build-only keys appear, runtime omitted');
+    strictEqual(stepEnv.map((entryPair) => entryPair['key']).join(','), 'PUBLIC_SITE_KEY,PUBLIC_GTM_ID', 'only reach-build keys appear, runtime omitted');
 
     const siteKeyEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesOnlyPublicVariablesIntoTheScopeEnvFile_SiteKeyEntry = stepEnv.find((entryPair) => entryPair['key'] === 'PUBLIC_SITE_KEY');
     const gtmEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesOnlyPublicVariablesIntoTheScopeEnvFile_GtmEntry = stepEnv.find((entryPair) => entryPair['key'] === 'PUBLIC_GTM_ID');
 
-    ok(siteKeyEntry !== undefined && gtmEntry !== undefined, 'both build-only entries are present');
+    ok(siteKeyEntry !== undefined && gtmEntry !== undefined, 'both reach-build entries are present');
 
-    ok(String(siteKeyEntry['value']).includes('vars.CBN_PUBLIC_SITE_KEY'), 'a build-only var sources from its prefixed name');
+    ok(String(siteKeyEntry['value']).includes('vars.CBN_PUBLIC_SITE_KEY'), 'a reach-build var sources from its prefixed name');
 
     ok(String(gtmEntry['value']).includes('vars.CBN_PUBLIC_GTM_ID'), 'a build-only var sources from its prefixed name');
 
@@ -597,7 +597,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
     const stepEnv: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_StepEnv = writeEnvStep['env'] ?? [];
     const regionEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_BakesABuildDefaultAsAnEscapedShellFallback_RegionEntry = stepEnv.find((entryPair) => entryPair['key'] === 'PUBLIC_REGION');
 
-    ok(regionEntry !== undefined, 'the build-only default entry is present');
+    ok(regionEntry !== undefined, 'the reach-build default entry is present');
 
     ok(String(regionEntry['value']).includes('vars.CBN_PUBLIC_REGION'), 'the default var sources from its prefixed name');
 
@@ -626,6 +626,45 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       path: './apps/plain-app',
     }],
   };
+
+  it('uses pnpm for Corepack installs and Turbo commands', () => {
+    ok(
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], true, 'pnpm')).includes([
+        'corepack enable pnpm',
+        '          pnpm install',
+      ].join('\n')),
+      'the install step enables and runs pnpm',
+    );
+
+    ok(
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], true, 'pnpm')).includes('pnpm exec turbo run check --filter=// --filter=plain-app-app --concurrency=2'),
+      'the check step executes Turbo through pnpm',
+    );
+
+    return;
+  });
+
+  it('uses Yarn for Corepack installs and non-turbo workspace commands', () => {
+    ok(
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], false, 'yarn')).includes([
+        'corepack enable yarn',
+        '          yarn install',
+      ].join('\n')),
+      'the install step enables and runs Yarn',
+    );
+
+    ok(
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], false, 'yarn')).includes('yarn workspace plain-app-app run check'),
+      'the workspace check uses Yarn syntax',
+    );
+
+    ok(
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], false, 'yarn')).includes('run: "yarn run check"'),
+      'the root check uses Yarn',
+    );
+
+    return;
+  });
 
   it('keeps the current job-level defaults', () => {
     const ir: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_KeepsTheCurrentJobLevelDefaults_Ir = WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces);

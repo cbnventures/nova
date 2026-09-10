@@ -82,14 +82,22 @@ export type Cli_Utility_Transpile_Runner_Run_ConfigResult = {
   error?: Diagnostic;
 };
 
+export type Cli_Utility_Transpile_Runner_Run_ConfigReadDiagnostics = readonly Diagnostic[];
+
+export type Cli_Utility_Transpile_Runner_Run_ConfigReadFilteredDiagnostics = Diagnostic[];
+
 export type Cli_Utility_Transpile_Runner_Run_Config = unknown;
 
 export type Cli_Utility_Transpile_Runner_Run_ConfigDirectory = string;
 
 export type Cli_Utility_Transpile_Runner_Run_Parsed = ParsedCommandLine;
 
+export type Cli_Utility_Transpile_Runner_Run_ConfigParseDiagnostics = readonly Diagnostic[];
+
+export type Cli_Utility_Transpile_Runner_Run_ConfigParseFilteredDiagnostics = Diagnostic[];
+
 export type Cli_Utility_Transpile_Runner_Run_Program = Program;
 
 export type Cli_Utility_Transpile_Runner_Run_EmitResult = EmitResult;
 
-export type Cli_Utility_Transpile_Runner_Run_FilteredDiagnostics = Diagnostic[];
+export type Cli_Utility_Transpile_Runner_Run_ProgramFilteredDiagnostics = Diagnostic[];

@@ -1,0 +1,36 @@
+import type { vi } from 'vitest';
+
+/**
+ * Tests - Toolkit - Vitest Setup - VitestSetup Register - Registers And Runs The Shared Hooks.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_AfterEachCallbacks_Item = () => void;
+
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_AfterEachCallbacks = Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_AfterEachCallbacks_Item[];
+
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_BeforeEachCallbacks_Item = () => void;
+
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_BeforeEachCallbacks = Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_BeforeEachCallbacks_Item[];
+
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_OriginalExitCode = null | number | string | undefined;
+
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_Vitest_AfterEach_Callback = () => void;
+
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_Vitest_AfterEach = (callback: Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_Vitest_AfterEach_Callback) => void;
+
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_Vitest_BeforeEach_Callback = () => void;
+
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_Vitest_BeforeEach = (callback: Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_Vitest_BeforeEach_Callback) => void;
+
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_Vitest_Vi = Pick<typeof vi, 'restoreAllMocks' | 'spyOn'>;
+
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_Vitest = {
+  afterEach: Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_Vitest_AfterEach;
+  beforeEach: Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_Vitest_BeforeEach;
+  vi: Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_Vitest_Vi;
+};
+
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_AfterEachCallback = Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_AfterEachCallbacks_Item | undefined;
+
+export type Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_BeforeEachCallback = Tests_Toolkit_VitestSetup_VitestSetupRegister_RegistersAndRunsTheSharedHooks_BeforeEachCallbacks_Item | undefined;

@@ -21,11 +21,9 @@ tags:
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-# Nova Config Reference
-
 The <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file lives at the <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root and drives every Nova command. This page documents each section and its fields.
 
-Use the [`nova utility initialize`](/docs/cli/utilities/initialize) wizard to create or update this file interactively.
+For your first working file, follow the [first successful check](/docs/quickstart/setup#first-successful-check). Use this reference when you need every supported field, or run [`nova utility initialize`](/docs/cli/utilities/initialize) to edit the same schema interactively.
 
 ## `project`
 
@@ -113,65 +111,131 @@ Canonical contact addresses referenced by tools and metadata.
 
 ## `github`
 
-Identifies the GitHub repository and configures repository-level metadata that the GitHub recipes synchronize. Consumed by the [`nova recipe github`](/docs/cli/recipes/github/sync-identity) commands.
+Identifies the GitHub repository and declares repository-level settings. Most blocks are maintained by repeatable recipes; `issueTemplate` is input for an explicit generator.
 
-| Field      | Type       | Description                                                                                                                                       |
-|------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-| `owner`    | `string`   | Repository owner (user or organization). Must match `/^[A-Za-z0-9-]+$/`.                                                                          |
-| `repo`     | `string`   | Repository name. Must match `/^[A-Za-z0-9._-]+$/`.                                                                                                |
-| `recipes`  | `object`   | Optional. Toggles for repository-level sync recipes. See [Recipes Fields](#recipes-fields) below.                                                 |
-| `topics`   | `string[]` | Optional. Repository topics. An empty array is preserved and clears topics on sync.                                                               |
-| `features` | `object`   | Optional. Toggles for repository features (issues, wiki, projects, discussions). See [Features Fields](#features-fields) below.                   |
-| `policies` | `object`   | Optional. Repository policy settings (visibility, default branch, merge methods, branch deletion). See [Policies Fields](#policies-fields) below. |
+| Field           | Type       | Owner command                                                                                           |
+|-----------------|------------|---------------------------------------------------------------------------------------------------------|
+| `owner`         | `string`   | Target owner used by every GitHub recipe and generator. Letters, numbers, and hyphens are allowed.      |
+| `repo`          | `string`   | Target repository used by every GitHub recipe and generator. Letters, numbers, dots, `_`, and `-` work. |
+| `topics`        | `string[]` | [`sync-identity`](/docs/cli/recipes/github/sync-identity). An empty array clears GitHub topics.         |
+| `features`      | `object`   | [`sync-features`](/docs/cli/recipes/github/sync-features).                                              |
+| `policies`      | `object`   | [`sync-policies`](/docs/cli/recipes/github/sync-policies).                                              |
+| `security`      | `object`   | [`sync-security`](/docs/cli/recipes/github/sync-security).                                              |
+| `rulesets`      | `object`   | [`sync-rulesets`](/docs/cli/recipes/github/sync-rulesets).                                              |
+| `actions`       | `object`   | [`sync-actions`](/docs/cli/recipes/github/sync-actions).                                                |
+| `labels`        | `object[]` | [`sync-labels`](/docs/cli/recipes/github/sync-labels).                                                  |
+| `issueTemplate` | `object`   | [`nova generate github issue-template`](/docs/cli/generators/github/issue-template).                    |
 
-### Recipes Fields
-
-Booleans that enable or disable each repository-level sync recipe.
-
-| Field           | Type      | Description                                                          |
-|-----------------|-----------|----------------------------------------------------------------------|
-| `sync-identity` | `boolean` | Optional. Synchronizes repository description, homepage, and topics. |
-| `sync-features` | `boolean` | Optional. Synchronizes the repository feature toggles in `features`. |
-| `sync-policies` | `boolean` | Optional. Synchronizes the repository policy settings in `policies`. |
+An omitted recipe field means “leave GitHub's current value alone.” It does not mean `false`, and Nova does not mix in GitHub defaults.
 
 ### Features Fields
 
 Booleans controlling which repository features are enabled. Each field is optional; omitted fields leave the corresponding GitHub setting untouched.
 
-| Field         | Type      | Description                            |
-|---------------|-----------|----------------------------------------|
-| `issues`      | `boolean` | Optional. Enables the Issues tab.      |
-| `wiki`        | `boolean` | Optional. Enables the Wiki tab.        |
-| `projects`    | `boolean` | Optional. Enables the Projects tab.    |
-| `discussions` | `boolean` | Optional. Enables the Discussions tab. |
+| Field          | Type      | Description                                                   |
+|----------------|-----------|---------------------------------------------------------------|
+| `issues`       | `boolean` | Enables the Issues tab.                                       |
+| `wiki`         | `boolean` | Enables the Wiki tab.                                         |
+| `projects`     | `boolean` | Enables repository Projects.                                  |
+| `discussions`  | `boolean` | Enables the Discussions tab.                                  |
+| `sponsorships` | `boolean` | Enables the Sponsor button when GitHub considers it eligible. |
 
 ### Policies Fields
 
 Repository policy settings. Each field is optional.
 
-| Field                  | Type      | Description                                                                           |
-|------------------------|-----------|---------------------------------------------------------------------------------------|
-| `visibility`           | `string`  | Optional. One of `"public"`, `"private"`, or `"internal"`.                            |
-| `defaultBranch`        | `string`  | Optional. Default branch name (e.g., `"main"`).                                       |
-| `mergeMethods`         | `object`  | Optional. Per-method enablement: `merge`, `squash`, `rebase`. Each is a boolean.      |
-| `autoDeleteHeadBranch` | `boolean` | Optional. When `true`, GitHub deletes the head branch after a pull request is merged. |
+| Field                      | Type      | Description                                                                          |
+|----------------------------|-----------|--------------------------------------------------------------------------------------|
+| `visibility`               | `string`  | `public`, `private`, or `internal`.                                                  |
+| `defaultBranch`            | `string`  | Default branch name. Nova skips the update if that branch does not exist yet.        |
+| `mergeMethods.merge`       | `boolean` | Allows merge commits.                                                                |
+| `mergeMethods.squash`      | `boolean` | Allows squash merges.                                                                |
+| `mergeMethods.rebase`      | `boolean` | Allows rebase merges.                                                                |
+| `mergeCommit.title`        | `string`  | `pull-request-title` or `merge-message`.                                             |
+| `mergeCommit.message`      | `string`  | `pull-request-body`, `pull-request-title`, or `blank`; requires `mergeCommit.title`. |
+| `squashMerge.title`        | `string`  | `pull-request-title` or `commit-or-pull-request-title`.                              |
+| `squashMerge.message`      | `string`  | `pull-request-body`, `commit-messages`, or `blank`; requires `squashMerge.title`.    |
+| `autoDeleteHeadBranch`     | `boolean` | Deletes the head branch after a pull request is merged.                              |
+| `autoMerge`                | `boolean` | Allows pull-request auto-merge.                                                      |
+| `allowUpdateBranch`        | `boolean` | Allows GitHub's update-branch action when a pull request is behind its base.         |
+| `webCommitSignoffRequired` | `boolean` | Requires signoff for commits created through GitHub's web interface.                 |
+
+### Security Fields
+
+| Field                       | Type      | Description                                      |
+|-----------------------------|-----------|--------------------------------------------------|
+| `vulnerabilityAlerts`       | `boolean` | Enables Dependabot vulnerability alerts.         |
+| `dependabotSecurityUpdates` | `boolean` | Enables automatic security-update pull requests. |
+| `secretScanning`            | `boolean` | Enables secret scanning.                         |
+| `pushProtection`            | `boolean` | Blocks pushes containing detected secrets.       |
+
+`pushProtection: true` requires `secretScanning: true` in the same block. GitHub plan and organization policies still determine availability.
+
+### Ruleset Fields
+
+These fields configure Nova's one named default-branch ruleset, **Nova default branch**.
+
+| Field                           | Type       | Description                                                                     |
+|---------------------------------|------------|---------------------------------------------------------------------------------|
+| `defaultBranch.enforcement`     | `string`   | `active`, `disabled`, or `evaluate`.                                            |
+| `blockDeletions`                | `boolean`  | Blocks default-branch deletion.                                                 |
+| `blockForcePushes`              | `boolean`  | Blocks force pushes.                                                            |
+| `requireLinearHistory`          | `boolean`  | Requires linear history.                                                        |
+| `requireSignedCommits`          | `boolean`  | Requires signed commits.                                                        |
+| `requirePullRequest`            | `boolean`  | Requires pull requests.                                                         |
+| `allowedMergeMethods`           | `string[]` | One or more of `merge`, `squash`, and `rebase` when pull requests are required. |
+| `dismissStaleReviews`           | `boolean`  | Dismisses approvals after new commits.                                          |
+| `requireCodeOwnerReview`        | `boolean`  | Requires a code-owner review.                                                   |
+| `requireLastPushApproval`       | `boolean`  | Requires someone other than the last pusher to approve.                         |
+| `requiredApprovals`             | `number`   | Integer from `0` through `10`.                                                  |
+| `requireConversationResolution` | `boolean`  | Requires review threads to be resolved.                                         |
+| `requiredStatusChecks`          | `string[]` | Required status-check context names.                                            |
+| `requireBranchesToBeUpToDate`   | `boolean`  | Requires a current branch and at least one required status check.               |
+
+At least one protection rule must be enabled. Nova does not edit or delete unrelated rulesets.
+
+### Actions Fields
+
+| Field                          | Type       | Description                                                                 |
+|--------------------------------|------------|-----------------------------------------------------------------------------|
+| `enabled`                      | `boolean`  | Enables or disables Actions. Required with `allowedActions` or SHA pinning. |
+| `allowedActions`               | `string`   | `all`, `local-only`, or `selected`.                                         |
+| `shaPinningRequired`           | `boolean`  | Requires full-SHA action references.                                        |
+| `selectedActions.githubOwned`  | `boolean`  | Allows GitHub-owned actions in selected mode.                               |
+| `selectedActions.verified`     | `boolean`  | Allows verified Marketplace creators in selected mode.                      |
+| `selectedActions.patterns`     | `string[]` | Custom allowlist patterns. An empty array clears those patterns.            |
+| `defaultWorkflowPermissions`   | `string`   | Default `GITHUB_TOKEN` permission: `read` or `write`.                       |
+| `canApprovePullRequestReviews` | `boolean`  | Allows Actions to create or approve pull-request reviews.                   |
+| `artifactRetentionDays`        | `number`   | Integer from `1` through `400`; GitHub may enforce a lower plan maximum.    |
+
+### Label Fields
+
+Each entry in `labels` has these fields. An explicit empty array is valid and performs no work. Labels missing from the array are not deleted.
+
+| Field         | Type     | Description                                       |
+|---------------|----------|---------------------------------------------------|
+| `name`        | `string` | Required non-empty label name.                    |
+| `color`       | `string` | Required six-digit hexadecimal color without `#`. |
+| `description` | `string` | Optional label description.                       |
+
+### Issue Template Fields
+
+| Field             | Type       | Description                                                                                                                                             |
+|-------------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `bugReportFields` | `string[]` | Optional platform field filenames for generated bug reports, such as `nodejs.yml`. When omitted, the generator derives fields from `project.platforms`. |
 
 ```json
 {
   "github": {
     "owner": "example-org",
     "repo": "example-project",
-    "recipes": {
-      "sync-identity": true,
-      "sync-features": true,
-      "sync-policies": true
-    },
     "topics": ["nova", "monorepo", "typescript"],
     "features": {
       "issues": true,
       "wiki": false,
       "projects": false,
-      "discussions": true
+      "discussions": true,
+      "sponsorships": true
     },
     "policies": {
       "visibility": "public",
@@ -181,7 +245,70 @@ Repository policy settings. Each field is optional.
         "squash": true,
         "rebase": false
       },
-      "autoDeleteHeadBranch": true
+      "mergeCommit": {
+        "title": "pull-request-title",
+        "message": "pull-request-body"
+      },
+      "squashMerge": {
+        "title": "commit-or-pull-request-title",
+        "message": "commit-messages"
+      },
+      "autoDeleteHeadBranch": true,
+      "autoMerge": true,
+      "allowUpdateBranch": true,
+      "webCommitSignoffRequired": false
+    },
+    "security": {
+      "vulnerabilityAlerts": true,
+      "dependabotSecurityUpdates": true,
+      "secretScanning": true,
+      "pushProtection": true
+    },
+    "rulesets": {
+      "defaultBranch": {
+        "enforcement": "active",
+        "blockDeletions": true,
+        "blockForcePushes": true,
+        "requireLinearHistory": false,
+        "requireSignedCommits": true,
+        "requirePullRequest": true,
+        "allowedMergeMethods": ["squash", "rebase"],
+        "dismissStaleReviews": true,
+        "requireCodeOwnerReview": false,
+        "requireLastPushApproval": true,
+        "requiredApprovals": 1,
+        "requireConversationResolution": true,
+        "requiredStatusChecks": ["check", "build"],
+        "requireBranchesToBeUpToDate": true
+      }
+    },
+    "actions": {
+      "enabled": true,
+      "allowedActions": "selected",
+      "shaPinningRequired": true,
+      "selectedActions": {
+        "githubOwned": true,
+        "verified": false,
+        "patterns": ["actions/*", "acme/*"]
+      },
+      "defaultWorkflowPermissions": "read",
+      "canApprovePullRequestReviews": false,
+      "artifactRetentionDays": 30
+    },
+    "labels": [
+      {
+        "name": "bug",
+        "color": "d73a4a",
+        "description": "Something isn't working"
+      },
+      {
+        "name": "good first issue",
+        "color": "7057ff",
+        "description": "Good for newcomers"
+      }
+    ],
+    "issueTemplate": {
+      "bugReportFields": ["nodejs.yml", "screenshots.yml"]
     }
   }
 }
@@ -201,6 +328,27 @@ An array of GitHub Actions workflow entries consumed by [`nova generate github w
 | `with`     | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.     |
 
 Field names changed in the rebuilt generator: `suffix` is now `name`, `scopes` is now `build`, `targets` is now `deploy`, and `settings` is now `with`. The former top-level `depends-on` moved onto the workflow-run trigger object as a `workflows` array.
+
+### Trigger Object Fields
+
+Use a bare string for triggers that need no filters, such as `"release"`. Use an object when the trigger needs additional settings.
+
+| Field       | Type       | Description                                                                                                                                               |
+|-------------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`      | `string`   | Required trigger name, such as `"push"`, `"tag-push"`, or `"workflow-run-success"`.                                                                       |
+| `branches`  | `string[]` | Branch filters for `push`. A `push` trigger requires at least one branch.                                                                                 |
+| `paths`     | `string[]` | Optional path filters for `push`.                                                                                                                         |
+| `tags`      | `string[]` | Optional tag filters for `tag-push`.                                                                                                                      |
+| `workflows` | `string[]` | Upstream `{template}-{name}` keys for a `workflow-run-*` trigger. Any listed workflow can start the downstream run; GitHub does not wait for all of them. |
+
+```json
+{
+  "name": "workflow-run-success",
+  "workflows": ["publish-core"]
+}
+```
+
+See [Configuring Workflow-Run Triggers](/docs/cli/generators/github/workflows#configuring-workflow-run-triggers) for chaining behavior and GitHub's limits.
 
 ### Deploy Fields
 
@@ -307,37 +455,11 @@ Canonical links with validation and normalization.
 
 A map of relative paths to <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> definitions. Each key is a path from the <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root (e.g., `"./"`, `"./apps/docs"`, `"./packages/nova"`).
 
-| Field     | Type     | Description                                                                                                                                                                                                                                       |
-|-----------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`    | `string` | Package name for `package.json`. Must follow the naming pattern for its role. See [Workspace Rules](/docs/quickstart/workspace-rules#workspace-naming) for details.                                                                               |
-| `role`    | `string` | Workspace role: `"project"`, `"docs"`, `"config"`, `"app"`, `"package"`, `"tool"`, or `"template"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                          |
-| `policy`  | `string` | Workspace policy: `"freezable"`, `"trackable"`, or `"distributable"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                                                        |
-| `recipes` | `object` | Optional. Enabled <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> and their settings, keyed by recipe name. Each value is a tuple: `[enabled]` or `[enabled, settings]`. |
-| `dotenv`  | `object` | Optional. Environment variables for the workspace's generated `.env` files and, on a publish `build` scope, its build-time environment. See [Dotenv Fields](#dotenv-fields) below.                                                                |
-
-### Dotenv Fields
-
-:::warning Retired — use [`environment`](#environment) instead
-
-The per-workspace `dotenv` block is retired. Environment variables and secrets now live in the top-level [`environment`](#environment) block, classified by a required `secret` flag and delivered by a required `buildOnly` flag.
-
-A config that still declares `dotenv`, `visibility`, or `from` is a load-time error. The fields below document the old shape for reference only.
-:::
-
-A `dotenv` block holds a `variables` array, and each entry describes one environment variable. The [`nova generate must-haves dotenv`](/docs/cli/generators/must-haves/dotenv) command reads these to write `.env` and `.env.sample`, while the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) reads the visibility to decide what gets baked into a static build.
-
-| Field          | Type     | Description                                                                                                                                                                                                                                                         |
-|----------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `key`          | `string` | Environment variable name written to the workspace's `.env` files.                                                                                                                                                                                                  |
-| `defaultValue` | `string` | Value written to `.env.sample`; the `.env` entry is left blank so real secrets stay out of version control.                                                                                                                                                         |
-| `visibility`   | `string` | Optional. `"public"` bakes the value into the build; `"private"` never bakes it. Required on any variable of a publish `build` scope.                                                                                                                               |
-| `from`         | `string` | Optional. On a `public` variable, the GitHub Variable its value is read from at build time (defaults to `key`). On a `private` variable, the GitHub Secret its value syncs from at deploy time — required and explicit on `cloudflare-workers` and `vercel-nextjs`. |
-
-A `public` variable is client-exposed and read from a GitHub Variable when the publish build job writes the scope's `.env`, so it suits values that ship to the browser (analytics IDs, public site keys). A `private` variable is a backend or runtime secret that Nova never bakes into the build.
-
-On a `cloudflare-workers` or `vercel-nextjs` deploy, a `private` variable must declare a `from` and Nova syncs its value from that GitHub Secret into the platform's runtime-secret store. See [Runtime Secret Sync](/docs/cli/generators/github/workflows#runtime-secret-sync) for the reconcile and full-authority behavior.
-
-Set `from` on a `public` variable when two apps declare the same `key` but need different per-app values, so each points at its own GitHub Variable.
+| Field    | Type     | Description                                                                                                                                                              |
+|----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`   | `string` | Package name for `package.json`. Must follow the naming pattern for its role. See [Workspace Rules](/docs/quickstart/workspace-rules#workspace-naming) for details.      |
+| `role`   | `string` | Workspace role: `"project"`, `"docs"`, `"config"`, `"app"`, `"package"`, `"tool"`, or `"template"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details. |
+| `policy` | `string` | Workspace policy: `"freezable"`, `"trackable"`, or `"distributable"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                               |
 
 ```json
 {
@@ -345,23 +467,12 @@ Set `from` on a `public` variable when two apps declare the same `key` but need 
     "./": {
       "name": "example-project",
       "role": "project",
-      "policy": "freezable",
-      "recipes": {
-        "cleanup": [true, { "removeUnknownKeys": true, "reorderKeys": true }],
-        "normalize-dependencies": [true, { "pinDependencyVersions": true }],
-        "sync-identity": [true],
-        "sync-ownership": [true]
-      }
+      "policy": "freezable"
     },
     "./packages/nova": {
       "name": "@company/example",
       "role": "package",
-      "policy": "distributable",
-      "recipes": {
-        "cleanup": [true, { "removeUnknownKeys": true, "reorderKeys": true }],
-        "sync-identity": [true, { "description": true, "keywords": true, "displayName": true }],
-        "sync-ownership": [true, { "homepage": true, "bugs": true, "author": true }]
-      }
+      "policy": "distributable"
     },
     "./apps/docs": {
       "name": "example-docs",
@@ -372,13 +483,122 @@ Set `from` on a `public` variable when two apps declare the same `key` but need 
 }
 ```
 
+## `gitignore`
+
+Adds project-specific patterns to the generated root `.gitignore` without mixing them into Nova's built-in templates.
+
+| Field             | Type       | Description                                                                                                     |
+|-------------------|------------|-----------------------------------------------------------------------------------------------------------------|
+| `projectExcludes` | `string[]` | Optional patterns appended under the generated Project Excludes marker. An empty array keeps the section empty. |
+
+```json
+{
+  "gitignore": {
+    "projectExcludes": [
+      ".wrangler/",
+      "coverage/"
+    ]
+  }
+}
+```
+
+## `agents`
+
+Selects the AI-tool entry files emitted by [`nova generate must-haves agent-conventions`](/docs/cli/generators/must-haves/agent-conventions).
+
+| Value           | File emitted |
+|-----------------|--------------|
+| `"claude-code"` | `CLAUDE.md`  |
+| `"codex"`       | `AGENTS.md`  |
+
+The shared `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md` files are generated whenever at least one agent is selected. An empty array is valid and intentionally disables generation.
+
+```json
+{
+  "agents": ["claude-code", "codex"]
+}
+```
+
+## `recipes`
+
+Stores every recipe toggle in one top-level block. Repository, license, and README recipes are project-scoped; `package-json` recipes are nested under the workspace path they modify.
+
+### Recipe Entry Fields
+
+| Field      | Type      | Description                                                                                      |
+|------------|-----------|--------------------------------------------------------------------------------------------------|
+| `enabled`  | `boolean` | Required. Runs the recipe when `true` and skips it when `false`.                                 |
+| `settings` | `object`  | Optional boolean settings supported by that recipe. Unknown or non-boolean settings are dropped. |
+
+### Recipe Categories
+
+| Category       | Supported recipes                                                                                                                                                                |
+|----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `github`       | `sync-actions`, `sync-features`, `sync-identity`, `sync-labels`, `sync-policies`, `sync-rulesets`, `sync-security`                                                               |
+| `license`      | `update-copyright`                                                                                                                                                               |
+| `read-me`      | `update-badges`, `update-credits`, `update-documentation`, `update-header`, `update-introduction`                                                                                |
+| `package-json` | `cleanup`, `normalize-artifacts`, `normalize-bundler`, `normalize-dependencies`, `normalize-modules`, `normalize-tooling`, `sync-environment`, `sync-identity`, `sync-ownership` |
+
+Package JSON recipes accept these optional settings where applicable:
+
+| Recipe                   | Settings                                                                                           |
+|--------------------------|----------------------------------------------------------------------------------------------------|
+| `cleanup`                | `removeUnknownKeys`, `reorderKeys`                                                                 |
+| `normalize-dependencies` | `pinDependencyVersions`, `pinDevDependencyVersions`                                                |
+| `sync-environment`       | `trackNodeLtsVersions`                                                                             |
+| `sync-identity`          | `description`, `keywords`, `displayName` for distributable workspaces                              |
+| `sync-ownership`         | `homepage`, `bugs`, `author`, `contributors`, `funding`, `repository` for distributable workspaces |
+
+```json
+{
+  "recipes": {
+    "github": {
+      "sync-identity": {
+        "enabled": true
+      }
+    },
+    "license": {
+      "update-copyright": {
+        "enabled": true
+      }
+    },
+    "read-me": {
+      "update-header": {
+        "enabled": true
+      }
+    },
+    "package-json": {
+      "./": {
+        "cleanup": {
+          "enabled": true,
+          "settings": {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        }
+      },
+      "./packages/nova": {
+        "sync-identity": {
+          "enabled": true,
+          "settings": {
+            "description": true,
+            "keywords": true,
+            "displayName": true
+          }
+        }
+      }
+    }
+  }
+}
+```
+
 ## `environment`
 
-Every environment variable and secret in the repository lives here, classified by a required `secret` flag and grouped by namespace. The [`nova generate must-haves dotenv`](/docs/cli/generators/must-haves/dotenv) command reads `environment.workspaces` to write each workspace's `.env` and `.env.sample` (including the repo root `./` when it is declared), and the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) delivers each value by kind.
+Every environment value in the repository lives here, grouped by namespace and classified by its required `reach`. The [`nova generate must-haves dotenv`](/docs/cli/generators/must-haves/dotenv) command writes workspace values to local `.env` files, while publish workflows provision and deliver the non-local values.
 
 | Field        | Type     | Description                                                                                                                                          |
 |--------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `project`    | `object` | Optional. Project-wide keys (deploy credentials, managed-only secrets) under one shared `prefix`. See [Project Fields](#project-fields).             |
+| `project`    | `object` | Optional. Project-wide managed keys, such as deploy credentials, under one shared `prefix`. See [Project Fields](#project-fields).                   |
 | `workspaces` | `object` | Optional. Per-workspace environment values, keyed by the workspace path (including the repo root `./`). See [Workspaces Fields](#workspaces-fields). |
 | `workflows`  | `object` | Optional. Workflow-config prefixes, keyed by workflow name. See [Workflows Fields](#workflows-fields).                                               |
 
@@ -388,18 +608,18 @@ Prefixes must be disjoint, must not reuse the reserved `GITHUB_` namespace, and 
 
 ### Project Fields
 
-`project` holds project-wide keys under a single `prefix`. Its `variables` are managed-only — provisioned on GitHub but not delivered to a build or server — so each carries only `secret`.
+`project` holds project-wide keys under a single `prefix`. Each variable uses `reach: "managed"`, is provisioned on GitHub, and is not written to a workspace `.env` or delivered to a build or server.
 
 Project-scoped deploy credentials (such as a Cloudflare API token) also derive their GitHub name from this `prefix`.
 
-| Field       | Type     | Description                                                           |
-|-------------|----------|-----------------------------------------------------------------------|
-| `prefix`    | `string` | Required. The uppercase namespace joined to every `key`.              |
-| `variables` | `array`  | Optional. Managed-only values, each with a `key` and a `secret` flag. |
+| Field       | Type     | Description                                                                       |
+|-------------|----------|-----------------------------------------------------------------------------------|
+| `prefix`    | `string` | Required. The uppercase namespace joined to every `key`.                          |
+| `variables` | `array`  | Optional. Managed-only values, each with `key`, `reach: "managed"`, and `secret`. |
 
 ### Workspaces Fields
 
-`environment.workspaces` is keyed by a workspace path that matches a top-level `workspaces` entry (including the repo root `./`). Each workspace declares a `prefix` and the `variables` delivered to its build and servers.
+`environment.workspaces` is keyed by a workspace path that matches a top-level `workspaces` entry (including the repo root `./`). Each workspace declares a `prefix`; every value appears in its generated `.env` and `.env.sample`, while `reach` determines what happens beyond local development.
 
 | Field       | Type     | Description                                                                |
 |-------------|----------|----------------------------------------------------------------------------|
@@ -408,12 +628,23 @@ Project-scoped deploy credentials (such as a Cloudflare API token) also derive t
 
 ### Value Fields
 
-| Field          | Type      | Description                                                                                                                                                                                                                               |
-|----------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `key`          | `string`  | Environment variable name, joined to the group's `prefix` to form the GitHub name.                                                                                                                                                        |
-| `secret`       | `boolean` | Required. `true` stores the value as a GitHub Secret (encrypted); `false` as a GitHub Variable (plaintext).                                                                                                                               |
-| `buildOnly`    | `boolean` | Required on a workspace value. `true` delivers it to the build; `false` syncs it to every server-bearing deploy target. See [Environment Variables and Secrets](/docs/cli/generators/github/workflows#environment-variables-and-secrets). |
-| `defaultValue` | `string`  | Optional, non-secret only. Seeds `.env.sample`; on a `buildOnly: true` value it is also the build fallback. Rejected on a `secret: true` value.                                                                                           |
+| Field          | Type      | Description                                                                                                                                                                                          |
+|----------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `key`          | `string`  | Environment variable name. Nova joins the group's `prefix` when a non-local value needs a GitHub name; local `.env` files use the unprefixed key.                                                    |
+| `reach`        | `string`  | Required. One of `"local"`, `"managed"`, `"build"`, or `"runtime"`. See [Reach Values](#reach-values).                                                                                               |
+| `secret`       | `boolean` | Required for `managed`, `build`, and `runtime`; forbidden for `local`. `true` stores the GitHub value as a Secret, while `false` stores it as a Variable.                                            |
+| `defaultValue` | `string`  | Optional for non-secret `local`, `build`, and `runtime` values. Seeds `.env.sample`; for `build`, it is also the build fallback. Forbidden for `managed` values and every value with `secret: true`. |
+
+### Reach Values
+
+| Reach       | Local `.env` | GitHub | CI delivery                                                                 |
+|-------------|:------------:|:------:|-----------------------------------------------------------------------------|
+| `local`     |      ✓       |   ✗    | None. The key stays on the developer machine.                               |
+| `managed`   |  ✓ (blank)   |   ✓    | None. Nova tracks the GitHub name but does not inject it into a build or server. |
+| `build`     |      ✓       |   ✓    | Injected into the build environment.                                        |
+| `runtime`   |      ✓       |   ✓    | Reconciled into every server-bearing deploy target for the workspace.       |
+
+Project-scoped variables support only `managed`. Their Local `.env` column is not applicable because they do not belong to a workspace.
 
 ### Workflows Fields
 
@@ -429,7 +660,7 @@ Project-scoped deploy credentials (such as a Cloudflare API token) also derive t
     "project": {
       "prefix": "ACCT_",
       "variables": [
-        { "key": "NPM_TOKEN", "secret": true }
+        { "key": "NPM_TOKEN", "reach": "managed", "secret": true }
       ]
     },
     "workspaces": {
@@ -439,9 +670,10 @@ Project-scoped deploy credentials (such as a Cloudflare API token) also derive t
       "./apps/web": {
         "prefix": "WEB_",
         "variables": [
-          { "key": "PUBLIC_ANALYTICS_ID", "secret": false, "buildOnly": true, "defaultValue": "" },
-          { "key": "AMAZON_REGION", "secret": false, "buildOnly": false, "defaultValue": "us-east-1" },
-          { "key": "STRIPE_SECRET_KEY", "secret": true, "buildOnly": false }
+          { "key": "LOCAL_API_MOCK", "reach": "local", "defaultValue": "http://127.0.0.1:8787" },
+          { "key": "SENTRY_PROJECT", "reach": "managed", "secret": false },
+          { "key": "PUBLIC_ANALYTICS_ID", "reach": "build", "secret": false, "defaultValue": "" },
+          { "key": "STRIPE_SECRET_KEY", "reach": "runtime", "secret": true }
         ]
       }
     },
@@ -458,10 +690,10 @@ Project-scoped deploy credentials (such as a Cloudflare API token) also derive t
 
 Project-wide behavior toggles that affect how Nova commands operate.
 
-| Field                | Type      | Description                                                                                                                                                                                                                                        |
-|----------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `lockStepVersioning` | `boolean` | When `true`, `nova utility changelog --release` bumps every distributable workspace to the same version, even if some had no recorded changes. Packages without changes receive a "No changes." entry in their `CHANGELOG.md`.                     |
-| `versionStrategy`    | `string`  | Version strategy for the project: `"semver"` (default) or `"calver"`. Semver uses major.minor.patch with bump types. CalVer uses YYYY.MM.MICRO with automatic date-based versioning. Locked after the first release is recorded in `CHANGELOG.md`. |
+| Field                | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|----------------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `lockStepVersioning` | `boolean` | When `true`, `nova utility changelog --release` moves every non-freezable workspace — both trackable and distributable — to the same version, even if some had no recorded changes. Before writing, Nova requires every participating `package.json` to exist, contain a valid version for the selected strategy, and start at the same version. Workspaces without changes receive a "No changes." entry in their `CHANGELOG.md`. |
+| `versionStrategy`    | `string`  | Version strategy for the project: `"semver"` (default) or `"calver"`. SemVer uses `major.minor.patch` with bump types. CalVer uses `YYYY.MM.MICRO` with automatic date-based versioning. Nova locks this setting to existing version headings found in the root or any non-freezable workspace changelog; missing changelogs and freezable workspaces do not lock it.                                                              |
 
 ```json title="nova.config.json"
 {
@@ -471,4 +703,3 @@ Project-wide behavior toggles that affect how Nova commands operate.
   }
 }
 ```
-

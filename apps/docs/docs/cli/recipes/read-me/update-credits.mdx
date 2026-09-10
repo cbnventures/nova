@@ -27,7 +27,13 @@ The `update-credits` recipe rewrites the credits of a `README.md` file so the fu
 
 The recipe only touches the marked region. Everything before the `<!-- nova-region: credits -->` marker and everything after the `<!-- nova-region-end: credits -->` marker is left byte-identical, so hand-written prose around the credits is never disturbed.
 
-## Prerequisites
+## Why Use This Command?
+
+1. Keeps contributor, supporter, and funding acknowledgements aligned with project metadata.
+2. Rewrites only Nova's credits region so custom README content remains untouched.
+3. Makes recognition updates repeatable as people and funding sources change.
+
+## Requirements
 
 - **An existing `README.md`** — The recipe updates a file in the project root; it does not create one. Use `generate must-haves read-me` to create the initial file.
 - **The `credits` region markers** — The `README.md` must contain the `<!-- nova-region: credits -->` and `<!-- nova-region-end: credits -->` markers. A `generate must-haves read-me` file has them by default.

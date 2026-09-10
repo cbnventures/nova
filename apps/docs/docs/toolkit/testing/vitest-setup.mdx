@@ -1,0 +1,106 @@
+---
+id: "vitest-setup"
+title: "Vitest Setup"
+description: "Register shared Vitest hooks that suppress console and process output, reset exit codes, and restore mocks through the active runtime."
+keywords:
+  - "nova"
+  - "vitest setup"
+  - "testing"
+  - "test hooks"
+  - "mock restoration"
+  - "process output"
+tags:
+  - "toolkit"
+  - "testing"
+  - "vitest"
+  - "battery"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Register shared Vitest hooks so test isolation behavior stays synchronized across projects.
+
+## Summary
+
+- Suppresses `console` calls and writes to `process.stdout` and `process.stderr` during each test.
+- Clears `process.exitCode` before each test and restores every Vitest mock afterward.
+- Receives the consumer's active Vitest functions so hooks bind to the runtime driving the suite.
+
+## Why Use This Battery?
+
+1. Centralizes the shared setup policy so behavior changes propagate without copying hook bodies between projects.
+2. Uses the suite's active Vitest runtime so linked packages and monorepos don't register hooks against a different instance.
+3. Leaves the local setup file available for project-specific hooks without forking the shared baseline.
+
+## Usage
+
+<Tabs groupId="vitest-setup-usage">
+  <TabItem value="baseline" label="Shared baseline" default>
+
+    ```ts title="vitest.setup.ts"
+    import { VitestSetup } from '@cbnventures/nova/toolkit';
+    import { afterEach, beforeEach, vi } from 'vitest';
+
+    VitestSetup.register({
+      afterEach,
+      beforeEach,
+      vi,
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="local" label="Local additions">
+
+    ```ts title="vitest.setup.ts"
+    import { VitestSetup } from '@cbnventures/nova/toolkit';
+    import { afterEach, beforeEach, vi } from 'vitest';
+
+    VitestSetup.register({
+      afterEach,
+      beforeEach,
+      vi,
+    });
+
+    beforeEach(() => {
+      vi.stubEnv('FEATURE_MODE', 'test');
+
+      return;
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Settings
+
+| Setting      | Type                | Default  | Description                                       |
+|--------------|---------------------|----------|---------------------------------------------------|
+| `afterEach`  | `Vitest afterEach`  | Required | Registers shared cleanup after every test.        |
+| `beforeEach` | `Vitest beforeEach` | Required | Registers shared isolation before every test.     |
+| `vi`         | `Vitest vi`         | Required | Creates and restores spies in the active runtime. |
+
+## Output Examples
+
+<Tabs groupId="vitest-setup-output">
+  <TabItem value="suppressed" label="Suppressed output" default>
+
+    ```ts
+    console.info('hidden during the test');
+    process.stdout.write('hidden during the test');
+    process.stderr.write('also hidden during the test');
+    ```
+
+  </TabItem>
+  <TabItem value="assertions" label="Assertions remain available">
+
+    ```ts
+    const write = vi.spyOn(process.stdout, 'write');
+
+    process.stdout.write('captured without terminal noise');
+
+    expect(write).toHaveBeenCalledOnce();
+    ```
+
+  </TabItem>
+</Tabs>

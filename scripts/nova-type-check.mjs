@@ -1,21 +1,36 @@
-import { dirname, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 
-import ts from 'typescript';
+import { createJiti } from 'jiti';
+
+/**
+ * Nova Type Check - TypeScript Loader.
+ *
+ * Loads the canonical TypeScript source before Nova's compiled CLI exists.
+ * Both filesystem and module caches stay disabled for deterministic checks.
+ *
+ * @since UNRELEASED
+ */
+const typescriptLoader = createJiti(import.meta.url, {
+  fsCache: false,
+  interopDefault: false,
+  moduleCache: false,
+});
 
 /**
  * Nova Type Check - Nova Type Check.
  *
- * Replicates the `nova utility type-check` command because nova's own bin may
- * not be built when nova builds or checks itself, resolving the tsconfig and
- * printing project-owned diagnostics through process.stderr and process.stdout.
+ * Parses the repository-only command arguments and delegates all TypeScript
+ * project behavior to the same pre-build-safe module used by Nova's public CLI.
  *
- * @returns {void}
+ * @returns {Promise<void>}
  *
  * @since 0.0.0
  */
-function novaTypeCheck() {
-  // Parse command-line arguments.
+async function novaTypeCheck() {
+  const typeCheckModule = /** @type {typeof import('../packages/nova/src/lib/type-check.ts')} */ (
+    await typescriptLoader.import('../packages/nova/src/lib/type-check.ts')
+  );
+  const runTypeCheck = typeCheckModule['runTypeCheck'];
   const parsedArgs = parseArgs({
     options: {
       project: {
@@ -26,69 +41,55 @@ function novaTypeCheck() {
     strict: false,
   });
   const values = parsedArgs.values;
-  const cwd = process.cwd();
-  const project = values['project'];
-
-  // Resolve the tsconfig.json path.
-  let configPath = undefined;
-
-  if (typeof project === 'string') {
-    const resolved = resolve(cwd, project);
-
-    configPath = (ts.sys.fileExists(resolved) === true) ? resolved : undefined;
-  } else if (project === undefined) {
-    configPath = ts.findConfigFile(cwd, ts.sys.fileExists, 'tsconfig.json');
-  }
-
-  if (configPath === undefined) {
-    process.stderr.write('No tsconfig.json found. Use --project to specify a path.\n');
-    process.exitCode = 1;
-    process.exit();
-  }
-
-  // Parse the tsconfig.json and create a program.
-  const configResult = ts.readConfigFile(configPath, ts.sys.readFile);
-  const config = configResult.config;
-  const configDirectory = dirname(configPath);
-  const parsed = ts.parseJsonConfigFileContent(config, ts.sys, configDirectory);
-  const program = ts.createProgram(parsed.fileNames, parsed.options);
-
-  // Get all diagnostics and filter to project-owned files only.
-  const diagnostics = ts.getPreEmitDiagnostics(program);
-  const filtered = diagnostics.filter((diagnostic) => {
-    const fileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : '';
-
-    return fileName.startsWith(cwd) === true && fileName.includes('node_modules') === false;
+  const projectValue = values['project'];
+  const project = (typeof projectValue === 'string') ? projectValue : undefined;
+  const exitCode = runTypeCheck({
+    project,
+    printError,
+    printInfo,
   });
 
-  // Print filtered diagnostics.
-  const fileSet = new Set();
-
-  for (const diagnostic of filtered) {
-    const fileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : 'unknown';
-    const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
-
-    fileSet.add(fileName);
-
-    if (diagnostic.file !== undefined && diagnostic.start !== undefined) {
-      const position = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start);
-      const line = position.line;
-      const character = position.character;
-
-      process.stderr.write(`${fileName}:${line + 1}:${character + 1} - ${message}\n`);
-    } else {
-      process.stderr.write(`${message}\n`);
-    }
-  }
-
-  if (filtered.length > 0) {
-    process.stdout.write(`Found ${filtered.length} error(s) in ${fileSet.size} file(s).\n`);
-    process.exitCode = 1;
-  } else {
-    process.stdout.write('No type errors found.\n');
+  if (exitCode > 0) {
+    process.exitCode = exitCode;
   }
 
   return;
 }
 
-novaTypeCheck();
+/**
+ * Nova Type Check - Print Error.
+ *
+ * Writes a canonical diagnostic line to stderr for repository bootstrap runs.
+ * The public CLI supplies its own Logger adapter to the shared implementation.
+ *
+ * @param {string} message - Message.
+ *
+ * @returns {void}
+ *
+ * @since UNRELEASED
+ */
+function printError(message) {
+  process.stderr.write(`${message}\n`);
+
+  return;
+}
+
+/**
+ * Nova Type Check - Print Info.
+ *
+ * Writes a canonical summary line to stdout for repository bootstrap runs.
+ * Keeping stream selection here leaves the shared checker output-agnostic.
+ *
+ * @param {string} message - Message.
+ *
+ * @returns {void}
+ *
+ * @since UNRELEASED
+ */
+function printInfo(message) {
+  process.stdout.write(`${message}\n`);
+
+  return;
+}
+
+await novaTypeCheck();

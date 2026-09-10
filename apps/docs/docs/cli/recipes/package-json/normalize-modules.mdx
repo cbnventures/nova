@@ -30,6 +30,18 @@ The `normalize-modules` recipe ensures that module resolution fields in each <Te
 
 It handles exports map structure, main entry point, module type declaration, browser field, and import maps.
 
+## Why Use This Command?
+
+1. Keeps Node.js entry points aligned with the module fields each workspace role supports.
+2. Normalizes shorthand exports into one predictable object shape for consumers and tools.
+3. Removes inapplicable module fields before they advertise entry points that should not exist.
+
+## Requirements
+
+- **Node.js runtime** — Use a supported Node.js LTS release with the Nova CLI available.
+- **Project config** — Register the workspace and enable `recipes.package-json.<workspace>.normalize-modules` in `nova.config.json`.
+- **Workspace manifest** — The configured workspace must contain a readable `package.json` file.
+
 ## Behavior
 
 For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects module resolution fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.

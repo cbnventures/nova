@@ -875,7 +875,7 @@ describe('Validator.validate', () => {
 
     strictEqual(result['diagnostics'].length, 1);
 
-    strictEqual(result['diagnostics'].map((diagnostic) => diagnostic['message']).join(' ').includes('Circular depends-on references detected. Aborting.'), true);
+    strictEqual(result['diagnostics'].map((diagnostic) => diagnostic['message']).join(' ').includes('Circular workflow-run references detected. Aborting.'), true);
 
     return;
   });

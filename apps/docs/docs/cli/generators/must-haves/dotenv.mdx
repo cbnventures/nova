@@ -67,6 +67,7 @@ Create `.env` and `.env.sample` files pre-populated with Nova-related environmen
 |----------------------|------------------------------------------------------------------------|
 | `-d, --dry-run`      | Run without writing any files.                                         |
 | `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
+| `--prune`            | Ask before removing `.env` keys that are no longer declared.           |
 
 ## Config Fields
 
@@ -78,9 +79,9 @@ The repo root gets `.env`/`.env.sample` only when you declare `environment.works
 |-------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
 | `environment.workspaces.<path>.variables` | The variables appended to that workspace's generated `.env` files. See [Value Fields](/docs/quickstart/nova-config#value-fields). |
 
-This command reads only each variable's `key` and `defaultValue`. A variable may also declare `secret` and `buildOnly`, which this command ignores — the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) uses them to deliver each value to the build or the running server.
+This command writes every workspace value regardless of its `reach`. It reads `key` and `defaultValue` for the files; the [publish workflow](/docs/cli/generators/github/workflows#environment-variables-and-secrets) uses `reach` and `secret` for GitHub provisioning and CI delivery.
 
-A non-secret `defaultValue` seeds `.env.sample`; the `.env` entry is always left blank so real secrets stay out of version control.
+A permitted `defaultValue` seeds `.env.sample`; the `.env` entry is always left blank so real values stay out of version control. Managed values accept no default, so they appear blank in both files for local input.
 
 The `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` keys are reserved. The template manages them, so declaring any of them under `environment.workspaces.<path>.variables` is rejected when the config loads, with a warning naming the reserved key.
 
@@ -97,7 +98,7 @@ The command writes these files into each workspace directory that declares an `e
 
 ## How It Works
 
-The command is non-interactive. It reads `nova.config.json`, then generates `.env` and `.env.sample` for every workspace that declares an `environment.workspaces` entry, writing both files into each workspace directory without prompting.
+The command reads `nova.config.json`, then generates `.env` and `.env.sample` for every workspace that declares an `environment.workspaces` entry. Normal runs are non-interactive; `--prune` asks before deleting undeclared keys from an existing `.env`.
 
 To change a workspace's variables, edit its `environment.workspaces` entry directly in `nova.config.json`.
 
@@ -114,3 +115,9 @@ When a workspace declares no `variables`, the generator emits the template only.
 For `.env`, the generator reads any existing file in the workspace first and keeps the values already filled in for every declared key — including the reserved `NODE_ENV`, `LOG_LEVEL`, and `LOG_TIME` keys. Only newly-added keys are written blank as `KEY=""`, so regenerating after editing the config never overwrites a real secret.
 
 The `.env.sample` file is always rebuilt from the config defaults, since it holds no secrets.
+
+### Pruning Undeclared Keys
+
+By default, an existing `.env` line survives even after its key is removed from `nova.config.json`. This prevents a filled local value from disappearing silently.
+
+Pass `--prune` to list the undeclared keys for each affected file and ask whether to remove them. Declining or canceling preserves every line, and `--dry-run --prune` never prompts or removes anything.

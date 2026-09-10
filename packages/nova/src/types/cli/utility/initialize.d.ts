@@ -59,7 +59,6 @@ import type {
   Shared_NovaConfigEnvironmentWorkspace,
   Shared_NovaConfigProjectPlatform,
   Shared_NovaConfigSettings_VersionStrategy,
-  Shared_NovaConfigWorkflow_Triggers,
   Shared_NovaConfigWorkflowScope,
   Shared_NovaConfigWorkflowTarget_Needs,
   Shared_NovaConfigWorkflowTrigger,
@@ -1012,16 +1011,28 @@ export type Cli_Utility_Initialize_Runner_PromptGithub_GithubRepoInput = string;
 
 export type Cli_Utility_Initialize_Runner_PromptGithub_ExistingRecipes = Shared_NovaConfig_Recipes_Github | undefined;
 
-export type Cli_Utility_Initialize_Runner_PromptGithub_SyncIdentityInitial = boolean;
+export type Cli_Utility_Initialize_Runner_PromptGithub_SyncActionsInitial = boolean;
 
 export type Cli_Utility_Initialize_Runner_PromptGithub_SyncFeaturesInitial = boolean;
 
+export type Cli_Utility_Initialize_Runner_PromptGithub_SyncIdentityInitial = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_SyncLabelsInitial = boolean;
+
 export type Cli_Utility_Initialize_Runner_PromptGithub_SyncPoliciesInitial = boolean;
 
+export type Cli_Utility_Initialize_Runner_PromptGithub_SyncRulesetsInitial = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_SyncSecurityInitial = boolean;
+
 export type Cli_Utility_Initialize_Runner_PromptGithub_RecipesOutputKey =
-  'githubRecipeSyncIdentity'
+  'githubRecipeSyncActions'
   | 'githubRecipeSyncFeatures'
-  | 'githubRecipeSyncPolicies';
+  | 'githubRecipeSyncIdentity'
+  | 'githubRecipeSyncLabels'
+  | 'githubRecipeSyncPolicies'
+  | 'githubRecipeSyncRulesets'
+  | 'githubRecipeSyncSecurity';
 
 export type Cli_Utility_Initialize_Runner_PromptGithub_RecipesOutputValue = boolean;
 
@@ -1067,11 +1078,14 @@ export type Cli_Utility_Initialize_Runner_PromptGithub_FeaturesProjectsInitial =
 
 export type Cli_Utility_Initialize_Runner_PromptGithub_FeaturesDiscussionsInitial = number;
 
+export type Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSponsorshipsInitial = number;
+
 export type Cli_Utility_Initialize_Runner_PromptGithub_FeaturesOutputKey =
   'githubFeaturesIssues'
   | 'githubFeaturesWiki'
   | 'githubFeaturesProjects'
-  | 'githubFeaturesDiscussions';
+  | 'githubFeaturesDiscussions'
+  | 'githubFeaturesSponsorships';
 
 export type Cli_Utility_Initialize_Runner_PromptGithub_FeaturesValue = boolean | Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSkip;
 
@@ -1090,6 +1104,8 @@ export type Cli_Utility_Initialize_Runner_PromptGithub_FeaturesWikiValue = boole
 export type Cli_Utility_Initialize_Runner_PromptGithub_FeaturesProjectsValue = boolean | Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSkip;
 
 export type Cli_Utility_Initialize_Runner_PromptGithub_FeaturesDiscussionsValue = boolean | Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSkip;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSponsorshipsValue = boolean | Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSkip;
 
 export type Cli_Utility_Initialize_Runner_PromptGithub_ExistingPolicies = Shared_NovaConfig_Github_Policies | undefined;
 
@@ -1530,13 +1546,7 @@ export type Cli_Utility_Initialize_Runner_PromptSettings_CurrentStrategy = Share
 
 export type Cli_Utility_Initialize_Runner_PromptSettings_CurrentDirectory = string;
 
-export type Cli_Utility_Initialize_Runner_PromptSettings_IsLocked = boolean;
-
-export type Cli_Utility_Initialize_Runner_PromptSettings_ChangelogPath = string;
-
-export type Cli_Utility_Initialize_Runner_PromptSettings_ChangelogContent = string;
-
-export type Cli_Utility_Initialize_Runner_PromptSettings_HasRelease = boolean;
+export type Cli_Utility_Initialize_Runner_PromptSettings_LockedStrategy = Shared_NovaConfigSettings_VersionStrategy | undefined;
 
 export type Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoice_Title = string;
 
@@ -1853,7 +1863,7 @@ export type Cli_Utility_Initialize_Runner_PromptWorkflowsDeleteForm_ConfirmOutpu
 /**
  * CLI - Utility - Initialize - Prompt Workflows Form.
  *
- * @since 0.15.0
+ * @since 0.26.0
  */
 export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Workflow = Shared_BlueprintConfigWorkflow | undefined;
 
@@ -1900,7 +1910,7 @@ export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingTriggers =
 
 export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingTriggerNames = string[];
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingDependsOn = Shared_BlueprintConfigTriggerObject_Workflows;
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingUpstreamWorkflows = Shared_BlueprintConfigTriggerObject_Workflows;
 
 export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingTargets = Shared_BlueprintConfigWorkflow_Deploy;
 
@@ -1946,7 +1956,7 @@ export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TriggersDir = stri
 
 export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TriggersDirExists = boolean;
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTriggers = Shared_NovaConfigWorkflow_Triggers;
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTriggers = Shared_NovaConfigWorkflowTrigger[];
 
 export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TriggersFiles = string[];
 
@@ -1976,31 +1986,31 @@ export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TriggersOutputResu
 
 export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ScheduleVariants = string[];
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedDependsOn = Shared_BlueprintConfigTriggerObject_Workflows | undefined;
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedUpstreamWorkflows = Shared_BlueprintConfigTriggerObject_Workflows | undefined;
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnChoice_Title = string;
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowChoice_Title = string;
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnChoice_Value = string;
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowChoice_Value = string;
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnChoice_Selected = boolean;
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowChoice_Selected = boolean;
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnChoice = {
-  title: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnChoice_Title;
-  value: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnChoice_Value;
-  selected: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnChoice_Selected;
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowChoice = {
+  title: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowChoice_Title;
+  value: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowChoice_Value;
+  selected: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowChoice_Selected;
 };
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnChoices = Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnChoice[];
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowChoices = Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowChoice[];
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnKey = string;
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowKey = string;
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputKey = 'dependsOn';
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputKey = 'upstreamWorkflows';
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputResult = string[];
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputResult = string[];
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutput = Shared_PromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputKey, Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputResult> | Shared_PromptWithCancelReject;
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutput = Shared_PromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputKey, Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputResult> | Shared_PromptWithCancelReject;
 
-export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputResultValue = Record<Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputKey, Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputResult>;
+export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputResultValue = Record<Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputKey, Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputResult>;
 
 export type Cli_Utility_Initialize_Runner_PromptWorkflowsForm_MatchedMetadata = Lib_WorkflowTemplates_Entry | undefined;
 

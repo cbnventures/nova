@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/nova",
-  "version": "0.25.2",
+  "version": "0.26.0",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",
@@ -58,6 +58,7 @@
     "./presets/tsconfig/fw-astro.json": "./build/src/presets/tsconfig/fw-astro.json",
     "./presets/tsconfig/fw-docusaurus.json": "./build/src/presets/tsconfig/fw-docusaurus.json",
     "./presets/tsconfig/fw-expressjs.json": "./build/src/presets/tsconfig/fw-expressjs.json",
+    "./presets/tsconfig/fw-homebridge.json": "./build/src/presets/tsconfig/fw-homebridge.json",
     "./presets/tsconfig/fw-nextjs.json": "./build/src/presets/tsconfig/fw-nextjs.json",
     "./presets/tsconfig/runtime-browser.json": "./build/src/presets/tsconfig/runtime-browser.json",
     "./presets/tsconfig/runtime-cloudflare-workers.json": "./build/src/presets/tsconfig/runtime-cloudflare-workers.json",
@@ -115,11 +116,12 @@
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "7.0.1",
     "glob": "13.0.6",
-    "globals": "17.4.0",
+    "globals": "17.11.0",
+    "minimatch": "10.2.6",
     "prompts": "2.4.2",
     "typescript-eslint": "8.58.1",
     "yaml": "2.8.3",
-    "zod": "4.3.6"
+    "zod": "4.4.3"
   },
   "devDependencies": {
     "@commander-js/extra-typings": "14.0.0",
@@ -127,16 +129,16 @@
     "@types/node": "24.9.1",
     "@types/prompts": "2.4.9",
     "@typescript-eslint/rule-tester": "8.58.1",
-    "eslint": "9.39.3",
+    "eslint": "9.39.5",
     "eslint-import-resolver-typescript": "4.4.4",
     "shx": "0.4.0",
-    "typescript": "5.9.3",
-    "vitest": "4.1.3"
+    "typescript": "6.0.3",
+    "vitest": "4.1.11"
   },
   "peerDependencies": {
     "eslint": "^9",
-    "typescript": "^5",
-    "vitest": "4.1.3"
+    "typescript": "^6",
+    "vitest": "^4"
   },
   "peerDependenciesMeta": {
     "eslint": {

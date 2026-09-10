@@ -1,0 +1,22 @@
+import type CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+
+/**
+ * Tests - Theme - Search Bar - Style Minification.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Theme_SearchBar_StyleMinification_SearchBarStyles_MinifiesWithoutProductionWarnings_CurrentFilePath = string;
+
+export type Tests_Theme_SearchBar_StyleMinification_SearchBarStyles_MinifiesWithoutProductionWarnings_CurrentDirectory = string;
+
+export type Tests_Theme_SearchBar_StyleMinification_SearchBarStyles_MinifiesWithoutProductionWarnings_StylePath = string;
+
+export type Tests_Theme_SearchBar_StyleMinification_SearchBarStyles_MinifiesWithoutProductionWarnings_StyleSource = string;
+
+export type Tests_Theme_SearchBar_StyleMinification_SearchBarStyles_MinifiesWithoutProductionWarnings_Result = Awaited<ReturnType<typeof CssMinimizerPlugin.cleanCssMinify>>;
+
+export type Tests_Theme_SearchBar_StyleMinification_SearchBarStyles_MinifiesWithoutProductionWarnings_Warnings = NonNullable<Tests_Theme_SearchBar_StyleMinification_SearchBarStyles_MinifiesWithoutProductionWarnings_Result['warnings']>;
+
+export type Tests_Theme_SearchBar_StyleMinification_SearchBarStyles_MinifiesWithoutProductionWarnings_Errors = NonNullable<Tests_Theme_SearchBar_StyleMinification_SearchBarStyles_MinifiesWithoutProductionWarnings_Result['errors']>;
+
+export type Tests_Theme_SearchBar_StyleMinification_SearchBarStyles_MinifiesWithoutProductionWarnings_KeepsMountingRule = boolean;

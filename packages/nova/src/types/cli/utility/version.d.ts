@@ -143,7 +143,7 @@ export type Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchSource = s
  */
 export type Cli_Utility_Version_Runner_GetNodeVersion_Returns = Promise<Cli_Utility_Version_Runner_GetNodeVersion_Tools>;
 
-export type Cli_Utility_Version_Runner_GetNodeVersion_NodeResults = [Shared_ShellOutput, Shared_ShellOutput, Shared_ShellOutput, Shared_ShellOutput, Shared_ShellOutput];
+export type Cli_Utility_Version_Runner_GetNodeVersion_NodeResults = [Shared_ShellOutput, Shared_ShellOutput, Shared_ShellOutput, Shared_ShellOutput];
 
 export type Cli_Utility_Version_Runner_GetNodeVersion_NodeJsVersion = Shared_ShellOutput;
 
@@ -152,8 +152,6 @@ export type Cli_Utility_Version_Runner_GetNodeVersion_NpmVersion = Shared_ShellO
 export type Cli_Utility_Version_Runner_GetNodeVersion_YarnVersion = Shared_ShellOutput;
 
 export type Cli_Utility_Version_Runner_GetNodeVersion_PnpmVersion = Shared_ShellOutput;
-
-export type Cli_Utility_Version_Runner_GetNodeVersion_BunVersion = Shared_ShellOutput;
 
 export type Cli_Utility_Version_Runner_GetNodeVersion_Tools = Record<string, string>;
 
@@ -172,10 +170,6 @@ export type Cli_Utility_Version_Runner_GetNodeVersion_YarnMatch = string | undef
 export type Cli_Utility_Version_Runner_GetNodeVersion_PnpmMatchResult = RegExpMatchArray | null;
 
 export type Cli_Utility_Version_Runner_GetNodeVersion_PnpmMatch = string | undefined;
-
-export type Cli_Utility_Version_Runner_GetNodeVersion_BunMatchResult = RegExpMatchArray | null;
-
-export type Cli_Utility_Version_Runner_GetNodeVersion_BunMatch = string | undefined;
 
 /**
  * CLI - Utility - Version - Get OS Version.

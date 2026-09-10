@@ -102,6 +102,8 @@ export type Theme_CodeBlock_Index_CodeBlock_ShowMore = string;
 
 export type Theme_CodeBlock_Index_CodeBlock_ShowLess = string;
 
+export type Theme_CodeBlock_Index_CodeBlock_LiveEditorLanguage = string;
+
 /**
  * Theme - Code Block - Extract Plain Text.
  *

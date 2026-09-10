@@ -88,14 +88,15 @@ The suite no-ops when the glossary page is absent, so a project without a glossa
 
 ## Configuration
 
-| Field             | Type                   | Default                                     | Description                                                                            |
-|-------------------|------------------------|---------------------------------------------|----------------------------------------------------------------------------------------|
-| `contentDirs`     | `string[]`             | `['docs', 'blog']`                          | Directories, relative to `rootDir`, scanned for component usages.                      |
-| `terminologyPath` | `string`               | `<rootDir>/docs/quickstart/terminology.mdx` | Glossary page (resolved against `rootDir`) whose headings define the valid-anchor set. |
-| `expectedBase`    | `string`               | `'/docs/quickstart/terminology'`            | Route every component must equal or prefix with an anchor.                             |
-| `rootDir`         | `string`               | `process.cwd()`                             | Base directory the content and glossary paths resolve against.                         |
-| `componentName`   | `string`               | `'Terminology'`                             | Name of the JSX component to validate.                                                 |
-| `enable`          | `'all' \| ToggleKey[]` | required                                    | Which checks run. Use `'all'` for every check, or a list to freeze a set.              |
+| Field             | Type                      | Default                                     | Description                                                                            |
+|-------------------|---------------------------|---------------------------------------------|----------------------------------------------------------------------------------------|
+| `vitest`          | `typeof import('vitest')` | required                                    | Vitest module namespace used to register the suite.                                    |
+| `contentDirs`     | `string[]`                | `['docs', 'blog']`                          | Directories, relative to `rootDir`, scanned for component usages.                      |
+| `terminologyPath` | `string`                  | `<rootDir>/docs/quickstart/terminology.mdx` | Glossary page (resolved against `rootDir`) whose headings define the valid-anchor set. |
+| `expectedBase`    | `string`                  | `'/docs/quickstart/terminology'`            | Route every component must equal or prefix with an anchor.                             |
+| `rootDir`         | `string`                  | `process.cwd()`                             | Base directory the content and glossary paths resolve against.                         |
+| `componentName`   | `string`                  | `'Terminology'`                             | Name of the JSX component to validate.                                                 |
+| `enable`          | `'all' \| ToggleKey[]`    | required                                    | Which checks run. Use `'all'` for every check, or a list to freeze a set.              |
 
 ## Toggle Keys
 

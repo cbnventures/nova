@@ -1,7 +1,9 @@
 import type {
   Shared_NovaConfig_Github,
   Shared_NovaConfig_Github_Policies,
+  Shared_NovaConfig_Github_Policies_MergeCommit,
   Shared_NovaConfig_Github_Policies_MergeMethods,
+  Shared_NovaConfig_Github_Policies_SquashMerge,
   Shared_ShellOutput,
 } from '../../../shared.d.ts';
 import type { Cli_Recipe_Github_GhPrecheck_GhPrecheck_Result } from './gh-precheck.d.ts';
@@ -37,6 +39,16 @@ export type Cli_Recipe_Github_SyncPolicies_Runner_Run_BranchResult = Shared_Shel
 
 export type Cli_Recipe_Github_SyncPolicies_Runner_Run_MergeMethods = Shared_NovaConfig_Github_Policies_MergeMethods | undefined;
 
-export type Cli_Recipe_Github_SyncPolicies_Runner_Run_Command = string;
+export type Cli_Recipe_Github_SyncPolicies_Runner_Run_ApiFlags = string[];
 
-export type Cli_Recipe_Github_SyncPolicies_Runner_Run_Result = Shared_ShellOutput;
+export type Cli_Recipe_Github_SyncPolicies_Runner_Run_MergeCommit = Shared_NovaConfig_Github_Policies_MergeCommit | undefined;
+
+export type Cli_Recipe_Github_SyncPolicies_Runner_Run_SquashMerge = Shared_NovaConfig_Github_Policies_SquashMerge | undefined;
+
+export type Cli_Recipe_Github_SyncPolicies_Runner_Run_RepoEditCommand = string | undefined;
+
+export type Cli_Recipe_Github_SyncPolicies_Runner_Run_ApiCommand = string | undefined;
+
+export type Cli_Recipe_Github_SyncPolicies_Runner_Run_RepoEditResult = Shared_ShellOutput;
+
+export type Cli_Recipe_Github_SyncPolicies_Runner_Run_ApiResult = Shared_ShellOutput;

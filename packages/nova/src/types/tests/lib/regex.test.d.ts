@@ -418,6 +418,13 @@ export type Tests_Lib_Regex_LIBREGEXPATTERNMARKDOWNLINK_DoesNotMatchPlainText_Su
 export type Tests_Lib_Regex_LIBREGEXPATTERNMARKDOWNLINK_MatchesMarkdownLink_Subject = string;
 
 /**
+ * Tests - Lib - Regex - Pattern Name At Version - Does Not Match A Partial Version.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_DoesNotMatchAPartialVersion_Subject = string;
+
+/**
  * Tests - Lib - Regex - LIBREGEXPATTERNNAMEATVERSION - DoesNotMatchScopedPackage.
  *
  * @since 0.13.0

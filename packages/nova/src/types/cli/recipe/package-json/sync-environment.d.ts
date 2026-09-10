@@ -1,6 +1,7 @@
 import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
 import type {
+  Shared_CorepackPackageManagerDescriptor,
   Shared_NovaConfig_RecipeEntry,
   Shared_NovaConfig_RecipeEntry_Settings,
   Shared_NovaConfig_Recipes,
@@ -79,6 +80,8 @@ export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_FileCon
 export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Manifest = Shared_NovaConfigWorkspace;
 
 export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_PackageManager = unknown;
+
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_ParsedPackageManager = Shared_CorepackPackageManagerDescriptor | undefined;
 
 /**
  * CLI - Recipe - package.json - Sync Environment - Handle Corepack.

@@ -19,9 +19,13 @@ import { Runner as CliGenerateMustHavesEditorconfig } from './generate/must-have
 import { Runner as CliGenerateMustHavesGitignore } from './generate/must-haves/gitignore.js';
 import { Runner as CliGenerateMustHavesLicense } from './generate/must-haves/license.js';
 import { Runner as CliGenerateMustHavesReadMe } from './generate/must-haves/read-me.js';
+import { Runner as CliRecipeGithubSyncActions } from './recipe/github/sync-actions.js';
 import { Runner as CliRecipeGithubSyncFeatures } from './recipe/github/sync-features.js';
 import { Runner as CliRecipeGithubSyncIdentity } from './recipe/github/sync-identity.js';
+import { Runner as CliRecipeGithubSyncLabels } from './recipe/github/sync-labels.js';
 import { Runner as CliRecipeGithubSyncPolicies } from './recipe/github/sync-policies.js';
+import { Runner as CliRecipeGithubSyncRulesets } from './recipe/github/sync-rulesets.js';
+import { Runner as CliRecipeGithubSyncSecurity } from './recipe/github/sync-security.js';
 import { Runner as CliRecipeLicenseUpdateCopyright } from './recipe/license/update-copyright.js';
 import { Runner as CliRecipePackageJsonCleanup } from './recipe/package-json/cleanup.js';
 import { Runner as CliRecipePackageJsonNormalizeArtifacts } from './recipe/package-json/normalize-artifacts.js';
@@ -508,7 +512,7 @@ class CLI {
       .description('Run all GitHub recipes')
       .commandsGroup('Subcommands:')
       .helpCommand(false)
-      .option('-d, --dry-run', 'Run without executing any GitHub commands')
+      .option('-d, --dry-run', 'Run read-only checks without changing GitHub settings')
       .action(async (options) => {
         await this.executeCommand<Cli_Index_CLI_RegisterCommands_RunRecipesOptions>({
           ...(options as Cli_Index_CLI_RegisterCommands_RecipeGithubOptions),
@@ -519,13 +523,25 @@ class CLI {
       });
 
     recipeGithub
+      .command('sync-actions')
+      .alias('sync-act')
+      .usage('[options]')
+      .description('Sync GitHub Actions permissions, token defaults, and artifact retention')
+      .option('-d, --dry-run', 'Run read-only checks without changing GitHub settings')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeGithubSyncActions['run']);
+
+        return;
+      });
+
+    recipeGithub
       .command('sync-features')
       .alias('sync-feat')
       .usage('[options]')
-      .description('Sync repository feature flags (issues, wiki, projects, discussions) to GitHub')
-      .option('-d, --dry-run', 'Run without executing any GitHub commands')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliRecipeGithubSyncFeatures['run']);
+      .description('Sync repository feature flags, including Sponsorships, to GitHub')
+      .option('-d, --dry-run', 'Run read-only checks without changing GitHub settings')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeGithubSyncFeatures['run']);
 
         return;
       });
@@ -535,9 +551,21 @@ class CLI {
       .alias('sync-id')
       .usage('[options]')
       .description('Sync repository identity (description, homepage URL, topics) to GitHub')
-      .option('-d, --dry-run', 'Run without executing any GitHub commands')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliRecipeGithubSyncIdentity['run']);
+      .option('-d, --dry-run', 'Run read-only checks without changing GitHub settings')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeGithubSyncIdentity['run']);
+
+        return;
+      });
+
+    recipeGithub
+      .command('sync-labels')
+      .alias('sync-lab')
+      .usage('[options]')
+      .description('Create or update configured GitHub repository labels')
+      .option('-d, --dry-run', 'Run read-only checks without changing GitHub settings')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeGithubSyncLabels['run']);
 
         return;
       });
@@ -547,9 +575,33 @@ class CLI {
       .alias('sync-pol')
       .usage('[options]')
       .description('Sync repository policies (visibility, merge methods, branch settings) to GitHub')
-      .option('-d, --dry-run', 'Run without executing any GitHub commands')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliRecipeGithubSyncPolicies['run']);
+      .option('-d, --dry-run', 'Run read-only checks without changing GitHub settings')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeGithubSyncPolicies['run']);
+
+        return;
+      });
+
+    recipeGithub
+      .command('sync-rulesets')
+      .alias('sync-rule')
+      .usage('[options]')
+      .description('Create or update Nova\'s managed default-branch ruleset')
+      .option('-d, --dry-run', 'Run read-only checks without changing GitHub settings')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeGithubSyncRulesets['run']);
+
+        return;
+      });
+
+    recipeGithub
+      .command('sync-security')
+      .alias('sync-sec')
+      .usage('[options]')
+      .description('Sync vulnerability, Dependabot, secret scanning, and push protection settings')
+      .option('-d, --dry-run', 'Run read-only checks without changing GitHub settings')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeGithubSyncSecurity['run']);
 
         return;
       });
@@ -579,8 +631,8 @@ class CLI {
       .description('Refresh the LICENSE copyright holder and year range from nova.config.json')
       .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliRecipeLicenseUpdateCopyright['run']);
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeLicenseUpdateCopyright['run']);
 
         return;
       });
@@ -618,8 +670,8 @@ class CLI {
       .description('Refresh the README.md badges region from nova.config.json')
       .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliRecipeReadMeUpdateBadges['run']);
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeReadMeUpdateBadges['run']);
 
         return;
       });
@@ -631,8 +683,8 @@ class CLI {
       .description('Refresh the README.md credits region from nova.config.json')
       .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliRecipeReadMeUpdateCredits['run']);
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeReadMeUpdateCredits['run']);
 
         return;
       });
@@ -644,8 +696,8 @@ class CLI {
       .description('Refresh the README.md documentation region from nova.config.json')
       .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliRecipeReadMeUpdateDocumentation['run']);
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeReadMeUpdateDocumentation['run']);
 
         return;
       });
@@ -657,8 +709,8 @@ class CLI {
       .description('Refresh the README.md header region from nova.config.json')
       .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliRecipeReadMeUpdateHeader['run']);
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeReadMeUpdateHeader['run']);
 
         return;
       });
@@ -670,8 +722,8 @@ class CLI {
       .description('Refresh the README.md introduction region from nova.config.json')
       .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliRecipeReadMeUpdateIntroduction['run']);
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeReadMeUpdateIntroduction['run']);
 
         return;
       });
@@ -705,7 +757,8 @@ class CLI {
       .usage('[options]')
       .description('Scaffold an Express.js workspace')
       .option('-d, --dry-run', 'Run without writing any files')
-      .option('--name <name>', 'Project or workspace name')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
       .option('--workspace-name <name>', 'Workspace directory name')
       .option('--output <dir>', 'Output directory')
       .action(async (options) => {
@@ -720,7 +773,8 @@ class CLI {
       .usage('[options]')
       .description('Scaffold a Next.js workspace')
       .option('-d, --dry-run', 'Run without writing any files')
-      .option('--name <name>', 'Project or workspace name')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
       .option('--workspace-name <name>', 'Workspace directory name')
       .option('--output <dir>', 'Output directory')
       .action(async (options) => {
@@ -734,7 +788,8 @@ class CLI {
       .usage('[options]')
       .description('Scaffold a Vite workspace')
       .option('-d, --dry-run', 'Run without writing any files')
-      .option('--name <name>', 'Project or workspace name')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
       .option('--workspace-name <name>', 'Workspace directory name')
       .option('--output <dir>', 'Output directory')
       .action(async (options) => {
@@ -748,7 +803,8 @@ class CLI {
       .usage('[options]')
       .description('Scaffold a Cloudflare Workers workspace')
       .option('-d, --dry-run', 'Run without writing any files')
-      .option('--name <name>', 'Project or workspace name')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
       .option('--workspace-name <name>', 'Workspace directory name')
       .option('--output <dir>', 'Output directory')
       .action(async (options) => {
@@ -769,9 +825,11 @@ class CLI {
       .usage('[options]')
       .description('Scaffold a Docusaurus documentation workspace')
       .option('-d, --dry-run', 'Run without writing any files')
-      .option('--name <name>', 'Project or workspace name')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
       .option('--workspace-name <name>', 'Workspace directory name')
       .option('--output <dir>', 'Output directory')
+      .option('--preset <name>', 'Nova visual preset')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliScaffoldDocsDocusaurus['run']);
 
@@ -792,6 +850,7 @@ class CLI {
       .description('Scaffold a base monorepo project without a framework workspace')
       .option('-d, --dry-run', 'Run without writing any files')
       .option('--name <name>', 'Project name')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
       .option('--output <dir>', 'Output directory')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliScaffoldStarterBase['run']);

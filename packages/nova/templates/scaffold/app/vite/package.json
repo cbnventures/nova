@@ -1,5 +1,5 @@
 {
-  "name": "[__PROJECT_SLUG__]",
+  "name": "[__WORKSPACE_PACKAGE_NAME__]",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,7 +11,7 @@
   "dependencies": {},
   "devDependencies": {
     "@types/node": "22.15.17",
-    "typescript": "5.8.3",
-    "vite": "6.3.5"
+    "typescript": "6.0.3",
+    "vite": "6.4.3"
   }
 }

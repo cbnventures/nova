@@ -1,0 +1,98 @@
+/**
+ * Tests - Documentation Contract - Documentation Contract.
+ *
+ * @since UNRELEASED
+ */
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_Cwd = string;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_NovaRoot = string;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_SharedTypes = string;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigReference = string;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_InitializeDocs = string;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigMatch = RegExpMatchArray | null;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigBlock = string;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigFields = string[];
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ExampleMatch = RegExpMatchArray | null;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ExampleConfig = Record<string, unknown>;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_DotenvDocs = string;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_WorkflowDocs = string;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_Reaches = string[];
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_RecipeRegistry = string;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_RunRecipesDocs = string;
+
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_RecipeCategories = string[];
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_Cwd = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_NovaRoot = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_DocsRoot = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_DocsEntries = string[];
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_DocsPagePath = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_DocsContent = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_FirstContent = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_RecipeRoot = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_RecipeEntries = string[];
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_RecipePagePath = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_RecipeContent = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_ToolkitRoot = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_ToolkitEntries = string[];
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_ToolkitPagePath = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_ToolkitContent = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_ConventionTemplate = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PageTemplates_ConventionGenerated = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_Cwd = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_NovaRoot = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_I18nCli = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_I18nDocs = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_I18nCommands = string[];
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_PresetTypes = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_ThemeDocs = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_IconMatch = RegExpMatchArray | null;
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_IconBlock = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_IconFields = string[];
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_VitestDocsRoot = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_VitestEntries = string[];
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_VitestPagePath = string;
+
+export type Tests_DocumentationContract_DocumentationContract_PresetContracts_VitestPage = string;

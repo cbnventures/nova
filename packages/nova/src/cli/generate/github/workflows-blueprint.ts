@@ -3,6 +3,7 @@ import { join } from 'node:path';
 
 import chalk from 'chalk';
 
+import { Runner as LibCorepack } from '../../../lib/corepack.js';
 import { libEnvNamespace } from '../../../lib/env-namespace.js';
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
@@ -182,6 +183,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Names,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_On,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_OnNode,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishCondition,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishConditionParts,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Reference,
@@ -223,11 +225,13 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScheduleDailyTrigger_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScheduleMonthlyTrigger_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScheduleWeeklyTrigger_Returns,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_NpmFlags,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ScriptName,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_TurboFlags,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_UseTurbo,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceCommands,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildTagPushTrigger_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildTagPushTrigger_Tags,
@@ -246,8 +250,16 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigger_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigger_Workflows,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_CommandArguments,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_PackageManager,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_PackageName,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_Command,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_PackageManager,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Template,
@@ -261,6 +273,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_JqObject,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Lines,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Run,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_RuntimeValues,
@@ -292,6 +305,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ExistingDirent,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ExistingEntries,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_GeneratedSet,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasPublishWorkflow,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_IsAtProjectRoot,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_IsBackup,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_IsDryRun,
@@ -300,6 +314,11 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Options,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_OrphanPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_OutputFileName,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJson,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJsonPath,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJsonRaw,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageManager,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ParsedPackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RawConfig,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RawContent,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_RawWorkflows,
@@ -320,6 +339,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_GithubAuthRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_GithubPublishRun_Dollar,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_GithubPublishRun_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_NpmAuthRun_Dollar,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_NpmAuthRun_Returns,
@@ -367,6 +387,9 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveWorkflowDisplayName_WorkflowId,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveWorkflowId_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveWorkflowId_Suffix,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_RunScriptCommand_PackageManager,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_RunScriptCommand_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_RunScriptCommand_ScriptName,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ScopePackageNameRun_Dollar,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ScopePackageNameRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Serialize_Lines,
@@ -534,6 +557,49 @@ export class Runner {
       process.exitCode = 1;
     }
 
+    // Publish workflows execute project-owned package scripts, so they require
+    // one exact Corepack descriptor before any workflow file is touched. The
+    // maintenance-only templates do not install project dependencies.
+    const hasPublishWorkflow: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasPublishWorkflow = validatedWorkflows.some((workflow) => workflow['template'] === 'publish');
+
+    let packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageManager = 'npm';
+
+    if (hasPublishWorkflow === true) {
+      const packageJsonPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJsonPath = join(currentDirectory, 'package.json');
+
+      let packageJson: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJson = {};
+
+      try {
+        const packageJsonRaw: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJsonRaw = await fs.readFile(packageJsonPath, 'utf-8');
+
+        packageJson = JSON.parse(packageJsonRaw) as Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJson;
+      } catch {
+        Logger.customize({
+          name: 'Runner.generate',
+          purpose: 'packageManager',
+        }).error('Failed to read or parse the project root "package.json".');
+
+        process.exitCode = 1;
+
+        return 'cancelled';
+      }
+
+      const parsedPackageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ParsedPackageManager = LibCorepack.parsePackageManager(packageJson['packageManager']);
+
+      if (parsedPackageManager === undefined) {
+        Logger.customize({
+          name: 'Runner.generate',
+          purpose: 'packageManager',
+        }).error('Publish workflows require an exact root "packageManager" descriptor for npm, pnpm, or Yarn.');
+
+        process.exitCode = 1;
+
+        return 'cancelled';
+      }
+
+      packageManager = parsedPackageManager['name'];
+    }
+
     const workflowsDirectory: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_WorkflowsDirectory = join(currentDirectory, '.github', 'workflows');
     const generatedSet: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_GeneratedSet = new Set();
     const setupLines: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SetupLines = [];
@@ -549,7 +615,7 @@ export class Runner {
 
       // Build output filename: nova-<template>[-<name>].yml.
       const outputFileName: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_OutputFileName = (suffix !== undefined) ? `nova-${template}-${suffix}.yml` : `nova-${template}.yml`;
-      const serialized: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized = Runner.dispatch(entry, workspaces, environment, validatedWorkflows, useTurbo);
+      const serialized: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized = Runner.dispatch(entry, workspaces, environment, validatedWorkflows, useTurbo, packageManager);
       const entrySetupLines: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_EntrySetupLines = Variables.collectSetupLines(entry, outputFileName, environment);
 
       generatedSet.add(outputFileName);
@@ -651,13 +717,14 @@ export class Runner {
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces}  workspaces    - Workspaces.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment} [environment] - Environment.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings}    [siblings]    - Siblings.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_UseTurbo}    [useTurbo]    - Use turbo.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_UseTurbo}      [useTurbo]      - Use turbo.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager} [packageManager] - Package manager.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns}
    *
    * @since 0.21.0
    */
-  public static dispatch(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = [], useTurbo: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_UseTurbo = true): Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns {
+  public static dispatch(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = [], useTurbo: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_UseTurbo = true, packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager = 'npm'): Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns {
     const template: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Template = entry['template'];
 
     let workflow: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workflow = undefined;
@@ -667,7 +734,7 @@ export class Runner {
     } else if (template === 'lock-inactive-issues') {
       workflow = Runner.buildLockInactiveIssues(entry, environment);
     } else {
-      workflow = Runner.buildPublish(entry, workspaces, environment, siblings, useTurbo);
+      workflow = Runner.buildPublish(entry, workspaces, environment, siblings, useTurbo, packageManager);
     }
 
     return Runner.serialize(workflow);
@@ -1053,13 +1120,14 @@ export class Runner {
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces}  workspaces    - Workspaces.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment} [environment] - Environment.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings}    [siblings]    - Siblings.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UseTurbo}    [useTurbo]    - Use turbo.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UseTurbo}      [useTurbo]      - Use turbo.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager} [packageManager] - Package manager.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns}
    *
    * @since 0.21.0
    */
-  public static buildPublish(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings = [], useTurbo: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UseTurbo = true): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns {
+  public static buildPublish(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings = [], useTurbo: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UseTurbo = true, packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager = 'npm'): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns {
     const suffix: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Suffix = entry['name'];
     const workflowId: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkflowId = Runner.resolveWorkflowId(suffix);
 
@@ -1277,8 +1345,8 @@ export class Runner {
       '//',
       ...names,
     ] : names;
-    const checkCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = Runner.buildScopeCommand('check', checkNames, useTurbo);
-    const buildCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildCommand = Runner.buildScopeCommand('build', names, useTurbo);
+    const checkCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = Runner.buildScopeCommand('check', checkNames, useTurbo, packageManager);
+    const buildCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildCommand = Runner.buildScopeCommand('build', names, useTurbo, packageManager);
 
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Steps = [
       {
@@ -1305,15 +1373,15 @@ export class Runner {
       },
       {
         name: 'Install packages',
-        run: Runner.installPackagesRun(),
+        run: Runner.installPackagesRun(packageManager),
         workingDirectory: Runner.expr('env.ROOT_DIR'),
       },
     ];
 
-    // Bake each scope's build-only environment values into that scope's .env
+    // Bake each scope's reach-build environment values into that scope's .env
     // before the shared check/build. Each value derives its GitHub name from
     // the app prefix; a Variable reads from vars, a Secret from secrets. A
-    // scope with no build-only values adds no step.
+    // scope with no reach-build values adds no step.
     for (const scope of scopes) {
       const buildValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildValues = Runner.appBuildValues(environment, scope);
 
@@ -1345,7 +1413,7 @@ export class Runner {
     if (useTurbo !== true) {
       steps.push({
         name: 'Check root',
-        run: 'npm run check',
+        run: Runner.runScriptCommand(packageManager, 'check'),
         workingDirectory: Runner.expr('env.ROOT_DIR'),
       });
     }
@@ -1423,6 +1491,7 @@ export class Runner {
         workflowSettings,
         workspace: workspaces[deployTarget['path']],
         environment,
+        packageManager,
       };
 
       // Every buildable deploy destination gets an explicit branch. There is no
@@ -1794,6 +1863,24 @@ export class Runner {
           uses: 'actions/checkout@v7',
         },
         {
+          name: 'Setup Node.js',
+          uses: 'actions/setup-node@v6',
+          with: [
+            {
+              key: 'node-version-file',
+              value: `${Runner.expr('env.ROOT_DIR')}/package.json`,
+            },
+            {
+              key: 'package-manager-cache',
+              value: false,
+            },
+          ],
+        },
+        {
+          name: 'Enable Corepack',
+          run: `corepack enable ${context['packageManager']}`,
+        },
+        {
           name: 'Download build artifacts',
           uses: 'actions/download-artifact@v8',
           with: [
@@ -1820,7 +1907,7 @@ export class Runner {
               value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_ACCOUNT_ID', targetSettings, workflowSettings, environment, appPath),
             },
           ],
-          run: `npx -y wrangler@3 pages deploy ${context['workingDir']}/build --project-name=${Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_PROJECT_NAME', targetSettings, workflowSettings, environment, appPath)} --branch=${Runner.expr('github.event.repository.default_branch')}`,
+          run: Runner.corepackDownloadCommand(context['packageManager'], 'wrangler@3', `pages deploy ${context['workingDir']}/build --project-name=${Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_PROJECT_NAME', targetSettings, workflowSettings, environment, appPath)} --branch=${Runner.expr('github.event.repository.default_branch')}`),
         },
       ],
     };
@@ -1858,7 +1945,7 @@ export class Runner {
       },
     ];
 
-    const deployRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployRun = 'npm run deploy';
+    const deployRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_DeployRun = Runner.runScriptCommand(context['packageManager'], 'deploy');
 
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Steps = [
       {
@@ -1881,7 +1968,7 @@ export class Runner {
       },
       {
         name: 'Install packages',
-        run: Runner.installPackagesRun(),
+        run: Runner.installPackagesRun(context['packageManager']),
         workingDirectory: Runner.expr('env.ROOT_DIR'),
       },
       {
@@ -1915,6 +2002,7 @@ export class Runner {
       vendor: 'cloudflare',
       runtimeValues,
       workingDir: context['workingDir'],
+      packageManager: context['packageManager'],
       extraEnv: [
         {
           key: 'CLOUDFLARE_API_TOKEN',
@@ -2468,6 +2556,7 @@ export class Runner {
       vendor: 'vercel',
       runtimeValues,
       workingDir: context['workingDir'],
+      packageManager: context['packageManager'],
       extraEnv: [{
         key: 'VERCEL_TOKEN',
         value: Runner.resolveScopedCredExpr(variables, 'VERCEL_TOKEN', targetSettings, workflowSettings, environment, appPath),
@@ -2600,49 +2689,135 @@ export class Runner {
   /**
    * CLI - Generate - GitHub - Workflows Blueprint - Build Scope Command.
    *
-   * Emits the shell command for a check or build step. A turbo
-   * project gets a turbo invocation with filter flags while one without
-   * turbo gets an npm invocation with workspace flags instead.
+   * Emits a check or build command through the selected Corepack client.
+   * Turbo projects use filters; other projects use native workspace syntax.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ScriptName}     scriptName     - Script name.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames} workspaceNames - Workspace names.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_UseTurbo}       useTurbo       - Use turbo.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_PackageManager} packageManager - Package manager.
    *
    * @private
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Returns}
    *
-   * @since 0.21.0
+   * @since 0.26.0
    */
-  private static buildScopeCommand(scriptName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ScriptName, workspaceNames: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames, useTurbo: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_UseTurbo): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Returns {
+  private static buildScopeCommand(scriptName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ScriptName, workspaceNames: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames, useTurbo: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_UseTurbo, packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_PackageManager): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Returns {
     if (useTurbo === true) {
       const turboFlags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_TurboFlags = workspaceNames.map((name) => `--filter=${name}`);
 
-      return `npx turbo run ${scriptName} ${turboFlags.join(' ')} --concurrency=2`;
+      return `${Runner.corepackExecuteCommand(packageManager, 'turbo')} run ${scriptName} ${turboFlags.join(' ')} --concurrency=2`;
     }
 
-    const npmFlags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_NpmFlags = workspaceNames.map((name) => `-w ${name}`);
+    if (packageManager === 'yarn') {
+      const workspaceCommands: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceCommands = workspaceNames.map((name) => `yarn workspace ${name} run ${scriptName}`);
 
-    return `npm run ${scriptName} ${npmFlags.join(' ')}`;
+      return workspaceCommands.join('\n');
+    }
+
+    const workspaceFlags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags = workspaceNames.map((name) => (packageManager === 'pnpm') ? `--filter=${name}` : `-w ${name}`);
+
+    if (packageManager === 'pnpm') {
+      return `pnpm ${workspaceFlags.join(' ')} run ${scriptName}`;
+    }
+
+    return `npm run ${scriptName} ${workspaceFlags.join(' ')}`;
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Corepack Download Command.
+   *
+   * Returns a one-off package download command through the selected
+   * Corepack client without changing the project's dependencies.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_PackageManager}   packageManager   - Package manager.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_PackageName}      packageName      - Package name.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_CommandArguments} commandArguments - Command arguments.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static corepackDownloadCommand(packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_PackageManager, packageName: Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_PackageName, commandArguments: Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_CommandArguments): Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_Returns {
+    if (packageManager === 'npm') {
+      return `npx -y ${packageName} ${commandArguments}`;
+    }
+
+    if (packageManager === 'pnpm') {
+      return `pnpm dlx ${packageName} ${commandArguments}`;
+    }
+
+    return `yarn dlx ${packageName} ${commandArguments}`;
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Corepack Execute Command.
+   *
+   * Returns a local package executable command through the selected
+   * Corepack client so project tools use the configured client.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_PackageManager} packageManager - Package manager.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_Command}        command        - Command.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static corepackExecuteCommand(packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_PackageManager, command: Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_Command): Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_Returns {
+    if (packageManager === 'npm') {
+      return `npx ${command}`;
+    }
+
+    if (packageManager === 'pnpm') {
+      return `pnpm exec ${command}`;
+    }
+
+    return `yarn exec ${command}`;
   }
 
   /**
    * CLI - Generate - GitHub - Workflows Blueprint - Install Packages Run.
    *
-   * Returns the shared install command that upgrades npm globally then
-   * installs the project's dependencies.
+   * Enables the selected Corepack client and installs project dependencies.
+   * Corepack reads the exact client version from the root package descriptor.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_PackageManager} packageManager - Package manager.
    *
    * @private
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_Returns}
    *
-   * @since 0.21.0
+   * @since 0.26.0
    */
-  private static installPackagesRun(): Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_Returns {
+  private static installPackagesRun(packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_PackageManager): Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_Returns {
     return [
-      'npm install -g npm@latest',
-      'npm install',
+      `corepack enable ${packageManager}`,
+      `${packageManager} install`,
     ].join('\n');
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Run Script Command.
+   *
+   * Returns a project script command through the selected Corepack client.
+   * The caller supplies the package script name without extra arguments.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_RunScriptCommand_PackageManager} packageManager - Package manager.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_RunScriptCommand_ScriptName}     scriptName     - Script name.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_RunScriptCommand_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static runScriptCommand(packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_RunScriptCommand_PackageManager, scriptName: Cli_Generate_Github_WorkflowsBlueprint_Runner_RunScriptCommand_ScriptName): Cli_Generate_Github_WorkflowsBlueprint_Runner_RunScriptCommand_Returns {
+    return `${packageManager} run ${scriptName}`;
   }
 
   /**
@@ -2847,6 +3022,7 @@ export class Runner {
     const vendor: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Vendor = options['vendor'];
     const runtimeValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_RuntimeValues = options['runtimeValues'];
     const workingDir: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_WorkingDir = options['workingDir'];
+    const packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_PackageManager = options['packageManager'] ?? 'npm';
     const extraEnv: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_ExtraEnv = options['extraEnv'];
 
     // A target the config never gives a runtime value skips the sync entirely.
@@ -2879,14 +3055,14 @@ export class Runner {
         const jqObject: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_JqObject = secretValues.map((value) => value['key']).join(', ');
 
         lines.push(`DECLARED="${secretDeclared}"`);
-        lines.push('npx wrangler secret list | jq -r \'.[].name\' | while read -r name; do');
+        lines.push(`${Runner.corepackExecuteCommand(packageManager, 'wrangler')} secret list | jq -r '.[].name' | while read -r name; do`);
         lines.push('  case " $DECLARED " in');
         lines.push('    *" $name "*) ;;');
-        lines.push('    *) echo "Removing undeclared secret: $name"; npx wrangler secret delete "$name" --force ;;');
+        lines.push(`    *) echo "Removing undeclared secret: $name"; ${Runner.corepackExecuteCommand(packageManager, 'wrangler')} secret delete "$name" --force ;;`);
         lines.push('  esac');
         lines.push('done');
         lines.push('echo "Syncing declared secrets: $DECLARED"');
-        lines.push(`jq -n 'env | {${jqObject}}' | npx wrangler secret bulk /dev/stdin`);
+        lines.push(`jq -n 'env | {${jqObject}}' | ${Runner.corepackExecuteCommand(packageManager, 'wrangler')} secret bulk /dev/stdin`);
       }
 
       // Variable channel: a plaintext runtime var rides the deploy, one redeploy
@@ -2896,7 +3072,7 @@ export class Runner {
         const varFlags: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_VarFlags = variableValues.map((value) => `--var ${value['key']}:"$${value['key']}"`).join(' ');
 
         lines.push(`echo "Syncing declared vars: ${varDeclared}"`);
-        lines.push(`npx wrangler deploy ${varFlags}`);
+        lines.push(`${Runner.corepackExecuteCommand(packageManager, 'wrangler')} deploy ${varFlags}`);
       }
     } else {
       // Vercel keeps one env store per deployment, so removal runs once over the

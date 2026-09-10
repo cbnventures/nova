@@ -38,6 +38,7 @@ import type {
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesFontsDisplay,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesFooter,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_OverridesNavbar,
+  Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_PersistentCache,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Plugins,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_PluginsBlog,
   Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_PluginsDocs,
@@ -230,8 +231,20 @@ describe('configDrift validateOptions', async () => {
             containerId: 'GTM-XXXXXX',
           },
         },
+        persistentCache: true,
         progressBar: {
-          color: '#DC2626',
+          minimum: 0.1,
+          easing: 'linear',
+          positionUsing: 'translate3d',
+          speed: 300,
+          trickle: false,
+          trickleRate: 0.05,
+          trickleSpeed: 1_000,
+          showSpinner: false,
+          barSelector: '[data-progress-bar]',
+          spinnerSelector: '[data-progress-spinner]',
+          parent: '#progress-root',
+          template: '<div data-progress-bar></div><div data-progress-spinner></div>',
         },
         search: {
           language: [
@@ -304,9 +317,26 @@ describe('configDrift validateOptions', async () => {
 
     strictEqual(analyticsGtmContainerId, 'GTM-XXXXXX');
 
+    const persistentCache: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_PersistentCache = result['persistentCache'];
+
+    strictEqual(persistentCache, true);
+
     const progressBar: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_ProgressBar = result['progressBar'];
 
-    strictEqual(typeof progressBar, 'object');
+    deepStrictEqual(progressBar, {
+      minimum: 0.1,
+      easing: 'linear',
+      positionUsing: 'translate3d',
+      speed: 300,
+      trickle: false,
+      trickleRate: 0.05,
+      trickleSpeed: 1_000,
+      showSpinner: false,
+      barSelector: '[data-progress-bar]',
+      spinnerSelector: '[data-progress-spinner]',
+      parent: '#progress-root',
+      template: '<div data-progress-bar></div><div data-progress-spinner></div>',
+    });
 
     const search: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Search = result['search'];
 

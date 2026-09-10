@@ -1,22 +1,36 @@
-import { resolve } from 'node:path';
+import {
+  join,
+  relative,
+  resolve,
+} from 'node:path';
 
 import prompts from 'prompts';
 
-import { createMonorepoRoot, detectMonorepoContext, promptPostScaffoldGenerators } from '../../../lib/scaffold.js';
+import { LIB_REGEX_PATTERN_SLUG_SIMPLE } from '../../../lib/regex.js';
+import {
+  createMonorepoRoot,
+  detectMonorepoContext,
+  findFileConflicts,
+  promptPostScaffoldGenerators,
+} from '../../../lib/scaffold.js';
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
   Cli_Scaffold_Starter_Base_Runner_Run_Cancelled,
+  Cli_Scaffold_Starter_Base_Runner_Run_ConflictingPaths,
+  Cli_Scaffold_Starter_Base_Runner_Run_ConflictMessage,
   Cli_Scaffold_Starter_Base_Runner_Run_Context,
   Cli_Scaffold_Starter_Base_Runner_Run_CurrentDirectory,
   Cli_Scaffold_Starter_Base_Runner_Run_DirectoryAnswers,
   Cli_Scaffold_Starter_Base_Runner_Run_DirectoryChoices,
   Cli_Scaffold_Starter_Base_Runner_Run_IsDryRun,
+  Cli_Scaffold_Starter_Base_Runner_Run_IsNonInteractive,
   Cli_Scaffold_Starter_Base_Runner_Run_NameAnswers,
   Cli_Scaffold_Starter_Base_Runner_Run_NameQuestions,
   Cli_Scaffold_Starter_Base_Runner_Run_Options,
   Cli_Scaffold_Starter_Base_Runner_Run_OutputAnswers,
   Cli_Scaffold_Starter_Base_Runner_Run_OutputDirectory,
+  Cli_Scaffold_Starter_Base_Runner_Run_PlannedPaths,
   Cli_Scaffold_Starter_Base_Runner_Run_ResolvedName,
   Cli_Scaffold_Starter_Base_Runner_Run_ResolvedOutput,
   Cli_Scaffold_Starter_Base_Runner_Run_Returns,
@@ -48,6 +62,7 @@ export class Runner {
   public static async run(options: Cli_Scaffold_Starter_Base_Runner_Run_Options): Cli_Scaffold_Starter_Base_Runner_Run_Returns {
     const currentDirectory: Cli_Scaffold_Starter_Base_Runner_Run_CurrentDirectory = process.cwd();
     const isDryRun: Cli_Scaffold_Starter_Base_Runner_Run_IsDryRun = options['dryRun'] === true;
+    const isNonInteractive: Cli_Scaffold_Starter_Base_Runner_Run_IsNonInteractive = options['nonInteractive'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
@@ -58,6 +73,17 @@ export class Runner {
 
     // Detect monorepo context.
     const context: Cli_Scaffold_Starter_Base_Runner_Run_Context = await detectMonorepoContext(currentDirectory);
+
+    if (context['context'] === 'invalid') {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'context',
+      }).error(`${context['reason']} No scaffold files were written.`);
+
+      process.exitCode = 1;
+
+      return;
+    }
 
     if (context['context'] === 'nested') {
       Logger.customize({
@@ -92,6 +118,23 @@ export class Runner {
       return;
     }
 
+    if (
+      isNonInteractive === true
+      && (
+        options['name'] === undefined
+        || options['output'] === undefined
+      )
+    ) {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'validate',
+      }).error('Non-interactive scaffolding requires --name and --output.');
+
+      process.exitCode = 1;
+
+      return;
+    }
+
     let cancelled: Cli_Scaffold_Starter_Base_Runner_Run_Cancelled = false;
 
     // Prompt for project name.
@@ -106,9 +149,13 @@ export class Runner {
       });
     }
 
-    const nameAnswers: Cli_Scaffold_Starter_Base_Runner_Run_NameAnswers = await prompts(nameQuestions, {
-      onCancel: () => false,
-    });
+    let nameAnswers: Cli_Scaffold_Starter_Base_Runner_Run_NameAnswers = {};
+
+    if (nameQuestions.length > 0) {
+      nameAnswers = await prompts(nameQuestions, {
+        onCancel: () => false,
+      });
+    }
 
     if (options['name'] === undefined && nameAnswers['name'] === undefined) {
       cancelled = true;
@@ -119,6 +166,17 @@ export class Runner {
     }
 
     const resolvedName: Cli_Scaffold_Starter_Base_Runner_Run_ResolvedName = (options['name'] ?? nameAnswers['name']) as Cli_Scaffold_Starter_Base_Runner_Run_ResolvedName;
+
+    if (LIB_REGEX_PATTERN_SLUG_SIMPLE.test(resolvedName) === false) {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'validate',
+      }).error('The project name must be a lowercase slug containing only letters, numbers, hyphens, or underscores. No scaffold files were written.');
+
+      process.exitCode = 1;
+
+      return;
+    }
 
     // Determine output directory.
     let outputDirectory: Cli_Scaffold_Starter_Base_Runner_Run_OutputDirectory = undefined;
@@ -192,7 +250,31 @@ export class Runner {
       purpose: 'config',
     }).info(`Scaffolding starter monorepo "${resolvedName}" in "${outputDirectory}".`);
 
+    const plannedPaths: Cli_Scaffold_Starter_Base_Runner_Run_PlannedPaths = [
+      join(outputDirectory, 'package.json'),
+      join(outputDirectory, 'nova.config.json'),
+    ];
+    const conflictingPaths: Cli_Scaffold_Starter_Base_Runner_Run_ConflictingPaths = await findFileConflicts(plannedPaths);
+
+    if (conflictingPaths.length > 0) {
+      const conflictMessage: Cli_Scaffold_Starter_Base_Runner_Run_ConflictMessage = conflictingPaths.map((conflictingPath) => relative(outputDirectory, conflictingPath)).join(', ');
+
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'validate',
+      }).error(`Scaffolding would overwrite files Nova does not own: ${conflictMessage}. Move or remove those files, then run the command again. No scaffold files were written.`);
+
+      process.exitCode = 1;
+
+      return;
+    }
+
     if (isDryRun === true) {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'dryRun',
+      }).info(`Would create monorepo root at "${outputDirectory}".`);
+
       return;
     }
 
@@ -205,7 +287,9 @@ export class Runner {
     }).info('Scaffold complete for starter monorepo.');
 
     // Post-scaffold generators.
-    await promptPostScaffoldGenerators(outputDirectory);
+    if (isNonInteractive === false) {
+      await promptPostScaffoldGenerators(outputDirectory);
+    }
 
     return;
   }

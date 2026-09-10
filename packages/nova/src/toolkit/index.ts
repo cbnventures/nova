@@ -3,3 +3,4 @@ export { default as CLIHeader } from './cli-header.js';
 export { default as Logger } from './logger.js';
 export { default as MarkdownTable } from './markdown-table.js';
 export { default as NovaIdentity } from './nova-identity.js';
+export { default as VitestSetup } from './vitest-setup.js';

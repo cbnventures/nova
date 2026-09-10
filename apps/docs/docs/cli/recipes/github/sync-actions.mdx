@@ -1,0 +1,110 @@
+---
+id: "sync-actions"
+title: "Sync Actions"
+description: "Sync repository-level GitHub Actions permissions, workflow token defaults, review permissions, and artifact retention from nova.config.json."
+keywords:
+  - "nova"
+  - "sync-actions"
+  - "github actions"
+  - "workflow permissions"
+  - "artifact retention"
+tags:
+  - "cli"
+  - "sync-actions"
+  - "recipe"
+  - "github"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Sync **repository-level GitHub Actions settings** from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Summary
+
+The `sync-actions` recipe reconciles whether Actions are enabled, which actions may run, workflow token permissions, pull-request review permission, and artifact retention. It changes repository settings through the [GitHub Actions REST API](https://docs.github.com/en/rest/actions/permissions).
+
+An omitted field is not a default: Nova leaves that GitHub setting untouched. An omitted or empty `github.actions` block produces no mutations.
+
+## Why Use This Command?
+
+1. Prevent a newly created repository from inheriting an accidental Actions policy.
+2. Keep the default `GITHUB_TOKEN` permission narrow and reviewable.
+3. Reapply allowed-action and retention choices after manual GitHub UI changes.
+
+## Requirements
+
+- **`gh` CLI ≥ 2.40.0** — The GitHub CLI must be installed and authenticated.
+- **Repository administration access** — The authenticated user must be able to change Actions settings.
+- **`github.owner` and `github.repo`** — Both fields identify the target repository.
+
+## Behavior
+
+| Field                          | Allowed values                  | What it controls                                                                 |
+|--------------------------------|---------------------------------|----------------------------------------------------------------------------------|
+| `enabled`                      | `boolean`                       | Whether GitHub Actions may run in the repository.                                |
+| `allowedActions`               | `all`, `local-only`, `selected` | Which actions and reusable workflows may run.                                    |
+| `shaPinningRequired`           | `boolean`                       | Whether actions must be pinned to a full commit SHA.                             |
+| `selectedActions.githubOwned`  | `boolean`                       | Allows actions authored by GitHub when `allowedActions` is `selected`.           |
+| `selectedActions.verified`     | `boolean`                       | Allows Marketplace actions from verified creators.                               |
+| `selectedActions.patterns`     | `string[]`                      | Allows matching action or reusable-workflow references.                          |
+| `defaultWorkflowPermissions`   | `read`, `write`                 | Default `GITHUB_TOKEN` repository permission.                                    |
+| `canApprovePullRequestReviews` | `boolean`                       | Whether GitHub Actions may create or approve pull-request reviews.               |
+| `artifactRetentionDays`        | integer `1`–`400`               | Default artifact and log retention. GitHub may impose a lower plan-specific max. |
+
+`enabled` is required when `allowedActions` or `shaPinningRequired` is configured. `selectedActions` is valid only with `allowedActions: "selected"`. An explicit empty `patterns` array is preserved and clears custom allowlist patterns.
+
+## Settings
+
+```json
+{
+  "github": {
+    "actions": {
+      "enabled": true,
+      "allowedActions": "selected",
+      "shaPinningRequired": true,
+      "selectedActions": {
+        "githubOwned": true,
+        "verified": false,
+        "patterns": ["acme/*", "octo-org/octo-repo@*"]
+      },
+      "defaultWorkflowPermissions": "read",
+      "canApprovePullRequestReviews": false,
+      "artifactRetentionDays": 30
+    }
+  },
+  "recipes": {
+    "github": {
+      "sync-actions": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe github sync-actions [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe github sync-actions [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag            | Description                                                |
+|-----------------|------------------------------------------------------------|
+| `-d, --dry-run` | Run read-only checks without changing any GitHub settings. |

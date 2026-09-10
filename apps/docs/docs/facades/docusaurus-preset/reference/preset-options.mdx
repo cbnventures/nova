@@ -1,7 +1,7 @@
 ---
 id: "preset-options"
 title: "Preset Options"
-description: "Configure the Nova Docusaurus preset with this full reference covering preset selection, overrides, analytics, search, and progress bar."
+description: "Configure every Nova-owned Docusaurus preset setting, including preset selection, overrides, webpack caching, analytics, search, icons, bundle limits, and route progress."
 sidebar_position: 1
 keywords:
   - "nova"
@@ -9,9 +9,11 @@ keywords:
   - "preset options"
   - "overrides"
   - "analytics"
+  - "webpack cache"
   - "search config"
   - "progress bar"
   - "preset selection"
+  - "persistent cache"
 tags:
   - "facades"
   - "reference"
@@ -19,9 +21,11 @@ tags:
   - "configuration"
 ---
 
-# Preset Options
+Configure every Nova-owned setting for `@cbnventures/docusaurus-preset-nova` in `docusaurus.config.ts`.
 
-Full reference for the first argument passed to `@cbnventures/docusaurus-preset-nova` in `docusaurus.config.ts`. These options control which preset is active, what overrides are applied, and how plugins behave.
+:::info Which defaults are these?
+Every default on this page is chosen or stabilized by Nova. Defaults for the forwarded Docusaurus content plugins are labeled separately in the Plugin Options reference.
+:::
 
 ## Top-Level Options
 
@@ -33,6 +37,7 @@ presets: [[
     overrides: { /* ... */ },
     plugins: { /* ... */ },
     analytics: { /* ... */ },
+    persistentCache: false,
     search: { /* ... */ },
     progressBar: true,
     iconSafelist: ['logos:slack'],
@@ -41,16 +46,17 @@ presets: [[
 ]],
 ```
 
-| Option              | Type                                                                       | Default | Description                                             |
-|---------------------|----------------------------------------------------------------------------|---------|---------------------------------------------------------|
-| `preset`            | `'envoy' \| 'foundry' \| 'lantern' \| 'marshal' \| 'sentinel' \| 'signal'` | —       | Which visual preset to use. Required.                   |
-| `overrides`         | `object`                                                                   | `{}`    | Override individual preset values. See Overrides below. |
-| `plugins`           | `object`                                                                   | `{}`    | Plugin configuration. See Plugin Options reference.     |
-| `analytics`         | `object`                                                                   | `{}`    | Analytics integrations. See Analytics below.            |
-| `search`            | `object \| false`                                                          | `false` | Search configuration. `false` disables search entirely. |
-| `progressBar`       | `boolean \| object`                                                        | `false` | Enable the NProgress loading bar.                       |
-| `iconSafelist`      | `string[]`                                                                 | `[]`    | Icon names to always bundle. See Icon Safelist below.   |
-| `maxBundleFileSize` | `number \| false`                                                          | `3`     | Max MiB per JS bundle file. See Bundle Size below.      |
+| Option              | Type                                                                       | Nova default | Description                                                                      |
+|---------------------|----------------------------------------------------------------------------|--------------|----------------------------------------------------------------------------------|
+| `preset`            | `'envoy' \| 'foundry' \| 'lantern' \| 'marshal' \| 'sentinel' \| 'signal'` | —            | Select the visual preset. Required.                                              |
+| `overrides`         | `object`                                                                   | `{}`         | Override individual preset values. See Overrides below.                          |
+| `plugins`           | `object`                                                                   | `{}`         | Configure the included Docusaurus content plugins. See Plugin Options.           |
+| `analytics`         | `object`                                                                   | `{}`         | Configure conditional analytics integrations. See Analytics below.               |
+| `persistentCache`   | `boolean`                                                                  | `false`      | Choose whether webpack may retain filesystem caches.                             |
+| `search`            | `object \| false`                                                          | `false`      | Configure Nova local search. `false` disables indexing and the search interface. |
+| `progressBar`       | `boolean \| object`                                                        | `false`      | Configure the route-transition progress bar.                                     |
+| `iconSafelist`      | `string[]`                                                                 | `[]`         | Bundle dynamically constructed Iconify identifiers.                              |
+| `maxBundleFileSize` | `number \| false`                                                          | `3`          | Set the maximum emitted JavaScript file size in MiB, or disable the guard.       |
 
 ## Overrides
 
@@ -101,15 +107,57 @@ The `primary` and `secondary` colors expand to 11-level shade scales (50 through
 | `analytics.gtm`             | `object \| undefined` | `undefined` | Google Tag Manager configuration.         |
 | `analytics.gtm.containerId` | `string`              | —           | GTM container ID (e.g., `'GTM-XXXXXXX'`). |
 
+## Webpack Cache
+
+Nova avoids persistent webpack cache files by default so multilingual development sessions and builds do not accumulate a separate disk cache for every locale and compiler target.
+
+- `docusaurus start` uses webpack's in-memory cache for fast rebuilds during the current development session.
+- `docusaurus build` disables webpack caching because a production build does not benefit from retaining those files afterward.
+
+Set `persistentCache` to `true` to leave Docusaurus's filesystem cache behavior unchanged. This can make repeated builds faster in environments with enough disk space.
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'envoy',
+  persistentCache: true,
+}
+```
+
 ## Search
 
 See **[Search](/docs/facades/docusaurus-preset/systems/search)** for the full options table and explanation.
 
 ## Progress Bar
 
-| Option        | Type                | Default | Description                                |
-|---------------|---------------------|---------|--------------------------------------------|
-| `progressBar` | `boolean \| object` | `false` | Set to `true` to enable the NProgress bar. |
+Set `progressBar` to `true` to use all Nova defaults, or pass an object to override individual behavior. The bar starts when Docusaurus begins a client-side route update and completes after the next route has been preloaded. It does not flash during the initial page load.
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'envoy',
+  progressBar: {
+    showSpinner: false,
+    speed: 250,
+  },
+}
+```
+
+| Option                        | Type                                             | Nova default                | Description                                                                 |
+|-------------------------------|--------------------------------------------------|-----------------------------|-----------------------------------------------------------------------------|
+| `progressBar`                 | `boolean \| object`                              | `false`                     | Enable route progress with defaults or provide the configuration below.     |
+| `progressBar.minimum`         | `number`                                         | `0.08`                      | Set the initial visible progress between `0` and `1`.                       |
+| `progressBar.easing`          | `string`                                         | `'ease'`                    | Set the CSS transition timing function.                                     |
+| `progressBar.positionUsing`   | `'' \| 'translate3d' \| 'translate' \| 'margin'` | `''`                        | Choose the positioning method; empty lets the implementation detect one.    |
+| `progressBar.speed`           | `number`                                         | `200`                       | Set transition duration in milliseconds.                                    |
+| `progressBar.trickle`         | `boolean`                                        | `true`                      | Increment the unfinished bar automatically.                                 |
+| `progressBar.trickleRate`     | `number`                                         | `0.02`                      | Add this fraction during each trickle step, between `0` and `1`.            |
+| `progressBar.trickleSpeed`    | `number`                                         | `800`                       | Wait this many milliseconds between trickle steps.                          |
+| `progressBar.showSpinner`     | `boolean`                                        | `true`                      | Render the spinner defined by the template.                                 |
+| `progressBar.barSelector`     | `string`                                         | `'[role="bar"]'`            | Find the progress-bar element inside the template.                          |
+| `progressBar.spinnerSelector` | `string`                                         | `'[role="spinner"]'`        | Find the spinner element inside the template.                               |
+| `progressBar.parent`          | `string`                                         | `'body'`                    | Mount the generated progress markup inside this CSS selector.               |
+| `progressBar.template`        | `string`                                         | Built-in bar/spinner markup | Replace the generated HTML; keep it aligned with the two selector settings. |
+
+The supported fields above receive stable Nova defaults. Additional advanced fields are forwarded to the bundled progress implementation, but Nova does not assign them a compatibility guarantee.
 
 ## Icon Safelist
 
@@ -138,3 +186,7 @@ Raise the limit if a site has a genuinely large legitimate chunk, or set it to `
   maxBundleFileSize: 5, // mebibytes (MiB); or false to disable
 }
 ```
+
+## Included Stack
+
+Nova installs and coordinates more than the four configurable content plugins. See [Preset Stack](/docs/facades/docusaurus-preset/reference/preset-stack) for every included plugin, runtime, build-time integration, CLI dependency, and required peer—plus how each one is activated and used.

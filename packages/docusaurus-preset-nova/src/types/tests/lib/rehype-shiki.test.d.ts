@@ -97,6 +97,32 @@ export type Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Inc
 export type Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_IncludesMarker = boolean;
 
 /**
+ * Tests - Lib - Rehype Shiki - Rehype Shiki - Ignores Live Words Inside Quoted Titles.
+ *
+ * @since 0.22.0
+ */
+export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_Type = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree = {
+  type: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_Type;
+  tagName?: string;
+  properties?: Record<string, unknown>;
+  children?: Array<Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree>;
+  value?: string;
+  data?: Record<string, unknown>;
+};
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Transformer = (tree: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree) => Promise<void>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_OutputNode = Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree | undefined;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_OutputJson = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_IncludesTitle = boolean;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_IncludesLive = boolean;
+
+/**
  * Tests - Lib - Rehype Shiki - Rehype Shiki - Marks Add And Remove Lines From Add Start Remove Start Magic Comments And Strips The Markers.
  *
  * @since 0.15.0

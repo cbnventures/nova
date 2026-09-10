@@ -21,6 +21,8 @@ import TabItem from '@theme/TabItem';
 
 Scaffold a **Cloudflare Workers** workspace with TypeScript.
 
+You can run this directly from an empty location; `scaffold starter base` is not a prerequisite. Nova creates the monorepo root and the first Workers workspace together.
+
 ## Why Use This Command?
 
 - Installs Wrangler with Cloudflare Workers types and TypeScript so you can run `wrangler dev` against the edge runtime right away.
@@ -61,12 +63,13 @@ Scaffold a **Cloudflare Workers** workspace with TypeScript.
 
 ## Options
 
-| Flag                      | Description                    |
-|---------------------------|--------------------------------|
-| `-d, --dry-run`           | Run without writing any files. |
-| `--name <name>`           | Project or workspace name.     |
-| `--workspace-name <name>` | Workspace directory name.      |
-| `--output <dir>`          | Output directory.              |
+| Flag                      | Description                                                          |
+|---------------------------|----------------------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                                       |
+| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
+| `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
+| `--workspace-name <name>` | Workspace directory name.                                            |
+| `--output <dir>`          | Output directory.                                                    |
 
 ## Output Structure
 
@@ -86,11 +89,11 @@ Scaffold a **Cloudflare Workers** workspace with TypeScript.
 
 ## Config Fields
 
-| Field                | Description                                                                                                                                                        |
-|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `project.name.slug`  | Read in workspace mode to derive the registered workspace name; registration is skipped with a warning if absent. In monorepo mode, written from the project name. |
-| `project.name.title` | Written in monorepo mode, title-cased from the project slug.                                                                                                       |
-| `workspaces`         | A `workspaces` entry is written for the new workspace: `name` (`{projectSlug}-app-{workspaceName}`), `role` (`app`), and `policy` (`freezable`).                   |
+| Field                | Description                                                                                                                                                  |
+|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `project.name.slug`  | Required in workspace mode and used to derive the package and registered workspace name. In monorepo mode, written from `--name` or the project-name answer. |
+| `project.name.title` | Written in monorepo mode, title-cased from the project slug.                                                                                                 |
+| `workspaces`         | A `workspaces` entry is written for the new workspace: `name` (`{projectSlug}-app-{workspaceName}`), `role` (`app`), and `policy` (`freezable`).             |
 
 ## How It Works
 
@@ -108,17 +111,45 @@ When run without flags, the command walks you through an interactive wizard:
 
 **Workspace mode** (`package.json` with `workspaces` found):
 
-1. **Package name** — Enter a slug for the workspace package (e.g. `my-worker`).
-2. **Workspace name** — Enter a slug for the workspace directory (default: `workers`).
-3. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
+1. **Workspace name** — Enter a slug for the workspace directory (default: `workers`).
+2. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
+
+Nova reads the project slug from the root `nova.config.json`; it does not ask you to rename the project or package.
 
 ### Non-Interactive Mode
 
-Provide `--name`, `--workspace-name`, and `--output` to skip all prompts:
+Agents and automation should add `--non-interactive`. A new monorepo needs `--name`, `--workspace-name`, and `--output`. An existing monorepo needs only `--workspace-name` and `--output`; omit `--name` because Nova reads the root project slug.
 
-```bash
-nova scaffold app workers --name my-worker --workspace-name workers --output ./my-worker
-```
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # New monorepo plus its first app
+    nova scaffold app workers --non-interactive --name my-worker --workspace-name worker --output ./my-worker
+
+    # Add another app from an existing Nova monorepo root
+    nova scaffold app workers --non-interactive --workspace-name worker --output ./apps/worker
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # New monorepo plus its first app
+    npx --yes @cbnventures/nova@latest scaffold app workers --non-interactive --name my-worker --workspace-name worker --output ./my-worker
+
+    # Add another app from an existing Nova monorepo root
+    npx --yes @cbnventures/nova@latest scaffold app workers --non-interactive --workspace-name worker --output ./apps/worker
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Naming, Registration, and Safety
+
+For project slug `my-worker` and workspace slug `worker`, Nova uses `my-worker-app-worker` for both the package name and Wrangler service name, and writes the same identity to `nova.config.json`. If the root `workspaces` globs do not include the selected output, Nova adds that exact relative path to the root `package.json`.
+
+Before writing, Nova requires a readable root `package.json` and `nova.config.json`, keeps the output inside the monorepo, rejects duplicate paths and names, and lists any template files it would overwrite. `--dry-run` performs these checks without changing the project.
 
 ## Next Steps
 

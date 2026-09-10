@@ -37,6 +37,8 @@ import type {
   Shared_BlueprintWithMap,
   Shared_BlueprintWithMapEntry_Value,
   Shared_BlueprintWorkflow,
+  Shared_CorepackPackageManager,
+  Shared_CorepackPackageManagerDescriptor,
   Shared_GeneratorRunResult,
   Shared_NovaConfig,
   Shared_NovaConfig_Workspaces,
@@ -49,13 +51,13 @@ import type {
   Shared_NovaConfigEnvironmentWorkflow_Prefix,
   Shared_NovaConfigEnvironmentWorkspace,
   Shared_NovaConfigEnvironmentWorkspace_Prefix,
-  Shared_NovaConfigWorkflow_DependsOn,
   Shared_NovaConfigWorkflow_Settings,
   Shared_NovaConfigWorkflow_Suffix,
   Shared_NovaConfigWorkflow_Template,
   Shared_NovaConfigWorkflowTarget_Settings,
   Shared_NovaConfigWorkflowTargetNeedsEntry,
   Shared_NovaConfigWorkflowTriggerObject_Tags,
+  Shared_NovaConfigWorkflowTriggerObject_Workflows,
   Shared_NovaConfigWorkspace,
   Shared_WorkflowTemplateTarget,
   Shared_WorkflowTemplateTarget_ArtifactPaths,
@@ -441,6 +443,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings 
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UseTurbo = boolean;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager = Shared_CorepackPackageManager;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns = Shared_BlueprintWorkflow;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Suffix = Shared_NovaConfigWorkflow_Suffix;
@@ -459,7 +463,7 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNamePa
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Triggers = Shared_BlueprintConfigWorkflow_Triggers;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOn = Shared_NovaConfigWorkflow_DependsOn;
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOn = Shared_NovaConfigWorkflowTriggerObject_Workflows;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOnTrigger = Shared_BlueprintConfigTriggerWideEntry;
 
@@ -605,11 +609,15 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Work
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_UseTurbo = boolean;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_PackageManager = Shared_CorepackPackageManager;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Returns = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_TurboFlags = string[];
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_NpmFlags = string[];
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceCommands = string[];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags = string[];
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -661,6 +669,30 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigge
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigger_Returns = Shared_BlueprintTriggerWorkflowRun;
 
 /**
+ * CLI - Generate - GitHub - Workflows Blueprint - Corepack Download Command.
+ *
+ * @since 0.26.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_PackageManager = Shared_CorepackPackageManager;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_PackageName = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_CommandArguments = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_Returns = string;
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Corepack Execute Command.
+ *
+ * @since 0.26.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_PackageManager = Shared_CorepackPackageManager;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_Command = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_Returns = string;
+
+/**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *
  * @since 0.21.0
@@ -674,6 +706,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment =
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = Shared_BlueprintConfigWorkflow[];
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_UseTurbo = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager = Shared_CorepackPackageManager;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns = string;
 
@@ -699,12 +733,15 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Op
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options_WorkingDir = string;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options_PackageManager = Shared_CorepackPackageManager;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options_ExtraEnv = Shared_BlueprintEnvMap;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options = {
   vendor: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options_Vendor;
   runtimeValues: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options_RuntimeValues;
   workingDir: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options_WorkingDir;
+  packageManager?: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options_PackageManager;
   extraEnv: Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options_ExtraEnv;
 };
 
@@ -715,6 +752,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Ve
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_RuntimeValues = Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options_RuntimeValues;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_WorkingDir = Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options_WorkingDir;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_PackageManager = Shared_CorepackPackageManager;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_ExtraEnv = Cli_Generate_Github_WorkflowsBlueprint_Runner_EmitRuntimeSyncStep_Options_ExtraEnv;
 
@@ -830,6 +869,18 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Diagnostic = 
   message: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Diagnostic_Message;
 };
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_HasPublishWorkflow = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageManager = Shared_CorepackPackageManager;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJsonPath = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJson = Record<string, unknown>;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_PackageJsonRaw = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ParsedPackageManager = Shared_CorepackPackageManagerDescriptor | undefined;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_WorkflowsDirectory = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_GeneratedSet = Set<string>;
@@ -887,6 +938,8 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_GithubPublishRun_Dolla
  *
  * @since 0.21.0
  */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_PackageManager = Shared_CorepackPackageManager;
+
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_InstallPackagesRun_Returns = string;
 
 /**
@@ -1030,6 +1083,17 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveWorkflowDisplay
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveWorkflowId_Suffix = Shared_NovaConfigWorkflow_Suffix;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveWorkflowId_Returns = string;
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint - Run Script Command.
+ *
+ * @since 0.26.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_RunScriptCommand_PackageManager = Shared_CorepackPackageManager;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_RunScriptCommand_ScriptName = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_RunScriptCommand_Returns = string;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.

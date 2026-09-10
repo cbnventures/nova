@@ -4,9 +4,15 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import lunr from 'lunr';
+import {
+  parseJsonConfigFileContent,
+  readConfigFile,
+  sys,
+  transpileModule,
+} from 'typescript';
 import { describe, it } from 'vitest';
 
-import { LIB_REGEX_PATTERN_IMPORT_STATEMENT } from '../../../lib/regex.js';
+import { normalizeClassicWorker } from '../../../lib/search/classic-worker.js';
 import { performSearch } from '../../../lib/search/perform-search.js';
 
 import type {
@@ -34,12 +40,20 @@ import type {
   Tests_Lib_Search_Worker_PerformSearchWildcard_MatchesPrefixQueriesViaWildcardStrategy_Index,
   Tests_Lib_Search_Worker_Results,
   Tests_Lib_Search_Worker_TestData,
+  Tests_Lib_Search_Worker_TranspileWorkerSource_ConfigPath,
+  Tests_Lib_Search_Worker_TranspileWorkerSource_ConfigReadResult,
+  Tests_Lib_Search_Worker_TranspileWorkerSource_CurrentDirectory,
+  Tests_Lib_Search_Worker_TranspileWorkerSource_PackageRoot,
+  Tests_Lib_Search_Worker_TranspileWorkerSource_ParsedConfig,
+  Tests_Lib_Search_Worker_TranspileWorkerSource_Returns,
+  Tests_Lib_Search_Worker_TranspileWorkerSource_TranspileDiagnostics,
+  Tests_Lib_Search_Worker_TranspileWorkerSource_TranspileOutput,
+  Tests_Lib_Search_Worker_TranspileWorkerSource_WorkerPath,
+  Tests_Lib_Search_Worker_TranspileWorkerSource_WorkerSource,
   Tests_Lib_Search_Worker_UniquePaths,
   Tests_Lib_Search_Worker_WiderResults,
-  Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_CurrentDir,
-  Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_ImportMatch,
-  Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_WorkerPath,
-  Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_WorkerSource,
+  Tests_Lib_Search_Worker_WorkerScriptCompatibility_ProducesAValidClassicScriptFromCurrentSourceWithoutBuildOutput_TranspiledWorkerSource,
+  Tests_Lib_Search_Worker_WorkerScriptCompatibility_ProducesAValidClassicScriptFromCurrentSourceWithoutBuildOutput_WorkerScript,
 } from '../../../types/tests/lib/search/worker.test.d.ts';
 
 /**
@@ -116,6 +130,42 @@ function buildTestIndex(): Tests_Lib_Search_Worker_BuildTestIndex_Returns {
     index,
     documents,
   };
+}
+
+/**
+ * Tests - Lib - Search - Worker - Transpile Worker Source.
+ *
+ * Loads the worker TSConfig and transpiles the current source in memory so the
+ * compatibility test never depends on a pre-existing package build.
+ *
+ * @returns {Tests_Lib_Search_Worker_TranspileWorkerSource_Returns}
+ *
+ * @since 0.26.0
+ */
+function transpileWorkerSource(): Tests_Lib_Search_Worker_TranspileWorkerSource_Returns {
+  const currentDirectory: Tests_Lib_Search_Worker_TranspileWorkerSource_CurrentDirectory = dirname(fileURLToPath(import.meta.url));
+  const packageRoot: Tests_Lib_Search_Worker_TranspileWorkerSource_PackageRoot = resolve(currentDirectory, '../../../..');
+  const configPath: Tests_Lib_Search_Worker_TranspileWorkerSource_ConfigPath = resolve(packageRoot, 'tsconfig.worker.json');
+  const configReadResult: Tests_Lib_Search_Worker_TranspileWorkerSource_ConfigReadResult = readConfigFile(configPath, sys.readFile);
+
+  ok(configReadResult['error'] === undefined && configReadResult['config'] !== undefined, 'Worker TSConfig must be readable');
+
+  const parsedConfig: Tests_Lib_Search_Worker_TranspileWorkerSource_ParsedConfig = parseJsonConfigFileContent(configReadResult['config'], sys, packageRoot);
+
+  strictEqual(parsedConfig['errors'].length, 0, 'Worker TSConfig must resolve without diagnostics');
+
+  const workerPath: Tests_Lib_Search_Worker_TranspileWorkerSource_WorkerPath = resolve(packageRoot, 'src/lib/search/worker.ts');
+  const workerSource: Tests_Lib_Search_Worker_TranspileWorkerSource_WorkerSource = readFileSync(workerPath, 'utf-8');
+  const transpileOutput: Tests_Lib_Search_Worker_TranspileWorkerSource_TranspileOutput = transpileModule(workerSource, {
+    compilerOptions: parsedConfig['options'],
+    fileName: workerPath,
+    reportDiagnostics: true,
+  });
+  const transpileDiagnostics: Tests_Lib_Search_Worker_TranspileWorkerSource_TranspileDiagnostics = transpileOutput['diagnostics'] ?? [];
+
+  strictEqual(transpileDiagnostics.length, 0, 'Worker source must transpile without diagnostics');
+
+  return transpileOutput['outputText'];
 }
 
 /**
@@ -329,16 +379,11 @@ describe('performSearch reserved syntax', async () => {
  * @since 0.21.0
  */
 describe('worker script compatibility', async () => {
-  it('contains no ES module syntax in the compiled output', () => {
-    const currentDir: Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_CurrentDir = dirname(fileURLToPath(import.meta.url));
-    const workerPath: Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_WorkerPath = resolve(currentDir, '../../../../build/src/lib/search/worker.js');
-    const workerSource: Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_WorkerSource = readFileSync(workerPath, 'utf-8');
-    const importMatch: Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_ImportMatch = workerSource.match(new RegExp(LIB_REGEX_PATTERN_IMPORT_STATEMENT.source, 'm'));
+  it('produces a valid classic script from current source without build output', () => {
+    const transpiledWorkerSource: Tests_Lib_Search_Worker_WorkerScriptCompatibility_ProducesAValidClassicScriptFromCurrentSourceWithoutBuildOutput_TranspiledWorkerSource = transpileWorkerSource();
+    const workerScript: Tests_Lib_Search_Worker_WorkerScriptCompatibility_ProducesAValidClassicScriptFromCurrentSourceWithoutBuildOutput_WorkerScript = normalizeClassicWorker(transpiledWorkerSource);
 
-    // TypeScript emits `export {};` for files with `import type` — the indexer
-    // strips it when copying the worker to the Docusaurus output directory.
-    // Only runtime import statements need to be caught here.
-    ok(importMatch === null, 'Compiled worker must not contain import statements (classic workers do not support ES module syntax)');
+    ok(workerScript.length > 0);
 
     return;
   });

@@ -115,16 +115,19 @@ You can run this command in two ways:
 
 ### Release Flow
 
-Steps 4–6 run once per releasing package in a loop. Step 7 runs once after all packages are processed.
+The validation and preview steps finish before Nova writes any release files. Version bumps, changelog updates, and sentinel stamping then run once per releasing workspace; consumed entries are deleted only after every workspace succeeds.
 
 1. **Read entries** — Collects all `.md` files from `.changelog/`.
-2. **Lock-step expansion** — When `settings.lockStepVersioning` is `true` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, every <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> is included in the release, even if it had no recorded entries. All packages are bumped to the highest computed version. Packages without entries receive a "No changes." entry in their `CHANGELOG.md`.
-3. **Show summary** — Lists entries grouped by package with the computed version bump (highest bump wins).
-4. **Confirm** — Interactive only. Non-interactive mode (`--release`) skips this step.
-5. **Bump version** — Updates the `version` field in each affected `package.json`.
-6. **Write CHANGELOG.md** — Prepends a new version section. Creates the file if it does not exist.
-7. **Stamp sentinels** — Replaces every `@since UNRELEASED` and `@deprecated UNRELEASED` tag in the package's `src/` tree (`.ts` and `.tsx` files) with the new version. Skipped when the new version is a prerelease (contains a hyphen). Fails the release with a non-zero exit code if any sentinel survives after stamping.
-8. **Clean up** — Deletes consumed entry files from `.changelog/`.
+2. **Validate release history** — Confirms the configured strategy agrees with the root and non-freezable workspace changelogs.
+3. **Preflight lock-step versions** — When `settings.lockStepVersioning` is `true`, reads every non-freezable workspace's `package.json`, validates its version against the configured strategy, and confirms all of them start at the same version. Nova stops before writing if a file is missing, malformed, or drifted.
+4. **Lock-step expansion** — Includes every non-freezable workspace in the release, even when it had no recorded entries. All workspaces move to the same computed version. Workspaces without entries receive a "No changes." section in their `CHANGELOG.md`.
+5. **Show summary** — Lists entries grouped by package with the computed version bump (highest bump wins).
+6. **Confirm** — Interactive only. Non-interactive mode (`--release`) skips this step.
+7. **Bump version** — Updates the `version` field in each affected `package.json`.
+8. **Write CHANGELOG.md** — Prepends a new version section. Creates the file if it does not exist.
+9. **Sync exact package references** — Updates exact-pinned references to co-released packages in workspace and template `package.json` files. Ranges and workspace protocols are left unchanged.
+10. **Stamp sentinels** — Replaces every `@since UNRELEASED` and `@deprecated UNRELEASED` tag in the package's `src/` tree (`.ts`, `.tsx`, and `.css` files) with the new version. Skipped when the new version is a prerelease (contains a hyphen). Fails the release with a non-zero exit code if source scanning or stamping fails, and keeps pending entry files for recovery.
+11. **Clean up** — Deletes consumed entry files from `.changelog/` only after every workspace has completed successfully.
 
 :::danger Non-Zero Exit Code
 The command exits with code **1** when validation fails (invalid flags, missing config, unknown package). <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> pipelines that use this command will fail the step on errors.
@@ -179,6 +182,7 @@ When `settings.versionStrategy` is `"calver"` in <Terminology title="Nova config
 - **Version format:** `YYYY.MM.MICRO` — full year, unpadded month, micro counter that resets each new month.
 - **No bump field:** Changelog entries omit the `bump` field entirely. The `--bump` flag is not available in CalVer mode.
 - **Automatic version:** `--release` computes the version from today's date with no user prompt. If the current version shares the same year and month, the micro counter increments. Otherwise, the micro resets to `0`.
+- **Current-version validation:** A workspace must already use `YYYY.MM.MICRO`, or the initial `0.0.0` sentinel before its first release. Nova rejects invalid numbers and dates later than the current month before calculating the next version.
 - **Heading format:** CalVer changelog headings omit the date suffix since the date is already embedded in the version number.
 
 ```markdown title=".changelog/brave-cats-jump.md"
@@ -201,7 +205,9 @@ Added dark mode support.
 
 #### Strategy Lock
 
-Once `CHANGELOG.md` contains at least one released version heading, the `versionStrategy` value in `nova.config.json` becomes immutable. Changing it after a release triggers a hard error during config parsing.
+Before the initializer opens or the changelog command records or releases a change, Nova scans the root `CHANGELOG.md` and every non-freezable workspace's `CHANGELOG.md`. Existing version headings lock `settings.versionStrategy` to the strategy already used by the project. Valid SemVer prerelease and build metadata remain part of SemVer history. Missing changelog files and freezable workspaces are ignored.
+
+Nova stops with a non-zero exit code when the configured strategy conflicts with that history, when the project mixes SemVer and CalVer release headings, or when a numeric release heading does not match either supported format. A project with no release headings remains unlocked, so the initializer can still change its strategy.
 
 ### CHANGELOG.md Format
 
@@ -337,4 +343,6 @@ Then run `npm run changelog:record` or `npm run changelog:release`.
 - **"Non-interactive record requires --package, --category, --bump, and --message"** — In semver mode, all four flags are required when using `--record`. In CalVer mode, only `--package`, `--category`, and `--message` are required (no `--bump`). Omit `--record` for interactive mode.
 - **"No changelog entries found"** — The `.changelog/` directory is empty or does not exist. Record at least one change before releasing.
 - **"Package not found in nova.config.json"** — The `--package` value must match the `name` field of a non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
-- **"UNRELEASED sentinel survived stamping"** — The release step found one or more `@since UNRELEASED` or `@deprecated UNRELEASED` tags in `src/` that were not replaced. This means a file was added or moved after the stamp pass searched it, or the file extension is not `.ts` or `.tsx`. Locate the surviving tag with `grep -r "UNRELEASED" src/` and update it manually to the released version, then re-run any post-release steps.
+- **"Configured version strategy ... conflicts with existing ... release history"** — Keep `settings.versionStrategy` aligned with the format already recorded in the root or a non-freezable workspace changelog. Do not rewrite published history merely to switch strategies.
+- **"Lock-step versioning requires every non-freezable workspace to start at the same version"** — Align the listed workspace versions, then run the release again. Nova has not written any release files when this check fails.
+- **"UNRELEASED sentinel survived stamping"** — The release step found one or more `@since UNRELEASED` or `@deprecated UNRELEASED` tags in `src/` that were not replaced. This means a file was added or moved after the stamp pass searched it, or the file extension is outside the supported `.ts`, `.tsx`, and `.css` set. Locate the surviving tag with `grep -r "UNRELEASED" src/`, fix the source problem, and re-run the release; pending entry files remain available.

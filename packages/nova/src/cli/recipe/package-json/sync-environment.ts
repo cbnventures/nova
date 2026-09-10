@@ -1,10 +1,10 @@
 import chalk from 'chalk';
 
 import { Runner as ApiNodeReleases } from '../../../api/node-releases.js';
+import { Runner as LibCorepack } from '../../../lib/corepack.js';
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
   LIB_REGEX_PATTERN_DIGITS,
-  LIB_REGEX_PATTERN_NAME_AT_VERSION,
   LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR,
   LIB_REGEX_PATTERN_RANGE_MAJOR,
   LIB_REGEX_PATTERN_SEMVER,
@@ -50,6 +50,7 @@ import type {
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_NpmMatchResult,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_NpmVersionResult,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_PackageManager,
+  Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_ParsedPackageManager,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Returns,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Workspace,
   Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_CurrentDirectory,
@@ -418,9 +419,9 @@ export class Runner {
   /**
    * CLI - Recipe - package.json - Sync Environment - Handle Corepack.
    *
-   * Validates the packageManager field for corepack compatibility. Only project-role
-   * workspaces may keep the field; all others have it removed. Project roots missing
-   * the field gain one pinned to the detected npm version.
+   * Validates the packageManager field against Nova's Corepack-only manager set.
+   * Project roots repair missing or unsupported descriptors to detected npm in one
+   * pass, while every other workspace role has the field removed.
    *
    * @param {Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Workspace} workspace - Workspace.
    *
@@ -428,43 +429,42 @@ export class Runner {
    *
    * @returns {Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Returns}
    *
-   * @since 0.14.0
+   * @since 0.26.0
    */
   private static async handleCorepack(workspace: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Workspace): Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Returns {
     const fileContents: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_FileContents = workspace['fileContents'];
     const manifest: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Manifest = workspace['manifest'];
 
     const packageManager: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_PackageManager = fileContents['packageManager'];
+    const parsedPackageManager: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_ParsedPackageManager = LibCorepack.parsePackageManager(packageManager);
 
     // Sync the "packageManager" field.
+    if (manifest['role'] !== 'project') {
+      if (packageManager !== undefined) {
+        Logger.customize({
+          name: 'Runner.handleCorepack',
+          purpose: 'packageManager',
+        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "packageManager". Workspace role "${manifest['role']}" does not allow it.`);
+
+        Reflect.deleteProperty(fileContents, 'packageManager');
+      }
+
+      return;
+    }
+
     if (
-      packageManager !== undefined // Package "packageManager" is defined.
-      && manifest['role'] !== 'project' // Workspace role is not "project".
+      packageManager !== undefined
+      && parsedPackageManager === undefined
     ) {
       Logger.customize({
         name: 'Runner.handleCorepack',
         purpose: 'packageManager',
-      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "packageManager". Workspace role "${manifest['role']}" does not allow it.`);
+      }).warn(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Replacing "packageManager". Expected an exact npm, pnpm, or Yarn Corepack descriptor.`);
 
       Reflect.deleteProperty(fileContents, 'packageManager');
-    } else if (
-      manifest['role'] === 'project' // Workspace role is "project".
-      && packageManager !== undefined // Package "packageManager" is defined.
-      && (
-        typeof packageManager !== 'string' // Package "packageManager" is not a string.
-        || LIB_REGEX_PATTERN_NAME_AT_VERSION.test(packageManager) === false // Package "packageManager" is not valid format (<name>@<version>).
-      )
-    ) {
-      Logger.customize({
-        name: 'Runner.handleCorepack',
-        purpose: 'packageManager',
-      }).warn(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "packageManager". Invalid format detected.`);
+    }
 
-      Reflect.deleteProperty(fileContents, 'packageManager');
-    } else if (
-      manifest['role'] === 'project' // Workspace role is "project".
-      && packageManager === undefined // Package "packageManager" is missing.
-    ) {
+    if (parsedPackageManager === undefined) {
       const npmVersionResult: Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_NpmVersionResult = await executeShell('npm --version');
 
       if (npmVersionResult['code'] !== 0) {

@@ -1,11 +1,30 @@
 import { promises as fs } from 'node:fs';
-import { join, relative, resolve } from 'node:path';
+import {
+  isAbsolute,
+  join,
+  relative,
+  resolve,
+  sep,
+} from 'node:path';
 
+import { minimatch } from 'minimatch';
 import prompts from 'prompts';
 
+import novaPackageJson from '../../package.json' with { type: 'json' };
+
 import { Logger } from '../toolkit/index.js';
-import { LIB_REGEX_PLACEHOLDER_PROJECT_SLUG } from './regex.js';
-import { discoverPathsWithFile, resolveTemplatePath, saveGeneratedFile } from './utility.js';
+import {
+  LIB_REGEX_PATTERN_SLUG_SIMPLE,
+  LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
+  LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
+} from './regex.js';
+import {
+  discoverPathsWithFile,
+  isPlainObject,
+  pathExists,
+  resolveTemplatePath,
+  saveGeneratedFile,
+} from './utility.js';
 
 import type {
   Lib_Scaffold_CollectFiles_Directory,
@@ -33,8 +52,36 @@ import type {
   Lib_Scaffold_CreateWorkspaceDirectory_WorkspaceName,
   Lib_Scaffold_DetectMonorepoContext_CurrentWorkingDirectory,
   Lib_Scaffold_DetectMonorepoContext_Locations,
+  Lib_Scaffold_DetectMonorepoContext_PackageJsonPath,
+  Lib_Scaffold_DetectMonorepoContext_PackageJsonRaw,
   Lib_Scaffold_DetectMonorepoContext_ParsedPackageJson,
   Lib_Scaffold_DetectMonorepoContext_Returns,
+  Lib_Scaffold_FindFileConflicts_Exists,
+  Lib_Scaffold_FindFileConflicts_PlannedPaths,
+  Lib_Scaffold_FindFileConflicts_Returns,
+  Lib_Scaffold_LoadExistingRoot_Config,
+  Lib_Scaffold_LoadExistingRoot_ConfigFilePath,
+  Lib_Scaffold_LoadExistingRoot_ConfigRaw,
+  Lib_Scaffold_LoadExistingRoot_ConfigWorkspaces,
+  Lib_Scaffold_LoadExistingRoot_ConfigWorkspacesValue,
+  Lib_Scaffold_LoadExistingRoot_PackageJson,
+  Lib_Scaffold_LoadExistingRoot_PackageJsonPath,
+  Lib_Scaffold_LoadExistingRoot_PackageJsonRaw,
+  Lib_Scaffold_LoadExistingRoot_ParsedConfig,
+  Lib_Scaffold_LoadExistingRoot_ParsedPackageJson,
+  Lib_Scaffold_LoadExistingRoot_Project,
+  Lib_Scaffold_LoadExistingRoot_ProjectName,
+  Lib_Scaffold_LoadExistingRoot_ProjectNameValue,
+  Lib_Scaffold_LoadExistingRoot_ProjectSlug,
+  Lib_Scaffold_LoadExistingRoot_ProjectSlugValue,
+  Lib_Scaffold_LoadExistingRoot_ProjectValue,
+  Lib_Scaffold_LoadExistingRoot_Returns,
+  Lib_Scaffold_LoadExistingRoot_RootDirectory,
+  Lib_Scaffold_LoadExistingRoot_WorkspacePatterns,
+  Lib_Scaffold_LoadExistingRoot_WorkspacePatternsResolved,
+  Lib_Scaffold_LoadExistingRoot_WorkspacePatternsValue,
+  Lib_Scaffold_LoadExistingRoot_WorkspacesObject,
+  Lib_Scaffold_LoadExistingRoot_WorkspacesValue,
   Lib_Scaffold_LoadGenerator_AgentConventionsModule,
   Lib_Scaffold_LoadGenerator_DotenvModule,
   Lib_Scaffold_LoadGenerator_EditorconfigModule,
@@ -46,6 +93,11 @@ import type {
   Lib_Scaffold_LoadGenerator_ReadMeModule,
   Lib_Scaffold_LoadGenerator_Returns,
   Lib_Scaffold_LoadGenerator_WorkflowsModule,
+  Lib_Scaffold_NormalizeWorkspaceRelativePath_NormalizedPath,
+  Lib_Scaffold_NormalizeWorkspaceRelativePath_RelativePath,
+  Lib_Scaffold_NormalizeWorkspaceRelativePath_Returns,
+  Lib_Scaffold_NormalizeWorkspaceRelativePath_RootDirectory,
+  Lib_Scaffold_NormalizeWorkspaceRelativePath_WorkspaceDirectory,
   Lib_Scaffold_PromptPostScaffoldGenerators_Answers,
   Lib_Scaffold_PromptPostScaffoldGenerators_Cancelled,
   Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoices,
@@ -99,21 +151,63 @@ import type {
   Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName,
   Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath,
   Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces,
+  Lib_Scaffold_ReportError_Message,
+  Lib_Scaffold_ReportError_Returns,
+  Lib_Scaffold_ResolveTemplateAnswers_AllowedValues,
+  Lib_Scaffold_ResolveTemplateAnswers_Answer,
+  Lib_Scaffold_ResolveTemplateAnswers_Answers,
+  Lib_Scaffold_ResolveTemplateAnswers_IsNonInteractive,
+  Lib_Scaffold_ResolveTemplateAnswers_Options,
+  Lib_Scaffold_ResolveTemplateAnswers_ProvidedValue,
+  Lib_Scaffold_ResolveTemplateAnswers_Questions,
+  Lib_Scaffold_ResolveTemplateAnswers_Replacements,
+  Lib_Scaffold_ResolveTemplateAnswers_ResolvedValue,
+  Lib_Scaffold_ResolveTemplateAnswers_Returns,
+  Lib_Scaffold_ResolveWorkspacePackageName_Category,
+  Lib_Scaffold_ResolveWorkspacePackageName_ProjectSlug,
+  Lib_Scaffold_ResolveWorkspacePackageName_Returns,
+  Lib_Scaffold_ResolveWorkspacePackageName_WorkspaceName,
   Lib_Scaffold_RunScaffold_Category,
   Lib_Scaffold_RunScaffold_Config,
   Lib_Scaffold_RunScaffold_ConfigFilePath,
+  Lib_Scaffold_RunScaffold_ConfigNameDefault,
   Lib_Scaffold_RunScaffold_ConfigRoot,
+  Lib_Scaffold_RunScaffold_ConflictingPaths,
+  Lib_Scaffold_RunScaffold_ConflictMessage,
   Lib_Scaffold_RunScaffold_Context,
   Lib_Scaffold_RunScaffold_CurrentDirectory,
+  Lib_Scaffold_RunScaffold_ExistingRoot,
+  Lib_Scaffold_RunScaffold_ExistingWorkspace,
+  Lib_Scaffold_RunScaffold_ExistingWorkspaceEntries,
+  Lib_Scaffold_RunScaffold_ExistingWorkspaceName,
+  Lib_Scaffold_RunScaffold_ExistingWorkspaceNormalizedPath,
+  Lib_Scaffold_RunScaffold_ExistingWorkspacePath,
+  Lib_Scaffold_RunScaffold_ExistingWorkspaceRole,
+  Lib_Scaffold_RunScaffold_ExistingWorkspaceValue,
   Lib_Scaffold_RunScaffold_ImportMetaUrl,
   Lib_Scaffold_RunScaffold_IsDryRun,
-  Lib_Scaffold_RunScaffold_ModePrefix,
+  Lib_Scaffold_RunScaffold_IsNonInteractive,
+  Lib_Scaffold_RunScaffold_IsWorkspaceCovered,
+  Lib_Scaffold_RunScaffold_NormalizedWorkspacePattern,
+  Lib_Scaffold_RunScaffold_NormalizedWorkspaceRelPath,
   Lib_Scaffold_RunScaffold_Options,
+  Lib_Scaffold_RunScaffold_PlannedPaths,
+  Lib_Scaffold_RunScaffold_ProjectSlug,
+  Lib_Scaffold_RunScaffold_Replacements,
   Lib_Scaffold_RunScaffold_Returns,
+  Lib_Scaffold_RunScaffold_RootPackageJsonContents,
+  Lib_Scaffold_RunScaffold_RootPackageJsonPath,
+  Lib_Scaffold_RunScaffold_RootWorkspacesObject,
+  Lib_Scaffold_RunScaffold_RootWorkspacesValue,
   Lib_Scaffold_RunScaffold_TemplateDirectory,
+  Lib_Scaffold_RunScaffold_TemplateEntries,
+  Lib_Scaffold_RunScaffold_TemplateQuestions,
+  Lib_Scaffold_RunScaffold_TemplateReplacements,
   Lib_Scaffold_RunScaffold_TemplateSubpath,
   Lib_Scaffold_RunScaffold_TypeName,
   Lib_Scaffold_RunScaffold_WorkspaceDirectory,
+  Lib_Scaffold_RunScaffold_WorkspacePackageName,
+  Lib_Scaffold_RunScaffold_WorkspaceRelPath,
   Lib_Scaffold_WriteTemplateFiles_Content,
   Lib_Scaffold_WriteTemplateFiles_CurrentDirectory,
   Lib_Scaffold_WriteTemplateFiles_Entries,
@@ -127,6 +221,231 @@ import type {
   Lib_Scaffold_WriteTemplateFiles_TemplateDirectory,
   Lib_Scaffold_WriteTemplateFiles_Value,
 } from '../types/lib/scaffold.d.ts';
+
+/**
+ * Lib - Scaffold - Report Error.
+ *
+ * Emits one consistent scaffold validation error and marks the command as
+ * unsuccessful before returning control to the caller.
+ *
+ * @param {Lib_Scaffold_ReportError_Message} message - Message.
+ *
+ * @returns {Lib_Scaffold_ReportError_Returns}
+ *
+ * @since 0.26.0
+ */
+function reportError(message: Lib_Scaffold_ReportError_Message): Lib_Scaffold_ReportError_Returns {
+  Logger.customize({
+    name: 'CliScaffold.run',
+    purpose: 'validate',
+  }).error(message);
+
+  process.exitCode = 1;
+
+  return;
+}
+
+/**
+ * Lib - Scaffold - Resolve Workspace Package Name.
+ *
+ * Applies Nova's role-based naming contract to an app or documentation
+ * workspace. The result is used by both package.json and nova.config.json.
+ *
+ * @param {Lib_Scaffold_ResolveWorkspacePackageName_ProjectSlug}   projectSlug   - Project slug.
+ * @param {Lib_Scaffold_ResolveWorkspacePackageName_WorkspaceName} workspaceName - Workspace name.
+ * @param {Lib_Scaffold_ResolveWorkspacePackageName_Category}      category      - Category.
+ *
+ * @returns {Lib_Scaffold_ResolveWorkspacePackageName_Returns}
+ *
+ * @since 0.26.0
+ */
+export function resolveWorkspacePackageName(projectSlug: Lib_Scaffold_ResolveWorkspacePackageName_ProjectSlug, workspaceName: Lib_Scaffold_ResolveWorkspacePackageName_WorkspaceName, category: Lib_Scaffold_ResolveWorkspacePackageName_Category): Lib_Scaffold_ResolveWorkspacePackageName_Returns {
+  return (category === 'docs') ? `${projectSlug}-docs` : `${projectSlug}-app-${workspaceName}`;
+}
+
+/**
+ * Lib - Scaffold - Normalize Workspace Relative Path.
+ *
+ * Converts an absolute workspace target into Nova's portable, root-relative
+ * path format. Targets outside the root and the root itself are rejected.
+ *
+ * @param {Lib_Scaffold_NormalizeWorkspaceRelativePath_RootDirectory}      rootDirectory      - Root directory.
+ * @param {Lib_Scaffold_NormalizeWorkspaceRelativePath_WorkspaceDirectory} workspaceDirectory - Workspace directory.
+ *
+ * @returns {Lib_Scaffold_NormalizeWorkspaceRelativePath_Returns}
+ *
+ * @since 0.26.0
+ */
+export function normalizeWorkspaceRelativePath(rootDirectory: Lib_Scaffold_NormalizeWorkspaceRelativePath_RootDirectory, workspaceDirectory: Lib_Scaffold_NormalizeWorkspaceRelativePath_WorkspaceDirectory): Lib_Scaffold_NormalizeWorkspaceRelativePath_Returns {
+  const relativePath: Lib_Scaffold_NormalizeWorkspaceRelativePath_RelativePath = relative(rootDirectory, workspaceDirectory);
+
+  if (
+    relativePath === ''
+    || relativePath === '..'
+    || relativePath.startsWith(`..${sep}`) === true
+    || isAbsolute(relativePath) === true
+  ) {
+    return undefined;
+  }
+
+  const normalizedPath: Lib_Scaffold_NormalizeWorkspaceRelativePath_NormalizedPath = relativePath.split(sep).join('/');
+
+  return `./${normalizedPath}`;
+}
+
+/**
+ * Lib - Scaffold - Find File Conflicts.
+ *
+ * Checks every file a scaffold plans to own before the first write. Existing
+ * unrelated files are allowed, while any file Nova would replace is returned.
+ *
+ * @param {Lib_Scaffold_FindFileConflicts_PlannedPaths} plannedPaths - Planned paths.
+ *
+ * @returns {Lib_Scaffold_FindFileConflicts_Returns}
+ *
+ * @since 0.26.0
+ */
+export async function findFileConflicts(plannedPaths: Lib_Scaffold_FindFileConflicts_PlannedPaths): Lib_Scaffold_FindFileConflicts_Returns {
+  const exists: Lib_Scaffold_FindFileConflicts_Exists = await Promise.all(plannedPaths.map((plannedPath) => pathExists(plannedPath)));
+
+  return plannedPaths.filter((_plannedPath, index) => exists[index] === true);
+}
+
+/**
+ * Lib - Scaffold - Load Existing Root.
+ *
+ * Loads the two files required to add a workspace to an existing project and
+ * validates the small contract scaffolding depends on before any files change.
+ *
+ * @param {Lib_Scaffold_LoadExistingRoot_RootDirectory} rootDirectory - Root directory.
+ *
+ * @returns {Lib_Scaffold_LoadExistingRoot_Returns}
+ *
+ * @since 0.26.0
+ */
+export async function loadExistingRoot(rootDirectory: Lib_Scaffold_LoadExistingRoot_RootDirectory): Lib_Scaffold_LoadExistingRoot_Returns {
+  const packageJsonPath: Lib_Scaffold_LoadExistingRoot_PackageJsonPath = join(rootDirectory, 'package.json');
+  const configFilePath: Lib_Scaffold_LoadExistingRoot_ConfigFilePath = join(rootDirectory, 'nova.config.json');
+
+  let parsedPackageJson: Lib_Scaffold_LoadExistingRoot_ParsedPackageJson = undefined;
+
+  try {
+    const packageJsonRaw: Lib_Scaffold_LoadExistingRoot_PackageJsonRaw = await fs.readFile(packageJsonPath, 'utf-8');
+
+    parsedPackageJson = JSON.parse(packageJsonRaw) as Lib_Scaffold_LoadExistingRoot_ParsedPackageJson;
+  } catch (error) {
+    reportError('The root package.json is missing or contains invalid JSON. No scaffold files were written.');
+
+    Logger.customize({
+      name: 'loadExistingRoot',
+      purpose: 'packageJson',
+    }).debug(error);
+
+    return undefined;
+  }
+
+  if (isPlainObject(parsedPackageJson) === false) {
+    reportError('The root package.json must contain a JSON object. No scaffold files were written.');
+
+    return undefined;
+  }
+
+  const packageJson: Lib_Scaffold_LoadExistingRoot_PackageJson = parsedPackageJson;
+  const workspacesValue: Lib_Scaffold_LoadExistingRoot_WorkspacesValue = packageJson['workspaces'];
+  let workspacePatterns: Lib_Scaffold_LoadExistingRoot_WorkspacePatterns = undefined;
+
+  if (
+    Array.isArray(workspacesValue) === true
+    && workspacesValue.every((workspacePattern) => typeof workspacePattern === 'string' && workspacePattern.trim() !== '') === true
+  ) {
+    workspacePatterns = workspacesValue as Lib_Scaffold_LoadExistingRoot_WorkspacePatternsResolved;
+  } else if (isPlainObject(workspacesValue) === true) {
+    const workspacesObject: Lib_Scaffold_LoadExistingRoot_WorkspacesObject = workspacesValue;
+    const workspacePatternsValue: Lib_Scaffold_LoadExistingRoot_WorkspacePatternsValue = workspacesObject['packages'];
+
+    if (
+      Array.isArray(workspacePatternsValue) === true
+      && workspacePatternsValue.every((workspacePattern) => typeof workspacePattern === 'string' && workspacePattern.trim() !== '') === true
+    ) {
+      workspacePatterns = workspacePatternsValue as Lib_Scaffold_LoadExistingRoot_WorkspacePatternsResolved;
+    }
+  }
+
+  if (workspacePatterns === undefined) {
+    reportError('The root package.json "workspaces" field must be a string array or an object with a string "packages" array. No scaffold files were written.');
+
+    return undefined;
+  }
+
+  let parsedConfig: Lib_Scaffold_LoadExistingRoot_ParsedConfig = undefined;
+
+  try {
+    const configRaw: Lib_Scaffold_LoadExistingRoot_ConfigRaw = await fs.readFile(configFilePath, 'utf-8');
+
+    parsedConfig = JSON.parse(configRaw) as Lib_Scaffold_LoadExistingRoot_ParsedConfig;
+  } catch (error) {
+    reportError('A readable nova.config.json is required at the monorepo root. Run "nova utility initialize" before adding a workspace. No scaffold files were written.');
+
+    Logger.customize({
+      name: 'loadExistingRoot',
+      purpose: 'novaConfig',
+    }).debug(error);
+
+    return undefined;
+  }
+
+  if (isPlainObject(parsedConfig) === false) {
+    reportError('The root nova.config.json must contain a JSON object. No scaffold files were written.');
+
+    return undefined;
+  }
+
+  const config: Lib_Scaffold_LoadExistingRoot_Config = parsedConfig;
+  const projectValue: Lib_Scaffold_LoadExistingRoot_ProjectValue = config['project'];
+
+  if (isPlainObject(projectValue) === false) {
+    reportError('The root nova.config.json must define project.name.slug before adding a workspace. No scaffold files were written.');
+
+    return undefined;
+  }
+
+  const project: Lib_Scaffold_LoadExistingRoot_Project = projectValue;
+  const projectNameValue: Lib_Scaffold_LoadExistingRoot_ProjectNameValue = project['name'];
+
+  if (isPlainObject(projectNameValue) === false) {
+    reportError('The root nova.config.json must define project.name.slug before adding a workspace. No scaffold files were written.');
+
+    return undefined;
+  }
+
+  const projectName: Lib_Scaffold_LoadExistingRoot_ProjectName = projectNameValue;
+  const projectSlugValue: Lib_Scaffold_LoadExistingRoot_ProjectSlugValue = projectName['slug'];
+
+  if (typeof projectSlugValue !== 'string' || LIB_REGEX_PATTERN_SLUG_SIMPLE.test(projectSlugValue) === false) {
+    reportError('The root nova.config.json project.name.slug must be a lowercase slug before adding a workspace. No scaffold files were written.');
+
+    return undefined;
+  }
+
+  const projectSlug: Lib_Scaffold_LoadExistingRoot_ProjectSlug = projectSlugValue;
+  const configWorkspacesValue: Lib_Scaffold_LoadExistingRoot_ConfigWorkspacesValue = config['workspaces'];
+
+  if (configWorkspacesValue !== undefined && isPlainObject(configWorkspacesValue) === false) {
+    reportError('The root nova.config.json "workspaces" field must be an object. No scaffold files were written.');
+
+    return undefined;
+  }
+
+  const configWorkspaces: Lib_Scaffold_LoadExistingRoot_ConfigWorkspaces = (configWorkspacesValue === undefined) ? {} : configWorkspacesValue as Lib_Scaffold_LoadExistingRoot_ConfigWorkspaces;
+
+  return {
+    config,
+    packageJson,
+    projectSlug,
+    workspacePatterns,
+    workspaces: configWorkspaces,
+  };
+}
 
 /**
  * Lib - Scaffold - Detect Monorepo Context.
@@ -160,7 +479,27 @@ export async function detectMonorepoContext(currentWorkingDirectory: Lib_Scaffol
   }
 
   // Package.json is in currentWorkingDirectory - check for workspaces field.
-  const parsedPackageJson: Lib_Scaffold_DetectMonorepoContext_ParsedPackageJson = JSON.parse(await fs.readFile(join(currentWorkingDirectory, 'package.json'), 'utf-8'));
+  const packageJsonPath: Lib_Scaffold_DetectMonorepoContext_PackageJsonPath = join(currentWorkingDirectory, 'package.json');
+
+  let parsedPackageJson: Lib_Scaffold_DetectMonorepoContext_ParsedPackageJson = {};
+
+  try {
+    const packageJsonRaw: Lib_Scaffold_DetectMonorepoContext_PackageJsonRaw = await fs.readFile(packageJsonPath, 'utf-8');
+
+    parsedPackageJson = JSON.parse(packageJsonRaw) as Lib_Scaffold_DetectMonorepoContext_ParsedPackageJson;
+  } catch {
+    return {
+      context: 'invalid',
+      reason: 'The current package.json contains invalid JSON.',
+    };
+  }
+
+  if (isPlainObject(parsedPackageJson) === false) {
+    return {
+      context: 'invalid',
+      reason: 'The current package.json must contain a JSON object.',
+    };
+  }
 
   if (parsedPackageJson['workspaces'] !== undefined) {
     return {
@@ -216,9 +555,13 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
       });
     }
 
-    const monorepoPromptsAnswers: Lib_Scaffold_PromptScaffoldOptions_MonorepoPromptsAnswers = await prompts(monorepoQuestions, {
-      onCancel: () => false,
-    });
+    let monorepoPromptsAnswers: Lib_Scaffold_PromptScaffoldOptions_MonorepoPromptsAnswers = {};
+
+    if (monorepoQuestions.length > 0) {
+      monorepoPromptsAnswers = await prompts(monorepoQuestions, {
+        onCancel: () => false,
+      });
+    }
 
     if (monorepoNameValue === undefined && monorepoPromptsAnswers['name'] === undefined) {
       cancelled = true;
@@ -316,7 +659,7 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
     };
   }
 
-  // Workspace mode - prompt for package name, workspace name, and output directory.
+  // Workspace mode - reuse the root project slug and prompt for workspace-specific values.
   const nameValue: Lib_Scaffold_PromptScaffoldOptions_NameValue = defaults['name'] ?? undefined;
   const outputValue: Lib_Scaffold_PromptScaffoldOptions_OutputValue = defaults['output'] ?? undefined;
   const workspaceNameValue: Lib_Scaffold_PromptScaffoldOptions_WorkspaceNameValue = defaults['workspaceName'] ?? undefined;
@@ -327,7 +670,7 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
     questions.push({
       type: 'text' as const,
       name: 'name',
-      message: 'Package name (slug):',
+      message: 'Project name (slug):',
       initial: defaults['typeName'],
     });
   }
@@ -369,9 +712,13 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
     });
   }
 
-  const promptsAnswers: Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers = await prompts(questions, {
-    onCancel: () => false,
-  });
+  let promptsAnswers: Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers = {};
+
+  if (questions.length > 0) {
+    promptsAnswers = await prompts(questions, {
+      onCancel: () => false,
+    });
+  }
 
   if (nameValue === undefined && promptsAnswers['name'] === undefined) {
     cancelled = true;
@@ -399,6 +746,80 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
     workspaceName: resolvedWorkspaceName,
     outputDirectory: resolve(currentDirectory, resolvedOutput),
   };
+}
+
+/**
+ * Lib - Scaffold - Resolve Template Answers.
+ *
+ * Resolves scaffold-specific template values from command flags or interactive
+ * choices, validating them before a non-interactive run can write any files.
+ *
+ * @param {Lib_Scaffold_ResolveTemplateAnswers_Options}          options          - Options.
+ * @param {Lib_Scaffold_ResolveTemplateAnswers_Questions}        questions        - Questions.
+ * @param {Lib_Scaffold_ResolveTemplateAnswers_IsNonInteractive} isNonInteractive - Is non interactive.
+ *
+ * @returns {Lib_Scaffold_ResolveTemplateAnswers_Returns}
+ *
+ * @since 0.26.0
+ */
+export async function resolveTemplateAnswers(options: Lib_Scaffold_ResolveTemplateAnswers_Options, questions: Lib_Scaffold_ResolveTemplateAnswers_Questions, isNonInteractive: Lib_Scaffold_ResolveTemplateAnswers_IsNonInteractive): Lib_Scaffold_ResolveTemplateAnswers_Returns {
+  const replacements: Lib_Scaffold_ResolveTemplateAnswers_Replacements = new Map();
+
+  for (const question of questions) {
+    const providedValue: Lib_Scaffold_ResolveTemplateAnswers_ProvidedValue = Reflect.get(options, question['name']);
+
+    let resolvedValue: Lib_Scaffold_ResolveTemplateAnswers_ResolvedValue = undefined;
+
+    if (providedValue !== undefined) {
+      if (
+        typeof providedValue !== 'string'
+        || question['choices'].some((choice) => choice['value'] === providedValue) !== true
+      ) {
+        const allowedValues: Lib_Scaffold_ResolveTemplateAnswers_AllowedValues = question['choices'].map((choice) => choice['value']).join(', ');
+
+        Logger.customize({
+          name: 'resolveTemplateAnswers',
+          purpose: 'validate',
+        }).error(`Invalid ${question['flag']} value "${String(providedValue)}". Expected one of: ${allowedValues}.`);
+
+        process.exitCode = 1;
+
+        return undefined;
+      }
+
+      resolvedValue = providedValue;
+    } else if (isNonInteractive === true) {
+      Logger.customize({
+        name: 'resolveTemplateAnswers',
+        purpose: 'validate',
+      }).error(`Non-interactive scaffolding requires ${question['flag']}.`);
+
+      process.exitCode = 1;
+
+      return undefined;
+    } else {
+      const answers: Lib_Scaffold_ResolveTemplateAnswers_Answers = await prompts({
+        type: 'select',
+        name: question['name'],
+        message: question['message'],
+        choices: question['choices'],
+        initial: question['initial'],
+      }, {
+        onCancel: () => false,
+      });
+      const answer: Lib_Scaffold_ResolveTemplateAnswers_Answer = answers[question['name']];
+
+      if (typeof answer !== 'string') {
+        return undefined;
+      }
+
+      resolvedValue = answer;
+    }
+
+    replacements.set(question['placeholder'], resolvedValue);
+  }
+
+  return replacements;
 }
 
 /**
@@ -540,15 +961,25 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
     name: `${projectSlug}-project`,
     version: '0.0.0',
     private: true,
+    allowScripts: {
+      'core-js': false,
+      'core-js-pure': false,
+      'es5-ext': false,
+      'esbuild': false,
+      'sharp': false,
+      'unrs-resolver': false,
+      'workerd': false,
+    },
     workspaces: [
       'apps/*',
       'packages/*',
     ],
-    devDependencies: {
-      '@cbnventures/nova': 'latest',
-    },
+    packageManager: 'npm@11.18.0',
     engines: {
-      node: '>=18.0.0',
+      node: '^22 || ^24',
+    },
+    devDependencies: {
+      '@cbnventures/nova': novaPackageJson['version'],
     },
   };
 
@@ -838,16 +1269,20 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
     const raw: Lib_Scaffold_RegisterWorkspaceInConfig_Raw = await fs.readFile(configFilePath, 'utf-8');
 
     parsedConfig = JSON.parse(raw) as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig;
-  } catch {
+  } catch (error) {
+    reportError('Unable to read nova.config.json while registering the scaffolded workspace.');
+
     Logger.customize({
       name: 'registerWorkspaceInConfig',
-      purpose: 'skip',
-    }).warn('No nova.config.json found. Skipping workspace registration.');
+      purpose: 'config',
+    }).debug(error);
 
     return;
   }
 
-  if (parsedConfig === undefined) {
+  if (isPlainObject(parsedConfig) === false) {
+    reportError('The root nova.config.json must contain a JSON object.');
+
     return;
   }
 
@@ -856,21 +1291,26 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
   const projectName: Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName = (project !== undefined) ? project['name'] as Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName : undefined;
   const projectSlug: Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug = (projectName !== undefined) ? projectName['slug'] as Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug : undefined;
 
-  if (projectSlug === undefined) {
-    Logger.customize({
-      name: 'registerWorkspaceInConfig',
-      purpose: 'skip',
-    }).warn('No project slug found in nova.config.json. Skipping workspace registration.');
+  if (typeof projectSlug !== 'string' || LIB_REGEX_PATTERN_SLUG_SIMPLE.test(projectSlug) === false) {
+    reportError('The root nova.config.json must define a valid project.name.slug before registering a workspace.');
 
     return;
   }
 
   // Determine role and config name based on category.
   const role: Lib_Scaffold_RegisterWorkspaceInConfig_Role = (category === 'docs') ? 'docs' : 'app';
-  const configName: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName = (role === 'docs') ? `${projectSlug}-docs` : `${projectSlug}-app-${workspaceName}`;
+  const configName: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName = resolveWorkspacePackageName(projectSlug, workspaceName, category);
 
   // Add workspace entry.
-  const workspaces: Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces = (parsedConfig['workspaces'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces) ?? {};
+  const parsedWorkspaces: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces = parsedConfig['workspaces'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces;
+
+  if (parsedWorkspaces !== undefined && isPlainObject(parsedWorkspaces) === false) {
+    reportError('The root nova.config.json "workspaces" field must be an object.');
+
+    return;
+  }
+
+  const workspaces: Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces = parsedWorkspaces ?? {};
 
   Reflect.set(workspaces, workspaceRelPath, {
     name: configName,
@@ -897,19 +1337,21 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
  * Orchestrates the full scaffold workflow: detects context, prompts for options,
  * writes template files, registers the workspace, and runs generators.
  *
- * @param {Lib_Scaffold_RunScaffold_Options}         options         - Options.
- * @param {Lib_Scaffold_RunScaffold_Category}        category        - Category.
- * @param {Lib_Scaffold_RunScaffold_TypeName}        typeName        - Type name.
- * @param {Lib_Scaffold_RunScaffold_TemplateSubpath} templateSubpath - Template subpath.
- * @param {Lib_Scaffold_RunScaffold_ImportMetaUrl}   importMetaUrl   - Import meta url.
+ * @param {Lib_Scaffold_RunScaffold_Options}           options           - Options.
+ * @param {Lib_Scaffold_RunScaffold_Category}          category          - Category.
+ * @param {Lib_Scaffold_RunScaffold_TypeName}          typeName          - Type name.
+ * @param {Lib_Scaffold_RunScaffold_TemplateSubpath}   templateSubpath   - Template subpath.
+ * @param {Lib_Scaffold_RunScaffold_ImportMetaUrl}     importMetaUrl     - Import meta url.
+ * @param {Lib_Scaffold_RunScaffold_TemplateQuestions} templateQuestions - Template questions.
  *
  * @returns {Lib_Scaffold_RunScaffold_Returns}
  *
  * @since 0.15.0
  */
-export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, category: Lib_Scaffold_RunScaffold_Category, typeName: Lib_Scaffold_RunScaffold_TypeName, templateSubpath: Lib_Scaffold_RunScaffold_TemplateSubpath, importMetaUrl: Lib_Scaffold_RunScaffold_ImportMetaUrl): Lib_Scaffold_RunScaffold_Returns {
+export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, category: Lib_Scaffold_RunScaffold_Category, typeName: Lib_Scaffold_RunScaffold_TypeName, templateSubpath: Lib_Scaffold_RunScaffold_TemplateSubpath, importMetaUrl: Lib_Scaffold_RunScaffold_ImportMetaUrl, templateQuestions: Lib_Scaffold_RunScaffold_TemplateQuestions = []): Lib_Scaffold_RunScaffold_Returns {
   const currentDirectory: Lib_Scaffold_RunScaffold_CurrentDirectory = process.cwd();
   const isDryRun: Lib_Scaffold_RunScaffold_IsDryRun = options['dryRun'] === true;
+  const isNonInteractive: Lib_Scaffold_RunScaffold_IsNonInteractive = options['nonInteractive'] === true;
 
   if (isDryRun === true) {
     Logger.customize({
@@ -921,24 +1363,20 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
   // Detect Monorepo Context.
   const context: Lib_Scaffold_RunScaffold_Context = await detectMonorepoContext(currentDirectory);
 
-  if (context['context'] === 'nested') {
-    Logger.customize({
-      name: 'CliScaffold.run',
-      purpose: 'context',
-    }).error('Re-run this command from the monorepo root directory.');
+  if (context['context'] === 'invalid') {
+    reportError(`${context['reason']} No scaffold files were written.`);
 
-    process.exitCode = 1;
+    return;
+  }
+
+  if (context['context'] === 'nested') {
+    reportError('Re-run this command from the monorepo root directory. No scaffold files were written.');
 
     return;
   }
 
   if (context['context'] === 'standalone') {
-    Logger.customize({
-      name: 'CliScaffold.run',
-      purpose: 'context',
-    }).error('Found a standalone project. Run from an empty directory to create a new monorepo, or add a "workspaces" field to use workspace mode.');
-
-    process.exitCode = 1;
+    reportError('Found a standalone project. Run from an empty directory to create a new monorepo, or add a valid "workspaces" field to use workspace mode. No scaffold files were written.');
 
     return;
   }
@@ -948,9 +1386,52 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
     purpose: 'context',
   }).info(`Detected mode: ${context['context']}.`);
 
+  let existingRoot: Lib_Scaffold_RunScaffold_ExistingRoot = undefined;
+
+  if (context['context'] === 'workspace') {
+    existingRoot = await loadExistingRoot(context['root']);
+
+    if (existingRoot === undefined) {
+      return;
+    }
+
+    if (options['name'] !== undefined && options['name'] !== existingRoot['projectSlug']) {
+      reportError(`This monorepo's project slug is "${existingRoot['projectSlug']}", not "${options['name']}". Omit --name when adding a workspace. No scaffold files were written.`);
+
+      return;
+    }
+  }
+
+  if (
+    isNonInteractive === true
+    && (
+      options['output'] === undefined
+      || options['workspaceName'] === undefined
+    )
+  ) {
+    reportError('Non-interactive scaffolding requires --workspace-name and --output. No scaffold files were written.');
+
+    return;
+  }
+
+  if (
+    isNonInteractive === true
+    && context['context'] === 'monorepo'
+    && options['name'] === undefined
+  ) {
+    reportError('Creating a new monorepo non-interactively also requires --name. No scaffold files were written.');
+
+    return;
+  }
+
   // Prompt for scaffold configuration.
+  let configNameDefault: Lib_Scaffold_RunScaffold_ConfigNameDefault = options['name'];
+
+  if (context['context'] === 'workspace' && existingRoot !== undefined) {
+    configNameDefault = existingRoot['projectSlug'];
+  }
   const config: Lib_Scaffold_RunScaffold_Config = await promptScaffoldOptions(context, {
-    name: options['name'],
+    name: configNameDefault,
     output: options['output'],
     typeName,
     workspaceName: options['workspaceName'],
@@ -965,45 +1446,212 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
     return;
   }
 
+  if (LIB_REGEX_PATTERN_SLUG_SIMPLE.test(config['name']) === false) {
+    reportError('The project name must be a lowercase slug containing only letters, numbers, hyphens, or underscores. No scaffold files were written.');
+
+    return;
+  }
+
+  if (LIB_REGEX_PATTERN_SLUG_SIMPLE.test(config['workspaceName']) === false) {
+    reportError('The workspace name must be a lowercase slug containing only letters, numbers, hyphens, or underscores. No scaffold files were written.');
+
+    return;
+  }
+
+  const projectSlug: Lib_Scaffold_RunScaffold_ProjectSlug = config['name'];
+  const workspacePackageName: Lib_Scaffold_RunScaffold_WorkspacePackageName = resolveWorkspacePackageName(projectSlug, config['workspaceName'], category);
+  const configRoot: Lib_Scaffold_RunScaffold_ConfigRoot = (config['mode'] === 'monorepo') ? config['outputDirectory'] : currentDirectory;
+  const configFilePath: Lib_Scaffold_RunScaffold_ConfigFilePath = join(configRoot, 'nova.config.json');
+  const workspaceDirectory: Lib_Scaffold_RunScaffold_WorkspaceDirectory = (config['mode'] === 'monorepo') ? join(configRoot, 'apps', config['workspaceName']) : config['outputDirectory'];
+  const workspaceRelPath: Lib_Scaffold_RunScaffold_WorkspaceRelPath = normalizeWorkspaceRelativePath(configRoot, workspaceDirectory);
+
+  if (workspaceRelPath === undefined) {
+    reportError('The workspace output must be a child directory of the monorepo root. No scaffold files were written.');
+
+    return;
+  }
+
+  const normalizedWorkspaceRelPath: Lib_Scaffold_RunScaffold_NormalizedWorkspaceRelPath = workspaceRelPath.slice(2);
+
+  if (existingRoot !== undefined) {
+    const existingWorkspaceEntries: Lib_Scaffold_RunScaffold_ExistingWorkspaceEntries = Object.entries(existingRoot['workspaces']);
+
+    for (const existingWorkspaceEntry of existingWorkspaceEntries) {
+      const existingWorkspacePath: Lib_Scaffold_RunScaffold_ExistingWorkspacePath = existingWorkspaceEntry[0];
+      const existingWorkspaceValue: Lib_Scaffold_RunScaffold_ExistingWorkspaceValue = existingWorkspaceEntry[1];
+      const existingWorkspaceNormalizedPath: Lib_Scaffold_RunScaffold_ExistingWorkspaceNormalizedPath = resolve(configRoot, existingWorkspacePath);
+
+      if (existingWorkspaceNormalizedPath === workspaceDirectory) {
+        reportError(`The workspace path "${workspaceRelPath}" is already registered in nova.config.json. No scaffold files were written.`);
+
+        return;
+      }
+
+      if (
+        existingWorkspaceNormalizedPath !== configRoot
+        && (
+          workspaceDirectory.startsWith(`${existingWorkspaceNormalizedPath}${sep}`) === true
+          || existingWorkspaceNormalizedPath.startsWith(`${workspaceDirectory}${sep}`) === true
+        )
+      ) {
+        reportError(`The workspace path "${workspaceRelPath}" overlaps the registered workspace "${existingWorkspacePath}". Workspaces cannot be nested inside one another. No scaffold files were written.`);
+
+        return;
+      }
+
+      if (isPlainObject(existingWorkspaceValue) === false) {
+        reportError(`The nova.config.json workspace "${existingWorkspacePath}" must be an object. No scaffold files were written.`);
+
+        return;
+      }
+
+      const existingWorkspace: Lib_Scaffold_RunScaffold_ExistingWorkspace = existingWorkspaceValue;
+      const existingWorkspaceName: Lib_Scaffold_RunScaffold_ExistingWorkspaceName = existingWorkspace['name'];
+      const existingWorkspaceRole: Lib_Scaffold_RunScaffold_ExistingWorkspaceRole = existingWorkspace['role'];
+
+      if (typeof existingWorkspaceName !== 'string' || typeof existingWorkspaceRole !== 'string') {
+        reportError(`The nova.config.json workspace "${existingWorkspacePath}" must define string name and role fields. No scaffold files were written.`);
+
+        return;
+      }
+
+      if (category === 'docs' && existingWorkspaceRole === 'docs') {
+        reportError(`A documentation workspace is already registered at "${existingWorkspacePath}". Nova projects support one canonical docs workspace. No scaffold files were written.`);
+
+        return;
+      }
+
+      if (existingWorkspaceName === workspacePackageName) {
+        reportError(`The workspace package name "${workspacePackageName}" is already registered in nova.config.json. No scaffold files were written.`);
+
+        return;
+      }
+    }
+  }
+
+  // Resolve template path and validate every planned file before writing.
+  const templateDirectory: Lib_Scaffold_RunScaffold_TemplateDirectory = resolveTemplatePath(importMetaUrl, templateSubpath);
+  const templateEntries: Lib_Scaffold_RunScaffold_TemplateEntries = await collectFiles(templateDirectory, '');
+  const plannedPaths: Lib_Scaffold_RunScaffold_PlannedPaths = templateEntries.map((templateEntry) => join(workspaceDirectory, templateEntry));
+
+  if (config['mode'] === 'monorepo') {
+    plannedPaths.push(
+      join(configRoot, 'package.json'),
+      configFilePath,
+    );
+  }
+
+  const conflictingPaths: Lib_Scaffold_RunScaffold_ConflictingPaths = await findFileConflicts(plannedPaths);
+
+  if (conflictingPaths.length > 0) {
+    const conflictMessage: Lib_Scaffold_RunScaffold_ConflictMessage = conflictingPaths.map((conflictingPath) => relative(configRoot, conflictingPath)).join(', ');
+
+    reportError(`Scaffolding would overwrite files Nova does not own: ${conflictMessage}. Move or remove those files, then run the command again. No scaffold files were written.`);
+
+    return;
+  }
+
+  let isWorkspaceCovered: Lib_Scaffold_RunScaffold_IsWorkspaceCovered = existingRoot === undefined;
+
+  if (existingRoot !== undefined) {
+    for (const workspacePattern of existingRoot['workspacePatterns']) {
+      const normalizedWorkspacePattern: Lib_Scaffold_RunScaffold_NormalizedWorkspacePattern = (workspacePattern.startsWith('./') === true) ? workspacePattern.slice(2) : workspacePattern;
+
+      if (minimatch(normalizedWorkspaceRelPath, normalizedWorkspacePattern, { dot: true }) === true) {
+        isWorkspaceCovered = true;
+
+        break;
+      }
+    }
+  }
+
+  const templateReplacements: Lib_Scaffold_RunScaffold_TemplateReplacements = await resolveTemplateAnswers(options, templateQuestions, isNonInteractive);
+
+  if (templateReplacements === undefined) {
+    if (process.exitCode !== 1) {
+      Logger.customize({
+        name: 'CliScaffold.run',
+        purpose: 'cancelled',
+      }).warn('Scaffold cancelled.');
+    }
+
+    return;
+  }
+
   Logger.customize({
     name: 'CliScaffold.run',
     purpose: 'config',
-  }).info(`Scaffolding ${category} ${typeName} "${config['name']}" in "${config['outputDirectory']}".`);
+  }).info(`Scaffolding ${category} ${typeName} workspace "${workspacePackageName}" in "${workspaceDirectory}".`);
 
   if (isDryRun === true) {
-    const modePrefix: Lib_Scaffold_RunScaffold_ModePrefix = (config['mode'] === 'monorepo') ? 'monorepo root + ' : '';
+    if (config['mode'] === 'monorepo') {
+      Logger.customize({
+        name: 'CliScaffold.run',
+        purpose: 'dryRunRoot',
+      }).info(`Would create monorepo root at "${configRoot}".`);
+    }
 
     Logger.customize({
       name: 'CliScaffold.run',
-      purpose: 'dryRun',
-    }).info(`Would create ${modePrefix}workspace at "${config['outputDirectory']}".`);
+      purpose: 'dryRunWorkspace',
+    }).info(`Would create workspace at "${workspaceDirectory}" and register "${workspaceRelPath}".`);
+
+    if (existingRoot !== undefined && isWorkspaceCovered === false) {
+      Logger.customize({
+        name: 'CliScaffold.run',
+        purpose: 'dryRunWorkspaces',
+      }).info(`Would add "${normalizedWorkspaceRelPath}" to the root package.json workspaces.`);
+    }
 
     return;
   }
 
   // Create monorepo root structure if needed.
   if (config['mode'] === 'monorepo') {
-    await createMonorepoRoot(config['outputDirectory'], config['name']);
+    await createMonorepoRoot(configRoot, projectSlug);
   }
-
-  // Determine workspace output directory.
-  const workspaceDirectory: Lib_Scaffold_RunScaffold_WorkspaceDirectory = (config['mode'] === 'monorepo') ? join(config['outputDirectory'], 'apps', config['workspaceName']) : config['outputDirectory'];
 
   await fs.mkdir(workspaceDirectory, { recursive: true });
 
-  // Resolve template path and write files.
-  const templateDirectory: Lib_Scaffold_RunScaffold_TemplateDirectory = resolveTemplatePath(importMetaUrl, templateSubpath);
+  const replacements: Lib_Scaffold_RunScaffold_Replacements = new Map([
+    [
+      LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
+      projectSlug,
+    ],
+    [
+      LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
+      workspacePackageName,
+    ],
+    ...templateReplacements,
+  ]);
 
-  await writeTemplateFiles(templateDirectory, workspaceDirectory, new Map([[
-    LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
-    config['name'],
-  ]]));
+  await writeTemplateFiles(templateDirectory, workspaceDirectory, replacements);
 
-  // Register workspace in nova.config.json.
-  const configRoot: Lib_Scaffold_RunScaffold_ConfigRoot = (config['mode'] === 'monorepo') ? config['outputDirectory'] : currentDirectory;
-  const configFilePath: Lib_Scaffold_RunScaffold_ConfigFilePath = join(configRoot, 'nova.config.json');
+  if (existingRoot !== undefined && isWorkspaceCovered === false) {
+    existingRoot['workspacePatterns'].push(normalizedWorkspaceRelPath);
 
-  await registerWorkspaceInConfig(configFilePath, `./${relative(configRoot, workspaceDirectory)}`, config['workspaceName'], category);
+    const rootPackageJsonPath: Lib_Scaffold_RunScaffold_RootPackageJsonPath = join(configRoot, 'package.json');
+    const rootWorkspacesValue: Lib_Scaffold_RunScaffold_RootWorkspacesValue = existingRoot['packageJson']['workspaces'];
+
+    if (isPlainObject(rootWorkspacesValue) === true) {
+      const rootWorkspacesObject: Lib_Scaffold_RunScaffold_RootWorkspacesObject = rootWorkspacesValue;
+
+      Reflect.set(rootWorkspacesObject, 'packages', existingRoot['workspacePatterns']);
+    } else {
+      Reflect.set(existingRoot['packageJson'], 'workspaces', existingRoot['workspacePatterns']);
+    }
+
+    const rootPackageJsonContents: Lib_Scaffold_RunScaffold_RootPackageJsonContents = `${JSON.stringify(existingRoot['packageJson'], null, 2)}\n`;
+
+    await fs.writeFile(rootPackageJsonPath, rootPackageJsonContents, 'utf-8');
+
+    Logger.customize({
+      name: 'CliScaffold.run',
+      purpose: 'workspaces',
+    }).info(`Added "${normalizedWorkspaceRelPath}" to the root package.json workspaces.`);
+  }
+
+  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, config['workspaceName'], category);
 
   Logger.customize({
     name: 'CliScaffold.run',
@@ -1011,8 +1659,8 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
   }).info(`Scaffold complete for ${category} ${typeName}.`);
 
   // Post-scaffold generators (monorepo mode only).
-  if (config['mode'] === 'monorepo') {
-    await promptPostScaffoldGenerators(config['outputDirectory']);
+  if (config['mode'] === 'monorepo' && isNonInteractive === false) {
+    await promptPostScaffoldGenerators(configRoot);
   }
 
   return;

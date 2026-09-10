@@ -20,13 +20,24 @@ tags:
 
 This preset is the framework layer for Astro projects in your TypeScript config.
 
-It sets the modern, browser-oriented compiler options an Astro project expects — `isolatedModules`, the DOM libraries, `ESNext` modules, `Bundler` module resolution, preserved JSX, and `noEmit` — matching how Astro's Vite pipeline builds. Combine it with Astro's own base so `.astro` type-checking stays correct:
+It sets the modern, browser-oriented compiler options an Astro project expects — `isolatedModules`, the DOM libraries, `ESNext` modules, `Bundler` module resolution, preserved JSX, and `noEmit` — matching how Astro's Vite pipeline builds. Combine it with Astro's strict config so `.astro` type-checking stays explicit under TypeScript 6:
 
 ```json
 {
   "extends": [
-    "astro/tsconfigs/base",
+    "astro/tsconfigs/strict",
     "@cbnventures/nova/presets/tsconfig/fw-astro.json"
   ]
 }
 ```
+
+## Compiler Options
+
+| Option             | Value                               | Purpose                                                         |
+|--------------------|-------------------------------------|-----------------------------------------------------------------|
+| `isolatedModules`  | `true`                              | Keeps every file safe for independent transpilation.            |
+| `jsx`              | `"preserve"`                        | Leaves JSX for Astro's Vite pipeline to transform.              |
+| `lib`              | `["DOM", "DOM.Iterable", "ESNext"]` | Provides browser APIs, iterable DOM collections, and modern JS. |
+| `module`           | `"ESNext"`                          | Preserves modern ECMAScript modules for the bundler.            |
+| `moduleResolution` | `"Bundler"`                         | Resolves packages with bundler-aware import rules.              |
+| `noEmit`           | `true`                              | Uses TypeScript for checking while Astro owns emitted output.   |

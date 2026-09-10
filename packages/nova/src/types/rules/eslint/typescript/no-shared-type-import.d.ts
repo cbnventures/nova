@@ -1,3 +1,5 @@
+import type { Stats } from 'node:fs';
+
 import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
@@ -45,6 +47,8 @@ export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_Options = R
   sharedFiles: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_Options_SharedFiles;
 }>;
 
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_SharedFiles = string[];
+
 export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_NormalizedFilename = string;
 
 /**
@@ -55,3 +59,20 @@ export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_NormalizedF
 export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_ImportDeclaration_Node = TSESTree.ImportDeclaration;
 
 export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_Create_ImportDeclaration_Returns = void;
+
+/**
+ * Rules - ESLint - TypeScript - No Shared Type Import - Resolve Shared Files.
+ *
+ * @since 0.26.0
+ */
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_Context = Readonly<RuleContext<string, readonly unknown[]>>;
+
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_SharedFiles = string[];
+
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_Returns = string[];
+
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_SharedFilePath = string;
+
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_SharedFileStats = Stats;
+
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_ResolveSharedFiles_IsSharedFile = boolean;

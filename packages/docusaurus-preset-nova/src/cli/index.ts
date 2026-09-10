@@ -3,7 +3,7 @@ import { CLIHeader, Logger } from '@cbnventures/nova/toolkit';
 import chalk from 'chalk';
 import { Command } from 'commander';
 
-import packageJson from '../../package.json';
+import packageJson from '../../package.json' with { type: 'json' };
 import { Runner as CliI18nCheck } from './i18n/check.js';
 import { Runner as CliI18nCoverage } from './i18n/coverage.js';
 import { Runner as CliI18nSync } from './i18n/sync.js';

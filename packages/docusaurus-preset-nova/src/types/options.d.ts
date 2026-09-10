@@ -14,6 +14,7 @@ import type {
   Shared_Preset_Navbar,
   Shared_Preset_Shape,
   Shared_PresetName,
+  Shared_ProgressBarConfig,
 } from './shared.d.ts';
 
 export type Options_PluginOptions_Preset = Shared_PresetName;
@@ -116,7 +117,9 @@ export type Options_PluginOptions_Overrides = {
   footer: Options_PluginOptions_Overrides_Footer;
 };
 
-export type Options_PluginOptions_ProgressBar = boolean | Record<string, unknown>;
+export type Options_PluginOptions_ProgressBarConfig = Shared_ProgressBarConfig;
+
+export type Options_PluginOptions_ProgressBar = boolean | Options_PluginOptions_ProgressBarConfig;
 
 export type Options_PluginOptionsSearchConfig_Language = string[];
 
@@ -198,11 +201,14 @@ export type Options_PluginOptions_IconSafelist = string[];
 
 export type Options_PluginOptions_MaxBundleFileSize = number | false;
 
+export type Options_PluginOptions_PersistentCache = boolean;
+
 export type Options_PluginOptions = {
   preset: Options_PluginOptions_Preset;
   overrides: Options_PluginOptions_Overrides;
   plugins: Options_PluginOptions_Plugins;
   analytics: Options_PluginOptions_Analytics;
+  persistentCache: Options_PluginOptions_PersistentCache;
   progressBar: Options_PluginOptions_ProgressBar;
   search: Options_PluginOptions_Search;
   iconSafelist: Options_PluginOptions_IconSafelist;
@@ -715,6 +721,8 @@ export type Options_ValidateOptions_Returns_Analytics = {
   gtm: Options_ValidateOptions_Returns_Analytics_Gtm;
 };
 
+export type Options_ValidateOptions_Returns_PersistentCache = boolean;
+
 export type Options_ValidateOptions_Returns_ProgressBar = boolean | Record<string, unknown>;
 
 export type Options_ValidateOptions_Returns_Search_Config_Language = string[];
@@ -765,6 +773,7 @@ export type Options_ValidateOptions_Returns = {
   overrides: Options_ValidateOptions_Returns_Overrides;
   plugins: Options_ValidateOptions_Returns_Plugins;
   analytics: Options_ValidateOptions_Returns_Analytics;
+  persistentCache: Options_ValidateOptions_Returns_PersistentCache;
   progressBar: Options_ValidateOptions_Returns_ProgressBar;
   search: Options_ValidateOptions_Returns_Search;
   iconSafelist: Options_ValidateOptions_Returns_IconSafelist;

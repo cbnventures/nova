@@ -24,14 +24,15 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Setup and Configure
-
 Nova supports three starting paths. Use the runner for a one-off, install into system, or install into project for presets and toolkits you can commit with.
 
 ## Requirements
 
 - Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology>
-- Node Package Manager (npm)
+- npm for the bootstrap commands shown on this page
+- TypeScript `6.0.3` for projects that use Nova's TSConfig presets or compiler-backed utilities
+
+Nova-managed projects may select npm, pnpm, or Yarn through an exact root `packageManager` descriptor. Corepack activates that pinned client when Nova-generated publish workflows run. See [Workspace Rules](/docs/quickstart/workspace-rules#root-package-manager) for the accepted values and why the field belongs only at the project root.
 
 :::tip Quick Check
 Run this command below to check the installed versions of your Node.js, package managers, operating system, installed browsers, and other dev tools directly:
@@ -76,13 +77,13 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
   </TabItem>
   <TabItem value="local" label="Install into project">
 
-    First, install Nova.
+    First, install Nova and the supported TypeScript compiler.
 
     ```bash
-    npm i @cbnventures/nova@latest
+    npm i @cbnventures/nova@latest typescript@6.0.3
     ```
 
-    Second, configure **TypeScript** through the `tsconfig.json` file. See **[TSConfig best practices](/docs/presets/tsconfig/best-practices)**.
+    Second, configure **TypeScript** through the `tsconfig.json` file. See **[TypeScript compatibility](/docs/presets/tsconfig/compatibility)** and **[TSConfig best practices](/docs/presets/tsconfig/best-practices)**.
 
     ```json
     {
@@ -112,6 +113,56 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
 
   </TabItem>
 </Tabs>
+
+## First Successful Check
+
+After a project install, use this short path to create Nova's project metadata and prove the TypeScript and ESLint presets work together.
+
+1. Start the guided config wizard from the project root.
+
+   ```bash
+   npx nova utility initialize
+   ```
+
+2. Keep the generated `nova.config.json` small at first. Project identity and the detected workspace entries are enough; the [complete config reference](/docs/quickstart/nova-config) is available when you need recipes, workflows, or environment delivery.
+
+3. Add one repeatable check script to `package.json`.
+
+   ```json title="package.json"
+   {
+     "scripts": {
+       "check": "eslint . --max-warnings=0 && nova utility type-check"
+     }
+   }
+   ```
+
+4. Run the same check locally that continuous integration can run later. Use the client named by the root `packageManager` field.
+
+   <Tabs groupId="package-manager-script">
+     <TabItem value="npm" label="npm" default>
+
+       ```bash
+       npm run check
+       ```
+
+     </TabItem>
+     <TabItem value="pnpm" label="pnpm">
+
+       ```bash
+       pnpm run check
+       ```
+
+     </TabItem>
+     <TabItem value="yarn" label="Yarn">
+
+       ```bash
+       yarn run check
+       ```
+
+     </TabItem>
+   </Tabs>
+
+When that command passes, the minimal setup is complete. Add stricter presets and Nova generators one at a time so a failing check points to one understandable change.
 
 ## Next Steps
 

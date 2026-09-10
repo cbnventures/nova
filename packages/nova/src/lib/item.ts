@@ -98,9 +98,13 @@ export const libItemAllowedRecipes: Lib_Item_AllowedRecipes = [
  */
 export const libItemRecipesByCategory: Lib_Item_RecipesByCategory = {
   'github': [
+    'sync-actions',
     'sync-features',
     'sync-identity',
+    'sync-labels',
     'sync-policies',
+    'sync-rulesets',
+    'sync-security',
   ],
   'license': ['update-copyright'],
   'read-me': [
@@ -776,7 +780,6 @@ export const libItemPrettyNamesAbbreviation: Lib_Item_PrettyNamesAbbreviation = 
  */
 export const libItemPrettyNamesBrand: Lib_Item_PrettyNamesBrand = {
   'brave': 'Brave Browser',
-  'bun': 'Bun',
   'chrome': 'Google Chrome',
   'edge': 'Microsoft Edge',
   'firefox': 'Mozilla Firefox',

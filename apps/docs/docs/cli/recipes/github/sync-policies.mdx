@@ -1,7 +1,7 @@
 ---
 id: "sync-policies"
 title: "Sync Policies"
-description: "Sync GitHub repository policies (visibility, default branch, merge methods, and auto-delete head branch) using nova.config.json as the source of truth."
+description: "Sync GitHub repository visibility, branch, merge, update, and web-signoff policies from nova.config.json."
 keywords:
   - "nova"
   - "sync-policies"
@@ -10,6 +10,8 @@ keywords:
   - "default branch"
   - "merge methods"
   - "auto-delete"
+  - "auto-merge"
+  - "commit signoff"
 tags:
   - "cli"
   - "sync-policies"
@@ -25,11 +27,17 @@ Sync **repository policies** to GitHub from <Terminology title="Nova config" to=
 
 ## Summary
 
-The `sync-policies` recipe pushes repository governance settings from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> to GitHub using `gh repo edit`. It controls repository visibility, the default branch, which merge strategies are allowed, and whether head branches are auto-deleted after a pull request is merged.
+The `sync-policies` recipe pushes repository-level governance settings from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> to GitHub. It uses `gh repo edit` for repository and branch behavior, plus the GitHub API for merge-commit presentation and web commit signoff.
 
 If the `github.policies` block is missing entirely, or all policy fields are undefined, the recipe no-ops and emits a warning.
 
-## Prerequisites
+## Why Use This Command?
+
+1. Keeps visibility, branch, merge, update, and signoff choices in version-controlled configuration.
+2. Applies related governance settings together so the repository does not retain a partial policy.
+3. Makes policy recovery and review possible without reconstructing web UI choices.
+
+## Requirements
 
 - **`gh` CLI ≥ 2.40.0** — The GitHub CLI must be installed and authenticated.
 - **Repository write access** — The authenticated user must have write access to the target repository.
@@ -37,26 +45,60 @@ If the `github.policies` block is missing entirely, or all policy fields are und
 
 ## Behavior
 
-Each policy field is independently optional. When a field is defined, the recipe passes the corresponding flag to `gh repo edit`.
+Each policy field is independently optional. When a field is omitted, Nova preserves GitHub's current value.
 
-When a field is undefined, that flag is omitted entirely and GitHub's current value is preserved.
+| Field                      | What it controls                                                                             |
+|----------------------------|----------------------------------------------------------------------------------------------|
+| `visibility`               | Repository visibility: `public`, `private`, or `internal`.                                   |
+| `defaultBranch`            | Default branch, after a read-only check confirms that branch exists.                         |
+| `mergeMethods.merge`       | Whether merge commits are allowed.                                                           |
+| `mergeMethods.squash`      | Whether squash merges are allowed.                                                           |
+| `mergeMethods.rebase`      | Whether rebase merges are allowed.                                                           |
+| `mergeCommit.title`        | Merge-commit title: `pull-request-title` or `merge-message`.                                 |
+| `mergeCommit.message`      | Merge-commit message: `pull-request-body`, `pull-request-title`, or `blank`.                 |
+| `squashMerge.title`        | Squash title: `pull-request-title` or `commit-or-pull-request-title`.                        |
+| `squashMerge.message`      | Squash message: `pull-request-body`, `commit-messages`, or `blank`.                          |
+| `autoDeleteHeadBranch`     | Whether GitHub deletes a pull request's head branch after merge.                             |
+| `autoMerge`                | Whether pull requests may use auto-merge.                                                    |
+| `allowUpdateBranch`        | Whether GitHub shows the update-branch option when a pull request branch is behind its base. |
+| `webCommitSignoffRequired` | Whether commits made in GitHub's web interface require a signoff.                            |
 
-- **`github.policies.visibility`** — Repository visibility. Emits `--visibility=<value>` (`public`, `private`, or `internal`) when defined.
-- **`github.policies.defaultBranch`** — The default branch name. Emits `--default-branch=<value>` when defined.
-- **`github.policies.mergeMethods.merge`** — Allow merge commits. Emits `--enable-merge-commit=<bool>` when defined.
-- **`github.policies.mergeMethods.squash`** — Allow squash merges. Emits `--enable-squash-merge=<bool>` when defined.
-- **`github.policies.mergeMethods.rebase`** — Allow rebase merges. Emits `--enable-rebase-merge=<bool>` when defined.
-- **`github.policies.autoDeleteHeadBranch`** — Automatically delete head branches after merge. Emits `--delete-branch-on-merge=<bool>` when defined.
+`mergeCommit.message` requires `mergeCommit.title`, and `squashMerge.message` requires `squashMerge.title`. Nova rejects those incomplete pairs before sending any mutation.
 
 ## Settings
 
-Settings are configured per workspace in `nova.config.json` under the `recipes` key. The `sync-policies` recipe is controlled by a single boolean toggle:
+Declare only the policies you want Nova to own, then enable the project-scoped recipe under `recipes.github`:
 
 ```json
 {
   "github": {
-    "recipes": {
-      "sync-policies": true
+    "policies": {
+      "visibility": "public",
+      "defaultBranch": "main",
+      "mergeMethods": {
+        "merge": false,
+        "squash": true,
+        "rebase": true
+      },
+      "mergeCommit": {
+        "title": "pull-request-title",
+        "message": "pull-request-body"
+      },
+      "squashMerge": {
+        "title": "commit-or-pull-request-title",
+        "message": "commit-messages"
+      },
+      "autoDeleteHeadBranch": true,
+      "autoMerge": true,
+      "allowUpdateBranch": true,
+      "webCommitSignoffRequired": false
+    }
+  },
+  "recipes": {
+    "github": {
+      "sync-policies": {
+        "enabled": true
+      }
     }
   }
 }
@@ -83,6 +125,6 @@ Settings are configured per workspace in `nova.config.json` under the `recipes` 
 
 ## Options
 
-| Flag            | Description                                |
-|-----------------|--------------------------------------------|
-| `-d, --dry-run` | Run without executing any GitHub commands. |
+| Flag            | Description                                                |
+|-----------------|------------------------------------------------------------|
+| `-d, --dry-run` | Run read-only checks without changing any GitHub settings. |

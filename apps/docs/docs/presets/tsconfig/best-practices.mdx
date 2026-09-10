@@ -8,7 +8,7 @@ keywords:
   - "tsconfig best practices"
   - "typescript strict"
   - "module and moduleResolution"
-  - "baseUrl and paths"
+  - "typescript paths aliases"
   - "ambient types"
   - "isolatedModules"
   - "deterministic builds"
@@ -22,8 +22,6 @@ tags:
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import { Icon } from '@iconify/react/offline';
 import Details from '@theme/Details';
-
-# Best Practices
 
 Practical TSConfig guidance for Nova that uses **small, composable <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> chains**. Favor **explicit wiring** and **predictable** compiler behavior.
 
@@ -54,11 +52,11 @@ Practical TSConfig guidance for Nova that uses **small, composable <Terminology 
 <Details>
   <summary>
     <Icon icon="openmoji:check-mark" width="20" height="20" />
-    <span>DO: Pair <code>{'baseUrl'}</code> with <code>{'paths'}</code></span>
+    <span>DO: Define import aliases with <code>{'paths'}</code></span>
   </summary>
   <ul>
-    <li><strong>What</strong>: Set <code>{'baseUrl'}</code> when you define import aliases in <code>{'paths'}</code>.</li>
-    <li><strong>Why</strong>: <code>{'paths'}</code> relies on <code>{'baseUrl'}</code>. Editors and builds need both to resolve aliases correctly.</li>
+    <li><strong>What</strong>: Define import aliases in <code>{'paths'}</code> without setting the deprecated TypeScript compiler <code>{'baseUrl'}</code> option.</li>
+    <li><strong>Why</strong>: TypeScript 6 resolves <code>{'paths'}</code> entries relative to the TSConfig file when <code>{'baseUrl'}</code> is absent.</li>
   </ul>
 </Details>
 
@@ -68,8 +66,19 @@ Practical TSConfig guidance for Nova that uses **small, composable <Terminology 
     <span>DO: Path-related settings belong in the app's <code>{'tsconfig.json'}</code></span>
   </summary>
   <ul>
-    <li><strong>What</strong>: Path-related settings like <code>{'baseUrl'}</code>, <code>{'paths'}</code>, <code>{'rootDir'}</code>, <code>{'outDir'}</code>, <code>{'include'}</code>, and <code>{'exclude'}</code> belong in the app's <code>{'tsconfig.json'}</code> file, not in Nova <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology>.</li>
+    <li><strong>What</strong>: Path-related settings like <code>{'paths'}</code>, <code>{'rootDir'}</code>, <code>{'outDir'}</code>, <code>{'include'}</code>, and <code>{'exclude'}</code> belong in the app's <code>{'tsconfig.json'}</code> file, not in Nova <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology>.</li>
     <li><strong>Why</strong>: TypeScript evaluates these against the file's location. Local wiring avoids resolution mistakes across different repos.</li>
+  </ul>
+</Details>
+
+<Details>
+  <summary>
+    <Icon icon="openmoji:check-mark" width="20" height="20" />
+    <span>DO: Set <code>{'rootDir'}</code> when TypeScript emits files</span>
+  </summary>
+  <ul>
+    <li><strong>What</strong>: Set <code>{'rootDir'}</code> to the source directory for projects that use <code>{'tsc'}</code> or <code>{'nova utility transpile'}</code> to emit output.</li>
+    <li><strong>Why</strong>: TypeScript 6 no longer lets emitted output layout depend on an inferred source root when that root differs from the TSConfig directory.</li>
   </ul>
 </Details>
 
@@ -79,7 +88,7 @@ Practical TSConfig guidance for Nova that uses **small, composable <Terminology 
     <span>DO: Declare ambient types explicitly</span>
   </summary>
   <ul>
-    <li><strong>What</strong>: Use <code>{'types'}</code> to list the type packages you installed (e.g., <code>{'@types/node'}</code>, <code>{'@types/react'}</code>).</li>
+    <li><strong>What</strong>: Use <code>{'types'}</code> to list the type packages you installed (e.g., <code>{'@types/node'}</code>, <code>{'@types/react'}</code>), or write <code>{'[]'}</code> when the config needs no ambient packages.</li>
     <li><strong>Why</strong>: Makes type sources explicit and under the app's control. Reduces surprises from transitive <code>{'@types'}</code> dependencies.</li>
   </ul>
 </Details>
@@ -135,3 +144,7 @@ Find issues by using the command below to print the effective config:
 ```bash
 tsc --showConfig --project ./path/to/tsconfig.json
 ```
+
+## Related
+
+- Review the supported compiler line and migration example in **[TypeScript Compatibility](/docs/presets/tsconfig/compatibility)**.

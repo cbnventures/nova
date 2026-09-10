@@ -192,7 +192,7 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns}
    *
-   * @since 0.21.0
+   * @since 0.26.0
    */
   public static validate(rawWorkflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows, workspaces: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns {
     const diagnostics: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Diagnostics = [];
@@ -219,12 +219,12 @@ export class Runner {
       };
     }
 
-    // Ports the old generator's circular depends-on detection. A cycle
-    // aborts the entire run, so no workflow survives validation.
+    // Reject circular workflow-run references before validating individual
+    // entries. A cycle aborts the entire run, so no workflow survives.
     if (Runner.detectCircularDependsOn(rawEntries) === true) {
       diagnostics.push({
         severity: 'error',
-        message: 'Circular depends-on references detected. Aborting.',
+        message: 'Circular workflow-run references detected. Aborting.',
       });
 
       return {
@@ -233,7 +233,7 @@ export class Runner {
       };
     }
 
-    // Collect every workflow key so a depends-on reference can be checked
+    // Collect every workflow key so each workflow-run reference can be checked
     // against the sibling workflows declared in the same config.
     const entryKeys: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EntryKeys = new Set();
 
@@ -722,8 +722,8 @@ export class Runner {
   /**
    * CLI - Generate - GitHub - Workflows Blueprint Validate - Detect Circular Depends On.
    *
-   * Walks the depends-on chain for each raw workflow entry and returns true
-   * when any circular reference is detected, ported from the old generator.
+   * Walks the workflow-run references for each raw workflow entry and returns
+   * true when any circular reference is detected.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_DetectCircularDependsOn_RawEntries} rawEntries - Raw entries.
    *
@@ -731,11 +731,11 @@ export class Runner {
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_DetectCircularDependsOn_Returns}
    *
-   * @since 0.21.0
+   * @since 0.26.0
    */
   private static detectCircularDependsOn(rawEntries: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_DetectCircularDependsOn_RawEntries): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_DetectCircularDependsOn_Returns {
-    // Index each entry's depends-on list by its workflow key so the walk
-    // below resolves references without rescanning the raw entries.
+    // Index each entry's workflow-run references by its workflow key so the
+    // walk below resolves references without rescanning the raw entries.
     const dependsOnMap: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_DetectCircularDependsOn_DependsOnMap = new Map();
 
     for (const rawEntryValue of rawEntries) {
@@ -831,7 +831,7 @@ export class Runner {
    * CLI - Generate - GitHub - Workflows Blueprint Validate - Collect Workflow Run References.
    *
    * Gathers the sibling workflow keys referenced by every workflow-run trigger
-   * object's "workflows" list, the new home of the retired top-level depends-on.
+   * object's "workflows" list.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_CollectWorkflowRunReferences_TriggerList} triggerList - Trigger list.
    *

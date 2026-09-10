@@ -135,6 +135,8 @@ The `no-regex-literals` rule reports any regex literal expression (e.g., `/^v/`,
   </TabItem>
 </Tabs>
 
+Leaving `regexFile` unset or empty keeps the rule enabled and reports inline patterns without naming a destination. A non-empty path resolves from ESLint's working directory and must identify an existing regular file, even when the current source has no regex violations.
+
 ## Options
 
 :::warning
@@ -144,7 +146,7 @@ The `no-regex-literals` rule reports any regex literal expression (e.g., `/^v/`,
 | Option        | Type       | Default | Description                                                                                                                               |
 |---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------|
 | `ignoreFiles` | `string[]` | `[]`    | File names to skip. Supports a leading-`*` suffix (`*.test.ts`), an exact path, or a trailing path segment; `**` globs are not supported. |
-| `regexFile`   | `string`   | `''`    | Path to centralized patterns file.                                                                                                        |
+| `regexFile`   | `string`   | `''`    | Existing centralized patterns file resolved from ESLint's working directory. An empty value leaves the destination unspecified.           |
 
 ## Autofix
 
@@ -152,6 +154,8 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 
 ## Troubleshooting
 
-- **Error fires inside the patterns file** — Add the filename to the `ignoreFiles` option so the rule skips that file.
-- **Already set the `regexFile` option?** — That file is skipped automatically, so you do not also need to list it in `ignoreFiles`. Use `ignoreFiles` only for additional files.
-- **Want to use `new RegExp()` inline instead?** — The rule only targets regex literals (`/pattern/`). Constructing a `RegExp` from an imported pattern string is allowed.
+- **Configured path does not resolve** — Check the path from the directory where ESLint runs. The target must already exist as a regular file.
+- **No centralized file yet** — Leave `regexFile` unset or empty. The rule stays active and reports inline patterns with destination-neutral guidance.
+- **Error fires inside the patterns file** — Check that `regexFile` resolves to that exact file. The configured target is skipped automatically.
+- **Need additional exceptions** — Use `ignoreFiles` only for files where the rule does not apply. The configured `regexFile` does not need to be listed again.
+- **Inline `new RegExp()` is reported** — Import a shared pattern and pass the reference to the constructor. Static inline string and template patterns are reported.

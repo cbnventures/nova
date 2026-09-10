@@ -5,11 +5,23 @@ import type {
   Shared_NovaConfig_Entities,
   Shared_NovaConfig_Environment,
   Shared_NovaConfig_Github,
+  Shared_NovaConfig_Github_Actions,
+  Shared_NovaConfig_Github_Actions_SelectedActions,
+  Shared_NovaConfig_Github_Actions_SelectedActions_Patterns,
   Shared_NovaConfig_Github_Features,
   Shared_NovaConfig_Github_IssueTemplate,
   Shared_NovaConfig_Github_IssueTemplate_BugReportFields,
+  Shared_NovaConfig_Github_Label,
+  Shared_NovaConfig_Github_Labels,
   Shared_NovaConfig_Github_Policies,
+  Shared_NovaConfig_Github_Policies_MergeCommit,
   Shared_NovaConfig_Github_Policies_MergeMethods,
+  Shared_NovaConfig_Github_Policies_SquashMerge,
+  Shared_NovaConfig_Github_Rulesets,
+  Shared_NovaConfig_Github_Rulesets_DefaultBranch,
+  Shared_NovaConfig_Github_Rulesets_DefaultBranch_AllowedMergeMethods,
+  Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusChecks,
+  Shared_NovaConfig_Github_Security,
   Shared_NovaConfig_Github_Topics,
   Shared_NovaConfig_Gitignore,
   Shared_NovaConfig_Gitignore_ProjectExcludes,
@@ -39,9 +51,22 @@ import type {
   Shared_NovaConfigEnvironmentValue_Reach,
   Shared_NovaConfigEnvironmentWorkflow,
   Shared_NovaConfigEnvironmentWorkspace,
+  Shared_NovaConfigGithubActionsAllowedActions,
+  Shared_NovaConfigGithubActionsDefaultWorkflowPermissions,
+  Shared_NovaConfigGithubPoliciesMergeCommitMessage,
+  Shared_NovaConfigGithubPoliciesMergeCommitTitle,
+  Shared_NovaConfigGithubPoliciesSquashMergeMessage,
+  Shared_NovaConfigGithubPoliciesSquashMergeTitle,
+  Shared_NovaConfigGithubRulesetEnforcement,
   Shared_NovaConfigProjectPlatform,
   Shared_NovaConfigSettings_VersionStrategy,
-  Shared_NovaConfigWorkflowDeployTarget,
+  Shared_NovaConfigWorkflow,
+  Shared_NovaConfigWorkflow_Triggers,
+  Shared_NovaConfigWorkflowTriggerObject,
+  Shared_NovaConfigWorkflowTriggerObject_Branches,
+  Shared_NovaConfigWorkflowTriggerObject_Paths,
+  Shared_NovaConfigWorkflowTriggerObject_Tags,
+  Shared_NovaConfigWorkflowTriggerObject_Workflows,
   Shared_NovaConfigWorkspace,
   Shared_NovaConfigWorkspace_Name,
   Shared_NovaConfigWorkspace_Policy,
@@ -130,6 +155,60 @@ export type Lib_NovaConfig_Runner_GetEmail_Returns = string | undefined;
 export type Lib_NovaConfig_Runner_GetEmail_Email = string | undefined;
 
 /**
+ * Lib - Nova Config - Get GitHub Actions.
+ *
+ * @since 0.26.0
+ */
+export type Lib_NovaConfig_Runner_GetGithubActions_Value = unknown;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_Returns = Shared_NovaConfig_Github_Actions | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_Result = {
+  enabled?: boolean;
+  allowedActions?: Shared_NovaConfigGithubActionsAllowedActions;
+  shaPinningRequired?: boolean;
+  selectedActions?: Shared_NovaConfig_Github_Actions_SelectedActions;
+  defaultWorkflowPermissions?: Shared_NovaConfigGithubActionsDefaultWorkflowPermissions;
+  canApprovePullRequestReviews?: boolean;
+  artifactRetentionDays?: number;
+};
+
+export type Lib_NovaConfig_Runner_GetGithubActions_Enabled = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_AllowedActions = Shared_NovaConfigGithubActionsAllowedActions | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_ShaPinningRequired = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_SelectedActions = Shared_NovaConfig_Github_Actions_SelectedActions | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_DefaultWorkflowPermissions = Shared_NovaConfigGithubActionsDefaultWorkflowPermissions | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_CanApprovePullRequestReviews = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_ArtifactRetentionDays = number | undefined;
+
+/**
+ * Lib - Nova Config - Get GitHub Actions Selected Actions.
+ *
+ * @since 0.26.0
+ */
+export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Value = unknown;
+
+export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Returns = Shared_NovaConfig_Github_Actions_SelectedActions | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Result = {
+  githubOwned?: boolean;
+  verified?: boolean;
+  patterns?: Shared_NovaConfig_Github_Actions_SelectedActions_Patterns;
+};
+
+export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_GithubOwned = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Verified = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Patterns = Shared_NovaConfig_Github_Actions_SelectedActions_Patterns | undefined;
+
+/**
  * Lib - Nova Config - Get GitHub Features.
  *
  * @since 0.18.0
@@ -143,6 +222,7 @@ export type Lib_NovaConfig_Runner_GetGithubFeatures_Result = {
   wiki?: boolean;
   projects?: boolean;
   discussions?: boolean;
+  sponsorships?: boolean;
 };
 
 export type Lib_NovaConfig_Runner_GetGithubFeatures_Issues = boolean | undefined;
@@ -152,6 +232,8 @@ export type Lib_NovaConfig_Runner_GetGithubFeatures_Wiki = boolean | undefined;
 export type Lib_NovaConfig_Runner_GetGithubFeatures_Projects = boolean | undefined;
 
 export type Lib_NovaConfig_Runner_GetGithubFeatures_Discussions = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubFeatures_Sponsorships = boolean | undefined;
 
 /**
  * Lib - Nova Config - Get GitHub Issue Template.
@@ -169,6 +251,27 @@ export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result = {
 export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportFields | undefined;
 
 /**
+ * Lib - Nova Config - Get GitHub Labels.
+ *
+ * @since 0.26.0
+ */
+export type Lib_NovaConfig_Runner_GetGithubLabels_Value = unknown;
+
+export type Lib_NovaConfig_Runner_GetGithubLabels_Returns = Shared_NovaConfig_Github_Labels | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubLabels_Labels = Shared_NovaConfig_Github_Labels;
+
+export type Lib_NovaConfig_Runner_GetGithubLabels_Name = string | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubLabels_ColorCandidate = string | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubLabels_Color = string | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubLabels_Description = string | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubLabels_Label = Shared_NovaConfig_Github_Label;
+
+/**
  * Lib - Nova Config - Get GitHub Policies.
  *
  * @since 0.18.0
@@ -181,7 +284,12 @@ export type Lib_NovaConfig_Runner_GetGithubPolicies_Result = {
   visibility?: 'public' | 'private' | 'internal';
   defaultBranch?: string;
   mergeMethods?: Shared_NovaConfig_Github_Policies_MergeMethods;
+  mergeCommit?: Shared_NovaConfig_Github_Policies_MergeCommit;
+  squashMerge?: Shared_NovaConfig_Github_Policies_SquashMerge;
   autoDeleteHeadBranch?: boolean;
+  autoMerge?: boolean;
+  allowUpdateBranch?: boolean;
+  webCommitSignoffRequired?: boolean;
 };
 
 export type Lib_NovaConfig_Runner_GetGithubPolicies_Visibility = 'public' | 'private' | 'internal' | undefined;
@@ -190,7 +298,35 @@ export type Lib_NovaConfig_Runner_GetGithubPolicies_DefaultBranch = string | und
 
 export type Lib_NovaConfig_Runner_GetGithubPolicies_MergeMethods = Shared_NovaConfig_Github_Policies_MergeMethods | undefined;
 
+export type Lib_NovaConfig_Runner_GetGithubPolicies_MergeCommit = Shared_NovaConfig_Github_Policies_MergeCommit | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubPolicies_SquashMerge = Shared_NovaConfig_Github_Policies_SquashMerge | undefined;
+
 export type Lib_NovaConfig_Runner_GetGithubPolicies_AutoDeleteHeadBranch = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubPolicies_AutoMerge = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubPolicies_AllowUpdateBranch = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubPolicies_WebCommitSignoffRequired = boolean | undefined;
+
+/**
+ * Lib - Nova Config - Get GitHub Policies Merge Commit.
+ *
+ * @since 0.26.0
+ */
+export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Value = unknown;
+
+export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Returns = Shared_NovaConfig_Github_Policies_MergeCommit | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Result = {
+  title?: Shared_NovaConfigGithubPoliciesMergeCommitTitle;
+  message?: Shared_NovaConfigGithubPoliciesMergeCommitMessage;
+};
+
+export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Title = Shared_NovaConfigGithubPoliciesMergeCommitTitle | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Message = Shared_NovaConfigGithubPoliciesMergeCommitMessage | undefined;
 
 /**
  * Lib - Nova Config - Get GitHub Policies Merge Methods.
@@ -212,6 +348,97 @@ export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Merge = boolean 
 export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Squash = boolean | undefined;
 
 export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Rebase = boolean | undefined;
+
+/**
+ * Lib - Nova Config - Get GitHub Policies Squash Merge.
+ *
+ * @since 0.26.0
+ */
+export type Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Value = unknown;
+
+export type Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Returns = Shared_NovaConfig_Github_Policies_SquashMerge | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Result = {
+  title?: Shared_NovaConfigGithubPoliciesSquashMergeTitle;
+  message?: Shared_NovaConfigGithubPoliciesSquashMergeMessage;
+};
+
+export type Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Title = Shared_NovaConfigGithubPoliciesSquashMergeTitle | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Message = Shared_NovaConfigGithubPoliciesSquashMergeMessage | undefined;
+
+/**
+ * Lib - Nova Config - Get GitHub Rulesets.
+ *
+ * @since 0.26.0
+ */
+export type Lib_NovaConfig_Runner_GetGithubRulesets_Value = unknown;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesets_Returns = Shared_NovaConfig_Github_Rulesets | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesets_Result = {
+  defaultBranch?: Shared_NovaConfig_Github_Rulesets_DefaultBranch;
+};
+
+export type Lib_NovaConfig_Runner_GetGithubRulesets_DefaultBranch = Shared_NovaConfig_Github_Rulesets_DefaultBranch | undefined;
+
+/**
+ * Lib - Nova Config - Get GitHub Rulesets Default Branch.
+ *
+ * @since 0.26.0
+ */
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Value = unknown;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Returns = Shared_NovaConfig_Github_Rulesets_DefaultBranch | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Result = Shared_NovaConfig_Github_Rulesets_DefaultBranch;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Enforcement = Shared_NovaConfigGithubRulesetEnforcement | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_BlockDeletions = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_BlockForcePushes = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireLinearHistory = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireSignedCommits = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequirePullRequest = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_AllowedMergeMethods = Shared_NovaConfig_Github_Rulesets_DefaultBranch_AllowedMergeMethods | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_DismissStaleReviews = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireCodeOwnerReview = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireLastPushApproval = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequiredApprovals = number | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireConversationResolution = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequiredStatusChecks = Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusChecks | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireBranchesToBeUpToDate = boolean | undefined;
+
+/**
+ * Lib - Nova Config - Get GitHub Security.
+ *
+ * @since 0.26.0
+ */
+export type Lib_NovaConfig_Runner_GetGithubSecurity_Value = unknown;
+
+export type Lib_NovaConfig_Runner_GetGithubSecurity_Returns = Shared_NovaConfig_Github_Security | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubSecurity_Result = Shared_NovaConfig_Github_Security;
+
+export type Lib_NovaConfig_Runner_GetGithubSecurity_VulnerabilityAlerts = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubSecurity_DependabotSecurityUpdates = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubSecurity_SecretScanning = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_GetGithubSecurity_PushProtection = boolean | undefined;
 
 /**
  * Lib - Nova Config - Get GitHub Topics.
@@ -567,6 +794,10 @@ export type Lib_NovaConfig_Runner_ParseGithub_Result = {
   topics?: string[];
   features?: Shared_NovaConfig_Github_Features;
   policies?: Shared_NovaConfig_Github_Policies;
+  security?: Shared_NovaConfig_Github_Security;
+  rulesets?: Shared_NovaConfig_Github_Rulesets;
+  actions?: Shared_NovaConfig_Github_Actions;
+  labels?: Shared_NovaConfig_Github_Labels;
   issueTemplate?: Shared_NovaConfig_Github_IssueTemplate;
 };
 
@@ -583,6 +814,14 @@ export type Lib_NovaConfig_Runner_ParseGithub_Topics = Shared_NovaConfig_Github_
 export type Lib_NovaConfig_Runner_ParseGithub_Features = Shared_NovaConfig_Github_Features | undefined;
 
 export type Lib_NovaConfig_Runner_ParseGithub_Policies = Shared_NovaConfig_Github_Policies | undefined;
+
+export type Lib_NovaConfig_Runner_ParseGithub_Security = Shared_NovaConfig_Github_Security | undefined;
+
+export type Lib_NovaConfig_Runner_ParseGithub_Rulesets = Shared_NovaConfig_Github_Rulesets | undefined;
+
+export type Lib_NovaConfig_Runner_ParseGithub_Actions = Shared_NovaConfig_Github_Actions | undefined;
+
+export type Lib_NovaConfig_Runner_ParseGithub_Labels = Shared_NovaConfig_Github_Labels | undefined;
 
 export type Lib_NovaConfig_Runner_ParseGithub_IssueTemplate = Shared_NovaConfig_Github_IssueTemplate | undefined;
 
@@ -740,21 +979,13 @@ export type Lib_NovaConfig_Runner_ParseUrls_ParsedUrl = string | undefined;
 /**
  * Lib - Nova Config - Parse Workflows.
  *
- * @since 0.18.0
+ * @since 0.26.0
  */
 export type Lib_NovaConfig_Runner_ParseWorkflows_Value = unknown;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_Returns = Shared_NovaConfig_Workflows | undefined;
 
-export type Lib_NovaConfig_Runner_ParseWorkflows_Workflows_Element = {
-  'template': string;
-  'name': string;
-  'triggers': string[];
-  'depends-on'?: string[];
-  'build'?: string[];
-  'deploy'?: Shared_NovaConfigWorkflowDeployTarget[];
-  'with'?: Record<string, string>;
-};
+export type Lib_NovaConfig_Runner_ParseWorkflows_Workflows_Element = Shared_NovaConfigWorkflow;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_Workflows = Lib_NovaConfig_Runner_ParseWorkflows_Workflows_Element[];
 
@@ -766,13 +997,23 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_Name = string | undefined;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_RawTriggers = unknown;
 
-export type Lib_NovaConfig_Runner_ParseWorkflows_Triggers = string[];
+export type Lib_NovaConfig_Runner_ParseWorkflows_Triggers = Shared_NovaConfigWorkflow_Triggers;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_Trigger = unknown;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_TriggerValue = string | undefined;
 
-export type Lib_NovaConfig_Runner_ParseWorkflows_RawDependsOn = unknown;
+export type Lib_NovaConfig_Runner_ParseWorkflows_TriggerName = string | undefined;
 
-export type Lib_NovaConfig_Runner_ParseWorkflows_DependsOn = string[];
+export type Lib_NovaConfig_Runner_ParseWorkflows_TriggerObject = Shared_NovaConfigWorkflowTriggerObject;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_TriggerBranches = Shared_NovaConfigWorkflowTriggerObject_Branches | undefined;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_TriggerPaths = Shared_NovaConfigWorkflowTriggerObject_Paths | undefined;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_TriggerTags = Shared_NovaConfigWorkflowTriggerObject_Tags | undefined;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_TriggerWorkflows = Shared_NovaConfigWorkflowTriggerObject_Workflows | undefined;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_RawBuild = unknown;
 
@@ -828,15 +1069,7 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_ParsedDeployWith = Record<strin
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_WithMap = unknown;
 
-export type Lib_NovaConfig_Runner_ParseWorkflows_Workflow = {
-  'template': string;
-  'name': string;
-  'triggers': string[];
-  'depends-on'?: string[];
-  'build'?: string[];
-  'deploy'?: Shared_NovaConfigWorkflowDeployTarget[];
-  'with'?: Record<string, string>;
-};
+export type Lib_NovaConfig_Runner_ParseWorkflows_Workflow = Shared_NovaConfigWorkflow;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_ParsedWith = Record<string, string> | undefined;
 

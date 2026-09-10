@@ -62,6 +62,33 @@ export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNo
 export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_Parsed = Record<string, unknown>;
 
 /**
+ * Tests - CLI - Recipe - package.json - Normalize Tooling - Run - Preserves Non Empty Allow Scripts.
+ *
+ * @since 0.25.0
+ */
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_WorkspaceDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_PackageJsonPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_PackageJsonContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_NovaConfigPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_NovaConfigContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_AllowScripts = Record<string, boolean>;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_WorkspacePackageJsonPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_WorkspacePackageJsonContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_Output = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_Parsed = Record<string, unknown>;
+
+/**
  * Tests - CLI - Recipe - package.json - Normalize Tooling - Run - Removes Empty Allow Scripts.
  *
  * @since 0.25.0

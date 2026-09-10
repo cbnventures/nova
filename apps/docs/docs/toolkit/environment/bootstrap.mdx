@@ -121,6 +121,57 @@ Examples use TypeScript, but the <Terminology title="application programming int
   </TabItem>
 </Tabs>
 
+## Settings
+
+`Bootstrap` uses method arguments and standard environment variables rather than a separate config object.
+
+| Setting or argument | Used by                              | Default              | Description                                                              |
+|---------------------|--------------------------------------|----------------------|--------------------------------------------------------------------------|
+| `appName`           | Directory getters and file resolvers | —                    | Required application namespace appended to platform-managed directories. |
+| `filename`          | `resolveFileDir`, `resolveFileDirs`  | —                    | Required file name searched for in each resolved location.               |
+| `searchOrder`       | `resolveFileDir`, `resolveFileDirs`  | —                    | Required ordered array of search keywords or absolute directory paths.   |
+| `directory`         | `loadEnv`                            | —                    | Required directory containing the `.env` file to load.                   |
+| `XDG_CONFIG_HOME`   | `getConfigDir` on macOS and Linux    | Platform path        | Overrides the base configuration directory.                              |
+| `XDG_DATA_HOME`     | `getDataDir` on Linux                | `~/.local/share`     | Overrides the base data directory.                                       |
+| `XDG_CACHE_HOME`    | `getCacheDir` on Linux               | `~/.cache`           | Overrides the base cache directory.                                      |
+| `APPDATA`           | Config and data getters on Windows   | Windows profile path | Overrides the roaming application-data directory.                        |
+| `LOCALAPPDATA`      | `getCacheDir` on Windows             | Windows profile path | Overrides the local application-data directory.                          |
+
+## Output Examples
+
+<Tabs groupId="bootstrap-output">
+  <TabItem value="file" label="First match" default>
+
+    ```text
+    /Users/you/.config/my-app
+    ```
+
+    `resolveFileDir` returns the first matching directory, or `undefined` when no location contains the file.
+
+  </TabItem>
+  <TabItem value="files" label="All matches">
+
+    ```text
+    [
+      "/Users/you/project",
+      "/Users/you/.config/my-app"
+    ]
+    ```
+
+    `resolveFileDirs` returns every distinct match in search order, or an empty array when none match.
+
+  </TabItem>
+  <TabItem value="env" label="Environment load">
+
+    ```text
+    process.env.API_URL === "https://api.example.com"
+    ```
+
+    `loadEnv` returns `undefined` after filling only keys that were not already present in `process.env`.
+
+  </TabItem>
+</Tabs>
+
 ## Search Keywords
 
 The `searchOrder` parameter in `resolveFileDir` and `resolveFileDirs` accepts these keywords alongside absolute path strings.

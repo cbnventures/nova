@@ -257,12 +257,13 @@ Commands for building and previewing the documentation site locally.
 <!--
 Step-by-step description of how a new version goes from code to release.
 
-1. All changes committed, `git status --short` is clean.
-2. Changelog consolidated, version bumped, build number recalculated (if applicable).
-3. Commit with a thematic subject line listing 3-5 themes in imperative form (e.g. `Add reconnect action, bandwidth polish, persistent TOTP lockout, and docs screenshots`). The version pointer lives in the tag in step 4, not the subject.
-4. Tag the commit (e.g. `v1.2.0`).
-5. Push commit and tag.
-6. GitHub Release triggers CI workflows.
+1. Run the project's clean install, check, and build gates.
+2. Preview and approve the command-generated changelog release before applying it.
+3. Run the changelog release to fold workspace entries, bump versions, stamp sentinels, and synchronize exact internal pins.
+4. Run check and build again.
+5. Use a separate concise thematic commit message; it is not the same text as the changelog block.
+6. Tag and push the release commit. The publish workflow trigger is project-config dependent; consult the generated workflow.
+7. Build the GitHub Release notes by combining the released workspace changelog files, retaining workspace names while omitting version/date headings.
 -->
 
 ### CI/CD Workflows
@@ -270,11 +271,10 @@ Step-by-step description of how a new version goes from code to release.
 <!--
 Map each GitHub Actions workflow to what it does and when it runs.
 
-| Workflow file               | Trigger           | What it does                     |
-|-----------------------------|-------------------|----------------------------------|
-| `publish-to-npm.yml`        | Release published | Build and publish to npm         |
-| `publish-to-docker-hub.yml` | Release published | Multi-arch Docker build and push |
-| `lock-inactive-issues.yml`  | Weekly cron       | Lock issues inactive > 30 days   |
+| Workflow file              | Trigger            | What it does                             |
+|----------------------------|--------------------|------------------------------------------|
+| Generated publish workflow | Project-configured | Build and publish the configured targets |
+| `lock-inactive-issues.yml` | Weekly cron        | Lock issues inactive > 30 days           |
 -->
 
 ### Environments

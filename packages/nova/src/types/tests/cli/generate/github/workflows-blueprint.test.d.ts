@@ -227,6 +227,10 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuild
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesTheWorkflowRunPublishConditionAndRunName_PublishEntry = Shared_BlueprintEnvMapEntry | undefined;
 
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_UsesPnpmForCorepackInstallsAndTurboCommands_Result = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_UsesYarnForCorepackInstallsAndNonTurboWorkspaceCommands_Result = string;
+
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint.
  *

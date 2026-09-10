@@ -1,3 +1,6 @@
+import { statSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 import { ESLintUtils } from '@typescript-eslint/utils';
 
 import { isIgnoredFile } from '../../../lib/utility.js';
@@ -21,6 +24,13 @@ import type {
   Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_NewExpression_Node,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_NewExpression_Returns,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Options,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_RegexFilePath,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_Context,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_IsRegexFile,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_RegexFile,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_RegexFilePath,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_RegexFileStats,
+  Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_Returns,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleDefaultOptionsIgnoreFiles,
   Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleDefaultOptionsRegexFile,
 } from '../../../types/rules/eslint/regex/no-regex-literals.d.ts';
@@ -76,6 +86,7 @@ export class Runner {
     }],
     create(context, defaultOptions) {
       const options: Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Options = defaultOptions[0];
+      const regexFilePath: Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_RegexFilePath = Runner.resolveRegexFile(context, options['regexFile']);
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -83,7 +94,7 @@ export class Runner {
       }
 
       // Skip the designated regex file.
-      if (options['regexFile'] !== '' && isIgnoredFile(context.filename, [options['regexFile']]) === true) {
+      if (regexFilePath !== undefined && isIgnoredFile(context.filename, [regexFilePath]) === true) {
         return {};
       }
 
@@ -195,5 +206,41 @@ export class Runner {
     }
 
     return;
+  }
+
+  /**
+   * Rules - ESLint - Regex - No Regex Literals - Resolve Regex File.
+   *
+   * Resolves a configured path from ESLint's working directory and rejects targets
+   * that are not regular files while preserving an empty optional configuration.
+   *
+   * @param {Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_Context}   context   - Context.
+   * @param {Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_RegexFile} regexFile - Regex file.
+   *
+   * @private
+   *
+   * @returns {Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static resolveRegexFile(context: Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_Context, regexFile: Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_RegexFile): Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_Returns {
+    if (regexFile === '') {
+      return undefined;
+    }
+
+    const regexFilePath: Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_RegexFilePath = resolve(context.cwd, regexFile);
+
+    try {
+      const regexFileStats: Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_RegexFileStats = statSync(regexFilePath);
+      const isRegexFile: Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_IsRegexFile = regexFileStats.isFile();
+
+      if (isRegexFile === true) {
+        return regexFilePath;
+      }
+    } catch {
+      // Fall through to the configuration error below.
+    }
+
+    throw new Error(`Configured "regexFile" path "${regexFile}" must resolve to an existing file from "${context.cwd}".`);
   }
 }

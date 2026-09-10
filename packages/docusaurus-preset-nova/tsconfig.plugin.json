@@ -30,7 +30,7 @@
   "exclude": [
     "./build/**",
     "./eslint.config.mts",
-    "./vitest.config.ts",
+    "./vitest.config.mts",
     "./node_modules/**",
     "./src/cli/**",
     "./src/lib/i18n/**",

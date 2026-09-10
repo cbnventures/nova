@@ -1,10 +1,10 @@
 import { NovaIdentity } from '@cbnventures/nova/toolkit';
 
-import type { Config } from '@docusaurus/types';
+import type { DocusaurusNovaConfig } from '@cbnventures/docusaurus-preset-nova/types/config';
 
 const identity = new NovaIdentity().forDocs();
 
-const config: Config = {
+const config: DocusaurusNovaConfig = {
   title: identity.title ?? 'Documentation',
   tagline: identity.tagline ?? 'Documentation',
   url: identity.url ?? 'https://example.com',
@@ -12,7 +12,12 @@ const config: Config = {
   organizationName: identity.organizationName ?? 'your-org',
   projectName: identity.projectName ?? '[__PROJECT_SLUG__]',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   i18n: {
     defaultLocale: 'en',
@@ -22,15 +27,12 @@ const config: Config = {
   presets: [[
     '@cbnventures/docusaurus-preset-nova',
     {
-      preset: 'foundry',
-      colors: {
-        primary: '#2563eb',
-        accent: '#7c3aed',
-        neutral: '#6b7280',
-      },
-      docs: {
-        sidebarPath: './sidebars.ts',
-        routeBasePath: 'docs',
+      preset: '[__DOCUSAURUS_PRESET__]',
+      plugins: {
+        docs: {
+          sidebarPath: './sidebars.ts',
+          routeBasePath: 'docs',
+        },
       },
     },
   ]],

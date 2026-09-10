@@ -1,3 +1,4 @@
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import { translate } from '@docusaurus/Translate';
 import React, {
   Suspense,
@@ -5,6 +6,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+
+import { hasMetastringFlag } from '../../lib/code-block-metastring.js';
 
 import type {
   Theme_CodeBlock_Index_CodeBlock_CodeRef,
@@ -18,6 +21,7 @@ import type {
   Theme_CodeBlock_Index_CodeBlock_HandleCopy_Textarea,
   Theme_CodeBlock_Index_CodeBlock_IsPreHighlighted,
   Theme_CodeBlock_Index_CodeBlock_LineCount,
+  Theme_CodeBlock_Index_CodeBlock_LiveEditorLanguage,
   Theme_CodeBlock_Index_CodeBlock_PlainText,
   Theme_CodeBlock_Index_CodeBlock_Props,
   Theme_CodeBlock_Index_CodeBlock_SetCollapsed,
@@ -117,7 +121,7 @@ function CodeBlock(props: Theme_CodeBlock_Index_CodeBlock_Props) {
     lineCount > 25
     && (
       props['metastring'] === undefined
-      || props['metastring'].includes('noCollapse') === false
+      || hasMetastringFlag(props['metastring'], 'noCollapse') === false
     )
   );
   const wordWrapToggleLabel: Theme_CodeBlock_Index_CodeBlock_WordWrapToggle = translate({
@@ -239,19 +243,31 @@ function CodeBlock(props: Theme_CodeBlock_Index_CodeBlock_Props) {
 
   // Path A - Live editor.
   if (props['live'] === true && props['language'] !== undefined) {
+    const liveEditorLanguage: Theme_CodeBlock_Index_CodeBlock_LiveEditorLanguage = props['language'];
+
     return (
-      <Suspense
+      <BrowserOnly
         fallback={(
           <pre>
             <code>{plainText}</code>
           </pre>
         )}
       >
-        {React.createElement(lazyLiveEditor, {
-          code: plainText,
-          language: props['language'],
-        })}
-      </Suspense>
+        {() => (
+          <Suspense
+            fallback={(
+              <pre>
+                <code>{plainText}</code>
+              </pre>
+            )}
+          >
+            {React.createElement(lazyLiveEditor, {
+              code: plainText,
+              language: liveEditorLanguage,
+            })}
+          </Suspense>
+        )}
+      </BrowserOnly>
     );
   }
 

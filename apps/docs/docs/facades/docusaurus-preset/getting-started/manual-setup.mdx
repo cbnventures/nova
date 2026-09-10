@@ -18,8 +18,6 @@ tags:
   - "docusaurus"
 ---
 
-# Manual Setup
-
 For existing Docusaurus v3 projects that need the preset added by hand.
 
 ## Install the Package
@@ -47,6 +45,12 @@ const config: DocusaurusNovaConfig = {
 
 export default config;
 ```
+
+:::info ECMAScript module package
+
+The Nova preset is published as ESM. Configure it through Docusaurus as shown above; no package-boundary change is required in the consuming site. Node scripts that import the preset directly must use `import` or dynamic `import()` instead of `require()`.
+
+:::
 
 The `preset` field is required. Choose one of `'envoy'`, `'foundry'`, `'lantern'`, `'marshal'`, `'sentinel'`, or `'signal'`.
 

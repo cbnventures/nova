@@ -1,7 +1,6 @@
+import { hasMetastringFlag } from './code-block-metastring.js';
 import {
   LIB_REGEX_METASTRING_LINE_RANGE,
-  LIB_REGEX_METASTRING_LIVE,
-  LIB_REGEX_METASTRING_SHOW_LINE_NUMBERS,
   LIB_REGEX_METASTRING_TITLE,
 } from './regex.js';
 
@@ -528,13 +527,13 @@ function processNode(node: Lib_RehypeShiki_ProcessNode_Node, index: Lib_RehypeSh
           Reflect.set(innerCodeProperties, 'data-title', title);
         }
 
-        const showLineNumbers: Lib_RehypeShiki_ProcessNode_ShowLineNumbers = LIB_REGEX_METASTRING_SHOW_LINE_NUMBERS.test(metastring);
+        const showLineNumbers: Lib_RehypeShiki_ProcessNode_ShowLineNumbers = hasMetastringFlag(metastring, 'showLineNumbers');
 
         if (showLineNumbers === true) {
           Reflect.set(innerCodeProperties, 'data-show-line-numbers', 'true');
         }
 
-        const live: Lib_RehypeShiki_ProcessNode_Live = LIB_REGEX_METASTRING_LIVE.test(metastring);
+        const live: Lib_RehypeShiki_ProcessNode_Live = hasMetastringFlag(metastring, 'live');
 
         if (live === true) {
           Reflect.set(innerCodeProperties, 'data-live', 'true');

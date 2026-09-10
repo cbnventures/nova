@@ -27,7 +27,13 @@ The `update-badges` recipe rewrites the badges of a `README.md` file so the npm,
 
 The recipe only touches the marked region. Everything before the `<!-- nova-region: badges -->` marker and everything after the `<!-- nova-region-end: badges -->` marker is left byte-identical, so hand-written prose around the badges is never disturbed.
 
-## Prerequisites
+## Why Use This Command?
+
+1. Refreshes npm, Docker, GitHub, and funding badges from one configuration source.
+2. Rewrites only Nova's badges region so surrounding README prose remains untouched.
+3. Makes badge changes repeatable when package or repository URLs move.
+
+## Requirements
 
 - **An existing `README.md`** — The recipe updates a file in the project root; it does not create one. Use `generate must-haves read-me` to create the initial file.
 - **The `badges` region markers** — The `README.md` must contain the `<!-- nova-region: badges -->` and `<!-- nova-region-end: badges -->` markers. A `generate must-haves read-me` file has them by default.

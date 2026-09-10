@@ -22,8 +22,6 @@ tags:
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-# Overview
-
 Use **Nova Presets** to lock in strict TypeScript, consistent style, and predictable builds. Pick the layers that match your stack.
 
 Each <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> is an <Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology> module designed for modern <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology>.
@@ -114,7 +112,7 @@ flowchart TD
 
 The <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> set the heavy knobs for you (e.g., `module` with `moduleResolution`, matching `lib` sets, etc.), so your config stays simple.
 
-Keep **local overrides** focused on project wiring: `paths` and `baseUrl` for imports, `outDir` and `rootDir` for layout, `types` for type packages, and use `include` for the files you compile and `exclude` for build artifacts and `node_modules`.
+Keep **local overrides** focused on project wiring: `paths` for imports, `outDir` and `rootDir` for layout, `types` for type packages, and use `include` for the files you compile and `exclude` for build artifacts and `node_modules`.
 
 ### 60-Second Setup
 
@@ -128,7 +126,6 @@ This example shows a minimal Node.js project using TypeScript, composed with Nov
     "@cbnventures/nova/presets/tsconfig/runtime-node.json"
   ],
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./build",
     "paths": {
       "@/*": [
@@ -151,6 +148,6 @@ This example shows a minimal Node.js project using TypeScript, composed with Nov
 }
 ```
 
-> Read next: **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.
+> Read next: **[TypeScript Compatibility](/docs/presets/tsconfig/compatibility)** and **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.
 
 > Looking for custom ESLint rules? See **[Nova Rules](/docs/rules/)**.

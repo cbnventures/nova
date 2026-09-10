@@ -21,8 +21,8 @@ tags:
 ---
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
-
-# Workspace Rules
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 Every <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in a Nova <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> is classified by a **role** and a **policy**.
 
@@ -34,7 +34,7 @@ A role describes what the workspace _is_. It determines which `package.json` fie
 
 | Role       | Purpose                                                                                                                                                           |
 |------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `project`  | The monorepo root. Owns the `workspaces` array and the `packageManager` field.                                                                                    |
+| `project`  | The monorepo root. Owns the `workspaces` array, `packageManager`, and dependency install-script policy.                                                           |
 | `docs`     | A documentation site (e.g., Docusaurus). Does not publish to a package registry.                                                                                  |
 | `config`   | A shared configuration package (e.g., ESLint presets, TSConfig presets). Retains the `types` and `module` bundler convention fields.                              |
 | `app`      | An application workspace (e.g., a web app, an API server). Not intended for registry publishing.                                                                  |
@@ -57,6 +57,56 @@ The following table shows which `package.json` fields are retained or removed ba
 | `module`      | `config`, `package`, `tool` | Yes                     |
 | `sideEffects` | `package`                   | Yes                     |
 | `esnext`      | `package`                   | Yes                     |
+
+### Root Package Manager
+
+The `project` workspace is the only workspace allowed to own `packageManager`. Use one exact Corepack descriptor:
+
+| Client | Root `package.json` shape          |
+|--------|------------------------------------|
+| npm    | `"packageManager": "npm@11.18.0"`  |
+| pnpm   | `"packageManager": "pnpm@10.17.1"` |
+| Yarn   | `"packageManager": "yarn@4.9.4"`   |
+
+Nova uses this field as executable configuration, not just metadata. Publish workflow generation selects the matching client for dependency installation, local package executables, and project scripts. A missing, partial, ranged, or unsupported descriptor is invalid for publish generation, which stops before changing workflow files. The [`sync-environment` recipe](/docs/cli/recipes/package-json/sync-environment) can repair the root field and removes duplicate copies from child workspaces.
+
+The package manager is separate from a publish destination. For example, a Yarn-managed project can still deploy a package to the `npm` target; Yarn manages the project, while the target identifies the registry operation.
+
+### Root Install-Script Policy
+
+An npm-managed project keeps its dependency lifecycle-script decisions in the root `allowScripts` object. Each entry answers one security question: may this installed dependency run `preinstall`, `install`, `postinstall`, or a source-package `prepare` script?
+
+```json
+{
+  "allowScripts": {
+    "core-js": false,
+    "node-pty@1.1.0": true
+  }
+}
+```
+
+Use an exact `name@version` key for an approval so a future dependency upgrade requires a new review. Use a name-only `false` entry for an explicit denial. A missing entry is unreviewed: npm 11 reports it while still running the script, whereas npm 12 blocks it by default.
+
+Nova recognizes and preserves non-empty `allowScripts` objects but never infers that dependency code is trustworthy. Review the pending set with the command that belongs to the npm version pinned by `packageManager`:
+
+<Tabs groupId="npm-install-script-policy">
+  <TabItem value="npm-11" label="npm 11" default>
+
+    ```bash
+    npm approve-scripts --allow-scripts-pending
+    ```
+
+  </TabItem>
+  <TabItem value="npm-12" label="npm 12">
+
+    ```bash
+    npm install-scripts ls
+    ```
+
+  </TabItem>
+</Tabs>
+
+Both commands above are read-only. Approve or deny a package only after reviewing its lifecycle commands and verifying the project without them.
 
 ## Policies
 

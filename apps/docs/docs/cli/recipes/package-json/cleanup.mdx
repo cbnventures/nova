@@ -28,6 +28,18 @@ The `cleanup` recipe finalizes each <Terminology title="package" to="/docs/quick
 
 Behavior is controlled per-<Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> via recipe settings in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 
+## Why Use This Command?
+
+1. Removes unsupported manifest keys so stale or misspelled metadata cannot linger unnoticed.
+2. Applies one canonical key order so package diffs focus on values instead of layout.
+3. Lets each workspace opt out of removal or reordering when a real exception is needed.
+
+## Requirements
+
+- **Node.js runtime** — Use a supported Node.js LTS release with the Nova CLI available.
+- **Project config** — Register the workspace and enable `recipes.package-json.<workspace>.cleanup` in `nova.config.json`.
+- **Workspace manifest** — The configured workspace must contain a readable `package.json` file.
+
 ## Behavior
 
 For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe applies up to two operations in order:

@@ -562,44 +562,44 @@ export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadAllowsEmptyTriggersAr
 export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadAllowsEmptyTriggersArray_FirstWorkflow = Shared_NovaConfigWorkflow | undefined;
 
 /**
- * Tests - Lib - Nova Config - ParseWorkflowsViaLoad - LoadParsesDependsOnFieldAsArray.
+ * Tests - Lib - Nova Config - ParseWorkflowsViaLoad - LoadOmitsRetiredTopLevelDependsOnField.
  *
- * @since 0.13.0
+ * @since 0.26.0
  */
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_ProjectDirectory = string;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_ProjectDirectory = string;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_ConfigPath = string;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_ConfigPath = string;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_ConfigContents = string;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_ConfigContents = string;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_Config = LibNovaConfig;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_Config = LibNovaConfig;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_LoadedWorkflows = Shared_NovaConfig_Workflows | undefined;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_LoadedWorkflows = Shared_NovaConfig_Workflows | undefined;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_SecondWorkflow = Shared_NovaConfigWorkflow | undefined;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_SecondWorkflow = Shared_NovaConfigWorkflow | undefined;
 
 /**
- * Tests - Lib - Nova Config - ParseWorkflowsViaLoad - LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn.
+ * Tests - Lib - Nova Config - ParseWorkflowsViaLoad - LoadParsesStringAndObjectFormWorkflowTriggers.
  *
- * @since 0.13.0
+ * @since 0.26.0
  */
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_ProjectDirectory = string;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_ProjectDirectory = string;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_ConfigPath = string;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_ConfigPath = string;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_ConfigContents = string;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_ConfigContents = string;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_Config = LibNovaConfig;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_Config = LibNovaConfig;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_LoadedWorkflows = Shared_NovaConfig_Workflows | undefined;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_LoadedWorkflows = Shared_NovaConfig_Workflows | undefined;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_FirstWorkflow = Shared_NovaConfigWorkflow | undefined;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_FirstWorkflow = Shared_NovaConfigWorkflow | undefined;
 
-export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_SecondWorkflow = Shared_NovaConfigWorkflow | undefined;
+export type Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_SecondWorkflow = Shared_NovaConfigWorkflow | undefined;
 
 /**
  * Tests - Lib - Nova Config - ParseWorkflowsViaLoad - LoadSkipsWorkflowEntryMissingTriggers.

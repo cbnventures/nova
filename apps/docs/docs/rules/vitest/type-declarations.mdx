@@ -29,6 +29,10 @@ Audit `.d.ts` mirror files against their source files for structure, ordering, n
 - Runs eleven inspector checks covering section order, identifier naming, source-to-mirror symmetry, and coverage.
 - Scans the current working directory by default, which is the consumer root when run from `node_modules`.
 
+:::info TypeScript Compatibility
+This suite uses TypeScript's compiler API and supports TypeScript 6. See [TypeScript Compatibility](/docs/presets/tsconfig/compatibility) before upgrading the compiler independently.
+:::
+
 ## Why Use This Suite?
 
 1. Keeps declaration mirrors in lockstep with their sources so types never silently drift from the code.
@@ -130,6 +134,7 @@ The `packageRoot` defaults to `process.cwd()`, so the suite audits the project V
 
 | Field                 | Type                                                       | Default                  | Description                                                                                           |
 |-----------------------|------------------------------------------------------------|--------------------------|-------------------------------------------------------------------------------------------------------|
+| `vitest`              | `typeof import('vitest')`                                  | required                 | Vitest module namespace used to register the suite.                                                   |
 | `packageRoot`         | `string`                                                   | `process.cwd()`          | Absolute root the suite scans and computes display paths against.                                     |
 | `typeRoots`           | `string[]`                                                 | `['src']`                | Top-level directories holding sources and their `<root>/types/**/*.d.ts` mirrors.                     |
 | `standaloneTypeFiles` | `string[]`                                                 | `[]`                     | Suffix-matched declaration paths exempt from the source-mirror rules and checked as standalone files. |

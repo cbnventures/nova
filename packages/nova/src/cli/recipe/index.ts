@@ -1,6 +1,10 @@
+import { Runner as CliRecipeGithubSyncActions } from './github/sync-actions.js';
 import { Runner as CliRecipeGithubSyncFeatures } from './github/sync-features.js';
 import { Runner as CliRecipeGithubSyncIdentity } from './github/sync-identity.js';
+import { Runner as CliRecipeGithubSyncLabels } from './github/sync-labels.js';
 import { Runner as CliRecipeGithubSyncPolicies } from './github/sync-policies.js';
+import { Runner as CliRecipeGithubSyncRulesets } from './github/sync-rulesets.js';
+import { Runner as CliRecipeGithubSyncSecurity } from './github/sync-security.js';
 import { Runner as CliRecipeLicenseUpdateCopyright } from './license/update-copyright.js';
 import { Runner as CliRecipePackageJsonCleanup } from './package-json/cleanup.js';
 import { Runner as CliRecipePackageJsonNormalizeArtifacts } from './package-json/normalize-artifacts.js';
@@ -30,6 +34,10 @@ import type { Cli_Recipe_Registry } from '../../types/cli/recipe/index.d.ts';
 export const registry: Cli_Recipe_Registry = {
   'github': [
     {
+      name: 'sync-actions',
+      run: CliRecipeGithubSyncActions['run'],
+    },
+    {
       name: 'sync-features',
       run: CliRecipeGithubSyncFeatures['run'],
     },
@@ -38,8 +46,20 @@ export const registry: Cli_Recipe_Registry = {
       run: CliRecipeGithubSyncIdentity['run'],
     },
     {
+      name: 'sync-labels',
+      run: CliRecipeGithubSyncLabels['run'],
+    },
+    {
       name: 'sync-policies',
       run: CliRecipeGithubSyncPolicies['run'],
+    },
+    {
+      name: 'sync-rulesets',
+      run: CliRecipeGithubSyncRulesets['run'],
+    },
+    {
+      name: 'sync-security',
+      run: CliRecipeGithubSyncSecurity['run'],
     },
   ],
   'license': [{

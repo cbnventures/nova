@@ -15,6 +15,7 @@ import {
 } from './item.js';
 import {
   LIB_REGEX_PATTERN_EMAIL_SIMPLE,
+  LIB_REGEX_PATTERN_GITHUB_LABEL_COLOR,
   LIB_REGEX_PATTERN_GITHUB_OWNER,
   LIB_REGEX_PATTERN_GITHUB_REPO,
   LIB_REGEX_PATTERN_SLUG_SCOPED,
@@ -45,30 +46,98 @@ import type {
   Lib_NovaConfig_Runner_GetEmail_Email,
   Lib_NovaConfig_Runner_GetEmail_Returns,
   Lib_NovaConfig_Runner_GetEmail_Value,
+  Lib_NovaConfig_Runner_GetGithubActions_AllowedActions,
+  Lib_NovaConfig_Runner_GetGithubActions_ArtifactRetentionDays,
+  Lib_NovaConfig_Runner_GetGithubActions_CanApprovePullRequestReviews,
+  Lib_NovaConfig_Runner_GetGithubActions_DefaultWorkflowPermissions,
+  Lib_NovaConfig_Runner_GetGithubActions_Enabled,
+  Lib_NovaConfig_Runner_GetGithubActions_Result,
+  Lib_NovaConfig_Runner_GetGithubActions_Returns,
+  Lib_NovaConfig_Runner_GetGithubActions_SelectedActions,
+  Lib_NovaConfig_Runner_GetGithubActions_ShaPinningRequired,
+  Lib_NovaConfig_Runner_GetGithubActions_Value,
+  Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_GithubOwned,
+  Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Patterns,
+  Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Result,
+  Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Returns,
+  Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Value,
+  Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Verified,
   Lib_NovaConfig_Runner_GetGithubFeatures_Discussions,
   Lib_NovaConfig_Runner_GetGithubFeatures_Issues,
   Lib_NovaConfig_Runner_GetGithubFeatures_Projects,
   Lib_NovaConfig_Runner_GetGithubFeatures_Result,
   Lib_NovaConfig_Runner_GetGithubFeatures_Returns,
+  Lib_NovaConfig_Runner_GetGithubFeatures_Sponsorships,
   Lib_NovaConfig_Runner_GetGithubFeatures_Value,
   Lib_NovaConfig_Runner_GetGithubFeatures_Wiki,
   Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields,
   Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result,
   Lib_NovaConfig_Runner_GetGithubIssueTemplate_Returns,
   Lib_NovaConfig_Runner_GetGithubIssueTemplate_Value,
+  Lib_NovaConfig_Runner_GetGithubLabels_Color,
+  Lib_NovaConfig_Runner_GetGithubLabels_ColorCandidate,
+  Lib_NovaConfig_Runner_GetGithubLabels_Description,
+  Lib_NovaConfig_Runner_GetGithubLabels_Label,
+  Lib_NovaConfig_Runner_GetGithubLabels_Labels,
+  Lib_NovaConfig_Runner_GetGithubLabels_Name,
+  Lib_NovaConfig_Runner_GetGithubLabels_Returns,
+  Lib_NovaConfig_Runner_GetGithubLabels_Value,
+  Lib_NovaConfig_Runner_GetGithubPolicies_AllowUpdateBranch,
   Lib_NovaConfig_Runner_GetGithubPolicies_AutoDeleteHeadBranch,
+  Lib_NovaConfig_Runner_GetGithubPolicies_AutoMerge,
   Lib_NovaConfig_Runner_GetGithubPolicies_DefaultBranch,
+  Lib_NovaConfig_Runner_GetGithubPolicies_MergeCommit,
   Lib_NovaConfig_Runner_GetGithubPolicies_MergeMethods,
   Lib_NovaConfig_Runner_GetGithubPolicies_Result,
   Lib_NovaConfig_Runner_GetGithubPolicies_Returns,
+  Lib_NovaConfig_Runner_GetGithubPolicies_SquashMerge,
   Lib_NovaConfig_Runner_GetGithubPolicies_Value,
   Lib_NovaConfig_Runner_GetGithubPolicies_Visibility,
+  Lib_NovaConfig_Runner_GetGithubPolicies_WebCommitSignoffRequired,
+  Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Message,
+  Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Result,
+  Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Returns,
+  Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Title,
+  Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Value,
   Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Merge,
   Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Rebase,
   Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Result,
   Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Returns,
   Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Squash,
   Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Value,
+  Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Message,
+  Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Result,
+  Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Returns,
+  Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Title,
+  Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Value,
+  Lib_NovaConfig_Runner_GetGithubRulesets_DefaultBranch,
+  Lib_NovaConfig_Runner_GetGithubRulesets_Result,
+  Lib_NovaConfig_Runner_GetGithubRulesets_Returns,
+  Lib_NovaConfig_Runner_GetGithubRulesets_Value,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_AllowedMergeMethods,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_BlockDeletions,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_BlockForcePushes,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_DismissStaleReviews,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Enforcement,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireBranchesToBeUpToDate,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireCodeOwnerReview,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireConversationResolution,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequiredApprovals,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequiredStatusChecks,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireLastPushApproval,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireLinearHistory,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequirePullRequest,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireSignedCommits,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Result,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Returns,
+  Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Value,
+  Lib_NovaConfig_Runner_GetGithubSecurity_DependabotSecurityUpdates,
+  Lib_NovaConfig_Runner_GetGithubSecurity_PushProtection,
+  Lib_NovaConfig_Runner_GetGithubSecurity_Result,
+  Lib_NovaConfig_Runner_GetGithubSecurity_Returns,
+  Lib_NovaConfig_Runner_GetGithubSecurity_SecretScanning,
+  Lib_NovaConfig_Runner_GetGithubSecurity_Value,
+  Lib_NovaConfig_Runner_GetGithubSecurity_VulnerabilityAlerts,
   Lib_NovaConfig_Runner_GetGithubTopics_Returns,
   Lib_NovaConfig_Runner_GetGithubTopics_TypeGuard,
   Lib_NovaConfig_Runner_GetGithubTopics_Value,
@@ -189,8 +258,10 @@ import type {
   Lib_NovaConfig_Runner_ParseEnvironmentValues_SeenNames,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Value,
   Lib_NovaConfig_Runner_ParseEnvironmentValues_Values,
+  Lib_NovaConfig_Runner_ParseGithub_Actions,
   Lib_NovaConfig_Runner_ParseGithub_Features,
   Lib_NovaConfig_Runner_ParseGithub_IssueTemplate,
+  Lib_NovaConfig_Runner_ParseGithub_Labels,
   Lib_NovaConfig_Runner_ParseGithub_Owner,
   Lib_NovaConfig_Runner_ParseGithub_OwnerCandidate,
   Lib_NovaConfig_Runner_ParseGithub_Policies,
@@ -198,6 +269,8 @@ import type {
   Lib_NovaConfig_Runner_ParseGithub_RepoCandidate,
   Lib_NovaConfig_Runner_ParseGithub_Result,
   Lib_NovaConfig_Runner_ParseGithub_Returns,
+  Lib_NovaConfig_Runner_ParseGithub_Rulesets,
+  Lib_NovaConfig_Runner_ParseGithub_Security,
   Lib_NovaConfig_Runner_ParseGithub_Topics,
   Lib_NovaConfig_Runner_ParseGithub_Value,
   Lib_NovaConfig_Runner_ParseGitignore_ProjectExcludes,
@@ -249,7 +322,6 @@ import type {
   Lib_NovaConfig_Runner_ParseUrls_Value,
   Lib_NovaConfig_Runner_ParseWorkflows_Build,
   Lib_NovaConfig_Runner_ParseWorkflows_CastItem,
-  Lib_NovaConfig_Runner_ParseWorkflows_DependsOn,
   Lib_NovaConfig_Runner_ParseWorkflows_Deploy,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployAfter,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployPath,
@@ -262,7 +334,6 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkflows_ParsedDeployWith,
   Lib_NovaConfig_Runner_ParseWorkflows_ParsedWith,
   Lib_NovaConfig_Runner_ParseWorkflows_RawBuild,
-  Lib_NovaConfig_Runner_ParseWorkflows_RawDependsOn,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeploy,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeployAfter,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeployValue,
@@ -270,8 +341,15 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkflows_Returns,
   Lib_NovaConfig_Runner_ParseWorkflows_Template,
   Lib_NovaConfig_Runner_ParseWorkflows_TemplateCompare,
+  Lib_NovaConfig_Runner_ParseWorkflows_Trigger,
+  Lib_NovaConfig_Runner_ParseWorkflows_TriggerBranches,
+  Lib_NovaConfig_Runner_ParseWorkflows_TriggerName,
+  Lib_NovaConfig_Runner_ParseWorkflows_TriggerObject,
+  Lib_NovaConfig_Runner_ParseWorkflows_TriggerPaths,
   Lib_NovaConfig_Runner_ParseWorkflows_Triggers,
+  Lib_NovaConfig_Runner_ParseWorkflows_TriggerTags,
   Lib_NovaConfig_Runner_ParseWorkflows_TriggerValue,
+  Lib_NovaConfig_Runner_ParseWorkflows_TriggerWorkflows,
   Lib_NovaConfig_Runner_ParseWorkflows_Value,
   Lib_NovaConfig_Runner_ParseWorkflows_WithMap,
   Lib_NovaConfig_Runner_ParseWorkflows_Workflow,
@@ -1393,7 +1471,8 @@ export class Runner {
 
       const defaultValueCandidate: Lib_NovaConfig_Runner_ParseEnvironmentValues_DefaultValueCandidate = (typeof raw['defaultValue'] === 'string') ? raw['defaultValue'] : undefined;
 
-      // A managed key never reaches a ".env" or a build, so it carries no default (spec 5).
+      // A workspace-managed key appears blank in local ".env" files while a project-managed
+      // key does not; neither is delivered by CI, so neither carries a default (spec 5).
       if (reachCandidate === 'managed' && defaultValueCandidate !== undefined) {
         this.pushError('Runner.parseEnvironmentValues', 'environment', `Environment ${context} value "${key}" is reach "managed" and cannot declare a "defaultValue". Skipping ...`);
 
@@ -1658,9 +1737,8 @@ export class Runner {
   /**
    * Lib - Nova Config - Parse Workflows.
    *
-   * Validates each workflow object for template, optional suffix, triggers,
-   * optional depends-on, and optional settings. Settings values must be strings;
-   * non-string values are dropped.
+   * Validates workflow objects while preserving their trigger-object filter arrays.
+   * Drops non-string workflow settings.
    *
    * @param {Lib_NovaConfig_Runner_ParseWorkflows_Value} value - Value.
    *
@@ -1668,7 +1746,7 @@ export class Runner {
    *
    * @returns {Lib_NovaConfig_Runner_ParseWorkflows_Returns}
    *
-   * @since 0.18.0
+   * @since 0.26.0
    */
   private parseWorkflows(value: Lib_NovaConfig_Runner_ParseWorkflows_Value): Lib_NovaConfig_Runner_ParseWorkflows_Returns {
     if (Array.isArray(value) === false) {
@@ -1704,16 +1782,53 @@ export class Runner {
 
       const triggers: Lib_NovaConfig_Runner_ParseWorkflows_Triggers = [];
 
-      for (const trigger of rawTriggers) {
+      for (const rawTrigger of rawTriggers) {
+        const trigger: Lib_NovaConfig_Runner_ParseWorkflows_Trigger = rawTrigger;
         const triggerValue: Lib_NovaConfig_Runner_ParseWorkflows_TriggerValue = this.getNonEmptyString(trigger);
 
         if (triggerValue !== undefined) {
           triggers.push(triggerValue);
+
+          continue;
         }
+
+        if (isPlainObject(trigger) === false) {
+          continue;
+        }
+
+        const triggerName: Lib_NovaConfig_Runner_ParseWorkflows_TriggerName = this.getNonEmptyString(trigger['name']);
+
+        if (triggerName === undefined) {
+          continue;
+        }
+
+        const triggerObject: Lib_NovaConfig_Runner_ParseWorkflows_TriggerObject = {
+          name: triggerName,
+        };
+        const triggerBranches: Lib_NovaConfig_Runner_ParseWorkflows_TriggerBranches = this.getArrayOfNonEmptyStrings(trigger['branches']);
+        const triggerPaths: Lib_NovaConfig_Runner_ParseWorkflows_TriggerPaths = this.getArrayOfNonEmptyStrings(trigger['paths']);
+        const triggerTags: Lib_NovaConfig_Runner_ParseWorkflows_TriggerTags = this.getArrayOfNonEmptyStrings(trigger['tags']);
+        const triggerWorkflows: Lib_NovaConfig_Runner_ParseWorkflows_TriggerWorkflows = this.getArrayOfNonEmptyStrings(trigger['workflows']);
+
+        if (triggerBranches !== undefined) {
+          Reflect.set(triggerObject, 'branches', triggerBranches);
+        }
+
+        if (triggerPaths !== undefined) {
+          Reflect.set(triggerObject, 'paths', triggerPaths);
+        }
+
+        if (triggerTags !== undefined) {
+          Reflect.set(triggerObject, 'tags', triggerTags);
+        }
+
+        if (triggerWorkflows !== undefined) {
+          Reflect.set(triggerObject, 'workflows', triggerWorkflows);
+        }
+
+        triggers.push(triggerObject);
       }
 
-      const rawDependsOn: Lib_NovaConfig_Runner_ParseWorkflows_RawDependsOn = castItem['depends-on'];
-      const dependsOn: Lib_NovaConfig_Runner_ParseWorkflows_DependsOn = (Array.isArray(rawDependsOn) === true) ? rawDependsOn.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as Lib_NovaConfig_Runner_ParseWorkflows_DependsOn : [];
       const rawBuild: Lib_NovaConfig_Runner_ParseWorkflows_RawBuild = castItem['build'];
       const build: Lib_NovaConfig_Runner_ParseWorkflows_Build = (Array.isArray(rawBuild) === true) ? rawBuild.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as Lib_NovaConfig_Runner_ParseWorkflows_Build : [];
       const rawDeploy: Lib_NovaConfig_Runner_ParseWorkflows_RawDeploy = castItem['deploy'];
@@ -1759,16 +1874,12 @@ export class Runner {
 
       const withMap: Lib_NovaConfig_Runner_ParseWorkflows_WithMap = castItem['with'];
 
-      // Build workflow object with properties in type-definition order: template, name, triggers, depends-on, build, deploy, with.
+      // Build workflow object with properties in type-definition order: template, name, triggers, build, deploy, with.
       const workflow: Lib_NovaConfig_Runner_ParseWorkflows_Workflow = {
         template,
         name,
         triggers,
       };
-
-      if (dependsOn.length > 0) {
-        Reflect.set(workflow, 'depends-on', dependsOn);
-      }
 
       if (build.length > 0) {
         Reflect.set(workflow, 'build', build);
@@ -1852,9 +1963,9 @@ export class Runner {
   /**
    * Lib - Nova Config - Parse GitHub.
    *
-   * Parses the github block from the config, extracting
-   * owner, repo, topics, features, and policies. Returns undefined
-   * when the block is absent or not a plain object.
+   * Parses owner, repo, topics, features, policies, security, rulesets, actions,
+   * labels, and issue-template settings. Returns undefined when the github block
+   * is absent or not a plain object.
    *
    * @param {Lib_NovaConfig_Runner_ParseGithub_Value} value - Value.
    *
@@ -1901,6 +2012,30 @@ export class Runner {
 
     if (policies !== undefined) {
       result.policies = policies;
+    }
+
+    const security: Lib_NovaConfig_Runner_ParseGithub_Security = this.getGithubSecurity(value['security']);
+
+    if (security !== undefined) {
+      result.security = security;
+    }
+
+    const rulesets: Lib_NovaConfig_Runner_ParseGithub_Rulesets = this.getGithubRulesets(value['rulesets']);
+
+    if (rulesets !== undefined) {
+      result.rulesets = rulesets;
+    }
+
+    const actions: Lib_NovaConfig_Runner_ParseGithub_Actions = this.getGithubActions(value['actions']);
+
+    if (actions !== undefined) {
+      result.actions = actions;
+    }
+
+    const labels: Lib_NovaConfig_Runner_ParseGithub_Labels = this.getGithubLabels(value['labels']);
+
+    if (labels !== undefined) {
+      result.labels = labels;
     }
 
     const issueTemplate: Lib_NovaConfig_Runner_ParseGithub_IssueTemplate = this.getGithubIssueTemplate(value['issueTemplate']);
@@ -2176,10 +2311,138 @@ export class Runner {
   }
 
   /**
+   * Lib - Nova Config - Get GitHub Actions.
+   *
+   * Parses repository-level GitHub Actions permissions, selected-action policy,
+   * workflow token defaults, and artifact retention settings.
+   *
+   * @param {Lib_NovaConfig_Runner_GetGithubActions_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetGithubActions_Returns}
+   *
+   * @since 0.26.0
+   */
+  private getGithubActions(value: Lib_NovaConfig_Runner_GetGithubActions_Value): Lib_NovaConfig_Runner_GetGithubActions_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_GetGithubActions_Result = {};
+
+    const enabled: Lib_NovaConfig_Runner_GetGithubActions_Enabled = (typeof value['enabled'] === 'boolean') ? value['enabled'] : undefined;
+
+    if (enabled !== undefined) {
+      result.enabled = enabled;
+    }
+
+    let allowedActions: Lib_NovaConfig_Runner_GetGithubActions_AllowedActions = undefined;
+
+    if (
+      value['allowedActions'] === 'all'
+      || value['allowedActions'] === 'local-only'
+      || value['allowedActions'] === 'selected'
+    ) {
+      allowedActions = value['allowedActions'];
+    }
+
+    if (allowedActions !== undefined) {
+      result.allowedActions = allowedActions;
+    }
+
+    const shaPinningRequired: Lib_NovaConfig_Runner_GetGithubActions_ShaPinningRequired = (typeof value['shaPinningRequired'] === 'boolean') ? value['shaPinningRequired'] : undefined;
+
+    if (shaPinningRequired !== undefined) {
+      result.shaPinningRequired = shaPinningRequired;
+    }
+
+    const selectedActions: Lib_NovaConfig_Runner_GetGithubActions_SelectedActions = this.getGithubActionsSelectedActions(value['selectedActions']);
+
+    if (selectedActions !== undefined) {
+      result.selectedActions = selectedActions;
+    }
+
+    let defaultWorkflowPermissions: Lib_NovaConfig_Runner_GetGithubActions_DefaultWorkflowPermissions = undefined;
+
+    if (
+      value['defaultWorkflowPermissions'] === 'read'
+      || value['defaultWorkflowPermissions'] === 'write'
+    ) {
+      defaultWorkflowPermissions = value['defaultWorkflowPermissions'];
+    }
+
+    if (defaultWorkflowPermissions !== undefined) {
+      result.defaultWorkflowPermissions = defaultWorkflowPermissions;
+    }
+
+    const canApprovePullRequestReviews: Lib_NovaConfig_Runner_GetGithubActions_CanApprovePullRequestReviews = (typeof value['canApprovePullRequestReviews'] === 'boolean') ? value['canApprovePullRequestReviews'] : undefined;
+
+    if (canApprovePullRequestReviews !== undefined) {
+      result.canApprovePullRequestReviews = canApprovePullRequestReviews;
+    }
+
+    const artifactRetentionDays: Lib_NovaConfig_Runner_GetGithubActions_ArtifactRetentionDays = (
+      typeof value['artifactRetentionDays'] === 'number'
+      && Number.isInteger(value['artifactRetentionDays']) === true
+      && value['artifactRetentionDays'] >= 1
+      && value['artifactRetentionDays'] <= 400
+    ) ? value['artifactRetentionDays'] : undefined;
+
+    if (artifactRetentionDays !== undefined) {
+      result.artifactRetentionDays = artifactRetentionDays;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get GitHub Actions Selected Actions.
+   *
+   * Parses the allowlist used when GitHub Actions is limited to selected
+   * publishers and action-reference patterns.
+   *
+   * @param {Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Returns}
+   *
+   * @since 0.26.0
+   */
+  private getGithubActionsSelectedActions(value: Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Value): Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Result = {};
+
+    const githubOwned: Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_GithubOwned = (typeof value['githubOwned'] === 'boolean') ? value['githubOwned'] : undefined;
+
+    if (githubOwned !== undefined) {
+      result.githubOwned = githubOwned;
+    }
+
+    const verified: Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Verified = (typeof value['verified'] === 'boolean') ? value['verified'] : undefined;
+
+    if (verified !== undefined) {
+      result.verified = verified;
+    }
+
+    const patterns: Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Patterns = this.getArrayOfNonEmptyStrings(value['patterns']);
+
+    if (patterns !== undefined) {
+      result.patterns = patterns;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
    * Lib - Nova Config - Get GitHub Features.
    *
-   * Parses the github.features block for boolean feature flags: issues, wiki,
-   * projects, and discussions. Returns undefined when the input is not a plain object.
+   * Parses the github.features block for issues, wiki, projects, discussions,
+   * and repository Sponsorships flags.
    *
    * @param {Lib_NovaConfig_Runner_GetGithubFeatures_Value} value - Value.
    *
@@ -2220,6 +2483,12 @@ export class Runner {
       result.discussions = discussions;
     }
 
+    const sponsorships: Lib_NovaConfig_Runner_GetGithubFeatures_Sponsorships = (typeof value['sponsorships'] === 'boolean') ? value['sponsorships'] : undefined;
+
+    if (sponsorships !== undefined) {
+      result.sponsorships = sponsorships;
+    }
+
     return (Object.keys(result).length > 0) ? result : undefined;
   }
 
@@ -2253,10 +2522,60 @@ export class Runner {
   }
 
   /**
+   * Lib - Nova Config - Get GitHub Labels.
+   *
+   * Parses label names, six-character colors, and optional descriptions while
+   * retaining an explicit empty array as a valid desired state.
+   *
+   * @param {Lib_NovaConfig_Runner_GetGithubLabels_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetGithubLabels_Returns}
+   *
+   * @since 0.26.0
+   */
+  private getGithubLabels(value: Lib_NovaConfig_Runner_GetGithubLabels_Value): Lib_NovaConfig_Runner_GetGithubLabels_Returns {
+    if (Array.isArray(value) === false) {
+      return undefined;
+    }
+
+    const labels: Lib_NovaConfig_Runner_GetGithubLabels_Labels = [];
+
+    for (const item of value) {
+      if (isPlainObject(item) === false) {
+        continue;
+      }
+
+      const name: Lib_NovaConfig_Runner_GetGithubLabels_Name = this.getNonEmptyString(item['name']);
+      const colorCandidate: Lib_NovaConfig_Runner_GetGithubLabels_ColorCandidate = this.getNonEmptyString(item['color']);
+      const color: Lib_NovaConfig_Runner_GetGithubLabels_Color = (colorCandidate !== undefined && LIB_REGEX_PATTERN_GITHUB_LABEL_COLOR.test(colorCandidate) === true) ? colorCandidate : undefined;
+      const description: Lib_NovaConfig_Runner_GetGithubLabels_Description = (typeof item['description'] === 'string' && item['description'].length <= 100) ? item['description'] : undefined;
+
+      if (
+        name === undefined
+        || color === undefined
+      ) {
+        continue;
+      }
+
+      const label: Lib_NovaConfig_Runner_GetGithubLabels_Label = {
+        name,
+        color,
+        ...((description !== undefined) ? { description } : {}),
+      };
+
+      labels.push(label);
+    }
+
+    return labels;
+  }
+
+  /**
    * Lib - Nova Config - Get GitHub Policies.
    *
-   * Parses the github.policies block for visibility, defaultBranch, mergeMethods,
-   * and autoDeleteHeadBranch. Returns undefined when the input is not a plain object.
+   * Parses repository visibility, branch, merge, update, and web-signoff policy
+   * settings from the github.policies block.
    *
    * @param {Lib_NovaConfig_Runner_GetGithubPolicies_Value} value - Value.
    *
@@ -2299,10 +2618,91 @@ export class Runner {
       result.mergeMethods = mergeMethods;
     }
 
+    const mergeCommit: Lib_NovaConfig_Runner_GetGithubPolicies_MergeCommit = this.getGithubPoliciesMergeCommit(value['mergeCommit']);
+
+    if (mergeCommit !== undefined) {
+      result.mergeCommit = mergeCommit;
+    }
+
+    const squashMerge: Lib_NovaConfig_Runner_GetGithubPolicies_SquashMerge = this.getGithubPoliciesSquashMerge(value['squashMerge']);
+
+    if (squashMerge !== undefined) {
+      result.squashMerge = squashMerge;
+    }
+
     const autoDeleteHeadBranch: Lib_NovaConfig_Runner_GetGithubPolicies_AutoDeleteHeadBranch = (typeof value['autoDeleteHeadBranch'] === 'boolean') ? value['autoDeleteHeadBranch'] : undefined;
 
     if (autoDeleteHeadBranch !== undefined) {
       result.autoDeleteHeadBranch = autoDeleteHeadBranch;
+    }
+
+    const autoMerge: Lib_NovaConfig_Runner_GetGithubPolicies_AutoMerge = (typeof value['autoMerge'] === 'boolean') ? value['autoMerge'] : undefined;
+
+    if (autoMerge !== undefined) {
+      result.autoMerge = autoMerge;
+    }
+
+    const allowUpdateBranch: Lib_NovaConfig_Runner_GetGithubPolicies_AllowUpdateBranch = (typeof value['allowUpdateBranch'] === 'boolean') ? value['allowUpdateBranch'] : undefined;
+
+    if (allowUpdateBranch !== undefined) {
+      result.allowUpdateBranch = allowUpdateBranch;
+    }
+
+    const webCommitSignoffRequired: Lib_NovaConfig_Runner_GetGithubPolicies_WebCommitSignoffRequired = (typeof value['webCommitSignoffRequired'] === 'boolean') ? value['webCommitSignoffRequired'] : undefined;
+
+    if (webCommitSignoffRequired !== undefined) {
+      result.webCommitSignoffRequired = webCommitSignoffRequired;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get GitHub Policies Merge Commit.
+   *
+   * Parses the title and message defaults GitHub applies when a pull request is
+   * merged with a merge commit.
+   *
+   * @param {Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Returns}
+   *
+   * @since 0.26.0
+   */
+  private getGithubPoliciesMergeCommit(value: Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Value): Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Result = {};
+
+    let title: Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Title = undefined;
+
+    if (
+      value['title'] === 'pull-request-title'
+      || value['title'] === 'merge-message'
+    ) {
+      title = value['title'];
+    }
+
+    if (title !== undefined) {
+      result.title = title;
+    }
+
+    let message: Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Message = undefined;
+
+    if (
+      value['message'] === 'pull-request-body'
+      || value['message'] === 'pull-request-title'
+      || value['message'] === 'blank'
+    ) {
+      message = value['message'];
+    }
+
+    if (message !== undefined) {
+      result.message = message;
     }
 
     return (Object.keys(result).length > 0) ? result : undefined;
@@ -2345,6 +2745,273 @@ export class Runner {
 
     if (rebase !== undefined) {
       result.rebase = rebase;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get GitHub Policies Squash Merge.
+   *
+   * Parses the title and message defaults GitHub applies when a pull request is
+   * merged with the squash strategy.
+   *
+   * @param {Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Returns}
+   *
+   * @since 0.26.0
+   */
+  private getGithubPoliciesSquashMerge(value: Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Value): Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Result = {};
+
+    let title: Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Title = undefined;
+
+    if (
+      value['title'] === 'pull-request-title'
+      || value['title'] === 'commit-or-pull-request-title'
+    ) {
+      title = value['title'];
+    }
+
+    if (title !== undefined) {
+      result.title = title;
+    }
+
+    let message: Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Message = undefined;
+
+    if (
+      value['message'] === 'pull-request-body'
+      || value['message'] === 'commit-messages'
+      || value['message'] === 'blank'
+    ) {
+      message = value['message'];
+    }
+
+    if (message !== undefined) {
+      result.message = message;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get GitHub Rulesets.
+   *
+   * Parses the repository rulesets block and delegates the default-branch
+   * protection settings to their focused parser.
+   *
+   * @param {Lib_NovaConfig_Runner_GetGithubRulesets_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetGithubRulesets_Returns}
+   *
+   * @since 0.26.0
+   */
+  private getGithubRulesets(value: Lib_NovaConfig_Runner_GetGithubRulesets_Value): Lib_NovaConfig_Runner_GetGithubRulesets_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_GetGithubRulesets_Result = {};
+    const defaultBranch: Lib_NovaConfig_Runner_GetGithubRulesets_DefaultBranch = this.getGithubRulesetsDefaultBranch(value['defaultBranch']);
+
+    if (defaultBranch !== undefined) {
+      result.defaultBranch = defaultBranch;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get GitHub Rulesets Default Branch.
+   *
+   * Parses the settings used to build Nova's managed default-branch ruleset,
+   * including pull-request review and status-check requirements.
+   *
+   * @param {Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Returns}
+   *
+   * @since 0.26.0
+   */
+  private getGithubRulesetsDefaultBranch(value: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Value): Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Result = {};
+
+    let enforcement: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_Enforcement = undefined;
+
+    if (
+      value['enforcement'] === 'active'
+      || value['enforcement'] === 'disabled'
+      || value['enforcement'] === 'evaluate'
+    ) {
+      enforcement = value['enforcement'];
+    }
+
+    if (enforcement !== undefined) {
+      result.enforcement = enforcement;
+    }
+
+    const blockDeletions: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_BlockDeletions = (typeof value['blockDeletions'] === 'boolean') ? value['blockDeletions'] : undefined;
+
+    if (blockDeletions !== undefined) {
+      result.blockDeletions = blockDeletions;
+    }
+
+    const blockForcePushes: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_BlockForcePushes = (typeof value['blockForcePushes'] === 'boolean') ? value['blockForcePushes'] : undefined;
+
+    if (blockForcePushes !== undefined) {
+      result.blockForcePushes = blockForcePushes;
+    }
+
+    const requireLinearHistory: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireLinearHistory = (typeof value['requireLinearHistory'] === 'boolean') ? value['requireLinearHistory'] : undefined;
+
+    if (requireLinearHistory !== undefined) {
+      result.requireLinearHistory = requireLinearHistory;
+    }
+
+    const requireSignedCommits: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireSignedCommits = (typeof value['requireSignedCommits'] === 'boolean') ? value['requireSignedCommits'] : undefined;
+
+    if (requireSignedCommits !== undefined) {
+      result.requireSignedCommits = requireSignedCommits;
+    }
+
+    const requirePullRequest: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequirePullRequest = (typeof value['requirePullRequest'] === 'boolean') ? value['requirePullRequest'] : undefined;
+
+    if (requirePullRequest !== undefined) {
+      result.requirePullRequest = requirePullRequest;
+    }
+
+    let allowedMergeMethods: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_AllowedMergeMethods = undefined;
+
+    if (Array.isArray(value['allowedMergeMethods']) === true) {
+      allowedMergeMethods = [];
+
+      for (const allowedMergeMethod of value['allowedMergeMethods']) {
+        if (
+          allowedMergeMethod !== 'merge'
+          && allowedMergeMethod !== 'squash'
+          && allowedMergeMethod !== 'rebase'
+        ) {
+          continue;
+        }
+
+        if (allowedMergeMethods.includes(allowedMergeMethod) === false) {
+          allowedMergeMethods.push(allowedMergeMethod);
+        }
+      }
+    }
+
+    if (allowedMergeMethods !== undefined) {
+      result.allowedMergeMethods = allowedMergeMethods;
+    }
+
+    const dismissStaleReviews: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_DismissStaleReviews = (typeof value['dismissStaleReviews'] === 'boolean') ? value['dismissStaleReviews'] : undefined;
+
+    if (dismissStaleReviews !== undefined) {
+      result.dismissStaleReviews = dismissStaleReviews;
+    }
+
+    const requireCodeOwnerReview: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireCodeOwnerReview = (typeof value['requireCodeOwnerReview'] === 'boolean') ? value['requireCodeOwnerReview'] : undefined;
+
+    if (requireCodeOwnerReview !== undefined) {
+      result.requireCodeOwnerReview = requireCodeOwnerReview;
+    }
+
+    const requireLastPushApproval: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireLastPushApproval = (typeof value['requireLastPushApproval'] === 'boolean') ? value['requireLastPushApproval'] : undefined;
+
+    if (requireLastPushApproval !== undefined) {
+      result.requireLastPushApproval = requireLastPushApproval;
+    }
+
+    const requiredApprovals: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequiredApprovals = (
+      typeof value['requiredApprovals'] === 'number'
+      && Number.isInteger(value['requiredApprovals']) === true
+      && value['requiredApprovals'] >= 0
+      && value['requiredApprovals'] <= 10
+    ) ? value['requiredApprovals'] : undefined;
+
+    if (requiredApprovals !== undefined) {
+      result.requiredApprovals = requiredApprovals;
+    }
+
+    const requireConversationResolution: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireConversationResolution = (typeof value['requireConversationResolution'] === 'boolean') ? value['requireConversationResolution'] : undefined;
+
+    if (requireConversationResolution !== undefined) {
+      result.requireConversationResolution = requireConversationResolution;
+    }
+
+    const requiredStatusChecks: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequiredStatusChecks = this.getArrayOfNonEmptyStrings(value['requiredStatusChecks']);
+
+    if (requiredStatusChecks !== undefined) {
+      result.requiredStatusChecks = requiredStatusChecks;
+    }
+
+    const requireBranchesToBeUpToDate: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequireBranchesToBeUpToDate = (typeof value['requireBranchesToBeUpToDate'] === 'boolean') ? value['requireBranchesToBeUpToDate'] : undefined;
+
+    if (requireBranchesToBeUpToDate !== undefined) {
+      result.requireBranchesToBeUpToDate = requireBranchesToBeUpToDate;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get GitHub Security.
+   *
+   * Parses repository vulnerability, Dependabot, secret-scanning, and push-
+   * protection switches from the GitHub security block.
+   *
+   * @param {Lib_NovaConfig_Runner_GetGithubSecurity_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetGithubSecurity_Returns}
+   *
+   * @since 0.26.0
+   */
+  private getGithubSecurity(value: Lib_NovaConfig_Runner_GetGithubSecurity_Value): Lib_NovaConfig_Runner_GetGithubSecurity_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_GetGithubSecurity_Result = {};
+
+    const vulnerabilityAlerts: Lib_NovaConfig_Runner_GetGithubSecurity_VulnerabilityAlerts = (typeof value['vulnerabilityAlerts'] === 'boolean') ? value['vulnerabilityAlerts'] : undefined;
+
+    if (vulnerabilityAlerts !== undefined) {
+      result.vulnerabilityAlerts = vulnerabilityAlerts;
+    }
+
+    const dependabotSecurityUpdates: Lib_NovaConfig_Runner_GetGithubSecurity_DependabotSecurityUpdates = (typeof value['dependabotSecurityUpdates'] === 'boolean') ? value['dependabotSecurityUpdates'] : undefined;
+
+    if (dependabotSecurityUpdates !== undefined) {
+      result.dependabotSecurityUpdates = dependabotSecurityUpdates;
+    }
+
+    const secretScanning: Lib_NovaConfig_Runner_GetGithubSecurity_SecretScanning = (typeof value['secretScanning'] === 'boolean') ? value['secretScanning'] : undefined;
+
+    if (secretScanning !== undefined) {
+      result.secretScanning = secretScanning;
+    }
+
+    const pushProtection: Lib_NovaConfig_Runner_GetGithubSecurity_PushProtection = (typeof value['pushProtection'] === 'boolean') ? value['pushProtection'] : undefined;
+
+    if (pushProtection !== undefined) {
+      result.pushProtection = pushProtection;
     }
 
     return (Object.keys(result).length > 0) ? result : undefined;

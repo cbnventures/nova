@@ -28,7 +28,13 @@ The `sync-identity` recipe pushes repository identity fields from <Terminology t
 
 If all three fields (`description`, `homepage`, and `topics`) are undefined in the config, the recipe no-ops and emits a warning.
 
-## Prerequisites
+## Why Use This Command?
+
+1. Keeps the public repository description, homepage, and topics aligned with the same project metadata used elsewhere.
+2. Normalizes derived topics so invalid GitHub topic values do not need manual cleanup.
+3. Makes identity updates repeatable after branding or ownership changes.
+
+## Requirements
 
 - **`gh` CLI ≥ 2.40.0** — The GitHub CLI must be installed and authenticated.
 - **Repository write access** — The authenticated user must have write access to the target repository.
@@ -51,13 +57,15 @@ Topic normalization rules applied to `project.keywords` when `github.topics` is 
 
 ## Settings
 
-Settings are configured per workspace in `nova.config.json` under the `recipes` key. The `sync-identity` recipe is controlled by a single boolean toggle:
+This project-scoped recipe is enabled under `recipes.github` in `nova.config.json`:
 
 ```json
 {
-  "github": {
-    "recipes": {
-      "sync-identity": true
+  "recipes": {
+    "github": {
+      "sync-identity": {
+        "enabled": true
+      }
     }
   }
 }
@@ -84,6 +92,6 @@ Settings are configured per workspace in `nova.config.json` under the `recipes` 
 
 ## Options
 
-| Flag            | Description                                |
-|-----------------|--------------------------------------------|
-| `-d, --dry-run` | Run without executing any GitHub commands. |
+| Flag            | Description                                                |
+|-----------------|------------------------------------------------------------|
+| `-d, --dry-run` | Run read-only checks without changing any GitHub settings. |

@@ -1,0 +1,137 @@
+---
+id: "preset-stack"
+title: "Preset Stack"
+description: "See every plugin, runtime, build integration, CLI dependency, and peer that the Nova Docusaurus preset coordinates, including activation and usage."
+sidebar_position: 4
+keywords:
+  - "nova"
+  - "docusaurus preset"
+  - "preset stack"
+  - "included plugins"
+  - "dependencies"
+  - "peer dependencies"
+  - "svgr"
+  - "iconify"
+  - "nprogress"
+  - "rtlcss"
+tags:
+  - "facades"
+  - "reference"
+  - "preset stack"
+  - "dependencies"
+---
+
+Use this inventory to answer four questions for every package behind `@cbnventures/docusaurus-preset-nova`: who installs it, how Nova represents it, when it runs, and what a site author does with it.
+
+:::info Installation ownership
+- **Installed with Nova** means the package is a direct dependency of the preset. A consuming site should not add it merely to use Nova's feature.
+- **Supplied by the site** means the package is a peer dependency. It must resolve from the consuming Docusaurus project.
+
+The exact supported versions live only in the preset's `package.json`; this page deliberately does not duplicate them.
+:::
+
+## Docusaurus Plugins Installed with Nova
+
+| Package                                 | Representation in Nova | Activation              | Site-author usage                                                                                                                             |
+|-----------------------------------------|------------------------|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| `@docusaurus/plugin-content-docs`       | `plugins.docs`         | Always included         | Author files under `docs`; configure forwarded [docs options](/docs/facades/docusaurus-preset/reference/plugin-options#docs-plugin).          |
+| `@docusaurus/plugin-content-blog`       | `plugins.blog`         | Included unless `false` | Author files under `blog`; configure forwarded [blog options](/docs/facades/docusaurus-preset/reference/plugin-options#blog-plugin).          |
+| `@docusaurus/plugin-content-pages`      | `plugins.pages`        | Included unless `false` | Author components or MDX under `src/pages`; configure [pages options](/docs/facades/docusaurus-preset/reference/plugin-options#pages-plugin). |
+| `@docusaurus/plugin-sitemap`            | `plugins.sitemap`      | Included unless `false` | Configure output and route filtering through [sitemap options](/docs/facades/docusaurus-preset/reference/plugin-options#sitemap-plugin).      |
+| `@docusaurus/plugin-google-tag-manager` | `analytics.gtm`        | Only when configured    | Provide a GTM `containerId` in [Preset Options](/docs/facades/docusaurus-preset/reference/preset-options#analytics).                          |
+| `@docusaurus/plugin-svgr`               | Included integration   | Always included         | Import an SVG file as a React component; no separate plugin entry is needed.                                                                  |
+
+## Authoring and Theme Integrations Installed with Nova
+
+| Package                       | Representation in Nova                          | Activation                                         | Site-author usage                                                                                                             |
+|-------------------------------|-------------------------------------------------|----------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| `@codesandbox/sandpack-react` | Nova `CodeBlock` live editor                    | A code fence contains the `live` flag              | Follow [Live Editor](/docs/facades/docusaurus-preset/authoring/code-blocks#live-editor); no direct import is needed.          |
+| `mermaid`                     | Nova `Mermaid` MDX component and tooltip plugin | Root `markdown.mermaid: true` plus a Mermaid fence | Follow [Mermaid Diagrams](/docs/facades/docusaurus-preset/authoring/mermaid).                                                 |
+| `nprogress`                   | `progressBar`                                   | `true` or a configuration object                   | Configure route-transition behavior in [Progress Bar](/docs/facades/docusaurus-preset/reference/preset-options#progress-bar). |
+| `shiki`                       | Nova pre-default rehype transform               | Automatic for docs, blog, and MDX pages            | Add a language to a code fence; see [Code Blocks](/docs/facades/docusaurus-preset/authoring/code-blocks).                     |
+| `@iconify/json`               | Build-time icon scanner dataset                 | Automatic; `iconSafelist` adds dynamic names       | Reference static `prefix:name` identifiers or safelist dynamic identifiers.                                                   |
+| `@iconify/react`              | Offline icon renderer in Nova theme and blocks  | Automatic for icons selected by the scanner        | Use Nova icon-bearing config and blocks; do not import the transitive package.                                                |
+| `@mdx-js/react`               | Nova MDX provider                               | Automatic on MDX content                           | Author MDX normally; no direct setup is required.                                                                             |
+| `rtlcss`                      | Nova PostCSS RTL transform                      | Current locale direction is `rtl`                  | Set locale direction through Docusaurus i18n; Nova transforms CSS automatically.                                              |
+
+### SVGR Usage
+
+SVGR is always registered by the preset. Import a local SVG as a component without adding `@docusaurus/plugin-svgr` to the site's plugin list.
+
+```tsx title="src/pages/index.tsx"
+import Logo from '@site/static/img/logo.svg';
+
+export default function Home() {
+  return <Logo title="Site logo" />;
+}
+```
+
+### Iconify Usage
+
+Nova scans `docs`, `blog`, `src`, and the resolved `themeConfig` for static Iconify identifiers. It reads `@iconify/json` only while building and registers the discovered icons for the offline `@iconify/react` renderer. This keeps entire icon collections out of the browser bundle.
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'envoy',
+  iconSafelist: [
+    'logos:slack',
+    'mdi:rocket-launch',
+  ],
+}
+```
+
+Use `iconSafelist` only when an identifier is assembled dynamically and therefore cannot be found in source text.
+
+## Search Pipeline Installed with Nova
+
+All packages in this table are dormant when `search: false`. Configure the feature through [Search](/docs/facades/docusaurus-preset/systems/search).
+
+| Package          | Representation in Nova            | Activation                                   | Site-author usage                                                       |
+|------------------|-----------------------------------|----------------------------------------------|-------------------------------------------------------------------------|
+| `cheerio`        | Build-time HTML content extractor | Search enabled during a production build     | No direct use; Nova extracts titles, headings, metadata, and body text. |
+| `lunr`           | Search index and query engine     | Search enabled                               | Configure indexed content and result behavior through `search`.         |
+| `lunr-languages` | Non-English analyzers             | `search.language` contains non-English codes | List the required language codes in `search.language`.                  |
+| `mark.js`        | In-page result highlighter        | `highlightSearchTermsOnTargetPage: true`     | Keep the default or disable target-page highlighting.                   |
+
+## Nova and Docusaurus Infrastructure Installed with Nova
+
+These packages support the preset's implementation. They do not create additional site configuration fields.
+
+| Package                          | Representation in Nova                          | Activation                       | Site-author usage                                                                                                                        |
+|----------------------------------|-------------------------------------------------|----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `@cbnventures/nova`              | Shared logger/toolkit and `theme-nova` CLI      | Build tooling and CLI commands   | Use [internationalization commands](/docs/facades/docusaurus-preset/systems/internationalization); no direct toolkit import is required. |
+| `@docusaurus/theme-common`       | Docusaurus theme components, hooks, and helpers | Automatic throughout the theme   | Configure Nova's [Theme Config](/docs/facades/docusaurus-preset/reference/theme-config); no direct import is required.                   |
+| `@docusaurus/theme-translations` | Upstream theme translation registry             | Translation loading and i18n CLI | Configure Docusaurus locales and run the Nova i18n commands.                                                                             |
+| `@docusaurus/utils-validation`   | Preset option schemas                           | Every Docusaurus config load     | Fix any reported invalid preset setting; no direct API use is needed.                                                                    |
+
+## CLI Dependencies Installed with Nova
+
+These packages power the `theme-nova` executable shipped by the preset. They never enter the site bundle.
+
+| Package     | Representation in Nova  | Activation                              | Site-author usage                                                     |
+|-------------|-------------------------|-----------------------------------------|-----------------------------------------------------------------------|
+| `commander` | CLI command parser      | Any `theme-nova` invocation             | Choose `i18n sync`, `i18n check`, or `i18n coverage` and their flags. |
+| `chalk`     | CLI terminal styling    | CLI writes status or diagnostics        | No direct use.                                                        |
+| `prompts`   | Interactive CLI prompts | `i18n sync` finds orphaned translations | Confirm whether real orphaned translations should be removed.         |
+
+## Peer Dependencies Supplied by the Site
+
+| Package            | Representation in Nova            | Activation                        | Site-author usage                                                                |
+|--------------------|-----------------------------------|-----------------------------------|----------------------------------------------------------------------------------|
+| `@docusaurus/core` | Preset host and plugin lifecycle  | Always required                   | Install Docusaurus in the consuming site and register the Nova preset.           |
+| `react`            | Component runtime                 | Always required                   | Supplied by the Docusaurus site; use React normally in pages and MDX components. |
+| `react-dom`        | Browser and server renderer       | Always required                   | Supplied by the Docusaurus site; no Nova-specific setup is required.             |
+| `@node-rs/jieba`   | Optional Chinese search tokenizer | `search.language` contains `'zh'` | Install it in the site only when Chinese search is enabled.                      |
+
+```bash title="Chinese search only"
+npm install @node-rs/jieba
+```
+
+## Activation at a Glance
+
+- **Automatic:** docs, blog, pages, sitemap, SVGR, Shiki, icon scanning, theme infrastructure, bundle-size checking, and locale-aware RTL processing.
+- **Nova preset option:** GTM through `analytics.gtm`, search through `search`, route progress through `progressBar`, and dynamic icons through `iconSafelist`.
+- **Root Docusaurus option:** Mermaid parsing through `markdown.mermaid: true`.
+- **Optional site install:** `@node-rs/jieba` only for Chinese search.
+
+The dependency ledger is checked against the preset's `package.json` in the test suite. Adding a runtime dependency or peer without documenting it causes the preset tests to fail.

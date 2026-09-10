@@ -1,14 +1,18 @@
 import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+import { resolveModulePath } from './lib/module-loader.js';
 import { rehypeShiki } from './lib/rehype-shiki.js';
 import { getShikiThemes } from './lib/shiki-themes.js';
 
 import type {
+  Preset_Preset_AnalyticsOptions,
   Preset_Preset_BlogPlugin,
   Preset_Preset_BlogRehypePlugins,
   Preset_Preset_BundleGuardPlugin,
   Preset_Preset_Context,
   Preset_Preset_CurrentDirectory,
+  Preset_Preset_CurrentFilePath,
   Preset_Preset_DocsPlugin,
   Preset_Preset_DocsRehypePlugins,
   Preset_Preset_GtmPlugin,
@@ -24,6 +28,7 @@ import type {
   Preset_Preset_Options,
   Preset_Preset_PagesPlugin,
   Preset_Preset_PagesRehypePlugins,
+  Preset_Preset_PluginOptions,
   Preset_Preset_Plugins,
   Preset_Preset_RehypePlugin,
   Preset_Preset_Returns,
@@ -52,12 +57,14 @@ import type {
 function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options): Preset_Preset_Returns {
   const plugins: Preset_Preset_Plugins = [];
   const themes: Preset_Preset_Themes = [];
+  const pluginOptions: Preset_Preset_PluginOptions = options['plugins'] ?? {};
+  const analyticsOptions: Preset_Preset_AnalyticsOptions = options['analytics'] ?? {};
 
   // Resolve the directory of this compiled preset module so local plugin and
-  // theme paths can be constructed without `require.resolve`, which performs
-  // a runtime file-existence check that fails in TypeScript test runners
-  // where the `.js` build output has not been emitted yet.
-  const currentDirectory: Preset_Preset_CurrentDirectory = dirname(__filename);
+  // theme paths can be constructed without a runtime file-existence check that
+  // fails before the `.js` build output has been emitted.
+  const currentFilePath: Preset_Preset_CurrentFilePath = fileURLToPath(import.meta.url);
+  const currentDirectory: Preset_Preset_CurrentDirectory = dirname(currentFilePath);
 
   // Resolve Shiki themes and create the rehype plugin config.
   const shikiThemes: Preset_Preset_ShikiThemes = getShikiThemes(options['preset']);
@@ -67,35 +74,35 @@ function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options)
   ];
 
   // Docs plugin (always included).
-  const docsRehypePlugins: Preset_Preset_DocsRehypePlugins = (options['plugins']['docs'] ?? {})['beforeDefaultRehypePlugins'] as Preset_Preset_DocsRehypePlugins ?? [];
+  const docsRehypePlugins: Preset_Preset_DocsRehypePlugins = (pluginOptions['docs'] ?? {})['beforeDefaultRehypePlugins'] as Preset_Preset_DocsRehypePlugins ?? [];
   const mergedDocsBeforeDefaultRehypePlugins: Preset_Preset_MergedDocsBeforeDefaultRehypePlugins = [
     rehypePlugin,
     ...docsRehypePlugins,
   ];
   const mergedDocsOptions: Preset_Preset_MergedDocsOptions = {
-    ...(options['plugins']['docs'] ?? {}),
+    ...(pluginOptions['docs'] ?? {}),
     beforeDefaultRehypePlugins: mergedDocsBeforeDefaultRehypePlugins,
   };
   const docsPlugin: Preset_Preset_DocsPlugin = [
-    require.resolve('@docusaurus/plugin-content-docs'),
+    resolveModulePath('@docusaurus/plugin-content-docs'),
     mergedDocsOptions,
   ];
 
   plugins.push(docsPlugin);
 
   // Blog plugin (unless blog: false).
-  if (options['plugins']['blog'] !== false) {
-    const blogRehypePlugins: Preset_Preset_BlogRehypePlugins = (options['plugins']['blog'] ?? {})['beforeDefaultRehypePlugins'] as Preset_Preset_BlogRehypePlugins ?? [];
+  if (pluginOptions['blog'] !== false) {
+    const blogRehypePlugins: Preset_Preset_BlogRehypePlugins = (pluginOptions['blog'] ?? {})['beforeDefaultRehypePlugins'] as Preset_Preset_BlogRehypePlugins ?? [];
     const mergedBlogBeforeDefaultRehypePlugins: Preset_Preset_MergedBlogBeforeDefaultRehypePlugins = [
       rehypePlugin,
       ...blogRehypePlugins,
     ];
     const mergedBlogOptions: Preset_Preset_MergedBlogOptions = {
-      ...(options['plugins']['blog'] ?? {}),
+      ...(pluginOptions['blog'] ?? {}),
       beforeDefaultRehypePlugins: mergedBlogBeforeDefaultRehypePlugins,
     };
     const blogPlugin: Preset_Preset_BlogPlugin = [
-      require.resolve('@docusaurus/plugin-content-blog'),
+      resolveModulePath('@docusaurus/plugin-content-blog'),
       mergedBlogOptions,
     ];
 
@@ -103,18 +110,18 @@ function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options)
   }
 
   // Pages plugin (unless pages: false).
-  if (options['plugins']['pages'] !== false) {
-    const pagesRehypePlugins: Preset_Preset_PagesRehypePlugins = (options['plugins']['pages'] ?? {})['beforeDefaultRehypePlugins'] as Preset_Preset_PagesRehypePlugins ?? [];
+  if (pluginOptions['pages'] !== false) {
+    const pagesRehypePlugins: Preset_Preset_PagesRehypePlugins = (pluginOptions['pages'] ?? {})['beforeDefaultRehypePlugins'] as Preset_Preset_PagesRehypePlugins ?? [];
     const mergedPagesBeforeDefaultRehypePlugins: Preset_Preset_MergedPagesBeforeDefaultRehypePlugins = [
       rehypePlugin,
       ...pagesRehypePlugins,
     ];
     const mergedPagesOptions: Preset_Preset_MergedPagesOptions = {
-      ...(options['plugins']['pages'] ?? {}),
+      ...(pluginOptions['pages'] ?? {}),
       beforeDefaultRehypePlugins: mergedPagesBeforeDefaultRehypePlugins,
     };
     const pagesPlugin: Preset_Preset_PagesPlugin = [
-      require.resolve('@docusaurus/plugin-content-pages'),
+      resolveModulePath('@docusaurus/plugin-content-pages'),
       mergedPagesOptions,
     ];
 
@@ -122,17 +129,17 @@ function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options)
   }
 
   // Sitemap plugin (unless sitemap: false).
-  if (options['plugins']['sitemap'] !== false) {
+  if (pluginOptions['sitemap'] !== false) {
     const sitemapPlugin: Preset_Preset_SitemapPlugin = [
-      require.resolve('@docusaurus/plugin-sitemap'),
-      options['plugins']['sitemap'] ?? {},
+      resolveModulePath('@docusaurus/plugin-sitemap'),
+      pluginOptions['sitemap'] ?? {},
     ];
 
     plugins.push(sitemapPlugin);
   }
 
   // SVGR plugin (always included).
-  const svgrPlugin: Preset_Preset_SvgrPlugin = require.resolve('@docusaurus/plugin-svgr');
+  const svgrPlugin: Preset_Preset_SvgrPlugin = resolveModulePath('@docusaurus/plugin-svgr');
 
   plugins.push(svgrPlugin);
 
@@ -169,10 +176,10 @@ function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options)
   plugins.push(bundleGuardPlugin);
 
   // Google Tag Manager plugin (if gtm option provided).
-  if (options['analytics']['gtm'] !== undefined) {
+  if (analyticsOptions['gtm'] !== undefined) {
     const gtmPlugin: Preset_Preset_GtmPlugin = [
-      require.resolve('@docusaurus/plugin-google-tag-manager'),
-      options['analytics']['gtm'],
+      resolveModulePath('@docusaurus/plugin-google-tag-manager'),
+      analyticsOptions['gtm'],
     ];
 
     plugins.push(gtmPlugin);
@@ -182,6 +189,7 @@ function preset(_context: Preset_Preset_Context, options: Preset_Preset_Options)
   const themeOptions: Preset_Preset_ThemeOptions = {
     preset: options['preset'],
     overrides: options['overrides'],
+    persistentCache: options['persistentCache'],
     progressBar: options['progressBar'],
     search: options['search'],
   };

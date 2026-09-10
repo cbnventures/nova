@@ -1,14 +1,17 @@
 ---
 id: "plugin-options"
 title: "Plugin Options"
-description: "Configure Docusaurus plugin options passed through the Nova preset with this full reference covering docs, blog, pages, and sitemap."
+description: "Configure every Docusaurus docs, blog, pages, and sitemap option forwarded by the Nova preset, with upstream defaults kept separate from Nova behavior."
 sidebar_position: 3
 keywords:
   - "nova"
   - "docusaurus facades"
   - "plugin options"
   - "docs plugin"
+  - "blog plugin"
+  - "pages plugin"
   - "sitemap plugin"
+  - "docusaurus defaults"
   - "configuration reference"
 tags:
   - "facades"
@@ -17,15 +20,16 @@ tags:
   - "configuration"
 ---
 
-# Plugin Options
+Configure the Docusaurus content plugins that Nova includes. These fields live under the Nova preset's `plugins` option, but the values and defaults in this reference belong to the bundled Docusaurus plugins—not to Nova's visual preset system.
 
-Full reference for the `plugins` section of the preset options. These options configure the Docusaurus content plugins (docs, blog, pages, sitemap) as passed through the Nova preset.
+:::info Two configuration layers
+- [Preset Options](/docs/facades/docusaurus-preset/reference/preset-options) documents settings Nova owns and labels their **Nova defaults**.
+- This page documents settings Nova forwards and labels their **Docusaurus defaults**.
 
-:::info Nova vs Docusaurus Defaults
-Some defaults differ from Docusaurus's own defaults, and Nova-specific overrides are noted in the table descriptions. The types in `nova-config.d.ts` are the source of truth.
+Nova currently pins Docusaurus 3.10.2. The preset accepts additional upstream fields for forward compatibility, while `nova-config.d.ts` explicitly types the complete surface documented here.
 :::
 
-## Top-Level Structure
+## Inclusion and Processing
 
 ```ts title="docusaurus.config.ts"
 presets: [[
@@ -33,63 +37,236 @@ presets: [[
   {
     preset: 'envoy',
     plugins: {
-      docs: { /* ... */ },
-      blog: { /* ... */ },
-      pages: { /* ... */ },
-      sitemap: { /* ... */ },
+      docs: { /* Docusaurus docs options */ },
+      blog: { /* Docusaurus blog options, or false */ },
+      pages: { /* Docusaurus pages options, or false */ },
+      sitemap: { /* Docusaurus sitemap options, or false */ },
     },
   },
 ]],
 ```
 
-Set `blog`, `pages`, or `sitemap` to `false` to disable them. The `docs` plugin is always included and cannot be disabled.
+| Nova preset field | Included by Nova | Forwarded to                       |
+|-------------------|------------------|------------------------------------|
+| `plugins.docs`    | Always           | `@docusaurus/plugin-content-docs`  |
+| `plugins.blog`    | Unless `false`   | `@docusaurus/plugin-content-blog`  |
+| `plugins.pages`   | Unless `false`   | `@docusaurus/plugin-content-pages` |
+| `plugins.sitemap` | Unless `false`   | `@docusaurus/plugin-sitemap`       |
+
+Nova preserves the supplied object and prepends its Shiki transform to `beforeDefaultRehypePlugins` for docs, blog posts, and MDX pages. Your own entries still run afterward. All other defaults below come directly from Docusaurus.
+
+The repeated **standard exclusions** default means:
+
+```ts
+[
+  '**/_*.{js,jsx,ts,tsx,md,mdx}',
+  '**/_*/**',
+  '**/*.test.{js,jsx,ts,tsx}',
+  '**/__tests__/**',
+]
+```
 
 ## Docs Plugin
 
-| Option                      | Type                      | Default         | Description                                     |
-|-----------------------------|---------------------------|-----------------|-------------------------------------------------|
-| `docs.id`                   | `string`                  | `'default'`     | Plugin instance ID.                             |
-| `docs.path`                 | `string`                  | `'docs'`        | Path to the docs directory.                     |
-| `docs.routeBasePath`        | `string`                  | `'docs'`        | URL base path for docs pages.                   |
-| `docs.sidebarPath`          | `string`                  | `'sidebars.ts'` | Path to the sidebars config file.               |
-| `docs.editUrl`              | `string \| function`      | `undefined`     | Base URL for "Edit this page" links.            |
-| `docs.breadcrumbs`          | `boolean`                 | `true`          | Show breadcrumb navigation.                     |
-| `docs.showLastUpdateTime`   | `boolean`                 | `false`         | Show last updated timestamp.                    |
-| `docs.showLastUpdateAuthor` | `boolean`                 | `false`         | Show last update author.                        |
-| `docs.tags`                 | `string \| false \| null` | `'tags.yml'`    | Path to the tags file. `false` to disable tags. |
-| `docs.remarkPlugins`        | `array`                   | `[]`            | Custom remark plugins.                          |
-| `docs.rehypePlugins`        | `array`                   | `[]`            | Custom rehype plugins.                          |
+### Files, Routes, and Navigation
+
+| Option                      | Type                  | Docusaurus default  | Description                                                              |
+|-----------------------------|-----------------------|---------------------|--------------------------------------------------------------------------|
+| `docs.id`                   | `string`              | `'default'`         | Identify this plugin instance.                                           |
+| `docs.path`                 | `string`              | `'docs'`            | Read docs from this site-relative directory.                             |
+| `docs.routeBasePath`        | `string`              | `'docs'`            | Mount docs at this URL base path. Use `'/'` for the site root.           |
+| `docs.sidebarPath`          | `string \| false`     | `undefined`         | Load a sidebar file, disable sidebars with `false`, or autogenerate one. |
+| `docs.include`              | `string[]`            | `['**/*.{md,mdx}']` | Include Markdown files matching these globs.                             |
+| `docs.exclude`              | `string[]`            | Standard exclusions | Exclude matching files after `include`.                                  |
+| `docs.editUrl`              | `string \| function`  | `undefined`         | Build “Edit this page” links; omission disables them.                    |
+| `docs.editCurrentVersion`   | `boolean`             | `false`             | Point edit links at current docs instead of stored version files.        |
+| `docs.editLocalizedFiles`   | `boolean`             | `false`             | Point edit links at localized files instead of source files.             |
+| `docs.showLastUpdateTime`   | `boolean`             | `false`             | Show each document's last update time.                                   |
+| `docs.showLastUpdateAuthor` | `boolean`             | `false`             | Show each document's last update author.                                 |
+| `docs.numberPrefixParser`   | `boolean \| function` | `true`              | Use the built-in numeric-prefix parser, disable it, or provide a parser. |
+| `docs.breadcrumbs`          | `boolean`             | `true`              | Render breadcrumbs on docs pages.                                        |
+| `docs.sidebarCollapsible`   | `boolean`             | `true`              | Allow readers to collapse sidebar categories.                            |
+| `docs.sidebarCollapsed`     | `boolean`             | `true`              | Start collapsible sidebar categories closed.                             |
+
+### Versioning
+
+| Option                           | Type                                       | Docusaurus default      | Description                                                                 |
+|----------------------------------|--------------------------------------------|-------------------------|-----------------------------------------------------------------------------|
+| `docs.lastVersion`               | `string`                                   | Derived                 | Prefer this version in navigation; otherwise use the newest stored version. |
+| `docs.onlyIncludeVersions`       | `string[]`                                 | `undefined`             | Build only this subset of available versions.                               |
+| `docs.disableVersioning`         | `boolean`                                  | `false`                 | Ignore stored versions and build only current docs.                         |
+| `docs.includeCurrentVersion`     | `boolean`                                  | `true`                  | Include the current, unreleased docs.                                       |
+| `docs.versions`                  | `Record<string, object>`                   | `{}`                    | Override display and routing for individual versions.                       |
+| `docs.versions.<name>.path`      | `string`                                   | Derived from version    | Override the URL path segment; the preferred version normally uses `''`.    |
+| `docs.versions.<name>.label`     | `string`                                   | Derived from version    | Override badges and dropdown labels; current docs normally use `'Next'`.    |
+| `docs.versions.<name>.banner`    | `'none' \| 'unreleased' \| 'unmaintained'` | Derived by status       | Override the version-status banner.                                         |
+| `docs.versions.<name>.badge`     | `boolean`                                  | Multiple versions only  | Override whether the version badge appears on documents.                    |
+| `docs.versions.<name>.noIndex`   | `boolean`                                  | `false`                 | Prevent search engines from indexing this version.                          |
+| `docs.versions.<name>.className` | `string`                                   | `'docs-version-<name>'` | Override the class added to the document element.                           |
+
+```ts title="docusaurus.config.ts"
+plugins: {
+  docs: {
+    sidebarPath: './sidebars.ts',
+    versions: {
+      current: {
+        label: 'Next',
+        banner: 'unreleased',
+      },
+      '1.0.0': {
+        label: '1.x',
+        banner: 'unmaintained',
+      },
+    },
+  },
+}
+```
+
+### Tags and Markdown
+
+| Option                            | Type                                     | Docusaurus default | Description                                                                       |
+|-----------------------------------|------------------------------------------|--------------------|-----------------------------------------------------------------------------------|
+| `docs.tags`                       | `string \| false \| null`                | `undefined`        | Load a central tags file; omission still permits inline tag definitions.          |
+| `docs.onInlineTags`               | `'ignore' \| 'log' \| 'warn' \| 'throw'` | `'warn'`           | Decide how Docusaurus reports inline tag definitions.                             |
+| `docs.tagsBasePath`               | `string`                                 | `'tags'`           | Mount tag pages under this docs-relative URL path.                                |
+| `docs.admonitions`                | `boolean \| object`                      | `true`             | Enable admonitions or configure their keywords and default extension behavior.    |
+| `docs.remarkPlugins`              | `array`                                  | `[]`               | Run these remark plugins after Docusaurus's pre-default phase.                    |
+| `docs.rehypePlugins`              | `array`                                  | `[]`               | Run these rehype plugins after Docusaurus's pre-default phase.                    |
+| `docs.recmaPlugins`               | `array`                                  | `[]`               | Run these recma plugins during MDX compilation.                                   |
+| `docs.beforeDefaultRemarkPlugins` | `array`                                  | `[]`               | Run these remark plugins before Docusaurus defaults.                              |
+| `docs.beforeDefaultRehypePlugins` | `array`                                  | `[]`               | Run these rehype plugins before defaults; Nova prepends Shiki ahead of this list. |
+
+### Components and Callbacks
+
+| Option                                    | Type       | Docusaurus default                       | Description                                                |
+|-------------------------------------------|------------|------------------------------------------|------------------------------------------------------------|
+| `docs.docsRootComponent`                  | `string`   | `'@theme/DocsRoot'`                      | Wrap every page from this docs plugin instance.            |
+| `docs.docVersionRootComponent`            | `string`   | `'@theme/DocVersionRoot'`                | Wrap every page in one docs version.                       |
+| `docs.docRootComponent`                   | `string`   | `'@theme/DocRoot'`                       | Wrap docs pages that use a sidebar.                        |
+| `docs.docItemComponent`                   | `string`   | `'@theme/DocItem'`                       | Render an individual document page.                        |
+| `docs.docTagDocListComponent`             | `string`   | `'@theme/DocTagDocListPage'`             | Render documents belonging to one tag.                     |
+| `docs.docTagsListComponent`               | `string`   | `'@theme/DocTagsListPage'`               | Render the docs tags index.                                |
+| `docs.docCategoryGeneratedIndexComponent` | `string`   | `'@theme/DocCategoryGeneratedIndexPage'` | Render generated category index pages.                     |
+| `docs.sidebarItemsGenerator`              | `function` | Built-in generator                       | Customize the sidebar produced for autogenerated sections. |
 
 ## Blog Plugin
 
-| Option                 | Type                      | Default         | Description                                     |
-|------------------------|---------------------------|-----------------|-------------------------------------------------|
-| `blog.id`              | `string`                  | `'default'`     | Plugin instance ID.                             |
-| `blog.path`            | `string`                  | `'blog'`        | Path to the blog directory.                     |
-| `blog.routeBasePath`   | `string`                  | `'blog'`        | URL base path for blog pages.                   |
-| `blog.blogTitle`       | `string`                  | `'Blog'`        | Blog page title.                                |
-| `blog.blogDescription` | `string`                  | `'Blog'`        | Blog page meta description.                     |
-| `blog.postsPerPage`    | `number \| 'ALL'`         | `10`            | Posts per listing page.                         |
-| `blog.showReadingTime` | `boolean`                 | `true`          | Show estimated reading time.                    |
-| `blog.authorsMapPath`  | `string`                  | `'authors.yml'` | Path to the authors map file.                   |
-| `blog.tags`            | `string \| false \| null` | `'tags.yml'`    | Path to the tags file. `false` to disable tags. |
-| `blog.remarkPlugins`   | `array`                   | `[]`            | Custom remark plugins.                          |
-| `blog.rehypePlugins`   | `array`                   | `[]`            | Custom rehype plugins.                          |
+### Files, Routes, and Listings
+
+| Option                  | Type                          | Docusaurus default                    | Description                                                  |
+|-------------------------|-------------------------------|---------------------------------------|--------------------------------------------------------------|
+| `blog.id`               | `string`                      | `'default'`                           | Identify this plugin instance.                               |
+| `blog.path`             | `string`                      | `'blog'`                              | Read posts from this site-relative directory.                |
+| `blog.routeBasePath`    | `string`                      | `'blog'`                              | Mount the blog at this URL base path.                        |
+| `blog.tagsBasePath`     | `string`                      | `'tags'`                              | Mount tag pages under this blog-relative path.               |
+| `blog.pageBasePath`     | `string`                      | `'page'`                              | Mount paginated listing pages under this path.               |
+| `blog.archiveBasePath`  | `string \| null`              | `'archive'`                           | Mount the archive here, or disable it with `null`.           |
+| `blog.include`          | `string[]`                    | `['**/*.{md,mdx}']`                   | Include posts matching these globs.                          |
+| `blog.exclude`          | `string[]`                    | Standard exclusions                   | Exclude matching files after `include`.                      |
+| `blog.postsPerPage`     | `number \| 'ALL'`             | `10`                                  | Control how many posts appear on each listing page.          |
+| `blog.blogTitle`        | `string`                      | `'Blog'`                              | Set the blog's SEO title.                                    |
+| `blog.blogDescription`  | `string`                      | `'Blog'`                              | Set the blog's SEO description.                              |
+| `blog.blogSidebarCount` | `number \| 'ALL'`             | `5`                                   | Show this many recent posts in the sidebar; `0` disables it. |
+| `blog.blogSidebarTitle` | `string`                      | `'Recent posts'`                      | Label the recent-posts sidebar.                              |
+| `blog.showReadingTime`  | `boolean`                     | `true`                                | Show the calculated reading time.                            |
+| `blog.truncateMarker`   | `RegExp`                      | Built-in HTML and JSX comment markers | Detect the point separating a summary from the full post.    |
+| `blog.sortPosts`        | `'ascending' \| 'descending'` | `'descending'`                        | Sort posts by publish date.                                  |
+
+### Editing, Authors, and Tags
+
+| Option                        | Type                                     | Docusaurus default | Description                                                              |
+|-------------------------------|------------------------------------------|--------------------|--------------------------------------------------------------------------|
+| `blog.editUrl`                | `string \| function`                     | `undefined`        | Build “Edit this page” links; omission disables them.                    |
+| `blog.editLocalizedFiles`     | `boolean`                                | `false`            | Point edit links at localized files.                                     |
+| `blog.showLastUpdateTime`     | `boolean`                                | `false`            | Show a post's last update time.                                          |
+| `blog.showLastUpdateAuthor`   | `boolean`                                | `false`            | Show a post's last update author.                                        |
+| `blog.authorsMapPath`         | `string`                                 | `'authors.yml'`    | Load reusable author records from this blog-relative file.               |
+| `blog.authorsBasePath`        | `string`                                 | `'authors'`        | Mount author pages under this blog-relative path.                        |
+| `blog.onInlineAuthors`        | `'ignore' \| 'log' \| 'warn' \| 'throw'` | `'warn'`           | Decide how Docusaurus reports inline author definitions.                 |
+| `blog.onUntruncatedBlogPosts` | `'ignore' \| 'log' \| 'warn' \| 'throw'` | `'warn'`           | Decide how Docusaurus reports posts without a truncate marker.           |
+| `blog.tags`                   | `string \| false \| null`                | `undefined`        | Load a central tags file; omission still permits inline tag definitions. |
+| `blog.onInlineTags`           | `'ignore' \| 'log' \| 'warn' \| 'throw'` | `'warn'`           | Decide how Docusaurus reports inline tag definitions.                    |
+
+### Feed
+
+`feedOptions` defaults to an enabled RSS and Atom feed. Set `feedOptions.type` to `null` to disable feed generation.
+
+| Option                             | Type                                  | Docusaurus default          | Description                                                             |
+|------------------------------------|---------------------------------------|-----------------------------|-------------------------------------------------------------------------|
+| `blog.feedOptions`                 | `object`                              | Enabled defaults            | Configure generated RSS, Atom, and JSON feeds.                          |
+| `blog.feedOptions.type`            | `string \| string[] \| 'all' \| null` | `['rss', 'atom']`           | Generate selected formats, all formats, or no feed.                     |
+| `blog.feedOptions.title`           | `string`                              | `'<site title> Blog'`       | Override the feed title.                                                |
+| `blog.feedOptions.description`     | `string`                              | `'<site title> Blog'`       | Override the feed description.                                          |
+| `blog.feedOptions.copyright`       | `string`                              | `''`                        | Set the feed copyright notice.                                          |
+| `blog.feedOptions.language`        | `string`                              | Current locale              | Override the feed language.                                             |
+| `blog.feedOptions.createFeedItems` | `function`                            | Built-in item generator     | Transform, filter, or replace generated feed items.                     |
+| `blog.feedOptions.limit`           | `number \| false \| null`             | `20`                        | Limit feed posts; `false` or `null` includes all posts.                 |
+| `blog.feedOptions.xslt`            | `boolean \| null \| object`           | `{ rss: null, atom: null }` | Enable built-in stylesheets, disable them, or provide per-format paths. |
+
+```ts title="docusaurus.config.ts"
+plugins: {
+  blog: {
+    feedOptions: {
+      type: 'all',
+      limit: 50,
+      xslt: true,
+    },
+  },
+}
+```
+
+### Markdown, Components, and Callbacks
+
+| Option                            | Type                | Docusaurus default                         | Description                                                                       |
+|-----------------------------------|---------------------|--------------------------------------------|-----------------------------------------------------------------------------------|
+| `blog.admonitions`                | `boolean \| object` | `true`                                     | Enable admonitions or configure their keywords and default extension behavior.    |
+| `blog.remarkPlugins`              | `array`             | `[]`                                       | Run these remark plugins after Docusaurus's pre-default phase.                    |
+| `blog.rehypePlugins`              | `array`             | `[]`                                       | Run these rehype plugins after Docusaurus's pre-default phase.                    |
+| `blog.recmaPlugins`               | `array`             | `[]`                                       | Run these recma plugins during MDX compilation.                                   |
+| `blog.beforeDefaultRemarkPlugins` | `array`             | `[]`                                       | Run these remark plugins before Docusaurus defaults.                              |
+| `blog.beforeDefaultRehypePlugins` | `array`             | `[]`                                       | Run these rehype plugins before defaults; Nova prepends Shiki ahead of this list. |
+| `blog.blogListComponent`          | `string`            | `'@theme/BlogListPage'`                    | Render blog listing pages.                                                        |
+| `blog.blogPostComponent`          | `string`            | `'@theme/BlogPostPage'`                    | Render individual posts.                                                          |
+| `blog.blogTagsListComponent`      | `string`            | `'@theme/BlogTagsListPage'`                | Render the blog tags index.                                                       |
+| `blog.blogTagsPostsComponent`     | `string`            | `'@theme/BlogTagsPostsPage'`               | Render posts belonging to one tag.                                                |
+| `blog.blogAuthorsListComponent`   | `string`            | `'@theme/Blog/Pages/BlogAuthorsListPage'`  | Render the authors index.                                                         |
+| `blog.blogAuthorsPostsComponent`  | `string`            | `'@theme/Blog/Pages/BlogAuthorsPostsPage'` | Render posts belonging to one author.                                             |
+| `blog.blogArchiveComponent`       | `string`            | `'@theme/BlogArchivePage'`                 | Render the archive page.                                                          |
+| `blog.readingTime`                | `function`          | Built-in locale-aware calculator           | Customize reading-time calculation or hide it for selected posts.                 |
+| `blog.processBlogPosts`           | `async function`    | No-op                                      | Transform, filter, or reorder loaded blog posts before rendering.                 |
 
 ## Pages Plugin
 
-| Option                | Type     | Default       | Description                     |
-|-----------------------|----------|---------------|---------------------------------|
-| `pages.id`            | `string` | `'default'`   | Plugin instance ID.             |
-| `pages.path`          | `string` | `'src/pages'` | Path to the pages directory.    |
-| `pages.routeBasePath` | `string` | `'/'`         | URL base path for custom pages. |
+| Option                             | Type                 | Docusaurus default                | Description                                                                       |
+|------------------------------------|----------------------|-----------------------------------|-----------------------------------------------------------------------------------|
+| `pages.id`                         | `string`             | `'default'`                       | Identify this plugin instance.                                                    |
+| `pages.path`                       | `string`             | `'src/pages'`                     | Read standalone pages from this site-relative directory.                          |
+| `pages.routeBasePath`              | `string`             | `'/'`                             | Mount standalone pages under this URL base path.                                  |
+| `pages.include`                    | `string[]`           | `['**/*.{js,jsx,ts,tsx,md,mdx}']` | Include matching component and Markdown files.                                    |
+| `pages.exclude`                    | `string[]`           | Standard exclusions               | Exclude matching files after `include`.                                           |
+| `pages.editUrl`                    | `string \| function` | `undefined`                       | Build edit links for MDX pages; omission disables them.                           |
+| `pages.editLocalizedFiles`         | `boolean`            | `false`                           | Point edit links at localized files.                                              |
+| `pages.showLastUpdateTime`         | `boolean`            | `false`                           | Show an MDX page's last update time.                                              |
+| `pages.showLastUpdateAuthor`       | `boolean`            | `false`                           | Show an MDX page's last update author.                                            |
+| `pages.admonitions`                | `boolean \| object`  | `true`                            | Enable admonitions or configure their keywords and default extension behavior.    |
+| `pages.remarkPlugins`              | `array`              | `[]`                              | Run these remark plugins after Docusaurus's pre-default phase.                    |
+| `pages.rehypePlugins`              | `array`              | `[]`                              | Run these rehype plugins after Docusaurus's pre-default phase.                    |
+| `pages.recmaPlugins`               | `array`              | `[]`                              | Run these recma plugins during MDX compilation.                                   |
+| `pages.beforeDefaultRemarkPlugins` | `array`              | `[]`                              | Run these remark plugins before Docusaurus defaults.                              |
+| `pages.beforeDefaultRehypePlugins` | `array`              | `[]`                              | Run these rehype plugins before defaults; Nova prepends Shiki ahead of this list. |
+| `pages.mdxPageComponent`           | `string`             | `'@theme/MDXPage'`                | Render standalone MDX pages.                                                      |
 
 ## Sitemap Plugin
 
-| Option                   | Type                                                                                      | Default         | Description                                                                                             |
-|--------------------------|-------------------------------------------------------------------------------------------|-----------------|---------------------------------------------------------------------------------------------------------|
-| `sitemap.filename`       | `string`                                                                                  | `'sitemap.xml'` | Sitemap output filename.                                                                                |
-| `sitemap.ignorePatterns` | `string[]`                                                                                | `[]`            | Route patterns to exclude from the sitemap.                                                             |
-| `sitemap.lastmod`        | `'date' \| 'datetime' \| null`                                                            | `null`          | Last modified format.                                                                                   |
-| `sitemap.changefreq`     | `'hourly' \| 'daily' \| 'weekly' \| 'monthly' \| 'yearly' \| 'always' \| 'never' \| null` | `'weekly'`      | Default change frequency hint — sitemaps.org values; `'weekly'` is the upstream sitemap plugin default. |
-| `sitemap.priority`       | `number \| null`                                                                          | `0.5`           | Default priority hint (0.0–1.0); `0.5` is the upstream sitemap plugin default.                          |
+| Option                       | Type                                                                                      | Docusaurus default | Description                                                                       |
+|------------------------------|-------------------------------------------------------------------------------------------|--------------------|-----------------------------------------------------------------------------------|
+| `sitemap.filename`           | `string`                                                                                  | `'sitemap.xml'`    | Write the sitemap under this build-output filename.                               |
+| `sitemap.ignorePatterns`     | `string[]`                                                                                | `[]`               | Exclude routes matching these globs.                                              |
+| `sitemap.lastmod`            | `'date' \| 'datetime' \| null`                                                            | `null`             | Select the last-modified format or omit the entry.                                |
+| `sitemap.changefreq`         | `'hourly' \| 'daily' \| 'weekly' \| 'monthly' \| 'yearly' \| 'always' \| 'never' \| null` | `'weekly'`         | Set the change-frequency hint or omit it.                                         |
+| `sitemap.priority`           | `number \| null`                                                                          | `0.5`              | Set the relative priority from `0` to `1`, or omit it.                            |
+| `sitemap.createSitemapItems` | `async function`                                                                          | Built-in generator | Customize generated entries with access to routes and the default implementation. |
+
+## What Nova Adds Around These Plugins
+
+The forwarded fields above do not describe the complete preset assembly. Nova also includes SVGR, icon scanning, the bundle-size guard, Mermaid tooltip handling, its theme runtime, and conditional Google Tag Manager support. [Preset Stack](/docs/facades/docusaurus-preset/reference/preset-stack) lists every included package and explains activation, representation, and user-facing usage consistently.

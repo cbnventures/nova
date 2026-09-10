@@ -15,6 +15,8 @@ import { afterAll, describe, it } from 'vitest';
 import { Runner as CliUtilityRunScripts } from '../../../cli/utility/run-scripts.js';
 
 import type {
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_DelegatesTheRepositoryBootstrapToTheSharedRunner_BootstrapScriptContents,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_DelegatesTheRepositoryBootstrapToTheSharedRunner_BootstrapScriptPath,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ErrorsWhenBothSequentialAndParallelAreSet_PackageJson,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ErrorsWhenBothSequentialAndParallelAreSet_PackageJsonPath,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ErrorsWhenBothSequentialAndParallelAreSet_ProjectRoot,
@@ -23,6 +25,16 @@ import type {
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ErrorsWhenBufferValueIsNotAPositiveInteger_PackageJsonPath,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ErrorsWhenBufferValueIsNotAPositiveInteger_ProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ErrorsWhenBufferValueIsNotAPositiveInteger_RealProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_CapturedStderr,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_CapturedStdout,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalSigintListeners,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalSigtermListeners,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalStderrWrite,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalStdoutWrite,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_PackageJson,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_PackageJsonPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_ProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_RealProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_MatchesExactScriptNameWithoutWildcard_Output,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_MatchesExactScriptNameWithoutWildcard_OutputPath,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_MatchesExactScriptNameWithoutWildcard_PackageJson,
@@ -89,6 +101,18 @@ describe('CliUtilityRunScripts.run', async () => {
       recursive: true,
       force: true,
     });
+
+    return;
+  });
+
+  it('delegates the repository bootstrap to the shared runner', async () => {
+    const bootstrapScriptPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_DelegatesTheRepositoryBootstrapToTheSharedRunner_BootstrapScriptPath = join(originalCwd, '..', '..', 'scripts', 'nova-run-scripts.mjs');
+    const bootstrapScriptContents: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_DelegatesTheRepositoryBootstrapToTheSharedRunner_BootstrapScriptContents = await readFile(bootstrapScriptPath, 'utf-8');
+
+    strictEqual(bootstrapScriptContents.includes('../packages/nova/src/lib/run-scripts.ts'), true);
+    strictEqual(bootstrapScriptContents.includes('from \'node:child_process\''), false);
+    strictEqual(bootstrapScriptContents.includes('fsCache: false'), true);
+    strictEqual(bootstrapScriptContents.includes('moduleCache: false'), true);
 
     return;
   });
@@ -226,6 +250,63 @@ describe('CliUtilityRunScripts.run', async () => {
     strictEqual(includesTaskB, true);
     strictEqual(includesHelloA, true);
     strictEqual(includesHelloB, true);
+
+    return;
+  });
+
+  it('keeps stdout and stderr partial lines independent and removes signal listeners', async () => {
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_ProjectRoot = join(sandboxRoot, 'parallel-streams');
+
+    await mkdir(projectRoot, { recursive: true });
+
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_PackageJson = JSON.stringify({
+      name: 'test-parallel-streams',
+      scripts: {
+        'task:streams': 'node -e "process.stdout.write(\'out-part\'); process.stderr.write(\'err-part\\n\')"',
+      },
+    }, null, 2);
+
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_PackageJsonPath = join(projectRoot, 'package.json');
+
+    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_RealProjectRoot = await realpath(projectRoot);
+    const capturedStdout: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_CapturedStdout = [];
+    const capturedStderr: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_CapturedStderr = [];
+    const originalStdoutWrite: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalStdoutWrite = process.stdout.write;
+    const originalStderrWrite: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalStderrWrite = process.stderr.write;
+    const originalSigintListeners: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalSigintListeners = process.listenerCount('SIGINT');
+    const originalSigtermListeners: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalSigtermListeners = process.listenerCount('SIGTERM');
+
+    process.chdir(realProjectRoot);
+
+    process.stdout.write = ((chunk) => {
+      capturedStdout.push(String(chunk));
+
+      return true;
+    }) as Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalStdoutWrite;
+
+    process.stderr.write = ((chunk) => {
+      capturedStderr.push(String(chunk));
+
+      return true;
+    }) as Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalStderrWrite;
+
+    try {
+      await CliUtilityRunScripts.run({
+        pattern: 'task:*',
+        parallel: true,
+        buffer: '100',
+      });
+    } finally {
+      process.stdout.write = originalStdoutWrite;
+      process.stderr.write = originalStderrWrite;
+    }
+
+    strictEqual(capturedStdout.join('').includes('[task:streams] out-part'), true);
+    strictEqual(capturedStderr.join('').includes('[task:streams] err-part'), true);
+    strictEqual(process.listenerCount('SIGINT'), originalSigintListeners);
+    strictEqual(process.listenerCount('SIGTERM'), originalSigtermListeners);
 
     return;
   });

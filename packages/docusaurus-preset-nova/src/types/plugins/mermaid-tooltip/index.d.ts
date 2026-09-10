@@ -14,4 +14,8 @@ export type Plugins_MermaidTooltip_Index_MermaidTooltip_Returns = Plugin;
  *
  * @since 0.18.0
  */
+export type Plugins_MermaidTooltip_Index_MermaidTooltip_GetClientModules_ClientUrl = URL;
+
+export type Plugins_MermaidTooltip_Index_MermaidTooltip_GetClientModules_ClientPath = string;
+
 export type Plugins_MermaidTooltip_Index_MermaidTooltip_GetClientModules_Returns = string[];

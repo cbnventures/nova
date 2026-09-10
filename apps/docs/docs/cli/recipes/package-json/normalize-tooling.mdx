@@ -30,15 +30,33 @@ The `normalize-tooling` recipe handles tooling-related fields in each <Terminolo
 
 It normalizes the `scripts` object, `allowScripts` object, `gypfile` flag, `config` object, and `workspaces` field according to workspace role conventions.
 
+## Why Use This Command?
+
+1. Keeps package scripts and tooling metadata in shapes expected by npm and the repository toolchain.
+2. Detects `binding.gyp` and workspace roles so native and monorepo fields appear only when applicable.
+3. Removes empty tooling objects before they become misleading configuration stubs.
+
+## Requirements
+
+- **Node.js runtime** — Use a supported Node.js LTS release with the Nova CLI available.
+- **Project config** — Register the workspace and enable `recipes.package-json.<workspace>.normalize-tooling` in `nova.config.json`.
+- **Workspace manifest** — The configured workspace must contain a readable `package.json` file.
+
 ## Behavior
 
 For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects tooling-related fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
 
 - **`scripts` (Required)** — If the field is missing, it is added as an empty object `{}`.
-- **`allowScripts` (Conditional)** — Removed if the field is present but empty.
+- **`allowScripts` (Conditional)** — Removed if the field is present but empty. A non-empty policy is preserved exactly; Nova never adds an approval or changes an existing decision.
 - **`gypfile` (Required)** — If present but no `binding.gyp` file exists in the workspace directory, the field is removed. If missing but `binding.gyp` exists and neither `scripts.preinstall` nor `scripts.install` are defined, it is added as `true`.
 - **`config` (Conditional)** — Removed if the field is present but empty.
 - **`workspaces` (Required)** — Removed if the workspace role is not `project`. If the role is `project` and the field is missing, it is added as an empty array `[]`.
+
+## Install-Script Trust Boundary
+
+`normalize-tooling` performs shape cleanup, not dependency trust review. It does not inspect lifecycle-script source, run npm's approval commands, or infer entries from the lockfile. This prevents a routine recipe run from granting newly installed dependency code permission to execute.
+
+Keep the reviewed policy in the project root and use exact-version approvals plus name-only denials. See [Root Install-Script Policy](/docs/quickstart/workspace-rules#root-install-script-policy) for the field shape, npm 11 and npm 12 review commands, and the difference between approved, denied, and unreviewed packages.
 
 ## Config Fields
 

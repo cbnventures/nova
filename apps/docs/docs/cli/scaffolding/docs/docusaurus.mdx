@@ -20,11 +20,14 @@ import TabItem from '@theme/TabItem';
 
 Scaffold a **Docusaurus** documentation workspace.
 
+You can run this directly from an empty location; `scaffold starter base` is not a prerequisite. Nova creates the monorepo root and its documentation workspace together.
+
 ## Why Use This Command?
 
-- Installs Docusaurus with the Nova preset already applied so your documentation site matches the Nova look and behavior from day one.
+- Installs Docusaurus and asks which Nova visual preset to apply so the generated site starts with an intentional look and behavior.
 - Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
 - Wires up `docusaurus start`, `docusaurus build`, and `docusaurus serve` scripts so the workspace runs without extra configuration.
+- Pins TypeScript `6.0.3` and composes Nova's essentials, strict, and Docusaurus TSConfig presets with the local `@site/*` alias.
 
 ## Requirements
 
@@ -60,12 +63,14 @@ Scaffold a **Docusaurus** documentation workspace.
 
 ## Options
 
-| Flag                      | Description                    |
-|---------------------------|--------------------------------|
-| `-d, --dry-run`           | Run without writing any files. |
-| `--name <name>`           | Project or workspace name.     |
-| `--workspace-name <name>` | Workspace directory name.      |
-| `--output <dir>`          | Output directory.              |
+| Flag                      | Description                                                          |
+|---------------------------|----------------------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                                       |
+| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
+| `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
+| `--workspace-name <name>` | Workspace directory name.                                            |
+| `--output <dir>`          | Output directory.                                                    |
+| `--preset <name>`         | Nova visual preset written to `docusaurus.config.ts`.                |
 
 ## Output Structure
 
@@ -80,18 +85,21 @@ Scaffold a **Docusaurus** documentation workspace.
 │       ├── tsconfig.json
 │       ├── sidebars.ts
 │       ├── docs/
-│       │   └── intro.md
+│       │   └── intro.mdx
+│       ├── src/
+│       │   └── pages/
+│       │       └── index.mdx
 │       └── static/
 └── packages/
 ```
 
 ## Config Fields
 
-| Field                | Description                                                                                                                                                        |
-|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `project.name.slug`  | Read in workspace mode to derive the registered workspace name; registration is skipped with a warning if absent. In monorepo mode, written from the project name. |
-| `project.name.title` | Written in monorepo mode, title-cased from the project slug.                                                                                                       |
-| `workspaces`         | A `workspaces` entry is written for the new workspace: `name` (`{projectSlug}-docs`), `role` (`docs`), and `policy` (`freezable`).                                 |
+| Field                | Description                                                                                                                                                  |
+|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `project.name.slug`  | Required in workspace mode and used to derive the package and registered workspace name. In monorepo mode, written from `--name` or the project-name answer. |
+| `project.name.title` | Written in monorepo mode, title-cased from the project slug.                                                                                                 |
+| `workspaces`         | A `workspaces` entry is written for the new workspace: `name` (`{projectSlug}-docs`), `role` (`docs`), and `policy` (`freezable`).                           |
 
 ## How It Works
 
@@ -105,21 +113,62 @@ When run without flags, the command walks you through an interactive wizard:
 2. **Workspace name** — Enter a slug for the workspace directory (default: `docusaurus`).
 3. **Where should the project be created?** — Choose between creating a new directory or building in the current working directory.
 4. **Output directory** — If creating a new directory, confirm the path (default: `./{project-name}`).
-5. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
+5. **Nova visual preset** — Select the visual identity written to `docusaurus.config.ts` (default: `foundry`).
+6. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
 
 **Workspace mode** (`package.json` with `workspaces` found):
 
-1. **Package name** — Enter a slug for the workspace package (e.g. `my-docs`).
-2. **Workspace name** — Enter a slug for the workspace directory (default: `docusaurus`).
-3. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
+1. **Workspace name** — Enter a slug for the workspace directory (default: `docusaurus`).
+2. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
+3. **Nova visual preset** — Select the visual identity written to `docusaurus.config.ts` (default: `foundry`).
+
+Nova reads the project slug from the root `nova.config.json`; it does not ask you to rename the project or package.
+
+### Visual Presets
+
+| Value      | Visual direction                                        |
+|------------|---------------------------------------------------------|
+| `envoy`    | Purple and cyan with rounded, elevated surfaces.        |
+| `foundry`  | Warm orange and amber with rounded, elevated surfaces.  |
+| `lantern`  | Warm amber and indigo with tactile paper-like surfaces. |
+| `marshal`  | Documentary green and red with compact, flat surfaces.  |
+| `sentinel` | Teal and indigo with rounded, flat surfaces.            |
+| `signal`   | Red and amber with sharp, compact surfaces.             |
 
 ### Non-Interactive Mode
 
-Provide `--name`, `--workspace-name`, and `--output` to skip all prompts:
+Agents and automation should add `--non-interactive`. A new monorepo needs `--name`, `--workspace-name`, `--output`, and `--preset`. An existing monorepo needs `--workspace-name`, `--output`, and `--preset`; omit `--name` because Nova reads the root project slug.
 
-```bash
-nova scaffold docs docusaurus --name my-docs --workspace-name docusaurus --output ./my-docs
-```
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # New monorepo plus its documentation workspace
+    nova scaffold docs docusaurus --non-interactive --name my-docs --workspace-name docs --output ./my-docs --preset foundry
+
+    # Add docs from an existing Nova monorepo root
+    nova scaffold docs docusaurus --non-interactive --workspace-name docs --output ./apps/docs --preset foundry
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # New monorepo plus its documentation workspace
+    npx --yes @cbnventures/nova@latest scaffold docs docusaurus --non-interactive --name my-docs --workspace-name docs --output ./my-docs --preset foundry
+
+    # Add docs from an existing Nova monorepo root
+    npx --yes @cbnventures/nova@latest scaffold docs docusaurus --non-interactive --workspace-name docs --output ./apps/docs --preset foundry
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Naming, Registration, and Safety
+
+For project slug `my-docs`, Nova names the package `my-docs-docs` and writes that same identity to `nova.config.json`. The package name does not change when you choose a different workspace directory. If the root `workspaces` globs do not include the selected output, Nova adds that exact relative path to the root `package.json`.
+
+A Nova project has one canonical workspace with the `docs` role, so the command refuses to create a second one. Before writing, Nova also requires a readable root `package.json` and `nova.config.json`, keeps the output inside the monorepo, rejects duplicate paths and names, and lists any template files it would overwrite. `--dry-run` performs these checks without changing the project.
 
 ## Next Steps
 

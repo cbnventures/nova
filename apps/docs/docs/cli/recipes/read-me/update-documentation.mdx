@@ -27,7 +27,13 @@ The `update-documentation` recipe rewrites the documentation section of a `READM
 
 The recipe only touches the marked region. Everything before the `<!-- nova-region: documentation -->` marker and everything after the `<!-- nova-region-end: documentation -->` marker is left byte-identical, so hand-written prose around the documentation is never disturbed.
 
-## Prerequisites
+## Why Use This Command?
+
+1. Keeps the README's documentation link aligned with the canonical project URL.
+2. Rewrites only Nova's documentation region so nearby hand-written guidance remains untouched.
+3. Makes a documentation move a single config change instead of a manual README edit.
+
+## Requirements
 
 - **An existing `README.md`** — The recipe updates a file in the project root; it does not create one. Use `generate must-haves read-me` to create the initial file.
 - **The `documentation` region markers** — The `README.md` must contain the `<!-- nova-region: documentation -->` and `<!-- nova-region-end: documentation -->` markers. A `generate must-haves read-me` file has them by default.

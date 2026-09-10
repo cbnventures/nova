@@ -30,6 +30,18 @@ The `sync-identity` recipe ensures that identity-related fields in each <Termino
 
 It enforces consistent naming, valid <Terminology title="semantic versioning" to="/docs/quickstart/terminology#fundamentals" color={true}>semver</Terminology> versions, and (for <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> workspaces with the setting enabled) syncs description, keywords, and displayName from the project-level config.
 
+## Why Use This Command?
+
+1. Keeps package names, versions, licenses, and public identity aligned with workspace policy.
+2. Shares approved project descriptions and keywords without duplicating them across manifests.
+3. Removes identity fields from workspaces where publishing policy says they do not apply.
+
+## Requirements
+
+- **Node.js runtime** — Use a supported Node.js LTS release with the Nova CLI available.
+- **Project config** — Register the workspace and enable `recipes.package-json.<workspace>.sync-identity` in `nova.config.json`.
+- **Workspace manifest** — The configured workspace must contain a readable `package.json` file.
+
 ## Behavior
 
 For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects identity fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.

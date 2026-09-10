@@ -198,21 +198,21 @@ import type {
   Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadAllowsEmptyTriggersArray_Loaded,
   Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadAllowsEmptyTriggersArray_LoadedWorkflows,
   Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadAllowsEmptyTriggersArray_ProjectDirectory,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_Config,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_ConfigContents,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_ConfigPath,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_Loaded,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_LoadedWorkflows,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_ProjectDirectory,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_SecondWorkflow,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_Config,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_ConfigContents,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_ConfigPath,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_FirstWorkflow,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_Loaded,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_LoadedWorkflows,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_ProjectDirectory,
-  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_SecondWorkflow,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_Config,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_ConfigContents,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_ConfigPath,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_Loaded,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_LoadedWorkflows,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_SecondWorkflow,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_Config,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_ConfigContents,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_ConfigPath,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_FirstWorkflow,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_Loaded,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_LoadedWorkflows,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_SecondWorkflow,
   Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadSkipsWorkflowEntryMissingTriggers_Config,
   Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadSkipsWorkflowEntryMissingTriggers_ConfigContents,
   Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadSkipsWorkflowEntryMissingTriggers_ConfigPath,
@@ -1153,11 +1153,26 @@ describe('Shared_NovaConfig load', async () => {
     const configContents: Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadParsesTheUnifiedRecipesBlock_ConfigContents = JSON.stringify({
       recipes: {
         'github': {
-          'sync-identity': {
+          'sync-actions': {
             enabled: true,
           },
           'sync-features': {
             enabled: false,
+          },
+          'sync-identity': {
+            enabled: true,
+          },
+          'sync-labels': {
+            enabled: true,
+          },
+          'sync-policies': {
+            enabled: true,
+          },
+          'sync-rulesets': {
+            enabled: false,
+          },
+          'sync-security': {
+            enabled: true,
           },
         },
         'license': {
@@ -1200,10 +1215,25 @@ describe('Shared_NovaConfig load', async () => {
     }
 
     deepStrictEqual(recipes['github'], {
+      'sync-actions': {
+        enabled: true,
+      },
       'sync-features': {
         enabled: false,
       },
       'sync-identity': {
+        enabled: true,
+      },
+      'sync-labels': {
+        enabled: true,
+      },
+      'sync-policies': {
+        enabled: true,
+      },
+      'sync-rulesets': {
+        enabled: false,
+      },
+      'sync-security': {
         enabled: true,
       },
     });
@@ -2068,28 +2098,41 @@ describe('parseWorkflows (via load)', async () => {
     return;
   });
 
-  it('load parses workflow with template, suffix, triggers, and depends-on', async () => {
-    const projectDirectory: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_ProjectDirectory = join(sandboxRoot, 'workflows-full');
+  it('load parses string and object-form workflow triggers', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_ProjectDirectory = join(sandboxRoot, 'workflows-full');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_ConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_ConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_ConfigContents = JSON.stringify({
       workflows: [
         {
-          template: 'deploy',
-          name: 'production',
-          triggers: ['release'],
+          template: 'publish',
+          name: 'core',
+          triggers: [
+            'release',
+            {
+              name: 'push',
+              branches: ['main'],
+              paths: ['packages/**'],
+            },
+            {
+              name: 'tag-push',
+              tags: ['v*'],
+            },
+          ],
           with: {
             region: 'us-east-1',
             stage: 'prod',
           },
         },
         {
-          'template': 'deploy',
-          'name': 'staging',
-          'triggers': ['push'],
-          'depends-on': ['deploy-production'],
+          template: 'publish',
+          name: 'preset',
+          triggers: [{
+            name: 'workflow-run-success',
+            workflows: ['publish-core'],
+          }],
         },
       ],
     }, null, 2);
@@ -2098,10 +2141,10 @@ describe('parseWorkflows (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_Config = new LibNovaConfig();
-    const loaded: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_Loaded = await config.load();
+    const config: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_Loaded = await config.load();
 
-    const loadedWorkflows: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_LoadedWorkflows = loaded['workflows'];
+    const loadedWorkflows: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_LoadedWorkflows = loaded['workflows'];
 
     if (loadedWorkflows === undefined) {
       fail('Expected workflows to be defined');
@@ -2109,30 +2152,43 @@ describe('parseWorkflows (via load)', async () => {
 
     strictEqual(loadedWorkflows.length, 2);
 
-    const firstWorkflow: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_FirstWorkflow = loadedWorkflows[0];
+    const firstWorkflow: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_FirstWorkflow = loadedWorkflows[0];
 
     if (firstWorkflow === undefined) {
       fail('Expected first workflow to be defined');
     }
 
-    strictEqual(firstWorkflow['name'], 'production');
-    strictEqual(firstWorkflow['template'], 'deploy');
-    deepStrictEqual(firstWorkflow['triggers'], ['release']);
+    strictEqual(firstWorkflow['name'], 'core');
+    strictEqual(firstWorkflow['template'], 'publish');
+    deepStrictEqual(firstWorkflow['triggers'], [
+      'release',
+      {
+        name: 'push',
+        branches: ['main'],
+        paths: ['packages/**'],
+      },
+      {
+        name: 'tag-push',
+        tags: ['v*'],
+      },
+    ]);
     deepStrictEqual(firstWorkflow['with'], {
       region: 'us-east-1',
       stage: 'prod',
     });
 
-    const secondWorkflow: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesWorkflowWithTemplateSuffixTriggersAndDependsOn_SecondWorkflow = loadedWorkflows[1];
+    const secondWorkflow: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesStringAndObjectFormWorkflowTriggers_SecondWorkflow = loadedWorkflows[1];
 
     if (secondWorkflow === undefined) {
       fail('Expected second workflow to be defined');
     }
 
-    strictEqual(secondWorkflow['name'], 'staging');
-    strictEqual(secondWorkflow['template'], 'deploy');
-    deepStrictEqual(secondWorkflow['triggers'], ['push']);
-    deepStrictEqual(secondWorkflow['depends-on'], ['deploy-production']);
+    strictEqual(secondWorkflow['name'], 'preset');
+    strictEqual(secondWorkflow['template'], 'publish');
+    deepStrictEqual(secondWorkflow['triggers'], [{
+      name: 'workflow-run-success',
+      workflows: ['publish-core'],
+    }]);
     strictEqual(secondWorkflow['with'], undefined);
 
     return;
@@ -2145,22 +2201,32 @@ describe('parseWorkflows (via load)', async () => {
 
     const configPath: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_ConfigPath = join(projectDirectory, 'nova.config.json');
     const configContents: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_ConfigContents = JSON.stringify({
-      workflows: [{
-        template: 'publish',
-        name: 'project',
-        triggers: ['release'],
-        build: [
-          './packages/thing',
-          './apps/docs',
-        ],
-        deploy: [{
-          to: 'github-action',
-          path: './packages/thing',
-        }],
-        with: {
-          ACTION_ENTRY_POINT: 'index.js',
+      workflows: [
+        {
+          template: 'publish',
+          name: 'core',
+          triggers: ['release'],
         },
-      }],
+        {
+          template: 'publish',
+          name: 'project',
+          triggers: [{
+            name: 'workflow-run-success',
+            workflows: ['publish-core'],
+          }],
+          build: [
+            './packages/thing',
+            './apps/docs',
+          ],
+          deploy: [{
+            to: 'github-action',
+            path: './packages/thing',
+          }],
+          with: {
+            ACTION_ENTRY_POINT: 'index.js',
+          },
+        },
+      ],
     }, null, 2);
 
     await writeFile(configPath, configContents, 'utf-8');
@@ -2184,9 +2250,9 @@ describe('parseWorkflows (via load)', async () => {
       fail('Expected workflows to survive the save');
     }
 
-    strictEqual(reloadedWorkflows.length, 1);
+    strictEqual(reloadedWorkflows.length, 2);
 
-    const reloadedWorkflow: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_ReloadedWorkflow = reloadedWorkflows[0];
+    const reloadedWorkflow: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_ReloadedWorkflow = reloadedWorkflows.find((candidate) => candidate['name'] === 'project');
 
     if (reloadedWorkflow === undefined) {
       fail('Expected the workflow entry to be defined');
@@ -2194,7 +2260,10 @@ describe('parseWorkflows (via load)', async () => {
 
     strictEqual(reloadedWorkflow['template'], 'publish');
     strictEqual(reloadedWorkflow['name'], 'project');
-    deepStrictEqual(reloadedWorkflow['triggers'], ['release']);
+    deepStrictEqual(reloadedWorkflow['triggers'], [{
+      name: 'workflow-run-success',
+      workflows: ['publish-core'],
+    }]);
     deepStrictEqual(reloadedWorkflow['build'], [
       './packages/thing',
       './apps/docs',
@@ -2303,13 +2372,13 @@ describe('parseWorkflows (via load)', async () => {
     return;
   });
 
-  it('load parses depends-on field as array', async () => {
-    const projectDirectory: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_ProjectDirectory = join(sandboxRoot, 'workflows-depends-on');
+  it('load omits retired top-level depends-on field', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_ProjectDirectory = join(sandboxRoot, 'workflows-depends-on');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_ConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_ConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_ConfigContents = JSON.stringify({
       workflows: [
         {
           template: 'publish-to-npm',
@@ -2329,10 +2398,10 @@ describe('parseWorkflows (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_Config = new LibNovaConfig();
-    const loaded: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_Loaded = await config.load();
+    const config: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_Loaded = await config.load();
 
-    const loadedWorkflows: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_LoadedWorkflows = loaded['workflows'];
+    const loadedWorkflows: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_LoadedWorkflows = loaded['workflows'];
 
     if (loadedWorkflows === undefined) {
       fail('Expected workflows to be defined');
@@ -2340,13 +2409,13 @@ describe('parseWorkflows (via load)', async () => {
 
     strictEqual(loadedWorkflows.length, 2);
 
-    const secondWorkflow: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadParsesDependsOnFieldAsArray_SecondWorkflow = loadedWorkflows[1];
+    const secondWorkflow: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_LoadOmitsRetiredTopLevelDependsOnField_SecondWorkflow = loadedWorkflows[1];
 
     if (secondWorkflow === undefined) {
       fail('Expected second workflow to be defined');
     }
 
-    deepStrictEqual(secondWorkflow['depends-on'], ['publish-to-npm-primary']);
+    strictEqual(Reflect.get(secondWorkflow, 'depends-on'), undefined);
 
     return;
   });
@@ -2584,6 +2653,7 @@ describe('parseGithub (via load)', async () => {
           wiki: false,
           projects: true,
           discussions: false,
+          sponsorships: true,
         },
         policies: {
           visibility: 'public',
@@ -2593,8 +2663,73 @@ describe('parseGithub (via load)', async () => {
             squash: true,
             rebase: true,
           },
+          mergeCommit: {
+            title: 'pull-request-title',
+            message: 'pull-request-body',
+          },
+          squashMerge: {
+            title: 'commit-or-pull-request-title',
+            message: 'commit-messages',
+          },
           autoDeleteHeadBranch: true,
+          autoMerge: true,
+          allowUpdateBranch: true,
+          webCommitSignoffRequired: false,
         },
+        security: {
+          vulnerabilityAlerts: true,
+          dependabotSecurityUpdates: true,
+          secretScanning: true,
+          pushProtection: true,
+        },
+        rulesets: {
+          defaultBranch: {
+            enforcement: 'active',
+            blockDeletions: true,
+            blockForcePushes: true,
+            requireLinearHistory: false,
+            requireSignedCommits: true,
+            requirePullRequest: true,
+            allowedMergeMethods: [
+              'squash',
+              'rebase',
+            ],
+            dismissStaleReviews: true,
+            requireCodeOwnerReview: false,
+            requireLastPushApproval: true,
+            requiredApprovals: 1,
+            requireConversationResolution: true,
+            requiredStatusChecks: [
+              'check',
+              'build',
+            ],
+            requireBranchesToBeUpToDate: true,
+          },
+        },
+        actions: {
+          enabled: true,
+          allowedActions: 'selected',
+          shaPinningRequired: true,
+          selectedActions: {
+            githubOwned: true,
+            verified: false,
+            patterns: ['acme/*'],
+          },
+          defaultWorkflowPermissions: 'read',
+          canApprovePullRequestReviews: false,
+          artifactRetentionDays: 30,
+        },
+        labels: [
+          {
+            name: 'bug',
+            color: 'D73A4A',
+            description: 'Something is not working',
+          },
+          {
+            name: 'help wanted',
+            color: '008672',
+          },
+        ],
       },
     }, null, 2);
 
@@ -2636,6 +2771,7 @@ describe('parseGithub (via load)', async () => {
     strictEqual(loadedFeatures['wiki'], false);
     strictEqual(loadedFeatures['projects'], true);
     strictEqual(loadedFeatures['discussions'], false);
+    strictEqual(loadedFeatures['sponsorships'], true);
 
     const loadedPolicies: Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_LoadedPolicies = loadedGithub['policies'];
 
@@ -2646,6 +2782,17 @@ describe('parseGithub (via load)', async () => {
     strictEqual(loadedPolicies['visibility'], 'public');
     strictEqual(loadedPolicies['defaultBranch'], 'main');
     strictEqual(loadedPolicies['autoDeleteHeadBranch'], true);
+    strictEqual(loadedPolicies['autoMerge'], true);
+    strictEqual(loadedPolicies['allowUpdateBranch'], true);
+    strictEqual(loadedPolicies['webCommitSignoffRequired'], false);
+    deepStrictEqual(loadedPolicies['mergeCommit'], {
+      title: 'pull-request-title',
+      message: 'pull-request-body',
+    });
+    deepStrictEqual(loadedPolicies['squashMerge'], {
+      title: 'commit-or-pull-request-title',
+      message: 'commit-messages',
+    });
 
     const loadedMergeMethods: Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesFullGithubBlockWithAllFields_LoadedMergeMethods = loadedPolicies['mergeMethods'];
 
@@ -2656,6 +2803,61 @@ describe('parseGithub (via load)', async () => {
     strictEqual(loadedMergeMethods['merge'], false);
     strictEqual(loadedMergeMethods['squash'], true);
     strictEqual(loadedMergeMethods['rebase'], true);
+
+    deepStrictEqual(loadedGithub['security'], {
+      vulnerabilityAlerts: true,
+      dependabotSecurityUpdates: true,
+      secretScanning: true,
+      pushProtection: true,
+    });
+    deepStrictEqual(loadedGithub['rulesets'], {
+      defaultBranch: {
+        enforcement: 'active',
+        blockDeletions: true,
+        blockForcePushes: true,
+        requireLinearHistory: false,
+        requireSignedCommits: true,
+        requirePullRequest: true,
+        allowedMergeMethods: [
+          'squash',
+          'rebase',
+        ],
+        dismissStaleReviews: true,
+        requireCodeOwnerReview: false,
+        requireLastPushApproval: true,
+        requiredApprovals: 1,
+        requireConversationResolution: true,
+        requiredStatusChecks: [
+          'check',
+          'build',
+        ],
+        requireBranchesToBeUpToDate: true,
+      },
+    });
+    deepStrictEqual(loadedGithub['actions'], {
+      enabled: true,
+      allowedActions: 'selected',
+      shaPinningRequired: true,
+      selectedActions: {
+        githubOwned: true,
+        verified: false,
+        patterns: ['acme/*'],
+      },
+      defaultWorkflowPermissions: 'read',
+      canApprovePullRequestReviews: false,
+      artifactRetentionDays: 30,
+    });
+    deepStrictEqual(loadedGithub['labels'], [
+      {
+        name: 'bug',
+        color: 'D73A4A',
+        description: 'Something is not working',
+      },
+      {
+        name: 'help wanted',
+        color: '008672',
+      },
+    ]);
 
     return;
   });

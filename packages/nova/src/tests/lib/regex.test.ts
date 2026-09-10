@@ -116,6 +116,7 @@ import type {
   Tests_Lib_Regex_LIBREGEXPATTERNLEADINGV_MatchesLeadingV_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNMARKDOWNLINK_DoesNotMatchPlainText_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNMARKDOWNLINK_MatchesMarkdownLink_Subject,
+  Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_DoesNotMatchAPartialVersion_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_DoesNotMatchScopedPackage_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_MatchesNameAtVersion_Subject,
   Tests_Lib_Regex_LIBREGEXPATTERNNONWORDCHARS_DoesNotMatchWordCharacters_Subject,
@@ -585,7 +586,7 @@ describe('LIB_REGEX_PATTERN_LEADING_V', async () => {
  */
 describe('LIB_REGEX_PATTERN_NAME_AT_VERSION', async () => {
   it('matches name at version', () => {
-    const subject: Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_MatchesNameAtVersion_Subject = 'node@20';
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_MatchesNameAtVersion_Subject = 'npm@11.18.0';
 
     match(subject, LIB_REGEX_PATTERN_NAME_AT_VERSION);
 
@@ -594,6 +595,14 @@ describe('LIB_REGEX_PATTERN_NAME_AT_VERSION', async () => {
 
   it('does not match scoped package', () => {
     const subject: Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_DoesNotMatchScopedPackage_Subject = '@scope/package';
+
+    doesNotMatch(subject, LIB_REGEX_PATTERN_NAME_AT_VERSION);
+
+    return;
+  });
+
+  it('does not match a partial version', () => {
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNNAMEATVERSION_DoesNotMatchAPartialVersion_Subject = 'npm@11';
 
     doesNotMatch(subject, LIB_REGEX_PATTERN_NAME_AT_VERSION);
 

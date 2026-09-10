@@ -3,11 +3,10 @@ import { defineConfig } from 'vitest/config';
 /**
  * Vitest Configuration.
  *
- * Runs the documentation conformance suites from @cbnventures/nova/rules/vitest
- * against this site. The suites scan from the project root (process.cwd()), so
- * vitest must run from this workspace directory.
+ * Wires the root-level test suite that validates dotenv quoting conventions
+ * across the project workspace's generated environment files.
  *
- * @since 0.20.0
+ * @since 1.0.0
  */
 export default defineConfig({
   test: {

@@ -10,6 +10,10 @@ import type {
   Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_Config,
   Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_Mutate,
   Cli_Utility_Initialize_Runner_PromptEnvironmentReconcile_Returns,
+  Cli_Utility_Initialize_Runner_PromptSettings_Config,
+  Cli_Utility_Initialize_Runner_PromptSettings_Returns,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_Config,
+  Cli_Utility_Initialize_Runner_PromptWorkflows_Returns,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Options,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Returns,
   Cli_Utility_Initialize_Runner_PromptWorkspacesForm_ReturnsApply,
@@ -20,6 +24,7 @@ import type {
   Cli_Utility_Initialize_Runner_ReadLocalFilledKeys_Returns,
 } from '../../../cli/utility/initialize.d.ts';
 import type {
+  Shared_BlueprintConfig_Workflows,
   Shared_NovaConfig,
   Shared_NovaConfig_Recipes_PackageJsonWorkspace,
   Shared_NovaConfigEnvironmentProject,
@@ -180,6 +185,44 @@ export type Tests_Cli_Utility_Initialize_Prompts_MockModule_Default = ReturnType
 export type Tests_Cli_Utility_Initialize_Prompts_MockModule = Readonly<{
   default: Tests_Cli_Utility_Initialize_Prompts_MockModule_Default;
 }>;
+
+/**
+ * Tests - CLI - Utility - Initialize - Prompt Settings - Locks Version Strategy From Workspace History.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_SandboxRoot = string;
+
+export type Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_WorkspaceDirectory = string;
+
+export type Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_ChangelogPath = string;
+
+export type Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_ChangelogContent = string;
+
+export type Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_CwdSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_PromptSettings = (config: Cli_Utility_Initialize_Runner_PromptSettings_Config) => Cli_Utility_Initialize_Runner_PromptSettings_Returns;
+
+export type Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Result = Awaited<Cli_Utility_Initialize_Runner_PromptSettings_Returns>;
+
+/**
+ * Tests - CLI - Utility - Initialize - Prompt Workflows - Preserves Workflow Run Trigger Objects When Syncing Existing Workflows.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Next = Record<string, unknown> | undefined;
+
+export type Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Config = {
+  workflows?: Shared_BlueprintConfig_Workflows;
+};
+
+export type Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_PromptWorkflows = (config: Cli_Utility_Initialize_Runner_PromptWorkflows_Config) => Cli_Utility_Initialize_Runner_PromptWorkflows_Returns;
+
+export type Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Result = Awaited<Cli_Utility_Initialize_Runner_PromptWorkflows_Returns>;
 
 /**
  * Tests - CLI - Utility - Initialize - Prompt Workspaces Form - Builds The Workspace From Role, Policy, Name, And Recipe Selection.

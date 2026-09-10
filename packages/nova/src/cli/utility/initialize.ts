@@ -25,6 +25,7 @@ import {
   LIB_REGEX_PATTERN_SLUG_SIMPLE,
   LIB_REGEX_PATTERN_YML_EXTENSION,
 } from '../../lib/regex.js';
+import { Runner as LibReleaseHistory } from '../../lib/release-history.js';
 import { discoverPathsWithFile, pathExists, resolveTemplatePath } from '../../lib/utility.js';
 import { libWorkflowTemplatesMetadata } from '../../lib/workflow-templates.js';
 import { Logger } from '../../toolkit/index.js';
@@ -328,6 +329,8 @@ import type {
   Cli_Utility_Initialize_Runner_PromptGithub_FeaturesProjectsInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_FeaturesProjectsValue,
   Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSkip,
+  Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSponsorshipsInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSponsorshipsValue,
   Cli_Utility_Initialize_Runner_PromptGithub_FeaturesValue,
   Cli_Utility_Initialize_Runner_PromptGithub_FeaturesWikiInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_FeaturesWikiValue,
@@ -380,9 +383,13 @@ import type {
   Cli_Utility_Initialize_Runner_PromptGithub_RepoOutputResult,
   Cli_Utility_Initialize_Runner_PromptGithub_Returns,
   Cli_Utility_Initialize_Runner_PromptGithub_SquashInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_SyncActionsInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_SyncFeaturesInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_SyncIdentityInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_SyncLabelsInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_SyncPoliciesInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_SyncRulesetsInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_SyncSecurityInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_TopicsHasExisting,
   Cli_Utility_Initialize_Runner_PromptGithub_TopicsInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_TopicsOutput,
@@ -501,13 +508,10 @@ import type {
   Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear,
   Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear_Parsed,
   Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear_Trimmed,
-  Cli_Utility_Initialize_Runner_PromptSettings_ChangelogContent,
-  Cli_Utility_Initialize_Runner_PromptSettings_ChangelogPath,
   Cli_Utility_Initialize_Runner_PromptSettings_Config,
   Cli_Utility_Initialize_Runner_PromptSettings_CurrentDirectory,
   Cli_Utility_Initialize_Runner_PromptSettings_CurrentStrategy,
-  Cli_Utility_Initialize_Runner_PromptSettings_HasRelease,
-  Cli_Utility_Initialize_Runner_PromptSettings_IsLocked,
+  Cli_Utility_Initialize_Runner_PromptSettings_LockedStrategy,
   Cli_Utility_Initialize_Runner_PromptSettings_Returns,
   Cli_Utility_Initialize_Runner_PromptSettings_Settings,
   Cli_Utility_Initialize_Runner_PromptSettings_StrategyChoices,
@@ -614,17 +618,10 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_CurrentTarget,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_CurrentTargetType,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_CurrentTargetWorkingDir,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnChoices,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnKey,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutput,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputKey,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputResult,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputResultValue,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_EditIndex,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExampleRaw,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExampleResolved,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExampleWorkingDir,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingDependsOn,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingKey,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingScopes,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingSuffix,
@@ -632,6 +629,7 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingTemplate,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingTriggerNames,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingTriggers,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingUpstreamWorkflows,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExtraScopes,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExtraWorkspaceKeys,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_FoundIndex,
@@ -654,7 +652,6 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ScopesOutputKey,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ScopesOutputResult,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ScopesOutputResultValue,
-  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedDependsOn,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedScopes,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedSuffix,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTargetNeeds,
@@ -663,6 +660,7 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTemplate,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedTriggers,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedUpstreamWorkflows,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Settings,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SettingsOutput,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SettingsOutputKey,
@@ -726,6 +724,12 @@ import type {
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TriggersOutputResult,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_TriggersOutputResultValue,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Trimmed,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowChoices,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowKey,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutput,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputKey,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputResult,
+  Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputResultValue,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_VariableConfig,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_VariableEntries,
   Cli_Utility_Initialize_Runner_PromptWorkflowsForm_VariableName,
@@ -880,6 +884,19 @@ export class Runner {
 
     const novaConfig: Cli_Utility_Initialize_Runner_Run_NovaConfig = new LibNovaConfig();
     const workingFile: Cli_Utility_Initialize_Runner_Run_WorkingFile = await novaConfig.load();
+
+    try {
+      await LibReleaseHistory.validateStrategy(workingFile, currentDirectory);
+    } catch (error) {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'versionStrategy',
+      }).error((error instanceof Error) ? error.message : 'Unable to validate the configured version strategy.');
+
+      process.exitCode = 1;
+
+      return;
+    }
 
     // A standalone, read-only status surface. It runs the same GitHub status computation the
     // interactive flow exposes, then exits without entering the menu or writing any files.
@@ -2219,19 +2236,23 @@ export class Runner {
     const repoOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_RepoOutputResult = repoOutput['result'];
     const githubRepoInput: Cli_Utility_Initialize_Runner_PromptGithub_GithubRepoInput = repoOutputResult.githubRepo.trim();
 
-    // Prompts 3–5: recipe toggles (required booleans).
+    // Recipe toggles (required booleans).
     const existingRecipes: Cli_Utility_Initialize_Runner_PromptGithub_ExistingRecipes = (config['recipes'] !== undefined) ? config['recipes']['github'] : undefined;
 
-    const syncIdentityInitial: Cli_Utility_Initialize_Runner_PromptGithub_SyncIdentityInitial = (existingRecipes !== undefined && existingRecipes['sync-identity'] !== undefined) ? existingRecipes['sync-identity']['enabled'] : true;
+    const syncActionsInitial: Cli_Utility_Initialize_Runner_PromptGithub_SyncActionsInitial = (existingRecipes !== undefined && existingRecipes['sync-actions'] !== undefined) ? existingRecipes['sync-actions']['enabled'] : false;
     const syncFeaturesInitial: Cli_Utility_Initialize_Runner_PromptGithub_SyncFeaturesInitial = (existingRecipes !== undefined && existingRecipes['sync-features'] !== undefined) ? existingRecipes['sync-features']['enabled'] : false;
+    const syncIdentityInitial: Cli_Utility_Initialize_Runner_PromptGithub_SyncIdentityInitial = (existingRecipes !== undefined && existingRecipes['sync-identity'] !== undefined) ? existingRecipes['sync-identity']['enabled'] : true;
+    const syncLabelsInitial: Cli_Utility_Initialize_Runner_PromptGithub_SyncLabelsInitial = (existingRecipes !== undefined && existingRecipes['sync-labels'] !== undefined) ? existingRecipes['sync-labels']['enabled'] : false;
     const syncPoliciesInitial: Cli_Utility_Initialize_Runner_PromptGithub_SyncPoliciesInitial = (existingRecipes !== undefined && existingRecipes['sync-policies'] !== undefined) ? existingRecipes['sync-policies']['enabled'] : false;
+    const syncRulesetsInitial: Cli_Utility_Initialize_Runner_PromptGithub_SyncRulesetsInitial = (existingRecipes !== undefined && existingRecipes['sync-rulesets'] !== undefined) ? existingRecipes['sync-rulesets']['enabled'] : false;
+    const syncSecurityInitial: Cli_Utility_Initialize_Runner_PromptGithub_SyncSecurityInitial = (existingRecipes !== undefined && existingRecipes['sync-security'] !== undefined) ? existingRecipes['sync-security']['enabled'] : false;
 
     const recipesOutput: Cli_Utility_Initialize_Runner_PromptGithub_RecipesOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGithub_RecipesOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_RecipesOutputValue>([
       {
         type: 'confirm',
-        name: 'githubRecipeSyncIdentity',
-        message: 'Enable sync-identity recipe?',
-        initial: syncIdentityInitial,
+        name: 'githubRecipeSyncActions',
+        message: 'Enable sync-actions recipe?',
+        initial: syncActionsInitial,
       },
       {
         type: 'confirm',
@@ -2241,9 +2262,33 @@ export class Runner {
       },
       {
         type: 'confirm',
+        name: 'githubRecipeSyncIdentity',
+        message: 'Enable sync-identity recipe?',
+        initial: syncIdentityInitial,
+      },
+      {
+        type: 'confirm',
+        name: 'githubRecipeSyncLabels',
+        message: 'Enable sync-labels recipe?',
+        initial: syncLabelsInitial,
+      },
+      {
+        type: 'confirm',
         name: 'githubRecipeSyncPolicies',
         message: 'Enable sync-policies recipe?',
         initial: syncPoliciesInitial,
+      },
+      {
+        type: 'confirm',
+        name: 'githubRecipeSyncRulesets',
+        message: 'Enable sync-rulesets recipe?',
+        initial: syncRulesetsInitial,
+      },
+      {
+        type: 'confirm',
+        name: 'githubRecipeSyncSecurity',
+        message: 'Enable sync-security recipe?',
+        initial: syncSecurityInitial,
       },
     ]);
 
@@ -2254,14 +2299,26 @@ export class Runner {
     const recipesOutputResult: Cli_Utility_Initialize_Runner_PromptGithub_RecipesOutputResult = recipesOutput['result'];
 
     const githubRecipesInput: Cli_Utility_Initialize_Runner_PromptGithub_GithubRecipesInput = {
-      'sync-identity': {
-        enabled: recipesOutputResult.githubRecipeSyncIdentity,
+      'sync-actions': {
+        enabled: recipesOutputResult.githubRecipeSyncActions,
       },
       'sync-features': {
         enabled: recipesOutputResult.githubRecipeSyncFeatures,
       },
+      'sync-identity': {
+        enabled: recipesOutputResult.githubRecipeSyncIdentity,
+      },
+      'sync-labels': {
+        enabled: recipesOutputResult.githubRecipeSyncLabels,
+      },
       'sync-policies': {
         enabled: recipesOutputResult.githubRecipeSyncPolicies,
+      },
+      'sync-rulesets': {
+        enabled: recipesOutputResult.githubRecipeSyncRulesets,
+      },
+      'sync-security': {
+        enabled: recipesOutputResult.githubRecipeSyncSecurity,
       },
     };
 
@@ -2323,7 +2380,7 @@ export class Runner {
       }
     }
 
-    // Prompts 7–10: features (optional booleans — skip omits field).
+    // Features (optional booleans — skip omits field).
     const existingFeatures: Cli_Utility_Initialize_Runner_PromptGithub_ExistingFeatures = github['features'];
 
     let featuresIssuesInitial: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesIssuesInitial = 0;
@@ -2348,6 +2405,12 @@ export class Runner {
 
     if (existingFeatures !== undefined && existingFeatures['discussions'] !== undefined) {
       featuresDiscussionsInitial = (existingFeatures['discussions'] === true) ? 1 : 2;
+    }
+
+    let featuresSponsorshipsInitial: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSponsorshipsInitial = 0;
+
+    if (existingFeatures !== undefined && existingFeatures['sponsorships'] !== undefined) {
+      featuresSponsorshipsInitial = (existingFeatures['sponsorships'] === true) ? 1 : 2;
     }
 
     const featuresOutput: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGithub_FeaturesOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_FeaturesValue>([
@@ -2431,6 +2494,26 @@ export class Runner {
         ],
         initial: featuresDiscussionsInitial,
       },
+      {
+        type: 'select',
+        name: 'githubFeaturesSponsorships',
+        message: 'GitHub features.sponsorships (sync this field?)',
+        choices: [
+          {
+            title: 'Skip (don\'t sync this field)',
+            value: 'skip' as Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSkip,
+          },
+          {
+            title: 'Enable',
+            value: true,
+          },
+          {
+            title: 'Disable',
+            value: false,
+          },
+        ],
+        initial: featuresSponsorshipsInitial,
+      },
     ]);
 
     if (featuresOutput['cancelled'] === true) {
@@ -2445,18 +2528,21 @@ export class Runner {
     const featuresWikiValue: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesWikiValue = featuresOutputResult.githubFeaturesWiki;
     const featuresProjectsValue: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesProjectsValue = featuresOutputResult.githubFeaturesProjects;
     const featuresDiscussionsValue: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesDiscussionsValue = featuresOutputResult.githubFeaturesDiscussions;
+    const featuresSponsorshipsValue: Cli_Utility_Initialize_Runner_PromptGithub_FeaturesSponsorshipsValue = featuresOutputResult.githubFeaturesSponsorships;
 
     if (
       featuresIssuesValue !== 'skip'
       || featuresWikiValue !== 'skip'
       || featuresProjectsValue !== 'skip'
       || featuresDiscussionsValue !== 'skip'
+      || featuresSponsorshipsValue !== 'skip'
     ) {
       githubFeaturesInput = {
         ...((featuresIssuesValue !== 'skip') ? { issues: featuresIssuesValue } : {}),
         ...((featuresWikiValue !== 'skip') ? { wiki: featuresWikiValue } : {}),
         ...((featuresProjectsValue !== 'skip') ? { projects: featuresProjectsValue } : {}),
         ...((featuresDiscussionsValue !== 'skip') ? { discussions: featuresDiscussionsValue } : {}),
+        ...((featuresSponsorshipsValue !== 'skip') ? { sponsorships: featuresSponsorshipsValue } : {}),
       };
     }
 
@@ -2699,18 +2785,20 @@ export class Runner {
     // Build the policies object (only if at least one non-skip field exists).
     let githubPoliciesInput: Cli_Utility_Initialize_Runner_PromptGithub_GithubPoliciesInput = undefined;
 
-    if (
-      githubPoliciesVisibilityValue !== 'skip'
-      || githubPoliciesDefaultBranchValue !== 'skip'
-      || githubPoliciesMergeMethodsInput !== undefined
-      || githubPoliciesAutoDeleteValue !== 'skip'
-    ) {
-      githubPoliciesInput = {
-        ...((githubPoliciesVisibilityValue !== 'skip') ? { visibility: githubPoliciesVisibilityValue } : {}),
-        ...((githubPoliciesDefaultBranchValue !== 'skip') ? { defaultBranch: githubPoliciesDefaultBranchValue } : {}),
-        ...((githubPoliciesMergeMethodsInput !== undefined) ? { mergeMethods: githubPoliciesMergeMethodsInput } : {}),
-        ...((githubPoliciesAutoDeleteValue !== 'skip') ? { autoDeleteHeadBranch: githubPoliciesAutoDeleteValue } : {}),
-      };
+    githubPoliciesInput = {
+      ...((githubPoliciesVisibilityValue !== 'skip') ? { visibility: githubPoliciesVisibilityValue } : {}),
+      ...((githubPoliciesDefaultBranchValue !== 'skip') ? { defaultBranch: githubPoliciesDefaultBranchValue } : {}),
+      ...((githubPoliciesMergeMethodsInput !== undefined) ? { mergeMethods: githubPoliciesMergeMethodsInput } : {}),
+      ...((existingPolicies !== undefined && existingPolicies['mergeCommit'] !== undefined) ? { mergeCommit: existingPolicies['mergeCommit'] } : {}),
+      ...((existingPolicies !== undefined && existingPolicies['squashMerge'] !== undefined) ? { squashMerge: existingPolicies['squashMerge'] } : {}),
+      ...((githubPoliciesAutoDeleteValue !== 'skip') ? { autoDeleteHeadBranch: githubPoliciesAutoDeleteValue } : {}),
+      ...((existingPolicies !== undefined && existingPolicies['autoMerge'] !== undefined) ? { autoMerge: existingPolicies['autoMerge'] } : {}),
+      ...((existingPolicies !== undefined && existingPolicies['allowUpdateBranch'] !== undefined) ? { allowUpdateBranch: existingPolicies['allowUpdateBranch'] } : {}),
+      ...((existingPolicies !== undefined && existingPolicies['webCommitSignoffRequired'] !== undefined) ? { webCommitSignoffRequired: existingPolicies['webCommitSignoffRequired'] } : {}),
+    };
+
+    if (Object.keys(githubPoliciesInput).length === 0) {
+      githubPoliciesInput = undefined;
     }
 
     // Prompt 17: issueTemplate.bugReportFields (optional multiselect — empty omits field).
@@ -2800,6 +2888,10 @@ export class Runner {
       ...((githubTopicsInput !== undefined) ? { topics: githubTopicsInput } : {}),
       ...((githubFeaturesInput !== undefined) ? { features: githubFeaturesInput } : {}),
       ...((githubPoliciesInput !== undefined) ? { policies: githubPoliciesInput } : {}),
+      ...((github['security'] !== undefined) ? { security: github['security'] } : {}),
+      ...((github['rulesets'] !== undefined) ? { rulesets: github['rulesets'] } : {}),
+      ...((github['actions'] !== undefined) ? { actions: github['actions'] } : {}),
+      ...((github['labels'] !== undefined) ? { labels: github['labels'] } : {}),
       ...((issueTemplateInput !== undefined) ? { issueTemplate: issueTemplateInput } : {}),
     };
 
@@ -3490,7 +3582,7 @@ export class Runner {
    *
    * @returns {Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Returns}
    *
-   * @since 0.15.0
+   * @since 0.26.0
    */
   private static async promptWorkflowsForm(workflow: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Workflow, mode: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Mode, workflows: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Workflows, config: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Config): Cli_Utility_Initialize_Runner_PromptWorkflowsForm_Returns {
     const existingTemplate: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingTemplate = (workflow !== undefined && typeof workflow['template'] === 'string') ? workflow['template'] : '';
@@ -3501,13 +3593,13 @@ export class Runner {
     // pre-check them, and recover any workflow-run upstream references that now
     // live on the trigger object as "workflows" (formerly a top-level field).
     const existingTriggerNames: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingTriggerNames = existingTriggers.map((trigger) => (typeof trigger === 'string') ? trigger : trigger['name']);
-    const existingDependsOn: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingDependsOn = [];
+    const existingUpstreamWorkflows: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ExistingUpstreamWorkflows = [];
 
     for (const trigger of existingTriggers) {
       if (typeof trigger !== 'string' && Array.isArray(trigger['workflows']) === true) {
         for (const upstream of trigger['workflows']) {
-          if (existingDependsOn.includes(upstream) === false) {
-            existingDependsOn.push(upstream);
+          if (existingUpstreamWorkflows.includes(upstream) === false) {
+            existingUpstreamWorkflows.push(upstream);
           }
         }
       }
@@ -3645,42 +3737,42 @@ export class Runner {
       }
     }
 
-    // Prompt for depends-on if any selected trigger starts with "workflow-run".
-    let selectedDependsOn: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedDependsOn = undefined;
+    // Prompt for upstream workflow references if any selected trigger starts with "workflow-run".
+    let selectedUpstreamWorkflows: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_SelectedUpstreamWorkflows = undefined;
 
     if (selectedTriggers.some((trigger) => trigger.startsWith('workflow-run')) === true) {
-      const dependsOnChoices: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnChoices = workflows
+      const upstreamWorkflowChoices: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowChoices = workflows
         .filter((w) =>
           w !== workflow
           && typeof w['template'] === 'string'
           && w['template'].trim() !== '',
         )
         .map((w) => {
-          const dependsOnKey: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnKey = (typeof w['name'] === 'string' && w['name'].trim() !== '') ? `${w['template']}-${w['name']}` : w['template'];
+          const upstreamWorkflowKey: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowKey = (typeof w['name'] === 'string' && w['name'].trim() !== '') ? `${w['template']}-${w['name']}` : w['template'];
 
           return {
-            title: dependsOnKey,
-            value: dependsOnKey,
-            selected: existingDependsOn.includes(dependsOnKey),
+            title: upstreamWorkflowKey,
+            value: upstreamWorkflowKey,
+            selected: existingUpstreamWorkflows.includes(upstreamWorkflowKey),
           };
         });
 
-      if (dependsOnChoices.length > 0) {
-        const dependsOnOutput: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputKey, Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputResult>({
+      if (upstreamWorkflowChoices.length > 0) {
+        const upstreamWorkflowsOutput: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputKey, Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputResult>({
           type: 'multiselect',
-          name: 'dependsOn',
-          message: 'Select the workflows this depends on.',
-          choices: dependsOnChoices,
+          name: 'upstreamWorkflows',
+          message: 'Select upstream workflows that can start this workflow.',
+          choices: upstreamWorkflowChoices,
         });
 
-        if (dependsOnOutput['cancelled'] === true) {
+        if (upstreamWorkflowsOutput['cancelled'] === true) {
           return {
             action: 'back',
           };
         }
 
-        const dependsOnOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_DependsOnOutputResultValue = dependsOnOutput['result'];
-        selectedDependsOn = (Array.isArray(dependsOnOutputResultValue.dependsOn) === true && dependsOnOutputResultValue.dependsOn.length > 0) ? dependsOnOutputResultValue.dependsOn : undefined;
+        const upstreamWorkflowsOutputResultValue: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputResultValue = upstreamWorkflowsOutput['result'];
+        selectedUpstreamWorkflows = (Array.isArray(upstreamWorkflowsOutputResultValue.upstreamWorkflows) === true && upstreamWorkflowsOutputResultValue.upstreamWorkflows.length > 0) ? upstreamWorkflowsOutputResultValue.upstreamWorkflows : undefined;
       }
     }
 
@@ -4065,10 +4157,10 @@ export class Runner {
     // "workflows"; other triggers stay bare strings. There is no top-level
     // depends-on field in the new shape.
     const resolvedTriggers: Cli_Utility_Initialize_Runner_PromptWorkflowsForm_ResolvedTriggers = selectedTriggers.map((trigger) => {
-      if (trigger.startsWith('workflow-run') === true && selectedDependsOn !== undefined) {
+      if (trigger.startsWith('workflow-run') === true && selectedUpstreamWorkflows !== undefined) {
         return {
           name: trigger,
-          workflows: selectedDependsOn,
+          workflows: selectedUpstreamWorkflows,
         };
       }
 
@@ -5174,7 +5266,7 @@ export class Runner {
    *
    * @returns {Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Returns}
    *
-   * @since 0.21.0
+   * @since 0.26.0
    */
   private static async promptEnvironmentValueForm(existing: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Existing, isWorkspace: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_IsWorkspace): Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_Returns {
     const keyOutput: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_KeyOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_KeyOutputKey, Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_KeyOutputValue>({
@@ -5233,7 +5325,7 @@ export class Runner {
             value: 'local',
           },
           {
-            title: 'managed (GitHub only, delivered nowhere)',
+            title: 'managed (GitHub + local .env, not delivered by CI)',
             value: 'managed',
           },
           {
@@ -5292,7 +5384,7 @@ export class Runner {
     }
 
     // A default lands in the committed ".env.sample"; it is offered only for a non-managed,
-    // non-secret value, because a managed value never reaches a ".env".
+    // non-secret value because a managed value is written blank for local input.
     if (reach !== 'managed' && secret === false) {
       let defaultValueInitial: Cli_Utility_Initialize_Runner_PromptEnvironmentValueForm_DefaultValueInitial = '';
 
@@ -5326,8 +5418,8 @@ export class Runner {
   /**
    * CLI - Utility - Initialize - Prompt Settings.
    *
-   * Presents the version strategy selector. When CHANGELOG.md already contains at least one
-   * release heading, the strategy is locked and the pane is read-only.
+   * Presents the version strategy selector. Existing release history in the root or
+   * a non-freezable workspace locks the strategy and makes the pane read-only.
    *
    * @param {Cli_Utility_Initialize_Runner_PromptSettings_Config} config - Config.
    *
@@ -5342,23 +5434,24 @@ export class Runner {
     const currentStrategy: Cli_Utility_Initialize_Runner_PromptSettings_CurrentStrategy = settings['versionStrategy'] ?? 'semver';
     const currentDirectory: Cli_Utility_Initialize_Runner_PromptSettings_CurrentDirectory = process.cwd();
 
-    let isLocked: Cli_Utility_Initialize_Runner_PromptSettings_IsLocked = false;
+    let lockedStrategy: Cli_Utility_Initialize_Runner_PromptSettings_LockedStrategy = undefined;
 
     try {
-      const changelogPath: Cli_Utility_Initialize_Runner_PromptSettings_ChangelogPath = join(currentDirectory, 'CHANGELOG.md');
-      const changelogContent: Cli_Utility_Initialize_Runner_PromptSettings_ChangelogContent = await fs.readFile(changelogPath, 'utf-8');
-      const hasRelease: Cli_Utility_Initialize_Runner_PromptSettings_HasRelease = changelogContent.split('\n').some((line) => line.startsWith('## '));
+      lockedStrategy = await LibReleaseHistory.validateStrategy(config, currentDirectory);
+    } catch (error) {
+      Logger.customize({
+        name: 'Runner.promptSettings',
+        purpose: 'versionStrategy',
+      }).error((error instanceof Error) ? error.message : 'Unable to validate the configured version strategy.');
 
-      isLocked = hasRelease;
-    } catch {
-      /* empty */
+      return 'back';
     }
 
-    if (isLocked === true) {
+    if (lockedStrategy !== undefined) {
       Logger.customize({
         name: 'Runner.promptSettings',
         purpose: 'locked',
-      }).info(`Version strategy cannot be changed — this repo has an existing "${currentStrategy}" release.`);
+      }).info(`Version strategy cannot be changed — this repo has existing "${lockedStrategy}" release history.`);
 
       return 'back';
     }

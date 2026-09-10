@@ -1,5 +1,5 @@
 {
-  "name": "[__PROJECT_SLUG__]",
+  "name": "[__WORKSPACE_PACKAGE_NAME__]",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,8 +9,8 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20250508.0",
-    "typescript": "5.8.3",
-    "wrangler": "4.14.4"
+    "@cloudflare/workers-types": "5.20260908.1",
+    "typescript": "6.0.3",
+    "wrangler": "4.130.0"
   }
 }

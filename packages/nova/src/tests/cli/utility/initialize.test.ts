@@ -61,6 +61,19 @@ import type {
   Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Next,
   Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_PromptEnvironment,
   Tests_Cli_Utility_Initialize_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Responses,
+  Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_ChangelogContent,
+  Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_ChangelogPath,
+  Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Config,
+  Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_CwdSpy,
+  Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_PromptSettings,
+  Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Result,
+  Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_SandboxRoot,
+  Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_WorkspaceDirectory,
+  Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Config,
+  Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Next,
+  Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_PromptWorkflows,
+  Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Responses,
+  Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Result,
   Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_FormResult,
   Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_Next,
   Tests_Cli_Utility_Initialize_PromptWorkspacesForm_BuildsTheWorkspaceFromRolePolicyNameAndRecipeSelection_PackageJsonRecipes,
@@ -546,6 +559,123 @@ describe('read local filled keys', () => {
       recursive: true,
       force: true,
     });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Initialize - Prompt Settings.
+ *
+ * @since 0.26.0
+ */
+describe('prompt settings', () => {
+  it('locks version strategy from workspace history', async () => {
+    const sandboxRoot: Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_SandboxRoot = await mkdtemp(join(tmpdir(), `nova-${'settings-history'}-`));
+    const workspaceDirectory: Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_WorkspaceDirectory = join(sandboxRoot, 'apps', 'demo');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+
+    const changelogPath: Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_ChangelogPath = join(workspaceDirectory, 'CHANGELOG.md');
+    const changelogContent: Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_ChangelogContent = [
+      '# Demo Changelog',
+      '',
+      '## 2026.8.5',
+      '',
+    ].join('\n');
+
+    await writeFile(changelogPath, changelogContent, 'utf-8');
+
+    const config: Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Config = {
+      workspaces: {
+        './apps/demo': {
+          name: 'app-demo',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+      settings: {
+        versionStrategy: 'calver',
+      },
+    };
+    const cwdSpy: Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_CwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(sandboxRoot);
+    const promptSettings: Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_PromptSettings = Reflect.get(CliUtilityInitialize, 'promptSettings') as Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_PromptSettings;
+
+    vi.mocked(prompts).mockClear();
+
+    const result: Tests_Cli_Utility_Initialize_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Result = await promptSettings(config);
+
+    cwdSpy.mockRestore();
+
+    strictEqual(result, 'back');
+    strictEqual(vi.mocked(prompts).mock.calls.length, 0);
+
+    await rm(sandboxRoot, {
+      recursive: true,
+      force: true,
+    });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Initialize - Prompt Workflows.
+ *
+ * @since 0.26.0
+ */
+describe('prompt workflows', () => {
+  it('preserves workflow-run trigger objects when syncing existing workflows', async () => {
+    const responses: Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Responses = [{
+      action: { kind: 'back' },
+    }];
+
+    vi.mocked(prompts).mockImplementation(() => {
+      const next: Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const config: Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Config = {
+      workflows: [
+        {
+          template: 'publish',
+          name: 'core',
+          triggers: ['release'],
+        },
+        {
+          template: 'publish',
+          name: 'preset',
+          triggers: [{
+            name: 'workflow-run-success',
+            workflows: ['publish-core'],
+          }],
+        },
+      ],
+    };
+    const promptWorkflows: Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_PromptWorkflows = Reflect.get(CliUtilityInitialize, 'promptWorkflows') as Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_PromptWorkflows;
+    const result: Tests_Cli_Utility_Initialize_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Result = await promptWorkflows(config);
+
+    strictEqual(result, 'back');
+    deepStrictEqual(config['workflows'], [
+      {
+        template: 'publish',
+        name: 'core',
+        triggers: ['release'],
+      },
+      {
+        template: 'publish',
+        name: 'preset',
+        triggers: [{
+          name: 'workflow-run-success',
+          workflows: ['publish-core'],
+        }],
+      },
+    ], 'Expected initialize to keep object-form workflow-run triggers and their upstream references');
 
     return;
   });

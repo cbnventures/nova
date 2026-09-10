@@ -1,7 +1,7 @@
 ---
 id: "internationalization"
 title: "Internationalization"
-description: "Reconcile the Docusaurus translation tree with theme-nova i18n sync and check, pruning redundant copies while preserving every real translation."
+description: "Reconcile and measure the Docusaurus translation tree with theme-nova i18n sync, check, and coverage while preserving every real translation."
 keywords:
   - "nova"
   - "docusaurus facades"
@@ -31,10 +31,11 @@ Docusaurus `write-translations` only ever adds keys. Over time the translation t
 
 `theme-nova i18n` reconciles the tree in both directions: it seeds new keys, prunes redundant copies, and surfaces orphaned keys for review before anything is deleted.
 
-Two subcommands share one engine:
+Three subcommands cover reconciliation and completeness:
 
 - `theme-nova i18n sync` — regenerate and reconcile the tree, writing the result.
 - `theme-nova i18n check` — compute the same plan without writing and exit non-zero when the tree is out of sync, for continuous integration.
+- `theme-nova i18n coverage` — report how much of each configured locale is translated and optionally enforce a minimum percentage.
 
 ## What Gets Localized
 
@@ -242,6 +243,27 @@ The default (source) locale is the reference and always reads as fully covered. 
 | `0`  | The report was printed, and every reported locale met `--min-coverage`. |
 | `1`  | A locale fell below the `--min-coverage` threshold.                     |
 | `2`  | The threshold was invalid, or the site could not be loaded.             |
+
+## Right-to-Left CSS
+
+Nova reads the active locale's Docusaurus `direction`. When it is `rtl`, the preset automatically appends its bundled RTL CSS transform to the PostCSS pipeline for that locale. Left-to-right locales do not load the transform, and there is no separate Nova preset option to maintain.
+
+```ts title="docusaurus.config.ts"
+i18n: {
+  defaultLocale: 'en',
+  locales: ['en', 'ar'],
+  localeConfigs: {
+    en: {
+      direction: 'ltr',
+    },
+    ar: {
+      direction: 'rtl',
+    },
+  },
+}
+```
+
+Write logical CSS properties such as `margin-inline-start` when possible. The automatic transform covers directional declarations from Nova and third-party styles during the RTL locale build.
 
 ## Replacing `write-translations`
 

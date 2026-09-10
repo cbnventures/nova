@@ -5,6 +5,7 @@ import {
   writeFileSync,
 } from 'node:fs';
 import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { readDefaultCodeTranslationMessages } from '@docusaurus/theme-translations';
 
@@ -12,8 +13,14 @@ import { comparePresetThemeFiles } from './lib/compare-preset-theme-files.js';
 import { Runner as LibCssGenerator } from './lib/css-generator.js';
 import { filterPresetThemeFile } from './lib/filter-preset-theme-file.js';
 import { buildGoogleFontsUrl } from './lib/google-fonts-url.js';
+import {
+  loadCommonJsModule,
+  resolveModulePath,
+} from './lib/module-loader.js';
+import { generateProgressBarClientModule } from './lib/progress-bar.js';
 import { buildSearchIndex } from './lib/search/indexer.js';
 import { Runner as LibTranslations } from './lib/translations.js';
+import { configureWebpackCache } from './lib/webpack-cache.js';
 import { resolvePreset } from './options.js';
 import { announcementBarInit } from './scripts/announcement-bar-init.js';
 import { colorModeInit } from './scripts/color-mode-init.js';
@@ -65,6 +72,7 @@ import type {
   Index_Runner_Default_BlocksPath,
   Index_Runner_Default_ConfigurePostCss_PostCssOptions,
   Index_Runner_Default_ConfigurePostCss_RtlPlugin,
+  Index_Runner_Default_ConfigureWebpack_Config,
   Index_Runner_Default_ContentLoaded_Actions,
   Index_Runner_Default_ContentLoaded_Args,
   Index_Runner_Default_Context,
@@ -84,12 +92,16 @@ import type {
   Index_Runner_Default_CssThemeFiles,
   Index_Runner_Default_CssUtilitiesPath,
   Index_Runner_Default_CurrentDirectory,
+  Index_Runner_Default_CurrentFilePath,
   Index_Runner_Default_CurrentLocale,
   Index_Runner_Default_GeneratedCss,
   Index_Runner_Default_GeneratedCssDirectory,
   Index_Runner_Default_GeneratedCssPath,
+  Index_Runner_Default_GeneratedProgressBar,
+  Index_Runner_Default_GeneratedProgressBarPath,
   Index_Runner_Default_GetClientModules_ClientModules,
   Index_Runner_Default_GetClientModules_NprogressCssModule,
+  Index_Runner_Default_GetClientModules_ProgressBarClientModule,
   Index_Runner_Default_GetClientModules_StickyLayoutPath,
   Index_Runner_Default_GetDefaultCodeTranslationMessages_NovaTranslationsDirPath,
   Index_Runner_Default_GetDefaultCodeTranslationMessages_ThemeCommonMessages,
@@ -108,8 +120,10 @@ import type {
   Index_Runner_Default_LocaleConfigs,
   Index_Runner_Default_LocaleDirection,
   Index_Runner_Default_NprogressCssPath,
+  Index_Runner_Default_NprogressJavaScriptPath,
   Index_Runner_Default_Options,
   Index_Runner_Default_PathsToWatch,
+  Index_Runner_Default_PersistentCache,
   Index_Runner_Default_PostBuild_Args,
   Index_Runner_Default_PostBuild_SearchConfigCast,
   Index_Runner_Default_PresetLogoContent,
@@ -189,7 +203,8 @@ export class Runner {
     );
 
     const presetName: Index_Runner_Default_PresetName = options['preset'];
-    const currentDirectory: Index_Runner_Default_CurrentDirectory = dirname(__filename);
+    const currentFilePath: Index_Runner_Default_CurrentFilePath = fileURLToPath(import.meta.url);
+    const currentDirectory: Index_Runner_Default_CurrentDirectory = dirname(currentFilePath);
 
     // Resolve preset logo to a data URI so it works as an <img src> at runtime.
     const presetLogoSrc: Index_Runner_Default_PresetLogoSrc = resolvedPreset['logo']['src'];
@@ -245,9 +260,21 @@ export class Runner {
     const themeConfig: Index_Runner_Default_ThemeConfig = siteConfig['themeConfig'] as Index_Runner_Default_ThemeConfig;
     const announcementBar: Index_Runner_Default_AnnouncementBar = themeConfig['announcementBar'] as Index_Runner_Default_AnnouncementBar;
 
+    const persistentCache: Index_Runner_Default_PersistentCache = options['persistentCache'];
     const progressBarConfig: Index_Runner_Default_ProgressBarConfig = options['progressBar'];
-    const nprogressCssPath: Index_Runner_Default_NprogressCssPath = require.resolve('nprogress/nprogress.css');
+    const nprogressCssPath: Index_Runner_Default_NprogressCssPath = resolveModulePath('nprogress/nprogress.css');
+    const nprogressJavaScriptPath: Index_Runner_Default_NprogressJavaScriptPath = resolveModulePath('nprogress');
+    const generatedProgressBarPath: Index_Runner_Default_GeneratedProgressBarPath = resolve(generatedCssDirectory, 'nova-progress-bar.js');
     const searchConfig: Index_Runner_Default_SearchConfig = options['search'] as Index_Runner_Default_SearchConfig;
+
+    if (progressBarConfig !== false) {
+      const generatedProgressBar: Index_Runner_Default_GeneratedProgressBar = generateProgressBarClientModule({
+        config: progressBarConfig,
+        nprogressPath: nprogressJavaScriptPath,
+      });
+
+      writeFileSync(generatedProgressBarPath, generatedProgressBar, 'utf-8');
+    }
 
     return {
       name: 'docusaurus-theme-nova',
@@ -326,8 +353,10 @@ export class Runner {
 
         if (progressBarConfig !== false) {
           const nprogressCssModule: Index_Runner_Default_GetClientModules_NprogressCssModule = resolve(nprogressCssPath);
+          const progressBarClientModule: Index_Runner_Default_GetClientModules_ProgressBarClientModule = resolve(generatedProgressBarPath);
 
           clientModules.push(nprogressCssModule);
+          clientModules.push(progressBarClientModule);
         }
 
         return clientModules;
@@ -432,7 +461,7 @@ export class Runner {
        */
       configurePostCss(postCssOptions: Index_Runner_Default_ConfigurePostCss_PostCssOptions) {
         if (isRtl === true) {
-          const rtlPlugin: Index_Runner_Default_ConfigurePostCss_RtlPlugin = require('rtlcss');
+          const rtlPlugin: Index_Runner_Default_ConfigurePostCss_RtlPlugin = loadCommonJsModule('rtlcss') as Index_Runner_Default_ConfigurePostCss_RtlPlugin;
 
           postCssOptions['plugins'].push(rtlPlugin);
         }
@@ -443,16 +472,19 @@ export class Runner {
       /**
        * Index - Docusaurus Theme Nova - Default - Configure Webpack.
        *
-       * Returns a webpack configuration fragment that registers a module
-       * alias mapping at-nova-assets to the package assets directory so
-       * preset logo files can be imported by path.
+       * Registers the Nova asset alias and prevents persistent cache files by
+       * default. Development uses memory caching, production disables caching,
+       * and an explicit opt-in leaves Docusaurus's cache configuration intact.
+       *
+       * @param {Index_Runner_Default_ConfigureWebpack_Config} config - Config.
        *
        * @returns {Index_Runner_Default_ReturnsConfigureWebpackReturns}
        *
        * @since 0.15.0
        */
-      configureWebpack() {
+      configureWebpack(config: Index_Runner_Default_ConfigureWebpack_Config) {
         return {
+          ...configureWebpackCache(config['mode'], persistentCache),
           resolve: {
             alias: {
               '@nova-assets': assetsDirectory,

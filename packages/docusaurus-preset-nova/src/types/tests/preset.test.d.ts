@@ -1,4 +1,26 @@
 /**
+ * Tests - Preset - Preset - Accepts Only Required Preset Option.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_ResultPlugin = [string, Record<string, unknown>] | string;
+
+export type Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_ResultPlugins = Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_ResultPlugin[];
+
+export type Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_ResultTheme = [string, Record<string, unknown>] | string;
+
+export type Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_ResultThemes = Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_ResultTheme[];
+
+export type Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_Result = {
+  plugins: Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_ResultPlugins;
+  themes: Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_ResultThemes;
+};
+
+export type Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_PluginCount = number;
+
+export type Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_ThemeCount = number;
+
+/**
  * Tests - Preset - Preset - Excludes Blog Plugin When Blog Is False.
  *
  * @since 0.15.0
@@ -117,6 +139,37 @@ export type Tests_Preset_Preset_IncludesGtmPluginWhenGtmIsProvided_Result = {
 };
 
 export type Tests_Preset_Preset_IncludesGtmPluginWhenGtmIsProvided_PluginCount = number;
+
+/**
+ * Tests - Preset - Preset - Passes Persistent Cache To Nova Theme When Enabled.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultPlugin = [string, Record<string, unknown>] | string;
+
+export type Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultPlugins = Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultPlugin[];
+
+export type Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultThemeOptions_PersistentCache = boolean | undefined;
+
+export type Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultThemeOptions = {
+  persistentCache?: Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultThemeOptions_PersistentCache;
+  [key: string]: unknown;
+};
+
+export type Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultTheme = [string, Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultThemeOptions] | string;
+
+export type Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultThemes = Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultTheme[];
+
+export type Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_Result = {
+  plugins: Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultPlugins;
+  themes: Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultThemes;
+};
+
+export type Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_NovaTheme = [string, Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultThemeOptions];
+
+export type Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ThemeOptions = Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ResultThemeOptions;
+
+export type Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_PersistentCache = boolean | undefined;
 
 /**
  * Tests - Preset - Preset - Passes Search Config To Nova Theme When Search Is Provided.

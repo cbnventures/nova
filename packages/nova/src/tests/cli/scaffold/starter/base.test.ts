@@ -9,7 +9,12 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { afterAll, describe, it } from 'vitest';
+import {
+  afterAll,
+  afterEach,
+  describe,
+  it,
+} from 'vitest';
 
 import { Runner as CliScaffoldStarterBase } from '../../../../cli/scaffold/starter/base.js';
 
@@ -45,7 +50,7 @@ import type {
  *
  * @since 0.15.0
  */
-describe.skip('CliScaffoldStarterBase.run', async () => {
+describe.sequential('CliScaffoldStarterBase.run', async () => {
   const originalCwd: Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_OriginalCwd = process.cwd();
   const temporaryDirectory: Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_TemporaryDirectory = tmpdir();
   const temporaryBase: Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_TemporaryBase = join(temporaryDirectory, `nova-${'test'}-`);
@@ -58,6 +63,12 @@ describe.skip('CliScaffoldStarterBase.run', async () => {
       recursive: true,
       force: true,
     });
+
+    return;
+  });
+
+  afterEach(() => {
+    process.exitCode = undefined;
 
     return;
   });
@@ -142,6 +153,7 @@ describe.skip('CliScaffoldStarterBase.run', async () => {
     await CliScaffoldStarterBase.run({
       dryRun: true,
       name: 'my-project',
+      nonInteractive: true,
       output: './my-project',
     });
 
@@ -169,6 +181,7 @@ describe.skip('CliScaffoldStarterBase.run', async () => {
 
     await CliScaffoldStarterBase.run({
       name: 'my-project',
+      nonInteractive: true,
       output: './my-project',
     });
 

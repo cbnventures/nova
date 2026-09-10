@@ -160,14 +160,11 @@ function SearchResults(_props: Theme_SearchBar_SearchResults_Props) {
     };
   }, []);
 
-  // Prod-safe mount transition trigger. cssnano strips @starting-style from
-  // the prod CSS bundle, so the dropdown's CSS-only mount transition never
-  // fires - it pops in at the visible target before the body keyframe gets a
-  // chance to clip it. This effect attaches the .nova-search-dropdown-mounting
-  // class for one frame (initial render via the className below), then clears
+  // Mount transition trigger. The dropdown starts with the
+  // .nova-search-dropdown-mounting class on its initial render, then clears
   // it on the next requestAnimationFrame. The cascade switches from the
-  // mounting rule (hidden) to the swap-in/has rule (visible), and the
-  // transition fires from hidden to visible like @starting-style would have.
+  // mounting rule (hidden) to the swap-in/has rule (visible), which starts
+  // the transition without relying on insertion-only CSS at-rules.
   // The [isOpen] dep ensures the effect re-fires on every dropdown opening,
   // not just the first - SearchResults persists across searches but the
   // dropdown DOM only mounts when isOpen flips true.

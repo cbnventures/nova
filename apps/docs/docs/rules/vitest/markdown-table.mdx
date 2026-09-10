@@ -76,12 +76,13 @@ The suite has a single check, so toggling is all-or-nothing. The defaults scan `
 
 ## Configuration
 
-| Field            | Type                   | Default            | Description                                                               |
-|------------------|------------------------|--------------------|---------------------------------------------------------------------------|
-| `contentDirs`    | `string[]`             | `['docs', 'blog']` | Directories, relative to `rootDir`, scanned recursively for tables.       |
-| `rootDir`        | `string`               | `process.cwd()`    | Base directory the `contentDirs` resolve against.                         |
-| `fileExtensions` | `string[]`             | `['.md', '.mdx']`  | Extensions that count as Markdown content.                                |
-| `enable`         | `'all' \| ToggleKey[]` | required           | Which checks run. Use `'all'` for every check, or a list to freeze a set. |
+| Field            | Type                      | Default            | Description                                                               |
+|------------------|---------------------------|--------------------|---------------------------------------------------------------------------|
+| `vitest`         | `typeof import('vitest')` | required           | Vitest module namespace used to register the suite.                       |
+| `contentDirs`    | `string[]`                | `['docs', 'blog']` | Directories, relative to `rootDir`, scanned recursively for tables.       |
+| `rootDir`        | `string`                  | `process.cwd()`    | Base directory the `contentDirs` resolve against.                         |
+| `fileExtensions` | `string[]`                | `['.md', '.mdx']`  | Extensions that count as Markdown content.                                |
+| `enable`         | `'all' \| ToggleKey[]`    | required           | Which checks run. Use `'all'` for every check, or a list to freeze a set. |
 
 ## Toggle Keys
 

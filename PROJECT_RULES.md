@@ -129,7 +129,9 @@ src/
 
 ### Commands
 
-All commands must be run from the **monorepo root**. The `changelog` and `recipes` scripts call the `nova` CLI binary directly — if Nova isn't built, those commands fail. The `check` task in `turbo.json` depends on `build` because ESLint uses Nova's own compiled custom rules from `./build/`. Tests run via Vitest directly on TypeScript source files and do not require a build step.
+All commands must be run from the **monorepo root**. The `changelog` and `recipes` scripts call the `nova` CLI binary directly — if Nova isn't built, those commands fail. The root `check` task in `turbo.json` depends on `^build` so consumer workspaces can load their compiled Nova dependencies without rebuilding the workspace being checked. Workspaces check their own TypeScript source directly; the Docusaurus worker compatibility test transpiles its current source in memory instead of requiring preset build output.
+
+The repository-only `nova-run-scripts.mjs` and `nova-type-check.mjs` bootstraps load canonical TypeScript implementations from `packages/nova/src/lib` with Jiti filesystem and module caches disabled. This lets build and check tasks use current source before the compiled CLI exists without maintaining duplicated logic.
 
 | Command             | What it does                                               |
 |---------------------|------------------------------------------------------------|
@@ -200,7 +202,7 @@ Every `package.json` key is classified into one of three buckets based on each w
 - A **distributable** workspace must not depend on **freezable** or **trackable** workspaces.
 - The monorepo root (`project` role) must have `packageManager` and `workspaces` keys; no other workspace should.
 - Only **distributable** workspaces may have `files` in their `package.json`.
-- **Trackable** and **distributable** workspaces must use Semantic Versioning.
+- **Trackable** and **distributable** workspace versions must match `settings.versionStrategy`; when lock-step versioning is enabled, they must also start each release at the same version.
 - **Freezable** workspaces stay at `0.0.0` and are never deployed or published.
 - Always pair `module` with `moduleResolution` in TSConfig.
 - Relative paths do not belong in exported TSConfig presets (TypeScript resolves from where the config is, not where the command runs).
@@ -382,22 +384,22 @@ apps/docs/
 
 ### Release Process
 
-1. All changes committed, `git status --short` is clean.
-2. Changelog consolidated, version bumped.
-3. Commit with a thematic subject line listing 3-5 themes in imperative form (e.g., `Add changelog dry-run mode, refine release summary output, and harden version bump arithmetic`). The version pointer lives in the tag in step 4, not the subject.
-4. Tag the commit (e.g., `v1.2.0`).
-5. Push commit and tag.
-6. GitHub Release triggers CI workflows.
+1. Run the clean install, root `check`, and root `build` before releasing.
+2. Run `npm run changelog -- --release --dry-run`, review the summary, and get approval.
+3. Run the real changelog release. It folds the released workspace changelog files, bumps versions, stamps sentinels, and syncs exact internal pins.
+4. Run `check` and `build` again.
+5. Write a separate concise thematic commit message; it is not the same text as the changelog block.
+6. Tag the commit (e.g., `v1.2.0`) and push the commit and tag.
+7. The configured publish workflow runs from its configured trigger; Nova's signed npm workflow uses the pushed version tag.
+8. Create the GitHub Release from that tag. Its notes are one combined block copied from the released workspace changelog files, with version/date headings removed and workspace names retained.
 
 ### CI/CD Workflows
 
-| Workflow file                                | Trigger           | What it does                              |
-|----------------------------------------------|-------------------|-------------------------------------------|
-| `check-sponsor-gated-issues.yml`             | Issue opened      | Gate issues behind sponsorship check      |
-| `lock-inactive-issues.yml`                   | Weekly cron       | Lock issues inactive > 30 days            |
-| `publish-to-github-packages.yml`             | Release published | Build and publish to GitHub Packages      |
-| `publish-to-cloudflare-pages-docusaurus.yml` | Release published | Build and deploy docs to Cloudflare Pages |
-| `publish-to-npm.yml`                         | Release published | Build and publish to npm                  |
+| Workflow file                    | Trigger          | What it does                            |
+|----------------------------------|------------------|-----------------------------------------|
+| `check-sponsor-gated-issues.yml` | Issue opened     | Gate issues behind sponsorship check    |
+| `lock-inactive-issues.yml`       | Weekly cron      | Lock issues inactive > 30 days          |
+| `nova-publish-project.yml`       | Version tag push | Build and publish configured workspaces |
 
 ### Environments
 

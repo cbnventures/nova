@@ -221,6 +221,8 @@ export type Lib_Search_Indexer_BuildSearchIndex_LunrSourcePath = string;
 
 export type Lib_Search_Indexer_BuildSearchIndex_LunrDestinationPath = string;
 
+export type Lib_Search_Indexer_BuildSearchIndex_WorkerSourceUrl = URL;
+
 export type Lib_Search_Indexer_BuildSearchIndex_WorkerSourcePath = string;
 
 export type Lib_Search_Indexer_BuildSearchIndex_WorkerDestinationPath = string;

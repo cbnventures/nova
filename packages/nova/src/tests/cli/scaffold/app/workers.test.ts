@@ -9,12 +9,19 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { afterAll, describe, it } from 'vitest';
+import {
+  afterAll,
+  afterEach,
+  describe,
+  it,
+} from 'vitest';
 
 import { Runner as CliScaffoldAppWorkers } from '../../../../cli/scaffold/app/workers.js';
 
 import type {
   Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_IndexTsPath,
+  Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_NovaConfig,
+  Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_NovaConfigPath,
   Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_PackageJson,
   Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_PackageJsonPath,
   Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_ProjectDirectory,
@@ -47,7 +54,7 @@ import type {
  *
  * @since 0.15.0
  */
-describe.skip('CliScaffoldAppWorkers.run', async () => {
+describe.sequential('CliScaffoldAppWorkers.run', async () => {
   const originalCwd: Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_OriginalCwd = process.cwd();
   const temporaryDirectory: Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_TemporaryDirectory = tmpdir();
   const temporaryBase: Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_TemporaryBase = join(temporaryDirectory, `nova-${'test'}-`);
@@ -60,6 +67,12 @@ describe.skip('CliScaffoldAppWorkers.run', async () => {
       recursive: true,
       force: true,
     });
+
+    return;
+  });
+
+  afterEach(() => {
+    process.exitCode = undefined;
 
     return;
   });
@@ -103,6 +116,7 @@ describe.skip('CliScaffoldAppWorkers.run', async () => {
     await CliScaffoldAppWorkers.run({
       dryRun: true,
       name: 'my-worker',
+      nonInteractive: true,
       workspaceName: 'workers',
       output: './my-worker',
     });
@@ -131,6 +145,7 @@ describe.skip('CliScaffoldAppWorkers.run', async () => {
 
     await CliScaffoldAppWorkers.run({
       name: 'my-worker',
+      nonInteractive: true,
       workspaceName: 'workers',
       output: './my-worker',
     });
@@ -181,10 +196,29 @@ describe.skip('CliScaffoldAppWorkers.run', async () => {
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
+    const novaConfig: Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_NovaConfig = JSON.stringify({
+      project: {
+        name: {
+          slug: 'workspace-test',
+          title: 'Workspace Test',
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'workspace-test-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+      },
+    }, null, 2);
+    const novaConfigPath: Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_AddsWorkspaceAtMonorepoRoot_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+
     process.chdir(projectDirectory);
 
     await CliScaffoldAppWorkers.run({
-      name: 'my-worker',
+      nonInteractive: true,
       workspaceName: 'workers',
       output: './apps/workers',
     });

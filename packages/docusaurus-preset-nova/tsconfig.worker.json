@@ -7,7 +7,8 @@
   "compilerOptions": {
     "noEmitOnError": false,
     "outDir": "./build",
-    "rootDir": "./"
+    "rootDir": "./",
+    "types": []
   },
   "include": [
     "./src/lib/search/worker.ts"

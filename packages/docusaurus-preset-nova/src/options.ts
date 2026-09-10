@@ -1,5 +1,6 @@
 import { Joi } from '@docusaurus/utils-validation';
 
+import { progressBarDefaults } from './lib/progress-bar.js';
 import { LIB_REGEX_HEX_COLOR } from './lib/regex.js';
 import { presetsIndexNames, presetsIndexPresets } from './presets/index.js';
 
@@ -96,10 +97,24 @@ const pluginOptionsSchema = Joi.object({
       containerId: Joi.string().required(),
     }).optional(),
   }).default(),
+  persistentCache: Joi.boolean().default(false),
   progressBar: Joi.alternatives()
     .try(
       Joi.boolean(),
-      Joi.object().unknown(true),
+      Joi.object({
+        minimum: Joi.number().min(0).max(1).default(progressBarDefaults['minimum']),
+        easing: Joi.string().default(progressBarDefaults['easing']),
+        positionUsing: Joi.string().valid('', 'translate3d', 'translate', 'margin').default(progressBarDefaults['positionUsing']),
+        speed: Joi.number().integer().min(0).default(progressBarDefaults['speed']),
+        trickle: Joi.boolean().default(progressBarDefaults['trickle']),
+        trickleRate: Joi.number().min(0).max(1).default(progressBarDefaults['trickleRate']),
+        trickleSpeed: Joi.number().integer().min(0).default(progressBarDefaults['trickleSpeed']),
+        showSpinner: Joi.boolean().default(progressBarDefaults['showSpinner']),
+        barSelector: Joi.string().default(progressBarDefaults['barSelector']),
+        spinnerSelector: Joi.string().default(progressBarDefaults['spinnerSelector']),
+        parent: Joi.string().default(progressBarDefaults['parent']),
+        template: Joi.string().default(progressBarDefaults['template']),
+      }).unknown(true),
     )
     .default(false),
   search: Joi.alternatives()

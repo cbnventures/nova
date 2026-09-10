@@ -90,6 +90,7 @@ The defaults match a standard Docusaurus layout with `docs` and `blog` directori
 
 | Field                     | Type                              | Default                          | Description                                                               |
 |---------------------------|-----------------------------------|----------------------------------|---------------------------------------------------------------------------|
+| `vitest`                  | `typeof import('vitest')`         | required                         | Vitest module namespace used to register the suite.                       |
 | `projectRoot`             | `string`                          | `process.cwd()`                  | Consumer root containing the content directories.                         |
 | `contentDirs`             | `{ docs: string; blog?: string }` | `{ docs: 'docs', blog: 'blog' }` | Content directories to scan and how they map to route prefixes.           |
 | `docsRouteBasePath`       | `string`                          | `'docs'`                         | URL route prefix for docs links.                                          |

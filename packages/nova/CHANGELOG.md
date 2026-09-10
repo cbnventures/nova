@@ -1,5 +1,41 @@
 # @cbnventures/nova
 
+## 0.26.0 - 2026-09-10
+
+### UPDATED
+- Updated `@cbnventures/nova` runtime dependencies `globals` to 17.11.0 and `zod` to 4.4.3, plus its ESLint and Vitest development dependencies to 9.39.5 and 4.1.11.
+- Updated generated Vite projects to 6.4.3 and Cloudflare Workers projects to Wrangler 4.130.0 with Workers Types 5.20260908.1, clearing both direct advisories, removing Wrangler's vulnerable Undici and ws chain, and keeping the generated Worker toolchain's peer contract valid.
+- Updated the base starter to pin the current npm and Node.js toolchain and declare install-script policy for built-in scaffold dependencies.
+- Made package-manager handling Corepack-only: publish workflows now validate and honor exact npm, pnpm, or Yarn descriptors, package environment sync removes the field from non-project workspaces and repairs missing or unsupported project descriptors to the detected exact npm version, and version diagnostics no longer detect unsupported clients.
+- Completed scaffold preflight and workspace registration so base-first and direct framework starts share canonical package names, safe outputs, and repeatable non-interactive behavior.
+- Disabled Turbo caching for build and check tasks so repository commands no longer accumulate persistent Turbo cache artifacts.
+- Documented and guarded Nova's explicit dependency install-script trust boundary while adopting reviewed root install-script denials.
+- Updated Nova documentation to match the public config, environment reach, initializer, recipe registry, TSConfig, Vitest, and toolkit contracts, with source-backed drift tests.
+- Required TypeScript 6 across Nova presets, compiler-backed utilities, documentation, and scaffold templates.
+
+### FIXED
+- Fixed generated Docusaurus projects to use an explicit ESM vitest.config.mts file, preventing Vite native-loader module-format warnings.
+- Hardened release history and lock-step releases by rejecting configured SemVer or CalVer strategies that conflict with existing changelog history and requiring every non-freezable workspace to start from the same valid version.
+- Fixed generated Docusaurus and Next.js workspaces to install and build cleanly by upgrading Docusaurus 3.7.0 to 3.10.2, Next.js 15.3.2 to 16.3.4, and React 19.1.0 to 19.2.8, then aligning their MDX, Nova preset, dependency, and TypeScript configuration contracts.
+- Unified the public type-check command and repository self-check behind one pre-build-safe diagnostic pipeline, preventing configuration and compiler reporting drift.
+- Fixed the ESLint no-shared-type-import rule to validate non-empty sharedFiles paths while preserving empty arrays.
+- Fixed the ESLint `no-regex-literals` rule to reject non-empty `regexFile` paths that do not resolve to existing files while preserving an empty string as the valid no-destination setting.
+- Invalid TypeScript configuration syntax and compiler options are now reported by the type-check and transpile utilities instead of being silently filtered.
+- Unified the public and repository run-scripts paths behind one pre-build-safe TypeScript implementation to prevent bootstrap behavior drift.
+- Fixed release-history validation to recognize valid SemVer prerelease and build metadata headings.
+- Fixed `@cbnventures/nova`'s Vitest peer dependency to accept compatible Vitest 4 releases through `^4` instead of pinning version 4.1.3.
+- Fixed the Docusaurus scaffold's Vitest configuration to resolve Docusaurus @site imports from the generated site root.
+- Fixed nested recipe commands to preserve parent-level `--dry-run` and `--replace-file` options before invoking GitHub, license, and README handlers, and clarified that GitHub dry runs still perform read-only checks.
+- Fixed release recovery to retain pending entries when source stamping fails, enforced prerequisite GitHub security settings before mutations, pinned scaffold-owned Nova dependencies to the running version, and kept partial stdout and stderr buffers independent while removing signal listeners after parallel runs.
+- Fixed workflow-run trigger objects so config loading and initialize preserve upstream workflow references, with chaining behavior documented accurately.
+
+### ADDED
+- Added the `fw-homebridge` TSConfig framework preset with `lib: ["DOM", "ESNext"]`, `isolatedModules: false`, and `verbatimModuleSyntax: false` for Homebridge plugins that consume ambient HAP const enums.
+- Added a shared Vitest setup battery that synchronizes console and process-output suppression, exit-code cleanup, and mock restoration across consumer suites.
+- Added declarative GitHub Actions, labels, rulesets, security, sponsorship, and repository policy synchronization.
+- Added inventory-wide TSConfig preset contract coverage that keeps source presets, public exports, build targets, and TypeScript compiler options aligned.
+- Added reusable scaffold-specific questions and deterministic non-interactive commands, including validated Docusaurus preset selection.
+
 ## 0.25.2 - 2026-08-20
 
 ### UPDATED

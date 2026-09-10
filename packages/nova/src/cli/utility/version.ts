@@ -86,9 +86,6 @@ import type {
   Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchSource,
   Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchVersion,
   Cli_Utility_Version_Runner_GetInterpreterVersion_RustVersion,
-  Cli_Utility_Version_Runner_GetNodeVersion_BunMatch,
-  Cli_Utility_Version_Runner_GetNodeVersion_BunMatchResult,
-  Cli_Utility_Version_Runner_GetNodeVersion_BunVersion,
   Cli_Utility_Version_Runner_GetNodeVersion_NodeJsMatch,
   Cli_Utility_Version_Runner_GetNodeVersion_NodeJsMatchResult,
   Cli_Utility_Version_Runner_GetNodeVersion_NodeJsVersion,
@@ -234,14 +231,14 @@ export class Runner {
   /**
    * CLI - Utility - Version - Get Node Version.
    *
-   * Shells out to node, npm, yarn, pnpm, and bun to capture their
-   * semver strings. Returns only the tools that are actually installed.
+   * Shells out to Node.js and the npm, Yarn, and pnpm Corepack clients to
+   * capture their semver strings. Returns only installed tools.
    *
    * @private
    *
    * @returns {Cli_Utility_Version_Runner_GetNodeVersion_Returns}
    *
-   * @since 0.11.0
+   * @since 0.26.0
    */
   private static async getNodeVersion(): Cli_Utility_Version_Runner_GetNodeVersion_Returns {
     const nodeResults: Cli_Utility_Version_Runner_GetNodeVersion_NodeResults = await Promise.all([
@@ -249,14 +246,12 @@ export class Runner {
       executeShell('npm --version'),
       executeShell('yarn --version'),
       executeShell('pnpm --version'),
-      executeShell('bun --version'),
     ]);
 
     const nodeJsVersion: Cli_Utility_Version_Runner_GetNodeVersion_NodeJsVersion = nodeResults[0];
     const npmVersion: Cli_Utility_Version_Runner_GetNodeVersion_NpmVersion = nodeResults[1];
     const yarnVersion: Cli_Utility_Version_Runner_GetNodeVersion_YarnVersion = nodeResults[2];
     const pnpmVersion: Cli_Utility_Version_Runner_GetNodeVersion_PnpmVersion = nodeResults[3];
-    const bunVersion: Cli_Utility_Version_Runner_GetNodeVersion_BunVersion = nodeResults[4];
 
     let tools: Cli_Utility_Version_Runner_GetNodeVersion_Tools = {};
 
@@ -308,19 +303,6 @@ export class Runner {
         tools = {
           ...tools,
           pnpm: pnpmMatch,
-        };
-      }
-    }
-
-    // Attempt to retrieve the Bun version.
-    if (bunVersion['code'] === 0) {
-      const bunMatchResult: Cli_Utility_Version_Runner_GetNodeVersion_BunMatchResult = bunVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
-      const bunMatch: Cli_Utility_Version_Runner_GetNodeVersion_BunMatch = (bunMatchResult !== null) ? bunMatchResult[1] : undefined;
-
-      if (bunMatch !== undefined) {
-        tools = {
-          ...tools,
-          bun: bunMatch,
         };
       }
     }

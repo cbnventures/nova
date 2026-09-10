@@ -32,6 +32,20 @@ export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Features = Shared_NovaConf
 
 export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Flags = string[];
 
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Command = string;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Sponsorships = boolean | undefined;
 
-export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Result = Shared_ShellOutput;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_RepoEditCommand = string | undefined;
+
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_SponsorshipsCommand = string | undefined;
+
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_RepositoryIdCommand = string;
+
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_RepositoryIdResult = Shared_ShellOutput;
+
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_RepositoryId = string;
+
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_SponsorshipsMutation = string;
+
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_RepoEditResult = Shared_ShellOutput;
+
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_SponsorshipsResult = Shared_ShellOutput;

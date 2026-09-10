@@ -1,0 +1,98 @@
+---
+id: "sync-security"
+title: "Sync Security"
+description: "Sync GitHub vulnerability alerts, Dependabot security updates, secret scanning, and push protection from nova.config.json."
+keywords:
+  - "nova"
+  - "sync-security"
+  - "dependabot"
+  - "secret scanning"
+  - "push protection"
+tags:
+  - "cli"
+  - "sync-security"
+  - "recipe"
+  - "github"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Sync **repository security settings** from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Summary
+
+The `sync-security` recipe reconciles vulnerability alerts, Dependabot security updates, secret scanning, and secret-scanning push protection. Each field is optional; omitted fields leave the current GitHub value untouched.
+
+GitHub controls feature availability by repository visibility, organization policy, license, and plan. Nova reports an API failure instead of silently claiming an unavailable feature was enabled.
+
+## Why Use This Command?
+
+1. Prevent security switches from being overlooked on a newly created repository.
+2. Repair manual UI drift from a reviewed configuration file.
+3. Apply secret scanning before push protection so dependent updates happen safely.
+
+## Requirements
+
+- **`gh` CLI ≥ 2.40.0** — The GitHub CLI must be installed and authenticated.
+- **Repository administration access** — The authenticated user must be able to change security settings.
+- **`github.owner` and `github.repo`** — Both fields identify the target repository.
+
+## Behavior
+
+| Field                       | What it controls                                             |
+|-----------------------------|--------------------------------------------------------------|
+| `vulnerabilityAlerts`       | Dependabot alerts for vulnerable dependencies.               |
+| `dependabotSecurityUpdates` | Automatic pull requests that update vulnerable dependencies. |
+| `secretScanning`            | Secret scanning for the repository.                          |
+| `pushProtection`            | Blocking pushes that contain detected secrets.               |
+
+`dependabotSecurityUpdates: true` requires `vulnerabilityAlerts: true` in the same configuration because GitHub's security-update service depends on Dependabot alerts. `pushProtection: true` requires `secretScanning: true` in the same configuration. Nova validates both relationships before sending any GitHub mutation. When disabling both secret-scanning settings, Nova disables push protection before secret scanning. When enabling both, Nova enables secret scanning first.
+
+## Settings
+
+```json
+{
+  "github": {
+    "security": {
+      "vulnerabilityAlerts": true,
+      "dependabotSecurityUpdates": true,
+      "secretScanning": true,
+      "pushProtection": true
+    }
+  },
+  "recipes": {
+    "github": {
+      "sync-security": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe github sync-security [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe github sync-security [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag            | Description                                                |
+|-----------------|------------------------------------------------------------|
+| `-d, --dry-run` | Run read-only checks without changing any GitHub settings. |

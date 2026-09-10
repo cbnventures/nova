@@ -31,11 +31,16 @@ import type {
   Cli_Utility_Transpile_Runner_PrintDiagnostics_Position,
   Cli_Utility_Transpile_Runner_PrintDiagnostics_Returns,
   Cli_Utility_Transpile_Runner_Run_Config,
+  Cli_Utility_Transpile_Runner_Run_ConfigParseDiagnostics,
+  Cli_Utility_Transpile_Runner_Run_ConfigParseFilteredDiagnostics,
   Cli_Utility_Transpile_Runner_Run_ConfigPath,
-  Cli_Utility_Transpile_Runner_Run_FilteredDiagnostics,
+  Cli_Utility_Transpile_Runner_Run_ConfigReadDiagnostics,
+  Cli_Utility_Transpile_Runner_Run_ConfigReadFilteredDiagnostics,
+  Cli_Utility_Transpile_Runner_Run_ConfigResult,
   Cli_Utility_Transpile_Runner_Run_Options,
   Cli_Utility_Transpile_Runner_Run_Parsed,
   Cli_Utility_Transpile_Runner_Run_Program,
+  Cli_Utility_Transpile_Runner_Run_ProgramFilteredDiagnostics,
   Cli_Utility_Transpile_Runner_Run_Returns,
 } from '../../types/cli/utility/transpile.d.ts';
 
@@ -70,14 +75,39 @@ export class Runner {
       return;
     }
 
-    const config: Cli_Utility_Transpile_Runner_Run_Config = readConfigFile(configPath, sys.readFile)['config'];
+    const configResult: Cli_Utility_Transpile_Runner_Run_ConfigResult = readConfigFile(configPath, sys.readFile);
+
+    if (configResult['error'] !== undefined) {
+      const configReadDiagnostics: Cli_Utility_Transpile_Runner_Run_ConfigReadDiagnostics = [configResult['error']];
+      const configReadFilteredDiagnostics: Cli_Utility_Transpile_Runner_Run_ConfigReadFilteredDiagnostics = Runner.filterDiagnostics(configReadDiagnostics);
+
+      Runner.printDiagnostics(configReadFilteredDiagnostics);
+
+      process.exitCode = 1;
+
+      return;
+    }
+
+    const config: Cli_Utility_Transpile_Runner_Run_Config = configResult['config'];
     const parsed: Cli_Utility_Transpile_Runner_Run_Parsed = parseJsonConfigFileContent(config, sys, dirname(configPath));
+
+    if (parsed.errors.length > 0) {
+      const configParseDiagnostics: Cli_Utility_Transpile_Runner_Run_ConfigParseDiagnostics = parsed.errors;
+      const configParseFilteredDiagnostics: Cli_Utility_Transpile_Runner_Run_ConfigParseFilteredDiagnostics = Runner.filterDiagnostics(configParseDiagnostics);
+
+      Runner.printDiagnostics(configParseFilteredDiagnostics);
+
+      process.exitCode = 1;
+
+      return;
+    }
+
     const program: Cli_Utility_Transpile_Runner_Run_Program = createProgram(parsed.fileNames, parsed.options);
-    const filteredDiagnostics: Cli_Utility_Transpile_Runner_Run_FilteredDiagnostics = Runner.filterDiagnostics(Runner.emitFiles(program).diagnostics);
+    const programFilteredDiagnostics: Cli_Utility_Transpile_Runner_Run_ProgramFilteredDiagnostics = Runner.filterDiagnostics(Runner.emitFiles(program).diagnostics);
 
-    Runner.printDiagnostics(filteredDiagnostics);
+    Runner.printDiagnostics(programFilteredDiagnostics);
 
-    if (filteredDiagnostics.length > 0) {
+    if (programFilteredDiagnostics.length > 0) {
       process.exitCode = 1;
     }
 
@@ -145,7 +175,11 @@ export class Runner {
     const currentDirectory: Cli_Utility_Transpile_Runner_FilterDiagnostics_CurrentDirectory = process.cwd();
 
     return diagnostics.filter((diagnostic) => {
-      const fileName: Cli_Utility_Transpile_Runner_FilterDiagnostics_FileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : '';
+      if (diagnostic.file === undefined) {
+        return true;
+      }
+
+      const fileName: Cli_Utility_Transpile_Runner_FilterDiagnostics_FileName = diagnostic.file.fileName;
       return fileName.startsWith(currentDirectory) === true && fileName.includes('node_modules') === false;
     });
   }

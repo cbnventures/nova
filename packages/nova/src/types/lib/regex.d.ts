@@ -69,6 +69,13 @@ export type Lib_Regex_PatternAnsiStart = RegExp;
 export type Lib_Regex_PatternBlogDatePrefix = RegExp;
 
 /**
+ * Lib - Regex - Pattern Calver Strict.
+ *
+ * @since 0.26.0
+ */
+export type Lib_Regex_PatternCalverStrict = RegExp;
+
+/**
  * Lib - Regex - Pattern Camel Case Boundary.
  *
  * @since 0.11.0
@@ -109,6 +116,27 @@ export type Lib_Regex_PatternCasingUnderscorePascalCase = RegExp;
  * @since 0.11.0
  */
 export type Lib_Regex_PatternCasingUpperSnakeCase = RegExp;
+
+/**
+ * Lib - Regex - Pattern Changelog Calver Heading.
+ *
+ * @since 0.26.0
+ */
+export type Lib_Regex_PatternChangelogCalverHeading = RegExp;
+
+/**
+ * Lib - Regex - Pattern Changelog Numeric Heading.
+ *
+ * @since 0.26.0
+ */
+export type Lib_Regex_PatternChangelogNumericHeading = RegExp;
+
+/**
+ * Lib - Regex - Pattern Changelog Semver Heading.
+ *
+ * @since 0.26.0
+ */
+export type Lib_Regex_PatternChangelogSemverHeading = RegExp;
 
 /**
  * Lib - Regex - Pattern Code Block.
@@ -706,6 +734,13 @@ export type Lib_Regex_PlaceholderCurrentYear = RegExp;
 export type Lib_Regex_PlaceholderCustomDonation = RegExp;
 
 /**
+ * Lib - Regex - Placeholder Docusaurus Preset.
+ *
+ * @since 0.26.0
+ */
+export type Lib_Regex_PlaceholderDocusaurusPreset = RegExp;
+
+/**
  * Lib - Regex - Placeholder Entity Name.
  *
  * @since 0.11.0
@@ -844,6 +879,13 @@ export type Lib_Regex_PlaceholderProjectName = RegExp;
  * @since 0.11.0
  */
 export type Lib_Regex_PlaceholderProjectSlug = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Workspace Package Name.
+ *
+ * @since 0.26.0
+ */
+export type Lib_Regex_PlaceholderWorkspacePackageName = RegExp;
 
 /**
  * Lib - Regex - Placeholder Terms Of Use.

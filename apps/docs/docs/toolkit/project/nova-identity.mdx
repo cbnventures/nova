@@ -103,6 +103,65 @@ Examples use TypeScript, but the <Terminology title="application programming int
   </TabItem>
 </Tabs>
 
+## Settings
+
+`NovaIdentity` accepts one optional constructor argument and reads the public identity fields below from the nearest `nova.config.json`.
+
+| Setting                     | Default         | Affects                                                                 |
+|-----------------------------|-----------------|-------------------------------------------------------------------------|
+| Constructor `cwd`           | `process.cwd()` | Starting directory for the upward config search.                        |
+| `project.name.title`        | `undefined`     | `title`.                                                                |
+| `project.name.slug`         | `undefined`     | `projectName`.                                                          |
+| `project.description.short` | `undefined`     | `tagline` and `metaDescription`.                                        |
+| `project.legalName`         | `undefined`     | `copyright`, when `project.startingYear` also exists.                   |
+| `project.startingYear`      | `undefined`     | Copyright year or year range.                                           |
+| `project.license`           | `undefined`     | Copyright notice; absent and `Proprietary` use reserved-rights wording. |
+| `github.owner`              | `undefined`     | `organizationName` and the GitHub profile URL.                          |
+| `urls.documentation`        | `undefined`     | `url`, `baseUrl`, and `documentation`.                                  |
+| `urls.repository`           | `undefined`     | Normalized `editUrl` and `repository`.                                  |
+| `urls.logo`                 | `undefined`     | `logo`.                                                                 |
+| `urls.npm`                  | `undefined`     | `npm`.                                                                  |
+| `urls.bugs`                 | `undefined`     | `bugs`.                                                                 |
+| `urls.privacyPolicy`        | `undefined`     | `privacyPolicy`.                                                        |
+| `urls.termsOfUse`           | `undefined`     | `termsOfUse`.                                                           |
+| `urls.fundSources`          | `[]`            | `funding`.                                                              |
+
+## Output Examples
+
+<Tabs groupId="nova-identity-output">
+  <TabItem value="docs" label="Docs projection" default>
+
+    ```json
+    {
+      "title": "Example",
+      "projectName": "example",
+      "organizationName": "example-org",
+      "tagline": "Example documentation.",
+      "url": "https://example.com",
+      "baseUrl": "/docs/",
+      "repository": "https://github.com/example-org/example"
+    }
+    ```
+
+    Fields without a configured source remain `undefined`; `funding` is the exception and defaults to an empty array.
+
+  </TabItem>
+  <TabItem value="transforms" label="Static transforms">
+
+    ```text
+    NovaIdentity.docsUrl("https://example.com/docs/")
+    → "https://example.com"
+
+    NovaIdentity.docsBaseUrl("https://example.com/docs/")
+    → "/docs/"
+
+    NovaIdentity.normalizeRepoUrl("git+https://github.com/example/example.git")
+    → "https://github.com/example/example"
+    ```
+
+  </TabItem>
+</Tabs>
+
 ## Projections
 
 `forDocs()` returns a flat object ready to spread into a Docusaurus config. Each field is optional, so pair it with a fallback using the `??` operator:
@@ -110,7 +169,7 @@ Examples use TypeScript, but the <Terminology title="application programming int
 - `title`, `tagline`, and `projectName` come straight from `project.name` and `project.description`.
 - `url` and `baseUrl` are split from `urls.documentation`: the origin becomes `url`, and the path prefix becomes `baseUrl` (normalized with a leading and trailing slash, so a subpath deployment resolves and a root deployment becomes `/`). Both are `undefined` when `urls.documentation` is absent.
 - `organizationName` is the GitHub owner, and `github` is the owner's profile URL.
-- `copyright` is the composed line, present only when both `project.startingYear` and `project.legalName` exist; its notice reflects `project.license` — an SPDX identifier reads `Licensed under the <id> License.`, while `Proprietary` or an absent license reads `All Rights Reserved.`
+- `copyright` is the composed line, present only when both `project.startingYear` and `project.legalName` exist; its notice reflects `project.license` — an SPDX identifier reads `Released under <id>.`, while `Proprietary` or an absent license reads `All Rights Reserved.`
 - `editUrl` and `repository` are the normalized repository URL; `npm`, `bugs`, `documentation`, `privacyPolicy`, and `termsOfUse` come from `urls`; `funding` is the list of funding URLs.
 
 ## Static Transforms

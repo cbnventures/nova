@@ -100,6 +100,25 @@ export type Shared_ChangelogOptions = {
 };
 
 /**
+ * Shared - Corepack Package Manager.
+ *
+ * @since 0.26.0
+ */
+export type Shared_CorepackPackageManager = 'npm' | 'pnpm' | 'yarn';
+
+export type Shared_CorepackPackageManagerDescriptor_Name = Shared_CorepackPackageManager;
+
+export type Shared_CorepackPackageManagerDescriptor_Version = string;
+
+export type Shared_CorepackPackageManagerDescriptor_Value = string;
+
+export type Shared_CorepackPackageManagerDescriptor = {
+  name: Shared_CorepackPackageManagerDescriptor_Name;
+  version: Shared_CorepackPackageManagerDescriptor_Version;
+  value: Shared_CorepackPackageManagerDescriptor_Value;
+};
+
+/**
  * Shared - Dialog Action.
  *
  * @since 0.11.0
@@ -681,11 +700,21 @@ export type Shared_MonorepoContextNested = {
   context: Shared_MonorepoContextNested_Context;
 };
 
+export type Shared_MonorepoContextInvalid_Context = 'invalid';
+
+export type Shared_MonorepoContextInvalid_Reason = string;
+
+export type Shared_MonorepoContextInvalid = {
+  context: Shared_MonorepoContextInvalid_Context;
+  reason: Shared_MonorepoContextInvalid_Reason;
+};
+
 export type Shared_MonorepoContext =
   Shared_MonorepoContextMonorepo
   | Shared_MonorepoContextWorkspace
   | Shared_MonorepoContextStandalone
-  | Shared_MonorepoContextNested;
+  | Shared_MonorepoContextNested
+  | Shared_MonorepoContextInvalid;
 
 /**
  * Shared - Normalized Result.
@@ -806,9 +835,13 @@ export type Shared_NovaConfig_Github_Owner = string;
 export type Shared_NovaConfig_Github_Repo = string;
 
 export type Shared_NovaConfigGithubRecipeName =
-  'sync-features'
+  'sync-actions'
+  | 'sync-features'
   | 'sync-identity'
-  | 'sync-policies';
+  | 'sync-labels'
+  | 'sync-policies'
+  | 'sync-rulesets'
+  | 'sync-security';
 
 export type Shared_NovaConfig_Github_Topics = string[];
 
@@ -817,7 +850,46 @@ export type Shared_NovaConfig_Github_Features = {
   wiki?: boolean;
   projects?: boolean;
   discussions?: boolean;
+  sponsorships?: boolean;
 };
+
+export type Shared_NovaConfigGithubActionsAllowedActions = 'all' | 'local-only' | 'selected';
+
+export type Shared_NovaConfigGithubActionsDefaultWorkflowPermissions = 'read' | 'write';
+
+export type Shared_NovaConfig_Github_Actions_SelectedActions_Pattern = string;
+
+export type Shared_NovaConfig_Github_Actions_SelectedActions_Patterns = Shared_NovaConfig_Github_Actions_SelectedActions_Pattern[];
+
+export type Shared_NovaConfig_Github_Actions_SelectedActions = {
+  githubOwned?: boolean;
+  verified?: boolean;
+  patterns?: Shared_NovaConfig_Github_Actions_SelectedActions_Patterns;
+};
+
+export type Shared_NovaConfig_Github_Actions = {
+  enabled?: boolean;
+  allowedActions?: Shared_NovaConfigGithubActionsAllowedActions;
+  shaPinningRequired?: boolean;
+  selectedActions?: Shared_NovaConfig_Github_Actions_SelectedActions;
+  defaultWorkflowPermissions?: Shared_NovaConfigGithubActionsDefaultWorkflowPermissions;
+  canApprovePullRequestReviews?: boolean;
+  artifactRetentionDays?: number;
+};
+
+export type Shared_NovaConfig_Github_Label_Name = string;
+
+export type Shared_NovaConfig_Github_Label_Color = string;
+
+export type Shared_NovaConfig_Github_Label_Description = string;
+
+export type Shared_NovaConfig_Github_Label = {
+  name: Shared_NovaConfig_Github_Label_Name;
+  color: Shared_NovaConfig_Github_Label_Color;
+  description?: Shared_NovaConfig_Github_Label_Description;
+};
+
+export type Shared_NovaConfig_Github_Labels = Shared_NovaConfig_Github_Label[];
 
 export type Shared_NovaConfig_Github_Policies_MergeMethods = {
   merge?: boolean;
@@ -825,11 +897,72 @@ export type Shared_NovaConfig_Github_Policies_MergeMethods = {
   rebase?: boolean;
 };
 
+export type Shared_NovaConfigGithubPoliciesMergeCommitTitle = 'pull-request-title' | 'merge-message';
+
+export type Shared_NovaConfigGithubPoliciesMergeCommitMessage = 'pull-request-body' | 'pull-request-title' | 'blank';
+
+export type Shared_NovaConfig_Github_Policies_MergeCommit = {
+  title?: Shared_NovaConfigGithubPoliciesMergeCommitTitle;
+  message?: Shared_NovaConfigGithubPoliciesMergeCommitMessage;
+};
+
+export type Shared_NovaConfigGithubPoliciesSquashMergeTitle = 'pull-request-title' | 'commit-or-pull-request-title';
+
+export type Shared_NovaConfigGithubPoliciesSquashMergeMessage = 'pull-request-body' | 'commit-messages' | 'blank';
+
+export type Shared_NovaConfig_Github_Policies_SquashMerge = {
+  title?: Shared_NovaConfigGithubPoliciesSquashMergeTitle;
+  message?: Shared_NovaConfigGithubPoliciesSquashMergeMessage;
+};
+
 export type Shared_NovaConfig_Github_Policies = {
   visibility?: 'public' | 'private' | 'internal';
   defaultBranch?: string;
   mergeMethods?: Shared_NovaConfig_Github_Policies_MergeMethods;
+  mergeCommit?: Shared_NovaConfig_Github_Policies_MergeCommit;
+  squashMerge?: Shared_NovaConfig_Github_Policies_SquashMerge;
   autoDeleteHeadBranch?: boolean;
+  autoMerge?: boolean;
+  allowUpdateBranch?: boolean;
+  webCommitSignoffRequired?: boolean;
+};
+
+export type Shared_NovaConfigGithubRulesetEnforcement = 'active' | 'disabled' | 'evaluate';
+
+export type Shared_NovaConfigGithubRulesetAllowedMergeMethod = 'merge' | 'squash' | 'rebase';
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_AllowedMergeMethods = Shared_NovaConfigGithubRulesetAllowedMergeMethod[];
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusCheck = string;
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusChecks = Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusCheck[];
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch = {
+  enforcement?: Shared_NovaConfigGithubRulesetEnforcement;
+  blockDeletions?: boolean;
+  blockForcePushes?: boolean;
+  requireLinearHistory?: boolean;
+  requireSignedCommits?: boolean;
+  requirePullRequest?: boolean;
+  allowedMergeMethods?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_AllowedMergeMethods;
+  dismissStaleReviews?: boolean;
+  requireCodeOwnerReview?: boolean;
+  requireLastPushApproval?: boolean;
+  requiredApprovals?: number;
+  requireConversationResolution?: boolean;
+  requiredStatusChecks?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusChecks;
+  requireBranchesToBeUpToDate?: boolean;
+};
+
+export type Shared_NovaConfig_Github_Rulesets = {
+  defaultBranch?: Shared_NovaConfig_Github_Rulesets_DefaultBranch;
+};
+
+export type Shared_NovaConfig_Github_Security = {
+  vulnerabilityAlerts?: boolean;
+  dependabotSecurityUpdates?: boolean;
+  secretScanning?: boolean;
+  pushProtection?: boolean;
 };
 
 export type Shared_NovaConfig_Github_IssueTemplate_BugReportField = string;
@@ -846,6 +979,10 @@ export type Shared_NovaConfig_Github = {
   topics?: Shared_NovaConfig_Github_Topics;
   features?: Shared_NovaConfig_Github_Features;
   policies?: Shared_NovaConfig_Github_Policies;
+  security?: Shared_NovaConfig_Github_Security;
+  rulesets?: Shared_NovaConfig_Github_Rulesets;
+  actions?: Shared_NovaConfig_Github_Actions;
+  labels?: Shared_NovaConfig_Github_Labels;
   issueTemplate?: Shared_NovaConfig_Github_IssueTemplate;
 };
 
@@ -922,8 +1059,6 @@ export type Shared_NovaConfigWorkflow_Template = string;
 
 export type Shared_NovaConfigWorkflowTrigger = string;
 
-export type Shared_NovaConfigWorkflow_Triggers = Shared_NovaConfigWorkflowTrigger[];
-
 export type Shared_NovaConfigWorkflowTriggerObject_Name = string;
 
 export type Shared_NovaConfigWorkflowTriggerObjectBranch = string;
@@ -938,18 +1073,23 @@ export type Shared_NovaConfigWorkflowTriggerObjectTag = string;
 
 export type Shared_NovaConfigWorkflowTriggerObject_Tags = Shared_NovaConfigWorkflowTriggerObjectTag[];
 
+export type Shared_NovaConfigWorkflowTriggerObjectWorkflow = string;
+
+export type Shared_NovaConfigWorkflowTriggerObject_Workflows = Shared_NovaConfigWorkflowTriggerObjectWorkflow[];
+
 export type Shared_NovaConfigWorkflowTriggerObject = {
   name: Shared_NovaConfigWorkflowTriggerObject_Name;
   branches?: Shared_NovaConfigWorkflowTriggerObject_Branches;
   paths?: Shared_NovaConfigWorkflowTriggerObject_Paths;
   tags?: Shared_NovaConfigWorkflowTriggerObject_Tags;
+  workflows?: Shared_NovaConfigWorkflowTriggerObject_Workflows;
 };
 
 export type Shared_NovaConfigWorkflowTriggerWideEntry = Shared_NovaConfigWorkflowTrigger | Shared_NovaConfigWorkflowTriggerObject;
 
-export type Shared_NovaConfigWorkflowTriggersWide = Shared_NovaConfigWorkflowTriggerWideEntry[];
+export type Shared_NovaConfigWorkflow_Triggers = Shared_NovaConfigWorkflowTriggerWideEntry[];
 
-export type Shared_NovaConfigWorkflow_DependsOn = string[];
+export type Shared_NovaConfigWorkflowTriggersWide = Shared_NovaConfigWorkflow_Triggers;
 
 export type Shared_NovaConfigWorkflowBuildEntry = string;
 
@@ -988,7 +1128,6 @@ export type Shared_NovaConfigWorkflow = {
   'template': Shared_NovaConfigWorkflow_Template;
   'name': Shared_NovaConfigWorkflow_Name;
   'triggers': Shared_NovaConfigWorkflow_Triggers;
-  'depends-on'?: Shared_NovaConfigWorkflow_DependsOn;
   'build'?: Shared_NovaConfigWorkflow_Build;
   'deploy'?: Shared_NovaConfigWorkflow_Deploy;
   'with'?: Shared_NovaConfigWorkflow_With;
@@ -1020,9 +1159,9 @@ export type Shared_BlueprintConfigWorkflow_Template = Shared_NovaConfigWorkflow_
 
 export type Shared_BlueprintConfigWorkflow_Name = Shared_NovaConfigWorkflow_Name;
 
-export type Shared_BlueprintConfigTriggerObjectWorkflow = string;
+export type Shared_BlueprintConfigTriggerObjectWorkflow = Shared_NovaConfigWorkflowTriggerObjectWorkflow;
 
-export type Shared_BlueprintConfigTriggerObject_Workflows = Shared_BlueprintConfigTriggerObjectWorkflow[];
+export type Shared_BlueprintConfigTriggerObject_Workflows = Shared_NovaConfigWorkflowTriggerObject_Workflows;
 
 export type Shared_BlueprintConfigTriggerObject_Name = Shared_NovaConfigWorkflowTriggerObject_Name;
 
@@ -1032,17 +1171,11 @@ export type Shared_BlueprintConfigTriggerObject_Paths = Shared_NovaConfigWorkflo
 
 export type Shared_BlueprintConfigTriggerObject_Tags = Shared_NovaConfigWorkflowTriggerObject_Tags;
 
-export type Shared_BlueprintConfigTriggerObject = {
-  name: Shared_BlueprintConfigTriggerObject_Name;
-  branches?: Shared_BlueprintConfigTriggerObject_Branches;
-  paths?: Shared_BlueprintConfigTriggerObject_Paths;
-  tags?: Shared_BlueprintConfigTriggerObject_Tags;
-  workflows?: Shared_BlueprintConfigTriggerObject_Workflows;
-};
+export type Shared_BlueprintConfigTriggerObject = Shared_NovaConfigWorkflowTriggerObject;
 
-export type Shared_BlueprintConfigTriggerWideEntry = Shared_NovaConfigWorkflowTrigger | Shared_BlueprintConfigTriggerObject;
+export type Shared_BlueprintConfigTriggerWideEntry = Shared_NovaConfigWorkflowTriggerWideEntry;
 
-export type Shared_BlueprintConfigWorkflow_Triggers = Shared_BlueprintConfigTriggerWideEntry[];
+export type Shared_BlueprintConfigWorkflow_Triggers = Shared_NovaConfigWorkflow_Triggers;
 
 export type Shared_BlueprintConfigWorkflow_Build = Shared_NovaConfigWorkflow_Build;
 
@@ -1113,6 +1246,8 @@ export type Shared_BlueprintPublishTargetContext_Workspace = Shared_NovaConfigWo
 
 export type Shared_BlueprintPublishTargetContext_Environment = Shared_NovaConfigEnvironment | undefined;
 
+export type Shared_BlueprintPublishTargetContext_PackageManager = Shared_CorepackPackageManager;
+
 export type Shared_BlueprintPublishTargetContext = {
   workingDir: Shared_BlueprintPublishTargetContext_WorkingDir;
   artifactName: Shared_BlueprintPublishTargetContext_ArtifactName;
@@ -1121,6 +1256,7 @@ export type Shared_BlueprintPublishTargetContext = {
   workflowSettings?: Shared_BlueprintPublishTargetContext_WorkflowSettings;
   workspace?: Shared_BlueprintPublishTargetContext_Workspace;
   environment?: Shared_BlueprintPublishTargetContext_Environment;
+  packageManager: Shared_BlueprintPublishTargetContext_PackageManager;
 };
 
 export type Shared_NovaConfigGitignoreProjectExclude = string;
@@ -1220,10 +1356,11 @@ export type Shared_NovaConfigEnvironmentValueLocal = {
 /**
  * Shared - Nova Config Environment Value Managed.
  *
- * A key provisioned as a GitHub Variable or Secret but delivered nowhere; it carries
- * no "defaultValue" because it never reaches a ".env" or a build.
+ * A key provisioned as a GitHub Variable or Secret but never delivered to a
+ * build or server by CI. Workspace-scoped values also appear blank in local
+ * ".env" files; project-scoped values do not. Neither kind accepts a default.
  *
- * @since 0.22.0
+ * @since 0.26.0
  */
 export type Shared_NovaConfigEnvironmentValueManaged_Key = Shared_NovaConfigEnvironmentValue_Key;
 
@@ -1475,6 +1612,111 @@ export type Shared_ScaffoldConfig = {
   outputDirectory: Shared_ScaffoldConfig_OutputDirectory;
   workspaceName: Shared_ScaffoldConfig_WorkspaceName;
 };
+
+/**
+ * Shared - Scaffold Existing Root.
+ *
+ * @since 0.26.0
+ */
+export type Shared_ScaffoldExistingRoot_Config = Record<string, unknown>;
+
+export type Shared_ScaffoldExistingRoot_PackageJson = Record<string, unknown>;
+
+export type Shared_ScaffoldExistingRoot_ProjectSlug = string;
+
+export type Shared_ScaffoldExistingRoot_WorkspacePatterns = string[];
+
+export type Shared_ScaffoldExistingRoot_Workspaces = Record<string, unknown>;
+
+export type Shared_ScaffoldExistingRoot = {
+  config: Shared_ScaffoldExistingRoot_Config;
+  packageJson: Shared_ScaffoldExistingRoot_PackageJson;
+  projectSlug: Shared_ScaffoldExistingRoot_ProjectSlug;
+  workspacePatterns: Shared_ScaffoldExistingRoot_WorkspacePatterns;
+  workspaces: Shared_ScaffoldExistingRoot_Workspaces;
+};
+
+/**
+ * Shared - Scaffold Non Interactive Workspace Options.
+ *
+ * @since 0.26.0
+ */
+export type Shared_ScaffoldNonInteractiveWorkspaceOptions_Name = string;
+
+export type Shared_ScaffoldNonInteractiveWorkspaceOptions_NonInteractive = true;
+
+export type Shared_ScaffoldNonInteractiveWorkspaceOptions_Output = string;
+
+export type Shared_ScaffoldNonInteractiveWorkspaceOptions_WorkspaceName = string;
+
+export type Shared_ScaffoldNonInteractiveWorkspaceOptions = {
+  name: Shared_ScaffoldNonInteractiveWorkspaceOptions_Name;
+  nonInteractive: Shared_ScaffoldNonInteractiveWorkspaceOptions_NonInteractive;
+  output: Shared_ScaffoldNonInteractiveWorkspaceOptions_Output;
+  workspaceName: Shared_ScaffoldNonInteractiveWorkspaceOptions_WorkspaceName;
+};
+
+/**
+ * Shared - Scaffold Output Contract.
+ *
+ * @since 0.26.0
+ */
+export type Shared_ScaffoldOutputContract_Name = string;
+
+export type Shared_ScaffoldOutputContract_TemplateSubpath = string;
+
+export type Shared_ScaffoldOutputContract_ExpectedFile = string;
+
+export type Shared_ScaffoldOutputContract_ExpectedFiles = Shared_ScaffoldOutputContract_ExpectedFile[];
+
+export type Shared_ScaffoldOutputContract_Replacements = Map<RegExp, string>;
+
+export type Shared_ScaffoldOutputContract = {
+  name: Shared_ScaffoldOutputContract_Name;
+  templateSubpath: Shared_ScaffoldOutputContract_TemplateSubpath;
+  expectedFiles: Shared_ScaffoldOutputContract_ExpectedFiles;
+  replacements: Shared_ScaffoldOutputContract_Replacements;
+};
+
+/**
+ * Shared - Scaffold Template Question.
+ *
+ * @since 0.26.0
+ */
+export type Shared_ScaffoldTemplateQuestionChoice_Title = string;
+
+export type Shared_ScaffoldTemplateQuestionChoice_Description = string;
+
+export type Shared_ScaffoldTemplateQuestionChoice_Value = string;
+
+export type Shared_ScaffoldTemplateQuestionChoice = {
+  description: Shared_ScaffoldTemplateQuestionChoice_Description;
+  title: Shared_ScaffoldTemplateQuestionChoice_Title;
+  value: Shared_ScaffoldTemplateQuestionChoice_Value;
+};
+
+export type Shared_ScaffoldTemplateQuestion_Choices = Shared_ScaffoldTemplateQuestionChoice[];
+
+export type Shared_ScaffoldTemplateQuestion_Flag = string;
+
+export type Shared_ScaffoldTemplateQuestion_Initial = number;
+
+export type Shared_ScaffoldTemplateQuestion_Message = string;
+
+export type Shared_ScaffoldTemplateQuestion_Name = string;
+
+export type Shared_ScaffoldTemplateQuestion_Placeholder = RegExp;
+
+export type Shared_ScaffoldTemplateQuestion = {
+  choices: Shared_ScaffoldTemplateQuestion_Choices;
+  flag: Shared_ScaffoldTemplateQuestion_Flag;
+  initial: Shared_ScaffoldTemplateQuestion_Initial;
+  message: Shared_ScaffoldTemplateQuestion_Message;
+  name: Shared_ScaffoldTemplateQuestion_Name;
+  placeholder: Shared_ScaffoldTemplateQuestion_Placeholder;
+};
+
+export type Shared_ScaffoldTemplateQuestions = Shared_ScaffoldTemplateQuestion[];
 
 /**
  * Shared - Shell Output.

@@ -301,10 +301,10 @@ describe('Variables.collectSetupLines', () => {
     const result: Tests_Cli_Generate_Github_WorkflowsBlueprintVariables_VariablesCollectSetupLines_ListsPublicDotenvVariablesForPublishScopes_Result = Variables.collectSetupLines(workflow, 'nova-publish-project.yml', environment);
     const joined: Tests_Cli_Generate_Github_WorkflowsBlueprintVariables_VariablesCollectSetupLines_ListsPublicDotenvVariablesForPublishScopes_Joined = result.join('\n').replace(new RegExp(LIB_REGEX_PATTERN_ANSI, 'g'), '');
 
-    // A build-only var lists under its prefixed GitHub name.
+    // A reach-build var lists under its prefixed GitHub name.
     strictEqual(joined.includes('Variable PKG_A_PUBLIC_SITE_KEY'), true);
 
-    // A second build-only var lists under its prefixed GitHub name.
+    // A second reach-build var lists under its prefixed GitHub name.
     strictEqual(joined.includes('Variable PKG_A_PUBLIC_GTM_ID'), true);
 
     // The unprefixed key must not appear, so the report matches the baked YAML.

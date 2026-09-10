@@ -1,0 +1,106 @@
+---
+id: "sync-labels"
+title: "Sync Labels"
+description: "Create or update configured GitHub repository labels from nova.config.json without deleting unmanaged labels."
+keywords:
+  - "nova"
+  - "sync-labels"
+  - "github labels"
+  - "issue labels"
+tags:
+  - "cli"
+  - "sync-labels"
+  - "recipe"
+  - "github"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Create or update **repository labels** from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Summary
+
+The `sync-labels` recipe runs an idempotent `gh label create --force` operation for every entry in `github.labels`. Existing configured labels are updated; missing configured labels are created.
+
+Nova never deletes a label that is absent from the array. This keeps custom or integration-managed labels outside Nova's ownership.
+
+## Why Use This Command?
+
+1. Give every new repository the same label names, colors, and descriptions.
+2. Repair label drift without deleting labels owned by another tool or team.
+3. Keep issue-triage vocabulary reviewable in the repository.
+
+## Requirements
+
+- **`gh` CLI ≥ 2.40.0** — The GitHub CLI must be installed and authenticated.
+- **Repository write access** — The authenticated user must be able to manage labels.
+- **`github.owner` and `github.repo`** — Both fields identify the target repository.
+
+## Behavior
+
+Each label requires a non-empty `name` and a six-digit hexadecimal `color` without `#`. `description` is optional; when omitted, Nova syncs an empty description.
+
+An explicit empty array is valid and quietly performs no label operations:
+
+```json
+{
+  "github": {
+    "labels": []
+  }
+}
+```
+
+## Settings
+
+```json
+{
+  "github": {
+    "labels": [
+      {
+        "name": "bug",
+        "color": "d73a4a",
+        "description": "Something isn't working"
+      },
+      {
+        "name": "good first issue",
+        "color": "7057ff",
+        "description": "Good for newcomers"
+      }
+    ]
+  },
+  "recipes": {
+    "github": {
+      "sync-labels": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe github sync-labels [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe github sync-labels [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag            | Description                                                |
+|-----------------|------------------------------------------------------------|
+| `-d, --dry-run` | Run read-only checks without changing any GitHub settings. |

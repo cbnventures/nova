@@ -1,4 +1,4 @@
-import { ok } from 'node:assert/strict';
+import { ok, strictEqual } from 'node:assert/strict';
 
 import { describe, it } from 'vitest';
 
@@ -26,6 +26,12 @@ import type {
   Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_OutputNode,
   Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Transformer,
   Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree,
+  Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_IncludesLive,
+  Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_IncludesTitle,
+  Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_OutputJson,
+  Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_OutputNode,
+  Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Transformer,
+  Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree,
   Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_AddRemoveCode,
   Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_ExcludesAddMarker,
   Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_ExcludesRemoveMarker,
@@ -360,6 +366,46 @@ describe('rehypeShiki', async () => {
     ok(includesShowLineNumbers);
     ok(includesLive);
     ok(includesMetastring);
+
+    return;
+  });
+
+  it('ignores live words inside quoted titles', async () => {
+    const tree: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree = {
+      type: 'root',
+      children: [{
+        type: 'element',
+        tagName: 'pre',
+        properties: {},
+        children: [{
+          type: 'element',
+          tagName: 'code',
+          properties: {
+            className: ['language-bash'],
+            metastring: 'title="Start Pulse live stream"',
+          },
+          children: [{
+            type: 'text',
+            value: 'signal pulse watch',
+          }],
+        }],
+      }],
+    };
+
+    const transformer: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Transformer = rehypeShiki({
+      light: 'github-light',
+      dark: 'github-dark',
+    });
+
+    await transformer(tree);
+
+    const outputNode: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_OutputNode = (tree['children'] ?? [])[0];
+    const outputJson: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_OutputJson = JSON.stringify(outputNode);
+    const includesTitle: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_IncludesTitle = outputJson.includes('"data-title":"Start Pulse live stream"');
+    const includesLive: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_IncludesLive = outputJson.includes('"data-live":"true"');
+
+    ok(includesTitle);
+    strictEqual(includesLive, false);
 
     return;
   });

@@ -29,7 +29,13 @@ The recipe never mangles a `LICENSE` that was not produced by Nova. Before writi
 
 If the file has been hand-edited, is a custom license, or does not match the template for `project.license`, the recipe skips it and leaves it untouched.
 
-## Prerequisites
+## Why Use This Command?
+
+1. Refreshes the holder and year range without replacing the rest of the license text.
+2. Reuses Nova's license template so generated and maintained files stay byte-consistent.
+3. Refuses to rewrite an unrecognized license, protecting custom legal text from accidental changes.
+
+## Requirements
 
 - **`project.license`** — The SPDX identifier must be set in `nova.config.json` so the recipe can locate the matching template.
 - **`project.legalName`** — The copyright holder name written into the refreshed `LICENSE`.

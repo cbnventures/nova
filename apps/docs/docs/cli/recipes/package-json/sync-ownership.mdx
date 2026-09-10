@@ -30,6 +30,18 @@ The `sync-ownership` recipe ensures that ownership-related fields in each <Termi
 
 For <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> workspaces, each field can be individually enabled via recipe settings.
 
+## Why Use This Command?
+
+1. Keeps authorship, funding, issue, and repository links aligned with canonical project metadata.
+2. Builds workspace-aware repository directories so monorepo packages point to their exact source.
+3. Removes ownership fields where policy or per-workspace settings say they do not apply.
+
+## Requirements
+
+- **Node.js runtime** — Use a supported Node.js LTS release with the Nova CLI available.
+- **Project config** — Register the workspace and enable `recipes.package-json.<workspace>.sync-ownership` in `nova.config.json`.
+- **Workspace manifest** — The configured workspace must contain a readable `package.json` file.
+
 ## Behavior
 
 For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects ownership fields and applies the following rules. Every field below is removed if the workspace policy is not `distributable`.

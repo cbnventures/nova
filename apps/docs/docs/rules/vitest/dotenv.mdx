@@ -74,11 +74,12 @@ The defaults resolve `envPaths` against `rootDir`, scanning `.env` and `.env.sam
 
 ## Configuration
 
-| Field      | Type                   | Default                   | Description                                               |
-|------------|------------------------|---------------------------|-----------------------------------------------------------|
-| `rootDir`  | `string`               | `process.cwd()`           | Base directory the `envPaths` resolve against.            |
-| `envPaths` | `string[]`             | `['.env', '.env.sample']` | Files scanned for violations; missing ones are skipped.   |
-| `enable`   | `'all' \| ToggleKey[]` | required                  | Which checks run. Use `'all'` for every check, or a list. |
+| Field      | Type                      | Default                   | Description                                               |
+|------------|---------------------------|---------------------------|-----------------------------------------------------------|
+| `vitest`   | `typeof import('vitest')` | required                  | Vitest module namespace used to register the suite.       |
+| `rootDir`  | `string`                  | `process.cwd()`           | Base directory the `envPaths` resolve against.            |
+| `envPaths` | `string[]`                | `['.env', '.env.sample']` | Files scanned for violations; missing ones are skipped.   |
+| `enable`   | `'all' \| ToggleKey[]`    | required                  | Which checks run. Use `'all'` for every check, or a list. |
 
 ## Toggle Keys
 

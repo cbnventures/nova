@@ -36,3 +36,31 @@ export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutp
  * @since 0.14.0
  */
 export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_ErrorsWhenNoTsconfigJsonFound_ProjectDirectory = string;
+
+/**
+ * Tests - CLI - Utility - Transpile - Run - Rejects Invalid Compiler Option.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_TsconfigPath = string;
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_TsconfigContents = string;
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_IndexPath = string;
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_OutputJsPath = string;
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_OutputExists = boolean;
+
+/**
+ * Tests - CLI - Utility - Transpile - Run - Rejects Invalid Json.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsInvalidJSON_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsInvalidJSON_TsconfigPath = string;
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsInvalidJSON_TsconfigContents = string;

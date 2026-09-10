@@ -1,5 +1,5 @@
 {
-  "name": "[__PROJECT_SLUG__]",
+  "name": "[__WORKSPACE_PACKAGE_NAME__]",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -12,16 +12,20 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@cbnventures/docusaurus-preset-nova": "0.25.2",
-    "@docusaurus/core": "3.7.0",
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "@cbnventures/docusaurus-preset-nova": "0.26.0",
+    "@docusaurus/core": "3.10.2",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@cbnventures/nova": "0.25.2",
-    "@docusaurus/types": "3.7.0",
+    "@cbnventures/nova": "0.26.0",
+    "@docusaurus/module-type-aliases": "3.10.2",
+    "@docusaurus/types": "3.10.2",
+    "@types/node": "24.9.1",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
     "glob": "13.0.6",
-    "typescript": "5.8.3",
-    "vitest": "4.1.3"
+    "typescript": "6.0.3",
+    "vitest": "4.1.11"
   }
 }

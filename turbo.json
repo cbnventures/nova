@@ -24,7 +24,7 @@
       "persistent": true
     },
     "build": {
-      "cache": true,
+      "cache": false,
       "dependsOn": [
         "^build"
       ],
@@ -39,9 +39,9 @@
       "persistent": false
     },
     "check": {
-      "cache": true,
+      "cache": false,
       "dependsOn": [
-        "build"
+        "^build"
       ],
       "inputs": [
         "!./.*/**/*",

@@ -19,8 +19,6 @@ tags:
   - "configuration"
 ---
 
-# Theme Config
-
 Full reference for the `themeConfig` section of `docusaurus.config.ts`. These options control site metadata, navigation, footer, color mode, and content display.
 
 ## Top-Level Structure
@@ -81,15 +79,17 @@ The navbar brand text is your site's top-level `title` (set in `docusaurus.confi
 
 Each item in the `navbar.items` array follows this structure:
 
-| Property    | Type                  | Description                                                    |
-|-------------|-----------------------|----------------------------------------------------------------|
-| `label`     | `string`              | Display text.                                                  |
-| `position`  | `'left' \| 'right'`   | Side of the navbar.                                            |
-| `type`      | `string \| undefined` | Docusaurus navbar item kind (see note). Omit for a plain link. |
-| `sidebarId` | `string \| undefined` | Sidebar ID when `type` is `'docSidebar'`.                      |
-| `to`        | `string \| undefined` | Internal URL when `type` is `undefined`.                       |
-| `href`      | `string \| undefined` | External URL when `type` is `undefined`.                       |
-| `icon`      | `string \| undefined` | Iconify icon identifier (e.g., `'lucide:rocket'`).             |
+| Property    | Type                        | Description                                                    |
+|-------------|-----------------------------|----------------------------------------------------------------|
+| `label`     | `string`                    | Display text.                                                  |
+| `position`  | `'left' \| 'right'`         | Side of the navbar.                                            |
+| `type`      | `string \| undefined`       | Docusaurus navbar item kind (see note). Omit for a plain link. |
+| `items`     | `NavbarItem[] \| undefined` | Nested items when `type` is `'dropdown'`.                      |
+| `docId`     | `string \| undefined`       | Document ID when `type` is `'doc'`.                            |
+| `sidebarId` | `string \| undefined`       | Sidebar ID when `type` is `'docSidebar'`.                      |
+| `to`        | `string \| undefined`       | Internal URL when `type` is `undefined`.                       |
+| `href`      | `string \| undefined`       | External URL when `type` is `undefined`.                       |
+| `icon`      | `string \| undefined`       | Iconify icon identifier (e.g., `'lucide:rocket'`).             |
 
 The `type` field accepts any of Docusaurus's standard navbar item kinds — `'doc'`, `'docSidebar'`, `'dropdown'`, `'localeDropdown'`, `'docsVersion'`, `'docsVersionDropdown'`, `'html'`, and `'search'` — and Nova renders them as standard Docusaurus navbar items — except `localeDropdown`, which Nova restyles with an abbreviated locale label. The `sidebarId`, `to`, and `href` columns above cover the common `'docSidebar'` and plain-link cases; other kinds take their own fields per the [Docusaurus navbar documentation](https://docusaurus.io/docs/api/themes/configuration#navbar).
 
@@ -169,11 +169,42 @@ Each leaf value is also optional, so you can override just the fields you care a
 
 Set to `false` to hide the footer entirely. Otherwise, provide an object:
 
-| Option               | Type                                                   | Default     | Description                                                                                                |
-|----------------------|--------------------------------------------------------|-------------|------------------------------------------------------------------------------------------------------------|
-| `footer.sections`    | `Record<string, FooterLink[]>`                         | `{}`        | Named groups of footer links.                                                                              |
-| `footer.layout`      | `Record<string, { title?, section }>`                  | `{}`        | Layout mapping for footer columns.                                                                         |
-| `footer.socialLinks` | `Array<{ icon: string, href: string, label: string }>` | `[]`        | Social media icon links.                                                                                   |
-| `footer.copyright`   | `string \| undefined`                                  | `undefined` | Copyright text.                                                                                            |
-| `footer.credit`      | `boolean`                                              | `true`      | Show "Built with Nova" credit.                                                                             |
-| `footer.cta`         | `string \| { label, href } \| undefined`               | `undefined` | Call-to-action. Pass a string for a static label, or `{ label, href }` to make the entire block clickable. |
+| Option               | Type                                                                  | Default     | Description                                                                                                |
+|----------------------|-----------------------------------------------------------------------|-------------|------------------------------------------------------------------------------------------------------------|
+| `footer.sections`    | `Record<string, FooterLink[]>`                                        | `{}`        | Named groups of footer links.                                                                              |
+| `footer.layout`      | `Record<string, { title?, section }>`                                 | `{}`        | Layout mapping for footer columns.                                                                         |
+| `footer.socialLinks` | `Array<{ icon: string \| IconifyIcon, href: string, label: string }>` | `[]`        | Social media icon links using an Iconify identifier or inline icon definition.                             |
+| `footer.copyright`   | `string \| undefined`                                                 | `undefined` | Copyright text.                                                                                            |
+| `footer.credit`      | `boolean`                                                             | `true`      | Show "Built with Nova" credit.                                                                             |
+| `footer.cta`         | `string \| { label, href } \| undefined`                              | `undefined` | Call-to-action. Pass a string for a static label, or `{ label, href }` to make the entire block clickable. |
+
+### Inline Iconify Objects
+
+Use an Iconify identifier for a registered icon, or provide an inline object when the SVG definition belongs in config. `body` is required; the remaining fields match the Iconify icon geometry and transformations.
+
+| Property | Type      | Required | Description                                      |
+|----------|-----------|:--------:|--------------------------------------------------|
+| `body`   | `string`  | Yes      | SVG body markup.                                 |
+| `left`   | `number`  | No       | Left edge of the view box. Defaults to `0`.      |
+| `top`    | `number`  | No       | Top edge of the view box. Defaults to `0`.       |
+| `width`  | `number`  | No       | View-box width. Defaults to `16`.                |
+| `height` | `number`  | No       | View-box height. Defaults to `16`.               |
+| `rotate` | `number`  | No       | Number of 90-degree rotations. Defaults to `0`.  |
+| `hFlip`  | `boolean` | No       | Flip the icon horizontally. Defaults to `false`. |
+| `vFlip`  | `boolean` | No       | Flip the icon vertically. Defaults to `false`.   |
+
+```ts title="docusaurus.config.ts"
+themeConfig: {
+  footer: {
+    socialLinks: [{
+      icon: {
+        body: '<path d="M3 3h10v10H3z" />',
+        width: 16,
+        height: 16,
+      },
+      href: 'https://example.com',
+      label: 'Example',
+    }],
+  },
+},
+```

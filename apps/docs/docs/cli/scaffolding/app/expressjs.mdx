@@ -21,11 +21,14 @@ import TabItem from '@theme/TabItem';
 
 Scaffold an **Express.js** workspace with TypeScript.
 
+You can run this directly from an empty location; `scaffold starter base` is not a prerequisite. Nova creates the monorepo root and the first Express workspace together.
+
 ## Why Use This Command?
 
 - Installs Express 5 with TypeScript and a `tsx watch` dev script so you can start writing routes with hot reload on the first command.
 - Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
 - Generates a minimal `src/index.ts` entry point so the server compiles and runs without extra boilerplate.
+- Pins TypeScript `6.0.3` and sets `rootDir` to `src` so the build emits the `build/index.js` file used by the start script.
 
 ## Requirements
 
@@ -61,12 +64,13 @@ Scaffold an **Express.js** workspace with TypeScript.
 
 ## Options
 
-| Flag                      | Description                    |
-|---------------------------|--------------------------------|
-| `-d, --dry-run`           | Run without writing any files. |
-| `--name <name>`           | Project or workspace name.     |
-| `--workspace-name <name>` | Workspace directory name.      |
-| `--output <dir>`          | Output directory.              |
+| Flag                      | Description                                                          |
+|---------------------------|----------------------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                                       |
+| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
+| `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
+| `--workspace-name <name>` | Workspace directory name.                                            |
+| `--output <dir>`          | Output directory.                                                    |
 
 ## Output Structure
 
@@ -99,17 +103,45 @@ When run without flags, the command walks you through an interactive wizard:
 
 **Workspace mode** (`package.json` with `workspaces` found):
 
-1. **Package name** — Enter a slug for the workspace package (e.g. `my-api`).
-2. **Workspace name** — Enter a slug for the workspace directory (default: `express`).
-3. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
+1. **Workspace name** — Enter a slug for the workspace directory (default: `express`).
+2. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
+
+Nova reads the project slug from the root `nova.config.json`; it does not ask you to rename the project or package.
 
 ### Non-Interactive Mode
 
-Provide `--name`, `--workspace-name`, and `--output` to skip all prompts:
+Agents and automation should add `--non-interactive`. A new monorepo needs `--name`, `--workspace-name`, and `--output`. An existing monorepo needs only `--workspace-name` and `--output`; omit `--name` because Nova reads the root project slug.
 
-```bash
-nova scaffold app expressjs --name my-api --workspace-name express --output ./my-api
-```
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # New monorepo plus its first app
+    nova scaffold app expressjs --non-interactive --name my-api --workspace-name api --output ./my-api
+
+    # Add another app from an existing Nova monorepo root
+    nova scaffold app expressjs --non-interactive --workspace-name api --output ./apps/api
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # New monorepo plus its first app
+    npx --yes @cbnventures/nova@latest scaffold app expressjs --non-interactive --name my-api --workspace-name api --output ./my-api
+
+    # Add another app from an existing Nova monorepo root
+    npx --yes @cbnventures/nova@latest scaffold app expressjs --non-interactive --workspace-name api --output ./apps/api
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Naming, Registration, and Safety
+
+For project slug `my-api` and workspace slug `api`, Nova names the package `my-api-app-api`. The same name is written to the workspace `package.json` and its `nova.config.json` entry. If the root `workspaces` globs do not include the selected output, Nova adds that exact relative path to the root `package.json`.
+
+Before writing, Nova requires a readable root `package.json` and `nova.config.json`, keeps the output inside the monorepo, rejects duplicate paths and names, and lists any template files it would overwrite. `--dry-run` performs these checks without changing the project.
 
 ## Next Steps
 

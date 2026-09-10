@@ -36,6 +36,7 @@ The generator validates each entry against its template, builds the workflow fro
 
 - **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
 - **Project root** — Run the command from the directory containing the top-level `package.json`.
+- **Corepack package manager** — A project with a `publish` workflow must declare an exact root `packageManager` value for npm, pnpm, or Yarn. Ranges, partial versions, missing values, and unsupported clients are rejected before any workflow file changes.
 - **Configured workflows** — The `"workflows"` array must exist in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. Use `nova utility initialize` to configure it interactively.
 
 ## Usage
@@ -71,6 +72,20 @@ The generator validates each entry against its template, builds the workflow fro
 |----------------------|------------------------------------------------------------------------|
 | `-d, --dry-run`      | Run without writing any files.                                         |
 | `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
+
+## Package Manager Selection
+
+The project root's `packageManager` field selects how generated `publish` workflows install dependencies and run project-owned tools. Nova passes the client through the entire workflow instead of translating every project to npm.
+
+| Root descriptor        | Install step   | Local executable   | Workspace scripts without Turbo           |
+|------------------------|----------------|--------------------|-------------------------------------------|
+| `npm@<exact-version>`  | `npm install`  | `npx <tool>`       | `npm run <script> -w <workspace>`         |
+| `pnpm@<exact-version>` | `pnpm install` | `pnpm exec <tool>` | `pnpm --filter=<workspace> run <script>`  |
+| `yarn@<exact-version>` | `yarn install` | `yarn exec <tool>` | `yarn workspace <workspace> run <script>` |
+
+Each install job first runs `corepack enable <client>`. Corepack then reads the full descriptor from the checked-out root `package.json`, so the workflow uses the pinned version instead of installing a floating `latest` release. Turbo projects use the same client to execute `turbo`.
+
+This selection governs project tooling; it does not rename deploy destinations. The `npm` and `github-packages` targets still use the npm publishing protocol and commands even when pnpm or Yarn manages the repository.
 
 :::warning Renamed fields are a breaking change
 
@@ -263,10 +278,15 @@ The bare string `"push"` is a validation error, since a branchless push trigger 
 
 #### Configuring Workflow-Run Triggers
 
-The three `workflow-run-*` triggers chain a publish workflow to one or more upstream workflows, and each carries its upstream references on the trigger object.
+The three `workflow-run-*` triggers start a new publish workflow after a named upstream workflow finishes. Choose the variant that matches the upstream result you accept:
 
-- Declare them in object form with a `workflows` array of `<template>-<name>` keys, for example `{ "name": "workflow-run-success", "workflows": ["publish-core"] }`.
-- Each referenced key must resolve to a sibling workflow in the same config, and circular references abort the run.
+| Trigger                | When the downstream jobs run                                  |
+|------------------------|---------------------------------------------------------------|
+| `workflow-run-success` | After an upstream run finishes successfully.                  |
+| `workflow-run-failure` | After an upstream run finishes with a failure.                |
+| `workflow-run-any`     | After an upstream run finishes, regardless of its conclusion. |
+
+Declare one of these triggers in object form. Its `workflows` array contains sibling `<template>-<name>` keys from the same `workflows` config:
 
 ```json
 {
@@ -288,42 +308,69 @@ The three `workflow-run-*` triggers chain a publish workflow to one or more upst
 }
 ```
 
+Nova turns `publish-core` into the generated upstream workflow's display name. When that workflow finishes successfully, GitHub starts `publish-preset` as a separate run.
+
+```mermaid
+flowchart LR
+  core["publish-core finishes successfully"] --> preset["publish-preset starts"]
+```
+
+:::warning Multiple names mean “any,” not “all”
+
+GitHub treats multiple entries in `workflows` as alternatives. This configuration starts `publish-preset` when **either** `publish-core` **or** `publish-cli` finishes successfully; it does not wait for both. If both finish, each completion can start its own downstream run.
+
+```json
+{
+  "name": "workflow-run-success",
+  "workflows": ["publish-core", "publish-cli"]
+}
+```
+
+If several packages must publish in one coordinated run, keep them in one `publish` workflow and use [`deploy[].after`](#deploy-fields) for destination ordering.
+:::
+
+Each referenced key must resolve to a sibling workflow, and Nova rejects circular references. The downstream run starts fresh; Nova does not automatically carry build files or artifacts over from the upstream run.
+
+GitHub also requires the downstream workflow file to exist on the repository's default branch and limits `workflow_run` chains to three levels. See GitHub's [`workflow_run` documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflow_run) before designing a longer chain.
+
 ## Environment Variables and Secrets
 
-A publish workflow delivers every workspace environment value declared under [`environment.workspaces`](/docs/quickstart/nova-config#environment). Each value carries two independent, required flags — `secret` (storage) and `buildOnly` (delivery) — and Nova routes delivery entirely off `buildOnly`, never off `secret`.
+A publish workflow reads workspace environment values declared under [`environment.workspaces`](/docs/quickstart/nova-config#environment). Every value has a required `reach`, which tells Nova where the value is allowed to travel:
 
-The difference between the two `buildOnly` destinations is *when there is a live environment to read the value*. A **running server** has one, so a `buildOnly: false` value sits in its env and the code reads it by reference (`env.X`) each run — never in a file.
+| `reach`   | Local `.env` | GitHub storage | CI build environment | Deployed runtime |
+|-----------|--------------|----------------|----------------------|------------------|
+| `local`   | Yes          | No             | No                   | No               |
+| `managed` | Yes, blank   | Yes            | No                   | No               |
+| `build`   | Yes          | Yes            | Yes                  | No               |
+| `runtime` | Yes          | Yes            | No                   | Yes              |
 
-A **build** has one only while it runs on the <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> runner, so a `buildOnly: true` value is placed in the build's env there; a Variable the code inlines (`import.meta.env.X`) gets *baked* into the output, a Secret used for auth is *consumed and not emitted*. **"Build" means "available to the build process," not "baked into the shipped output"** — that is why `secret + buildOnly` is valid, and why the only leak risk (a secret inlined into *client* output) is a code choice, not the delivery's fault.
+For `managed`, `build`, and `runtime`, the independent `secret` flag controls storage: `secret: false` uses a GitHub Variable, while `secret: true` uses a GitHub Secret. A `local` value never leaves the developer's machine, so it does not accept `secret` and does not need a namespace prefix.
 
-`secret` never changes *where* a value goes; `buildOnly` never changes *how* it is stored and moved. All four combinations are real:
+A build value exists only while the build runs on the <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> runner. A Variable that application code inlines (for example, `import.meta.env.PUBLIC_SITE_KEY`) can become part of the output; a Secret used for authentication can be consumed without being emitted. **"Build" means "available to the build process," not automatically "shipped to users."** Whether a value is exposed in client output depends on how the application uses it.
 
-| Storage                    | `buildOnly: true` (build env)                                                        | `buildOnly: false` (running server)                       |
-|----------------------------|--------------------------------------------------------------------------------------|-----------------------------------------------------------|
-| `secret: false` (Variable) | baked into the build (a `PUBLIC_` client key)                                        | synced to the server as **plaintext** (`AMAZON_REGION`)   |
-| `secret: true` (Secret)    | available to the CI build, used transiently, **not shipped** (a private build token) | synced to the server, **encrypted** (`STRIPE_SECRET_KEY`) |
+A runtime value is reconciled into a running server's environment and read by reference (`env.X` or `process.env.X`). A managed value is tracked locally and on GitHub but is intentionally delivered to neither destination.
 
 Every GitHub name is the workspace's `prefix` joined to the `key` (e.g. `CBN_` joined to `PUBLIC_SITE_KEY` becomes `CBN_PUBLIC_SITE_KEY`).
 
 ### Build Delivery
 
-Every `buildOnly: true` workspace value is written into the build `.env` before `check` / `build`. Nova reads it from its GitHub **Variable** (`${{ vars.<name> }}`) when `secret: false`, or its GitHub **Secret** (`${{ secrets.<name> }}`) when `secret: true`.
+Every workspace value with `reach: "build"` is written into the build `.env` before `check` / `build`. Nova reads it from its GitHub **Variable** (`${{ vars.<name> }}`) when `secret: false`, or its GitHub **Secret** (`${{ secrets.<name> }}`) when `secret: true`.
 
 A `secret: false` Variable falls back to its `defaultValue` when the Variable is unset. Deploy credentials and workflow-config keys never reach the build.
 
 The [Setup report](#setup-instructions) lists every GitHub Variable and Secret to create.
 
-### Runtime Secret Sync
+### Runtime Environment Sync
 
-On each deploy, Nova reconciles every `buildOnly: false` workspace value into the runtime store of **every server-bearing target** in the workspace's `deploy[]`. `secret` picks the channel: a `secret: true` value is stored **encrypted**, a `secret: false` value as a **plaintext** runtime variable.
+On each deploy, Nova reconciles every workspace value with `reach: "runtime"` into the runtime store of **every server-bearing target** in the workspace's `deploy[]`. `secret` picks the channel: a `secret: true` value is stored **encrypted**, while a `secret: false` value is stored as a **plaintext** runtime variable.
 
-- **Upsert** — Every declared `buildOnly: false` value is pushed to the destination under its prefixed name, and the running app reads it as `env.NAME` on Workers or `process.env.NAME` on Vercel.
+- **Upsert** — Every declared runtime value is pushed to the destination under its prefixed name, and the running app reads it as `env.NAME` on Workers or `process.env.NAME` on Vercel.
 - **Delete** — Any value already in the destination store but no longer declared in the config is removed, since Nova is the single source of truth for that target's runtime env.
 - **Log by name** — Each add and removal is written to the deploy log by name only, never by value, so the reconcile stays auditable.
 
 :::warning Sync makes Nova authoritative
 
-Nova has full authority over each server's runtime env — removing a `buildOnly: false` value from the config deletes it from every server on the next deploy, and any value set out-of-band is reconciled away. The sync runs unattended in <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, so there is no interactive confirm — the deploy log records every change.
+Nova has full authority over each server's runtime env — removing a `reach: "runtime"` value from the config deletes it from every server on the next deploy, and any value set out-of-band is reconciled away. The sync runs unattended in <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>, so there is no interactive confirm — the deploy log records every change.
 :::
 
 #### Per-Target Mechanism
@@ -368,23 +415,25 @@ The generator loads <Terminology title="Nova config" to="/docs/quickstart/termin
 
 ### Validation
 
-Before generating each file, the generator checks:
+When at least one valid `publish` entry exists, the generator validates the root `packageManager` first. If that project-level setting is missing or invalid, the whole generation run stops before writing, backing up, or deleting workflow files.
+
+The generator also checks each configured entry:
 
 1. No entry carries an old-shape field name — a renamed field is rejected with a hint naming its replacement (e.g., `Workflow field "suffix" was renamed to "name". Skipping.`).
 2. The template name matches a known bundled template.
 3. `name` is present and a non-empty string, and no two entries share the same template and `name`.
 4. Each trigger is valid for the entry's template, and object-form filter lists are non-empty string arrays.
 5. A `push` trigger uses the object form with a `branches` filter, and a workflow-run trigger carries `workflows` references that each resolve to a sibling workflow.
-6. Each `build` scope is a registered workspace, and no workspace still carries the retired `dotenv` block — that model moved to the top-level `environment` block classified by `secret`, so an old-shape config is rejected with a migration hint.
+6. Each `build` scope is a registered workspace, and no workspace still carries the retired `dotenv` block — that model moved to the top-level `environment` block classified by `reach` and, where applicable, `secret`, so an old-shape config is rejected with a migration hint.
 7. Each deploy `to` is a supported target type, and each deploy `path` is a registered workspace.
 8. All `literal` variables without a default have a corresponding value in `with`.
 9. Destination uniqueness holds across every workflow (see [Cross-Workflow Uniqueness](#publishing-github-actions)), and no two entries produce the same output filename.
 
-Each failed check emits a diagnostic and skips the affected workflow, while any valid workflows still build.
+Each entry-level failure emits a diagnostic and skips the affected workflow, while other valid workflows still build. The project-level package manager guard is the exception because every publish entry shares it.
 
 ### File Generation
 
-Each valid entry produces one YAML file under `.github/workflows/`. The generator builds the workflow blueprint from your config — merging the resolved triggers, jobs, and deploy destinations — resolves variable placeholders from the template metadata and the entry's `with`, then serializes the blueprint to YAML.
+Each valid entry produces one YAML file under `.github/workflows/`. The generator builds the workflow blueprint from your config — merging the resolved triggers, jobs, deploy destinations, and selected Corepack client — resolves variable placeholders from the template metadata and the entry's `with`, then serializes the blueprint to YAML.
 
 Deploy jobs that declare `after` dependencies emit `needs: ["build", ...]`. If the target file already exists, a `.nova-backup` copy is created unless `--replace-file` is set.
 
@@ -396,7 +445,7 @@ When the config is clean, the generator scans `.github/workflows/` for existing 
 
 ### Setup Instructions
 
-After all files are generated, the generator prints a Setup report of the secrets and variables to configure on GitHub. This covers every non-automatic `secret` and `var`, plus every `buildOnly: true` workspace value each build scope reads — listed under its prefixed GitHub name as a Variable (`secret: false`) or a Secret (`secret: true`).
+After all files are generated, the generator prints a Setup report of the secrets and variables to configure on GitHub. This covers every non-automatic template `secret` and `var`, plus every `reach: "build"` workspace value each build scope reads — listed under its prefixed GitHub name as a Variable (`secret: false`) or a Secret (`secret: true`).
 
 Entries are deduplicated and listed once per output file, so a value used by two destinations in the same workflow appears a single time.
 
@@ -467,7 +516,7 @@ You can set these on the deploy's `with` as shown, or on the workflow-level `wit
 
 When a GitHub Release is published:
 
-1. The base `build` job runs the workspace's build command (`npx turbo run build` if a `turbo.json` is present at repo root, otherwise `npm run build`), producing output in the workspace's `build/` directory.
+1. The base `build` job runs the workspace's build command through the root `packageManager` client (executing Turbo when a `turbo.json` is present, otherwise using the client's workspace command), producing output in the workspace's `build/` directory.
 2. The `publish-github-action-*` job spins up a separate git workspace at `$RUNNER_TEMP/release`, initialized with the release branch name.
 3. If the release branch already exists remotely, the workspace fetches and resets to it. Otherwise it stays as a fresh orphan branch.
 4. The release tree is staged: `action.yml`, the optional files above, and the built output copied into `action/` (renaming `build/` → `action/`).

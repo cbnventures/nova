@@ -19,18 +19,27 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Scaffold a **base <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology>** project with workspaces configuration, ready for adding framework workspaces.
+Scaffold a **base <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology>** project with workspaces configuration, ready for adding framework workspaces. This command is optional: use it when you want the project root now but do not want to choose an app or documentation framework yet.
+
+| What you want now                 | Command to start with           | Result                         |
+|-----------------------------------|---------------------------------|--------------------------------|
+| Only an empty Nova monorepo root  | `nova scaffold starter base`    | Root, `apps/`, and `packages/` |
+| A root and the first app together | `nova scaffold app <framework>` | Root plus the app workspace    |
+| A root and documentation together | `nova scaffold docs docusaurus` | Root plus the docs workspace   |
+
+You do not need to run `starter base` before either direct app or docs command.
 
 ## Why Use This Command?
 
 - Creates the root `package.json` with `workspaces` configured for `apps/*` and `packages/*` so you can add workspaces immediately.
+- Pins the npm and Node.js toolchain used by current Nova projects and records explicit denials for optional dependency install scripts used by the built-in scaffolds.
 - Generates a baseline `nova.config.json` so recipes and utilities have a valid config to work with from the start.
 - Installs `@cbnventures/nova` as a dev dependency so the `nova` CLI is available inside the project without a global install.
 
 ## Requirements
 
 - **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
-- **Empty directory** — The command only works when no `package.json` exists.
+- **Start outside a project** — Run the command where Nova cannot find a `package.json`. The selected output may already contain unrelated files, but Nova refuses to replace `package.json` or `nova.config.json`.
 
 ## Usage
 
@@ -61,11 +70,12 @@ Scaffold a **base <Terminology title="multi-package repo" to="/docs/quickstart/t
 
 ## Options
 
-| Flag             | Description                    |
-|------------------|--------------------------------|
-| `-d, --dry-run`  | Run without writing any files. |
-| `--name <name>`  | Project name.                  |
-| `--output <dir>` | Output directory.              |
+| Flag                | Description                                             |
+|---------------------|---------------------------------------------------------|
+| `-d, --dry-run`     | Run without writing any files.                          |
+| `--name <name>`     | Project name.                                           |
+| `--non-interactive` | Require every answer as a flag and do not open prompts. |
+| `--output <dir>`    | Output directory.                                       |
 
 ## Output Structure
 
@@ -90,12 +100,56 @@ When run without flags, the command walks you through an interactive wizard:
 
 ### Non-Interactive Mode
 
-Provide `--name` and `--output` to skip all prompts:
+Agents and automation should add `--non-interactive` and provide both answers. Nova refuses incomplete commands before writing and skips the optional post-scaffold generator menu.
 
-```bash
-nova scaffold starter base --name my-app --output ./my-app
-```
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova scaffold starter base --non-interactive --name my-app --output ./my-app
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest scaffold starter base --non-interactive --name my-app --output ./my-app
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Safety Checks
+
+Before creating any file, Nova validates the project slug and checks the two root files it owns. If either target file already exists, the command stops and lists the conflict. `--dry-run` performs the same validation and reports the exact root path without writing.
 
 ## Next Steps
 
-After scaffolding, use `nova scaffold app` or `nova scaffold docs` to add workspaces, then run generators for project-level files like `.editorconfig`, `.gitignore`, and `LICENSE`.
+After scaffolding, enter the new monorepo and add as many workspaces as the project needs. Each scaffold command detects the existing workspace root, creates only the requested workspace, and adds it to the same `nova.config.json`. Running another scaffold command later preserves the workspaces that are already registered.
+
+For example, these commands add a Docusaurus documentation site and a Cloudflare Worker to one project:
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    cd my-app
+    nova scaffold docs docusaurus
+    nova scaffold app workers
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    cd my-app
+    npx --yes @cbnventures/nova@latest scaffold docs docusaurus
+    npx --yes @cbnventures/nova@latest scaffold app workers
+    ```
+
+  </TabItem>
+</Tabs>
+
+You can mix any supported app and docs scaffolds this way. Run each command from the monorepo root, not from inside an existing workspace.
+
+Once the workspaces are in place, run generators for project-level files like `.editorconfig`, `.gitignore`, and `LICENSE`.

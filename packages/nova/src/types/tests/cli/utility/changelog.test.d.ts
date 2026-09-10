@@ -1,3 +1,10 @@
+import type {
+  Cli_Utility_Changelog_Runner_ValidateVersion_CurrentVersion,
+  Cli_Utility_Changelog_Runner_ValidateVersion_PackageJsonPath,
+  Cli_Utility_Changelog_Runner_ValidateVersion_Returns,
+  Cli_Utility_Changelog_Runner_ValidateVersion_VersionStrategy,
+} from '../../../cli/utility/changelog.d.ts';
+
 /**
  * Tests - CLI - Utility - Changelog - Run.
  *
@@ -322,6 +329,23 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersion
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_PackageJson = Record<string, unknown>;
 
 /**
+ * Tests - CLI - Utility - Changelog - Run - Keeps Pending Entries When Stamping Fails.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_WorkspaceDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_ChangelogDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_SourcePath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_RemainingFiles = string[];
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_RemainingMdFiles = string[];
+
+/**
  * Tests - CLI - Utility - Changelog - Run - Prerelease Version Skips Stamp.
  *
  * Note: the normal bump arithmetic (split('.').map(Number)) always produces clean
@@ -398,6 +422,49 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNon
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_HasBump = boolean;
 
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_HasMessage = boolean;
+
+/**
+ * Tests - CLI - Utility - Changelog - Run - Rejects Lock Step Version Drift Before Writing.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CoreDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ChangelogDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_PackageJsonContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ConfigPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ConfigContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CorePackagePath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CorePackageContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolPackagePath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolPackageContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_EntryPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_EntryContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CoreAfterRaw = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CoreAfter = Record<string, unknown>;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolAfterRaw = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolAfter = Record<string, unknown>;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_EntryAfter = string;
 
 /**
  * Tests - CLI - Utility - Changelog - Run - Releases And Bumps Version.
@@ -667,3 +734,35 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SyncsExactPinnedR
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SyncsExactPinnedReferencesToReleasedPackages_ThirdPartyKept = boolean;
 
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SyncsExactPinnedReferencesToReleasedPackages_VersionKept = boolean;
+
+/**
+ * Tests - CLI - Utility - Changelog - Validate Version.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_Changelog_ValidateVersion_ValidateVersion = (
+  currentVersion: Cli_Utility_Changelog_Runner_ValidateVersion_CurrentVersion,
+  versionStrategy: Cli_Utility_Changelog_Runner_ValidateVersion_VersionStrategy,
+  packageJsonPath: Cli_Utility_Changelog_Runner_ValidateVersion_PackageJsonPath,
+) => Cli_Utility_Changelog_Runner_ValidateVersion_Returns;
+
+/**
+ * Tests - CLI - Utility - Changelog - Validate Version - Allows The Initial CalVer Sentinel.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_Changelog_ValidateVersion_AllowsTheInitialCalVerSentinel_CurrentVersion = string;
+
+/**
+ * Tests - CLI - Utility - Changelog - Validate Version - Rejects Future CalVer.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_Changelog_ValidateVersion_RejectsFutureCalVer_FutureVersion = string;
+
+/**
+ * Tests - CLI - Utility - Changelog - Validate Version - Rejects Malformed CalVer.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_Changelog_ValidateVersion_RejectsMalformedCalVer_CurrentVersion = string;

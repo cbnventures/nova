@@ -140,6 +140,16 @@ export const LIB_REGEX_PATTERN_BLOG_DATE_PREFIX = /^\d{4}-\d{2}-\d{2}-/;
 export const LIB_REGEX_PATTERN_BRACKETED_TIMESTAMP = /^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{3} [+-]\d{2}\d{2}]$/;
 
 /**
+ * Lib - Regex - Pattern Calver Strict.
+ *
+ * Validates Nova's YYYY.MM.MICRO calendar-version format with a four-digit year,
+ * a month from 1 through 12, and a non-negative micro number.
+ *
+ * @since 0.26.0
+ */
+export const LIB_REGEX_PATTERN_CALVER_STRICT = /^(?:[1-9]\d{3})\.(?:[1-9]|1[0-2])\.(?:0|[1-9]\d*)$/;
+
+/**
  * Lib - Regex - Pattern Camel Case Boundary.
  *
  * Used by require-jsdoc-param-name to split camelCase into readable words. Captures each
@@ -199,6 +209,36 @@ export const LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE = /^[A-Z][A-Za-z0-9
  * @since 0.11.0
  */
 export const LIB_REGEX_PATTERN_CASING_UPPER_SNAKE_CASE = /^[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*$/;
+
+/**
+ * Lib - Regex - Pattern Changelog Calver Heading.
+ *
+ * Matches the complete release heading Nova writes for calendar-versioned
+ * changelogs.
+ *
+ * @since 0.26.0
+ */
+export const LIB_REGEX_PATTERN_CHANGELOG_CALVER_HEADING = /^## (?:[1-9]\d{3})\.(?:[1-9]|1[0-2])\.(?:0|[1-9]\d*)$/;
+
+/**
+ * Lib - Regex - Pattern Changelog Numeric Heading.
+ *
+ * Identifies numeric H2 headings that look like release history but do not match
+ * either supported Nova release-heading format.
+ *
+ * @since 0.26.0
+ */
+export const LIB_REGEX_PATTERN_CHANGELOG_NUMERIC_HEADING = /^## \d/;
+
+/**
+ * Lib - Regex - Pattern Changelog Semver Heading.
+ *
+ * Matches current and legacy Nova semantic-version release headings, including
+ * prerelease and build metadata plus both dash-prefixed and parenthesized ISO dates.
+ *
+ * @since 0.26.0
+ */
+export const LIB_REGEX_PATTERN_CHANGELOG_SEMVER_HEADING = /^## (?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)? (?:- \d{4}-\d{2}-\d{2}|\(\d{4}-\d{2}-\d{2}\))$/;
 
 /**
  * Lib - Regex - Pattern Code Block.
@@ -839,12 +879,12 @@ export const LIB_REGEX_PATTERN_MARKDOWN_LINK = /\[([^\]]*)\]\(([^)]+)\)/;
 /**
  * Lib - Regex - Pattern Name At Version.
  *
- * Validates the "name@version" format used by packageManager fields. Used by the
- * sync-environment recipe to check values like "npm@10" or "pnpm@9".
+ * Captures an unscoped package-manager name and exact semantic version from a
+ * Corepack descriptor. Ranges and partial versions are intentionally rejected.
  *
- * @since 0.11.0
+ * @since 0.26.0
  */
-export const LIB_REGEX_PATTERN_NAME_AT_VERSION = /^[a-z]+@\d+/;
+export const LIB_REGEX_PATTERN_NAME_AT_VERSION = /^([a-z]+)@((?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?)$/;
 
 /**
  * Lib - Regex - Pattern Non Alphanumeric Run.
@@ -1040,7 +1080,7 @@ export const LIB_REGEX_PATTERN_RUSTC_VERSION_LINE = /^rustc\s+(\d+\.\d+\.\d+)\s+
  * Lib - Regex - Pattern Semver.
  *
  * Captures a semver version from within a larger string. Used by the version utility
- * to extract it from Node.js, npm, Yarn, pnpm, and Bun output.
+ * to extract it from Node.js, npm, Yarn, and pnpm output.
  *
  * @since 0.11.0
  */
@@ -1313,6 +1353,16 @@ export const LIB_REGEX_PLACEHOLDER_CURRENT_YEAR = /\[__CURRENT_YEAR__\]/;
 export const LIB_REGEX_PLACEHOLDER_CUSTOM_DONATION = /\[__CUSTOM_DONATION__\]/;
 
 /**
+ * Lib - Regex - Placeholder Docusaurus Preset.
+ *
+ * Matches the "[__DOCUSAURUS_PRESET__]" token in the Docusaurus scaffold
+ * template. Used by the scaffold library to insert the selected Nova preset.
+ *
+ * @since 0.26.0
+ */
+export const LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET = /\[__DOCUSAURUS_PRESET__\]/;
+
+/**
  * Lib - Regex - Placeholder Entity Name.
  *
  * Matches the "[__ENTITY_NAME__]" token in license templates. Used by the license
@@ -1511,6 +1561,17 @@ export const LIB_REGEX_PLACEHOLDER_PROJECT_NAME = /\[__PROJECT_NAME__\]/;
  * @since 0.11.0
  */
 export const LIB_REGEX_PLACEHOLDER_PROJECT_SLUG = /\[__PROJECT_SLUG__\]/;
+
+/**
+ * Lib - Regex - Placeholder Workspace Package Name.
+ *
+ * Matches the "[__WORKSPACE_PACKAGE_NAME__]" token in scaffold templates. The
+ * scaffold pipeline replaces it with the canonical Nova workspace identity so
+ * package manifests and nova.config.json registrations stay aligned.
+ *
+ * @since 0.26.0
+ */
+export const LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME = /\[__WORKSPACE_PACKAGE_NAME__\]/;
 
 /**
  * Lib - Regex - Placeholder Terms Of Use.
@@ -1768,6 +1829,16 @@ export const LIB_REGEX_PATTERN_WORKFLOW_VAR_REFERENCE = /\$\{\{\s*vars\.(\w+)\s*
  * @since 0.18.0
  */
 export const LIB_REGEX_PATTERN_GH_VERSION = /^gh version (\d+\.\d+\.\d+)/;
+
+/**
+ * Lib - Regex - Pattern GitHub Label Color.
+ *
+ * Matches the six hexadecimal characters accepted by GitHub label settings.
+ * The sync-labels recipe uses it before sending configuration to GitHub.
+ *
+ * @since 0.26.0
+ */
+export const LIB_REGEX_PATTERN_GITHUB_LABEL_COLOR = /^[0-9A-Fa-f]{6}$/;
 
 /**
  * Lib - Regex - Pattern GitHub Owner.

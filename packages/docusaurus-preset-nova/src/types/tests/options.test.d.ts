@@ -240,6 +240,8 @@ export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvide
 
 export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result_Analytics = unknown;
 
+export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result_PersistentCache = boolean;
+
 export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result_ProgressBar = unknown;
 
 export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result_Search = unknown;
@@ -249,6 +251,7 @@ export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvide
   overrides: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result_Overrides;
   plugins: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result_Plugins;
   analytics: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result_Analytics;
+  persistentCache: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result_PersistentCache;
   progressBar: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result_ProgressBar;
   search: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result_Search;
 };
@@ -265,6 +268,8 @@ export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvide
   value: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Validated_Value;
   error?: Error;
 };
+
+export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_PersistentCache = boolean;
 
 /**
  * Tests - Options - Validate Theme Config - Accepts An Empty Error Pages Object.

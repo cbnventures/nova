@@ -105,17 +105,18 @@ The `requiredFields` list has no default, so you must declare which keys every n
 
 ## Configuration
 
-| Field                   | Type                   | Default                        | Description                                                                      |
-|-------------------------|------------------------|--------------------------------|----------------------------------------------------------------------------------|
-| `requiredFields`        | `string[]`             | required                       | Frontmatter keys every non-blog page must declare.                               |
-| `requiredBlogFields`    | `string[]`             | `['title', 'authors', 'tags']` | Frontmatter keys every blog post must declare.                                   |
-| `contentDirs`           | `string[]`             | `['docs', 'blog']`             | Directories, relative to `rootDir`, scanned recursively for content files.       |
-| `blogDir`               | `string`               | `'blog'`                       | Which content directory is the blog, selecting the blog required-field set.      |
-| `indexSlug`             | `string \| null`       | `null`                         | Expected `id` for index pages; `null` disables the index-to-slug remap.          |
-| `placeholderSentinel`   | `string`               | disabled                       | Single-value marker that fails description, keywords, and tags checks.           |
-| `placeholderBodyPrefix` | `string`               | disabled                       | Body prefix that downgrades a file's issues from failures to warnings.           |
-| `rootDir`               | `string`               | `process.cwd()`                | Base directory the `contentDirs` resolve against.                                |
-| `enable`                | `'all' \| ToggleKey[]` | required                       | Which checks run. Use `'all'` for every check, or a list to freeze an exact set. |
+| Field                   | Type                      | Default                        | Description                                                                      |
+|-------------------------|---------------------------|--------------------------------|----------------------------------------------------------------------------------|
+| `vitest`                | `typeof import('vitest')` | required                       | Vitest module namespace used to register the suite.                              |
+| `requiredFields`        | `string[]`                | required                       | Frontmatter keys every non-blog page must declare.                               |
+| `requiredBlogFields`    | `string[]`                | `['title', 'authors', 'tags']` | Frontmatter keys every blog post must declare.                                   |
+| `contentDirs`           | `string[]`                | `['docs', 'blog']`             | Directories, relative to `rootDir`, scanned recursively for content files.       |
+| `blogDir`               | `string`                  | `'blog'`                       | Which content directory is the blog, selecting the blog required-field set.      |
+| `indexSlug`             | `string \| null`          | `null`                         | Expected `id` for index pages; `null` disables the index-to-slug remap.          |
+| `placeholderSentinel`   | `string`                  | disabled                       | Single-value marker that fails description, keywords, and tags checks.           |
+| `placeholderBodyPrefix` | `string`                  | disabled                       | Body prefix that downgrades a file's issues from failures to warnings.           |
+| `rootDir`               | `string`                  | `process.cwd()`                | Base directory the `contentDirs` resolve against.                                |
+| `enable`                | `'all' \| ToggleKey[]`    | required                       | Which checks run. Use `'all'` for every check, or a list to freeze an exact set. |
 
 ## Toggle Keys
 

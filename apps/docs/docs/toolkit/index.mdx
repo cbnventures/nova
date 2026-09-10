@@ -25,8 +25,6 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Overview
-
 Use **Nova Toolkit** to accelerate development across projects fast. Pick the pieces that match your workflow.
 
 ## Install
@@ -100,3 +98,11 @@ Produce **consistent process messages** and lightweight **run context** that wor
 |------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [CLI Header](/docs/toolkit/logging/cli-header) | Present a simple and customizable banner for projects with <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology>. |
 | [Logger](/docs/toolkit/logging/logger)         | Emit logs that are more customizable and safer than `console.log`.                                                                                                                    |
+
+### Testing
+
+Keep shared test isolation behavior synchronized while each project continues to own its local setup file.
+
+| Battery                                            | Synopsis                                                                                       |
+|----------------------------------------------------|------------------------------------------------------------------------------------------------|
+| [Vitest Setup](/docs/toolkit/testing/vitest-setup) | Register consistent output suppression, exit-code cleanup, and mock restoration across suites. |

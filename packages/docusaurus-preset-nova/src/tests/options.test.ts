@@ -30,6 +30,7 @@ import type {
   Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_JoiSchema,
   Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_Validated,
   Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_JoiSchema,
+  Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_PersistentCache,
   Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Result,
   Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Validated,
   Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_ErrorPages,
@@ -119,8 +120,10 @@ describe('validateOptions', async () => {
     });
 
     const presetValue: Tests_Options_PresetValue = result['preset'];
+    const persistentCache: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_PersistentCache = result['persistentCache'];
 
     strictEqual(presetValue, 'foundry');
+    strictEqual(persistentCache, false);
 
     return;
   });

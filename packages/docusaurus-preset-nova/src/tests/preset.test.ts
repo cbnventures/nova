@@ -5,6 +5,9 @@ import { describe, it } from 'vitest';
 import preset from '../preset.js';
 
 import type {
+  Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_PluginCount,
+  Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_Result,
+  Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_ThemeCount,
   Tests_Preset_Preset_ExcludesBlogPluginWhenBlogIsFalse_PluginCount,
   Tests_Preset_Preset_ExcludesBlogPluginWhenBlogIsFalse_Result,
   Tests_Preset_Preset_ExcludesGtmPluginWhenGtmIsUndefined_PluginCount,
@@ -17,6 +20,10 @@ import type {
   Tests_Preset_Preset_ExcludesSitemapPluginWhenSitemapIsFalse_Result,
   Tests_Preset_Preset_IncludesGtmPluginWhenGtmIsProvided_PluginCount,
   Tests_Preset_Preset_IncludesGtmPluginWhenGtmIsProvided_Result,
+  Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_NovaTheme,
+  Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_PersistentCache,
+  Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_Result,
+  Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ThemeOptions,
   Tests_Preset_Preset_PassesSearchConfigToNovaThemeWhenSearchIsProvided_Result,
   Tests_Preset_Preset_PassesSearchConfigToNovaThemeWhenSearchIsProvided_ThemeCount,
   Tests_Preset_Preset_ReturnsDocsBlogPagesSitemapSvgrPluginsAndNovaThemeByDefault_PluginCount,
@@ -30,6 +37,21 @@ import type {
  * @since 0.15.0
  */
 describe('preset', async () => {
+  it('accepts only required preset option', () => {
+    const result: Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_Result = preset(
+      { siteDir: '/mock' },
+      { preset: 'foundry' },
+    );
+
+    const pluginCount: Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_PluginCount = result['plugins'].length;
+    const themeCount: Tests_Preset_Preset_AcceptsOnlyRequiredPresetOption_ThemeCount = result['themes'].length;
+
+    strictEqual(pluginCount, 8);
+    strictEqual(themeCount, 1);
+
+    return;
+  });
+
   it('returns docs, blog, pages, sitemap, svgr plugins and nova theme by default', () => {
     const result: Tests_Preset_Preset_ReturnsDocsBlogPagesSitemapSvgrPluginsAndNovaThemeByDefault_Result = preset(
       { siteDir: '/mock' },
@@ -226,6 +248,36 @@ describe('preset', async () => {
 
     // Nova theme (Mermaid is now integrated natively).
     strictEqual(themeCount, 1);
+
+    return;
+  });
+
+  it('passes persistent cache to nova theme when enabled', () => {
+    const result: Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_Result = preset(
+      { siteDir: '/mock' },
+      {
+        preset: 'foundry',
+        overrides: undefined,
+        plugins: {
+          docs: undefined,
+          blog: undefined,
+          pages: undefined,
+          sitemap: undefined,
+        },
+        analytics: {
+          gtm: undefined,
+        },
+        persistentCache: true,
+        search: false,
+        progressBar: undefined,
+      },
+    );
+
+    const novaTheme: Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_NovaTheme = result['themes'][0] as Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_NovaTheme;
+    const themeOptions: Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_ThemeOptions = novaTheme[1];
+    const persistentCache: Tests_Preset_Preset_PassesPersistentCacheToNovaThemeWhenEnabled_PersistentCache = themeOptions['persistentCache'];
+
+    strictEqual(persistentCache, true);
 
     return;
   });

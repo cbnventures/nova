@@ -23,6 +23,15 @@ import type {
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_TsconfigPath,
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_ErrorsWhenNoTsconfigJsonFound_ProjectDirectory,
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_OriginalCwd,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_IndexPath,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_OutputExists,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_OutputJsPath,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_ProjectDirectory,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_TsconfigContents,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_TsconfigPath,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsInvalidJSON_ProjectDirectory,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsInvalidJSON_TsconfigContents,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsInvalidJSON_TsconfigPath,
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_SandboxDirectory,
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_SandboxRoot,
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TemporaryDirectory,
@@ -84,6 +93,63 @@ describe('CliUtilityTranspile.run', async () => {
     const outputExists: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_OutputExists = existsSync(outputJsPath);
 
     ok(outputExists);
+
+    return;
+  });
+
+  it('rejects an invalid compiler option without emitting output', async () => {
+    const projectDirectory: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_ProjectDirectory = join(sandboxRoot, 'invalid-compiler-option');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const tsconfigPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_TsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_TsconfigContents = JSON.stringify({
+      compilerOptions: {
+        module: 'invalid',
+        outDir: './build',
+      },
+      include: ['*.ts'],
+    }, null, 2);
+
+    await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
+
+    const indexPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_IndexPath = join(projectDirectory, 'index.ts');
+
+    await writeFile(indexPath, 'export {};\n', 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    CliUtilityTranspile.run({
+      project: tsconfigPath,
+    });
+
+    strictEqual(process.exitCode, 1);
+
+    const outputJsPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_OutputJsPath = join(projectDirectory, 'build', 'index.js');
+    const outputExists: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsAnInvalidCompilerOptionWithoutEmittingOutput_OutputExists = existsSync(outputJsPath);
+
+    strictEqual(outputExists, false);
+
+    return;
+  });
+
+  it('rejects invalid JSON', async () => {
+    const projectDirectory: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsInvalidJSON_ProjectDirectory = join(sandboxRoot, 'invalid-json');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const tsconfigPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsInvalidJSON_TsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsInvalidJSON_TsconfigContents = '{ "compilerOptions": {';
+
+    await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    CliUtilityTranspile.run({
+      project: tsconfigPath,
+    });
+
+    strictEqual(process.exitCode, 1);
 
     return;
   });

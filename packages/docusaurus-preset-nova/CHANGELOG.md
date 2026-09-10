@@ -1,5 +1,24 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.26.0 - 2026-09-10
+
+### UPDATED
+- Updated the Docusaurus preset reference with every Nova option, forwarded content-plugin setting, bundled integration, runtime dependency, and peer dependency, plus a manifest-to-documentation drift check.
+- Updated the Docusaurus preset's nine `@docusaurus/*` runtime packages from 3.10.0 to 3.10.2 and aligned its Docusaurus types, React types, ESLint, and Vitest development dependencies.
+- Updated Mermaid to 11.16.1 to consume its official security fixes.
+- Migrated the preset, theme plugin, browser exports, and CLI to one explicit ESM package boundary while preserving CommonJS dependency interoperability.
+- Updated the Docusaurus preset documentation for all i18n commands, navbar fields, and inline Iconify footer icons, with source-backed drift tests.
+
+### FIXED
+- Fixed production CSS minimization to keep the mobile search mount transition warning-free while preserving its opening behavior.
+- Allowed the documented minimal preset configuration by safely handling omitted optional plugin and analytics groups.
+- Fixed the Docusaurus route progress bar to run through the client navigation lifecycle and apply the complete validated configuration surface with stable Nova defaults.
+- Made live code blocks safe during static generation and prevented quoted title text from being mistaken for standalone code-fence flags.
+- Fixed classic search-worker validation to transpile current source in memory and reuse the production normalization path. Clean checks no longer require a prebuilt preset or package-level Turbo override, while incompatible worker syntax now fails during both tests and site builds.
+
+### ADDED
+- Added a configurable Docusaurus webpack cache policy that uses memory-only caching during development and disables production cache persistence by default, preventing multilingual sites from exhausting disk space.
+
 ## 0.25.2 - 2026-08-20
 
 No changes.

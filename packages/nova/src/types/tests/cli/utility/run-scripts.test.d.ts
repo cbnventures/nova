@@ -12,6 +12,15 @@ export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_TemporaryPrefix
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SandboxRoot = string;
 
 /**
+ * Tests - CLI - Utility - Run Scripts - Run - Delegates The Repository Bootstrap To The Shared Runner.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_DelegatesTheRepositoryBootstrapToTheSharedRunner_BootstrapScriptPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_DelegatesTheRepositoryBootstrapToTheSharedRunner_BootstrapScriptContents = string;
+
+/**
  * Tests - CLI - Utility - Run Scripts - Run - Errors When Both Sequential And Parallel Are Set.
  *
  * @since 0.14.0
@@ -42,6 +51,26 @@ export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ErrorsWhenBuffe
  *
  * @since 0.14.0
  */
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_ProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_PackageJson = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_RealProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_CapturedStdout = string[];
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_CapturedStderr = string[];
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalStdoutWrite = typeof process.stdout.write;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalStderrWrite = typeof process.stderr.write;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalSigintListeners = number;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_KeepsStdoutAndStderrPartialLinesIndependentAndRemovesSignalListeners_OriginalSigtermListeners = number;
+
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_MatchesExactScriptNameWithoutWildcard_ProjectRoot = string;
 
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_MatchesExactScriptNameWithoutWildcard_PackageJson = string;

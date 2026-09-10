@@ -1,4 +1,4 @@
-import { rejects, strictEqual } from 'node:assert/strict';
+import { rejects, strictEqual, throws } from 'node:assert/strict';
 import {
   mkdir,
   mkdtemp,
@@ -140,6 +140,12 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspaceDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspacePackageContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ErrorsWhenVersionIsNotCleanNumeric_WorkspacePackagePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_ChangelogDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_RemainingFiles,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_RemainingMdFiles,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_SourcePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_WorkspaceDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_OriginalCwd,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_ChangelogDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PrereleaseVersionSkipsStamp_ConfigContents,
@@ -172,6 +178,25 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_PackageJsonContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_PackageJsonPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RecordsEntryInNonInteractiveMode_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ChangelogDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ConfigContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CoreAfter,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CoreAfterRaw,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CoreDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CorePackageContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CorePackagePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_EntryAfter,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_EntryContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_EntryPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_PackageJsonContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_PackageJsonPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolAfter,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolAfterRaw,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolPackageContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolPackagePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ReleasesAndBumpsVersion_ChangelogContent,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ReleasesAndBumpsVersion_ChangelogDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ReleasesAndBumpsVersion_ChangelogPath,
@@ -292,6 +317,10 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SyncsExactPinnedReferencesToReleasedPackages_VersionKept,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SyncsExactPinnedReferencesToReleasedPackages_WorkspaceKept,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_TemporaryDirectory,
+  Tests_Cli_Utility_Changelog_ValidateVersion_AllowsTheInitialCalVerSentinel_CurrentVersion,
+  Tests_Cli_Utility_Changelog_ValidateVersion_RejectsFutureCalVer_FutureVersion,
+  Tests_Cli_Utility_Changelog_ValidateVersion_RejectsMalformedCalVer_CurrentVersion,
+  Tests_Cli_Utility_Changelog_ValidateVersion_ValidateVersion,
 } from '../../../types/tests/cli/utility/changelog.test.d.ts';
 
 /**
@@ -757,6 +786,98 @@ describe('CliUtilityChangelog.run', async () => {
     return;
   });
 
+  it('rejects lock-step version drift before writing', async () => {
+    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ProjectDirectory = join(sandboxRoot, 'lock-step-drift');
+    const coreDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CoreDirectory = join(projectDirectory, 'packages', 'core');
+    const toolDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolDirectory = join(projectDirectory, 'packages', 'tool');
+    const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ChangelogDirectory = join(projectDirectory, '.changelog');
+
+    await Promise.all([
+      mkdir(coreDirectory, { recursive: true }),
+      mkdir(toolDirectory, { recursive: true }),
+      mkdir(changelogDirectory, { recursive: true }),
+    ]);
+
+    const packageJsonPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_PackageJsonContents = JSON.stringify({
+      name: 'test-lock-step-drift',
+    }, null, 2);
+    const configPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+        './packages/tool': {
+          name: 'tool-helper',
+          role: 'tool',
+          policy: 'trackable',
+        },
+        './templates/ignored': {
+          name: '@test/template',
+          role: 'template',
+          policy: 'freezable',
+        },
+      },
+      settings: {
+        lockStepVersioning: true,
+        versionStrategy: 'semver',
+      },
+    }, null, 2);
+    const corePackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CorePackagePath = join(coreDirectory, 'package.json');
+    const corePackageContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CorePackageContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+    }, null, 2);
+    const toolPackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolPackagePath = join(toolDirectory, 'package.json');
+    const toolPackageContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolPackageContents = JSON.stringify({
+      name: 'tool-helper',
+      version: '1.0.1',
+    }, null, 2);
+    const entryPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_EntryPath = join(changelogDirectory, 'lock-step-drift.md');
+    const entryContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_EntryContents = [
+      '---',
+      'package: "@test/core"',
+      'category: fixed',
+      'bump: patch',
+      '---',
+      '',
+      'Fixed a lock-step bug',
+      '',
+    ].join('\n');
+
+    await Promise.all([
+      writeFile(packageJsonPath, packageJsonContents, 'utf-8'),
+      writeFile(configPath, configContents, 'utf-8'),
+      writeFile(corePackagePath, corePackageContents, 'utf-8'),
+      writeFile(toolPackagePath, toolPackageContents, 'utf-8'),
+      writeFile(entryPath, entryContents, 'utf-8'),
+    ]);
+
+    process.chdir(projectDirectory);
+
+    process.exitCode = undefined;
+
+    await CliUtilityChangelog.run({
+      release: true,
+    });
+
+    const coreAfterRaw: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CoreAfterRaw = await readFile(corePackagePath, 'utf-8');
+    const coreAfter: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_CoreAfter = JSON.parse(coreAfterRaw);
+    const toolAfterRaw: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolAfterRaw = await readFile(toolPackagePath, 'utf-8');
+    const toolAfter: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_ToolAfter = JSON.parse(toolAfterRaw);
+    const entryAfter: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RejectsLockStepVersionDriftBeforeWriting_EntryAfter = await readFile(entryPath, 'utf-8');
+
+    strictEqual(coreAfter['version'], '1.0.0');
+    strictEqual(toolAfter['version'], '1.0.1');
+    strictEqual(entryAfter, entryContents);
+    strictEqual(process.exitCode, 1);
+
+    return;
+  });
+
   it('syncs exact-pinned references to released packages', async () => {
     const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SyncsExactPinnedReferencesToReleasedPackages_ProjectDirectory = join(sandboxRoot, 'reference-sync');
     const coreDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SyncsExactPinnedReferencesToReleasedPackages_CoreDirectory = join(projectDirectory, 'packages', 'core');
@@ -939,6 +1060,64 @@ describe('CliUtilityChangelog.run', async () => {
     strictEqual(hasSince, true);
     strictEqual(hasDeprecated, true);
     strictEqual(stringLiteralPreserved, true);
+
+    return;
+  });
+
+  it('keeps pending entries when stamping fails', async () => {
+    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_ProjectDirectory = join(sandboxRoot, 'stamp-failure');
+    const workspaceDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_ChangelogDirectory = join(projectDirectory, '.changelog');
+    const sourcePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_SourcePath = join(workspaceDirectory, 'src');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+    await mkdir(changelogDirectory, { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({
+      name: 'test-stamp-failure',
+    }, null, 2), 'utf-8');
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }, null, 2), 'utf-8');
+
+    await writeFile(join(workspaceDirectory, 'package.json'), JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+    }, null, 2), 'utf-8');
+
+    // A non-directory src path makes the stamp preflight fail with ENOTDIR.
+    await writeFile(sourcePath, 'not a directory', 'utf-8');
+
+    await writeFile(join(changelogDirectory, 'failed-stamp.md'), [
+      '---',
+      'package: "@test/core"',
+      'category: fixed',
+      'bump: patch',
+      '---',
+      '',
+      'Keep this pending when source stamping fails.',
+      '',
+    ].join('\n'), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliUtilityChangelog.run({
+      release: true,
+    });
+
+    strictEqual(process.exitCode, 1);
+
+    const remainingFiles: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_RemainingFiles = await readdir(changelogDirectory);
+    const remainingMdFiles: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_KeepsPendingEntriesWhenStampingFails_RemainingMdFiles = remainingFiles.filter((file) => file.endsWith('.md') && file !== 'README.md');
+
+    strictEqual(remainingMdFiles.includes('failed-stamp.md'), true);
 
     return;
   });
@@ -1704,6 +1883,41 @@ describe('CliUtilityChangelog.run', async () => {
     strictEqual(hasBump, false);
     strictEqual(hasPackage, true);
     strictEqual(hasCategory, true);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Changelog - Validate Version.
+ *
+ * @since 0.26.0
+ */
+describe('validate version', () => {
+  const validateVersion: Tests_Cli_Utility_Changelog_ValidateVersion_ValidateVersion = Reflect.get(CliUtilityChangelog, 'validateVersion') as Tests_Cli_Utility_Changelog_ValidateVersion_ValidateVersion;
+
+  it('allows the initial CalVer sentinel', () => {
+    const currentVersion: Tests_Cli_Utility_Changelog_ValidateVersion_AllowsTheInitialCalVerSentinel_CurrentVersion = '0.0.0';
+
+    validateVersion(currentVersion, 'calver', '/tmp/package.json');
+
+    return;
+  });
+
+  it('rejects malformed CalVer', () => {
+    const currentVersion: Tests_Cli_Utility_Changelog_ValidateVersion_RejectsMalformedCalVer_CurrentVersion = '2026.13.0';
+
+    throws(() => validateVersion(currentVersion, 'calver', '/tmp/package.json'));
+
+    return;
+  });
+
+  it('rejects future CalVer', () => {
+    const futureVersion: Tests_Cli_Utility_Changelog_ValidateVersion_RejectsFutureCalVer_FutureVersion = `${new Date().getFullYear() + 1}.1.0`;
+
+    throws(() => validateVersion(futureVersion, 'calver', '/tmp/package.json'));
 
     return;
   });

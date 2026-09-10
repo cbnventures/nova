@@ -2,11 +2,17 @@ import { createHash } from 'node:crypto';
 import {
   copyFileSync, existsSync, readFileSync, writeFileSync,
 } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import * as cheerio from 'cheerio';
 
-import { LIB_REGEX_PATTERN_EXPORT_EMPTY, LIB_REGEX_WILDCARD_ASTERISK } from '../regex.js';
+import {
+  loadCommonJsModule,
+  resolveModulePath,
+} from '../module-loader.js';
+import { LIB_REGEX_WILDCARD_ASTERISK } from '../regex.js';
+import { normalizeClassicWorker } from './classic-worker.js';
 
 import type {
   Lib_Search_Indexer_BuildSearchIndex_BaseUrlPrefixedRoute,
@@ -76,6 +82,7 @@ import type {
   Lib_Search_Indexer_BuildSearchIndex_WorkerScript,
   Lib_Search_Indexer_BuildSearchIndex_WorkerSource,
   Lib_Search_Indexer_BuildSearchIndex_WorkerSourcePath,
+  Lib_Search_Indexer_BuildSearchIndex_WorkerSourceUrl,
   Lib_Search_Indexer_ExtractDocument_ArticleText,
   Lib_Search_Indexer_ExtractDocument_Body,
   Lib_Search_Indexer_ExtractDocument_CheerioApi,
@@ -308,7 +315,7 @@ export function buildSearchIndex(options: Lib_Search_Indexer_BuildSearchIndex_Op
     documents.push(document);
   }
 
-  const lunrModule: Lib_Search_Indexer_BuildSearchIndex_LunrModule = require('lunr');
+  const lunrModule: Lib_Search_Indexer_BuildSearchIndex_LunrModule = loadCommonJsModule('lunr');
   const lunrFunction: Lib_Search_Indexer_BuildSearchIndex_LunrFunction = lunrModule as Lib_Search_Indexer_BuildSearchIndex_LunrFunction;
 
   const nonEnglishLanguages: Lib_Search_Indexer_BuildSearchIndex_NonEnglishLanguages = [];
@@ -322,7 +329,7 @@ export function buildSearchIndex(options: Lib_Search_Indexer_BuildSearchIndex_Op
   }
 
   if (nonEnglishLanguages.length > 0) {
-    const lunrStemmerSupportLoader: Lib_Search_Indexer_BuildSearchIndex_LunrStemmerSupportLoader = require('lunr-languages/lunr.stemmer.support');
+    const lunrStemmerSupportLoader: Lib_Search_Indexer_BuildSearchIndex_LunrStemmerSupportLoader = loadCommonJsModule('lunr-languages/lunr.stemmer.support') as Lib_Search_Indexer_BuildSearchIndex_LunrStemmerSupportLoader;
 
     lunrStemmerSupportLoader(lunrFunction);
 
@@ -331,7 +338,7 @@ export function buildSearchIndex(options: Lib_Search_Indexer_BuildSearchIndex_Op
 
       if (nonEnglishLanguageCode === 'zh') {
         try {
-          require('@node-rs/jieba');
+          loadCommonJsModule('@node-rs/jieba');
         } catch {
           throw new Error('Chinese ("zh") search requires "@node-rs/jieba". Install it with "npm install @node-rs/jieba" to enable Chinese segmentation.');
         }
@@ -344,18 +351,18 @@ export function buildSearchIndex(options: Lib_Search_Indexer_BuildSearchIndex_Op
       // the Japanese language loader crashes with
       // "TypeError: lunr.TinySegmenter is not a constructor".
       if (nonEnglishLanguageCode === 'ja' || nonEnglishLanguageCode === 'jp') {
-        const lunrTinySegLoader: Lib_Search_Indexer_BuildSearchIndex_LunrTinySegLoader = require('lunr-languages/tinyseg');
+        const lunrTinySegLoader: Lib_Search_Indexer_BuildSearchIndex_LunrTinySegLoader = loadCommonJsModule('lunr-languages/tinyseg') as Lib_Search_Indexer_BuildSearchIndex_LunrTinySegLoader;
 
         lunrTinySegLoader(lunrFunction);
       }
 
-      const lunrLanguageLoader: Lib_Search_Indexer_BuildSearchIndex_LunrLanguageLoader = require(`lunr-languages/lunr.${nonEnglishLanguageCode}`);
+      const lunrLanguageLoader: Lib_Search_Indexer_BuildSearchIndex_LunrLanguageLoader = loadCommonJsModule(`lunr-languages/lunr.${nonEnglishLanguageCode}`) as Lib_Search_Indexer_BuildSearchIndex_LunrLanguageLoader;
 
       lunrLanguageLoader(lunrFunction);
     }
 
     if (nonEnglishLanguages.length >= 2) {
-      const lunrMultiLoader: Lib_Search_Indexer_BuildSearchIndex_LunrMultiLoader = require('lunr-languages/lunr.multi');
+      const lunrMultiLoader: Lib_Search_Indexer_BuildSearchIndex_LunrMultiLoader = loadCommonJsModule('lunr-languages/lunr.multi') as Lib_Search_Indexer_BuildSearchIndex_LunrMultiLoader;
 
       lunrMultiLoader(lunrFunction);
     }
@@ -466,19 +473,20 @@ export function buildSearchIndex(options: Lib_Search_Indexer_BuildSearchIndex_Op
 
   writeFileSync(manifestFilePath, manifestJson, 'utf-8');
 
-  const lunrSourcePath: Lib_Search_Indexer_BuildSearchIndex_LunrSourcePath = join(dirname(require.resolve('lunr')), 'lunr.min.js');
+  const lunrSourcePath: Lib_Search_Indexer_BuildSearchIndex_LunrSourcePath = join(dirname(resolveModulePath('lunr')), 'lunr.min.js');
   const lunrDestinationPath: Lib_Search_Indexer_BuildSearchIndex_LunrDestinationPath = join(options['outDir'], 'lunr.min.js');
 
   if (existsSync(lunrSourcePath) === true) {
     copyFileSync(lunrSourcePath, lunrDestinationPath);
   }
 
-  const workerSourcePath: Lib_Search_Indexer_BuildSearchIndex_WorkerSourcePath = resolve(__dirname, 'worker.js');
+  const workerSourceUrl: Lib_Search_Indexer_BuildSearchIndex_WorkerSourceUrl = new URL('./worker.js', import.meta.url);
+  const workerSourcePath: Lib_Search_Indexer_BuildSearchIndex_WorkerSourcePath = fileURLToPath(workerSourceUrl);
   const workerDestinationPath: Lib_Search_Indexer_BuildSearchIndex_WorkerDestinationPath = join(options['outDir'], 'search-worker.js');
 
   if (existsSync(workerSourcePath) === true) {
     const workerSource: Lib_Search_Indexer_BuildSearchIndex_WorkerSource = readFileSync(workerSourcePath, 'utf-8');
-    const workerScript: Lib_Search_Indexer_BuildSearchIndex_WorkerScript = `${workerSource.replace(new RegExp(LIB_REGEX_PATTERN_EXPORT_EMPTY.source, 'gm'), '').trimEnd()}\n`;
+    const workerScript: Lib_Search_Indexer_BuildSearchIndex_WorkerScript = normalizeClassicWorker(workerSource);
 
     writeFileSync(workerDestinationPath, workerScript, 'utf-8');
   }

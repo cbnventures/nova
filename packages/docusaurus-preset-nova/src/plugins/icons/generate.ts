@@ -5,6 +5,7 @@ import { dirname, extname, join } from 'node:path';
 
 import { Logger } from '@cbnventures/nova/toolkit';
 
+import { resolveModulePath } from '../../lib/module-loader.js';
 import { LIB_REGEX_ICON_CANDIDATE } from '../../lib/regex.js';
 import { iconBaseSet } from './base-set.js';
 
@@ -349,7 +350,7 @@ function walkDirectory(directory: Plugins_Icons_Generate_WalkDirectory_Directory
  * @since 0.19.0
  */
 function getIconifyPackageDirectory(): Plugins_Icons_Generate_GetIconifyPackageDirectory_Returns {
-  return dirname(require.resolve('@iconify/json/package.json'));
+  return dirname(resolveModulePath('@iconify/json/package.json'));
 }
 
 /**

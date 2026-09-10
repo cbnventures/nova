@@ -86,14 +86,23 @@ You can run this command in two ways:
 
 ## Options
 
-| Flag                 | Description                                                                 |
-|----------------------|-----------------------------------------------------------------------------|
-| `-d, --dry-run`      | Run without writing any files.                                              |
-| `-r, --replace-file` | Overwrite the existing `nova.config.json` instead of creating a dated copy. |
+| Flag                 | Description                                                                       |
+|----------------------|-----------------------------------------------------------------------------------|
+| `-d, --dry-run`      | Run without writing any files.                                                    |
+| `-r, --replace-file` | Overwrite the existing `nova.config.json` instead of creating a dated copy.       |
+| `-s, --status`       | Show the read-only GitHub environment status and exit without opening the wizard. |
+
+### Read-Only Environment Status
+
+Use `--status` when you only want to compare the environment declarations with their GitHub Variable and Secret names. This path does not open the wizard and does not write `nova.config.json` or reconcile any values.
+
+```bash
+nova utility initialize --status
+```
 
 ## Flow Overview
 
-The command loops until you choose **Save & Exit** or **Cancel**. You can edit any category multiple times during the same run.
+Without `--status`, the command loops until you choose **Save & Exit** or **Cancel**. You can edit any category multiple times during the same run.
 
 :::tip Editing an existing config?
 Existing values are pre-filled in each prompt. Press **Enter** to keep a value, type a new value to replace it, or enter a single space to clear that field.
@@ -136,8 +145,8 @@ Environment variables and secrets live in the top-level [`environment`](/docs/qu
 ### Workflows
 
 - **Purpose**: Manage the list of GitHub Actions workflow templates that the [workflow generator](/docs/cli/generators/github/workflows) reads from at generation time.
-- **Nice to know**: The menu lists existing workflow entries with **Edit** and **Remove** actions alongside an **Add** option and a **Back** option to return to the category menu. When adding or editing, the wizard prompts for a template (chosen from the bundled set), a suffix, triggers (selected from the template's available options), an optional depends-on (when using `workflow-run-*` triggers), and per-variable settings. Each variable prompt includes a description and example value to guide input.
-- **Things to watch**: The suffix must be unique within the same template so the output filenames remain distinct. When using `workflow-run-*` triggers, the depends-on field references other workflows by their `{template}-{suffix}` composite key.
+- **Nice to know**: The menu lists existing workflow entries with **Edit** and **Remove** actions alongside an **Add** option and a **Back** option to return to the category menu. When adding or editing, the wizard prompts for a template (chosen from the bundled set), a name, triggers (selected from the template's available options), upstream workflows when using a `workflow-run-*` trigger, and per-variable settings. Each variable prompt includes a description and example value to guide input.
+- **Things to watch**: The name must be unique within the same template so the output filenames remain distinct. Upstream choices use another workflow's `{template}-{name}` key. Multiple upstream choices are alternatives: any one completion can start this workflow; the wizard does not create a wait-for-all chain.
 
 :::note Multiline values
 The interactive prompt is single-line. To include line breaks in a setting value (e.g., issue messages with paragraphs), type `\n` where you want a newline.
@@ -147,8 +156,9 @@ The wizard converts `\n` sequences to actual line breaks when saving. Alternativ
 
 ### GitHub
 
-- **Purpose**: Configure GitHub repository settings, recipes, policies, and issue-template fields: owner, repository name, sync recipes, topics, features, merge/branch policies, and bug report fields.
-- **Nice to know**: Recipes toggle which repository settings get synced (`sync-identity`, `sync-features`, `sync-policies`). Features cover the repository toggles for issues, wiki, projects, and discussions, while policies cover visibility (public, private, internal), default branch, allowed merge methods (merge, squash, rebase), and automatic head-branch deletion.
+- **Purpose**: Configure GitHub repository settings, policies, issue-template fields, and the GitHub recipes stored under the top-level `recipes.github` block.
+- **Nice to know**: Recipe toggles cover `sync-actions`, `sync-features`, `sync-identity`, `sync-labels`, `sync-policies`, `sync-rulesets`, and `sync-security`. Features cover Issues, Wiki, Projects, Discussions, and Sponsorships. Guided policies cover visibility, default branch, merge methods, and automatic head-branch deletion.
+- **Advanced repository settings**: Actions, labels, security, rulesets, merge presentation, auto-merge, update-branch, and web-signoff values already in the config are preserved when the wizard saves. Edit those values through the complete [`github` config reference](/docs/quickstart/nova-config#github); the wizard does not invent GitHub policy defaults for you.
 - **Bug report fields**: A multiselect chooses which platform field files the [issue template generator](/docs/cli/generators/github/issue-template) includes, saved under `github.issueTemplate.bugReportFields`. Leaving every option unselected omits the field so the generator falls back to fields derived from `project.platforms`.
 - **Things to watch**: Owner and repository name are required (non-empty) and trimmed before they're saved.
 
@@ -171,8 +181,14 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 ### Environment
 
 - **Purpose**: Manage the [`environment`](/docs/quickstart/nova-config#environment) block — per-workspace environment values, project-wide keys, and their namespace prefixes — without editing `nova.config.json` by hand.
-- **Nice to know**: Each value is classified by a required `secret` flag (stored as a GitHub Secret when `true`, a GitHub Variable when `false`); workspace values also declare how they are delivered, and a non-secret value can seed `.env.sample` with a `defaultValue`. The wizard can add the repo root `./` workspace alongside the others, bringing its `.env` under management.
+- **Nice to know**: Each value has a required `reach`: `local` stays on the developer machine, `managed` is tracked locally and on GitHub but delivered nowhere, `build` is injected into CI builds, and `runtime` is reconciled to deployed servers. `managed`, `build`, and `runtime` values also require `secret` to choose GitHub Secret or Variable storage. The wizard can add the repo root `./` workspace alongside the others, bringing its `.env` under management.
 - **Things to watch**: Removing a value is confirm-gated and offers to drop its local `.env` line as well. Every namespace — the `project` group, each workspace (including the root `./`), and each workflow — requires a non-empty `prefix` before it can be saved. On exit, the section can check GitHub status and reconcile — stubbing missing keys and deleting stale ones through the `gh` CLI — so Nova manages key names and existence only, never their values.
+
+### Settings
+
+- **Purpose**: Select the project's release strategy: SemVer (`major.minor.patch`) or CalVer (`YYYY.MM.MICRO`).
+- **Nice to know**: With no release history, you can revisit this category and change the strategy before the first release.
+- **Things to watch**: Once the root or any non-freezable workspace changelog contains a release heading, Nova detects that history and makes the strategy read-only. A configured mismatch, mixed strategies, or an unsupported numeric heading stops initialization and identifies the affected changelog.
 
 ## Saving and Canceling
 
@@ -189,23 +205,12 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
       "title": "Example"
     },
     "description": {
-      "short": "Sample settings for a Nova-powered JavaScript toolkit.",
-      "long": "Use Nova to keep linting, typing, and release metadata consistent across your JavaScript and TypeScript projects."
+      "short": "A Nova-powered JavaScript toolkit."
     },
-    "keywords": [
-      "example",
-      "nova",
-      "tooling",
-      "config"
-    ],
+    "keywords": ["example", "nova", "tooling"],
     "legalName": "Example Author LLC",
     "pronouns": "business",
-    "platforms": [
-      "nodejs",
-      "macos",
-      "linux",
-      "windows"
-    ],
+    "platforms": ["nodejs", "linux", "windows"],
     "startingYear": 2025,
     "license": "MIT"
   },
@@ -214,18 +219,7 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
       "name": "Example Author",
       "email": "author@example.com",
       "url": "https://example.com/author",
-      "roles": [
-        "author"
-      ]
-    },
-    {
-      "name": "Example Collaborator",
-      "email": "collab@example.com",
-      "url": "https://example.com/collaborator",
-      "roles": [
-        "contributor",
-        "supporter"
-      ]
+      "roles": ["author"]
     }
   ],
   "emails": {
@@ -234,20 +228,13 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
   "github": {
     "owner": "example",
     "repo": "example-project",
-    "recipes": {
-      "sync-identity": true,
-      "sync-features": true,
-      "sync-policies": true
-    },
-    "topics": [
-      "nova",
-      "tooling"
-    ],
+    "topics": ["nova", "tooling"],
     "features": {
       "issues": true,
       "wiki": false,
       "projects": false,
-      "discussions": false
+      "discussions": false,
+      "sponsorships": true
     },
     "policies": {
       "visibility": "public",
@@ -258,6 +245,9 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
         "rebase": false
       },
       "autoDeleteHeadBranch": true
+    },
+    "issueTemplate": {
+      "bugReportFields": ["nodejs.yml", "screenshots.yml"]
     }
   },
   "urls": {
@@ -269,10 +259,7 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
     "documentation": "https://docs.example.com/project",
     "npm": "https://www.npmjs.com/package/example-project",
     "docker": "https://hub.docker.com/r/example/example-project",
-    "fundSources": [
-      "https://github.com/sponsors/example",
-      "https://opencollective.com/example"
-    ],
+    "fundSources": ["https://github.com/sponsors/example"],
     "privacyPolicy": "https://example.com/privacy",
     "termsOfUse": "https://example.com/terms"
   },
@@ -280,175 +267,122 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
     "./": {
       "name": "example-project",
       "role": "project",
-      "policy": "freezable",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true
-        ],
-        "sync-ownership": [
-          true
-        ]
-      }
+      "policy": "freezable"
     },
     "./apps/docs": {
       "name": "example-docs",
       "role": "docs",
-      "policy": "freezable",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true
-        ],
-        "sync-ownership": [
-          true
-        ]
-      }
+      "policy": "freezable"
     },
     "./packages/nova": {
       "name": "@company/example",
       "role": "package",
-      "policy": "distributable",
-      "recipes": {
-        "cleanup": [
-          true,
-          {
-            "removeUnknownKeys": true,
-            "reorderKeys": true
-          }
-        ],
-        "normalize-artifacts": [
-          true
-        ],
-        "normalize-bundler": [
-          true
-        ],
-        "normalize-dependencies": [
-          true,
-          {
-            "pinDependencyVersions": true,
-            "pinDevDependencyVersions": true
-          }
-        ],
-        "normalize-modules": [
-          true
-        ],
-        "normalize-tooling": [
-          true
-        ],
-        "sync-environment": [
-          true,
-          {
-            "trackNodeLtsVersions": true
-          }
-        ],
-        "sync-identity": [
-          true,
-          {
-            "description": true,
-            "keywords": true,
-            "displayName": true
-          }
-        ],
-        "sync-ownership": [
-          true,
-          {
-            "homepage": true,
-            "bugs": true,
-            "author": true,
-            "contributors": true,
-            "funding": true,
-            "repository": true
-          }
-        ]
-      }
+      "policy": "distributable"
     }
   },
   "workflows": [
     {
       "template": "lock-inactive-issues",
-      "suffix": "project",
+      "name": "project",
       "triggers": ["schedule-weekly"]
     },
     {
       "template": "publish",
-      "suffix": "project",
+      "name": "project",
       "triggers": ["release"],
-      "scopes": ["./packages/my-package"],
-      "targets": [
+      "build": ["./packages/nova"],
+      "deploy": [
         {
-          "type": "npm",
-          "workingDir": "./packages/my-package"
+          "to": "npm",
+          "path": "./packages/nova"
         }
       ],
-      "settings": {
-        "NPM_TOKEN": "NPM_TOKEN",
-        "ROOT_WORKING_DIR": "./"
+      "with": {
+        "NPM_TOKEN": "NPM_TOKEN"
       }
     }
-  ]
+  ],
+  "gitignore": {
+    "projectExcludes": [".local/", "scratch/"]
+  },
+  "agents": ["claude-code", "codex"],
+  "recipes": {
+    "github": {
+      "sync-actions": { "enabled": false },
+      "sync-features": { "enabled": true },
+      "sync-identity": { "enabled": true },
+      "sync-labels": { "enabled": false },
+      "sync-policies": { "enabled": true },
+      "sync-rulesets": { "enabled": false },
+      "sync-security": { "enabled": false }
+    },
+    "license": {
+      "update-copyright": { "enabled": true }
+    },
+    "read-me": {
+      "update-badges": { "enabled": true },
+      "update-credits": { "enabled": true }
+    },
+    "package-json": {
+      "./": {
+        "cleanup": {
+          "enabled": true,
+          "settings": {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        },
+        "normalize-dependencies": {
+          "enabled": true,
+          "settings": {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        }
+      },
+      "./packages/nova": {
+        "sync-identity": {
+          "enabled": true,
+          "settings": {
+            "description": true,
+            "keywords": true,
+            "displayName": true
+          }
+        }
+      }
+    }
+  },
+  "environment": {
+    "project": {
+      "prefix": "EXAMPLE_",
+      "variables": [
+        { "key": "NPM_TOKEN", "reach": "managed", "secret": true }
+      ]
+    },
+    "workspaces": {
+      "./": {
+        "prefix": "ROOT_"
+      },
+      "./apps/docs": {
+        "prefix": "DOCS_",
+        "variables": [
+          { "key": "LOCAL_API_MOCK", "reach": "local", "defaultValue": "http://127.0.0.1:8787" },
+          { "key": "SENTRY_PROJECT", "reach": "managed", "secret": false },
+          { "key": "PUBLIC_SITE_URL", "reach": "build", "secret": false, "defaultValue": "https://docs.example.com" },
+          { "key": "STRIPE_SECRET_KEY", "reach": "runtime", "secret": true }
+        ]
+      }
+    },
+    "workflows": {
+      "project": {
+        "prefix": "PUBLISH_"
+      }
+    }
+  },
+  "settings": {
+    "lockStepVersioning": false,
+    "versionStrategy": "semver"
+  }
 }
 ```
 

@@ -16,11 +16,13 @@ import {
 } from '../../lib/item.js';
 import { Runner as LibNovaConfig } from '../../lib/nova-config.js';
 import {
+  LIB_REGEX_PATTERN_CALVER_STRICT,
   LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED,
   LIB_REGEX_PATTERN_EXACT_SEMVER,
   LIB_REGEX_PATTERN_LEADING_NEWLINES,
   LIB_REGEX_PATTERN_SINCE_UNRELEASED,
 } from '../../lib/regex.js';
+import { Runner as LibReleaseHistory } from '../../lib/release-history.js';
 import { Logger } from '../../toolkit/index.js';
 
 import type {
@@ -126,6 +128,8 @@ import type {
   Cli_Utility_Changelog_Runner_Release_CurrentVersion,
   Cli_Utility_Changelog_Runner_Release_Entries,
   Cli_Utility_Changelog_Runner_Release_Existing,
+  Cli_Utility_Changelog_Runner_Release_FilterLockStepWorkspaceConfig,
+  Cli_Utility_Changelog_Runner_Release_FilterLockStepWorkspacePolicy,
   Cli_Utility_Changelog_Runner_Release_FindWorkspaceConfig,
   Cli_Utility_Changelog_Runner_Release_FindWorkspaceConfigName,
   Cli_Utility_Changelog_Runner_Release_Groups,
@@ -136,16 +140,20 @@ import type {
   Cli_Utility_Changelog_Runner_Release_IsNonInteractive,
   Cli_Utility_Changelog_Runner_Release_LockStepCurrentDirectory,
   Cli_Utility_Changelog_Runner_Release_LockStepCurrentVersion,
+  Cli_Utility_Changelog_Runner_Release_LockStepErrorLines,
   Cli_Utility_Changelog_Runner_Release_LockStepI,
   Cli_Utility_Changelog_Runner_Release_LockStepPackageDirectory,
   Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonPath,
   Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonRaw,
+  Cli_Utility_Changelog_Runner_Release_LockStepPackages,
   Cli_Utility_Changelog_Runner_Release_LockStepParsedPackageJson,
   Cli_Utility_Changelog_Runner_Release_LockStepVersioning,
+  Cli_Utility_Changelog_Runner_Release_LockStepVersionRows,
+  Cli_Utility_Changelog_Runner_Release_LockStepVersions,
   Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceConfig,
   Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceName,
   Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePath,
-  Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePolicy,
+  Cli_Utility_Changelog_Runner_Release_LockStepWorkspaces,
   Cli_Utility_Changelog_Runner_Release_NewVersion,
   Cli_Utility_Changelog_Runner_Release_Options,
   Cli_Utility_Changelog_Runner_Release_PackageDirectory,
@@ -160,6 +168,7 @@ import type {
   Cli_Utility_Changelog_Runner_Release_ReleaseParts,
   Cli_Utility_Changelog_Runner_Release_Releases,
   Cli_Utility_Changelog_Runner_Release_Returns,
+  Cli_Utility_Changelog_Runner_Release_StampSucceeded,
   Cli_Utility_Changelog_Runner_Release_SummaryReleaseCurrentVersion,
   Cli_Utility_Changelog_Runner_Release_SummaryReleaseEntries,
   Cli_Utility_Changelog_Runner_Release_SummaryReleaseHighestBump,
@@ -181,6 +190,8 @@ import type {
   Cli_Utility_Changelog_Runner_Run_Options,
   Cli_Utility_Changelog_Runner_Run_Returns,
   Cli_Utility_Changelog_Runner_StampUnreleased_CheckContent,
+  Cli_Utility_Changelog_Runner_StampUnreleased_CheckError,
+  Cli_Utility_Changelog_Runner_StampUnreleased_CheckErrorMessage,
   Cli_Utility_Changelog_Runner_StampUnreleased_CheckFp,
   Cli_Utility_Changelog_Runner_StampUnreleased_DeprecatedPattern,
   Cli_Utility_Changelog_Runner_StampUnreleased_Fp,
@@ -199,6 +210,8 @@ import type {
   Cli_Utility_Changelog_Runner_StampUnreleased_SincePattern,
   Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles,
   Cli_Utility_Changelog_Runner_StampUnreleased_SrcDirectory,
+  Cli_Utility_Changelog_Runner_StampUnreleased_StampError,
+  Cli_Utility_Changelog_Runner_StampUnreleased_StampErrorMessage,
   Cli_Utility_Changelog_Runner_StampUnreleased_StillHasDeprecated,
   Cli_Utility_Changelog_Runner_StampUnreleased_StillHasSince,
   Cli_Utility_Changelog_Runner_StampUnreleased_SurvivingFiles,
@@ -222,6 +235,17 @@ import type {
   Cli_Utility_Changelog_Runner_SyncPackageReferences_Workspaces,
   Cli_Utility_Changelog_Runner_ValidateMessage_MessageValue,
   Cli_Utility_Changelog_Runner_ValidateMessage_Returns,
+  Cli_Utility_Changelog_Runner_ValidateVersion_CalverCurrentMonth,
+  Cli_Utility_Changelog_Runner_ValidateVersion_CalverCurrentYear,
+  Cli_Utility_Changelog_Runner_ValidateVersion_CalverMonth,
+  Cli_Utility_Changelog_Runner_ValidateVersion_CalverParts,
+  Cli_Utility_Changelog_Runner_ValidateVersion_CalverToday,
+  Cli_Utility_Changelog_Runner_ValidateVersion_CalverYear,
+  Cli_Utility_Changelog_Runner_ValidateVersion_CurrentVersion,
+  Cli_Utility_Changelog_Runner_ValidateVersion_PackageJsonPath,
+  Cli_Utility_Changelog_Runner_ValidateVersion_Returns,
+  Cli_Utility_Changelog_Runner_ValidateVersion_SemverParts,
+  Cli_Utility_Changelog_Runner_ValidateVersion_VersionStrategy,
   Cli_Utility_Changelog_Runner_WriteChangelog_AfterHeading,
   Cli_Utility_Changelog_Runner_WriteChangelog_ByCategory,
   Cli_Utility_Changelog_Runner_WriteChangelog_CategoryOrder,
@@ -384,6 +408,19 @@ export class Runner {
     const config: Cli_Utility_Changelog_Runner_Record_Config = await new LibNovaConfig().load();
     const workspaces: Cli_Utility_Changelog_Runner_Record_Workspaces = config['workspaces'] ?? {};
     const versionStrategy: Cli_Utility_Changelog_Runner_Record_VersionStrategy = (config['settings'] !== undefined && config['settings']['versionStrategy'] !== undefined) ? config['settings']['versionStrategy'] : 'semver';
+
+    try {
+      await LibReleaseHistory.validateStrategy(config, process.cwd());
+    } catch (error) {
+      Logger.customize({
+        name: 'Runner.record',
+        purpose: 'versionStrategy',
+      }).error((error instanceof Error) ? error.message : 'Unable to validate the configured version strategy.');
+
+      process.exitCode = 1;
+
+      return;
+    }
 
     // Filter to non-freezable workspaces.
     const eligibleWorkspaces: Cli_Utility_Changelog_Runner_Record_EligibleWorkspaces = Object.entries(workspaces).filter((workspace) => {
@@ -753,6 +790,24 @@ export class Runner {
     // Parse all entries.
     const entries: Cli_Utility_Changelog_Runner_Release_Entries = await Runner.parseEntries();
 
+    // Load "nova.config.json" for workspace paths.
+    const config: Cli_Utility_Changelog_Runner_Release_Config = await new LibNovaConfig().load();
+    const workspaces: Cli_Utility_Changelog_Runner_Release_Workspaces = config['workspaces'] ?? {};
+    const versionStrategy: Cli_Utility_Changelog_Runner_Release_VersionStrategy = (config['settings'] !== undefined && config['settings']['versionStrategy'] !== undefined) ? config['settings']['versionStrategy'] : 'semver';
+
+    try {
+      await LibReleaseHistory.validateStrategy(config, process.cwd());
+    } catch (error) {
+      Logger.customize({
+        name: 'Runner.release',
+        purpose: 'versionStrategy',
+      }).error((error instanceof Error) ? error.message : 'Unable to validate the configured version strategy.');
+
+      process.exitCode = 1;
+
+      return;
+    }
+
     if (entries.length === 0) {
       Logger.customize({
         name: 'Runner.release',
@@ -772,11 +827,6 @@ export class Runner {
 
       groups.set(entry['package'], existing);
     }
-
-    // Load "nova.config.json" for workspace paths.
-    const config: Cli_Utility_Changelog_Runner_Release_Config = await new LibNovaConfig().load();
-    const workspaces: Cli_Utility_Changelog_Runner_Release_Workspaces = config['workspaces'] ?? {};
-    const versionStrategy: Cli_Utility_Changelog_Runner_Release_VersionStrategy = (config['settings'] !== undefined && config['settings']['versionStrategy'] !== undefined) ? config['settings']['versionStrategy'] : 'semver';
 
     if (versionStrategy === 'calver') {
       for (const validateEntry of entries) {
@@ -803,6 +853,92 @@ export class Runner {
 
           return;
         }
+      }
+    }
+
+    const lockStepVersioning: Cli_Utility_Changelog_Runner_Release_LockStepVersioning = config['settings'] !== undefined && config['settings']['lockStepVersioning'] === true;
+    let lockStepPackages: Cli_Utility_Changelog_Runner_Release_LockStepPackages = [];
+
+    if (lockStepVersioning === true) {
+      const lockStepWorkspaces: Cli_Utility_Changelog_Runner_Release_LockStepWorkspaces = Object.entries(workspaces).filter((lockStepWorkspace) => {
+        const filterLockStepWorkspaceConfig: Cli_Utility_Changelog_Runner_Release_FilterLockStepWorkspaceConfig = lockStepWorkspace[1];
+        const filterLockStepWorkspacePolicy: Cli_Utility_Changelog_Runner_Release_FilterLockStepWorkspacePolicy = filterLockStepWorkspaceConfig['policy'];
+
+        return filterLockStepWorkspacePolicy !== 'freezable';
+      });
+
+      try {
+        lockStepPackages = await Promise.all(lockStepWorkspaces.map(async (lockStepWorkspace) => {
+          const lockStepWorkspacePath: Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePath = lockStepWorkspace[0];
+          const lockStepWorkspaceConfig: Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceConfig = lockStepWorkspace[1];
+          const lockStepWorkspaceName: Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceName = lockStepWorkspaceConfig['name'];
+          const lockStepCurrentDirectory: Cli_Utility_Changelog_Runner_Release_LockStepCurrentDirectory = process.cwd();
+          const lockStepPackageDirectory: Cli_Utility_Changelog_Runner_Release_LockStepPackageDirectory = resolve(lockStepCurrentDirectory, lockStepWorkspacePath);
+          const lockStepPackageJsonPath: Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonPath = join(lockStepPackageDirectory, 'package.json');
+
+          let lockStepPackageJsonRaw: Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonRaw = undefined;
+
+          try {
+            lockStepPackageJsonRaw = await fs.readFile(lockStepPackageJsonPath, 'utf-8');
+          } catch {
+            throw new Error(`Unable to read "${lockStepPackageJsonPath}" for lock-step versioning.`);
+          }
+
+          let lockStepParsedPackageJson: Cli_Utility_Changelog_Runner_Release_LockStepParsedPackageJson = undefined;
+
+          try {
+            lockStepParsedPackageJson = JSON.parse(lockStepPackageJsonRaw);
+          } catch {
+            throw new Error(`Unable to parse "${lockStepPackageJsonPath}" for lock-step versioning.`);
+          }
+
+          if (lockStepParsedPackageJson === undefined) {
+            throw new Error(`Unable to parse "${lockStepPackageJsonPath}" for lock-step versioning.`);
+          }
+
+          const lockStepCurrentVersion: Cli_Utility_Changelog_Runner_Release_LockStepCurrentVersion = (typeof lockStepParsedPackageJson['version'] === 'string') ? lockStepParsedPackageJson['version'] : undefined;
+
+          if (lockStepCurrentVersion === undefined) {
+            throw new Error(`No "version" field found in "${lockStepPackageJsonPath}" for lock-step versioning.`);
+          }
+
+          Runner.validateVersion(lockStepCurrentVersion, versionStrategy, lockStepPackageJsonPath);
+
+          return {
+            packageName: lockStepWorkspaceName,
+            packageDirectory: lockStepPackageDirectory,
+            currentVersion: lockStepCurrentVersion,
+          };
+        }));
+      } catch (error) {
+        Logger.customize({
+          name: 'Runner.release',
+          purpose: 'lockStepVersioning',
+        }).error((error instanceof Error) ? error.message : 'Unable to validate lock-step workspace versions.');
+
+        process.exitCode = 1;
+
+        return;
+      }
+
+      const lockStepVersions: Cli_Utility_Changelog_Runner_Release_LockStepVersions = new Set(lockStepPackages.map((lockStepPackage) => lockStepPackage['currentVersion']));
+
+      if (lockStepVersions.size > 1) {
+        const lockStepVersionRows: Cli_Utility_Changelog_Runner_Release_LockStepVersionRows = lockStepPackages.map((lockStepPackage) => `- ${lockStepPackage['packageName']}: ${lockStepPackage['currentVersion']}`);
+        const lockStepErrorLines: Cli_Utility_Changelog_Runner_Release_LockStepErrorLines = [
+          'Lock-step versioning requires every non-freezable workspace to start at the same version.',
+          ...lockStepVersionRows,
+          'Align these versions before running the release again.',
+        ];
+
+        Logger.customize({
+          name: 'Runner.release',
+          purpose: 'lockStepVersioning',
+        }).error(lockStepErrorLines.join('\n'));
+
+        process.exitCode = 1;
+
+        return;
       }
     }
 
@@ -895,6 +1031,8 @@ export class Runner {
       let highestBump: Cli_Utility_Changelog_Runner_Release_HighestBump = 'patch';
       let newVersion: Cli_Utility_Changelog_Runner_Release_NewVersion = currentVersion;
 
+      Runner.validateVersion(currentVersion, versionStrategy, packageJsonPath);
+
       if (versionStrategy === 'calver') {
         const calverToday: Cli_Utility_Changelog_Runner_Release_CalverToday = new Date();
         const calverYear: Cli_Utility_Changelog_Runner_Release_CalverYear = calverToday.getFullYear();
@@ -917,13 +1055,6 @@ export class Runner {
         }
 
         const versionParts: Cli_Utility_Changelog_Runner_Release_VersionParts = currentVersion.split('.').map(Number);
-
-        if (
-          versionParts.length !== 3
-          || versionParts.some((versionPart) => Number.isInteger(versionPart) === false) === true
-        ) {
-          throw new Error(`Invalid version "${currentVersion}" in "${packageJsonPath}": expected a clean numeric "x.y.z" to bump.`);
-        }
 
         const versionPartsMajor: Cli_Utility_Changelog_Runner_Release_VersionPartsMajor = versionParts[0] ?? 0;
         const versionPartsMinor: Cli_Utility_Changelog_Runner_Release_VersionPartsMinor = versionParts[1] ?? 0;
@@ -961,9 +1092,7 @@ export class Runner {
       });
     }
 
-    // Lock-step versioning: include distributable packages that had no changelog entries.
-    const lockStepVersioning: Cli_Utility_Changelog_Runner_Release_LockStepVersioning = config['settings'] !== undefined && config['settings']['lockStepVersioning'] === true;
-
+    // Lock-step versioning: include non-freezable packages that had no changelog entries.
     if (lockStepVersioning === true && releases.length > 0) {
       // Safe: the length > 0 guard above guarantees releases[0] is defined.
       const highestNewVersion: Cli_Utility_Changelog_Runner_Release_HighestNewVersion = releases.reduce((highest, release) => {
@@ -988,53 +1117,18 @@ export class Runner {
         Reflect.set(release, 'newVersion', highestNewVersion);
       }
 
-      // Add synthetic entries for distributable packages not already in releases.
+      // Add synthetic entries for non-freezable packages not already in releases.
       const releasedNames: Cli_Utility_Changelog_Runner_Release_ReleasedNames = new Set(releases.map((release) => release['packageName']));
 
-      for (const workspaceEntry of Object.entries(workspaces)) {
-        const lockStepWorkspacePath: Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePath = workspaceEntry[0];
-        const lockStepWorkspaceConfig: Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceConfig = workspaceEntry[1];
-        const lockStepWorkspaceName: Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceName = lockStepWorkspaceConfig['name'];
-        const lockStepWorkspacePolicy: Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePolicy = lockStepWorkspaceConfig['policy'];
-
-        if (lockStepWorkspacePolicy === 'freezable' || releasedNames.has(lockStepWorkspaceName) === true) {
-          continue;
-        }
-
-        const lockStepCurrentDirectory: Cli_Utility_Changelog_Runner_Release_LockStepCurrentDirectory = process.cwd();
-        const lockStepPackageDirectory: Cli_Utility_Changelog_Runner_Release_LockStepPackageDirectory = resolve(lockStepCurrentDirectory, lockStepWorkspacePath);
-        const lockStepPackageJsonPath: Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonPath = join(lockStepPackageDirectory, 'package.json');
-
-        let lockStepPackageJsonRaw: Cli_Utility_Changelog_Runner_Release_LockStepPackageJsonRaw = undefined;
-
-        try {
-          lockStepPackageJsonRaw = await fs.readFile(lockStepPackageJsonPath, 'utf-8');
-        } catch {
-          continue;
-        }
-
-        let lockStepParsedPackageJson: Cli_Utility_Changelog_Runner_Release_LockStepParsedPackageJson = undefined;
-
-        try {
-          lockStepParsedPackageJson = JSON.parse(lockStepPackageJsonRaw);
-        } catch {
-          continue;
-        }
-
-        if (lockStepParsedPackageJson === undefined) {
-          continue;
-        }
-
-        const lockStepCurrentVersion: Cli_Utility_Changelog_Runner_Release_LockStepCurrentVersion = (typeof lockStepParsedPackageJson['version'] === 'string') ? lockStepParsedPackageJson['version'] : undefined;
-
-        if (lockStepCurrentVersion === undefined) {
+      for (const lockStepPackage of lockStepPackages) {
+        if (releasedNames.has(lockStepPackage['packageName']) === true) {
           continue;
         }
 
         releases.push({
-          packageName: lockStepWorkspaceName,
-          packageDirectory: lockStepPackageDirectory,
-          currentVersion: lockStepCurrentVersion,
+          packageName: lockStepPackage['packageName'],
+          packageDirectory: lockStepPackage['packageDirectory'],
+          currentVersion: lockStepPackage['currentVersion'],
           newVersion: highestNewVersion,
           highestBump: 'patch',
           entries: [],
@@ -1188,7 +1282,13 @@ export class Runner {
       }).info(`Updated "CHANGELOG.md" for ${applyReleasePackageName}.`);
 
       // Stamp @since UNRELEASED / @deprecated UNRELEASED tokens in source files.
-      await Runner.stampUnreleased(applyReleasePackageDirectory, applyReleaseNewVersion);
+      const stampSucceeded: Cli_Utility_Changelog_Runner_Release_StampSucceeded = await Runner.stampUnreleased(applyReleasePackageDirectory, applyReleaseNewVersion);
+
+      if (stampSucceeded === false) {
+        process.exitCode = 1;
+
+        return;
+      }
     }
 
     // Clean up consumed entry files.
@@ -1344,7 +1444,7 @@ export class Runner {
     const isPrerelease: Cli_Utility_Changelog_Runner_StampUnreleased_IsPrerelease = newVersion.includes('-');
 
     if (isPrerelease === true) {
-      return;
+      return true;
     }
 
     const srcDirectory: Cli_Utility_Changelog_Runner_StampUnreleased_SrcDirectory = join(packageDirectory, 'src');
@@ -1375,7 +1475,7 @@ export class Runner {
 
       // A missing "src" directory is a legitimate no-op; any other failure must surface.
       if (readdirErrorCode === 'ENOENT') {
-        return;
+        return true;
       }
 
       Logger.customize({
@@ -1383,30 +1483,40 @@ export class Runner {
         purpose: 'readdir',
       }).error(`Unable to read source directory "${srcDirectory}".`);
 
-      process.exitCode = 1;
-
-      return;
+      return false;
     }
 
     const sincePattern: Cli_Utility_Changelog_Runner_StampUnreleased_SincePattern = new RegExp(LIB_REGEX_PATTERN_SINCE_UNRELEASED.source, 'g');
     const deprecatedPattern: Cli_Utility_Changelog_Runner_StampUnreleased_DeprecatedPattern = new RegExp(LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED.source, 'g');
 
-    for (const filePath of sourceFiles) {
-      const fp: Cli_Utility_Changelog_Runner_StampUnreleased_Fp = filePath;
-      const originalContent: Cli_Utility_Changelog_Runner_StampUnreleased_OriginalContent = await fs.readFile(fp, 'utf-8');
+    try {
+      for (const filePath of sourceFiles) {
+        const fp: Cli_Utility_Changelog_Runner_StampUnreleased_Fp = filePath;
+        const originalContent: Cli_Utility_Changelog_Runner_StampUnreleased_OriginalContent = await fs.readFile(fp, 'utf-8');
 
-      const hasSince: Cli_Utility_Changelog_Runner_StampUnreleased_HasSince = LIB_REGEX_PATTERN_SINCE_UNRELEASED.test(originalContent);
-      const hasDeprecated: Cli_Utility_Changelog_Runner_StampUnreleased_HasDeprecated = LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED.test(originalContent);
+        const hasSince: Cli_Utility_Changelog_Runner_StampUnreleased_HasSince = LIB_REGEX_PATTERN_SINCE_UNRELEASED.test(originalContent);
+        const hasDeprecated: Cli_Utility_Changelog_Runner_StampUnreleased_HasDeprecated = LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED.test(originalContent);
 
-      if (hasSince === false && hasDeprecated === false) {
-        continue;
+        if (hasSince === false && hasDeprecated === false) {
+          continue;
+        }
+
+        const updatedContent: Cli_Utility_Changelog_Runner_StampUnreleased_UpdatedContent = originalContent
+          .replace(sincePattern, `$1@since ${newVersion}`)
+          .replace(deprecatedPattern, `$1@deprecated ${newVersion}`);
+
+        await fs.writeFile(fp, updatedContent, 'utf-8');
       }
+    } catch (error) {
+      const stampError: Cli_Utility_Changelog_Runner_StampUnreleased_StampError = error;
+      const stampErrorMessage: Cli_Utility_Changelog_Runner_StampUnreleased_StampErrorMessage = (stampError instanceof Error) ? stampError.message : String(stampError);
 
-      const updatedContent: Cli_Utility_Changelog_Runner_StampUnreleased_UpdatedContent = originalContent
-        .replace(sincePattern, `$1@since ${newVersion}`)
-        .replace(deprecatedPattern, `$1@deprecated ${newVersion}`);
+      Logger.customize({
+        name: 'Runner.stampUnreleased',
+        purpose: 'write',
+      }).error(`Unable to stamp source files in "${srcDirectory}": ${stampErrorMessage}`);
 
-      await fs.writeFile(fp, updatedContent, 'utf-8');
+      return false;
     }
 
     // Self-check: verify no UNRELEASED sentinel survived stamping. This reuses the same
@@ -1416,16 +1526,28 @@ export class Runner {
     // unanchored check would false-positive on string-literal fixtures the stamp preserves.
     const survivingFiles: Cli_Utility_Changelog_Runner_StampUnreleased_SurvivingFiles = [];
 
-    for (const filePath of sourceFiles) {
-      const checkFp: Cli_Utility_Changelog_Runner_StampUnreleased_CheckFp = filePath;
-      const checkContent: Cli_Utility_Changelog_Runner_StampUnreleased_CheckContent = await fs.readFile(checkFp, 'utf-8');
+    try {
+      for (const filePath of sourceFiles) {
+        const checkFp: Cli_Utility_Changelog_Runner_StampUnreleased_CheckFp = filePath;
+        const checkContent: Cli_Utility_Changelog_Runner_StampUnreleased_CheckContent = await fs.readFile(checkFp, 'utf-8');
 
-      const stillHasSince: Cli_Utility_Changelog_Runner_StampUnreleased_StillHasSince = LIB_REGEX_PATTERN_SINCE_UNRELEASED.test(checkContent);
-      const stillHasDeprecated: Cli_Utility_Changelog_Runner_StampUnreleased_StillHasDeprecated = LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED.test(checkContent);
+        const stillHasSince: Cli_Utility_Changelog_Runner_StampUnreleased_StillHasSince = LIB_REGEX_PATTERN_SINCE_UNRELEASED.test(checkContent);
+        const stillHasDeprecated: Cli_Utility_Changelog_Runner_StampUnreleased_StillHasDeprecated = LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED.test(checkContent);
 
-      if (stillHasSince === true || stillHasDeprecated === true) {
-        survivingFiles.push(checkFp);
+        if (stillHasSince === true || stillHasDeprecated === true) {
+          survivingFiles.push(checkFp);
+        }
       }
+    } catch (error) {
+      const checkError: Cli_Utility_Changelog_Runner_StampUnreleased_CheckError = error;
+      const checkErrorMessage: Cli_Utility_Changelog_Runner_StampUnreleased_CheckErrorMessage = (checkError instanceof Error) ? checkError.message : String(checkError);
+
+      Logger.customize({
+        name: 'Runner.stampUnreleased',
+        purpose: 'selfCheck',
+      }).error(`Unable to verify stamped source files in "${srcDirectory}": ${checkErrorMessage}`);
+
+      return false;
     }
 
     if (survivingFiles.length > 0) {
@@ -1434,10 +1556,10 @@ export class Runner {
         purpose: 'selfCheck',
       }).error(`UNRELEASED sentinel survived stamping in: ${survivingFiles.join(', ')}`);
 
-      process.exitCode = 1;
+      return false;
     }
 
-    return;
+    return true;
   }
 
   /**
@@ -1764,5 +1886,71 @@ export class Runner {
     }
 
     return true;
+  }
+
+  /**
+   * CLI - Utility - Changelog - Validate Version.
+   *
+   * Validates a package version against the configured strategy before Nova
+   * calculates or applies a release.
+   *
+   * @param {Cli_Utility_Changelog_Runner_ValidateVersion_CurrentVersion}  currentVersion  - Current version.
+   * @param {Cli_Utility_Changelog_Runner_ValidateVersion_VersionStrategy} versionStrategy - Version strategy.
+   * @param {Cli_Utility_Changelog_Runner_ValidateVersion_PackageJsonPath} packageJsonPath - Package json path.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_ValidateVersion_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static validateVersion(currentVersion: Cli_Utility_Changelog_Runner_ValidateVersion_CurrentVersion, versionStrategy: Cli_Utility_Changelog_Runner_ValidateVersion_VersionStrategy, packageJsonPath: Cli_Utility_Changelog_Runner_ValidateVersion_PackageJsonPath): Cli_Utility_Changelog_Runner_ValidateVersion_Returns {
+    if (versionStrategy === 'calver') {
+      if (
+        currentVersion !== '0.0.0'
+        && LIB_REGEX_PATTERN_CALVER_STRICT.test(currentVersion) === false
+      ) {
+        throw new Error(`Invalid version "${currentVersion}" in "${packageJsonPath}": expected "YYYY.MM.MICRO" or the initial "0.0.0" sentinel.`);
+      }
+
+      const calverParts: Cli_Utility_Changelog_Runner_ValidateVersion_CalverParts = currentVersion.split('.').map(Number);
+
+      if (calverParts.some((calverPart) => Number.isSafeInteger(calverPart) === false) === true) {
+        throw new Error(`Invalid version "${currentVersion}" in "${packageJsonPath}": each CalVer part must be a safe integer.`);
+      }
+
+      const calverToday: Cli_Utility_Changelog_Runner_ValidateVersion_CalverToday = new Date();
+      const calverYear: Cli_Utility_Changelog_Runner_ValidateVersion_CalverYear = calverToday.getFullYear();
+      const calverMonth: Cli_Utility_Changelog_Runner_ValidateVersion_CalverMonth = calverToday.getMonth() + 1;
+      const calverCurrentYear: Cli_Utility_Changelog_Runner_ValidateVersion_CalverCurrentYear = calverParts[0] ?? 0;
+      const calverCurrentMonth: Cli_Utility_Changelog_Runner_ValidateVersion_CalverCurrentMonth = calverParts[1] ?? 0;
+
+      if (
+        currentVersion !== '0.0.0'
+        && (
+          calverCurrentYear > calverYear
+          || (
+            calverCurrentYear === calverYear
+            && calverCurrentMonth > calverMonth
+          )
+        )
+      ) {
+        throw new Error(`Invalid version "${currentVersion}" in "${packageJsonPath}": CalVer cannot be later than the current month.`);
+      }
+
+      return;
+    }
+
+    const semverParts: Cli_Utility_Changelog_Runner_ValidateVersion_SemverParts = currentVersion.split('.').map(Number);
+
+    if (
+      LIB_REGEX_PATTERN_EXACT_SEMVER.test(currentVersion) === false
+      || semverParts.length !== 3
+      || semverParts.some((semverPart) => Number.isSafeInteger(semverPart) === false) === true
+    ) {
+      throw new Error(`Invalid version "${currentVersion}" in "${packageJsonPath}": expected a clean numeric "x.y.z" to bump.`);
+    }
+
+    return;
   }
 }

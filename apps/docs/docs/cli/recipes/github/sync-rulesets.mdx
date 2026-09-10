@@ -1,0 +1,128 @@
+---
+id: "sync-rulesets"
+title: "Sync Rulesets"
+description: "Create or update Nova's named GitHub default-branch ruleset without modifying unrelated repository or organization rulesets."
+keywords:
+  - "nova"
+  - "sync-rulesets"
+  - "github rulesets"
+  - "branch protection"
+  - "required status checks"
+tags:
+  - "cli"
+  - "sync-rulesets"
+  - "recipe"
+  - "github"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Manage one **default-branch ruleset** from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Summary
+
+The `sync-rulesets` recipe looks up the repository ruleset named **Nova default branch**. It creates that ruleset when missing or replaces its desired rules when present, targeting GitHub's `~DEFAULT_BRANCH` selector.
+
+Nova does not edit or delete any other repository or organization ruleset. Review [GitHub's ruleset availability and precedence](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets) before enabling enforcement.
+
+## Why Use This Command?
+
+1. Recreate default-branch protection without clicking through GitHub settings.
+2. Keep pull-request, review, and status-check requirements together as one policy.
+3. Avoid claiming rulesets that Nova did not create.
+
+## Requirements
+
+- **`gh` CLI ≥ 2.40.0** — The GitHub CLI must be installed and authenticated.
+- **Repository administration access** — The authenticated user must be able to manage rulesets.
+- **A GitHub plan that supports the selected rules** — GitHub may reject unavailable enforcement modes or rule types.
+- **`github.owner` and `github.repo`** — Both fields identify the target repository.
+
+## Behavior
+
+| Field                           | Type or values                    | What it controls                                                         |
+|---------------------------------|-----------------------------------|--------------------------------------------------------------------------|
+| `enforcement`                   | `active`, `disabled`, `evaluate`  | Whether the managed ruleset is enforced.                                 |
+| `blockDeletions`                | `boolean`                         | Blocks deletion of the default branch.                                   |
+| `blockForcePushes`              | `boolean`                         | Blocks non-fast-forward pushes.                                          |
+| `requireLinearHistory`          | `boolean`                         | Requires a linear commit history.                                        |
+| `requireSignedCommits`          | `boolean`                         | Requires signed commits.                                                 |
+| `requirePullRequest`            | `boolean`                         | Requires changes to enter through a pull request.                        |
+| `allowedMergeMethods`           | `merge`, `squash`, `rebase` array | Merge methods accepted by the pull-request rule.                         |
+| `dismissStaleReviews`           | `boolean`                         | Dismisses approvals after new commits.                                   |
+| `requireCodeOwnerReview`        | `boolean`                         | Requires approval from a code owner.                                     |
+| `requireLastPushApproval`       | `boolean`                         | Requires someone other than the last pusher to approve.                  |
+| `requiredApprovals`             | integer `0`–`10`                  | Number of approving reviews required.                                    |
+| `requireConversationResolution` | `boolean`                         | Requires review threads to be resolved.                                  |
+| `requiredStatusChecks`          | `string[]`                        | Status-check context names required before merging.                      |
+| `requireBranchesToBeUpToDate`   | `boolean`                         | Requires the branch to be current before required checks may pass merge. |
+
+Nova rejects combinations GitHub cannot interpret:
+
+- `requirePullRequest: true` requires at least one `allowedMergeMethods` value.
+- Pull-request review fields require `requirePullRequest: true`.
+- `requireBranchesToBeUpToDate: true` requires at least one `requiredStatusChecks` value.
+- At least one protection rule must be enabled.
+
+Use `enforcement: "disabled"` to create or maintain the policy without enforcing it. Removing the config does not delete the managed ruleset; Nova only mutates it when `github.rulesets.defaultBranch` is present.
+
+## Settings
+
+```json
+{
+  "github": {
+    "rulesets": {
+      "defaultBranch": {
+        "enforcement": "active",
+        "blockDeletions": true,
+        "blockForcePushes": true,
+        "requireLinearHistory": false,
+        "requireSignedCommits": true,
+        "requirePullRequest": true,
+        "allowedMergeMethods": ["squash", "rebase"],
+        "dismissStaleReviews": true,
+        "requireCodeOwnerReview": false,
+        "requireLastPushApproval": true,
+        "requiredApprovals": 1,
+        "requireConversationResolution": true,
+        "requiredStatusChecks": ["check", "build"],
+        "requireBranchesToBeUpToDate": true
+      }
+    }
+  },
+  "recipes": {
+    "github": {
+      "sync-rulesets": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe github sync-rulesets [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe github sync-rulesets [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag            | Description                                                |
+|-----------------|------------------------------------------------------------|
+| `-d, --dry-run` | Run read-only checks without changing any GitHub settings. |

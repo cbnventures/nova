@@ -336,7 +336,7 @@ export default [
         'error',
         {
           ignoreFiles: [],
-          sharedFiles: ['shared.d.ts'],
+          sharedFiles: ['./src/types/shared.d.ts'],
         },
       ],
 
@@ -411,7 +411,7 @@ export default [
         {
           ignoreFiles: [
             './eslint.config.mts',
-            './vitest.config.ts',
+            './vitest.config.mts',
           ],
           maxLines: 3,
           maxWidth: 90,
@@ -433,7 +433,7 @@ export default [
           ],
           ignoreFiles: [
             './eslint.config.mts',
-            './vitest.config.ts',
+            './vitest.config.mts',
             './vitest.setup.ts',
             './src/index.ts',
           ],
@@ -465,7 +465,7 @@ export default [
           ignoreFiles: [
             './bin/theme-nova.mjs',
             './eslint.config.mts',
-            './vitest.config.ts',
+            './vitest.config.mts',
           ],
           skipDirectories: [
             'tests',
@@ -513,7 +513,7 @@ export default [
           extraExtensions: [],
           ignoreFiles: [
             './eslint.config.mts',
-            './vitest.config.ts',
+            './vitest.config.mts',
             './vitest.setup.ts',
           ],
         },

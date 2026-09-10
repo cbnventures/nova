@@ -9,12 +9,19 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { afterAll, describe, it } from 'vitest';
+import {
+  afterAll,
+  afterEach,
+  describe,
+  it,
+} from 'vitest';
 
 import { Runner as CliScaffoldAppNextjs } from '../../../../cli/scaffold/app/nextjs.js';
 
 import type {
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_NextConfigPath,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_NovaConfig,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_NovaConfigPath,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_PackageJson,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_PackageJsonPath,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_PageTsxPath,
@@ -49,7 +56,7 @@ import type {
  *
  * @since 0.15.0
  */
-describe.skip('CliScaffoldAppNextjs.run', async () => {
+describe.sequential('CliScaffoldAppNextjs.run', async () => {
   const originalCwd: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_OriginalCwd = process.cwd();
   const temporaryDirectory: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_TemporaryDirectory = tmpdir();
   const temporaryBase: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_TemporaryBase = join(temporaryDirectory, `nova-${'test'}-`);
@@ -62,6 +69,12 @@ describe.skip('CliScaffoldAppNextjs.run', async () => {
       recursive: true,
       force: true,
     });
+
+    return;
+  });
+
+  afterEach(() => {
+    process.exitCode = undefined;
 
     return;
   });
@@ -124,6 +137,7 @@ describe.skip('CliScaffoldAppNextjs.run', async () => {
     await CliScaffoldAppNextjs.run({
       dryRun: true,
       name: 'my-app',
+      nonInteractive: true,
       workspaceName: 'nextjs',
       output: './my-app',
     });
@@ -152,6 +166,7 @@ describe.skip('CliScaffoldAppNextjs.run', async () => {
 
     await CliScaffoldAppNextjs.run({
       name: 'my-app',
+      nonInteractive: true,
       workspaceName: 'nextjs',
       output: './my-app',
     });
@@ -191,10 +206,29 @@ describe.skip('CliScaffoldAppNextjs.run', async () => {
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
+    const novaConfig: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_NovaConfig = JSON.stringify({
+      project: {
+        name: {
+          slug: 'workspace-test',
+          title: 'Workspace Test',
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'workspace-test-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+      },
+    }, null, 2);
+    const novaConfigPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+
     process.chdir(projectDirectory);
 
     await CliScaffoldAppNextjs.run({
-      name: 'my-app',
+      nonInteractive: true,
       workspaceName: 'nextjs',
       output: './apps/nextjs',
     });

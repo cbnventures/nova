@@ -1,3 +1,9 @@
+import type {
+  Diagnostic,
+  ParsedCommandLine,
+  TranspileOutput,
+} from 'typescript';
+
 /**
  * Tests - Lib - Search - Worker.
  *
@@ -174,14 +180,42 @@ export type Tests_Lib_Search_Worker_PerformSearchScoreSorting_ReturnsResultsSort
 export type Tests_Lib_Search_Worker_PerformSearchWildcard_MatchesPrefixQueriesViaWildcardStrategy_Index = unknown;
 
 /**
- * Tests - Lib - Search - Worker - Worker Script Compatibility - Contains No ES Module Syntax In The Compiled Output.
+ * Tests - Lib - Search - Worker - Transpile Worker Source.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Lib_Search_Worker_TranspileWorkerSource_Returns = string;
+
+export type Tests_Lib_Search_Worker_TranspileWorkerSource_CurrentDirectory = string;
+
+export type Tests_Lib_Search_Worker_TranspileWorkerSource_PackageRoot = string;
+
+export type Tests_Lib_Search_Worker_TranspileWorkerSource_ConfigPath = string;
+
+export type Tests_Lib_Search_Worker_TranspileWorkerSource_ConfigReadResult_Config = unknown;
+
+export type Tests_Lib_Search_Worker_TranspileWorkerSource_ConfigReadResult_Error = Diagnostic;
+
+export type Tests_Lib_Search_Worker_TranspileWorkerSource_ConfigReadResult = {
+  config?: Tests_Lib_Search_Worker_TranspileWorkerSource_ConfigReadResult_Config;
+  error?: Tests_Lib_Search_Worker_TranspileWorkerSource_ConfigReadResult_Error;
+};
+
+export type Tests_Lib_Search_Worker_TranspileWorkerSource_ParsedConfig = ParsedCommandLine;
+
+export type Tests_Lib_Search_Worker_TranspileWorkerSource_WorkerPath = string;
+
+export type Tests_Lib_Search_Worker_TranspileWorkerSource_WorkerSource = string;
+
+export type Tests_Lib_Search_Worker_TranspileWorkerSource_TranspileOutput = TranspileOutput;
+
+export type Tests_Lib_Search_Worker_TranspileWorkerSource_TranspileDiagnostics = Diagnostic[];
+
+/**
+ * Tests - Lib - Search - Worker - Worker Script Compatibility - Produces A Valid Classic Script From Current Source Without Build Output.
  *
  * @since 0.21.0
  */
-export type Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_CurrentDir = string;
+export type Tests_Lib_Search_Worker_WorkerScriptCompatibility_ProducesAValidClassicScriptFromCurrentSourceWithoutBuildOutput_TranspiledWorkerSource = string;
 
-export type Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_WorkerPath = string;
-
-export type Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_WorkerSource = string;
-
-export type Tests_Lib_Search_Worker_WorkerScriptCompatibility_ContainsNoESModuleSyntaxInTheCompiledOutput_ImportMatch = RegExpMatchArray | null;
+export type Tests_Lib_Search_Worker_WorkerScriptCompatibility_ProducesAValidClassicScriptFromCurrentSourceWithoutBuildOutput_WorkerScript = string;

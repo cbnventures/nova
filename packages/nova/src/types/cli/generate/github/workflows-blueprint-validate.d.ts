@@ -2,8 +2,8 @@ import type { Lib_WorkflowTemplates_Entry } from '../../../lib/workflow-template
 import type {
   Shared_BlueprintConfigWorkflow,
   Shared_NovaConfig_Workspaces,
-  Shared_NovaConfigWorkflow_DependsOn,
   Shared_NovaConfigWorkflow_Settings,
+  Shared_NovaConfigWorkflowTriggerObject_Workflows,
   Shared_NovaConfigWorkspace,
   Shared_WorkflowTemplateTarget,
   Shared_WorkflowTemplateVariable,
@@ -117,7 +117,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_DeployMigratio
 /**
  * CLI - Generate - GitHub - Workflows Blueprint Validate - Runner - Detect Circular Depends On.
  *
- * @since 0.21.0
+ * @since 0.26.0
  */
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_DetectCircularDependsOn_RawEntries = unknown[];
 
@@ -179,7 +179,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsPlainObject_
 /**
  * CLI - Generate - GitHub - Workflows Blueprint Validate - Runner - Validate.
  *
- * @since 0.21.0
+ * @since 0.26.0
  */
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows = unknown;
 
@@ -263,7 +263,7 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Trigg
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TriggerObjectTags = unknown;
 
-export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DependsOnEntries = Shared_NovaConfigWorkflow_DependsOn;
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DependsOnEntries = Shared_NovaConfigWorkflowTriggerObject_Workflows;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Reference = string;
 

@@ -199,14 +199,13 @@ mark {
   padding: 0 2rem 0 0.75rem;
 }
 
-/* Mobile dropdown: default state is hidden. The transition + @starting-style
-   pair (plus the `.nova-search-dropdown-mounting` JS-managed class for prod
-   where cssnano strips @starting-style) fires the show transition the moment
-   the body's swap-in class adds the visible target. steps(2, jump-none)
-   gives an exact 50% midpoint flip for max-height, matching the previous
-   keyframe choreography. visibility flips at the same midpoint via
-   transition-delay 500ms (duration 0 = the value swaps discretely).
-   overflow: auto so results can scroll when content exceeds 100dvh. */
+/* Mobile dropdown: default state is hidden. The JS-managed mounting class
+   establishes the initial hidden frame before the body's swap-in class adds
+   the visible target. steps(2, jump-none) gives an exact 50% midpoint flip
+   for max-height, matching the previous keyframe choreography. visibility
+   flips at the same midpoint via transition-delay 500ms (duration 0 = the
+   value swaps discretely). overflow: auto so results can scroll when content
+   exceeds 100dvh. */
 .nova-mobile-menu-panel .nova-search-dropdown {
   position: static;
   z-index: auto;
@@ -342,32 +341,11 @@ mark {
   max-height: 100dvh;
 }
 
-
-/* Starting style applied at element insertion - must come AFTER the
-   visible-target rule above so it wins on source order (same selector
-   specificity of 2 classes). Without it the dropdown mounts directly
-   into the visible target with no previous computed value and no
-   transition fires - the dropdown just pops in. With it, the dropdown's
-   starting style is hidden, the cascade immediately switches to the
-   visible target on the next frame, and the transition runs the show.
-
-   cssnano in the prod build strips @starting-style entirely. The
-   `.nova-search-dropdown-mounting` rule below is the JS-managed fallback
-   that SearchResults applies for one frame after insertion - same effect
-   but works through minification. */
-@starting-style {
-  .nova-mobile-menu-body-swapping-in .nova-search-dropdown,
-  .nova-mobile-menu-body:has(.nova-search-dropdown:not(.nova-search-dropdown-closing)) .nova-search-dropdown {
-    visibility: hidden;
-    max-height: 0;
-  }
-}
-
-/* Prod-safe mount transition trigger. SearchResults attaches this class
-   for one frame on initial render so the dropdown's first paint shows the
-   hidden state; the class is removed on the next requestAnimationFrame,
-   the cascade switches to the visible-target rule above, and the
-   max-height + visibility transition fires from hidden to visible.
+/* Mount transition trigger. SearchResults attaches this class for one frame
+   on initial render so the dropdown's first paint shows the hidden state;
+   the class is removed on the next requestAnimationFrame, the cascade
+   switches to the visible-target rule above, and the max-height + visibility
+   transition fires from hidden to visible.
 
    `!important` is needed because the visible-target rule's `:has()`
    selector accumulates the inner `.nova-search-dropdown:not(.nova-search-

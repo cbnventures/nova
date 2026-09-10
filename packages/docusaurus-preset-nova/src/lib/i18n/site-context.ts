@@ -14,6 +14,8 @@ import {
 } from '@docusaurus/utils';
 import { Joi } from '@docusaurus/utils-validation';
 
+import { resolveModulePath } from '../module-loader.js';
+
 import type {
   Lib_I18n_SiteContext_Runner_Gather_Base,
   Lib_I18n_SiteContext_Runner_Gather_DefaultLocale,
@@ -128,7 +130,7 @@ export class Runner {
     // compiled source in the full scan. Without it, ids like
     // `theme.common.skipToMainContent` never surface as live and their default
     // English copies would be misread as data-loss orphans.
-    const themeCommonDir: Lib_I18n_SiteContext_Runner_Gather_ThemeCommonDir = dirname(require.resolve('@docusaurus/theme-common'));
+    const themeCommonDir: Lib_I18n_SiteContext_Runner_Gather_ThemeCommonDir = dirname(resolveModulePath('@docusaurus/theme-common'));
     const extraPaths: Lib_I18n_SiteContext_Runner_Gather_ExtraPaths = await globTranslatableSourceFiles([themeCommonDir]);
     const fullExtract: Lib_I18n_SiteContext_Runner_Gather_FullExtract = await extractSiteSourceCodeTranslations({
       siteDir,

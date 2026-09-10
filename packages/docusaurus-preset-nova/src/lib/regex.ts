@@ -73,26 +73,6 @@ export const LIB_REGEX_METASTRING_LINE_RANGE = /\{([^}]+)\}/;
 export const LIB_REGEX_METASTRING_TITLE = /title=(?:"([^"]*)"|'([^']*)')/;
 
 /**
- * Lib - Regex - Metastring Show Line Numbers.
- *
- * Detects the standalone `showLineNumbers` flag in a code block metastring
- * so rehype-shiki can forward it as a `data-show-line-numbers` attribute.
- *
- * @since 0.18.0
- */
-export const LIB_REGEX_METASTRING_SHOW_LINE_NUMBERS = /\bshowLineNumbers\b/;
-
-/**
- * Lib - Regex - Metastring Live.
- *
- * Detects the standalone `live` flag in a code block metastring used by
- * CodeBlock to mount the Sandpack live editor.
- *
- * @since 0.18.0
- */
-export const LIB_REGEX_METASTRING_LIVE = /\blive\b/;
-
-/**
  * Lib - Regex - Trailing Slash.
  *
  * Matches a trailing forward slash at the end of a string. Used by sidebar

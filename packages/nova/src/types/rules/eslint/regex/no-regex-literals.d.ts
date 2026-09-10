@@ -1,3 +1,5 @@
+import type { Stats } from 'node:fs';
+
 import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
@@ -70,6 +72,8 @@ export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Options = Readonly<
   regexFile: Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Options_RegexFile;
 }>;
 
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_RegexFilePath = string | undefined;
+
 /**
  * Rules - ESLint - Regex - No Regex Literals - Create - Call Expression.
  *
@@ -96,3 +100,20 @@ export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_Literal_Returns = v
 export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_NewExpression_Node = TSESTree.NewExpression;
 
 export type Rules_Eslint_Regex_NoRegexLiterals_Runner_Create_NewExpression_Returns = void;
+
+/**
+ * Rules - ESLint - Regex - No Regex Literals - Resolve Regex File.
+ *
+ * @since 0.26.0
+ */
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_Context = Readonly<RuleContext<string, readonly unknown[]>>;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_RegexFile = string;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_Returns = string | undefined;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_RegexFilePath = string;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_RegexFileStats = Stats;
+
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_ResolveRegexFile_IsRegexFile = boolean;

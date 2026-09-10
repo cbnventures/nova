@@ -22,8 +22,6 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-# Scaffold
-
 The fastest way to get started. The scaffold command creates a ready-to-run Docusaurus <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> with the preset already wired up.
 
 ## Usage
@@ -45,7 +43,7 @@ The fastest way to get started. The scaffold command creates a ready-to-run Docu
   </TabItem>
 </Tabs>
 
-The wizard walks you through project name, workspace name, and output directory. Once complete, install dependencies and start the dev server:
+The wizard walks you through project name, workspace name, output directory, and the Nova visual preset to apply. Once complete, install dependencies and start the dev server:
 
 ```bash
 npm install
@@ -54,19 +52,36 @@ npm run start
 
 ## Options
 
-| Flag                      | Description                    |
-|---------------------------|--------------------------------|
-| `-d, --dry-run`           | Run without writing any files. |
-| `--name <name>`           | Project or workspace name.     |
-| `--workspace-name <name>` | Workspace directory name.      |
-| `--output <dir>`          | Output directory.              |
+| Flag                      | Description                                             |
+|---------------------------|---------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                          |
+| `--name <name>`           | Project or workspace name.                              |
+| `--non-interactive`       | Require every answer as a flag and do not open prompts. |
+| `--workspace-name <name>` | Workspace directory name.                               |
+| `--output <dir>`          | Output directory.                                       |
+| `--preset <name>`         | Nova visual preset written to `docusaurus.config.ts`.   |
+
+The preset choices are `envoy`, `foundry`, `lantern`, `marshal`, `sentinel`, and `signal`. The interactive wizard defaults to `foundry`.
 
 ## Non-Interactive Mode
 
-Provide all flags to skip the wizard entirely:
+Agents and automation should add `--non-interactive` and provide every answer. Nova validates the preset and refuses incomplete commands before writing any files.
 
-```bash
-nova scaffold docs docusaurus --name my-docs --workspace-name docusaurus --output ./my-docs
-```
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova scaffold docs docusaurus --non-interactive --name my-docs --workspace-name docs --output ./my-docs --preset foundry
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest scaffold docs docusaurus --non-interactive --name my-docs --workspace-name docs --output ./my-docs --preset foundry
+    ```
+
+  </TabItem>
+</Tabs>
 
 For the full scaffold reference, see **[Scaffold Docusaurus](/docs/cli/scaffolding/docs/docusaurus)**.

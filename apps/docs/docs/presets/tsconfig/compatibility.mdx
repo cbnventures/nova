@@ -1,0 +1,129 @@
+---
+id: "compatibility"
+title: "TypeScript Compatibility"
+description: "Use Nova with its supported TypeScript 6 compiler line, exact project pins, and migration-safe TSConfig settings."
+sidebar_position: 2
+keywords:
+  - "nova"
+  - "typescript 6"
+  - "typescript compatibility"
+  - "typescript version"
+  - "tsconfig migration"
+  - "compiler api"
+  - "baseurl deprecation"
+tags:
+  - "presets"
+  - "tsconfig"
+  - "typescript"
+  - "compatibility"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Nova uses TypeScript 6 as one shared compiler baseline for presets, command-line utilities, declaration tests, and generated project templates.
+
+## Supported Versions
+
+| TypeScript version | Status      | Project guidance                                                                 |
+|--------------------|-------------|----------------------------------------------------------------------------------|
+| `6.0.3`            | Supported   | Pin this exact version in every workspace that directly declares TypeScript.     |
+| Other `6.x`        | Compatible  | Nova's package peer range accepts `^6`, but exact project pins prevent drift.    |
+| `5.x`              | Unsupported | Upgrade the project and its TSConfig files together instead of mixing baselines. |
+| `7.x`              | Unsupported | Nova will add support only after its compiler-backed features are compatible.    |
+
+Nova intentionally supports one complete TypeScript major at a time. This keeps the preset behavior, diagnostics, and compiler API usage consistent across every Nova-managed workspace.
+
+## Why Nova Depends on the Compiler Version
+
+Most TSConfig presets are JSON, but several Nova features use TypeScript's compiler API directly:
+
+1. `nova utility type-check` parses a project and reports project-owned diagnostics.
+2. `nova utility transpile` parses a project and emits compiled output.
+3. The type declaration Vitest suite inspects TypeScript source and declaration files.
+4. Nova's own declaration generator and validation tooling inspect TypeScript syntax.
+
+TypeScript 6 preserves the compiler API these features use. TypeScript 7 does not yet provide the compatible API surface Nova needs, so installing the latest unpinned TypeScript release is not supported.
+
+## Upgrade from TypeScript 5
+
+Update the package version and TSConfig wiring together.
+
+<Tabs groupId="typescript-six-migration">
+  <TabItem value="before" label="Before: TypeScript 5" default>
+
+    ```json title="package.json"
+    {
+      "devDependencies": {
+        "typescript": "5.9.3"
+      }
+    }
+    ```
+
+    ```json title="tsconfig.json"
+    {
+      "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+          "@/*": [
+            "./src/*"
+          ]
+        }
+      }
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="after" label="After: TypeScript 6">
+
+    ```json title="package.json"
+    {
+      "devDependencies": {
+        "typescript": "6.0.3"
+      }
+    }
+    ```
+
+    ```json title="tsconfig.json"
+    {
+      "compilerOptions": {
+        "paths": {
+          "@/*": [
+            "./src/*"
+          ]
+        }
+      }
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+In TypeScript 6, `paths` entries resolve relative to the TSConfig file when `baseUrl` is absent. Remove only the TypeScript `compilerOptions.baseUrl` setting. A Docusaurus site's top-level `baseUrl` setting controls deployed URLs and is unrelated.
+
+## TypeScript 6 Configuration Changes
+
+| Setting                        | Nova guidance                                                                                        |
+|--------------------------------|------------------------------------------------------------------------------------------------------|
+| `baseUrl`                      | Remove the compiler option. Keep `paths` for aliases.                                                |
+| `rootDir`                      | Set it explicitly for projects that emit files, so output layout does not depend on inferred roots.  |
+| `strict`                       | Keep it explicit through `dx-strict` or a framework's strict base config.                            |
+| `types`                        | List every ambient type package intentionally, or write `[]` when the project needs none.            |
+| `noUncheckedSideEffectImports` | Keep it explicit through `dx-strict` so unresolved side-effect imports fail consistently.            |
+| `module` and `target`          | Keep using Nova presets so TypeScript's changing defaults do not alter the project's runtime output. |
+
+## Verification
+
+After updating the version and configs, reinstall dependencies so the lockfile records TypeScript 6, then run the project checks and build from the monorepo root.
+
+```bash
+npm install
+npm run check
+npm run build
+```
+
+## Related
+
+- Review local TSConfig wiring in **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.
+- Use **[Type Check](/docs/cli/utilities/type-check)** for project-owned diagnostics.
+- Use **[Transpile](/docs/cli/utilities/transpile)** when TypeScript should emit the project output.

@@ -1,6 +1,10 @@
 import type { TranslationFile } from '@docusaurus/types';
 
 import type {
+  Lib_WebpackCache_ConfigureWebpackCache_Cache,
+  Lib_WebpackCache_ConfigureWebpackCache_MergeStrategy,
+} from './lib/webpack-cache.d.ts';
+import type {
   Options_PluginOptions,
   Options_PluginOptions_Search,
 } from './options.d.ts';
@@ -61,7 +65,11 @@ export type Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve = {
   alias: Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve_Alias;
 };
 
-export type Index_Runner_Default_Returns_ConfigureWebpack = () => Index_Runner_Default_ReturnsConfigureWebpackReturns;
+export type Index_Runner_Default_ReturnsConfigureWebpackReturns_Cache = Lib_WebpackCache_ConfigureWebpackCache_Cache;
+
+export type Index_Runner_Default_ReturnsConfigureWebpackReturns_MergeStrategy = Lib_WebpackCache_ConfigureWebpackCache_MergeStrategy;
+
+export type Index_Runner_Default_Returns_ConfigureWebpack = (config: Index_Runner_Default_ConfigureWebpack_Config) => Index_Runner_Default_ReturnsConfigureWebpackReturns;
 
 export type Index_Runner_Default_Returns_GetTranslationFiles = () => TranslationFile[];
 
@@ -114,6 +122,8 @@ export type Index_Runner_Default_GeneratedCssPath = string;
 export type Index_Runner_Default_GoogleFontsUrl = string;
 
 export type Index_Runner_Default_PresetName = 'envoy' | 'foundry' | 'lantern' | 'marshal' | 'sentinel' | 'signal';
+
+export type Index_Runner_Default_CurrentFilePath = string;
 
 export type Index_Runner_Default_CurrentDirectory = string;
 
@@ -224,13 +234,23 @@ export type Index_Runner_Default_ThemeConfig = Record<string, unknown>;
 
 export type Index_Runner_Default_AnnouncementBar = Record<string, unknown> | undefined;
 
-export type Index_Runner_Default_ProgressBarConfig = boolean | Record<string, unknown>;
+export type Index_Runner_Default_PersistentCache = Options_PluginOptions['persistentCache'];
+
+export type Index_Runner_Default_ProgressBarConfig = Options_PluginOptions['progressBar'];
 
 export type Index_Runner_Default_NprogressCssPath = string;
 
+export type Index_Runner_Default_NprogressJavaScriptPath = string;
+
+export type Index_Runner_Default_GeneratedProgressBarPath = string;
+
 export type Index_Runner_Default_SearchConfig = Options_PluginOptions_Search | undefined;
 
+export type Index_Runner_Default_GeneratedProgressBar = string;
+
 export type Index_Runner_Default_ReturnsConfigureWebpackReturns = {
+  cache?: Index_Runner_Default_ReturnsConfigureWebpackReturns_Cache;
+  mergeStrategy?: Index_Runner_Default_ReturnsConfigureWebpackReturns_MergeStrategy;
   resolve: Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve;
 };
 
@@ -425,6 +445,13 @@ export type Index_Runner_Default_ConfigurePostCss_RtlPlugin = {
  */
 export type Index_Runner_Default_ConfigureWebpack_AssetsDirectory = string;
 
+export type Index_Runner_Default_ConfigureWebpack_Config_Mode = string | undefined;
+
+export type Index_Runner_Default_ConfigureWebpack_Config = {
+  mode?: Index_Runner_Default_ConfigureWebpack_Config_Mode;
+  [key: string]: unknown;
+};
+
 /**
  * Index - Docusaurus Theme Nova - Default - Content Loaded.
  *
@@ -465,6 +492,8 @@ export type Index_Runner_Default_GetClientModules_StickyLayoutPath = string;
 export type Index_Runner_Default_GetClientModules_ClientModules = string[];
 
 export type Index_Runner_Default_GetClientModules_NprogressCssModule = string;
+
+export type Index_Runner_Default_GetClientModules_ProgressBarClientModule = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Get Default Code Translation Messages.

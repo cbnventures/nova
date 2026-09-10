@@ -109,6 +109,95 @@ export type Shared_MermaidConfig = {
 };
 
 /**
+ * Shared - Progress Bar Config.
+ *
+ * @since 0.26.0
+ */
+export type Shared_ProgressBarConfig_Minimum = number | undefined;
+
+export type Shared_ProgressBarConfig_Easing = string | undefined;
+
+export type Shared_ProgressBarConfig_PositionUsing = '' | 'translate3d' | 'translate' | 'margin' | undefined;
+
+export type Shared_ProgressBarConfig_Speed = number | undefined;
+
+export type Shared_ProgressBarConfig_Trickle = boolean | undefined;
+
+export type Shared_ProgressBarConfig_TrickleRate = number | undefined;
+
+export type Shared_ProgressBarConfig_TrickleSpeed = number | undefined;
+
+export type Shared_ProgressBarConfig_ShowSpinner = boolean | undefined;
+
+export type Shared_ProgressBarConfig_BarSelector = string | undefined;
+
+export type Shared_ProgressBarConfig_SpinnerSelector = string | undefined;
+
+export type Shared_ProgressBarConfig_Parent = string | undefined;
+
+export type Shared_ProgressBarConfig_Template = string | undefined;
+
+export type Shared_ProgressBarConfig = {
+  minimum?: Shared_ProgressBarConfig_Minimum;
+  easing?: Shared_ProgressBarConfig_Easing;
+  positionUsing?: Shared_ProgressBarConfig_PositionUsing;
+  speed?: Shared_ProgressBarConfig_Speed;
+  trickle?: Shared_ProgressBarConfig_Trickle;
+  trickleRate?: Shared_ProgressBarConfig_TrickleRate;
+  trickleSpeed?: Shared_ProgressBarConfig_TrickleSpeed;
+  showSpinner?: Shared_ProgressBarConfig_ShowSpinner;
+  barSelector?: Shared_ProgressBarConfig_BarSelector;
+  spinnerSelector?: Shared_ProgressBarConfig_SpinnerSelector;
+  parent?: Shared_ProgressBarConfig_Parent;
+  template?: Shared_ProgressBarConfig_Template;
+  [key: string]: unknown;
+};
+
+/**
+ * Shared - Progress Bar Defaults.
+ *
+ * @since 0.26.0
+ */
+export type Shared_ProgressBarDefaults_Minimum = number;
+
+export type Shared_ProgressBarDefaults_Easing = string;
+
+export type Shared_ProgressBarDefaults_PositionUsing = '' | 'translate3d' | 'translate' | 'margin';
+
+export type Shared_ProgressBarDefaults_Speed = number;
+
+export type Shared_ProgressBarDefaults_Trickle = boolean;
+
+export type Shared_ProgressBarDefaults_TrickleRate = number;
+
+export type Shared_ProgressBarDefaults_TrickleSpeed = number;
+
+export type Shared_ProgressBarDefaults_ShowSpinner = boolean;
+
+export type Shared_ProgressBarDefaults_BarSelector = string;
+
+export type Shared_ProgressBarDefaults_SpinnerSelector = string;
+
+export type Shared_ProgressBarDefaults_Parent = string;
+
+export type Shared_ProgressBarDefaults_Template = string;
+
+export type Shared_ProgressBarDefaults = {
+  minimum: Shared_ProgressBarDefaults_Minimum;
+  easing: Shared_ProgressBarDefaults_Easing;
+  positionUsing: Shared_ProgressBarDefaults_PositionUsing;
+  speed: Shared_ProgressBarDefaults_Speed;
+  trickle: Shared_ProgressBarDefaults_Trickle;
+  trickleRate: Shared_ProgressBarDefaults_TrickleRate;
+  trickleSpeed: Shared_ProgressBarDefaults_TrickleSpeed;
+  showSpinner: Shared_ProgressBarDefaults_ShowSpinner;
+  barSelector: Shared_ProgressBarDefaults_BarSelector;
+  spinnerSelector: Shared_ProgressBarDefaults_SpinnerSelector;
+  parent: Shared_ProgressBarDefaults_Parent;
+  template: Shared_ProgressBarDefaults_Template;
+};
+
+/**
  * Shared - Preset.
  *
  * @since 0.15.0

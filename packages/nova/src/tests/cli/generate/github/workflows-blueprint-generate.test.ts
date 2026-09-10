@@ -129,6 +129,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       name: 'portfolio-project',
       version: '0.0.0',
       private: true,
+      packageManager: 'npm@11.18.0',
     }, null, 2));
 
     await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
@@ -357,6 +358,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       name: 'valid-project',
       version: '0.0.0',
       private: true,
+      packageManager: 'npm@11.18.0',
     }, null, 2));
 
     await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
@@ -446,6 +448,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       name: 'unknown-template-project',
       version: '0.0.0',
       private: true,
+      packageManager: 'npm@11.18.0',
     }, null, 2));
 
     await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
@@ -516,6 +519,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       name: 'diagnostic-orphan-project',
       version: '0.0.0',
       private: true,
+      packageManager: 'npm@11.18.0',
     }, null, 2));
 
     await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
@@ -581,6 +585,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       name: 'missing-suffix-project',
       version: '0.0.0',
       private: true,
+      packageManager: 'npm@11.18.0',
     }, null, 2));
 
     await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
@@ -646,6 +651,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       name: 'unregistered-scope-project',
       version: '0.0.0',
       private: true,
+      packageManager: 'npm@11.18.0',
     }, null, 2));
 
     await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
@@ -723,6 +729,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       name: 'public-dotenv-project',
       version: '0.0.0',
       private: true,
+      packageManager: 'npm@11.18.0',
     }, null, 2));
 
     await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
@@ -795,10 +802,10 @@ describe('WorkflowsBlueprint.generate', async () => {
 
     const stdoutText: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_StdoutText = stdoutChunks.join('');
 
-    // The build-only environment values list under their prefixed GitHub names.
-    ok(stdoutText.includes('Variable CBN_PUBLIC_SITE_KEY') === true, 'missing build-only variable setup line');
+    // The reach-build environment values list under their prefixed GitHub names.
+    ok(stdoutText.includes('Variable CBN_PUBLIC_SITE_KEY') === true, 'missing reach-build variable setup line');
 
-    ok(stdoutText.includes('Variable CBN_PUBLIC_GTM_ID') === true, 'missing prefixed build-only variable setup line');
+    ok(stdoutText.includes('Variable CBN_PUBLIC_GTM_ID') === true, 'missing prefixed reach-build variable setup line');
 
     // The private runtime value is never surfaced in the build setup report.
     ok(stdoutText.includes('PRIVATE_TOKEN') === false, 'private dotenv variable leaked into setup report');
@@ -829,6 +836,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       name: 'tag-push-project',
       version: '0.0.0',
       private: true,
+      packageManager: 'npm@11.18.0',
     }, null, 2));
 
     await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
@@ -902,6 +910,7 @@ describe('WorkflowsBlueprint.generate', async () => {
       name: 'workflow-prefix-project',
       version: '0.0.0',
       private: true,
+      packageManager: 'npm@11.18.0',
     }, null, 2));
 
     await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');

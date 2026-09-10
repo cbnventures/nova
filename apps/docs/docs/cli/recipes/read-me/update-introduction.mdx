@@ -27,7 +27,13 @@ The `update-introduction` recipe rewrites the introduction of a `README.md` file
 
 The recipe only touches the marked region. Everything before the `<!-- nova-region: introduction -->` marker and everything after the `<!-- nova-region-end: introduction -->` marker is left byte-identical, so hand-written prose around the introduction is never disturbed.
 
-## Prerequisites
+## Why Use This Command?
+
+1. Keeps the README introduction aligned with the canonical long project description.
+2. Rewrites only Nova's introduction region so surrounding prose remains untouched.
+3. Makes messaging updates repeatable without regenerating the entire README.
+
+## Requirements
 
 - **An existing `README.md`** — The recipe updates a file in the project root; it does not create one. Use `generate must-haves read-me` to create the initial file.
 - **The `introduction` region markers** — The `README.md` must contain the `<!-- nova-region: introduction -->` and `<!-- nova-region-end: introduction -->` markers. A `generate must-haves read-me` file has them by default.
