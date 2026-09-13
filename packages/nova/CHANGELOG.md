@@ -5,6 +5,7 @@
 ### UPDATED
 - Updated the Cloudflare Worker scaffold to Wrangler 4.131.1 and Workers Types 5.20260911.1.
 - Standardized package scripts as development-first parent/child groups with checks before builds, including Docusaurus i18n maintenance, taught `normalize-tooling` to preserve the lifecycle structure, and gave scaffolded monorepo roots the same Nova-dispatched Turbo commands and `turbo.json` contract.
+- Reused npm's integrity-verified package cache for scaffold smoke installs and preferred cached packages, keeping every generated project clean while avoiding redundant framework downloads.
 
 ### FIXED
 - Fixed Nova's type checker to preserve the resolved TSConfig path, allowing valid `incremental` projects, and made the Next.js scaffold generate framework types before its clean TypeScript check.

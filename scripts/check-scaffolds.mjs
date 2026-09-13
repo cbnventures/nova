@@ -130,7 +130,6 @@ function verifyWorkspaceRegistrations(projectDirectory, expectedWorkspaces) {
 function checkScaffolds() {
   const repositoryDirectory = process.cwd();
   const temporaryDirectory = mkdtempSync(join(tmpdir(), 'nova-scaffold-smoke-'));
-  const cacheDirectory = join(temporaryDirectory, 'npm-cache');
   const projectDirectory = join(temporaryDirectory, 'project');
   const directProjectDirectory = join(temporaryDirectory, 'direct-project');
   const novaCliPath = join(repositoryDirectory, 'packages', 'nova', 'bin', 'nova.mjs');
@@ -154,8 +153,6 @@ function checkScaffolds() {
       '@cbnventures/docusaurus-preset-nova',
       '--pack-destination',
       temporaryDirectory,
-      '--cache',
-      cacheDirectory,
     ], repositoryDirectory);
 
     const novaTarballPath = findTarball(temporaryDirectory, 'cbnventures-nova-');
@@ -288,14 +285,12 @@ function checkScaffolds() {
 
     runCommand('npm', [
       'install',
-      '--cache',
-      cacheDirectory,
+      '--prefer-offline',
     ], projectDirectory);
 
     runCommand('npm', [
       'install',
-      '--cache',
-      cacheDirectory,
+      '--prefer-offline',
     ], directProjectDirectory);
 
     const novaPackageJson = JSON.parse(readFileSync(join(repositoryDirectory, 'packages', 'nova', 'package.json'), 'utf-8'));
