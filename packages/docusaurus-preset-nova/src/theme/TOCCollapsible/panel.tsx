@@ -1,6 +1,10 @@
+import { useLocation } from '@docusaurus/router';
 import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
-import { useSyncExternalStore } from 'react';
+import {
+  useEffect,
+  useSyncExternalStore,
+} from 'react';
 import { createPortal } from 'react-dom';
 
 import {
@@ -21,11 +25,13 @@ import type {
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_OverlayClassName,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_OverlayPanel,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_PanelRef,
+  Theme_TocCollapsible_Panel_TOCCollapsiblePanel_Pathname,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_Payload,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_SetIsClosing,
   Theme_TocCollapsible_Panel_TOCCollapsiblePanel_TriggerLabel,
   Theme_TocCollapsible_Panel_TocList_Item,
   Theme_TocCollapsible_Panel_TocList_Items,
+  Theme_TocCollapsible_Panel_TocList_OnLinkClick,
 } from '../../types/theme/TOCCollapsible/panel.d.ts';
 
 /**
@@ -35,13 +41,14 @@ import type {
  * table-of-contents items, linking each heading by its anchor
  * identifier and nesting child items.
  *
- * @param {Theme_TocCollapsible_Panel_TocList_Items} items - Items.
+ * @param {Theme_TocCollapsible_Panel_TocList_Items}       items       - Items.
+ * @param {Theme_TocCollapsible_Panel_TocList_OnLinkClick} onLinkClick - On link click.
  *
  * @returns {JSX.Element | undefined}
  *
- * @since 0.21.0
+ * @since 0.27.0
  */
-function TocList(items: Theme_TocCollapsible_Panel_TocList_Items) {
+function TocList(items: Theme_TocCollapsible_Panel_TocList_Items, onLinkClick: Theme_TocCollapsible_Panel_TocList_OnLinkClick) {
   if (items === undefined || items['length'] === 0) {
     return undefined;
   }
@@ -51,8 +58,8 @@ function TocList(items: Theme_TocCollapsible_Panel_TocList_Items) {
       {
         items.map((item: Theme_TocCollapsible_Panel_TocList_Item) => (
           <li className="nova-toc-item" key={item['id']}>
-            <a className="nova-toc-link" href={`#${item['id']}`} dangerouslySetInnerHTML={{ __html: item['value'] }} />
-            {TocList(item['children'])}
+            <a className="nova-toc-link" href={`#${item['id']}`} onClick={onLinkClick} dangerouslySetInnerHTML={{ __html: item['value'] }} />
+            {TocList(item['children'], onLinkClick)}
           </li>
         ))
       }
@@ -70,6 +77,7 @@ function TocList(items: Theme_TocCollapsible_Panel_TocList_Items) {
  * @since 0.21.0
  */
 function TOCCollapsiblePanel() {
+  const pathname: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_Pathname = useLocation()['pathname'];
   const isOpen: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsOpen = useSyncExternalStore(tocCollapsibleSubscribe, tocCollapsibleGetOpenSnapshot, tocCollapsibleGetOpenSnapshot);
   const payload: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_Payload = useSyncExternalStore(tocCollapsibleSubscribe, tocCollapsibleGetPayloadSnapshot, tocCollapsibleGetPayloadSnapshot);
 
@@ -78,6 +86,15 @@ function TOCCollapsiblePanel() {
   const setIsClosing: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_SetIsClosing = overlayPanel['setIsClosing'];
   const handleClickOutside: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_HandleClickOutsideFunction = overlayPanel['handleClickOutside'];
   const panelRef: Theme_TocCollapsible_Panel_TOCCollapsiblePanel_PanelRef = overlayPanel['panelRef'];
+
+  // Close overlay on navigation.
+  useEffect(() => {
+    if (isOpen === true) {
+      setIsClosing(true);
+    }
+
+    return undefined;
+  }, [pathname]);
 
   if (
     isOpen !== true
@@ -146,7 +163,11 @@ function TOCCollapsiblePanel() {
           </button>
         </div>
         <div className="nova-toc-collapsible-content">
-          {TocList(payload['treeItems'])}
+          {TocList(payload['treeItems'], () => {
+            setIsClosing(true);
+
+            return undefined;
+          })}
         </div>
       </div>
     </div>,

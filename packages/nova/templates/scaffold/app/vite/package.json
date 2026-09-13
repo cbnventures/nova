@@ -4,13 +4,22 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev": "nova utility run-scripts --parallel 'dev:*'",
+    "dev:start": "vite",
+    "prod": "nova utility run-scripts --sequential 'prod:*'",
+    "prod:preview": "vite preview",
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:types": "nova utility type-check --project tsconfig.json",
+    "build": "nova utility run-scripts --sequential 'build:*'",
+    "build:types": "tsc",
+    "build:app": "vite build",
+    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean:build": "shx rm -rf ./dist"
   },
   "dependencies": {},
   "devDependencies": {
     "@types/node": "22.15.17",
+    "shx": "0.4.0",
     "typescript": "6.0.3",
     "vite": "6.4.3"
   }

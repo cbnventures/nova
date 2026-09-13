@@ -4,13 +4,21 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "build": "tsc"
+    "dev": "nova utility run-scripts --parallel 'dev:*'",
+    "dev:worker": "wrangler dev",
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:types": "nova utility type-check --project tsconfig.json",
+    "build": "nova utility run-scripts --sequential 'build:*'",
+    "build:types": "tsc",
+    "deploy": "nova utility run-scripts --sequential 'deploy:*'",
+    "deploy:worker": "wrangler deploy",
+    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean:wrangler": "shx rm -rf ./.wrangler"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "5.20260908.1",
+    "@cloudflare/workers-types": "5.20260911.1",
+    "shx": "0.4.0",
     "typescript": "6.0.3",
-    "wrangler": "4.130.0"
+    "wrangler": "4.131.1"
   }
 }

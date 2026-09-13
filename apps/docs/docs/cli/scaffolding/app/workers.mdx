@@ -27,7 +27,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 - Installs Wrangler with Cloudflare Workers types and TypeScript so you can run `wrangler dev` against the edge runtime right away.
 - Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
-- Wires up `wrangler dev` and `wrangler deploy` scripts so the workspace is ready to iterate and ship to Cloudflare.
+- Provides `dev`, `check`, `build`, `deploy`, and `clean` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner; the child steps run Wrangler and TypeScript directly.
 
 ## Requirements
 
@@ -77,6 +77,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 {project-slug}/
 ├── package.json
 ├── nova.config.json
+├── turbo.json
 ├── apps/
 │   └── {workspace-name}/
 │       ├── package.json

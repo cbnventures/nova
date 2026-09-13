@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/nova",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",
@@ -83,18 +83,18 @@
   "scripts": {
     "dev": "node ../../scripts/nova-run-scripts.mjs --parallel 'dev:*'",
     "dev:watch": "tsc --project tsconfig.source.json --watch",
-    "build": "node ../../scripts/nova-run-scripts.mjs --sequential 'build:*'",
-    "build:transpile-source": "tsc --project tsconfig.source.json --outDir ./build --skipLibCheck",
-    "build:copy-types": "shx rm -rf \"./build/src/types\" && shx cp -r \"./src/types\" \"./build/src/types\"",
-    "build:copy-tsconfig-presets": "shx rm -rf \"./build/src/presets/tsconfig\" && shx cp -r \"./src/presets/tsconfig\" \"./build/src/presets/tsconfig\"",
-    "build:fix-perms": "shx chmod +x ./build/src/cli/index.js",
-    "build:copy-templates": "shx rm -rf \"./build/templates\" && shx cp -r \"./templates\" \"./build/templates\"",
     "check": "node ../../scripts/nova-run-scripts.mjs --sequential 'check:*'",
     "check:lint": "eslint ./ --max-warnings=0",
     "check:types-source": "node ../../scripts/nova-type-check.mjs --project tsconfig.source.json",
     "check:types-config": "node ../../scripts/nova-type-check.mjs --project tsconfig.config.json",
     "check:types-tests": "node ../../scripts/nova-type-check.mjs --project tsconfig.tests.json",
     "check:test": "vitest run",
+    "build": "node ../../scripts/nova-run-scripts.mjs --sequential 'build:*'",
+    "build:transpile-source": "tsc --project tsconfig.source.json --outDir ./build --skipLibCheck",
+    "build:copy-types": "shx rm -rf \"./build/src/types\" && shx cp -r \"./src/types\" \"./build/src/types\"",
+    "build:copy-tsconfig-presets": "shx rm -rf \"./build/src/presets/tsconfig\" && shx cp -r \"./src/presets/tsconfig\" \"./build/src/presets/tsconfig\"",
+    "build:fix-perms": "shx chmod +x ./build/src/cli/index.js",
+    "build:copy-templates": "shx rm -rf \"./build/templates\" && shx cp -r \"./templates\" \"./build/templates\"",
     "clean": "node ../../scripts/nova-run-scripts.mjs --parallel 'clean:*'",
     "clean:build": "shx rm -rf ./build"
   },
@@ -132,6 +132,7 @@
     "eslint": "9.39.5",
     "eslint-import-resolver-typescript": "4.4.4",
     "shx": "0.4.0",
+    "turbo": "2.10.11",
     "typescript": "6.0.3",
     "vitest": "4.1.11"
   },

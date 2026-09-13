@@ -79,6 +79,18 @@ import type {
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesWorkspacesFromNonProjectRole_WorkspaceDirectory,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesWorkspacesFromNonProjectRole_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesWorkspacesFromNonProjectRole_WorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_Output,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_Parsed,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_ScriptNames,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_Scripts,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_WorkspacePackageJsonPath,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_SandboxPath,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_SandboxRoot,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_SetsExitCodeWhenNotAtProjectRoot_ProjectDirectory,
@@ -238,6 +250,86 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
     const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsScriptsWhenMissing_Parsed = JSON.parse(output);
 
     deepStrictEqual(parsed['scripts'], {});
+
+    return;
+  });
+
+  it('reorders lifecycle script groups', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_ProjectDirectory = join(sandboxRoot, 'reorder-scripts');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_PackageJsonContents = JSON.stringify({
+      name: 'test-reorder-scripts',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_NovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/core': {
+            'normalize-tooling': {
+              enabled: true,
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_WorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+      scripts: {
+        'build': 'nova utility run-scripts --sequential \'build:*\'',
+        'build:second': 'second',
+        'custom': 'custom',
+        'dev:start': 'start',
+        'check:test': 'test',
+        'check': 'nova utility run-scripts --sequential \'check:*\'',
+        'dev': 'nova utility run-scripts --parallel \'dev:*\'',
+        'build:first': 'first',
+      },
+    }, null, 2);
+
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonNormalizeTooling.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_Parsed = JSON.parse(output);
+    const scripts: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_Scripts = parsed['scripts'] as Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_Scripts;
+    const scriptNames: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_ScriptNames = Object.keys(scripts);
+
+    deepStrictEqual(scriptNames, [
+      'dev',
+      'dev:start',
+      'check',
+      'check:test',
+      'build',
+      'build:second',
+      'build:first',
+      'custom',
+    ]);
 
     return;
   });

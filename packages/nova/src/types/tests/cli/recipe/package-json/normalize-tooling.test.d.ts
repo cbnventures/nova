@@ -164,6 +164,35 @@ export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNo
 export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_RemovesWorkspacesFromNonProjectRole_Parsed = Record<string, unknown>;
 
 /**
+ * Tests - CLI - Recipe - package.json - Normalize Tooling - Run - Reorders Lifecycle Script Groups.
+ *
+ * @since 0.27.0
+ */
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_WorkspaceDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_PackageJsonPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_PackageJsonContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_NovaConfigPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_NovaConfigContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_WorkspacePackageJsonPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_WorkspacePackageJsonContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_Output = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_Parsed = Record<string, unknown>;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_Scripts = Record<string, unknown>;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_ScriptNames = string[];
+
+/**
  * Tests - CLI - Recipe - package.json - Normalize Tooling - Run - Sets Exit Code When Not At Project Root.
  *
  * @since 0.14.0

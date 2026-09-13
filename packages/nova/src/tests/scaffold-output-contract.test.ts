@@ -48,10 +48,28 @@ import type {
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Returns,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TargetDirectory,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_UnresolvedFiles,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_ChildScriptNames,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedGroupNames,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedParentCommand,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_HasParent,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJson,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonPath,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonRaw,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_ParentIndex,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_PreviousParentIndex,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_Returns,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupModes,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptNames,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJson,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonPath,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRaw,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJson,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonPath,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonRaw,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboTasks,
   Tests_ScaffoldOutputContract_VerifyStarterContract_Returns,
   Tests_ScaffoldOutputContract_VerifyStarterContract_SandboxRoot,
   Tests_ScaffoldOutputContract_VerifyStarterContract_TargetDirectory,
@@ -191,6 +209,74 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
 ];
 
 /**
+ * Tests - Scaffold Output Contract - Verify Script Contract.
+ *
+ * Confirms every generated lifecycle command uses the public Nova dispatcher,
+ * keeps its child steps adjacent, and follows the canonical development-first
+ * ordering without constraining framework-specific child names.
+ *
+ * @param {Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonPath} packageJsonPath - Package json path.
+ *
+ * @returns {Tests_ScaffoldOutputContract_VerifyScriptContract_Returns}
+ *
+ * @since 0.27.0
+ */
+async function verifyScriptContract(packageJsonPath: Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonPath): Tests_ScaffoldOutputContract_VerifyScriptContract_Returns {
+  const packageJsonRaw: Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonRaw = await readFile(packageJsonPath, 'utf-8');
+  const packageJson: Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJson = JSON.parse(packageJsonRaw) as Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJson;
+  const scripts: Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts = packageJson['scripts'] as Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts;
+  const scriptNames: Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptNames = Object.keys(scripts);
+  const scriptGroupOrder: Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder = [
+    'dev',
+    'prod',
+    'check',
+    'build',
+    'deploy',
+    'clean',
+    'i18n',
+  ];
+  const scriptGroupModes: Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupModes = {
+    dev: 'parallel',
+    prod: 'sequential',
+    check: 'sequential',
+    build: 'sequential',
+    deploy: 'sequential',
+    clean: 'parallel',
+    i18n: 'sequential',
+  };
+  let previousParentIndex: Tests_ScaffoldOutputContract_VerifyScriptContract_PreviousParentIndex = -1;
+
+  for (const scriptGroup of scriptGroupOrder) {
+    const childScriptNames: Tests_ScaffoldOutputContract_VerifyScriptContract_ChildScriptNames = scriptNames.filter((scriptName) => scriptName.startsWith(`${scriptGroup}:`));
+    const hasParent: Tests_ScaffoldOutputContract_VerifyScriptContract_HasParent = Reflect.has(scripts, scriptGroup);
+
+    if (childScriptNames.length > 0) {
+      strictEqual(hasParent, true, `Generated script group "${scriptGroup}" has child scripts but no parent dispatcher in "${packageJsonPath}".`);
+    }
+
+    if (hasParent === false) {
+      continue;
+    }
+
+    const parentIndex: Tests_ScaffoldOutputContract_VerifyScriptContract_ParentIndex = scriptNames.indexOf(scriptGroup);
+    const expectedParentCommand: Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedParentCommand = `nova utility run-scripts --${scriptGroupModes[scriptGroup]} '${scriptGroup}:*'`;
+    const expectedGroupNames: Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedGroupNames = [
+      scriptGroup,
+      ...childScriptNames,
+    ];
+
+    strictEqual(parentIndex > previousParentIndex, true, `Generated lifecycle scripts are out of order in "${packageJsonPath}".`);
+    strictEqual(scripts[scriptGroup], expectedParentCommand, `Generated parent script "${scriptGroup}" does not use the canonical Nova dispatcher in "${packageJsonPath}".`);
+    strictEqual(childScriptNames.length > 0, true, `Generated parent script "${scriptGroup}" has no child steps in "${packageJsonPath}".`);
+    deepStrictEqual(scriptNames.slice(parentIndex, parentIndex + expectedGroupNames.length), expectedGroupNames, `Generated child scripts for "${scriptGroup}" are not adjacent to their parent in "${packageJsonPath}".`);
+
+    previousParentIndex = parentIndex;
+  }
+
+  return;
+}
+
+/**
  * Tests - Scaffold Output Contract - Verify Generated Output.
  *
  * Compares a generated directory with its reviewed file inventory and confirms
@@ -230,6 +316,10 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
 
   deepStrictEqual(unresolvedFiles, [], placeholderMessage);
 
+  if (generatedFiles.includes('package.json') === true) {
+    await verifyScriptContract(join(targetDirectory, 'package.json'));
+  }
+
   return;
 }
 
@@ -253,14 +343,28 @@ async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_V
   await verifyGeneratedOutput(targetDirectory, [
     'nova.config.json',
     'package.json',
+    'turbo.json',
   ]);
 
   const generatedPackageJsonPath: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonPath = join(targetDirectory, 'package.json');
   const generatedPackageJsonRaw: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRaw = await readFile(generatedPackageJsonPath, 'utf-8');
   const generatedPackageJson: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJson = JSON.parse(generatedPackageJsonRaw) as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJson;
   const generatedDevDependencies: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies = generatedPackageJson['devDependencies'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies;
+  const generatedTurboJsonPath: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonPath = join(targetDirectory, 'turbo.json');
+  const generatedTurboJsonRaw: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonRaw = await readFile(generatedTurboJsonPath, 'utf-8');
+  const generatedTurboJson: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJson = JSON.parse(generatedTurboJsonRaw) as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJson;
+  const generatedTurboTasks: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboTasks = generatedTurboJson['tasks'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboTasks;
 
   strictEqual(generatedDevDependencies['@cbnventures/nova'], novaPackageJson['version']);
+  strictEqual(generatedDevDependencies['turbo'], novaPackageJson['devDependencies']['turbo']);
+  deepStrictEqual(Object.keys(generatedTurboTasks), [
+    'dev',
+    'prod',
+    'check',
+    'build',
+    'deploy',
+    'clean',
+  ]);
 
   return;
 }

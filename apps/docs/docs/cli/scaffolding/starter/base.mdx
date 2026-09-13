@@ -32,6 +32,7 @@ You do not need to run `starter base` before either direct app or docs command.
 ## Why Use This Command?
 
 - Creates the root `package.json` with `workspaces` configured for `apps/*` and `packages/*` so you can add workspaces immediately.
+- Creates a root `turbo.json` and standard `dev`, `prod`, `check`, `build`, `deploy`, and `clean` script groups. Each top-level script delegates to its adjacent `name:workspaces` Turbo step through `nova utility run-scripts`.
 - Pins the npm and Node.js toolchain used by current Nova projects and records explicit denials for optional dependency install scripts used by the built-in scaffolds.
 - Generates a baseline `nova.config.json` so recipes and utilities have a valid config to work with from the start.
 - Installs `@cbnventures/nova` as a dev dependency so the `nova` CLI is available inside the project without a global install.
@@ -83,6 +84,7 @@ You do not need to run `starter base` before either direct app or docs command.
 {project-slug}/
 ├── package.json
 ├── nova.config.json
+├── turbo.json
 ├── apps/
 └── packages/
 ```
@@ -121,7 +123,7 @@ Agents and automation should add `--non-interactive` and provide both answers. N
 
 ## Safety Checks
 
-Before creating any file, Nova validates the project slug and checks the two root files it owns. If either target file already exists, the command stops and lists the conflict. `--dry-run` performs the same validation and reports the exact root path without writing.
+Before creating any file, Nova validates the project slug and checks the three root files it owns: `package.json`, `nova.config.json`, and `turbo.json`. If any target file already exists, the command stops and lists the conflict. `--dry-run` performs the same validation and reports the exact root path without writing.
 
 ## Next Steps
 

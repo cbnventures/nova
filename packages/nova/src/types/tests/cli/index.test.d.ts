@@ -11,6 +11,8 @@ export type Tests_Cli_Index_RunnerMocks_GithubSyncPoliciesRun = ReturnType<typeo
 
 export type Tests_Cli_Index_RunnerMocks_LicenseUpdateCopyrightRun = ReturnType<typeof vi['fn']>;
 
+export type Tests_Cli_Index_RunnerMocks_MiscellaneousFixMarkdownTablesRun = ReturnType<typeof vi['fn']>;
+
 export type Tests_Cli_Index_RunnerMocks_ReadMeUpdateHeaderRun = ReturnType<typeof vi['fn']>;
 
 export type Tests_Cli_Index_RunnerMocks_ScaffoldAppExpressjsRun = ReturnType<typeof vi['fn']>;
@@ -28,6 +30,7 @@ export type Tests_Cli_Index_RunnerMocks_ScaffoldStarterBaseRun = ReturnType<type
 export type Tests_Cli_Index_RunnerMocks = {
   githubSyncPoliciesRun: Tests_Cli_Index_RunnerMocks_GithubSyncPoliciesRun;
   licenseUpdateCopyrightRun: Tests_Cli_Index_RunnerMocks_LicenseUpdateCopyrightRun;
+  miscellaneousFixMarkdownTablesRun: Tests_Cli_Index_RunnerMocks_MiscellaneousFixMarkdownTablesRun;
   readMeUpdateHeaderRun: Tests_Cli_Index_RunnerMocks_ReadMeUpdateHeaderRun;
   scaffoldAppExpressjsRun: Tests_Cli_Index_RunnerMocks_ScaffoldAppExpressjsRun;
   scaffoldAppNextjsRun: Tests_Cli_Index_RunnerMocks_ScaffoldAppNextjsRun;
@@ -57,6 +60,17 @@ export type Tests_Cli_Index_CliRecipeLicenseUpdateCopyrightJs_MockedRunner_Run =
 
 export type Tests_Cli_Index_CliRecipeLicenseUpdateCopyrightJs_MockedRunner = {
   run: Tests_Cli_Index_CliRecipeLicenseUpdateCopyrightJs_MockedRunner_Run;
+};
+
+/**
+ * Tests - CLI - Index - CLI Recipe Miscellaneous Fix Markdown Tables JS.
+ *
+ * @since 0.27.0
+ */
+export type Tests_Cli_Index_CliRecipeMiscellaneousFixMarkdownTablesJs_MockedRunner_Run = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Index_CliRecipeMiscellaneousFixMarkdownTablesJs_MockedRunner = {
+  run: Tests_Cli_Index_CliRecipeMiscellaneousFixMarkdownTablesJs_MockedRunner_Run;
 };
 
 /**
@@ -169,6 +183,17 @@ export type Tests_Cli_Index_NestedRecipeOptions_PassesDryRunAndReplaceFileToADir
 export type Tests_Cli_Index_NestedRecipeOptions_PassesDryRunAndReplaceFileToADirectREADMERecipe_ExpectedOptions = {
   dryRun: Tests_Cli_Index_NestedRecipeOptions_PassesDryRunAndReplaceFileToADirectREADMERecipe_ExpectedOptions_DryRun;
   replaceFile: Tests_Cli_Index_NestedRecipeOptions_PassesDryRunAndReplaceFileToADirectREADMERecipe_ExpectedOptions_ReplaceFile;
+};
+
+/**
+ * Tests - CLI - Index - Nested Recipe Options - Passes Dry Run Through Aliases To A Miscellaneous Recipe.
+ *
+ * @since 0.27.0
+ */
+export type Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughAliasesToAMiscellaneousRecipe_ExpectedOptions_DryRun = true;
+
+export type Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughAliasesToAMiscellaneousRecipe_ExpectedOptions = {
+  dryRun: Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughAliasesToAMiscellaneousRecipe_ExpectedOptions_DryRun;
 };
 
 /**

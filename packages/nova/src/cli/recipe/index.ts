@@ -6,6 +6,7 @@ import { Runner as CliRecipeGithubSyncPolicies } from './github/sync-policies.js
 import { Runner as CliRecipeGithubSyncRulesets } from './github/sync-rulesets.js';
 import { Runner as CliRecipeGithubSyncSecurity } from './github/sync-security.js';
 import { Runner as CliRecipeLicenseUpdateCopyright } from './license/update-copyright.js';
+import { Runner as CliRecipeMiscellaneousFixMarkdownTables } from './miscellaneous/fix-markdown-tables.js';
 import { Runner as CliRecipePackageJsonCleanup } from './package-json/cleanup.js';
 import { Runner as CliRecipePackageJsonNormalizeArtifacts } from './package-json/normalize-artifacts.js';
 import { Runner as CliRecipePackageJsonNormalizeBundler } from './package-json/normalize-bundler.js';
@@ -65,6 +66,10 @@ export const registry: Cli_Recipe_Registry = {
   'license': [{
     name: 'update-copyright',
     run: CliRecipeLicenseUpdateCopyright['run'],
+  }],
+  'miscellaneous': [{
+    name: 'fix-markdown-tables',
+    run: CliRecipeMiscellaneousFixMarkdownTables['run'],
   }],
   'read-me': [
     {

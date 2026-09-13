@@ -3,9 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "nova utility run-scripts --parallel 'dev:*'",
+    "dev:start": "next dev",
+    "prod": "nova utility run-scripts --sequential 'prod:*'",
+    "prod:start": "next start",
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:typegen": "next typegen",
+    "check:types": "nova utility type-check --project tsconfig.json",
+    "build": "nova utility run-scripts --sequential 'build:*'",
+    "build:app": "next build",
+    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean:build": "shx rm -rf ./build"
   },
   "dependencies": {
     "next": "16.3.4",
@@ -16,6 +24,7 @@
     "@types/node": "24.9.1",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.7",
+    "shx": "0.4.0",
     "typescript": "6.0.3"
   }
 }

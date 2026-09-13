@@ -1,5 +1,11 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.27.0 - 2026-09-11
+
+### FIXED
+- Fixed excess plural-form warnings in Hebrew and Indonesian localized builds by overriding Docusaurus's blog post messages with the correct number of forms.
+- Fixed the mobile docs sidebar to close after route navigation and the mobile table of contents to close after route or heading selection.
+
 ## 0.26.0 - 2026-09-10
 
 ### UPDATED

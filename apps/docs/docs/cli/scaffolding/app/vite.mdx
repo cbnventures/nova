@@ -26,7 +26,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 - Installs Vite with TypeScript so you get fast dev server startup and hot module replacement out of the box.
 - Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
-- Wires up `vite`, `tsc && vite build`, and `vite preview` scripts so the workspace runs without extra configuration.
+- Provides `dev`, `prod`, `check`, `build`, and `clean` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner; the child steps run Vite and TypeScript directly.
 
 ## Requirements
 
@@ -76,6 +76,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 {project-slug}/
 ├── package.json
 ├── nova.config.json
+├── turbo.json
 ├── apps/
 │   └── {workspace-name}/
 │       ├── package.json

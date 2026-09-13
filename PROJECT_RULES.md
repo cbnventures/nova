@@ -52,6 +52,7 @@ src/
 ├── cli/
 │   ├── recipe/
 │   │   ├── index.ts        → recipe entry point
+│   │   ├── miscellaneous/  → config-free maintenance recipes (fix-markdown-tables)
 │   │   └── package-json/   → package.json recipes (sync-identity.ts, normalize-modules.ts, etc.)
 │   ├── utility/            → utility commands (changelog, initialize, run-recipes, run-scripts, transpile, type-check, version)
 │   └── index.ts            → CLI entry point (Commander setup)
@@ -129,21 +130,23 @@ src/
 
 ### Commands
 
-All commands must be run from the **monorepo root**. The `changelog` and `recipes` scripts call the `nova` CLI binary directly — if Nova isn't built, those commands fail. The root `check` task in `turbo.json` depends on `^build` so consumer workspaces can load their compiled Nova dependencies without rebuilding the workspace being checked. Workspaces check their own TypeScript source directly; the Docusaurus worker compatibility test transpiles its current source in memory instead of requiring preset build output.
+All commands must be run from the **monorepo root**. The `changelog` and `recipes` scripts call the `nova` CLI binary directly — if Nova isn't built, those commands fail. The root `check` script uses Nova's repository bootstrap to run every `check:*` script sequentially in `package.json` order. The root `check` task in `turbo.json` depends on `^build` so consumer workspaces can load their compiled Nova dependencies without rebuilding the workspace being checked. Workspaces check their own TypeScript source directly; the Docusaurus worker compatibility test transpiles its current source in memory instead of requiring preset build output.
 
 The repository-only `nova-run-scripts.mjs` and `nova-type-check.mjs` bootstraps load canonical TypeScript implementations from `packages/nova/src/lib` with Jiti filesystem and module caches disabled. This lets build and check tasks use current source before the compiled CLI exists without maintaining duplicated logic.
 
-| Command             | What it does                                               |
-|---------------------|------------------------------------------------------------|
-| `npm install`       | Install all dependencies                                   |
-| `npm run dev`       | Start development servers (via Turborepo)                  |
-| `npm run prod`      | Start production servers (via Turborepo, depends on build) |
-| `npm run build`     | Compile TypeScript to JavaScript (`tsc` via Turborepo)     |
-| `npm run check`     | Run lint, type-check, and tests (via Turborepo)            |
-| `npm run deploy`    | Run deployment scripts (via Turborepo)                     |
-| `npm run clean`     | Remove build artifacts                                     |
-| `npm run changelog` | Generate changelog from `.changelog/` entries              |
-| `npm run recipes`   | Run Nova recipes across all workspaces                     |
+| Command                   | What it does                                                        |
+|---------------------------|---------------------------------------------------------------------|
+| `npm install`             | Install all dependencies                                            |
+| `npm run dev`             | Start development servers (via Turborepo)                           |
+| `npm run prod`            | Start production servers (via Turborepo, depends on build)          |
+| `npm run build`           | Compile TypeScript to JavaScript (`tsc` via Turborepo)              |
+| `npm run check`           | Run every nested `check:*` script sequentially                      |
+| `npm run check:cli`       | Build Nova and run the Vitest CLI integration suite                 |
+| `npm run check:scaffolds` | Pack, install, check, and build every generated scaffold consumer   |
+| `npm run deploy`          | Run deployment scripts (via Turborepo)                              |
+| `npm run clean`           | Remove build artifacts                                              |
+| `npm run changelog`       | Generate changelog from `.changelog/` entries                       |
+| `npm run recipes`         | Run Nova recipes across all workspaces                              |
 
 ### Environment Variables
 

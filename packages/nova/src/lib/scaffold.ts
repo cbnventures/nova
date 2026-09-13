@@ -46,6 +46,9 @@ import type {
   Lib_Scaffold_CreateMonorepoRoot_ProjectSlug,
   Lib_Scaffold_CreateMonorepoRoot_ProjectTitle,
   Lib_Scaffold_CreateMonorepoRoot_Returns,
+  Lib_Scaffold_CreateMonorepoRoot_TurboJsonContent,
+  Lib_Scaffold_CreateMonorepoRoot_TurboJsonPath,
+  Lib_Scaffold_CreateMonorepoRoot_TurboJsonRelativePath,
   Lib_Scaffold_CreateWorkspaceDirectory_BasePath,
   Lib_Scaffold_CreateWorkspaceDirectory_Returns,
   Lib_Scaffold_CreateWorkspaceDirectory_WorkspaceDirectory,
@@ -934,7 +937,8 @@ async function collectFiles(directory: Lib_Scaffold_CollectFiles_Directory, pref
  * Lib - Scaffold - Create Monorepo Root.
  *
  * Generates the top-level monorepo structure with apps and packages directories, a root
- * package.json with workspaces, and a baseline nova.config.json for the project.
+ * package.json with workspaces and script dispatchers, a Turbo task graph, and a baseline
+ * nova.config.json for the project.
  *
  * @param {Lib_Scaffold_CreateMonorepoRoot_OutputDirectory} outputDirectory - Output directory.
  * @param {Lib_Scaffold_CreateMonorepoRoot_ProjectSlug}     projectSlug     - Project slug.
@@ -961,6 +965,22 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
     name: `${projectSlug}-project`,
     version: '0.0.0',
     private: true,
+    scripts: {
+      'dev': 'nova utility run-scripts --parallel \'dev:*\'',
+      'dev:workspaces': 'turbo run dev',
+      'prod': 'nova utility run-scripts --sequential \'prod:*\'',
+      'prod:workspaces': 'turbo run prod',
+      'check': 'nova utility run-scripts --sequential \'check:*\'',
+      'check:workspaces': 'turbo run check --concurrency=2',
+      'build': 'nova utility run-scripts --sequential \'build:*\'',
+      'build:workspaces': 'turbo run build --concurrency=2',
+      'deploy': 'nova utility run-scripts --sequential \'deploy:*\'',
+      'deploy:workspaces': 'turbo run deploy --concurrency=2',
+      'clean': 'nova utility run-scripts --parallel \'clean:*\'',
+      'clean:workspaces': 'turbo run clean',
+      'changelog': 'nova utility changelog',
+      'recipes': 'nova utility run-recipes --replace-file',
+    },
     allowScripts: {
       'core-js': false,
       'core-js-pure': false,
@@ -980,6 +1000,7 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
     },
     devDependencies: {
       '@cbnventures/nova': novaPackageJson['version'],
+      'turbo': novaPackageJson['devDependencies']['turbo'],
     },
   };
 
@@ -993,6 +1014,85 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
     name: 'createMonorepoRoot',
     purpose: 'written',
   }).info(`Created "${packageJsonRelativePath}".`);
+
+  // Create root turbo.json.
+  const turboJsonContent: Lib_Scaffold_CreateMonorepoRoot_TurboJsonContent = {
+    $schema: 'https://turbo.build/schema.json',
+    globalDependencies: [
+      'package-lock.json',
+      '.env',
+    ],
+    noUpdateNotifier: true,
+    tasks: {
+      dev: {
+        cache: false,
+        dependsOn: [],
+        inputs: [],
+        outputs: [],
+        persistent: true,
+      },
+      prod: {
+        cache: false,
+        dependsOn: [
+          'check',
+          'build',
+        ],
+        inputs: [],
+        outputs: [],
+        persistent: true,
+      },
+      check: {
+        cache: false,
+        dependsOn: ['^build'],
+        inputs: [
+          '!./.*/**/*',
+          '!./build/**',
+          './**/*',
+        ],
+        outputs: [],
+        persistent: false,
+      },
+      build: {
+        cache: false,
+        dependsOn: ['^build'],
+        inputs: [
+          '!./.*/**/*',
+          '!./build/**',
+          './**/*',
+        ],
+        outputs: ['./build/**'],
+        persistent: false,
+      },
+      deploy: {
+        cache: false,
+        dependsOn: [
+          'check',
+          'build',
+        ],
+        inputs: [],
+        outputs: [],
+        persistent: false,
+      },
+      clean: {
+        cache: false,
+        dependsOn: [],
+        inputs: [],
+        outputs: [],
+        persistent: false,
+      },
+    },
+    ui: 'tui',
+  };
+  const turboJsonPath: Lib_Scaffold_CreateMonorepoRoot_TurboJsonPath = join(outputDirectory, 'turbo.json');
+
+  await fs.writeFile(turboJsonPath, `${JSON.stringify(turboJsonContent, null, 2)}\n`, 'utf-8');
+
+  const turboJsonRelativePath: Lib_Scaffold_CreateMonorepoRoot_TurboJsonRelativePath = relative(currentDirectory, turboJsonPath);
+
+  Logger.customize({
+    name: 'createMonorepoRoot',
+    purpose: 'written',
+  }).info(`Created "${turboJsonRelativePath}".`);
 
   // Create baseline nova.config.json.
   const projectTitle: Lib_Scaffold_CreateMonorepoRoot_ProjectTitle = projectSlug
@@ -1538,6 +1638,7 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
     plannedPaths.push(
       join(configRoot, 'package.json'),
       configFilePath,
+      join(configRoot, 'turbo.json'),
     );
   }
 

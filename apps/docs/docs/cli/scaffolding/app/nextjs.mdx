@@ -26,9 +26,9 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 ## Why Use This Command?
 
-- Installs Next.js 15 with React 19, TypeScript, and the App Router so you can start building pages immediately.
+- Installs Next.js 16 with React 19, TypeScript, and the App Router so you can start building pages immediately.
 - Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
-- Wires up `next dev`, `next build`, and `next start` scripts so the workspace runs without extra configuration.
+- Provides `dev`, `prod`, `check`, `build`, and `clean` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner. The check group runs Next.js type generation before Nova's TypeScript check, so a clean project does not need a development server or production build first.
 
 ## Requirements
 
@@ -78,6 +78,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 {project-slug}/
 ├── package.json
 ├── nova.config.json
+├── turbo.json
 ├── apps/
 │   └── {workspace-name}/
 │       ├── package.json

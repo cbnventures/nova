@@ -27,6 +27,7 @@ import { Runner as CliRecipeGithubSyncPolicies } from './recipe/github/sync-poli
 import { Runner as CliRecipeGithubSyncRulesets } from './recipe/github/sync-rulesets.js';
 import { Runner as CliRecipeGithubSyncSecurity } from './recipe/github/sync-security.js';
 import { Runner as CliRecipeLicenseUpdateCopyright } from './recipe/license/update-copyright.js';
+import { Runner as CliRecipeMiscellaneousFixMarkdownTables } from './recipe/miscellaneous/fix-markdown-tables.js';
 import { Runner as CliRecipePackageJsonCleanup } from './recipe/package-json/cleanup.js';
 import { Runner as CliRecipePackageJsonNormalizeArtifacts } from './recipe/package-json/normalize-artifacts.js';
 import { Runner as CliRecipePackageJsonNormalizeBundler } from './recipe/package-json/normalize-bundler.js';
@@ -97,6 +98,8 @@ import type {
   Cli_Index_CLI_RegisterCommands_RecipeGithubOptions,
   Cli_Index_CLI_RegisterCommands_RecipeLicense,
   Cli_Index_CLI_RegisterCommands_RecipeLicenseOptions,
+  Cli_Index_CLI_RegisterCommands_RecipeMiscellaneous,
+  Cli_Index_CLI_RegisterCommands_RecipeMiscellaneousOptions,
   Cli_Index_CLI_RegisterCommands_RecipePackageJson,
   Cli_Index_CLI_RegisterCommands_RecipeReadMe,
   Cli_Index_CLI_RegisterCommands_RecipeReadMeOptions,
@@ -376,7 +379,7 @@ class CLI {
       .command('recipe')
       .alias('rcp')
       .usage('<subcommand> [options]')
-      .description('Automate routine maintenance with configured defaults')
+      .description('Automate routine project maintenance')
       .commandsGroup('Subcommands:')
       .helpCommand(false);
 
@@ -633,6 +636,35 @@ class CLI {
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options, command) => {
         await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeLicenseUpdateCopyright['run']);
+
+        return;
+      });
+
+    const recipeMiscellaneous: Cli_Index_CLI_RegisterCommands_RecipeMiscellaneous = recipe
+      .command('miscellaneous')
+      .alias('misc')
+      .usage('[subcommand] [options]')
+      .description('Run all miscellaneous recipes')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false)
+      .option('-d, --dry-run', 'Run without writing any files')
+      .action(async (options) => {
+        await this.executeCommand<Cli_Index_CLI_RegisterCommands_RunRecipesOptions>({
+          ...(options as Cli_Index_CLI_RegisterCommands_RecipeMiscellaneousOptions),
+          category: 'miscellaneous',
+        }, CliUtilityRunRecipes['run']);
+
+        return;
+      });
+
+    recipeMiscellaneous
+      .command('fix-markdown-tables')
+      .usage('[options]')
+      .description('Format Markdown and MDX tables across the project')
+      .option('-c, --check', 'Report formatting drift without writing files')
+      .option('-d, --dry-run', 'Preview formatting changes without writing files')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeMiscellaneousFixMarkdownTables['run']);
 
         return;
       });

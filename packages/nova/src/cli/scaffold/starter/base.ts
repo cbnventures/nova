@@ -41,7 +41,7 @@ import type {
  * CLI - Scaffold - Starter - Base.
  *
  * Creates a new monorepo from scratch with root-level
- * config files including package.json and nova.config.json.
+ * config files including package.json, nova.config.json, and turbo.json.
  * Sets up directory structure and runs generators.
  *
  * @since 0.15.0
@@ -253,6 +253,7 @@ export class Runner {
     const plannedPaths: Cli_Scaffold_Starter_Base_Runner_Run_PlannedPaths = [
       join(outputDirectory, 'package.json'),
       join(outputDirectory, 'nova.config.json'),
+      join(outputDirectory, 'turbo.json'),
     ];
     const conflictingPaths: Cli_Scaffold_Starter_Base_Runner_Run_ConflictingPaths = await findFileConflicts(plannedPaths);
 

@@ -4,9 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node build/index.js"
+    "dev": "nova utility run-scripts --parallel 'dev:*'",
+    "dev:start": "tsx watch src/index.ts",
+    "prod": "nova utility run-scripts --sequential 'prod:*'",
+    "prod:start": "node build/index.js",
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:types": "nova utility type-check --project tsconfig.json",
+    "build": "nova utility run-scripts --sequential 'build:*'",
+    "build:types": "tsc",
+    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean:build": "shx rm -rf ./build"
   },
   "dependencies": {
     "express": "5.1.0"
@@ -14,6 +21,7 @@
   "devDependencies": {
     "@types/express": "5.0.2",
     "@types/node": "22.15.17",
+    "shx": "0.4.0",
     "tsx": "4.19.4",
     "typescript": "6.0.3"
   }

@@ -68,6 +68,49 @@ export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_UnresolvedFiles =
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PlaceholderMessage = string;
 
 /**
+ * Tests - Scaffold Output Contract - Verify Script Contract.
+ *
+ * @since 0.27.0
+ */
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonPath = string;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_Returns = Promise<void>;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonRaw = string;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJson = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptNames = string[];
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder = readonly [
+  'dev',
+  'prod',
+  'check',
+  'build',
+  'deploy',
+  'clean',
+  'i18n',
+];
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroup = Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder[number];
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupModes = Record<Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroup, 'parallel' | 'sequential'>;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_PreviousParentIndex = number;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_ChildScriptNames = string[];
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_HasParent = boolean;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_ParentIndex = number;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedParentCommand = string;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedGroupNames = string[];
+
+/**
  * Tests - Scaffold Output Contract - Verify Starter Contract.
  *
  * @since 0.26.0
@@ -85,6 +128,14 @@ export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJ
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJson = Record<string, unknown>;
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonPath = string;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonRaw = string;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJson = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboTasks = Record<string, unknown>;
 
 /**
  * Tests - Scaffold Output Contract - Verify Template Contract.

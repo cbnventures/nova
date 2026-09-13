@@ -11,6 +11,20 @@ import type {
 } from '../../../shared.d.ts';
 
 /**
+ * CLI - Recipe - package.json - Normalize Tooling.
+ *
+ * @since 0.27.0
+ */
+export type Cli_Recipe_PackageJson_NormalizeTooling_ScriptGroupOrder = readonly [
+  'dev',
+  'prod',
+  'check',
+  'build',
+  'deploy',
+  'clean',
+];
+
+/**
  * CLI - Recipe - package.json - Normalize Tooling - Handle.
  *
  * @since 0.14.0
@@ -35,11 +49,23 @@ export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageConfig 
 
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageWorkspaces = unknown;
 
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasBindingGyp = boolean;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptNames = string[];
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_OrderedScripts = Record<string, unknown>;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HandledScripts = Set<string>;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CurrentScriptNames = string[];
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_OrderedScriptNames = string[];
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptOrderChanged = boolean;
+
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_WorkspaceDirectory = string;
 
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_BindingGypPath = string;
-
-export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasBindingGyp = boolean;
 
 /**
  * CLI - Recipe - package.json - Normalize Tooling - Run.

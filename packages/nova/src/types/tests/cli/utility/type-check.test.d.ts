@@ -78,3 +78,16 @@ export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForIn
 export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_TsconfigContents = string;
 
 export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_IndexPath = string;
+
+/**
+ * Tests - CLI - Utility - Type Check - Run - Supports Incremental Project Configurations.
+ *
+ * @since 0.27.0
+ */
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_TsconfigPath = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_TsconfigContents = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_IndexPath = string;

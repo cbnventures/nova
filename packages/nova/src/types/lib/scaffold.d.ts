@@ -76,6 +76,12 @@ export type Lib_Scaffold_CreateMonorepoRoot_PackageJsonPath = string;
 
 export type Lib_Scaffold_CreateMonorepoRoot_PackageJsonRelativePath = string;
 
+export type Lib_Scaffold_CreateMonorepoRoot_TurboJsonContent = Record<string, unknown>;
+
+export type Lib_Scaffold_CreateMonorepoRoot_TurboJsonPath = string;
+
+export type Lib_Scaffold_CreateMonorepoRoot_TurboJsonRelativePath = string;
+
 export type Lib_Scaffold_CreateMonorepoRoot_ProjectTitle = string;
 
 export type Lib_Scaffold_CreateMonorepoRoot_NovaConfigContent = Record<string, unknown>;

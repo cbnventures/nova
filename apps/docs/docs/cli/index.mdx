@@ -75,6 +75,7 @@ flowchart TD
         direction LR
         RCP --> GHR[github] --> GHR1[sync-features / sync-identity / sync-policies]
         RCP --> PKG[package-json] --> PKG1[cleanup / normalize-* / sync-*]
+        RCP --> MISC[miscellaneous] --> MISC1[fix-markdown-tables]
     end
 
     subgraph Scaffolding
@@ -127,7 +128,7 @@ _Category: `must-haves` · Alias: `must`_
 
 ### Recipes
 
-Apply **scripted edits** that automate routine maintenance, using values from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> at the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>.
+Apply **scripted edits** that automate routine maintenance, using values from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> when the recipe needs configured project data.
 
 :::info
 All commands in "Recipes" are shaped as `nova recipe <category> <subcommand>` or `nova rcp <alias> <shorthand>`.
@@ -159,6 +160,16 @@ _Category: `package-json` · Alias: `pkg`_
 | [`sync-environment`](/docs/cli/recipes/package-json/sync-environment)             | `sync-env`  | Sync engines, os, cpu, libc, devEngines, and packageManager in workspace `package.json` files.         |
 | [`sync-identity`](/docs/cli/recipes/package-json/sync-identity)                   | `sync-id`   | Sync name, version, description, keywords, displayName, and license to workspace `package.json` files. |
 | [`sync-ownership`](/docs/cli/recipes/package-json/sync-ownership)                 | `sync-own`  | Sync homepage, bugs, author, contributors, funding, and repository to workspace `package.json` files.  |
+
+#### Miscellaneous
+_Category: `miscellaneous` · Alias: `misc`_
+
+| Subcommand                                                                   | Shorthand | What It Does                                                |
+|------------------------------------------------------------------------------|-----------|-------------------------------------------------------------|
+| _(none)_                                                                     | —         | Run every miscellaneous recipe for the current repository.  |
+| [`fix-markdown-tables`](/docs/cli/recipes/miscellaneous/fix-markdown-tables) | —         | Format Markdown and MDX tables throughout the project root. |
+
+Running `nova recipe miscellaneous` (alias `nova rcp misc`) without a subcommand runs every miscellaneous recipe. Currently, that means `fix-markdown-tables`.
 
 ### Scaffolding
 

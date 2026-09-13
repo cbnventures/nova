@@ -1,0 +1,106 @@
+---
+id: "fix-markdown-tables"
+title: "Fix Markdown Tables"
+description: "Format pipe-based Markdown and MDX tables across the project root while preserving fenced examples and detecting formatting drift in CI."
+keywords:
+  - "nova"
+  - "fix markdown tables"
+  - "markdown formatter"
+  - "mdx tables"
+  - "documentation"
+  - "ci check"
+tags:
+  - "cli"
+  - "markdown"
+  - "recipe"
+  - "miscellaneous"
+  - "documentation"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Format pipe-based Markdown and MDX tables with Nova's consistent column spacing from anywhere inside your project.
+
+## Summary
+
+The `fix-markdown-tables` recipe scans the project root for pipe-based Markdown and MDX tables and formats them with Nova's shared renderer. It preserves fenced examples, escaped pipes, and intentionally aligned tables.
+
+It can write changes, preview them with `--dry-run`, or report formatting drift with `--check` for CI.
+
+## Why Use This Command?
+
+1. Scans the complete project root so documentation outside the current <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> is not overlooked.
+2. Uses Nova's MarkdownTable renderer so copied formatting scripts cannot drift between repositories.
+3. Provides preview and check modes so you can inspect changes locally or enforce the format in <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology>.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
+- **Project manifest** — A `package.json` file must exist in the current directory or one of its parent directories.
+- **Supported sources** — Tables must use leading pipes in `.md` or `.mdx` files and include a header, delimiter, and at least one data row.
+
+## Behavior
+
+1. **Resolve the project** — Find the nearest `package.json`, preferring the containing <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root when it declares workspaces.
+2. **Discover sources** — Find `.md` and `.mdx` files while skipping dependencies, generated output, caches, and agent-state directories.
+3. **Protect semantics** — Ignore tables inside backtick or tilde code fences and tables with alignment markers such as `:---` or `---:`.
+4. **Render tables** — Preserve escaped pipes and optional trailing pipes, then rewrite changed tables with Nova's Markdown table formatter.
+
+## Recipe Integration
+
+Include the formatter in routine project maintenance by exposing Nova's batch recipe command at the project root:
+
+```json title="package.json"
+{
+  "scripts": {
+    "recipes": "nova utility run-recipes --replace-file"
+  }
+}
+```
+
+The `fix-markdown-tables` recipe is registered in the `miscellaneous` category, so `npm run recipes` invokes it automatically along with every other registered recipe. A separate `postbuild` lifecycle script is not required.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova recipe miscellaneous fix-markdown-tables
+
+    # Shorthand
+    nova rcp misc fix-markdown-tables
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest recipe miscellaneous fix-markdown-tables
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest rcp misc fix-markdown-tables
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag            | Description                                                                 |
+|-----------------|-----------------------------------------------------------------------------|
+| `-c, --check`   | Report tables that need formatting without writing files; exit with code 1. |
+| `-d, --dry-run` | Preview tables that would be formatted without writing files.               |
+
+`--check` and `--dry-run` are mutually exclusive. Running the command without either option writes the formatted tables in place.
+
+## Troubleshooting
+
+- **Aligned table remains unchanged** — Nova leaves delimiter rows containing colons alone because changing them could remove left, center, or right alignment.
+- **Table inside a code sample remains unchanged** — Fenced examples are excluded so documentation can show intentionally unformatted input.
+- **A file is not scanned** — Generated-output, dependency, cache, and agent-state directories are excluded from discovery.
+- **Command reports conflicting options** — Use either `--check` or `--dry-run`, not both.

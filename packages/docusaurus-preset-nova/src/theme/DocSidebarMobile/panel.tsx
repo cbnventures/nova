@@ -3,7 +3,10 @@ import { useLocation } from '@docusaurus/router';
 import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
 import DocSidebar from '@theme/DocSidebar';
-import { useSyncExternalStore } from 'react';
+import {
+  useEffect,
+  useSyncExternalStore,
+} from 'react';
 import { createPortal } from 'react-dom';
 
 import {
@@ -50,6 +53,15 @@ function DocSidebarMobilePanel() {
   const setIsClosing: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_SetIsClosing = overlayPanel['setIsClosing'];
   const handleClickOutside: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_HandleClickOutsideFunction = overlayPanel['handleClickOutside'];
   const panelRef: Theme_DocSidebarMobile_Panel_DocSidebarMobilePanel_PanelRef = overlayPanel['panelRef'];
+
+  // Close overlay on navigation.
+  useEffect(() => {
+    if (isOpen === true) {
+      setIsClosing(true);
+    }
+
+    return undefined;
+  }, [pathname]);
 
   if (
     isOpen !== true

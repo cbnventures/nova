@@ -10,6 +10,7 @@ import {
 import type {
   Tests_Cli_Index_CliRecipeGithubSyncPoliciesJs_MockedRunner,
   Tests_Cli_Index_CliRecipeLicenseUpdateCopyrightJs_MockedRunner,
+  Tests_Cli_Index_CliRecipeMiscellaneousFixMarkdownTablesJs_MockedRunner,
   Tests_Cli_Index_CliRecipeReadMeUpdateHeaderJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldAppExpressjsJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldAppNextjsJs_MockedRunner,
@@ -20,6 +21,7 @@ import type {
   Tests_Cli_Index_NestedRecipeOptions_OriginalArgv,
   Tests_Cli_Index_NestedRecipeOptions_PassesDryRunAndReplaceFileToADirectLicenseRecipe_ExpectedOptions,
   Tests_Cli_Index_NestedRecipeOptions_PassesDryRunAndReplaceFileToADirectREADMERecipe_ExpectedOptions,
+  Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughAliasesToAMiscellaneousRecipe_ExpectedOptions,
   Tests_Cli_Index_NestedRecipeOptions_PassesDryRunToADirectGitHubRecipe_ExpectedOptions,
   Tests_Cli_Index_RunnerMocks,
   Tests_Cli_Index_ScaffoldOptions_OriginalArgv,
@@ -42,6 +44,7 @@ import type {
 const runnerMocks: Tests_Cli_Index_RunnerMocks = vi.hoisted(() => ({
   githubSyncPoliciesRun: vi.fn(),
   licenseUpdateCopyrightRun: vi.fn(),
+  miscellaneousFixMarkdownTablesRun: vi.fn(),
   readMeUpdateHeaderRun: vi.fn(),
   scaffoldAppExpressjsRun: vi.fn(),
   scaffoldAppNextjsRun: vi.fn(),
@@ -62,6 +65,14 @@ vi.mock('../../cli/recipe/github/sync-policies.js', () => {
 vi.mock('../../cli/recipe/license/update-copyright.js', () => {
   const mockedRunner: Tests_Cli_Index_CliRecipeLicenseUpdateCopyrightJs_MockedRunner = {
     run: runnerMocks['licenseUpdateCopyrightRun'],
+  };
+
+  return { Runner: mockedRunner };
+});
+
+vi.mock('../../cli/recipe/miscellaneous/fix-markdown-tables.js', () => {
+  const mockedRunner: Tests_Cli_Index_CliRecipeMiscellaneousFixMarkdownTablesJs_MockedRunner = {
+    run: runnerMocks['miscellaneousFixMarkdownTablesRun'],
   };
 
   return { Runner: mockedRunner };
@@ -166,6 +177,31 @@ describe('nested recipe options', () => {
 
     await vi.waitFor(() => {
       expect(runnerMocks['githubSyncPoliciesRun']).toHaveBeenCalledWith(expectedOptions);
+
+      return;
+    });
+
+    return;
+  });
+
+  it('passes dry run through aliases to a miscellaneous recipe', async () => {
+    const expectedOptions: Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughAliasesToAMiscellaneousRecipe_ExpectedOptions = {
+      dryRun: true,
+    };
+
+    process.argv = [
+      'node',
+      'nova',
+      'rcp',
+      'misc',
+      'fix-markdown-tables',
+      '--dry-run',
+    ];
+
+    await import('../../cli/index.js');
+
+    await vi.waitFor(() => {
+      expect(runnerMocks['miscellaneousFixMarkdownTablesRun']).toHaveBeenCalledWith(expectedOptions);
 
       return;
     });

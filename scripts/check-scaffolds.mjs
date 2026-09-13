@@ -34,6 +34,27 @@ function findTarball(directory, packageStem) {
 }
 
 /**
+ * Check Scaffolds - Read Command Output.
+ *
+ * Runs one consumer command while capturing stdout so package-boundary checks
+ * can verify the installed executable rather than only its process exit code.
+ *
+ * @param {string}   command - Command.
+ * @param {string[]} args    - Args.
+ * @param {string}   cwd     - Cwd.
+ *
+ * @returns {string}
+ *
+ * @since UNRELEASED
+ */
+function readCommandOutput(command, args, cwd) {
+  return execFileSync(command, args, {
+    cwd,
+    encoding: 'utf-8',
+  });
+}
+
+/**
  * Check Scaffolds - Run Command.
  *
  * Runs one consumer command with inherited output so failures retain the
@@ -277,39 +298,64 @@ function checkScaffolds() {
       cacheDirectory,
     ], directProjectDirectory);
 
+    const novaPackageJson = JSON.parse(readFileSync(join(repositoryDirectory, 'packages', 'nova', 'package.json'), 'utf-8'));
+    const novaVersion = novaPackageJson['version'];
+    const novaHelpOutput = readCommandOutput('npm', [
+      'exec',
+      '--offline',
+      '--',
+      'nova',
+      '--help',
+    ], directProjectDirectory);
+
+    process.stdout.write(novaHelpOutput);
+
+    if (
+      novaHelpOutput.includes(`Nova v${novaVersion}`) === false
+      || novaHelpOutput.includes('Usage: nova') === false
+    ) {
+      throw new Error(`Installed Nova executable should report version "${novaVersion}" and render its help menu.`);
+    }
+
+    const docusaurusPresetPackageJson = JSON.parse(readFileSync(join(repositoryDirectory, 'packages', 'docusaurus-preset-nova', 'package.json'), 'utf-8'));
+    const docusaurusPresetVersion = docusaurusPresetPackageJson['version'];
+    const themeNovaHelpOutput = readCommandOutput('npm', [
+      'exec',
+      '--offline',
+      '--workspace',
+      './apps/docs',
+      '--',
+      'theme-nova',
+      '--help',
+    ], projectDirectory);
+
+    process.stdout.write(themeNovaHelpOutput);
+
+    if (
+      themeNovaHelpOutput.includes(`theme-nova v${docusaurusPresetVersion}`) === false
+      || themeNovaHelpOutput.includes('Usage: theme-nova') === false
+    ) {
+      throw new Error(`Installed theme-nova executable should report version "${docusaurusPresetVersion}" and render its help menu.`);
+    }
+
     runCommand('npm', [
       'run',
       'check',
-      '--workspaces',
-      '--if-present',
-    ], projectDirectory);
-
-    runCommand('npm', [
-      'run',
-      'lint',
-      '--workspaces',
-      '--if-present',
-    ], projectDirectory);
-
-    runCommand('npm', [
-      'run',
-      'test',
-      '--workspaces',
-      '--if-present',
     ], projectDirectory);
 
     runCommand('npm', [
       'run',
       'build',
-      '--workspaces',
-      '--if-present',
     ], projectDirectory);
 
     runCommand('npm', [
       'run',
+      'check',
+    ], directProjectDirectory);
+
+    runCommand('npm', [
+      'run',
       'build',
-      '--workspaces',
-      '--if-present',
     ], directProjectDirectory);
   } finally {
     rmSync(temporaryDirectory, {

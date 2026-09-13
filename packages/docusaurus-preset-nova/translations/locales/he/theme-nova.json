@@ -86,6 +86,7 @@
   "theme.blog.post.paginator.navAriaLabel": "ניווט בדף רשומת הבלוג",
   "theme.blog.post.readMore": "קרא עוד",
   "theme.blog.post.readMoreLabel": "קרא עוד על {title}",
+  "theme.blog.post.plurals": "רשומה אחת|שתי רשומות|{count} רשומות",
   "theme.blog.post.readingTime.plurals": "דקת קריאה|{readingTime} דקות קריאה|{readingTime} דקות קריאה",
   "theme.blog.sidebar.ariaLabel": "סרגל הצד של הבלוג",
   "theme.blog.sidebar.authorsLabel": "כותבים",

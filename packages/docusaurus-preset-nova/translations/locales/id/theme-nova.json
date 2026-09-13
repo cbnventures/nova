@@ -86,6 +86,7 @@
   "theme.blog.post.paginator.navAriaLabel": "Navigasi halaman pos blog",
   "theme.blog.post.readMore": "Baca selengkapnya",
   "theme.blog.post.readMoreLabel": "Baca selengkapnya mengenai {title}",
+  "theme.blog.post.plurals": "{count} pos",
   "theme.blog.post.readingTime.plurals": "{readingTime} menit membaca",
   "theme.blog.sidebar.ariaLabel": "Bilah sisi blog",
   "theme.blog.sidebar.authorsLabel": "Penulis",

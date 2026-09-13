@@ -36,6 +36,10 @@ import type {
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_ProjectDirectory,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_TsconfigContents,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SetsExitCodeForInvalidTypeScript_TsconfigPath,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_IndexPath,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_ProjectDirectory,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_TsconfigContents,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_TsconfigPath,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TemporaryDirectory,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TemporaryPrefix,
 } from '../../../types/tests/cli/utility/type-check.test.d.ts';
@@ -197,6 +201,38 @@ describe('CliUtilityTypeCheck.run', async () => {
     CliUtilityTypeCheck.run({});
 
     strictEqual(process.exitCode, 1);
+
+    return;
+  });
+
+  it('supports incremental project configurations', async () => {
+    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_ProjectDirectory = join(sandboxRoot, 'incremental-ts');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const tsconfigPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_TsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_TsconfigContents = JSON.stringify({
+      compilerOptions: {
+        incremental: true,
+        noEmit: true,
+        strict: true,
+      },
+      include: ['*.ts'],
+    }, null, 2);
+
+    await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
+
+    const indexPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SupportsIncrementalProjectConfigurations_IndexPath = join(projectDirectory, 'index.ts');
+
+    await writeFile(indexPath, 'export const greeting: string = "hello";\n', 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    CliUtilityTypeCheck.run({
+      project: tsconfigPath,
+    });
+
+    strictEqual(process.exitCode, undefined);
 
     return;
   });

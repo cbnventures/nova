@@ -46,7 +46,7 @@ It normalizes the `scripts` object, `allowScripts` object, `gypfile` flag, `conf
 
 For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects tooling-related fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
 
-- **`scripts` (Required)** — If the field is missing, it is added as an empty object `{}`.
+- **`scripts` (Required)** — If the field is missing, it is added as an empty object `{}`. Existing lifecycle groups are ordered as `dev`, `prod`, `check`, `build`, `deploy`, and `clean`; each group's `name:*` children stay directly beneath their parent in authored order so sequential pipelines keep their intended execution order. Other scripts retain their relative order after those groups.
 - **`allowScripts` (Conditional)** — Removed if the field is present but empty. A non-empty policy is preserved exactly; Nova never adds an approval or changes an existing decision.
 - **`gypfile` (Required)** — If present but no `binding.gyp` file exists in the workspace directory, the field is removed. If missing but `binding.gyp` exists and neither `scripts.preinstall` nor `scripts.install` are defined, it is added as `true`.
 - **`config` (Conditional)** — Removed if the field is present but empty.

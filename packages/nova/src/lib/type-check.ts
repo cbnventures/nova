@@ -180,7 +180,7 @@ export function runTypeCheck(options: Lib_TypeCheck_RunTypeCheck_Options): Lib_T
   }
 
   const config: Lib_TypeCheck_RunTypeCheck_Config = configResult['config'];
-  const parsed: Lib_TypeCheck_RunTypeCheck_Parsed = parseJsonConfigFileContent(config, sys, dirname(configPath));
+  const parsed: Lib_TypeCheck_RunTypeCheck_Parsed = parseJsonConfigFileContent(config, sys, dirname(configPath), undefined, configPath);
 
   if (parsed.errors.length > 0) {
     printDiagnostics(parsed.errors, options['printError'], options['printInfo']);

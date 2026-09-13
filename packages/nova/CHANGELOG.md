@@ -1,5 +1,17 @@
 # @cbnventures/nova
 
+## 0.27.0 - 2026-09-11
+
+### UPDATED
+- Updated the Cloudflare Worker scaffold to Wrangler 4.131.1 and Workers Types 5.20260911.1.
+- Standardized package scripts as development-first parent/child groups with checks before builds, including Docusaurus i18n maintenance, taught `normalize-tooling` to preserve the lifecycle structure, and gave scaffolded monorepo roots the same Nova-dispatched Turbo commands and `turbo.json` contract.
+
+### FIXED
+- Fixed Nova's type checker to preserve the resolved TSConfig path, allowing valid `incremental` projects, and made the Next.js scaffold generate framework types before its clean TypeScript check.
+
+### ADDED
+- Added `nova recipe miscellaneous fix-markdown-tables` to format project-root Markdown and MDX tables, with batch `run-recipes` integration, `--dry-run` previews, and a `--check` mode suitable for CI.
+
 ## 0.26.0 - 2026-09-10
 
 ### UPDATED

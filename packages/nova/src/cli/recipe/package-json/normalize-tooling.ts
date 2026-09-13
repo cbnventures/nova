@@ -17,16 +17,22 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CurrentScriptNames,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_FileContents,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_FilePath,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HandledScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasBindingGyp,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Manifest,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_OrderedScriptNames,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_OrderedScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageAllowScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageConfig,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageGypfile,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageWorkspaces,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Returns,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptNames,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptOrderChanged,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Workspace,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_ConfigRecipes,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_ConfigRecipesPackageJson,
@@ -44,7 +50,26 @@ import type {
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkingFile,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkingFileWorkspaces,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_Workspaces,
+  Cli_Recipe_PackageJson_NormalizeTooling_ScriptGroupOrder,
 } from '../../../types/cli/recipe/package-json/normalize-tooling.d.ts';
+
+/**
+ * CLI - Recipe - package.json - Normalize Tooling - Script Group Order.
+ *
+ * Keeps the shared development lifecycle easy to scan while preserving the
+ * authored order of each group's child scripts, which is also their sequential
+ * execution order.
+ *
+ * @since 0.27.0
+ */
+const scriptGroupOrder: Cli_Recipe_PackageJson_NormalizeTooling_ScriptGroupOrder = [
+  'dev',
+  'prod',
+  'check',
+  'build',
+  'deploy',
+  'clean',
+];
 
 /**
  * CLI - Recipe - package.json - Normalize Tooling.
@@ -219,6 +244,45 @@ export class Runner {
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding "scripts" as an empty object ...`);
 
       Reflect.set(fileContents, 'scripts', {});
+    } else if (isPlainObject(packageScripts) === true) {
+      const scriptNames: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptNames = Object.keys(packageScripts);
+      const orderedScripts: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_OrderedScripts = {};
+      const handledScripts: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HandledScripts = new Set();
+
+      for (const scriptGroup of scriptGroupOrder) {
+        if (Reflect.has(packageScripts, scriptGroup) === true) {
+          Reflect.set(orderedScripts, scriptGroup, packageScripts[scriptGroup]);
+
+          handledScripts.add(scriptGroup);
+        }
+
+        for (const scriptName of scriptNames) {
+          if (scriptName.startsWith(`${scriptGroup}:`) === true) {
+            Reflect.set(orderedScripts, scriptName, packageScripts[scriptName]);
+
+            handledScripts.add(scriptName);
+          }
+        }
+      }
+
+      for (const scriptName of scriptNames) {
+        if (handledScripts.has(scriptName) === false) {
+          Reflect.set(orderedScripts, scriptName, packageScripts[scriptName]);
+        }
+      }
+
+      const currentScriptNames: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CurrentScriptNames = Object.keys(packageScripts);
+      const orderedScriptNames: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_OrderedScriptNames = Object.keys(orderedScripts);
+      const scriptOrderChanged: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptOrderChanged = currentScriptNames.some((scriptName, scriptIndex) => scriptName !== orderedScriptNames[scriptIndex]);
+
+      if (scriptOrderChanged === true) {
+        Logger.customize({
+          name: 'Runner.handle',
+          purpose: 'scripts',
+        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Reordering lifecycle scripts as dev, prod, check, build, deploy, and clean ...`);
+
+        Reflect.set(fileContents, 'scripts', orderedScripts);
+      }
     }
 
     // Sync the "allowScripts" field (Conditional).

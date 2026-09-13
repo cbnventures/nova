@@ -6,6 +6,8 @@ import type { Shared_TocHeading } from '../../shared.d.ts';
  *
  * @since 0.21.0
  */
+export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_Pathname = string;
+
 export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_IsOpen = boolean;
 
 export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_Payload_TreeItems = Shared_TocHeading[];
@@ -49,6 +51,8 @@ export type Theme_TocCollapsible_Panel_TOCCollapsiblePanel_Returns = React.JSX.E
 export type Theme_TocCollapsible_Panel_TocList_Item = Shared_TocHeading;
 
 export type Theme_TocCollapsible_Panel_TocList_Items = Theme_TocCollapsible_Panel_TocList_Item[];
+
+export type Theme_TocCollapsible_Panel_TocList_OnLinkClick = () => undefined;
 
 /**
  * Theme - Toc Collapsible - Panel - Toc List (TocList).

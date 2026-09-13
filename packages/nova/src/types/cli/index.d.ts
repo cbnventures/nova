@@ -144,6 +144,12 @@ export type Cli_Index_CLI_RegisterCommands_RecipeLicenseOptions = {
   replaceFile?: true;
 };
 
+export type Cli_Index_CLI_RegisterCommands_RecipeMiscellaneous = Command;
+
+export type Cli_Index_CLI_RegisterCommands_RecipeMiscellaneousOptions = {
+  dryRun?: true;
+};
+
 export type Cli_Index_CLI_RegisterCommands_RecipeReadMe = Command;
 
 export type Cli_Index_CLI_RegisterCommands_RecipeReadMeOptions = {
