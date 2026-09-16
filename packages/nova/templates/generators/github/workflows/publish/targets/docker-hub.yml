@@ -5,6 +5,7 @@ publish-docker-hub-[__TARGET_ID__]:
   permissions:
     contents: "read"
     attestations: "write"
+    artifact-metadata: "write"
     id-token: "write"
 [__JOBS_CONDITION__]
   steps:
@@ -40,7 +41,7 @@ publish-docker-hub-[__TARGET_ID__]:
 
     - name: "Generate build provenance"
       if: "${{ env.PUBLISH == 'true' }}"
-      uses: "actions/attest-build-provenance@v2"
+      uses: "actions/attest@v4"
       with:
         subject-name: "docker.io/${{ github.repository }}"
         subject-digest: "${{ steps.build-push.outputs.digest }}"

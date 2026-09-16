@@ -2436,7 +2436,7 @@ export class Runner {
         {
           name: 'Attest build provenance',
           if: Runner.expr('env.PUBLISH == \'true\''),
-          uses: 'actions/attest-build-provenance@v2',
+          uses: 'actions/attest@v4',
           with: [{
             key: 'subject-path',
             value: `${actionOutputPath}/${actionEntryPoint}`,
@@ -2619,6 +2619,7 @@ export class Runner {
         'contents': 'read',
         ...extraPermissions,
         'attestations': 'write',
+        'artifact-metadata': 'write',
         'id-token': 'write',
       },
       steps: [
@@ -2666,7 +2667,7 @@ export class Runner {
         {
           name: 'Generate build provenance',
           if: Runner.expr('env.PUBLISH == \'true\''),
-          uses: 'actions/attest-build-provenance@v2',
+          uses: 'actions/attest@v4',
           with: [
             {
               key: 'subject-name',

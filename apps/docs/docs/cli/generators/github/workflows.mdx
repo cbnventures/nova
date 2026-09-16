@@ -523,7 +523,7 @@ When a GitHub Release is published:
 5. The staged tree is committed as `Release <tag>` and force-pushed to the release branch.
 6. The semver tag (e.g., `v2.1.0`) is force-retagged onto the new orphan commit. GitHub creates this tag on `main`'s HEAD when you publish the release; this step moves it to point at the orphan commit so `uses: owner/repo@v2.1.0` resolves correctly.
 7. The floating major tag (e.g., `v2`) is force-moved to the same commit.
-8. A SLSA build-provenance attestation is emitted on the resolved entry script (`ACTION_OUTPUT_PATH`/`ACTION_ENTRY_POINT`) via `actions/attest-build-provenance`.
+8. A SLSA build-provenance attestation is emitted on the resolved entry script (`ACTION_OUTPUT_PATH`/`ACTION_ENTRY_POINT`) via `actions/attest@v4`.
 
 The `main` branch is never rewritten — the release branch is a parallel, orphan history that mirrors only what consumers receive via `uses: owner/repo@<ref>`.
 

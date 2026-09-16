@@ -1,7 +1,7 @@
 /**
  * Tests - Documentation Contract - Documentation Contract.
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_Cwd = string;
 

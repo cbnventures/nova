@@ -480,6 +480,8 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_ReproducesTheSyntheticContainersWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
     strictEqual(generated, committed);
+    strictEqual(generated.includes('uses: "actions/attest@v4"'), true);
+    strictEqual(generated.includes('artifact-metadata: "write"'), true);
 
     return;
   });
@@ -609,6 +611,8 @@ describe('WorkflowsBlueprintPublishParity.action', () => {
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
     strictEqual(generated, committed);
+    strictEqual(generated.includes('uses: "actions/attest@v4"'), true);
+    strictEqual(generated.includes('actions/attest-build-provenance@v2'), false);
 
     return;
   });

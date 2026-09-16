@@ -56,7 +56,7 @@ Recorded entries are stored as individual `.md` files in a `.changelog/` directo
 
 - **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
 - **Project root** — Run the command from the directory containing the top-level `package.json` (<Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepos</Terminology> included).
-- **Nova config** — A valid <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> must exist with at least one non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> workspace defined.
+- **Nova config** — A valid <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> must exist. Recording a change requires a non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> workspace; releasing can also stamp freezable workspaces when there are no entries.
 
 ## Usage
 
@@ -115,7 +115,7 @@ You can run this command in two ways:
 
 ### Release Flow
 
-The validation and preview steps finish before Nova writes any release files. Version bumps, changelog updates, and sentinel stamping then run once per releasing workspace; consumed entries are deleted only after every workspace succeeds.
+The validation and preview steps finish before Nova writes any release files. Version bumps and changelog updates run for releasing non-freezable workspaces, while sentinel stamping also runs for freezable workspaces; consumed entries are deleted only after every workspace succeeds.
 
 1. **Read entries** — Collects all `.md` files from `.changelog/`.
 2. **Validate release history** — Confirms the configured strategy agrees with the root and non-freezable workspace changelogs.
@@ -126,8 +126,10 @@ The validation and preview steps finish before Nova writes any release files. Ve
 7. **Bump version** — Updates the `version` field in each affected `package.json`.
 8. **Write CHANGELOG.md** — Prepends a new version section. Creates the file if it does not exist.
 9. **Sync exact package references** — Updates exact-pinned references to co-released packages in workspace and template `package.json` files. Ranges and workspace protocols are left unchanged.
-10. **Stamp sentinels** — Replaces every `@since UNRELEASED` and `@deprecated UNRELEASED` tag in the package's `src/` tree (`.ts`, `.tsx`, and `.css` files) with the new version. Skipped when the new version is a prerelease (contains a hyphen). Fails the release with a non-zero exit code if source scanning or stamping fails, and keeps pending entry files for recovery.
+10. **Stamp sentinels** — Replaces `@since UNRELEASED` and `@deprecated UNRELEASED` tags in each workspace's own `src/` and `scripts/` trees (`.ts`, `.tsx`, `.mts`, `.cts`, `.js`, `.mjs`, `.cjs`, and `.css` files). Releasing non-freezable workspaces use their new version, while freezable workspaces use `0.0.0` without a version bump or changelog. Prerelease versions (containing a hyphen) are skipped. A scanning or stamping failure leaves pending entries in place.
 11. **Clean up** — Deletes consumed entry files from `.changelog/` only after every workspace has completed successfully.
+
+When `.changelog/` has no entries, `--release` still stamps freezable workspaces at `0.0.0`. This includes the project root's `scripts/` files; it does not scan into sibling `apps/` or `packages/` workspaces. A dry run writes nothing.
 
 :::danger Non-Zero Exit Code
 The command exits with code **1** when validation fails (invalid flags, missing config, unknown package). <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> pipelines that use this command will fail the step on errors.
@@ -341,8 +343,8 @@ Then run `npm run changelog:record` or `npm run changelog:release`.
 - **"No eligible (non-freezable) workspaces found"** — Confirm that <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> has at least one <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> with a <Terminology title="private workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>trackable</Terminology> or <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> <Terminology title="workspace label" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace policy</Terminology>.
 - **"Cannot use --record and --release together"** — These flags are mutually exclusive. Run them as separate commands.
 - **"Non-interactive record requires --package, --category, --bump, and --message"** — In semver mode, all four flags are required when using `--record`. In CalVer mode, only `--package`, `--category`, and `--message` are required (no `--bump`). Omit `--record` for interactive mode.
-- **"No changelog entries found"** — The `.changelog/` directory is empty or does not exist. Record at least one change before releasing.
+- **"No changelog entries found"** — The `.changelog/` directory is empty or does not exist. No versions or changelogs change, but a non-dry-run release still stamps freezable workspace sentinels at `0.0.0`.
 - **"Package not found in nova.config.json"** — The `--package` value must match the `name` field of a non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 - **"Configured version strategy ... conflicts with existing ... release history"** — Keep `settings.versionStrategy` aligned with the format already recorded in the root or a non-freezable workspace changelog. Do not rewrite published history merely to switch strategies.
 - **"Lock-step versioning requires every non-freezable workspace to start at the same version"** — Align the listed workspace versions, then run the release again. Nova has not written any release files when this check fails.
-- **"UNRELEASED sentinel survived stamping"** — The release step found one or more `@since UNRELEASED` or `@deprecated UNRELEASED` tags in `src/` that were not replaced. This means a file was added or moved after the stamp pass searched it, or the file extension is outside the supported `.ts`, `.tsx`, and `.css` set. Locate the surviving tag with `grep -r "UNRELEASED" src/`, fix the source problem, and re-run the release; pending entry files remain available.
+- **"UNRELEASED sentinel survived stamping"** — The release step found a supported `@since UNRELEASED` or `@deprecated UNRELEASED` tag in a workspace's `src/` or `scripts/` tree that was not replaced. Check the file paths in the error, correct the source problem, and re-run the release; pending entry files remain available.

@@ -31,7 +31,7 @@ const temporaryDirectory = await mkdtemp(join(tmpdir(), 'nova-cli-integration-')
  *
  * @returns {string}
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 function collectOutput(result) {
   return `${result.stdout}${result.stderr}`;
@@ -48,7 +48,7 @@ function collectOutput(result) {
  *
  * @returns {Promise<void>}
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 async function createProject(directory, name) {
   await mkdir(directory, { recursive: true });
@@ -74,7 +74,7 @@ async function createProject(directory, name) {
  *
  * @returns {Promise<boolean>}
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 async function pathExists(filePath) {
   try {
@@ -97,7 +97,7 @@ async function pathExists(filePath) {
  *
  * @returns {import('node:child_process').SpawnSyncReturns<string>}
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 function runNova(currentDirectory, commandArguments) {
   return spawnSync(process.execPath, [
@@ -119,7 +119,7 @@ function runNova(currentDirectory, commandArguments) {
  * Exercises complete command lifecycles through the compiled executable while
  * keeping every filesystem mutation isolated inside a temporary directory.
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 describe('Compiled Nova CLI integration', () => {
   afterAll(async () => {

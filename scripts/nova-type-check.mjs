@@ -8,7 +8,7 @@ import { createJiti } from 'jiti';
  * Loads the canonical TypeScript source before Nova's compiled CLI exists.
  * Both filesystem and module caches stay disabled for deterministic checks.
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 const typescriptLoader = createJiti(import.meta.url, {
   fsCache: false,
@@ -66,7 +66,7 @@ async function novaTypeCheck() {
  *
  * @returns {void}
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 function printError(message) {
   process.stderr.write(`${message}\n`);
@@ -84,7 +84,7 @@ function printError(message) {
  *
  * @returns {void}
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 function printInfo(message) {
   process.stdout.write(`${message}\n`);

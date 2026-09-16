@@ -66,7 +66,7 @@ import type {
 /**
  * Tests - Documentation Contract - Documentation Contract.
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 describe('Documentation contract', () => {
   it('config and cli', async () => {

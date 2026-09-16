@@ -5,6 +5,7 @@ import {
   readdir,
   readFile,
   rm,
+  symlink,
   writeFile,
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -254,6 +255,14 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampIsIdempotentSecondRunChangesNothing_WorkspaceDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampIsIdempotentSecondRunChangesNothing_WorkspacePackageContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampIsIdempotentSecondRunChangesNothing_WorkspacePackagePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsSourcePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageSourcePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootManifest,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootScriptPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_Sentinel,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDOnlyInTheReleasingPackageNotInOthers_ChangelogDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDOnlyInTheReleasingPackageNotInOthers_ConfigContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDOnlyInTheReleasingPackageNotInOthers_ConfigPath,
@@ -287,7 +296,12 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_HasSince,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageJsonContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageJsonPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageScriptDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageScriptPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SourceFileContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SourceFilePath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SrcDirectory,
@@ -972,18 +986,111 @@ describe('CliUtilityChangelog.run', async () => {
     return;
   });
 
+  it('stamps freezable without entries', async () => {
+    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_ProjectDirectory = join(sandboxRoot, 'freezable-no-entries');
+    const docsDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsDirectory = join(projectDirectory, 'apps', 'docs');
+    const packageDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageDirectory = join(projectDirectory, 'packages', 'core');
+    const rootScriptPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootScriptPath = join(projectDirectory, 'scripts', 'root.mjs');
+    const docsSourcePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsSourcePath = join(docsDirectory, 'src', 'index.ts');
+    const packageSourcePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageSourcePath = join(packageDirectory, 'src', 'index.ts');
+    const rootManifest: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootManifest = JSON.stringify({
+      name: 'project',
+      version: '0.0.0',
+    });
+
+    await mkdir(join(projectDirectory, 'scripts'), { recursive: true });
+    await mkdir(join(docsDirectory, 'src'), { recursive: true });
+    await mkdir(join(packageDirectory, 'src'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), rootManifest, 'utf-8');
+    await writeFile(join(docsDirectory, 'package.json'), JSON.stringify({
+      name: 'docs',
+      version: '0.0.0',
+    }), 'utf-8');
+    await writeFile(join(packageDirectory, 'package.json'), JSON.stringify({
+      name: '@test/core',
+      version: '1.2.3',
+    }), 'utf-8');
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify({
+      workspaces: {
+        './': {
+          name: 'project',
+          role: 'project',
+          policy: 'freezable',
+        },
+        './apps/docs': {
+          name: 'docs',
+          role: 'docs',
+          policy: 'freezable',
+        },
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }), 'utf-8');
+
+    const sentinel: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_Sentinel = [
+      '/**',
+      ' * @since UNRELEASED',
+      ' */',
+      'export const value = true;',
+      '',
+    ].join('\n');
+
+    await writeFile(rootScriptPath, sentinel, 'utf-8');
+    await writeFile(docsSourcePath, sentinel, 'utf-8');
+    await writeFile(packageSourcePath, sentinel, 'utf-8');
+    await symlink(packageSourcePath, join(projectDirectory, 'scripts', 'linked.ts'));
+    await symlink(join(packageDirectory, 'src'), join(projectDirectory, 'scripts', 'linked-package'), 'dir');
+
+    process.chdir(projectDirectory);
+    process.exitCode = undefined;
+
+    await CliUtilityChangelog.run({
+      release: true,
+      dryRun: true,
+    });
+
+    strictEqual(await readFile(rootScriptPath, 'utf-8'), sentinel);
+    strictEqual(await readFile(docsSourcePath, 'utf-8'), sentinel);
+
+    await CliUtilityChangelog.run({ release: true });
+
+    strictEqual(process.exitCode, undefined);
+    strictEqual((await readFile(rootScriptPath, 'utf-8')).includes('@since 0.0.0'), true);
+    strictEqual((await readFile(docsSourcePath, 'utf-8')).includes('@since 0.0.0'), true);
+    strictEqual(await readFile(packageSourcePath, 'utf-8'), sentinel);
+    strictEqual(await readFile(join(projectDirectory, 'package.json'), 'utf-8'), rootManifest);
+
+    await rejects(readFile(join(projectDirectory, 'CHANGELOG.md'), 'utf-8'), {
+      code: 'ENOENT',
+    });
+    await rejects(readFile(join(docsDirectory, 'CHANGELOG.md'), 'utf-8'), {
+      code: 'ENOENT',
+    });
+
+    return;
+  });
+
   it('stamps UNRELEASED tokens in source files on release', async () => {
     const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ProjectDirectory = join(sandboxRoot, 'stamp-unreleased');
     const workspaceDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
     const changelogDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ChangelogDirectory = join(projectDirectory, '.changelog');
     const srcDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SrcDirectory = join(workspaceDirectory, 'src');
+    const rootScriptDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptDirectory = join(projectDirectory, 'scripts');
+    const packageScriptDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageScriptDirectory = join(workspaceDirectory, 'scripts');
 
     await mkdir(srcDirectory, { recursive: true });
+    await mkdir(rootScriptDirectory, { recursive: true });
+    await mkdir(packageScriptDirectory, { recursive: true });
     await mkdir(changelogDirectory, { recursive: true });
 
     const packageJsonPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageJsonPath = join(projectDirectory, 'package.json');
     const packageJsonContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageJsonContents = JSON.stringify({
-      name: 'test-stamp-unreleased',
+      name: 'project',
+      version: '0.0.0',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
@@ -991,6 +1098,11 @@ describe('CliUtilityChangelog.run', async () => {
     const configPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ConfigPath = join(projectDirectory, 'nova.config.json');
     const configContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_ConfigContents = JSON.stringify({
       workspaces: {
+        './': {
+          name: 'project',
+          role: 'project',
+          policy: 'freezable',
+        },
         './packages/core': {
           name: '@test/core',
           role: 'package',
@@ -1027,6 +1139,25 @@ describe('CliUtilityChangelog.run', async () => {
 
     await writeFile(sourceFilePath, sourceFileContents, 'utf-8');
 
+    const rootScriptPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptPath = join(rootScriptDirectory, 'root.mjs');
+    const rootScriptContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptContents = [
+      '/**',
+      ' * @since UNRELEASED',
+      ' * @deprecated UNRELEASED',
+      ' */',
+      'export const root = true;',
+      '',
+    ].join('\n');
+
+    await writeFile(rootScriptPath, rootScriptContents, 'utf-8');
+
+    const packageScriptPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageScriptPath = join(packageScriptDirectory, 'build.mjs');
+
+    await writeFile(packageScriptPath, rootScriptContents, 'utf-8');
+
+    await symlink(sourceFilePath, join(rootScriptDirectory, 'linked.mjs'));
+    await symlink(srcDirectory, join(rootScriptDirectory, 'linked-package'), 'dir');
+
     const entryPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_EntryPath = join(changelogDirectory, 'stamp-test.md');
     const entryContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_EntryContents = [
       '---',
@@ -1060,6 +1191,13 @@ describe('CliUtilityChangelog.run', async () => {
     strictEqual(hasSince, true);
     strictEqual(hasDeprecated, true);
     strictEqual(stringLiteralPreserved, true);
+    strictEqual((await readFile(rootScriptPath, 'utf-8')).includes('@since 0.0.0'), true);
+    strictEqual((await readFile(rootScriptPath, 'utf-8')).includes('@deprecated 0.0.0'), true);
+    strictEqual((await readFile(packageScriptPath, 'utf-8')).includes('@since 0.20.0'), true);
+    strictEqual((await readFile(sourceFilePath, 'utf-8')).includes('@since 0.0.0'), false);
+    strictEqual(await readFile(packageJsonPath, 'utf-8'), packageJsonContents);
+
+    await rejects(readFile(join(projectDirectory, 'CHANGELOG.md'), 'utf-8'), { code: 'ENOENT' });
 
     return;
   });

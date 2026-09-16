@@ -72,6 +72,7 @@ jobs:
     permissions:
       contents: "read"
       attestations: "write"
+      artifact-metadata: "write"
       id-token: "write"
     steps:
       - name: "Checkout repository"
@@ -106,7 +107,7 @@ jobs:
 
       - name: "Generate build provenance"
         if: "${{ env.PUBLISH == 'true' }}"
-        uses: "actions/attest-build-provenance@v2"
+        uses: "actions/attest@v4"
         with:
           subject-name: "docker.io/${{ github.repository }}"
           subject-digest: "${{ steps.build-push.outputs.digest }}"
@@ -120,6 +121,7 @@ jobs:
       contents: "read"
       packages: "write"
       attestations: "write"
+      artifact-metadata: "write"
       id-token: "write"
     steps:
       - name: "Checkout repository"
@@ -153,7 +155,7 @@ jobs:
 
       - name: "Generate build provenance"
         if: "${{ env.PUBLISH == 'true' }}"
-        uses: "actions/attest-build-provenance@v2"
+        uses: "actions/attest@v4"
         with:
           subject-name: "ghcr.io/${{ github.repository }}"
           subject-digest: "${{ steps.build-push.outputs.digest }}"

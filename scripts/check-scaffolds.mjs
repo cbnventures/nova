@@ -8,6 +8,8 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
+import { verifyBundlerLoad } from './lib/verify-scaffold-install.mjs';
+
 /**
  * Check Scaffolds - Find Tarball.
  *
@@ -19,7 +21,7 @@ import { join } from 'node:path';
  *
  * @returns {string}
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 function findTarball(directory, packageStem) {
   const tarballName = readdirSync(directory).find((entry) => {
@@ -45,7 +47,7 @@ function findTarball(directory, packageStem) {
  *
  * @returns {string}
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 function readCommandOutput(command, args, cwd) {
   return execFileSync(command, args, {
@@ -66,13 +68,55 @@ function readCommandOutput(command, args, cwd) {
  *
  * @returns {void}
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 function runCommand(command, args, cwd) {
   execFileSync(command, args, {
     cwd,
     stdio: 'inherit',
   });
+
+  return;
+}
+
+/**
+ * Check Scaffolds - Read npm Output.
+ *
+ * Routes direct npm invocations through Corepack so they use the
+ * packageManager version declared by the current project.
+ *
+ * @param {string[]} args - Args.
+ * @param {string}   cwd  - Cwd.
+ *
+ * @returns {string}
+ *
+ * @since 0.0.0
+ */
+function readNpmOutput(args, cwd) {
+  return readCommandOutput('corepack', [
+    'npm',
+    ...args,
+  ], cwd);
+}
+
+/**
+ * Check Scaffolds - Run npm.
+ *
+ * Routes direct npm invocations through Corepack so installs and package
+ * operations use the declared packageManager version.
+ *
+ * @param {string[]} args - Args.
+ * @param {string}   cwd  - Cwd.
+ *
+ * @returns {void}
+ *
+ * @since 0.0.0
+ */
+function runNpm(args, cwd) {
+  runCommand('corepack', [
+    'npm',
+    ...args,
+  ], cwd);
 
   return;
 }
@@ -88,7 +132,7 @@ function runCommand(command, args, cwd) {
  *
  * @returns {void}
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 function verifyWorkspaceRegistrations(projectDirectory, expectedWorkspaces) {
   const config = JSON.parse(readFileSync(join(projectDirectory, 'nova.config.json'), 'utf-8'));
@@ -125,7 +169,7 @@ function verifyWorkspaceRegistrations(projectDirectory, expectedWorkspaces) {
  *
  * @returns {void}
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 function checkScaffolds() {
   const repositoryDirectory = process.cwd();
@@ -135,7 +179,7 @@ function checkScaffolds() {
   const novaCliPath = join(repositoryDirectory, 'packages', 'nova', 'bin', 'nova.mjs');
 
   try {
-    runCommand('npm', [
+    runNpm([
       'run',
       'build',
       '--workspace',
@@ -144,7 +188,7 @@ function checkScaffolds() {
       '@cbnventures/docusaurus-preset-nova',
     ], repositoryDirectory);
 
-    runCommand('npm', [
+    runNpm([
       'pack',
       '--silent',
       '--workspace',
@@ -262,19 +306,19 @@ function checkScaffolds() {
       './apps/docs': 'scaffold-smoke-docs',
     });
 
-    runCommand('npm', [
+    runNpm([
       'pkg',
       'set',
       `devDependencies.@cbnventures/nova=file:${novaTarballPath}`,
     ], directProjectDirectory);
 
-    runCommand('npm', [
+    runNpm([
       'pkg',
       'set',
       `devDependencies.@cbnventures/nova=file:${novaTarballPath}`,
     ], projectDirectory);
 
-    runCommand('npm', [
+    runNpm([
       'pkg',
       'set',
       `dependencies.@cbnventures/docusaurus-preset-nova=file:${docusaurusPresetTarballPath}`,
@@ -283,19 +327,23 @@ function checkScaffolds() {
       './apps/docs',
     ], projectDirectory);
 
-    runCommand('npm', [
+    runNpm([
       'install',
       '--prefer-offline',
     ], projectDirectory);
 
-    runCommand('npm', [
+    runNpm([
       'install',
       '--prefer-offline',
     ], directProjectDirectory);
 
+    verifyBundlerLoad(projectDirectory, 'apps/docs', 'vitest');
+    verifyBundlerLoad(projectDirectory, 'apps/vite', 'vite');
+    verifyBundlerLoad(directProjectDirectory, 'apps/web', 'vite');
+
     const novaPackageJson = JSON.parse(readFileSync(join(repositoryDirectory, 'packages', 'nova', 'package.json'), 'utf-8'));
     const novaVersion = novaPackageJson['version'];
-    const novaHelpOutput = readCommandOutput('npm', [
+    const novaHelpOutput = readNpmOutput([
       'exec',
       '--offline',
       '--',
@@ -314,7 +362,7 @@ function checkScaffolds() {
 
     const docusaurusPresetPackageJson = JSON.parse(readFileSync(join(repositoryDirectory, 'packages', 'docusaurus-preset-nova', 'package.json'), 'utf-8'));
     const docusaurusPresetVersion = docusaurusPresetPackageJson['version'];
-    const themeNovaHelpOutput = readCommandOutput('npm', [
+    const themeNovaHelpOutput = readNpmOutput([
       'exec',
       '--offline',
       '--workspace',
@@ -333,22 +381,22 @@ function checkScaffolds() {
       throw new Error(`Installed theme-nova executable should report version "${docusaurusPresetVersion}" and render its help menu.`);
     }
 
-    runCommand('npm', [
+    runNpm([
       'run',
       'check',
     ], projectDirectory);
 
-    runCommand('npm', [
+    runNpm([
       'run',
       'build',
     ], projectDirectory);
 
-    runCommand('npm', [
+    runNpm([
       'run',
       'check',
     ], directProjectDirectory);
 
-    runCommand('npm', [
+    runNpm([
       'run',
       'build',
     ], directProjectDirectory);

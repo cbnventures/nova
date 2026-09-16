@@ -15,7 +15,7 @@ import { cliScaffoldDocsDocusaurusTemplateQuestions } from '../../packages/nova/
  * Keeps the complete Docusaurus scaffold choice list aligned with the preset
  * package registry, including the interactive default.
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 describe('scaffold preset contract', () => {
   it('offers every supported preset and defaults to foundry', () => {

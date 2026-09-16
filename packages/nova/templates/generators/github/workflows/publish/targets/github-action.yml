@@ -116,6 +116,6 @@ publish-github-action-[__TARGET_ID__]:
 
     - name: "Attest build provenance"
       if: "${{ env.PUBLISH == 'true' }}"
-      uses: "actions/attest-build-provenance@v2"
+      uses: "actions/attest@v4"
       with:
         subject-path: "${{ vars.ACTION_OUTPUT_PATH }}/${{ vars.ACTION_ENTRY_POINT }}"

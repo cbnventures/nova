@@ -6,6 +6,7 @@ publish-ghcr-[__TARGET_ID__]:
     contents: "read"
     packages: "write"
     attestations: "write"
+    artifact-metadata: "write"
     id-token: "write"
 [__JOBS_CONDITION__]
   steps:
@@ -40,7 +41,7 @@ publish-ghcr-[__TARGET_ID__]:
 
     - name: "Generate build provenance"
       if: "${{ env.PUBLISH == 'true' }}"
-      uses: "actions/attest-build-provenance@v2"
+      uses: "actions/attest@v4"
       with:
         subject-name: "ghcr.io/${{ github.repository }}"
         subject-digest: "${{ steps.build-push.outputs.digest }}"

@@ -126,12 +126,21 @@ import type {
   Cli_Utility_Changelog_Runner_Release_ConfirmOutputValue,
   Cli_Utility_Changelog_Runner_Release_CurrentDirectory,
   Cli_Utility_Changelog_Runner_Release_CurrentVersion,
+  Cli_Utility_Changelog_Runner_Release_EmptyFreezableStampSucceeded,
+  Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspaceDirectory,
+  Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspacePath,
   Cli_Utility_Changelog_Runner_Release_Entries,
   Cli_Utility_Changelog_Runner_Release_Existing,
+  Cli_Utility_Changelog_Runner_Release_FilterFreezableWorkspaceConfig,
+  Cli_Utility_Changelog_Runner_Release_FilterFreezableWorkspacePolicy,
   Cli_Utility_Changelog_Runner_Release_FilterLockStepWorkspaceConfig,
   Cli_Utility_Changelog_Runner_Release_FilterLockStepWorkspacePolicy,
   Cli_Utility_Changelog_Runner_Release_FindWorkspaceConfig,
   Cli_Utility_Changelog_Runner_Release_FindWorkspaceConfigName,
+  Cli_Utility_Changelog_Runner_Release_FreezableStampSucceeded,
+  Cli_Utility_Changelog_Runner_Release_FreezableWorkspaceDirectory,
+  Cli_Utility_Changelog_Runner_Release_FreezableWorkspacePath,
+  Cli_Utility_Changelog_Runner_Release_FreezableWorkspaces,
   Cli_Utility_Changelog_Runner_Release_Groups,
   Cli_Utility_Changelog_Runner_Release_HighestBump,
   Cli_Utility_Changelog_Runner_Release_HighestNewVersion,
@@ -189,11 +198,14 @@ import type {
   Cli_Utility_Changelog_Runner_Run_ModeOutputValue,
   Cli_Utility_Changelog_Runner_Run_Options,
   Cli_Utility_Changelog_Runner_Run_Returns,
+  Cli_Utility_Changelog_Runner_StampUnreleased_CandidatePath,
   Cli_Utility_Changelog_Runner_StampUnreleased_CheckContent,
   Cli_Utility_Changelog_Runner_StampUnreleased_CheckError,
   Cli_Utility_Changelog_Runner_StampUnreleased_CheckErrorMessage,
   Cli_Utility_Changelog_Runner_StampUnreleased_CheckFp,
+  Cli_Utility_Changelog_Runner_StampUnreleased_CurrentDirectory,
   Cli_Utility_Changelog_Runner_StampUnreleased_DeprecatedPattern,
+  Cli_Utility_Changelog_Runner_StampUnreleased_DirectoryEntries,
   Cli_Utility_Changelog_Runner_StampUnreleased_Fp,
   Cli_Utility_Changelog_Runner_StampUnreleased_HasDeprecated,
   Cli_Utility_Changelog_Runner_StampUnreleased_HasSince,
@@ -201,15 +213,14 @@ import type {
   Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion,
   Cli_Utility_Changelog_Runner_StampUnreleased_OriginalContent,
   Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory,
-  Cli_Utility_Changelog_Runner_StampUnreleased_RawPaths,
+  Cli_Utility_Changelog_Runner_StampUnreleased_PendingDirectories,
   Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirError,
   Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirErrorCode,
-  Cli_Utility_Changelog_Runner_StampUnreleased_RelativePaths,
   Cli_Utility_Changelog_Runner_StampUnreleased_Returns,
-  Cli_Utility_Changelog_Runner_StampUnreleased_Rp,
+  Cli_Utility_Changelog_Runner_StampUnreleased_ScanSourceDirectory,
   Cli_Utility_Changelog_Runner_StampUnreleased_SincePattern,
+  Cli_Utility_Changelog_Runner_StampUnreleased_SourceDirectories,
   Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles,
-  Cli_Utility_Changelog_Runner_StampUnreleased_SrcDirectory,
   Cli_Utility_Changelog_Runner_StampUnreleased_StampError,
   Cli_Utility_Changelog_Runner_StampUnreleased_StampErrorMessage,
   Cli_Utility_Changelog_Runner_StampUnreleased_StillHasDeprecated,
@@ -808,7 +819,28 @@ export class Runner {
       return;
     }
 
+    const freezableWorkspaces: Cli_Utility_Changelog_Runner_Release_FreezableWorkspaces = Object.entries(workspaces).filter((freezableWorkspace) => {
+      const filterFreezableWorkspaceConfig: Cli_Utility_Changelog_Runner_Release_FilterFreezableWorkspaceConfig = freezableWorkspace[1];
+      const filterFreezableWorkspacePolicy: Cli_Utility_Changelog_Runner_Release_FilterFreezableWorkspacePolicy = filterFreezableWorkspaceConfig['policy'];
+
+      return filterFreezableWorkspacePolicy === 'freezable';
+    });
+
     if (entries.length === 0) {
+      if (isDryRun !== true) {
+        for (const freezableWorkspace of freezableWorkspaces) {
+          const emptyFreezableWorkspacePath: Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspacePath = freezableWorkspace[0];
+          const emptyFreezableWorkspaceDirectory: Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspaceDirectory = resolve(process.cwd(), emptyFreezableWorkspacePath);
+          const emptyFreezableStampSucceeded: Cli_Utility_Changelog_Runner_Release_EmptyFreezableStampSucceeded = await Runner.stampUnreleased(emptyFreezableWorkspaceDirectory, '0.0.0');
+
+          if (emptyFreezableStampSucceeded === false) {
+            process.exitCode = 1;
+
+            return;
+          }
+        }
+      }
+
       Logger.customize({
         name: 'Runner.release',
         purpose: 'entries',
@@ -967,6 +999,17 @@ export class Runner {
           name: 'Runner.release',
           purpose: 'workspace',
         }).error(`Package "${packageName}" not found in "nova.config.json".`);
+
+        process.exitCode = 1;
+
+        return;
+      }
+
+      if (workspaceEntry[1]['policy'] === 'freezable') {
+        Logger.customize({
+          name: 'Runner.release',
+          purpose: 'workspace',
+        }).error(`Freezable workspace "${packageName}" cannot have changelog entries. Its source is stamped at 0.0.0 automatically.`);
 
         process.exitCode = 1;
 
@@ -1291,6 +1334,20 @@ export class Runner {
       }
     }
 
+    // Freezable workspaces keep their fixed version and have no changelog, but their
+    // source and repository scripts still need their UNRELEASED tags stamped.
+    for (const freezableWorkspace of freezableWorkspaces) {
+      const freezableWorkspacePath: Cli_Utility_Changelog_Runner_Release_FreezableWorkspacePath = freezableWorkspace[0];
+      const freezableWorkspaceDirectory: Cli_Utility_Changelog_Runner_Release_FreezableWorkspaceDirectory = resolve(process.cwd(), freezableWorkspacePath);
+      const freezableStampSucceeded: Cli_Utility_Changelog_Runner_Release_FreezableStampSucceeded = await Runner.stampUnreleased(freezableWorkspaceDirectory, '0.0.0');
+
+      if (freezableStampSucceeded === false) {
+        process.exitCode = 1;
+
+        return;
+      }
+    }
+
     // Clean up consumed entry files.
     for (const entry of entries) {
       await fs.unlink(entry['filePath']);
@@ -1429,7 +1486,7 @@ export class Runner {
    * CLI - Utility - Changelog - Stamp Unreleased.
    *
    * Replaces every `@since UNRELEASED` and `@deprecated UNRELEASED` sentinel in the
-   * package's src/ tree with the real version, then self-checks for survivors.
+   * workspace's src/ and scripts/ trees with its version, then checks for survivors.
    *
    * @param {Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory} packageDirectory - Package directory.
    * @param {Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion}       newVersion       - New version.
@@ -1447,43 +1504,78 @@ export class Runner {
       return true;
     }
 
-    const srcDirectory: Cli_Utility_Changelog_Runner_StampUnreleased_SrcDirectory = join(packageDirectory, 'src');
-
+    const sourceDirectories: Cli_Utility_Changelog_Runner_StampUnreleased_SourceDirectories = [
+      join(packageDirectory, 'src'),
+      join(packageDirectory, 'scripts'),
+    ];
     const sourceFiles: Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles = [];
 
-    try {
-      const rawPaths: Cli_Utility_Changelog_Runner_StampUnreleased_RawPaths = await fs.readdir(srcDirectory, {
-        recursive: true,
-        encoding: 'utf-8',
-      });
-      const relativePaths: Cli_Utility_Changelog_Runner_StampUnreleased_RelativePaths = rawPaths;
+    for (const sourceDirectory of sourceDirectories) {
+      const scanSourceDirectory: Cli_Utility_Changelog_Runner_StampUnreleased_ScanSourceDirectory = sourceDirectory;
 
-      for (const relativePath of relativePaths) {
-        const rp: Cli_Utility_Changelog_Runner_StampUnreleased_Rp = relativePath;
-
-        if (
-          rp.endsWith('.ts') === true
-          || rp.endsWith('.tsx') === true
-          || rp.endsWith('.css') === true
-        ) {
-          sourceFiles.push(join(srcDirectory, rp));
+      try {
+        // Neither the source root nor any child symlink may lead into another workspace.
+        if ((await fs.lstat(scanSourceDirectory)).isSymbolicLink() === true) {
+          continue;
         }
+
+        const pendingDirectories: Cli_Utility_Changelog_Runner_StampUnreleased_PendingDirectories = [scanSourceDirectory];
+
+        while (pendingDirectories.length > 0) {
+          const currentDirectory: Cli_Utility_Changelog_Runner_StampUnreleased_CurrentDirectory = pendingDirectories.pop();
+
+          if (currentDirectory === undefined) {
+            continue;
+          }
+
+          const directoryEntries: Cli_Utility_Changelog_Runner_StampUnreleased_DirectoryEntries = await fs.readdir(currentDirectory, { withFileTypes: true });
+
+          for (const directoryEntry of directoryEntries) {
+            if (directoryEntry.isSymbolicLink() === true) {
+              continue;
+            }
+
+            const candidatePath: Cli_Utility_Changelog_Runner_StampUnreleased_CandidatePath = join(currentDirectory, directoryEntry.name);
+
+            if (directoryEntry.isDirectory() === true) {
+              pendingDirectories.push(candidatePath);
+
+              continue;
+            }
+
+            if (
+              directoryEntry.isFile() === true
+              && (
+                candidatePath.endsWith('.ts') === true
+                || candidatePath.endsWith('.tsx') === true
+                || candidatePath.endsWith('.mts') === true
+                || candidatePath.endsWith('.cts') === true
+                || candidatePath.endsWith('.js') === true
+                || candidatePath.endsWith('.mjs') === true
+                || candidatePath.endsWith('.cjs') === true
+                || candidatePath.endsWith('.css') === true
+              )
+            ) {
+              sourceFiles.push(candidatePath);
+            }
+          }
+        }
+      } catch (error) {
+        const readdirError: Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirError = error;
+        const readdirErrorCode: Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirErrorCode = (readdirError instanceof Error && 'code' in readdirError) ? readdirError.code : undefined;
+
+        // A missing source directory is a legitimate no-op; other failures must surface.
+        if (readdirErrorCode === 'ENOENT') {
+          continue;
+        }
+
+        Logger.customize({
+          name: 'Runner.stampUnreleased',
+          purpose: 'readdir',
+        }).error(`Unable to read source directory "${scanSourceDirectory}".`);
+
+        return false;
       }
-    } catch (error) {
-      const readdirError: Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirError = error;
-      const readdirErrorCode: Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirErrorCode = (readdirError instanceof Error && 'code' in readdirError) ? readdirError.code : undefined;
-
-      // A missing "src" directory is a legitimate no-op; any other failure must surface.
-      if (readdirErrorCode === 'ENOENT') {
-        return true;
-      }
-
-      Logger.customize({
-        name: 'Runner.stampUnreleased',
-        purpose: 'readdir',
-      }).error(`Unable to read source directory "${srcDirectory}".`);
-
-      return false;
     }
 
     const sincePattern: Cli_Utility_Changelog_Runner_StampUnreleased_SincePattern = new RegExp(LIB_REGEX_PATTERN_SINCE_UNRELEASED.source, 'g');
@@ -1514,7 +1606,7 @@ export class Runner {
       Logger.customize({
         name: 'Runner.stampUnreleased',
         purpose: 'write',
-      }).error(`Unable to stamp source files in "${srcDirectory}": ${stampErrorMessage}`);
+      }).error(`Unable to stamp source files in "${packageDirectory}": ${stampErrorMessage}`);
 
       return false;
     }
@@ -1545,7 +1637,7 @@ export class Runner {
       Logger.customize({
         name: 'Runner.stampUnreleased',
         purpose: 'selfCheck',
-      }).error(`Unable to verify stamped source files in "${srcDirectory}": ${checkErrorMessage}`);
+      }).error(`Unable to verify stamped source files in "${packageDirectory}": ${checkErrorMessage}`);
 
       return false;
     }

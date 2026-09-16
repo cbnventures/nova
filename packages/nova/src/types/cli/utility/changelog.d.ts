@@ -1,3 +1,5 @@
+import type { Dirent } from 'node:fs';
+
 import type { PromptObject } from 'prompts';
 
 import type { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
@@ -210,6 +212,18 @@ export type Cli_Utility_Changelog_Runner_Release_Workspaces = Shared_NovaConfig_
 
 export type Cli_Utility_Changelog_Runner_Release_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
 
+export type Cli_Utility_Changelog_Runner_Release_FreezableWorkspaces = [string, Shared_NovaConfigWorkspace][];
+
+export type Cli_Utility_Changelog_Runner_Release_FilterFreezableWorkspaceConfig = Shared_NovaConfigWorkspace;
+
+export type Cli_Utility_Changelog_Runner_Release_FilterFreezableWorkspacePolicy = Shared_NovaConfigWorkspace['policy'];
+
+export type Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspacePath = string;
+
+export type Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspaceDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_Release_EmptyFreezableStampSucceeded = boolean;
+
 export type Cli_Utility_Changelog_Runner_Release_Groups = Map<Shared_ChangelogEntry_Package, Shared_ChangelogEntry[]>;
 
 export type Cli_Utility_Changelog_Runner_Release_Existing = Shared_ChangelogEntry[];
@@ -395,6 +409,12 @@ export type Cli_Utility_Changelog_Runner_Release_ApplyUpdatedContents = string;
 
 export type Cli_Utility_Changelog_Runner_Release_StampSucceeded = boolean;
 
+export type Cli_Utility_Changelog_Runner_Release_FreezableWorkspacePath = string;
+
+export type Cli_Utility_Changelog_Runner_Release_FreezableWorkspaceDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_Release_FreezableStampSucceeded = boolean;
+
 /**
  * CLI - Utility - Changelog - Run.
  *
@@ -427,15 +447,19 @@ export type Cli_Utility_Changelog_Runner_StampUnreleased_Returns = Promise<boole
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_IsPrerelease = boolean;
 
-export type Cli_Utility_Changelog_Runner_StampUnreleased_SrcDirectory = string;
+export type Cli_Utility_Changelog_Runner_StampUnreleased_SourceDirectories = string[];
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles = string[];
 
-export type Cli_Utility_Changelog_Runner_StampUnreleased_RawPaths = string[];
+export type Cli_Utility_Changelog_Runner_StampUnreleased_ScanSourceDirectory = string;
 
-export type Cli_Utility_Changelog_Runner_StampUnreleased_RelativePaths = string[];
+export type Cli_Utility_Changelog_Runner_StampUnreleased_PendingDirectories = string[];
 
-export type Cli_Utility_Changelog_Runner_StampUnreleased_Rp = string;
+export type Cli_Utility_Changelog_Runner_StampUnreleased_CurrentDirectory = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_DirectoryEntries = Dirent[];
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_CandidatePath = string;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_ReaddirError = unknown;
 

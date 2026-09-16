@@ -1,5 +1,11 @@
 # @cbnventures/nova
 
+## 0.27.1 - 2026-09-16
+
+### FIXED
+- Updated generated GitHub Action and container publish workflows to use Node 24-ready `actions/attest@v4`, avoiding Node 20 deprecation warnings, and granted container jobs `artifact-metadata: write` for registry storage records.
+- Stamped `@since` and `@deprecated` tags in freezable workspaces at `0.0.0` during release, even with no pending entries, without creating their changelogs or changing their versions; source and script scans stay within each workspace.
+
 ## 0.27.0 - 2026-09-11
 
 ### UPDATED
