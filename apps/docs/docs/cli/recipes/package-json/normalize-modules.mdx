@@ -33,7 +33,7 @@ It handles exports map structure, main entry point, module type declaration, bro
 ## Why Use This Command?
 
 1. Keeps Node.js entry points aligned with the module fields each workspace role supports.
-2. Normalizes shorthand exports into one predictable object shape for consumers and tools.
+2. Normalizes shorthand exports into one predictable object shape and keeps explicit conditions reachable.
 3. Removes inapplicable module fields before they advertise entry points that should not exist.
 
 ## Requirements
@@ -46,14 +46,10 @@ It handles exports map structure, main entry point, module type declaration, bro
 
 For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects module resolution fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
 
-- **`exports` (Conditional)** — Removed if the workspace role is not `config`, `package`, or `tool`. For allowed roles, if the value is a string it is normalized into `{ ".": { "default": value } }`.
-- **`main` (Conditional)** — Removed if the workspace role is not `config`, `app`, `package`, or `tool`. For allowed roles, the recipe cross-references `main` with `exports['.'].require`:
-  - If both exist and differ — a warning is logged and no changes are applied.
-  - If `main` exists but `exports['.'].require` does not — `exports['.'].require` is set from `main`.
-  - If `exports['.'].require` exists but `main` does not — `main` is set from `exports['.'].require`.
-  - If `main` exists and `exports['.']` is a string — `exports['.']` is normalized into `{ "default": exports['.'], "require": main }`.
+- **`exports` (Conditional)** — Removed if the workspace role is not `config`, `package`, or `tool`. For allowed roles, a string value is normalized into `{ ".": { "default": value } }`, and a string at `exports['.']` becomes `{ "default": value }`. If an explicit `exports['.']` condition map puts `default` before other conditions, the recipe moves `default` last so those conditions remain reachable. It never invents `require` or `browser` conditions; declare them explicitly when the package actually provides those entry points.
+- **`main` (Conditional)** — Removed if the workspace role is not `config`, `app`, `package`, or `tool`. Otherwise preserved independently: `main` is a legacy fallback entry point for either module format, not a synonym for `exports['.'].require`. When `exports` is defined, Node.js uses it in preference to `main` for supported imports.
 - **`type` (Conditional)** — Removed if the workspace role is not `config`, `app`, `package`, or `tool`.
-- **`browser` (Conditional)** — Removed if the workspace role is not `package`. For packages, the same cross-reference logic as `main` is applied using `exports['.'].browser`.
+- **`browser` (Conditional)** — Removed if the workspace role is not `package`. Otherwise preserved independently of any explicit `exports['.'].browser` condition.
 - **`imports` (Conditional)** — Removed if the workspace role is not `config`, `app`, `package`, or `tool`.
 
 ## Usage

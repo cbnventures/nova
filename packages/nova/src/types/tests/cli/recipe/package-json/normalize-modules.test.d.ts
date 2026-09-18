@@ -37,6 +37,27 @@ export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNo
 export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_DoesNotModifyFilesDuringDryRun_Parsed = Record<string, unknown>;
 
 /**
+ * Tests - CLI - Recipe - package.json - Normalize Modules - Run - Keeps Legacy Entry Points Separate From Exports Conditions.
+ *
+ * @since 0.27.2
+ */
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_EsmDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_DualDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_NovaConfigPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_EsmPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_DualPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_EsmOutput = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_DualOutput = string;
+
+/**
  * Tests - CLI - Recipe - package.json - Normalize Modules - Run - Normalizes String Exports To Object For Package Role.
  *
  * @since 0.14.0

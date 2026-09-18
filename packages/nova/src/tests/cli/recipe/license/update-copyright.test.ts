@@ -192,6 +192,11 @@ import type {
   Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NonNovaLICENSEIsSkippedAndNeverRewritten_OnDiskContent,
   Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NonNovaLICENSEIsSkippedAndNeverRewritten_Output,
   Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NonNovaLICENSEIsSkippedAndNeverRewritten_ProjectDirectory,
+  Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_IsProjectRootSpy,
+  Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_LicensePath,
+  Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_LoadSpy,
+  Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_ProjectDirectory,
+  Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_Template,
   Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_OriginalCwd,
   Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_PlaceholderLessTemplateSkipsInformationally_CustomizedLoggerMock,
   Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_PlaceholderLessTemplateSkipsInformationally_InfoCalls,
@@ -348,6 +353,42 @@ describe('CliRecipeLicenseUpdateCopyright.run', async () => {
 
     ok(output.includes('New Holder LLC'), 'Expected new holder in the LICENSE');
     ok(output.includes('Old Holder Inc.') === false, 'Expected old holder removed from the LICENSE');
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    return;
+  });
+
+  it('normalizes a legacy trailing blank line while updating copyright', async () => {
+    const projectDirectory: Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_ProjectDirectory = await mkdtemp(join(sandboxRoot, 'legacy-newline-'));
+    const template: Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_Template = await readTemplate('MIT');
+    const licensePath: Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_LicensePath = join(projectDirectory, 'LICENSE');
+
+    await writeFile(licensePath, `${substitute(template, '2019-2024', 'Old Holder Inc.')}\n`, 'utf-8');
+
+    const isProjectRootSpy: Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+      project: {
+        legalName: 'New Holder LLC',
+        startingYear: 2019,
+        license: 'MIT',
+      },
+      recipes: {
+        license: {
+          'update-copyright': {
+            enabled: true,
+          },
+        },
+      },
+    });
+
+    process.chdir(projectDirectory);
+
+    await CliRecipeLicenseUpdateCopyright.run({ replaceFile: true });
+
+    strictEqual(await readFile(licensePath, 'utf-8'), substitute(template, `2019-${new Date().getFullYear()}`, 'New Holder LLC'));
 
     isProjectRootSpy.mockRestore();
 

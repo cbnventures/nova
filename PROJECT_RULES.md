@@ -134,19 +134,19 @@ All commands must be run from the **monorepo root**. The `changelog` and `recipe
 
 The repository-only `nova-run-scripts.mjs` and `nova-type-check.mjs` bootstraps load canonical TypeScript implementations from `packages/nova/src/lib` with Jiti filesystem and module caches disabled. This lets build and check tasks use current source before the compiled CLI exists without maintaining duplicated logic.
 
-| Command                   | What it does                                                        |
-|---------------------------|---------------------------------------------------------------------|
-| `npm install`             | Install all dependencies                                            |
-| `npm run dev`             | Start development servers (via Turborepo)                           |
-| `npm run prod`            | Start production servers (via Turborepo, depends on build)          |
-| `npm run build`           | Compile TypeScript to JavaScript (`tsc` via Turborepo)              |
-| `npm run check`           | Run every nested `check:*` script sequentially                      |
-| `npm run check:cli`       | Build Nova and run the Vitest CLI integration suite                 |
-| `npm run check:scaffolds` | Pack, install, check, and build every generated scaffold consumer   |
-| `npm run deploy`          | Run deployment scripts (via Turborepo)                              |
-| `npm run clean`           | Remove build artifacts                                              |
-| `npm run changelog`       | Generate changelog from `.changelog/` entries                       |
-| `npm run recipes`         | Run Nova recipes across all workspaces                              |
+| Command                   | What it does                                                      |
+|---------------------------|-------------------------------------------------------------------|
+| `npm install`             | Install all dependencies                                          |
+| `npm run dev`             | Start development servers (via Turborepo)                         |
+| `npm run prod`            | Start production servers (via Turborepo, depends on build)        |
+| `npm run build`           | Compile TypeScript to JavaScript (`tsc` via Turborepo)            |
+| `npm run check`           | Run every nested `check:*` script sequentially                    |
+| `npm run check:cli`       | Build Nova and run the Vitest CLI integration suite               |
+| `npm run check:scaffolds` | Pack, install, check, and build every generated scaffold consumer |
+| `npm run deploy`          | Run deployment scripts (via Turborepo)                            |
+| `npm run clean`           | Remove build artifacts                                            |
+| `npm run changelog`       | Generate changelog from `.changelog/` entries                     |
+| `npm run recipes`         | Run Nova recipes across all workspaces                            |
 
 ### Environment Variables
 

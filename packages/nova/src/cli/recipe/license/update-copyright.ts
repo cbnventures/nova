@@ -152,7 +152,9 @@ export class Runner {
       }
     }
 
-    return new RegExp(`^${pattern}$`);
+    // Older Nova templates ended with one extra blank line. Accept that legacy ending
+    // so the recipe can migrate existing generated files to the single-newline template.
+    return new RegExp(`^${pattern}(?:\\x0A)?$`);
   }
 
   /**

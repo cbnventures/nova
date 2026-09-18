@@ -10,8 +10,7 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentExportsBrowser,
-  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentPackageExports,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Fallback,
   Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_FileContents,
   Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Manifest,
   Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageBrowser,
@@ -20,6 +19,7 @@ import type {
   Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageMain,
   Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageType,
   Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Returns,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_RootExport,
   Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Workspace,
   Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_ConfigRecipes,
   Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_ConfigRecipesPackageJson,
@@ -43,7 +43,7 @@ import type {
  * CLI - Recipe - package.json - Normalize Modules.
  *
  * Enforces exports, main, type, browser, and imports fields based on workspace role.
- * Normalizes string exports into condition map objects.
+ * Normalizes shorthand exports and keeps explicit conditions in resolution order.
  *
  * @since 0.14.0
  */
@@ -177,8 +177,8 @@ export class Runner {
   /**
    * CLI - Recipe - package.json - Normalize Modules - Handle.
    *
-   * Processes exports, main, type, browser, and imports for one workspace. Keeps main and
-   * exports in sync and normalizes strings to objects.
+   * Processes exports, main, type, browser, and imports for one workspace. Normalizes
+   * shorthand exports without guessing conditional exports from legacy entry points.
    *
    * @param {Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Workspace} workspace - Workspace.
    *
@@ -230,6 +230,28 @@ export class Runner {
             default: packageExports,
           },
         });
+      } else if (isPlainObject(packageExports) === true) {
+        const rootExport: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_RootExport = packageExports['.'];
+
+        if (typeof rootExport === 'string') {
+          Logger.customize({
+            name: 'Runner.handle',
+            purpose: 'exports',
+          }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Normalizing "exports['.']" from string to object ...`);
+
+          Reflect.set(packageExports, '.', { default: rootExport });
+        } else if (
+          isPlainObject(rootExport) === true
+          && Object.keys(rootExport).at(-1) !== 'default'
+          && Object.hasOwn(rootExport, 'default') === true
+        ) {
+          // Node resolves conditions in declaration order; the universal fallback must be last.
+          const fallback: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Fallback = rootExport['default'];
+
+          Reflect.deleteProperty(rootExport, 'default');
+
+          Reflect.set(rootExport, 'default', fallback);
+        }
       }
     }
 
@@ -249,70 +271,6 @@ export class Runner {
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "main". Workspace role "${manifest['role']}" does not allow it.`);
 
       Reflect.deleteProperty(fileContents, 'main');
-    } else if (
-      manifest['role'] === 'config' // Workspace role is "config".
-      || manifest['role'] === 'app' // Workspace role is "app".
-      || manifest['role'] === 'package' // Workspace role is "package".
-      || manifest['role'] === 'tool' // Workspace role is "tool".
-    ) {
-      const currentPackageExports: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentPackageExports = fileContents['exports'];
-
-      if (
-        typeof packageMain === 'string' // Package "main" is a string.
-        && (
-          isPlainObject(currentPackageExports) === true // Package "exports" is an object.
-          && isPlainObject(currentPackageExports['.']) === true // Package "exports['.']" is an object.
-          && typeof currentPackageExports['.']['require'] === 'string' // Package "exports['.'].require" is a string.
-        )
-        && packageMain !== currentPackageExports['.']['require'] // Package "main" differs from package "exports['.'].require".
-      ) {
-        Logger.customize({
-          name: 'Runner.handle',
-          purpose: 'main',
-        }).warn(`${chalk.magenta(`"${manifest['name']}" workspace`)} → "main" differs from "exports['.'].require". No changes applied.`);
-      } else if (
-        typeof packageMain === 'string' // Package "main" is a string.
-        && (
-          isPlainObject(currentPackageExports) === true // Package "exports" is an object.
-          && isPlainObject(currentPackageExports['.']) === true // Package "exports['.']" is an object.
-        )
-        && typeof currentPackageExports['.']['require'] !== 'string' // Package "exports['.'].require" is not a string.
-      ) {
-        Logger.customize({
-          name: 'Runner.handle',
-          purpose: 'main',
-        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "exports['.'].require" from "main" ...`);
-
-        Reflect.set(currentPackageExports['.'], 'require', packageMain);
-      } else if (
-        (
-          isPlainObject(currentPackageExports) === true // Package "exports" is an object.
-          && isPlainObject(currentPackageExports['.']) === true // Package "exports['.']" is an object.
-          && typeof currentPackageExports['.']['require'] === 'string' // Package "exports['.'].require" is a string.
-        )
-        && typeof packageMain !== 'string' // Package "main" is not a string.
-      ) {
-        Logger.customize({
-          name: 'Runner.handle',
-          purpose: 'main',
-        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "main" from "exports['.'].require" ...`);
-
-        Reflect.set(fileContents, 'main', currentPackageExports['.']['require']);
-      } else if (
-        typeof packageMain === 'string' // Package "main" is a string.
-        && isPlainObject(currentPackageExports) === true // Package "exports" is an object.
-        && typeof currentPackageExports['.'] === 'string' // Package "exports['.']" is a string.
-      ) {
-        Logger.customize({
-          name: 'Runner.handle',
-          purpose: 'main',
-        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Normalizing "exports['.']" from string to object ...`);
-
-        Reflect.set(currentPackageExports, '.', {
-          default: currentPackageExports['.'],
-          require: packageMain,
-        });
-      }
     }
 
     // Sync the "type" field.
@@ -344,68 +302,6 @@ export class Runner {
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "browser". Workspace role "${manifest['role']}" does not allow it.`);
 
       Reflect.deleteProperty(fileContents, 'browser');
-    } else if (
-      manifest['role'] === 'package' // Workspace role is "package".
-    ) {
-      const currentExportsBrowser: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentExportsBrowser = fileContents['exports'];
-
-      if (
-        typeof packageBrowser === 'string' // Package "browser" is a string.
-        && (
-          isPlainObject(currentExportsBrowser) === true // Package "exports" is an object.
-          && isPlainObject(currentExportsBrowser['.']) === true // Package "exports['.']" is an object.
-          && typeof currentExportsBrowser['.']['browser'] === 'string' // Package "exports['.'].browser" is a string.
-        )
-        && packageBrowser !== currentExportsBrowser['.']['browser'] // Package "browser" differs from "exports['.'].browser".
-      ) {
-        Logger.customize({
-          name: 'Runner.handle',
-          purpose: 'browser',
-        }).warn(`${chalk.magenta(`"${manifest['name']}" workspace`)} → "browser" differs from "exports['.'].browser". No changes applied.`);
-      } else if (
-        typeof packageBrowser === 'string' // Package "browser" is a string.
-        && (
-          isPlainObject(currentExportsBrowser) === true // Package "exports" is an object.
-          && isPlainObject(currentExportsBrowser['.']) === true // Package "exports['.']" is an object.
-        )
-        && typeof currentExportsBrowser['.']['browser'] !== 'string' // Package "exports['.'].browser" is not a string.
-      ) {
-        Logger.customize({
-          name: 'Runner.handle',
-          purpose: 'browser',
-        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "exports['.'].browser" from "browser" ...`);
-
-        Reflect.set(currentExportsBrowser['.'], 'browser', packageBrowser);
-      } else if (
-        (
-          isPlainObject(currentExportsBrowser) === true // Package "exports" is an object.
-          && isPlainObject(currentExportsBrowser['.']) === true // Package "exports['.']" is an object.
-          && typeof currentExportsBrowser['.']['browser'] === 'string' // Package "exports['.'].browser" is a string.
-        )
-        && typeof packageBrowser !== 'string' // Package "browser" is not a string.
-        && isPlainObject(packageBrowser) === false // Package "browser" is not a plain object.
-      ) {
-        Logger.customize({
-          name: 'Runner.handle',
-          purpose: 'browser',
-        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "browser" from "exports['.'].browser" ...`);
-
-        Reflect.set(fileContents, 'browser', currentExportsBrowser['.']['browser']);
-      } else if (
-        typeof packageBrowser === 'string' // Package "browser" is a string.
-        && isPlainObject(currentExportsBrowser) === true // Package "exports" is an object.
-        && typeof currentExportsBrowser['.'] === 'string' // Package "exports['.']" is a string.
-      ) {
-        Logger.customize({
-          name: 'Runner.handle',
-          purpose: 'browser',
-        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Normalizing "exports['.']" from string to object ...`);
-
-        Reflect.set(currentExportsBrowser, '.', {
-          default: currentExportsBrowser['.'],
-          browser: packageBrowser,
-        });
-      }
     }
 
     // Sync the "imports" field.

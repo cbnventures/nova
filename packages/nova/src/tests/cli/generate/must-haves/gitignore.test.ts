@@ -56,6 +56,10 @@ describe('CliGenerateMustHavesGitignore.run', () => {
     ok(targetCall !== undefined, 'Expected saveGeneratedFile to be called for .gitignore');
 
     ok(targetCall[1].includes('wrangler.toml'), 'Expected generated content to include the config projectExcludes entry');
+    ok(targetCall[1].includes('\n/bin/\n'), 'Expected root-only .NET bin ignore');
+    ok(targetCall[1].includes('\n/obj/\n'), 'Expected root-only .NET obj ignore');
+    ok(targetCall[1].split('\n').includes('bin/') === false, 'Expected nested package bin directories to remain visible');
+    ok(targetCall[1].split('\n').includes('obj/') === false, 'Expected nested package obj directories to remain visible');
 
     const headerArg: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_WritesConfigProjectExcludesAndHeaderMetadata_HeaderArg = targetCall[3];
 

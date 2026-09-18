@@ -3,18 +3,23 @@ import {
   access,
   mkdir,
   mkdtemp,
+  readdir,
   readFile,
   rm,
   writeFile,
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { afterAll, describe, it } from 'vitest';
 
 import { Runner as CliGenerateMustHavesLicense } from '../../../../cli/generate/must-haves/license.js';
 
 import type {
+  Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_BundledTemplatesEndWithExactlyOneNewline_Content,
+  Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_BundledTemplatesEndWithExactlyOneNewline_Directory,
+  Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_BundledTemplatesEndWithExactlyOneNewline_Names,
   Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_DryRunSkipsWorkspaceFanOutWrites_CliExists,
   Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_DryRunSkipsWorkspaceFanOutWrites_CliLicensePath,
   Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_DryRunSkipsWorkspaceFanOutWrites_LibExists,
@@ -174,6 +179,22 @@ describe('CliGenerateMustHavesLicense.run', async () => {
   const temporaryPrefix: Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_TemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
   const sandboxRoot: Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_SandboxRoot = await mkdtemp(temporaryPrefix);
 
+  it('bundled templates end with exactly one newline', async () => {
+    const directory: Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_BundledTemplatesEndWithExactlyOneNewline_Directory = join(fileURLToPath(import.meta.url), '..', '..', '..', '..', '..', '..', 'templates', 'generators', 'must-haves', 'license');
+    const names: Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_BundledTemplatesEndWithExactlyOneNewline_Names = await readdir(directory);
+
+    strictEqual(names.length > 0, true, 'Expected bundled license templates');
+
+    for (const name of names) {
+      const content: Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_BundledTemplatesEndWithExactlyOneNewline_Content = await readFile(join(directory, name), 'utf-8');
+
+      strictEqual(content.endsWith('\n'), true, `Expected ${name} to end with a newline`);
+      strictEqual(content.endsWith('\n\n'), false, `Expected ${name} to have no trailing blank line`);
+    }
+
+    return;
+  });
+
   afterAll(async () => {
     process.chdir(originalCwd);
 
@@ -271,6 +292,8 @@ describe('CliGenerateMustHavesLicense.run', async () => {
     const licensePath: Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_GeneratesFileFromTemplate_LicensePath = join(projectDirectory, 'LICENSE');
 
     await access(licensePath);
+
+    strictEqual((await readFile(licensePath, 'utf-8')).endsWith('\n\n'), false, 'Expected generated LICENSE to have no trailing blank line');
 
     return;
   });

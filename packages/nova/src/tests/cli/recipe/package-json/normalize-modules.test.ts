@@ -27,6 +27,14 @@ import type {
   Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_DoesNotModifyFilesDuringDryRun_WorkspaceDirectory,
   Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_DoesNotModifyFilesDuringDryRun_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_DoesNotModifyFilesDuringDryRun_WorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_DualDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_DualOutput,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_DualPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_EsmDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_EsmOutput,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_EsmPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_ProjectDirectory,
   Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_NormalizesStringExportsToObjectForPackageRole_NovaConfigContents,
   Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_NormalizesStringExportsToObjectForPackageRole_NovaConfigPath,
   Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_NormalizesStringExportsToObjectForPackageRole_Output,
@@ -148,6 +156,87 @@ describe('CliRecipePackageJsonNormalizeModules.run', async () => {
     const parsed: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_SkipsWhenNoWorkspacesHaveTheRecipeEnabled_Parsed = JSON.parse(output);
 
     strictEqual(parsed['exports'], './build/index.js');
+
+    return;
+  });
+
+  it('keeps legacy entry points separate from exports conditions', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_ProjectDirectory = join(sandboxRoot, 'entry-point-conditions');
+    const esmDirectory: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_EsmDirectory = join(projectDirectory, 'packages', 'esm');
+    const dualDirectory: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_DualDirectory = join(projectDirectory, 'packages', 'dual');
+
+    await mkdir(esmDirectory, { recursive: true });
+    await mkdir(dualDirectory, { recursive: true });
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test-entry-point-conditions' }), 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(novaConfigPath, JSON.stringify({
+      workspaces: {
+        './packages/esm': {
+          name: '@test/esm',
+          role: 'package',
+          policy: 'distributable',
+        },
+        './packages/dual': {
+          name: '@test/dual',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './packages/esm': { 'normalize-modules': { enabled: true } },
+          './packages/dual': { 'normalize-modules': { enabled: true } },
+        },
+      },
+    }), 'utf-8');
+
+    const esmPath: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_EsmPath = join(esmDirectory, 'package.json');
+    const dualPath: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_DualPath = join(dualDirectory, 'package.json');
+
+    await writeFile(esmPath, JSON.stringify({
+      name: '@test/esm',
+      version: '1.0.0',
+      type: 'module',
+      main: './build/index.js',
+      browser: './build/browser.js',
+      exports: { '.': './build/index.js' },
+    }), 'utf-8');
+    await writeFile(dualPath, JSON.stringify({
+      name: '@test/dual',
+      version: '1.0.0',
+      main: './legacy.js',
+      exports: {
+        '.': {
+          default: './fallback.js',
+          import: './esm.js',
+          require: './cjs.cjs',
+        },
+      },
+    }), 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonNormalizeModules.run({ replaceFile: true });
+
+    const esmOutput: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_EsmOutput = await readFile(esmPath, 'utf-8');
+    const dualOutput: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_KeepsLegacyEntryPointsSeparateFromExportsConditions_DualOutput = await readFile(dualPath, 'utf-8');
+
+    deepStrictEqual(JSON.parse(esmOutput)['exports'], { '.': { default: './build/index.js' } });
+    strictEqual(JSON.parse(esmOutput)['main'], './build/index.js');
+    strictEqual(JSON.parse(esmOutput)['browser'], './build/browser.js');
+    deepStrictEqual(JSON.parse(dualOutput)['exports']['.'], {
+      import: './esm.js',
+      require: './cjs.cjs',
+      default: './fallback.js',
+    });
+    strictEqual(JSON.parse(dualOutput)['main'], './legacy.js');
+
+    await CliRecipePackageJsonNormalizeModules.run({ replaceFile: true });
+
+    strictEqual(await readFile(esmPath, 'utf-8'), esmOutput);
+    strictEqual(await readFile(dualPath, 'utf-8'), dualOutput);
 
     return;
   });

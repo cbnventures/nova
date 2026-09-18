@@ -1,5 +1,13 @@
 # @cbnventures/nova
 
+## 0.27.2 - 2026-09-17
+
+### FIXED
+- Corrected normalize-modules to preserve independent main and browser entries and keep explicit export conditions reachable, preventing recipes from recreating inferred require branches.
+- Anchor generated .NET bin and obj ignores to the repository root so nested package launchers remain visible to Git.
+- Normalize generated licenses to one final newline while keeping update-copyright compatible with older files that have a trailing blank line.
+- Moved Nova to runtime dependencies in the Docusaurus scaffold so generated Nova commands remain available after production-only installs.
+
 ## 0.27.1 - 2026-09-16
 
 ### FIXED

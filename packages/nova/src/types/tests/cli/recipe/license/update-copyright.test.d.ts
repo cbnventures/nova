@@ -489,6 +489,21 @@ export type Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyr
 export type Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NonNovaLICENSEIsSkippedAndNeverRewritten_Output = string;
 
 /**
+ * Tests - CLI - Recipe - License - Update Copyright - Normalizes A Legacy Trailing Blank Line While Updating Copyright.
+ *
+ * @since 0.27.2
+ */
+export type Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_Template = string;
+
+export type Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_LicensePath = string;
+
+export type Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Recipe_License_UpdateCopyright_CliRecipeLicenseUpdateCopyrightRun_NormalizesALegacyTrailingBlankLineWhileUpdatingCopyright_LoadSpy = ReturnType<typeof vi['spyOn']>;
+
+/**
  * Tests - CLI - Recipe - License - Update Copyright - CLI Recipe License Update Copyright Run - Placeholderless Template Skips Informationally.
  *
  * @since 0.20.0

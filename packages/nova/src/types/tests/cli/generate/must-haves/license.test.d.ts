@@ -12,6 +12,17 @@ export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_
 export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_SandboxRoot = string;
 
 /**
+ * Tests - CLI - Generate - Must Haves - License - Run - Bundled Templates End With Exactly One Newline.
+ *
+ * @since 0.27.2
+ */
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_BundledTemplatesEndWithExactlyOneNewline_Directory = string;
+
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_BundledTemplatesEndWithExactlyOneNewline_Names = string[];
+
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_BundledTemplatesEndWithExactlyOneNewline_Content = string;
+
+/**
  * Tests - CLI - Generate - Must Haves - License - Run - Dry Run Skips Workspace Fan Out Writes.
  *
  * @since 0.15.0
