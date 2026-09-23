@@ -90,7 +90,8 @@ export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
       contents: 'read',
     },
     jobPermissions: {
-      issues: 'write',
+      'issues': 'write',
+      'pull-requests': 'write',
     },
     variables: {
       'GITHUB_TOKEN': {

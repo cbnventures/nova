@@ -1098,7 +1098,8 @@ export class Runner {
       runName: `Locking inactive issues${workflowId}\${{ github.event_name == 'workflow_dispatch' && inputs.dry-run && ' (dry run)' || '' }}`,
       on,
       permissions: {
-        issues: 'write',
+        'issues': 'write',
+        'pull-requests': 'write',
       },
       concurrency: {
         group: Runner.expr('github.workflow'),

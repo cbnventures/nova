@@ -19,6 +19,7 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildIssuesTrigger_ReturnsTheIssuesTrigger_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_AppendsTheWorkflowDispatchInput_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_Entry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_GrantsIssueAndPullRequestWritePermissions_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AddsNoStepForADotenvLessScope_BuildJob,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AddsNoStepForADotenvLessScope_Ir,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_AddsNoStepForADotenvLessScope_PlainStep,
@@ -356,6 +357,17 @@ describe('WorkflowsBlueprint.buildLockInactiveIssues', () => {
     strictEqual(ir['on'].map((trigger) => trigger['event']).join(','), 'schedule,workflow_dispatch');
 
     strictEqual(ir['name'], 'Lock Inactive Issues (project)');
+
+    return;
+  });
+
+  it('grants issue and pull request write permissions', () => {
+    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_GrantsIssueAndPullRequestWritePermissions_Ir = WorkflowsBlueprint.buildLockInactiveIssues(entry);
+
+    deepStrictEqual(ir['permissions'], {
+      'issues': 'write',
+      'pull-requests': 'write',
+    });
 
     return;
   });

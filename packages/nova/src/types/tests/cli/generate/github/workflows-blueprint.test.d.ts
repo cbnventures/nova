@@ -80,6 +80,8 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuild
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_AppendsTheWorkflowDispatchInput_Ir = Shared_BlueprintWorkflow;
 
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildLockInactiveIssues_GrantsIssueAndPullRequestWritePermissions_Ir = Shared_BlueprintWorkflow;
+
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint - Build Publish.
  *
