@@ -265,3 +265,23 @@ No changes
 - Shiki syntax highlighting with theme support
 - Sandpack code playground for interactive examples
 - Theme color schemes for Envoy, Foundry, Sentinel, and Signal
+
+## 0.14.0 - 2026-03-07
+
+No changes.
+
+## 0.13.1 - 2026-02-28
+
+No changes.
+
+## 0.13.0 - 2026-02-27
+
+No changes.
+
+## 0.12.0 - 2025-11-02
+
+No changes.
+
+## 0.11.0 - 2025-10-30
+
+No changes.
