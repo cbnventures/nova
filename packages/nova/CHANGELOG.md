@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.27.4 - 2026-10-01
+
+### FIXED
+- Made Vitest an optional peer dependency so runtime-only consumers avoid resolving its Vite toolchain and npm Arborist no longer crashes while installing Nova.
+
 ## 0.27.3 - 2026-09-23
 
 ### FIXED
