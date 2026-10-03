@@ -2,6 +2,7 @@ import type { ChildProcess, ChildProcessWithoutNullStreams } from 'node:child_pr
 
 import type {
   Shared_RunScriptsOptions_Buffer,
+  Shared_RunScriptsOptions_NodeEnv,
   Shared_RunScriptsOptions_Parallel,
   Shared_RunScriptsOptions_Pattern,
   Shared_RunScriptsOptions_Sequential,
@@ -13,6 +14,15 @@ import type {
  * @since 0.26.0
  */
 export type Lib_RunScripts_Runner_GetNpmCommand_Returns = string;
+
+/**
+ * Lib - Run Scripts - Get Script Environment.
+ *
+ * @since 0.28.0
+ */
+export type Lib_RunScripts_Runner_GetScriptEnvironment_NodeEnv = 'development' | 'production' | 'test' | undefined;
+
+export type Lib_RunScripts_Runner_GetScriptEnvironment_Returns = NodeJS.ProcessEnv;
 
 /**
  * Lib - Run Scripts - Match Scripts.
@@ -53,6 +63,8 @@ export type Lib_RunScripts_Runner_Run_Options_Parallel = Shared_RunScriptsOption
 
 export type Lib_RunScripts_Runner_Run_Options_Buffer = Shared_RunScriptsOptions_Buffer;
 
+export type Lib_RunScripts_Runner_Run_Options_NodeEnv = Shared_RunScriptsOptions_NodeEnv;
+
 export type Lib_RunScripts_Runner_Run_Options_PrintError = (message: string) => void;
 
 export type Lib_RunScripts_Runner_Run_Options_PrintInfo = (message: string) => void;
@@ -68,6 +80,7 @@ export type Lib_RunScripts_Runner_Run_Options = {
   sequential: Lib_RunScripts_Runner_Run_Options_Sequential;
   parallel: Lib_RunScripts_Runner_Run_Options_Parallel;
   buffer: Lib_RunScripts_Runner_Run_Options_Buffer;
+  nodeEnv: Lib_RunScripts_Runner_Run_Options_NodeEnv;
   printError: Lib_RunScripts_Runner_Run_Options_PrintError;
   printInfo: Lib_RunScripts_Runner_Run_Options_PrintInfo;
   printWarn: Lib_RunScripts_Runner_Run_Options_PrintWarn;
@@ -77,7 +90,11 @@ export type Lib_RunScripts_Runner_Run_Options = {
 
 export type Lib_RunScripts_Runner_Run_Returns = Promise<0 | 1>;
 
+export type Lib_RunScripts_Runner_Run_NodeEnvOption = string | undefined;
+
 export type Lib_RunScripts_Runner_Run_Pattern = string;
+
+export type Lib_RunScripts_Runner_Run_NodeEnv = 'development' | 'production' | 'test' | undefined;
 
 export type Lib_RunScripts_Runner_Run_PackageJson = Record<string, unknown> | undefined;
 
@@ -101,6 +118,8 @@ export type Lib_RunScripts_Runner_Run_ParallelExitCode = 0 | 1;
 export type Lib_RunScripts_Runner_RunParallel_MatchedScripts = string[];
 
 export type Lib_RunScripts_Runner_RunParallel_BufferMs = number;
+
+export type Lib_RunScripts_Runner_RunParallel_NodeEnv = 'development' | 'production' | 'test' | undefined;
 
 export type Lib_RunScripts_Runner_RunParallel_WriteStderr = (message: string) => void;
 
@@ -242,6 +261,8 @@ export type Lib_RunScripts_Runner_RunParallel_HandleSigterm_Returns = void;
  * @since 0.26.0
  */
 export type Lib_RunScripts_Runner_SpawnScript_Script = string;
+
+export type Lib_RunScripts_Runner_SpawnScript_NodeEnv = 'development' | 'production' | 'test' | undefined;
 
 export type Lib_RunScripts_Runner_SpawnScript_Returns = Promise<number>;
 

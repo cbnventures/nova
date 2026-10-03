@@ -1586,11 +1586,14 @@ export type Shared_RunScriptsOptions_Parallel = true | undefined;
 
 export type Shared_RunScriptsOptions_Buffer = string | undefined;
 
+export type Shared_RunScriptsOptions_NodeEnv = string | undefined;
+
 export type Shared_RunScriptsOptions = {
   pattern?: Shared_RunScriptsOptions_Pattern;
   sequential?: Shared_RunScriptsOptions_Sequential;
   parallel?: Shared_RunScriptsOptions_Parallel;
   buffer?: Shared_RunScriptsOptions_Buffer;
+  nodeEnv?: Shared_RunScriptsOptions_NodeEnv;
 };
 
 /**

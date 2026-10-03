@@ -42,6 +42,14 @@ import type {
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_MatchesExactScriptNameWithoutWildcard_ProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_MatchesExactScriptNameWithoutWildcard_RealProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_OriginalCwd,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_NodeEnv,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_OriginalNodeEnv,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_Output,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_OutputPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_PackageJson,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_PackageJsonPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_ProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_RealProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_CapturedOutput,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_CapturedWrites,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_ChunkString,
@@ -69,6 +77,22 @@ import type {
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RunsScriptsSequentially_ProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RunsScriptsSequentially_RealProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SandboxRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_NodeEnv,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_OriginalNodeEnv,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_Output,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_OutputPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_PackageJson,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_PackageJsonPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_ProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_RealProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_NodeEnv,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_OriginalNodeEnv,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_Output,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_OutputPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_PackageJson,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_PackageJsonPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_ProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_RealProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_StopsOnFirstFailureInSequentialMode_MissingFilePath,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_StopsOnFirstFailureInSequentialMode_PackageJson,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_StopsOnFirstFailureInSequentialMode_PackageJsonPath,
@@ -150,6 +174,169 @@ describe('CliUtilityRunScripts.run', async () => {
     const output: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RunsScriptsSequentially_Output = await readFile(outputPath, 'utf-8');
 
     strictEqual(output, 'first\nsecond\n');
+
+    return;
+  });
+
+  it('sets an explicit production environment without mutating the parent', async () => {
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_ProjectRoot = join(sandboxRoot, 'production-environment');
+
+    await mkdir(projectRoot, { recursive: true });
+
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_PackageJson = JSON.stringify({
+      name: 'test-production-environment',
+      scripts: {
+        'compile:environment': 'node -e "require(\'fs\').writeFileSync(\'environment.txt\', process.env.NODE_ENV ?? \'\')"',
+      },
+    }, null, 2);
+
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_PackageJsonPath = join(projectRoot, 'package.json');
+
+    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_RealProjectRoot = await realpath(projectRoot);
+    const originalNodeEnv: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_OriginalNodeEnv = process.env['NODE_ENV'];
+
+    process.chdir(realProjectRoot);
+
+    Reflect.set(process.env, 'NODE_ENV', 'development');
+
+    try {
+      await CliUtilityRunScripts.run({
+        nodeEnv: 'production',
+        pattern: 'compile:*',
+        sequential: true,
+      });
+
+      const nodeEnv: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_NodeEnv = process.env['NODE_ENV'];
+
+      strictEqual(nodeEnv, 'development');
+    } finally {
+      if (originalNodeEnv === undefined) {
+        Reflect.deleteProperty(process.env, 'NODE_ENV');
+      } else {
+        Reflect.set(process.env, 'NODE_ENV', originalNodeEnv);
+      }
+    }
+
+    const outputPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_OutputPath = join(realProjectRoot, 'environment.txt');
+    const output: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_Output = await readFile(outputPath, 'utf-8');
+
+    strictEqual(output, 'production');
+
+    return;
+  });
+
+  it('sets an explicit development environment in parallel', async () => {
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_ProjectRoot = join(sandboxRoot, 'development-environment');
+
+    await mkdir(projectRoot, { recursive: true });
+
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_PackageJson = JSON.stringify({
+      name: 'test-development-environment',
+      scripts: {
+        'watch:environment': 'node -e "require(\'fs\').writeFileSync(\'environment.txt\', process.env.NODE_ENV ?? \'\')"',
+      },
+    }, null, 2);
+
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_PackageJsonPath = join(projectRoot, 'package.json');
+
+    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_RealProjectRoot = await realpath(projectRoot);
+    const originalNodeEnv: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_OriginalNodeEnv = process.env['NODE_ENV'];
+
+    process.chdir(realProjectRoot);
+
+    Reflect.set(process.env, 'NODE_ENV', 'production');
+
+    try {
+      await CliUtilityRunScripts.run({
+        nodeEnv: 'development',
+        pattern: 'watch:*',
+        parallel: true,
+        buffer: '100',
+      });
+
+      const nodeEnv: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_NodeEnv = process.env['NODE_ENV'];
+
+      strictEqual(nodeEnv, 'production');
+    } finally {
+      if (originalNodeEnv === undefined) {
+        Reflect.deleteProperty(process.env, 'NODE_ENV');
+      } else {
+        Reflect.set(process.env, 'NODE_ENV', originalNodeEnv);
+      }
+    }
+
+    const outputPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_OutputPath = join(realProjectRoot, 'environment.txt');
+    const output: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_Output = await readFile(outputPath, 'utf-8');
+
+    strictEqual(output, 'development');
+
+    return;
+  });
+
+  it('preserves the inherited environment when --node-env is omitted', async () => {
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_ProjectRoot = join(sandboxRoot, 'inherited-environment');
+
+    await mkdir(projectRoot, { recursive: true });
+
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_PackageJson = JSON.stringify({
+      name: 'test-inherited-environment',
+      scripts: {
+        'build:environment': 'node -e "require(\'fs\').writeFileSync(\'environment.txt\', process.env.NODE_ENV ?? \'\')"',
+      },
+    }, null, 2);
+
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_PackageJsonPath = join(projectRoot, 'package.json');
+
+    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_RealProjectRoot = await realpath(projectRoot);
+    const originalNodeEnv: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_OriginalNodeEnv = process.env['NODE_ENV'];
+
+    process.chdir(realProjectRoot);
+
+    Reflect.set(process.env, 'NODE_ENV', 'staging');
+
+    try {
+      await CliUtilityRunScripts.run({
+        pattern: 'build:*',
+        sequential: true,
+      });
+
+      const nodeEnv: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_NodeEnv = process.env['NODE_ENV'];
+
+      strictEqual(nodeEnv, 'staging');
+    } finally {
+      if (originalNodeEnv === undefined) {
+        Reflect.deleteProperty(process.env, 'NODE_ENV');
+      } else {
+        Reflect.set(process.env, 'NODE_ENV', originalNodeEnv);
+      }
+    }
+
+    const outputPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_OutputPath = join(realProjectRoot, 'environment.txt');
+    const output: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_Output = await readFile(outputPath, 'utf-8');
+
+    strictEqual(output, 'staging');
+
+    return;
+  });
+
+  it('rejects unsupported --node-env values', async () => {
+    process.exitCode = undefined;
+
+    await CliUtilityRunScripts.run({
+      nodeEnv: 'staging',
+      pattern: 'build:*',
+      sequential: true,
+    });
+
+    strictEqual(process.exitCode, 1);
+
+    process.exitCode = undefined;
 
     return;
   });

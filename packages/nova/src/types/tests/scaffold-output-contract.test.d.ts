@@ -98,6 +98,8 @@ export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroup = Test
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupModes = Record<Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroup, 'parallel' | 'sequential'>;
 
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupNodeEnvOptions = Record<Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroup, string>;
+
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_PreviousParentIndex = number;
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ChildScriptNames = string[];

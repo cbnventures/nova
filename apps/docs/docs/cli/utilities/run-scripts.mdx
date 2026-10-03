@@ -25,18 +25,19 @@ Run `package.json` scripts by pattern in sequential or parallel mode with no ext
 
 ## Summary
 
-The `run-scripts` command reads the `scripts` field from the nearest `package.json`, matches script names by a prefix pattern (e.g., `build:*`), and runs them either sequentially (stopping on first failure) or concurrently (reporting all failures).
+The `run-scripts` command reads the `scripts` field from the nearest `package.json`, matches script names by a prefix pattern (e.g., `build:*`), and runs them either sequentially (stopping on first failure) or concurrently (reporting all failures). An optional `-n, --node-env` value explicitly controls `NODE_ENV` for the matched child scripts.
 
 ## Why Use This Command?
 
 - Run related scripts (e.g., `build:clean`, `build:transpile`, `build:fix-alias`) in a single command with no extra <Terminology title="runtime dep" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependencies</Terminology>.
 - Choose between sequential execution (for ordered pipelines) and parallel execution (for independent tasks).
+- Set `NODE_ENV` for child scripts without relying on platform-specific shell syntax or Nova guessing from script names.
 - Get clear exit codes and error messages when a script fails.
 
 ## Use Cases
 
-- **Build pipelines** — Run `build:*` scripts sequentially so each step depends on the previous one.
-- **Development mode** — Run `dev:*` scripts in parallel to start watchers, dev servers, and other tools concurrently.
+- **Build pipelines** — Run `build:*` scripts sequentially with an explicit production environment so each step shares the same intent.
+- **Development mode** — Run `dev:*` scripts in parallel with an explicit development environment to start watchers, dev servers, and other tools concurrently.
 - **<Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> checks** — Run `check:*` scripts sequentially or in parallel depending on whether order matters.
 - **Cleanup tasks** — Run `clean:*` scripts in parallel since cleanup operations are independent.
 
@@ -80,15 +81,18 @@ You can run this command in two ways:
 
 ## Options
 
-| Flag                | Description                                                                  |
-|---------------------|------------------------------------------------------------------------------|
-| `-s, --sequential`  | Run matched scripts one at a time, stopping on failure.                      |
-| `-p, --parallel`    | Run matched scripts concurrently.                                            |
-| `-b, --buffer <ms>` | Flush interval in milliseconds for parallel log grouping. Defaults to `500`. |
+| Flag                           | Description                                                                                           |
+|--------------------------------|-------------------------------------------------------------------------------------------------------|
+| `-s, --sequential`             | Run matched scripts one at a time, stopping on failure.                                               |
+| `-p, --parallel`               | Run matched scripts concurrently.                                                                     |
+| `-b, --buffer <ms>`            | Flush interval in milliseconds for parallel log grouping. Defaults to `500`.                          |
+| `-n, --node-env <environment>` | Set child `NODE_ENV` to `development`, `production`, or `test`. Omit it to preserve the caller value. |
 
 Exactly one of `--sequential` or `--parallel` is required. The `<pattern>` argument supports a trailing wildcard (e.g., `build:*`) to match all scripts sharing a common prefix, or an exact script name.
 
 In parallel mode, each script's output is prefixed with `[script-name]` and grouped using a time-windowed log queue. Use `--buffer` to adjust the flush interval (default: `500` ms).
+
+`--node-env` is explicit by design. Nova does not infer an environment from names such as `build:*` or `dev:*`. The selected value applies only to the child scripts; Nova does not mutate the parent process. If the option is omitted, the children inherit the caller's existing `NODE_ENV` unchanged.
 
 ## Examples
 
@@ -99,10 +103,10 @@ In parallel mode, each script's output is prefixed with `[script-name]` and grou
 
         ```bash title="Sequential build pipeline"
         # Original
-        nova utility run-scripts 'build:*' --sequential
+        nova utility run-scripts 'build:*' --sequential --node-env production
 
         # Shorthand
-        nova util run-scr -s 'build:*'
+        nova util run-scr -s 'build:*' -n production
         ```
 
       </div>
@@ -110,10 +114,10 @@ In parallel mode, each script's output is prefixed with `[script-name]` and grou
 
         ```bash title="Parallel dev watchers"
         # Original
-        nova utility run-scripts 'dev:*' --parallel
+        nova utility run-scripts 'dev:*' --parallel --node-env development
 
         # Shorthand
-        nova util run-scr -p 'dev:*'
+        nova util run-scr -p 'dev:*' -n development
         ```
 
       </div>
@@ -125,10 +129,10 @@ In parallel mode, each script's output is prefixed with `[script-name]` and grou
 
         ```bash title="Sequential build pipeline"
         # Original
-        npx --yes @cbnventures/nova@latest utility run-scripts 'build:*' --sequential
+        npx --yes @cbnventures/nova@latest utility run-scripts 'build:*' --sequential --node-env production
 
         # Shorthand
-        npx --yes @cbnventures/nova@latest util run-scr -s 'build:*'
+        npx --yes @cbnventures/nova@latest util run-scr -s 'build:*' -n production
         ```
 
       </div>
@@ -136,10 +140,10 @@ In parallel mode, each script's output is prefixed with `[script-name]` and grou
 
         ```bash title="Parallel dev watchers"
         # Original
-        npx --yes @cbnventures/nova@latest utility run-scripts 'dev:*' --parallel
+        npx --yes @cbnventures/nova@latest utility run-scripts 'dev:*' --parallel --node-env development
 
         # Shorthand
-        npx --yes @cbnventures/nova@latest util run-scr -p 'dev:*'
+        npx --yes @cbnventures/nova@latest util run-scr -p 'dev:*' -n development
         ```
 
       </div>
@@ -151,11 +155,12 @@ In parallel mode, each script's output is prefixed with `[script-name]` and grou
 
 For users migrating from the [npm-run-all](https://github.com/mysticatea/npm-run-all) workflow, Nova provides equivalent flags under `nova utility run-scripts`:
 
-| Command                                                    | Equivalent                         | What It Does                                     |
-|------------------------------------------------------------|------------------------------------|--------------------------------------------------|
-| `nova utility run-scripts 'build:*' --sequential`          | `npm-run-all --sequential build:*` | Run matched scripts one at a time.               |
-| `nova utility run-scripts 'dev:*' --parallel`              | `npm-run-all --parallel dev:*`     | Run matched scripts concurrently.                |
-| `nova utility run-scripts 'dev:*' --parallel --buffer 200` | —                                  | Run concurrently with 200 ms log flush interval. |
+| Command                                                                 | Equivalent                         | What It Does                                        |
+|-------------------------------------------------------------------------|------------------------------------|-----------------------------------------------------|
+| `nova utility run-scripts 'build:*' --sequential`                       | `npm-run-all --sequential build:*` | Run matched scripts one at a time.                  |
+| `nova utility run-scripts 'dev:*' --parallel`                           | `npm-run-all --parallel dev:*`     | Run matched scripts concurrently.                   |
+| `nova utility run-scripts 'dev:*' --parallel --buffer 200`              | —                                  | Run concurrently with 200 ms log flush interval.    |
+| `nova utility run-scripts 'build:*' --sequential --node-env production` | —                                  | Run sequentially with an explicit child `NODE_ENV`. |
 
 After updating your `scripts` in `package.json`, `npm-run-all` can be removed from `devDependencies`.
 
@@ -164,5 +169,6 @@ After updating your `scripts` in `package.json`, `npm-run-all` can be removed fr
 - **No "package.json" found** — Confirm a `package.json` exists in the current working directory before running the command.
 - **No scripts matched** — Verify that your pattern matches at least one key in the `scripts` field. A trailing `*` matches by prefix (e.g., `build:*` matches `build:clean`, `build:transpile`).
 - **Both modes specified** — Use either `--sequential` or `--parallel`, not both. The command will exit with an error if both are provided.
+- **Unsupported Node environment** — Use `development`, `production`, or `test` with `--node-env`, or omit the option to inherit the caller's value.
 - **Script fails in sequential mode** — Execution stops at the first failure. Fix the failing script and re-run.
 - **Script fails in parallel mode** — All scripts run to completion. Check the output for which scripts failed.

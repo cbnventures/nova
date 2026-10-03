@@ -34,15 +34,18 @@ async function novaRunScripts() {
   const parsedArgs = parseArgs({
     allowPositionals: true,
     options: {
-      buffer: {
+      'buffer': {
         type: 'string',
         short: 'b',
       },
-      parallel: {
+      'node-env': {
+        type: 'string',
+      },
+      'parallel': {
         type: 'boolean',
         short: 'p',
       },
-      sequential: {
+      'sequential': {
         type: 'boolean',
         short: 's',
       },
@@ -52,12 +55,15 @@ async function novaRunScripts() {
   const positionals = parsedArgs.positionals;
   const values = parsedArgs.values;
   const bufferValue = values['buffer'];
+  const nodeEnvValue = values['node-env'];
   const pattern = positionals[0];
   const buffer = (typeof bufferValue === 'string') ? bufferValue : undefined;
+  const nodeEnv = (typeof nodeEnvValue === 'string') ? nodeEnvValue : undefined;
   const parallel = (values['parallel'] === true) ? true : undefined;
   const sequential = (values['sequential'] === true) ? true : undefined;
   const exitCode = await runScriptsRunner.run({
     buffer,
+    nodeEnv,
     parallel,
     pattern,
     printError,

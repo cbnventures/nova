@@ -359,7 +359,7 @@ describe('Compiled Nova CLI integration', () => {
     return;
   });
 
-  it('runs a matching package script through the utility command', async () => {
+  it('runs a matching package script through long and short utility options', async () => {
     const projectDirectory = join(temporaryDirectory, 'utility');
 
     await mkdir(projectDirectory, { recursive: true });
@@ -368,7 +368,7 @@ describe('Compiled Nova CLI integration', () => {
       name: 'utility-project',
       private: true,
       scripts: {
-        'integration:marker': 'node -e "require(\'node:fs\').writeFileSync(\'marker.txt\', \'done\')"',
+        'integration:marker': 'node -e "require(\'node:fs\').writeFileSync(\'marker.txt\', process.env.NODE_ENV ?? \'\')"',
       },
     }, null, 2);
     const packageJsonPath = join(projectDirectory, 'package.json');
@@ -380,6 +380,8 @@ describe('Compiled Nova CLI integration', () => {
       'run-scripts',
       'integration:*',
       '--sequential',
+      '--node-env',
+      'test',
     ]);
 
     expect(result.error).toBeUndefined();
@@ -388,7 +390,22 @@ describe('Compiled Nova CLI integration', () => {
 
     const markerPath = join(projectDirectory, 'marker.txt');
 
-    expect(await readFile(markerPath, 'utf-8')).toBe('done');
+    expect(await readFile(markerPath, 'utf-8')).toBe('test');
+
+    const shorthandResult = runNova(projectDirectory, [
+      'utility',
+      'run-scripts',
+      'integration:*',
+      '-s',
+      '-n',
+      'development',
+    ]);
+
+    expect(shorthandResult.error).toBeUndefined();
+
+    expect(shorthandResult.status).toBe(0);
+
+    expect(await readFile(markerPath, 'utf-8')).toBe('development');
 
     return;
   });

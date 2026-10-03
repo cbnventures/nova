@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.28.0 - 2026-10-02
+
+### ADDED
+- Add an explicit `-n, --node-env <environment>` option to `nova utility run-scripts` for setting child scripts to development, production, or test without inferring intent from script names or mutating the parent process
+
 ## 0.27.4 - 2026-10-01
 
 ### FIXED

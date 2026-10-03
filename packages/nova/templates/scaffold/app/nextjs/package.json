@@ -3,14 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "nova utility run-scripts --parallel 'dev:*'",
+    "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
     "dev:start": "next dev",
-    "prod": "nova utility run-scripts --sequential 'prod:*'",
+    "prod": "nova utility run-scripts --sequential --node-env production 'prod:*'",
     "prod:start": "next start",
     "check": "nova utility run-scripts --sequential 'check:*'",
     "check:typegen": "next typegen",
     "check:types": "nova utility type-check --project tsconfig.json",
-    "build": "nova utility run-scripts --sequential 'build:*'",
+    "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
     "build:app": "next build",
     "clean": "nova utility run-scripts --parallel 'clean:*'",
     "clean:build": "shx rm -rf ./build"

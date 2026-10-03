@@ -32,7 +32,7 @@ You do not need to run `starter base` before either direct app or docs command.
 ## Why Use This Command?
 
 - Creates the root `package.json` with `workspaces` configured for `apps/*` and `packages/*` so you can add workspaces immediately.
-- Creates a root `turbo.json` and standard `dev`, `prod`, `check`, `build`, `deploy`, and `clean` script groups. Each top-level script delegates to its adjacent `name:workspaces` Turbo step through `nova utility run-scripts`.
+- Creates a root `turbo.json` and standard `dev`, `prod`, `check`, `build`, `deploy`, and `clean` script groups. Each top-level script delegates to its adjacent `name:workspaces` Turbo step through `nova utility run-scripts`; development and production-oriented groups pass an explicit `--node-env` value.
 - Pins the npm and Node.js toolchain used by current Nova projects and records explicit denials for optional dependency install scripts used by the built-in scaffolds.
 - Generates a baseline `nova.config.json` so recipes and utilities have a valid config to work with from the start.
 - Installs `@cbnventures/nova` as a dev dependency so the `nova` CLI is available inside the project without a global install.

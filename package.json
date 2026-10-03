@@ -4,9 +4,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "node ./scripts/nova-run-scripts.mjs --parallel 'dev:*'",
+    "dev": "node ./scripts/nova-run-scripts.mjs --parallel --node-env development 'dev:*'",
     "dev:workspaces": "turbo run dev",
-    "prod": "node ./scripts/nova-run-scripts.mjs --sequential 'prod:*'",
+    "prod": "node ./scripts/nova-run-scripts.mjs --sequential --node-env production 'prod:*'",
     "prod:workspaces": "turbo run prod",
     "check": "node ./scripts/nova-run-scripts.mjs --sequential 'check:*'",
     "check:workspaces": "turbo run check --concurrency=2",
@@ -17,9 +17,9 @@
     "check:test": "vitest run --exclude \"scripts/tests/**/*.mjs\"",
     "check:cli": "npm run build --workspace=@cbnventures/nova && vitest run scripts/tests/cli",
     "check:scaffolds": "node ./scripts/check-scaffolds.mjs",
-    "build": "node ./scripts/nova-run-scripts.mjs --sequential 'build:*'",
+    "build": "node ./scripts/nova-run-scripts.mjs --sequential --node-env production 'build:*'",
     "build:workspaces": "turbo run build --concurrency=2",
-    "deploy": "node ./scripts/nova-run-scripts.mjs --sequential 'deploy:*'",
+    "deploy": "node ./scripts/nova-run-scripts.mjs --sequential --node-env production 'deploy:*'",
     "deploy:workspaces": "turbo run deploy --concurrency=2",
     "clean": "node ./scripts/nova-run-scripts.mjs --parallel 'clean:*'",
     "clean:workspaces": "turbo run clean",
@@ -30,6 +30,7 @@
   "allowScripts": {
     "core-js": false,
     "es5-ext": false,
+    "fsevents": true,
     "unrs-resolver": false
   },
   "workspaces": [

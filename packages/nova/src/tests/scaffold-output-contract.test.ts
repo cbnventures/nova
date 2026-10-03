@@ -59,6 +59,7 @@ import type {
   Tests_ScaffoldOutputContract_VerifyScriptContract_PreviousParentIndex,
   Tests_ScaffoldOutputContract_VerifyScriptContract_Returns,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupModes,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupNodeEnvOptions,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptNames,
   Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts,
@@ -244,6 +245,15 @@ async function verifyScriptContract(packageJsonPath: Tests_ScaffoldOutputContrac
     clean: 'parallel',
     i18n: 'sequential',
   };
+  const scriptGroupNodeEnvOptions: Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupNodeEnvOptions = {
+    dev: ' --node-env development',
+    prod: ' --node-env production',
+    check: '',
+    build: ' --node-env production',
+    deploy: ' --node-env production',
+    clean: '',
+    i18n: '',
+  };
   let previousParentIndex: Tests_ScaffoldOutputContract_VerifyScriptContract_PreviousParentIndex = -1;
 
   for (const scriptGroup of scriptGroupOrder) {
@@ -259,7 +269,7 @@ async function verifyScriptContract(packageJsonPath: Tests_ScaffoldOutputContrac
     }
 
     const parentIndex: Tests_ScaffoldOutputContract_VerifyScriptContract_ParentIndex = scriptNames.indexOf(scriptGroup);
-    const expectedParentCommand: Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedParentCommand = `nova utility run-scripts --${scriptGroupModes[scriptGroup]} '${scriptGroup}:*'`;
+    const expectedParentCommand: Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedParentCommand = `nova utility run-scripts --${scriptGroupModes[scriptGroup]}${scriptGroupNodeEnvOptions[scriptGroup]} '${scriptGroup}:*'`;
     const expectedGroupNames: Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedGroupNames = [
       scriptGroup,
       ...childScriptNames,

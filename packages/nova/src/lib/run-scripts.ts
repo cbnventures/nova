@@ -7,6 +7,8 @@ import chalk from 'chalk';
 
 import type {
   Lib_RunScripts_Runner_GetNpmCommand_Returns,
+  Lib_RunScripts_Runner_GetScriptEnvironment_NodeEnv,
+  Lib_RunScripts_Runner_GetScriptEnvironment_Returns,
   Lib_RunScripts_Runner_MatchScripts_Pattern,
   Lib_RunScripts_Runner_MatchScripts_Prefix,
   Lib_RunScripts_Runner_MatchScripts_Returns,
@@ -17,6 +19,8 @@ import type {
   Lib_RunScripts_Runner_Run_BufferMs,
   Lib_RunScripts_Runner_Run_ExitCode,
   Lib_RunScripts_Runner_Run_MatchedScripts,
+  Lib_RunScripts_Runner_Run_NodeEnv,
+  Lib_RunScripts_Runner_Run_NodeEnvOption,
   Lib_RunScripts_Runner_Run_Options,
   Lib_RunScripts_Runner_Run_PackageJson,
   Lib_RunScripts_Runner_Run_ParallelExitCode,
@@ -55,6 +59,7 @@ import type {
   Lib_RunScripts_Runner_RunParallel_HandleSigterm,
   Lib_RunScripts_Runner_RunParallel_LastFlushedScript,
   Lib_RunScripts_Runner_RunParallel_MatchedScripts,
+  Lib_RunScripts_Runner_RunParallel_NodeEnv,
   Lib_RunScripts_Runner_RunParallel_NpmCommand,
   Lib_RunScripts_Runner_RunParallel_PartialLines,
   Lib_RunScripts_Runner_RunParallel_Prefixes,
@@ -67,6 +72,7 @@ import type {
   Lib_RunScripts_Runner_SpawnScript_Child,
   Lib_RunScripts_Runner_SpawnScript_Close_ExitCode,
   Lib_RunScripts_Runner_SpawnScript_Error_Returns,
+  Lib_RunScripts_Runner_SpawnScript_NodeEnv,
   Lib_RunScripts_Runner_SpawnScript_NpmCommand,
   Lib_RunScripts_Runner_SpawnScript_Returns,
   Lib_RunScripts_Runner_SpawnScript_Script,
@@ -112,7 +118,21 @@ export class Runner {
       return 1;
     }
 
+    const nodeEnvOption: Lib_RunScripts_Runner_Run_NodeEnvOption = options['nodeEnv'];
+
+    if (
+      nodeEnvOption !== undefined
+      && nodeEnvOption !== 'development'
+      && nodeEnvOption !== 'production'
+      && nodeEnvOption !== 'test'
+    ) {
+      options.printError('The --node-env value must be "development", "production", or "test".');
+
+      return 1;
+    }
+
     const pattern: Lib_RunScripts_Runner_Run_Pattern = options['pattern'];
+    const nodeEnv: Lib_RunScripts_Runner_Run_NodeEnv = nodeEnvOption;
 
     // Read the "package.json" from the current working directory.
     const packageJson: Lib_RunScripts_Runner_Run_PackageJson = await Runner.readPackageJson();
@@ -148,7 +168,7 @@ export class Runner {
         options.writeStdout(`\n┌─ ${chalk.cyan(matchedScript)} ──\n`);
 
         try {
-          const exitCode: Lib_RunScripts_Runner_Run_ExitCode = await Runner.spawnScript(matchedScript);
+          const exitCode: Lib_RunScripts_Runner_Run_ExitCode = await Runner.spawnScript(matchedScript, nodeEnv);
 
           if (exitCode !== 0) {
             options.writeStderr(`└─ ${chalk.cyan(matchedScript)} ── ${chalk.red(`✗ (exit code ${exitCode})`)}\n`);
@@ -189,6 +209,7 @@ export class Runner {
       const parallelExitCode: Lib_RunScripts_Runner_Run_ParallelExitCode = await Runner.runParallel(
         matchedScripts,
         bufferMs,
+        nodeEnv,
         options['writeStderr'],
         options['writeStdout'],
       );
@@ -248,6 +269,30 @@ export class Runner {
   }
 
   /**
+   * Lib - Run Scripts - Get Script Environment.
+   *
+   * Creates an isolated child environment for the requested NODE_ENV value.
+   * Every other project variable is preserved, and omitting the option inherits NODE_ENV
+   * without Nova inferring execution intent from the matched script names.
+   *
+   * @param {Lib_RunScripts_Runner_GetScriptEnvironment_NodeEnv} nodeEnv - Node env.
+   *
+   * @private
+   *
+   * @returns {Lib_RunScripts_Runner_GetScriptEnvironment_Returns}
+   *
+   * @since 0.28.0
+   */
+  private static getScriptEnvironment(nodeEnv: Lib_RunScripts_Runner_GetScriptEnvironment_NodeEnv): Lib_RunScripts_Runner_GetScriptEnvironment_Returns {
+    return {
+      ...process.env,
+      ...(nodeEnv === undefined) ? {} : {
+        'NODE_ENV': nodeEnv,
+      },
+    };
+  }
+
+  /**
    * Lib - Run Scripts - Match Scripts.
    *
    * Filters script names by a trailing-wildcard pattern like "build:*" or returns an exact
@@ -284,7 +329,8 @@ export class Runner {
    * Spawns a single npm run command with inherited stdio for real-time output. Used by
    * sequential mode to stream output as scripts run.
    *
-   * @param {Lib_RunScripts_Runner_SpawnScript_Script} script - Script.
+   * @param {Lib_RunScripts_Runner_SpawnScript_Script}  script  - Script.
+   * @param {Lib_RunScripts_Runner_SpawnScript_NodeEnv} nodeEnv - Node env.
    *
    * @private
    *
@@ -292,7 +338,7 @@ export class Runner {
    *
    * @since 0.26.0
    */
-  private static spawnScript(script: Lib_RunScripts_Runner_SpawnScript_Script): Lib_RunScripts_Runner_SpawnScript_Returns {
+  private static spawnScript(script: Lib_RunScripts_Runner_SpawnScript_Script, nodeEnv: Lib_RunScripts_Runner_SpawnScript_NodeEnv): Lib_RunScripts_Runner_SpawnScript_Returns {
     const npmCommand: Lib_RunScripts_Runner_SpawnScript_NpmCommand = Runner.getNpmCommand();
 
     return new Promise((promiseResolve, reject) => {
@@ -300,6 +346,7 @@ export class Runner {
         'run',
         script,
       ], {
+        env: Runner.getScriptEnvironment(nodeEnv),
         stdio: 'inherit',
         shell: false,
       });
@@ -331,6 +378,7 @@ export class Runner {
    *
    * @param {Lib_RunScripts_Runner_RunParallel_MatchedScripts} matchedScripts - Matched scripts.
    * @param {Lib_RunScripts_Runner_RunParallel_BufferMs}       bufferMs       - Buffer ms.
+   * @param {Lib_RunScripts_Runner_RunParallel_NodeEnv}        nodeEnv        - Node env.
    * @param {Lib_RunScripts_Runner_RunParallel_WriteStderr}    writeStderr    - Write stderr.
    * @param {Lib_RunScripts_Runner_RunParallel_WriteStdout}    writeStdout    - Write stdout.
    *
@@ -340,7 +388,7 @@ export class Runner {
    *
    * @since 0.26.0
    */
-  private static async runParallel(matchedScripts: Lib_RunScripts_Runner_RunParallel_MatchedScripts, bufferMs: Lib_RunScripts_Runner_RunParallel_BufferMs, writeStderr: Lib_RunScripts_Runner_RunParallel_WriteStderr, writeStdout: Lib_RunScripts_Runner_RunParallel_WriteStdout): Lib_RunScripts_Runner_RunParallel_Returns {
+  private static async runParallel(matchedScripts: Lib_RunScripts_Runner_RunParallel_MatchedScripts, bufferMs: Lib_RunScripts_Runner_RunParallel_BufferMs, nodeEnv: Lib_RunScripts_Runner_RunParallel_NodeEnv, writeStderr: Lib_RunScripts_Runner_RunParallel_WriteStderr, writeStdout: Lib_RunScripts_Runner_RunParallel_WriteStdout): Lib_RunScripts_Runner_RunParallel_Returns {
     const npmCommand: Lib_RunScripts_Runner_RunParallel_NpmCommand = Runner.getNpmCommand();
 
     // Build color-coded prefixes for each script.
@@ -411,6 +459,7 @@ export class Runner {
         'run',
         script,
       ], {
+        env: Runner.getScriptEnvironment(nodeEnv),
         stdio: 'pipe',
         shell: false,
       });

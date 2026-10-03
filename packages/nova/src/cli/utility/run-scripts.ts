@@ -41,6 +41,7 @@ export class Runner {
   public static async run(options: Cli_Utility_RunScripts_Runner_Run_Options): Cli_Utility_RunScripts_Runner_Run_Returns {
     const exitCode: Cli_Utility_RunScripts_Runner_Run_ExitCode = await LibRunScripts.run({
       buffer: options['buffer'],
+      nodeEnv: options['nodeEnv'],
       parallel: options['parallel'],
       pattern: options['pattern'],
       printError: Runner['printError'],

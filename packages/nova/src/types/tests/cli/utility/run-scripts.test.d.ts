@@ -84,6 +84,27 @@ export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_MatchesExactScr
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_MatchesExactScriptNameWithoutWildcard_Output = string;
 
 /**
+ * Tests - CLI - Utility - Run Scripts - Run - Preserves The Inherited Environment When Node Env Is Omitted.
+ *
+ * @since 0.28.0
+ */
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_ProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_PackageJson = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_RealProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_OriginalNodeEnv = string | undefined;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_NodeEnv = string | undefined;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_OutputPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_Output = string;
+
+/**
  * Tests - CLI - Utility - Run Scripts - Run - Produces Prefixed Output In Parallel Mode.
  *
  * @since 0.14.0
@@ -111,6 +132,13 @@ export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixe
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesHelloA = boolean;
 
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesHelloB = boolean;
+
+/**
+ * Tests - CLI - Utility - Run Scripts - Run - Rejects Unsupported Node Env Values.
+ *
+ * @since 0.28.0
+ */
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RejectsUnsupportedNodeEnvValues_Returns = void;
 
 /**
  * Tests - CLI - Utility - Run Scripts - Run - Runs Scripts In Parallel.
@@ -149,6 +177,48 @@ export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RunsScriptsSequ
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RunsScriptsSequentially_OutputPath = string;
 
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RunsScriptsSequentially_Output = string;
+
+/**
+ * Tests - CLI - Utility - Run Scripts - Run - Sets An Explicit Development Environment In Parallel.
+ *
+ * @since 0.28.0
+ */
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_ProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_PackageJson = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_RealProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_OriginalNodeEnv = string | undefined;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_NodeEnv = string | undefined;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_OutputPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitDevelopmentEnvironmentInParallel_Output = string;
+
+/**
+ * Tests - CLI - Utility - Run Scripts - Run - Sets An Explicit Production Environment Without Mutating The Parent.
+ *
+ * @since 0.28.0
+ */
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_ProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_PackageJson = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_RealProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_OriginalNodeEnv = string | undefined;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_NodeEnv = string | undefined;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_OutputPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SetsAnExplicitProductionEnvironmentWithoutMutatingTheParent_Output = string;
 
 /**
  * Tests - CLI - Utility - Run Scripts - Run - Stops On First Failure In Sequential Mode.

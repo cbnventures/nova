@@ -960,6 +960,7 @@ class CLI {
       .option('-s, --sequential', 'Run matched scripts one at a time, stopping on failure')
       .option('-p, --parallel', 'Run matched scripts concurrently')
       .option('-b, --buffer <ms>', 'Flush interval in ms for parallel log grouping (default: 500)')
+      .option('-n, --node-env <environment>', 'Set NODE_ENV for matched child scripts (development, production, or test)')
       .action(async (pattern, options) => {
         await this.executeCommand<Cli_Index_CLI_RegisterCommands_RunScriptsOptions>({
           ...options,
