@@ -9,18 +9,24 @@
     "prod": "nova utility run-scripts --sequential --node-env production 'prod:*'",
     "prod:preview": "vite preview",
     "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:lint": "eslint ./ --max-warnings=0",
     "check:types": "nova utility type-check --project tsconfig.json",
+    "check:test": "vitest run",
     "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
-    "build:types": "tsc",
+    "build:types": "nova utility type-check --project tsconfig.json",
     "build:app": "vite build",
     "clean": "nova utility run-scripts --parallel 'clean:*'",
     "clean:build": "shx rm -rf ./dist"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@cbnventures/nova": "0.29.0"
+  },
   "devDependencies": {
     "@types/node": "22.15.17",
+    "eslint": "9.39.5",
     "shx": "0.4.0",
     "typescript": "6.0.3",
-    "vite": "6.4.3"
+    "vite": "6.4.3",
+    "vitest": "4.1.11"
   }
 }

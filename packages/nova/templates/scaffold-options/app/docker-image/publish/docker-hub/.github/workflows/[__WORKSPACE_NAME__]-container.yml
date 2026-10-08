@@ -1,0 +1,45 @@
+name: Publish [__WORKSPACE_TITLE__] Container
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Publish container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+
+      - name: Derive image metadata
+        id: metadata
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ vars.DOCKERHUB_USERNAME }}/[__WORKSPACE_NAME__]
+
+      - name: Build and publish image
+        uses: docker/build-push-action@v7
+        with:
+          context: ./[__WORKSPACE_RELATIVE_PATH__]
+          labels: ${{ steps.metadata.outputs.labels }}
+          platforms: [__DOCKER_ARCHITECTURES__]
+          push: true
+          tags: ${{ steps.metadata.outputs.tags }}

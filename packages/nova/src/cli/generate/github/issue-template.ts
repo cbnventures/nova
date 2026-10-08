@@ -26,7 +26,7 @@ import type {
   Cli_Generate_Github_IssueTemplate_Runner_Run_ConfigBugReportFields,
   Cli_Generate_Github_IssueTemplate_Runner_Run_Content,
   Cli_Generate_Github_IssueTemplate_Runner_Run_CurrentDirectory,
-  Cli_Generate_Github_IssueTemplate_Runner_Run_File,
+  Cli_Generate_Github_IssueTemplate_Runner_Run_FieldFileMapping,
   Cli_Generate_Github_IssueTemplate_Runner_Run_Files,
   Cli_Generate_Github_IssueTemplate_Runner_Run_FundSources,
   Cli_Generate_Github_IssueTemplate_Runner_Run_Github,
@@ -53,9 +53,6 @@ import type {
   Cli_Generate_Github_IssueTemplate_Runner_Run_PlatformFieldParts,
   Cli_Generate_Github_IssueTemplate_Runner_Run_PlatformFieldsContent,
   Cli_Generate_Github_IssueTemplate_Runner_Run_PlatformFieldsDirectory,
-  Cli_Generate_Github_IssueTemplate_Runner_Run_Platforms,
-  Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectedFiles,
-  Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMapping,
   Cli_Generate_Github_IssueTemplate_Runner_Run_PrivacyPolicy,
   Cli_Generate_Github_IssueTemplate_Runner_Run_Project,
   Cli_Generate_Github_IssueTemplate_Runner_Run_Pronouns,
@@ -87,7 +84,7 @@ export class Runner {
    * CLI - Generate - GitHub - Issue Template - Run.
    *
    * Called by the CLI index via executeCommand. Reads nova.config.json for pronouns, URLs, and
-   * bug report fields, falling back to platform-derived fields when none are configured.
+   * bug report fields. Configured semantic field identifiers are the complete desired list.
    *
    * @param {Cli_Generate_Github_IssueTemplate_Runner_Run_Options} options - Options.
    *
@@ -150,31 +147,21 @@ export class Runner {
       }
     }
 
-    // Derive bug report fields from dev platforms (fallback when none configured).
-    const platforms: Cli_Generate_Github_IssueTemplate_Runner_Run_Platforms = (project !== undefined) ? (project['platforms'] ?? []) : [];
-    const preSelectMapping: Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMapping = {
+    const fieldFileMapping: Cli_Generate_Github_IssueTemplate_Runner_Run_FieldFileMapping = {
       nodejs: 'nodejs.yml',
-      swift: 'apple.yml',
-      macos: 'apple.yml',
+      apple: 'apple.yml',
       android: 'android.yml',
-      java: 'android.yml',
-      kotlin: 'android.yml',
       csharp: 'csharp.yml',
       php: 'php.yml',
       python: 'python.yml',
+      homebridge: 'homebridge.yml',
+      pfsense: 'pfsense.yml',
+      synology: 'synology.yml',
+      docker: 'docker.yml',
+      web: 'web.yml',
+      screenshots: 'screenshots.yml',
     };
-
-    const preSelectedFiles: Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectedFiles = new Set();
-
-    for (const platform of platforms) {
-      const file: Cli_Generate_Github_IssueTemplate_Runner_Run_File = preSelectMapping[platform];
-
-      if (file !== undefined) {
-        preSelectedFiles.add(file);
-      }
-    }
-
-    const selectedFiles: Cli_Generate_Github_IssueTemplate_Runner_Run_SelectedFiles = (configBugReportFields.length > 0) ? configBugReportFields : [...preSelectedFiles];
+    const selectedFiles: Cli_Generate_Github_IssueTemplate_Runner_Run_SelectedFiles = configBugReportFields.map((field) => fieldFileMapping[field]);
 
     if (selectedFiles.length === 0) {
       Logger.customize({

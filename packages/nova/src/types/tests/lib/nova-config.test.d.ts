@@ -731,21 +731,23 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_SandboxPref
 export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_SandboxRoot = string;
 
 /**
- * Tests - Lib - Nova Config - SharedNovaConfigGithubIssueTemplate - FiltersEmptyBugReportFields.
+ * Tests - Lib - Nova Config - SharedNovaConfigGithubIssueTemplate - Rejects Invalid And Duplicate Bug Report Fields.
  *
  * @since 0.20.0
  */
-export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ProjectDirectory = string;
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_ProjectDirectory = string;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigPath = string;
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_ConfigPath = string;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigContents = string;
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_ConfigContents = string;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Config = LibNovaConfig;
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_Config = LibNovaConfig;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_LoadedGithub = Shared_NovaConfig_Github | undefined;
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_LoadedGithub = Shared_NovaConfig_Github | undefined;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_Messages = string[];
 
 /**
  * Tests - Lib - Nova Config - SharedNovaConfigGitignore.
@@ -1435,6 +1437,51 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadStripsUnknownFieldsFro
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadStripsUnknownFieldsFromConfigFile_LoadedProject = Shared_NovaConfig_Project | undefined;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadStripsUnknownFieldsFromConfigFile_LoadedProjectName = Shared_NovaConfig_Project_Name | undefined;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigReadme.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_OriginalCwd = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_TemporaryDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_SandboxPrefix = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_SandboxRoot = string;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigReadme - Preserves Exact Badge Order.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_Loaded = Shared_NovaConfigConfig;
+
+/**
+ * Tests - Lib - Nova Config - SharedNovaConfigReadme - Rejects Invalid Duplicate And Sourceless Badges.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Loaded = Shared_NovaConfigConfig;
+
+export type Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Messages = string[];
 
 /**
  * Tests - Lib - Nova Config - SharedNovaConfigSetAndSave.

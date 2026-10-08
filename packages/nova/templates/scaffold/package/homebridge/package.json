@@ -1,0 +1,47 @@
+{
+  "name": "[__WORKSPACE_PACKAGE_NAME__]",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./build/index.js",
+  "files": [
+    "build",
+    "config.schema.json"
+  ],
+  "scripts": {
+    "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
+    "dev:watch": "tsc --project tsconfig.source.json --watch",
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:lint": "eslint ./ --max-warnings=0",
+    "check:types-source": "nova utility type-check --project tsconfig.source.json",
+    "check:types-config": "nova utility type-check --project tsconfig.config.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
+    "check:test": "vitest run",
+    "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
+    "build:reset": "shx rm -rf ./build",
+    "build:transpile": "nova utility transpile --project tsconfig.source.json",
+    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean:build": "shx rm -rf ./build",
+    "start": "homebridge --debug --keep-orphans --plugin-path $(pwd)"
+  },
+  "dependencies": {
+    "@cbnventures/nova": "0.29.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.9.1",
+    "eslint": "9.39.5",
+    "homebridge": "2.4.0",
+    "shx": "0.4.0",
+    "typescript": "6.0.3",
+    "vitest": "4.1.11"
+  },
+  "engines": {
+    "homebridge": "^1.11.0 || ^2.0.0",
+    "node": "^22 || ^24"
+  },
+  "keywords": [
+    "homebridge",
+    "homebridge-plugin",
+    "homekit",
+    "supports-hap"
+  ]
+}

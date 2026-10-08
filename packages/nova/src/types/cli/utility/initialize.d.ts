@@ -37,6 +37,8 @@ import type {
   Shared_NovaConfig_Project_Platforms,
   Shared_NovaConfig_Project_Pronouns,
   Shared_NovaConfig_Project_StartingYear,
+  Shared_NovaConfig_ReadMe,
+  Shared_NovaConfig_ReadMe_Badges,
   Shared_NovaConfig_RecipeEntry,
   Shared_NovaConfig_RecipeEntry_Settings,
   Shared_NovaConfig_Recipes,
@@ -1204,6 +1206,36 @@ export type Cli_Utility_Initialize_Runner_PromptGithub_ExistingGithubForIssueTem
 
 export type Cli_Utility_Initialize_Runner_PromptGithub_ExistingBugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
 
+export type Cli_Utility_Initialize_Runner_PromptGithub_HasExplicitBugReportFields = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_SuggestedBugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_ConfiguredPlatforms = Shared_NovaConfig_Project_Platforms | undefined;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_ConfiguredUrls = Shared_NovaConfig_Urls | undefined;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_HasNodejsPlatform = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_HasNpmUrl = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_HasSwiftPlatform = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_HasMacosPlatform = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_HasAndroidPlatform = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_HasJavaPlatform = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_HasKotlinPlatform = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_SuggestedPlatformField = Extract<Shared_NovaConfig_Github_IssueTemplate_BugReportFields[number], Shared_NovaConfigProjectPlatform>;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_SuggestedPlatformFields = Cli_Utility_Initialize_Runner_PromptGithub_SuggestedPlatformField[];
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_HasDockerUrl = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptGithub_SelectedBugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
+
 export type Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsOutputKey = 'bugReportFields';
 
 export type Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsResult = Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
@@ -1212,7 +1244,7 @@ export type Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateOutput = Sha
 
 export type Cli_Utility_Initialize_Runner_PromptGithub_BugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
 
-export type Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateInput = Shared_NovaConfig_Github_IssueTemplate | undefined;
+export type Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateInput = Shared_NovaConfig_Github_IssueTemplate;
 
 export type Cli_Utility_Initialize_Runner_PromptGithub_GithubConfig = Partial<Shared_NovaConfig_Github>;
 
@@ -1530,6 +1562,43 @@ export type Cli_Utility_Initialize_Runner_PromptProject_PreviousLabel = string;
 export type Cli_Utility_Initialize_Runner_PromptProject_CurrentLabel = string;
 
 export type Cli_Utility_Initialize_Runner_PromptProject_Name = string;
+
+/**
+ * CLI - Utility - Initialize - Prompt Read Me.
+ *
+ * @since 0.29.0
+ */
+export type Cli_Utility_Initialize_Runner_PromptReadMe_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_ExistingReadMe = Shared_NovaConfig_ReadMe | undefined;
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_ExistingBadges = Shared_NovaConfig_ReadMe_Badges;
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_HasExplicitBadges = boolean;
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_SuggestedBadges = Shared_NovaConfig_ReadMe_Badges;
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_Project = Shared_NovaConfig['project'];
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_Platforms = Shared_NovaConfig_Project_Platforms | undefined;
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_Urls = Shared_NovaConfig_Urls | undefined;
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_Github = Shared_NovaConfig_Github | undefined;
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_FundSources = string[];
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_SelectedBadges = Shared_NovaConfig_ReadMe_Badges;
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_BadgesOutputKey = 'readMeBadges';
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_BadgesOutputResult = Shared_NovaConfig_ReadMe_Badges;
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_BadgesOutput = Shared_PromptWithCancelResolved<Cli_Utility_Initialize_Runner_PromptReadMe_BadgesOutputKey, Cli_Utility_Initialize_Runner_PromptReadMe_BadgesOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Initialize_Runner_PromptReadMe_Badges = Shared_NovaConfig_ReadMe_Badges;
 
 /**
  * CLI - Utility - Initialize - Prompt Settings.

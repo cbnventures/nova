@@ -1,0 +1,15 @@
+name: "[__WORKSPACE_TITLE__]"
+description: "A Nova-generated GitHub Action"
+
+inputs:
+  name:
+    description: "Name to greet"
+    required: true
+
+outputs:
+  message:
+    description: "Generated greeting"
+
+runs:
+  using: "node24"
+  main: "./[__WORKSPACE_RELATIVE_PATH__]/build/index.js"

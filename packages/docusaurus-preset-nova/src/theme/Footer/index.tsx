@@ -35,6 +35,7 @@ import type {
 function Footer(props: Theme_Footer_Index_Footer_Props) {
   const themeConfig: Theme_Footer_Index_Footer_ThemeConfig = useThemeConfig() as Theme_Footer_Index_Footer_ThemeConfigCast as Theme_Footer_Index_Footer_ThemeConfig;
   const footerConfig: Theme_Footer_Index_Footer = themeConfig['footer'] as Theme_Footer_Index_Footer;
+  const globalData: Theme_Footer_Index_GlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as Theme_Footer_Index_GlobalData;
 
   // Render nothing when footer config is disabled or missing.
   if (footerConfig === false || footerConfig === undefined) {
@@ -42,7 +43,6 @@ function Footer(props: Theme_Footer_Index_Footer_Props) {
   }
 
   // Read footer variant from build-time global data (no hydration mismatch).
-  const globalData: Theme_Footer_Index_GlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as Theme_Footer_Index_GlobalData;
   const footerVariant: Theme_Footer_Index_Footer_Variant = (globalData['footerVariant'] ?? 'commons') as Theme_Footer_Index_Footer_Variant;
   const presetCta: Theme_Footer_Index_PresetCta = (globalData['presetCta'] ?? { contained: false }) as Theme_Footer_Index_PresetCta;
 

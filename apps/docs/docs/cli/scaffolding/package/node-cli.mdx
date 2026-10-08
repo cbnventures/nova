@@ -1,0 +1,91 @@
+---
+id: "node-cli"
+title: "Node.js CLI"
+description: "Scaffold a publishable Node.js CLI with Commander, TypeScript, Nova's fixed-width CLI header, Vitest, and executable build output."
+keywords:
+  - "nova"
+  - "nova scaffold"
+  - "typescript cli"
+  - "commander"
+  - "command line"
+tags:
+  - "cli"
+  - "scaffold"
+  - "package"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a publishable **Node.js command-line package** with Commander, TypeScript, and Nova's CLI presentation utilities.
+
+## Why Use This Command?
+
+1. Separates program construction from the executable entry point so tests can import the command without running it.
+2. Includes a fixed-width Nova `CLIHeader` and executable permissions so the built binary starts with consistent presentation.
+3. Registers the workspace as a distributable package so Nova's release workflow can version and publish it.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Package name** — Use `--workspace-name` for both the directory and unscoped npm package name.
+- **Empty directory** or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** — Nova auto-detects whether to create a project or add a package.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold package node-cli
+
+    # Shorthand
+    nova scaf pkg node-cli
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold package node-cli
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf pkg node-cli
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                                                          |
+|---------------------------|----------------------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                                       |
+| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
+| `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
+| `--workspace-name <name>` | Workspace directory, package name, and binary name.                  |
+| `--output <dir>`          | Output directory.                                                    |
+
+## Output Files
+
+| File                | Description                                            |
+|---------------------|--------------------------------------------------------|
+| `src/index.ts`      | Executable entry point.                                |
+| `src/program.ts`    | Import-safe Commander program factory.                 |
+| `src/index.test.ts` | Vitest smoke test for the generated binary identity.   |
+| `tsconfig.json`     | Strict Node.js configuration with declaration output.  |
+| `package.json`      | npm `bin` mapping, publish files, and grouped scripts. |
+
+## Non-Interactive Mode
+
+```bash
+nova scaffold package node-cli --non-interactive --name my-tools --workspace-name my-cli --output ./my-tools
+nova scaffold package node-cli --non-interactive --workspace-name my-cli --output ./packages/my-cli
+```
+
+## Registration
+
+Nova creates packages under `packages/` by default and registers this workspace with the `package` role and `distributable` policy. The package name is exactly the selected workspace name.

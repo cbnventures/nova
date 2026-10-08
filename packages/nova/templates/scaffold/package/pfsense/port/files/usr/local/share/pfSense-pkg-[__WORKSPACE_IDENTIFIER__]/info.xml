@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<pfsensepkgs>
+	<package>
+		<name>[__WORKSPACE_TITLE__]</name>
+		<descr><![CDATA[[__WORKSPACE_TITLE__] adds a WebGUI-managed scheduled task to pfSense.]]></descr>
+		<version>%%PKGVERSION%%</version>
+		<configurationfile>[__WORKSPACE_NAME__].xml</configurationfile>
+	</package>
+</pfsensepkgs>

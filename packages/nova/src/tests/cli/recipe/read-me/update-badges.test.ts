@@ -161,6 +161,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
         owner: 'cbnventures',
         repo: 'nova',
       },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
+      },
     });
 
     ok(newBadges !== undefined, 'Expected config to produce badges');
@@ -189,6 +196,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
       github: {
         owner: 'cbnventures',
         repo: 'nova',
+      },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
       },
       recipes: {
         'read-me': {
@@ -232,6 +246,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
         owner: 'cbnventures',
         repo: 'nova',
       },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
+      },
     });
 
     ok(newBadges !== undefined, 'Expected config to produce badges');
@@ -251,6 +272,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
       github: {
         owner: 'cbnventures',
         repo: 'nova',
+      },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
       },
       recipes: {
         'read-me': {
@@ -305,6 +333,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
       github: {
         owner: 'cbnventures',
         repo: 'nova',
+      },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
       },
       recipes: {
         'read-me': {
@@ -376,6 +411,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
         owner: 'cbnventures',
         repo: 'nova',
       },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
+      },
       recipes: {
         'read-me': {
           'update-badges': {
@@ -423,6 +465,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
         owner: 'cbnventures',
         repo: 'nova',
       },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
+      },
     });
 
     process.chdir(projectDirectory);
@@ -464,6 +513,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
         owner: 'cbnventures',
         repo: 'nova',
       },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
+      },
       recipes: {
         'read-me': {
           'update-badges': {
@@ -499,6 +555,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
       github: {
         owner: 'cbnventures',
         repo: 'nova',
+      },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
       },
     });
 
@@ -536,6 +599,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
       github: {
         owner: 'cbnventures',
         repo: 'nova',
+      },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
       },
       recipes: {
         'read-me': {
@@ -600,6 +670,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
         owner: 'cbnventures',
         repo: 'nova',
       },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
+      },
     });
 
     ok(newBadges !== undefined, 'Expected config to produce badges');
@@ -638,6 +715,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
       github: {
         owner: 'cbnventures',
         repo: 'nova',
+      },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
       },
       recipes: {
         'read-me': {
@@ -697,6 +781,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
         owner: 'cbnventures',
         repo: 'nova',
       },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
+      },
     });
 
     ok(newBadges !== undefined, 'Expected config to produce badges');
@@ -724,6 +815,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
       github: {
         owner: 'cbnventures',
         repo: 'nova',
+      },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
       },
       recipes: {
         'read-me': {
@@ -803,6 +901,13 @@ describe('CliRecipeReadMeUpdateBadges.run', async () => {
       github: {
         owner: 'cbnventures',
         repo: 'nova',
+      },
+      readme: {
+        badges: [
+          'github-release',
+          'github-top-language',
+          'github-license',
+        ],
       },
       recipes: {
         'read-me': {

@@ -4,6 +4,7 @@ import type {
   Shared_MonorepoContext,
   Shared_ScaffoldConfig,
   Shared_ScaffoldTemplateQuestions,
+  Shared_ScaffoldTemplateResolution,
 } from '../../shared.d.ts';
 
 /**
@@ -12,6 +13,8 @@ import type {
  * @since 0.26.0
  */
 export type Tests_Lib_Scaffold_TemplateQuestions = Shared_ScaffoldTemplateQuestions;
+
+export type Tests_Lib_Scaffold_OptionalTemplateQuestions = Shared_ScaffoldTemplateQuestions;
 
 /**
  * Tests - Lib - Scaffold - Detect Monorepo Context.
@@ -119,28 +122,49 @@ export type Tests_Lib_Scaffold_PromptScaffoldOptions_UsesCompleteValuesWithoutPr
  *
  * @since 0.26.0
  */
-export type Tests_Lib_Scaffold_ResolveTemplateAnswers_PromptsForAMissingInteractiveValue_Result = Map<RegExp, string> | undefined;
+export type Tests_Lib_Scaffold_ResolveTemplateAnswers_PromptsForAMissingInteractiveValue_Result = Shared_ScaffoldTemplateResolution | undefined;
 
 /**
  * Tests - Lib - Scaffold - Resolve Template Answers - Rejects A Missing Non Interactive Value.
  *
  * @since 0.26.0
  */
-export type Tests_Lib_Scaffold_ResolveTemplateAnswers_RejectsAMissingNonInteractiveValue_Result = Map<RegExp, string> | undefined;
+export type Tests_Lib_Scaffold_ResolveTemplateAnswers_RejectsAMissingNonInteractiveValue_Result = Shared_ScaffoldTemplateResolution | undefined;
 
 /**
  * Tests - Lib - Scaffold - Resolve Template Answers - Rejects An Invalid Provided Value.
  *
  * @since 0.26.0
  */
-export type Tests_Lib_Scaffold_ResolveTemplateAnswers_RejectsAnInvalidProvidedValue_Result = Map<RegExp, string> | undefined;
+export type Tests_Lib_Scaffold_ResolveTemplateAnswers_RejectsAnInvalidProvidedValue_Result = Shared_ScaffoldTemplateResolution | undefined;
+
+/**
+ * Tests - Lib - Scaffold - Resolve Template Answers - Rejects Values Passed To Boolean Only Flags.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Lib_Scaffold_ResolveTemplateAnswers_RejectsValuesPassedToBooleanOnlyFlags_Result = Shared_ScaffoldTemplateResolution | undefined;
+
+/**
+ * Tests - Lib - Scaffold - Resolve Template Answers - Resolves Boolean Flags And Active Dependent Choices.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Lib_Scaffold_ResolveTemplateAnswers_ResolvesBooleanFlagsAndActiveDependentChoices_Result = Shared_ScaffoldTemplateResolution | undefined;
 
 /**
  * Tests - Lib - Scaffold - Resolve Template Answers - Uses A Valid Non Interactive Value Without Prompting.
  *
  * @since 0.26.0
  */
-export type Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesAValidNonInteractiveValueWithoutPrompting_Result = Map<RegExp, string> | undefined;
+export type Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesAValidNonInteractiveValueWithoutPrompting_Result = Shared_ScaffoldTemplateResolution | undefined;
+
+/**
+ * Tests - Lib - Scaffold - Resolve Template Answers - Uses Non Interactive Defaults Without Requiring Optional Flags.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesNonInteractiveDefaultsWithoutRequiringOptionalFlags_Result = Shared_ScaffoldTemplateResolution | undefined;
 
 /**
  * Tests - Lib - Scaffold - Workspace Contract - Derives Role Based Package Names.

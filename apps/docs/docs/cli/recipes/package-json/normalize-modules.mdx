@@ -48,7 +48,7 @@ For each eligible <Terminology title="package" to="/docs/quickstart/terminology#
 
 - **`exports` (Conditional)** — Removed if the workspace role is not `config`, `package`, or `tool`. For allowed roles, a string value is normalized into `{ ".": { "default": value } }`, and a string at `exports['.']` becomes `{ "default": value }`. If an explicit `exports['.']` condition map puts `default` before other conditions, the recipe moves `default` last so those conditions remain reachable. It never invents `require` or `browser` conditions; declare them explicitly when the package actually provides those entry points.
 - **`main` (Conditional)** — Removed if the workspace role is not `config`, `app`, `package`, or `tool`. Otherwise preserved independently: `main` is a legacy fallback entry point for either module format, not a synonym for `exports['.'].require`. When `exports` is defined, Node.js uses it in preference to `main` for supported imports.
-- **`type` (Conditional)** — Removed if the workspace role is not `config`, `app`, `package`, or `tool`.
+- **`type` (Conditional)** — Removed if the workspace role is not `project`, `config`, `app`, `package`, or `tool`. Project roots keep their explicit module format so root configuration, scripts, and tests can share ESM semantics.
 - **`browser` (Conditional)** — Removed if the workspace role is not `package`. Otherwise preserved independently of any explicit `exports['.'].browser` condition.
 - **`imports` (Conditional)** — Removed if the workspace role is not `config`, `app`, `package`, or `tool`.
 

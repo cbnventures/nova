@@ -67,6 +67,7 @@ flowchart TD
 
     subgraph Generators
         direction LR
+        GEN --> DOCKERGEN[docker-image]
         GEN --> GH[github] --> GH1[funding / issue-template / workflows]
         GEN --> MUST[must-haves] --> MUST1[agent-conventions / dotenv / editorconfig / ...]
     end
@@ -80,8 +81,9 @@ flowchart TD
 
     subgraph Scaffolding
         direction LR
-        SCAF --> APP[app] --> APP1[expressjs / nextjs / vite / workers]
+        SCAF --> APP[app] --> APP1[android / apple / astro / cloudflare-workers / discord-bot / docker-image / expressjs / nextjs / vite]
         SCAF --> DOCS[docs] --> DOCS1[docusaurus]
+        SCAF --> PACKAGE[package] --> PACKAGE1[github-action / homebridge / node-cli / pfsense]
         SCAF --> START[starter] --> START1[base]
     end
 
@@ -99,11 +101,17 @@ You can freely combine full names and shorthands in the same command. For exampl
 
 ### Generators
 
-Create **semi-tailored** versions of supported vendor and project essentials, populated with values from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> at the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>.
+Create **semi-tailored** vendor, packaging, and project files at the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>. Generators read <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> when their output needs project-level values.
 
 :::info
-All commands in "Generators" are shaped as `nova generate <category> <subcommand>` or `nova gen <alias> <shorthand>`.
+Category generators use `nova generate <category> <subcommand>`. Direct generators use `nova generate <subcommand>` when another category would add no useful meaning.
 :::
+
+#### Direct
+
+| Subcommand                                          | Shorthand | What It Does                                                       |
+|-----------------------------------------------------|-----------|--------------------------------------------------------------------|
+| [`docker-image`](/docs/cli/generators/docker-image) | —         | Add an explicit Docker packaging profile to an existing workspace. |
 
 #### GitHub
 _Category: `github` · Alias: `gh`_
@@ -182,12 +190,17 @@ All commands in "Scaffolding" are shaped as `nova scaffold <category> <subcomman
 #### App
 _Category: `app` · Alias: none_
 
-| Subcommand                                         | Shorthand | What It Does                             |
-|----------------------------------------------------|-----------|------------------------------------------|
-| [`expressjs`](/docs/cli/scaffolding/app/expressjs) | `express` | Scaffold an Express.js workspace.        |
-| [`nextjs`](/docs/cli/scaffolding/app/nextjs)       | `next`    | Scaffold a Next.js workspace.            |
-| [`vite`](/docs/cli/scaffolding/app/vite)           | —         | Scaffold a Vite workspace.               |
-| [`workers`](/docs/cli/scaffolding/app/workers)     | —         | Scaffold a Cloudflare Workers workspace. |
+| Subcommand                                                           | Shorthand | What It Does                             |
+|----------------------------------------------------------------------|-----------|------------------------------------------|
+| [`android`](/docs/cli/scaffolding/app/android)                       | —         | Scaffold a native Android workspace.     |
+| [`apple`](/docs/cli/scaffolding/app/apple)                           | —         | Scaffold a SwiftUI Apple workspace.      |
+| [`astro`](/docs/cli/scaffolding/app/astro)                           | —         | Scaffold an Astro workspace.             |
+| [`cloudflare-workers`](/docs/cli/scaffolding/app/cloudflare-workers) | —         | Scaffold a Cloudflare Workers workspace. |
+| [`discord-bot`](/docs/cli/scaffolding/app/discord-bot)               | —         | Scaffold a Discord bot workspace.        |
+| [`docker-image`](/docs/cli/scaffolding/app/docker-image)             | —         | Scaffold a Docker image workspace.       |
+| [`expressjs`](/docs/cli/scaffolding/app/expressjs)                   | `express` | Scaffold an Express.js workspace.        |
+| [`nextjs`](/docs/cli/scaffolding/app/nextjs)                         | `next`    | Scaffold a Next.js workspace.            |
+| [`vite`](/docs/cli/scaffolding/app/vite)                             | —         | Scaffold a Vite workspace.               |
 
 #### Docs
 _Category: `docs` · Alias: none_
@@ -195,6 +208,16 @@ _Category: `docs` · Alias: none_
 | Subcommand                                            | Shorthand | What It Does                                   |
 |-------------------------------------------------------|-----------|------------------------------------------------|
 | [`docusaurus`](/docs/cli/scaffolding/docs/docusaurus) | —         | Scaffold a Docusaurus documentation workspace. |
+
+#### Package
+_Category: `package` · Alias: `pkg`_
+
+| Subcommand                                                     | Shorthand | What It Does                                   |
+|----------------------------------------------------------------|-----------|------------------------------------------------|
+| [`github-action`](/docs/cli/scaffolding/package/github-action) | `action`  | Scaffold a bundled GitHub Action package.      |
+| [`homebridge`](/docs/cli/scaffolding/package/homebridge)       | —         | Scaffold a dynamic-platform Homebridge plugin. |
+| [`node-cli`](/docs/cli/scaffolding/package/node-cli)           | —         | Scaffold a Node.js CLI package.                |
+| [`pfsense`](/docs/cli/scaffolding/package/pfsense)             | —         | Scaffold a WebGUI-managed pfSense package.     |
 
 #### Starter
 _Category: `starter` · Alias: `start`_

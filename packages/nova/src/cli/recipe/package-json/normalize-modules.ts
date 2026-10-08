@@ -280,8 +280,9 @@ export class Runner {
         'config',
         'app',
         'package',
+        'project',
         'tool',
-      ].includes(manifest['role']) === false // Workspace role is not "config", "app", "package", or "tool".
+      ].includes(manifest['role']) === false // Workspace role is not "config", "app", "package", "project", or "tool".
     ) {
       Logger.customize({
         name: 'Runner.handle',

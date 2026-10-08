@@ -36,7 +36,7 @@ These practices apply to any <Terminology title="package" to="/docs/quickstart/t
     <span>DO: Use one <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> and start from Nova presets</span>
   </summary>
   <ul>
-    <li><strong>What</strong>: Use a single <code>{'eslint.config.ts'}</code>. First <strong>import Nova <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology></strong>, then add your project's layers and overrides in that same array.</li>
+    <li><strong>What</strong>: Use a single <code>{'eslint.config.mts'}</code>. First <strong>import Nova <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology></strong>, then add <code>{'novaRules'}</code> and your project's overrides in that same array.</li>
     <li><strong>Why</strong>: One file is the source of truth. <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>Presets</Terminology> give a reliable base. Your local entries then adjust behavior in a controlled, visible order.</li>
   </ul>
 </Details>
@@ -47,7 +47,7 @@ These practices apply to any <Terminology title="package" to="/docs/quickstart/t
     <span>DO: Order layers intentionally</span>
   </summary>
   <ul>
-    <li><strong>What</strong>: Arrange as <em>ignores → style → language → environment/framework → platform → tool → your custom overrides</em>.</li>
+    <li><strong>What</strong>: Arrange as <em>ignores → style → language → environment/framework → platform → tool → Nova custom rules → your custom overrides</em>.</li>
     <li><strong>Why</strong>: ESLint merges top to bottom and the <em>last</em> matching entry wins. Stable order makes outcomes predictable.</li>
   </ul>
 </Details>
@@ -69,7 +69,7 @@ These practices apply to any <Terminology title="package" to="/docs/quickstart/t
     <span>DON'T: Mix <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> with legacy <code>{'.eslintrc*'}</code></span>
   </summary>
   <ul>
-    <li><strong>What</strong>: Do not keep old config files alongside <code>{'eslint.config.ts'}</code>.</li>
+    <li><strong>What</strong>: Do not keep old config files alongside <code>{'eslint.config.mts'}</code>.</li>
     <li><strong>Why</strong>: Split sources of truth cause confusion. <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>Flat config</Terminology> expects rules and ignores to live in one place.</li>
   </ul>
 </Details>

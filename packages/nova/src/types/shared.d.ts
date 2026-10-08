@@ -126,6 +126,13 @@ export type Shared_CorepackPackageManagerDescriptor = {
 export type Shared_DialogAction = 'save' | 'cancel' | 'back';
 
 /**
+ * Shared - Docker Image Profile.
+ *
+ * @since 0.29.0
+ */
+export type Shared_DockerImageProfile = 'astro-node' | 'background-service' | 'container-native' | 'http-service' | 'nextjs-standalone' | 'static-site';
+
+/**
  * Shared - Entity Menu Action.
  *
  * @since 0.11.0
@@ -772,7 +779,12 @@ export type Shared_NovaConfigProjectPlatform =
   | 'python'
   | 'macos'
   | 'linux'
-  | 'windows';
+  | 'windows'
+  | 'homebridge'
+  | 'docker'
+  | 'pfsense'
+  | 'synology'
+  | 'web';
 
 export type Shared_NovaConfig_Project_Platforms = Shared_NovaConfigProjectPlatform[];
 
@@ -965,7 +977,19 @@ export type Shared_NovaConfig_Github_Security = {
   pushProtection?: boolean;
 };
 
-export type Shared_NovaConfig_Github_IssueTemplate_BugReportField = string;
+export type Shared_NovaConfig_Github_IssueTemplate_BugReportField =
+  'nodejs'
+  | 'apple'
+  | 'android'
+  | 'csharp'
+  | 'php'
+  | 'python'
+  | 'homebridge'
+  | 'pfsense'
+  | 'synology'
+  | 'docker'
+  | 'web'
+  | 'screenshots';
 
 export type Shared_NovaConfig_Github_IssueTemplate_BugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportField[];
 
@@ -1022,6 +1046,24 @@ export type Shared_NovaConfig_Urls = {
   fundSources?: Shared_NovaConfig_Urls_FundSources;
   privacyPolicy?: Shared_NovaConfig_Urls_PrivacyPolicy;
   termsOfUse?: Shared_NovaConfig_Urls_TermsOfUse;
+};
+
+export type Shared_NovaConfigReadMeBadge =
+  'homebridge'
+  | 'homebridge-verified'
+  | 'npm-version'
+  | 'npm-downloads'
+  | 'docker-pulls'
+  | 'docker-image-size'
+  | 'github-release'
+  | 'github-top-language'
+  | 'github-license'
+  | 'funding';
+
+export type Shared_NovaConfig_ReadMe_Badges = Shared_NovaConfigReadMeBadge[];
+
+export type Shared_NovaConfig_ReadMe = {
+  badges?: Shared_NovaConfig_ReadMe_Badges;
 };
 
 export type Shared_NovaConfigWorkspace_Name = string;
@@ -1536,6 +1578,7 @@ export type Shared_NovaConfig = {
   github?: Shared_NovaConfig_Github;
   workflows?: Shared_NovaConfig_Workflows;
   urls?: Shared_NovaConfig_Urls;
+  readme?: Shared_NovaConfig_ReadMe;
   workspaces?: Shared_NovaConfig_Workspaces;
   gitignore?: Shared_NovaConfig_Gitignore;
   agents?: Shared_NovaConfig_Agents;
@@ -1551,7 +1594,7 @@ export type Shared_NovaConfigConfig = Shared_NovaConfig;
  *
  * @since 0.11.0
  */
-export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'workspaces' | 'workflows' | 'gitignore' | 'agents' | 'environment' | 'settings';
+export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'readme' | 'workspaces' | 'workflows' | 'gitignore' | 'agents' | 'environment' | 'settings';
 
 /**
  * Shared - Prompt With Cancel.
@@ -1668,6 +1711,10 @@ export type Shared_ScaffoldOutputContract_Name = string;
 
 export type Shared_ScaffoldOutputContract_TemplateSubpath = string;
 
+export type Shared_ScaffoldOutputContract_TemplateOptionSubpath = string;
+
+export type Shared_ScaffoldOutputContract_TemplateOptionSubpaths = Shared_ScaffoldOutputContract_TemplateOptionSubpath[];
+
 export type Shared_ScaffoldOutputContract_ExpectedFile = string;
 
 export type Shared_ScaffoldOutputContract_ExpectedFiles = Shared_ScaffoldOutputContract_ExpectedFile[];
@@ -1677,6 +1724,7 @@ export type Shared_ScaffoldOutputContract_Replacements = Map<RegExp, string>;
 export type Shared_ScaffoldOutputContract = {
   name: Shared_ScaffoldOutputContract_Name;
   templateSubpath: Shared_ScaffoldOutputContract_TemplateSubpath;
+  templateOptionSubpaths?: Shared_ScaffoldOutputContract_TemplateOptionSubpaths;
   expectedFiles: Shared_ScaffoldOutputContract_ExpectedFiles;
   replacements: Shared_ScaffoldOutputContract_Replacements;
 };
@@ -1694,13 +1742,31 @@ export type Shared_ScaffoldTemplateQuestionChoice_Value = string;
 
 export type Shared_ScaffoldTemplateQuestionChoice = {
   description: Shared_ScaffoldTemplateQuestionChoice_Description;
+  replacement?: Shared_ScaffoldTemplateQuestionChoice_Replacement;
   title: Shared_ScaffoldTemplateQuestionChoice_Title;
   value: Shared_ScaffoldTemplateQuestionChoice_Value;
 };
 
+export type Shared_ScaffoldTemplateQuestionChoice_Replacement = string;
+
 export type Shared_ScaffoldTemplateQuestion_Choices = Shared_ScaffoldTemplateQuestionChoice[];
 
+export type Shared_ScaffoldTemplateQuestion_DefaultValue = string;
+
+export type Shared_ScaffoldTemplateQuestion_DependsOn_Name = string;
+
+export type Shared_ScaffoldTemplateQuestion_DependsOn_Value = string;
+
+export type Shared_ScaffoldTemplateQuestion_DependsOn_Values = Shared_ScaffoldTemplateQuestion_DependsOn_Value[];
+
+export type Shared_ScaffoldTemplateQuestion_DependsOn = {
+  name: Shared_ScaffoldTemplateQuestion_DependsOn_Name;
+  values: Shared_ScaffoldTemplateQuestion_DependsOn_Values;
+};
+
 export type Shared_ScaffoldTemplateQuestion_Flag = string;
+
+export type Shared_ScaffoldTemplateQuestion_FlagValue = string;
 
 export type Shared_ScaffoldTemplateQuestion_Initial = number;
 
@@ -1712,7 +1778,10 @@ export type Shared_ScaffoldTemplateQuestion_Placeholder = RegExp;
 
 export type Shared_ScaffoldTemplateQuestion = {
   choices: Shared_ScaffoldTemplateQuestion_Choices;
+  defaultValue?: Shared_ScaffoldTemplateQuestion_DefaultValue;
+  dependsOn?: Shared_ScaffoldTemplateQuestion_DependsOn;
   flag: Shared_ScaffoldTemplateQuestion_Flag;
+  flagValue?: Shared_ScaffoldTemplateQuestion_FlagValue;
   initial: Shared_ScaffoldTemplateQuestion_Initial;
   message: Shared_ScaffoldTemplateQuestion_Message;
   name: Shared_ScaffoldTemplateQuestion_Name;
@@ -1720,6 +1789,24 @@ export type Shared_ScaffoldTemplateQuestion = {
 };
 
 export type Shared_ScaffoldTemplateQuestions = Shared_ScaffoldTemplateQuestion[];
+
+/**
+ * Shared - Scaffold Template Resolution.
+ *
+ * @since 0.29.0
+ */
+export type Shared_ScaffoldTemplateResolution_AnswerName = string;
+
+export type Shared_ScaffoldTemplateResolution_AnswerValue = string;
+
+export type Shared_ScaffoldTemplateResolution_Answers = Map<Shared_ScaffoldTemplateResolution_AnswerName, Shared_ScaffoldTemplateResolution_AnswerValue>;
+
+export type Shared_ScaffoldTemplateResolution_Replacements = Map<RegExp, string>;
+
+export type Shared_ScaffoldTemplateResolution = {
+  answers: Shared_ScaffoldTemplateResolution_Answers;
+  replacements: Shared_ScaffoldTemplateResolution_Replacements;
+};
 
 /**
  * Shared - Shell Output.

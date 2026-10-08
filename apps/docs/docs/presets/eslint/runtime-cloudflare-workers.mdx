@@ -1,15 +1,15 @@
 ---
 id: "runtime-cloudflare-workers"
 title: "Runtime - Cloudflare Workers"
-description: "Reserve the Cloudflare Workers layer in your ESLint flat config with a named ignore group ready for worker build output path exclusions."
+description: "Declare Worker-compatible globals for Cloudflare Worker JavaScript and TypeScript sources."
 keywords:
   - "nova"
   - "runtime cloudflare workers"
   - "eslint preset"
   - "cloudflare workers"
   - "environment layer"
-  - "ignored files"
-  - "build output"
+  - "worker globals"
+  - "cloudflare runtime"
   - "flat config"
 tags:
   - "presets"
@@ -19,10 +19,31 @@ tags:
 ---
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-This preset is the runtime layer for code that runs on Cloudflare Workers in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>.
+Declare the standard Worker globals available to Cloudflare Worker source files without exposing browser-window or Node.js-only names. Project-specific bindings such as `env` remain typed by the consumer.
 
-:::info Coming soon
+## Usage
 
-This preset has no rules yet. This page will be filled in once it does.
+```ts title="eslint.config.mts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  langTypescript,
+  runtimeCloudflareWorkers,
+} from '@cbnventures/nova/presets/eslint';
 
-:::
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...runtimeCloudflareWorkers,
+];
+```
+
+## What This Preset Configures
+
+The preset applies the `globals` package's Worker environment to JavaScript, TypeScript, MJS, and MTS files. Add binding types through your own declarations or generated Wrangler types.
+
+## Related
+
+- Pair it with the matching **[Runtime - Cloudflare Workers TSConfig preset](/docs/presets/tsconfig/runtime-cloudflare-workers)**.
+- Review the **[Cloudflare Workers scaffold](/docs/cli/scaffolding/app/cloudflare-workers)**.

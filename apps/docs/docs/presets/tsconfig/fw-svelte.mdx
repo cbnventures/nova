@@ -1,0 +1,51 @@
+---
+id: "fw-svelte"
+title: "Framework - Svelte"
+description: "Configure TypeScript for Svelte with checked JavaScript, bundler resolution, browser libraries, and no emit."
+keywords:
+  - "nova"
+  - "svelte"
+  - "tsconfig"
+  - "bundler resolution"
+  - "checked javascript"
+tags:
+  - "presets"
+  - "tsconfig"
+  - "framework"
+  - "svelte"
+---
+
+Configure TypeScript for Svelte components and a bundler-owned build.
+
+## Usage
+
+```json title="tsconfig.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-browser.json",
+    "@cbnventures/nova/presets/tsconfig/fw-svelte.json"
+  ],
+  "include": [
+    "./src/**/*"
+  ]
+}
+```
+
+## Compiler Options
+
+| Option             | Value                               | Purpose                                                           |
+|--------------------|-------------------------------------|-------------------------------------------------------------------|
+| `allowJs`          | `true`                              | Allows JavaScript emitted by Svelte tooling to participate.       |
+| `checkJs`          | `true`                              | Type-checks the allowed JavaScript instead of accepting it loose. |
+| `isolatedModules`  | `true`                              | Keeps every file safe for independent bundler transforms.         |
+| `lib`              | `["DOM", "DOM.Iterable", "ESNext"]` | Provides browser and modern JavaScript APIs.                      |
+| `module`           | `"ESNext"`                          | Preserves ECMAScript modules for the bundler.                     |
+| `moduleResolution` | `"Bundler"`                         | Resolves package exports the way a modern bundler does.           |
+| `noEmit`           | `true`                              | Keeps TypeScript as the checker while the bundler owns output.    |
+
+## Related
+
+- Pair it with the matching **[Framework - Svelte ESLint preset](/docs/presets/eslint/fw-svelte)**.
+- Select it automatically with the **[Vite scaffold](/docs/cli/scaffolding/app/vite)** and `--framework svelte`.

@@ -1,7 +1,7 @@
 ---
 id: "vite"
 title: "Vite"
-description: "Scaffold a Vite workspace with TypeScript, fast dev server startup, and hot module replacement in monorepo or workspace mode."
+description: "Scaffold a Vite workspace with Vanilla TypeScript, React, Vue, or Svelte plus optional PWA and Docker support."
 keywords:
   - "nova"
   - "nova scaffold"
@@ -18,15 +18,17 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Scaffold a **Vite** workspace with TypeScript.
+Scaffold a **Vite** workspace with Vanilla TypeScript, React, Vue, or Svelte.
 
 You can run this directly from an empty location; `scaffold starter base` is not a prerequisite. Nova creates the monorepo root and the first Vite workspace together.
 
 ## Why Use This Command?
 
-- Installs Vite with TypeScript so you get fast dev server startup and hot module replacement out of the box.
-- Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
-- Provides `dev`, `prod`, `check`, `build`, and `clean` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner; the child steps run Vite and TypeScript directly.
+1. Selects one reviewed framework layer—Vanilla TypeScript, React, Vue, or Svelte—without copying an upstream preset wholesale.
+2. Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
+3. Provides `dev`, `prod`, `check`, `build`, and `clean` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner; the child steps run Vite and TypeScript directly.
+4. Optionally adds an auto-updating service worker and an unprivileged NGINX production image.
+5. Composes Nova's ESLint and TSConfig framework presets, enables all Nova rules, and includes Vitest for every framework choice.
 
 ## Requirements
 
@@ -62,13 +64,16 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 ## Options
 
-| Flag                      | Description                                                          |
-|---------------------------|----------------------------------------------------------------------|
-| `-d, --dry-run`           | Run without writing any files.                                       |
-| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
-| `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
-| `--workspace-name <name>` | Workspace directory name.                                            |
-| `--output <dir>`          | Output directory.                                                    |
+| Flag                                        | Description                                                          |
+|---------------------------------------------|----------------------------------------------------------------------|
+| `-d, --dry-run`                             | Run without writing any files.                                       |
+| `--name <name>`                             | Project slug when creating a new monorepo; omit at an existing root. |
+| `--non-interactive`                         | Use flags and defaults without opening prompts.                      |
+| `--workspace-name <name>`                   | Workspace directory name.                                            |
+| `--output <dir>`                            | Output directory.                                                    |
+| `--framework <vanilla\|react\|vue\|svelte>` | Framework layer; defaults to `vanilla`.                              |
+| `--pwa`                                     | Add an auto-updating progressive web app service worker.             |
+| `--docker-image`                            | Serve the production `dist` directory from unprivileged NGINX.       |
 
 ## Output Structure
 
@@ -83,8 +88,13 @@ You can run this directly from an empty location; `scaffold starter base` is not
 │       ├── vite.config.mts
 │       ├── tsconfig.json
 │       ├── index.html
+│       ├── config/
+│       │   ├── eslint-framework.mts
+│       │   ├── framework-plugins.ts
+│       │   └── pwa-plugins.ts
 │       └── src/
-│           └── main.ts
+│           ├── main.ts
+│           └── {framework component}
 └── packages/
 ```
 
@@ -94,7 +104,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 |----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `project.name.slug`  | Required in workspace mode and used to derive the package and registered workspace name. In monorepo mode, written from `--name` or the project-name answer. |
 | `project.name.title` | Written in monorepo mode, title-cased from the project slug.                                                                                                 |
-| `workspaces`         | A `workspaces` entry is written for the new workspace: `name` (`{projectSlug}-app-{workspaceName}`), `role` (`app`), and `policy` (`freezable`).             |
+| `workspaces`         | A `workspaces` entry is written for the new workspace: `name` (`{projectSlug}-app-{workspaceName}`), `role` (`app`), and `policy` (`trackable`).             |
 
 ## How It Works
 
@@ -108,12 +118,18 @@ When run without flags, the command walks you through an interactive wizard:
 2. **Workspace name** — Enter a slug for the workspace directory (default: `vite`).
 3. **Where should the project be created?** — Choose between creating a new directory or building in the current working directory.
 4. **Output directory** — If creating a new directory, confirm the path (default: `./{project-name}`).
-5. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
+5. **Framework** — Choose Vanilla TypeScript, React, Vue, or Svelte (default: Vanilla TypeScript).
+6. **Progressive web app** — Choose whether to add the service worker (default: no).
+7. **Docker image** — Choose whether to package the static build (default: no).
+8. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
 
 **Workspace mode** (`package.json` with `workspaces` found):
 
 1. **Workspace name** — Enter a slug for the workspace directory (default: `vite`).
 2. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
+3. **Framework** — Choose Vanilla TypeScript, React, Vue, or Svelte (default: Vanilla TypeScript).
+4. **Progressive web app** — Choose whether to add the service worker (default: no).
+5. **Docker image** — Choose whether to package the static build (default: no).
 
 Nova reads the project slug from the root `nova.config.json`; it does not ask you to rename the project or package.
 
@@ -130,6 +146,13 @@ Agents and automation should add `--non-interactive`. A new monorepo needs `--na
 
     # Add another app from an existing Nova monorepo root
     nova scaffold app vite --non-interactive --workspace-name web --output ./apps/web
+
+    # React PWA packaged as a Docker image
+    nova scaffold app vite --non-interactive --workspace-name dashboard --output ./apps/dashboard --framework react --pwa --docker-image
+
+    # Vue or Svelte workspace
+    nova scaffold app vite --non-interactive --workspace-name admin --output ./apps/admin --framework vue
+    nova scaffold app vite --non-interactive --workspace-name console --output ./apps/console --framework svelte
     ```
 
   </TabItem>
@@ -141,6 +164,9 @@ Agents and automation should add `--non-interactive`. A new monorepo needs `--na
 
     # Add another app from an existing Nova monorepo root
     npx --yes @cbnventures/nova@latest scaffold app vite --non-interactive --workspace-name web --output ./apps/web
+
+    # React PWA packaged as a Docker image
+    npx --yes @cbnventures/nova@latest scaffold app vite --non-interactive --workspace-name dashboard --output ./apps/dashboard --framework react --pwa --docker-image
     ```
 
   </TabItem>

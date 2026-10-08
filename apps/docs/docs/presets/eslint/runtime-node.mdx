@@ -23,7 +23,7 @@ Lint Node.js code with the recommended `eslint-plugin-n` ruleset, guard against 
 
 ## Why Use This Preset?
 
-1. Applies `eslint-plugin-n`'s recommended rules so your Node.js code catches missing dependencies, unsupported APIs, and bad imports.
+1. Applies `eslint-plugin-n`'s recommended rules for Node.js correctness and unsupported APIs.
 2. Bans raw `console` output so logging flows through the Logger toolkit battery instead.
 3. Disallows `process.exit()` so error handling stays structured rather than terminating abruptly.
 4. Warns on synchronous APIs so you avoid blocking the event loop.
@@ -33,7 +33,7 @@ Lint Node.js code with the recommended `eslint-plugin-n` ruleset, guard against 
 
 Import `runtimeNode` from the ESLint presets entry and spread it into your <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> after the language layer, in the documented layer order.
 
-```ts title="eslint.config.ts"
+```ts title="eslint.config.mts"
 import {
   dxCodeStyle,
   dxIgnore,
@@ -55,7 +55,7 @@ The preset registers `eslint-plugin-n` and applies its recommended Node.js rules
 
 ### Recommended rules
 
-Registers `eslint-plugin-n` and spreads its recommended ruleset for Node.js, catching missing dependencies, unsupported APIs, and bad imports.
+Registers `eslint-plugin-n` and spreads its recommended ruleset for Node.js. Nova disables `n/no-missing-import` because that rule can reject valid conditional package exports; TypeScript or `checkJs` remains the source of truth for module resolution.
 
 ### Bad habits
 

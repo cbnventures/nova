@@ -1,0 +1,38 @@
+{
+  "name": "[__WORKSPACE_PACKAGE_NAME__]",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
+    "dev:start": "tsx watch --env-file=.env src/index.ts",
+    "prod": "nova utility run-scripts --sequential --node-env production 'prod:*'",
+    "prod:start": "node --env-file=.env build/index.js",
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:lint": "eslint ./ --max-warnings=0",
+    "check:types-source": "nova utility type-check --project tsconfig.source.json",
+    "check:types-config": "nova utility type-check --project tsconfig.config.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
+    "check:test": "vitest run",
+    "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
+    "build:reset": "shx rm -rf ./build",
+    "build:transpile": "nova utility transpile --project tsconfig.source.json",
+    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean:build": "shx rm -rf ./build"
+  },
+  "dependencies": {
+    "@cbnventures/nova": "0.29.0",
+    "discord.js": "14.27.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.9.1",
+    "eslint": "9.39.5",
+    "shx": "0.4.0",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "vitest": "4.1.11"
+  },
+  "engines": {
+    "node": "^22 || ^24"
+  }
+}

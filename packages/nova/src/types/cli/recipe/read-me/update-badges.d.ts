@@ -39,7 +39,7 @@ export type Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_ReadMeRecipes = Shared_Nov
 
 export type Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_UpdateBadges = Shared_NovaConfig_RecipeEntry | undefined;
 
-export type Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_NewInnerContent = string | undefined;
+export type Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_NewInnerContent = string;
 
 export type Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_RootPath = string;
 

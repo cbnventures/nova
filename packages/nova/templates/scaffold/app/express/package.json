@@ -9,20 +9,28 @@
     "prod": "nova utility run-scripts --sequential --node-env production 'prod:*'",
     "prod:start": "node build/index.js",
     "check": "nova utility run-scripts --sequential 'check:*'",
-    "check:types": "nova utility type-check --project tsconfig.json",
+    "check:lint": "eslint ./ --max-warnings=0",
+    "check:types-source": "nova utility type-check --project tsconfig.source.json",
+    "check:types-config": "nova utility type-check --project tsconfig.config.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
+    "check:test": "vitest run",
     "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
-    "build:types": "tsc",
+    "build:reset": "shx rm -rf ./build",
+    "build:transpile": "nova utility transpile --project tsconfig.source.json",
     "clean": "nova utility run-scripts --parallel 'clean:*'",
     "clean:build": "shx rm -rf ./build"
   },
   "dependencies": {
+    "@cbnventures/nova": "0.29.0",
     "express": "5.1.0"
   },
   "devDependencies": {
     "@types/express": "5.0.2",
     "@types/node": "22.15.17",
+    "eslint": "9.39.5",
     "shx": "0.4.0",
     "tsx": "4.19.4",
-    "typescript": "6.0.3"
+    "typescript": "6.0.3",
+    "vitest": "4.1.11"
   }
 }

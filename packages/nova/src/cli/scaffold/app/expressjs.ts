@@ -1,4 +1,5 @@
 import { runScaffold } from '../../../lib/scaffold.js';
+import { Runner as CliGenerateDockerImage } from '../../generate/docker-image/index.js';
 
 import type {
   Cli_Scaffold_App_Expressjs_Runner_Run_Options,
@@ -28,7 +29,32 @@ export class Runner {
    * @since 0.15.0
    */
   public static async run(options: Cli_Scaffold_App_Expressjs_Runner_Run_Options): Cli_Scaffold_App_Expressjs_Runner_Run_Returns {
-    await runScaffold(options, 'app', 'express', 'scaffold/app/express', import.meta.url);
+    if (options['dockerImage'] === true) {
+      await runScaffold(options, {
+        category: 'app',
+        importMetaUrl: import.meta.url,
+        templateSubpath: 'scaffold/app/express',
+        typeName: 'express',
+        workspaceFinalizer: async (workspaceDirectory) => {
+          await CliGenerateDockerImage.generateForTarget({
+            profile: 'http-service',
+            replaceFile: true,
+            workspaceDirectory,
+          });
+
+          return;
+        },
+      });
+
+      return;
+    }
+
+    await runScaffold(options, {
+      category: 'app',
+      importMetaUrl: import.meta.url,
+      templateSubpath: 'scaffold/app/express',
+      typeName: 'express',
+    });
 
     return;
   }

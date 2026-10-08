@@ -2,20 +2,26 @@
   "name": "[__WORKSPACE_PACKAGE_NAME__]",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
     "dev:start": "next dev",
     "prod": "nova utility run-scripts --sequential --node-env production 'prod:*'",
     "prod:start": "next start",
     "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:lint": "eslint ./ --max-warnings=0",
     "check:typegen": "next typegen",
-    "check:types": "nova utility type-check --project tsconfig.json",
+    "check:types-app": "nova utility type-check --project tsconfig.json",
+    "check:types-config": "nova utility type-check --project tsconfig.config.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
+    "check:test": "vitest run",
     "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
     "build:app": "next build",
     "clean": "nova utility run-scripts --parallel 'clean:*'",
     "clean:build": "shx rm -rf ./build"
   },
   "dependencies": {
+    "@cbnventures/nova": "0.29.0",
     "next": "16.3.4",
     "react": "19.2.8",
     "react-dom": "19.2.8"
@@ -24,7 +30,9 @@
     "@types/node": "24.9.1",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.7",
+    "eslint": "9.39.5",
     "shx": "0.4.0",
-    "typescript": "6.0.3"
+    "typescript": "6.0.3",
+    "vitest": "4.1.11"
   }
 }

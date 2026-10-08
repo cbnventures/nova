@@ -225,8 +225,11 @@ import type {
   Cli_Utility_Changelog_Runner_StampUnreleased_StampErrorMessage,
   Cli_Utility_Changelog_Runner_StampUnreleased_StillHasDeprecated,
   Cli_Utility_Changelog_Runner_StampUnreleased_StillHasSince,
+  Cli_Utility_Changelog_Runner_StampUnreleased_SupportedExtensions,
   Cli_Utility_Changelog_Runner_StampUnreleased_SurvivingFiles,
   Cli_Utility_Changelog_Runner_StampUnreleased_UpdatedContent,
+  Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceCandidatePath,
+  Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceEntries,
   Cli_Utility_Changelog_Runner_SyncPackageReferences_ActionVerb,
   Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateChanged,
   Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateParsed,
@@ -1485,8 +1488,9 @@ export class Runner {
   /**
    * CLI - Utility - Changelog - Stamp Unreleased.
    *
-   * Replaces every `@since UNRELEASED` and `@deprecated UNRELEASED` sentinel in the
-   * workspace's src/ and scripts/ trees with its version, then checks for survivors.
+   * Replaces unreleased JSDoc sentinels in each workspace root and its
+   * src/ and scripts/ trees with the workspace's release version, then checks
+   * every scanned file for survivors.
    *
    * @param {Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory} packageDirectory - Package directory.
    * @param {Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion}       newVersion       - New version.
@@ -1509,6 +1513,39 @@ export class Runner {
       join(packageDirectory, 'scripts'),
     ];
     const sourceFiles: Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles = [];
+    const supportedExtensions: Cli_Utility_Changelog_Runner_StampUnreleased_SupportedExtensions = [
+      '.ts',
+      '.tsx',
+      '.mts',
+      '.cts',
+      '.js',
+      '.mjs',
+      '.cjs',
+      '.css',
+    ];
+
+    try {
+      const workspaceEntries: Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceEntries = await fs.readdir(packageDirectory, { withFileTypes: true });
+
+      for (const workspaceEntry of workspaceEntries) {
+        if (workspaceEntry.isSymbolicLink() === true || workspaceEntry.isFile() === false) {
+          continue;
+        }
+
+        const workspaceCandidatePath: Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceCandidatePath = join(packageDirectory, workspaceEntry.name);
+
+        if (supportedExtensions.some((supportedExtension) => workspaceCandidatePath.endsWith(supportedExtension)) === true) {
+          sourceFiles.push(workspaceCandidatePath);
+        }
+      }
+    } catch {
+      Logger.customize({
+        name: 'Runner.stampUnreleased',
+        purpose: 'readdir',
+      }).error(`Unable to read workspace directory "${packageDirectory}".`);
+
+      return false;
+    }
 
     for (const sourceDirectory of sourceDirectories) {
       const scanSourceDirectory: Cli_Utility_Changelog_Runner_StampUnreleased_ScanSourceDirectory = sourceDirectory;
@@ -1545,16 +1582,7 @@ export class Runner {
 
             if (
               directoryEntry.isFile() === true
-              && (
-                candidatePath.endsWith('.ts') === true
-                || candidatePath.endsWith('.tsx') === true
-                || candidatePath.endsWith('.mts') === true
-                || candidatePath.endsWith('.cts') === true
-                || candidatePath.endsWith('.js') === true
-                || candidatePath.endsWith('.mjs') === true
-                || candidatePath.endsWith('.cjs') === true
-                || candidatePath.endsWith('.css') === true
-              )
+              && supportedExtensions.some((supportedExtension) => candidatePath.endsWith(supportedExtension)) === true
             ) {
               sourceFiles.push(candidatePath);
             }

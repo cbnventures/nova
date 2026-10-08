@@ -5,6 +5,8 @@
  */
 export type Cli_Scaffold_App_Expressjs_Runner_Run_Options_DryRun = true;
 
+export type Cli_Scaffold_App_Expressjs_Runner_Run_Options_DockerImage = true;
+
 export type Cli_Scaffold_App_Expressjs_Runner_Run_Options_Name = string;
 
 export type Cli_Scaffold_App_Expressjs_Runner_Run_Options_NonInteractive = true;
@@ -14,6 +16,7 @@ export type Cli_Scaffold_App_Expressjs_Runner_Run_Options_Output = string;
 export type Cli_Scaffold_App_Expressjs_Runner_Run_Options_WorkspaceName = string;
 
 export type Cli_Scaffold_App_Expressjs_Runner_Run_Options = {
+  dockerImage?: Cli_Scaffold_App_Expressjs_Runner_Run_Options_DockerImage;
   dryRun?: Cli_Scaffold_App_Expressjs_Runner_Run_Options_DryRun;
   name?: Cli_Scaffold_App_Expressjs_Runner_Run_Options_Name;
   nonInteractive?: Cli_Scaffold_App_Expressjs_Runner_Run_Options_NonInteractive;

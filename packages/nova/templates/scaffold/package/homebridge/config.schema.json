@@ -1,0 +1,18 @@
+{
+  "pluginAlias": "[__WORKSPACE_IDENTIFIER__]",
+  "pluginType": "platform",
+  "customUi": [__HOMEBRIDGE_CUSTOM_UI__],
+  "customUiPath": "./build/config-ui",
+  "singular": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "title": "Name",
+        "type": "string",
+        "required": true,
+        "default": "[__WORKSPACE_TITLE__]"
+      }
+    }
+  }
+}

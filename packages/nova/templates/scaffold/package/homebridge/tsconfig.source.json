@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-node.json",
+    "@cbnventures/nova/presets/tsconfig/fw-homebridge.json"
+  ],
+  "compilerOptions": {
+    "noEmit": false,
+    "rootDir": "./src",
+    "types": [
+      "node"
+    ],
+    "noEmitOnError": false,
+    "outDir": "./build",
+    "module": "ESNext",
+    "moduleResolution": "Bundler"
+  },
+  "include": [
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "./src/**/*.test.ts"
+  ]
+}

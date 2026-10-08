@@ -1,5 +1,4 @@
 import {
-  join,
   relative,
   resolve,
 } from 'node:path';
@@ -11,6 +10,7 @@ import {
   createMonorepoRoot,
   detectMonorepoContext,
   findFileConflicts,
+  getMonorepoRootPlannedPaths,
   promptPostScaffoldGenerators,
 } from '../../../lib/scaffold.js';
 import { Logger } from '../../../toolkit/index.js';
@@ -111,7 +111,7 @@ export class Runner {
       Logger.customize({
         name: 'Runner.run',
         purpose: 'context',
-      }).error('Already at a monorepo root. Use scaffold app or scaffold docs to add workspaces.');
+      }).error('Already at a monorepo root. Use scaffold app, scaffold docs, or scaffold package to add workspaces.');
 
       process.exitCode = 1;
 
@@ -250,11 +250,7 @@ export class Runner {
       purpose: 'config',
     }).info(`Scaffolding starter monorepo "${resolvedName}" in "${outputDirectory}".`);
 
-    const plannedPaths: Cli_Scaffold_Starter_Base_Runner_Run_PlannedPaths = [
-      join(outputDirectory, 'package.json'),
-      join(outputDirectory, 'nova.config.json'),
-      join(outputDirectory, 'turbo.json'),
-    ];
+    const plannedPaths: Cli_Scaffold_Starter_Base_Runner_Run_PlannedPaths = await getMonorepoRootPlannedPaths(outputDirectory);
     const conflictingPaths: Cli_Scaffold_Starter_Base_Runner_Run_ConflictingPaths = await findFileConflicts(plannedPaths);
 
     if (conflictingPaths.length > 0) {

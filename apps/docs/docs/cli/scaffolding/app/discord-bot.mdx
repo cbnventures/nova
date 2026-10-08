@@ -1,0 +1,93 @@
+---
+id: "discord-bot"
+title: "Discord Bot"
+description: "Scaffold a Discord bot with discord.js, typed environment handling, watch mode, and Nova-managed build scripts."
+keywords:
+  - "nova"
+  - "nova scaffold"
+  - "discord bot"
+  - "discord.js"
+  - "typescript"
+tags:
+  - "cli"
+  - "scaffold"
+  - "app"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a **Discord bot** with discord.js, TypeScript, and explicit development and production entry points.
+
+## Why Use This Command?
+
+1. Includes a minimal client and login flow so you can add commands and events without rebuilding the project foundation.
+2. Keeps the bot token in an untracked `.env` file while documenting the required key in `.env.example`.
+3. Uses Nova's type-check and transpile utilities so checking and production output follow the same contract as other workspaces.
+4. Can compose the background-service Docker profile with `--docker-image` without adding an HTTP port or health check.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Discord application token** — Create a bot in the Discord Developer Portal and provide its token as `DISCORD_TOKEN`.
+- **Empty directory** or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** — Nova auto-detects whether to create a project or add a workspace.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold app discord-bot
+
+    # Shorthand
+    nova scaf app discord-bot
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold app discord-bot
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf app discord-bot
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                                                          |
+|---------------------------|----------------------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                                       |
+| `--docker-image`          | Add a production Node image and background-service Compose file.     |
+| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
+| `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
+| `--workspace-name <name>` | Workspace directory name.                                            |
+| `--output <dir>`          | Output directory.                                                    |
+
+## Output Files
+
+| File            | Description                                                        |
+|-----------------|--------------------------------------------------------------------|
+| `.env.example`  | Required `DISCORD_TOKEN` environment variable.                     |
+| `src/index.ts`  | Typed Discord client, ready event, and login flow.                 |
+| `tsconfig.json` | Nova strict and Node.js runtime presets with build output enabled. |
+| `package.json`  | discord.js dependencies and Nova-managed workspace scripts.        |
+
+## Non-Interactive Mode
+
+```bash
+nova scaffold app discord-bot --non-interactive --name my-bot --workspace-name bot --output ./my-bot
+nova scaffold app discord-bot --non-interactive --workspace-name bot --output ./apps/bot
+nova scaffold app discord-bot --docker-image --non-interactive --name my-bot --workspace-name bot --output ./my-bot
+```
+
+## Registration
+
+Nova registers the workspace with the `app` role and `trackable` policy. Its package name follows `{projectSlug}-app-{workspaceName}`.

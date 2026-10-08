@@ -1,0 +1,21 @@
+#!/usr/local/bin/php -f
+<?php
+
+declare(strict_types=1);
+
+require_once('/etc/inc/config.inc');
+require_once('/etc/inc/util.inc');
+
+$settings = config_get_path('installedpackages/[__WORKSPACE_NAME__]/config/0', []);
+
+if (!is_array($settings) || ($settings['enabled'] ?? '') !== 'on') {
+    exit(0);
+}
+
+$message = trim((string) ($settings['message'] ?? ''));
+
+if ($message === '') {
+    $message = 'Scheduled [__WORKSPACE_TITLE__] task completed.';
+}
+
+log_error(sprintf('[__WORKSPACE_TITLE__]: %s', $message));

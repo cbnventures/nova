@@ -1,0 +1,57 @@
+---
+id: "fw-svelte"
+title: "Framework - Svelte"
+description: "Lint Svelte components with Nova-compatible official correctness rules, TypeScript parsing, and generated-file ignores."
+keywords:
+  - "nova"
+  - "svelte"
+  - "eslint"
+  - "component"
+  - "typescript"
+tags:
+  - "presets"
+  - "eslint"
+  - "framework"
+  - "svelte"
+---
+
+Lint Svelte components through a Nova-owned compatibility layer.
+
+## Why Use This Preset?
+
+1. Selects Svelte's recommended correctness rules without exposing its upstream config structure to consumers.
+2. Parses TypeScript inside `.svelte` components through Nova's installed TypeScript parser.
+3. Ignores generated `.svelte-kit` output.
+4. Composes after Nova's required ignore, code-style, and language layers while preserving later consumer overrides.
+
+## Usage
+
+```ts title="eslint.config.mts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  fwSvelte,
+  langJavascript,
+  langTypescript,
+  runtimeBrowser,
+  toolVite,
+} from '@cbnventures/nova/presets/eslint';
+import { novaRules } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langJavascript,
+  ...langTypescript,
+  ...runtimeBrowser,
+  ...toolVite,
+  ...fwSvelte,
+  ...novaRules,
+];
+```
+
+## Related
+
+- Pair it with the matching **[Framework - Svelte TSConfig preset](/docs/presets/tsconfig/fw-svelte)**.
+- Select it automatically with the **[Vite scaffold](/docs/cli/scaffolding/app/vite)** and `--framework svelte`.
+- Review the layering order in **[ESLint Best Practices](/docs/presets/eslint/best-practices)**.

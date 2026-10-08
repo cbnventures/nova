@@ -1,7 +1,7 @@
 ---
 id: "fw-nextjs"
 title: "Framework - Next.js"
-description: "Reserve the Next.js framework layer in your ESLint flat config with a named ignore group ready for .next build output path exclusions."
+description: "Lint Next.js and React applications with curated framework, Core Web Vitals, Hooks, and accessibility rules."
 keywords:
   - "nova"
   - "next.js"
@@ -19,10 +19,43 @@ tags:
 ---
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-This preset is the framework layer for Next.js projects in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>.
+Lint Next.js applications with a Nova-compatible framework stack. The preset combines Next.js correctness and Core Web Vitals checks with React, React Hooks, and JSX accessibility rules without copying an upstream flat config wholesale.
 
-:::info Coming soon
+## Usage
 
-This preset has no rules yet. This page will be filled in once it does.
+Spread `fwNextjs` after the language layers. The preset provides its own plugin registration.
 
-:::
+```ts title="eslint.config.mts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  fwNextjs,
+  langJavascript,
+  langTypescript,
+} from '@cbnventures/nova/presets/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langJavascript,
+  ...langTypescript,
+  ...fwNextjs,
+];
+```
+
+## What This Preset Configures
+
+- Ignores `.next` build output and generated `next-env.d.ts` files.
+- Declares Node.js globals for `next.config.*` and browser globals for application code.
+- Registers Next.js, React, React Hooks, and JSX accessibility plugins.
+- Applies Next.js recommended and Core Web Vitals rules, React's modern JSX runtime, the fundamental Rules of Hooks check, and accessibility checks.
+- Disables legacy React prop-type validation for TypeScript-first applications.
+
+Nova intentionally omits React Hooks' compiler-diagnostic bundle and `exhaustive-deps`. The compiler diagnostics require an explicit React Compiler migration, while `exhaustive-deps` rejects computed dependency expressions required by Nova's bracket-property rule. Consumers can opt into either policy after the preset when the application is designed for it.
+
+Consumers retain normal flat-config control: append a later config object to change an individual rule.
+
+## Related
+
+- Pair it with the matching **[Framework - Next.js TSConfig preset](/docs/presets/tsconfig/fw-nextjs)**.
+- Review the **[Next.js scaffold](/docs/cli/scaffolding/app/nextjs)**.

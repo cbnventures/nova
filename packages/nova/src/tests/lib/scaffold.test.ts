@@ -21,7 +21,12 @@ import {
   vi,
 } from 'vitest';
 
-import { LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET } from '../../lib/regex.js';
+import {
+  LIB_REGEX_PLACEHOLDER_DOCKER_ARCHITECTURES,
+  LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE,
+  LIB_REGEX_PLACEHOLDER_DOCKER_PUBLISH,
+  LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET,
+} from '../../lib/regex.js';
 import {
   detectMonorepoContext,
   normalizeWorkspaceRelativePath,
@@ -54,12 +59,16 @@ import type {
   Tests_Lib_Scaffold_DetectMonorepoContext_SandboxRoot,
   Tests_Lib_Scaffold_DetectMonorepoContext_TemporaryDirectory,
   Tests_Lib_Scaffold_DetectMonorepoContext_TemporaryPrefix,
+  Tests_Lib_Scaffold_OptionalTemplateQuestions,
   Tests_Lib_Scaffold_Prompts_MockModule,
   Tests_Lib_Scaffold_PromptScaffoldOptions_UsesCompleteValuesWithoutPrompting_Result,
   Tests_Lib_Scaffold_ResolveTemplateAnswers_PromptsForAMissingInteractiveValue_Result,
   Tests_Lib_Scaffold_ResolveTemplateAnswers_RejectsAMissingNonInteractiveValue_Result,
   Tests_Lib_Scaffold_ResolveTemplateAnswers_RejectsAnInvalidProvidedValue_Result,
+  Tests_Lib_Scaffold_ResolveTemplateAnswers_RejectsValuesPassedToBooleanOnlyFlags_Result,
+  Tests_Lib_Scaffold_ResolveTemplateAnswers_ResolvesBooleanFlagsAndActiveDependentChoices_Result,
   Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesAValidNonInteractiveValueWithoutPrompting_Result,
+  Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesNonInteractiveDefaultsWithoutRequiringOptionalFlags_Result,
   Tests_Lib_Scaffold_TemplateQuestions,
 } from '../../types/tests/lib/scaffold.test.d.ts';
 
@@ -97,6 +106,86 @@ const templateQuestions: Tests_Lib_Scaffold_TemplateQuestions = [{
   placeholder: LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET,
 }];
 
+/**
+ * Tests - Lib - Scaffold - Optional Template Questions.
+ *
+ * Covers defaults, dependent choices, replacement values, and boolean flags
+ * used by framework scaffold options.
+ *
+ * @since 0.29.0
+ */
+const optionalTemplateQuestions: Tests_Lib_Scaffold_OptionalTemplateQuestions = [
+  {
+    choices: [
+      {
+        title: 'None',
+        description: 'No publishing',
+        value: 'none',
+      },
+      {
+        title: 'GitHub Container Registry',
+        description: 'Publish to GitHub',
+        value: 'ghcr',
+      },
+    ],
+    defaultValue: 'none',
+    flag: '--publish',
+    initial: 0,
+    message: 'Select publishing:',
+    name: 'publish',
+    placeholder: LIB_REGEX_PLACEHOLDER_DOCKER_PUBLISH,
+  },
+  {
+    choices: [
+      {
+        title: 'Both',
+        description: 'Publish both architectures',
+        replacement: 'linux/amd64,linux/arm64',
+        value: 'amd64,arm64',
+      },
+      {
+        title: 'ARM64',
+        description: 'Publish ARM64',
+        replacement: 'linux/arm64',
+        value: 'arm64',
+      },
+    ],
+    defaultValue: 'amd64,arm64',
+    dependsOn: {
+      name: 'publish',
+      values: ['ghcr'],
+    },
+    flag: '--architectures',
+    initial: 0,
+    message: 'Select architectures:',
+    name: 'architectures',
+    placeholder: LIB_REGEX_PLACEHOLDER_DOCKER_ARCHITECTURES,
+  },
+  {
+    choices: [
+      {
+        title: 'No',
+        description: 'Do not add Docker',
+        replacement: 'false',
+        value: 'disabled',
+      },
+      {
+        title: 'Yes',
+        description: 'Add Docker',
+        replacement: 'true',
+        value: 'enabled',
+      },
+    ],
+    defaultValue: 'disabled',
+    flag: '--docker-image',
+    flagValue: 'enabled',
+    initial: 0,
+    message: 'Add Docker?',
+    name: 'dockerImage',
+    placeholder: LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE,
+  },
+];
+
 afterEach(() => {
   vi.mocked(prompts).mockReset();
 
@@ -114,6 +203,7 @@ describe('workspace contract', () => {
   it('derives role-based package names', () => {
     strictEqual(resolveWorkspacePackageName('my-project', 'web', 'app'), 'my-project-app-web');
     strictEqual(resolveWorkspacePackageName('my-project', 'website', 'docs'), 'my-project-docs');
+    strictEqual(resolveWorkspacePackageName('my-project', 'my-library', 'package'), 'my-library');
 
     return;
   });
@@ -139,7 +229,8 @@ describe('resolveTemplateAnswers', () => {
     const result: Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesAValidNonInteractiveValueWithoutPrompting_Result = await resolveTemplateAnswers({ preset: 'signal' }, templateQuestions, true);
 
     ok(result !== undefined);
-    strictEqual(result.get(LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET), 'signal');
+    strictEqual(result['answers'].get('preset'), 'signal');
+    strictEqual(result['replacements'].get(LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET), 'signal');
     strictEqual(vi.mocked(prompts).mock.calls.length, 0);
 
     return;
@@ -151,7 +242,8 @@ describe('resolveTemplateAnswers', () => {
     const result: Tests_Lib_Scaffold_ResolveTemplateAnswers_PromptsForAMissingInteractiveValue_Result = await resolveTemplateAnswers({}, templateQuestions, false);
 
     ok(result !== undefined);
-    strictEqual(result.get(LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET), 'foundry');
+    strictEqual(result['answers'].get('preset'), 'foundry');
+    strictEqual(result['replacements'].get(LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET), 'foundry');
     strictEqual(vi.mocked(prompts).mock.calls.length, 1);
 
     return;
@@ -177,6 +269,48 @@ describe('resolveTemplateAnswers', () => {
     return;
   });
 
+  it('uses non-interactive defaults without requiring optional flags', async () => {
+    const result: Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesNonInteractiveDefaultsWithoutRequiringOptionalFlags_Result = await resolveTemplateAnswers({}, optionalTemplateQuestions, true);
+
+    ok(result !== undefined);
+    strictEqual(result['answers'].get('publish'), 'none');
+    strictEqual(result['answers'].get('architectures'), 'amd64,arm64');
+    strictEqual(result['answers'].get('dockerImage'), 'disabled');
+    strictEqual(result['replacements'].get(LIB_REGEX_PLACEHOLDER_DOCKER_ARCHITECTURES), 'linux/amd64,linux/arm64');
+    strictEqual(result['replacements'].get(LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE), 'false');
+    strictEqual(vi.mocked(prompts).mock.calls.length, 0);
+
+    return;
+  });
+
+  it('resolves boolean flags and active dependent choices', async () => {
+    const result: Tests_Lib_Scaffold_ResolveTemplateAnswers_ResolvesBooleanFlagsAndActiveDependentChoices_Result = await resolveTemplateAnswers({
+      architectures: 'arm64',
+      dockerImage: true,
+      publish: 'ghcr',
+    }, optionalTemplateQuestions, true);
+
+    ok(result !== undefined);
+    strictEqual(result['answers'].get('publish'), 'ghcr');
+    strictEqual(result['answers'].get('architectures'), 'arm64');
+    strictEqual(result['answers'].get('dockerImage'), 'enabled');
+    strictEqual(result['replacements'].get(LIB_REGEX_PLACEHOLDER_DOCKER_ARCHITECTURES), 'linux/arm64');
+    strictEqual(result['replacements'].get(LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE), 'true');
+
+    return;
+  });
+
+  it('rejects values passed to boolean-only flags', async () => {
+    const result: Tests_Lib_Scaffold_ResolveTemplateAnswers_RejectsValuesPassedToBooleanOnlyFlags_Result = await resolveTemplateAnswers({
+      dockerImage: 'yes',
+    }, optionalTemplateQuestions, true);
+
+    strictEqual(result, undefined);
+    strictEqual(process.exitCode, 1);
+
+    return;
+  });
+
   return;
 });
 
@@ -191,6 +325,7 @@ describe('promptScaffoldOptions', () => {
       name: 'my-project',
       output: './my-project',
       typeName: 'vite',
+      workspaceBaseDirectory: 'apps',
       workspaceName: 'web',
     });
 

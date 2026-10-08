@@ -45,6 +45,8 @@ function BlogSidebar(props: Theme_BlogSidebar_Index_BlogSidebar_Props) {
   const groupByYearValue: Theme_BlogSidebar_Index_BlogSidebar_GroupByYear = (sidebarConfig['groupByYear'] ?? true);
   const globalData: Theme_BlogSidebar_Index_BlogSidebar_GlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as Theme_BlogSidebar_Index_BlogSidebar_GlobalData;
   const blogAuthors: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthors = (globalData['blogAuthors'] ?? []) as Theme_BlogSidebar_Index_BlogSidebar_BlogAuthors;
+  const rssUrl: Theme_BlogSidebar_Index_BlogSidebar_FeedUrl = useBaseUrl('/blog/rss.xml');
+  const atomUrl: Theme_BlogSidebar_Index_BlogSidebar_FeedUrl = useBaseUrl('/blog/atom.xml');
 
   if (
     props['sidebar'] === undefined
@@ -68,9 +70,6 @@ function BlogSidebar(props: Theme_BlogSidebar_Index_BlogSidebar_Props) {
     message: 'Subscribe',
     description: 'The label for the subscribe section in the blog sidebar',
   });
-  const rssUrl: Theme_BlogSidebar_Index_BlogSidebar_FeedUrl = useBaseUrl('/blog/rss.xml');
-  const atomUrl: Theme_BlogSidebar_Index_BlogSidebar_FeedUrl = useBaseUrl('/blog/atom.xml');
-
   if (groupByYearValue === true) {
     let currentYear: Theme_BlogSidebar_Index_BlogSidebar_CurrentYear = '';
 

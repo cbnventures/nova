@@ -25,11 +25,12 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 ## Why Use This Command?
 
-- Installs Express 5 with TypeScript and a `tsx watch` dev script so you can start writing routes with hot reload on the first command.
-- Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
-- Generates a minimal `src/index.ts` entry point so the server compiles and runs without extra boilerplate.
-- Pins TypeScript `6.0.3` and sets `rootDir` to `src` so the build emits the `build/index.js` file used by the start script.
-- Provides `dev`, `prod`, `check`, `build`, and `clean` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner.
+1. Installs Express 5 with TypeScript and a `tsx watch` dev script so you can start writing routes with hot reload on the first command.
+2. Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
+3. Generates a minimal `src/index.ts` entry point so the server compiles and runs without extra boilerplate.
+4. Pins TypeScript `6.0.3` and sets `rootDir` to `src` so the build emits the `build/index.js` file used by the start script.
+5. Provides `dev`, `prod`, `check`, `build`, and `clean` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner.
+6. Can compose the HTTP-service Docker profile with `--docker-image` without changing the Express source template.
 
 ## Requirements
 
@@ -68,6 +69,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 | Flag                      | Description                                                          |
 |---------------------------|----------------------------------------------------------------------|
 | `-d, --dry-run`           | Run without writing any files.                                       |
+| `--docker-image`          | Add a production Node image, port `3000`, and HTTP health check.     |
 | `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
 | `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
 | `--workspace-name <name>` | Workspace directory name.                                            |
@@ -123,6 +125,9 @@ Agents and automation should add `--non-interactive`. A new monorepo needs `--na
 
     # Add another app from an existing Nova monorepo root
     nova scaffold app expressjs --non-interactive --workspace-name api --output ./apps/api
+
+    # Create the same Express app with Docker packaging
+    nova scaffold app expressjs --docker-image --non-interactive --name my-api --workspace-name api --output ./my-api
     ```
 
   </TabItem>
@@ -134,6 +139,9 @@ Agents and automation should add `--non-interactive`. A new monorepo needs `--na
 
     # Add another app from an existing Nova monorepo root
     npx --yes @cbnventures/nova@latest scaffold app expressjs --non-interactive --workspace-name api --output ./apps/api
+
+    # Create the same Express app with Docker packaging
+    npx --yes @cbnventures/nova@latest scaffold app expressjs --docker-image --non-interactive --name my-api --workspace-name api --output ./my-api
     ```
 
   </TabItem>

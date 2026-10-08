@@ -7,6 +7,7 @@ export { Runner as RequireNamingConvention } from './conventions/require-naming-
 export { Runner as RequireNodeProtocol } from './conventions/require-node-protocol.js';
 export { Runner as RequireUndefinedInit } from './conventions/require-undefined-init.js';
 export { Runner as SwitchCaseBlocks } from './conventions/switch-case-blocks.js';
+export { default as novaRules } from './nova-rules.js';
 export { Runner as NoComplexArrowConcise } from './formatting/no-complex-arrow-concise.js';
 export { Runner as NoMultilineStrings } from './formatting/no-multiline-strings.js';
 export { Runner as NoRawTextInCode } from './formatting/no-raw-text-in-code.js';

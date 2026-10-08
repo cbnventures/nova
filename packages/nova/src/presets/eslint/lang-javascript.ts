@@ -5,8 +5,8 @@ import type { Presets_Eslint_LangJavascript_Config } from '../../types/presets/e
 /**
  * Presets - ESLint - Lang JavaScript - Config.
  *
- * Enables typescript-eslint parser for all JS and JSX files so
- * Nova custom rules can run on JavaScript sources with full AST support.
+ * Enables the typescript-eslint parser for all JS and JSX files so Nova
+ * custom rules can run without requiring JavaScript files in a TSConfig.
  *
  * @since 0.11.0
  */
@@ -24,7 +24,7 @@ const config: Presets_Eslint_LangJavascript_Config = [
       parserOptions: {
         sourceType: 'module',
         ecmaVersion: 'latest',
-        project: true,
+        project: false,
       },
     },
   },

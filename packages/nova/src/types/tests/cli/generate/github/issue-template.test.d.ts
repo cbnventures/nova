@@ -3,19 +3,19 @@ import type { vi } from 'vitest';
 import type { Lib_Utility_SaveGeneratedFile_Header } from '../../../../lib/utility.d.ts';
 
 /**
- * Tests - CLI - Generate - GitHub - Issue Template - Run - Falls Back To Platform Derived Fields When Config Is Absent.
+ * Tests - CLI - Generate - GitHub - Issue Template - Run - Does Not Infer Fields From Project Platforms.
  *
  * @since 0.20.0
  */
-export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_IsProjectRootSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_LoadSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_LoadSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_SaveSpy = ReturnType<typeof vi['spyOn']>;
+export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_SaveSpy = ReturnType<typeof vi['spyOn']>;
 
-export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_Calls = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined][];
+export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_Calls = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined][];
 
-export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_BugReportCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
+export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_BugReportCall = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
 
 /**
  * Tests - CLI - Generate - GitHub - Issue Template - Run - Generates Bug Report Without Platform Fields When Config Is Empty.

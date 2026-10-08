@@ -24,10 +24,11 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 ## Why Use This Command?
 
-- Installs Docusaurus and asks which Nova visual preset to apply so the generated site starts with an intentional look and behavior.
-- Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
-- Provides `dev`, `prod`, `check`, `build`, `clean`, and `i18n` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner; the child steps run Docusaurus, TypeScript, Vitest, and the preset's i18n commands directly.
-- Pins TypeScript `6.0.3` and composes Nova's essentials, strict, and Docusaurus TSConfig presets with the local `@site/*` alias.
+1. Installs Docusaurus and asks which Nova visual preset to apply so the generated site starts with an intentional look and behavior.
+2. Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
+3. Provides `dev`, `prod`, `check`, `build`, `clean`, and `i18n` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner; the child steps run Docusaurus, TypeScript, Vitest, and the preset's i18n commands directly.
+4. Pins TypeScript `6.0.3` and composes Nova's essentials, strict, and Docusaurus TSConfig presets with the local `@site/*` alias.
+5. Selects docs-only or docs-and-blog content, with optional local search and Docker packaging.
 
 ## Requirements
 
@@ -63,14 +64,17 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 ## Options
 
-| Flag                      | Description                                                          |
-|---------------------------|----------------------------------------------------------------------|
-| `-d, --dry-run`           | Run without writing any files.                                       |
-| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
-| `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
-| `--workspace-name <name>` | Workspace directory name.                                            |
-| `--output <dir>`          | Output directory.                                                    |
-| `--preset <name>`         | Nova visual preset written to `docusaurus.config.ts`.                |
+| Flag                          | Description                                                          |
+|-------------------------------|----------------------------------------------------------------------|
+| `-d, --dry-run`               | Run without writing any files.                                       |
+| `--name <name>`               | Project slug when creating a new monorepo; omit at an existing root. |
+| `--non-interactive`           | Use flags and defaults without opening prompts.                      |
+| `--workspace-name <name>`     | Workspace directory name.                                            |
+| `--output <dir>`              | Output directory.                                                    |
+| `--preset <name>`             | Required Nova visual preset written to `docusaurus.config.ts`.       |
+| `--content <docs\|docs-blog>` | Content model; defaults to `docs`.                                   |
+| `--search`                    | Enable the Nova preset's local search index.                         |
+| `--docker-image`              | Serve the production build from an unprivileged NGINX image.         |
 
 ## Output Structure
 
@@ -87,6 +91,8 @@ You can run this directly from an empty location; `scaffold starter base` is not
 │       ├── sidebars.ts
 │       ├── docs/
 │       │   └── intro.mdx
+│       ├── blog/                   # With --content docs-blog
+│       │   └── 2026-01-01-welcome.mdx
 │       ├── src/
 │       │   └── pages/
 │       │       └── index.mdx
@@ -115,13 +121,19 @@ When run without flags, the command walks you through an interactive wizard:
 3. **Where should the project be created?** — Choose between creating a new directory or building in the current working directory.
 4. **Output directory** — If creating a new directory, confirm the path (default: `./{project-name}`).
 5. **Nova visual preset** — Select the visual identity written to `docusaurus.config.ts` (default: `foundry`).
-6. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
+6. **Content model** — Choose docs only or docs plus a starter blog (default: docs only).
+7. **Local search** — Choose whether to build the preset's local search index (default: no).
+8. **Docker image** — Choose whether to package the static build (default: no).
+9. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
 
 **Workspace mode** (`package.json` with `workspaces` found):
 
 1. **Workspace name** — Enter a slug for the workspace directory (default: `docusaurus`).
 2. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
 3. **Nova visual preset** — Select the visual identity written to `docusaurus.config.ts` (default: `foundry`).
+4. **Content model** — Choose docs only or docs plus a starter blog (default: docs only).
+5. **Local search** — Choose whether to build the preset's local search index (default: no).
+6. **Docker image** — Choose whether to package the static build (default: no).
 
 Nova reads the project slug from the root `nova.config.json`; it does not ask you to rename the project or package.
 
@@ -149,6 +161,9 @@ Agents and automation should add `--non-interactive`. A new monorepo needs `--na
 
     # Add docs from an existing Nova monorepo root
     nova scaffold docs docusaurus --non-interactive --workspace-name docs --output ./apps/docs --preset foundry
+
+    # Docs, blog, local search, and a production image
+    nova scaffold docs docusaurus --non-interactive --workspace-name portal --output ./apps/portal --preset foundry --content docs-blog --search --docker-image
     ```
 
   </TabItem>
@@ -160,6 +175,9 @@ Agents and automation should add `--non-interactive`. A new monorepo needs `--na
 
     # Add docs from an existing Nova monorepo root
     npx --yes @cbnventures/nova@latest scaffold docs docusaurus --non-interactive --workspace-name docs --output ./apps/docs --preset foundry
+
+    # Docs, blog, local search, and a production image
+    npx --yes @cbnventures/nova@latest scaffold docs docusaurus --non-interactive --workspace-name portal --output ./apps/portal --preset foundry --content docs-blog --search --docker-image
     ```
 
   </TabItem>

@@ -21,21 +21,22 @@ import TabItem from '@theme/TabItem';
 
 Scaffold a **base <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology>** project with workspaces configuration, ready for adding framework workspaces. This command is optional: use it when you want the project root now but do not want to choose an app or documentation framework yet.
 
-| What you want now                 | Command to start with           | Result                         |
-|-----------------------------------|---------------------------------|--------------------------------|
-| Only an empty Nova monorepo root  | `nova scaffold starter base`    | Root, `apps/`, and `packages/` |
-| A root and the first app together | `nova scaffold app <framework>` | Root plus the app workspace    |
-| A root and documentation together | `nova scaffold docs docusaurus` | Root plus the docs workspace   |
+| What you want now                 | Command to start with           | Result                          |
+|-----------------------------------|---------------------------------|---------------------------------|
+| Only an empty Nova monorepo root  | `nova scaffold starter base`    | Root, `apps/`, and `packages/`  |
+| A root and the first app together | `nova scaffold app <framework>` | Root plus the app workspace     |
+| A root and documentation together | `nova scaffold docs docusaurus` | Root plus the docs workspace    |
+| A root and a package together     | `nova scaffold package <type>`  | Root plus the package workspace |
 
-You do not need to run `starter base` before either direct app or docs command.
+You do not need to run `starter base` before a direct app, docs, or package command.
 
 ## Why Use This Command?
 
-- Creates the root `package.json` with `workspaces` configured for `apps/*` and `packages/*` so you can add workspaces immediately.
-- Creates a root `turbo.json` and standard `dev`, `prod`, `check`, `build`, `deploy`, and `clean` script groups. Each top-level script delegates to its adjacent `name:workspaces` Turbo step through `nova utility run-scripts`; development and production-oriented groups pass an explicit `--node-env` value.
-- Pins the npm and Node.js toolchain used by current Nova projects and records explicit denials for optional dependency install scripts used by the built-in scaffolds.
-- Generates a baseline `nova.config.json` so recipes and utilities have a valid config to work with from the start.
-- Installs `@cbnventures/nova` as a dev dependency so the `nova` CLI is available inside the project without a global install.
+1. Creates the root `package.json` with `workspaces` configured for `apps/*` and `packages/*` so you can add workspaces immediately.
+2. Creates a root `turbo.json` and standard `dev`, `prod`, `check`, `build`, `deploy`, and `clean` script groups. Each top-level script delegates to its adjacent `name:*` Turbo step through `nova utility run-scripts`; development and production-oriented groups pass an explicit `--node-env` value.
+3. Pins the npm and Node.js toolchain used by current Nova projects and records explicit install-script decisions used by the built-in scaffolds.
+4. Generates a baseline `nova.config.json` so recipes and utilities have a valid config to work with from the start.
+5. Installs `@cbnventures/nova` as a dependency so its CLI, presets, and runtime toolkit remain available to generated workspaces.
 
 ## Requirements
 
@@ -137,7 +138,7 @@ For example, these commands add a Docusaurus documentation site and a Cloudflare
     ```bash
     cd my-app
     nova scaffold docs docusaurus
-    nova scaffold app workers
+    nova scaffold app cloudflare-workers
     ```
 
   </TabItem>
@@ -146,12 +147,12 @@ For example, these commands add a Docusaurus documentation site and a Cloudflare
     ```bash
     cd my-app
     npx --yes @cbnventures/nova@latest scaffold docs docusaurus
-    npx --yes @cbnventures/nova@latest scaffold app workers
+    npx --yes @cbnventures/nova@latest scaffold app cloudflare-workers
     ```
 
   </TabItem>
 </Tabs>
 
-You can mix any supported app and docs scaffolds this way. Run each command from the monorepo root, not from inside an existing workspace.
+You can mix any supported app, docs, and package scaffolds this way. Run each command from the monorepo root, not from inside an existing workspace.
 
 Once the workspaces are in place, run generators for project-level files like `.editorconfig`, `.gitignore`, and `LICENSE`.

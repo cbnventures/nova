@@ -111,7 +111,7 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 ### Project
 
 - **Purpose**: Edit project display name, slug, short/long descriptions, keywords, legal name, pronouns, supported platforms, starting year, and license in one guided step.
-- **Nice to know**: Slug updates propagate to <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> names for roles that depend on it (`project`, `docs`, `config`, `app`, `tool`) to keep names consistent. Pronouns control first-person wording (we/us/our vs I/me/my) in generated files, platforms drive bug report dropdowns, and starting year plus license feed the LICENSE generator.
+- **Nice to know**: Slug updates propagate to <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> names for roles that depend on it (`project`, `docs`, `config`, `app`, `tool`) to keep names consistent. Pronouns control first-person wording (we/us/our vs I/me/my), platforms help suggest initial issue fields and badges, and starting year plus license feed the LICENSE generator.
 - **Things to watch**: Slug allows only letters, numbers, hyphens, and underscores up to 214 characters; keywords are validated per item (50 characters max); starting year must be an integer &ge; 1970.
 
 ### Entities
@@ -131,6 +131,12 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 - **Purpose**: Configure canonical links with validation/normalization before persisting: homepage, repository, bugs, license, logo, docs, npm, docker, funding, privacy policy, and terms of use.
 - **Nice to know**: Repository accepts `git:`, `git+https:`, `git+ssh:`, `git+http:` plus `http://`, `https://`; all other URLs are `http://`, `https://` only. Privacy policy and terms of use URLs appear in generated GitHub issue templates.
 - **Things to watch**: Funding sources are entered comma-separated and saved as a list after validation.
+
+### README
+
+- **Purpose**: Select the exact badges and order generated inside Nova's README badges region.
+- **Nice to know**: When `readme.badges` has never been configured, the wizard suggests badges from the project platforms and available npm, Docker, GitHub, and funding sources. Saving the category writes your choices explicitly, so later generators never guess.
+- **Things to watch**: Verified Homebridge status is never inferred. Badges that depend on npm, Docker, GitHub, or funding metadata require the corresponding source field.
 
 ### Workspaces
 
@@ -159,7 +165,7 @@ The wizard converts `\n` sequences to actual line breaks when saving. Alternativ
 - **Purpose**: Configure GitHub repository settings, policies, issue-template fields, and the GitHub recipes stored under the top-level `recipes.github` block.
 - **Nice to know**: Recipe toggles cover `sync-actions`, `sync-features`, `sync-identity`, `sync-labels`, `sync-policies`, `sync-rulesets`, and `sync-security`. Features cover Issues, Wiki, Projects, Discussions, and Sponsorships. Guided policies cover visibility, default branch, merge methods, and automatic head-branch deletion.
 - **Advanced repository settings**: Actions, labels, security, rulesets, merge presentation, auto-merge, update-branch, and web-signoff values already in the config are preserved when the wizard saves. Edit those values through the complete [`github` config reference](/docs/quickstart/nova-config#github); the wizard does not invent GitHub policy defaults for you.
-- **Bug report fields**: A multiselect chooses which platform field files the [issue template generator](/docs/cli/generators/github/issue-template) includes, saved under `github.issueTemplate.bugReportFields`. Leaving every option unselected omits the field so the generator falls back to fields derived from `project.platforms`.
+- **Bug report fields**: A multiselect chooses the exact semantic fields and order the [issue template generator](/docs/cli/generators/github/issue-template) includes, saved under `github.issueTemplate.bugReportFields`. When this array has never been configured, the wizard suggests an initial selection from `project.platforms` and configured URLs; saving no choices writes an explicit empty array.
 - **Things to watch**: Owner and repository name are required (non-empty) and trimmed before they're saved.
 
 ### Ignores
@@ -247,7 +253,7 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
       "autoDeleteHeadBranch": true
     },
     "issueTemplate": {
-      "bugReportFields": ["nodejs.yml", "screenshots.yml"]
+      "bugReportFields": ["nodejs", "screenshots"]
     }
   },
   "urls": {
@@ -262,6 +268,18 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
     "fundSources": ["https://github.com/sponsors/example"],
     "privacyPolicy": "https://example.com/privacy",
     "termsOfUse": "https://example.com/terms"
+  },
+  "readme": {
+    "badges": [
+      "npm-version",
+      "npm-downloads",
+      "docker-pulls",
+      "docker-image-size",
+      "github-release",
+      "github-top-language",
+      "github-license",
+      "funding"
+    ]
   },
   "workspaces": {
     "./": {

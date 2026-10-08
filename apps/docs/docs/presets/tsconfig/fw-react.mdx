@@ -1,0 +1,52 @@
+---
+id: "fw-react"
+title: "Framework - React"
+description: "Configure TypeScript for React with the modern JSX transform, bundler resolution, browser libraries, and no emit."
+keywords:
+  - "nova"
+  - "react"
+  - "tsconfig"
+  - "react jsx"
+  - "bundler resolution"
+tags:
+  - "presets"
+  - "tsconfig"
+  - "framework"
+  - "react"
+---
+
+Configure TypeScript for a bundler-built React application.
+
+## Usage
+
+Add `fw-react` after Nova's required essentials and strict layers and the browser runtime.
+
+```json title="tsconfig.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-browser.json",
+    "@cbnventures/nova/presets/tsconfig/fw-react.json"
+  ],
+  "include": [
+    "./src/**/*"
+  ]
+}
+```
+
+## Compiler Options
+
+| Option             | Value                               | Purpose                                                        |
+|--------------------|-------------------------------------|----------------------------------------------------------------|
+| `isolatedModules`  | `true`                              | Keeps every file safe for independent bundler transforms.      |
+| `jsx`              | `"react-jsx"`                       | Uses React's modern automatic JSX runtime.                     |
+| `lib`              | `["DOM", "DOM.Iterable", "ESNext"]` | Provides browser and modern JavaScript APIs.                   |
+| `module`           | `"ESNext"`                          | Preserves ECMAScript modules for the bundler.                  |
+| `moduleResolution` | `"Bundler"`                         | Resolves package exports the way a modern bundler does.        |
+| `noEmit`           | `true`                              | Keeps TypeScript as the checker while the bundler owns output. |
+
+## Related
+
+- Pair it with the matching **[Framework - React ESLint preset](/docs/presets/eslint/fw-react)**.
+- Select it automatically with the **[Vite scaffold](/docs/cli/scaffolding/app/vite)** and `--framework react`.

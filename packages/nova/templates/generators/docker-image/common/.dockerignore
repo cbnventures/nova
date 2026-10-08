@@ -1,0 +1,9 @@
+.git
+.github
+.nova-backup*
+.env
+.env.*
+!.env.example
+build
+node_modules
+npm-debug.log*

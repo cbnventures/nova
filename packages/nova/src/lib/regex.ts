@@ -1343,6 +1343,26 @@ export const LIB_REGEX_PLACEHOLDER_CURRENT_DATE = /\[__CURRENT_DATE__\]/;
 export const LIB_REGEX_PLACEHOLDER_CURRENT_YEAR = /\[__CURRENT_YEAR__\]/;
 
 /**
+ * Lib - Regex - Placeholder Astro Adapter.
+ *
+ * Matches the adapter selection token used by the Astro scaffold. The shared
+ * resolver replaces it only after validating the selected server mode.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_ASTRO_ADAPTER = /\[__ASTRO_ADAPTER__\]/;
+
+/**
+ * Lib - Regex - Placeholder Astro Rendering.
+ *
+ * Matches the rendering-mode token used by the Astro scaffold. It remains
+ * distinct from the universal output-directory option.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_ASTRO_RENDERING = /\[__ASTRO_RENDERING__\]/;
+
+/**
  * Lib - Regex - Placeholder Custom Donation.
  *
  * Matches the "[__CUSTOM_DONATION__]" token in the FUNDING.yml template. Used by
@@ -1353,6 +1373,66 @@ export const LIB_REGEX_PLACEHOLDER_CURRENT_YEAR = /\[__CURRENT_YEAR__\]/;
 export const LIB_REGEX_PLACEHOLDER_CUSTOM_DONATION = /\[__CUSTOM_DONATION__\]/;
 
 /**
+ * Lib - Regex - Placeholder Docker Runtime Directives.
+ *
+ * Matches the "[__DOCKER_RUNTIME_DIRECTIVES__]" token in the shared Node.js
+ * Dockerfile template so each Docker profile can add only its runtime contract.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_DOCKER_RUNTIME_DIRECTIVES = /\[__DOCKER_RUNTIME_DIRECTIVES__\]/;
+
+/**
+ * Lib - Regex - Placeholder Docker Build Directory.
+ *
+ * Matches the compiled-site directory inserted into static-site Dockerfiles.
+ * Different framework scaffolds can therefore share one runtime template.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_DOCKER_BUILD_DIRECTORY = /\[__DOCKER_BUILD_DIRECTORY__\]/;
+
+/**
+ * Lib - Regex - Placeholder Docker Architectures.
+ *
+ * Matches the architecture list used by generated container publishing
+ * workflows after Nova normalizes the selected platform names.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_DOCKER_ARCHITECTURES = /\[__DOCKER_ARCHITECTURES__\]/;
+
+/**
+ * Lib - Regex - Placeholder Docker Image.
+ *
+ * Matches the shared yes-or-no Docker scaffold selection token. Framework
+ * scaffolds use it to coordinate config output and packaging.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE = /\[__DOCKER_IMAGE__\]/;
+
+/**
+ * Lib - Regex - Placeholder Docker Publish.
+ *
+ * Matches the registry selection token used by Docker image scaffolding. The
+ * selected registry determines which root workflow layer is emitted.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_DOCKER_PUBLISH = /\[__DOCKER_PUBLISH__\]/;
+
+/**
+ * Lib - Regex - Placeholder Docusaurus Content.
+ *
+ * Matches the docs-only or docs-and-blog content selection token. It controls
+ * both preset configuration and optional blog starter content.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_DOCUSAURUS_CONTENT = /\[__DOCUSAURUS_CONTENT__\]/;
+
+/**
  * Lib - Regex - Placeholder Docusaurus Preset.
  *
  * Matches the "[__DOCUSAURUS_PRESET__]" token in the Docusaurus scaffold
@@ -1361,6 +1441,26 @@ export const LIB_REGEX_PLACEHOLDER_CUSTOM_DONATION = /\[__CUSTOM_DONATION__\]/;
  * @since 0.26.0
  */
 export const LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET = /\[__DOCUSAURUS_PRESET__\]/;
+
+/**
+ * Lib - Regex - Placeholder Docusaurus Search.
+ *
+ * Matches the built-in search selection token used by the Docusaurus scaffold.
+ * The generated preset config enables or disables local search from this value.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_DOCUSAURUS_SEARCH = /\[__DOCUSAURUS_SEARCH__\]/;
+
+/**
+ * Lib - Regex - Placeholder Homebridge Custom UI.
+ *
+ * Matches the custom Config UI selection token used by the Homebridge scaffold.
+ * Its replacement is a JSON boolean rather than the internal answer label.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_HOMEBRIDGE_CUSTOM_UI = /\[__HOMEBRIDGE_CUSTOM_UI__\]/;
 
 /**
  * Lib - Regex - Placeholder Entity Name.
@@ -1574,6 +1674,46 @@ export const LIB_REGEX_PLACEHOLDER_PROJECT_SLUG = /\[__PROJECT_SLUG__\]/;
 export const LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME = /\[__WORKSPACE_PACKAGE_NAME__\]/;
 
 /**
+ * Lib - Regex - Placeholder Workspace Relative Path.
+ *
+ * Matches the "[__WORKSPACE_RELATIVE_PATH__]" token in scaffold templates.
+ * The scaffold pipeline replaces it with the workspace path from the root.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_WORKSPACE_RELATIVE_PATH = /\[__WORKSPACE_RELATIVE_PATH__\]/;
+
+/**
+ * Lib - Regex - Placeholder Workspace Identifier.
+ *
+ * Matches the "[__WORKSPACE_IDENTIFIER__]" token in scaffold templates. The
+ * scaffold pipeline replaces it with a PascalCase source-code identifier.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_WORKSPACE_IDENTIFIER = /\[__WORKSPACE_IDENTIFIER__\]/;
+
+/**
+ * Lib - Regex - Placeholder Workspace Name.
+ *
+ * Matches the "[__WORKSPACE_NAME__]" token in scaffold templates. The scaffold
+ * pipeline replaces it with the user-selected workspace slug.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME = /\[__WORKSPACE_NAME__\]/;
+
+/**
+ * Lib - Regex - Placeholder Workspace Title.
+ *
+ * Matches the "[__WORKSPACE_TITLE__]" token in scaffold templates. The scaffold
+ * pipeline replaces it with a title-cased workspace name for human-facing text.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE = /\[__WORKSPACE_TITLE__\]/;
+
+/**
  * Lib - Regex - Placeholder Terms Of Use.
  *
  * Matches the "[__TERMS_OF_USE__]" token in issue templates. Used by the issue-template
@@ -1582,6 +1722,26 @@ export const LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME = /\[__WORKSPACE_PACKA
  * @since 0.11.0
  */
 export const LIB_REGEX_PLACEHOLDER_TERMS_OF_USE = /\[__TERMS_OF_USE__\]/;
+
+/**
+ * Lib - Regex - Placeholder Vite Framework.
+ *
+ * Matches the framework selection token used by the Vite scaffold. The answer
+ * selects a complete source, ESLint, and TypeScript template layer.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_VITE_FRAMEWORK = /\[__VITE_FRAMEWORK__\]/;
+
+/**
+ * Lib - Regex - Placeholder Vite Pwa.
+ *
+ * Matches the progressive-web-app selection token used by the Vite scaffold.
+ * It selects either the empty or service-worker plugin layer.
+ *
+ * @since 0.29.0
+ */
+export const LIB_REGEX_PLACEHOLDER_VITE_PWA = /\[__VITE_PWA__\]/;
 
 /**
  * Lib - Regex - Placeholder Us.

@@ -1,15 +1,15 @@
 ---
 id: "tool-vite"
 title: "Tool - Vite"
-description: "Reserve the Vite tool layer in your ESLint config so future Vite-specific ignores and rules drop in without restructuring."
+description: "Add Node.js globals to Vite and Vitest configuration files without changing browser application globals."
 keywords:
   - "nova"
   - "vite"
   - "tool preset"
   - "eslint ignores"
   - "flat config"
-  - "forward compatibility"
-  - "config layering"
+  - "vite config"
+  - "vitest config"
 tags:
   - "presets"
   - "eslint"
@@ -18,10 +18,35 @@ tags:
 ---
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-This preset is the tooling layer for Vite projects in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>.
+Add Node.js globals only to Vite and Vitest configuration files. Your application source keeps the globals from its selected runtime layer, while configuration code can use Node APIs without false positives.
 
-:::info Coming soon
+## Usage
 
-This preset has no rules yet. This page will be filled in once it does.
+Spread `toolVite` after the language and runtime layers.
 
-:::
+```ts title="eslint.config.mts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  langTypescript,
+  runtimeBrowser,
+  toolVite,
+} from '@cbnventures/nova/presets/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...runtimeBrowser,
+  ...toolVite,
+];
+```
+
+## What This Preset Configures
+
+The preset scopes Node.js globals to `vite.config.*` and `vitest.config.*` files across JavaScript and TypeScript module extensions. It does not add Vite application rules or browser globals.
+
+## Related
+
+- Pair it with the matching **[Tool - Vite TSConfig preset](/docs/presets/tsconfig/tool-vite)**.
+- Review the **[Vite scaffold](/docs/cli/scaffolding/app/vite)**.

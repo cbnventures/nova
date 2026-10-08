@@ -70,9 +70,13 @@ import type {
   Lib_NovaConfig_Runner_GetGithubFeatures_Sponsorships,
   Lib_NovaConfig_Runner_GetGithubFeatures_Value,
   Lib_NovaConfig_Runner_GetGithubFeatures_Wiki,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplate_AllowedBugReportFields,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportField,
   Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplate_RawBugReportFields,
   Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result,
   Lib_NovaConfig_Runner_GetGithubIssueTemplate_Returns,
+  Lib_NovaConfig_Runner_GetGithubIssueTemplate_SeenBugReportFields,
   Lib_NovaConfig_Runner_GetGithubIssueTemplate_Value,
   Lib_NovaConfig_Runner_GetGithubLabels_Color,
   Lib_NovaConfig_Runner_GetGithubLabels_ColorCandidate,
@@ -185,6 +189,7 @@ import type {
   Lib_NovaConfig_Runner_Parse_Github,
   Lib_NovaConfig_Runner_Parse_Gitignore,
   Lib_NovaConfig_Runner_Parse_Project,
+  Lib_NovaConfig_Runner_Parse_ReadMe,
   Lib_NovaConfig_Runner_Parse_Recipes,
   Lib_NovaConfig_Runner_Parse_Result,
   Lib_NovaConfig_Runner_Parse_Returns,
@@ -299,6 +304,20 @@ import type {
   Lib_NovaConfig_Runner_ParseProject_ValuePlatforms,
   Lib_NovaConfig_Runner_ParseProject_ValuePronouns,
   Lib_NovaConfig_Runner_ParseProject_ValueStartingYear,
+  Lib_NovaConfig_Runner_ParseReadMe_AllowedBadges,
+  Lib_NovaConfig_Runner_ParseReadMe_Badge,
+  Lib_NovaConfig_Runner_ParseReadMe_Badges,
+  Lib_NovaConfig_Runner_ParseReadMe_Github,
+  Lib_NovaConfig_Runner_ParseReadMe_HasDockerSource,
+  Lib_NovaConfig_Runner_ParseReadMe_HasFundingSource,
+  Lib_NovaConfig_Runner_ParseReadMe_HasGithubSource,
+  Lib_NovaConfig_Runner_ParseReadMe_HasNpmSource,
+  Lib_NovaConfig_Runner_ParseReadMe_MissingSource,
+  Lib_NovaConfig_Runner_ParseReadMe_Returns,
+  Lib_NovaConfig_Runner_ParseReadMe_SeenBadges,
+  Lib_NovaConfig_Runner_ParseReadMe_Urls,
+  Lib_NovaConfig_Runner_ParseReadMe_Value,
+  Lib_NovaConfig_Runner_ParseReadMe_ValueBadges,
   Lib_NovaConfig_Runner_ParseRecipes_Github,
   Lib_NovaConfig_Runner_ParseRecipes_License,
   Lib_NovaConfig_Runner_ParseRecipes_PackageJson,
@@ -619,6 +638,7 @@ export class Runner {
     const github: Lib_NovaConfig_Runner_Parse_Github = this.parseGithub(value['github']);
     const workflows: Lib_NovaConfig_Runner_Parse_Workflows = this.parseWorkflows(value['workflows']);
     const urls: Lib_NovaConfig_Runner_Parse_Urls = this.parseUrls(value['urls']);
+    const readMe: Lib_NovaConfig_Runner_Parse_ReadMe = this.parseReadMe(value['readme'], github, urls);
     const workspaces: Lib_NovaConfig_Runner_Parse_Workspaces = this.parseWorkspaces(
       value['workspaces'],
       (project !== undefined && project['name'] !== undefined) ? project['name']['slug'] : undefined,
@@ -656,6 +676,10 @@ export class Runner {
 
     if (urls !== undefined) {
       result.urls = urls;
+    }
+
+    if (readMe !== undefined) {
+      result.readme = readMe;
     }
 
     if (workspaces !== undefined) {
@@ -839,6 +863,11 @@ export class Runner {
         'macos',
         'linux',
         'windows',
+        'homebridge',
+        'docker',
+        'pfsense',
+        'synology',
+        'web',
       ]);
       const parsedPlatforms: Lib_NovaConfig_Runner_ParseProject_ParsedPlatforms = valuePlatforms
         .filter((item): item is Lib_NovaConfig_Runner_ParseProject_Platform => typeof item === 'string' && allowedPlatforms.has(item));
@@ -881,6 +910,119 @@ export class Runner {
     }
 
     return (Object.keys(project).length > 0) ? project : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Parse Read Me.
+   *
+   * Validates the exact ordered README badge list. Badge identifiers are explicit:
+   * missing or empty lists produce no badges, and source-backed badges are rejected
+   * when their required GitHub, npm, Docker, or funding setting is unavailable.
+   *
+   * @param {Lib_NovaConfig_Runner_ParseReadMe_Value}  value  - Value.
+   * @param {Lib_NovaConfig_Runner_ParseReadMe_Github} github - Github.
+   * @param {Lib_NovaConfig_Runner_ParseReadMe_Urls}   urls   - Urls.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_ParseReadMe_Returns}
+   *
+   * @since 0.29.0
+   */
+  private parseReadMe(value: Lib_NovaConfig_Runner_ParseReadMe_Value, github: Lib_NovaConfig_Runner_ParseReadMe_Github, urls: Lib_NovaConfig_Runner_ParseReadMe_Urls): Lib_NovaConfig_Runner_ParseReadMe_Returns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const valueBadges: Lib_NovaConfig_Runner_ParseReadMe_ValueBadges = value['badges'];
+
+    if (valueBadges === undefined) {
+      return undefined;
+    }
+
+    if (Array.isArray(valueBadges) === false) {
+      this.pushError('Runner.parseReadMe', 'readme', 'README "badges" must be an array. Skipping ...');
+
+      return undefined;
+    }
+
+    const allowedBadges: Lib_NovaConfig_Runner_ParseReadMe_AllowedBadges = new Set([
+      'homebridge',
+      'homebridge-verified',
+      'npm-version',
+      'npm-downloads',
+      'docker-pulls',
+      'docker-image-size',
+      'github-release',
+      'github-top-language',
+      'github-license',
+      'funding',
+    ]);
+    const seenBadges: Lib_NovaConfig_Runner_ParseReadMe_SeenBadges = new Set();
+    const badges: Lib_NovaConfig_Runner_ParseReadMe_Badges = [];
+    const hasGithubSource: Lib_NovaConfig_Runner_ParseReadMe_HasGithubSource = (github !== undefined) ? (github['owner'] !== undefined && github['repo'] !== undefined) : false;
+    const hasNpmSource: Lib_NovaConfig_Runner_ParseReadMe_HasNpmSource = (urls !== undefined) ? urls['npm'] !== undefined : false;
+    const hasDockerSource: Lib_NovaConfig_Runner_ParseReadMe_HasDockerSource = (urls !== undefined) ? urls['docker'] !== undefined : false;
+    const hasFundingSource: Lib_NovaConfig_Runner_ParseReadMe_HasFundingSource = (urls !== undefined && urls['fundSources'] !== undefined) ? urls['fundSources'].length > 0 : false;
+
+    for (const item of valueBadges) {
+      if (typeof item !== 'string' || allowedBadges.has(item) === false) {
+        this.pushError('Runner.parseReadMe', 'readme', `README badge "${String(item)}" is not supported. Skipping ...`);
+
+        continue;
+      }
+
+      if (seenBadges.has(item) === true) {
+        this.pushError('Runner.parseReadMe', 'readme', `README badge "${item}" is duplicated. Skipping ...`);
+
+        continue;
+      }
+
+      seenBadges.add(item);
+
+      const badge: Lib_NovaConfig_Runner_ParseReadMe_Badge = item as Lib_NovaConfig_Runner_ParseReadMe_Badge;
+      let missingSource: Lib_NovaConfig_Runner_ParseReadMe_MissingSource = false;
+
+      switch (badge) {
+        case 'npm-version':
+        case 'npm-downloads': {
+          missingSource = hasNpmSource === false;
+          break;
+        }
+
+        case 'docker-pulls':
+        case 'docker-image-size': {
+          missingSource = hasDockerSource === false;
+          break;
+        }
+
+        case 'github-release':
+        case 'github-top-language':
+        case 'github-license': {
+          missingSource = hasGithubSource === false;
+          break;
+        }
+
+        case 'funding': {
+          missingSource = hasFundingSource === false;
+          break;
+        }
+
+        default: {
+          break;
+        }
+      }
+
+      if (missingSource === true) {
+        this.pushError('Runner.parseReadMe', 'readme', `README badge "${badge}" is missing its required configuration source. Skipping ...`);
+
+        continue;
+      }
+
+      badges.push(badge);
+    }
+
+    return { badges };
   }
 
   /**
@@ -2495,8 +2637,8 @@ export class Runner {
   /**
    * Lib - Nova Config - Get GitHub Issue Template.
    *
-   * Parses the github.issueTemplate block for the bugReportFields list of form
-   * field file names. Returns undefined when the input is not a plain object.
+   * Parses the github.issueTemplate block for its semantic bug-report field list.
+   * Returns undefined when the input is not a plain object.
    *
    * @param {Lib_NovaConfig_Runner_GetGithubIssueTemplate_Value} value - Value.
    *
@@ -2512,13 +2654,56 @@ export class Runner {
     }
 
     const result: Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result = {};
-    const bugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields = this.getArrayOfNonEmptyStrings(value['bugReportFields']);
+    const rawBugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplate_RawBugReportFields = value['bugReportFields'];
 
-    if (bugReportFields !== undefined) {
-      result.bugReportFields = bugReportFields;
+    if (rawBugReportFields === undefined) {
+      return undefined;
     }
 
-    return (Object.keys(result).length > 0) ? result : undefined;
+    if (Array.isArray(rawBugReportFields) === false) {
+      this.pushError('Runner.getGithubIssueTemplate', 'github', 'GitHub issue-template "bugReportFields" must be an array. Skipping ...');
+
+      return undefined;
+    }
+
+    const allowedBugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplate_AllowedBugReportFields = new Set([
+      'nodejs',
+      'apple',
+      'android',
+      'csharp',
+      'php',
+      'python',
+      'homebridge',
+      'pfsense',
+      'synology',
+      'docker',
+      'web',
+      'screenshots',
+    ]);
+    const seenBugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplate_SeenBugReportFields = new Set();
+    const bugReportFields: Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields = [];
+
+    for (const item of rawBugReportFields) {
+      if (typeof item !== 'string' || allowedBugReportFields.has(item) === false) {
+        this.pushError('Runner.getGithubIssueTemplate', 'github', `GitHub bug-report field "${String(item)}" is not supported. Skipping ...`);
+
+        continue;
+      }
+
+      if (seenBugReportFields.has(item) === true) {
+        this.pushError('Runner.getGithubIssueTemplate', 'github', `GitHub bug-report field "${item}" is duplicated. Skipping ...`);
+
+        continue;
+      }
+
+      seenBugReportFields.add(item);
+
+      bugReportFields.push(item as Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportField);
+    }
+
+    result.bugReportFields = bugReportFields;
+
+    return result;
   }
 
   /**

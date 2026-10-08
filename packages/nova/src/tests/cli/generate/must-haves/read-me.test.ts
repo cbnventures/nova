@@ -22,6 +22,9 @@ import { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 import * as utility from '../../../../lib/utility.js';
 
 import type {
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildBadgesRegionContent_ReturnsNoBadgesWhenTheExplicitListIsMissingOrEmpty_EmptyContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildBadgesRegionContent_ReturnsNoBadgesWhenTheExplicitListIsMissingOrEmpty_MissingContent,
+  Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildBadgesRegionContent_UsesOnlyExplicitBadgesInConfiguredOrder_Content,
   Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_IsProjectRootSpy,
   Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_LoadSpy,
   Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_DoesNotCallSaveGeneratedFileDuringDryRun_SaveSpy,
@@ -320,6 +323,12 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
         logo: 'https://example.com/logo.svg',
         documentation: 'https://docs.example.com',
         fundSources: ['https://github.com/sponsors/acme'],
+      },
+      readme: {
+        badges: [
+          'github-release',
+          'funding',
+        ],
       },
     }, null, 2);
     const novaConfigPath: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_WrapsEachSectionInNovaRegionAnchors_NovaConfigPath = join(projectDirectory, 'nova.config.json');
@@ -675,6 +684,63 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
     const presetContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReplaceFileModeOverwritesExistingFanOutFiles_PresetContent = await readFile(join(projectDirectory, 'packages', 'preset-a', 'README.md'), 'utf-8');
 
     strictEqual(presetContent.includes('Test Project') === true, true);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Build Badges Region Content.
+ *
+ * @since 0.29.0
+ */
+describe('CliGenerateMustHavesReadMe.buildBadgesRegionContent', () => {
+  it('uses only explicit badges in configured order', () => {
+    const content: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildBadgesRegionContent_UsesOnlyExplicitBadgesInConfiguredOrder_Content = CliGenerateMustHavesReadMe.buildBadgesRegionContent({
+      github: {
+        owner: 'acme',
+        repo: 'widget',
+      },
+      urls: {
+        npm: 'https://www.npmjs.com/package/@acme/widget',
+      },
+      readme: {
+        badges: [
+          'github-license',
+          'npm-version',
+          'github-release',
+        ],
+      },
+    });
+
+    ok(content.indexOf('GitHub License') < content.indexOf('npm Package'));
+    ok(content.indexOf('npm Package') < content.indexOf('GitHub Releases'));
+    ok(content.includes('npm Downloads') === false);
+    ok(content.includes('GitHub Top Languages') === false);
+
+    return;
+  });
+
+  it('returns no badges when the explicit list is missing or empty', () => {
+    const missingContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildBadgesRegionContent_ReturnsNoBadgesWhenTheExplicitListIsMissingOrEmpty_MissingContent = CliGenerateMustHavesReadMe.buildBadgesRegionContent({
+      github: {
+        owner: 'acme',
+        repo: 'widget',
+      },
+    });
+
+    const emptyContent: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildBadgesRegionContent_ReturnsNoBadgesWhenTheExplicitListIsMissingOrEmpty_EmptyContent = CliGenerateMustHavesReadMe.buildBadgesRegionContent({
+      github: {
+        owner: 'acme',
+        repo: 'widget',
+      },
+      readme: { badges: [] },
+    });
+
+    strictEqual(missingContent, '');
+    strictEqual(emptyContent, '');
 
     return;
   });

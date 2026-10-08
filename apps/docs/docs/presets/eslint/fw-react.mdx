@@ -1,0 +1,61 @@
+---
+id: "fw-react"
+title: "Framework - React"
+description: "Lint React components with Nova-compatible React, Hooks, accessibility, browser, and modern JSX runtime rules."
+keywords:
+  - "nova"
+  - "react"
+  - "eslint"
+  - "react hooks"
+  - "jsx accessibility"
+tags:
+  - "presets"
+  - "eslint"
+  - "framework"
+  - "react"
+---
+
+Lint React applications with a Nova-compatible framework layer instead of composing the upstream plugin configs directly.
+
+## Why Use This Preset?
+
+1. Enables React component correctness, the Rules of Hooks, and recommended JSX accessibility checks.
+2. Selects the modern JSX runtime, so components do not need legacy React imports.
+3. Declares browser globals for React source files while leaving language and repository policy to separate Nova layers.
+4. Disables runtime prop-type validation for TypeScript projects and keeps every rule open to later consumer overrides.
+
+## Usage
+
+Spread `fwReact` after the language and browser layers and before `novaRules`.
+
+```ts title="eslint.config.mts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  fwReact,
+  langJavascript,
+  langTypescript,
+  runtimeBrowser,
+  toolVite,
+} from '@cbnventures/nova/presets/eslint';
+import { novaRules } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langJavascript,
+  ...langTypescript,
+  ...runtimeBrowser,
+  ...toolVite,
+  ...fwReact,
+  ...novaRules,
+];
+```
+
+Nova deliberately does not enable React Hooks' compiler-diagnostic bundle or `exhaustive-deps`. Consumers can opt into those policies in a later config block when their application is designed for them.
+
+## Related
+
+- Pair it with the matching **[Framework - React TSConfig preset](/docs/presets/tsconfig/fw-react)**.
+- Select it automatically with the **[Vite scaffold](/docs/cli/scaffolding/app/vite)** and `--framework react`.
+- Review the layering order in **[ESLint Best Practices](/docs/presets/eslint/best-practices)**.

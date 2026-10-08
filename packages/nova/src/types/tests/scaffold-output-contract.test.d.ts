@@ -65,7 +65,41 @@ export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_UnresolvedFile = 
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_UnresolvedFiles = Tests_ScaffoldOutputContract_VerifyGeneratedOutput_UnresolvedFile[];
 
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PlaceholderGeneratedContent = string;
+
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PlaceholderMessage = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TrailingWhitespaceFile = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TrailingWhitespaceFiles = Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TrailingWhitespaceFile[];
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TrailingWhitespaceGeneratedContent = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TrailingWhitespaceMessage = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExtraFinalNewlineFile = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExtraFinalNewlineFiles = Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExtraFinalNewlineFile[];
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExtraFinalNewlineGeneratedContent = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExtraFinalNewlineMessage = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_EslintConfigIndex = number;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_EslintConfigContent = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_EslintBaseline = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigFiles = string[];
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigPath = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigRaw = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Tsconfig = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigExtends = string[];
 
 /**
  * Tests - Scaffold Output Contract - Verify Script Contract.
@@ -129,6 +163,8 @@ export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJ
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJson = Record<string, unknown>;
 
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDependencies = Record<string, unknown>;
+
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies = Record<string, unknown>;
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonPath = string;
@@ -155,3 +191,11 @@ export type Tests_ScaffoldOutputContract_VerifyTemplateContract_Returns = Promis
 export type Tests_ScaffoldOutputContract_VerifyTemplateContract_TargetDirectory = string;
 
 export type Tests_ScaffoldOutputContract_VerifyTemplateContract_TemplateDirectory = string;
+
+export type Tests_ScaffoldOutputContract_VerifyTemplateContract_TemplateOptionSubpath = string;
+
+export type Tests_ScaffoldOutputContract_VerifyTemplateContract_TemplateOptionSubpaths = Tests_ScaffoldOutputContract_VerifyTemplateContract_TemplateOptionSubpath[];
+
+export type Tests_ScaffoldOutputContract_VerifyTemplateContract_ReviewedTemplateOptionSubpath = string;
+
+export type Tests_ScaffoldOutputContract_VerifyTemplateContract_TemplateOptionDirectory = string;

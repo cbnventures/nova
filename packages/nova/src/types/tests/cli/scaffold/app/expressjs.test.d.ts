@@ -74,6 +74,27 @@ export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWit
 export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJsonPath = string;
 
 /**
+ * Tests - CLI - Scaffold - App - Express.js - Run - Generates Docker Packaging When Requested.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_ProjectDirectory = string;
+
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_PackageJson = string;
+
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_PackageJsonPath = string;
+
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_NovaConfig = string;
+
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_NovaConfigPath = string;
+
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfilePath = string;
+
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_ComposePath = string;
+
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfileContent = string;
+
+/**
  * Tests - CLI - Scaffold - App - Express.js - Run - Respects Dry Run.
  *
  * @since 0.15.0

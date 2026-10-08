@@ -46,6 +46,13 @@ import type {
   Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_NormalizesStringExportsToObjectForPackageRole_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_NormalizesStringExportsToObjectForPackageRole_WorkspacePackageJsonPath,
   Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_OriginalCwd,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_Output,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_Parsed,
+  Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_ProjectDirectory,
   Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_RemovesExportsFromNonPackageRole_NovaConfigContents,
   Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_RemovesExportsFromNonPackageRole_NovaConfigPath,
   Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_RemovesExportsFromNonPackageRole_Output,
@@ -301,6 +308,59 @@ describe('CliRecipePackageJsonNormalizeModules.run', async () => {
         default: './build/index.js',
       },
     });
+
+    return;
+  });
+
+  it('preserves module type for project role', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_ProjectDirectory = join(sandboxRoot, 'preserve-project-module-type');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_PackageJsonContents = JSON.stringify({
+      name: 'test-project',
+      version: '0.0.0',
+      private: true,
+      type: 'module',
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_NovaConfigContents = JSON.stringify({
+      workspaces: {
+        './': {
+          name: 'test-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './': {
+            'normalize-modules': {
+              enabled: true,
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonNormalizeModules.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_Output = await readFile(packageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_Parsed = JSON.parse(output);
+
+    strictEqual(parsed['type'], 'module');
 
     return;
   });

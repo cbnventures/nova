@@ -1,0 +1,47 @@
+name: [__WORKSPACE_IDENTIFIER__]
+options:
+  bundleIdPrefix: com.example
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: "17.0"
+    macOS: "14.0"
+  developmentLanguage: en
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    GENERATE_INFOPLIST_FILE: YES
+targets:
+  [__WORKSPACE_IDENTIFIER__]:
+    type: application
+    supportedDestinations: [iOS, macOS]
+    sources:
+      - Sources
+    settings:
+      base:
+        PRODUCT_NAME: [__WORKSPACE_TITLE__]
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.[__WORKSPACE_NAME__]
+        ENABLE_PREVIEWS: YES
+  [__WORKSPACE_IDENTIFIER__]Tests:
+    type: bundle.unit-test
+    supportedDestinations: [iOS, macOS]
+    sources:
+      - Tests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.[__WORKSPACE_NAME__].tests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/[__WORKSPACE_IDENTIFIER__].app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/[__WORKSPACE_IDENTIFIER__]
+        BUNDLE_LOADER: $(TEST_HOST)
+    dependencies:
+      - target: [__WORKSPACE_IDENTIFIER__]
+schemes:
+  [__WORKSPACE_IDENTIFIER__]:
+    build:
+      targets:
+        [__WORKSPACE_IDENTIFIER__]: all
+        [__WORKSPACE_IDENTIFIER__]Tests: [test]
+    test:
+      targets:
+        - [__WORKSPACE_IDENTIFIER__]Tests

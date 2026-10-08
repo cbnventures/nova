@@ -25,8 +25,28 @@ import type {
   Shared_MonorepoContext,
   Shared_ScaffoldConfig,
   Shared_ScaffoldExistingRoot,
+  Shared_ScaffoldTemplateQuestionChoice,
   Shared_ScaffoldTemplateQuestions,
+  Shared_ScaffoldTemplateResolution,
+  Shared_ScaffoldTemplateResolution_Answers,
 } from '../shared.d.ts';
+
+/**
+ * Lib - Scaffold - Apply Template Replacements.
+ *
+ * @since 0.29.0
+ */
+export type Lib_Scaffold_ApplyTemplateReplacements_Input = string;
+
+export type Lib_Scaffold_ApplyTemplateReplacements_Replacements = Map<RegExp, string>;
+
+export type Lib_Scaffold_ApplyTemplateReplacements_Returns = string;
+
+export type Lib_Scaffold_ApplyTemplateReplacements_Output = string;
+
+export type Lib_Scaffold_ApplyTemplateReplacements_Pattern = RegExp;
+
+export type Lib_Scaffold_ApplyTemplateReplacements_Value = string;
 
 /**
  * Lib - Scaffold - Collect Files.
@@ -94,6 +114,10 @@ export type Lib_Scaffold_CreateMonorepoRoot_NovaConfigPath = string;
 
 export type Lib_Scaffold_CreateMonorepoRoot_NovaConfigRelativePath = string;
 
+export type Lib_Scaffold_CreateMonorepoRoot_RootTemplateDirectory = string;
+
+export type Lib_Scaffold_CreateMonorepoRoot_Replacements = Map<RegExp, string>;
+
 /**
  * Lib - Scaffold - Create Workspace Directory.
  *
@@ -134,6 +158,19 @@ export type Lib_Scaffold_FindFileConflicts_PlannedPaths = string[];
 export type Lib_Scaffold_FindFileConflicts_Returns = Promise<string[]>;
 
 export type Lib_Scaffold_FindFileConflicts_Exists = boolean[];
+
+/**
+ * Lib - Scaffold - Get Monorepo Root Planned Paths.
+ *
+ * @since 0.29.0
+ */
+export type Lib_Scaffold_GetMonorepoRootPlannedPaths_OutputDirectory = string;
+
+export type Lib_Scaffold_GetMonorepoRootPlannedPaths_Returns = Promise<string[]>;
+
+export type Lib_Scaffold_GetMonorepoRootPlannedPaths_TemplateDirectory = string;
+
+export type Lib_Scaffold_GetMonorepoRootPlannedPaths_TemplateEntries = string[];
 
 /**
  * Lib - Scaffold - Load Existing Root.
@@ -280,12 +317,15 @@ export type Lib_Scaffold_PromptScaffoldOptions_Defaults_Output = string | undefi
 
 export type Lib_Scaffold_PromptScaffoldOptions_Defaults_TypeName = string;
 
+export type Lib_Scaffold_PromptScaffoldOptions_Defaults_WorkspaceBaseDirectory = 'apps' | 'packages';
+
 export type Lib_Scaffold_PromptScaffoldOptions_Defaults_WorkspaceName = string | undefined;
 
 export type Lib_Scaffold_PromptScaffoldOptions_Defaults = {
   name: Lib_Scaffold_PromptScaffoldOptions_Defaults_Name;
   output: Lib_Scaffold_PromptScaffoldOptions_Defaults_Output;
   typeName: Lib_Scaffold_PromptScaffoldOptions_Defaults_TypeName;
+  workspaceBaseDirectory: Lib_Scaffold_PromptScaffoldOptions_Defaults_WorkspaceBaseDirectory;
   workspaceName: Lib_Scaffold_PromptScaffoldOptions_Defaults_WorkspaceName;
 };
 
@@ -366,9 +406,9 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath = string;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath = string;
 
-export type Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName = string;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName = string;
 
-export type Lib_Scaffold_RegisterWorkspaceInConfig_Category = 'app' | 'docs';
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Category = 'app' | 'docs' | 'package';
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Returns = Promise<void>;
 
@@ -382,7 +422,9 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName = Record<string, 
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug = string | undefined;
 
-export type Lib_Scaffold_RegisterWorkspaceInConfig_Role = 'app' | 'docs';
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Role = 'app' | 'docs' | 'package';
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Policy = 'distributable' | 'freezable' | 'trackable';
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName = string;
 
@@ -404,6 +446,15 @@ export type Lib_Scaffold_ReportError_Message = string;
 export type Lib_Scaffold_ReportError_Returns = void;
 
 /**
+ * Lib - Scaffold - Resolve Monorepo Root Template Directory.
+ *
+ * @since 0.29.0
+ */
+export type Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_Returns = string;
+
+export type Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_CurrentDirectory = string;
+
+/**
  * Lib - Scaffold - Resolve Template Answers.
  *
  * @since 0.26.0
@@ -414,19 +465,41 @@ export type Lib_Scaffold_ResolveTemplateAnswers_Questions = Shared_ScaffoldTempl
 
 export type Lib_Scaffold_ResolveTemplateAnswers_IsNonInteractive = boolean;
 
-export type Lib_Scaffold_ResolveTemplateAnswers_Returns = Promise<Map<RegExp, string> | undefined>;
+export type Lib_Scaffold_ResolveTemplateAnswers_Returns = Promise<Shared_ScaffoldTemplateResolution | undefined>;
+
+export type Lib_Scaffold_ResolveTemplateAnswers_ResolvedAnswers = Shared_ScaffoldTemplateResolution_Answers;
 
 export type Lib_Scaffold_ResolveTemplateAnswers_Replacements = Map<RegExp, string>;
 
+export type Lib_Scaffold_ResolveTemplateAnswers_IsActive = boolean;
+
+export type Lib_Scaffold_ResolveTemplateAnswers_DependencyValue = string | undefined;
+
+export type Lib_Scaffold_ResolveTemplateAnswers_InactiveDefaultChoice = string | undefined;
+
+export type Lib_Scaffold_ResolveTemplateAnswers_InactiveDefaultChoiceDefinition = Shared_ScaffoldTemplateQuestionChoice | undefined;
+
+export type Lib_Scaffold_ResolveTemplateAnswers_InactiveAllowedValues = string;
+
 export type Lib_Scaffold_ResolveTemplateAnswers_ProvidedValue = unknown;
+
+export type Lib_Scaffold_ResolveTemplateAnswers_FlagValue = string | undefined;
 
 export type Lib_Scaffold_ResolveTemplateAnswers_ResolvedValue = string | undefined;
 
-export type Lib_Scaffold_ResolveTemplateAnswers_AllowedValues = string;
+export type Lib_Scaffold_ResolveTemplateAnswers_ProvidedAllowedValues = string;
+
+export type Lib_Scaffold_ResolveTemplateAnswers_NonInteractiveDefaultChoice = string | undefined;
 
 export type Lib_Scaffold_ResolveTemplateAnswers_Answers = Record<string, unknown>;
 
 export type Lib_Scaffold_ResolveTemplateAnswers_Answer = unknown;
+
+export type Lib_Scaffold_ResolveTemplateAnswers_ResolvedAllowedValues = string;
+
+export type Lib_Scaffold_ResolveTemplateAnswers_ResolvedChoiceDefinition = Shared_ScaffoldTemplateQuestionChoice | undefined;
+
+export type Lib_Scaffold_ResolveTemplateAnswers_ReplacementValue = string;
 
 /**
  * Lib - Scaffold - Resolve Workspace Package Name.
@@ -437,7 +510,7 @@ export type Lib_Scaffold_ResolveWorkspacePackageName_ProjectSlug = string;
 
 export type Lib_Scaffold_ResolveWorkspacePackageName_WorkspaceName = string;
 
-export type Lib_Scaffold_ResolveWorkspacePackageName_Category = 'app' | 'docs';
+export type Lib_Scaffold_ResolveWorkspacePackageName_Category = 'app' | 'docs' | 'package';
 
 export type Lib_Scaffold_ResolveWorkspacePackageName_Returns = string;
 
@@ -464,15 +537,41 @@ export type Lib_Scaffold_RunScaffold_Options = {
   workspaceName?: Lib_Scaffold_RunScaffold_Options_WorkspaceName;
 };
 
-export type Lib_Scaffold_RunScaffold_Category = 'app' | 'docs';
+export type Lib_Scaffold_RunScaffold_Definition_Category = 'app' | 'docs' | 'package';
 
-export type Lib_Scaffold_RunScaffold_TypeName = string;
+export type Lib_Scaffold_RunScaffold_Definition_ImportMetaUrl = string;
 
-export type Lib_Scaffold_RunScaffold_TemplateSubpath = string;
+export type Lib_Scaffold_RunScaffold_Definition_ResolveRootTemplateSubpaths = (answers: Shared_ScaffoldTemplateResolution_Answers) => string[];
 
-export type Lib_Scaffold_RunScaffold_ImportMetaUrl = string;
+export type Lib_Scaffold_RunScaffold_Definition_ResolveWorkspaceTemplateSubpaths = (answers: Shared_ScaffoldTemplateResolution_Answers) => string[];
 
-export type Lib_Scaffold_RunScaffold_TemplateQuestions = Shared_ScaffoldTemplateQuestions;
+export type Lib_Scaffold_RunScaffold_Definition_RootTemplateSubpath = string;
+
+export type Lib_Scaffold_RunScaffold_Definition_TemplateQuestions = Shared_ScaffoldTemplateQuestions;
+
+export type Lib_Scaffold_RunScaffold_Definition_TemplateSubpath = string;
+
+export type Lib_Scaffold_RunScaffold_Definition_TypeName = string;
+
+export type Lib_Scaffold_RunScaffold_Definition_ValidateTemplateAnswers = (answers: Shared_ScaffoldTemplateResolution_Answers) => string | undefined;
+
+export type Lib_Scaffold_RunScaffold_Definition_WorkspaceFinalizer = (workspaceDirectory: string, workspaceName: string, configRoot: string, answers: Shared_ScaffoldTemplateResolution_Answers, replacements: Map<RegExp, string>) => Promise<void>;
+
+export type Lib_Scaffold_RunScaffold_Definition_WorkspacePackageNamePrefix = string;
+
+export type Lib_Scaffold_RunScaffold_Definition = {
+  category: Lib_Scaffold_RunScaffold_Definition_Category;
+  importMetaUrl: Lib_Scaffold_RunScaffold_Definition_ImportMetaUrl;
+  resolveRootTemplateSubpaths?: Lib_Scaffold_RunScaffold_Definition_ResolveRootTemplateSubpaths;
+  resolveWorkspaceTemplateSubpaths?: Lib_Scaffold_RunScaffold_Definition_ResolveWorkspaceTemplateSubpaths;
+  rootTemplateSubpath?: Lib_Scaffold_RunScaffold_Definition_RootTemplateSubpath;
+  templateQuestions?: Lib_Scaffold_RunScaffold_Definition_TemplateQuestions;
+  templateSubpath: Lib_Scaffold_RunScaffold_Definition_TemplateSubpath;
+  typeName: Lib_Scaffold_RunScaffold_Definition_TypeName;
+  validateTemplateAnswers?: Lib_Scaffold_RunScaffold_Definition_ValidateTemplateAnswers;
+  workspaceFinalizer?: Lib_Scaffold_RunScaffold_Definition_WorkspaceFinalizer;
+  workspacePackageNamePrefix?: Lib_Scaffold_RunScaffold_Definition_WorkspacePackageNamePrefix;
+};
 
 export type Lib_Scaffold_RunScaffold_Returns = Promise<void>;
 
@@ -492,17 +591,31 @@ export type Lib_Scaffold_RunScaffold_Config = Shared_ScaffoldConfig | undefined;
 
 export type Lib_Scaffold_RunScaffold_ProjectSlug = string;
 
+export type Lib_Scaffold_RunScaffold_WorkspacePackageNameBase = string;
+
+export type Lib_Scaffold_RunScaffold_WorkspacePackageNamePrefix = string;
+
 export type Lib_Scaffold_RunScaffold_WorkspacePackageName = string;
 
 export type Lib_Scaffold_RunScaffold_ConfigRoot = string;
 
 export type Lib_Scaffold_RunScaffold_ConfigFilePath = string;
 
+export type Lib_Scaffold_RunScaffold_WorkspaceBaseDirectory = 'apps' | 'packages';
+
 export type Lib_Scaffold_RunScaffold_WorkspaceDirectory = string;
 
 export type Lib_Scaffold_RunScaffold_WorkspaceRelPath = string | undefined;
 
 export type Lib_Scaffold_RunScaffold_NormalizedWorkspaceRelPath = string;
+
+export type Lib_Scaffold_RunScaffold_WorkspaceNameSegments = string[];
+
+export type Lib_Scaffold_RunScaffold_WorkspaceTitle = string;
+
+export type Lib_Scaffold_RunScaffold_WorkspaceIdentifier = string;
+
+export type Lib_Scaffold_RunScaffold_CoreReplacements = Map<RegExp, string>;
 
 export type Lib_Scaffold_RunScaffold_ExistingWorkspaceEntries = [string, unknown][];
 
@@ -518,9 +631,49 @@ export type Lib_Scaffold_RunScaffold_ExistingWorkspaceName = unknown;
 
 export type Lib_Scaffold_RunScaffold_ExistingWorkspaceRole = unknown;
 
+export type Lib_Scaffold_RunScaffold_TemplateResolution = Shared_ScaffoldTemplateResolution | undefined;
+
+export type Lib_Scaffold_RunScaffold_TemplateAnswers = Shared_ScaffoldTemplateResolution_Answers;
+
+export type Lib_Scaffold_RunScaffold_TemplateReplacements = Map<RegExp, string>;
+
+export type Lib_Scaffold_RunScaffold_TemplateValidationError = string | undefined;
+
+export type Lib_Scaffold_RunScaffold_Replacements = Map<RegExp, string>;
+
+export type Lib_Scaffold_RunScaffold_WorkspaceTemplateSubpath = string;
+
+export type Lib_Scaffold_RunScaffold_WorkspaceTemplateSubpaths = Lib_Scaffold_RunScaffold_WorkspaceTemplateSubpath[];
+
+export type Lib_Scaffold_RunScaffold_WorkspaceTemplateDirectory = string;
+
+export type Lib_Scaffold_RunScaffold_WorkspaceTemplateDirectories = Lib_Scaffold_RunScaffold_WorkspaceTemplateDirectory[];
+
+export type Lib_Scaffold_RunScaffold_WorkspacePlannedPath = string;
+
+export type Lib_Scaffold_RunScaffold_WorkspacePlannedPathGroup = Lib_Scaffold_RunScaffold_WorkspacePlannedPath[];
+
+export type Lib_Scaffold_RunScaffold_WorkspacePlannedPathGroups = Lib_Scaffold_RunScaffold_WorkspacePlannedPathGroup[];
+
 export type Lib_Scaffold_RunScaffold_TemplateDirectory = string;
 
 export type Lib_Scaffold_RunScaffold_TemplateEntries = string[];
+
+export type Lib_Scaffold_RunScaffold_RootTemplateSubpath = string;
+
+export type Lib_Scaffold_RunScaffold_RootTemplateSubpaths = Lib_Scaffold_RunScaffold_RootTemplateSubpath[];
+
+export type Lib_Scaffold_RunScaffold_RootTemplateDirectory = string;
+
+export type Lib_Scaffold_RunScaffold_RootTemplateDirectories = Lib_Scaffold_RunScaffold_RootTemplateDirectory[];
+
+export type Lib_Scaffold_RunScaffold_RootPlannedPath = string;
+
+export type Lib_Scaffold_RunScaffold_RootPlannedPathGroup = Lib_Scaffold_RunScaffold_RootPlannedPath[];
+
+export type Lib_Scaffold_RunScaffold_RootPlannedPathGroups = Lib_Scaffold_RunScaffold_RootPlannedPathGroup[];
+
+export type Lib_Scaffold_RunScaffold_RootTemplateEntries = string[];
 
 export type Lib_Scaffold_RunScaffold_PlannedPaths = string[];
 
@@ -532,9 +685,11 @@ export type Lib_Scaffold_RunScaffold_IsWorkspaceCovered = boolean;
 
 export type Lib_Scaffold_RunScaffold_NormalizedWorkspacePattern = string;
 
-export type Lib_Scaffold_RunScaffold_TemplateReplacements = Map<RegExp, string> | undefined;
+export type Lib_Scaffold_RunScaffold_WorkspaceTemplateWrites = Promise<void>[];
 
-export type Lib_Scaffold_RunScaffold_Replacements = Map<RegExp, string>;
+export type Lib_Scaffold_RunScaffold_RootTemplateWrites = Promise<void>[];
+
+export type Lib_Scaffold_RunScaffold_WorkspaceFinalizerError = unknown;
 
 export type Lib_Scaffold_RunScaffold_RootPackageJsonPath = string;
 
@@ -543,6 +698,33 @@ export type Lib_Scaffold_RunScaffold_RootWorkspacesValue = unknown;
 export type Lib_Scaffold_RunScaffold_RootWorkspacesObject = Record<string, unknown>;
 
 export type Lib_Scaffold_RunScaffold_RootPackageJsonContents = string;
+
+/**
+ * Lib - Scaffold - Update Scaffold Package JSON.
+ *
+ * @since 0.29.0
+ */
+export type Lib_Scaffold_UpdateScaffoldPackageJson_WorkspaceDirectory = string;
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_Updates = Record<string, Record<string, string>>;
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_Returns = Promise<void>;
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_PackageJsonPath = string;
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_Raw = string;
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_Parsed = unknown;
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_PackageJson = Record<string, unknown>;
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_SectionValue = unknown;
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_Section = Record<string, unknown>;
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_IsSortedSection = boolean;
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_Content = string;
 
 /**
  * Lib - Scaffold - Write Template Files.
@@ -563,7 +745,11 @@ export type Lib_Scaffold_WriteTemplateFiles_Entries = string[];
 
 export type Lib_Scaffold_WriteTemplateFiles_SourcePath = string;
 
+export type Lib_Scaffold_WriteTemplateFiles_TargetEntry = string;
+
 export type Lib_Scaffold_WriteTemplateFiles_TargetPath = string;
+
+export type Lib_Scaffold_WriteTemplateFiles_SourceContent = string;
 
 export type Lib_Scaffold_WriteTemplateFiles_Content = string;
 

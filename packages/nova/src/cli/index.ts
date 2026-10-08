@@ -10,6 +10,7 @@ import {
   LIB_REGEX_PATTERN_WHITESPACE,
 } from '../lib/regex.js';
 import { Bootstrap, CLIHeader, Logger } from '../toolkit/index.js';
+import { Runner as CliGenerateDockerImage } from './generate/docker-image/index.js';
 import { Runner as CliGenerateGithubFunding } from './generate/github/funding.js';
 import { Runner as CliGenerateGithubIssueTemplate } from './generate/github/issue-template.js';
 import { Runner as CliGenerateGithubWorkflowsBlueprint } from './generate/github/workflows-blueprint.js';
@@ -42,11 +43,20 @@ import { Runner as CliRecipeReadMeUpdateCredits } from './recipe/read-me/update-
 import { Runner as CliRecipeReadMeUpdateDocumentation } from './recipe/read-me/update-documentation.js';
 import { Runner as CliRecipeReadMeUpdateHeader } from './recipe/read-me/update-header.js';
 import { Runner as CliRecipeReadMeUpdateIntroduction } from './recipe/read-me/update-introduction.js';
+import { Runner as CliScaffoldAppAndroid } from './scaffold/app/android.js';
+import { Runner as CliScaffoldAppApple } from './scaffold/app/apple.js';
+import { Runner as CliScaffoldAppAstro } from './scaffold/app/astro.js';
+import { Runner as CliScaffoldAppCloudflareWorkers } from './scaffold/app/cloudflare-workers.js';
+import { Runner as CliScaffoldAppDiscordBot } from './scaffold/app/discord-bot.js';
+import { Runner as CliScaffoldAppDockerImage } from './scaffold/app/docker-image.js';
 import { Runner as CliScaffoldAppExpressjs } from './scaffold/app/expressjs.js';
 import { Runner as CliScaffoldAppNextjs } from './scaffold/app/nextjs.js';
 import { Runner as CliScaffoldAppVite } from './scaffold/app/vite.js';
-import { Runner as CliScaffoldAppWorkers } from './scaffold/app/workers.js';
 import { Runner as CliScaffoldDocsDocusaurus } from './scaffold/docs/docusaurus.js';
+import { Runner as CliScaffoldPackageGithubAction } from './scaffold/package/github-action.js';
+import { Runner as CliScaffoldPackageHomebridge } from './scaffold/package/homebridge.js';
+import { Runner as CliScaffoldPackageNodeCli } from './scaffold/package/node-cli.js';
+import { Runner as CliScaffoldPackagePfSense } from './scaffold/package/pfsense.js';
 import { Runner as CliScaffoldStarterBase } from './scaffold/starter/base.js';
 import { Runner as CliUtilityChangelog } from './utility/changelog.js';
 import { Runner as CliUtilityInitialize } from './utility/initialize.js';
@@ -109,6 +119,7 @@ import type {
   Cli_Index_CLI_RegisterCommands_Scaffold,
   Cli_Index_CLI_RegisterCommands_ScaffoldApp,
   Cli_Index_CLI_RegisterCommands_ScaffoldDocs,
+  Cli_Index_CLI_RegisterCommands_ScaffoldPackage,
   Cli_Index_CLI_RegisterCommands_ScaffoldStarter,
   Cli_Index_CLI_RegisterCommands_Utility,
   Cli_Index_CLI_StyleText_CategoryFunctions,
@@ -236,6 +247,20 @@ class CLI {
       .description('Generate vendor or must-have files for projects')
       .commandsGroup('Subcommands:')
       .helpCommand(false);
+
+    generate
+      .command('docker-image')
+      .usage('[options]')
+      .description('Add Docker packaging to an existing workspace')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .requiredOption('--profile <profile>', 'Docker workload profile')
+      .option('-r, --replace-file', 'Replace original files without creating backups')
+      .requiredOption('--workspace <path>', 'Workspace path relative to the project root')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliGenerateDockerImage['run']);
+
+        return;
+      });
 
     const generateGitHub: Cli_Index_CLI_RegisterCommands_GenerateGitHub = generate
       .command('github')
@@ -763,8 +788,8 @@ class CLI {
     /**
      * CLI - Register Commands - Scaffold.
      *
-     * Parent command for bootstrapping monorepo-style projects. Groups app, docs, and starter
-     * templates under a single namespace.
+     * Parent command for bootstrapping monorepo-style projects. Groups app, docs, package, and
+     * starter templates under a single namespace.
      *
      * @since 0.11.0
      */
@@ -784,11 +809,109 @@ class CLI {
       .helpCommand(false);
 
     scaffoldApp
+      .command('android')
+      .usage('[options]')
+      .description('Scaffold a native Kotlin and Jetpack Compose Android application workspace')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('--application-id <id>', 'Android application ID and namespace')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
+      .option('--workspace-name <name>', 'Workspace directory name')
+      .option('--output <dir>', 'Output directory')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliScaffoldAppAndroid['run']);
+
+        return;
+      });
+
+    scaffoldApp
+      .command('apple')
+      .usage('[options]')
+      .description('Scaffold a SwiftUI Apple application workspace')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
+      .option('--workspace-name <name>', 'Workspace directory name')
+      .option('--output <dir>', 'Output directory')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliScaffoldAppApple['run']);
+
+        return;
+      });
+
+    scaffoldApp
+      .command('astro')
+      .usage('[options]')
+      .description('Scaffold an Astro application workspace')
+      .option('--adapter <adapter>', 'Server adapter: node or cloudflare')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('--docker-image', 'Add Docker packaging for the selected rendering mode')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
+      .option('--workspace-name <name>', 'Workspace directory name')
+      .option('--output <dir>', 'Output directory')
+      .option('--rendering <mode>', 'Rendering mode: static or server')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliScaffoldAppAstro['run']);
+
+        return;
+      });
+
+    scaffoldApp
+      .command('cloudflare-workers')
+      .usage('[options]')
+      .description('Scaffold a Cloudflare Workers application workspace')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
+      .option('--workspace-name <name>', 'Workspace directory name')
+      .option('--output <dir>', 'Output directory')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliScaffoldAppCloudflareWorkers['run']);
+
+        return;
+      });
+
+    scaffoldApp
+      .command('discord-bot')
+      .usage('[options]')
+      .description('Scaffold a Discord bot application workspace')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('--docker-image', 'Add background-service Docker packaging')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
+      .option('--workspace-name <name>', 'Workspace directory name')
+      .option('--output <dir>', 'Output directory')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliScaffoldAppDiscordBot['run']);
+
+        return;
+      });
+
+    scaffoldApp
+      .command('docker-image')
+      .usage('[options]')
+      .description('Scaffold a container-native image workspace')
+      .option('--architectures <architectures>', 'Published architectures: amd64, arm64, or amd64,arm64')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
+      .option('--workspace-name <name>', 'Workspace directory name')
+      .option('--output <dir>', 'Output directory')
+      .option('--publish <registry>', 'Container registry: none, ghcr, or docker-hub')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliScaffoldAppDockerImage['run']);
+
+        return;
+      });
+
+    scaffoldApp
       .command('expressjs')
       .alias('express')
       .usage('[options]')
       .description('Scaffold an Express.js workspace')
       .option('-d, --dry-run', 'Run without writing any files')
+      .option('--docker-image', 'Add HTTP-service Docker packaging')
       .option('--name <name>', 'Project slug when creating a new monorepo')
       .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
       .option('--workspace-name <name>', 'Workspace directory name')
@@ -805,6 +928,7 @@ class CLI {
       .usage('[options]')
       .description('Scaffold a Next.js workspace')
       .option('-d, --dry-run', 'Run without writing any files')
+      .option('--docker-image', 'Enable standalone output and add Docker packaging')
       .option('--name <name>', 'Project slug when creating a new monorepo')
       .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
       .option('--workspace-name <name>', 'Workspace directory name')
@@ -820,27 +944,15 @@ class CLI {
       .usage('[options]')
       .description('Scaffold a Vite workspace')
       .option('-d, --dry-run', 'Run without writing any files')
+      .option('--docker-image', 'Add static-site Docker packaging')
+      .option('--framework <framework>', 'Framework: vanilla, react, vue, or svelte')
       .option('--name <name>', 'Project slug when creating a new monorepo')
       .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
       .option('--workspace-name <name>', 'Workspace directory name')
       .option('--output <dir>', 'Output directory')
+      .option('--pwa', 'Add progressive web app support')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliScaffoldAppVite['run']);
-
-        return;
-      });
-
-    scaffoldApp
-      .command('workers')
-      .usage('[options]')
-      .description('Scaffold a Cloudflare Workers workspace')
-      .option('-d, --dry-run', 'Run without writing any files')
-      .option('--name <name>', 'Project slug when creating a new monorepo')
-      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
-      .option('--workspace-name <name>', 'Workspace directory name')
-      .option('--output <dir>', 'Output directory')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliScaffoldAppWorkers['run']);
 
         return;
       });
@@ -856,14 +968,87 @@ class CLI {
       .command('docusaurus')
       .usage('[options]')
       .description('Scaffold a Docusaurus documentation workspace')
+      .option('--content <content>', 'Content model: docs or docs-blog')
       .option('-d, --dry-run', 'Run without writing any files')
+      .option('--docker-image', 'Add static-site Docker packaging')
       .option('--name <name>', 'Project slug when creating a new monorepo')
       .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
       .option('--workspace-name <name>', 'Workspace directory name')
       .option('--output <dir>', 'Output directory')
       .option('--preset <name>', 'Nova visual preset')
+      .option('--search', 'Enable Nova preset local search')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliScaffoldDocsDocusaurus['run']);
+
+        return;
+      });
+
+    const scaffoldPackage: Cli_Index_CLI_RegisterCommands_ScaffoldPackage = scaffold
+      .command('package')
+      .alias('pkg')
+      .usage('<subcommand> [options]')
+      .description('Scaffold publishable package workspaces')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false);
+
+    scaffoldPackage
+      .command('github-action')
+      .alias('action')
+      .usage('[options]')
+      .description('Scaffold a bundled TypeScript GitHub Action package')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
+      .option('--workspace-name <name>', 'Workspace directory and package name')
+      .option('--output <dir>', 'Output directory')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliScaffoldPackageGithubAction['run']);
+
+        return;
+      });
+
+    scaffoldPackage
+      .command('homebridge')
+      .usage('[options]')
+      .description('Scaffold a dynamic-platform Homebridge plugin package')
+      .option('--custom-ui', 'Add a custom Homebridge Config UI X frontend and backend')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
+      .option('--workspace-name <name>', 'Workspace directory name; homebridge- is added to the package name')
+      .option('--output <dir>', 'Output directory')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliScaffoldPackageHomebridge['run']);
+
+        return;
+      });
+
+    scaffoldPackage
+      .command('node-cli')
+      .usage('[options]')
+      .description('Scaffold a publishable Node.js command-line package')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
+      .option('--workspace-name <name>', 'Workspace directory, package name, and binary name')
+      .option('--output <dir>', 'Output directory')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliScaffoldPackageNodeCli['run']);
+
+        return;
+      });
+
+    scaffoldPackage
+      .command('pfsense')
+      .usage('[options]')
+      .description('Scaffold a pfSense package with WebGUI and scheduled task support')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
+      .option('--workspace-name <name>', 'Workspace directory name; pfsense-pkg- is added to the package name')
+      .option('--output <dir>', 'Output directory')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliScaffoldPackagePfSense['run']);
 
         return;
       });

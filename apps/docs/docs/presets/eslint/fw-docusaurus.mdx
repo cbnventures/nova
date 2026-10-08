@@ -1,7 +1,7 @@
 ---
 id: "fw-docusaurus"
 title: "Framework - Docusaurus"
-description: "Exclude the Docusaurus .docusaurus build cache from ESLint so generated framework files stay out of your lint reports in flat config."
+description: "Lint Docusaurus configuration and React components with framework globals and curated React, Hooks, and accessibility rules."
 keywords:
   - "nova"
   - "docusaurus"
@@ -17,43 +17,54 @@ tags:
   - "docusaurus"
 ---
 
-Exclude the Docusaurus `.docusaurus` build cache from ESLint so generated framework files never enter your lint reports.
+Lint Docusaurus sites with a Nova-compatible React stack while excluding generated framework output.
 
 ## Why Use This Preset?
 
 1. Ignores the `.docusaurus` cache directory so transient framework output does not trigger lint failures.
-2. Keeps your lint runs focused on hand-written content and components rather than regenerated artifacts.
-3. Slots into the environment/framework layer so it composes cleanly after your code style and language layers.
+2. Declares Node.js globals for Docusaurus and sidebar configuration files.
+3. Declares browser globals for JSX and TSX components.
+4. Applies curated React, React Hooks, and JSX accessibility correctness rules with the modern JSX runtime.
 
 ## Usage
 
 Spread `fwDocusaurus` in the environment/framework slot, after the language layer and before any tool layer.
 
-```ts title="eslint.config.ts"
+```ts title="eslint.config.mts"
 import {
   dxCodeStyle,
   dxIgnore,
   fwDocusaurus,
+  langJavascript,
+  langMdx,
   langTypescript,
+  runtimeBrowser,
 } from '@cbnventures/nova/presets/eslint';
 
 export default [
   ...dxIgnore,
   ...dxCodeStyle,
+  ...langJavascript,
+  ...langMdx,
   ...langTypescript,
   ...fwDocusaurus,
+  ...runtimeBrowser,
 ];
 ```
 
 ## What This Preset Configures
 
-The preset registers no plugins or parsers and authors no rules. It contributes a single named ignore group that keeps the Docusaurus build cache out of every lint run.
+The preset registers React, React Hooks, and JSX accessibility plugins for JSX and TSX files. It selects React's component checks, the fundamental Rules of Hooks check, and JSX accessibility checks, turns off legacy React prop-type validation for TypeScript projects, and lets consumers override any severity in a later flat-config block.
+
+Nova intentionally does not enable React Hooks' compiler-diagnostic bundle or `exhaustive-deps`. The compiler diagnostics assume React Compiler adoption, while `exhaustive-deps` rejects computed dependency expressions that Nova's bracket-property rule requires. Consumers can opt into either policy in a later config block when their application is designed for it.
 
 ### Ignored files
 
-| Pattern            | Excludes                              |
-|--------------------|---------------------------------------|
-| `./.docusaurus/**` | The Docusaurus build cache directory. |
+| Pattern             | Excludes                              |
+|---------------------|---------------------------------------|
+| `**/.docusaurus/**` | The Docusaurus build cache directory. |
+
+Nova deliberately does not copy an upstream framework config wholesale. The preset selects the parts that compose with Nova's language, MDX, browser, and custom-rule layers.
 
 ## Related
 

@@ -2,7 +2,7 @@ import { registerTerminologySuite } from '@cbnventures/nova/rules/vitest';
 import * as vitest from 'vitest';
 
 /**
- * Tests - Terminology.
+ * Terminology.
  *
  * This site self-checks its Terminology components THROUGH the published kit.
  * The suite logic lives in @cbnventures/nova/rules/vitest; this wrapper

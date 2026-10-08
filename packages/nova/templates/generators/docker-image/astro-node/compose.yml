@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: .
+    environment:
+      HOST: 0.0.0.0
+      NODE_ENV: production
+      PORT: 4321
+    init: true
+    ports:
+      - "4321:4321"
+    restart: unless-stopped

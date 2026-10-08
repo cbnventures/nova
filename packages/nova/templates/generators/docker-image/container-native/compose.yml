@@ -1,0 +1,8 @@
+services:
+  app:
+    build:
+      context: .
+    init: true
+    restart: unless-stopped
+    stdin_open: true
+    tty: true

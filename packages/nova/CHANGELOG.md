@@ -1,5 +1,36 @@
 # @cbnventures/nova
 
+## 0.29.0 - 2026-10-07
+
+### UPDATED
+- Replaces filename-based GitHub bug-report fields with an explicit ordered semantic configuration, including platform validation, initializer guidance, tests, and documentation.
+- Replaces inferred README badges with an explicit ordered `readme.badges` configuration, including source validation, Homebridge and Docker badge support, initializer guidance, tests, and documentation.
+- Expands Docusaurus scaffolding with docs-only or docs-and-blog content choices, optional local search, and compatible Docker packaging.
+- Updates the MDX linting, React Hooks linting, globals, YAML, and resolver maintenance dependencies.
+- Installs Nova as a regular dependency in generated roots and workspaces so the CLI, presets, and runtime toolkit remain available.
+- Renames the Cloudflare Workers scaffold command from `nova scaffold app workers` to `nova scaffold app cloudflare-workers`; callers must update scripts and automation to the new command.
+- Expands Vite scaffolding with Vanilla TypeScript, React, Vue, and Svelte variants plus optional PWA support.
+- Equips generated monorepo roots and every applicable workspace with lint, type-check, and Vitest coverage, then verifies generated consumers from the packed Nova npm artifact through checks and production builds.
+
+### FIXED
+- Stamps unreleased JSDoc sentinels in supported code files directly inside each workspace root without crossing into nested workspaces, covering Docusaurus and other root-level configurations.
+- Registers generated app, documentation, and package workspaces with their intended trackable, freezable, and distributable policies.
+- Removes disabled Docker placeholder indentation from the default Next.js scaffold so a newly generated project passes its own trailing-whitespace lint check.
+- Fixes the package-json `normalize-modules` recipe to preserve an explicit `module` type on project roots so root configuration, scripts, and tests keep their intended ESM semantics.
+
+### ADDED
+- Adds an Android app scaffold that delegates native Kotlin and Jetpack Compose generation to Google’s Android CLI while providing Nova-managed lifecycle scripts and helper checks.
+- Adds the `novaRules` flat-config collection, enables every Nova custom ESLint rule by default in generated JavaScript and TypeScript projects, and verifies that every rule supports `ignoreFiles` and runs safely against `.mjs` files.
+- Adds container-native and workload-specific Docker image generation for compatible scaffolds, with optional multi-architecture publishing to GitHub Container Registry or Docker Hub.
+- Adds a GitHub Action package scaffold with action metadata, bundled output, tests, and release-ready publishing.
+- Adds ordered ESLint and TSConfig composition for generated projects, including Nova-compatible Astro, React, Vue, and Svelte framework presets.
+- Adds a Homebridge plugin package scaffold with platform registration, configuration schema, tests, and an optional custom Config UI.
+- Adds a Node.js CLI package scaffold with Commander, executable packaging, type declarations, tests, and Nova-managed builds.
+- Adds a universal SwiftUI app scaffold for iOS and macOS with XcodeGen project generation, Swift Testing, and Nova-managed scripts.
+- Adds an Astro app scaffold with static or server rendering, Node.js and Cloudflare adapters, and compatible Docker packaging.
+- Adds a Discord bot scaffold with discord.js, typed environment handling, Nova-managed builds, and optional background-service Docker packaging.
+- Adds a pfSense package scaffold with WebGUI-managed settings, a cron-oriented PHP task, versioned FreeBSD port staging, GitHub Release packaging, documentation, and regression coverage.
+
 ## 0.28.0 - 2026-10-02
 
 ### ADDED

@@ -26,9 +26,12 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 ## Why Use This Command?
 
-- Installs Next.js 16 with React 19, TypeScript, and the App Router so you can start building pages immediately.
-- Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
-- Provides `dev`, `prod`, `check`, `build`, and `clean` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner. The check group runs Next.js type generation before Nova's TypeScript check, so a clean project does not need a development server or production build first.
+1. Installs Next.js 16 with React 19, TypeScript, and the App Router so you can start building pages immediately.
+2. Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
+3. Provides `dev`, `prod`, `check`, `build`, and `clean` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner.
+4. Runs Next.js type generation before separate app, configuration, and Vitest type checks. Vite's test types never enter Next.js production compilation.
+5. Enables Nova's complete custom ESLint rules and a starter Vitest suite while leaving every rule open to consumer overrides.
+6. Optionally enables Next.js standalone output and adds a production Docker image without changing the platform-neutral default.
 
 ## Requirements
 
@@ -64,13 +67,14 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 ## Options
 
-| Flag                      | Description                                                          |
-|---------------------------|----------------------------------------------------------------------|
-| `-d, --dry-run`           | Run without writing any files.                                       |
-| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
-| `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
-| `--workspace-name <name>` | Workspace directory name.                                            |
-| `--output <dir>`          | Output directory.                                                    |
+| Flag                      | Description                                                                          |
+|---------------------------|--------------------------------------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                                                       |
+| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root.                 |
+| `--non-interactive`       | Use flags and defaults without opening prompts.                                      |
+| `--workspace-name <name>` | Workspace directory name.                                                            |
+| `--output <dir>`          | Output directory.                                                                    |
+| `--docker-image`          | Enable Next.js standalone output and add `.dockerignore`, `Dockerfile`, and Compose. |
 
 ## Output Structure
 
@@ -81,9 +85,15 @@ You can run this directly from an empty location; `scaffold starter base` is not
 ├── turbo.json
 ├── apps/
 │   └── {workspace-name}/
+│       ├── eslint.config.mts
 │       ├── package.json
 │       ├── next.config.mjs
 │       ├── tsconfig.json
+│       ├── tsconfig.config.json
+│       ├── tsconfig.tests.json
+│       ├── vitest.config.mts
+│       ├── tests/
+│       │   └── project.test.ts
 │       └── src/
 │           └── app/
 │               ├── layout.tsx
@@ -126,6 +136,9 @@ Agents and automation should add `--non-interactive`. A new monorepo needs `--na
 
     # Add another app from an existing Nova monorepo root
     nova scaffold app nextjs --non-interactive --workspace-name web --output ./apps/web
+
+    # Add a self-hosted standalone app in Docker
+    nova scaffold app nextjs --non-interactive --workspace-name portal --output ./apps/portal --docker-image
     ```
 
   </TabItem>
@@ -137,6 +150,9 @@ Agents and automation should add `--non-interactive`. A new monorepo needs `--na
 
     # Add another app from an existing Nova monorepo root
     npx --yes @cbnventures/nova@latest scaffold app nextjs --non-interactive --workspace-name web --output ./apps/web
+
+    # Add a self-hosted standalone app in Docker
+    npx --yes @cbnventures/nova@latest scaffold app nextjs --non-interactive --workspace-name portal --output ./apps/portal --docker-image
     ```
 
   </TabItem>

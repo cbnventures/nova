@@ -15,13 +15,17 @@ export type Tests_Cli_Index_RunnerMocks_MiscellaneousFixMarkdownTablesRun = Retu
 
 export type Tests_Cli_Index_RunnerMocks_ReadMeUpdateHeaderRun = ReturnType<typeof vi['fn']>;
 
+export type Tests_Cli_Index_RunnerMocks_ScaffoldAppAndroidRun = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Index_RunnerMocks_ScaffoldAppAppleRun = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Index_RunnerMocks_ScaffoldAppCloudflareWorkersRun = ReturnType<typeof vi['fn']>;
+
 export type Tests_Cli_Index_RunnerMocks_ScaffoldAppExpressjsRun = ReturnType<typeof vi['fn']>;
 
 export type Tests_Cli_Index_RunnerMocks_ScaffoldAppNextjsRun = ReturnType<typeof vi['fn']>;
 
 export type Tests_Cli_Index_RunnerMocks_ScaffoldAppViteRun = ReturnType<typeof vi['fn']>;
-
-export type Tests_Cli_Index_RunnerMocks_ScaffoldAppWorkersRun = ReturnType<typeof vi['fn']>;
 
 export type Tests_Cli_Index_RunnerMocks_ScaffoldDocsDocusaurusRun = ReturnType<typeof vi['fn']>;
 
@@ -32,10 +36,12 @@ export type Tests_Cli_Index_RunnerMocks = {
   licenseUpdateCopyrightRun: Tests_Cli_Index_RunnerMocks_LicenseUpdateCopyrightRun;
   miscellaneousFixMarkdownTablesRun: Tests_Cli_Index_RunnerMocks_MiscellaneousFixMarkdownTablesRun;
   readMeUpdateHeaderRun: Tests_Cli_Index_RunnerMocks_ReadMeUpdateHeaderRun;
+  scaffoldAppAndroidRun: Tests_Cli_Index_RunnerMocks_ScaffoldAppAndroidRun;
+  scaffoldAppAppleRun: Tests_Cli_Index_RunnerMocks_ScaffoldAppAppleRun;
+  scaffoldAppCloudflareWorkersRun: Tests_Cli_Index_RunnerMocks_ScaffoldAppCloudflareWorkersRun;
   scaffoldAppExpressjsRun: Tests_Cli_Index_RunnerMocks_ScaffoldAppExpressjsRun;
   scaffoldAppNextjsRun: Tests_Cli_Index_RunnerMocks_ScaffoldAppNextjsRun;
   scaffoldAppViteRun: Tests_Cli_Index_RunnerMocks_ScaffoldAppViteRun;
-  scaffoldAppWorkersRun: Tests_Cli_Index_RunnerMocks_ScaffoldAppWorkersRun;
   scaffoldDocsDocusaurusRun: Tests_Cli_Index_RunnerMocks_ScaffoldDocsDocusaurusRun;
   scaffoldStarterBaseRun: Tests_Cli_Index_RunnerMocks_ScaffoldStarterBaseRun;
 };
@@ -85,6 +91,39 @@ export type Tests_Cli_Index_CliRecipeReadMeUpdateHeaderJs_MockedRunner = {
 };
 
 /**
+ * Tests - CLI - Index - CLI Scaffold App Android JS.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Cli_Index_CliScaffoldAppAndroidJs_MockedRunner_Run = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Index_CliScaffoldAppAndroidJs_MockedRunner = {
+  run: Tests_Cli_Index_CliScaffoldAppAndroidJs_MockedRunner_Run;
+};
+
+/**
+ * Tests - CLI - Index - CLI Scaffold App Apple JS.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Cli_Index_CliScaffoldAppAppleJs_MockedRunner_Run = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Index_CliScaffoldAppAppleJs_MockedRunner = {
+  run: Tests_Cli_Index_CliScaffoldAppAppleJs_MockedRunner_Run;
+};
+
+/**
+ * Tests - CLI - Index - CLI Scaffold App Cloudflare Workers JS.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Index_CliScaffoldAppCloudflareWorkersJs_MockedRunner_Run = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Index_CliScaffoldAppCloudflareWorkersJs_MockedRunner = {
+  run: Tests_Cli_Index_CliScaffoldAppCloudflareWorkersJs_MockedRunner_Run;
+};
+
+/**
  * Tests - CLI - Index - CLI Scaffold App Express.js JS.
  *
  * @since 0.26.0
@@ -115,17 +154,6 @@ export type Tests_Cli_Index_CliScaffoldAppViteJs_MockedRunner_Run = ReturnType<t
 
 export type Tests_Cli_Index_CliScaffoldAppViteJs_MockedRunner = {
   run: Tests_Cli_Index_CliScaffoldAppViteJs_MockedRunner_Run;
-};
-
-/**
- * Tests - CLI - Index - CLI Scaffold App Workers JS.
- *
- * @since 0.26.0
- */
-export type Tests_Cli_Index_CliScaffoldAppWorkersJs_MockedRunner_Run = ReturnType<typeof vi['fn']>;
-
-export type Tests_Cli_Index_CliScaffoldAppWorkersJs_MockedRunner = {
-  run: Tests_Cli_Index_CliScaffoldAppWorkersJs_MockedRunner_Run;
 };
 
 /**
@@ -215,6 +243,24 @@ export type Tests_Cli_Index_NestedRecipeOptions_PassesDryRunToADirectGitHubRecip
 export type Tests_Cli_Index_ScaffoldOptions_OriginalArgv = string[];
 
 /**
+ * Tests - CLI - Index - Scaffold Options - Passes Complete Non Interactive Android Answers.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveAndroidAnswers_ExpectedOptions_ApplicationId = string;
+
+export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveAndroidAnswers_ExpectedOptions = Shared_ScaffoldNonInteractiveWorkspaceOptions & {
+  applicationId: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveAndroidAnswers_ExpectedOptions_ApplicationId;
+};
+
+/**
+ * Tests - CLI - Index - Scaffold Options - Passes Complete Non Interactive Apple Answers.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveAppleAnswers_ExpectedOptions = Shared_ScaffoldNonInteractiveWorkspaceOptions;
+
+/**
  * Tests - CLI - Index - Scaffold Options - Passes Complete Non Interactive Base Answers.
  *
  * @since 0.26.0
@@ -230,6 +276,13 @@ export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnsw
   nonInteractive: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions_NonInteractive;
   output: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions_Output;
 };
+
+/**
+ * Tests - CLI - Index - Scaffold Options - Passes Complete Non Interactive Cloudflare Workers Answers.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveCloudflareWorkersAnswers_ExpectedOptions = Shared_ScaffoldNonInteractiveWorkspaceOptions;
 
 /**
  * Tests - CLI - Index - Scaffold Options - Passes Complete Non Interactive Docusaurus Answers.
@@ -259,7 +312,11 @@ export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveDocusaur
  *
  * @since 0.26.0
  */
-export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveExpressJsAnswers_ExpectedOptions = Shared_ScaffoldNonInteractiveWorkspaceOptions;
+export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveExpressJsAnswers_ExpectedOptions_DockerImage = true;
+
+export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveExpressJsAnswers_ExpectedOptions = Shared_ScaffoldNonInteractiveWorkspaceOptions & {
+  dockerImage: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveExpressJsAnswers_ExpectedOptions_DockerImage;
+};
 
 /**
  * Tests - CLI - Index - Scaffold Options - Passes Complete Non Interactive Next.js Answers.
@@ -274,10 +331,3 @@ export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveNextJsAn
  * @since 0.26.0
  */
 export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveViteAnswers_ExpectedOptions = Shared_ScaffoldNonInteractiveWorkspaceOptions;
-
-/**
- * Tests - CLI - Index - Scaffold Options - Passes Complete Non Interactive Workers Answers.
- *
- * @since 0.26.0
- */
-export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveWorkersAnswers_ExpectedOptions = Shared_ScaffoldNonInteractiveWorkspaceOptions;

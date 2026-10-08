@@ -1,0 +1,33 @@
+{
+  "name": "[__WORKSPACE_PACKAGE_NAME__]",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
+    "dev:start": "android --no-metrics run",
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:lint-scripts": "eslint ./ --max-warnings=0",
+    "check:types-scripts": "nova utility type-check --project tsconfig.scripts.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
+    "check:test-scripts": "vitest run",
+    "check:lint-android": "node ./scripts/run-gradle.mjs lint",
+    "check:test-android": "node ./scripts/run-gradle.mjs testDebugUnitTest",
+    "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
+    "build:debug": "node ./scripts/run-gradle.mjs assembleDebug",
+    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean:gradle": "node ./scripts/run-gradle.mjs clean"
+  },
+  "dependencies": {
+    "@cbnventures/nova": "0.29.0"
+  },
+  "engines": {
+    "node": "^22 || ^24"
+  },
+  "devDependencies": {
+    "@types/node": "24.9.1",
+    "eslint": "9.39.5",
+    "typescript": "6.0.3",
+    "vitest": "4.1.11"
+  }
+}

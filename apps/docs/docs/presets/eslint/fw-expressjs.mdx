@@ -1,7 +1,7 @@
 ---
 id: "fw-expressjs"
 title: "Framework - Express.js"
-description: "Reserve the Express.js framework layer in your ESLint flat config with a named ignore group ready for dist build output path exclusions."
+description: "Represent Express.js explicitly in a Nova ESLint stack while Node.js owns its runtime rules and globals."
 keywords:
   - "nova"
   - "express.js"
@@ -19,10 +19,35 @@ tags:
 ---
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-This preset is the framework layer for Express.js projects in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>.
+Represent Express.js explicitly in a Nova ESLint composition. Express does not add language syntax, globals, or general-purpose lint rules beyond Node.js, so this framework layer is intentionally a named marker rather than an unfinished preset.
 
-:::info Coming soon
+## Usage
 
-This preset has no rules yet. This page will be filled in once it does.
+Use it after the language layers and before `runtimeNode`.
 
-:::
+```ts title="eslint.config.mts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  fwExpressjs,
+  langTypescript,
+  runtimeNode,
+} from '@cbnventures/nova/presets/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...fwExpressjs,
+  ...runtimeNode,
+];
+```
+
+## Why Keep an Empty Framework Layer?
+
+The named layer keeps generated projects structurally consistent and gives Nova one framework-specific extension point if Express ever requires safe shared configuration. Runtime behavior remains in `runtimeNode`, and application-specific middleware policy remains with the consumer.
+
+## Related
+
+- Pair it with the matching **[Framework - Express.js TSConfig preset](/docs/presets/tsconfig/fw-expressjs)**.
+- Review the **[Express.js scaffold](/docs/cli/scaffolding/app/expressjs)**.

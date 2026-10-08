@@ -1,7 +1,7 @@
 ---
 id: "runtime-browser"
 title: "Runtime - Browser"
-description: "Reserve the browser environment layer in your flat config so it stays forward-compatible when browser-specific lint rules ship."
+description: "Declare standard browser globals for JavaScript and TypeScript without exposing Node.js-only APIs."
 keywords:
   - "nova"
   - "runtime browser"
@@ -9,8 +9,8 @@ keywords:
   - "browser runtime"
   - "environment layer"
   - "flat config"
-  - "forward compatible"
-  - "reserved preset"
+  - "browser globals"
+  - "dom globals"
 tags:
   - "presets"
   - "eslint"
@@ -19,10 +19,33 @@ tags:
 ---
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-This preset is the environment layer for code that runs in the browser in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>.
+Declare the standard browser globals for JavaScript and TypeScript that runs in a web page. The layer supplies names such as `window`, `document`, and `navigator` without changing Nova's language or code-style rules.
 
-:::info Coming soon
+## Usage
 
-This preset has no rules yet. This page will be filled in once it does.
+Spread `runtimeBrowser` after the language layers and before tool-specific layers.
 
-:::
+```ts title="eslint.config.mts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  langTypescript,
+  runtimeBrowser,
+} from '@cbnventures/nova/presets/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...runtimeBrowser,
+];
+```
+
+## What This Preset Configures
+
+The preset applies the `globals` package's browser environment to JavaScript, JSX, TypeScript, TSX, MJS, and MTS files. It intentionally does not add Node.js globals; configuration files that run in Node should use a separate scoped runtime or tool layer.
+
+## Related
+
+- Pair it with the matching **[Runtime - Browser TSConfig preset](/docs/presets/tsconfig/runtime-browser)**.
+- Review the layering order in **[ESLint Best Practices](/docs/presets/eslint/best-practices)**.

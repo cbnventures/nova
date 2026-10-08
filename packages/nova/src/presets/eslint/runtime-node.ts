@@ -1,4 +1,5 @@
 import nPlugin from 'eslint-plugin-n';
+import globals from 'globals';
 
 import type { Presets_Eslint_RuntimeNode_Config } from '../../types/presets/eslint/runtime-node.d.ts';
 
@@ -23,11 +24,17 @@ const config: Presets_Eslint_RuntimeNode_Config = [
       '**/*.mjs',
       '**/*.mts',
     ],
+    languageOptions: {
+      globals: globals.node,
+    },
     plugins: {
       n: nPlugin,
     },
     rules: {
       ...nPlugin.configs.recommended.rules,
+
+      // Let TypeScript or checkJs resolve package exports because eslint-plugin-n can reject valid conditional exports.
+      'n/no-missing-import': ['off'],
     },
   },
   {

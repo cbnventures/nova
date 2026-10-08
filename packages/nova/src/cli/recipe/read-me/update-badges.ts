@@ -112,12 +112,6 @@ export class Runner {
     // uses. The content is identical for the root copy and every consumer copy.
     const newInnerContent: Cli_Recipe_ReadMe_UpdateBadges_Runner_Run_NewInnerContent = CliGenerateMustHavesReadMe.buildBadgesRegionContent(workingFile);
 
-    if (newInnerContent === undefined) {
-      Logger.warn('Skipping update-badges. No badges apply for the current "nova.config.json" file.');
-
-      return;
-    }
-
     // The generator fans a single README out to the root plus every consumer-facing workspace
     // (app, package, tool, config). Refresh every copy the generator writes so no consumer copy
     // drifts. Each copy is gated independently below.

@@ -29,13 +29,14 @@ Configure TypeScript for an Express.js server so module resolution matches how N
 
 ## Usage
 
-Add the preset to the `extends` array of your `tsconfig.json`, after the essentials and strict layers.
+Add the preset to the `extends` array of your `tsconfig.json`, after the essentials, strict, and Node runtime layers.
 
 ```json title="tsconfig.json"
 {
   "extends": [
     "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
     "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-node.json",
     "@cbnventures/nova/presets/tsconfig/fw-expressjs.json"
   ],
   "compilerOptions": {

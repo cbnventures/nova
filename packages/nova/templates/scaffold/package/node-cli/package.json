@@ -1,0 +1,44 @@
+{
+  "name": "[__WORKSPACE_PACKAGE_NAME__]",
+  "version": "0.0.0",
+  "type": "module",
+  "bin": {
+    "[__WORKSPACE_NAME__]": "./build/index.js"
+  },
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
+    "dev:start": "tsx src/index.ts",
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:lint": "eslint ./ --max-warnings=0",
+    "check:types-source": "nova utility type-check --project tsconfig.source.json",
+    "check:types-config": "nova utility type-check --project tsconfig.config.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
+    "check:test": "vitest run",
+    "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
+    "build:reset": "shx rm -rf ./build",
+    "build:transpile": "nova utility transpile --project tsconfig.source.json",
+    "build:permissions": "shx chmod +x ./build/index.js",
+    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean:build": "shx rm -rf ./build"
+  },
+  "dependencies": {
+    "@cbnventures/nova": "0.29.0",
+    "commander": "15.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.9.1",
+    "eslint": "9.39.5",
+    "shx": "0.4.0",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "vitest": "4.1.11"
+  },
+  "engines": {
+    "node": "^22 || ^24"
+  }
+}

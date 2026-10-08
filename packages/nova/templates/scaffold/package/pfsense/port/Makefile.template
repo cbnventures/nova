@@ -1,0 +1,39 @@
+PORTNAME=	pfSense-pkg-[__WORKSPACE_IDENTIFIER__]
+DISTVERSION=	%%NOVA_PORTVERSION%%
+CATEGORIES=	sysutils
+MASTER_SITES=	# empty
+DISTFILES=	# empty
+EXTRACT_ONLY=	# empty
+
+MAINTAINER?=	maintainer@example.invalid
+COMMENT=	[__WORKSPACE_TITLE__] package for pfSense
+
+LICENSE=	MIT
+
+NO_ARCH=	yes
+NO_BUILD=	yes
+NO_MTREE=	yes
+
+SUB_FILES=	pkg-install pkg-deinstall
+SUB_LIST=	PORTNAME=${PORTNAME}
+
+do-extract:
+	${MKDIR} ${WRKSRC}
+
+do-install:
+	${MKDIR} ${STAGEDIR}${PREFIX}/pkg
+	${MKDIR} ${STAGEDIR}${PREFIX}/sbin
+	${MKDIR} ${STAGEDIR}${DATADIR}
+	${INSTALL_DATA} ${FILESDIR}${PREFIX}/pkg/[__WORKSPACE_NAME__].inc \
+		${STAGEDIR}${PREFIX}/pkg
+	${INSTALL_DATA} ${FILESDIR}${PREFIX}/pkg/[__WORKSPACE_NAME__].xml \
+		${STAGEDIR}${PREFIX}/pkg
+	${INSTALL_SCRIPT} ${FILESDIR}${PREFIX}/sbin/[__WORKSPACE_NAME__] \
+		${STAGEDIR}${PREFIX}/sbin
+	${INSTALL_DATA} ${FILESDIR}${DATADIR}/info.xml \
+		${STAGEDIR}${DATADIR}
+	@${REINPLACE_CMD} -i '' -e "s|%%PKGVERSION%%|${PKGVERSION}|" \
+		${STAGEDIR}${PREFIX}/pkg/[__WORKSPACE_NAME__].xml \
+		${STAGEDIR}${DATADIR}/info.xml
+
+.include <bsd.port.mk>

@@ -1,3 +1,11 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({});
+import frameworkPlugins from './config/framework-plugins.js';
+import pwaPlugins from './config/pwa-plugins.js';
+
+export default defineConfig({
+  plugins: [
+    ...frameworkPlugins,
+    ...pwaPlugins,
+  ],
+});

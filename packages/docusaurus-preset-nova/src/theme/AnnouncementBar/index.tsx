@@ -35,16 +35,11 @@ import type {
 function AnnouncementBar(props: Theme_AnnouncementBar_Index_AnnouncementBar_Props): Theme_AnnouncementBar_Index_AnnouncementBar_Returns {
   const themeConfig: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig = useThemeConfig() as Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig;
   const config: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar = themeConfig['announcementBar'];
-
-  if (config === undefined) {
-    return null;
-  }
-
-  const announcementId: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id = config['id'];
-  const content: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Content = config['content'];
-  const backgroundColor: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_BackgroundColor = config['backgroundColor'];
-  const textColor: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_TextColor = config['textColor'];
-  const isCloseable: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_IsCloseable = config['isCloseable'] ?? true;
+  const announcementId: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id = (config === undefined) ? '' : config['id'];
+  const content: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Content = (config === undefined) ? '' : config['content'];
+  const backgroundColor: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_BackgroundColor = (config === undefined) ? undefined : config['backgroundColor'];
+  const textColor: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_TextColor = (config === undefined) ? undefined : config['textColor'];
+  const isCloseable: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_IsCloseable = (config === undefined) ? true : config['isCloseable'] ?? true;
 
   const dismissStorageKey: Theme_AnnouncementBar_Index_AnnouncementBar_DismissStorageKey = `docusaurus.announcement.dismiss.${announcementId}`;
   const isDismissedState: Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissedState = useState<Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissed>(() => {
@@ -61,7 +56,11 @@ function AnnouncementBar(props: Theme_AnnouncementBar_Index_AnnouncementBar_Prop
   const isDismissed: Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissed = isDismissedState[0];
   const setIsDismissed: Theme_AnnouncementBar_Index_AnnouncementBar_SetIsDismissed = isDismissedState[1];
 
-  if (isDismissed === true || content === '') {
+  if (
+    config === undefined
+    || isDismissed === true
+    || content === ''
+  ) {
     return null;
   }
 

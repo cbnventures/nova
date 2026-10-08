@@ -58,13 +58,13 @@ export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor = {
 
 export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthors = Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor[];
 
+export type Theme_BlogSidebar_Index_BlogSidebar_FeedUrl = string;
+
 export type Theme_BlogSidebar_Index_BlogSidebar_AriaLabel = string;
 
 export type Theme_BlogSidebar_Index_BlogSidebar_AuthorsLabel = string;
 
 export type Theme_BlogSidebar_Index_BlogSidebar_SubscribeLabel = string;
-
-export type Theme_BlogSidebar_Index_BlogSidebar_FeedUrl = string;
 
 export type Theme_BlogSidebar_Index_BlogSidebar_CurrentYear = string;
 

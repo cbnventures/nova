@@ -1,0 +1,112 @@
+---
+id: "astro"
+title: "Astro"
+description: "Scaffold a static or server-rendered Astro site with reviewed Node.js, Cloudflare, and Docker deployment choices."
+keywords:
+  - "nova"
+  - "nova scaffold"
+  - "astro"
+  - "static site"
+  - "typescript"
+tags:
+  - "cli"
+  - "scaffold"
+  - "app"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold an **Astro** application with strict TypeScript checking and an explicit static or server-rendered deployment target.
+
+## Why Use This Command?
+
+1. Combines Astro's strict configuration with Nova's Astro TSConfig preset so framework types and project rules start aligned.
+2. Supports static output, a standalone Node.js server, or Cloudflare Workers without mixing incompatible adapter settings.
+3. Pins Astro's ESM cookie runtime directly so a mixed-framework monorepo cannot hoist an older CommonJS version into Astro's prerender build.
+4. Separates Astro source, Node-based configuration, and Vitest type-checking so one tool's declarations do not leak into another build.
+5. Can package static output or the Node.js server as a reviewed Docker image.
+6. Supports both a new monorepo and an additional app workspace through the same command.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Empty directory** or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** — Nova auto-detects whether to create a project or add a workspace.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold app astro
+
+    # Shorthand
+    nova scaf app astro
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold app astro
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf app astro
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                           | Description                                                               |
+|--------------------------------|---------------------------------------------------------------------------|
+| `-d, --dry-run`                | Run without writing any files.                                            |
+| `--name <name>`                | Project slug when creating a new monorepo; omit at an existing root.      |
+| `--non-interactive`            | Use flags and defaults without opening prompts.                           |
+| `--workspace-name <name>`      | Workspace directory name.                                                 |
+| `--output <dir>`               | Output directory.                                                         |
+| `--rendering <static\|server>` | Rendering mode; defaults to `static`.                                     |
+| `--adapter <node\|cloudflare>` | Server adapter when `--rendering server` is selected; defaults to `node`. |
+| `--docker-image`               | Add Docker packaging for static output or the Node.js server.             |
+
+## Output Files
+
+| File                    | Description                                                               |
+|-------------------------|---------------------------------------------------------------------------|
+| `astro.config.mjs`      | Astro project configuration.                                              |
+| `eslint.config.mts`     | Ordered Nova presets and the complete Nova custom-rule collection.        |
+| `src/pages/index.astro` | Starter page using the generated workspace title.                         |
+| `tests/project.test.ts` | Starter Vitest workspace test.                                            |
+| `tsconfig.astro.json`   | Astro source contract with essentials, strict, browser, and Astro layers. |
+| `tsconfig.config.json`  | Node.js contract for configuration files.                                 |
+| `tsconfig.tests.json`   | Isolated Vitest test contract.                                            |
+| `vitest.config.mts`     | Test discovery scoped to this workspace.                                  |
+| `package.json`          | Astro dependencies and Nova-managed workspace scripts.                    |
+
+When `--docker-image` is enabled, Nova also writes `.dockerignore`, `Dockerfile`, and `compose.yml`. Static sites use an unprivileged NGINX image; Node.js server rendering uses Astro's standalone server output. Cloudflare server rendering cannot be combined with `--docker-image` because Cloudflare owns that runtime.
+
+Astro does not enable MDX by default, so this scaffold does not pretend `.mdx` files are buildable. If you add Astro's MDX integration, also add `langMdx` to the ESLint config; Nova's MDX language preset composes with the Astro framework layer.
+
+## Non-Interactive Mode
+
+Agents and automation can provide every answer as flags:
+
+```bash
+# Static site with defaults
+nova scaffold app astro --non-interactive --name my-site --workspace-name web --output ./my-site
+
+# Node.js server in Docker
+nova scaffold app astro --non-interactive --workspace-name server --output ./apps/server --rendering server --adapter node --docker-image
+
+# Cloudflare server-rendered site
+nova scaffold app astro --non-interactive --workspace-name edge --output ./apps/edge --rendering server --adapter cloudflare
+```
+
+## Registration
+
+Nova registers the workspace with the `app` role and `trackable` policy. Its package name follows `{projectSlug}-app-{workspaceName}`.

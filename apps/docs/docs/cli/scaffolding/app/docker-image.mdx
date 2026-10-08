@@ -1,0 +1,101 @@
+---
+id: "docker-image"
+title: "Docker Image"
+description: "Scaffold a container-native Docker image workspace without choosing an application framework or server runtime."
+keywords:
+  - "nova"
+  - "nova scaffold"
+  - "docker"
+  - "container"
+  - "container native"
+  - "appliance"
+tags:
+  - "cli"
+  - "scaffold"
+  - "app"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a **container-native Docker image** without assuming Express, Discord, or another application workload.
+
+## Why Use This Command?
+
+1. Starts from a pinned Alpine runtime so the image foundation remains predictable.
+2. Runs as a non-root `app` user and leaves application installation and startup decisions to the project.
+3. Includes Compose and Nova-managed lifecycle scripts without inserting a web server or opening a port.
+4. Can add a release workflow for GitHub Container Registry or Docker Hub with an explicit architecture target.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Docker** — Install Docker with Compose support before running the generated development, production, build, or deployment commands.
+- **Empty directory** or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** — Nova auto-detects whether to create a project or add a workspace.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold app docker-image
+
+    # Shorthand
+    nova scaf app docker-image
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold app docker-image
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf app docker-image
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                                 | Description                                                                         |
+|--------------------------------------|-------------------------------------------------------------------------------------|
+| `-d, --dry-run`                      | Run without writing any files.                                                      |
+| `--name <name>`                      | Project slug when creating a new monorepo; omit at an existing root.                |
+| `--non-interactive`                  | Use flags and defaults without opening prompts.                                     |
+| `--workspace-name <name>`            | Workspace directory name.                                                           |
+| `--output <dir>`                     | Output directory.                                                                   |
+| `--publish <none\|ghcr\|docker-hub>` | Registry workflow; defaults to `none`.                                              |
+| `--architectures <value>`            | `amd64`, `arm64`, or `amd64,arm64`; used only when publishing and defaults to both. |
+
+## Output Files
+
+| File                    | Description                                                       |
+|-------------------------|-------------------------------------------------------------------|
+| `Dockerfile`            | Pinned Alpine image with a non-root runtime user.                 |
+| `compose.yml`           | Container-native Compose service without a port assumption.       |
+| `.dockerignore`         | Exclusions for source-control, environment, and build artifacts.  |
+| `package.json`          | Nova lifecycle scripts for Docker development, build, and deploy. |
+| `tests/project.test.ts` | Vitest workspace identity coverage for the generated project.     |
+
+When publishing is enabled, Nova writes `.github/workflows/{workspace-name}-container.yml` at the monorepo root. GHCR uses the workflow's `GITHUB_TOKEN`. Docker Hub expects the `DOCKERHUB_USERNAME` repository variable and `DOCKERHUB_TOKEN` repository secret.
+
+## Non-Interactive Mode
+
+```bash
+nova scaffold app docker-image --non-interactive --name my-service --workspace-name api --output ./my-service
+nova scaffold app docker-image --non-interactive --workspace-name api --output ./apps/api
+nova scaffold app docker-image --non-interactive --workspace-name gateway --output ./apps/gateway --publish ghcr --architectures amd64,arm64
+nova scaffold app docker-image --non-interactive --workspace-name appliance --output ./apps/appliance --publish docker-hub --architectures arm64
+```
+
+## Registration
+
+Nova registers the workspace with the `app` role and `trackable` policy. Its package name follows `{projectSlug}-app-{workspaceName}`.
+
+The generated image is deliberately a foundation. Add the packages, copied assets, ports, health checks, and final `CMD` required by the actual container workload. To package an Express or Discord workload instead, use its own scaffold with `--docker-image`.

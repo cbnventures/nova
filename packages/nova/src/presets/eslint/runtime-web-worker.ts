@@ -1,13 +1,26 @@
+import globals from 'globals';
+
 import type { Presets_Eslint_RuntimeWebWorker_Config } from '../../types/presets/eslint/runtime-web-worker.d.ts';
 
 /**
  * Presets - ESLint - Runtime Web Worker - Config.
  *
- * Reserved preset for Web Worker environment rules. Currently empty because no
- * Worker-specific lint rules are needed beyond the shared dx-code-style preset.
+ * Declares Web Worker globals for JavaScript and TypeScript sources.
+ * Runtime-specific application rules remain owned by the consumer.
  *
  * @since 0.11.0
  */
-const config: Presets_Eslint_RuntimeWebWorker_Config = [{}];
+const config: Presets_Eslint_RuntimeWebWorker_Config = [{
+  name: 'nova/runtime-web-worker',
+  files: [
+    '**/*.js',
+    '**/*.ts',
+    '**/*.mjs',
+    '**/*.mts',
+  ],
+  languageOptions: {
+    globals: globals.worker,
+  },
+}];
 
 export default config;

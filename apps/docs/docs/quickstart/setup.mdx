@@ -89,19 +89,29 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
     {
       "extends": [
         "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
-        "@cbnventures/nova/presets/tsconfig/dx-strict.json"
+        "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+        "@cbnventures/nova/presets/tsconfig/runtime-node.json"
       ]
     }
     ```
 
-    Third, configure **ESLint** through the `eslint.config.ts` file. See **[ESLint best practices](/docs/presets/eslint/best-practices)**.
+    Third, configure **ESLint** through the `eslint.config.mts` file. See **[ESLint best practices](/docs/presets/eslint/best-practices)**.
 
     ```ts
-    import { dxCodeStyle, dxIgnore } from '@cbnventures/nova/presets/eslint';
+    import {
+      dxCodeStyle,
+      dxIgnore,
+      langTypescript,
+      runtimeNode,
+    } from '@cbnventures/nova/presets/eslint';
+    import { novaRules } from '@cbnventures/nova/rules/eslint';
 
     export default [
       ...dxIgnore,
       ...dxCodeStyle,
+      ...langTypescript,
+      ...runtimeNode,
+      ...novaRules,
     ];
     ```
 

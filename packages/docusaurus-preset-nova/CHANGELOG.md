@@ -1,5 +1,13 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.29.0 - 2026-10-07
+
+### UPDATED
+- Updates Iconify metadata, multilingual Lunr support, and Shiki syntax highlighting to their latest compatible releases.
+
+### FIXED
+- Keeps announcement bar, blog sidebar, and footer hooks in a stable order when their optional configuration or content is absent, preventing conditional React hook execution.
+
 ## 0.28.0 - 2026-10-02
 
 No changes.

@@ -1,0 +1,45 @@
+import type { TSESLint } from '@typescript-eslint/utils';
+import type { Linter } from '@typescript-eslint/utils/ts-eslint';
+
+/**
+ * Tests - Rules - ESLint - Nova Rules.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_RuleModules = Map<string, unknown>;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_Config = TSESLint.FlatConfig.Config;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_Plugins = TSESLint.FlatConfig.Config['plugins'];
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_Plugin = TSESLint.FlatConfig.Plugin | undefined;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_Rules = TSESLint.FlatConfig.Plugin['rules'];
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_RuleNames = string[];
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_RuleName = string;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_RuleDefinition = unknown;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_Meta = unknown;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_Schema = unknown;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_SchemaOption = unknown;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_Properties = unknown;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_DefaultOptions = unknown;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_DefaultOption = unknown;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RequiresEveryCustomRuleToSupportIgnoreFiles_IgnoreFiles = unknown;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RunsEveryEnabledCustomRuleAgainstAnMJSFileWithoutCrashing_Linter = Linter;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RunsEveryEnabledCustomRuleAgainstAnMJSFileWithoutCrashing_TemplateInterpolation = string;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RunsEveryEnabledCustomRuleAgainstAnMJSFileWithoutCrashing_SourceCode = string;
+
+export type Tests_Rules_Eslint_NovaRules_NovaRules_RunsEveryEnabledCustomRuleAgainstAnMJSFileWithoutCrashing_Messages = Linter.LintMessage[];

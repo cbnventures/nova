@@ -1,0 +1,33 @@
+{
+  "name": "[__WORKSPACE_PACKAGE_NAME__]",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
+    "dev:container": "docker compose up --build",
+    "prod": "nova utility run-scripts --sequential --node-env production 'prod:*'",
+    "prod:container": "docker compose up --detach",
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:lint": "eslint ./ --max-warnings=0",
+    "check:types-config": "nova utility type-check --project tsconfig.config.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
+    "check:test": "vitest run",
+    "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
+    "build:container": "docker compose build",
+    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean:container": "docker compose down --remove-orphans"
+  },
+  "dependencies": {
+    "@cbnventures/nova": "0.29.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.9.1",
+    "eslint": "9.39.5",
+    "typescript": "6.0.3",
+    "vitest": "4.1.11"
+  },
+  "engines": {
+    "node": "^22 || ^24"
+  }
+}

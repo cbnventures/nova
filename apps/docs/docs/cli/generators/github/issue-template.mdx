@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 
 Create issue form templates under `.github/ISSUE_TEMPLATE/` including `config.yml`, `BUG-REPORT.yml`, `FEATURE-REQUEST.yml`, and `SUPPORT-REQUEST.yml`.
 
-The bug report fields come from `nova.config.json`, falling back to the fields that match your configured dev platforms when none are set.
+The bug report includes only the exact ordered fields selected in `nova.config.json`.
 
 ## Why Use This Command?
 
@@ -72,14 +72,13 @@ The bug report fields come from `nova.config.json`, falling back to the fields t
 
 ## Config Fields
 
-| Field                                  | Description                                                              |
-|----------------------------------------|--------------------------------------------------------------------------|
-| `project.pronouns`                     | Pronoun style (`personal` or `business`) for template language.          |
-| `project.platforms`                    | Dev platforms used to derive bug report fields when none are configured. |
-| `github.issueTemplate.bugReportFields` | Bug report field files to include. Overrides the platform-derived set.   |
-| `urls.fundSources`                     | Fund source URLs used to derive the GitHub sponsor username.             |
-| `urls.privacyPolicy`                   | Privacy policy URL included in issue template footers.                   |
-| `urls.termsOfUse`                      | Terms of use URL included in issue template footers.                     |
+| Field                                  | Description                                                            |
+|----------------------------------------|------------------------------------------------------------------------|
+| `project.pronouns`                     | Pronoun style (`personal` or `business`) for template language.        |
+| `github.issueTemplate.bugReportFields` | Exact ordered semantic field identifiers to include in the bug report. |
+| `urls.fundSources`                     | Fund source URLs used to derive the GitHub sponsor username.           |
+| `urls.privacyPolicy`                   | Privacy policy URL included in issue template footers.                 |
+| `urls.termsOfUse`                      | Terms of use URL included in issue template footers.                   |
 
 ## Output Files
 
@@ -94,28 +93,28 @@ The bug report fields come from `nova.config.json`, falling back to the fields t
 
 ### Field Selection
 
-The command is non-interactive. It reads the bug report fields from `github.issueTemplate.bugReportFields` in `nova.config.json`.
+The command is non-interactive. It reads the exact field identifiers from `github.issueTemplate.bugReportFields` in `nova.config.json` and preserves their order.
 
-When that field is absent, the generator derives the set from `project.platforms` instead. If neither yields any fields, the templates are produced without platform-specific fields.
+Missing and empty arrays both produce a bug report without optional fields. The initializer can suggest a first selection from `project.platforms` and configured URLs, but the generator never infers fields.
 
 To change which fields are included, edit them through [`nova utility initialize`](/docs/cli/utilities/initialize#github) under the **GitHub** category.
 
 ### Available Bug Report Fields
 
-| Field       | Template File     | Collects                                                |
-|-------------|-------------------|---------------------------------------------------------|
-| Node.js     | `nodejs.yml`      | Node.js version.                                        |
-| Apple       | `apple.yml`       | Device type and OS version.                             |
-| Android     | `android.yml`     | Device model and Android version.                       |
-| C# / .NET   | `csharp.yml`      | .NET version and operating system.                      |
-| PHP         | `php.yml`         | PHP version.                                            |
-| Python      | `python.yml`      | Python version.                                         |
-| Homebridge  | `homebridge.yml`  | Plugin and Homebridge version.                          |
-| pfSense     | `pfsense.yml`     | pfSense version.                                        |
-| Synology    | `synology.yml`    | Synology DSM version.                                   |
-| Docker      | `docker.yml`      | Docker version, host OS, architecture, and run command. |
-| Web Browser | `web.yml`         | Browser name and version.                               |
-| Screenshots | `screenshots.yml` | Screenshot upload field.                                |
+| Identifier    | Internal Template File | Collects                                                |
+|---------------|------------------------|---------------------------------------------------------|
+| `nodejs`      | `nodejs.yml`           | Node.js version.                                        |
+| `apple`       | `apple.yml`            | Device type and OS version.                             |
+| `android`     | `android.yml`          | Device model and Android version.                       |
+| `csharp`      | `csharp.yml`           | .NET version and operating system.                      |
+| `php`         | `php.yml`              | PHP version.                                            |
+| `python`      | `python.yml`           | Python version.                                         |
+| `homebridge`  | `homebridge.yml`       | Plugin and Homebridge version.                          |
+| `pfsense`     | `pfsense.yml`          | pfSense version.                                        |
+| `synology`    | `synology.yml`         | Synology DSM version.                                   |
+| `docker`      | `docker.yml`           | Docker version, host OS, architecture, and run command. |
+| `web`         | `web.yml`              | Browser name and version.                               |
+| `screenshots` | `screenshots.yml`      | Screenshot upload field.                                |
 
 ### File Generation
 

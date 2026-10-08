@@ -12,10 +12,12 @@ import type {
   Tests_Cli_Index_CliRecipeLicenseUpdateCopyrightJs_MockedRunner,
   Tests_Cli_Index_CliRecipeMiscellaneousFixMarkdownTablesJs_MockedRunner,
   Tests_Cli_Index_CliRecipeReadMeUpdateHeaderJs_MockedRunner,
+  Tests_Cli_Index_CliScaffoldAppAndroidJs_MockedRunner,
+  Tests_Cli_Index_CliScaffoldAppAppleJs_MockedRunner,
+  Tests_Cli_Index_CliScaffoldAppCloudflareWorkersJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldAppExpressjsJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldAppNextjsJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldAppViteJs_MockedRunner,
-  Tests_Cli_Index_CliScaffoldAppWorkersJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldDocsDocusaurusJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldStarterBaseJs_MockedRunner,
   Tests_Cli_Index_NestedRecipeOptions_OriginalArgv,
@@ -25,12 +27,14 @@ import type {
   Tests_Cli_Index_NestedRecipeOptions_PassesDryRunToADirectGitHubRecipe_ExpectedOptions,
   Tests_Cli_Index_RunnerMocks,
   Tests_Cli_Index_ScaffoldOptions_OriginalArgv,
+  Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveAndroidAnswers_ExpectedOptions,
+  Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveAppleAnswers_ExpectedOptions,
   Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions,
+  Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveCloudflareWorkersAnswers_ExpectedOptions,
   Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveDocusaurusAnswers_ExpectedOptions,
   Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveExpressJsAnswers_ExpectedOptions,
   Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveNextJsAnswers_ExpectedOptions,
   Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveViteAnswers_ExpectedOptions,
-  Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveWorkersAnswers_ExpectedOptions,
 } from '../../types/tests/cli/index.test.d.ts';
 
 /**
@@ -46,10 +50,12 @@ const runnerMocks: Tests_Cli_Index_RunnerMocks = vi.hoisted(() => ({
   licenseUpdateCopyrightRun: vi.fn(),
   miscellaneousFixMarkdownTablesRun: vi.fn(),
   readMeUpdateHeaderRun: vi.fn(),
+  scaffoldAppAndroidRun: vi.fn(),
+  scaffoldAppAppleRun: vi.fn(),
+  scaffoldAppCloudflareWorkersRun: vi.fn(),
   scaffoldAppExpressjsRun: vi.fn(),
   scaffoldAppNextjsRun: vi.fn(),
   scaffoldAppViteRun: vi.fn(),
-  scaffoldAppWorkersRun: vi.fn(),
   scaffoldDocsDocusaurusRun: vi.fn(),
   scaffoldStarterBaseRun: vi.fn(),
 }));
@@ -86,17 +92,33 @@ vi.mock('../../cli/recipe/read-me/update-header.js', () => {
   return { Runner: mockedRunner };
 });
 
-vi.mock('../../cli/scaffold/app/expressjs.js', () => {
-  const mockedRunner: Tests_Cli_Index_CliScaffoldAppExpressjsJs_MockedRunner = {
-    run: runnerMocks['scaffoldAppExpressjsRun'],
+vi.mock('../../cli/scaffold/app/android.js', () => {
+  const mockedRunner: Tests_Cli_Index_CliScaffoldAppAndroidJs_MockedRunner = {
+    run: runnerMocks['scaffoldAppAndroidRun'],
   };
 
   return { Runner: mockedRunner };
 });
 
-vi.mock('../../cli/scaffold/app/nextjs.js', () => {
-  const mockedRunner: Tests_Cli_Index_CliScaffoldAppNextjsJs_MockedRunner = {
-    run: runnerMocks['scaffoldAppNextjsRun'],
+vi.mock('../../cli/scaffold/app/apple.js', () => {
+  const mockedRunner: Tests_Cli_Index_CliScaffoldAppAppleJs_MockedRunner = {
+    run: runnerMocks['scaffoldAppAppleRun'],
+  };
+
+  return { Runner: mockedRunner };
+});
+
+vi.mock('../../cli/scaffold/app/cloudflare-workers.js', () => {
+  const mockedRunner: Tests_Cli_Index_CliScaffoldAppCloudflareWorkersJs_MockedRunner = {
+    run: runnerMocks['scaffoldAppCloudflareWorkersRun'],
+  };
+
+  return { Runner: mockedRunner };
+});
+
+vi.mock('../../cli/scaffold/app/expressjs.js', () => {
+  const mockedRunner: Tests_Cli_Index_CliScaffoldAppExpressjsJs_MockedRunner = {
+    run: runnerMocks['scaffoldAppExpressjsRun'],
   };
 
   return { Runner: mockedRunner };
@@ -110,9 +132,9 @@ vi.mock('../../cli/scaffold/app/vite.js', () => {
   return { Runner: mockedRunner };
 });
 
-vi.mock('../../cli/scaffold/app/workers.js', () => {
-  const mockedRunner: Tests_Cli_Index_CliScaffoldAppWorkersJs_MockedRunner = {
-    run: runnerMocks['scaffoldAppWorkersRun'],
+vi.mock('../../cli/scaffold/app/nextjs.js', () => {
+  const mockedRunner: Tests_Cli_Index_CliScaffoldAppNextjsJs_MockedRunner = {
+    run: runnerMocks['scaffoldAppNextjsRun'],
   };
 
   return { Runner: mockedRunner };
@@ -291,8 +313,43 @@ describe('scaffold options', () => {
     return;
   });
 
+  it('passes complete non-interactive Apple answers', async () => {
+    const expectedOptions: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveAppleAnswers_ExpectedOptions = {
+      name: 'my-apple-app',
+      nonInteractive: true,
+      output: './my-project',
+      workspaceName: 'apple',
+    };
+
+    process.argv = [
+      'node',
+      'nova',
+      'scaffold',
+      'app',
+      'apple',
+      '--non-interactive',
+      '--name',
+      'my-apple-app',
+      '--workspace-name',
+      'apple',
+      '--output',
+      './my-project',
+    ];
+
+    await import('../../cli/index.js');
+
+    await vi.waitFor(() => {
+      expect(runnerMocks['scaffoldAppAppleRun']).toHaveBeenCalledWith(expectedOptions);
+
+      return;
+    });
+
+    return;
+  });
+
   it('passes complete non-interactive Express.js answers', async () => {
     const expectedOptions: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveExpressJsAnswers_ExpectedOptions = {
+      dockerImage: true,
       name: 'my-api',
       nonInteractive: true,
       output: './my-project',
@@ -305,6 +362,7 @@ describe('scaffold options', () => {
       'scaffold',
       'app',
       'expressjs',
+      '--docker-image',
       '--non-interactive',
       '--name',
       'my-api',
@@ -318,6 +376,43 @@ describe('scaffold options', () => {
 
     await vi.waitFor(() => {
       expect(runnerMocks['scaffoldAppExpressjsRun']).toHaveBeenCalledWith(expectedOptions);
+
+      return;
+    });
+
+    return;
+  });
+
+  it('passes complete non-interactive Android answers', async () => {
+    const expectedOptions: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveAndroidAnswers_ExpectedOptions = {
+      applicationId: 'com.example.mobile',
+      name: 'my-android-app',
+      nonInteractive: true,
+      output: './my-project',
+      workspaceName: 'mobile',
+    };
+
+    process.argv = [
+      'node',
+      'nova',
+      'scaffold',
+      'app',
+      'android',
+      '--non-interactive',
+      '--application-id',
+      'com.example.mobile',
+      '--name',
+      'my-android-app',
+      '--workspace-name',
+      'mobile',
+      '--output',
+      './my-project',
+    ];
+
+    await import('../../cli/index.js');
+
+    await vi.waitFor(() => {
+      expect(runnerMocks['scaffoldAppAndroidRun']).toHaveBeenCalledWith(expectedOptions);
 
       return;
     });
@@ -393,8 +488,8 @@ describe('scaffold options', () => {
     return;
   });
 
-  it('passes complete non-interactive Workers answers', async () => {
-    const expectedOptions: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveWorkersAnswers_ExpectedOptions = {
+  it('passes complete non-interactive Cloudflare Workers answers', async () => {
+    const expectedOptions: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveCloudflareWorkersAnswers_ExpectedOptions = {
       name: 'my-worker',
       nonInteractive: true,
       output: './my-project',
@@ -406,7 +501,7 @@ describe('scaffold options', () => {
       'nova',
       'scaffold',
       'app',
-      'workers',
+      'cloudflare-workers',
       '--non-interactive',
       '--name',
       'my-worker',
@@ -419,7 +514,7 @@ describe('scaffold options', () => {
     await import('../../cli/index.js');
 
     await vi.waitFor(() => {
-      expect(runnerMocks['scaffoldAppWorkersRun']).toHaveBeenCalledWith(expectedOptions);
+      expect(runnerMocks['scaffoldAppCloudflareWorkersRun']).toHaveBeenCalledWith(expectedOptions);
 
       return;
     });

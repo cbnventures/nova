@@ -3,6 +3,7 @@ import {
   access,
   mkdir,
   mkdtemp,
+  readFile,
   rm,
   writeFile,
 } from 'node:fs/promises';
@@ -40,6 +41,14 @@ import type {
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootDirectory,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJson,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJsonPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_ComposePath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfileContent,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfilePath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_NovaConfig,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_NovaConfigPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_PackageJson,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_PackageJsonPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_ProjectDirectory,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_OriginalCwd,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RespectsDryRun_DryRunOutputPath,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RespectsDryRun_Exists,
@@ -152,7 +161,7 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
 
     // Verify workspace files were created.
     const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath = join(projectDirectory, 'my-api', 'apps', 'express', 'package.json');
-    const tsconfigPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_TsconfigPath = join(projectDirectory, 'my-api', 'apps', 'express', 'tsconfig.json');
+    const tsconfigPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_TsconfigPath = join(projectDirectory, 'my-api', 'apps', 'express', 'tsconfig.source.json');
     const indexTsPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_IndexTsPath = join(projectDirectory, 'my-api', 'apps', 'express', 'src', 'index.ts');
 
     await access(workspacePackageJsonPath);
@@ -225,7 +234,7 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
 
     // Verify workspace files were created.
     const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath = join(projectDirectory, 'apps', 'express', 'package.json');
-    const tsconfigPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_TsconfigPath = join(projectDirectory, 'apps', 'express', 'tsconfig.json');
+    const tsconfigPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_TsconfigPath = join(projectDirectory, 'apps', 'express', 'tsconfig.source.json');
     const indexTsPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_IndexTsPath = join(projectDirectory, 'apps', 'express', 'src', 'index.ts');
 
     await access(workspacePackageJsonPath);
@@ -233,6 +242,59 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
     await access(tsconfigPath);
 
     await access(indexTsPath);
+
+    return;
+  });
+
+  it('generates Docker packaging when requested', async () => {
+    const projectDirectory: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_ProjectDirectory = join(sandboxRoot, 'docker-workspace-test');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const packageJson: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_PackageJson = JSON.stringify({
+      name: 'root',
+      workspaces: ['apps/*'],
+    }, null, 2);
+    const packageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_PackageJsonPath = join(projectDirectory, 'package.json');
+
+    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+
+    const novaConfig: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_NovaConfig = JSON.stringify({
+      project: {
+        name: {
+          slug: 'docker-workspace-test',
+          title: 'Docker Workspace Test',
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'docker-workspace-test-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+      },
+    }, null, 2);
+    const novaConfigPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliScaffoldAppExpressjs.run({
+      dockerImage: true,
+      nonInteractive: true,
+      workspaceName: 'api',
+      output: './apps/api',
+    });
+
+    const dockerfilePath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfilePath = join(projectDirectory, 'apps', 'api', 'Dockerfile');
+    const composePath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_ComposePath = join(projectDirectory, 'apps', 'api', 'compose.yml');
+    const dockerfileContent: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfileContent = await readFile(dockerfilePath, 'utf-8');
+
+    await access(composePath);
+
+    strictEqual(dockerfileContent.includes('EXPOSE 3000'), true);
+    strictEqual(dockerfileContent.includes('HEALTHCHECK'), true);
 
     return;
   });

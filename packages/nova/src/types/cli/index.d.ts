@@ -163,6 +163,8 @@ export type Cli_Index_CLI_RegisterCommands_ScaffoldApp = Command;
 
 export type Cli_Index_CLI_RegisterCommands_ScaffoldDocs = Command;
 
+export type Cli_Index_CLI_RegisterCommands_ScaffoldPackage = Command;
+
 export type Cli_Index_CLI_RegisterCommands_ScaffoldStarter = Command;
 
 export type Cli_Index_CLI_RegisterCommands_Utility = Command;

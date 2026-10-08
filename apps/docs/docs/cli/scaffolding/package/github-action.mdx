@@ -1,0 +1,91 @@
+---
+id: "github-action"
+title: "GitHub Action"
+description: "Scaffold a Node 24 GitHub Action with typed inputs, Vitest, local-action support, and NCC-bundled production output."
+keywords:
+  - "nova"
+  - "nova scaffold"
+  - "github action"
+  - "ncc"
+  - "typescript"
+tags:
+  - "cli"
+  - "scaffold"
+  - "package"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a bundled **GitHub Action** that runs on Node 24 and exposes a typed greeting input and output.
+
+## Why Use This Command?
+
+1. Creates the repository-level `action.yml` and its package source together so their entry paths cannot drift.
+2. Bundles dependencies with NCC so consumers can execute the checked-in `build/index.js` without installing packages.
+3. Includes Vitest and GitHub's local-action runner so logic can be checked before publishing a tag.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Repository root ownership** — The command writes `action.yml` at the monorepo root and stops if that file already exists.
+- **Empty directory** or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** — Nova auto-detects whether to create a project or add a package.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold package github-action
+
+    # Shorthand
+    nova scaf pkg action
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold package github-action
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf pkg action
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                                                          |
+|---------------------------|----------------------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                                       |
+| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
+| `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
+| `--workspace-name <name>` | Workspace directory and package name.                                |
+| `--output <dir>`          | Output directory.                                                    |
+
+## Output Files
+
+| File              | Description                                               |
+|-------------------|-----------------------------------------------------------|
+| `action.yml`      | Root action metadata using the generated package build.   |
+| `src/index.ts`    | Action entry point with failure reporting.                |
+| `src/run.ts`      | Import-safe action logic and output generation.           |
+| `src/run.test.ts` | Vitest smoke test for the action logic.                   |
+| `package.json`    | GitHub toolkit dependencies, local runner, and NCC build. |
+
+## Non-Interactive Mode
+
+```bash
+nova scaffold package github-action --non-interactive --name my-action --workspace-name my-action --output ./my-action
+nova scaffold package github-action --non-interactive --workspace-name my-action --output ./packages/my-action
+```
+
+## Registration
+
+Nova registers the workspace with the `package` role and `distributable` policy. The generated `action.yml` uses `./packages/{workspaceName}/build/index.js`, so a custom output path is also added to the root npm workspace list when needed.

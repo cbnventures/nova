@@ -1,7 +1,7 @@
 ---
 id: "runtime-web-worker"
 title: "Runtime - Web Worker"
-description: "Reserve the Web Worker layer in your ESLint flat config so it stays forward-compatible when worker-specific lint rules ship in the future."
+description: "Declare Web Worker globals for background JavaScript and TypeScript without browser-window APIs."
 keywords:
   - "nova"
   - "runtime web worker"
@@ -9,8 +9,8 @@ keywords:
   - "web worker"
   - "environment layer"
   - "flat config"
-  - "forward compatible"
-  - "reserved preset"
+  - "web worker globals"
+  - "background worker"
 tags:
   - "presets"
   - "eslint"
@@ -19,10 +19,31 @@ tags:
 ---
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-This preset is the environment layer for code that runs in a Web Worker in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>.
+Declare Web Worker globals for background JavaScript and TypeScript without making browser-window or Node.js APIs available to ESLint.
 
-:::info Coming soon
+## Usage
 
-This preset has no rules yet. This page will be filled in once it does.
+```ts title="eslint.config.mts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  langTypescript,
+  runtimeWebWorker,
+} from '@cbnventures/nova/presets/eslint';
 
-:::
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...runtimeWebWorker,
+];
+```
+
+## What This Preset Configures
+
+The preset applies the `globals` package's Worker environment to JavaScript, TypeScript, MJS, and MTS files.
+
+## Related
+
+- Pair it with the matching **[Runtime - Web Worker TSConfig preset](/docs/presets/tsconfig/runtime-web-worker)**.
+- Review the layering order in **[ESLint Best Practices](/docs/presets/eslint/best-practices)**.

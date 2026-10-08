@@ -1,0 +1,98 @@
+---
+id: "homebridge"
+title: "Homebridge Plugin"
+description: "Scaffold a Homebridge dynamic-platform plugin with a config schema, Homebridge 1 and 2 compatibility, and strict TypeScript."
+keywords:
+  - "nova"
+  - "nova scaffold"
+  - "homebridge plugin"
+  - "homekit"
+  - "dynamic platform"
+tags:
+  - "cli"
+  - "scaffold"
+  - "package"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a **Homebridge dynamic-platform plugin** with the required registration entry point and Config UI schema.
+
+## Why Use This Command?
+
+1. Generates Homebridge's platform registration and cached-accessory hooks so the package begins with a valid plugin shape.
+2. Declares compatibility with Homebridge 1.11 and 2.x while using the current Homebridge types during development.
+3. Applies Nova's Homebridge TSConfig preset and npm package-name convention so framework and publication requirements stay aligned.
+4. Optionally adds the official Config UI X custom frontend and backend layout while keeping schema-rendered settings as the default.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Homebridge environment** — Install Homebridge when you want to load and test the generated plugin locally.
+- **Empty directory** or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** — Nova auto-detects whether to create a project or add a package.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold package homebridge
+
+    # Shorthand
+    nova scaf pkg homebridge
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold package homebridge
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf pkg homebridge
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                                                                |
+|---------------------------|----------------------------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                                             |
+| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root.       |
+| `--non-interactive`       | Use flags and defaults without opening prompts.                            |
+| `--workspace-name <name>` | Workspace directory name; Nova adds `homebridge-` to the npm package name. |
+| `--output <dir>`          | Output directory.                                                          |
+| `--custom-ui`             | Add Config UI X frontend assets and a custom UI server entry point.        |
+
+## Output Files
+
+| File                   | Description                                                      |
+|------------------------|------------------------------------------------------------------|
+| `config.schema.json`   | Basic Homebridge Config UI schema and generated plugin alias.    |
+| `src/index.ts`         | Homebridge registration entry point.                             |
+| `src/platform.ts`      | Dynamic platform class with cached-accessory restoration.        |
+| `tsconfig.source.json` | Nova strict, Node.js, and Homebridge preset composition.         |
+| `package.json`         | Homebridge metadata, engine ranges, keywords, and local scripts. |
+
+With `--custom-ui`, Nova also writes `src/config-ui/server.ts` and `homebridge-ui/public/`. The build copies those browser assets into `build/config-ui/public`, matching the `customUiPath` written to `config.schema.json`.
+
+## Non-Interactive Mode
+
+```bash
+nova scaffold package homebridge --non-interactive --name my-plugin --workspace-name lights --output ./my-plugin
+nova scaffold package homebridge --non-interactive --workspace-name lights --output ./packages/lights
+nova scaffold package homebridge --non-interactive --workspace-name thermostat --output ./packages/thermostat --custom-ui
+```
+
+## Naming and Registration
+
+Nova prefixes the npm package name with `homebridge-` when needed, so workspace `lights` becomes package `homebridge-lights`. A name that already begins with `homebridge-` is preserved.
+
+The workspace is registered with the `package` role and `distributable` policy. Without `--custom-ui`, Homebridge Config UI X renders the schema normally. Enable the option only when the plugin needs its own setup flow or richer settings interface.

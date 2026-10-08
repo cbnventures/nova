@@ -1,0 +1,96 @@
+---
+id: "docker-image"
+title: "Docker Image"
+description: "Add reviewed Node.js service, static-site, framework-server, or container-native Docker packaging to an existing Nova workspace."
+keywords:
+  - "nova"
+  - "nova generate"
+  - "docker"
+  - "compose"
+  - "container"
+  - "workspace"
+tags:
+  - "cli"
+  - "generator"
+  - "docker"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Add Docker packaging to an existing workspace without changing what the application does.
+
+## Why Use This Command?
+
+1. Keeps Docker separate from framework scaffolds so one Express or Discord template can work with or without containers.
+2. Requires an explicit workload profile instead of guessing from dependencies or filenames.
+3. Adds a pinned, non-root Dockerfile, a matching Compose service, `.dockerignore`, and the canonical `deploy:container` script.
+4. Uses the same packaging profiles as Nova's Astro, Discord bot, Docker image, Express.js, Next.js, Vite, and Docusaurus scaffolds.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Project root** — Run from the directory containing the top-level `package.json`.
+- **Existing workspace** — Select a child workspace with a readable `package.json`.
+- **Docker** — Install Docker with Compose support before running the generated deployment script.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova generate docker-image --workspace ./apps/api --profile http-service
+
+    # Shorthand
+    nova gen docker-image --workspace ./apps/api --profile http-service
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest generate docker-image --workspace ./apps/api --profile http-service
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest gen docker-image --workspace ./apps/api --profile http-service
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                  | Description                                                         |
+|-----------------------|---------------------------------------------------------------------|
+| `-d, --dry-run`       | Validate the target and planned profile without writing files.      |
+| `--profile <profile>` | Select one of the six reviewed profiles listed below.               |
+| `-r, --replace-file`  | Overwrite changed files instead of creating `.nova-backup` copies.  |
+| `--workspace <path>`  | Select a child workspace relative to the current Nova project root. |
+
+## Profiles
+
+| Profile              | Intended Workload                                 | Runtime Contract                                                   |
+|----------------------|---------------------------------------------------|--------------------------------------------------------------------|
+| `http-service`       | Express and other Node.js HTTP services.          | Node.js runtime on port `3000` with an HTTP health check.          |
+| `background-service` | Discord bots and other Node.js workers.           | Node.js runtime without a port or network health check.            |
+| `container-native`   | Appliances such as VPN or proxy images.           | Minimal Alpine base without a framework, port, or default command. |
+| `static-site`        | Astro, Docusaurus, or other `build` directories.  | Multi-stage build served by unprivileged NGINX on port `8080`.     |
+| `astro-node`         | Astro standalone Node.js server output.           | Node.js runtime on port `4321` with an HTTP health check.          |
+| `nextjs-standalone`  | Next.js standalone output using `distDir: build`. | Node.js runtime on port `3000` with an HTTP health check.          |
+
+The public generator's `static-site` profile reads the conventional `build` directory. Nova's Vite scaffold uses the same profile internally with Vite's `dist` directory. For an existing Vite app, prefer the scaffold's `--docker-image` option when creating it, or adjust the generated Dockerfile's copied directory after reviewing the app's build output.
+
+## Output Files
+
+| File            | Description                                                            |
+|-----------------|------------------------------------------------------------------------|
+| `.dockerignore` | Excludes local dependencies, builds, secrets, and Git metadata.        |
+| `Dockerfile`    | Profile-specific pinned image and non-root runtime.                    |
+| `compose.yml`   | Profile-specific local and deployment service definition.              |
+| `package.json`  | Adds the canonical `deploy` dispatcher and `deploy:container` command. |
+
+The generator owns Docker packaging only. It does not add Express, Discord, VPN, proxy, or application source code. Existing custom `deploy:*` steps remain beside `deploy:container`.

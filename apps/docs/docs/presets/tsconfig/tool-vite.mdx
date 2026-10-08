@@ -26,10 +26,11 @@ Align TypeScript with how <Terminology title="build tool" to="/docs/quickstart/t
 ## Why Use This Preset?
 
 1. Sets `moduleResolution` to `Bundler` so TypeScript resolves imports the same way Vite does.
-2. Enables `isolatedModules` so each file type-checks safely under Vite's per-file transpilation.
-3. Turns on `noEmit` so TypeScript only checks types and never competes with Vite for build output.
-4. Ships browser `lib` defaults so DOM and `ESNext` globals are available without extra wiring.
-5. Sits last in the `extends` chain so its bundler-oriented settings layer cleanly over the base presets.
+2. Allows native TypeScript file extensions in imports used by Vite-loaded configuration modules.
+3. Enables `isolatedModules` so each file type-checks safely under Vite's per-file transpilation.
+4. Turns on `noEmit` so TypeScript only checks types and never competes with Vite for build output.
+5. Ships browser `lib` defaults so DOM and `ESNext` globals are available without extra wiring.
+6. Sits last in the `extends` chain so its bundler-oriented settings layer cleanly over the base presets.
 
 ## Usage
 
@@ -69,13 +70,14 @@ Add the preset as the final entry in your `tsconfig.json` `extends` chain, after
 
 The preset sets the following `compilerOptions` to match Vite's bundler-driven workflow.
 
-| Setting            | Value                               | Description                                                                 |
-|--------------------|-------------------------------------|-----------------------------------------------------------------------------|
-| `isolatedModules`  | `true`                              | Enforces per-file type safety since Vite transpiles each file alone.        |
-| `lib`              | `["DOM", "DOM.Iterable", "ESNext"]` | Exposes browser DOM APIs and the latest `ESNext` library features.          |
-| `module`           | `"ESNext"`                          | Emits modern ECMAScript module syntax for the bundler to consume.           |
-| `moduleResolution` | `"Bundler"`                         | Resolves imports the way Vite does, including bare and extensionless paths. |
-| `noEmit`           | `true`                              | Type-checks only and leaves build output to Vite.                           |
+| Setting                      | Value                               | Description                                                                 |
+|------------------------------|-------------------------------------|-----------------------------------------------------------------------------|
+| `allowImportingTsExtensions` | `true`                              | Accepts explicit `.ts`, `.mts`, and `.tsx` imports in Vite-loaded modules.  |
+| `isolatedModules`            | `true`                              | Enforces per-file type safety since Vite transpiles each file alone.        |
+| `lib`                        | `["DOM", "DOM.Iterable", "ESNext"]` | Exposes browser DOM APIs and the latest `ESNext` library features.          |
+| `module`                     | `"ESNext"`                          | Emits modern ECMAScript module syntax for the bundler to consume.           |
+| `moduleResolution`           | `"Bundler"`                         | Resolves imports the way Vite does, including bare and extensionless paths. |
+| `noEmit`                     | `true`                              | Type-checks only and leaves build output to Vite.                           |
 
 ## Related
 

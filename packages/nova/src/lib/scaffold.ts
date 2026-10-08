@@ -1,11 +1,13 @@
 import { promises as fs } from 'node:fs';
 import {
+  dirname,
   isAbsolute,
   join,
   relative,
   resolve,
   sep,
 } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { minimatch } from 'minimatch';
 import prompts from 'prompts';
@@ -14,9 +16,14 @@ import novaPackageJson from '../../package.json' with { type: 'json' };
 
 import { Logger } from '../toolkit/index.js';
 import {
+  LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN,
   LIB_REGEX_PATTERN_SLUG_SIMPLE,
   LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
+  LIB_REGEX_PLACEHOLDER_WORKSPACE_IDENTIFIER,
+  LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME,
   LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
+  LIB_REGEX_PLACEHOLDER_WORKSPACE_RELATIVE_PATH,
+  LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
 } from './regex.js';
 import {
   discoverPathsWithFile,
@@ -27,6 +34,12 @@ import {
 } from './utility.js';
 
 import type {
+  Lib_Scaffold_ApplyTemplateReplacements_Input,
+  Lib_Scaffold_ApplyTemplateReplacements_Output,
+  Lib_Scaffold_ApplyTemplateReplacements_Pattern,
+  Lib_Scaffold_ApplyTemplateReplacements_Replacements,
+  Lib_Scaffold_ApplyTemplateReplacements_Returns,
+  Lib_Scaffold_ApplyTemplateReplacements_Value,
   Lib_Scaffold_CollectFiles_Directory,
   Lib_Scaffold_CollectFiles_Entries,
   Lib_Scaffold_CollectFiles_EntryPath,
@@ -45,7 +58,9 @@ import type {
   Lib_Scaffold_CreateMonorepoRoot_PackagesDirectory,
   Lib_Scaffold_CreateMonorepoRoot_ProjectSlug,
   Lib_Scaffold_CreateMonorepoRoot_ProjectTitle,
+  Lib_Scaffold_CreateMonorepoRoot_Replacements,
   Lib_Scaffold_CreateMonorepoRoot_Returns,
+  Lib_Scaffold_CreateMonorepoRoot_RootTemplateDirectory,
   Lib_Scaffold_CreateMonorepoRoot_TurboJsonContent,
   Lib_Scaffold_CreateMonorepoRoot_TurboJsonPath,
   Lib_Scaffold_CreateMonorepoRoot_TurboJsonRelativePath,
@@ -62,6 +77,10 @@ import type {
   Lib_Scaffold_FindFileConflicts_Exists,
   Lib_Scaffold_FindFileConflicts_PlannedPaths,
   Lib_Scaffold_FindFileConflicts_Returns,
+  Lib_Scaffold_GetMonorepoRootPlannedPaths_OutputDirectory,
+  Lib_Scaffold_GetMonorepoRootPlannedPaths_Returns,
+  Lib_Scaffold_GetMonorepoRootPlannedPaths_TemplateDirectory,
+  Lib_Scaffold_GetMonorepoRootPlannedPaths_TemplateEntries,
   Lib_Scaffold_LoadExistingRoot_Config,
   Lib_Scaffold_LoadExistingRoot_ConfigFilePath,
   Lib_Scaffold_LoadExistingRoot_ConfigRaw,
@@ -145,32 +164,45 @@ import type {
   Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Policy,
   Lib_Scaffold_RegisterWorkspaceInConfig_Project,
   Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName,
   Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug,
   Lib_Scaffold_RegisterWorkspaceInConfig_Raw,
   Lib_Scaffold_RegisterWorkspaceInConfig_Returns,
   Lib_Scaffold_RegisterWorkspaceInConfig_Role,
-  Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName,
+  Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName,
   Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath,
   Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces,
   Lib_Scaffold_ReportError_Message,
   Lib_Scaffold_ReportError_Returns,
-  Lib_Scaffold_ResolveTemplateAnswers_AllowedValues,
+  Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_CurrentDirectory,
+  Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_Returns,
   Lib_Scaffold_ResolveTemplateAnswers_Answer,
   Lib_Scaffold_ResolveTemplateAnswers_Answers,
+  Lib_Scaffold_ResolveTemplateAnswers_DependencyValue,
+  Lib_Scaffold_ResolveTemplateAnswers_FlagValue,
+  Lib_Scaffold_ResolveTemplateAnswers_InactiveAllowedValues,
+  Lib_Scaffold_ResolveTemplateAnswers_InactiveDefaultChoice,
+  Lib_Scaffold_ResolveTemplateAnswers_InactiveDefaultChoiceDefinition,
+  Lib_Scaffold_ResolveTemplateAnswers_IsActive,
   Lib_Scaffold_ResolveTemplateAnswers_IsNonInteractive,
+  Lib_Scaffold_ResolveTemplateAnswers_NonInteractiveDefaultChoice,
   Lib_Scaffold_ResolveTemplateAnswers_Options,
+  Lib_Scaffold_ResolveTemplateAnswers_ProvidedAllowedValues,
   Lib_Scaffold_ResolveTemplateAnswers_ProvidedValue,
   Lib_Scaffold_ResolveTemplateAnswers_Questions,
   Lib_Scaffold_ResolveTemplateAnswers_Replacements,
+  Lib_Scaffold_ResolveTemplateAnswers_ReplacementValue,
+  Lib_Scaffold_ResolveTemplateAnswers_ResolvedAllowedValues,
+  Lib_Scaffold_ResolveTemplateAnswers_ResolvedAnswers,
+  Lib_Scaffold_ResolveTemplateAnswers_ResolvedChoiceDefinition,
   Lib_Scaffold_ResolveTemplateAnswers_ResolvedValue,
   Lib_Scaffold_ResolveTemplateAnswers_Returns,
   Lib_Scaffold_ResolveWorkspacePackageName_Category,
   Lib_Scaffold_ResolveWorkspacePackageName_ProjectSlug,
   Lib_Scaffold_ResolveWorkspacePackageName_Returns,
   Lib_Scaffold_ResolveWorkspacePackageName_WorkspaceName,
-  Lib_Scaffold_RunScaffold_Category,
   Lib_Scaffold_RunScaffold_Config,
   Lib_Scaffold_RunScaffold_ConfigFilePath,
   Lib_Scaffold_RunScaffold_ConfigNameDefault,
@@ -178,7 +210,9 @@ import type {
   Lib_Scaffold_RunScaffold_ConflictingPaths,
   Lib_Scaffold_RunScaffold_ConflictMessage,
   Lib_Scaffold_RunScaffold_Context,
+  Lib_Scaffold_RunScaffold_CoreReplacements,
   Lib_Scaffold_RunScaffold_CurrentDirectory,
+  Lib_Scaffold_RunScaffold_Definition,
   Lib_Scaffold_RunScaffold_ExistingRoot,
   Lib_Scaffold_RunScaffold_ExistingWorkspace,
   Lib_Scaffold_RunScaffold_ExistingWorkspaceEntries,
@@ -187,7 +221,6 @@ import type {
   Lib_Scaffold_RunScaffold_ExistingWorkspacePath,
   Lib_Scaffold_RunScaffold_ExistingWorkspaceRole,
   Lib_Scaffold_RunScaffold_ExistingWorkspaceValue,
-  Lib_Scaffold_RunScaffold_ImportMetaUrl,
   Lib_Scaffold_RunScaffold_IsDryRun,
   Lib_Scaffold_RunScaffold_IsNonInteractive,
   Lib_Scaffold_RunScaffold_IsWorkspaceCovered,
@@ -200,30 +233,82 @@ import type {
   Lib_Scaffold_RunScaffold_Returns,
   Lib_Scaffold_RunScaffold_RootPackageJsonContents,
   Lib_Scaffold_RunScaffold_RootPackageJsonPath,
+  Lib_Scaffold_RunScaffold_RootPlannedPathGroups,
+  Lib_Scaffold_RunScaffold_RootTemplateDirectories,
+  Lib_Scaffold_RunScaffold_RootTemplateEntries,
+  Lib_Scaffold_RunScaffold_RootTemplateSubpaths,
+  Lib_Scaffold_RunScaffold_RootTemplateWrites,
   Lib_Scaffold_RunScaffold_RootWorkspacesObject,
   Lib_Scaffold_RunScaffold_RootWorkspacesValue,
-  Lib_Scaffold_RunScaffold_TemplateDirectory,
+  Lib_Scaffold_RunScaffold_TemplateAnswers,
   Lib_Scaffold_RunScaffold_TemplateEntries,
-  Lib_Scaffold_RunScaffold_TemplateQuestions,
   Lib_Scaffold_RunScaffold_TemplateReplacements,
-  Lib_Scaffold_RunScaffold_TemplateSubpath,
-  Lib_Scaffold_RunScaffold_TypeName,
+  Lib_Scaffold_RunScaffold_TemplateResolution,
+  Lib_Scaffold_RunScaffold_TemplateValidationError,
+  Lib_Scaffold_RunScaffold_WorkspaceBaseDirectory,
   Lib_Scaffold_RunScaffold_WorkspaceDirectory,
+  Lib_Scaffold_RunScaffold_WorkspaceFinalizerError,
+  Lib_Scaffold_RunScaffold_WorkspaceIdentifier,
+  Lib_Scaffold_RunScaffold_WorkspaceNameSegments,
   Lib_Scaffold_RunScaffold_WorkspacePackageName,
+  Lib_Scaffold_RunScaffold_WorkspacePackageNameBase,
+  Lib_Scaffold_RunScaffold_WorkspacePackageNamePrefix,
+  Lib_Scaffold_RunScaffold_WorkspacePlannedPathGroups,
   Lib_Scaffold_RunScaffold_WorkspaceRelPath,
+  Lib_Scaffold_RunScaffold_WorkspaceTemplateDirectories,
+  Lib_Scaffold_RunScaffold_WorkspaceTemplateSubpaths,
+  Lib_Scaffold_RunScaffold_WorkspaceTemplateWrites,
+  Lib_Scaffold_RunScaffold_WorkspaceTitle,
+  Lib_Scaffold_UpdateScaffoldPackageJson_Content,
+  Lib_Scaffold_UpdateScaffoldPackageJson_IsSortedSection,
+  Lib_Scaffold_UpdateScaffoldPackageJson_PackageJson,
+  Lib_Scaffold_UpdateScaffoldPackageJson_PackageJsonPath,
+  Lib_Scaffold_UpdateScaffoldPackageJson_Parsed,
+  Lib_Scaffold_UpdateScaffoldPackageJson_Raw,
+  Lib_Scaffold_UpdateScaffoldPackageJson_Returns,
+  Lib_Scaffold_UpdateScaffoldPackageJson_Section,
+  Lib_Scaffold_UpdateScaffoldPackageJson_SectionValue,
+  Lib_Scaffold_UpdateScaffoldPackageJson_Updates,
+  Lib_Scaffold_UpdateScaffoldPackageJson_WorkspaceDirectory,
   Lib_Scaffold_WriteTemplateFiles_Content,
   Lib_Scaffold_WriteTemplateFiles_CurrentDirectory,
   Lib_Scaffold_WriteTemplateFiles_Entries,
-  Lib_Scaffold_WriteTemplateFiles_Pattern,
   Lib_Scaffold_WriteTemplateFiles_RelativePath,
   Lib_Scaffold_WriteTemplateFiles_Replacements,
   Lib_Scaffold_WriteTemplateFiles_Returns,
+  Lib_Scaffold_WriteTemplateFiles_SourceContent,
   Lib_Scaffold_WriteTemplateFiles_SourcePath,
   Lib_Scaffold_WriteTemplateFiles_TargetDirectory,
+  Lib_Scaffold_WriteTemplateFiles_TargetEntry,
   Lib_Scaffold_WriteTemplateFiles_TargetPath,
   Lib_Scaffold_WriteTemplateFiles_TemplateDirectory,
-  Lib_Scaffold_WriteTemplateFiles_Value,
 } from '../types/lib/scaffold.d.ts';
+
+/**
+ * Lib - Scaffold - Apply Template Replacements.
+ *
+ * Applies the scaffold replacement map to either template contents or a
+ * template-relative path so generated files can use workspace-specific names.
+ *
+ * @param {Lib_Scaffold_ApplyTemplateReplacements_Input}        input        - Input.
+ * @param {Lib_Scaffold_ApplyTemplateReplacements_Replacements} replacements - Replacements.
+ *
+ * @returns {Lib_Scaffold_ApplyTemplateReplacements_Returns}
+ *
+ * @since 0.29.0
+ */
+function applyTemplateReplacements(input: Lib_Scaffold_ApplyTemplateReplacements_Input, replacements: Lib_Scaffold_ApplyTemplateReplacements_Replacements): Lib_Scaffold_ApplyTemplateReplacements_Returns {
+  let output: Lib_Scaffold_ApplyTemplateReplacements_Output = input;
+
+  for (const replacement of replacements) {
+    const pattern: Lib_Scaffold_ApplyTemplateReplacements_Pattern = replacement[0];
+    const value: Lib_Scaffold_ApplyTemplateReplacements_Value = replacement[1];
+
+    output = output.replace(new RegExp(pattern.source, 'g'), value);
+  }
+
+  return output;
+}
 
 /**
  * Lib - Scaffold - Report Error.
@@ -263,6 +348,10 @@ function reportError(message: Lib_Scaffold_ReportError_Message): Lib_Scaffold_Re
  * @since 0.26.0
  */
 export function resolveWorkspacePackageName(projectSlug: Lib_Scaffold_ResolveWorkspacePackageName_ProjectSlug, workspaceName: Lib_Scaffold_ResolveWorkspacePackageName_WorkspaceName, category: Lib_Scaffold_ResolveWorkspacePackageName_Category): Lib_Scaffold_ResolveWorkspacePackageName_Returns {
+  if (category === 'package') {
+    return workspaceName;
+  }
+
   return (category === 'docs') ? `${projectSlug}-docs` : `${projectSlug}-app-${workspaceName}`;
 }
 
@@ -703,7 +792,7 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
   const resolveInitialOutput: Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput = (_initialPrev: Lib_Scaffold_PromptScaffoldOptions_InitialPrev, initialAnswers: Lib_Scaffold_PromptScaffoldOptions_InitialAnswers) => {
     const resolvedInitialWorkspaceName: Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput_ResolvedInitialWorkspaceName = (workspaceNameValue ?? initialAnswers['workspaceName']) as Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput_ResolvedInitialWorkspaceName;
 
-    return `./apps/${resolvedInitialWorkspaceName}`;
+    return `./${defaults['workspaceBaseDirectory']}/${resolvedInitialWorkspaceName}`;
   };
 
   if (outputValue === undefined) {
@@ -766,24 +855,76 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
  * @since 0.26.0
  */
 export async function resolveTemplateAnswers(options: Lib_Scaffold_ResolveTemplateAnswers_Options, questions: Lib_Scaffold_ResolveTemplateAnswers_Questions, isNonInteractive: Lib_Scaffold_ResolveTemplateAnswers_IsNonInteractive): Lib_Scaffold_ResolveTemplateAnswers_Returns {
+  const resolvedAnswers: Lib_Scaffold_ResolveTemplateAnswers_ResolvedAnswers = new Map();
   const replacements: Lib_Scaffold_ResolveTemplateAnswers_Replacements = new Map();
 
   for (const question of questions) {
+    let isActive: Lib_Scaffold_ResolveTemplateAnswers_IsActive = true;
+
+    if (question['dependsOn'] !== undefined) {
+      const dependencyValue: Lib_Scaffold_ResolveTemplateAnswers_DependencyValue = resolvedAnswers.get(question['dependsOn']['name']);
+
+      isActive = dependencyValue !== undefined && question['dependsOn']['values'].some((value) => value === dependencyValue);
+    }
+
+    if (isActive === false) {
+      const inactiveDefaultChoice: Lib_Scaffold_ResolveTemplateAnswers_InactiveDefaultChoice = question['defaultValue'];
+
+      if (inactiveDefaultChoice !== undefined) {
+        const inactiveDefaultChoiceDefinition: Lib_Scaffold_ResolveTemplateAnswers_InactiveDefaultChoiceDefinition = question['choices'].find((choice) => choice['value'] === inactiveDefaultChoice);
+
+        if (inactiveDefaultChoiceDefinition === undefined) {
+          const inactiveAllowedValues: Lib_Scaffold_ResolveTemplateAnswers_InactiveAllowedValues = question['choices'].map((choice) => choice['value']).join(', ');
+
+          Logger.customize({
+            name: 'resolveTemplateAnswers',
+            purpose: 'validate',
+          }).error(`Invalid default for ${question['flag']}: "${inactiveDefaultChoice}". Expected one of: ${inactiveAllowedValues}.`);
+
+          process.exitCode = 1;
+
+          return undefined;
+        }
+
+        resolvedAnswers.set(question['name'], inactiveDefaultChoice);
+
+        replacements.set(question['placeholder'], inactiveDefaultChoiceDefinition['replacement'] ?? inactiveDefaultChoice);
+      }
+
+      continue;
+    }
+
     const providedValue: Lib_Scaffold_ResolveTemplateAnswers_ProvidedValue = Reflect.get(options, question['name']);
+    const flagValue: Lib_Scaffold_ResolveTemplateAnswers_FlagValue = question['flagValue'];
 
     let resolvedValue: Lib_Scaffold_ResolveTemplateAnswers_ResolvedValue = undefined;
 
-    if (providedValue !== undefined) {
+    if (flagValue !== undefined && providedValue === true) {
+      resolvedValue = flagValue;
+    } else if (
+      flagValue !== undefined
+      && providedValue !== undefined
+      && providedValue !== false
+    ) {
+      Logger.customize({
+        name: 'resolveTemplateAnswers',
+        purpose: 'validate',
+      }).error(`Invalid ${question['flag']} value "${String(providedValue)}". This option is a boolean flag.`);
+
+      process.exitCode = 1;
+
+      return undefined;
+    } else if (flagValue === undefined && providedValue !== undefined) {
       if (
         typeof providedValue !== 'string'
         || question['choices'].some((choice) => choice['value'] === providedValue) !== true
       ) {
-        const allowedValues: Lib_Scaffold_ResolveTemplateAnswers_AllowedValues = question['choices'].map((choice) => choice['value']).join(', ');
+        const providedAllowedValues: Lib_Scaffold_ResolveTemplateAnswers_ProvidedAllowedValues = question['choices'].map((choice) => choice['value']).join(', ');
 
         Logger.customize({
           name: 'resolveTemplateAnswers',
           purpose: 'validate',
-        }).error(`Invalid ${question['flag']} value "${String(providedValue)}". Expected one of: ${allowedValues}.`);
+        }).error(`Invalid ${question['flag']} value "${String(providedValue)}". Expected one of: ${providedAllowedValues}.`);
 
         process.exitCode = 1;
 
@@ -792,14 +933,20 @@ export async function resolveTemplateAnswers(options: Lib_Scaffold_ResolveTempla
 
       resolvedValue = providedValue;
     } else if (isNonInteractive === true) {
-      Logger.customize({
-        name: 'resolveTemplateAnswers',
-        purpose: 'validate',
-      }).error(`Non-interactive scaffolding requires ${question['flag']}.`);
+      const nonInteractiveDefaultChoice: Lib_Scaffold_ResolveTemplateAnswers_NonInteractiveDefaultChoice = question['defaultValue'];
 
-      process.exitCode = 1;
+      if (nonInteractiveDefaultChoice === undefined) {
+        Logger.customize({
+          name: 'resolveTemplateAnswers',
+          purpose: 'validate',
+        }).error(`Non-interactive scaffolding requires ${question['flag']}.`);
 
-      return undefined;
+        process.exitCode = 1;
+
+        return undefined;
+      }
+
+      resolvedValue = nonInteractiveDefaultChoice;
     } else {
       const answers: Lib_Scaffold_ResolveTemplateAnswers_Answers = await prompts({
         type: 'select',
@@ -819,10 +966,31 @@ export async function resolveTemplateAnswers(options: Lib_Scaffold_ResolveTempla
       resolvedValue = answer;
     }
 
-    replacements.set(question['placeholder'], resolvedValue);
+    if (question['choices'].some((choice) => choice['value'] === resolvedValue) !== true) {
+      const resolvedAllowedValues: Lib_Scaffold_ResolveTemplateAnswers_ResolvedAllowedValues = question['choices'].map((choice) => choice['value']).join(', ');
+
+      Logger.customize({
+        name: 'resolveTemplateAnswers',
+        purpose: 'validate',
+      }).error(`Invalid default for ${question['flag']}: "${String(resolvedValue)}". Expected one of: ${resolvedAllowedValues}.`);
+
+      process.exitCode = 1;
+
+      return undefined;
+    }
+
+    const resolvedChoiceDefinition: Lib_Scaffold_ResolveTemplateAnswers_ResolvedChoiceDefinition = question['choices'].find((choice) => choice['value'] === resolvedValue);
+    const replacementValue: Lib_Scaffold_ResolveTemplateAnswers_ReplacementValue = (resolvedChoiceDefinition === undefined) ? resolvedValue : (resolvedChoiceDefinition['replacement'] ?? resolvedValue);
+
+    resolvedAnswers.set(question['name'], resolvedValue);
+
+    replacements.set(question['placeholder'], replacementValue);
   }
 
-  return replacements;
+  return {
+    answers: resolvedAnswers,
+    replacements,
+  };
 }
 
 /**
@@ -871,17 +1039,10 @@ export async function writeTemplateFiles(templateDirectory: Lib_Scaffold_WriteTe
 
   for (const entry of entries) {
     const sourcePath: Lib_Scaffold_WriteTemplateFiles_SourcePath = join(templateDirectory, entry);
-    const targetPath: Lib_Scaffold_WriteTemplateFiles_TargetPath = join(targetDirectory, entry);
-
-    let content: Lib_Scaffold_WriteTemplateFiles_Content = await fs.readFile(sourcePath, 'utf-8');
-
-    // Apply placeholder replacements.
-    for (const replacement of replacements) {
-      const pattern: Lib_Scaffold_WriteTemplateFiles_Pattern = replacement[0];
-      const value: Lib_Scaffold_WriteTemplateFiles_Value = replacement[1];
-
-      content = content.replace(new RegExp(pattern.source, 'g'), value);
-    }
+    const targetEntry: Lib_Scaffold_WriteTemplateFiles_TargetEntry = applyTemplateReplacements(entry, replacements);
+    const targetPath: Lib_Scaffold_WriteTemplateFiles_TargetPath = join(targetDirectory, targetEntry);
+    const sourceContent: Lib_Scaffold_WriteTemplateFiles_SourceContent = await fs.readFile(sourcePath, 'utf-8');
+    const content: Lib_Scaffold_WriteTemplateFiles_Content = applyTemplateReplacements(sourceContent, replacements);
 
     await saveGeneratedFile(targetPath, content, true);
 
@@ -892,6 +1053,60 @@ export async function writeTemplateFiles(templateDirectory: Lib_Scaffold_WriteTe
       purpose: 'written',
     }).info(`Created "${relativePath}".`);
   }
+
+  return;
+}
+
+/**
+ * Lib - Scaffold - Update Scaffold package.json.
+ *
+ * Merges framework-specific dependency and script entries into a freshly
+ * generated workspace manifest while preserving its canonical section order.
+ *
+ * @param {Lib_Scaffold_UpdateScaffoldPackageJson_WorkspaceDirectory} workspaceDirectory - Workspace directory.
+ * @param {Lib_Scaffold_UpdateScaffoldPackageJson_Updates}            updates            - Updates.
+ *
+ * @returns {Lib_Scaffold_UpdateScaffoldPackageJson_Returns}
+ *
+ * @since 0.29.0
+ */
+export async function updateScaffoldPackageJson(workspaceDirectory: Lib_Scaffold_UpdateScaffoldPackageJson_WorkspaceDirectory, updates: Lib_Scaffold_UpdateScaffoldPackageJson_Updates): Lib_Scaffold_UpdateScaffoldPackageJson_Returns {
+  const packageJsonPath: Lib_Scaffold_UpdateScaffoldPackageJson_PackageJsonPath = join(workspaceDirectory, 'package.json');
+  const raw: Lib_Scaffold_UpdateScaffoldPackageJson_Raw = await fs.readFile(packageJsonPath, 'utf-8');
+  const parsed: Lib_Scaffold_UpdateScaffoldPackageJson_Parsed = JSON.parse(raw);
+
+  if (isPlainObject(parsed) === false) {
+    throw new Error(`The scaffold package manifest at "${packageJsonPath}" must contain a JSON object.`);
+  }
+
+  const packageJson: Lib_Scaffold_UpdateScaffoldPackageJson_PackageJson = parsed;
+
+  for (const updateEntry of Object.entries(updates)) {
+    const sectionValue: Lib_Scaffold_UpdateScaffoldPackageJson_SectionValue = packageJson[updateEntry[0]];
+
+    if (sectionValue !== undefined && isPlainObject(sectionValue) === false) {
+      throw new Error(`The "${updateEntry[0]}" field in "${packageJsonPath}" must contain a JSON object.`);
+    }
+
+    const section: Lib_Scaffold_UpdateScaffoldPackageJson_Section = (isPlainObject(sectionValue) === true) ? sectionValue : {};
+
+    for (const valueEntry of Object.entries(updateEntry[1])) {
+      Reflect.set(section, valueEntry[0], valueEntry[1]);
+    }
+
+    const isSortedSection: Lib_Scaffold_UpdateScaffoldPackageJson_IsSortedSection = [
+      'dependencies',
+      'devDependencies',
+      'optionalDependencies',
+      'peerDependencies',
+    ].includes(updateEntry[0]);
+
+    Reflect.set(packageJson, updateEntry[0], (isSortedSection === true) ? Object.fromEntries(Object.entries(section).sort((firstEntry, secondEntry) => firstEntry[0].localeCompare(secondEntry[0]))) : section);
+  }
+
+  const content: Lib_Scaffold_UpdateScaffoldPackageJson_Content = `${JSON.stringify(packageJson, null, 2)}\n`;
+
+  await fs.writeFile(packageJsonPath, content, 'utf-8');
 
   return;
 }
@@ -934,11 +1149,53 @@ async function collectFiles(directory: Lib_Scaffold_CollectFiles_Directory, pref
 }
 
 /**
+ * Lib - Scaffold - Resolve Monorepo Root Template Directory.
+ *
+ * Locates the root TypeScript, ESLint, and Vitest foundation from both the
+ * source tree and Nova's compiled package layout.
+ *
+ * @private
+ *
+ * @returns {Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_Returns}
+ *
+ * @since 0.29.0
+ */
+function resolveMonorepoRootTemplateDirectory(): Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_Returns {
+  const currentDirectory: Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_CurrentDirectory = dirname(fileURLToPath(import.meta.url));
+
+  return join(currentDirectory, '..', '..', 'templates', 'scaffold', 'starter', 'base');
+}
+
+/**
+ * Lib - Scaffold - Get Monorepo Root Planned Paths.
+ *
+ * Lists every root file owned by the base scaffold so conflict detection and
+ * actual generation always use the same source of truth.
+ *
+ * @param {Lib_Scaffold_GetMonorepoRootPlannedPaths_OutputDirectory} outputDirectory - Output directory.
+ *
+ * @returns {Lib_Scaffold_GetMonorepoRootPlannedPaths_Returns}
+ *
+ * @since 0.29.0
+ */
+export async function getMonorepoRootPlannedPaths(outputDirectory: Lib_Scaffold_GetMonorepoRootPlannedPaths_OutputDirectory): Lib_Scaffold_GetMonorepoRootPlannedPaths_Returns {
+  const templateDirectory: Lib_Scaffold_GetMonorepoRootPlannedPaths_TemplateDirectory = resolveMonorepoRootTemplateDirectory();
+  const templateEntries: Lib_Scaffold_GetMonorepoRootPlannedPaths_TemplateEntries = await collectFiles(templateDirectory, '');
+
+  return [
+    join(outputDirectory, 'package.json'),
+    join(outputDirectory, 'nova.config.json'),
+    join(outputDirectory, 'turbo.json'),
+    ...templateEntries.map((templateEntry) => join(outputDirectory, templateEntry)),
+  ];
+}
+
+/**
  * Lib - Scaffold - Create Monorepo Root.
  *
  * Generates the top-level monorepo structure with apps and packages directories, a root
  * package.json with workspaces and script dispatchers, a Turbo task graph, and a baseline
- * nova.config.json for the project.
+ * nova.config.json plus TypeScript, ESLint, and Vitest root tooling.
  *
  * @param {Lib_Scaffold_CreateMonorepoRoot_OutputDirectory} outputDirectory - Output directory.
  * @param {Lib_Scaffold_CreateMonorepoRoot_ProjectSlug}     projectSlug     - Project slug.
@@ -965,12 +1222,17 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
     name: `${projectSlug}-project`,
     version: '0.0.0',
     private: true,
+    type: 'module',
     scripts: {
       'dev': 'nova utility run-scripts --parallel --node-env development \'dev:*\'',
       'dev:workspaces': 'turbo run dev',
       'prod': 'nova utility run-scripts --sequential --node-env production \'prod:*\'',
       'prod:workspaces': 'turbo run prod',
       'check': 'nova utility run-scripts --sequential \'check:*\'',
+      'check:lint': 'eslint ./ --max-warnings=0',
+      'check:types-config': 'nova utility type-check --project tsconfig.config.json',
+      'check:types-tests': 'nova utility type-check --project tsconfig.tests.json',
+      'check:test': 'vitest run',
       'check:workspaces': 'turbo run check --concurrency=2',
       'build': 'nova utility run-scripts --sequential --node-env production \'build:*\'',
       'build:workspaces': 'turbo run build --concurrency=2',
@@ -986,6 +1248,7 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
       'core-js-pure': false,
       'es5-ext': false,
       'esbuild': false,
+      'fsevents': true,
       'sharp': false,
       'unrs-resolver': false,
       'workerd': false,
@@ -998,9 +1261,16 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
     engines: {
       node: '^22 || ^24',
     },
-    devDependencies: {
+    dependencies: {
       '@cbnventures/nova': novaPackageJson['version'],
+    },
+    devDependencies: {
+      '@types/node': novaPackageJson['devDependencies']['@types/node'],
+      'eslint': novaPackageJson['devDependencies']['eslint'],
+      'jiti': '2.7.0',
       'turbo': novaPackageJson['devDependencies']['turbo'],
+      'typescript': novaPackageJson['devDependencies']['typescript'],
+      'vitest': novaPackageJson['devDependencies']['vitest'],
     },
   };
 
@@ -1126,6 +1396,14 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
     name: 'createMonorepoRoot',
     purpose: 'written',
   }).info(`Created "${novaConfigRelativePath}".`);
+
+  const rootTemplateDirectory: Lib_Scaffold_CreateMonorepoRoot_RootTemplateDirectory = resolveMonorepoRootTemplateDirectory();
+  const replacements: Lib_Scaffold_CreateMonorepoRoot_Replacements = new Map([[
+    LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
+    projectSlug,
+  ]]);
+
+  await writeTemplateFiles(rootTemplateDirectory, outputDirectory, replacements);
 
   return;
 }
@@ -1353,16 +1631,16 @@ async function loadGenerator(name: Lib_Scaffold_LoadGenerator_Name): Lib_Scaffol
  * Adds a workspace entry to nova.config.json so the CLI recognizes the new workspace for
  * recipes, generators, and other project-wide operations.
  *
- * @param {Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath}   configFilePath   - Config file path.
- * @param {Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath} workspaceRelPath - Workspace rel path.
- * @param {Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName}    workspaceName    - Workspace name.
- * @param {Lib_Scaffold_RegisterWorkspaceInConfig_Category}         category         - Category.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath}       configFilePath       - Config file path.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath}     workspaceRelPath     - Workspace rel path.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName} workspacePackageName - Workspace package name.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_Category}             category             - Category.
  *
  * @returns {Lib_Scaffold_RegisterWorkspaceInConfig_Returns}
  *
  * @since 0.15.0
  */
-export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspaceName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
+export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
   let parsedConfig: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig = undefined;
 
   try {
@@ -1398,8 +1676,16 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
   }
 
   // Determine role and config name based on category.
-  const role: Lib_Scaffold_RegisterWorkspaceInConfig_Role = (category === 'docs') ? 'docs' : 'app';
-  const configName: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName = resolveWorkspacePackageName(projectSlug, workspaceName, category);
+  const role: Lib_Scaffold_RegisterWorkspaceInConfig_Role = (category === 'package') ? 'package' : category;
+  let policy: Lib_Scaffold_RegisterWorkspaceInConfig_Policy = 'trackable';
+
+  if (category === 'package') {
+    policy = 'distributable';
+  } else if (category === 'docs') {
+    policy = 'freezable';
+  }
+
+  const configName: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName = workspacePackageName;
 
   // Add workspace entry.
   const parsedWorkspaces: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces = parsedConfig['workspaces'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces;
@@ -1415,7 +1701,7 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
   Reflect.set(workspaces, workspaceRelPath, {
     name: configName,
     role,
-    policy: 'freezable',
+    policy,
   });
 
   Reflect.set(parsedConfig, 'workspaces', workspaces);
@@ -1437,18 +1723,14 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
  * Orchestrates the full scaffold workflow: detects context, prompts for options,
  * writes template files, registers the workspace, and runs generators.
  *
- * @param {Lib_Scaffold_RunScaffold_Options}           options           - Options.
- * @param {Lib_Scaffold_RunScaffold_Category}          category          - Category.
- * @param {Lib_Scaffold_RunScaffold_TypeName}          typeName          - Type name.
- * @param {Lib_Scaffold_RunScaffold_TemplateSubpath}   templateSubpath   - Template subpath.
- * @param {Lib_Scaffold_RunScaffold_ImportMetaUrl}     importMetaUrl     - Import meta url.
- * @param {Lib_Scaffold_RunScaffold_TemplateQuestions} templateQuestions - Template questions.
+ * @param {Lib_Scaffold_RunScaffold_Options}    options    - Options.
+ * @param {Lib_Scaffold_RunScaffold_Definition} definition - Definition.
  *
  * @returns {Lib_Scaffold_RunScaffold_Returns}
  *
  * @since 0.15.0
  */
-export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, category: Lib_Scaffold_RunScaffold_Category, typeName: Lib_Scaffold_RunScaffold_TypeName, templateSubpath: Lib_Scaffold_RunScaffold_TemplateSubpath, importMetaUrl: Lib_Scaffold_RunScaffold_ImportMetaUrl, templateQuestions: Lib_Scaffold_RunScaffold_TemplateQuestions = []): Lib_Scaffold_RunScaffold_Returns {
+export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, definition: Lib_Scaffold_RunScaffold_Definition): Lib_Scaffold_RunScaffold_Returns {
   const currentDirectory: Lib_Scaffold_RunScaffold_CurrentDirectory = process.cwd();
   const isDryRun: Lib_Scaffold_RunScaffold_IsDryRun = options['dryRun'] === true;
   const isNonInteractive: Lib_Scaffold_RunScaffold_IsNonInteractive = options['nonInteractive'] === true;
@@ -1533,7 +1815,8 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
   const config: Lib_Scaffold_RunScaffold_Config = await promptScaffoldOptions(context, {
     name: configNameDefault,
     output: options['output'],
-    typeName,
+    typeName: definition['typeName'],
+    workspaceBaseDirectory: (definition['category'] === 'package') ? 'packages' : 'apps',
     workspaceName: options['workspaceName'],
   });
 
@@ -1559,10 +1842,13 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
   }
 
   const projectSlug: Lib_Scaffold_RunScaffold_ProjectSlug = config['name'];
-  const workspacePackageName: Lib_Scaffold_RunScaffold_WorkspacePackageName = resolveWorkspacePackageName(projectSlug, config['workspaceName'], category);
+  const workspacePackageNameBase: Lib_Scaffold_RunScaffold_WorkspacePackageNameBase = resolveWorkspacePackageName(projectSlug, config['workspaceName'], definition['category']);
+  const workspacePackageNamePrefix: Lib_Scaffold_RunScaffold_WorkspacePackageNamePrefix = definition['workspacePackageNamePrefix'] ?? '';
+  const workspacePackageName: Lib_Scaffold_RunScaffold_WorkspacePackageName = (workspacePackageNamePrefix !== '' && workspacePackageNameBase.startsWith(workspacePackageNamePrefix) === false) ? `${workspacePackageNamePrefix}${workspacePackageNameBase}` : workspacePackageNameBase;
   const configRoot: Lib_Scaffold_RunScaffold_ConfigRoot = (config['mode'] === 'monorepo') ? config['outputDirectory'] : currentDirectory;
   const configFilePath: Lib_Scaffold_RunScaffold_ConfigFilePath = join(configRoot, 'nova.config.json');
-  const workspaceDirectory: Lib_Scaffold_RunScaffold_WorkspaceDirectory = (config['mode'] === 'monorepo') ? join(configRoot, 'apps', config['workspaceName']) : config['outputDirectory'];
+  const workspaceBaseDirectory: Lib_Scaffold_RunScaffold_WorkspaceBaseDirectory = (definition['category'] === 'package') ? 'packages' : 'apps';
+  const workspaceDirectory: Lib_Scaffold_RunScaffold_WorkspaceDirectory = (config['mode'] === 'monorepo') ? join(configRoot, workspaceBaseDirectory, config['workspaceName']) : config['outputDirectory'];
   const workspaceRelPath: Lib_Scaffold_RunScaffold_WorkspaceRelPath = normalizeWorkspaceRelativePath(configRoot, workspaceDirectory);
 
   if (workspaceRelPath === undefined) {
@@ -1572,6 +1858,35 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
   }
 
   const normalizedWorkspaceRelPath: Lib_Scaffold_RunScaffold_NormalizedWorkspaceRelPath = workspaceRelPath.slice(2);
+  const workspaceNameSegments: Lib_Scaffold_RunScaffold_WorkspaceNameSegments = config['workspaceName'].split(LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN);
+  const workspaceTitle: Lib_Scaffold_RunScaffold_WorkspaceTitle = workspaceNameSegments.map((workspaceNameSegment) => `${workspaceNameSegment.charAt(0).toUpperCase()}${workspaceNameSegment.slice(1)}`).join(' ');
+  const workspaceIdentifier: Lib_Scaffold_RunScaffold_WorkspaceIdentifier = workspaceNameSegments.map((workspaceNameSegment) => `${workspaceNameSegment.charAt(0).toUpperCase()}${workspaceNameSegment.slice(1)}`).join('');
+  const coreReplacements: Lib_Scaffold_RunScaffold_CoreReplacements = new Map([
+    [
+      LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
+      projectSlug,
+    ],
+    [
+      LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
+      workspacePackageName,
+    ],
+    [
+      LIB_REGEX_PLACEHOLDER_WORKSPACE_IDENTIFIER,
+      workspaceIdentifier,
+    ],
+    [
+      LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME,
+      config['workspaceName'],
+    ],
+    [
+      LIB_REGEX_PLACEHOLDER_WORKSPACE_RELATIVE_PATH,
+      normalizedWorkspaceRelPath,
+    ],
+    [
+      LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
+      workspaceTitle,
+    ],
+  ]);
 
   if (existingRoot !== undefined) {
     const existingWorkspaceEntries: Lib_Scaffold_RunScaffold_ExistingWorkspaceEntries = Object.entries(existingRoot['workspaces']);
@@ -1615,7 +1930,7 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
         return;
       }
 
-      if (category === 'docs' && existingWorkspaceRole === 'docs') {
+      if (definition['category'] === 'docs' && existingWorkspaceRole === 'docs') {
         reportError(`A documentation workspace is already registered at "${existingWorkspacePath}". Nova projects support one canonical docs workspace. No scaffold files were written.`);
 
         return;
@@ -1629,17 +1944,68 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
     }
   }
 
-  // Resolve template path and validate every planned file before writing.
-  const templateDirectory: Lib_Scaffold_RunScaffold_TemplateDirectory = resolveTemplatePath(importMetaUrl, templateSubpath);
-  const templateEntries: Lib_Scaffold_RunScaffold_TemplateEntries = await collectFiles(templateDirectory, '');
-  const plannedPaths: Lib_Scaffold_RunScaffold_PlannedPaths = templateEntries.map((templateEntry) => join(workspaceDirectory, templateEntry));
+  const templateResolution: Lib_Scaffold_RunScaffold_TemplateResolution = await resolveTemplateAnswers(options, definition['templateQuestions'] ?? [], isNonInteractive);
+
+  if (templateResolution === undefined) {
+    if (process.exitCode !== 1) {
+      Logger.customize({
+        name: 'CliScaffold.run',
+        purpose: 'cancelled',
+      }).warn('Scaffold cancelled.');
+    }
+
+    return;
+  }
+
+  const templateAnswers: Lib_Scaffold_RunScaffold_TemplateAnswers = templateResolution['answers'];
+  const templateReplacements: Lib_Scaffold_RunScaffold_TemplateReplacements = templateResolution['replacements'];
+  const templateValidationError: Lib_Scaffold_RunScaffold_TemplateValidationError = (definition['validateTemplateAnswers'] === undefined) ? undefined : definition.validateTemplateAnswers(templateAnswers);
+
+  if (templateValidationError !== undefined) {
+    reportError(`${templateValidationError} No scaffold files were written.`);
+
+    return;
+  }
+
+  const replacements: Lib_Scaffold_RunScaffold_Replacements = new Map([
+    ...coreReplacements,
+    ...templateReplacements,
+  ]);
+  const workspaceTemplateSubpaths: Lib_Scaffold_RunScaffold_WorkspaceTemplateSubpaths = [definition['templateSubpath']];
+
+  if (definition['resolveWorkspaceTemplateSubpaths'] !== undefined) {
+    workspaceTemplateSubpaths.push(...definition.resolveWorkspaceTemplateSubpaths(templateAnswers));
+  }
+
+  const workspaceTemplateDirectories: Lib_Scaffold_RunScaffold_WorkspaceTemplateDirectories = workspaceTemplateSubpaths.map((workspaceTemplateSubpath) => resolveTemplatePath(definition['importMetaUrl'], workspaceTemplateSubpath));
+  const workspacePlannedPathGroups: Lib_Scaffold_RunScaffold_WorkspacePlannedPathGroups = await Promise.all(workspaceTemplateDirectories.map(async (workspaceTemplateDirectory) => {
+    const templateEntries: Lib_Scaffold_RunScaffold_TemplateEntries = await collectFiles(workspaceTemplateDirectory, '');
+
+    return templateEntries.map((templateEntry) => join(workspaceDirectory, applyTemplateReplacements(templateEntry, replacements)));
+  }));
+  const rootTemplateSubpaths: Lib_Scaffold_RunScaffold_RootTemplateSubpaths = [];
+
+  if (definition['rootTemplateSubpath'] !== undefined) {
+    rootTemplateSubpaths.push(definition['rootTemplateSubpath']);
+  }
+
+  if (definition['resolveRootTemplateSubpaths'] !== undefined) {
+    rootTemplateSubpaths.push(...definition.resolveRootTemplateSubpaths(templateAnswers));
+  }
+
+  const rootTemplateDirectories: Lib_Scaffold_RunScaffold_RootTemplateDirectories = rootTemplateSubpaths.map((rootTemplateSubpath) => resolveTemplatePath(definition['importMetaUrl'], rootTemplateSubpath));
+  const rootPlannedPathGroups: Lib_Scaffold_RunScaffold_RootPlannedPathGroups = await Promise.all(rootTemplateDirectories.map(async (rootTemplateDirectory) => {
+    const rootTemplateEntries: Lib_Scaffold_RunScaffold_RootTemplateEntries = await collectFiles(rootTemplateDirectory, '');
+
+    return rootTemplateEntries.map((rootTemplateEntry) => join(configRoot, applyTemplateReplacements(rootTemplateEntry, replacements)));
+  }));
+  const plannedPaths: Lib_Scaffold_RunScaffold_PlannedPaths = [
+    ...workspacePlannedPathGroups.flat(),
+    ...rootPlannedPathGroups.flat(),
+  ];
 
   if (config['mode'] === 'monorepo') {
-    plannedPaths.push(
-      join(configRoot, 'package.json'),
-      configFilePath,
-      join(configRoot, 'turbo.json'),
-    );
+    plannedPaths.push(...await getMonorepoRootPlannedPaths(configRoot));
   }
 
   const conflictingPaths: Lib_Scaffold_RunScaffold_ConflictingPaths = await findFileConflicts(plannedPaths);
@@ -1666,23 +2032,10 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
     }
   }
 
-  const templateReplacements: Lib_Scaffold_RunScaffold_TemplateReplacements = await resolveTemplateAnswers(options, templateQuestions, isNonInteractive);
-
-  if (templateReplacements === undefined) {
-    if (process.exitCode !== 1) {
-      Logger.customize({
-        name: 'CliScaffold.run',
-        purpose: 'cancelled',
-      }).warn('Scaffold cancelled.');
-    }
-
-    return;
-  }
-
   Logger.customize({
     name: 'CliScaffold.run',
     purpose: 'config',
-  }).info(`Scaffolding ${category} ${typeName} workspace "${workspacePackageName}" in "${workspaceDirectory}".`);
+  }).info(`Scaffolding ${definition['category']} ${definition['typeName']} workspace "${workspacePackageName}" in "${workspaceDirectory}".`);
 
   if (isDryRun === true) {
     if (config['mode'] === 'monorepo') {
@@ -1696,6 +2049,13 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
       name: 'CliScaffold.run',
       purpose: 'dryRunWorkspace',
     }).info(`Would create workspace at "${workspaceDirectory}" and register "${workspaceRelPath}".`);
+
+    if (rootTemplateDirectories.length > 0) {
+      Logger.customize({
+        name: 'CliScaffold.run',
+        purpose: 'dryRunRootFiles',
+      }).info(`Would create companion files at the monorepo root "${configRoot}".`);
+    }
 
     if (existingRoot !== undefined && isWorkspaceCovered === false) {
       Logger.customize({
@@ -1714,19 +2074,30 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
 
   await fs.mkdir(workspaceDirectory, { recursive: true });
 
-  const replacements: Lib_Scaffold_RunScaffold_Replacements = new Map([
-    [
-      LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
-      projectSlug,
-    ],
-    [
-      LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
-      workspacePackageName,
-    ],
-    ...templateReplacements,
+  const workspaceTemplateWrites: Lib_Scaffold_RunScaffold_WorkspaceTemplateWrites = workspaceTemplateDirectories.map((workspaceTemplateDirectory) => writeTemplateFiles(workspaceTemplateDirectory, workspaceDirectory, replacements));
+  const rootTemplateWrites: Lib_Scaffold_RunScaffold_RootTemplateWrites = rootTemplateDirectories.map((rootTemplateDirectory) => writeTemplateFiles(rootTemplateDirectory, configRoot, replacements));
+
+  await Promise.all([
+    ...workspaceTemplateWrites,
+    ...rootTemplateWrites,
   ]);
 
-  await writeTemplateFiles(templateDirectory, workspaceDirectory, replacements);
+  if (definition['workspaceFinalizer'] !== undefined) {
+    try {
+      await definition.workspaceFinalizer(workspaceDirectory, config['workspaceName'], configRoot, templateAnswers, replacements);
+    } catch (error) {
+      const workspaceFinalizerError: Lib_Scaffold_RunScaffold_WorkspaceFinalizerError = error;
+
+      Logger.customize({
+        name: 'CliScaffold.run',
+        purpose: 'workspaceFinalizer',
+      }).debug(workspaceFinalizerError);
+
+      reportError(`The ${definition['typeName']} framework could not finish preparing the workspace. The generated files were left in place for inspection, but the workspace was not registered.`);
+
+      return;
+    }
+  }
 
   if (existingRoot !== undefined && isWorkspaceCovered === false) {
     existingRoot['workspacePatterns'].push(normalizedWorkspaceRelPath);
@@ -1752,12 +2123,12 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, cat
     }).info(`Added "${normalizedWorkspaceRelPath}" to the root package.json workspaces.`);
   }
 
-  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, config['workspaceName'], category);
+  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, workspacePackageName, definition['category']);
 
   Logger.customize({
     name: 'CliScaffold.run',
     purpose: 'complete',
-  }).info(`Scaffold complete for ${category} ${typeName}.`);
+  }).info(`Scaffold complete for ${definition['category']} ${definition['typeName']}.`);
 
   // Post-scaffold generators (monorepo mode only).
   if (config['mode'] === 'monorepo' && isNonInteractive === false) {

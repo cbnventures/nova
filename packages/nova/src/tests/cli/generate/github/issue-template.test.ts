@@ -11,11 +11,11 @@ import { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 import * as utility from '../../../../lib/utility.js';
 
 import type {
-  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_BugReportCall,
-  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_Calls,
-  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_IsProjectRootSpy,
-  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_LoadSpy,
-  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_SaveSpy,
+  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_BugReportCall,
+  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_Calls,
+  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_IsProjectRootSpy,
+  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_LoadSpy,
+  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_SaveSpy,
   Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_GeneratesBugReportWithoutPlatformFieldsWhenConfigIsEmpty_BugReportCall,
   Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_GeneratesBugReportWithoutPlatformFieldsWhenConfigIsEmpty_Calls,
   Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_GeneratesBugReportWithoutPlatformFieldsWhenConfigIsEmpty_IsProjectRootSpy,
@@ -53,7 +53,7 @@ describe('CliGenerateGithubIssueTemplate.run', () => {
 
   it('selects bug report fields from config', async () => {
     const isProjectRootSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-    const loadSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ github: { issueTemplate: { bugReportFields: ['docker.yml'] } } });
+    const loadSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ github: { issueTemplate: { bugReportFields: ['docker'] } } });
     const saveSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateGithubIssueTemplate.run({ replaceFile: true });
@@ -78,23 +78,23 @@ describe('CliGenerateGithubIssueTemplate.run', () => {
     return;
   });
 
-  it('falls back to platform-derived fields when config is absent', async () => {
-    const isProjectRootSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-    const loadSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ project: { platforms: ['nodejs'] } });
-    const saveSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+  it('does not infer fields from project platforms', async () => {
+    const isProjectRootSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ project: { platforms: ['nodejs'] } });
+    const saveSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateGithubIssueTemplate.run({ replaceFile: true });
 
-    const calls: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_Calls = saveSpy['mock']['calls'];
+    const calls: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_Calls = saveSpy['mock']['calls'];
 
-    const bugReportCall: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_FallsBackToPlatformDerivedFieldsWhenConfigIsAbsent_BugReportCall = calls.find((call) => (
+    const bugReportCall: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_BugReportCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].endsWith('/BUG-REPORT.yml')
     ));
 
     ok(bugReportCall !== undefined, 'Expected saveGeneratedFile to be called for BUG-REPORT.yml');
 
-    ok(bugReportCall[1].includes('Node.js'), 'Expected BUG-REPORT.yml content to include the Node.js field fragment');
+    ok(bugReportCall[1].includes('Node.js') === false, 'Expected BUG-REPORT.yml content to omit inferred Node.js fields');
 
     isProjectRootSpy.mockRestore();
 
@@ -107,7 +107,7 @@ describe('CliGenerateGithubIssueTemplate.run', () => {
 
   it('generates bug report without platform fields when config is empty', async () => {
     const isProjectRootSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_GeneratesBugReportWithoutPlatformFieldsWhenConfigIsEmpty_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-    const loadSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_GeneratesBugReportWithoutPlatformFieldsWhenConfigIsEmpty_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({});
+    const loadSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_GeneratesBugReportWithoutPlatformFieldsWhenConfigIsEmpty_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ github: { issueTemplate: { bugReportFields: [] } } });
     const saveSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_GeneratesBugReportWithoutPlatformFieldsWhenConfigIsEmpty_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateGithubIssueTemplate.run({ replaceFile: true });

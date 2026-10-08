@@ -734,11 +734,36 @@ export type Lib_Regex_PlaceholderCurrentYear = RegExp;
 export type Lib_Regex_PlaceholderCustomDonation = RegExp;
 
 /**
+ * Lib - Regex - Placeholder Docker Runtime Directives.
+ *
+ * @since 0.29.0
+ */
+export type Lib_Regex_PlaceholderDockerRuntimeDirectives = RegExp;
+
+export type Lib_Regex_PlaceholderDockerBuildDirectory = RegExp;
+
+export type Lib_Regex_PlaceholderAstroAdapter = RegExp;
+
+export type Lib_Regex_PlaceholderAstroRendering = RegExp;
+
+export type Lib_Regex_PlaceholderDockerArchitectures = RegExp;
+
+export type Lib_Regex_PlaceholderDockerImage = RegExp;
+
+export type Lib_Regex_PlaceholderDockerPublish = RegExp;
+
+export type Lib_Regex_PlaceholderDocusaurusContent = RegExp;
+
+/**
  * Lib - Regex - Placeholder Docusaurus Preset.
  *
  * @since 0.26.0
  */
 export type Lib_Regex_PlaceholderDocusaurusPreset = RegExp;
+
+export type Lib_Regex_PlaceholderDocusaurusSearch = RegExp;
+
+export type Lib_Regex_PlaceholderHomebridgeCustomUi = RegExp;
 
 /**
  * Lib - Regex - Placeholder Entity Name.
@@ -886,6 +911,38 @@ export type Lib_Regex_PlaceholderProjectSlug = RegExp;
  * @since 0.26.0
  */
 export type Lib_Regex_PlaceholderWorkspacePackageName = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Workspace Relative Path.
+ *
+ * @since 0.29.0
+ */
+export type Lib_Regex_PlaceholderWorkspaceRelativePath = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Workspace Identifier.
+ *
+ * @since 0.29.0
+ */
+export type Lib_Regex_PlaceholderWorkspaceIdentifier = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Workspace Name.
+ *
+ * @since 0.29.0
+ */
+export type Lib_Regex_PlaceholderWorkspaceName = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Workspace Title.
+ *
+ * @since 0.29.0
+ */
+export type Lib_Regex_PlaceholderWorkspaceTitle = RegExp;
+
+export type Lib_Regex_PlaceholderViteFramework = RegExp;
+
+export type Lib_Regex_PlaceholderVitePwa = RegExp;
 
 /**
  * Lib - Regex - Placeholder Terms Of Use.

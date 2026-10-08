@@ -1,0 +1,4 @@
+pkg/[__WORKSPACE_NAME__].inc
+pkg/[__WORKSPACE_NAME__].xml
+sbin/[__WORKSPACE_NAME__]
+%%DATADIR%%/info.xml

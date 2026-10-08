@@ -255,13 +255,14 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigAgents_TemporaryDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigConstructor_CreatesInstanceWithoutErrors_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigConstructor_InstanceHasExpectedPublicMethods_Config,
-  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Config,
-  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigContents,
-  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigPath,
-  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Loaded,
-  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_LoadedGithub,
-  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ProjectDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_OriginalCwd,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_LoadedGithub,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_Messages,
+  Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_ProjectDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_SandboxPrefix,
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_SandboxRoot,
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_TemporaryDirectory,
@@ -493,6 +494,21 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_SandboxPrefix,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_SandboxRoot,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_TemporaryDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_OriginalCwd,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Config,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_ConfigContents,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_ConfigPath,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Loaded,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Messages,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_ProjectDirectory,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_SandboxPrefix,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_SandboxRoot,
+  Tests_Lib_NovaConfig_SharedNovaConfigReadme_TemporaryDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_OriginalCwd,
   Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SandboxPrefix,
   Tests_Lib_NovaConfig_SharedNovaConfigSetAndSave_SandboxRoot,
@@ -3201,20 +3217,21 @@ describe('Shared_NovaConfig github issue template', async () => {
     return;
   });
 
-  it('filters empty bug report fields', async () => {
-    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ProjectDirectory = join(sandboxRoot, 'github-issue-template-filters');
+  it('rejects invalid and duplicate bug report fields', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_ProjectDirectory = join(sandboxRoot, 'github-issue-template-fields');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_ConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_ConfigContents = JSON.stringify({
       github: {
         owner: 'cbnventures',
         issueTemplate: {
           bugReportFields: [
+            'nodejs',
+            'docker',
             'nodejs.yml',
-            'docker.yml',
-            '',
+            'nodejs',
           ],
         },
       },
@@ -3224,10 +3241,10 @@ describe('Shared_NovaConfig github issue template', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Config = new LibNovaConfig();
-    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_Loaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_Loaded = await config.load();
 
-    const loadedGithub: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_FiltersEmptyBugReportFields_LoadedGithub = loaded['github'];
+    const loadedGithub: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_LoadedGithub = loaded['github'];
 
     if (loadedGithub === undefined) {
       fail('Expected github to be defined');
@@ -3235,10 +3252,115 @@ describe('Shared_NovaConfig github issue template', async () => {
 
     deepStrictEqual(loadedGithub['issueTemplate'], {
       bugReportFields: [
-        'nodejs.yml',
-        'docker.yml',
+        'nodejs',
+        'docker',
       ],
     });
+
+    const messages: Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('"nodejs.yml" is not supported')));
+    ok(messages.some((message) => message.includes('"nodejs" is duplicated')));
+
+    return;
+  });
+
+  return;
+});
+
+describe('Shared_NovaConfig readme', async () => {
+  const originalCwd: Tests_Lib_NovaConfig_SharedNovaConfigReadme_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Lib_NovaConfig_SharedNovaConfigReadme_TemporaryDirectory = tmpdir();
+  const sandboxPrefix: Tests_Lib_NovaConfig_SharedNovaConfigReadme_SandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Lib_NovaConfig_SharedNovaConfigReadme_SandboxRoot = await mkdtemp(sandboxPrefix);
+
+  afterAll(async () => {
+    process.chdir(originalCwd);
+
+    await rm(sandboxRoot, {
+      recursive: true,
+      force: true,
+    });
+
+    return;
+  });
+
+  it('preserves exact badge order', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_ProjectDirectory = join(sandboxRoot, 'readme-order');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_ConfigContents = JSON.stringify({
+      github: {
+        owner: 'cbnventures',
+        repo: 'nova',
+      },
+      urls: {
+        npm: 'https://www.npmjs.com/package/@cbnventures/nova',
+      },
+      readme: {
+        badges: [
+          'github-license',
+          'npm-version',
+          'github-release',
+        ],
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigReadme_PreservesExactBadgeOrder_Loaded = await config.load();
+
+    deepStrictEqual(loaded['readme'], {
+      badges: [
+        'github-license',
+        'npm-version',
+        'github-release',
+      ],
+    });
+
+    return;
+  });
+
+  it('rejects invalid duplicate and sourceless badges', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_ProjectDirectory = join(sandboxRoot, 'readme-invalid');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_ConfigContents = JSON.stringify({
+      github: {
+        owner: 'cbnventures',
+      },
+      readme: {
+        badges: [
+          'github-release',
+          'github-release',
+          'npm-version',
+          'unknown',
+        ],
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Loaded = await config.load();
+
+    deepStrictEqual(loaded['readme'], { badges: [] });
+
+    const messages: Tests_Lib_NovaConfig_SharedNovaConfigReadme_RejectsInvalidDuplicateAndSourcelessBadges_Messages = config.diagnostics().map((diagnostic) => diagnostic['message']);
+
+    ok(messages.some((message) => message.includes('"github-release" is missing its required configuration source')));
+    ok(messages.some((message) => message.includes('"github-release" is duplicated')));
+    ok(messages.some((message) => message.includes('"npm-version" is missing its required configuration source')));
+    ok(messages.some((message) => message.includes('"unknown" is not supported')));
 
     return;
   });

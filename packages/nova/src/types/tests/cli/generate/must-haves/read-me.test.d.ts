@@ -3,6 +3,22 @@ import type { vi } from 'vitest';
 import type { Lib_Utility_SaveGeneratedFile_Header } from '../../../../lib/utility.d.ts';
 
 /**
+ * Tests - CLI - Generate - Must Haves - Read Me - Build Badges Region Content - Returns No Badges When The Explicit List Is Missing Or Empty.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildBadgesRegionContent_ReturnsNoBadgesWhenTheExplicitListIsMissingOrEmpty_MissingContent = string;
+
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildBadgesRegionContent_ReturnsNoBadgesWhenTheExplicitListIsMissingOrEmpty_EmptyContent = string;
+
+/**
+ * Tests - CLI - Generate - Must Haves - Read Me - Build Badges Region Content - Uses Only Explicit Badges In Configured Order.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeBuildBadgesRegionContent_UsesOnlyExplicitBadgesInConfiguredOrder_Content = string;
+
+/**
  * Tests - CLI - Generate - Must Haves - Read Me - Run.
  *
  * @since 0.15.0

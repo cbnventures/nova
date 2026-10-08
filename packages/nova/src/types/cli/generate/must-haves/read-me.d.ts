@@ -6,12 +6,14 @@ import type {
   Shared_NovaConfig_Project,
   Shared_NovaConfig_Project_Description,
   Shared_NovaConfig_Project_Name,
-  Shared_NovaConfig_Project_Platforms,
   Shared_NovaConfig_Project_Pronouns,
+  Shared_NovaConfig_ReadMe,
+  Shared_NovaConfig_ReadMe_Badges,
   Shared_NovaConfig_Urls,
   Shared_NovaConfigConfig,
   Shared_NovaConfigEntity,
   Shared_NovaConfigEntity_Roles,
+  Shared_NovaConfigReadMeBadge,
 } from '../../../shared.d.ts';
 
 /**
@@ -19,13 +21,13 @@ import type {
  *
  * @since 0.15.0
  */
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Badges = Shared_NovaConfig_ReadMe_Badges;
+
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_GithubRepo = string;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_NpmPackage = string;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_DockerImage = string;
-
-export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Platforms = string[];
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_FundSources = string[];
 
@@ -33,7 +35,7 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Returns = string;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Lines = string[];
 
-export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_HasNodejs = boolean;
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_BadgeId = Shared_NovaConfigReadMeBadge;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Platform = Shared_FundPlatform;
 
@@ -44,11 +46,11 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Platform = Shared_F
  */
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Config = Shared_NovaConfigConfig;
 
-export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Returns = string | undefined;
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Returns = string;
 
-export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Project = Shared_NovaConfig_Project | undefined;
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_ReadMe = Shared_NovaConfig_ReadMe | undefined;
 
-export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_ProjectPlatforms = Shared_NovaConfig_Project_Platforms;
+export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_BadgeIds = Shared_NovaConfig_ReadMe_Badges;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Urls = Shared_NovaConfig_Urls | undefined;
 
@@ -240,7 +242,7 @@ export type Cli_Generate_MustHaves_ReadMe_Runner_Run_WorkingFile = Shared_NovaCo
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_Run_HeaderContent = string | undefined;
 
-export type Cli_Generate_MustHaves_ReadMe_Runner_Run_BadgesContent = string | undefined;
+export type Cli_Generate_MustHaves_ReadMe_Runner_Run_BadgesContent = string;
 
 export type Cli_Generate_MustHaves_ReadMe_Runner_Run_IntroductionContent = string | undefined;
 

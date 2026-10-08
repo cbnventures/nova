@@ -1,0 +1,38 @@
+{
+  "name": "[__WORKSPACE_PACKAGE_NAME__]",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
+    "dev:start": "astro dev",
+    "prod": "nova utility run-scripts --sequential --node-env production 'prod:*'",
+    "prod:preview": "astro preview",
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:lint": "eslint ./ --max-warnings=0",
+    "check:astro": "astro check --tsconfig tsconfig.astro.json",
+    "check:types-config": "nova utility type-check --project tsconfig.config.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
+    "check:test": "vitest run",
+    "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
+    "build:site": "astro build",
+    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean:build": "shx rm -rf ./build"
+  },
+  "dependencies": {
+    "@cbnventures/nova": "0.29.0",
+    "astro": "7.3.5",
+    "cookie": "2.0.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@types/node": "24.9.1",
+    "eslint": "9.39.5",
+    "shx": "0.4.0",
+    "typescript": "6.0.3",
+    "vitest": "4.1.11"
+  },
+  "engines": {
+    "node": "^22 || ^24"
+  }
+}

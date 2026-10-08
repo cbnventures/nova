@@ -19,9 +19,9 @@ import { cliScaffoldDocsDocusaurusTemplateQuestions } from '../../packages/nova/
  */
 describe('scaffold preset contract', () => {
   it('offers every supported preset and defaults to foundry', () => {
-    deepStrictEqual(cliScaffoldDocsDocusaurusTemplateQuestions.flatMap((question) => question['choices'].map((choice) => choice['value'])), presetsIndexNames);
-    ok(cliScaffoldDocsDocusaurusTemplateQuestions.some((question) => question['choices'].some((choice, index) => index === question['initial'] && choice['value'] === 'foundry')));
-    strictEqual(cliScaffoldDocsDocusaurusTemplateQuestions.length, 1);
+    deepStrictEqual(cliScaffoldDocsDocusaurusTemplateQuestions.filter((question) => question['name'] === 'preset').flatMap((question) => question['choices'].map((choice) => choice['value'])), presetsIndexNames);
+    ok(cliScaffoldDocsDocusaurusTemplateQuestions.some((question) => question['name'] === 'preset' && question['choices'].some((choice, index) => index === question['initial'] && choice['value'] === 'foundry')));
+    strictEqual(cliScaffoldDocsDocusaurusTemplateQuestions.filter((question) => question['name'] === 'preset').length, 1);
 
     return;
   });

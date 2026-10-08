@@ -301,6 +301,8 @@ import type {
   Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsOutputKey,
   Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsResult,
   Cli_Utility_Initialize_Runner_PromptGithub_Config,
+  Cli_Utility_Initialize_Runner_PromptGithub_ConfiguredPlatforms,
+  Cli_Utility_Initialize_Runner_PromptGithub_ConfiguredUrls,
   Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchChoiceValue,
   Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_DefaultBranchOutput,
@@ -348,6 +350,15 @@ import type {
   Cli_Utility_Initialize_Runner_PromptGithub_GithubRepoInput,
   Cli_Utility_Initialize_Runner_PromptGithub_GithubRepoValue,
   Cli_Utility_Initialize_Runner_PromptGithub_GithubTopicsInput,
+  Cli_Utility_Initialize_Runner_PromptGithub_HasAndroidPlatform,
+  Cli_Utility_Initialize_Runner_PromptGithub_HasDockerUrl,
+  Cli_Utility_Initialize_Runner_PromptGithub_HasExplicitBugReportFields,
+  Cli_Utility_Initialize_Runner_PromptGithub_HasJavaPlatform,
+  Cli_Utility_Initialize_Runner_PromptGithub_HasKotlinPlatform,
+  Cli_Utility_Initialize_Runner_PromptGithub_HasMacosPlatform,
+  Cli_Utility_Initialize_Runner_PromptGithub_HasNodejsPlatform,
+  Cli_Utility_Initialize_Runner_PromptGithub_HasNpmUrl,
+  Cli_Utility_Initialize_Runner_PromptGithub_HasSwiftPlatform,
   Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateInput,
   Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_MergeInitial,
@@ -382,7 +393,10 @@ import type {
   Cli_Utility_Initialize_Runner_PromptGithub_RepoOutput,
   Cli_Utility_Initialize_Runner_PromptGithub_RepoOutputResult,
   Cli_Utility_Initialize_Runner_PromptGithub_Returns,
+  Cli_Utility_Initialize_Runner_PromptGithub_SelectedBugReportFields,
   Cli_Utility_Initialize_Runner_PromptGithub_SquashInitial,
+  Cli_Utility_Initialize_Runner_PromptGithub_SuggestedBugReportFields,
+  Cli_Utility_Initialize_Runner_PromptGithub_SuggestedPlatformFields,
   Cli_Utility_Initialize_Runner_PromptGithub_SyncActionsInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_SyncFeaturesInitial,
   Cli_Utility_Initialize_Runner_PromptGithub_SyncIdentityInitial,
@@ -508,6 +522,22 @@ import type {
   Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear,
   Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear_Parsed,
   Cli_Utility_Initialize_Runner_PromptProject_ValidateProjectStartingYear_Trimmed,
+  Cli_Utility_Initialize_Runner_PromptReadMe_Badges,
+  Cli_Utility_Initialize_Runner_PromptReadMe_BadgesOutput,
+  Cli_Utility_Initialize_Runner_PromptReadMe_BadgesOutputKey,
+  Cli_Utility_Initialize_Runner_PromptReadMe_BadgesOutputResult,
+  Cli_Utility_Initialize_Runner_PromptReadMe_Config,
+  Cli_Utility_Initialize_Runner_PromptReadMe_ExistingBadges,
+  Cli_Utility_Initialize_Runner_PromptReadMe_ExistingReadMe,
+  Cli_Utility_Initialize_Runner_PromptReadMe_FundSources,
+  Cli_Utility_Initialize_Runner_PromptReadMe_Github,
+  Cli_Utility_Initialize_Runner_PromptReadMe_HasExplicitBadges,
+  Cli_Utility_Initialize_Runner_PromptReadMe_Platforms,
+  Cli_Utility_Initialize_Runner_PromptReadMe_Project,
+  Cli_Utility_Initialize_Runner_PromptReadMe_Returns,
+  Cli_Utility_Initialize_Runner_PromptReadMe_SelectedBadges,
+  Cli_Utility_Initialize_Runner_PromptReadMe_SuggestedBadges,
+  Cli_Utility_Initialize_Runner_PromptReadMe_Urls,
   Cli_Utility_Initialize_Runner_PromptSettings_Config,
   Cli_Utility_Initialize_Runner_PromptSettings_CurrentDirectory,
   Cli_Utility_Initialize_Runner_PromptSettings_CurrentStrategy,
@@ -1000,6 +1030,11 @@ export class Runner {
         description: 'Configure project URLs (homepage, repository, fund sources, etc.).',
         handler: Runner['promptUrls'],
       },
+      readme: {
+        label: 'README',
+        description: 'Choose the exact ordered badge set generated in README files.',
+        handler: Runner['promptReadMe'],
+      },
       workspaces: {
         label: 'Workspaces',
         description: 'Review workspace packages, assigning roles and policies.',
@@ -1383,6 +1418,31 @@ export class Runner {
         title: 'Windows',
         value: 'windows',
         selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('windows') === true,
+      },
+      {
+        title: 'Homebridge',
+        value: 'homebridge',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('homebridge') === true,
+      },
+      {
+        title: 'Docker',
+        value: 'docker',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('docker') === true,
+      },
+      {
+        title: 'pfSense',
+        value: 'pfsense',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('pfsense') === true,
+      },
+      {
+        title: 'Synology',
+        value: 'synology',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('synology') === true,
+      },
+      {
+        title: 'Web',
+        value: 'web',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('web') === true,
       },
     ];
 
@@ -2801,9 +2861,65 @@ export class Runner {
       githubPoliciesInput = undefined;
     }
 
-    // Prompt 17: issueTemplate.bugReportFields (optional multiselect — empty omits field).
+    // Prompt 17: issueTemplate.bugReportFields (exact semantic field list).
     const existingGithubForIssueTemplate: Cli_Utility_Initialize_Runner_PromptGithub_ExistingGithubForIssueTemplate = (config['github'] !== undefined) ? config['github']['issueTemplate'] : undefined;
     const existingBugReportFields: Cli_Utility_Initialize_Runner_PromptGithub_ExistingBugReportFields = (existingGithubForIssueTemplate !== undefined) ? (existingGithubForIssueTemplate['bugReportFields'] ?? []) : [];
+    const hasExplicitBugReportFields: Cli_Utility_Initialize_Runner_PromptGithub_HasExplicitBugReportFields = (existingGithubForIssueTemplate !== undefined) ? existingGithubForIssueTemplate['bugReportFields'] !== undefined : false;
+    const suggestedBugReportFields: Cli_Utility_Initialize_Runner_PromptGithub_SuggestedBugReportFields = [];
+    const configuredPlatforms: Cli_Utility_Initialize_Runner_PromptGithub_ConfiguredPlatforms = (config['project'] !== undefined) ? config['project']['platforms'] : undefined;
+    const configuredUrls: Cli_Utility_Initialize_Runner_PromptGithub_ConfiguredUrls = config['urls'];
+    const hasNodejsPlatform: Cli_Utility_Initialize_Runner_PromptGithub_HasNodejsPlatform = configuredPlatforms !== undefined && configuredPlatforms.includes('nodejs') === true;
+    const hasNpmUrl: Cli_Utility_Initialize_Runner_PromptGithub_HasNpmUrl = configuredUrls !== undefined && configuredUrls['npm'] !== undefined;
+
+    if (hasNodejsPlatform === true || hasNpmUrl === true) {
+      suggestedBugReportFields.push('nodejs');
+    }
+
+    const hasSwiftPlatform: Cli_Utility_Initialize_Runner_PromptGithub_HasSwiftPlatform = configuredPlatforms !== undefined && configuredPlatforms.includes('swift') === true;
+    const hasMacosPlatform: Cli_Utility_Initialize_Runner_PromptGithub_HasMacosPlatform = configuredPlatforms !== undefined && configuredPlatforms.includes('macos') === true;
+
+    if (hasSwiftPlatform === true || hasMacosPlatform === true) {
+      suggestedBugReportFields.push('apple');
+    }
+
+    const hasAndroidPlatform: Cli_Utility_Initialize_Runner_PromptGithub_HasAndroidPlatform = configuredPlatforms !== undefined && configuredPlatforms.includes('android') === true;
+    const hasJavaPlatform: Cli_Utility_Initialize_Runner_PromptGithub_HasJavaPlatform = configuredPlatforms !== undefined && configuredPlatforms.includes('java') === true;
+    const hasKotlinPlatform: Cli_Utility_Initialize_Runner_PromptGithub_HasKotlinPlatform = configuredPlatforms !== undefined && configuredPlatforms.includes('kotlin') === true;
+
+    if (
+      hasAndroidPlatform === true
+      || hasJavaPlatform === true
+      || hasKotlinPlatform === true
+    ) {
+      suggestedBugReportFields.push('android');
+    }
+
+    const suggestedPlatformFields: Cli_Utility_Initialize_Runner_PromptGithub_SuggestedPlatformFields = [
+      'csharp',
+      'php',
+      'python',
+      'homebridge',
+      'pfsense',
+      'synology',
+      'docker',
+      'web',
+    ];
+
+    for (const field of suggestedPlatformFields) {
+      if (configuredPlatforms !== undefined && configuredPlatforms.includes(field) === true) {
+        if (suggestedBugReportFields.includes(field) === false) {
+          suggestedBugReportFields.push(field);
+        }
+      }
+    }
+
+    const hasDockerUrl: Cli_Utility_Initialize_Runner_PromptGithub_HasDockerUrl = configuredUrls !== undefined && configuredUrls['docker'] !== undefined;
+
+    if (hasDockerUrl === true && suggestedBugReportFields.includes('docker') === false) {
+      suggestedBugReportFields.push('docker');
+    }
+
+    const selectedBugReportFields: Cli_Utility_Initialize_Runner_PromptGithub_SelectedBugReportFields = (hasExplicitBugReportFields === true) ? existingBugReportFields : suggestedBugReportFields;
 
     const issueTemplateOutput: Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsOutputKey, Cli_Utility_Initialize_Runner_PromptGithub_BugReportFieldsResult>({
       type: 'multiselect',
@@ -2812,63 +2928,63 @@ export class Runner {
       choices: [
         {
           title: 'Node.js',
-          value: 'nodejs.yml',
-          selected: existingBugReportFields.includes('nodejs.yml'),
+          value: 'nodejs',
+          selected: selectedBugReportFields.includes('nodejs'),
         },
         {
           title: 'Apple',
-          value: 'apple.yml',
-          selected: existingBugReportFields.includes('apple.yml'),
+          value: 'apple',
+          selected: selectedBugReportFields.includes('apple'),
         },
         {
           title: 'Android',
-          value: 'android.yml',
-          selected: existingBugReportFields.includes('android.yml'),
+          value: 'android',
+          selected: selectedBugReportFields.includes('android'),
         },
         {
           title: 'C# / .NET',
-          value: 'csharp.yml',
-          selected: existingBugReportFields.includes('csharp.yml'),
+          value: 'csharp',
+          selected: selectedBugReportFields.includes('csharp'),
         },
         {
           title: 'PHP',
-          value: 'php.yml',
-          selected: existingBugReportFields.includes('php.yml'),
+          value: 'php',
+          selected: selectedBugReportFields.includes('php'),
         },
         {
           title: 'Python',
-          value: 'python.yml',
-          selected: existingBugReportFields.includes('python.yml'),
+          value: 'python',
+          selected: selectedBugReportFields.includes('python'),
         },
         {
           title: 'Homebridge',
-          value: 'homebridge.yml',
-          selected: existingBugReportFields.includes('homebridge.yml'),
+          value: 'homebridge',
+          selected: selectedBugReportFields.includes('homebridge'),
         },
         {
           title: 'pfSense',
-          value: 'pfsense.yml',
-          selected: existingBugReportFields.includes('pfsense.yml'),
+          value: 'pfsense',
+          selected: selectedBugReportFields.includes('pfsense'),
         },
         {
           title: 'Synology',
-          value: 'synology.yml',
-          selected: existingBugReportFields.includes('synology.yml'),
+          value: 'synology',
+          selected: selectedBugReportFields.includes('synology'),
         },
         {
           title: 'Docker',
-          value: 'docker.yml',
-          selected: existingBugReportFields.includes('docker.yml'),
+          value: 'docker',
+          selected: selectedBugReportFields.includes('docker'),
         },
         {
           title: 'Web Browser',
-          value: 'web.yml',
-          selected: existingBugReportFields.includes('web.yml'),
+          value: 'web',
+          selected: selectedBugReportFields.includes('web'),
         },
         {
           title: 'Screenshots',
-          value: 'screenshots.yml',
-          selected: existingBugReportFields.includes('screenshots.yml'),
+          value: 'screenshots',
+          selected: selectedBugReportFields.includes('screenshots'),
         },
       ],
       hint: '- Space to select. Return to submit',
@@ -2879,7 +2995,7 @@ export class Runner {
     }
 
     const bugReportFields: Cli_Utility_Initialize_Runner_PromptGithub_BugReportFields = issueTemplateOutput['result'].bugReportFields ?? [];
-    const issueTemplateInput: Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateInput = (bugReportFields.length > 0) ? { bugReportFields } : undefined;
+    const issueTemplateInput: Cli_Utility_Initialize_Runner_PromptGithub_IssueTemplateInput = { bugReportFields };
 
     // Build the github config object in schema declaration order.
     const githubConfig: Cli_Utility_Initialize_Runner_PromptGithub_GithubConfig = {
@@ -2892,7 +3008,7 @@ export class Runner {
       ...((github['rulesets'] !== undefined) ? { rulesets: github['rulesets'] } : {}),
       ...((github['actions'] !== undefined) ? { actions: github['actions'] } : {}),
       ...((github['labels'] !== undefined) ? { labels: github['labels'] } : {}),
-      ...((issueTemplateInput !== undefined) ? { issueTemplate: issueTemplateInput } : {}),
+      issueTemplate: issueTemplateInput,
     };
 
     Object.assign(config, { github: githubConfig });
@@ -2910,6 +3026,134 @@ export class Runner {
       padTop: 1,
       padBottom: 1,
     }).info('GitHub settings updated.');
+
+    return 'back';
+  }
+
+  /**
+   * CLI - Utility - Initialize - Prompt Read Me.
+   *
+   * Presents the supported README badge identifiers in their generated order. Existing
+   * explicit badge arrays are authoritative; otherwise Nova preselects suggestions from
+   * configured platforms and source URLs, then persists the user's final explicit list.
+   *
+   * @param {Cli_Utility_Initialize_Runner_PromptReadMe_Config} config - Config.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Initialize_Runner_PromptReadMe_Returns}
+   *
+   * @since 0.29.0
+   */
+  private static async promptReadMe(config: Cli_Utility_Initialize_Runner_PromptReadMe_Config): Cli_Utility_Initialize_Runner_PromptReadMe_Returns {
+    const existingReadMe: Cli_Utility_Initialize_Runner_PromptReadMe_ExistingReadMe = config['readme'];
+    const existingBadges: Cli_Utility_Initialize_Runner_PromptReadMe_ExistingBadges = (existingReadMe !== undefined) ? (existingReadMe['badges'] ?? []) : [];
+    const hasExplicitBadges: Cli_Utility_Initialize_Runner_PromptReadMe_HasExplicitBadges = (existingReadMe !== undefined) ? existingReadMe['badges'] !== undefined : false;
+    const suggestedBadges: Cli_Utility_Initialize_Runner_PromptReadMe_SuggestedBadges = [];
+    const project: Cli_Utility_Initialize_Runner_PromptReadMe_Project = config['project'];
+    const platforms: Cli_Utility_Initialize_Runner_PromptReadMe_Platforms = (project !== undefined) ? project['platforms'] : undefined;
+    const urls: Cli_Utility_Initialize_Runner_PromptReadMe_Urls = config['urls'];
+    const github: Cli_Utility_Initialize_Runner_PromptReadMe_Github = config['github'];
+    const fundSources: Cli_Utility_Initialize_Runner_PromptReadMe_FundSources = (urls !== undefined) ? (urls['fundSources'] ?? []) : [];
+
+    if (platforms !== undefined && platforms.includes('homebridge') === true) {
+      suggestedBadges.push('homebridge');
+    }
+
+    if (urls !== undefined && urls['npm'] !== undefined) {
+      suggestedBadges.push('npm-version', 'npm-downloads');
+    }
+
+    if (urls !== undefined && urls['docker'] !== undefined) {
+      suggestedBadges.push('docker-pulls', 'docker-image-size');
+    }
+
+    if (github !== undefined) {
+      if (github['owner'] !== undefined && github['repo'] !== undefined) {
+        suggestedBadges.push('github-release', 'github-top-language', 'github-license');
+      }
+    }
+
+    if (fundSources.length > 0) {
+      suggestedBadges.push('funding');
+    }
+
+    const selectedBadges: Cli_Utility_Initialize_Runner_PromptReadMe_SelectedBadges = (hasExplicitBadges === true) ? existingBadges : suggestedBadges;
+    const badgesOutput: Cli_Utility_Initialize_Runner_PromptReadMe_BadgesOutput = await Runner.promptWithCancel<Cli_Utility_Initialize_Runner_PromptReadMe_BadgesOutputKey, Cli_Utility_Initialize_Runner_PromptReadMe_BadgesOutputResult>({
+      type: 'multiselect',
+      name: 'readMeBadges',
+      message: 'README badges in generated order (space to select)',
+      choices: [
+        {
+          title: 'Homebridge Verified',
+          value: 'homebridge-verified',
+          selected: selectedBadges.includes('homebridge-verified'),
+        },
+        {
+          title: 'Homebridge',
+          value: 'homebridge',
+          selected: selectedBadges.includes('homebridge'),
+        },
+        {
+          title: 'npm Version (requires urls.npm)',
+          value: 'npm-version',
+          selected: selectedBadges.includes('npm-version'),
+        },
+        {
+          title: 'npm Downloads (requires urls.npm)',
+          value: 'npm-downloads',
+          selected: selectedBadges.includes('npm-downloads'),
+        },
+        {
+          title: 'Docker Pulls (requires urls.docker)',
+          value: 'docker-pulls',
+          selected: selectedBadges.includes('docker-pulls'),
+        },
+        {
+          title: 'Docker Image Size (requires urls.docker)',
+          value: 'docker-image-size',
+          selected: selectedBadges.includes('docker-image-size'),
+        },
+        {
+          title: 'GitHub Release (requires github owner and repo)',
+          value: 'github-release',
+          selected: selectedBadges.includes('github-release'),
+        },
+        {
+          title: 'GitHub Top Language (requires github owner and repo)',
+          value: 'github-top-language',
+          selected: selectedBadges.includes('github-top-language'),
+        },
+        {
+          title: 'GitHub License (requires github owner and repo)',
+          value: 'github-license',
+          selected: selectedBadges.includes('github-license'),
+        },
+        {
+          title: 'Funding (requires urls.fundSources)',
+          value: 'funding',
+          selected: selectedBadges.includes('funding'),
+        },
+      ],
+      hint: '- Space to select. Return to submit',
+    });
+
+    if (badgesOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const badges: Cli_Utility_Initialize_Runner_PromptReadMe_Badges = badgesOutput['result'].readMeBadges ?? [];
+
+    Object.assign(config, {
+      readme: { badges },
+    });
+
+    Logger.customize({
+      name: 'Runner.promptReadMe',
+      purpose: 'updated',
+      padTop: 1,
+      padBottom: 1,
+    }).info('README settings updated.');
 
     return 'back';
   }

@@ -24,7 +24,7 @@ Create a baseline `README.md` populated with project name, description, dynamic 
 ## Why Use This Command?
 
 - Produces a consistent README with shields badges, documentation links, and correct pronoun usage without manual editing.
-- Dynamically generates platform badges based on `project.platforms` and funding badges from `urls.fundSources`.
+- Generates only the badges selected in `readme.badges`, preserving their configured order.
 - Draws every value from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, so regenerating after a config change keeps the file in sync.
 - Automatically copies the generated file into each <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> workspace.
 
@@ -70,21 +70,38 @@ Create a baseline `README.md` populated with project name, description, dynamic 
 
 ## Config Fields
 
-| Field                      | Description                                                                                               |
-|----------------------------|-----------------------------------------------------------------------------------------------------------|
-| `project.name.title`       | Display name used in the heading.                                                                         |
-| `project.description.long` | Long project description shown below the heading.                                                         |
-| `project.pronouns`         | `"personal"` or `"business"` — controls me/us, my/our usage.                                              |
-| `project.platforms`        | Includes npm badges when `nodejs` is among the platforms.                                                 |
-| `urls.homepage`            | Project homepage URL linked from the logo.                                                                |
-| `urls.logo`                | Absolute URL to the project logo image.                                                                   |
-| `urls.documentation`       | Documentation site URL used in the links section.                                                         |
-| `urls.npm`                 | npm package URL — includes npm badges when `nodejs` is a platform.                                        |
-| `urls.docker`              | Docker Hub URL — includes Docker Pulls and Image Size badges.                                             |
-| `github.owner`             | GitHub owner — combined with `github.repo` into the repo slug.                                            |
-| `github.repo`              | GitHub repo name — joined with `github.owner` to emit GitHub Releases, Top Languages, and License badges. |
-| `urls.fundSources`         | Array of funding URLs — generates badges and credits section.                                             |
-| `entities`                 | Entities with a `contributor` or `supporter` role are listed by name and URL in the credits section.      |
+| Field                      | Description                                                                                          |
+|----------------------------|------------------------------------------------------------------------------------------------------|
+| `project.name.title`       | Display name used in the heading.                                                                    |
+| `project.description.long` | Long project description shown below the heading.                                                    |
+| `project.pronouns`         | `"personal"` or `"business"` — controls me/us, my/our usage.                                         |
+| `urls.homepage`            | Project homepage URL linked from the logo.                                                           |
+| `urls.logo`                | Absolute URL to the project logo image.                                                              |
+| `urls.documentation`       | Documentation site URL used in the links section.                                                    |
+| `readme.badges`            | Exact ordered badge identifiers to include. Missing and empty arrays produce no badges.              |
+| `urls.npm`                 | npm package URL used by the selected npm badges.                                                     |
+| `urls.docker`              | Docker Hub URL used by the selected Docker badges.                                                   |
+| `github.owner`             | GitHub owner — combined with `github.repo` into the repo slug.                                       |
+| `github.repo`              | GitHub repo name — joined with `github.owner` for selected GitHub badges.                            |
+| `urls.fundSources`         | Array of funding URLs used by the selected funding badge and credits section.                        |
+| `entities`                 | Entities with a `contributor` or `supporter` role are listed by name and URL in the credits section. |
+
+## Supported Badges
+
+Badges render in the same order as `readme.badges`. Unknown identifiers, duplicates, and badges without their required source fail config validation.
+
+| Identifier            | Badge                 | Required Source                        |
+|-----------------------|-----------------------|----------------------------------------|
+| `homebridge`          | Homebridge            | None.                                  |
+| `homebridge-verified` | Verified Homebridge   | None.                                  |
+| `npm-version`         | npm version           | `urls.npm`.                            |
+| `npm-downloads`       | npm downloads         | `urls.npm`.                            |
+| `docker-pulls`        | Docker pulls          | `urls.docker`.                         |
+| `docker-image-size`   | Docker image size     | `urls.docker`.                         |
+| `github-release`      | Latest GitHub release | `github.owner` and `github.repo`.      |
+| `github-top-language` | GitHub top language   | `github.owner` and `github.repo`.      |
+| `github-license`      | GitHub license        | `github.owner` and `github.repo`.      |
+| `funding`             | Funding               | At least one `urls.fundSources` entry. |
 
 ## Supported Funding Platforms
 

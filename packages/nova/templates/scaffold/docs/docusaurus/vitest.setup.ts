@@ -2,7 +2,7 @@ import { VitestSetup } from '@cbnventures/nova/toolkit';
 import { afterEach, beforeEach, vi } from 'vitest';
 
 /**
- * Vitest Setup.
+ * Vitest.
  *
  * Global test hooks that run before and after every test. Suppresses
  * conformance-suite output by spying on stdout and stderr, and resets the

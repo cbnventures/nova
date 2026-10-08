@@ -4,6 +4,7 @@ import type {
   Shared_GeneratorRunResult,
   Shared_NovaConfig,
   Shared_NovaConfig_Github_IssueTemplate,
+  Shared_NovaConfig_Github_IssueTemplate_BugReportField,
   Shared_NovaConfig_Github_IssueTemplate_BugReportFields,
 } from '../../../shared.d.ts';
 
@@ -69,15 +70,7 @@ export type Cli_Generate_Github_IssueTemplate_Runner_Run_FundSources = string[];
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_GithubSponsor = string;
 
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_Platforms = string[];
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMappingKey = string;
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMappingValue = string;
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMapping = Record<Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMappingKey, Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMappingValue>;
-
-export type Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectedFiles = Set<string>;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_FieldFileMapping = Record<Shared_NovaConfig_Github_IssueTemplate_BugReportField, string>;
 
 export type Cli_Generate_Github_IssueTemplate_Runner_Run_File = string | undefined;
 

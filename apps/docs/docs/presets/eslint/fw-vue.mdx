@@ -1,0 +1,57 @@
+---
+id: "fw-vue"
+title: "Framework - Vue"
+description: "Lint Vue single-file components with Nova-compatible official correctness rules and TypeScript parsing."
+keywords:
+  - "nova"
+  - "vue"
+  - "eslint"
+  - "single-file component"
+  - "typescript"
+tags:
+  - "presets"
+  - "eslint"
+  - "framework"
+  - "vue"
+---
+
+Lint Vue single-file components through a Nova-owned compatibility layer.
+
+## Why Use This Preset?
+
+1. Selects Vue's official flat-config correctness baseline without copying its entire project setup.
+2. Parses TypeScript inside `.vue` components through Nova's installed TypeScript parser.
+3. Composes after Nova's required ignore, code-style, and language layers.
+4. Leaves consumer-specific rule changes in a later config block.
+
+## Usage
+
+```ts title="eslint.config.mts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  fwVue,
+  langJavascript,
+  langTypescript,
+  runtimeBrowser,
+  toolVite,
+} from '@cbnventures/nova/presets/eslint';
+import { novaRules } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langJavascript,
+  ...langTypescript,
+  ...runtimeBrowser,
+  ...toolVite,
+  ...fwVue,
+  ...novaRules,
+];
+```
+
+## Related
+
+- Pair it with the matching **[Framework - Vue TSConfig preset](/docs/presets/tsconfig/fw-vue)**.
+- Select it automatically with the **[Vite scaffold](/docs/cli/scaffolding/app/vite)** and `--framework vue`.
+- Review the layering order in **[ESLint Best Practices](/docs/presets/eslint/best-practices)**.

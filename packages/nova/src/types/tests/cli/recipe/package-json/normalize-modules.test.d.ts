@@ -83,6 +83,25 @@ export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNo
 export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_NormalizesStringExportsToObjectForPackageRole_Parsed = Record<string, unknown>;
 
 /**
+ * Tests - CLI - Recipe - package.json - Normalize Modules - Run - Preserves Module Type For Project Role.
+ *
+ * @since 0.29.0
+ */
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_PackageJsonPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_PackageJsonContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_NovaConfigPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_NovaConfigContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_Output = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeModules_CliRecipePackageJsonNormalizeModulesRun_PreservesModuleTypeForProjectRole_Parsed = Record<string, unknown>;
+
+/**
  * Tests - CLI - Recipe - package.json - Normalize Modules - Run - Removes Exports From Non Package Role.
  *
  * @since 0.14.0

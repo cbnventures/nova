@@ -29,7 +29,7 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Nova ships two kinds of checks. **ESLint rules** are individual, per-file checks you enable one at a time in your flat config. **Vitest conformance suites** are importable test suites that each scan across multiple files at once — frontmatter, links, tables, and type declarations.
+Nova ships two kinds of checks. **ESLint rules** are per-file checks available through the complete `novaRules` collection or as individual rule exports. **Vitest conformance suites** are importable test suites that each scan across multiple files at once — frontmatter, links, tables, and type declarations.
 
 ## Install
 
@@ -50,7 +50,7 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
     <ul>
       <li><strong>ESLint rules</strong> that catch patterns the built-in rule set does not cover — each rule targets a single concern.</li>
       <li><strong>Vitest suites</strong> that scan across multiple files at once to enforce conventions on frontmatter, links, tables, and type declarations.</li>
-      <li><strong>No extra options</strong> required — enable each ESLint rule in your <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>, or register each Vitest suite in a short test file.</li>
+      <li><strong>Safe defaults</strong> — every custom ESLint rule supports <code>{'ignoreFiles'}</code>; the complete collection supplies reviewed defaults, and consumers can append overrides.</li>
       <li>Designed to complement existing tools, not replace them.</li>
     </ul>
   </TabItem>
@@ -74,7 +74,37 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
 
 ## ESLint Rules
 
-Custom rules for JavaScript and TypeScript projects. Each rule is **targeted**, **independent**, and **safe to adopt** — enable only what you need. Each rule focuses on a single concern.
+Custom rules for JavaScript and TypeScript projects. Each rule is **targeted**, **independent**, and **safe to override**. Nova scaffolds enable the complete collection as their standard, while consumers remain free to disable individual rules in a later config block.
+
+### Scaffold Default
+
+`novaRules` registers every Nova-owned ESLint rule and enables its shared defaults. It is separate from the preset package because presets contain only curated ESLint core and third-party behavior.
+
+```ts title="eslint.config.mts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  langTypescript,
+  runtimeNode,
+} from '@cbnventures/nova/presets/eslint';
+import { novaRules } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...runtimeNode,
+  ...novaRules,
+  {
+    name: 'custom-nova-rules',
+    rules: {
+      '@cbnventures/nova/no-optional-chaining': 'off',
+    },
+  },
+];
+```
+
+The later object wins for that consumer only. You can still import individual rule runners when building a specialized plugin config, but generated projects do not need to register them one by one.
 
 ### Conventions
 

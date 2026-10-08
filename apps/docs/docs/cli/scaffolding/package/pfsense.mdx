@@ -1,0 +1,136 @@
+---
+id: "pfsense"
+title: "pfSense Package"
+description: "Scaffold a pfSense package with a WebGUI settings page, cron-oriented PHP task, FreeBSD port sources, and GitHub Release packaging."
+keywords:
+  - "nova"
+  - "nova scaffold"
+  - "pfsense"
+  - "freebsd port"
+  - "pfsense package"
+tags:
+  - "cli"
+  - "scaffold"
+  - "package"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a **pfSense package** whose settings live in the WebGUI and whose background work runs as a quiet PHP command scheduled by pfSense.
+
+## Why Use This Command?
+
+1. Generates the standard pfSense package manifest, configuration XML, install hooks, packing list, and FreeBSD port metadata together.
+2. Connects WebGUI fields to a managed cron entry, keeping the scheduled command implementation separate from the user-facing settings.
+3. Stages the port with the current workspace version and includes a root GitHub Actions workflow that builds a `.pkg` file on FreeBSD and attaches it with a checksum to a GitHub release.
+4. Lints, type-checks, and tests the Node.js packaging helpers independently from the native pfSense and FreeBSD sources.
+
+## Requirements
+
+- **Node.js runtime** — Use Node.js 22 or 24 to validate and stage the package.
+- **FreeBSD package builder** — A matching FreeBSD environment is required only for the final `make package` step. See Netgate's [package build guidance](https://docs.netgate.com/pfsense/en/latest/development/develop-packages.html#testing-building-individual-packages).
+- **Target version** — Build against the FreeBSD major used by the pfSense release you support. The generated workflow reads the optional `PFSENSE_FREEBSD_VERSION` repository variable and defaults to `15`.
+- **Empty directory** or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** — Nova auto-detects whether to create a project or add a package.
+
+:::warning Unofficial packages
+Installing a `.pkg` file from GitHub bypasses Netgate's package repository review and support. Test on a disposable or backed-up firewall before production use. To pursue official distribution, follow Netgate's [package development process](https://docs.netgate.com/pfsense/en/latest/development/develop-packages.html).
+:::
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold package pfsense
+
+    # Shorthand
+    nova scaf pkg pfsense
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold package pfsense
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf pkg pfsense
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                                                                  |
+|---------------------------|------------------------------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                                               |
+| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root.         |
+| `--non-interactive`       | Require every answer as a flag and do not open prompts.                      |
+| `--workspace-name <name>` | Workspace directory name; Nova adds `pfsense-pkg-` to the workspace package. |
+| `--output <dir>`          | Output directory.                                                            |
+
+## Output Files
+
+| File or Directory                                                                                                                                                          | Description                                                                 |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| `port/Makefile.template`                                                                                                                                                   | FreeBSD port recipe with a build-time workspace-version placeholder.        |
+| `port/pkg-descr` and `port/pkg-plist`                                                                                                                                      | Package description and installed-file inventory.                           |
+| `port/files/pkg-install.in` and `port/files/pkg-deinstall.in`                                                                                                              | Standard pfSense package lifecycle hooks.                                   |
+| `port/files/usr/local/pkg/<name>.xml`                                                                                                                                      | WebGUI menu, settings fields, validation, and package lifecycle callbacks.  |
+| `port/files/usr/local/pkg/<name>.inc`                                                                                                                                      | Settings lookup and pfSense-managed cron synchronization.                   |
+| `port/files/usr/local/sbin/<name>`                                                                                                                                         | Non-interactive PHP task invoked by cron.                                   |
+| `port/files/usr/local/share/pfSense-pkg-<Name>/info.xml`                                                                                                                   | pfSense package manifest.                                                   |
+| `scripts/check-package.mjs`                                                                                                                                                | Cross-platform structural validation.                                       |
+| `scripts/stage-package.mjs`                                                                                                                                                | Copies the port into `build/port` and stamps the `package.json` version.    |
+| `scripts/build-package.sh`                                                                                                                                                 | Runs `make package` in a supplied pfSense FreeBSD-ports checkout.           |
+| `tests/project.test.ts`                                                                                                                                                    | Vitest smoke suite for Nova-managed Node.js helper tooling.                 |
+| `tsconfig.*.json` and `vitest.config.mts`                                                                                                                                  | Strict helper and test contracts, separate from native package sources.     |
+| `.github/workflows/pfsense-<name>.yml` at the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>project root</Terminology> | Builds on FreeBSD and uploads the `.pkg` plus checksum to a GitHub release. |
+| `package.json`                                                                                                                                                             | Nova lifecycle commands and workspace metadata.                             |
+
+## WebGUI and Scheduled Task
+
+The generated page appears under **Services > &lt;Workspace Title&gt;**. It provides an enable switch, hourly/daily/weekly schedule, and starter message field. Saving the page removes any older matching cron entry and installs the selected schedule through pfSense's `install_cron_job()` API.
+
+The executable under `usr/local/sbin` is intentionally not an interactive end-user CLI. Cron invokes it without arguments, it reads the saved pfSense configuration, and the starter implementation writes the configured message to the system log. Replace that final operation with the package's actual background work.
+
+## Check, Stage, and Package
+
+```bash
+npm run check
+npm run build
+PFSENSE_PORTS_DIR=/path/to/pfSense-FreeBSD-ports npm run deploy
+```
+
+`npm run build` is safe on macOS, Linux, and Windows because it only stages source files. `npm run deploy` requires FreeBSD and refuses to overwrite an existing port directory in the supplied ports checkout.
+
+Before publishing, replace the starter `maintainer@example.invalid` value and confirm the `MIT` port license matches the repository.
+
+## GitHub Releases
+
+The companion workflow runs when a GitHub release is published. It can also be run manually with the tag of an existing release. The workflow:
+
+1. Validates and stages the port on the GitHub runner.
+2. Starts a FreeBSD VM, checks out the pfSense ports framework, and runs the package build.
+3. Uploads the `.pkg` and `.sha256` files as both workflow artifacts and assets on the selected GitHub release.
+
+Set the `PFSENSE_FREEBSD_VERSION` repository variable to the FreeBSD major that matches the target pfSense release. If that FreeBSD version is not offered by the generated VM action, run `scripts/build-package.sh` on a matching pfSense builder instead; do not publish a package built against a different major.
+
+## Non-Interactive Mode
+
+```bash
+nova scaffold package pfsense --non-interactive --name my-firewall-tools --workspace-name scheduler --output ./my-firewall-tools
+nova scaffold package pfsense --non-interactive --workspace-name scheduler --output ./packages/scheduler
+```
+
+## Naming and Registration
+
+Nova prefixes the workspace package name with `pfsense-pkg-` when needed, so workspace `scheduler` becomes `pfsense-pkg-scheduler`. The FreeBSD port and installed package use pfSense's conventional `pfSense-pkg-Scheduler` form.
+
+The workspace is registered with the `package` role and `distributable` policy so Nova can track its changelog and semantic version. Publication remains explicit: the generated workflow uploads the FreeBSD package to GitHub Releases and does not publish it to npm or Netgate's repository.

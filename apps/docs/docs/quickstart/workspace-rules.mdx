@@ -34,7 +34,7 @@ A role describes what the workspace _is_. It determines which `package.json` fie
 
 | Role       | Purpose                                                                                                                                                           |
 |------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `project`  | The monorepo root. Owns the `workspaces` array, `packageManager`, and dependency install-script policy.                                                           |
+| `project`  | The ESM monorepo root. Retains `"type": "module"` and owns the `workspaces` array, `packageManager`, and dependency install-script policy.                        |
 | `docs`     | A documentation site (e.g., Docusaurus). Does not publish to a package registry.                                                                                  |
 | `config`   | A shared configuration package (e.g., ESLint presets, TSConfig presets). Retains the `types` and `module` bundler convention fields.                              |
 | `app`      | An application workspace (e.g., a web app, an API server). Not intended for registry publishing.                                                                  |
@@ -46,17 +46,18 @@ A role describes what the workspace _is_. It determines which `package.json` fie
 
 The following table shows which `package.json` fields are retained or removed based on role. Fields not listed here are handled independently of role.
 
-| Field         | Retained by                 | Removed from all others |
-|---------------|-----------------------------|-------------------------|
-| `workspaces`  | `project`                   | Yes                     |
-| `files`       | `package`, `tool`           | Yes                     |
-| `bin`         | `package`, `tool`           | Yes                     |
-| `man`         | `package`, `tool`           | Yes                     |
-| `directories` | `package`, `tool`           | Yes                     |
-| `types`       | `config`, `package`, `tool` | Yes                     |
-| `module`      | `config`, `package`, `tool` | Yes                     |
-| `sideEffects` | `package`                   | Yes                     |
-| `esnext`      | `package`                   | Yes                     |
+| Field         | Retained by                                   | Removed from all others |
+|---------------|-----------------------------------------------|-------------------------|
+| `workspaces`  | `project`                                     | Yes                     |
+| `type`        | `project`, `config`, `app`, `package`, `tool` | Yes                     |
+| `files`       | `package`, `tool`                             | Yes                     |
+| `bin`         | `package`, `tool`                             | Yes                     |
+| `man`         | `package`, `tool`                             | Yes                     |
+| `directories` | `package`, `tool`                             | Yes                     |
+| `types`       | `config`, `package`, `tool`                   | Yes                     |
+| `module`      | `config`, `package`, `tool`                   | Yes                     |
+| `sideEffects` | `package`                                     | Yes                     |
+| `esnext`      | `package`                                     | Yes                     |
 
 ### Root Package Manager
 

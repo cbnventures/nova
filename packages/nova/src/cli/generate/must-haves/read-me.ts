@@ -17,16 +17,16 @@ import { collectConsumerWorkspacePaths, isProjectRoot, saveGeneratedFile } from 
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_BadgeId,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Badges,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_DockerImage,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_FundSources,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_GithubRepo,
-  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_HasNodejs,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Lines,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_NpmPackage,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Platform,
-  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Platforms,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Returns,
-  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Badges,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_BadgeIds,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Config,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_DockerImage,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_DockerUrl,
@@ -37,8 +37,7 @@ import type {
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_GithubRepoName,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_NpmPackage,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_NpmUrl,
-  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Project,
-  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_ProjectPlatforms,
+  Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_ReadMe,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Returns,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Urls,
   Cli_Generate_MustHaves_ReadMe_Runner_BuildCreditsRegionContent_Config,
@@ -182,7 +181,7 @@ export class Runner {
         wrapReadMeRegion('header', headerContent),
       ];
 
-      if (badgesContent !== undefined) {
+      if (badgesContent !== '') {
         headerLines.push(wrapReadMeRegion('badges', badgesContent));
       }
 
@@ -232,8 +231,8 @@ export class Runner {
   /**
    * CLI - Generate - Must Haves - Read Me - Build Badges Region Content.
    *
-   * Derives the badge inputs from config and returns the inner content for the badges
-   * region, or undefined when no badges apply. Shared by the generator and the recipes.
+   * Resolves the exact ordered badge identifiers from config into the badges region.
+   * Missing and empty badge arrays both return an empty string, so no implicit badges appear.
    *
    * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Config} config - Config.
    *
@@ -242,8 +241,8 @@ export class Runner {
    * @since 0.21.0
    */
   public static buildBadgesRegionContent(config: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Config): Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Returns {
-    const project: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Project = config['project'];
-    const projectPlatforms: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_ProjectPlatforms = (project !== undefined) ? (project['platforms'] ?? []) : [];
+    const readMe: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_ReadMe = config['readme'];
+    const badgeIds: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_BadgeIds = (readMe !== undefined) ? (readMe['badges'] ?? []) : [];
     const urls: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Urls = config['urls'];
     const github: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Github = config['github'];
     const githubOwner: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_GithubOwner = (github !== undefined) ? (github['owner'] ?? '') : '';
@@ -255,13 +254,7 @@ export class Runner {
     const dockerImage: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_DockerImage = dockerUrl.replace(LIB_REGEX_URL_PREFIX_DOCKER_HUB, '');
     const fundSources: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_FundSources = (urls !== undefined) ? (urls['fundSources'] ?? []) : [];
 
-    const badges: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadgesRegionContent_Badges = Runner.buildBadges(githubRepo, npmPackage, dockerImage, projectPlatforms, fundSources);
-
-    if (badges === '') {
-      return undefined;
-    }
-
-    return badges;
+    return Runner.buildBadges(badgeIds, githubRepo, npmPackage, dockerImage, fundSources);
   }
 
   /**
@@ -411,13 +404,14 @@ export class Runner {
   /**
    * CLI - Generate - Must Haves - Read Me - Build Badges.
    *
-   * Assembles shields.io badge HTML for npm, Docker, GitHub, and funding platforms. Output
-   * replaces the platform badges placeholder in the template.
+   * Assembles shields.io badge HTML in the exact configured order. Each semantic badge
+   * identifier resolves through one source-specific branch, while the funding identifier
+   * expands to the configured funding sources at that position.
    *
+   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Badges}      badges      - Badges.
    * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_GithubRepo}  githubRepo  - Github repo.
    * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_NpmPackage}  npmPackage  - Npm package.
    * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_DockerImage} dockerImage - Docker image.
-   * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Platforms}   platforms   - Platforms.
    * @param {Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_FundSources} fundSources - Fund sources.
    *
    * @private
@@ -426,59 +420,111 @@ export class Runner {
    *
    * @since 0.15.0
    */
-  private static buildBadges(githubRepo: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_GithubRepo, npmPackage: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_NpmPackage, dockerImage: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_DockerImage, platforms: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Platforms, fundSources: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_FundSources): Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Returns {
+  private static buildBadges(badges: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Badges, githubRepo: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_GithubRepo, npmPackage: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_NpmPackage, dockerImage: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_DockerImage, fundSources: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_FundSources): Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Returns {
     const lines: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Lines = [];
 
-    // Platform-specific badges.
-    const hasNodejs: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_HasNodejs = platforms.includes('nodejs');
+    for (const badge of badges) {
+      const badgeId: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_BadgeId = badge;
 
-    if (hasNodejs === true && npmPackage !== '') {
-      lines.push(
-        `  <a href="https://www.npmjs.com/package/${npmPackage}">`,
-        `    <img alt="npm Package" src="https://img.shields.io/npm/v/${npmPackage}?style=for-the-badge&logo=npm&logoColor=%23ffffff&color=%23b25da6">`,
-        '  </a>',
-        `  <a href="https://www.npmjs.com/package/${npmPackage}">`,
-        `    <img alt="npm Downloads" src="https://img.shields.io/npm/dt/${npmPackage}?style=for-the-badge&logo=npm&logoColor=%23ffffff&color=%236688c3">`,
-        '  </a>',
-      );
-    }
+      switch (badgeId) {
+        case 'homebridge': {
+          lines.push(
+            '  <a href="https://homebridge.io">',
+            '    <img alt="Homebridge" src="https://img.shields.io/badge/homebridge-plugin-491F59?style=for-the-badge&logo=homebridge&logoColor=%23ffffff">',
+            '  </a>',
+          );
+          break;
+        }
 
-    // Docker Hub badges.
-    if (dockerImage !== '') {
-      lines.push(
-        `  <a href="https://hub.docker.com/r/${dockerImage}">`,
-        `    <img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/${dockerImage}?style=for-the-badge&logo=docker&logoColor=%23ffffff&color=%23b25da6">`,
-        '  </a>',
-        `  <a href="https://hub.docker.com/r/${dockerImage}">`,
-        `    <img alt="Docker Image Size" src="https://img.shields.io/docker/image-size/${dockerImage}?style=for-the-badge&logo=docker&logoColor=%23ffffff&color=%236688c3">`,
-        '  </a>',
-      );
-    }
+        case 'homebridge-verified': {
+          lines.push(
+            '  <a href="https://github.com/homebridge/homebridge/wiki/Verified-Plugins">',
+            '    <img alt="Verified Homebridge Plugin" src="https://img.shields.io/badge/homebridge-verified-blueviolet?color=%23491F59&style=for-the-badge&logoColor=%23FFFFFF&logo=homebridge">',
+            '  </a>',
+          );
+          break;
+        }
 
-    // GitHub badges.
-    if (githubRepo !== '') {
-      lines.push(
-        `  <a href="https://github.com/${githubRepo}/releases">`,
-        `    <img alt="GitHub Releases" src="https://img.shields.io/github/v/release/${githubRepo}?style=for-the-badge&logo=github&logoColor=%23ffffff&color=%23b25da6">`,
-        '  </a>',
-        `  <a href="https://github.com/${githubRepo}">`,
-        `    <img alt="GitHub Top Languages" src="https://img.shields.io/github/languages/top/${githubRepo}?style=for-the-badge&logo=github&logoColor=%23ffffff&color=%236688c3">`,
-        '  </a>',
-        `  <a href="https://github.com/${githubRepo}/blob/HEAD/LICENSE">`,
-        `    <img alt="GitHub License" src="https://img.shields.io/github/license/${githubRepo}?style=for-the-badge&logo=googledocs&logoColor=%23ffffff&color=%2348a56a">`,
-        '  </a>',
-      );
-    }
+        case 'npm-version': {
+          lines.push(
+            `  <a href="https://www.npmjs.com/package/${npmPackage}">`,
+            `    <img alt="npm Package" src="https://img.shields.io/npm/v/${npmPackage}?style=for-the-badge&logo=npm&logoColor=%23ffffff&color=%23b25da6">`,
+            '  </a>',
+          );
+          break;
+        }
 
-    // Funding badges.
-    for (const source of fundSources) {
-      const platform: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Platform = Runner.detectFundPlatform(source);
+        case 'npm-downloads': {
+          lines.push(
+            `  <a href="https://www.npmjs.com/package/${npmPackage}">`,
+            `    <img alt="npm Downloads" src="https://img.shields.io/npm/dt/${npmPackage}?style=for-the-badge&logo=npm&logoColor=%23ffffff&color=%236688c3">`,
+            '  </a>',
+          );
+          break;
+        }
 
-      lines.push(
-        `  <a href="${source}">`,
-        `    <img alt="${platform['alt']}" src="https://img.shields.io/badge/${platform['label']}-gray?style=for-the-badge&logo=${platform['logo']}&logoColor=%23ffffff&color=%23${platform['color']}">`,
-        '  </a>',
-      );
+        case 'docker-pulls': {
+          lines.push(
+            `  <a href="https://hub.docker.com/r/${dockerImage}">`,
+            `    <img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/${dockerImage}?style=for-the-badge&logo=docker&logoColor=%23ffffff&color=%23b25da6">`,
+            '  </a>',
+          );
+          break;
+        }
+
+        case 'docker-image-size': {
+          lines.push(
+            `  <a href="https://hub.docker.com/r/${dockerImage}">`,
+            `    <img alt="Docker Image Size" src="https://img.shields.io/docker/image-size/${dockerImage}?style=for-the-badge&logo=docker&logoColor=%23ffffff&color=%236688c3">`,
+            '  </a>',
+          );
+          break;
+        }
+
+        case 'github-release': {
+          lines.push(
+            `  <a href="https://github.com/${githubRepo}/releases">`,
+            `    <img alt="GitHub Releases" src="https://img.shields.io/github/v/release/${githubRepo}?style=for-the-badge&logo=github&logoColor=%23ffffff&color=%23b25da6">`,
+            '  </a>',
+          );
+          break;
+        }
+
+        case 'github-top-language': {
+          lines.push(
+            `  <a href="https://github.com/${githubRepo}">`,
+            `    <img alt="GitHub Top Languages" src="https://img.shields.io/github/languages/top/${githubRepo}?style=for-the-badge&logo=github&logoColor=%23ffffff&color=%236688c3">`,
+            '  </a>',
+          );
+          break;
+        }
+
+        case 'github-license': {
+          lines.push(
+            `  <a href="https://github.com/${githubRepo}/blob/HEAD/LICENSE">`,
+            `    <img alt="GitHub License" src="https://img.shields.io/github/license/${githubRepo}?style=for-the-badge&logo=googledocs&logoColor=%23ffffff&color=%2348a56a">`,
+            '  </a>',
+          );
+          break;
+        }
+
+        case 'funding': {
+          for (const source of fundSources) {
+            const platform: Cli_Generate_MustHaves_ReadMe_Runner_BuildBadges_Platform = Runner.detectFundPlatform(source);
+
+            lines.push(
+              `  <a href="${source}">`,
+              `    <img alt="${platform['alt']}" src="https://img.shields.io/badge/${platform['label']}-gray?style=for-the-badge&logo=${platform['logo']}&logoColor=%23ffffff&color=%23${platform['color']}">`,
+              '  </a>',
+            );
+          }
+          break;
+        }
+
+        default: {
+          break;
+        }
+      }
     }
 
     return lines.join('\n');

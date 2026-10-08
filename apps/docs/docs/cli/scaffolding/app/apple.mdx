@@ -1,0 +1,98 @@
+---
+id: "apple"
+title: "Apple"
+description: "Scaffold a universal SwiftUI application for iOS and macOS with XcodeGen, Swift Testing, and Nova-managed project scripts."
+keywords:
+  - "nova"
+  - "nova scaffold"
+  - "swiftui"
+  - "xcodegen"
+  - "ios"
+  - "macos"
+tags:
+  - "cli"
+  - "scaffold"
+  - "app"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a universal **SwiftUI** application that shares one codebase across iOS and macOS.
+
+Nova stores the Xcode project as a readable `project.yml` definition, then generates the disposable `.xcodeproj` file with XcodeGen.
+
+## Why Use This Command?
+
+1. Creates iOS and macOS targets together so one workspace can serve both Apple platforms.
+2. Includes a Swift Testing target so the generated app starts with a working verification path.
+3. Keeps Xcode build data inside the workspace so local and automated builds do not depend on a global DerivedData location.
+
+## Requirements
+
+- **macOS and Xcode** — Xcode supplies the Swift compiler, platform SDKs, and `xcodebuild`.
+- **XcodeGen** — Install XcodeGen and make `xcodegen` available on your `PATH`.
+- **Empty directory** or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** — Nova auto-detects whether to create a project or add a workspace.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold app apple
+
+    # Shorthand
+    nova scaf app apple
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold app apple
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf app apple
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                                                          |
+|---------------------------|----------------------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                                       |
+| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
+| `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
+| `--workspace-name <name>` | Workspace directory name and generated Xcode target name.            |
+| `--output <dir>`          | Output directory.                                                    |
+
+## Output Files
+
+| File                        | Description                                                         |
+|-----------------------------|---------------------------------------------------------------------|
+| `project.yml`               | XcodeGen definition for the universal app, test target, and scheme. |
+| `Sources/App.swift`         | SwiftUI application entry point.                                    |
+| `Sources/ContentView.swift` | Starter interface shared by iOS and macOS.                          |
+| `Tests/AppTests.swift`      | Swift Testing smoke test.                                           |
+| `package.json`              | Nova script groups for project generation, checking, and building.  |
+
+## Non-Interactive Mode
+
+Agents and automation can create the root and first Apple app in one command, or omit `--name` to add the app from an existing monorepo root.
+
+```bash
+nova scaffold app apple --non-interactive --name my-apple-app --workspace-name client --output ./my-apple-app
+nova scaffold app apple --non-interactive --workspace-name client --output ./apps/client
+```
+
+## Registration and Customization
+
+Nova registers the workspace with the `app` role and `trackable` policy. The generated package name follows `{projectSlug}-app-{workspaceName}`.
+
+The starter bundle identifier uses `com.example.{workspaceName}`. It is recommended to replace that value in `project.yml` before signing or distributing the app.

@@ -30,6 +30,8 @@ import type {
   Shared_NovaConfig_Project_License,
   Shared_NovaConfig_Project_Name,
   Shared_NovaConfig_Project_Name_Slug,
+  Shared_NovaConfig_ReadMe,
+  Shared_NovaConfig_ReadMe_Badges,
   Shared_NovaConfig_RecipeEntry,
   Shared_NovaConfig_RecipeEntry_Settings,
   Shared_NovaConfig_Recipes,
@@ -59,6 +61,7 @@ import type {
   Shared_NovaConfigGithubPoliciesSquashMergeTitle,
   Shared_NovaConfigGithubRulesetEnforcement,
   Shared_NovaConfigProjectPlatform,
+  Shared_NovaConfigReadMeBadge,
   Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkflow,
   Shared_NovaConfigWorkflow_Triggers,
@@ -248,7 +251,15 @@ export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result = {
   bugReportFields?: Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
 };
 
-export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportFields | undefined;
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_RawBugReportFields = unknown;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_AllowedBugReportFields = Set<string>;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_SeenBugReportFields = Set<string>;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
+
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_BugReportField = Shared_NovaConfig_Github_IssueTemplate_BugReportFields[number];
 
 /**
  * Lib - Nova Config - Get GitHub Labels.
@@ -580,6 +591,7 @@ export type Lib_NovaConfig_Runner_Parse_Result = {
   github?: Shared_NovaConfig_Github;
   workflows?: Shared_NovaConfig_Workflows;
   urls?: Shared_NovaConfig_Urls;
+  readme?: Shared_NovaConfig_ReadMe;
   workspaces?: Shared_NovaConfig_Workspaces;
   gitignore?: Shared_NovaConfig_Gitignore;
   agents?: Shared_NovaConfig_Agents;
@@ -599,6 +611,8 @@ export type Lib_NovaConfig_Runner_Parse_Github = Shared_NovaConfig_Github | unde
 export type Lib_NovaConfig_Runner_Parse_Workflows = Shared_NovaConfig_Workflows | undefined;
 
 export type Lib_NovaConfig_Runner_Parse_Urls = Shared_NovaConfig_Urls | undefined;
+
+export type Lib_NovaConfig_Runner_Parse_ReadMe = Shared_NovaConfig_ReadMe | undefined;
 
 export type Lib_NovaConfig_Runner_Parse_Workspaces = Shared_NovaConfig_Workspaces | undefined;
 
@@ -892,7 +906,7 @@ export type Lib_NovaConfig_Runner_ParseProject_ValuePlatforms = unknown;
 
 export type Lib_NovaConfig_Runner_ParseProject_AllowedPlatforms = Set<string>;
 
-export type Lib_NovaConfig_Runner_ParseProject_ParsedPlatforms = ('nodejs' | 'swift' | 'android' | 'java' | 'kotlin' | 'csharp' | 'php' | 'python' | 'macos' | 'linux' | 'windows')[];
+export type Lib_NovaConfig_Runner_ParseProject_ParsedPlatforms = Shared_NovaConfigProjectPlatform[];
 
 export type Lib_NovaConfig_Runner_ParseProject_Platform = Shared_NovaConfigProjectPlatform;
 
@@ -903,6 +917,41 @@ export type Lib_NovaConfig_Runner_ParseProject_ValueLicense = string | undefined
 export type Lib_NovaConfig_Runner_ParseProject_AllowedLicenses = Set<string>;
 
 export type Lib_NovaConfig_Runner_ParseProject_License = Shared_NovaConfig_Project_License;
+
+/**
+ * Lib - Nova Config - Parse Read Me.
+ *
+ * @since 0.29.0
+ */
+export type Lib_NovaConfig_Runner_ParseReadMe_Value = unknown;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_Github = Shared_NovaConfig_Github | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_Urls = Shared_NovaConfig_Urls | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_Returns = Shared_NovaConfig_ReadMe | undefined;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_Result = Shared_NovaConfig_ReadMe;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_ValueBadges = unknown;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_AllowedBadges = Set<string>;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_SeenBadges = Set<string>;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_Badges = Shared_NovaConfig_ReadMe_Badges;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_HasGithubSource = boolean;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_HasNpmSource = boolean;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_HasDockerSource = boolean;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_HasFundingSource = boolean;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_Badge = Shared_NovaConfigReadMeBadge;
+
+export type Lib_NovaConfig_Runner_ParseReadMe_MissingSource = boolean;
 
 /**
  * Lib - Nova Config - Parse Recipes.

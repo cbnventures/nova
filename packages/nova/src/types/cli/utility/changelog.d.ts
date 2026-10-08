@@ -451,6 +451,12 @@ export type Cli_Utility_Changelog_Runner_StampUnreleased_SourceDirectories = str
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles = string[];
 
+export type Cli_Utility_Changelog_Runner_StampUnreleased_SupportedExtensions = string[];
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceEntries = Dirent[];
+
+export type Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceCandidatePath = string;
+
 export type Cli_Utility_Changelog_Runner_StampUnreleased_ScanSourceDirectory = string;
 
 export type Cli_Utility_Changelog_Runner_StampUnreleased_PendingDirectories = string[];

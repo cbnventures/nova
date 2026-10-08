@@ -1,7 +1,7 @@
 ---
 id: "runtime-edge"
 title: "Runtime - Edge"
-description: "Reserve the edge runtime layer in your ESLint flat config so it stays forward-compatible when edge-specific lint rules ship in the future."
+description: "Declare Web Worker-compatible globals for portable edge-runtime JavaScript and TypeScript."
 keywords:
   - "nova"
   - "runtime edge"
@@ -9,8 +9,8 @@ keywords:
   - "edge runtime"
   - "environment layer"
   - "flat config"
-  - "forward compatible"
-  - "reserved preset"
+  - "worker globals"
+  - "portable edge"
 tags:
   - "presets"
   - "eslint"
@@ -19,10 +19,31 @@ tags:
 ---
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-This preset is the runtime layer for code that runs on the edge in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>.
+Declare Web Worker-compatible globals for portable edge code. This avoids assuming a browser window, a Service Worker lifecycle, or Node.js APIs that an edge provider may not expose.
 
-:::info Coming soon
+## Usage
 
-This preset has no rules yet. This page will be filled in once it does.
+```ts title="eslint.config.mts"
+import {
+  dxCodeStyle,
+  dxIgnore,
+  langTypescript,
+  runtimeEdge,
+} from '@cbnventures/nova/presets/eslint';
 
-:::
+export default [
+  ...dxIgnore,
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...runtimeEdge,
+];
+```
+
+## What This Preset Configures
+
+The preset applies the `globals` package's Worker environment to JavaScript, TypeScript, MJS, and MTS files. Provider-specific APIs and bindings remain consumer-owned.
+
+## Related
+
+- Pair it with the matching **[Runtime - Edge TSConfig preset](/docs/presets/tsconfig/runtime-edge)**.
+- Review the layering order in **[ESLint Best Practices](/docs/presets/eslint/best-practices)**.

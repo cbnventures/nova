@@ -1,0 +1,3 @@
+[__WORKSPACE_TITLE__] adds a WebGUI settings page and a scheduled background
+task to pfSense. The task is configured from Services > [__WORKSPACE_TITLE__]
+and runs without an interactive command-line interface.

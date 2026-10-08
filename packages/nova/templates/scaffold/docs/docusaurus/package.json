@@ -8,6 +8,7 @@
     "prod": "nova utility run-scripts --sequential --node-env production 'prod:*'",
     "prod:serve": "docusaurus serve --port 3000",
     "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:lint": "eslint ./ --max-warnings=0",
     "check:types": "nova utility type-check --project tsconfig.json",
     "check:test": "vitest run",
     "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
@@ -21,8 +22,8 @@
     "i18n:coverage": "theme-nova i18n coverage"
   },
   "dependencies": {
-    "@cbnventures/docusaurus-preset-nova": "0.28.0",
-    "@cbnventures/nova": "0.28.0",
+    "@cbnventures/docusaurus-preset-nova": "0.29.0",
+    "@cbnventures/nova": "0.29.0",
     "@docusaurus/core": "3.10.2",
     "react": "19.2.8",
     "react-dom": "19.2.8"
@@ -33,6 +34,7 @@
     "@types/node": "24.9.1",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",
+    "eslint": "9.39.5",
     "glob": "13.0.6",
     "shx": "0.4.0",
     "typescript": "6.0.3",

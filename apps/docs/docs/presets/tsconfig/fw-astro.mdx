@@ -1,13 +1,14 @@
 ---
 id: "fw-astro"
 title: "Framework - Astro"
-description: "Configure the Astro framework layer for TypeScript with bundler resolution, DOM libraries, and preserved JSX for .astro components."
+description: "Configure the Astro framework layer for TypeScript with native TypeScript-extension imports, bundler resolution, DOM libraries, and preserved JSX."
 keywords:
   - "nova"
   - "astro"
   - "tsconfig preset"
   - "astro framework"
   - "bundler resolution"
+  - "typescript extensions"
   - "dom libraries"
   - "jsx preserve"
   - "typescript config"
@@ -20,24 +21,41 @@ tags:
 
 This preset is the framework layer for Astro projects in your TypeScript config.
 
-It sets the modern, browser-oriented compiler options an Astro project expects — `isolatedModules`, the DOM libraries, `ESNext` modules, `Bundler` module resolution, preserved JSX, and `noEmit` — matching how Astro's Vite pipeline builds. Combine it with Astro's strict config so `.astro` type-checking stays explicit under TypeScript 6:
+It sets the modern, browser-oriented compiler options an Astro project expects — native `.ts` and `.tsx` import extensions, `isolatedModules`, the DOM libraries, `ESNext` modules, `Bundler` module resolution, preserved JSX, and `noEmit` — matching how Astro's Vite pipeline builds. Use it after Nova's required essentials and strict layers and the browser runtime:
 
-```json
+```json title="tsconfig.astro.json"
 {
   "extends": [
-    "astro/tsconfigs/strict",
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-browser.json",
     "@cbnventures/nova/presets/tsconfig/fw-astro.json"
+  ],
+  "compilerOptions": {
+    "declaration": false,
+    "declarationMap": false,
+    "noEmit": true
+  },
+  "include": [
+    ".astro/types.d.ts",
+    "./src/**/*"
   ]
 }
 ```
 
 ## Compiler Options
 
-| Option             | Value                               | Purpose                                                         |
-|--------------------|-------------------------------------|-----------------------------------------------------------------|
-| `isolatedModules`  | `true`                              | Keeps every file safe for independent transpilation.            |
-| `jsx`              | `"preserve"`                        | Leaves JSX for Astro's Vite pipeline to transform.              |
-| `lib`              | `["DOM", "DOM.Iterable", "ESNext"]` | Provides browser APIs, iterable DOM collections, and modern JS. |
-| `module`           | `"ESNext"`                          | Preserves modern ECMAScript modules for the bundler.            |
-| `moduleResolution` | `"Bundler"`                         | Resolves packages with bundler-aware import rules.              |
-| `noEmit`           | `true`                              | Uses TypeScript for checking while Astro owns emitted output.   |
+| Option                       | Value                               | Purpose                                                                  |
+|------------------------------|-------------------------------------|--------------------------------------------------------------------------|
+| `allowImportingTsExtensions` | `true`                              | Accepts native `.ts` and `.tsx` import paths used by Astro source files. |
+| `isolatedModules`            | `true`                              | Keeps every file safe for independent transpilation.                     |
+| `jsx`                        | `"preserve"`                        | Leaves JSX for Astro's Vite pipeline to transform.                       |
+| `lib`                        | `["DOM", "DOM.Iterable", "ESNext"]` | Provides browser APIs, iterable DOM collections, and modern JavaScript.  |
+| `module`                     | `"ESNext"`                          | Preserves modern ECMAScript modules for the bundler.                     |
+| `moduleResolution`           | `"Bundler"`                         | Resolves packages with bundler-aware import rules.                       |
+| `noEmit`                     | `true`                              | Uses TypeScript for checking while Astro owns emitted output.            |
+
+## Related
+
+- Review the **[Astro scaffold](/docs/cli/scaffolding/app/astro)**.
+- Review the layering order in **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.
