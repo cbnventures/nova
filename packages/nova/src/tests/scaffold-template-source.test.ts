@@ -1,4 +1,5 @@
 import { deepStrictEqual } from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { extname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -16,8 +17,14 @@ import type {
   Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoEmittedJavaScriptBesideTypeScriptSource_EmittedFiles,
   Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoEmittedJavaScriptBesideTypeScriptSource_EmittedSourcePairs,
   Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoEmittedJavaScriptBesideTypeScriptSource_FailureMessage,
+  Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_CheckIgnoreResult,
+  Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_FailureMessage,
+  Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_IgnoredTemplateFiles,
+  Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplateFiles,
+  Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplatePaths,
   Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_PackageDirectory,
   Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ScaffoldDirectory,
+  Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_TemplatesDirectory,
 } from '../types/tests/scaffold-template-source.test.d.ts';
 
 /**
@@ -80,7 +87,40 @@ function hasTypeScriptSourceCounterpart(emittedFile: Tests_ScaffoldTemplateSourc
  */
 describe('scaffold template source', () => {
   const packageDirectory: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_PackageDirectory = join(fileURLToPath(import.meta.url), '..', '..', '..');
+  const templatesDirectory: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_TemplatesDirectory = join(packageDirectory, 'templates');
   const scaffoldDirectory: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ScaffoldDirectory = join(packageDirectory, 'templates', 'scaffold');
+
+  it('contains no Git-ignored template files', () => {
+    const templateFiles: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplateFiles = globSync('**/*', {
+      cwd: templatesDirectory,
+      dot: true,
+      nodir: true,
+    });
+    const templatePaths: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplatePaths = templateFiles.map((templateFile) => `templates/${templateFile}`);
+    const checkIgnoreResult: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_CheckIgnoreResult = spawnSync('git', [
+      'check-ignore',
+      '--stdin',
+      '-z',
+    ], {
+      cwd: packageDirectory,
+      encoding: 'utf-8',
+      input: `${templatePaths.join('\0')}\0`,
+    });
+    const ignoredTemplateFiles: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_IgnoredTemplateFiles = checkIgnoreResult.stdout.split('\0').filter((ignoredTemplateFile) => ignoredTemplateFile !== '');
+    const failureMessage: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_FailureMessage = [
+      'Template source files are hidden from Git and will be absent from clean CI checkouts and published packages.',
+      'Rename the files or add intentional negated ignore rules:',
+      ...ignoredTemplateFiles,
+    ].join('\n');
+
+    if (checkIgnoreResult.status !== 0 && checkIgnoreResult.status !== 1) {
+      throw new Error(`Unable to inspect template ignore status with Git: ${checkIgnoreResult.stderr}`);
+    }
+
+    deepStrictEqual(ignoredTemplateFiles, [], failureMessage);
+
+    return;
+  });
 
   it('contains no emitted JavaScript beside TypeScript source', () => {
     const emittedFiles: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoEmittedJavaScriptBesideTypeScriptSource_EmittedFiles = globSync([

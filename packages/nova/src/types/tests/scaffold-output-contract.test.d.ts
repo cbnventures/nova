@@ -29,6 +29,10 @@ export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemp
 
 export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractPromises = Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractPromise[];
 
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractResults = PromiseSettledResult<void>[];
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_RejectedTemplateContract = PromiseRejectedResult | undefined;
+
 /**
  * Tests - Scaffold Output Contract - Scaffold Output Contract - Matches The Base Starter Inventory.
  *

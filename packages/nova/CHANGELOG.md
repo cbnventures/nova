@@ -13,6 +13,8 @@
 - Equips generated monorepo roots and every applicable workspace with lint, type-check, and Vitest coverage, then verifies generated consumers from the packed Nova npm artifact through checks and production builds.
 
 ### FIXED
+- Ships the Discord bot token template as the tracked `.env.sample`, rejects Git-ignored template inputs before clean CI, and aligns generated Docker exclusions and documentation with Nova's environment-file convention.
+- Makes scaffold smoke validation detect a reachable Docker engine instead of only an installed CLI, preserves npm pack diagnostics, and waits for every template contract before cleaning its shared test sandbox.
 - Stamps unreleased JSDoc sentinels in supported code files directly inside each workspace root without crossing into nested workspaces, covering Docusaurus and other root-level configurations.
 - Registers generated app, documentation, and package workspaces with their intended trackable, freezable, and distributable policies.
 - Removes disabled Docker placeholder indentation from the default Next.js scaffold so a newly generated project passes its own trailing-whitespace lint check.

@@ -23,7 +23,7 @@ Scaffold a **Discord bot** with discord.js, TypeScript, and explicit development
 ## Why Use This Command?
 
 1. Includes a minimal client and login flow so you can add commands and events without rebuilding the project foundation.
-2. Keeps the bot token in an untracked `.env` file while documenting the required key in `.env.example`.
+2. Keeps the bot token in an untracked `.env` file while documenting the required key in the tracked `.env.sample`.
 3. Uses Nova's type-check and transpile utilities so checking and production output follow the same contract as other workspaces.
 4. Can compose the background-service Docker profile with `--docker-image` without adding an HTTP port or health check.
 
@@ -73,12 +73,12 @@ Scaffold a **Discord bot** with discord.js, TypeScript, and explicit development
 
 ## Output Files
 
-| File            | Description                                                        |
-|-----------------|--------------------------------------------------------------------|
-| `.env.example`  | Required `DISCORD_TOKEN` environment variable.                     |
-| `src/index.ts`  | Typed Discord client, ready event, and login flow.                 |
-| `tsconfig.json` | Nova strict and Node.js runtime presets with build output enabled. |
-| `package.json`  | discord.js dependencies and Nova-managed workspace scripts.        |
+| File              | Description                                                 |
+|-------------------|-------------------------------------------------------------|
+| `.env.sample`     | Required `DISCORD_TOKEN` environment variable.              |
+| `src/index.ts`    | Typed Discord client, ready event, and login flow.          |
+| `tsconfig.*.json` | Nova strict Node.js configs for source, tooling, and tests. |
+| `package.json`    | discord.js dependencies and Nova-managed workspace scripts. |
 
 ## Non-Interactive Mode
 

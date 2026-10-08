@@ -1,3 +1,5 @@
+import type { SpawnSyncReturns } from 'node:child_process';
+
 /**
  * Tests - Scaffold Template Source - Has TypeScript Source Counterpart.
  *
@@ -24,6 +26,8 @@ export type Tests_ScaffoldTemplateSource_HasTypeScriptSourceCounterpart_SourceEx
  */
 export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_PackageDirectory = string;
 
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_TemplatesDirectory = string;
+
 export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ScaffoldDirectory = string;
 
 /**
@@ -40,3 +44,24 @@ export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoEmitte
 export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoEmittedJavaScriptBesideTypeScriptSource_EmittedSourcePairs = Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoEmittedJavaScriptBesideTypeScriptSource_EmittedSourcePair[];
 
 export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoEmittedJavaScriptBesideTypeScriptSource_FailureMessage = string;
+
+/**
+ * Tests - Scaffold Template Source - Scaffold Template Source - Contains No Git Ignored Template Files.
+ *
+ * @since 0.29.0
+ */
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplateFile = string;
+
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplateFiles = Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplateFile[];
+
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplatePath = string;
+
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplatePaths = Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplatePath[];
+
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_CheckIgnoreResult = SpawnSyncReturns<string>;
+
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_IgnoredTemplateFile = string;
+
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_IgnoredTemplateFiles = Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_IgnoredTemplateFile[];
+
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_FailureMessage = string;

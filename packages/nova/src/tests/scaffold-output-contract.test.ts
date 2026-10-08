@@ -39,7 +39,9 @@ import {
 } from '../lib/scaffold.js';
 
 import type {
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_RejectedTemplateContract,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractPromises,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractResults,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesTheBaseStarterInventory_StarterContractPromise,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_PackageDirectory,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_SandboxRoot,
@@ -207,7 +209,7 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     name: 'discord-bot',
     templateSubpath: 'app/discord-bot',
     expectedFiles: [
-      '.env.example',
+      '.env.sample',
       'eslint.config.mts',
       'package.json',
       'src/index.ts',
@@ -905,8 +907,12 @@ describe('scaffold output contract', async () => {
 
   it('matches every template inventory', async () => {
     const templateContractPromises: Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractPromises = templateContracts.map((templateContract) => verifyTemplateContract(templateContract, packageDirectory, sandboxRoot));
+    const templateContractResults: Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractResults = await Promise.allSettled(templateContractPromises);
+    const rejectedTemplateContract: Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_RejectedTemplateContract = templateContractResults.find((templateContractResult): templateContractResult is PromiseRejectedResult => templateContractResult.status === 'rejected');
 
-    await Promise.all(templateContractPromises);
+    if (rejectedTemplateContract !== undefined) {
+      throw rejectedTemplateContract.reason;
+    }
 
     return;
   });

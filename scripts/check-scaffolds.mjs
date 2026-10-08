@@ -121,20 +121,23 @@ function expectCommandFailure(command, args, cwd, expectedMessage) {
 }
 
 /**
- * Check Scaffolds - Has Command.
+ * Check Scaffolds - Has Docker Engine.
  *
- * Reports whether an optional external runtime is installed without turning
- * the missing runtime into a scaffold-generation failure.
- *
- * @param {string} command - Command.
+ * Reports whether the Docker CLI can reach a running engine. An installed CLI
+ * is not sufficient for container smoke builds when Docker Desktop or another
+ * configured engine is stopped.
  *
  * @returns {boolean}
  *
  * @since 0.0.0
  */
-function hasCommand(command) {
+function hasDockerEngine() {
   try {
-    execFileSync(command, ['--version'], {
+    execFileSync('docker', [
+      'info',
+      '--format',
+      '{{.ServerVersion}}',
+    ], {
       stdio: 'ignore',
     });
 
@@ -266,7 +269,7 @@ function checkScaffolds() {
 
     runNpm([
       'pack',
-      '--silent',
+      '--loglevel=error',
       '--workspace',
       '@cbnventures/nova',
       '--workspace',
@@ -783,13 +786,13 @@ function checkScaffolds() {
       'check',
     ], projectDirectory);
 
-    if (hasCommand('docker') === true) {
+    if (hasDockerEngine() === true) {
       runNpm([
         'run',
         'build',
       ], projectDirectory);
     } else {
-      process.stdout.write('Docker is unavailable; building every generated workspace except the container-native image.\n');
+      process.stdout.write('A running Docker engine is unavailable; building every generated workspace except the container-native image.\n');
 
       runNpm([
         'run',
