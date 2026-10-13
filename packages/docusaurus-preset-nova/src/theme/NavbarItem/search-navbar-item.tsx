@@ -9,7 +9,7 @@ import type { Theme_NavbarItem_SearchNavbarItem_Props } from '../../types/theme/
  * directly into the navigation bar without any wrapper
  * elements or framework-specific styling.
  *
- * @param {Theme_NavbarItem_SearchNavbarItem_Props} _props - _props.
+ * @param {Theme_NavbarItem_SearchNavbarItem_Props} _props - Props.
  *
  * @since 0.15.0
  */

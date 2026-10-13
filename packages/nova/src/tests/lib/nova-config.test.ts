@@ -2249,7 +2249,7 @@ describe('parseWorkflows (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    // Mirrors "nova utility initialize" on Save & Exit, which loads, sets, then saves. The save
+    // Mirrors "nova utility configure" on Save & Exit, which loads, sets, then saves. The save
     // re-parses the already-parsed config, so the parser has to accept its own output. Reading
     // one field name while writing another silently emptied the whole workflows key.
     const config: Tests_Lib_NovaConfig_ParseWorkflowsViaLoad_SavePreservesWorkflowsWhenTheConfigRoundTripsThroughTheParser_Config = new LibNovaConfig();

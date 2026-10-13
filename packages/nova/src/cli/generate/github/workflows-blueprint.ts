@@ -713,11 +713,11 @@ export class Runner {
    * returns the serialized YAML. The publish builder receives the workspaces
    * map and the sibling workflows for scope and chaining resolution.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry}       entry         - Entry.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces}  workspaces    - Workspaces.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment} [environment] - Environment.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings}    [siblings]    - Siblings.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_UseTurbo}      [useTurbo]      - Use turbo.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry}          entry            - Entry.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces}     workspaces       - Workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment}    [environment]    - Environment.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings}       [siblings]       - Siblings.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_UseTurbo}       [useTurbo]       - Use turbo.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager} [packageManager] - Package manager.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns}
@@ -1117,11 +1117,11 @@ export class Runner {
    * emitting one shared build job then one deploy job per target; sibling
    * workflows resolve chained depends-on references to names.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry}       entry         - Entry.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces}  workspaces    - Workspaces.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment} [environment] - Environment.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings}    [siblings]    - Siblings.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UseTurbo}      [useTurbo]      - Use turbo.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry}          entry            - Entry.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces}     workspaces       - Workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment}    [environment]    - Environment.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings}       [siblings]       - Siblings.
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UseTurbo}       [useTurbo]       - Use turbo.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager} [packageManager] - Package manager.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns}
@@ -1907,8 +1907,16 @@ export class Runner {
               key: 'CLOUDFLARE_ACCOUNT_ID',
               value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_ACCOUNT_ID', targetSettings, workflowSettings, environment, appPath),
             },
+            {
+              key: 'CLOUDFLARE_PROJECT_NAME',
+              value: Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_PROJECT_NAME', targetSettings, workflowSettings, environment, appPath),
+            },
+            {
+              key: 'DEFAULT_BRANCH',
+              value: Runner.expr('github.event.repository.default_branch'),
+            },
           ],
-          run: Runner.corepackDownloadCommand(context['packageManager'], 'wrangler@3', `pages deploy ${context['workingDir']}/build --project-name=${Runner.resolveScopedCredExpr(variables, 'CLOUDFLARE_PROJECT_NAME', targetSettings, workflowSettings, environment, appPath)} --branch=${Runner.expr('github.event.repository.default_branch')}`),
+          run: Runner.corepackDownloadCommand(context['packageManager'], 'wrangler@3', `pages deploy ${context['workingDir']}/build --project-name="$CLOUDFLARE_PROJECT_NAME" --branch="$DEFAULT_BRANCH"`),
         },
       ],
     };
@@ -2316,7 +2324,8 @@ export class Runner {
       'set -euo pipefail',
       'cd "$RUNNER_TEMP/release"',
       'git add -A',
-      'git commit -m "Release $TAG_NAME"',
+      '# Keep one release commit per published version even when the bundled bytes are unchanged.',
+      'git commit --allow-empty -m "Release $TAG_NAME"',
       `git push origin "${releaseBranchName}" --force`,
     ].join('\n');
 

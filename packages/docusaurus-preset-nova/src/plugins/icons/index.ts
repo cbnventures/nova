@@ -37,7 +37,7 @@ const watchDirectories = [
 ];
 
 /**
- * Plugins - Icons.
+ * Plugins - Icons - Icons.
  *
  * Docusaurus plugin that discovers every Iconify identifier a site references
  * and generates a client module registering only those icons, so whole

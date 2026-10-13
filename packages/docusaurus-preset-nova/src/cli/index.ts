@@ -157,8 +157,8 @@ class CLI {
    * Prints the CLI header and the running command label, then delegates to the
    * target handler. Every leaf command calls this.
    *
-   * @param {Cli_Index_CLI_ExecuteCommand_Options} options - Options.
-   * @param {Cli_Index_CLI_ExecuteCommand_Target}  target  - Target.
+   * @param {Cli_Index_CLI_ExecuteCommand_Options<Options>} options - Options.
+   * @param {Cli_Index_CLI_ExecuteCommand_Target<Options>}  target  - Target.
    *
    * @private
    *

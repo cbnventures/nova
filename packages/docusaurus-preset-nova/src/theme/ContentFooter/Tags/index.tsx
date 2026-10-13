@@ -8,7 +8,7 @@ import type {
 } from '../../../types/theme/ContentFooter/Tags/index.d.ts';
 
 /**
- * Theme - Content Footer - Tags.
+ * Theme - Content Footer - Tags - Tags.
  *
  * Renders the tags section of a content footer - a labeled row
  * of tag pills for the current page.

@@ -388,7 +388,7 @@ const config: DocusaurusNovaConfig = {
           },
           {
             label: 'nova.config.json',
-            href: '/docs/cli/utilities/initialize/',
+            href: '/docs/cli/utilities/configure/',
           },
         ],
         resources: [

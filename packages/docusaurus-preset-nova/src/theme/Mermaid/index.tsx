@@ -1,7 +1,21 @@
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
+import { translate } from '@docusaurus/Translate';
+import { Icon } from '@iconify/react/offline';
 import ErrorPageContent from '@theme/ErrorPageContent';
-import { useEffect, useRef } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
+import {
+  clampScale,
+  MERMAID_MAX_SCALE,
+  MERMAID_MIN_SCALE,
+  MERMAID_PAN_STEP,
+  MERMAID_SCALE_STEP,
+  resolvePan,
+} from '../../lib/mermaid-viewport.js';
 import {
   MERMAID_CONTAINER_CLASS_NAME,
   useMermaidRenderResult,
@@ -12,18 +26,54 @@ import type {
   Theme_Mermaid_Index_Mermaid_ColorMode,
   Theme_Mermaid_Index_Mermaid_Props,
   Theme_Mermaid_Index_Mermaid_Returns,
+  Theme_Mermaid_Index_MermaidContent_CanZoomIn,
+  Theme_Mermaid_Index_MermaidContent_CanZoomOut,
   Theme_Mermaid_Index_MermaidContent_ClassName,
   Theme_Mermaid_Index_MermaidContent_ContainerRef,
+  Theme_Mermaid_Index_MermaidContent_DragRef,
+  Theme_Mermaid_Index_MermaidContent_HandleKeyDown_Event,
+  Theme_Mermaid_Index_MermaidContent_HandleKeyDown_NextPosition,
+  Theme_Mermaid_Index_MermaidContent_HandleKeyDown_Returns,
+  Theme_Mermaid_Index_MermaidContent_HandlePointerDown_Event,
+  Theme_Mermaid_Index_MermaidContent_HandlePointerDown_Returns,
+  Theme_Mermaid_Index_MermaidContent_HandlePointerEnd_Event,
+  Theme_Mermaid_Index_MermaidContent_HandlePointerEnd_Returns,
+  Theme_Mermaid_Index_MermaidContent_HandlePointerMove_Event,
+  Theme_Mermaid_Index_MermaidContent_HandlePointerMove_Returns,
+  Theme_Mermaid_Index_MermaidContent_IsDragging,
+  Theme_Mermaid_Index_MermaidContent_IsDraggingState,
+  Theme_Mermaid_Index_MermaidContent_IsInteractive,
+  Theme_Mermaid_Index_MermaidContent_Position,
+  Theme_Mermaid_Index_MermaidContent_PositionState,
   Theme_Mermaid_Index_MermaidContent_Props,
   Theme_Mermaid_Index_MermaidContent_RenderResult,
+  Theme_Mermaid_Index_MermaidContent_ResetLabel,
   Theme_Mermaid_Index_MermaidContent_Returns,
+  Theme_Mermaid_Index_MermaidContent_Scale,
+  Theme_Mermaid_Index_MermaidContent_ScaleLabel,
+  Theme_Mermaid_Index_MermaidContent_ScaleState,
+  Theme_Mermaid_Index_MermaidContent_SetIsDragging,
+  Theme_Mermaid_Index_MermaidContent_SetPosition,
+  Theme_Mermaid_Index_MermaidContent_SetScale,
+  Theme_Mermaid_Index_MermaidContent_StageStyle,
+  Theme_Mermaid_Index_MermaidContent_ViewportClassName,
+  Theme_Mermaid_Index_MermaidContent_ViewportLabel,
+  Theme_Mermaid_Index_MermaidContent_ZoomIn_NextScale,
+  Theme_Mermaid_Index_MermaidContent_ZoomIn_Returns,
+  Theme_Mermaid_Index_MermaidContent_ZoomInLabel,
+  Theme_Mermaid_Index_MermaidContent_ZoomOut_NextScale,
+  Theme_Mermaid_Index_MermaidContent_ZoomOut_Returns,
+  Theme_Mermaid_Index_MermaidContent_ZoomOutLabel,
 } from '../../types/theme/Mermaid/index.d.ts';
+
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions -- The Mermaid viewport is a custom two-dimensional interaction surface whose rendered SVG may contain native links. */
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex -- The application viewport must receive focus so readers can pan it with the arrow keys. */
 
 /**
  * Theme - Mermaid - Content.
  *
- * Renders a Mermaid diagram from the given text by injecting
- * the resulting SVG into a container div.
+ * Renders a Mermaid diagram inside an accessible viewport with zoom buttons,
+ * pointer panning, keyboard panning, and a one-click view reset.
  *
  * @param {Theme_Mermaid_Index_MermaidContent_Props} props - Props.
  *
@@ -32,6 +82,19 @@ import type {
 function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_Mermaid_Index_MermaidContent_Returns {
   const renderResult: Theme_Mermaid_Index_MermaidContent_RenderResult = useMermaidRenderResult({ text: props['value'] });
   const containerRef: Theme_Mermaid_Index_MermaidContent_ContainerRef = useRef<HTMLDivElement | null>(null);
+  const scaleState: Theme_Mermaid_Index_MermaidContent_ScaleState = useState<Theme_Mermaid_Index_MermaidContent_Scale>(1);
+  const scale: Theme_Mermaid_Index_MermaidContent_Scale = scaleState[0];
+  const setScale: Theme_Mermaid_Index_MermaidContent_SetScale = scaleState[1];
+  const positionState: Theme_Mermaid_Index_MermaidContent_PositionState = useState<Theme_Mermaid_Index_MermaidContent_Position>({
+    x: 0,
+    y: 0,
+  });
+  const position: Theme_Mermaid_Index_MermaidContent_Position = positionState[0];
+  const setPosition: Theme_Mermaid_Index_MermaidContent_SetPosition = positionState[1];
+  const isDraggingState: Theme_Mermaid_Index_MermaidContent_IsDraggingState = useState<Theme_Mermaid_Index_MermaidContent_IsDragging>(false);
+  const isDragging: Theme_Mermaid_Index_MermaidContent_IsDragging = isDraggingState[0];
+  const setIsDragging: Theme_Mermaid_Index_MermaidContent_SetIsDragging = isDraggingState[1];
+  const dragRef: Theme_Mermaid_Index_MermaidContent_DragRef = useRef(null);
 
   useEffect(() => {
     if (
@@ -50,22 +113,313 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
   }
 
   const className: Theme_Mermaid_Index_MermaidContent_ClassName = (props['className'] !== undefined) ? `${MERMAID_CONTAINER_CLASS_NAME} ${props['className']}` : MERMAID_CONTAINER_CLASS_NAME;
+  const canZoomIn: Theme_Mermaid_Index_MermaidContent_CanZoomIn = scale < MERMAID_MAX_SCALE;
+  const canZoomOut: Theme_Mermaid_Index_MermaidContent_CanZoomOut = scale > MERMAID_MIN_SCALE;
+  const isInteractive: Theme_Mermaid_Index_MermaidContent_IsInteractive = scale > 1;
+  const scaleLabel: Theme_Mermaid_Index_MermaidContent_ScaleLabel = `${Math.round(scale * 100)}%`;
+  const zoomInLabel: Theme_Mermaid_Index_MermaidContent_ZoomInLabel = translate({
+    id: 'theme.mermaid.zoomIn',
+    message: 'Zoom in diagram',
+    description: 'Accessible label for the Mermaid diagram zoom-in button',
+  });
+  const zoomOutLabel: Theme_Mermaid_Index_MermaidContent_ZoomOutLabel = translate({
+    id: 'theme.mermaid.zoomOut',
+    message: 'Zoom out diagram',
+    description: 'Accessible label for the Mermaid diagram zoom-out button',
+  });
+  const resetLabel: Theme_Mermaid_Index_MermaidContent_ResetLabel = translate({
+    id: 'theme.mermaid.resetView',
+    message: 'Reset diagram view',
+    description: 'Accessible label for the Mermaid diagram reset button',
+  });
+  const viewportLabel: Theme_Mermaid_Index_MermaidContent_ViewportLabel = translate({
+    id: 'theme.mermaid.viewport',
+    message: 'Interactive diagram. Zoom in, then drag or use the arrow keys to pan.',
+    description: 'Accessible instructions for the interactive Mermaid diagram viewport',
+  });
+  const stageStyle: Theme_Mermaid_Index_MermaidContent_StageStyle = {
+    transform: `translate(${position['x']}px, ${position['y']}px) scale(${scale})`,
+  };
+  const viewportClassName: Theme_Mermaid_Index_MermaidContent_ViewportClassName = [
+    'nova-mermaid-viewport',
+    (isInteractive === true) ? 'nova-mermaid-viewport--interactive' : '',
+    (isDragging === true) ? 'nova-mermaid-viewport--dragging' : '',
+  ].filter((value) => value !== '').join(' ');
+
+  /**
+   * Theme - Mermaid - Mermaid Content - Zoom In.
+   *
+   * Increases the diagram scale by one supported step while respecting the
+   * maximum magnification boundary.
+   *
+   * @since 0.30.0
+   */
+  function zoomIn(): Theme_Mermaid_Index_MermaidContent_ZoomIn_Returns {
+    const nextScale: Theme_Mermaid_Index_MermaidContent_ZoomIn_NextScale = clampScale(scale + MERMAID_SCALE_STEP);
+
+    setScale(nextScale);
+
+    return undefined;
+  }
+
+  /**
+   * Theme - Mermaid - Mermaid Content - Zoom Out.
+   *
+   * Decreases the diagram scale by one supported step and recenters the
+   * diagram when magnification no longer requires panning.
+   *
+   * @since 0.30.0
+   */
+  function zoomOut(): Theme_Mermaid_Index_MermaidContent_ZoomOut_Returns {
+    const nextScale: Theme_Mermaid_Index_MermaidContent_ZoomOut_NextScale = clampScale(scale - MERMAID_SCALE_STEP);
+
+    setScale(nextScale);
+
+    if (nextScale <= 1) {
+      setPosition({
+        x: 0,
+        y: 0,
+      });
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Theme - Mermaid - Mermaid Content - Handle Pointer Down.
+   *
+   * Captures the starting pointer and diagram positions when a reader begins
+   * dragging a magnified diagram outside a clickable node.
+   *
+   * @param {PointerEvent} event - Event.
+   *
+   * @since 0.30.0
+   */
+  function handlePointerDown(event: Theme_Mermaid_Index_MermaidContent_HandlePointerDown_Event): Theme_Mermaid_Index_MermaidContent_HandlePointerDown_Returns {
+    if (event['button'] !== 0 || isInteractive === false) {
+      return undefined;
+    }
+
+    if (event['target'] instanceof Element && event['target'].closest('a') !== null) {
+      return undefined;
+    }
+
+    dragRef.current = {
+      pointerId: event['pointerId'],
+      start: {
+        x: event['clientX'],
+        y: event['clientY'],
+      },
+      startPosition: position,
+    };
+
+    event['currentTarget'].setPointerCapture(event['pointerId']);
+
+    setIsDragging(true);
+
+    return undefined;
+  }
+
+  /**
+   * Theme - Mermaid - Mermaid Content - Handle Pointer Move.
+   *
+   * Resolves pointer travel against the captured drag origin and applies the
+   * resulting position to the diagram stage.
+   *
+   * @param {PointerEvent} event - Event.
+   *
+   * @since 0.30.0
+   */
+  function handlePointerMove(event: Theme_Mermaid_Index_MermaidContent_HandlePointerMove_Event): Theme_Mermaid_Index_MermaidContent_HandlePointerMove_Returns {
+    if (dragRef.current === null || dragRef.current['pointerId'] !== event['pointerId']) {
+      return undefined;
+    }
+
+    setPosition(resolvePan(
+      dragRef.current['startPosition'],
+      dragRef.current['start'],
+      {
+        x: event['clientX'],
+        y: event['clientY'],
+      },
+    ));
+
+    return undefined;
+  }
+
+  /**
+   * Theme - Mermaid - Mermaid Content - Handle Pointer End.
+   *
+   * Releases the active pointer capture and restores the viewport's idle
+   * interaction state after a drag ends or is cancelled.
+   *
+   * @param {PointerEvent} event - Event.
+   *
+   * @since 0.30.0
+   */
+  function handlePointerEnd(event: Theme_Mermaid_Index_MermaidContent_HandlePointerEnd_Event): Theme_Mermaid_Index_MermaidContent_HandlePointerEnd_Returns {
+    if (dragRef.current === null || dragRef.current['pointerId'] !== event['pointerId']) {
+      return undefined;
+    }
+
+    if (event['currentTarget'].hasPointerCapture(event['pointerId']) === true) {
+      event['currentTarget'].releasePointerCapture(event['pointerId']);
+    }
+
+    dragRef.current = null;
+    setIsDragging(false);
+
+    return undefined;
+  }
+
+  /**
+   * Theme - Mermaid - Mermaid Content - Handle Key Down.
+   *
+   * Moves a magnified diagram in fixed steps when a reader uses an arrow key
+   * inside the focused viewport.
+   *
+   * @param {KeyboardEvent} event - Event.
+   *
+   * @since 0.30.0
+   */
+  function handleKeyDown(event: Theme_Mermaid_Index_MermaidContent_HandleKeyDown_Event): Theme_Mermaid_Index_MermaidContent_HandleKeyDown_Returns {
+    if (isInteractive === false) {
+      return undefined;
+    }
+
+    let nextPosition: Theme_Mermaid_Index_MermaidContent_HandleKeyDown_NextPosition = undefined;
+
+    switch (event['key']) {
+      case 'ArrowDown': {
+        nextPosition = {
+          x: position['x'],
+          y: position['y'] - MERMAID_PAN_STEP,
+        };
+        break;
+      }
+
+      case 'ArrowLeft': {
+        nextPosition = {
+          x: position['x'] + MERMAID_PAN_STEP,
+          y: position['y'],
+        };
+        break;
+      }
+
+      case 'ArrowRight': {
+        nextPosition = {
+          x: position['x'] - MERMAID_PAN_STEP,
+          y: position['y'],
+        };
+        break;
+      }
+
+      case 'ArrowUp': {
+        nextPosition = {
+          x: position['x'],
+          y: position['y'] + MERMAID_PAN_STEP,
+        };
+        break;
+      }
+
+      default: {
+        break;
+      }
+    }
+
+    if (nextPosition !== undefined) {
+      event.preventDefault();
+
+      setPosition(nextPosition);
+    }
+
+    return undefined;
+  }
 
   return (
     <div
       ref={containerRef}
       className={className}
       style={props['style']}
-      dangerouslySetInnerHTML={{ __html: renderResult['svg'] }}
-    />
+    >
+      <div
+        className="nova-mermaid-controls"
+        role="toolbar"
+        aria-label={translate({
+          id: 'theme.mermaid.controls',
+          message: 'Diagram controls',
+          description: 'Accessible label for the Mermaid diagram control toolbar',
+        })}
+      >
+        <button
+          className="nova-mermaid-control"
+          type="button"
+          disabled={canZoomOut === false}
+          onClick={zoomOut}
+          aria-label={zoomOutLabel}
+          title={zoomOutLabel}
+        >
+          <Icon icon="lucide:zoom-out" width="16" height="16" aria-hidden="true" />
+        </button>
+        <button
+          className="nova-mermaid-control nova-mermaid-scale"
+          type="button"
+          disabled={(
+            scale === 1
+            && position['x'] === 0
+            && position['y'] === 0
+          )}
+          onClick={() => {
+            setScale(1);
+            setPosition({
+              x: 0,
+              y: 0,
+            });
+
+            return undefined;
+          }}
+          aria-label={`${resetLabel}: ${scaleLabel}`}
+          title={resetLabel}
+        >
+          {scaleLabel}
+        </button>
+        <button
+          className="nova-mermaid-control"
+          type="button"
+          disabled={canZoomIn === false}
+          onClick={zoomIn}
+          aria-label={zoomInLabel}
+          title={zoomInLabel}
+        >
+          <Icon icon="lucide:zoom-in" width="16" height="16" aria-hidden="true" />
+        </button>
+      </div>
+      <div
+        className={viewportClassName}
+        role="application"
+        tabIndex={0}
+        aria-label={viewportLabel}
+        onKeyDown={handleKeyDown}
+        onPointerCancel={handlePointerEnd}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerEnd}
+      >
+        <div
+          className="nova-mermaid-stage"
+          style={stageStyle}
+          dangerouslySetInnerHTML={{ __html: renderResult['svg'] }}
+        />
+      </div>
+    </div>
   );
 }
 
 /**
- * Theme - Mermaid.
+ * Theme - Mermaid - Mermaid.
  *
- * Wraps the Mermaid diagram renderer in an error boundary so
- * that malformed syntax does not crash the page.
+ * Wraps the Mermaid diagram renderer in an error boundary so malformed syntax
+ * does not crash the page and color-mode changes remount the diagram cleanly.
  *
  * @param {Theme_Mermaid_Index_Mermaid_Props} props - Props.
  *

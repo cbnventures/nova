@@ -1,0 +1,55 @@
+---
+id: "role-source"
+title: "Role - Source"
+description: "Let TypeScript emit source code, declarations, and declaration maps for packages and directly compiled applications."
+keywords:
+  - "nova"
+  - "role-source"
+  - "tsconfig preset"
+  - "typescript emit"
+  - "declarations"
+  - "source code"
+tags:
+  - "presets"
+  - "tsconfig"
+  - "role"
+  - "source"
+---
+
+Use `role-source` when TypeScript or `nova utility transpile` owns the emitted source output.
+
+## Why Use This Preset?
+
+1. Makes the source-emission contract explicit instead of inheriting it accidentally from a baseline.
+2. Produces declaration files and declaration maps for published packages and directly compiled applications.
+3. Keeps runtime, framework, output-directory, and ambient-type decisions in their appropriate later layers or local config.
+
+## Usage
+
+```json title="tsconfig.source.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-source.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-node.json"
+  ],
+  "compilerOptions": {
+    "outDir": "./build",
+    "rootDir": "./src"
+  }
+}
+```
+
+## What This Preset Configures
+
+| Setting          | Value   | Description                                             |
+|------------------|---------|---------------------------------------------------------|
+| `declaration`    | `true`  | Emits declarations with compiled source.                |
+| `declarationMap` | `true`  | Maps declarations back to their TypeScript source.      |
+| `noEmit`         | `false` | Allows TypeScript to write the configured build output. |
+
+## Related
+
+- Use **[Role - App](/docs/presets/tsconfig/role-app)** when a framework or bundler owns output instead.
+- Review the complete layer order in **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.

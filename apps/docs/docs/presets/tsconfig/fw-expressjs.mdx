@@ -1,7 +1,7 @@
 ---
 id: "fw-expressjs"
 title: "Framework - Express.js"
-description: "Configure TypeScript for Express.js servers with Node ESM module resolution, the latest ECMAScript library, and declaration output."
+description: "Mark an Express.js source layer explicitly while Node runtime and source-role presets provide its compiler behavior."
 keywords:
   - "nova"
   - "express"
@@ -18,24 +18,25 @@ tags:
   - "express"
 ---
 
-Configure TypeScript for an Express.js server so module resolution matches how Node.js loads your code.
+Mark an Express.js source layer explicitly while composing its compiler behavior from the source role and Node runtime.
 
 ## Why Use This Preset?
 
-1. Sets `NodeNext` module and resolution so imports follow Node.js ECMAScript module rules.
-2. Targets the latest ECMAScript library so server code can use current language APIs.
-3. Keeps the configuration server-focused without pulling in DOM types you do not need.
-4. Layers cleanly after `dx-essentials` and `dx-strict` so framework settings stay in their own reviewable layer.
+1. Makes the Express.js framework choice visible in a standard Nova preset chain.
+2. Avoids copying Express-specific compiler settings that the framework does not require.
+3. Lets `role-source` own declarations and emit while `runtime-node` owns module resolution and libraries.
+4. Leaves application-specific Express and Node types in the local TSConfig.
 
 ## Usage
 
-Add the preset to the `extends` array of your `tsconfig.json`, after the essentials, strict, and Node runtime layers.
+Add the preset after the essentials, strict, source-role, and Node-runtime layers.
 
 ```json title="tsconfig.json"
 {
   "extends": [
     "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
     "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-source.json",
     "@cbnventures/nova/presets/tsconfig/runtime-node.json",
     "@cbnventures/nova/presets/tsconfig/fw-expressjs.json"
   ],
@@ -59,13 +60,9 @@ Add the preset to the `extends` array of your `tsconfig.json`, after the essenti
 
 ## What This Preset Configures
 
-This preset sets the following `compilerOptions`.
+Express.js does not require compiler overrides beyond the Node runtime, so this preset intentionally supplies an empty `compilerOptions` object. It remains useful as an explicit, future-compatible framework layer.
 
-| Setting            | Value        | Description                                                          |
-|--------------------|--------------|----------------------------------------------------------------------|
-| `lib`              | `["ESNext"]` | Provides the latest ECMAScript APIs without browser DOM types.       |
-| `module`           | `"NodeNext"` | Emits ECMAScript module syntax following Node.js module semantics.   |
-| `moduleResolution` | `"NodeNext"` | Resolves imports using Node.js ESM resolution, paired with `module`. |
+The preceding [`runtime-node`](/docs/presets/tsconfig/runtime-node) layer supplies `lib`, `module`, and `moduleResolution`. The preceding [`role-source`](/docs/presets/tsconfig/role-source) layer supplies declaration and emit behavior.
 
 ## Related
 

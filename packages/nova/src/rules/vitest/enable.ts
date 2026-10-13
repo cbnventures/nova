@@ -11,8 +11,8 @@ import type {
  * either the string `all` (every key is active) or an explicit array of keys (only the
  * listed keys are active). Used by every register function to gate its checks.
  *
- * @param {Rules_Vitest_Enable_IsEnabled_Key}    key    - Key.
- * @param {Rules_Vitest_Enable_IsEnabled_Enable} enable - Enable.
+ * @param {Rules_Vitest_Enable_IsEnabled_Key<ToggleKey>}    key    - Key.
+ * @param {Rules_Vitest_Enable_IsEnabled_Enable<ToggleKey>} enable - Enable.
  *
  * @returns {Rules_Vitest_Enable_IsEnabled_Returns}
  *

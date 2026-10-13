@@ -11,7 +11,7 @@ import type {
 } from '../../types/theme/Footer/cta.d.ts';
 
 /**
- * Theme - Footer - Cta.
+ * Theme - Footer - Cta - Footer Cta.
  *
  * Shared CTA rendered as a sibling to the footer, wrapped in a
  * `<div class="nova-footer-{variant}-cta-wrap">` (gains `nova-container` when

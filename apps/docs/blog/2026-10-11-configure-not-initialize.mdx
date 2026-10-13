@@ -1,0 +1,92 @@
+---
+title: "Why Nova Replaced Initialize with Configure"
+description: "Nova 0.30.0 renames its configuration wizard to match how developers create, inspect, and maintain nova.config.json over time."
+slug: "configure-not-initialize"
+authors:
+  - "mrjackyliang"
+keywords:
+  - "nova"
+  - "nova configure"
+  - "command line interface"
+  - "project configuration"
+  - "nova.config.json"
+tags:
+  - "release"
+  - "nova"
+  - "cli"
+  - "configuration"
+---
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+`nova utility initialize` made sense when Nova's guided setup had one obvious job: create the first `nova.config.json` file.
+
+The command grew. It became the place to return whenever a project changed, whether you needed to add a <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, revise repository settings, manage environment variables, or inspect GitHub environment status. Calling that ongoing work “initialization” stopped describing what the command actually did.
+
+Nova 0.30.0 gives it a more accurate name: `configure`.
+
+{/* truncate */}
+
+## What Changed
+
+The old command and shorthand were:
+
+```bash
+nova utility initialize
+nova util init
+```
+
+Starting with Nova 0.30.0, use:
+
+```bash
+nova utility configure
+nova util config
+```
+
+Nova's documentation uses the full command because it is the clearest form. The shorter `config` alias remains available for interactive terminal use.
+
+This is a command rename, not a configuration format migration. Nova continues to read the existing `nova.config.json` in the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>. You do not need to recreate the file or answer the wizard's questions again.
+
+The command also keeps its existing options:
+
+- `--dry-run` previews the result without writing files.
+- `--replace-file` updates the configuration without creating a backup.
+- `--status` shows the read-only GitHub environment status and exits.
+
+## Why Configure Fits Better
+
+Initialization happens once. Configuration changes throughout the life of a project.
+
+The guided flow now covers project identity, people and organizations, workspaces, URLs, README badges, GitHub workflows and repository settings, environment variables, recipes, project exclusions, agent preferences, and release strategy. Some values are decided when a repository is created. Others evolve as the repository gains packages, deployment targets, or maintainers.
+
+`configure` makes that lifecycle explicit. The same command works on day one and on day one thousand:
+
+```bash
+nova utility configure
+```
+
+Open it, choose the category you want to maintain, save the change, and leave everything else alone.
+
+## What You Need to Update
+
+Search project scripts, automation, and internal instructions for either old form:
+
+```text
+nova utility initialize
+nova util init
+```
+
+Replace them with the explicit current command:
+
+```text
+nova utility configure
+```
+
+The old command is no longer registered in Nova 0.30.0, so unattended scripts must be updated before upgrading. Interactive users only need to remember the new name.
+
+## Historical Posts Stay Historical
+
+The original [Introducing Nova](/blog/introducing-nova) article still shows `nova utility initialize`. That is intentional: published posts are snapshots of the product and the thinking that existed at the time.
+
+When Nova changes again, maintained reference documentation will describe the current behavior and a new article will explain the change. Older articles will receive a visible historical warning when their instructions are no longer current, rather than being silently rewritten.
+
+For the complete current workflow, see the [Configure documentation](/docs/cli/utilities/configure).

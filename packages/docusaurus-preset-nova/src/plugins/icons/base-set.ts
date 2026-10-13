@@ -40,6 +40,8 @@ export const iconBaseSet: Plugins_Icons_BaseSet_IconBaseSet = [
   'lucide:sun',
   'lucide:triangle-alert',
   'lucide:x',
+  'lucide:zoom-in',
+  'lucide:zoom-out',
   'ri:apple-fill',
   'ri:bluesky-fill',
   'ri:facebook-fill',

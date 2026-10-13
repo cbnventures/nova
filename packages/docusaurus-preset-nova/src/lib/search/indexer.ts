@@ -183,7 +183,7 @@ function extractDocument(htmlFilePath: Lib_Search_Indexer_ExtractDocument_HtmlFi
    * Reads the id, text, and level from one h2 or h3 element and
    * appends a normalized heading entry to the headings accumulator.
    *
-   * @param _index  - _index.
+   * @param _index  - Index.
    * @param element - Element.
    *
    * @private

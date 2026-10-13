@@ -1,5 +1,13 @@
 import { ok, strictEqual } from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import {
+  mkdir,
+  mkdtemp,
+  readFile,
+  rm,
+  writeFile,
+} from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -10,6 +18,12 @@ import { libEnvManagedSet } from '../../../../lib/env-managed-set.js';
 
 import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_Entry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_CommitCount,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_CommitSubjects,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_OriginPath,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_SandboxRoot,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_StagedStatus,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_StagePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_Committed,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_FixturePath,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_FixturesDir,
@@ -611,8 +625,234 @@ describe('WorkflowsBlueprintPublishParity.action', () => {
     const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
     strictEqual(generated, committed);
+    strictEqual(generated.includes('git commit --allow-empty -m "Release $TAG_NAME"'), true, 'Every published version must receive its own action release commit, even when the runtime bytes are unchanged');
     strictEqual(generated.includes('uses: "actions/attest@v4"'), true);
     strictEqual(generated.includes('actions/attest-build-provenance@v2'), false);
+
+    return;
+  });
+
+  it('publishes distinct commits when runtime bytes are unchanged', async () => {
+    const sandboxRoot: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_SandboxRoot = await mkdtemp(join(tmpdir(), 'nova-action-release-'));
+    const originPath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_OriginPath = join(sandboxRoot, 'origin.git');
+    const stagePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_StagePath = join(sandboxRoot, 'release');
+
+    try {
+      await mkdir(stagePath, { recursive: true });
+      execFileSync('git', [
+        'init',
+        '--bare',
+        originPath,
+      ], { stdio: 'pipe' });
+      execFileSync('git', [
+        'init',
+        '-b',
+        'releases',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'config',
+        'user.name',
+        'github-actions[bot]',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'config',
+        'user.email',
+        '41898282+github-actions[bot]@users.noreply.github.com',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'config',
+        'commit.gpgsign',
+        'false',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'remote',
+        'add',
+        'origin',
+        originPath,
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      await writeFile(join(stagePath, 'action.yml'), 'name: Sandbox\n', 'utf-8');
+      execFileSync('git', [
+        'add',
+        '-A',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'commit',
+        '--allow-empty',
+        '-m',
+        'Release v1.0.0',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'push',
+        'origin',
+        'releases',
+        '--force',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+
+      await rm(stagePath, {
+        recursive: true,
+        force: true,
+      });
+      await mkdir(stagePath, { recursive: true });
+      execFileSync('git', [
+        'init',
+        '-b',
+        'releases',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'config',
+        'user.name',
+        'github-actions[bot]',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'config',
+        'user.email',
+        '41898282+github-actions[bot]@users.noreply.github.com',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'config',
+        'commit.gpgsign',
+        'false',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'remote',
+        'add',
+        'origin',
+        originPath,
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'fetch',
+        'origin',
+        'releases',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'reset',
+        '--hard',
+        'origin/releases',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'rm',
+        '-rf',
+        '.',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      await writeFile(join(stagePath, 'action.yml'), 'name: Sandbox\n', 'utf-8');
+      execFileSync('git', [
+        'add',
+        '-A',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+
+      const stagedStatus: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_StagedStatus = execFileSync('git', [
+        'status',
+        '--porcelain',
+      ], {
+        cwd: stagePath,
+        encoding: 'utf-8',
+        stdio: 'pipe',
+      }).trim();
+
+      strictEqual(stagedStatus, '');
+
+      execFileSync('git', [
+        'commit',
+        '--allow-empty',
+        '-m',
+        'Release v1.0.1',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+      execFileSync('git', [
+        'push',
+        'origin',
+        'releases',
+        '--force',
+      ], {
+        cwd: stagePath,
+        stdio: 'pipe',
+      });
+
+      const commitCount: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_CommitCount = execFileSync('git', [
+        '--git-dir',
+        originPath,
+        'rev-list',
+        '--count',
+        'refs/heads/releases',
+      ], {
+        encoding: 'utf-8',
+        stdio: 'pipe',
+      }).trim();
+      const commitSubjects: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_CommitSubjects = execFileSync('git', [
+        '--git-dir',
+        originPath,
+        'log',
+        '--format=%s',
+        'refs/heads/releases',
+      ], {
+        encoding: 'utf-8',
+        stdio: 'pipe',
+      }).trim();
+
+      strictEqual(commitCount, '2');
+      strictEqual(commitSubjects, [
+        'Release v1.0.1',
+        'Release v1.0.0',
+      ].join('\n'));
+    } finally {
+      await rm(sandboxRoot, {
+        recursive: true,
+        force: true,
+      });
+    }
 
     return;
   });

@@ -29,13 +29,14 @@ Configure TypeScript for a Homebridge plugin without making every Node.js projec
 
 ## Usage
 
-Add the preset after the essentials, strict, and Node runtime layers.
+Add the preset after the essentials, strict, source-role, and Node-runtime layers.
 
 ```json title="tsconfig.json"
 {
   "extends": [
     "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
     "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-source.json",
     "@cbnventures/nova/presets/tsconfig/runtime-node.json",
     "@cbnventures/nova/presets/tsconfig/fw-homebridge.json"
   ],

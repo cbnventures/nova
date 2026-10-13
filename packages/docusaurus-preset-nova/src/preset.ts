@@ -41,13 +41,13 @@ import type {
 } from './types/preset.d.ts';
 
 /**
- * Preset.
+ * Preset - Preset.
  *
  * Docusaurus preset factory function that assembles the full plugin and
  * theme stack from a single options object, forwarding each section to its
  * corresponding Docusaurus plugin.
  *
- * @param {Preset_Preset_Context} _context - _context.
+ * @param {Preset_Preset_Context} _context - Context.
  * @param {Preset_Preset_Options} options  - Options.
  *
  * @returns {Preset_Preset_Returns}

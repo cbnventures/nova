@@ -44,7 +44,7 @@ const bytesPerMebibyte = 1024 * 1024;
  * bundle file is larger than the configured limit, catching bundle-size
  * regressions long before they reach a host or hurt load performance.
  *
- * @param {Plugins_BundleGuard_Index_BundleGuard_Context} _context - _context.
+ * @param {Plugins_BundleGuard_Index_BundleGuard_Context} _context - Context.
  * @param {Plugins_BundleGuard_Index_BundleGuard_Options} options  - Options.
  *
  * @returns {Plugins_BundleGuard_Index_BundleGuard_Returns}

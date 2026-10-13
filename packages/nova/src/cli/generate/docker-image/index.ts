@@ -323,7 +323,7 @@ export class Runner {
    *
    * @private
    *
-   * @returns {boolean}
+   * @returns {Cli_Generate_DockerImage_Index_Runner_IsProfile_TypeGuard}
    *
    * @since 0.29.0
    */

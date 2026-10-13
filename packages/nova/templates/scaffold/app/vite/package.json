@@ -19,7 +19,7 @@
     "clean:build": "shx rm -rf ./dist"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.29.0"
+    "@cbnventures/nova": "0.30.0"
   },
   "devDependencies": {
     "@types/node": "22.15.17",

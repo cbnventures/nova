@@ -46,7 +46,7 @@ function TocList(items: Theme_Toc_Index_ListItems) {
 }
 
 /**
- * Theme - Toc.
+ * Theme - Toc - Toc.
  *
  * Renders a navigation landmark containing a
  * recursive table of contents built from heading items,

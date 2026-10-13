@@ -3,17 +3,17 @@ import { defineConfig } from 'vitest/config';
 /**
  * Vitest Configuration.
  *
- * Wires the root-level test suite that validates dotenv quoting conventions
- * across the project workspace's generated environment files.
+ * Wires the root-owned conformance and cross-workspace integration tests.
+ * Workspace packages retain their independently configured suites.
  *
  * @since 1.0.0
  */
 export default defineConfig({
   test: {
-    setupFiles: ['./vitest.setup.ts'],
+    setupFiles: ['./tests/setup.ts'],
     include: [
       'scripts/tests/**/*.mjs',
-      'src/tests/**/*.test.ts',
+      'tests/**/*.test.ts',
     ],
     globals: false,
     testTimeout: 30000, // 30 seconds.

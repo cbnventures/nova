@@ -1,0 +1,72 @@
+---
+title: "GitHub Settings as Repository Configuration"
+description: "Nova 0.21.0 makes core GitHub repository settings repeatable through recipes, turning important web-console choices into reviewed configuration."
+slug: "github-settings-as-configuration"
+authors:
+  - "mrjackyliang"
+keywords:
+  - "nova"
+  - "github repository settings"
+  - "configuration as code"
+  - "repository policy"
+  - "github cli"
+tags:
+  - "release"
+  - "nova"
+  - "github"
+  - "recipes"
+---
+
+Repository settings are part of a project’s behavior even when they live behind switches in the GitHub website.
+
+Nova 0.18.0 introduced GitHub recipes so those choices could be declared, reviewed, and reconciled from `nova.config.json`.
+
+{/* truncate */}
+
+## The Drift Outside the Repository
+
+Source files can be copied, reviewed, and compared. Repository settings often cannot.
+
+Two sibling projects may intend to use the same merge policy while one quietly allows merge commits and the other deletes merged branches. A new repository can have the correct code and still miss discussions, topics, or its intended default branch.
+
+## Three Initial Responsibilities
+
+The first GitHub recipe category divided the work into three commands.
+
+### Identity
+
+`sync-identity` aligned repository-facing identity such as the description, homepage, and topics with Nova’s project configuration.
+
+### Features
+
+`sync-features` controlled GitHub product switches such as issues, the wiki, projects, and discussions.
+
+### Policies
+
+`sync-policies` reconciled repository behavior, including visibility, the default branch, allowed merge methods, and whether merged head branches are deleted.
+
+The separation matters because changing a description is not the same kind of decision as changing repository visibility. A project can enable only the recipes it wants Nova to own.
+
+## Reconciliation, Not Repository Creation
+
+The recipes operate on an existing GitHub repository. `nova.config.json` is the desired state, the GitHub CLI provides authenticated access, and Nova compares that state before applying updates.
+
+```bash
+nova recipe github sync-identity
+nova recipe github sync-features
+nova recipe github sync-policies
+```
+
+A dry run can show intended mutations without changing the repository. Read-only prechecks still run because Nova needs to know the current repository and authentication state before it can explain the difference.
+
+## Why This Belongs in a Recipe
+
+A generator creates files, but these settings continue to exist on GitHub after generation. They can be changed later through the website or by another administrator.
+
+A recipe is designed to be rerun. That makes it a better fit for detecting and repairing drift between the reviewed configuration and the hosted repository.
+
+## The Boundary Stayed Explicit
+
+Version 0.18.0 covered the core identity, feature, and policy surfaces. Later releases added richer synchronization for labels, rulesets, security controls, sponsorship, and GitHub Actions settings.
+
+That growth kept the original ownership model: consumers choose which categories Nova manages. See the current [GitHub recipe documentation](/docs/cli/recipes/github/sync-identity) for the maintained command set.

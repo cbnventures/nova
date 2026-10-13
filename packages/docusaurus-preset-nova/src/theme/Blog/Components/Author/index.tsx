@@ -13,7 +13,7 @@ import type {
 } from '../../../../types/theme/Blog/Components/Author/index.d.ts';
 
 /**
- * Theme - Blog - Components - Author.
+ * Theme - Blog - Components - Author - Author.
  *
  * Renders an author card with avatar, name, title, optional post count, and
  * social links. The avatar wraps in a `<Link>` when the author has a page

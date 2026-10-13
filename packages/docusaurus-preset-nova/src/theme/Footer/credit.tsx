@@ -19,7 +19,7 @@ import type {
 } from '../../types/theme/Footer/credit.d.ts';
 
 /**
- * Theme - Footer - Credit.
+ * Theme - Footer - Credit - Footer Credit.
  *
  * Shared credit attribution line that renders a rotating verb chosen at build
  * time and read from plugin global data at render time, so SSR HTML and

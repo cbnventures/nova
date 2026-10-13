@@ -325,7 +325,7 @@ export const LIB_REGEX_PATTERN_DTS_PROPERTY_LINE = /^(\w+):\s+(.+);$/;
  * Lib - Regex - Pattern Email Simple.
  *
  * Basic email format check without full RFC validation. Used by nova-config and
- * the initialize command to validate author emails.
+ * the configure command to validate author emails.
  *
  * @since 0.11.0
  */
@@ -722,7 +722,7 @@ export const LIB_REGEX_PATTERN_JSDOC_PARAM_ALIGNMENT_FIX = /^(\s*\*\s*@param\s+)
  *
  * @since 0.20.0
  */
-export const LIB_REGEX_PATTERN_JSDOC_PARAM_ALIGNMENT_PARAM = /@param\s+(\{[^}]*\})\s+(\w+)\s+(-)/;
+export const LIB_REGEX_PATTERN_JSDOC_PARAM_ALIGNMENT_PARAM = /@param\s+(\{[^}]*\})\s+(\[?\w+\]?)\s+(-)/;
 
 /**
  * Lib - Regex - Pattern JSDoc Param Tag Line.
@@ -732,7 +732,7 @@ export const LIB_REGEX_PATTERN_JSDOC_PARAM_ALIGNMENT_PARAM = /@param\s+(\{[^}]*\
  *
  * @since 0.20.0
  */
-export const LIB_REGEX_PATTERN_JSDOC_PARAM_TAG_LINE = /@param\s+(?:\{[^}]*\}\s+)?(\w+)\s+-\s+(.+)/;
+export const LIB_REGEX_PATTERN_JSDOC_PARAM_TAG_LINE = /@param\s+(?:\{[^}]*\}\s+)?(\[?\w+\]?)\s+-\s+(.+)/;
 
 /**
  * Lib - Regex - Pattern JSDoc Returns Type Only.
@@ -1166,13 +1166,13 @@ export const LIB_REGEX_PATTERN_SINGLE_PASCAL_TYPE = /^([A-Z][A-Za-z0-9_]*)$/;
  *
  * @since 0.20.0
  */
-export const LIB_REGEX_PATTERN_SLUG_LINE = /^slug:\s*(.+)$/;
+export const LIB_REGEX_PATTERN_SLUG_LINE = /^slug:\s*["']?([^"']+?)["']?\s*$/;
 
 /**
  * Lib - Regex - Pattern Slug Scoped.
  *
  * Validates npm scoped package names like the "@scope/name" format. Used by nova-config
- * and the initialize command for package name validation.
+ * and the configure command for package name validation.
  *
  * @since 0.11.0
  */
@@ -1182,7 +1182,7 @@ export const LIB_REGEX_PATTERN_SLUG_SCOPED = /^@[a-z0-9]+(?:[a-z0-9-_]*[a-z0-9])
  * Lib - Regex - Pattern Slug Simple.
  *
  * Validates unscoped package or project names like "nova". Used by nova-config
- * and the initialize command alongside the scoped variant.
+ * and the configure command alongside the scoped variant.
  *
  * @since 0.11.0
  */
@@ -1953,7 +1953,7 @@ export const LIB_REGEX_PATTERN_WORKFLOW_RUN_NAME_CAPTURE = /^(.*?)\$\{\{.*?\}\}(
 /**
  * Lib - Regex - Pattern Yml Extension.
  *
- * Matches a trailing `.yml` file extension. Used by the initialize command
+ * Matches a trailing `.yml` file extension. Used by the configure command
  * to strip the extension from trigger file names.
  *
  * @since 0.18.0

@@ -1,7 +1,7 @@
 ---
 id: "runtime-cloudflare-workers"
 title: "Runtime - Cloudflare Workers"
-description: "Configure TypeScript for Cloudflare Workers with bundler resolution, per-file isolation, and no compiler emit so Wrangler owns the build."
+description: "Configure TypeScript for Cloudflare Workers with bundler resolution, per-file isolation, and the runtime's ESNext library."
 keywords:
   - "nova"
   - "cloudflare workers"
@@ -9,7 +9,6 @@ keywords:
   - "runtime"
   - "bundler resolution"
   - "isolatedModules"
-  - "noEmit"
   - "wrangler"
 tags:
   - "presets"
@@ -24,19 +23,20 @@ Configure TypeScript for the Cloudflare Workers edge runtime by pairing `ESNext`
 
 1. Sets `ESNext` modules with `Bundler` resolution so imports resolve the way Wrangler and esbuild expect.
 2. Enables `isolatedModules` so each file type-checks independently, matching how the bundler transpiles your Worker.
-3. Sets `noEmit` so TypeScript checks types only and lets Wrangler own the output, avoiding duplicate JavaScript on disk.
-4. Targets the `ESNext` library so you write against the latest language features the V8 isolate supports.
-5. Layers cleanly after `dx-essentials` and `dx-strict`, keeping runtime concerns separate from your strictness baseline.
+3. Targets the `ESNext` library so you write against the latest language features the V8 isolate supports.
+4. Leaves emit behavior to the selected role so the same runtime works with Wrangler-managed and TypeScript-emitted Workers.
+5. Layers cleanly after a role preset, keeping runtime concerns separate from build ownership.
 
 ## Usage
 
-Add the preset to the `extends` array of your `tsconfig.json`, after the essentials and strict layers.
+Add the preset after the essentials, strict, and app-role layers.
 
 ```json title="tsconfig.json"
 {
   "extends": [
     "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
     "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-app.json",
     "@cbnventures/nova/presets/tsconfig/runtime-cloudflare-workers.json"
   ]
 }
@@ -52,7 +52,6 @@ This preset sets the following `compilerOptions`.
 | `lib`              | `["ESNext"]` | Exposes the latest ECMAScript APIs without bundling any DOM type definitions.     |
 | `module`           | `ESNext`     | Emits modern ECMAScript module syntax for the bundler to consume.                 |
 | `moduleResolution` | `Bundler`    | Resolves imports the way a bundler does, matching the Wrangler build pipeline.    |
-| `noEmit`           | `true`       | Runs type-checking only and leaves JavaScript output to Wrangler.                 |
 
 :::info
 The `lib` array replaces the parent's value rather than merging with it, so this preset deliberately omits any DOM or `WebWorker` libraries that a Worker isolate does not provide.

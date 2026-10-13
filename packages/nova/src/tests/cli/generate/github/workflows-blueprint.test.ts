@@ -725,6 +725,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       '$',
       '{',
     ].join('');
+
     const publishEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesTheReleaseOnlyPublishConditionAndRunName_PublishEntry = ir['env'].find((envEntry) => envEntry['key'] === 'PUBLISH');
 
     ok(publishEntry !== undefined, 'the PUBLISH env entry exists');
@@ -758,6 +759,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       '$',
       '{',
     ].join('');
+
     const publishEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesTheTagPushOnlyPublishConditionAndRunName_PublishEntry = ir['env'].find((envEntry) => envEntry['key'] === 'PUBLISH');
 
     ok(publishEntry !== undefined, 'the PUBLISH env entry exists');
@@ -801,6 +803,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       '$',
       '{',
     ].join('');
+
     const publishEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesReleaseAndPushTriggersInConfigOrder_PublishEntry = ir['env'].find((envEntry) => envEntry['key'] === 'PUBLISH');
 
     ok(publishEntry !== undefined, 'the PUBLISH env entry exists');
@@ -897,6 +900,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       '$',
       '{',
     ].join('');
+
     const publishEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesTheWorkflowRunPublishConditionAndRunName_PublishEntry = ir['env'].find((envEntry) => envEntry['key'] === 'PUBLISH');
 
     ok(publishEntry !== undefined, 'the PUBLISH env entry exists');
@@ -1004,6 +1008,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
       '$',
       '{',
     ].join('');
+
     const publishEntry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_MergesReleaseAndWorkflowRunPartsInConfigOrder_PublishEntry = ir['env'].find((envEntry) => envEntry['key'] === 'PUBLISH');
 
     ok(publishEntry !== undefined, 'the PUBLISH env entry exists');

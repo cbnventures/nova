@@ -81,7 +81,7 @@ export const PATTERN_MDX_PREAMBLE = /^(?:---\n[\s\S]*?\n---\n\s*)?(?:import[\s\S
 /**
  * Lib - Regex - Pattern Titled Nova Config JSON Block.
  *
- * Captures the initializer page's full nova.config.json example so the
+ * Captures the configuration page's full nova.config.json example so the
  * documentation contract test can parse and compare its public fields.
  *
  * @since 0.0.0

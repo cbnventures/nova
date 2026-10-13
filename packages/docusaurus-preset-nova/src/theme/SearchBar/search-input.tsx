@@ -88,7 +88,7 @@ const parseShortcutKeymap: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Funct
  * configured global keyboard shortcut, and handles keyboard navigation
  * for cycling through search results via arrow keys.
  *
- * @param {Theme_SearchBar_SearchInput_Props} _props - _props.
+ * @param {Theme_SearchBar_SearchInput_Props} _props - Props.
  *
  * @since 0.15.0
  */

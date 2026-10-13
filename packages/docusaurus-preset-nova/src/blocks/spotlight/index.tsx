@@ -3,7 +3,7 @@ import Heading from '@theme/Heading';
 import type { Blocks_Spotlight_Index_BlocksSpotlight_Props } from '../../types/blocks/spotlight/index.d.ts';
 
 /**
- * Blocks - Spotlight.
+ * Blocks - Spotlight - Blocks Spotlight.
  *
  * Narrow single-column section that constrains freeform content to a
  * readable width with a heading for focused content blocks like code

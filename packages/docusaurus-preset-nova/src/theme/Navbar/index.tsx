@@ -94,7 +94,7 @@ import type {
 } from '../../types/theme/Navbar/index.d.ts';
 
 /**
- * Theme - Navbar.
+ * Theme - Navbar - Navbar.
  *
  * Orchestrator component that reads the active navbar variant from
  * build-time global data, assembles shared props, and dispatches

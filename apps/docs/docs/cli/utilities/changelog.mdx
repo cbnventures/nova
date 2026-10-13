@@ -207,9 +207,9 @@ Added dark mode support.
 
 #### Strategy Lock
 
-Before the initializer opens or the changelog command records or releases a change, Nova scans the root `CHANGELOG.md` and every non-freezable workspace's `CHANGELOG.md`. Existing version headings lock `settings.versionStrategy` to the strategy already used by the project. Valid SemVer prerelease and build metadata remain part of SemVer history. Missing changelog files and freezable workspaces are ignored.
+Before the configuration wizard opens or the changelog command records or releases a change, Nova scans the root `CHANGELOG.md` and every non-freezable workspace's `CHANGELOG.md`. Existing version headings lock `settings.versionStrategy` to the strategy already used by the project. Valid SemVer prerelease and build metadata remain part of SemVer history. Missing changelog files and freezable workspaces are ignored.
 
-Nova stops with a non-zero exit code when the configured strategy conflicts with that history, when the project mixes SemVer and CalVer release headings, or when a numeric release heading does not match either supported format. A project with no release headings remains unlocked, so the initializer can still change its strategy.
+Nova stops with a non-zero exit code when the configured strategy conflicts with that history, when the project mixes SemVer and CalVer release headings, or when a numeric release heading does not match either supported format. A project with no release headings remains unlocked, so the configuration wizard can still change its strategy.
 
 ### CHANGELOG.md Format
 
@@ -223,7 +223,7 @@ Empty headings are omitted. When lock-step versioning is enabled and a package h
 ## 1.3.0 - 2026-02-25
 
 ### FIXED
-- Crash in initialize command.
+- Crash in configure command.
 
 ### ADDED
 - New ESLint rule for switch case blocks.

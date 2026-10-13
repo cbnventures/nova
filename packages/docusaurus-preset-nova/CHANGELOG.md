@@ -1,5 +1,10 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.30.0 - 2026-10-11
+
+### ADDED
+- Added accessible Mermaid diagram controls with zoom buttons, view reset, pointer dragging, keyboard panning, and responsive viewport styling.
+
 ## 0.29.0 - 2026-10-07
 
 ### UPDATED

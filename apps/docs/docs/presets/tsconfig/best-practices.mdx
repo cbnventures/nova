@@ -33,8 +33,19 @@ Practical TSConfig guidance for Nova that uses **small, composable <Terminology 
     <span>DO: Order presets intentionally</span>
   </summary>
   <ul>
-    <li><strong>What</strong>: Use a layered <code>{'"extends"'}</code> chain in this order: <em>essentials → strict → environment/framework → platform → tool → your custom overrides</em>.</li>
+    <li><strong>What</strong>: Use a layered <code>{'"extends"'}</code> chain in this order: <em>essentials → strict → role → runtime → framework → tool → your local overrides</em>.</li>
     <li><strong>Why</strong>: The base loads first; the child overrides it. A clear order keeps policy layered and reviewable.</li>
+  </ul>
+</Details>
+
+<Details>
+  <summary>
+    <Icon icon="openmoji:check-mark" width="20" height="20" />
+    <span>DO: Select exactly one role for every compiling TSConfig</span>
+  </summary>
+  <ul>
+    <li><strong>What</strong>: Choose <code>{'role-app'}</code>, <code>{'role-config'}</code>, <code>{'role-scripts'}</code>, <code>{'role-source'}</code>, or <code>{'role-tests'}</code> immediately after the strict layer. Reference-only solution files with <code>{'"files": []'}</code> do not compile files and need no role.</li>
+    <li><strong>Why</strong>: The role decides whether TypeScript emits source, declarations, or nothing. Runtime and framework presets can then describe the environment without silently changing the build owner.</li>
   </ul>
 </Details>
 
@@ -99,8 +110,8 @@ Practical TSConfig guidance for Nova that uses **small, composable <Terminology 
     <span>DO: Configure type-checking when a bundler transpiles</span>
   </summary>
   <ul>
-    <li><strong>What</strong>: If your project does not use <code>{'tsc'}</code> to build, set <code>{'"isolatedModules": true'}</code> and <code>{'"noEmit": true'}</code> in the app's <code>{'tsconfig.json'}</code>.</li>
-    <li><strong>Why</strong>: Bundlers and frameworks compile each file independently. <code>{'isolatedModules'}</code> enforces per-file safety. <code>{'noEmit'}</code> prevents TypeScript from writing JavaScript when another tool already emits output.</li>
+    <li><strong>What</strong>: If your project does not use <code>{'tsc'}</code> to build, select <code>{'role-app'}</code> and then add the matching framework or tool preset.</li>
+    <li><strong>Why</strong>: The app role sets <code>{'noEmit'}</code> while framework and tool layers provide their per-file compiler behavior. Each layer has one clear responsibility.</li>
   </ul>
 </Details>
 

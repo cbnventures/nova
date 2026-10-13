@@ -4,7 +4,7 @@ import Heading from '@theme/Heading';
 import type { Blocks_Features_Index_BlocksFeatures_Props } from '../../types/blocks/features/index.d.ts';
 
 /**
- * Blocks - Features.
+ * Blocks - Features - Blocks Features.
  *
  * Responsive feature grid section that renders icon cards in a
  * one-to-three column layout with stagger reveal animation and

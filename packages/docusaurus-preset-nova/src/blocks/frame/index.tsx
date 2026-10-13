@@ -4,7 +4,7 @@ import type {
 } from '../../types/blocks/frame/index.d.ts';
 
 /**
- * Blocks - Frame.
+ * Blocks - Frame - Blocks Frame.
  *
  * Renders a figure with an optional caption that wraps a media child
  * such as a themed image, image, or video, applying preset framing

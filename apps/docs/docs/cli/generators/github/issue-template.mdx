@@ -95,9 +95,9 @@ The bug report includes only the exact ordered fields selected in `nova.config.j
 
 The command is non-interactive. It reads the exact field identifiers from `github.issueTemplate.bugReportFields` in `nova.config.json` and preserves their order.
 
-Missing and empty arrays both produce a bug report without optional fields. The initializer can suggest a first selection from `project.platforms` and configured URLs, but the generator never infers fields.
+Missing and empty arrays both produce a bug report without optional fields. The configuration wizard can suggest a first selection from `project.platforms` and configured URLs, but the generator never infers fields.
 
-To change which fields are included, edit them through [`nova utility initialize`](/docs/cli/utilities/initialize#github) under the **GitHub** category.
+To change which fields are included, edit them through [`nova utility configure`](/docs/cli/utilities/configure#github) under the **GitHub** category.
 
 ### Available Bug Report Fields
 
@@ -118,6 +118,6 @@ To change which fields are included, edit them through [`nova utility initialize
 
 ### File Generation
 
-Each output file is built from a built-in template with placeholders replaced by values from the Nova config (pronouns, GitHub repo, legal links, and the selected bug report fields).
+Each output file is built from a built-in template with placeholders replaced by values from the Nova config (pronouns, GitHub repo, legal links, and the selected bug report fields). Pronouns are capitalized when their placeholder begins a sentence and remain lowercase within a sentence.
 
 If the target file already exists, a `.nova-backup` copy is created unless `--replace-file` is set.

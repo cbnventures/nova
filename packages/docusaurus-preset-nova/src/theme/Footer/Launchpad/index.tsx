@@ -27,7 +27,7 @@ import type {
 } from '../../../types/theme/Footer/Launchpad/index.d.ts';
 
 /**
- * Theme - Footer - Launchpad.
+ * Theme - Footer - Launchpad - Launchpad.
  *
  * Action-oriented footer layout with a call-to-action block above
  * condensed link columns arranged by layout entries, social

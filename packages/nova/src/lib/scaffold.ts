@@ -476,7 +476,7 @@ export async function loadExistingRoot(rootDirectory: Lib_Scaffold_LoadExistingR
 
     parsedConfig = JSON.parse(configRaw) as Lib_Scaffold_LoadExistingRoot_ParsedConfig;
   } catch (error) {
-    reportError('A readable nova.config.json is required at the monorepo root. Run "nova utility initialize" before adding a workspace. No scaffold files were written.');
+    reportError('A readable nova.config.json is required at the monorepo root. Run "nova utility configure" before adding a workspace. No scaffold files were written.');
 
     Logger.customize({
       name: 'loadExistingRoot',
@@ -782,7 +782,7 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
    * Computes the initial output directory value shown in the prompt by combining the
    * resolved workspace name into an apps-relative path.
    *
-   * @param {Lib_Scaffold_PromptScaffoldOptions_InitialPrev}    _initialPrev   - _initial prev.
+   * @param {Lib_Scaffold_PromptScaffoldOptions_InitialPrev}    _initialPrev   - Initial prev.
    * @param {Lib_Scaffold_PromptScaffoldOptions_InitialAnswers} initialAnswers - Initial answers.
    *
    * @private

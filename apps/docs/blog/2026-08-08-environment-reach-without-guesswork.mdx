@@ -1,0 +1,65 @@
+---
+title: "Environment Reach Without Guesswork"
+description: "Nova 0.22.0 classifies environment values by how far they travel, separating local, managed, build-time, and runtime delivery."
+slug: "environment-reach-without-guesswork"
+authors:
+  - "mrjackyliang"
+keywords:
+  - "nova"
+  - "environment variables"
+  - "secrets management"
+  - "build environment"
+  - "runtime configuration"
+tags:
+  - "release"
+  - "nova"
+  - "environment"
+  - "configuration"
+---
+
+Environment values become easier to reason about when configuration describes where each value is allowed to travel.
+
+Nova 0.22.0 introduced `reach` as a required delivery classification for project and workspace environment values.
+
+{/* truncate */}
+
+## One Boolean Was Not Enough
+
+The earlier `buildOnly` distinction could answer whether a value belonged in a build, but it could not describe the full lifecycle. It left separate questions for local files, hosted management, and server delivery.
+
+Reach replaces that ambiguity with four explicit values.
+
+| Reach     | Local file | GitHub | Delivered by automation                         |
+|-----------|:----------:|:------:|-------------------------------------------------|
+| `local`   |     Yes    |   No   | Never                                           |
+| `managed` |    Blank   |  Yes   | Never                                           |
+| `build`   |     Yes    |  Yes   | Into the build environment                      |
+| `runtime` |     Yes    |  Yes   | Into server-bearing deployment targets          |
+
+The names describe the farthest boundary a value may reach.
+
+## Local Means Local
+
+A `local` value supports development on one machine and never needs a hosted counterpart. Local service URLs and development-only toggles fit here.
+
+Nova can place a default in `.env.sample`, but the key is not provisioned on GitHub and is not injected into automation.
+
+## Managed Means Stored, Not Delivered
+
+A `managed` value belongs in GitHub as a variable or secret because automation or an external process may need to track it. Nova does not inject it into a package build or deployed server.
+
+Publish tokens are a common example: the workflow step uses the credential, but the produced application should never receive it.
+
+## Build and Runtime Are Different Products
+
+A `build` value is available while an artifact is being produced. Public analytics identifiers and compile-time feature settings often belong here.
+
+A `runtime` value is reconciled into a deployment target that hosts a server. Database credentials and server-side API keys belong at this boundary instead of being compiled into a client bundle.
+
+## One Declaration Drives Several Outputs
+
+The environment configuration gives each project or workspace a prefix, a key, a reach, and—when hosted—a secret classification. Nova uses the same declaration to coordinate generated `.env` files, `.env.sample`, GitHub variables or secrets, and workflow delivery.
+
+That removes a common source of drift: documenting a key in one place, creating it on GitHub in another, and separately wiring it into a deployment command.
+
+See the current [`environment` configuration reference](/docs/quickstart/nova-config#environment) for the complete schema and delivery rules.

@@ -37,6 +37,7 @@ You do not need to run `starter base` before a direct app, docs, or package comm
 3. Pins the npm and Node.js toolchain used by current Nova projects and records explicit install-script decisions used by the built-in scaffolds.
 4. Generates a baseline `nova.config.json` so recipes and utilities have a valid config to work with from the start.
 5. Installs `@cbnventures/nova` as a dependency so its CLI, presets, and runtime toolkit remain available to generated workspaces.
+6. Adds root Vitest coverage for dotenv formatting and the private monorepo coordinator contract, backed by Nova's shared test setup.
 
 ## Requirements
 
@@ -83,11 +84,19 @@ You do not need to run `starter base` before a direct app, docs, or package comm
 
 ```text
 {project-slug}/
-├── package.json
-├── nova.config.json
-├── turbo.json
 ├── apps/
-└── packages/
+├── packages/
+├── tests/
+│   ├── dotenv.test.ts
+│   ├── project.test.ts
+│   └── setup.ts
+├── eslint.config.mts
+├── nova.config.json
+├── package.json
+├── tsconfig.config.json
+├── tsconfig.tests.json
+├── turbo.json
+└── vitest.config.mts
 ```
 
 ## How It Works

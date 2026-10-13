@@ -10,7 +10,7 @@ import type {
 } from '../../types/theme/Loading/index.d.ts';
 
 /**
- * Theme - Loading.
+ * Theme - Loading - Loading.
  *
  * Renders a loading indicator with contextual states for
  * error, timeout, and delay, providing a fallback view

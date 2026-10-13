@@ -37,7 +37,7 @@ The generator validates each entry against its template, builds the workflow fro
 - **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
 - **Project root** — Run the command from the directory containing the top-level `package.json`.
 - **Corepack package manager** — A project with a `publish` workflow must declare an exact root `packageManager` value for npm, pnpm, or Yarn. Ranges, partial versions, missing values, and unsupported clients are rejected before any workflow file changes.
-- **Configured workflows** — The `"workflows"` array must exist in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. Use `nova utility initialize` to configure it interactively.
+- **Configured workflows** — The `"workflows"` array must exist in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. Use `nova utility configure` to configure it interactively.
 
 ## Usage
 
@@ -449,6 +449,21 @@ After all files are generated, the generator prints a Setup report of the secret
 
 Entries are deduplicated and listed once per output file, so a value used by two destinations in the same workflow appears a single time.
 
+## OIDC, Registry Authentication, and Provenance
+
+These features are related, but they solve different problems:
+
+| Mechanism                   | What it answers                               | How Nova uses it                                                                                                                                             |
+|-----------------------------|-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| OpenID Connect (OIDC)       | “Which trusted workflow is asking?”           | npm trusted publishing exchanges GitHub's short-lived identity token for publish access. The job needs `id-token: write`; no long-lived npm token is stored. |
+| `GITHUB_TOKEN`              | “May this workflow write to this repository?” | GitHub Packages and GHCR use GitHub's short-lived repository token with the required package permission. This is not npm trusted publishing.                 |
+| npm provenance              | “Where and how was this npm package built?”   | The npm target publishes with `--provenance`. With npm trusted publishing, npm automatically associates the supported GitHub Actions build evidence.         |
+| GitHub artifact attestation | “Which workflow produced this artifact?”      | GitHub Action and container targets use `actions/attest` after publishing their built artifact.                                                              |
+
+For npm trusted publishing, configure the package on npm with the exact GitHub owner, repository, generated workflow filename, and optional GitHub environment. Do not create `NPM_TOKEN` for that target. If trusted publishing is not configured, Nova can still use a repository `NPM_TOKEN` secret as the explicit fallback.
+
+Provenance is proof about the build; it is not permission to publish. OIDC supplies the short-lived identity used for trusted publishing, while the registry decides whether that identity is authorized.
+
 ## Publishing GitHub Actions
 
 The `github-action` destination distributes a JavaScript GitHub Action by maintaining an orphan `releases` branch whose commits contain only the runtime files needed by consumers. Each release is tagged with its semver (e.g., `v2.1.0`), and the floating major tag (`v2`) is force-moved to the latest release commit.
@@ -501,7 +516,7 @@ What lands on the `releases` branch for each release:
 }
 ```
 
-All four `with` values are **required**. Defaults aren't auto-applied — `nova utility initialize` prompts for each one, showing the suggested value as an example.
+All four `with` values are **required**. Defaults aren't auto-applied — `nova utility configure` prompts for each one, showing the suggested value as an example.
 
 You can set these on the deploy's `with` as shown, or on the workflow-level `with` to share them across the entry. A deploy-level `with` value takes precedence over the workflow-level one for that destination.
 
@@ -520,7 +535,7 @@ When a GitHub Release is published:
 2. The `publish-github-action-*` job spins up a separate git workspace at `$RUNNER_TEMP/release`, initialized with the release branch name.
 3. If the release branch already exists remotely, the workspace fetches and resets to it. Otherwise it stays as a fresh orphan branch.
 4. The release tree is staged: `action.yml`, the optional files above, and the built output copied into `action/` (renaming `build/` → `action/`).
-5. The staged tree is committed as `Release <tag>` and force-pushed to the release branch.
+5. The staged tree is committed as `Release <tag>` and force-pushed to the release branch. Nova permits an empty commit here so every published semantic version receives a distinct action release commit even when its bundled runtime bytes did not change.
 6. The semver tag (e.g., `v2.1.0`) is force-retagged onto the new orphan commit. GitHub creates this tag on `main`'s HEAD when you publish the release; this step moves it to point at the orphan commit so `uses: owner/repo@v2.1.0` resolves correctly.
 7. The floating major tag (e.g., `v2`) is force-moved to the same commit.
 8. A SLSA build-provenance attestation is emitted on the resolved entry script (`ACTION_OUTPUT_PATH`/`ACTION_ENTRY_POINT`) via `actions/attest@v4`.
@@ -535,6 +550,7 @@ A few non-obvious consequences worth knowing:
 - **Checking out a tag yields the runtime tree, not the source.** `git checkout v2.1.0` puts you in a working tree containing only `action.yml`, `action/index.js`, and the optional community files. The original source that produced this release is at the parent main commit at the time of release publication.
 - **Force-retagging breaks reproducibility from a tag.** Once `v2.1.0` is moved from `main`'s HEAD to the orphan commit, the original `main` commit that triggered the release is no longer reachable via that tag. Keep release notes that reference the original commit SHA if you need that traceability.
 - **Older frozen major tags stay put.** A `v1` tag from a prior major line is never touched by this workflow. Only the floating major matching the released `v<N>.x.y` (e.g., `v2` for a `v2.1.0` release) gets force-moved.
+- **Runtime-identical releases still exist.** A documentation-only or metadata-only release can produce the same action files as the previous version. Nova still creates a new `Release <tag>` commit, then points that semantic-version tag at it, so the action's release history stays aligned with GitHub Releases.
 
 ### Multiple actions in one repo
 

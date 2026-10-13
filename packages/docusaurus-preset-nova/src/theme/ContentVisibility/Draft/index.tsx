@@ -9,7 +9,7 @@ import type {
 } from '../../../types/theme/ContentVisibility/Draft/index.d.ts';
 
 /**
- * Theme - Content Visibility - Draft.
+ * Theme - Content Visibility - Draft - Draft.
  *
  * Renders a caution-styled admonition warning that
  * the current page content is in draft status and not published.

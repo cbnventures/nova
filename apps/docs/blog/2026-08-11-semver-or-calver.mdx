@@ -1,0 +1,87 @@
+---
+title: "SemVer or CalVer: Choose the Right Clock"
+description: "Nova 0.23.0 adds calendar versioning beside semantic versioning while protecting projects from silently mixing incompatible release histories."
+slug: "semver-or-calver"
+authors:
+  - "mrjackyliang"
+keywords:
+  - "nova"
+  - "semantic versioning"
+  - "calendar versioning"
+  - "release strategy"
+  - "changelog"
+tags:
+  - "release"
+  - "nova"
+  - "versioning"
+  - "changelog"
+---
+
+Version numbers can describe either compatibility or time, and projects should be able to choose the signal that fits their releases.
+
+Nova 0.23.0 added calendar versioning beside its existing semantic-versioning workflow.
+
+{/* truncate */}
+
+## Two Strategies, Two Questions
+
+Semantic versioning asks what changed for consumers:
+
+- `major` marks an incompatible change.
+- `minor` marks a backward-compatible feature.
+- `patch` marks a backward-compatible fix.
+
+Calendar versioning asks when the release belongs. Nova names the format `YYYY.MM.MICRO`, using the full year, an unpadded month, and a counter within that month.
+
+```text
+2026.8.0
+2026.8.1
+2026.9.0
+```
+
+The counter increments for another release in the same month and returns to zero when the month changes.
+
+## Configuration Selects the Strategy
+
+The project records its choice once in `nova.config.json`.
+
+```json title="nova.config.json"
+{
+  "settings": {
+    "versionStrategy": "calver"
+  }
+}
+```
+
+Semantic versioning remains the default. Calendar versioning changes both the changelog record and release flows.
+
+## CalVer Removes the Bump Decision
+
+A CalVer entry does not carry a `bump` field because major, minor, and patch do not determine the next version.
+
+```markdown title=".changelog/brave-cats-jump.md"
+---
+package: "example-app"
+category: added
+---
+
+Added a new reporting dashboard.
+```
+
+At release time, Nova calculates the next version from the current date. CalVer changelog headings omit a separate date suffix because the year and month already appear in the version.
+
+## History Protects the Choice
+
+Changing strategies after publishing can make version order confusing for package managers and people. Nova therefore inspects existing changelog headings before recording or releasing a change.
+
+Once a project has release history, the heading format locks the strategy. A configuration that says `calver` cannot silently continue a SemVer history, and mixed histories stop with an error instead of producing another ambiguous release.
+
+Projects without released headings remain free to choose. The `0.0.0` starting sentinel is also accepted before a first CalVer release.
+
+## Pick the Signal Consumers Need
+
+SemVer remains the stronger choice for libraries whose consumers need compatibility promises. CalVer works well for applications, data sets, operational tools, and regularly delivered artifacts where recency is the useful signal.
+
+The automation is intentionally different, but the source of release notes remains the same. Both strategies use reviewable `.changelog/` records and produce package-owned changelog sections.
+
+See the current [Changelog documentation](/docs/cli/utilities/changelog#calver-mode) for validation, record, and release details.

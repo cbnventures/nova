@@ -24,7 +24,7 @@ import type {
 } from '../../types/theme/Layout/index.d.ts';
 
 /**
- * Theme - Layout.
+ * Theme - Layout - Layout.
  *
  * Wraps all page content in the Docusaurus provider stack with
  * skip-to-content accessibility, navigation, and footer sections,

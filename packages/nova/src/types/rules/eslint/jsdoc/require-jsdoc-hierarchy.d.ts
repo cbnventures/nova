@@ -152,7 +152,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NodeName =
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NamePathParts = string[];
 
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NameSuffix = string | undefined;
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NameSuffix = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_ExpectedWithSuffix = string;
 
@@ -265,7 +265,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_Wor
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_PathParts = string[];
 
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_Returns = string | undefined;
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_Returns = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_PrefixLength = number;
 
@@ -288,7 +288,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_PathParts = string[];
 
-export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_Returns = string | undefined;
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_Returns = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveDescribeSuffix_Words = string[];
 

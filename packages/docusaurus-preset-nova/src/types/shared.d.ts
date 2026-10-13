@@ -109,6 +109,20 @@ export type Shared_MermaidConfig = {
 };
 
 /**
+ * Shared - Mermaid Viewport Position.
+ *
+ * @since 0.30.0
+ */
+export type Shared_MermaidViewportPosition_X = number;
+
+export type Shared_MermaidViewportPosition_Y = number;
+
+export type Shared_MermaidViewportPosition = {
+  x: Shared_MermaidViewportPosition_X;
+  y: Shared_MermaidViewportPosition_Y;
+};
+
+/**
  * Shared - Progress Bar Config.
  *
  * @since 0.26.0

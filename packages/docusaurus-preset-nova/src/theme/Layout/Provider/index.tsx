@@ -14,7 +14,7 @@ import type {
 } from '../../../types/theme/Layout/Provider/index.d.ts';
 
 /**
- * Theme - Layout - Provider.
+ * Theme - Layout - Provider - Provider.
  *
  * Composed provider stack built once at module scope so its identity
  * stays stable across renders and never remounts the tree below it.
@@ -31,7 +31,7 @@ const Provider: Theme_Layout_Provider_Index_LayoutProvider_Provider = composePro
 ]);
 
 /**
- * Theme - Layout - Provider.
+ * Theme - Layout - Provider - Layout Provider.
  *
  * Composes the Docusaurus context providers that
  * theme components depend on for color mode, scroll tracking,

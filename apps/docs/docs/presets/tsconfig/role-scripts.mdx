@@ -1,0 +1,56 @@
+---
+id: "role-scripts"
+title: "Role - Scripts"
+description: "Type-check JavaScript and TypeScript repository scripts without emitting build output."
+keywords:
+  - "nova"
+  - "role-scripts"
+  - "tsconfig preset"
+  - "repository scripts"
+  - "check js"
+  - "no emit"
+tags:
+  - "presets"
+  - "tsconfig"
+  - "role"
+  - "scripts"
+---
+
+Use `role-scripts` for maintenance, generation, and automation scripts that run directly from the repository.
+
+## Why Use This Preset?
+
+1. Checks both JavaScript and TypeScript scripts through the same strict compiler contract.
+2. Avoids producing copied script output or declaration files.
+3. Removes the repeated `allowJs`, `checkJs`, declaration, and emit overrides from every root TSConfig.
+
+## Usage
+
+```json title="tsconfig.scripts.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-scripts.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-node.json"
+  ],
+  "include": [
+    "./scripts/**/*.mjs"
+  ]
+}
+```
+
+## What This Preset Configures
+
+| Setting          | Value   | Description                                        |
+|------------------|---------|----------------------------------------------------|
+| `allowJs`        | `true`  | Includes JavaScript scripts in the compiler input. |
+| `checkJs`        | `true`  | Type-checks included JavaScript files.             |
+| `declaration`    | `false` | Does not create declaration files for scripts.     |
+| `declarationMap` | `false` | Does not create declaration maps.                  |
+| `noEmit`         | `true`  | Checks scripts without writing build output.       |
+
+## Related
+
+- Use **[Role - Config](/docs/presets/tsconfig/role-config)** for tool configuration files.
+- Review the complete layer order in **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.

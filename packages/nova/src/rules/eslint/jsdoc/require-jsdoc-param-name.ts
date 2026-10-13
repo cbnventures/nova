@@ -16,6 +16,7 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Lines,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Match,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatches,
+  Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_NormalizedParamName,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_ParamName,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_RawDescription,
   Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Returns,
@@ -152,8 +153,26 @@ export class Runner {
 
         const description: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Description = rawDescription.trim();
 
+        // Remove optional-parameter brackets and one unused-parameter prefix before formatting.
+        let normalizedParamName: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_NormalizedParamName = paramName;
+
+        if (
+          normalizedParamName.startsWith('[') === true
+          && normalizedParamName.endsWith(']') === true
+        ) {
+          normalizedParamName = normalizedParamName.slice(1, -1);
+        }
+
+        if (normalizedParamName.startsWith('_') === true) {
+          normalizedParamName = normalizedParamName.slice(1);
+        }
+
+        if (normalizedParamName === '') {
+          normalizedParamName = paramName;
+        }
+
         // Convert camelCase to space-separated words with first letter capitalized.
-        const words: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Words = paramName.replace(new RegExp(LIB_REGEX_PATTERN_CAMEL_CASE_BOUNDARY.source, 'g'), ' $1').trim();
+        const words: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Words = normalizedParamName.replace(new RegExp(LIB_REGEX_PATTERN_CAMEL_CASE_BOUNDARY.source, 'g'), ' $1').trim();
         const expected: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Expected = `${words.charAt(0).toUpperCase()}${words.slice(1).toLowerCase()}.`;
 
         if (description !== expected) {

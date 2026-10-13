@@ -45,7 +45,7 @@ function ThemedImage(props: Theme_Logo_Index_ThemedImage_Props): Theme_Logo_Inde
 }
 
 /**
- * Theme - Logo.
+ * Theme - Logo - Logo.
  *
  * Renders the site brand inside an existing wrapper. Picks among wordmark,
  * square src, or text title based on which fields the consumer provided.

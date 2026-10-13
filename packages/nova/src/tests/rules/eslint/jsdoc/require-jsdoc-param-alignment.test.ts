@@ -54,6 +54,21 @@ ruleTester.run('requireJsdocParamAlignment', RequireJsdocParamAlignment['rule'],
       ].join('\n'),
     },
 
+    // Optional @param names participate in alignment.
+    {
+      code: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} name      - Name.',
+        ' * @param {number} [options] - Options.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(name, options) {}',
+      ].join('\n'),
+    },
+
     // No @param tags.
     {
       code: [
@@ -135,6 +150,33 @@ ruleTester.run('requireJsdocParamAlignment', RequireJsdocParamAlignment['rule'],
         ' * @since 0.15.0',
         ' */',
         'function myFunction(name, items) {}',
+      ].join('\n'),
+      errors: [{ messageId: 'paramAlignment' }],
+    },
+
+    // Optional @param names are included when fixing dash alignment.
+    {
+      code: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} name - Name.',
+        ' * @param {number} [options] - Options.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(name, options) {}',
+      ].join('\n'),
+      output: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} name      - Name.',
+        ' * @param {number} [options] - Options.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(name, options) {}',
       ].join('\n'),
       errors: [{ messageId: 'paramAlignment' }],
     },

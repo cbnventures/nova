@@ -59,7 +59,7 @@ import { Runner as CliScaffoldPackageNodeCli } from './scaffold/package/node-cli
 import { Runner as CliScaffoldPackagePfSense } from './scaffold/package/pfsense.js';
 import { Runner as CliScaffoldStarterBase } from './scaffold/starter/base.js';
 import { Runner as CliUtilityChangelog } from './utility/changelog.js';
-import { Runner as CliUtilityInitialize } from './utility/initialize.js';
+import { Runner as CliUtilityConfigure } from './utility/configure.js';
 import { Runner as CliUtilityRunRecipes } from './utility/run-recipes.js';
 import { Runner as CliUtilityRunScripts } from './utility/run-scripts.js';
 import { Runner as CliUtilityTranspile } from './utility/transpile.js';
@@ -1110,15 +1110,15 @@ class CLI {
       });
 
     utility
-      .command('initialize')
-      .alias('init')
+      .command('configure')
+      .alias('config')
       .usage('[options]')
-      .description('Generate a new Nova config for this project')
+      .description('Create or edit the Nova config for this project')
       .option('-d, --dry-run', 'Run without writing any files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .option('-s, --status', 'Show the read-only GitHub environment status and exit')
       .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliUtilityInitialize['run']);
+        await this.executeCommand<typeof options>(options, CliUtilityConfigure['run']);
 
         return;
       });
@@ -1161,6 +1161,7 @@ class CLI {
       .usage('[options]')
       .description('Transpile TypeScript with filtered diagnostics')
       .option('-p, --project <path>', 'Path to tsconfig.json')
+      .option('-w, --watch', 'Watch project files and transpile when they change')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliUtilityTranspile['run']);
 
@@ -1205,8 +1206,8 @@ class CLI {
    * Prints the CLI header and the currently running command label, then delegates to the
    * target handler. Every leaf command in registerCommands calls this.
    *
-   * @param {Cli_Index_CLI_ExecuteCommand_Options} options - Options.
-   * @param {Cli_Index_CLI_ExecuteCommand_Target}  target  - Target.
+   * @param {Cli_Index_CLI_ExecuteCommand_Options<Options>} options - Options.
+   * @param {Cli_Index_CLI_ExecuteCommand_Target<Options>}  target  - Target.
    *
    * @private
    *

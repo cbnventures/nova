@@ -66,6 +66,34 @@ ruleTester.run('requireJsdocParamName', RequireJsdocParamName['rule'], {
       ].join('\n'),
     },
 
+    // Leading underscore marks an unused parameter but is not part of its description.
+    {
+      code: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} _context - Context.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(_context) {}',
+      ].join('\n'),
+    },
+
+    // Optional parameter brackets are not part of the description.
+    {
+      code: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} [defaultOptions] - Default options.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(defaultOptions) {}',
+      ].join('\n'),
+    },
+
     // No JSDoc (should not report).
     {
       code: 'function myFunction(name) {}',
@@ -204,6 +232,56 @@ ruleTester.run('requireJsdocParamName', RequireJsdocParamName['rule'], {
         { messageId: 'paramDescriptionMismatch' },
         { messageId: 'paramDescriptionMismatch' },
       ],
+    },
+
+    // Leading underscore is removed before deriving the description.
+    {
+      code: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} _context - _context.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(_context) {}',
+      ].join('\n'),
+      output: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} _context - Context.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(_context) {}',
+      ].join('\n'),
+      errors: [{ messageId: 'paramDescriptionMismatch' }],
+    },
+
+    // Optional parameter brackets are removed before deriving the description.
+    {
+      code: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} [defaultOptions] - [default options].',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(defaultOptions) {}',
+      ].join('\n'),
+      output: [
+        '/**',
+        ' * My function.',
+        ' *',
+        ' * @param {string} [defaultOptions] - Default options.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function myFunction(defaultOptions) {}',
+      ].join('\n'),
+      errors: [{ messageId: 'paramDescriptionMismatch' }],
     },
 
     // Cyclic (three-way) param descriptions must each be rewritten at their own position.

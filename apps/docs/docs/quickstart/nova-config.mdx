@@ -23,7 +23,7 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 The <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file lives at the <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root and drives every Nova command. This page documents each section and its fields.
 
-For your first working file, follow the [first successful check](/docs/quickstart/setup#first-successful-check). Use this reference when you need every supported field, or run [`nova utility initialize`](/docs/cli/utilities/initialize) to edit the same schema interactively.
+For your first working file, follow the [first successful check](/docs/quickstart/setup#first-successful-check). Use this reference when you need every supported field, or run [`nova utility configure`](/docs/cli/utilities/configure) to edit the same schema interactively.
 
 ## `project`
 
@@ -31,7 +31,7 @@ Describes the project identity, display info, and build metadata.
 
 | Field               | Type       | Description                                                                                                                                                                                                                                                              |
 |---------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name.slug`         | `string`   | URL-safe project identifier. Letters, numbers, hyphens, and underscores only. The 214-character npm limit is enforced by the `nova utility initialize` wizard; the parser only requires a non-empty trimmed string.                                                      |
+| `name.slug`         | `string`   | URL-safe project identifier. Letters, numbers, hyphens, and underscores only. The 214-character npm limit is enforced by the `nova utility configure` wizard; the parser only requires a non-empty trimmed string.                                                       |
 | `name.title`        | `string`   | Human-readable project name for display.                                                                                                                                                                                                                                 |
 | `description.short` | `string`   | One-line summary used in `package.json` and meta tags.                                                                                                                                                                                                                   |
 | `description.long`  | `string`   | Extended description for README and documentation pages.                                                                                                                                                                                                                 |

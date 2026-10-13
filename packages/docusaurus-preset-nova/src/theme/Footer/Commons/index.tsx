@@ -27,7 +27,7 @@ import type {
 } from '../../../types/theme/Footer/Commons/index.d.ts';
 
 /**
- * Theme - Footer - Commons.
+ * Theme - Footer - Commons - Commons.
  *
  * Community-focused footer layout with section links arranged
  * by layout entries, social media icons, copyright notice,

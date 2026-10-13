@@ -20,7 +20,7 @@
     "clean:wrangler": "shx rm -rf ./.wrangler"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.29.0"
+    "@cbnventures/nova": "0.30.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "5.20260911.1",

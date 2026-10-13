@@ -1,7 +1,7 @@
 ---
 id: "fw-vue"
 title: "Framework - Vue"
-description: "Configure TypeScript for Vue with preserved JSX, bundler resolution, browser libraries, and no emit."
+description: "Configure TypeScript for Vue with preserved JSX, bundler resolution, and browser libraries."
 keywords:
   - "nova"
   - "vue"
@@ -24,6 +24,7 @@ Configure TypeScript for Vue single-file components and a bundler-owned build.
   "extends": [
     "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
     "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-app.json",
     "@cbnventures/nova/presets/tsconfig/runtime-browser.json",
     "@cbnventures/nova/presets/tsconfig/fw-vue.json"
   ],
@@ -35,14 +36,13 @@ Configure TypeScript for Vue single-file components and a bundler-owned build.
 
 ## Compiler Options
 
-| Option             | Value                               | Purpose                                                        |
-|--------------------|-------------------------------------|----------------------------------------------------------------|
-| `isolatedModules`  | `true`                              | Keeps every file safe for independent bundler transforms.      |
-| `jsx`              | `"preserve"`                        | Leaves JSX for Vue's build tooling.                            |
-| `lib`              | `["DOM", "DOM.Iterable", "ESNext"]` | Provides browser and modern JavaScript APIs.                   |
-| `module`           | `"ESNext"`                          | Preserves ECMAScript modules for the bundler.                  |
-| `moduleResolution` | `"Bundler"`                         | Resolves package exports the way a modern bundler does.        |
-| `noEmit`           | `true`                              | Keeps TypeScript as the checker while the bundler owns output. |
+| Option             | Value                               | Purpose                                                   |
+|--------------------|-------------------------------------|-----------------------------------------------------------|
+| `isolatedModules`  | `true`                              | Keeps every file safe for independent bundler transforms. |
+| `jsx`              | `"preserve"`                        | Leaves JSX for Vue's build tooling.                       |
+| `lib`              | `["DOM", "DOM.Iterable", "ESNext"]` | Provides browser and modern JavaScript APIs.              |
+| `module`           | `"ESNext"`                          | Preserves ECMAScript modules for the bundler.             |
+| `moduleResolution` | `"Bundler"`                         | Resolves package exports the way a modern bundler does.   |
 
 ## Related
 

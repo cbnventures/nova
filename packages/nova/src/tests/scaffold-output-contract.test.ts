@@ -779,6 +779,7 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
       '@cbnventures/nova/presets/tsconfig/dx-essentials.json',
       '@cbnventures/nova/presets/tsconfig/dx-strict.json',
     ], `Generated TSConfig "${tsconfigFile}" must begin with dx-essentials and dx-strict.`);
+    strictEqual(String(tsconfigExtends[2]).startsWith('@cbnventures/nova/presets/tsconfig/role-'), true, `Generated TSConfig "${tsconfigFile}" must select a role immediately after dx-essentials and dx-strict.`);
   }
 
   if (generatedFiles.includes('package.json') === true) {
@@ -809,7 +810,9 @@ async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_V
     'eslint.config.mts',
     'nova.config.json',
     'package.json',
+    'tests/dotenv.test.ts',
     'tests/project.test.ts',
+    'tests/setup.ts',
     'tsconfig.config.json',
     'tsconfig.tests.json',
     'turbo.json',

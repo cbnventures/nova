@@ -60,7 +60,7 @@ import type {
  * empty state, and error state, closing automatically when
  * the user clicks outside the panel or the input field.
  *
- * @param {Theme_SearchBar_SearchResults_Props} _props - _props.
+ * @param {Theme_SearchBar_SearchResults_Props} _props - Props.
  *
  * @since 0.15.0
  */

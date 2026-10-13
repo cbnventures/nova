@@ -1,0 +1,94 @@
+---
+title: "Role-Based TypeScript Builds"
+description: "Nova 0.30.0 separates TypeScript strictness from file-role emission and introduces one transpiler for checked one-shot and watch builds."
+slug: "role-based-typescript-builds"
+authors:
+  - "mrjackyliang"
+keywords:
+  - "nova"
+  - "typescript configuration"
+  - "tsconfig presets"
+  - "typescript compiler"
+  - "transpilation"
+tags:
+  - "release"
+  - "nova"
+  - "typescript"
+  - "presets"
+---
+
+TypeScript files need different output policies depending on whether they are application code, published source, configuration, scripts, or tests.
+
+Nova 0.30.0 moved those policies into role presets and unified checked emission behind one transpile utility.
+
+{/* truncate */}
+
+## Strictness and Output Are Different Questions
+
+Every Nova TypeScript project begins with two baseline layers:
+
+```json title="tsconfig.source.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json"
+  ]
+}
+```
+
+Those layers answer how TypeScript should understand and validate the language. They should not also guess whether a particular file set emits JavaScript, declarations, both, or neither.
+
+## Five File Roles
+
+Version 0.30.0 added a role layer for each recurring job.
+
+| Role           | Intended file set                                       |
+|----------------|---------------------------------------------------------|
+| `role-app`     | Application code built or bundled for deployment        |
+| `role-config`  | Tool and framework configuration files                  |
+| `role-scripts` | Repository automation and maintenance scripts           |
+| `role-source`  | Reusable package source that emits distributable output |
+| `role-tests`   | Tests and fixtures checked without production emission  |
+
+A project composes its baseline, role, runtime, framework, and tool layers. Consumer-owned overrides remain last, so a workspace can change a deliberate setting without forking the preset.
+
+```json title="tsconfig.source.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-source.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-node.json"
+  ]
+}
+```
+
+## One Transpiler for Build and Watch
+
+The public utility handles both a one-shot build and a long-running watcher.
+
+```bash
+nova utility transpile --project tsconfig.source.json
+nova utility transpile --project tsconfig.source.json --watch
+```
+
+Both modes load the same project configuration, report project diagnostics, and use the same emission path. Fixing behavior in one mode no longer leaves the other behind.
+
+## Keep `skipLibCheck` False Without Owning Dependencies
+
+Nova’s strict baseline keeps `skipLibCheck: false`, so TypeScript still understands the complete type graph. The transpiler then separates diagnostics caused by project-owned files from errors that originate entirely inside installed dependencies.
+
+That boundary avoids two bad choices:
+
+- `skipLibCheck: true`, which suppresses declaration checking globally and can hide conflicts that reach project code.
+- Failing a project build because an unrelated dependency’s internal declaration file has a defect the project cannot repair.
+
+Errors in the project, its configuration, or the way it consumes dependency types still fail the command. Only dependency-internal noise is filtered from the project-owned report.
+
+## Less Repetition, Clearer Intent
+
+Before role layers, the same `noEmit`, declaration, and output settings appeared across many consumer TSConfig files. That repetition looked explicit, but it also allowed equivalent file roles to drift.
+
+Role presets centralize only the policy shared by the role. Runtime and framework choices remain separate layers, and the consumer still owns its includes, excludes, paths, and intentional overrides.
+
+See the current [TSConfig preset guide](/docs/presets/tsconfig/best-practices) and [Transpile documentation](/docs/cli/utilities/transpile) for the complete composition model.

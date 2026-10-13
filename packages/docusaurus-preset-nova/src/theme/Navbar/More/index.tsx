@@ -18,7 +18,7 @@ import type {
 } from '../../../types/theme/Navbar/More/index.d.ts';
 
 /**
- * Theme - Navbar - More.
+ * Theme - Navbar - More - More.
  *
  * Trailing dropdown that holds the overflow set of inline navbar items.
  * Mirrors locale-dropdown chrome for outside-click + open-state parity.

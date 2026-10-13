@@ -32,13 +32,14 @@ Layer strict TypeScript checks on top of the essentials baseline so type errors,
 
 ## Usage
 
-This preset is an overlay and must come after [DX - Essentials](/docs/presets/tsconfig/dx-essentials) in the `extends` chain, then before any environment layer.
+This preset is an overlay and must come after [DX - Essentials](/docs/presets/tsconfig/dx-essentials) in the `extends` chain, then before the role and environment layers.
 
 ```json title="tsconfig.json"
 {
   "extends": [
     "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
     "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-source.json",
     "@cbnventures/nova/presets/tsconfig/runtime-node.json"
   ]
 }

@@ -3,7 +3,7 @@ import './icons.js';
 import type { Theme_Root_Index_Root_Props } from '../../types/theme/Root/index.d.ts';
 
 /**
- * Theme - Root.
+ * Theme - Root - Root.
  *
  * Wraps the entire Docusaurus application tree as a top-level
  * component, rendering its children without any additional

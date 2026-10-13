@@ -1,0 +1,76 @@
+---
+title: "Corepack and Install-Script Trust"
+description: "Nova 0.26.0 narrows package-manager support to Corepack and makes dependency install scripts an explicit, reviewed trust decision."
+slug: "corepack-and-install-script-trust"
+authors:
+  - "mrjackyliang"
+keywords:
+  - "nova"
+  - "corepack"
+  - "package manager"
+  - "install scripts"
+  - "dependency security"
+tags:
+  - "release"
+  - "nova"
+  - "dependencies"
+  - "security"
+---
+
+Installing dependencies is part tool selection and part trust decision, so both should be explicit in project configuration.
+
+Nova 0.26.0 limited package-manager support to Corepack-compatible clients and documented the boundary around dependency lifecycle scripts.
+
+{/* truncate */}
+
+## One Exact Package Manager
+
+The project root owns a complete `packageManager` descriptor such as:
+
+```json title="package.json"
+{
+  "packageManager": "npm@11.6.1"
+}
+```
+
+Nova accepts exact npm, pnpm, and Yarn descriptors that Corepack can resolve. It repairs missing or unsupported root descriptors to the exact detected npm version and removes the field from nested workspaces.
+
+Bun is intentionally outside this contract. It does not participate in Corepack’s package-manager resolution model, so claiming support would require a second installation and version-selection path.
+
+## Why Exact Versions Matter
+
+A package manager interprets the lockfile, dependency metadata, lifecycle scripts, and workspace graph. Allowing two machines to choose different client versions introduces variation before project code even runs.
+
+An exact descriptor makes the selected client reviewable. Generated CI workflows can validate the same value and use the intended package manager rather than guessing from whichever executable happens to be installed.
+
+## Dependency Scripts Are Code Execution
+
+Some dependencies compile native modules or download platform binaries during installation. Others do not need to execute anything at all.
+
+An install-script policy records which packages have been reviewed and allowed. It can also record denials so a known package cannot begin executing a newly added script unnoticed.
+
+```json title="package.json"
+{
+  "allowScripts": {
+    "approved-native-package@1.2.3": true,
+    "package-that-needs-no-script": false
+  }
+}
+```
+
+Approvals use exact versions because the reviewed script belongs to a particular release. Denials can remain name-only because they express that the package is not permitted to run lifecycle code.
+
+## Nova Does Not Guess Trust
+
+The package JSON recipe normalizes the shape of `allowScripts`, but it does not inspect dependency source and grant approvals automatically. A maintenance command should never turn a newly installed package into trusted executable code.
+
+This leaves a clear ownership boundary:
+
+- Nova keeps package-manager metadata structurally correct.
+- The repository records reviewed approvals and denials.
+- The package manager enforces the policy during installation.
+- A maintainer decides whether a dependency’s script is necessary and safe.
+
+The model is stricter than accepting every lifecycle script, but it keeps exceptional native dependencies usable without making silent execution the default.
+
+See the current [Normalize Tooling documentation](/docs/cli/recipes/package-json/normalize-tooling#install-script-trust-boundary) for the maintained policy behavior.

@@ -19,7 +19,7 @@
     "clean:container": "docker compose down --remove-orphans"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.29.0"
+    "@cbnventures/nova": "0.30.0"
   },
   "devDependencies": {
     "@types/node": "24.9.1",

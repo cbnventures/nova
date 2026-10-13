@@ -1,7 +1,7 @@
 ---
 id: "mermaid"
 title: "Mermaid Diagrams"
-description: "Render Mermaid diagrams from fenced code blocks with per-preset node, edge, and cluster identity plus a styled hover tooltip."
+description: "Render interactive Mermaid diagrams from fenced code blocks with per-preset identity, zoom and pan controls, and a styled hover tooltip."
 sidebar_position: 2
 keywords:
   - "nova"
@@ -29,6 +29,7 @@ The preset registers a Mermaid renderer as the MDX component for `mermaid` fence
 - A fenced block with the `mermaid` language is the only authoring step.
 - Diagrams adopt **per-preset identity** through `--nova-mermaid-*` tokens for node radius, cluster fill, and cluster stroke.
 - Clickable nodes show a **styled hover tooltip** instead of the browser's native one.
+- Built-in controls let readers **zoom, reset, drag, and keyboard-pan** a diagram without leaving the page.
 - The renderer follows the active color mode, re-rendering when `data-theme` flips between light and dark.
 
 ## Why Use This?
@@ -37,6 +38,7 @@ The preset registers a Mermaid renderer as the MDX component for `mermaid` fence
 - Themes each diagram with the active preset's tokens so it matches the rest of the page in both light and dark mode.
 - Renders inside an error boundary so a malformed diagram does not crash the page.
 - Replaces the unstyled native tooltip on clickable nodes with one that follows the design system.
+- Keeps dense diagrams readable with zoom levels from 50% to 300% and an overflow-safe viewport.
 
 ## Enabling Mermaid
 
@@ -107,6 +109,16 @@ Diagrams are not generically styled. The renderer reads preset CSS variables at 
 
 Each preset (`envoy`, `foundry`, `lantern`, `marshal`, `sentinel`, `signal`) maps these shared tokens to its own preset-scoped values, so the same diagram looks at home under any preset.
 
+## Explore Large Diagrams
+
+Every rendered diagram includes three compact controls:
+
+- Select **zoom out** or **zoom in** to change the scale in 25% steps between 50% and 300%.
+- Select the percentage between them to reset the diagram to 100% and return it to the center.
+- After zooming above 100%, drag the diagram with a pointer or focus the viewport and use the arrow keys to pan.
+
+Links inside Mermaid nodes remain selectable while panning is enabled. The viewport contains the transformed diagram, so zooming does not widen the page or create document-level horizontal scrolling.
+
 ## Hover Tooltip
 
 Mermaid lets you attach a tooltip to a node with a `click` directive. On SVG nodes the browser ignores the underlying `title` attribute, so the preset ships a runtime handler that renders a styled `<div class="nova-mermaid-tooltip">` on hover instead.
@@ -131,4 +143,5 @@ The renderer reads the document's `data-theme` attribute and re-renders when it 
 - **Nothing renders for the fence** — The fence language is not exactly `mermaid`. Only the `mermaid` language is mapped to the diagram renderer.
 - **Diagram colors look generic** — Confirm a Nova preset is active so the `--nova-mermaid-*` and color tokens resolve. The renderer pulls its theme from those variables at render time.
 - **Tooltip is missing or unstyled** — The tooltip only appears on nodes that declare a `click` directive with a tooltip string. Nodes without one show nothing on hover.
+- **Diagram will not drag or respond to arrow keys** — Panning activates after zooming above 100%. Focus the diagram viewport before using the arrow keys.
 - **Diagram does not follow dark mode** — The renderer keys off `data-theme` on the document element. If the theme attribute is overridden, the color mode it reads may not match.

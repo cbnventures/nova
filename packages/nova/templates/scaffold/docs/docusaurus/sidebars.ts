@@ -1,7 +1,7 @@
 import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
 /**
- * Sidebars.
+ * Sidebars - Sidebars.
  *
  * Defines the generated documentation navigation tree.
  * Add categories and documents here as the site grows.

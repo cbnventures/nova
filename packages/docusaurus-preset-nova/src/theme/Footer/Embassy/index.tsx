@@ -27,7 +27,7 @@ import type {
 } from '../../../types/theme/Footer/Embassy/index.d.ts';
 
 /**
- * Theme - Footer - Embassy.
+ * Theme - Footer - Embassy - Embassy.
  *
  * Formal directory-style footer layout with a logo and tagline
  * header, multi-column link sections arranged by layout entries,

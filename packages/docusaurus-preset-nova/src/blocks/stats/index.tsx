@@ -3,7 +3,7 @@ import Heading from '@theme/Heading';
 import type { Blocks_Stats_Index_BlocksStats_Props } from '../../types/blocks/stats/index.d.ts';
 
 /**
- * Blocks - Stats.
+ * Blocks - Stats - Blocks Stats.
  *
  * Numeric highlight grid that displays key metrics as large values
  * with descriptive labels in a responsive two-to-four column layout

@@ -39,7 +39,7 @@ import type {
  * Lib - Item - Allowed Policies By Role.
  *
  * Maps each workspace role to the lifecycle policies it supports. Used by nova-config
- * parsing and the initialize prompt to constrain selection.
+ * parsing and the configure prompt to constrain selection.
  *
  * @since 0.11.0
  */
@@ -131,7 +131,7 @@ export const libItemRecipesByCategory: Lib_Item_RecipesByCategory = {
  * Lib - Item - Allowed Roles.
  *
  * Every valid workspace role in the monorepo. Used by nova-config to validate
- * role candidates and by the initialize prompt to populate role choices.
+ * role candidates and by the configure prompt to populate role choices.
  *
  * @since 0.11.0
  */
@@ -149,7 +149,7 @@ export const libItemAllowedRoles: Lib_Item_AllowedRoles = [
  * Lib - Item - Allowed Agents.
  *
  * Canonical list of AI-tool ids the agent-conventions generator supports. Nova-config
- * validates the "agents" field against this set and the initialize prompt uses it.
+ * validates the "agents" field against this set and the configure prompt uses it.
  *
  * @since 0.20.0
  */
@@ -431,7 +431,7 @@ export const libItemGenericProtocols: Lib_Item_GenericProtocols = [
  * Lib - Item - Sync Roles.
  *
  * Workspace roles whose names are prefixed with the project slug. When the slug changes,
- * the initialize command renames these workspaces automatically.
+ * the configure command renames these workspaces automatically.
  *
  * @since 0.11.0
  */
@@ -446,7 +446,7 @@ export const libItemSyncRoles: Lib_Item_SyncRoles = [
 /**
  * Lib - Item - Valid Entity Roles.
  *
- * Accepted roles for people entries in nova-config. The initialize prompt uses this
+ * Accepted roles for people entries in nova-config. The configure prompt uses this
  * list to populate the role multi-select.
  *
  * @since 0.11.0

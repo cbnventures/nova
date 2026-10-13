@@ -17,7 +17,7 @@ import type {
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_ItemHref,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_ItemItems,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Items,
-  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Result,
+  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Returns,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_DocsConfig,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ExpandCategoryAriaLabel,
   Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_ActivePath,
@@ -94,11 +94,11 @@ function DocSidebarItemCategory(props: Theme_DocSidebarItem_Category_Index_DocSi
    * @param {Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Items}      items      - Items.
    * @param {Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_ActivePath} activePath - Active path.
    *
-   * @returns {boolean}
+   * @returns {Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Returns}
    *
    * @since 0.15.0
    */
-  function containsActivePath(items: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Items, activePath: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_ActivePath): Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Result {
+  function containsActivePath(items: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Items, activePath: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_ActivePath): Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Returns {
     for (const item of items) {
       const sidebarItem: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Item = item as Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Item;
       const itemHref: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_ItemHref = sidebarItem['href'] as Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_ItemHref;

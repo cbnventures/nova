@@ -31,13 +31,14 @@ Add the Node <Terminology title="ECMAScript Modules" to="/docs/quickstart/termin
 
 ## Usage
 
-Add the preset as the last entry in the `extends` array of your `tsconfig.json`, after the essentials and strict layers.
+Add the preset after the essentials, strict, and source-role layers.
 
 ```json title="tsconfig.json"
 {
   "extends": [
     "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
     "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-source.json",
     "@cbnventures/nova/presets/tsconfig/runtime-node.json"
   ]
 }

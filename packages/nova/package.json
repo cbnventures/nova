@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/nova",
-  "version": "0.29.0",
+  "version": "0.30.0",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",
@@ -69,6 +69,11 @@
     "./presets/tsconfig/runtime-node.json": "./build/src/presets/tsconfig/runtime-node.json",
     "./presets/tsconfig/runtime-service-worker.json": "./build/src/presets/tsconfig/runtime-service-worker.json",
     "./presets/tsconfig/runtime-web-worker.json": "./build/src/presets/tsconfig/runtime-web-worker.json",
+    "./presets/tsconfig/role-app.json": "./build/src/presets/tsconfig/role-app.json",
+    "./presets/tsconfig/role-config.json": "./build/src/presets/tsconfig/role-config.json",
+    "./presets/tsconfig/role-scripts.json": "./build/src/presets/tsconfig/role-scripts.json",
+    "./presets/tsconfig/role-source.json": "./build/src/presets/tsconfig/role-source.json",
+    "./presets/tsconfig/role-tests.json": "./build/src/presets/tsconfig/role-tests.json",
     "./presets/tsconfig/tool-vite.json": "./build/src/presets/tsconfig/tool-vite.json",
     "./toolkit": "./build/src/toolkit/index.js",
     "./toolkit/*": "./build/src/toolkit/*.js",
@@ -85,7 +90,7 @@
   "private": false,
   "scripts": {
     "dev": "node ../../scripts/nova-run-scripts.mjs --parallel --node-env development 'dev:*'",
-    "dev:watch": "tsc --project tsconfig.source.json --watch",
+    "dev:watch": "node ../../scripts/nova-transpile.mjs --project tsconfig.source.json --watch",
     "check": "node ../../scripts/nova-run-scripts.mjs --sequential 'check:*'",
     "check:lint": "eslint ./ --max-warnings=0",
     "check:types-source": "node ../../scripts/nova-type-check.mjs --project tsconfig.source.json",
@@ -93,7 +98,7 @@
     "check:types-tests": "node ../../scripts/nova-type-check.mjs --project tsconfig.tests.json",
     "check:test": "vitest run",
     "build": "node ../../scripts/nova-run-scripts.mjs --sequential --node-env production 'build:*'",
-    "build:transpile-source": "tsc --project tsconfig.source.json --outDir ./build --skipLibCheck",
+    "build:transpile-source": "node ../../scripts/nova-transpile.mjs --project tsconfig.source.json",
     "build:copy-types": "shx rm -rf \"./build/src/types\" && shx cp -r \"./src/types\" \"./build/src/types\"",
     "build:copy-tsconfig-presets": "shx rm -rf \"./build/src/presets/tsconfig\" && shx cp -r \"./src/presets/tsconfig\" \"./build/src/presets/tsconfig\"",
     "build:fix-perms": "shx chmod +x ./build/src/cli/index.js",

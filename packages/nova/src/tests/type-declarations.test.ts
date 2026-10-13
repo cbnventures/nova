@@ -471,15 +471,15 @@ describe('buildSourceSectionMap', () => {
     return;
   });
 
-  it.skipIf(existsSync(resolve(process.cwd(), 'src/tests/cli/utility/initialize.test.ts')) === false)('tags describe block contents with the describe-derived section', async () => {
-    const filePath: Tests_TypeDeclarations_BuildSourceSectionMap_TagsDescribeBlockContentsWithTheDescribeDerivedSection_FilePath = resolve(process.cwd(), 'src/tests/cli/utility/initialize.test.ts');
+  it.skipIf(existsSync(resolve(process.cwd(), 'src/tests/cli/utility/configure.test.ts')) === false)('tags describe block contents with the describe-derived section', async () => {
+    const filePath: Tests_TypeDeclarations_BuildSourceSectionMap_TagsDescribeBlockContentsWithTheDescribeDerivedSection_FilePath = resolve(process.cwd(), 'src/tests/cli/utility/configure.test.ts');
     const content: Tests_TypeDeclarations_BuildSourceSectionMap_TagsDescribeBlockContentsWithTheDescribeDerivedSection_Content = await readFile(filePath, 'utf-8');
     const classPrefix: Tests_TypeDeclarations_BuildSourceSectionMap_TagsDescribeBlockContentsWithTheDescribeDerivedSection_ClassPrefix = deriveClassPrefix(filePath, testConfig);
     const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_TagsDescribeBlockContentsWithTheDescribeDerivedSection_SectionMap = buildSourceSectionMap(filePath, content, classPrefix);
 
-    // `const originalCwd: ... = process.cwd();` inside describe('CliUtilityInitialize.run', ...).
-    // describe string 'CliUtilityInitialize.run' -> 'CliUtilityInitializeRun'.
-    strictEqual(sectionMap.get(content.split('\n').findIndex((line) => line.includes('const originalCwd:')) + 1), 'Tests_Cli_Utility_Initialize_CliUtilityInitializeRun');
+    // `const originalCwd: ... = process.cwd();` inside describe('CliUtilityConfigure.run', ...).
+    // describe string 'CliUtilityConfigure.run' -> 'CliUtilityConfigureRun'.
+    strictEqual(sectionMap.get(content.split('\n').findIndex((line) => line.includes('const originalCwd:')) + 1), 'Tests_Cli_Utility_Configure_CliUtilityConfigureRun');
 
     return;
   });
@@ -575,10 +575,10 @@ describe('deriveClassPrefix', () => {
   });
 
   it('drops .test from test files', () => {
-    const filePath: Tests_TypeDeclarations_DeriveClassPrefix_DropsTestFromTestFiles_FilePath = resolve(process.cwd(), 'src/types/tests/cli/utility/initialize.test.d.ts');
+    const filePath: Tests_TypeDeclarations_DeriveClassPrefix_DropsTestFromTestFiles_FilePath = resolve(process.cwd(), 'src/types/tests/cli/utility/configure.test.d.ts');
     const result: Tests_TypeDeclarations_DeriveClassPrefix_DropsTestFromTestFiles_Result = deriveClassPrefix(filePath, testConfig);
 
-    strictEqual(result, 'Tests_Cli_Utility_Initialize');
+    strictEqual(result, 'Tests_Cli_Utility_Configure');
 
     return;
   });
@@ -749,10 +749,10 @@ describe('discoverSourceFiles', () => {
  */
 describe('parseDescribeString', () => {
   it('splits Class.method form and joins as one PascalCase chunk', () => {
-    const input: Tests_TypeDeclarations_ParseDescribeString_SplitsClassMethodFormAndJoinsAsOnePascalCaseChunk_Input = 'CliUtilityInitialize.run';
+    const input: Tests_TypeDeclarations_ParseDescribeString_SplitsClassMethodFormAndJoinsAsOnePascalCaseChunk_Input = 'CliUtilityConfigure.run';
     const result: Tests_TypeDeclarations_ParseDescribeString_SplitsClassMethodFormAndJoinsAsOnePascalCaseChunk_Result = parseDescribeString(input);
 
-    strictEqual(result, 'CliUtilityInitializeRun');
+    strictEqual(result, 'CliUtilityConfigureRun');
 
     return;
   });
@@ -1884,9 +1884,9 @@ describe('deriveClassPrefix comprehensive', () => {
   });
 
   it('strips .test marker for test files', () => {
-    const prefix: Tests_TypeDeclarations_DeriveClassPrefixComprehensive_StripsTestMarkerForTestFiles_Prefix = deriveClassPrefix(resolve(process.cwd(), 'src/tests/cli/utility/initialize.test.ts'), testConfig);
+    const prefix: Tests_TypeDeclarations_DeriveClassPrefixComprehensive_StripsTestMarkerForTestFiles_Prefix = deriveClassPrefix(resolve(process.cwd(), 'src/tests/cli/utility/configure.test.ts'), testConfig);
 
-    strictEqual(prefix, 'Tests_Cli_Utility_Initialize');
+    strictEqual(prefix, 'Tests_Cli_Utility_Configure');
 
     return;
   });

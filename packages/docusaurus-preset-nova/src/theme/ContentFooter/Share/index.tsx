@@ -9,7 +9,7 @@ import type {
 } from '../../../types/theme/ContentFooter/Share/index.d.ts';
 
 /**
- * Theme - Content Footer - Share.
+ * Theme - Content Footer - Share - Share.
  *
  * Renders the share-this section of a content footer - a labeled row
  * of social share buttons for the current page.

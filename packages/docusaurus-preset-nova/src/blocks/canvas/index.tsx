@@ -4,7 +4,7 @@ import type {
 } from '../../types/blocks/canvas/index.d.ts';
 
 /**
- * Blocks - Canvas.
+ * Blocks - Canvas - Blocks Canvas.
  *
  * Freeform container block that accepts arbitrary JSX children.
  * Renders a section with configurable container width and surface variant.

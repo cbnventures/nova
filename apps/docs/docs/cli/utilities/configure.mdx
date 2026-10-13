@@ -1,11 +1,11 @@
 ---
-id: "initialize"
-title: "Initialize Config"
+id: "configure"
+title: "Configure Nova"
 description: "Launch an interactive wizard that loads, edits, and saves the Nova config file with project details, entities, and canonical URLs from the terminal."
 keywords:
   - "nova"
-  - "nova initialize"
-  - "nova utility init"
+  - "nova configure"
+  - "nova utility config"
   - "nova config wizard"
   - "project metadata"
   - "nova config json"
@@ -27,7 +27,7 @@ Generate or update the Nova config file with an interactive wizard that guides y
 
 ## Summary
 
-The `initialize` command scaffolds and maintains the <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file by opening a guided flow across project metadata, key entities, and canonical URLs.
+The `configure` command creates and maintains the <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file by opening a guided flow across project metadata, key entities, and canonical URLs.
 
 Existing values populate each prompt so you can edit an accurate snapshot and only persist changes when you confirm them.
 
@@ -60,10 +60,10 @@ You can run this command in two ways:
 
     ```bash
     # Original
-    nova utility initialize
+    nova utility configure
 
     # Shorthand
-    nova util init
+    nova util config
     ```
 
     **Note:** If Nova is installed **only locally** (inside a project), the command will work **only within that project's directory**. See the [npm docs](https://docs.npmjs.com/cli/configuring-npm/folders) for details.
@@ -73,10 +73,10 @@ You can run this command in two ways:
 
     ```bash
     # Original
-    npx --yes @cbnventures/nova@latest utility initialize
+    npx --yes @cbnventures/nova@latest utility configure
 
     # Shorthand
-    npx --yes @cbnventures/nova@latest util init
+    npx --yes @cbnventures/nova@latest util config
     ```
 
     **Note:** If you prefer the shorter `nova` command, see the [Setup and Configure](/docs/quickstart/setup) guide for installation instructions.
@@ -97,7 +97,7 @@ You can run this command in two ways:
 Use `--status` when you only want to compare the environment declarations with their GitHub Variable and Secret names. This path does not open the wizard and does not write `nova.config.json` or reconcile any values.
 
 ```bash
-nova utility initialize --status
+nova utility configure --status
 ```
 
 ## Flow Overview
@@ -194,7 +194,7 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 
 - **Purpose**: Select the project's release strategy: SemVer (`major.minor.patch`) or CalVer (`YYYY.MM.MICRO`).
 - **Nice to know**: With no release history, you can revisit this category and change the strategy before the first release.
-- **Things to watch**: Once the root or any non-freezable workspace changelog contains a release heading, Nova detects that history and makes the strategy read-only. A configured mismatch, mixed strategies, or an unsupported numeric heading stops initialization and identifies the affected changelog.
+- **Things to watch**: Once the root or any non-freezable workspace changelog contains a release heading, Nova detects that history and makes the strategy read-only. A configured mismatch, mixed strategies, or an unsupported numeric heading stops configuration and identifies the affected changelog.
 
 ## Saving and Canceling
 

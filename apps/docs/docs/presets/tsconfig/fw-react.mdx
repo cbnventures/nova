@@ -1,7 +1,7 @@
 ---
 id: "fw-react"
 title: "Framework - React"
-description: "Configure TypeScript for React with the modern JSX transform, bundler resolution, browser libraries, and no emit."
+description: "Configure TypeScript for React with the modern JSX transform, bundler resolution, and browser libraries."
 keywords:
   - "nova"
   - "react"
@@ -19,13 +19,14 @@ Configure TypeScript for a bundler-built React application.
 
 ## Usage
 
-Add `fw-react` after Nova's required essentials and strict layers and the browser runtime.
+Add `fw-react` after Nova's required essentials, strict, app-role, and browser-runtime layers.
 
 ```json title="tsconfig.json"
 {
   "extends": [
     "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
     "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-app.json",
     "@cbnventures/nova/presets/tsconfig/runtime-browser.json",
     "@cbnventures/nova/presets/tsconfig/fw-react.json"
   ],
@@ -37,14 +38,13 @@ Add `fw-react` after Nova's required essentials and strict layers and the browse
 
 ## Compiler Options
 
-| Option             | Value                               | Purpose                                                        |
-|--------------------|-------------------------------------|----------------------------------------------------------------|
-| `isolatedModules`  | `true`                              | Keeps every file safe for independent bundler transforms.      |
-| `jsx`              | `"react-jsx"`                       | Uses React's modern automatic JSX runtime.                     |
-| `lib`              | `["DOM", "DOM.Iterable", "ESNext"]` | Provides browser and modern JavaScript APIs.                   |
-| `module`           | `"ESNext"`                          | Preserves ECMAScript modules for the bundler.                  |
-| `moduleResolution` | `"Bundler"`                         | Resolves package exports the way a modern bundler does.        |
-| `noEmit`           | `true`                              | Keeps TypeScript as the checker while the bundler owns output. |
+| Option             | Value                               | Purpose                                                   |
+|--------------------|-------------------------------------|-----------------------------------------------------------|
+| `isolatedModules`  | `true`                              | Keeps every file safe for independent bundler transforms. |
+| `jsx`              | `"react-jsx"`                       | Uses React's modern automatic JSX runtime.                |
+| `lib`              | `["DOM", "DOM.Iterable", "ESNext"]` | Provides browser and modern JavaScript APIs.              |
+| `module`           | `"ESNext"`                          | Preserves ECMAScript modules for the bundler.             |
+| `moduleResolution` | `"Bundler"`                         | Resolves package exports the way a modern bundler does.   |
 
 ## Related
 

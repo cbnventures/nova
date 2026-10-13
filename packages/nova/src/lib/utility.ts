@@ -869,7 +869,7 @@ export function isEmpty(value: Lib_Utility_IsEmpty_Value): Lib_Utility_IsEmpty_R
  *
  * @param {Lib_Utility_IsExecuteShellError_Error} error - Error.
  *
- * @returns {boolean}
+ * @returns {Lib_Utility_IsExecuteShellError_TypeGuard}
  *
  * @since 0.11.0
  */
@@ -1015,7 +1015,7 @@ export function isIgnoredFile(filename: Lib_Utility_IsIgnoredFile_Filename, igno
  *
  * @param {Lib_Utility_IsPlainObject_Value} value - Value.
  *
- * @returns {boolean}
+ * @returns {Lib_Utility_IsPlainObject_TypeGuard}
  *
  * @since 0.13.0
  */
@@ -1503,7 +1503,7 @@ export function buildGeneratedFileHeader(options: Lib_Utility_BuildGeneratedFile
  * @param {Lib_Utility_SaveGeneratedFile_TargetPath}  targetPath  - Target path.
  * @param {Lib_Utility_SaveGeneratedFile_Contents}    contents    - Contents.
  * @param {Lib_Utility_SaveGeneratedFile_ReplaceFile} replaceFile - Replace file.
- * @param {Lib_Utility_SaveGeneratedFile_Header}      [header]    - Optional header metadata.
+ * @param {Lib_Utility_SaveGeneratedFile_Header}      [header]    - Header.
  *
  * @returns {Lib_Utility_SaveGeneratedFile_Returns}
  *

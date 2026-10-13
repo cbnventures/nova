@@ -70,7 +70,7 @@ const admonitionTypeLabels: Theme_Admonition_Index_Admonition_TypeLabels = {
 };
 
 /**
- * Theme - Admonition.
+ * Theme - Admonition - Admonition.
  *
  * Renders a styled admonition block with a type-specific icon, bold
  * title, and content area, applying nova and legacy class names

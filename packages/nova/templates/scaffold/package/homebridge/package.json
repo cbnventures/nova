@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
-    "dev:watch": "tsc --project tsconfig.source.json --watch",
+    "dev:watch": "nova utility transpile --project tsconfig.source.json --watch",
     "check": "nova utility run-scripts --sequential 'check:*'",
     "check:lint": "eslint ./ --max-warnings=0",
     "check:types-source": "nova utility type-check --project tsconfig.source.json",
@@ -24,7 +24,7 @@
     "start": "homebridge --debug --keep-orphans --plugin-path $(pwd)"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.29.0"
+    "@cbnventures/nova": "0.30.0"
   },
   "devDependencies": {
     "@types/node": "24.9.1",

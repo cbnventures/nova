@@ -76,7 +76,7 @@ const socialIconConfigs: Theme_Blog_Components_Author_Socials_Index_Socials_Icon
 };
 
 /**
- * Theme - Blog - Components - Author - Socials.
+ * Theme - Blog - Components - Author - Socials - Socials.
  *
  * Renders an author's social-platform links as a row of icon links. Each
  * known platform (X, GitHub, LinkedIn, etc.) gets a branded Iconify glyph;

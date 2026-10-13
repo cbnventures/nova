@@ -89,7 +89,7 @@ flowchart TD
 
     subgraph Utilities
         direction LR
-        UTIL --> UTIL1[changelog / initialize / run-recipes / run-scripts / ...]
+        UTIL --> UTIL1[changelog / configure / run-recipes / run-scripts / ...]
     end
 ```
 
@@ -237,7 +237,7 @@ All commands in "Utilities" are shaped as `nova utility <subcommand>` or `nova u
 | Subcommand                                       | Shorthand  | What It Does                                                                                            |
 |--------------------------------------------------|------------|---------------------------------------------------------------------------------------------------------|
 | [`changelog`](/docs/cli/utilities/changelog)     | `log`      | Record changes and release versioned changelogs.                                                        |
-| [`initialize`](/docs/cli/utilities/initialize)   | `init`     | Generate a new `nova.config.json` configuration file for this project.                                  |
+| [`configure`](/docs/cli/utilities/configure)     | `config`   | Create or edit this project's `nova.config.json` configuration file.                                    |
 | [`run-recipes`](/docs/cli/utilities/run-recipes) | `run-rcp`  | Run all enabled recipes and finalize workspace `package.json` files.                                    |
 | [`run-scripts`](/docs/cli/utilities/run-scripts) | `run-scr`  | Run package.json scripts by pattern with sequential, parallel, and explicit child-environment controls. |
 | [`transpile`](/docs/cli/utilities/transpile)     | `xpile`    | Transpile TypeScript with filtered diagnostics, emitting compiled output for project-owned files.       |

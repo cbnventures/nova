@@ -1408,7 +1408,7 @@ describe('LIB_REGEX_PATTERN_NON_WORD_CHARS', async () => {
  */
 describe('LIB_REGEX_PATTERN_SLUG_LINE', async () => {
   it('matches slug line', () => {
-    const subject: Tests_Lib_Regex_LIBREGEXPATTERNSLUGLINE_MatchesSlugLine_Subject = 'slug: /custom-path';
+    const subject: Tests_Lib_Regex_LIBREGEXPATTERNSLUGLINE_MatchesSlugLine_Subject = 'slug: "/custom-path"';
 
     match(subject, LIB_REGEX_PATTERN_SLUG_LINE);
 

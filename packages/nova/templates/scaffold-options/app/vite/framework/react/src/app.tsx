@@ -1,5 +1,5 @@
 /**
- * App.
+ * App - App.
  *
  * Renders the generated React workspace title.
  * Replace this starter component with application routes and features.

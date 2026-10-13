@@ -115,16 +115,20 @@ Composition follows a simple order:
 ```mermaid
 flowchart TD
     ES[1. Essentials] --> ST[2. Strict]
-    ST --> E[3. Environment / Framework]
-    E -.-> P[4. Platform]
-    P -.-> T[5. Tool]
+    ST --> RO[3. Role]
+    RO --> RU[4. Runtime]
+    RU -.-> FW[5. Framework]
+    FW -.-> T[6. Tool]
+    T -.-> LO[7. Local Overrides]
 ```
 
 1. Start with **essentials** as the baseline.
 2. Apply **strict** for stronger compiler checks.
-3. Then add the **environment** (runtime) or **framework** that matches where it runs.
-4. Optionally, pick a **platform**.
-5. Finish with any **tool** specifics.
+3. Select one **role** to decide whether TypeScript emits source, declarations, or nothing.
+4. Add the **runtime** that matches where the code runs.
+5. Add a **framework** when the project uses one.
+6. Finish with any **tool** specifics.
+7. Keep project paths, ambient types, includes, excludes, and output directories local.
 
 The <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> set the heavy knobs for you (e.g., `module` with `moduleResolution`, matching `lib` sets, etc.), so your config stays simple.
 
@@ -135,6 +139,7 @@ Keep **local overrides** focused on project wiring: `paths` for imports, `outDir
 | Layer             | Presets                                                                                                                                                                                                                                                                                                                                                                                                            | Use                                                                         |
 |-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
 | Required baseline | [`dx-essentials`](/docs/presets/tsconfig/dx-essentials), [`dx-strict`](/docs/presets/tsconfig/dx-strict)                                                                                                                                                                                                                                                                                                           | Every Nova TSConfig begins with these two presets, in this order.           |
+| Role              | [`role-app`](/docs/presets/tsconfig/role-app), [`role-config`](/docs/presets/tsconfig/role-config), [`role-scripts`](/docs/presets/tsconfig/role-scripts), [`role-source`](/docs/presets/tsconfig/role-source), [`role-tests`](/docs/presets/tsconfig/role-tests)                                                                                                                                                  | Select build ownership immediately after the required baseline.             |
 | Framework         | [`fw-astro`](/docs/presets/tsconfig/fw-astro), [`fw-docusaurus`](/docs/presets/tsconfig/fw-docusaurus), [`fw-expressjs`](/docs/presets/tsconfig/fw-expressjs), [`fw-homebridge`](/docs/presets/tsconfig/fw-homebridge), [`fw-nextjs`](/docs/presets/tsconfig/fw-nextjs), [`fw-react`](/docs/presets/tsconfig/fw-react), [`fw-svelte`](/docs/presets/tsconfig/fw-svelte), [`fw-vue`](/docs/presets/tsconfig/fw-vue) | Add framework compiler behavior after the matching runtime.                 |
 | Runtime           | [`runtime-browser`](/docs/presets/tsconfig/runtime-browser), [`runtime-cloudflare-workers`](/docs/presets/tsconfig/runtime-cloudflare-workers), [`runtime-edge`](/docs/presets/tsconfig/runtime-edge), [`runtime-node`](/docs/presets/tsconfig/runtime-node), [`runtime-service-worker`](/docs/presets/tsconfig/runtime-service-worker), [`runtime-web-worker`](/docs/presets/tsconfig/runtime-web-worker)         | Select module resolution and libraries for the execution environment.       |
 | Tool              | [`tool-vite`](/docs/presets/tsconfig/tool-vite)                                                                                                                                                                                                                                                                                                                                                                    | Configure bundler resolution and isolated transforms for Vite-built source. |
@@ -148,6 +153,7 @@ This example shows a minimal Node.js project using TypeScript, composed with Nov
   "extends": [
     "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
     "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-source.json",
     "@cbnventures/nova/presets/tsconfig/runtime-node.json"
   ],
   "compilerOptions": {

@@ -14,7 +14,7 @@ import type {
  * renders styled tooltips over pre-rendered Mermaid diagram nodes on
  * hover, replacing the unstyled native title attribute behavior.
  *
- * @param {Plugins_MermaidTooltip_Index_MermaidTooltip_Context} _context - _context.
+ * @param {Plugins_MermaidTooltip_Index_MermaidTooltip_Context} _context - Context.
  *
  * @returns {Plugins_MermaidTooltip_Index_MermaidTooltip_Returns}
  *

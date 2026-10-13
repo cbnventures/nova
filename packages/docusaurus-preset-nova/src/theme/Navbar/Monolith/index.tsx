@@ -22,7 +22,7 @@ import type {
 } from '../../../types/theme/Navbar/Monolith/index.d.ts';
 
 /**
- * Theme - Navbar - Monolith.
+ * Theme - Navbar - Monolith - Monolith.
  *
  * Minimal navigation layout with the site brand centered and only utility
  * action icons visible, omitting traditional navigation items

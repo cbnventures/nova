@@ -23,6 +23,18 @@ import { isProjectRoot, resolveTemplatePath, saveGeneratedFile } from '../../../
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
+  Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_CapitalizedValue,
+  Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Content,
+  Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Placeholder,
+  Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_CurrentLinePrefix,
+  Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_IsSentenceStart,
+  Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Match,
+  Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Offset,
+  Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Prefix,
+  Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_PreviousCharacter,
+  Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Returns,
+  Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Returns,
+  Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Value,
   Cli_Generate_Github_IssueTemplate_Runner_Run_ConfigBugReportFields,
   Cli_Generate_Github_IssueTemplate_Runner_Run_Content,
   Cli_Generate_Github_IssueTemplate_Runner_Run_CurrentDirectory,
@@ -80,6 +92,68 @@ import type {
  * @since 0.15.0
  */
 export class Runner {
+  /**
+   * CLI - Generate - GitHub - Issue Template - Replace Pronoun.
+   *
+   * Replaces one pronoun placeholder throughout a template and capitalizes the
+   * replacement when the placeholder begins a sentence or quoted YAML value.
+   *
+   * @param {Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Content}     content     - Content.
+   * @param {Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Placeholder} placeholder - Placeholder.
+   * @param {Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Value}       value       - Value.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Returns}
+   *
+   * @since 0.30.0
+   */
+  private static replacePronoun(
+    content: Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Content,
+    placeholder: Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Placeholder,
+    value: Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Value,
+  ): Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Returns {
+    const capitalizedValue: Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_CapitalizedValue = `${value.slice(0, 1).toUpperCase()}${value.slice(1)}`;
+
+    /**
+     * CLI - Generate - GitHub - Issue Template - Replace Pronoun - Resolve Replacement.
+     *
+     * Selects the correctly capitalized replacement for one placeholder match
+     * after examining the content that precedes it on the current line.
+     *
+     * @param {Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Match}  _match - Match.
+     * @param {Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Offset} offset - Offset.
+     *
+     * @returns {Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Returns}
+     *
+     * @since 0.30.0
+     */
+    function resolveReplacement(
+      _match: Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Match,
+      offset: Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Offset,
+    ): Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Returns {
+      const prefix: Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Prefix = content.slice(0, offset);
+      const currentLinePrefix: Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_CurrentLinePrefix = prefix.slice(prefix.lastIndexOf('\n') + 1).trimEnd();
+      const previousCharacter: Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_PreviousCharacter = currentLinePrefix.at(-1);
+      const isSentenceStart: Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_IsSentenceStart = previousCharacter === undefined
+        || previousCharacter === '.'
+        || previousCharacter === '!'
+        || previousCharacter === '?'
+        || previousCharacter === ':'
+        || previousCharacter === '"'
+        || previousCharacter === '\''
+        || previousCharacter === '('
+        || previousCharacter === '['
+        || previousCharacter === '{'
+        || previousCharacter === '>'
+        || previousCharacter === '-';
+
+      return (isSentenceStart === true) ? capitalizedValue : value;
+    }
+
+    return content.replace(new RegExp(placeholder.source, 'g'), resolveReplacement);
+  }
+
   /**
    * CLI - Generate - GitHub - Issue Template - Run.
    *
@@ -268,16 +342,17 @@ export class Runner {
         }
       }
 
-      const content: Cli_Generate_Github_IssueTemplate_Runner_Run_Content = stripped
+      let content: Cli_Generate_Github_IssueTemplate_Runner_Run_Content = stripped
         .replace(new RegExp(`${LIB_REGEX_PLACEHOLDER_PLATFORM_FIELDS.source}\\n`, 'g'), platformFieldsContent)
         .replace(new RegExp(`${LIB_REGEX_PLACEHOLDER_LEGAL_AGREEMENTS.source}\\n`, 'g'), legalContent)
-        .replace(new RegExp(LIB_REGEX_PLACEHOLDER_WE.source, 'g'), we)
-        .replace(new RegExp(LIB_REGEX_PLACEHOLDER_US.source, 'g'), us)
-        .replace(new RegExp(LIB_REGEX_PLACEHOLDER_OUR.source, 'g'), our)
         .replace(new RegExp(LIB_REGEX_PLACEHOLDER_GITHUB_REPO.source, 'g'), githubRepo)
         .replace(new RegExp(LIB_REGEX_PLACEHOLDER_GITHUB_SPONSOR.source, 'g'), githubSponsor)
         .replace(new RegExp(LIB_REGEX_PLACEHOLDER_PRIVACY_POLICY.source, 'g'), privacyPolicy)
         .replace(new RegExp(LIB_REGEX_PLACEHOLDER_TERMS_OF_USE.source, 'g'), termsOfUse);
+
+      content = this.replacePronoun(content, LIB_REGEX_PLACEHOLDER_WE, we);
+      content = this.replacePronoun(content, LIB_REGEX_PLACEHOLDER_US, us);
+      content = this.replacePronoun(content, LIB_REGEX_PLACEHOLDER_OUR, our);
 
       try {
         parseYaml(content);

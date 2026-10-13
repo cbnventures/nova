@@ -6,7 +6,7 @@ import type {
 } from '../../types/blocks/terminology/index.d.ts';
 
 /**
- * Blocks - Terminology.
+ * Blocks - Terminology - Blocks Terminology.
  *
  * Inline terminology component that renders children with a dotted
  * underline and a hover tooltip expanding the abbreviated term,

@@ -1,0 +1,95 @@
+---
+title: "Recipes and Run Scripts"
+description: "Nova 0.14.0 replaces copied maintenance commands with reusable recipes and a structured script runner for predictable project upkeep."
+slug: "recipes-and-run-scripts"
+authors:
+  - "mrjackyliang"
+keywords:
+  - "nova"
+  - "package.json recipes"
+  - "run scripts"
+  - "project maintenance"
+  - "monorepo tooling"
+tags:
+  - "release"
+  - "nova"
+  - "recipes"
+  - "scripts"
+---
+
+Routine project maintenance should read like a policy, not a growing chain of copied shell commands.
+
+Nova 0.14.0 introduced granular recipes, `run-recipes`, and `run-scripts` to make that structure explicit.
+
+{/* truncate */}
+
+## Small Recipes Instead of One Large Rewrite
+
+The first package-manifest tooling tried to synchronize too many concerns at once. A project could want Nova to align ownership fields without also changing modules, dependencies, or build artifacts.
+
+Version 0.14.0 split that work into nine package JSON recipes:
+
+- `cleanup`
+- `normalize-artifacts`
+- `normalize-bundler`
+- `normalize-dependencies`
+- `normalize-modules`
+- `normalize-tooling`
+- `sync-environment`
+- `sync-identity`
+- `sync-ownership`
+
+Each workspace opts into the recipes it wants through `nova.config.json`. Consumers keep control over policy while Nova owns the repeatable transformation.
+
+## One Command for Enabled Maintenance
+
+Running each recipe by hand would only replace one kind of command sprawl with another. The `run-recipes` utility reads the configuration and executes the enabled set in a stable order.
+
+```bash
+nova utility run-recipes --replace-file
+```
+
+That makes a repository-level `recipes` script short and durable:
+
+```json title="package.json"
+{
+  "scripts": {
+    "recipes": "nova utility run-recipes --replace-file"
+  }
+}
+```
+
+The command can be rerun as a project evolves. Recipes are maintenance operations, not one-time project generators.
+
+## Scripts Become Groups
+
+The `run-scripts` utility gives `package.json` script names a simple hierarchy. A parent script can run every matching child instead of spelling out a long command chain.
+
+```json title="package.json"
+{
+  "scripts": {
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:lint": "eslint . --max-warnings=0",
+    "check:types": "nova utility type-check --project tsconfig.json",
+    "check:test": "vitest run"
+  }
+}
+```
+
+Running `npm run check` now means “run the complete check group.” Adding `check:docs` later does not require editing the parent command.
+
+Sequential mode keeps dependent checks ordered. Parallel mode serves independent groups, such as development watchers that should stay alive together.
+
+## A Cleaner Ownership Boundary
+
+The combination establishes a useful division:
+
+- `package.json` names the lifecycle developers expect: `dev`, `check`, `build`, `deploy`, and `clean`.
+- Nested scripts hold the individual tools that implement that lifecycle.
+- `run-scripts` orchestrates those scripts without an external runner.
+- `nova.config.json` declares which maintenance recipes a workspace accepts.
+- `run-recipes` applies those accepted transformations repeatedly.
+
+The repository remains understandable to ordinary npm users, while Nova removes the duplicated glue that tends to drift.
+
+See the current [Run Scripts](/docs/cli/utilities/run-scripts) and [Run Recipes](/docs/cli/utilities/run-recipes) documentation for the maintained command options.

@@ -11,7 +11,7 @@ import type {
 } from '../../types/theme/Heading/index.d.ts';
 
 /**
- * Theme - Heading.
+ * Theme - Heading - Heading.
  *
  * Renders a heading element at the specified level with an anchor hash link
  * revealed on hover or keyboard focus, collecting anchor identifiers through

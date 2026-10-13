@@ -10,7 +10,7 @@ import type {
 } from '../../../types/theme/ContentVisibility/Unlisted/index.d.ts';
 
 /**
- * Theme - Content Visibility - Unlisted.
+ * Theme - Content Visibility - Unlisted - Unlisted.
  *
  * Renders a caution-styled admonition for unlisted content and uses Helmet
  * to inject a noindex meta tag; the tag is server-rendered into the prod

@@ -13,7 +13,7 @@ import type {
 } from '../../types/theme/Error/index.d.ts';
 
 /**
- * Theme - Error.
+ * Theme - Error - Error.
  *
  * Renders a plain error fallback with the error message and a retry button,
  * providing a minimal view for the top-level error boundary without any

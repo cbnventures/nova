@@ -9,6 +9,40 @@ import type {
 } from '../../../shared.d.ts';
 
 /**
+ * CLI - Generate - GitHub - Issue Template - Replace Pronoun.
+ *
+ * @since 0.30.0
+ */
+export type Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Content = string;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Placeholder = RegExp;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Value = string;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_Returns = string;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_CapitalizedValue = string;
+
+/**
+ * CLI - Generate - GitHub - Issue Template - Replace Pronoun - Resolve Replacement.
+ *
+ * @since 0.30.0
+ */
+export type Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Match = string;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Offset = number;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Returns = string;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_Prefix = string;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_CurrentLinePrefix = string;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_PreviousCharacter = string | undefined;
+
+export type Cli_Generate_Github_IssueTemplate_Runner_ReplacePronoun_ResolveReplacement_IsSentenceStart = boolean;
+
+/**
  * CLI - Generate - GitHub - Issue Template - Run.
  *
  * @since 0.15.0

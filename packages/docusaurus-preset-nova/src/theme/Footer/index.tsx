@@ -22,7 +22,7 @@ import type {
 } from '../../types/theme/Footer/index.d.ts';
 
 /**
- * Theme - Footer.
+ * Theme - Footer - Footer.
  *
  * Orchestrator component that reads the active footer variant from
  * build-time global data, assembles shared props, and dispatches

@@ -22,7 +22,7 @@ import type {
 } from '../../types/theme/Details/index.d.ts';
 
 /**
- * Theme - Details.
+ * Theme - Details - Details.
  *
  * Custom collapsible details component with animated open/close
  * transition, a chevron rotation indicator, and border styling

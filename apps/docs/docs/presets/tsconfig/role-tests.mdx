@@ -1,0 +1,57 @@
+---
+id: "role-tests"
+title: "Role - Tests"
+description: "Type-check Vitest suites and test helpers without emitting JavaScript or declarations."
+keywords:
+  - "nova"
+  - "role-tests"
+  - "tsconfig preset"
+  - "vitest"
+  - "test typescript"
+  - "no emit"
+tags:
+  - "presets"
+  - "tsconfig"
+  - "role"
+  - "tests"
+---
+
+Use `role-tests` for Vitest suites, fixtures, and test-only helpers.
+
+## Why Use This Preset?
+
+1. Keeps test code under the same strict type-checking baseline as production code.
+2. Prevents test JavaScript and declaration files from leaking into build output.
+3. Leaves test globals and environment types explicit in each project instead of assuming one runner or runtime.
+
+## Usage
+
+```json title="tsconfig.tests.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-tests.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-node.json"
+  ],
+  "compilerOptions": {
+    "types": [
+      "@types/node",
+      "vitest/globals"
+    ]
+  }
+}
+```
+
+## What This Preset Configures
+
+| Setting          | Value   | Description                                 |
+|------------------|---------|---------------------------------------------|
+| `declaration`    | `false` | Does not create declarations for test code. |
+| `declarationMap` | `false` | Does not create declaration maps.           |
+| `noEmit`         | `true`  | Checks tests without writing build output.  |
+
+## Related
+
+- Add the runtime used by the tests after this role.
+- Review the complete layer order in **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.

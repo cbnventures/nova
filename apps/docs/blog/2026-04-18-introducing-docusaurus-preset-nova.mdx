@@ -1,0 +1,79 @@
+---
+title: "Introducing Docusaurus Preset Nova"
+description: "Docusaurus Preset Nova 0.15.0 packages complete visual systems, content blocks, search, diagrams, and authoring tools behind one preset."
+slug: "introducing-docusaurus-preset-nova"
+authors:
+  - "mrjackyliang"
+keywords:
+  - "nova"
+  - "docusaurus preset"
+  - "documentation theme"
+  - "design system"
+  - "documentation search"
+tags:
+  - "release"
+  - "docusaurus"
+  - "preset"
+  - "design"
+---
+
+Documentation sites need more than a color palette when they are expected to feel like a finished product.
+
+Docusaurus Preset Nova 0.15.0 launched as a coordinated design, content, search, and authoring layer for Docusaurus.
+
+{/* truncate */}
+
+## Four Starting Identities
+
+The initial release shipped four complete visual presets:
+
+- **Envoy** — A polished, approachable system for public-facing product documentation.
+- **Foundry** — A denser technical system suited to tools and engineering projects.
+- **Sentinel** — A high-contrast identity for security and infrastructure products.
+- **Signal** — A vivid system for products that need a more expressive voice.
+
+A site selects its starting point in the Docusaurus configuration:
+
+```ts title="docusaurus.config.ts"
+const config = {
+  presets: [
+    [
+      '@cbnventures/docusaurus-preset-nova',
+      {
+        preset: 'envoy',
+      },
+    ],
+  ],
+};
+```
+
+The choice is larger than a theme name. Each preset coordinates colors, typography, shapes, spacing, navigation, footer treatment, code presentation, and motion.
+
+## A System with Deliberate Axes
+
+Version 0.15.0 made the visual system adjustable without requiring a fork.
+
+- Navbar variants included Bridge, Canopy, Monolith, and Compass.
+- Footer variants included Commons, Embassy, Ledger, and Launchpad.
+- Shape could move from sharp to rounded to pill.
+- Density could move from compact to comfortable to spacious.
+- Depth could render cards as flat, elevated, or glass surfaces and code blocks as flat, bordered, or elevated surfaces.
+- Motion ranged from none to expressive, with coordinated reveal timing.
+
+These axes let a site change character while preserving the relationships that make the design coherent.
+
+## Content Tools Belong in the Same Package
+
+The release also included reusable blocks for Hero, Features, Blog Preview, Install Strip, App Market downloads, Spotlight, Stats, Terminology, and Typewriter content.
+
+Authors could add Mermaid diagrams, Shiki-highlighted code, and Sandpack playgrounds without assembling a separate plugin stack. RTL handling, sitemap output, Google Tag Manager integration, and page-transition progress completed the initial authoring surface.
+
+Client-side search used Lunr indexing, a Web Worker, and CJK-aware processing. Search therefore arrived as part of the preset experience rather than a separate hosted service decision.
+
+## Why a Preset Instead of a Theme
+
+A Docusaurus theme controls presentation, but a preset can coordinate the plugins and content systems around it. That wider boundary is what makes the package useful as a site foundation.
+
+The goal is not to hide Docusaurus. It is to provide a known-good composition so a new documentation site starts with consistent navigation, search, diagrams, code, internationalization support, analytics hooks, and design tokens.
+
+The preset has continued to grow since this launch. See the current [manual setup guide](/docs/facades/docusaurus-preset/getting-started/manual-setup) and [preset reference](/docs/facades/docusaurus-preset/presets/envoy) for today’s options.

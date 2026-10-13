@@ -49,7 +49,7 @@ export class [__WORKSPACE_IDENTIFIER__]Platform implements Platform_[__WORKSPACE
    * The generated platform is then ready for consumer device discovery.
    *
    * @param {Platform_[__WORKSPACE_IDENTIFIER__]Platform_Constructor_Log}    log     - Log.
-   * @param {Platform_[__WORKSPACE_IDENTIFIER__]Platform_Constructor_Config} _config - _config.
+   * @param {Platform_[__WORKSPACE_IDENTIFIER__]Platform_Constructor_Config} _config - Config.
    * @param {Platform_[__WORKSPACE_IDENTIFIER__]Platform_Constructor_Api}    api     - Api.
    *
    * @since 0.0.0

@@ -1,0 +1,71 @@
+---
+title: "Build Once, Publish Everywhere"
+description: "Nova 0.16.0 unifies package, container, and site publishing so one verified build can fan out to several destinations safely."
+slug: "build-once-publish-everywhere"
+authors:
+  - "mrjackyliang"
+keywords:
+  - "nova"
+  - "github actions"
+  - "continuous deployment"
+  - "npm provenance"
+  - "multi-destination publishing"
+tags:
+  - "release"
+  - "nova"
+  - "publishing"
+  - "github-actions"
+---
+
+Publishing the same release to several destinations should not require rebuilding the same source several times.
+
+Nova 0.16.0 replaced separate destination workflows with one build that fans out into independent publish jobs.
+
+{/* truncate */}
+
+## The Old Shape Multiplied Work
+
+A package published to npm and GitHub Packages could run two complete check-and-build pipelines. A documentation site deployed to two hosts could repeat the same expensive production build again.
+
+Repeated builds cost time and can produce subtly different artifacts. They also scatter permissions, environment setup, and release behavior across files that are difficult to compare.
+
+## One Verified Build, Many Destinations
+
+The unified publish workflow introduced three clear phases:
+
+1. Check the configured release scopes.
+2. Build the release artifacts once.
+3. Publish those artifacts to every configured destination.
+
+Version 0.16.0 supported eight destination types:
+
+- npm
+- GitHub Packages
+- Docker Hub
+- GitHub Container Registry
+- Cloudflare Pages for Docusaurus
+- GitHub Pages for Docusaurus
+- AWS Amplify for Next.js
+- Vercel for Next.js
+
+Targets can run in parallel when they are independent. A target can also declare that it needs another target first, which supports cases such as publishing a core package before a package that installs it during release.
+
+## Build Only What the Release Needs
+
+The generator scopes checks and builds to the packages involved in the workflow. It uses project-aware filtering when Turborepo is present and falls back to npm workspace targeting when it is not.
+
+That keeps a documentation-only release from rebuilding an unrelated service. The workflow remains generated from the declared release graph instead of a hand-maintained list of commands.
+
+## Security Is Part of the Graph
+
+Generated workflows declare GitHub token permissions explicitly, beginning from `contents: read` instead of inheriting broad repository defaults.
+
+The first unified publisher also added signed provenance to npm packages and Docker images. npm receives the provenance flag at publish time, while container targets use GitHub’s build-provenance attestation action.
+
+These are different mechanisms applied at the destination that understands them. The shared principle is that consumers should be able to connect an artifact to the workflow that produced it.
+
+## Configuration Describes Intent
+
+The configuration records what should publish, where its working directory lives, which packages should be checked and built, and which same-type targets must finish first. Nova turns that data into the job graph.
+
+The generator has evolved since 0.16.0, including renamed fields and additional targets. See the current [GitHub workflow generator](/docs/cli/generators/github/workflows) for the maintained schema and security behavior.

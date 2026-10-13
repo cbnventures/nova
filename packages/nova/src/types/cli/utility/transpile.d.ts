@@ -1,66 +1,22 @@
-import type {
-  Diagnostic,
-  EmitResult,
-  LineAndCharacter,
-  ParsedCommandLine,
-  Program,
-} from 'typescript';
+import type { Shared_TranspileResult } from '../../shared.d.ts';
 
 /**
- * CLI - Utility - Transpile - Emit Files.
+ * CLI - Utility - Transpile - Print Error.
  *
- * @since 0.14.0
+ * @since 0.30.0
  */
-export type Cli_Utility_Transpile_Runner_EmitFiles_Program = Program;
+export type Cli_Utility_Transpile_Runner_PrintError_Message = string;
 
-export type Cli_Utility_Transpile_Runner_EmitFiles_Returns = EmitResult;
+export type Cli_Utility_Transpile_Runner_PrintError_Returns = void;
 
 /**
- * CLI - Utility - Transpile - Filter Diagnostics.
+ * CLI - Utility - Transpile - Print Info.
  *
- * @since 0.14.0
+ * @since 0.30.0
  */
-export type Cli_Utility_Transpile_Runner_FilterDiagnostics_Diagnostics = readonly Diagnostic[];
+export type Cli_Utility_Transpile_Runner_PrintInfo_Message = string;
 
-export type Cli_Utility_Transpile_Runner_FilterDiagnostics_Returns = Diagnostic[];
-
-export type Cli_Utility_Transpile_Runner_FilterDiagnostics_CurrentDirectory = string;
-
-export type Cli_Utility_Transpile_Runner_FilterDiagnostics_FileName = string;
-
-/**
- * CLI - Utility - Transpile - Get Config Path.
- *
- * @since 0.14.0
- */
-export type Cli_Utility_Transpile_Runner_GetConfigPath_Project = string | undefined;
-
-export type Cli_Utility_Transpile_Runner_GetConfigPath_Returns = string | undefined;
-
-export type Cli_Utility_Transpile_Runner_GetConfigPath_CurrentDirectory = string;
-
-export type Cli_Utility_Transpile_Runner_GetConfigPath_Resolved = string;
-
-/**
- * CLI - Utility - Transpile - Print Diagnostics.
- *
- * @since 0.14.0
- */
-export type Cli_Utility_Transpile_Runner_PrintDiagnostics_FilteredDiagnostics = Diagnostic[];
-
-export type Cli_Utility_Transpile_Runner_PrintDiagnostics_Returns = void;
-
-export type Cli_Utility_Transpile_Runner_PrintDiagnostics_FileSet = Set<string>;
-
-export type Cli_Utility_Transpile_Runner_PrintDiagnostics_FileName = string;
-
-export type Cli_Utility_Transpile_Runner_PrintDiagnostics_Message = string;
-
-export type Cli_Utility_Transpile_Runner_PrintDiagnostics_Position = LineAndCharacter;
-
-export type Cli_Utility_Transpile_Runner_PrintDiagnostics_Line = number;
-
-export type Cli_Utility_Transpile_Runner_PrintDiagnostics_Character = number;
+export type Cli_Utility_Transpile_Runner_PrintInfo_Returns = void;
 
 /**
  * CLI - Utility - Transpile - Run.
@@ -69,35 +25,13 @@ export type Cli_Utility_Transpile_Runner_PrintDiagnostics_Character = number;
  */
 export type Cli_Utility_Transpile_Runner_Run_Options_Project = string;
 
+export type Cli_Utility_Transpile_Runner_Run_Options_Watch = boolean;
+
 export type Cli_Utility_Transpile_Runner_Run_Options = {
   project?: Cli_Utility_Transpile_Runner_Run_Options_Project;
+  watch?: Cli_Utility_Transpile_Runner_Run_Options_Watch;
 };
 
 export type Cli_Utility_Transpile_Runner_Run_Returns = void;
 
-export type Cli_Utility_Transpile_Runner_Run_ConfigPath = string | undefined;
-
-export type Cli_Utility_Transpile_Runner_Run_ConfigResult = {
-  config?: unknown;
-  error?: Diagnostic;
-};
-
-export type Cli_Utility_Transpile_Runner_Run_ConfigReadDiagnostics = readonly Diagnostic[];
-
-export type Cli_Utility_Transpile_Runner_Run_ConfigReadFilteredDiagnostics = Diagnostic[];
-
-export type Cli_Utility_Transpile_Runner_Run_Config = unknown;
-
-export type Cli_Utility_Transpile_Runner_Run_ConfigDirectory = string;
-
-export type Cli_Utility_Transpile_Runner_Run_Parsed = ParsedCommandLine;
-
-export type Cli_Utility_Transpile_Runner_Run_ConfigParseDiagnostics = readonly Diagnostic[];
-
-export type Cli_Utility_Transpile_Runner_Run_ConfigParseFilteredDiagnostics = Diagnostic[];
-
-export type Cli_Utility_Transpile_Runner_Run_Program = Program;
-
-export type Cli_Utility_Transpile_Runner_Run_EmitResult = EmitResult;
-
-export type Cli_Utility_Transpile_Runner_Run_ProgramFilteredDiagnostics = Diagnostic[];
+export type Cli_Utility_Transpile_Runner_Run_Result = Shared_TranspileResult;

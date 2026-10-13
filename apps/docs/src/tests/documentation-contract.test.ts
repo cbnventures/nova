@@ -18,11 +18,11 @@ import type {
   Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigFields,
   Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigMatch,
   Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigReference,
+  Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigureDocs,
   Tests_DocumentationContract_DocumentationContract_ConfigAndCli_Cwd,
   Tests_DocumentationContract_DocumentationContract_ConfigAndCli_DotenvDocs,
   Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ExampleConfig,
   Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ExampleMatch,
-  Tests_DocumentationContract_DocumentationContract_ConfigAndCli_InitializeDocs,
   Tests_DocumentationContract_DocumentationContract_ConfigAndCli_NovaRoot,
   Tests_DocumentationContract_DocumentationContract_ConfigAndCli_Reaches,
   Tests_DocumentationContract_DocumentationContract_ConfigAndCli_RecipeCategories,
@@ -74,7 +74,7 @@ describe('Documentation contract', () => {
     const novaRoot: Tests_DocumentationContract_DocumentationContract_ConfigAndCli_NovaRoot = resolve(cwd, '..', '..');
     const sharedTypes: Tests_DocumentationContract_DocumentationContract_ConfigAndCli_SharedTypes = await readFile(resolve(novaRoot, 'packages', 'nova', 'src', 'types', 'shared.d.ts'), 'utf-8');
     const configReference: Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigReference = await readFile(resolve(cwd, 'docs', 'quickstart', 'nova-config.mdx'), 'utf-8');
-    const initializeDocs: Tests_DocumentationContract_DocumentationContract_ConfigAndCli_InitializeDocs = await readFile(resolve(cwd, 'docs', 'cli', 'utilities', 'initialize.mdx'), 'utf-8');
+    const configureDocs: Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigureDocs = await readFile(resolve(cwd, 'docs', 'cli', 'utilities', 'configure.mdx'), 'utf-8');
     const configMatch: Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigMatch = sharedTypes.match(PATTERN_NOVA_CONFIG_TYPE_BLOCK);
 
     ok(configMatch !== null, 'Shared_NovaConfig public type block was not found');
@@ -92,14 +92,14 @@ describe('Documentation contract', () => {
       ok(configReference.includes(`## \`${configField}\``) === true, `Config reference is missing the top-level "${configField}" field`);
     }
 
-    const exampleMatch: Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ExampleMatch = initializeDocs.match(PATTERN_TITLED_NOVA_CONFIG_JSON_BLOCK);
+    const exampleMatch: Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ExampleMatch = configureDocs.match(PATTERN_TITLED_NOVA_CONFIG_JSON_BLOCK);
 
-    ok(exampleMatch !== null, 'Initializer reference is missing its full nova.config.json example');
+    ok(exampleMatch !== null, 'Configure reference is missing its full nova.config.json example');
 
     const exampleConfig: Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ExampleConfig = JSON.parse(exampleMatch[1] ?? '') as Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ExampleConfig;
 
     for (const configField of configFields) {
-      ok(Object.hasOwn(exampleConfig, configField) === true, `Initializer output example is missing the top-level "${configField}" field`);
+      ok(Object.hasOwn(exampleConfig, configField) === true, `Configure output example is missing the top-level "${configField}" field`);
     }
 
     const dotenvDocs: Tests_DocumentationContract_DocumentationContract_ConfigAndCli_DotenvDocs = await readFile(resolve(cwd, 'docs', 'cli', 'generators', 'must-haves', 'dotenv.mdx'), 'utf-8');
@@ -112,11 +112,11 @@ describe('Documentation contract', () => {
     ];
 
     ok(dotenvDocs.includes('`--prune`') === true, 'Dotenv reference is missing --prune');
-    ok(initializeDocs.includes('`-s, --status`') === true, 'Initializer reference is missing --status');
+    ok(configureDocs.includes('`-s, --status`') === true, 'Configure reference is missing --status');
     strictEqual(configReference.includes('buildOnly'), false, 'Config reference still teaches the retired buildOnly field');
     strictEqual(dotenvDocs.includes('buildOnly'), false, 'Dotenv reference still teaches the retired buildOnly field');
     strictEqual(workflowDocs.includes('buildOnly'), false, 'Workflow reference still teaches the retired buildOnly field');
-    strictEqual(initializeDocs.includes('buildOnly'), false, 'Initializer reference still teaches the retired buildOnly field');
+    strictEqual(configureDocs.includes('buildOnly'), false, 'Configure reference still teaches the retired buildOnly field');
 
     for (const reach of reaches) {
       ok(sharedTypes.includes(`'${reach}'`) === true, `Public environment types are missing reach "${reach}"`);

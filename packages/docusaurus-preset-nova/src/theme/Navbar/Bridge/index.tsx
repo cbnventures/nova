@@ -37,7 +37,7 @@ import type {
 import type { Theme_Navbar_Index_Navbar_Item } from '../../../types/theme/Navbar/index.d.ts';
 
 /**
- * Theme - Navbar - Bridge.
+ * Theme - Navbar - Bridge - Bridge.
  *
  * Split navigation layout with the site brand anchored to the left,
  * navigation items in the center-left region, and action

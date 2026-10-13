@@ -1935,11 +1935,11 @@ export class Runner {
    * Wraps the prompts library with cancellation detection. Returns a discriminated union so
    * callers can check cancelled before using result.
    *
-   * @param {Cli_Utility_Changelog_Runner_PromptWithCancel_Questions} questions - Questions.
+   * @param {Cli_Utility_Changelog_Runner_PromptWithCancel_Questions<Keys>} questions - Questions.
    *
    * @private
    *
-   * @returns {Cli_Utility_Changelog_Runner_PromptWithCancel_Returns}
+   * @returns {Cli_Utility_Changelog_Runner_PromptWithCancel_Returns<Keys, Result>}
    *
    * @since 0.13.0
    */

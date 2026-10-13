@@ -1,3 +1,8 @@
+import type {
+  EmitAndSemanticDiagnosticsBuilderProgram,
+  WatchOfConfigFile,
+} from 'typescript';
+
 /**
  * Shared - Active Vitest.
  *
@@ -1831,6 +1836,30 @@ export type Shared_ShellOutput = {
  * @since 0.11.0
  */
 export type Shared_TextAlign = 'left' | 'center' | 'right';
+
+/**
+ * Shared - Transpile.
+ *
+ * @since 0.30.0
+ */
+export type Shared_TranspileOptions_Project = string | undefined;
+
+export type Shared_TranspileOptions_Watch = true | undefined;
+
+export type Shared_TranspileOptions_PrintError = (message: string) => void;
+
+export type Shared_TranspileOptions_PrintInfo = (message: string) => void;
+
+export type Shared_TranspileOptions = {
+  project: Shared_TranspileOptions_Project;
+  watch: Shared_TranspileOptions_Watch;
+  printError: Shared_TranspileOptions_PrintError;
+  printInfo: Shared_TranspileOptions_PrintInfo;
+};
+
+export type Shared_TranspileWatcher = WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>;
+
+export type Shared_TranspileResult = number | Shared_TranspileWatcher;
 
 /**
  * Shared - Type Declaration Dts Mapping.

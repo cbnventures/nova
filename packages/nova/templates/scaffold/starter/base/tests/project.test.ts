@@ -9,7 +9,7 @@ import packageJson from '../package.json' with { type: 'json' };
 /**
  * Project - Project Root.
  *
- * Confirms the generated root remains a private monorepo coordinator.
+ * Confirms the repository root remains a private monorepo coordinator.
  *
  * @since 0.0.0
  */

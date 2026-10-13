@@ -1,0 +1,54 @@
+---
+id: "role-config"
+title: "Role - Config"
+description: "Type-check repository and tool configuration files without emitting JavaScript or declarations."
+keywords:
+  - "nova"
+  - "role-config"
+  - "tsconfig preset"
+  - "configuration files"
+  - "no emit"
+tags:
+  - "presets"
+  - "tsconfig"
+  - "role"
+  - "configuration"
+---
+
+Use `role-config` for TypeScript configuration files such as ESLint, Vitest, framework, and build-tool configs.
+
+## Why Use This Preset?
+
+1. Type-checks configuration code without creating runtime output.
+2. Prevents declaration files from being generated for files that are executed directly by their tools.
+3. Gives configuration files a visible role instead of repeating three compiler overrides in every project.
+
+## Usage
+
+```json title="tsconfig.config.json"
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-config.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-node.json"
+  ],
+  "include": [
+    "./eslint.config.mts",
+    "./vitest.config.mts"
+  ]
+}
+```
+
+## What This Preset Configures
+
+| Setting          | Value   | Description                                           |
+|------------------|---------|-------------------------------------------------------|
+| `declaration`    | `false` | Does not produce declarations for tool configuration. |
+| `declarationMap` | `false` | Does not produce declaration maps.                    |
+| `noEmit`         | `true`  | Type-checks the files without writing build output.   |
+
+## Related
+
+- Use **[Role - Scripts](/docs/presets/tsconfig/role-scripts)** for checked JavaScript or TypeScript maintenance scripts.
+- Review the complete layer order in **[TSConfig Best Practices](/docs/presets/tsconfig/best-practices)**.

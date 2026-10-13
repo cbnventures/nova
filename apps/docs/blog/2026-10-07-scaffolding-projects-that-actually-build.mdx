@@ -1,0 +1,73 @@
+---
+title: "Scaffolding Projects That Actually Build"
+description: "Nova 0.29.0 expands scaffolding into tested project foundations whose generated apps, packages, docs, and containers verify themselves."
+slug: "scaffolding-projects-that-actually-build"
+authors:
+  - "mrjackyliang"
+keywords:
+  - "nova"
+  - "project scaffolding"
+  - "application templates"
+  - "monorepo generator"
+  - "smoke testing"
+tags:
+  - "release"
+  - "nova"
+  - "scaffolding"
+  - "testing"
+---
+
+A scaffold is only useful when the generated project behaves like a real consumer rather than a folder-shaped example.
+
+Nova 0.29.0 expanded its scaffold system and began validating generated projects from the packed npm artifact through their own checks and production builds.
+
+{/* truncate */}
+
+## Start Empty or Start Specific
+
+The base scaffold creates a Nova project root for someone who is not ready to choose an application yet. The same repository can later receive additional app, documentation, or package workspaces.
+
+A developer can also start directly with a specific scaffold. Nova creates the shared root when needed, then registers the chosen workspace with its intended role and release policy.
+
+## A Concrete Project Catalog
+
+Version 0.29.0 covered the project shapes already represented across Nova’s consumers.
+
+| Category      | Scaffolds                                                                                    |
+|---------------|----------------------------------------------------------------------------------------------|
+| Applications  | Android, Apple, Astro, Cloudflare Workers, Discord bot, Docker image, Express, Next.js, Vite |
+| Documentation | Docusaurus                                                                                   |
+| Packages      | GitHub Action, Homebridge plugin, Node.js CLI, pfSense package                               |
+| Containers    | Workload-specific Docker images for compatible scaffolds                                     |
+
+The names are intentionally specific. A Docker image is a packaging option around a workload, not an assumption that every container runs Express.
+
+Vite can select Vanilla TypeScript, React, Vue, or Svelte and optionally add PWA support. Docusaurus can create docs-only or docs-and-blog sites, optionally with local search and compatible container packaging.
+
+Homebridge can add a custom Config UI. Docker-capable workloads can add multi-architecture publishing to GitHub Container Registry or Docker Hub.
+
+## Generated Projects Own Their Quality Gates
+
+Every applicable JavaScript or TypeScript root and workspace receives linting, type checking, and Vitest coverage. Non-JavaScript workspaces keep their native build tools while the project root can still coordinate repository-level scripts.
+
+Nova is installed as a regular dependency because generated projects use more than development-only presets. The CLI and runtime toolkit remain available wherever the generated code expects them.
+
+## Test the Artifact Users Install
+
+Template tests alone can confirm that files exist, but they cannot prove that a published package generates a working project. The scaffold suite therefore packs Nova as an npm artifact, installs that artifact into temporary projects, runs each scaffold variant, and executes the generated project’s own checks and build.
+
+Container-capable variants verify the Docker engine is reachable before attempting their native image builds. A missing or stopped engine cannot silently turn container validation into a pass.
+
+## Templates Become Maintained Products
+
+The expanded suite catches several classes of drift:
+
+- A template references a file that is not included in the package.
+- A dependency version no longer satisfies a framework peer contract.
+- Generated lint, TypeScript, or test configuration disagrees with the source presets.
+- A non-interactive option produces a different project from the matching interactive answer.
+- A Dockerfile parses but cannot build its workload.
+
+Scaffolding is therefore not “copy these files and hope.” It is a release surface with consumer-level regression coverage.
+
+Browse the current [Scaffolding documentation](/docs/cli/scaffolding/starter/base) for the available project types and options.

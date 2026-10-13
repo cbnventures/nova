@@ -14,6 +14,28 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsB
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_Entry = Shared_BlueprintConfigWorkflow;
 
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Action - Publishes Distinct Commits When Runtime Bytes Are Unchanged.
+ *
+ * @since 0.30.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_SandboxRoot = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_OriginPath = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_StagePath = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_StagedStatus = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_CommitCount = string;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_PublishesDistinctCommitsWhenRuntimeBytesAreUnchanged_CommitSubjects = string;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Action - Reproduces The Synthetic Action Workflow Byte For Byte.
+ *
+ * @since 0.21.0
+ */
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_Ir = Shared_BlueprintWorkflow;
 
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityAction_ReproducesTheSyntheticActionWorkflowByteForByte_Generated = string;

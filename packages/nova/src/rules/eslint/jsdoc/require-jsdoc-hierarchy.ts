@@ -476,7 +476,7 @@ export class Runner {
       }
     }
 
-    // Fall back to node name extraction with dedup for variables.
+    // Fall back to the declaration name as its own hierarchy level.
     if (suffix === undefined) {
       const nodeName: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_CheckNode_NodeName = Runner.extractNodeName(node);
 
@@ -845,7 +845,7 @@ export class Runner {
    * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Dedup Against Path.
    *
    * Strips leading words from a suffix when they overlap with the
-   * trailing segments of the path hierarchy, preventing redundant repetition in the summary.
+   * trailing path hierarchy, while preserving a complete match as its own declaration level.
    *
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_Words}     words     - Words.
    * @param {Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_PathParts} pathParts - Path parts.
@@ -888,7 +888,7 @@ export class Runner {
     const remaining: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DedupAgainstPath_Remaining = words.slice(prefixLength);
 
     if (remaining.length === 0) {
-      return undefined;
+      return words.join(' ');
     }
 
     return remaining.join(' ');

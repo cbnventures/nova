@@ -24,9 +24,11 @@ Require JSDoc summary lines to follow the hierarchy chain derived from the file 
 
 ## Summary
 
-The `require-jsdoc-hierarchy` rule reports any JSDoc summary line on a class or method that does not match the expected hierarchy string.
+The `require-jsdoc-hierarchy` rule reports any JSDoc summary line on a supported declaration that does not match the expected hierarchy string.
 
-The expected hierarchy is built from the file path segments after the first matching anchor directory (default: `src`), with each segment title-cased and separated by ` - `. For methods, the method name is appended as the final segment.
+The expected hierarchy is built from the file path segments after the first matching anchor directory (default: `src`), with each segment title-cased and separated by ` - `. Functions, variables, test suites, and class methods add their declaration identity after the path identity.
+
+Repeated path prefixes inside long declaration names are collapsed. For example, `LIB_REGEX_PATTERN_DIGITS` in `src/lib/regex.ts` becomes `Lib - Regex - Pattern Digits.`. When the complete declaration name matches the final path segment, it remains as a separate declaration level: `Details()` in `src/theme/Details/index.tsx` becomes `Theme - Details - Details.`.
 
 Known abbreviations (e.g., `api` to `API`, `eslint` to `ESLint`) are applied automatically. Path segments named `index` are always dropped (e.g. `src/cli/index.ts` yields `CLI.`), in addition to any `stripDirectories` entries.
 
@@ -88,6 +90,21 @@ Files that hold `<script>` tags (`astro`, `md`, `markdown`, `html`, `htm`, `vue`
 
   </TabItem>
 </Tabs>
+
+For a declaration whose name matches its containing path, both identities remain visible:
+
+```tsx
+// File: src/theme/Details/index.tsx
+
+/**
+ * Theme - Details - Details.
+ *
+ * @since UNRELEASED
+ */
+export default function Details() {
+  // ...
+}
+```
 
 ## Configuration
 
@@ -223,7 +240,7 @@ npx eslint --fix . --rule '@cbnventures/nova/require-jsdoc-hierarchy: error'
 ## Troubleshooting
 
 - **Warning fires even though the summary looks correct** — Check for extra or missing spaces around ` - ` separators, and verify that known abbreviations match exactly (e.g., `API` not `Api`, `ESLint` not `Eslint`).
-- **File is not under any anchor directory** — The rule tries each `anchorDirectories` entry in order. If none match, it falls back to using the filename stem as the hierarchy base (e.g., `sidebars.ts` becomes `Sidebars.`).
+- **File is not under any anchor directory** — The rule tries each `anchorDirectories` entry in order. If none match, it falls back to using the filename stem as the path hierarchy base. A `sidebars` declaration in `sidebars.ts`, for example, becomes `Sidebars - Sidebars.` because the path and declaration remain separate identities.
 - **Constructor summary looks off** — Constructors are checked like any other method, with `Constructor` appended as the final segment (e.g. `CLI - Utility - Changelog - Constructor.`).
 - **Error says to rename a directory** — If the first path segment after the anchor directory begins with a digit (e.g. `src/2fa/...`), the rule reports `invalidIdentifierPrefix` and asks you to rename the directory to start with a letter, because the segment would produce an invalid TypeScript identifier prefix. The normal hierarchy check is skipped for that file until renamed.
 - **Exported type aliases may add sub-segments** — For `export type` declarations the rule accepts any summary that begins with the file's hierarchy prefix and ends with a period (e.g. `Logger - Debug.` is allowed under a `Logger.` path), so related types can live in one file under sub-section names.

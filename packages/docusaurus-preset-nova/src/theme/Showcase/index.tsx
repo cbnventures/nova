@@ -43,7 +43,7 @@ import type {
  * showcase. Renders nothing on its own - the parent enumerates Item
  * children and wraps each in a controlled Details disclosure.
  *
- * @param {Theme_Showcase_Index_ItemProps} _props - _props.
+ * @param {Theme_Showcase_Index_ItemProps} _props - Props.
  *
  * @since 0.18.0
  */
@@ -52,7 +52,7 @@ function ShowcaseItem(_props: Theme_Showcase_Index_ItemProps): Theme_Showcase_In
 }
 
 /**
- * Theme - Showcase.
+ * Theme - Showcase - Showcase.
  *
  * Reusable shell for block showcase pages. Renders an intro card with
  * a title, description, and Expand/Collapse All toggle. Each Item is a

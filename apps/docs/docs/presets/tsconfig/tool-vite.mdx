@@ -1,14 +1,13 @@
 ---
 id: "tool-vite"
 title: "Tool - Vite"
-description: "Configure TypeScript for Vite projects with bundler module resolution, isolated modules, browser libs, and no TypeScript emit."
+description: "Configure TypeScript for Vite projects with bundler module resolution, isolated modules, and browser libraries."
 keywords:
   - "nova"
   - "tsconfig vite"
   - "vite"
   - "bundler resolution"
   - "isolated modules"
-  - "no emit"
   - "esnext module"
   - "dom lib"
 tags:
@@ -28,19 +27,20 @@ Align TypeScript with how <Terminology title="build tool" to="/docs/quickstart/t
 1. Sets `moduleResolution` to `Bundler` so TypeScript resolves imports the same way Vite does.
 2. Allows native TypeScript file extensions in imports used by Vite-loaded configuration modules.
 3. Enables `isolatedModules` so each file type-checks safely under Vite's per-file transpilation.
-4. Turns on `noEmit` so TypeScript only checks types and never competes with Vite for build output.
-5. Ships browser `lib` defaults so DOM and `ESNext` globals are available without extra wiring.
-6. Sits last in the `extends` chain so its bundler-oriented settings layer cleanly over the base presets.
+4. Ships browser `lib` defaults so DOM and `ESNext` globals are available without extra wiring.
+5. Leaves output ownership to the selected role instead of mixing build policy into a tool preset.
+6. Sits last in the `extends` chain so its bundler-oriented settings layer cleanly over the other presets.
 
 ## Usage
 
-Add the preset as the final entry in your `tsconfig.json` `extends` chain, after the essentials, strict, and runtime layers.
+Add the preset as the final entry in your `tsconfig.json` `extends` chain, after the essentials, strict, role, and runtime layers.
 
 ```json title="tsconfig.json"
 {
   "extends": [
     "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
     "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-app.json",
     "@cbnventures/nova/presets/tsconfig/runtime-browser.json",
     "@cbnventures/nova/presets/tsconfig/tool-vite.json"
   ],
@@ -77,7 +77,6 @@ The preset sets the following `compilerOptions` to match Vite's bundler-driven w
 | `lib`                        | `["DOM", "DOM.Iterable", "ESNext"]` | Exposes browser DOM APIs and the latest `ESNext` library features.          |
 | `module`                     | `"ESNext"`                          | Emits modern ECMAScript module syntax for the bundler to consume.           |
 | `moduleResolution`           | `"Bundler"`                         | Resolves imports the way Vite does, including bare and extensionless paths. |
-| `noEmit`                     | `true`                              | Type-checks only and leaves build output to Vite.                           |
 
 ## Related
 

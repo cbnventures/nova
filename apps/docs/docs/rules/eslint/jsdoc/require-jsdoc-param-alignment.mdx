@@ -25,7 +25,7 @@ Require vertical alignment of `@param` types, names, and dashes in JSDoc blocks.
 
 The `require-jsdoc-param-alignment` rule reports any JSDoc block where two or more `@param` tags have misaligned columns.
 
-The rule checks that all parameter names start at the same column and all dashes start at the same column. Blocks with zero or one `@param` tag are skipped.
+The rule checks that all parameter names start at the same column and all dashes start at the same column. Optional names such as `[options]` participate in the same alignment calculation. Blocks with zero or one `@param` tag are skipped.
 
 ## Why Use This Rule?
 
@@ -42,14 +42,14 @@ The rule checks that all parameter names start at the same column and all dashes
     /**
      * Merge two datasets.
      *
-     * @param {MergeSource}  source  - Source.
-     * @param {MergeOptions} options - Options.
+     * @param {MergeSource}  source    - Source.
+     * @param {MergeOptions} [options] - Options.
      *
      * @returns {MergeReturns}
      *
      * @since UNRELEASED
      */
-    function merge(source, options) {
+    function merge(source, options = {}) {
       // ...
     }
     ```
@@ -62,13 +62,13 @@ The rule checks that all parameter names start at the same column and all dashes
      * Merge two datasets.
      *
      * @param {MergeSource} source - Source.
-     * @param {MergeOptions} options - Options.
+     * @param {MergeOptions} [options] - Options.
      *
      * @returns {MergeReturns}
      *
      * @since UNRELEASED
      */
-    function merge(source, options) {
+    function merge(source, options = {}) {
       // ...
     }
     ```
@@ -155,4 +155,4 @@ npx eslint --fix . --rule '@cbnventures/nova/require-jsdoc-param-alignment: erro
 
 - **Warning fires but alignment looks correct visually** — The rule checks character positions, not visual width. If you use a non-monospace font in your editor, the columns may appear aligned but differ in character count. Switch to a monospace font to verify.
 - **Single-param blocks are not checked** — The rule only fires when a JSDoc block has two or more `@param` tags. Single-parameter blocks are skipped because there is nothing to align against.
-- **Rule never fires on my multi-param block** — Only `@param` lines written as `@param {Type} name - description` are counted; a line is ignored unless it has all three of a `{type}` in braces, a name, and a `-` dash. A block needs at least two such lines to be checked, so two `@param` tags that lack a type or lack a dash are not aligned.
+- **Rule never fires on my multi-param block** — Only `@param` lines written as `@param {Type} name - description` or `@param {Type} [name] - description` are counted. A line is ignored unless it has all three of a `{type}` in braces, a name, and a `-` dash. A block needs at least two such lines to be checked, so two `@param` tags that lack a type or lack a dash are not aligned.

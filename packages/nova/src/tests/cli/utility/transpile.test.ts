@@ -13,6 +13,7 @@ import { join } from 'node:path';
 import { afterAll, describe, it } from 'vitest';
 
 import { Runner as CliUtilityTranspile } from '../../../cli/utility/transpile.js';
+import { runTranspile } from '../../../lib/transpile.js';
 
 import type {
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_IndexPath,
@@ -36,6 +37,14 @@ import type {
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_SandboxRoot,
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TemporaryDirectory,
   Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TemporaryPrefix,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_Errors,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_IndexPath,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_Info,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_OutputJsPath,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_ProjectDirectory,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_Result,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_TsconfigContents,
+  Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_TsconfigPath,
 } from '../../../types/tests/cli/utility/transpile.test.d.ts';
 
 /**
@@ -69,7 +78,11 @@ describe('CliUtilityTranspile.run', async () => {
     const tsconfigPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_TsconfigPath = join(projectDirectory, 'tsconfig.json');
     const tsconfigContents: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_TsconfigContents = JSON.stringify({
       compilerOptions: {
+        module: 'NodeNext',
+        moduleResolution: 'NodeNext',
+        noEmitOnError: true,
         strict: true,
+        skipLibCheck: false,
         outDir: './build',
       },
       include: ['*.ts'],
@@ -79,7 +92,17 @@ describe('CliUtilityTranspile.run', async () => {
 
     const indexPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_EmitsCompiledOutputForValidTypeScript_IndexPath = join(projectDirectory, 'index.ts');
 
-    await writeFile(indexPath, 'const greeting: string = "hello";\nconsole.log(greeting);\n', 'utf-8');
+    await mkdir(join(projectDirectory, 'node_modules', 'broken-dependency'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'node_modules', 'broken-dependency', 'package.json'), JSON.stringify({
+      name: 'broken-dependency',
+      type: 'module',
+      types: './index.d.ts',
+    }, null, 2), 'utf-8');
+
+    await writeFile(join(projectDirectory, 'node_modules', 'broken-dependency', 'index.d.ts'), 'export declare const greeting: MissingDependencyType;\n', 'utf-8');
+
+    await writeFile(indexPath, 'import { greeting } from "broken-dependency";\nconsole.log(greeting);\n', 'utf-8');
 
     process.chdir(projectDirectory);
 
@@ -164,6 +187,50 @@ describe('CliUtilityTranspile.run', async () => {
     CliUtilityTranspile.run({});
 
     strictEqual(process.exitCode, 1);
+
+    return;
+  });
+
+  it('watch mode starts an incremental emitter', async () => {
+    const projectDirectory: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_ProjectDirectory = join(sandboxRoot, 'watch-mode');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const tsconfigPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_TsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_TsconfigContents = JSON.stringify({
+      compilerOptions: {
+        strict: true,
+        outDir: './build',
+      },
+      include: ['*.ts'],
+    }, null, 2);
+
+    await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
+
+    const indexPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_IndexPath = join(projectDirectory, 'index.ts');
+
+    await writeFile(indexPath, 'export const watched: string = "ready";\n', 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const errors: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_Errors = [];
+    const info: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_Info = [];
+    const result: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_Result = runTranspile({
+      project: tsconfigPath,
+      watch: true,
+      printError: (message) => errors.push(message),
+      printInfo: (message) => info.push(message),
+    });
+
+    ok(typeof result !== 'number', 'Expected watch mode to return an active TypeScript watcher');
+
+    const outputJsPath: Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_OutputJsPath = join(projectDirectory, 'build', 'index.js');
+
+    strictEqual(existsSync(outputJsPath), true);
+    strictEqual(errors.length, 0);
+    ok(info.some((message) => message === 'No type errors found.'), 'Expected the initial watched emit to report a clean compilation');
+
+    result.close();
 
     return;
   });

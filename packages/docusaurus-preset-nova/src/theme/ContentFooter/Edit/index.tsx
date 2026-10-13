@@ -9,7 +9,7 @@ import type {
 } from '../../../types/theme/ContentFooter/Edit/index.d.ts';
 
 /**
- * Theme - Content Footer - Edit.
+ * Theme - Content Footer - Edit - Edit.
  *
  * Renders the contribute section of a content footer - a labeled
  * row containing the last-updated stamp and an edit-this-page link

@@ -115,7 +115,7 @@ export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsA
 
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_ActivePath = string;
 
-export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Result = boolean;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Returns = boolean;
 
 export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Item = Record<string, unknown>;
 

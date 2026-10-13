@@ -28,7 +28,7 @@ import type {
 } from '../../../types/theme/Footer/Ledger/index.d.ts';
 
 /**
- * Theme - Footer - Ledger.
+ * Theme - Footer - Ledger - Ledger.
  *
  * Minimal single-bar footer layout with copyright text, a small
  * set of links drawn from the first available section, and

@@ -61,7 +61,7 @@ function BlocksTypewriterPrefix(props: Blocks_Typewriter_Index_BlocksTypewriter_
  * Renders nothing - the parent extracts text from each word child to
  * build the rotation list.
  *
- * @param {Blocks_Typewriter_Index_BlocksTypewriter_WordProps} _props - _props.
+ * @param {Blocks_Typewriter_Index_BlocksTypewriter_WordProps} _props - Props.
  *
  * @since 0.15.0
  */
@@ -70,7 +70,7 @@ function BlocksTypewriterWord(_props: Blocks_Typewriter_Index_BlocksTypewriter_W
 }
 
 /**
- * Blocks - Typewriter.
+ * Blocks - Typewriter - Blocks Typewriter.
  *
  * Compound component that cycles through a list of words with a type-on and
  * delete-off animation. Static content is placed in Prefix children and rotating

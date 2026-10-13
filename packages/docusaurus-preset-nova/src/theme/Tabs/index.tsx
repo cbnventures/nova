@@ -138,7 +138,7 @@ function TabList(tabs: Theme_Tabs_Index_TabList_TabsResult) {
 }
 
 /**
- * Theme - Tabs.
+ * Theme - Tabs - Tabs.
  *
  * Renders a tabbed interface with clickable tab buttons and content
  * panels, using Docusaurus tab state management for synchronized

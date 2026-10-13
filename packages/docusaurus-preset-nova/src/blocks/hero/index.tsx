@@ -7,7 +7,7 @@ import type {
 } from '../../types/blocks/hero/index.d.ts';
 
 /**
- * Blocks - Hero.
+ * Blocks - Hero - Blocks Hero.
  *
  * Full-width hero section with a large display heading, tagline text, and primary/secondary
  * call-to-action buttons over a configurable background variant.

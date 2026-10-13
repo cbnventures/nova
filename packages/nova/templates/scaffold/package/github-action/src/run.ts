@@ -27,7 +27,7 @@ export function createMessage(name: Run_CreateMessage_Name): Run_CreateMessage_R
 }
 
 /**
- * Run.
+ * Run - Run.
  *
  * Reads action inputs and publishes the generated action output.
  * GitHub invokes this path through the workspace entry point.

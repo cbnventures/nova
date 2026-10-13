@@ -1,0 +1,83 @@
+---
+title: "Release Notes That Release Code"
+description: "Nova 0.13.0 turns release notes into small reviewable records, then assembles them into package changelogs when a release is ready."
+slug: "release-notes-that-release-code"
+authors:
+  - "mrjackyliang"
+keywords:
+  - "nova"
+  - "changelog"
+  - "release notes"
+  - "semantic versioning"
+  - "monorepo releases"
+tags:
+  - "release"
+  - "nova"
+  - "changelog"
+  - "versioning"
+---
+
+Release notes work best when they are written while a change is still fresh, not reconstructed from a crowded commit history at release time.
+
+Nova 0.13.0 introduced `nova utility changelog` to make that habit part of the release process.
+
+{/* truncate */}
+
+## One Change, One Record
+
+The `record` flow stores each user-facing change as a small Markdown file under `.changelog/`.
+
+```bash
+nova utility changelog --record
+```
+
+Each record identifies the affected package, the release-note category, the semantic-version bump, and the wording that should reach users.
+
+```markdown title=".changelog/brave-cats-jump.md"
+---
+package: "@cbnventures/nova"
+category: added
+bump: minor
+---
+
+Added a changelog workflow for recording and releasing package changes.
+```
+
+That file is small enough to review beside the code that motivated it. A pull request can therefore answer two separate questions: does the implementation work, and does the release note describe its effect accurately?
+
+## Release from the Records
+
+When the project is ready, the `release` flow gathers the pending records for each package.
+
+```bash
+nova utility changelog --release
+```
+
+Nova chooses the highest requested bump, updates the package version, writes a dated section into its `CHANGELOG.md`, and consumes the released records. The result is assembled from reviewed source material instead of newly generated marketing text.
+
+The category order stays predictable:
+
+1. `UPDATED`
+2. `FIXED`
+3. `ADDED`
+4. `REMOVED`
+
+Empty categories stay out of the final section, which keeps a small release small.
+
+## Why the Split Matters
+
+Recording and releasing are deliberately separate activities.
+
+- **During development**, a contributor explains one observable change without needing to understand the whole release.
+- **During review**, the note changes with the implementation when wording or scope is wrong.
+- **During release**, Nova performs the mechanical version and changelog work from the accepted records.
+
+This gives release notes the same traceability as code. It also avoids a long end-of-cycle session spent guessing which commits mattered to users.
+
+## The First Version of a Larger System
+
+The 0.13.0 command focused on the core record-and-release loop for semantic versioning. Later Nova releases added release-history validation, lock-step package releases, calendar versioning, and source-version stamping.
+
+Those later capabilities build on the same decision made here: the changelog entry is authored source, and the released changelog is its compiled result.
+
+See the current [Changelog documentation](/docs/cli/utilities/changelog) for the complete workflow available today.

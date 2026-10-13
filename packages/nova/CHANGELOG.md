@@ -1,5 +1,22 @@
 # @cbnventures/nova
 
+## 0.30.0 - 2026-10-11
+
+### UPDATED
+- Separated application, configuration, script, source, and test emission policy into composable role TSConfig presets, and migrated Nova and every JavaScript or TypeScript scaffold to select the appropriate role layer.
+- Unified one-shot and watch-mode TypeScript builds behind a pre-build-safe transpiler that consistently reports project-owned diagnostics while filtering errors originating inside dependencies.
+- Renamed `nova utility initialize` to `nova utility configure` with the `config` alias, and updated its guidance, documentation, and generated references.
+- Standardized generated monorepo roots on a shared tests layout with private-coordinator and dotenv conformance coverage backed by Nova's shared Vitest setup.
+- Clarified the boundaries between OIDC trusted publishing, registry authentication, npm provenance, and GitHub artifact attestation in the generated workflow documentation.
+
+### FIXED
+- Made Nova's scaffold test suite start an installed local Docker engine before container smoke builds, preventing stopped engines from silently skipping Docker validation.
+- Made generated GitHub Action releases create an explicit empty release commit when a new version contains no runtime code difference, preserving release and tag parity.
+- Routed Cloudflare Pages repository values through step environment variables before shell use, removing unsafe direct expression interpolation from generated deployment commands.
+- Corrected JSDoc hierarchy, optional and unused parameter descriptions, generic type references, and type-guard return conventions across Nova's source, tests, and generated scaffold templates.
+- Capitalized generated issue-template pronouns at sentence boundaries while preserving lowercase replacements within sentences.
+- Normalized quoted blog slugs in the shared link test suite so valid cross-post links resolve against conventional YAML frontmatter.
+
 ## 0.29.0 - 2026-10-07
 
 ### UPDATED

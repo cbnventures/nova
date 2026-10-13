@@ -90,6 +90,7 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
       "extends": [
         "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
         "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+        "@cbnventures/nova/presets/tsconfig/role-source.json",
         "@cbnventures/nova/presets/tsconfig/runtime-node.json"
       ]
     }
@@ -131,7 +132,7 @@ After a project install, use this short path to create Nova's project metadata a
 1. Start the guided config wizard from the project root.
 
    ```bash
-   npx nova utility initialize
+   npx nova utility configure
    ```
 
 2. Keep the generated `nova.config.json` small at first. Project identity and the detected workspace entries are enough; the [complete config reference](/docs/quickstart/nova-config) is available when you need recipes, workflows, or environment delivery.

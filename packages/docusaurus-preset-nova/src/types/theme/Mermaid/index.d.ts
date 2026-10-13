@@ -1,6 +1,16 @@
-import type { CSSProperties } from 'react';
+import type {
+  CSSProperties,
+  Dispatch,
+  KeyboardEvent,
+  PointerEvent,
+  RefObject,
+  SetStateAction,
+} from 'react';
 
-import type { Shared_MermaidRenderOutput } from '../../shared.d.ts';
+import type {
+  Shared_MermaidRenderOutput,
+  Shared_MermaidViewportPosition,
+} from '../../shared.d.ts';
 
 /**
  * Theme - Mermaid.
@@ -46,6 +56,114 @@ export type Theme_Mermaid_Index_MermaidContent_Returns = React.JSX.Element | nul
 
 export type Theme_Mermaid_Index_MermaidContent_RenderResult = Shared_MermaidRenderOutput | null;
 
-export type Theme_Mermaid_Index_MermaidContent_ContainerRef = React.RefObject<HTMLDivElement | null>;
+export type Theme_Mermaid_Index_MermaidContent_ContainerRef = RefObject<HTMLDivElement | null>;
+
+export type Theme_Mermaid_Index_MermaidContent_Scale = number;
+
+export type Theme_Mermaid_Index_MermaidContent_ScaleState = [Theme_Mermaid_Index_MermaidContent_Scale, Dispatch<SetStateAction<Theme_Mermaid_Index_MermaidContent_Scale>>];
+
+export type Theme_Mermaid_Index_MermaidContent_SetScale = Dispatch<SetStateAction<Theme_Mermaid_Index_MermaidContent_Scale>>;
+
+export type Theme_Mermaid_Index_MermaidContent_Position = Shared_MermaidViewportPosition;
+
+export type Theme_Mermaid_Index_MermaidContent_PositionState = [Theme_Mermaid_Index_MermaidContent_Position, Dispatch<SetStateAction<Theme_Mermaid_Index_MermaidContent_Position>>];
+
+export type Theme_Mermaid_Index_MermaidContent_SetPosition = Dispatch<SetStateAction<Theme_Mermaid_Index_MermaidContent_Position>>;
+
+export type Theme_Mermaid_Index_MermaidContent_IsDragging = boolean;
+
+export type Theme_Mermaid_Index_MermaidContent_IsDraggingState = [Theme_Mermaid_Index_MermaidContent_IsDragging, Dispatch<SetStateAction<Theme_Mermaid_Index_MermaidContent_IsDragging>>];
+
+export type Theme_Mermaid_Index_MermaidContent_SetIsDragging = Dispatch<SetStateAction<Theme_Mermaid_Index_MermaidContent_IsDragging>>;
+
+export type Theme_Mermaid_Index_MermaidContent_Drag_PointerId = number;
+
+export type Theme_Mermaid_Index_MermaidContent_Drag_Start = Shared_MermaidViewportPosition;
+
+export type Theme_Mermaid_Index_MermaidContent_Drag_StartPosition = Shared_MermaidViewportPosition;
+
+export type Theme_Mermaid_Index_MermaidContent_Drag = {
+  pointerId: Theme_Mermaid_Index_MermaidContent_Drag_PointerId;
+  start: Theme_Mermaid_Index_MermaidContent_Drag_Start;
+  startPosition: Theme_Mermaid_Index_MermaidContent_Drag_StartPosition;
+};
+
+export type Theme_Mermaid_Index_MermaidContent_DragRef = RefObject<Theme_Mermaid_Index_MermaidContent_Drag | null>;
 
 export type Theme_Mermaid_Index_MermaidContent_ClassName = string;
+
+export type Theme_Mermaid_Index_MermaidContent_CanZoomIn = boolean;
+
+export type Theme_Mermaid_Index_MermaidContent_CanZoomOut = boolean;
+
+export type Theme_Mermaid_Index_MermaidContent_IsInteractive = boolean;
+
+export type Theme_Mermaid_Index_MermaidContent_ScaleLabel = string;
+
+export type Theme_Mermaid_Index_MermaidContent_ZoomInLabel = string;
+
+export type Theme_Mermaid_Index_MermaidContent_ZoomOutLabel = string;
+
+export type Theme_Mermaid_Index_MermaidContent_ResetLabel = string;
+
+export type Theme_Mermaid_Index_MermaidContent_ViewportLabel = string;
+
+export type Theme_Mermaid_Index_MermaidContent_StageStyle = CSSProperties;
+
+export type Theme_Mermaid_Index_MermaidContent_ViewportClassName = string;
+
+/**
+ * Theme - Mermaid - Mermaid Content - Handle Key Down.
+ *
+ * @since 0.30.0
+ */
+export type Theme_Mermaid_Index_MermaidContent_HandleKeyDown_Event = KeyboardEvent<HTMLDivElement>;
+
+export type Theme_Mermaid_Index_MermaidContent_HandleKeyDown_Returns = undefined;
+
+export type Theme_Mermaid_Index_MermaidContent_HandleKeyDown_NextPosition = Shared_MermaidViewportPosition | undefined;
+
+/**
+ * Theme - Mermaid - Mermaid Content - Handle Pointer Down.
+ *
+ * @since 0.30.0
+ */
+export type Theme_Mermaid_Index_MermaidContent_HandlePointerDown_Event = PointerEvent<HTMLDivElement>;
+
+export type Theme_Mermaid_Index_MermaidContent_HandlePointerDown_Returns = undefined;
+
+/**
+ * Theme - Mermaid - Mermaid Content - Handle Pointer End.
+ *
+ * @since 0.30.0
+ */
+export type Theme_Mermaid_Index_MermaidContent_HandlePointerEnd_Event = PointerEvent<HTMLDivElement>;
+
+export type Theme_Mermaid_Index_MermaidContent_HandlePointerEnd_Returns = undefined;
+
+/**
+ * Theme - Mermaid - Mermaid Content - Handle Pointer Move.
+ *
+ * @since 0.30.0
+ */
+export type Theme_Mermaid_Index_MermaidContent_HandlePointerMove_Event = PointerEvent<HTMLDivElement>;
+
+export type Theme_Mermaid_Index_MermaidContent_HandlePointerMove_Returns = undefined;
+
+/**
+ * Theme - Mermaid - Mermaid Content - Zoom In.
+ *
+ * @since 0.30.0
+ */
+export type Theme_Mermaid_Index_MermaidContent_ZoomIn_Returns = undefined;
+
+export type Theme_Mermaid_Index_MermaidContent_ZoomIn_NextScale = number;
+
+/**
+ * Theme - Mermaid - Mermaid Content - Zoom Out.
+ *
+ * @since 0.30.0
+ */
+export type Theme_Mermaid_Index_MermaidContent_ZoomOut_Returns = undefined;
+
+export type Theme_Mermaid_Index_MermaidContent_ZoomOut_NextScale = number;

@@ -106,6 +106,19 @@ ruleTester.run('requireJsdocHierarchy', RequireJsdocHierarchy['rule'], {
       filename: '/project/src/lib/utility.ts',
     },
 
+    // Declaration identity remains separate when it matches the final path segment.
+    {
+      code: [
+        '/**',
+        ' * Theme - Details - Details.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function Details() {}',
+      ].join('\n'),
+      filename: '/project/src/theme/Details/index.tsx',
+    },
+
     // Correct variable declaration hierarchy.
     {
       code: [
@@ -288,11 +301,11 @@ ruleTester.run('requireJsdocHierarchy', RequireJsdocHierarchy['rule'], {
       filename: '/project/utils/getters/get-footer-links.ts',
     },
 
-    // Correct hierarchy for file at root with no anchor directory.
+    // Correct hierarchy for a declaration at root with no anchor directory.
     {
       code: [
         '/**',
-        ' * Sidebars.',
+        ' * Sidebars - Sidebars.',
         ' *',
         ' * @since 0.15.0',
         ' */',
@@ -335,7 +348,7 @@ ruleTester.run('requireJsdocHierarchy', RequireJsdocHierarchy['rule'], {
     {
       code: [
         '/**',
-        ' * App - Not Found - Layout.',
+        ' * App - Not Found - Layout - Layout.',
         ' *',
         ' * @since 0.15.0',
         ' */',
@@ -463,6 +476,28 @@ ruleTester.run('requireJsdocHierarchy', RequireJsdocHierarchy['rule'], {
         'function currentTimestamp() {}',
       ].join('\n'),
       filename: '/project/src/lib/utility.ts',
+      errors: [{ messageId: 'hierarchyMismatch' }],
+    },
+
+    // Declaration identity was incorrectly collapsed into the matching path segment.
+    {
+      code: [
+        '/**',
+        ' * Theme - Details.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function Details() {}',
+      ].join('\n'),
+      output: [
+        '/**',
+        ' * Theme - Details - Details.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function Details() {}',
+      ].join('\n'),
+      filename: '/project/src/theme/Details/index.tsx',
       errors: [{ messageId: 'hierarchyMismatch' }],
     },
 
@@ -653,7 +688,7 @@ ruleTester.run('requireJsdocHierarchy', RequireJsdocHierarchy['rule'], {
       ].join('\n'),
       output: [
         '/**',
-        ' * App - Not Found - Layout.',
+        ' * App - Not Found - Layout - Layout.',
         ' *',
         ' * @since 0.15.0',
         ' */',

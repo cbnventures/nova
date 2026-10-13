@@ -37,7 +37,7 @@ import type {
 import type { Theme_Navbar_Index_Navbar_Item } from '../../../types/theme/Navbar/index.d.ts';
 
 /**
- * Theme - Navbar - Canopy.
+ * Theme - Navbar - Canopy - Canopy.
  *
  * Centered brand layout with the site logo and title positioned at the
  * top center, navigation items expanding into dropdowns below,

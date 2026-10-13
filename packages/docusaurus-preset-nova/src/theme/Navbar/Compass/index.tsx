@@ -37,7 +37,7 @@ import type {
 import type { Theme_Navbar_Index_Navbar_Item } from '../../../types/theme/Navbar/index.d.ts';
 
 /**
- * Theme - Navbar - Compass.
+ * Theme - Navbar - Compass - Compass.
  *
  * Search-forward navigation layout with the site brand on the left, a dominant
  * search bar occupying the center region, and minimal action

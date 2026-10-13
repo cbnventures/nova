@@ -32,7 +32,7 @@ import type {
 } from '../types/tests/preset.test.d.ts';
 
 /**
- * Tests - Preset.
+ * Tests - Preset - Preset.
  *
  * @since 0.15.0
  */

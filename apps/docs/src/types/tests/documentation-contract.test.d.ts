@@ -11,7 +11,7 @@ export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_Share
 
 export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigReference = string;
 
-export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_InitializeDocs = string;
+export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigureDocs = string;
 
 export type Tests_DocumentationContract_DocumentationContract_ConfigAndCli_ConfigMatch = RegExpMatchArray | null;
 

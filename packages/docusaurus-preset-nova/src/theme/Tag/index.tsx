@@ -3,7 +3,7 @@ import Link from '@docusaurus/Link';
 import type { Theme_Tag_Index_Tag_Props } from '../../types/theme/Tag/index.d.ts';
 
 /**
- * Theme - Tag.
+ * Theme - Tag - Tag.
  *
  * Renders a single tag as a plain link with an optional
  * count badge, using the tag description as the link title

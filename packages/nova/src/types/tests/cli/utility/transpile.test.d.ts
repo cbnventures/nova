@@ -1,3 +1,5 @@
+import type { Shared_TranspileResult } from '../../../shared.d.ts';
+
 /**
  * Tests - CLI - Utility - Transpile - Run.
  *
@@ -64,3 +66,24 @@ export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsInvalidJSO
 export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsInvalidJSON_TsconfigPath = string;
 
 export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_RejectsInvalidJSON_TsconfigContents = string;
+
+/**
+ * Tests - CLI - Utility - Transpile - Run - Watch Mode Starts An Incremental Emitter.
+ *
+ * @since 0.30.0
+ */
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_TsconfigPath = string;
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_TsconfigContents = string;
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_IndexPath = string;
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_Errors = string[];
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_Info = string[];
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_Result = Shared_TranspileResult;
+
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_WatchModeStartsAnIncrementalEmitter_OutputJsPath = string;

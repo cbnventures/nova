@@ -14,6 +14,7 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
+import { ensureDockerEngine } from './lib/docker-engine.mjs';
 import { verifyBundlerLoad } from './lib/verify-scaffold-install.mjs';
 
 /**
@@ -121,33 +122,6 @@ function expectCommandFailure(command, args, cwd, expectedMessage) {
 }
 
 /**
- * Check Scaffolds - Has Docker Engine.
- *
- * Reports whether the Docker CLI can reach a running engine. An installed CLI
- * is not sufficient for container smoke builds when Docker Desktop or another
- * configured engine is stopped.
- *
- * @returns {boolean}
- *
- * @since 0.0.0
- */
-function hasDockerEngine() {
-  try {
-    execFileSync('docker', [
-      'info',
-      '--format',
-      '{{.ServerVersion}}',
-    ], {
-      stdio: 'ignore',
-    });
-
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/**
  * Check Scaffolds - Read npm Output.
  *
  * Routes direct npm invocations through Corepack so they use the
@@ -252,6 +226,7 @@ function verifyWorkspaceRegistrations(projectDirectory, expectedWorkspaces) {
  */
 function checkScaffolds() {
   const repositoryDirectory = process.cwd();
+  const dockerAvailable = ensureDockerEngine();
   const temporaryDirectory = mkdtempSync(join(tmpdir(), 'nova-scaffold-smoke-'));
   const projectDirectory = join(temporaryDirectory, 'project');
   const directProjectDirectory = join(temporaryDirectory, 'direct-project');
@@ -786,13 +761,13 @@ function checkScaffolds() {
       'check',
     ], projectDirectory);
 
-    if (hasDockerEngine() === true) {
+    if (dockerAvailable === true) {
       runNpm([
         'run',
         'build',
       ], projectDirectory);
     } else {
-      process.stdout.write('A running Docker engine is unavailable; building every generated workspace except the container-native image.\n');
+      process.stdout.write('Docker is not installed; building every generated workspace except the container-native image.\n');
 
       runNpm([
         'run',

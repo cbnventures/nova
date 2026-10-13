@@ -171,7 +171,7 @@ export class Runner {
    *
    * @private
    *
-   * @returns {boolean}
+   * @returns {Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_TypeGuard}
    *
    * @since 0.12.0
    */

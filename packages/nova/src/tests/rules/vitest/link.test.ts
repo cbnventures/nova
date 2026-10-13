@@ -42,6 +42,7 @@ const fixtureRoot: Tests_Rules_Vitest_Link_FixtureRoot = mkdtempSync(join(tmpdir
 const docsDir: Tests_Rules_Vitest_Link_DocsDir = join(fixtureRoot, 'docs');
 
 mkdirSync(docsDir, { recursive: true });
+mkdirSync(join(fixtureRoot, 'blog'), { recursive: true });
 
 writeFileSync(
   join(docsDir, 'overview.md'),
@@ -86,9 +87,25 @@ writeFileSync(
   ].join('\n'),
 );
 
+writeFileSync(
+  join(fixtureRoot, 'blog', '2026-10-12-release-notes.mdx'),
+  [
+    '---',
+    'slug: "release-notes"',
+    'title: Release Notes',
+    '---',
+    '',
+    '## Highlights',
+    '',
+  ].join('\n'),
+);
+
 const resolvedConfig: Tests_Rules_Vitest_Link_ResolvedConfig = {
   projectRoot: fixtureRoot,
-  contentDirs: { docs: 'docs' },
+  contentDirs: {
+    docs: 'docs',
+    blog: 'blog',
+  },
   docsRouteBasePath: 'docs',
   blogRouteBasePath: 'blog',
   categoryRouteSkipPrefix: 'category/',
@@ -111,6 +128,7 @@ describe(`link kit helpers${''}`, () => {
 
     strictEqual(goodIndex['existingPaths'].has('guide'), true);
     strictEqual(goodIndex['idPaths'].has('overview'), true);
+    strictEqual(goodIndex['blogPaths'].has('release-notes'), true);
     strictEqual(overviewHeadings !== undefined && overviewHeadings.has('getting-started'), true);
 
     return;

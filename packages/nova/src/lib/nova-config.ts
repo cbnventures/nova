@@ -535,7 +535,7 @@ export class Runner {
    * Lib - Nova Config - Set.
    *
    * Replaces the in-memory config with a parsed copy of the given object. Called by
-   * the initialize command after the user completes the prompt flow.
+   * the configure command after the user completes the prompt flow.
    *
    * @param {Lib_NovaConfig_Runner_Set_Config} config - Config.
    *
@@ -3235,7 +3235,7 @@ export class Runner {
    *
    * @private
    *
-   * @returns {boolean}
+   * @returns {Lib_NovaConfig_Runner_IsEntityRole_TypeGuard}
    *
    * @since 0.11.0
    */

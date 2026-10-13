@@ -44,6 +44,8 @@ export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_RawDesc
 
 export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Description = string;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_NormalizedParamName = string;
+
 export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Words = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Expected = string;

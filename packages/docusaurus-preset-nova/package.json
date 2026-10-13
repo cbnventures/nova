@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/docusaurus-preset-nova",
-  "version": "0.29.0",
+  "version": "0.30.0",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",
@@ -71,10 +71,10 @@
   "private": false,
   "scripts": {
     "dev": "node ../../scripts/nova-run-scripts.mjs --parallel --node-env development 'dev:*'",
-    "dev:watch-plugin": "tsc --project tsconfig.plugin.json --watch",
+    "dev:watch-plugin": "node ../../scripts/nova-transpile.mjs --project tsconfig.plugin.json --watch",
     "dev:watch-styles": "node ../../scripts/copy-styles.mjs --watch",
-    "dev:watch-theme": "tsc --project tsconfig.theme.json --watch",
-    "dev:watch-cli": "tsc --project tsconfig.cli.json --watch",
+    "dev:watch-theme": "node ../../scripts/nova-transpile.mjs --project tsconfig.theme.json --watch",
+    "dev:watch-cli": "node ../../scripts/nova-transpile.mjs --project tsconfig.cli.json --watch",
     "dev:fix-shiki-import": "node ../../scripts/fix-shiki-import.mjs --watch",
     "check": "node ../../scripts/nova-run-scripts.mjs --sequential 'check:*'",
     "check:lint": "eslint ./ --max-warnings=0",
@@ -85,10 +85,10 @@
     "check:types-config": "node ../../scripts/nova-type-check.mjs --project tsconfig.config.json",
     "check:test": "vitest run",
     "build": "node ../../scripts/nova-run-scripts.mjs --sequential --node-env production 'build:*'",
-    "build:transpile-theme": "tsc --project tsconfig.theme.json --outDir ./build --skipLibCheck",
-    "build:transpile-plugin": "tsc --project tsconfig.plugin.json --outDir ./build --skipLibCheck",
-    "build:transpile-worker": "tsc --project tsconfig.worker.json --outDir ./build --skipLibCheck",
-    "build:transpile-cli": "tsc --project tsconfig.cli.json --outDir ./build --skipLibCheck",
+    "build:transpile-theme": "node ../../scripts/nova-transpile.mjs --project tsconfig.theme.json",
+    "build:transpile-plugin": "node ../../scripts/nova-transpile.mjs --project tsconfig.plugin.json",
+    "build:transpile-worker": "node ../../scripts/nova-transpile.mjs --project tsconfig.worker.json",
+    "build:transpile-cli": "node ../../scripts/nova-transpile.mjs --project tsconfig.cli.json",
     "build:copy-types": "shx rm -rf \"./build/src/types\" && shx cp -r \"./src/types\" \"./build/src/types\"",
     "build:fix-shiki-import": "node ../../scripts/fix-shiki-import.mjs",
     "build:copy-styles": "node ../../scripts/copy-styles.mjs",
@@ -100,7 +100,7 @@
     "node": "^22 || ^24"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.29.0",
+    "@cbnventures/nova": "0.30.0",
     "@codesandbox/sandpack-react": "2.20.0",
     "@docusaurus/plugin-content-blog": "3.10.2",
     "@docusaurus/plugin-content-docs": "3.10.2",
