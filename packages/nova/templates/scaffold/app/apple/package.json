@@ -15,7 +15,7 @@
     "clean:project": "shx rm -rf ./[__WORKSPACE_IDENTIFIER__].xcodeproj ./build"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.30.0"
+    "@cbnventures/nova": "0.30.1"
   },
   "devDependencies": {
     "shx": "0.4.0"

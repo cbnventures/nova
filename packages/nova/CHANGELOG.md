@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.30.1 - 2026-10-12
+
+### FIXED
+- Fixed GitHub issue-template generation when invoked through the CLI.
+
 ## 0.30.0 - 2026-10-11
 
 ### UPDATED

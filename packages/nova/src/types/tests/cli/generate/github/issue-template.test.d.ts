@@ -1,5 +1,10 @@
 import type { vi } from 'vitest';
 
+import type {
+  Cli_Generate_Github_IssueTemplate_Runner_Run_Options,
+  Cli_Generate_Github_IssueTemplate_Runner_Run_Returns,
+} from '../../../../cli/generate/github/issue-template.d.ts';
+
 import type { Lib_Utility_SaveGeneratedFile_Header } from '../../../../lib/utility.d.ts';
 
 /**
@@ -42,6 +47,8 @@ export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTempla
 export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_LoadSpy = ReturnType<typeof vi['spyOn']>;
 
 export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_SaveSpy = ReturnType<typeof vi['spyOn']>;
+
+export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_Run = (options: Cli_Generate_Github_IssueTemplate_Runner_Run_Options) => Cli_Generate_Github_IssueTemplate_Runner_Run_Returns;
 
 export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_Calls = [string, string, boolean, Lib_Utility_SaveGeneratedFile_Header | undefined][];
 

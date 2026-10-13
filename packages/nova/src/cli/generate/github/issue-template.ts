@@ -350,9 +350,9 @@ export class Runner {
         .replace(new RegExp(LIB_REGEX_PLACEHOLDER_PRIVACY_POLICY.source, 'g'), privacyPolicy)
         .replace(new RegExp(LIB_REGEX_PLACEHOLDER_TERMS_OF_USE.source, 'g'), termsOfUse);
 
-      content = this.replacePronoun(content, LIB_REGEX_PLACEHOLDER_WE, we);
-      content = this.replacePronoun(content, LIB_REGEX_PLACEHOLDER_US, us);
-      content = this.replacePronoun(content, LIB_REGEX_PLACEHOLDER_OUR, our);
+      content = Runner.replacePronoun(content, LIB_REGEX_PLACEHOLDER_WE, we);
+      content = Runner.replacePronoun(content, LIB_REGEX_PLACEHOLDER_US, us);
+      content = Runner.replacePronoun(content, LIB_REGEX_PLACEHOLDER_OUR, our);
 
       try {
         parseYaml(content);

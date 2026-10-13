@@ -24,7 +24,7 @@
     "start": "homebridge --debug --keep-orphans --plugin-path $(pwd)"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.30.0"
+    "@cbnventures/nova": "0.30.1"
   },
   "devDependencies": {
     "@types/node": "24.9.1",

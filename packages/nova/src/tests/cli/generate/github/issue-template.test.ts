@@ -25,6 +25,7 @@ import type {
   Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_Calls,
   Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_IsProjectRootSpy,
   Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_LoadSpy,
+  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_Run,
   Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_SaveSpy,
   Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SetsExitCodeWhenNotAtProjectRoot_IsProjectRootSpy,
 } from '../../../../types/tests/cli/generate/github/issue-template.test.d.ts';
@@ -55,8 +56,9 @@ describe('CliGenerateGithubIssueTemplate.run', () => {
     const isProjectRootSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
     const loadSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ github: { issueTemplate: { bugReportFields: ['docker'] } } });
     const saveSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+    const run: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_Run = CliGenerateGithubIssueTemplate['run'];
 
-    await CliGenerateGithubIssueTemplate.run({ replaceFile: true });
+    await run({ replaceFile: true });
 
     const calls: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_Calls = saveSpy['mock']['calls'];
 

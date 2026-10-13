@@ -21,7 +21,7 @@
     "clean:build": "shx rm -rf ./build"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.30.0",
+    "@cbnventures/nova": "0.30.1",
     "express": "5.1.0"
   },
   "devDependencies": {
