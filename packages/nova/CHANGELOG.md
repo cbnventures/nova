@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.31.1 - 2026-10-15
+
+### FIXED
+- Prevented GitHub CodeQL from treating raw scaffold templates as repository implementation languages while preserving analysis of Nova's actual source.
+
 ## 0.31.0 - 2026-10-15
 
 ### UPDATED

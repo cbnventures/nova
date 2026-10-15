@@ -22,7 +22,12 @@ import type {
   Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_IgnoredTemplateFiles,
   Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplateFiles,
   Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplatePaths,
+  Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ExcludesOnlyRawTemplatesFromLanguageDetection_SourceAttributeResult,
+  Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ExcludesOnlyRawTemplatesFromLanguageDetection_SourcePath,
+  Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ExcludesOnlyRawTemplatesFromLanguageDetection_TemplateAttributeResult,
+  Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ExcludesOnlyRawTemplatesFromLanguageDetection_TemplatePath,
   Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_PackageDirectory,
+  Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_RepositoryDirectory,
   Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ScaffoldDirectory,
   Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_TemplatesDirectory,
 } from '../types/tests/scaffold-template-source.test.d.ts';
@@ -87,8 +92,39 @@ function hasTypeScriptSourceCounterpart(emittedFile: Tests_ScaffoldTemplateSourc
  */
 describe('scaffold template source', () => {
   const packageDirectory: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_PackageDirectory = join(fileURLToPath(import.meta.url), '..', '..', '..');
+  const repositoryDirectory: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_RepositoryDirectory = join(packageDirectory, '..', '..');
   const templatesDirectory: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_TemplatesDirectory = join(packageDirectory, 'templates');
   const scaffoldDirectory: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ScaffoldDirectory = join(packageDirectory, 'templates', 'scaffold');
+
+  it('excludes only raw templates from language detection', () => {
+    const templatePath: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ExcludesOnlyRawTemplatesFromLanguageDetection_TemplatePath = 'packages/nova/templates/scaffold-options/app/android-native/build.gradle.kts';
+    const sourcePath: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ExcludesOnlyRawTemplatesFromLanguageDetection_SourcePath = 'packages/nova/src/cli/index.ts';
+    const templateAttributeResult: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ExcludesOnlyRawTemplatesFromLanguageDetection_TemplateAttributeResult = spawnSync('git', [
+      'check-attr',
+      'linguist-detectable',
+      '--',
+      templatePath,
+    ], {
+      cwd: repositoryDirectory,
+      encoding: 'utf-8',
+    });
+    const sourceAttributeResult: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ExcludesOnlyRawTemplatesFromLanguageDetection_SourceAttributeResult = spawnSync('git', [
+      'check-attr',
+      'linguist-detectable',
+      '--',
+      sourcePath,
+    ], {
+      cwd: repositoryDirectory,
+      encoding: 'utf-8',
+    });
+
+    deepStrictEqual(templateAttributeResult.status, 0, templateAttributeResult.stderr);
+    deepStrictEqual(templateAttributeResult.stdout.trim(), `${templatePath}: linguist-detectable: unset`);
+    deepStrictEqual(sourceAttributeResult.status, 0, sourceAttributeResult.stderr);
+    deepStrictEqual(sourceAttributeResult.stdout.trim(), `${sourcePath}: linguist-detectable: unspecified`);
+
+    return;
+  });
 
   it('contains no Git-ignored template files', () => {
     const templateFiles: Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_TemplateFiles = globSync('**/*', {

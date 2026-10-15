@@ -23,7 +23,7 @@
     "node": "^22 || ^24"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.31.0",
+    "@cbnventures/nova": "0.31.1",
     "astro": "7.3.5",
     "cookie": "2.0.1"
   },

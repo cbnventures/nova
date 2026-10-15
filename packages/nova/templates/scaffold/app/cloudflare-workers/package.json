@@ -23,7 +23,7 @@
     "node": "^22 || ^24"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.31.0"
+    "@cbnventures/nova": "0.31.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "5.20261015.1",

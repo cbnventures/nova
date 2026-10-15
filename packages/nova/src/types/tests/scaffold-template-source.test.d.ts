@@ -26,6 +26,8 @@ export type Tests_ScaffoldTemplateSource_HasTypeScriptSourceCounterpart_SourceEx
  */
 export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_PackageDirectory = string;
 
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_RepositoryDirectory = string;
+
 export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_TemplatesDirectory = string;
 
 export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ScaffoldDirectory = string;
@@ -65,3 +67,16 @@ export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgn
 export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_IgnoredTemplateFiles = Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_IgnoredTemplateFile[];
 
 export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ContainsNoGitIgnoredTemplateFiles_FailureMessage = string;
+
+/**
+ * Tests - Scaffold Template Source - Scaffold Template Source - Excludes Only Raw Templates From Language Detection.
+ *
+ * @since 0.31.1
+ */
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ExcludesOnlyRawTemplatesFromLanguageDetection_TemplatePath = string;
+
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ExcludesOnlyRawTemplatesFromLanguageDetection_SourcePath = string;
+
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ExcludesOnlyRawTemplatesFromLanguageDetection_TemplateAttributeResult = SpawnSyncReturns<string>;
+
+export type Tests_ScaffoldTemplateSource_ScaffoldTemplateSource_ExcludesOnlyRawTemplatesFromLanguageDetection_SourceAttributeResult = SpawnSyncReturns<string>;

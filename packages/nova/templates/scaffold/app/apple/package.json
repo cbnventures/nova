@@ -18,7 +18,7 @@
     "node": "^22 || ^24"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.31.0"
+    "@cbnventures/nova": "0.31.1"
   },
   "devDependencies": {
     "shx": "0.4.0"

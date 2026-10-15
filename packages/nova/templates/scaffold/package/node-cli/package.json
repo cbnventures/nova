@@ -31,7 +31,7 @@
     "node": "^22 || ^24"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.31.0",
+    "@cbnventures/nova": "0.31.1",
     "chalk": "5.6.2",
     "commander": "15.0.0"
   },

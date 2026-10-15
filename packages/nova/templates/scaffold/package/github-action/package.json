@@ -27,7 +27,7 @@
   "dependencies": {
     "@actions/core": "3.0.1",
     "@actions/github": "9.1.1",
-    "@cbnventures/nova": "0.31.0"
+    "@cbnventures/nova": "0.31.1"
   },
   "devDependencies": {
     "@github/local-action": "1.5.1",
