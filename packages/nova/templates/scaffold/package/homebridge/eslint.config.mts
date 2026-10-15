@@ -3,10 +3,11 @@ import {
   dxIgnore,
   langJavascript,
   langTypescript,
-  runtimeBrowser,
   runtimeNode,
 } from '@cbnventures/nova/presets/eslint';
 import { novaRules } from '@cbnventures/nova/rules/eslint';
+
+import customUiPreset from './config/eslint-custom-ui.js';
 
 /**
  * ESLint Configuration.
@@ -21,11 +22,6 @@ export default [
   ...langJavascript,
   ...langTypescript,
   ...runtimeNode,
-  ...runtimeBrowser.map((config) => ({
-    ...config,
-    files: ['homebridge-ui/public/**/*.js'],
-    name: 'custom-ui-browser',
-  })),
   {
     name: 'custom-tsconfig',
     files: [
@@ -45,4 +41,5 @@ export default [
     },
   },
   ...novaRules,
+  ...customUiPreset,
 ];

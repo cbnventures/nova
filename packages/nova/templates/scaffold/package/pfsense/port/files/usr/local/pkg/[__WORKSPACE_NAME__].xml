@@ -10,46 +10,57 @@
 	 */
 	]]>
 	</copyright>
-	<name>[__WORKSPACE_NAME__]</name>
+	<name>[__PFSENSE_CONFIG_NAME__]</name>
 	<version>%%PKGVERSION%%</version>
 	<title>Services: [__WORKSPACE_TITLE__]</title>
 	<include_file>/usr/local/pkg/[__WORKSPACE_NAME__].inc</include_file>
-	<aftersaveredirect>/pkg.php?xml=[__WORKSPACE_NAME__].xml</aftersaveredirect>
+	<addedit_string>[__WORKSPACE_TITLE__]: saved settings</addedit_string>
 	<menu>
 		<name>[__WORKSPACE_TITLE__]</name>
 		<section>Services</section>
 		<configfile>[__WORKSPACE_NAME__].xml</configfile>
-		<url>/pkg.php?xml=[__WORKSPACE_NAME__].xml</url>
+		<url>/pkg_edit.php?xml=[__WORKSPACE_NAME__].xml&amp;id=0</url>
 	</menu>
 	<fields>
 		<field>
 			<type>listtopic</type>
-			<name>[__WORKSPACE_TITLE__] Settings</name>
+			<name>Getting Started</name>
 		</field>
 		<field>
-			<fielddescr>Enable Scheduled Task</fielddescr>
+			<fielddescr>Nova × pfSense</fielddescr>
+			<type>info</type>
+			<description>[__WORKSPACE_TITLE__] starts here. This generated package uses pfSense's native WebGUI controls and includes a replaceable background-task example. Rename these fields and replace the task as the package takes shape.</description>
+		</field>
+		<field>
+			<type>listtopic</type>
+			<name>Starter Configuration</name>
+		</field>
+		<field>
+			<fielddescr>Enable Example Background Task</fielddescr>
 			<fieldname>enabled</fieldname>
 			<type>checkbox</type>
-			<description>Run the package's background task on the selected schedule.</description>
+			<description>Turn on the replaceable background-task example.</description>
 		</field>
 		<field>
-			<fielddescr>Schedule</fielddescr>
-			<fieldname>schedule</fieldname>
+			<fielddescr>Example Task Frequency</fielddescr>
+			<fieldname>task_frequency</fieldname>
 			<type>select</type>
 			<options>
+				<option><name>Every minute</name><value>minute</value></option>
 				<option><name>Hourly</name><value>hourly</value></option>
 				<option><name>Daily at midnight</name><value>daily</value></option>
 				<option><name>Weekly on Sunday</name><value>weekly</value></option>
 			</options>
-			<description>Choose how often pfSense runs the background task.</description>
+			<default_value>hourly</default_value>
+			<description>Choose how often pfSense runs the starter background task.</description>
 		</field>
 		<field>
-			<fielddescr>Task Message</fielddescr>
+			<fielddescr>Example Log Message</fielddescr>
 			<fieldname>message</fieldname>
 			<type>input</type>
 			<size>60</size>
-			<default_value>Scheduled [__WORKSPACE_TITLE__] task completed.</default_value>
-			<description>Starter value written to the pfSense system log by the generated task.</description>
+			<default_value>Example [__WORKSPACE_TITLE__] background task completed.</default_value>
+			<description>Starter text written to the pfSense system log. Replace this behavior with the package's actual background work.</description>
 			<required/>
 		</field>
 	</fields>

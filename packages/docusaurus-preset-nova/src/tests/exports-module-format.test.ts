@@ -22,9 +22,12 @@ import type {
   Tests_ExportsModuleFormat_CollectNonEsmPackageExports_PackageRoot,
   Tests_ExportsModuleFormat_CollectNonEsmPackageExports_PackageType,
   Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Projects,
+  Tests_ExportsModuleFormat_CollectNonEsmPackageExports_RawTarget,
   Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Returns,
   Tests_ExportsModuleFormat_CollectNonEsmPackageExports_SourcePath,
   Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Target,
+  Tests_ExportsModuleFormat_CollectNonEsmPackageExports_TargetConditions,
+  Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Targets,
   Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Violations,
   Tests_ExportsModuleFormat_EmitsEsm_ModuleKind,
   Tests_ExportsModuleFormat_EmitsEsm_PackageType,
@@ -200,40 +203,61 @@ async function collectNonEsmPackageExports(packageRoot: Tests_ExportsModuleForma
   }
 
   for (const subpath of Object.keys(exportsMap)) {
-    const target: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Target = exportsMap[subpath];
+    const rawTarget: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_RawTarget = exportsMap[subpath];
+    const targets: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Targets = [];
 
-    if (typeof target !== 'string') {
-      throw new Error(`exports-module-format: conditional export "${subpath}" is unsupported; extend this guard to classify it`);
+    if (typeof rawTarget === 'string') {
+      targets.push(rawTarget);
+    } else if (
+      rawTarget !== null
+      && typeof rawTarget === 'object'
+      && Array.isArray(rawTarget) === false
+    ) {
+      const targetConditions: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_TargetConditions = rawTarget as Tests_ExportsModuleFormat_CollectNonEsmPackageExports_TargetConditions;
+
+      for (const condition of Object.keys(targetConditions)) {
+        const target: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Target = targetConditions[condition];
+
+        if (typeof target !== 'string') {
+          throw new Error(`exports-module-format: condition "${condition}" for export "${subpath}" must resolve to a string target`);
+        }
+
+        targets.push(target);
+      }
+    } else {
+      throw new Error(`exports-module-format: export "${subpath}" must resolve to a string or conditional object`);
     }
 
-    if (target.startsWith('./build/') === false) {
-      continue;
-    }
+    for (const target of targets) {
+      if (target.startsWith('./build/') === false) {
+        continue;
+      }
 
-    const sourcePath: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_SourcePath = resolveExportSource(packageRoot, target);
+      const sourcePath: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_SourcePath = resolveExportSource(packageRoot, target);
 
-    if (sourcePath === undefined) {
-      violations.push(`${subpath} -> ${target}: no matching source file found`);
+      if (sourcePath === undefined) {
+        violations.push(`${subpath} -> ${target}: no matching source file found`);
 
-      continue;
-    }
+        continue;
+      }
 
-    const owningProjects: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_OwningProjects = projects.filter((project) => project['files'].has(sourcePath));
+      const owningProjects: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_OwningProjects = projects.filter((project) => project['files'].has(sourcePath));
 
-    if (owningProjects.length !== 1) {
-      violations.push(`${subpath} -> ${target}: expected exactly one compiling tsconfig, found ${owningProjects.length} (${owningProjects.map((project) => project['name']).join(', ')})`);
+      if (owningProjects.length !== 1) {
+        violations.push(`${subpath} -> ${target}: expected exactly one compiling tsconfig, found ${owningProjects.length} (${owningProjects.map((project) => project['name']).join(', ')})`);
 
-      continue;
-    }
+        continue;
+      }
 
-    const owningProject: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_OwningProject = owningProjects[0];
+      const owningProject: Tests_ExportsModuleFormat_CollectNonEsmPackageExports_OwningProject = owningProjects[0];
 
-    if (owningProject === undefined) {
-      continue;
-    }
+      if (owningProject === undefined) {
+        continue;
+      }
 
-    if (owningProject['esm'] === false) {
-      violations.push(`${subpath} -> ${target}: source ${sourcePath} is compiled as CommonJS by ${owningProject['name']}`);
+      if (owningProject['esm'] === false) {
+        violations.push(`${subpath} -> ${target}: source ${sourcePath} is compiled as CommonJS by ${owningProject['name']}`);
+      }
     }
   }
 

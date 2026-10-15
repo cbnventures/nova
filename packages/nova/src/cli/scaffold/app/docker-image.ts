@@ -127,6 +127,7 @@ export class Runner {
   public static async run(options: Cli_Scaffold_App_DockerImage_Runner_Run_Options): Cli_Scaffold_App_DockerImage_Runner_Run_Returns {
     await runScaffold(options, {
       category: 'app',
+      displayName: 'Docker Image',
       importMetaUrl: import.meta.url,
       resolveRootTemplateSubpaths,
       templateQuestions: cliScaffoldAppDockerImageTemplateQuestions,
@@ -135,6 +136,7 @@ export class Runner {
       workspaceFinalizer: async (workspaceDirectory) => {
         await CliGenerateDockerImage.generateForTarget({
           profile: 'container-native',
+          reportFiles: false,
           replaceFile: true,
           workspaceDirectory,
         });

@@ -1,8 +1,14 @@
 {
   "name": "[__WORKSPACE_PACKAGE_NAME__]",
   "version": "0.0.0",
-  "type": "module",
+  "keywords": [
+    "homebridge",
+    "homebridge-plugin",
+    "homekit",
+    "supports-hap"
+  ],
   "main": "./build/index.js",
+  "type": "module",
   "files": [
     "build",
     "config.schema.json"
@@ -23,8 +29,12 @@
     "clean:build": "shx rm -rf ./build",
     "start": "homebridge --debug --keep-orphans --plugin-path $(pwd)"
   },
+  "engines": {
+    "homebridge": "^1.11.0 || ^2.0.0",
+    "node": "^22 || ^24"
+  },
   "dependencies": {
-    "@cbnventures/nova": "0.30.1"
+    "@cbnventures/nova": "0.31.0"
   },
   "devDependencies": {
     "@types/node": "24.9.1",
@@ -33,15 +43,5 @@
     "shx": "0.4.0",
     "typescript": "6.0.3",
     "vitest": "4.1.11"
-  },
-  "engines": {
-    "homebridge": "^1.11.0 || ^2.0.0",
-    "node": "^22 || ^24"
-  },
-  "keywords": [
-    "homebridge",
-    "homebridge-plugin",
-    "homekit",
-    "supports-hap"
-  ]
+  }
 }

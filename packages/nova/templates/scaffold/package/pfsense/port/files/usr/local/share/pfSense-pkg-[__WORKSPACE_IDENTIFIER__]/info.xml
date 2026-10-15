@@ -2,7 +2,8 @@
 <pfsensepkgs>
 	<package>
 		<name>[__WORKSPACE_TITLE__]</name>
-		<descr><![CDATA[[__WORKSPACE_TITLE__] adds a WebGUI-managed scheduled task to pfSense.]]></descr>
+		<internal_name>[__WORKSPACE_IDENTIFIER__]</internal_name>
+		<descr><![CDATA[[__WORKSPACE_TITLE__] is a Nova-generated pfSense package starter with native WebGUI settings and an optional background-task example.]]></descr>
 		<version>%%PKGVERSION%%</version>
 		<configurationfile>[__WORKSPACE_NAME__].xml</configurationfile>
 	</package>

@@ -1,5 +1,6 @@
 import {
   execFileSync,
+  spawn,
   spawnSync,
 } from 'node:child_process';
 import {
@@ -122,6 +123,64 @@ function expectCommandFailure(command, args, cwd, expectedMessage) {
 }
 
 /**
+ * Check Scaffolds - Verify Node CLI Runtime.
+ *
+ * Exercises the built scaffolded executable across its normal, help, version,
+ * and invalid-command lifecycles. These Nova-owned assertions keep presentation
+ * regressions out of the generated consumer test suite.
+ *
+ * @param {string} projectDirectory - Project directory.
+ *
+ * @returns {void}
+ *
+ * @since 0.0.0
+ */
+function verifyNodeCliRuntime(projectDirectory) {
+  const cliDirectory = join(projectDirectory, 'packages', 'scaffold-cli');
+  const cliPath = join(projectDirectory, 'node_modules', '.bin', (process.platform === 'win32') ? 'scaffold-cli.cmd' : 'scaffold-cli');
+
+  if (existsSync(cliPath) === false) {
+    throw new Error('The generated Node CLI should be linked into node_modules/.bin during installation.');
+  }
+
+  const statusOutput = readCommandOutput(cliPath, ['status'], cliDirectory);
+
+  for (const expectedText of [
+    'scaffold-cli v0.0.0',
+    'CURRENTLY RUNNING:',
+    'scaffold-cli status',
+    'Your command is ready.',
+  ]) {
+    if (statusOutput.includes(expectedText) === false) {
+      throw new Error(`The generated Node CLI status command should include "${expectedText}".`);
+    }
+  }
+
+  const helpOutput = readCommandOutput(cliPath, ['--help'], cliDirectory);
+
+  for (const expectedText of [
+    'scaffold-cli v0.0.0',
+    'Usage: scaffold-cli <command> [options]',
+    'Commands:',
+    'status [options]',
+  ]) {
+    if (helpOutput.includes(expectedText) === false) {
+      throw new Error(`The generated Node CLI help should include "${expectedText}".`);
+    }
+  }
+
+  const versionOutput = readCommandOutput(cliPath, ['--version'], cliDirectory).trim();
+
+  if (versionOutput !== '0.0.0') {
+    throw new Error(`The generated Node CLI should report version "0.0.0"; received "${versionOutput}".`);
+  }
+
+  expectCommandFailure(cliPath, ['unknown-command'], cliDirectory, 'ERROR Unknown command');
+
+  return;
+}
+
+/**
  * Check Scaffolds - Read npm Output.
  *
  * Routes direct npm invocations through Corepack so they use the
@@ -179,6 +238,17 @@ function runNpm(args, cwd) {
 function verifyWorkspaceRegistrations(projectDirectory, expectedWorkspaces) {
   const config = JSON.parse(readFileSync(join(projectDirectory, 'nova.config.json'), 'utf-8'));
   const configWorkspaces = config['workspaces'];
+  const configEnvironment = config['environment'];
+
+  if (typeof configEnvironment !== 'object' || configEnvironment === null) {
+    throw new Error('The generated nova.config.json should register environment namespaces.');
+  }
+
+  const configEnvironmentWorkspaces = configEnvironment['workspaces'];
+
+  if (typeof configEnvironmentWorkspaces !== 'object' || configEnvironmentWorkspaces === null) {
+    throw new Error('The generated nova.config.json should register workspace environment namespaces.');
+  }
 
   for (const expectedWorkspaceEntry of Object.entries(expectedWorkspaces)) {
     const workspacePath = expectedWorkspaceEntry[0];
@@ -208,7 +278,298 @@ function verifyWorkspaceRegistrations(projectDirectory, expectedWorkspaces) {
         throw new Error(`Workspace "${workspacePath}" package.json should be named "${expectedName}".`);
       }
     }
+
+    verifyWorkspaceEnvironment(projectDirectory, workspacePath, configEnvironmentWorkspaces);
   }
+
+  return;
+}
+
+/**
+ * Check Scaffolds - Verify Workspace Environment.
+ *
+ * Confirms one generated workspace has a distinct environment namespace and
+ * both Nova-managed dotenv files with the shared runtime and logging defaults.
+ *
+ * @param {string}                            projectDirectory      - Project directory.
+ * @param {string}                            workspacePath         - Workspace path.
+ * @param {Record<string, {prefix: string}>} environmentWorkspaces - Environment workspaces.
+ *
+ * @returns {void}
+ *
+ * @since 0.0.0
+ */
+function verifyWorkspaceEnvironment(projectDirectory, workspacePath, environmentWorkspaces) {
+  const registeredEnvironmentWorkspace = environmentWorkspaces[workspacePath];
+
+  if (
+    registeredEnvironmentWorkspace === undefined
+    || typeof registeredEnvironmentWorkspace['prefix'] !== 'string'
+    || registeredEnvironmentWorkspace['prefix'] === ''
+  ) {
+    throw new Error(`Workspace "${workspacePath}" should have a non-empty environment prefix.`);
+  }
+
+  let packageDirectory = '';
+
+  if (workspacePath !== './') {
+    packageDirectory = (workspacePath.startsWith('./') === true) ? workspacePath.slice(2) : workspacePath;
+  }
+
+  const workspaceDirectory = join(projectDirectory, packageDirectory);
+  const expectedBaselineLines = [
+    'NODE_ENV="development"',
+    'LOG_LEVEL="auto"',
+    'LOG_TIME="false"',
+  ];
+
+  for (const fileName of [
+    '.env',
+    '.env.sample',
+  ]) {
+    const filePath = join(workspaceDirectory, fileName);
+
+    if (existsSync(filePath) === false) {
+      throw new Error(`Workspace "${workspacePath}" should include "${fileName}".`);
+    }
+
+    const lines = readFileSync(filePath, 'utf-8').split('\n');
+
+    for (const expectedLine of expectedBaselineLines) {
+      if (lines.includes(expectedLine) === false) {
+        throw new Error(`Workspace "${workspacePath}" ${fileName} should include "${expectedLine}".`);
+      }
+    }
+  }
+
+  return;
+}
+
+/**
+ * Check Scaffolds - Verify Workspace Environment Variables.
+ *
+ * Confirms scaffold-specific variables remain blank locally while their safe
+ * defaults are documented in the generated sample file.
+ *
+ * @param {string}                 projectDirectory        - Project directory.
+ * @param {string}                 workspacePath           - Workspace path.
+ * @param {Record<string, string>} expectedSampleVariables - Expected sample variables.
+ *
+ * @returns {void}
+ *
+ * @since 0.0.0
+ */
+function verifyWorkspaceEnvironmentVariables(projectDirectory, workspacePath, expectedSampleVariables) {
+  const packageDirectory = (workspacePath.startsWith('./') === true) ? workspacePath.slice(2) : workspacePath;
+  const workspaceDirectory = join(projectDirectory, packageDirectory);
+  const envLines = readFileSync(join(workspaceDirectory, '.env'), 'utf-8').split('\n');
+  const sampleLines = readFileSync(join(workspaceDirectory, '.env.sample'), 'utf-8').split('\n');
+
+  for (const expectedVariableEntry of Object.entries(expectedSampleVariables)) {
+    const variableName = expectedVariableEntry[0];
+    const sampleValue = expectedVariableEntry[1];
+
+    if (envLines.includes(`${variableName}=""`) === false) {
+      throw new Error(`Workspace "${workspacePath}" .env should include a blank "${variableName}" value.`);
+    }
+
+    if (sampleLines.includes(`${variableName}="${sampleValue}"`) === false) {
+      throw new Error(`Workspace "${workspacePath}" .env.sample should include "${variableName}=\"${sampleValue}\"".`);
+    }
+  }
+
+  return;
+}
+
+/**
+ * Check Scaffolds - Verify Dockerfile Banners.
+ *
+ * Confirms that generated Dockerfile comment frames align with their title
+ * lines across every Docker profile exercised by the scaffold matrix.
+ *
+ * @param {string[]} dockerfilePaths - Dockerfile paths.
+ *
+ * @returns {void}
+ *
+ * @since 0.0.0
+ */
+function verifyDockerfileBanners(dockerfilePaths) {
+  for (const dockerfilePath of dockerfilePaths) {
+    const dockerfileLines = readFileSync(dockerfilePath, 'utf-8').split('\n');
+
+    for (const dockerfileLineEntry of dockerfileLines.entries()) {
+      const lineIndex = dockerfileLineEntry[0];
+      const dockerfileLine = dockerfileLineEntry[1];
+
+      if (dockerfileLine.startsWith('#### ') === false || dockerfileLine.endsWith(' ####') === false) {
+        continue;
+      }
+
+      const precedingBorder = dockerfileLines[lineIndex - 1];
+      const followingBorder = dockerfileLines[lineIndex + 1];
+      const hasAlignedBorders = precedingBorder !== undefined
+        && followingBorder !== undefined
+        && precedingBorder.replaceAll('#', '') === ''
+        && followingBorder.replaceAll('#', '') === ''
+        && precedingBorder.length === dockerfileLine.length
+        && followingBorder.length === dockerfileLine.length;
+
+      if (hasAlignedBorders === false) {
+        throw new Error(`Dockerfile banner at "${dockerfilePath}:${String(lineIndex + 1)}" is not aligned.`);
+      }
+    }
+  }
+
+  return;
+}
+
+/**
+ * Check Scaffolds - Verify Launch Sequence Copy.
+ *
+ * Confirms every generated launchpad presents one shared three-step sequence so
+ * platform-specific starter implementations cannot drift into separate copy.
+ *
+ * @param {string[]} launchpadPaths - Launchpad paths.
+ *
+ * @returns {void}
+ *
+ * @since 0.0.0
+ */
+function verifyLaunchSequenceCopy(launchpadPaths) {
+  const expectedCopy = [
+    'Replace this starter with your first real product experience.',
+    'Run the workspace checks while the project takes shape.',
+    'Build the same production artifact Nova already validates.',
+  ];
+
+  for (const launchpadPath of launchpadPaths) {
+    const launchpad = readFileSync(launchpadPath, 'utf-8');
+
+    for (const expectedLine of expectedCopy) {
+      if (launchpad.includes(expectedLine) === false) {
+        throw new Error(`Generated launchpad "${launchpadPath}" does not use the shared launch-sequence copy: "${expectedLine}".`);
+      }
+    }
+  }
+
+  return;
+}
+
+/**
+ * Check Scaffolds - Verify Cloudflare Worker Runtime.
+ *
+ * Starts the generated Worker long enough for Wrangler and workerd to accept
+ * the scaffold configuration. Static checks and dry-run deployments do not
+ * reject a compatibility date newer than the bundled runtime supports.
+ *
+ * @param {string} projectDirectory - Project directory.
+ *
+ * @returns {Promise<void>}
+ *
+ * @since 0.0.0
+ */
+async function verifyCloudflareWorkerRuntime(projectDirectory) {
+  const workspaceDirectory = join(projectDirectory, 'apps', 'workers');
+  const rootWranglerExecutable = join(
+    projectDirectory,
+    'node_modules',
+    '.bin',
+    (process.platform === 'win32') ? 'wrangler.cmd' : 'wrangler',
+  );
+  const workspaceWranglerExecutable = join(
+    workspaceDirectory,
+    'node_modules',
+    '.bin',
+    (process.platform === 'win32') ? 'wrangler.cmd' : 'wrangler',
+  );
+  const wranglerExecutable = (existsSync(workspaceWranglerExecutable) === true) ? workspaceWranglerExecutable : rootWranglerExecutable;
+  const wranglerProcess = spawn(wranglerExecutable, [
+    'dev',
+    '--ip',
+    '127.0.0.1',
+    '--port',
+    '0',
+    '--inspector-port',
+    '0',
+  ], {
+    cwd: workspaceDirectory,
+    env: {
+      ...process.env,
+      CLOUDFLARE_TELEMETRY_DISABLED: '1',
+      NO_COLOR: '1',
+    },
+    stdio: [
+      'ignore',
+      'pipe',
+      'pipe',
+    ],
+  });
+
+  let output = '';
+  let runtimeReady = false;
+
+  await new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      wranglerProcess.kill('SIGTERM');
+
+      return;
+    }, 30000);
+
+    /**
+     * Check Scaffolds - Verify Cloudflare Worker Runtime - Collect Output.
+     *
+     * Combines both streams because Wrangler may report startup readiness and
+     * configuration failures through different channels.
+     *
+     * @param {Buffer} data - Data.
+     *
+     * @returns {void}
+     *
+     * @since 0.0.0
+     */
+    const collectOutput = (data) => {
+      output += data.toString();
+
+      if (runtimeReady === false && output.includes('Ready on') === true) {
+        runtimeReady = true;
+        wranglerProcess.kill('SIGTERM');
+      }
+
+      return;
+    };
+
+    wranglerProcess.stdout.on('data', collectOutput);
+
+    wranglerProcess.stderr.on('data', collectOutput);
+
+    wranglerProcess.once('error', (error) => {
+      clearTimeout(timeout);
+      reject(error);
+
+      return;
+    });
+
+    wranglerProcess.once('close', (exitCode) => {
+      clearTimeout(timeout);
+
+      if (runtimeReady === true) {
+        resolve(undefined);
+
+        return;
+      }
+
+      reject(new Error([
+        `Generated Cloudflare Worker runtime exited before becoming ready (exit code ${String(exitCode)}).`,
+        output,
+      ].join('\n')));
+
+      return;
+    });
+
+    return;
+  });
+
+  process.stdout.write('Generated Cloudflare Worker runtime started successfully.\n');
 
   return;
 }
@@ -220,11 +581,11 @@ function verifyWorkspaceRegistrations(projectDirectory, expectedWorkspaces) {
  * scaffold into one clean monorepo, installs it, and exercises each applicable
  * check, lint, test, and production build command.
  *
- * @returns {void}
+ * @returns {Promise<void>}
  *
  * @since 0.0.0
  */
-function checkScaffolds() {
+async function checkScaffolds() {
   const repositoryDirectory = process.cwd();
   const dockerAvailable = ensureDockerEngine();
   const temporaryDirectory = mkdtempSync(join(tmpdir(), 'nova-scaffold-smoke-'));
@@ -278,6 +639,7 @@ function checkScaffolds() {
       'app',
       'vite',
       '--non-interactive',
+      '--no-install',
       '--name',
       'direct-smoke',
       '--workspace-name',
@@ -305,6 +667,7 @@ function checkScaffolds() {
       'starter',
       'base',
       '--non-interactive',
+      '--no-install',
       '--name',
       'scaffold-smoke',
       '--output',
@@ -320,6 +683,7 @@ function checkScaffolds() {
       'cloudflare',
       '--docker-image',
       '--non-interactive',
+      '--no-install',
       '--rendering',
       'server',
       '--workspace-name',
@@ -336,11 +700,40 @@ function checkScaffolds() {
       novaCliPath,
       'scaffold',
       'app',
+      'android',
+      '--application-id',
+      'io.cbnventures.scaffoldsmoke',
+      '--non-interactive',
+      '--no-install',
+      '--workspace-name',
+      'android',
+      '--output',
+      './apps/android',
+    ], projectDirectory);
+
+    runCommand(process.execPath, [
+      novaCliPath,
+      'scaffold',
+      'app',
+      'apple',
+      '--non-interactive',
+      '--no-install',
+      '--workspace-name',
+      'apple',
+      '--output',
+      './apps/apple',
+    ], projectDirectory);
+
+    runCommand(process.execPath, [
+      novaCliPath,
+      'scaffold',
+      'app',
       'astro',
       '--adapter',
       'node',
       '--docker-image',
       '--non-interactive',
+      '--no-install',
       '--rendering',
       'server',
       '--workspace-name',
@@ -357,6 +750,7 @@ function checkScaffolds() {
       '--adapter',
       'cloudflare',
       '--non-interactive',
+      '--no-install',
       '--rendering',
       'server',
       '--workspace-name',
@@ -372,6 +766,7 @@ function checkScaffolds() {
       'discord-bot',
       '--docker-image',
       '--non-interactive',
+      '--no-install',
       '--workspace-name',
       'bot',
       '--output',
@@ -386,6 +781,7 @@ function checkScaffolds() {
       '--architectures',
       'amd64,arm64',
       '--non-interactive',
+      '--no-install',
       '--publish',
       'ghcr',
       '--workspace-name',
@@ -402,6 +798,7 @@ function checkScaffolds() {
       '--architectures',
       'arm64',
       '--non-interactive',
+      '--no-install',
       '--publish',
       'docker-hub',
       '--workspace-name',
@@ -417,6 +814,7 @@ function checkScaffolds() {
       'expressjs',
       '--docker-image',
       '--non-interactive',
+      '--no-install',
       '--workspace-name',
       'express',
       '--output',
@@ -430,6 +828,7 @@ function checkScaffolds() {
       'nextjs',
       '--docker-image',
       '--non-interactive',
+      '--no-install',
       '--workspace-name',
       'nextjs',
       '--output',
@@ -445,6 +844,7 @@ function checkScaffolds() {
       '--framework',
       'react',
       '--non-interactive',
+      '--no-install',
       '--pwa',
       '--workspace-name',
       'vite',
@@ -460,6 +860,7 @@ function checkScaffolds() {
       '--framework',
       'vue',
       '--non-interactive',
+      '--no-install',
       '--workspace-name',
       'vite-vue',
       '--output',
@@ -474,6 +875,7 @@ function checkScaffolds() {
       '--framework',
       'svelte',
       '--non-interactive',
+      '--no-install',
       '--workspace-name',
       'vite-svelte',
       '--output',
@@ -486,6 +888,7 @@ function checkScaffolds() {
       'app',
       'cloudflare-workers',
       '--non-interactive',
+      '--no-install',
       '--workspace-name',
       'workers',
       '--output',
@@ -501,13 +904,13 @@ function checkScaffolds() {
       'docs-blog',
       '--docker-image',
       '--non-interactive',
+      '--no-install',
       '--workspace-name',
       'docs',
       '--output',
       './apps/docs',
       '--preset',
       'foundry',
-      '--search',
     ], projectDirectory);
 
     runCommand(process.execPath, [
@@ -516,6 +919,7 @@ function checkScaffolds() {
       'package',
       'node-cli',
       '--non-interactive',
+      '--no-install',
       '--workspace-name',
       'scaffold-cli',
       '--output',
@@ -528,6 +932,7 @@ function checkScaffolds() {
       'package',
       'github-action',
       '--non-interactive',
+      '--no-install',
       '--workspace-name',
       'scaffold-action',
       '--output',
@@ -541,6 +946,7 @@ function checkScaffolds() {
       'homebridge',
       '--custom-ui',
       '--non-interactive',
+      '--no-install',
       '--workspace-name',
       'scaffold',
       '--output',
@@ -553,10 +959,11 @@ function checkScaffolds() {
       'package',
       'pfsense',
       '--non-interactive',
+      '--no-install',
       '--workspace-name',
-      'scheduler',
+      'my-package',
       '--output',
-      './packages/scheduler',
+      './packages/my-package',
     ], projectDirectory);
 
     verifyWorkspaceRegistrations(projectDirectory, {
@@ -564,6 +971,16 @@ function checkScaffolds() {
         name: 'scaffold-smoke-project',
         policy: 'freezable',
         role: 'project',
+      },
+      './apps/android': {
+        name: 'scaffold-smoke-app-android',
+        policy: 'trackable',
+        role: 'app',
+      },
+      './apps/apple': {
+        name: 'scaffold-smoke-app-apple',
+        policy: 'trackable',
+        role: 'app',
       },
       './apps/astro': {
         name: 'scaffold-smoke-app-astro',
@@ -640,12 +1057,46 @@ function checkScaffolds() {
         policy: 'distributable',
         role: 'package',
       },
-      './packages/scheduler': {
-        name: 'pfsense-pkg-scheduler',
+      './packages/my-package': {
+        name: 'pfsense-pkg-my-package',
         policy: 'distributable',
         role: 'package',
       },
     });
+
+    verifyWorkspaceEnvironmentVariables(projectDirectory, './apps/bot', {
+      DISCORD_TOKEN: '',
+    });
+
+    verifyWorkspaceEnvironmentVariables(projectDirectory, './apps/express', {
+      PORT: '3000',
+    });
+
+    verifyWorkspaceEnvironmentVariables(projectDirectory, './tools/scaffold-action', {
+      INPUT_NAME: 'Nova',
+    });
+
+    verifyDockerfileBanners([
+      join(projectDirectory, 'apps', 'astro', 'Dockerfile'),
+      join(projectDirectory, 'apps', 'bot', 'Dockerfile'),
+      join(projectDirectory, 'apps', 'docs', 'Dockerfile'),
+      join(projectDirectory, 'apps', 'express', 'Dockerfile'),
+      join(projectDirectory, 'apps', 'nextjs', 'Dockerfile'),
+      join(projectDirectory, 'apps', 'service', 'Dockerfile'),
+      join(projectDirectory, 'apps', 'service-hub', 'Dockerfile'),
+      join(projectDirectory, 'apps', 'vite', 'Dockerfile'),
+    ]);
+
+    verifyLaunchSequenceCopy([
+      join(directProjectDirectory, 'apps', 'web', 'src', 'main.ts'),
+      join(projectDirectory, 'apps', 'android', 'app', 'src', 'main', 'java', 'io', 'cbnventures', 'scaffoldsmoke', 'ui', 'main', 'MainScreen.kt'),
+      join(projectDirectory, 'apps', 'apple', 'Sources', 'ContentView.swift'),
+      join(projectDirectory, 'apps', 'astro', 'src', 'pages', 'index.astro'),
+      join(projectDirectory, 'apps', 'nextjs', 'src', 'app', 'page.tsx'),
+      join(projectDirectory, 'apps', 'vite', 'src', 'app.tsx'),
+      join(projectDirectory, 'apps', 'vite-svelte', 'src', 'app.svelte'),
+      join(projectDirectory, 'apps', 'vite-vue', 'src', 'app.vue'),
+    ]);
 
     const actionManifest = readFileSync(join(projectDirectory, 'action.yml'), 'utf-8');
 
@@ -653,10 +1104,28 @@ function checkScaffolds() {
       throw new Error('The generated action.yml should point at the selected package output path.');
     }
 
-    const pfSenseWorkflow = readFileSync(join(projectDirectory, '.github', 'workflows', 'pfsense-scheduler.yml'), 'utf-8');
+    const pfSenseWorkflow = readFileSync(join(projectDirectory, '.github', 'workflows', 'pfsense-my-package.yml'), 'utf-8');
 
-    if (pfSenseWorkflow.includes('./packages/scheduler/scripts/build-package.sh') === false) {
+    if (pfSenseWorkflow.includes('./packages/my-package/scripts/build-package.sh') === false) {
       throw new Error('The generated pfSense workflow should point at the selected package workspace.');
+    }
+
+    const pfSensePackageGui = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'pkg', 'my-package.xml'), 'utf-8');
+    const pfSensePackageHelper = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'pkg', 'my-package.inc'), 'utf-8');
+    const pfSensePackageExecutable = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'sbin', 'my-package'), 'utf-8');
+    const pfSensePackageInfo = readFileSync(join(projectDirectory, 'packages', 'my-package', 'port', 'files', 'usr', 'local', 'share', 'pfSense-pkg-MyPackage', 'info.xml'), 'utf-8');
+
+    if (
+      pfSensePackageGui.includes('<name>mypackage</name>') === false
+      || pfSensePackageGui.includes('<addedit_string>My Package: saved settings</addedit_string>') === false
+      || pfSensePackageGui.includes('<fieldname>task_frequency</fieldname>') === false
+      || pfSensePackageGui.includes('<option><name>Every minute</name><value>minute</value></option>') === false
+      || pfSensePackageHelper.includes('installedpackages/mypackage/config/0') === false
+      || pfSensePackageHelper.includes('\'minute\' => [\'*\', \'*\', \'*\', \'*\', \'*\']') === false
+      || pfSensePackageExecutable.includes('logger(LOG_NOTICE,') === false
+      || pfSensePackageInfo.includes('<internal_name>MyPackage</internal_name>') === false
+    ) {
+      throw new Error('The generated pfSense package should keep its normalized config key and internal package identity aligned.');
     }
 
     const ghcrWorkflow = readFileSync(join(projectDirectory, '.github', 'workflows', 'service-container.yml'), 'utf-8');
@@ -709,6 +1178,8 @@ function checkScaffolds() {
     runNpm(['install'], projectDirectory);
 
     runNpm(['install'], directProjectDirectory);
+
+    await verifyCloudflareWorkerRuntime(projectDirectory);
 
     verifyBundlerLoad(projectDirectory, 'apps/docs', 'vitest');
     verifyBundlerLoad(projectDirectory, 'apps/vite', 'vite');
@@ -778,6 +1249,8 @@ function checkScaffolds() {
       ], projectDirectory);
     }
 
+    verifyNodeCliRuntime(projectDirectory);
+
     runNpm([
       'run',
       'check',
@@ -799,4 +1272,4 @@ function checkScaffolds() {
   return;
 }
 
-checkScaffolds();
+await checkScaffolds();

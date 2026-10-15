@@ -1,7 +1,7 @@
 ---
 id: "expressjs"
 title: "Express.js"
-description: "Scaffold an Express.js workspace with TypeScript, tsx watch, and a minimal server entry point in monorepo or workspace mode."
+description: "Scaffold an Express.js API with discovery and health routes, validated port configuration, TypeScript, and tsx watch."
 keywords:
   - "nova"
   - "nova scaffold"
@@ -27,7 +27,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 1. Installs Express 5 with TypeScript and a `tsx watch` dev script so you can start writing routes with hot reload on the first command.
 2. Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
-3. Generates a minimal `src/index.ts` entry point so the server compiles and runs without extra boilerplate.
+3. Separates the Express app from process startup, then provides discovery and health routes that are useful immediately and remain easy to test.
 4. Pins TypeScript `6.0.3` and sets `rootDir` to `src` so the build emits the `build/index.js` file used by the start script.
 5. Provides `dev`, `prod`, `check`, `build`, and `clean` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner.
 6. Can compose the HTTP-service Docker profile with `--docker-image` without changing the Express source template.
@@ -70,6 +70,8 @@ You can run this directly from an empty location; `scaffold starter base` is not
 |---------------------------|----------------------------------------------------------------------|
 | `-d, --dry-run`           | Run without writing any files.                                       |
 | `--docker-image`          | Add a production Node image, port `3000`, and HTTP health check.     |
+| `--install`               | Install dependencies after scaffolding; this is the default.         |
+| `--no-install`            | Skip dependency installation.                                        |
 | `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
 | `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
 | `--workspace-name <name>` | Workspace directory name.                                            |
@@ -84,9 +86,13 @@ You can run this directly from an empty location; `scaffold starter base` is not
 ├── turbo.json
 ├── apps/
 │   └── {workspace-name}/
+│       ├── .env
+│       ├── .env.sample
 │       ├── package.json
 │       ├── tsconfig.json
 │       └── src/
+│           ├── app.ts
+│           ├── app.test.ts
 │           └── index.ts
 └── packages/
 ```
@@ -95,15 +101,14 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 ### Interactive Wizard
 
-When run without flags, the command walks you through an interactive wizard:
+When run without flags, Nova collects every answer before it writes files:
 
 **Monorepo mode** (no `package.json` found):
 
 1. **Project name** — Enter a slug for your monorepo (e.g. `my-api`).
 2. **Workspace name** — Enter a slug for the workspace directory (default: `express`).
-3. **Where should the project be created?** — Choose between creating a new directory or building in the current working directory.
-4. **Output directory** — If creating a new directory, confirm the path (default: `./{project-name}`).
-5. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
+
+The new project is created in `./{project-name}` by default and never directly in the current directory.
 
 **Workspace mode** (`package.json` with `workspaces` found):
 
@@ -111,6 +116,8 @@ When run without flags, the command walks you through an interactive wizard:
 2. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
 
 Nova reads the project slug from the root `nova.config.json`; it does not ask you to rename the project or package.
+
+After collecting the answers, Nova displays the complete plan and asks for one confirmation. It then writes the scaffold and installs dependencies unless you pass `--no-install`. Project-level generators remain separate commands that you can run after configuring `nova.config.json`.
 
 ### Non-Interactive Mode
 
@@ -153,6 +160,14 @@ For project slug `my-api` and workspace slug `api`, Nova names the package `my-a
 
 Before writing, Nova requires a readable root `package.json` and `nova.config.json`, keeps the output inside the monorepo, rejects duplicate paths and names, and lists any template files it would overwrite. `--dry-run` performs these checks without changing the project.
 
+## Starter API
+
+The generated server exposes `/` as a compact discovery response and `/health` as a container-friendly health response. Nova registers `PORT` in the workspace environment, leaves its local `.env` value blank, and documents `3000` in `.env.sample`.
+
+The server uses `3000` when `PORT` is blank or missing. Any other value must be an integer from `1` through `65535`; invalid values and bind failures stop startup instead of printing a false ready message.
+
+The app factory lives in `src/app.ts`, while `src/index.ts` owns only runtime startup and the copyable endpoint summary. This keeps route tests offline and makes the app straightforward to import from a larger test suite.
+
 ## Next Steps
 
-After scaffolding, consider running generators to add essential project files like `.editorconfig`, `.gitignore`, `LICENSE`, and `README.md`.
+After scaffolding, consider running generators to add project files like `.editorconfig`, `LICENSE`, and `README.md`. The root `.gitignore` is already generated by the scaffold.

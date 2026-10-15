@@ -65,6 +65,8 @@ Scaffold a **Homebridge dynamic-platform plugin** with the required registration
 | Flag                      | Description                                                                |
 |---------------------------|----------------------------------------------------------------------------|
 | `-d, --dry-run`           | Run without writing any files.                                             |
+| `--install`               | Install dependencies after scaffolding; this is the default.               |
+| `--no-install`            | Skip dependency installation.                                              |
 | `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root.       |
 | `--non-interactive`       | Use flags and defaults without opening prompts.                            |
 | `--workspace-name <name>` | Workspace directory name; Nova adds `homebridge-` to the npm package name. |
@@ -81,7 +83,7 @@ Scaffold a **Homebridge dynamic-platform plugin** with the required registration
 | `tsconfig.source.json` | Nova strict, Node.js, and Homebridge preset composition.         |
 | `package.json`         | Homebridge metadata, engine ranges, keywords, and local scripts. |
 
-With `--custom-ui`, Nova also writes `src/config-ui/server.ts` and `homebridge-ui/public/`. The build copies those browser assets into `build/config-ui/public`, matching the `customUiPath` written to `config.schema.json`.
+With `--custom-ui`, Nova also writes `src/config-ui/server.ts` and `homebridge-ui/public/`. The browser entry is an embeddable fragment rather than a competing HTML document, and it uses the Bootstrap styles injected by Homebridge instead of bundling another theme. Its responsive tabs introduce the generated plugin and demonstrate practical input, choice, and component patterns. A dedicated **Open Homebridge Configuration** action replaces the gallery with Homebridge's native schema form and a single return action, keeping the native and custom interfaces visually separate. The examples remain interactive without writing demonstration values into the user's configuration. The build copies those browser assets into `build/config-ui/public`, matching the `customUiPath` written to `config.schema.json`.
 
 ## Non-Interactive Mode
 

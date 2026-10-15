@@ -7,34 +7,46 @@ import prompts from 'prompts';
 
 import { LIB_REGEX_PATTERN_SLUG_SIMPLE } from '../../../lib/regex.js';
 import {
+  confirmScaffoldPlan,
+  createScaffoldProgress,
+  reportScaffoldCompletion,
+  reportScaffoldPlan,
+  resolveDisplayPath,
+  resolveScaffoldInstall,
+} from '../../../lib/scaffold-presentation.js';
+import {
   createMonorepoRoot,
   detectMonorepoContext,
   findFileConflicts,
   getMonorepoRootPlannedPaths,
-  promptPostScaffoldGenerators,
+  installScaffoldDependencies,
 } from '../../../lib/scaffold.js';
+import { pathExists } from '../../../lib/utility.js';
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
   Cli_Scaffold_Starter_Base_Runner_Run_Cancelled,
+  Cli_Scaffold_Starter_Base_Runner_Run_Confirmed,
   Cli_Scaffold_Starter_Base_Runner_Run_ConflictingPaths,
   Cli_Scaffold_Starter_Base_Runner_Run_ConflictMessage,
   Cli_Scaffold_Starter_Base_Runner_Run_Context,
   Cli_Scaffold_Starter_Base_Runner_Run_CurrentDirectory,
-  Cli_Scaffold_Starter_Base_Runner_Run_DirectoryAnswers,
-  Cli_Scaffold_Starter_Base_Runner_Run_DirectoryChoices,
+  Cli_Scaffold_Starter_Base_Runner_Run_DisplayPath,
+  Cli_Scaffold_Starter_Base_Runner_Run_InstallOutput,
+  Cli_Scaffold_Starter_Base_Runner_Run_InstallResult,
+  Cli_Scaffold_Starter_Base_Runner_Run_InstallSucceeded,
   Cli_Scaffold_Starter_Base_Runner_Run_IsDryRun,
   Cli_Scaffold_Starter_Base_Runner_Run_IsNonInteractive,
   Cli_Scaffold_Starter_Base_Runner_Run_NameAnswers,
   Cli_Scaffold_Starter_Base_Runner_Run_NameQuestions,
   Cli_Scaffold_Starter_Base_Runner_Run_Options,
-  Cli_Scaffold_Starter_Base_Runner_Run_OutputAnswers,
   Cli_Scaffold_Starter_Base_Runner_Run_OutputDirectory,
   Cli_Scaffold_Starter_Base_Runner_Run_PlannedPaths,
+  Cli_Scaffold_Starter_Base_Runner_Run_Progress,
+  Cli_Scaffold_Starter_Base_Runner_Run_ProgressTotal,
   Cli_Scaffold_Starter_Base_Runner_Run_ResolvedName,
-  Cli_Scaffold_Starter_Base_Runner_Run_ResolvedOutput,
   Cli_Scaffold_Starter_Base_Runner_Run_Returns,
-  Cli_Scaffold_Starter_Base_Runner_Run_SelectedDirectoryChoice,
+  Cli_Scaffold_Starter_Base_Runner_Run_ShouldInstall,
 } from '../../../types/cli/scaffold/starter/base.d.ts';
 
 /**
@@ -42,7 +54,7 @@ import type {
  *
  * Creates a new monorepo from scratch with root-level
  * config files including package.json, nova.config.json, and turbo.json.
- * Sets up directory structure and runs generators.
+ * Sets up the directory structure and baseline Nova configuration.
  *
  * @since 0.15.0
  */
@@ -51,7 +63,7 @@ export class Runner {
    * CLI - Scaffold - Starter - Base - Run.
    *
    * Entry point invoked by the CLI nova scaffold starter command. Detects context, prompts for
-   * project name and output directory, then creates the monorepo root.
+   * the project name, then creates the monorepo root in a dedicated directory.
    *
    * @param {Cli_Scaffold_Starter_Base_Runner_Run_Options} options - Options.
    *
@@ -120,15 +132,12 @@ export class Runner {
 
     if (
       isNonInteractive === true
-      && (
-        options['name'] === undefined
-        || options['output'] === undefined
-      )
+      && options['name'] === undefined
     ) {
       Logger.customize({
         name: 'Runner.run',
         purpose: 'validate',
-      }).error('Non-interactive scaffolding requires --name and --output.');
+      }).error('Non-interactive scaffolding requires --name.');
 
       process.exitCode = 1;
 
@@ -178,77 +187,29 @@ export class Runner {
       return;
     }
 
-    // Determine output directory.
-    let outputDirectory: Cli_Scaffold_Starter_Base_Runner_Run_OutputDirectory = undefined;
+    const outputDirectory: Cli_Scaffold_Starter_Base_Runner_Run_OutputDirectory = resolve(currentDirectory, options['output'] ?? `./${resolvedName}`);
 
-    if (options['output'] !== undefined) {
-      outputDirectory = resolve(currentDirectory, options['output']);
-    } else {
-      const directoryChoices: Cli_Scaffold_Starter_Base_Runner_Run_DirectoryChoices = [
-        {
-          title: 'Create a new directory',
-          value: 'new-directory',
-        },
-        {
-          title: 'Build in current working directory',
-          value: 'current-directory',
-        },
-      ];
+    if (outputDirectory === currentDirectory) {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'validate',
+      }).error('A new project must be created in a new directory, not the current working directory. Choose a different --output path. No scaffold files were written.');
 
-      const directoryAnswers: Cli_Scaffold_Starter_Base_Runner_Run_DirectoryAnswers = await prompts({
-        type: 'select',
-        name: 'directoryChoice',
-        message: 'Where should the project be created?',
-        choices: directoryChoices,
-        initial: 0,
-      }, {
-        onCancel: () => false,
-      });
+      process.exitCode = 1;
 
-      if (directoryAnswers['directoryChoice'] === undefined) {
-        cancelled = true;
-      }
-
-      if (cancelled === true) {
-        return;
-      }
-
-      const selectedDirectoryChoice: Cli_Scaffold_Starter_Base_Runner_Run_SelectedDirectoryChoice = directoryAnswers['directoryChoice'] as Cli_Scaffold_Starter_Base_Runner_Run_SelectedDirectoryChoice;
-
-      if (selectedDirectoryChoice === 'current-directory') {
-        outputDirectory = currentDirectory;
-      } else {
-        const outputAnswers: Cli_Scaffold_Starter_Base_Runner_Run_OutputAnswers = await prompts({
-          type: 'text',
-          name: 'output',
-          message: 'Output directory:',
-          initial: `./${resolvedName}`,
-        }, {
-          onCancel: () => false,
-        });
-
-        if (outputAnswers['output'] === undefined) {
-          cancelled = true;
-        }
-
-        if (cancelled === true) {
-          return;
-        }
-
-        const resolvedOutput: Cli_Scaffold_Starter_Base_Runner_Run_ResolvedOutput = outputAnswers['output'] as Cli_Scaffold_Starter_Base_Runner_Run_ResolvedOutput;
-
-        outputDirectory = resolve(currentDirectory, resolvedOutput);
-      }
-    }
-
-    if (outputDirectory === undefined) {
       return;
     }
 
-    Logger.customize({
-      name: 'Runner.run',
-      purpose: 'config',
-    }).info(`Scaffolding starter monorepo "${resolvedName}" in "${outputDirectory}".`);
+    if (await pathExists(outputDirectory) === true) {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'validate',
+      }).error(`The monorepo destination "${resolveDisplayPath(currentDirectory, outputDirectory)}" already exists. A new monorepo scaffold requires a new directory; choose a different --output path. No scaffold files were written.`);
+
+      process.exitCode = 1;
+
+      return;
+    }
 
     const plannedPaths: Cli_Scaffold_Starter_Base_Runner_Run_PlannedPaths = await getMonorepoRootPlannedPaths(outputDirectory);
     const conflictingPaths: Cli_Scaffold_Starter_Base_Runner_Run_ConflictingPaths = await findFileConflicts(plannedPaths);
@@ -259,9 +220,36 @@ export class Runner {
       Logger.customize({
         name: 'Runner.run',
         purpose: 'validate',
-      }).error(`Scaffolding would overwrite files Nova does not own: ${conflictMessage}. Move or remove those files, then run the command again. No scaffold files were written.`);
+      }).error(`Scaffolding found existing files at paths it needs to create: ${conflictMessage}. Move those files or choose a different destination, then run the command again. No scaffold files were written.`);
 
       process.exitCode = 1;
+
+      return;
+    }
+
+    const displayPath: Cli_Scaffold_Starter_Base_Runner_Run_DisplayPath = resolveDisplayPath(currentDirectory, outputDirectory);
+    const shouldInstall: Cli_Scaffold_Starter_Base_Runner_Run_ShouldInstall = resolveScaffoldInstall(options['install']);
+
+    reportScaffoldPlan({
+      additionalOptions: [{
+        flag: 'Dependencies',
+        value: (shouldInstall === true) ? 'Install with npm' : 'Skip installation',
+      }],
+      answers: new Map(),
+      displayName: 'Base Monorepo',
+      destination: displayPath,
+      mode: 'monorepo',
+      project: resolvedName,
+      questions: [],
+    });
+
+    const confirmed: Cli_Scaffold_Starter_Base_Runner_Run_Confirmed = await confirmScaffoldPlan(isNonInteractive, isDryRun);
+
+    if (confirmed === false) {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'cancelled',
+      }).warn('Scaffold cancelled. No files were written.');
 
       return;
     }
@@ -269,24 +257,73 @@ export class Runner {
     if (isDryRun === true) {
       Logger.customize({
         name: 'Runner.run',
-        purpose: 'dryRun',
+        purpose: 'dryRunRoot',
       }).info(`Would create monorepo root at "${outputDirectory}".`);
+
+      reportScaffoldCompletion({
+        dependenciesInstalled: false,
+        displayName: 'Base Monorepo',
+        dryRun: true,
+        packageManager: 'npm',
+        projectRoot: displayPath,
+        shouldConfigure: true,
+      });
 
       return;
     }
 
+    const progressTotal: Cli_Scaffold_Starter_Base_Runner_Run_ProgressTotal = 1
+      + ((shouldInstall === true) ? 1 : 0);
+    const progress: Cli_Scaffold_Starter_Base_Runner_Run_Progress = createScaffoldProgress(progressTotal);
+
+    progress.start('Writing base monorepo files', displayPath);
+
     // Create monorepo root structure.
     await createMonorepoRoot(outputDirectory, resolvedName);
 
-    Logger.customize({
-      name: 'Runner.run',
-      purpose: 'complete',
-    }).info('Scaffold complete for starter monorepo.');
+    await progress.complete();
 
-    // Post-scaffold generators.
-    if (isNonInteractive === false) {
-      await promptPostScaffoldGenerators(outputDirectory);
+    let installSucceeded: Cli_Scaffold_Starter_Base_Runner_Run_InstallSucceeded = false;
+
+    if (shouldInstall === true) {
+      progress.start('Installing dependencies with npm', displayPath);
+
+      const installResult: Cli_Scaffold_Starter_Base_Runner_Run_InstallResult = await installScaffoldDependencies(outputDirectory, 'npm');
+
+      if (installResult['succeeded'] === false) {
+        progress.clear();
+
+        const installOutput: Cli_Scaffold_Starter_Base_Runner_Run_InstallOutput = installResult['output'].trim();
+
+        if (installOutput !== '') {
+          process.stderr.write(`\n${installOutput}\n`);
+        }
+
+        Logger.customize({
+          name: 'Runner.run',
+          purpose: 'install',
+        }).error(`Dependency installation failed. The scaffold files remain available at "${outputDirectory}". Run "npm install" from that directory after resolving the package-manager error.`);
+
+        process.exitCode = 1;
+
+        return;
+      }
+
+      installSucceeded = true;
+
+      await progress.complete();
     }
+
+    progress.finish('Base Monorepo scaffold ready');
+
+    reportScaffoldCompletion({
+      dependenciesInstalled: installSucceeded,
+      displayName: 'Base Monorepo',
+      dryRun: false,
+      packageManager: 'npm',
+      projectRoot: displayPath,
+      shouldConfigure: true,
+    });
 
     return;
   }

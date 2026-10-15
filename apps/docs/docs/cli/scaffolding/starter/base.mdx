@@ -35,9 +35,11 @@ You do not need to run `starter base` before a direct app, docs, or package comm
 1. Creates the root `package.json` with `workspaces` configured for `apps/*` and `packages/*` so you can add workspaces immediately.
 2. Creates a root `turbo.json` and standard `dev`, `prod`, `check`, `build`, `deploy`, and `clean` script groups. Each top-level script delegates to its adjacent `name:*` Turbo step through `nova utility run-scripts`; development and production-oriented groups pass an explicit `--node-env` value.
 3. Pins the npm and Node.js toolchain used by current Nova projects and records explicit install-script decisions used by the built-in scaffolds.
-4. Generates a baseline `nova.config.json` so recipes and utilities have a valid config to work with from the start.
-5. Installs `@cbnventures/nova` as a dependency so its CLI, presets, and runtime toolkit remain available to generated workspaces.
-6. Adds root Vitest coverage for dotenv formatting and the private monorepo coordinator contract, backed by Nova's shared test setup.
+4. Generates a baseline `nova.config.json` with the project name, current starting year, and `Example Company` legal-name placeholder so recipes, utilities, and identity-aware workspaces have valid input from the start.
+5. Registers the root environment namespace and generates `.env` plus `.env.sample` with Nova's Node.js and logging defaults.
+6. Generates Nova's canonical root `.gitignore` for secrets, dependencies, build output, editor metadata, and supported platform tooling.
+7. Installs `@cbnventures/nova` as a dependency so its CLI, presets, and runtime toolkit remain available to generated workspaces.
+8. Adds root Vitest coverage for dotenv formatting and the private monorepo coordinator contract, backed by Nova's shared test setup.
 
 ## Requirements
 
@@ -73,12 +75,14 @@ You do not need to run `starter base` before a direct app, docs, or package comm
 
 ## Options
 
-| Flag                | Description                                             |
-|---------------------|---------------------------------------------------------|
-| `-d, --dry-run`     | Run without writing any files.                          |
-| `--name <name>`     | Project name.                                           |
-| `--non-interactive` | Require every answer as a flag and do not open prompts. |
-| `--output <dir>`    | Output directory.                                       |
+| Flag                | Description                                                  |
+|---------------------|--------------------------------------------------------------|
+| `-d, --dry-run`     | Run without writing any files.                               |
+| `--install`         | Install dependencies after scaffolding; this is the default. |
+| `--no-install`      | Skip dependency installation.                                |
+| `--name <name>`     | Project name.                                                |
+| `--non-interactive` | Require every answer as a flag and do not open prompts.      |
+| `--output <dir>`    | Output directory.                                            |
 
 ## Output Structure
 
@@ -90,6 +94,9 @@ You do not need to run `starter base` before a direct app, docs, or package comm
 │   ├── dotenv.test.ts
 │   ├── project.test.ts
 │   └── setup.ts
+├── .env
+├── .env.sample
+├── .gitignore
 ├── eslint.config.mts
 ├── nova.config.json
 ├── package.json
@@ -103,16 +110,15 @@ You do not need to run `starter base` before a direct app, docs, or package comm
 
 ### Interactive Wizard
 
-When run without flags, the command walks you through an interactive wizard:
+When run without flags, the command collects the project details before writing anything:
 
 1. **Project name** — Enter a slug for your monorepo (e.g. `my-app`).
-2. **Where should the project be created?** — Choose between creating a new directory or building in the current working directory.
-3. **Output directory** — If creating a new directory, confirm the path (default: `./{project-name}`).
-4. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
+
+Nova creates the project in `./{project-name}` by default, displays the complete plan, and asks for one confirmation. A new project never writes directly into the current directory. Dependencies install after the files are ready unless you pass `--no-install`. Project-level generators remain separate commands that you can run after configuring `nova.config.json`.
 
 ### Non-Interactive Mode
 
-Agents and automation should add `--non-interactive` and provide both answers. Nova refuses incomplete commands before writing and skips the optional post-scaffold generator menu.
+Agents and automation should add `--non-interactive` and provide `--name`. `--output` is optional and defaults to `./{project-name}`. Nova validates the complete plan before writing and installs dependencies unless the command includes `--no-install`.
 
 <Tabs groupId="install-state">
   <TabItem value="nova" label="nova (installed)" default>
@@ -133,7 +139,7 @@ Agents and automation should add `--non-interactive` and provide both answers. N
 
 ## Safety Checks
 
-Before creating any file, Nova validates the project slug and checks the three root files it owns: `package.json`, `nova.config.json`, and `turbo.json`. If any target file already exists, the command stops and lists the conflict. `--dry-run` performs the same validation and reports the exact root path without writing.
+Before creating any file, Nova validates the project slug and checks every root path it owns, including `.gitignore`, `package.json`, `nova.config.json`, and `turbo.json`. If any target file already exists, the command stops and lists the conflict. `--dry-run` performs the same validation and reports the exact root path without writing.
 
 ## Next Steps
 
@@ -164,4 +170,4 @@ For example, these commands add a Docusaurus documentation site and a Cloudflare
 
 You can mix any supported app, docs, and package scaffolds this way. Run each command from the monorepo root, not from inside an existing workspace.
 
-Once the workspaces are in place, run generators for project-level files like `.editorconfig`, `.gitignore`, and `LICENSE`.
+Once the workspaces are in place, run generators for additional project-level files like `.editorconfig`, `LICENSE`, and `README.md`. The root `.gitignore` is already generated by the scaffold.

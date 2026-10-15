@@ -67,6 +67,8 @@ Nova stores the Xcode project as a readable `project.yml` definition, then gener
 | Flag                      | Description                                                          |
 |---------------------------|----------------------------------------------------------------------|
 | `-d, --dry-run`           | Run without writing any files.                                       |
+| `--install`               | Install dependencies after scaffolding; this is the default.         |
+| `--no-install`            | Skip dependency installation.                                        |
 | `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
 | `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
 | `--workspace-name <name>` | Workspace directory name and generated Xcode target name.            |
@@ -74,13 +76,14 @@ Nova stores the Xcode project as a readable `project.yml` definition, then gener
 
 ## Output Files
 
-| File                        | Description                                                         |
-|-----------------------------|---------------------------------------------------------------------|
-| `project.yml`               | XcodeGen definition for the universal app, test target, and scheme. |
-| `Sources/App.swift`         | SwiftUI application entry point.                                    |
-| `Sources/ContentView.swift` | Starter interface shared by iOS and macOS.                          |
-| `Tests/AppTests.swift`      | Swift Testing smoke test.                                           |
-| `package.json`              | Nova script groups for project generation, checking, and building.  |
+| File                        | Description                                                                   |
+|-----------------------------|-------------------------------------------------------------------------------|
+| `project.yml`               | XcodeGen definition for the universal app, test target, scheme, and app icon. |
+| `Sources/App.swift`         | SwiftUI application entry point.                                              |
+| `Sources/Assets.xcassets/`  | Nova app icon, launchpad mark, and social-link vector assets.                 |
+| `Sources/ContentView.swift` | Starter interface shared by iOS and macOS.                                    |
+| `Tests/AppTests.swift`      | Swift Testing smoke test.                                                     |
+| `package.json`              | Nova script groups for project generation, checking, and building.            |
 
 ## Non-Interactive Mode
 

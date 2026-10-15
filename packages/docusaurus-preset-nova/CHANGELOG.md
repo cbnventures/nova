@@ -1,5 +1,10 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.31.0 - 2026-10-15
+
+### FIXED
+- Expanded standalone MDX pages without a table of contents across the full content grid instead of reserving an empty right rail
+
 ## 0.30.1 - 2026-10-12
 
 No changes.

@@ -47,7 +47,7 @@ export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ErrorsWhenBuffe
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ErrorsWhenBufferValueIsNotAPositiveInteger_RealProjectRoot = string;
 
 /**
- * Tests - CLI - Utility - Run Scripts - Run - Matches Exact Script Name Without Wildcard.
+ * Tests - CLI - Utility - Run Scripts - Run - Keeps Stdout And Stderr Partial Lines Independent And Removes Signal Listeners.
  *
  * @since 0.14.0
  */
@@ -125,6 +125,8 @@ export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixe
 
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_CapturedOutput = string;
 
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_ExpectedColoredHelloA = string;
+
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesTaskA = boolean;
 
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesTaskB = boolean;
@@ -132,6 +134,16 @@ export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixe
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesHelloA = boolean;
 
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesHelloB = boolean;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesOpeningSectionA = boolean;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesOpeningSectionB = boolean;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesClosingSectionA = boolean;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesClosingSectionB = boolean;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesColoredHelloA = boolean;
 
 /**
  * Tests - CLI - Utility - Run Scripts - Run - Rejects Unsupported Node Env Values.
@@ -236,6 +248,29 @@ export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_StopsOnFirstFai
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_StopsOnFirstFailureInSequentialMode_SecondRan = boolean;
 
 export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_StopsOnFirstFailureInSequentialMode_MissingFilePath = string;
+
+/**
+ * Tests - CLI - Utility - Run Scripts - Run - Summarizes Every Parallel Failure.
+ *
+ * @since 0.31.0
+ */
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_ProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_PackageJson = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_PackageJsonPath = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_RealProjectRoot = string;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_CapturedStdout = string[];
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_CapturedStderr = string[];
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_OriginalStdoutWrite = typeof process.stdout.write;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_OriginalStderrWrite = typeof process.stderr.write;
+
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_Summary = string;
 
 /**
  * Tests - CLI - Utility - Run Scripts - Run - Warns When No Scripts Match The Pattern.

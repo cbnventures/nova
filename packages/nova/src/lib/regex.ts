@@ -1343,6 +1343,36 @@ export const LIB_REGEX_PLACEHOLDER_CURRENT_DATE = /\[__CURRENT_DATE__\]/;
 export const LIB_REGEX_PLACEHOLDER_CURRENT_YEAR = /\[__CURRENT_YEAR__\]/;
 
 /**
+ * Lib - Regex - Placeholder Android Application ID.
+ *
+ * Replaces the Android package declaration in Nova-owned native launchpad
+ * files after Google's project generator has established the workspace.
+ *
+ * @since 0.31.0
+ */
+export const LIB_REGEX_PLACEHOLDER_ANDROID_APPLICATION_ID = /\[__ANDROID_APPLICATION_ID__\]/;
+
+/**
+ * Lib - Regex - Android Application ID Segment.
+ *
+ * Validates one Android application ID segment before Nova also uses that
+ * value as an unescaped Java or Kotlin package segment.
+ *
+ * @since 0.31.0
+ */
+export const LIB_REGEX_ANDROID_APPLICATION_ID_SEGMENT = /^[A-Za-z][A-Za-z0-9_]*$/;
+
+/**
+ * Lib - Regex - Placeholder Android Package Path.
+ *
+ * Replaces the directory path for Nova-owned Android source overlays so their
+ * location remains aligned with a consumer's selected application identifier.
+ *
+ * @since 0.31.0
+ */
+export const LIB_REGEX_PLACEHOLDER_ANDROID_PACKAGE_PATH = /\[__ANDROID_PACKAGE_PATH__\]/;
+
+/**
  * Lib - Regex - Placeholder Astro Adapter.
  *
  * Matches the adapter selection token used by the Astro scaffold. The shared
@@ -1441,16 +1471,6 @@ export const LIB_REGEX_PLACEHOLDER_DOCUSAURUS_CONTENT = /\[__DOCUSAURUS_CONTENT_
  * @since 0.26.0
  */
 export const LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET = /\[__DOCUSAURUS_PRESET__\]/;
-
-/**
- * Lib - Regex - Placeholder Docusaurus Search.
- *
- * Matches the built-in search selection token used by the Docusaurus scaffold.
- * The generated preset config enables or disables local search from this value.
- *
- * @since 0.29.0
- */
-export const LIB_REGEX_PLACEHOLDER_DOCUSAURUS_SEARCH = /\[__DOCUSAURUS_SEARCH__\]/;
 
 /**
  * Lib - Regex - Placeholder Homebridge Custom UI.
@@ -1591,6 +1611,17 @@ export const LIB_REGEX_PLACEHOLDER_PLATFORM_BADGES = /\[__PLATFORM_BADGES__\]/;
  * @since 0.11.0
  */
 export const LIB_REGEX_PLACEHOLDER_PLATFORM_FIELDS = /\[__PLATFORM_FIELDS__\]/;
+
+/**
+ * Lib - Regex - Placeholder Pfsense Config Name.
+ *
+ * Matches the "[__PFSENSE_CONFIG_NAME__]" token.
+ * The pfSense package system removes slug separators from configuration keys.
+ * Generated PHP uses the normalized result when reading settings.
+ *
+ * @since 0.31.0
+ */
+export const LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME = /\[__PFSENSE_CONFIG_NAME__\]/;
 
 /**
  * Lib - Regex - Placeholder Privacy Policy.

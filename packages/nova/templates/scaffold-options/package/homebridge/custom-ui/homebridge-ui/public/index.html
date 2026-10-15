@@ -1,16 +1,206 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>[__WORKSPACE_TITLE__] Settings</title>
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <main>
-      <h1>[__WORKSPACE_TITLE__]</h1>
-      <p>Loading plugin settings…</p>
-    </main>
-    <script type="module" src="./index.js"></script>
-  </body>
-</html>
+<section aria-labelledby="nova-homebridge-title" data-nova-custom-interface>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div>
+          <p class="text-body-secondary small text-uppercase fw-semibold mb-1">Nova × Homebridge</p>
+          <h2 class="card-title h5 mb-0" id="nova-homebridge-title">[__WORKSPACE_TITLE__]</h2>
+        </div>
+        <span class="badge rounded-pill text-bg-primary" id="nova-homebridge-version">Custom UI</span>
+      </div>
+      <p class="card-text mt-3 mb-0" id="nova-homebridge-description">
+        Explore a Homebridge-native custom settings interface, then replace the examples with controls for your plugin.
+      </p>
+      <button class="btn btn-outline-primary mt-3" type="button" data-nova-open-configuration>Open Homebridge Configuration</button>
+    </div>
+  </div>
+
+  <nav class="nav nav-tabs nav-fill flex-column flex-sm-row mb-3" aria-label="Custom UI examples" role="tablist">
+    <button class="nav-link active" id="nova-homebridge-about-tab" type="button" role="tab" aria-controls="nova-homebridge-about" aria-selected="true" data-nova-tab="about">About</button>
+    <button class="nav-link" id="nova-homebridge-inputs-tab" type="button" role="tab" aria-controls="nova-homebridge-inputs" aria-selected="false" data-nova-tab="inputs">Inputs</button>
+    <button class="nav-link" id="nova-homebridge-choices-tab" type="button" role="tab" aria-controls="nova-homebridge-choices" aria-selected="false" data-nova-tab="choices">Choices</button>
+    <button class="nav-link" id="nova-homebridge-components-tab" type="button" role="tab" aria-controls="nova-homebridge-components" aria-selected="false" data-nova-tab="components">Components</button>
+  </nav>
+
+  <div id="nova-homebridge-about" role="tabpanel" aria-labelledby="nova-homebridge-about-tab" data-nova-panel="about">
+    <div class="row g-3 mx-0">
+      <div class="col-12 col-md-6">
+        <article class="card h-100">
+          <div class="card-body">
+            <h3 class="card-title h6">What this starter includes</h3>
+            <p class="card-text">The generated package combines a dynamic Homebridge platform, a schema-backed configuration form, and an optional custom UI server.</p>
+            <ul class="mb-0">
+              <li>Host-owned Bootstrap styling and color modes</li>
+              <li>Responsive tabs and accessible form examples</li>
+              <li>A separate native configuration mode</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+      <div class="col-12 col-md-6">
+        <article class="card h-100">
+          <div class="card-body">
+            <h3 class="card-title h6">How to customize it</h3>
+            <p class="card-text">Keep only the controls your plugin needs, connect them to <code>window.homebridge</code>, and validate configuration before updating it.</p>
+            <p class="card-text mb-0"><strong>Tip:</strong> The examples are interactive inspiration. They do not write demonstration values into a user's Homebridge configuration.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div id="nova-homebridge-inputs" role="tabpanel" aria-labelledby="nova-homebridge-inputs-tab" data-nova-panel="inputs" hidden>
+    <div class="alert alert-info" role="status">
+      These controls demonstrate Bootstrap's Homebridge-themed input styles without saving their sample values.
+    </div>
+    <div class="row g-3 mx-0">
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="nova-homebridge-text">Text</label>
+        <input class="form-control" id="nova-homebridge-text" type="text" placeholder="Living room bridge" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="nova-homebridge-password">Password</label>
+        <input class="form-control" id="nova-homebridge-password" type="password" value="homebridge" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="nova-homebridge-email">Email</label>
+        <input class="form-control" id="nova-homebridge-email" type="email" placeholder="developer@example.com" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="nova-homebridge-url">URL</label>
+        <input class="form-control" id="nova-homebridge-url" type="url" placeholder="https://example.com" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="nova-homebridge-number">Number</label>
+        <input class="form-control" id="nova-homebridge-number" type="number" min="1" max="60" value="15" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="nova-homebridge-date">Date</label>
+        <input class="form-control" id="nova-homebridge-date" type="date" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="nova-homebridge-color">Color</label>
+        <input class="form-control form-control-color" id="nova-homebridge-color" type="color" value="#673ab7" title="Choose an accent color" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="nova-homebridge-file">File</label>
+        <input class="form-control" id="nova-homebridge-file" type="file" />
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="nova-homebridge-textarea">Textarea</label>
+        <textarea class="form-control" id="nova-homebridge-textarea" rows="3" placeholder="Explain this plugin option to the user."></textarea>
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="nova-homebridge-range">Range</label>
+        <input class="form-range" id="nova-homebridge-range" type="range" min="0" max="100" value="50" />
+      </div>
+    </div>
+  </div>
+
+  <div id="nova-homebridge-choices" role="tabpanel" aria-labelledby="nova-homebridge-choices-tab" data-nova-panel="choices" hidden>
+    <div class="row g-4 mx-0">
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="nova-homebridge-select">Select</label>
+        <select class="form-select" id="nova-homebridge-select">
+          <option selected>Choose a device type</option>
+          <option value="light">Light</option>
+          <option value="sensor">Sensor</option>
+          <option value="switch">Switch</option>
+        </select>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="nova-homebridge-multiple-select">Multiple select</label>
+        <select class="form-select" id="nova-homebridge-multiple-select" multiple size="3">
+          <option value="status">Status updates</option>
+          <option value="warnings">Warnings</option>
+          <option value="errors">Errors</option>
+        </select>
+      </div>
+      <div class="col-12 col-md-4">
+        <p class="form-label">Checkbox</p>
+        <div class="form-check">
+          <input class="form-check-input" id="nova-homebridge-checkbox" type="checkbox" />
+          <label class="form-check-label" for="nova-homebridge-checkbox">Enable optional behavior</label>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <p class="form-label">Radio group</p>
+        <div class="form-check">
+          <input class="form-check-input" id="nova-homebridge-radio-normal" type="radio" name="nova-homebridge-mode" value="normal" checked />
+          <label class="form-check-label" for="nova-homebridge-radio-normal">Normal</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" id="nova-homebridge-radio-advanced" type="radio" name="nova-homebridge-mode" value="advanced" />
+          <label class="form-check-label" for="nova-homebridge-radio-advanced">Advanced</label>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <p class="form-label">Switch</p>
+        <div class="form-check form-switch">
+          <input class="form-check-input" id="nova-homebridge-switch" type="checkbox" role="switch" checked />
+          <label class="form-check-label" for="nova-homebridge-switch">Refresh automatically</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="nova-homebridge-components" role="tabpanel" aria-labelledby="nova-homebridge-components-tab" data-nova-panel="components" hidden>
+    <div class="row g-3 mx-0">
+      <div class="col-12 col-lg-6">
+        <article class="card h-100">
+          <div class="card-body">
+            <h3 class="card-title h6">Input group and validation</h3>
+            <div class="input-group mb-3">
+              <span class="input-group-text">https://</span>
+              <input class="form-control is-valid" type="text" value="bridge.example.com" aria-label="Plugin host" />
+            </div>
+            <div class="valid-feedback d-block">This example is ready to use.</div>
+          </div>
+        </article>
+      </div>
+      <div class="col-12 col-lg-6">
+        <article class="card h-100">
+          <div class="card-body">
+            <h3 class="card-title h6">Dropdown menu</h3>
+            <div class="dropdown">
+              <button class="btn btn-outline-primary dropdown-toggle" id="nova-homebridge-dropdown" type="button" aria-expanded="false" data-nova-dropdown>Choose an example action</button>
+              <ul class="dropdown-menu" aria-labelledby="nova-homebridge-dropdown" data-nova-dropdown-menu>
+                <li><button class="dropdown-item" type="button" data-nova-action="Discover devices">Discover devices</button></li>
+                <li><button class="dropdown-item" type="button" data-nova-action="Refresh status">Refresh status</button></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><button class="dropdown-item" type="button" data-nova-action="Reset examples">Reset examples</button></li>
+              </ul>
+            </div>
+            <p class="form-text mb-0" id="nova-homebridge-action-status" aria-live="polite">Choose an action to see a Homebridge toast.</p>
+          </div>
+        </article>
+      </div>
+      <div class="col-12">
+        <div class="accordion" id="nova-homebridge-accordion">
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" id="nova-homebridge-accordion-button" type="button" aria-expanded="false" aria-controls="nova-homebridge-accordion-panel" data-nova-accordion>Why use a custom UI?</button>
+            </h3>
+            <div class="accordion-collapse collapse" id="nova-homebridge-accordion-panel" aria-labelledby="nova-homebridge-accordion-button" hidden data-nova-accordion-panel>
+              <div class="accordion-body">Custom interfaces can guide authentication, discovery, and validation flows that are difficult to express with a schema alone.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="alert alert-warning mb-3" role="alert">Use alerts for information that needs attention, not as permanent decoration.</div>
+        <div class="d-flex flex-wrap gap-2">
+          <button class="btn btn-primary" type="button" data-nova-toast="Primary action selected">Primary action</button>
+          <button class="btn btn-outline-secondary" type="button" data-nova-toast="Secondary action selected">Secondary action</button>
+          <button class="btn btn-danger" type="button" data-nova-toast="Destructive action selected">Destructive action</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-nova-native-configuration hidden>
+  <button class="btn btn-primary" type="button" data-nova-close-configuration>Back to Custom UI</button>
+</section>
+
+<script type="module" src="./index.js"></script>

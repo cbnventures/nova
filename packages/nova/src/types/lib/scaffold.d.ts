@@ -1,28 +1,16 @@
-import type { Dirent } from 'node:fs';
+import type { ChildProcess } from 'node:child_process';
+import type {
+  Dirent,
+  Stats,
+} from 'node:fs';
 
 import type { PromptObject } from 'prompts';
 
-import type * as FundingModule from '../../cli/generate/github/funding.js';
-
-import type * as IssueTemplateModule from '../../cli/generate/github/issue-template.js';
-
-import type * as WorkflowsModule from '../../cli/generate/github/workflows-blueprint.js';
-
-import type * as AgentConventionsModule from '../../cli/generate/must-haves/agent-conventions.js';
-
-import type * as DotenvModule from '../../cli/generate/must-haves/dotenv.js';
-
-import type * as EditorconfigModule from '../../cli/generate/must-haves/editorconfig.js';
-
-import type * as GitignoreModule from '../../cli/generate/must-haves/gitignore.js';
-
-import type * as LicenseModule from '../../cli/generate/must-haves/license.js';
-
-import type * as ReadMeModule from '../../cli/generate/must-haves/read-me.js';
-
 import type {
-  Shared_GeneratorRunResult,
+  Shared_CorepackPackageManager,
+  Shared_CorepackPackageManagerDescriptor,
   Shared_MonorepoContext,
+  Shared_NovaConfigEnvironmentValue,
   Shared_ScaffoldConfig,
   Shared_ScaffoldExistingRoot,
   Shared_ScaffoldTemplateQuestionChoice,
@@ -173,6 +161,91 @@ export type Lib_Scaffold_GetMonorepoRootPlannedPaths_TemplateDirectory = string;
 export type Lib_Scaffold_GetMonorepoRootPlannedPaths_TemplateEntries = string[];
 
 /**
+ * Lib - Scaffold - Install Scaffold Dependencies.
+ *
+ * @since 0.31.0
+ */
+export type Lib_Scaffold_InstallScaffoldDependencies_RootDirectory = string;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_PackageManager = Shared_CorepackPackageManager;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_ReturnValue_Output = string;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_ReturnValue_Succeeded = boolean;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_ReturnValue = {
+  output: Lib_Scaffold_InstallScaffoldDependencies_ReturnValue_Output;
+  succeeded: Lib_Scaffold_InstallScaffoldDependencies_ReturnValue_Succeeded;
+};
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Returns = Promise<Lib_Scaffold_InstallScaffoldDependencies_ReturnValue>;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Invocation_Command = string;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Invocation_CommandArguments = string[];
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Invocation = {
+  command: Lib_Scaffold_InstallScaffoldDependencies_Invocation_Command;
+  commandArguments: Lib_Scaffold_InstallScaffoldDependencies_Invocation_CommandArguments;
+};
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Command = string;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_CommandArguments = string[];
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Output = string;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_PromiseResolve_Value_Output = string;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_PromiseResolve_Value_Succeeded = boolean;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_PromiseResolve_Value = {
+  output: Lib_Scaffold_InstallScaffoldDependencies_Executor_PromiseResolve_Value_Output;
+  succeeded: Lib_Scaffold_InstallScaffoldDependencies_Executor_PromiseResolve_Value_Succeeded;
+};
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_PromiseResolve = (value: Lib_Scaffold_InstallScaffoldDependencies_Executor_PromiseResolve_Value) => void;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_Returns = void;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor = (promiseResolve: Lib_Scaffold_InstallScaffoldDependencies_Executor_PromiseResolve) => Lib_Scaffold_InstallScaffoldDependencies_Executor_Returns;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_ChildProcess = ChildProcess;
+
+/**
+ * Lib - Scaffold - Install Scaffold Dependencies - Executor - Append Output.
+ *
+ * @since 0.31.0
+ */
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_AppendOutput_Chunk = unknown;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_AppendOutput_Returns = void;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_AppendOutput = (chunk: Lib_Scaffold_InstallScaffoldDependencies_Executor_AppendOutput_Chunk) => Lib_Scaffold_InstallScaffoldDependencies_Executor_AppendOutput_Returns;
+
+/**
+ * Lib - Scaffold - Install Scaffold Dependencies - Executor - Handle Close.
+ *
+ * @since 0.31.0
+ */
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleClose_Code = number | null;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleClose_Returns = void;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleClose = (code: Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleClose_Code) => Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleClose_Returns;
+
+/**
+ * Lib - Scaffold - Install Scaffold Dependencies - Executor - Handle Error.
+ *
+ * @since 0.31.0
+ */
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleError_Error = Error;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleError_Returns = void;
+
+export type Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleError = (error: Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleError_Error) => Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleError_Returns;
+
+/**
  * Lib - Scaffold - Load Existing Root.
  *
  * @since 0.26.0
@@ -224,35 +297,6 @@ export type Lib_Scaffold_LoadExistingRoot_ConfigWorkspacesValue = unknown;
 export type Lib_Scaffold_LoadExistingRoot_ConfigWorkspaces = Record<string, unknown>;
 
 /**
- * Lib - Scaffold - Load Generator.
- *
- * @since 0.15.0
- */
-export type Lib_Scaffold_LoadGenerator_Name = string;
-
-export type Lib_Scaffold_LoadGenerator_Returns = Promise<((options: {
-  replaceFile: true;
-}) => Promise<Shared_GeneratorRunResult>) | undefined>;
-
-export type Lib_Scaffold_LoadGenerator_EditorconfigModule = typeof EditorconfigModule;
-
-export type Lib_Scaffold_LoadGenerator_GitignoreModule = typeof GitignoreModule;
-
-export type Lib_Scaffold_LoadGenerator_DotenvModule = typeof DotenvModule;
-
-export type Lib_Scaffold_LoadGenerator_LicenseModule = typeof LicenseModule;
-
-export type Lib_Scaffold_LoadGenerator_ReadMeModule = typeof ReadMeModule;
-
-export type Lib_Scaffold_LoadGenerator_AgentConventionsModule = typeof AgentConventionsModule;
-
-export type Lib_Scaffold_LoadGenerator_FundingModule = typeof FundingModule;
-
-export type Lib_Scaffold_LoadGenerator_IssueTemplateModule = typeof IssueTemplateModule;
-
-export type Lib_Scaffold_LoadGenerator_WorkflowsModule = typeof WorkflowsModule;
-
-/**
  * Lib - Scaffold - Normalize Workspace Relative Path.
  *
  * @since 0.26.0
@@ -266,43 +310,6 @@ export type Lib_Scaffold_NormalizeWorkspaceRelativePath_Returns = string | undef
 export type Lib_Scaffold_NormalizeWorkspaceRelativePath_RelativePath = string;
 
 export type Lib_Scaffold_NormalizeWorkspaceRelativePath_NormalizedPath = string;
-
-/**
- * Lib - Scaffold - Prompt Post Scaffold Generators.
- *
- * @since 0.15.0
- */
-export type Lib_Scaffold_PromptPostScaffoldGenerators_OutputDirectory = string;
-
-export type Lib_Scaffold_PromptPostScaffoldGenerators_Returns = Promise<void>;
-
-export type Lib_Scaffold_PromptPostScaffoldGenerators_Cancelled = boolean;
-
-export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice_Title = string;
-
-export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice_Description = string;
-
-export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice_Value = string;
-
-export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice = {
-  title: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice_Title;
-  description: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice_Description;
-  value: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice_Value;
-};
-
-export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoices = Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice[];
-
-export type Lib_Scaffold_PromptPostScaffoldGenerators_Answers = Record<string, unknown>;
-
-export type Lib_Scaffold_PromptPostScaffoldGenerators_Selected = string[];
-
-export type Lib_Scaffold_PromptPostScaffoldGenerators_OriginalCwd = string;
-
-export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorModule = ((options: {
-  replaceFile: true;
-}) => Promise<Shared_GeneratorRunResult>) | undefined;
-
-export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorResult = Shared_GeneratorRunResult;
 
 /**
  * Lib - Scaffold - Prompt Scaffold Options.
@@ -351,23 +358,6 @@ export type Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedWorkspaceName = s
 
 export type Lib_Scaffold_PromptScaffoldOptions_ResolvedOutputDirectory = string;
 
-export type Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices_Title = string;
-
-export type Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices_Value = string;
-
-export type Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices = {
-  title: Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices_Title;
-  value: Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices_Value;
-}[];
-
-export type Lib_Scaffold_PromptScaffoldOptions_DirectoryAnswers = Record<string, unknown>;
-
-export type Lib_Scaffold_PromptScaffoldOptions_DirectoryChoice = string;
-
-export type Lib_Scaffold_PromptScaffoldOptions_OutputAnswers = Record<string, unknown>;
-
-export type Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedOutput = string;
-
 export type Lib_Scaffold_PromptScaffoldOptions_NameValue = string | undefined;
 
 export type Lib_Scaffold_PromptScaffoldOptions_OutputValue = string | undefined;
@@ -408,7 +398,11 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath = string;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName = string;
 
+export type Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName = string;
+
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Category = 'app' | 'docs' | 'package';
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables = Shared_NovaConfigEnvironmentValue[];
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Returns = Promise<void>;
 
@@ -432,6 +426,16 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces = Lib_Scaffo
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces = Record<string, unknown>;
 
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironment = Lib_Scaffold_RegisterWorkspaceInConfig_Environment | undefined;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Environment = Record<string, unknown>;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironmentWorkspaces = Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspaces | undefined;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspaces = Record<string, unknown>;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspace = Record<string, unknown>;
+
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Json = string;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_JsonContents = string;
@@ -453,6 +457,87 @@ export type Lib_Scaffold_ReportError_Returns = void;
 export type Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_Returns = string;
 
 export type Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_CurrentDirectory = string;
+
+/**
+ * Lib - Scaffold - Resolve Scaffold Environment Prefix.
+ *
+ * @since 0.31.0
+ */
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Environment = Record<string, unknown>;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceName = string;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Returns = string;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_ExistingPrefixes = string[];
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_ScopeValue = unknown;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Scope = Record<string, unknown>;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_EntryValue = unknown;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_EntryValues = Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_EntryValue[];
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Entry = Record<string, unknown>;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_PrefixValue = unknown;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_BasePrefix = string;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Candidate = string;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_CandidateIndex = number;
+
+export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_HasConflict = boolean;
+
+/**
+ * Lib - Scaffold - Resolve Scaffold Gitignore Project Excludes.
+ *
+ * @since 0.31.0
+ */
+export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Config = Record<string, unknown>;
+
+export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Returns = string[];
+
+export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_GitignoreValue = unknown;
+
+export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Gitignore = Record<string, unknown>;
+
+export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_ProjectExcludesValue = unknown;
+
+export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_ProjectExcludes = string[];
+
+export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_ResolvedProjectExcludeValue = unknown;
+
+/**
+ * Lib - Scaffold - Resolve Scaffold Gitignore Template Path.
+ *
+ * @since 0.31.0
+ */
+export type Lib_Scaffold_ResolveScaffoldGitignoreTemplatePath_Returns = string;
+
+export type Lib_Scaffold_ResolveScaffoldGitignoreTemplatePath_CurrentDirectory = string;
+
+/**
+ * Lib - Scaffold - Resolve Scaffold Install Invocation.
+ *
+ * @since 0.31.0
+ */
+export type Lib_Scaffold_ResolveScaffoldInstallInvocation_PackageManager = Shared_CorepackPackageManager;
+
+export type Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns_Command = string;
+
+export type Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns_CommandArguments = string[];
+
+export type Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns = {
+  command: Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns_Command;
+  commandArguments: Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns_CommandArguments;
+};
+
+export type Lib_Scaffold_ResolveScaffoldInstallInvocation_Command = string;
+
+export type Lib_Scaffold_ResolveScaffoldInstallInvocation_CommandArguments = string[];
 
 /**
  * Lib - Scaffold - Resolve Template Answers.
@@ -521,6 +606,8 @@ export type Lib_Scaffold_ResolveWorkspacePackageName_Returns = string;
  */
 export type Lib_Scaffold_RunScaffold_Options_DryRun = true;
 
+export type Lib_Scaffold_RunScaffold_Options_Install = boolean;
+
 export type Lib_Scaffold_RunScaffold_Options_Name = string;
 
 export type Lib_Scaffold_RunScaffold_Options_NonInteractive = true;
@@ -531,6 +618,7 @@ export type Lib_Scaffold_RunScaffold_Options_WorkspaceName = string;
 
 export type Lib_Scaffold_RunScaffold_Options = {
   dryRun?: Lib_Scaffold_RunScaffold_Options_DryRun;
+  install?: Lib_Scaffold_RunScaffold_Options_Install;
   name?: Lib_Scaffold_RunScaffold_Options_Name;
   nonInteractive?: Lib_Scaffold_RunScaffold_Options_NonInteractive;
   output?: Lib_Scaffold_RunScaffold_Options_Output;
@@ -539,7 +627,25 @@ export type Lib_Scaffold_RunScaffold_Options = {
 
 export type Lib_Scaffold_RunScaffold_Definition_Category = 'app' | 'docs' | 'package';
 
+export type Lib_Scaffold_RunScaffold_Definition_CompletionNote = string;
+
+export type Lib_Scaffold_RunScaffold_Definition_CompletionNotes = Lib_Scaffold_RunScaffold_Definition_CompletionNote[];
+
+export type Lib_Scaffold_RunScaffold_Definition_DisplayName = string;
+
+export type Lib_Scaffold_RunScaffold_Definition_EnvironmentVariables = Shared_NovaConfigEnvironmentValue[];
+
 export type Lib_Scaffold_RunScaffold_Definition_ImportMetaUrl = string;
+
+export type Lib_Scaffold_RunScaffold_Definition_PrimaryScript = string;
+
+export type Lib_Scaffold_RunScaffold_Definition_ResolvePresentationOptions_WorkspaceName = string;
+
+export type Lib_Scaffold_RunScaffold_Definition_ResolvePresentationOptions = (workspaceName: Lib_Scaffold_RunScaffold_Definition_ResolvePresentationOptions_WorkspaceName) => Lib_Scaffold_RunScaffold_PresentationOptions;
+
+export type Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_WorkspaceName = string;
+
+export type Lib_Scaffold_RunScaffold_Definition_ResolveReplacements = (workspaceName: Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_WorkspaceName) => Map<RegExp, string>;
 
 export type Lib_Scaffold_RunScaffold_Definition_ResolveRootTemplateSubpaths = (answers: Shared_ScaffoldTemplateResolution_Answers) => string[];
 
@@ -561,7 +667,13 @@ export type Lib_Scaffold_RunScaffold_Definition_WorkspacePackageNamePrefix = str
 
 export type Lib_Scaffold_RunScaffold_Definition = {
   category: Lib_Scaffold_RunScaffold_Definition_Category;
+  completionNotes?: Lib_Scaffold_RunScaffold_Definition_CompletionNotes;
+  displayName: Lib_Scaffold_RunScaffold_Definition_DisplayName;
+  environmentVariables?: Lib_Scaffold_RunScaffold_Definition_EnvironmentVariables;
   importMetaUrl: Lib_Scaffold_RunScaffold_Definition_ImportMetaUrl;
+  primaryScript?: Lib_Scaffold_RunScaffold_Definition_PrimaryScript;
+  resolvePresentationOptions?: Lib_Scaffold_RunScaffold_Definition_ResolvePresentationOptions;
+  resolveReplacements?: Lib_Scaffold_RunScaffold_Definition_ResolveReplacements;
   resolveRootTemplateSubpaths?: Lib_Scaffold_RunScaffold_Definition_ResolveRootTemplateSubpaths;
   resolveWorkspaceTemplateSubpaths?: Lib_Scaffold_RunScaffold_Definition_ResolveWorkspaceTemplateSubpaths;
   rootTemplateSubpath?: Lib_Scaffold_RunScaffold_Definition_RootTemplateSubpath;
@@ -601,6 +713,12 @@ export type Lib_Scaffold_RunScaffold_ConfigRoot = string;
 
 export type Lib_Scaffold_RunScaffold_ConfigFilePath = string;
 
+export type Lib_Scaffold_RunScaffold_RootGitignorePath = string;
+
+export type Lib_Scaffold_RunScaffold_ShouldCreateRootGitignore = boolean;
+
+export type Lib_Scaffold_RunScaffold_ScaffoldGitignoreProjectExcludes = string[];
+
 export type Lib_Scaffold_RunScaffold_WorkspaceBaseDirectory = 'apps' | 'packages';
 
 export type Lib_Scaffold_RunScaffold_WorkspaceDirectory = string;
@@ -637,7 +755,19 @@ export type Lib_Scaffold_RunScaffold_TemplateAnswers = Shared_ScaffoldTemplateRe
 
 export type Lib_Scaffold_RunScaffold_TemplateReplacements = Map<RegExp, string>;
 
+export type Lib_Scaffold_RunScaffold_ResolvedReplacements = Map<RegExp, string>;
+
 export type Lib_Scaffold_RunScaffold_TemplateValidationError = string | undefined;
+
+export type Lib_Scaffold_RunScaffold_ShouldInstall = boolean;
+
+export type Lib_Scaffold_RunScaffold_EnvironmentVariables = Shared_NovaConfigEnvironmentValue[];
+
+export type Lib_Scaffold_RunScaffold_PackageManagerValue = unknown;
+
+export type Lib_Scaffold_RunScaffold_PackageManagerDescriptor = Shared_CorepackPackageManagerDescriptor | undefined;
+
+export type Lib_Scaffold_RunScaffold_PackageManager = Shared_CorepackPackageManager;
 
 export type Lib_Scaffold_RunScaffold_Replacements = Map<RegExp, string>;
 
@@ -685,6 +815,48 @@ export type Lib_Scaffold_RunScaffold_IsWorkspaceCovered = boolean;
 
 export type Lib_Scaffold_RunScaffold_NormalizedWorkspacePattern = string;
 
+export type Lib_Scaffold_RunScaffold_Destination = string;
+
+export type Lib_Scaffold_RunScaffold_ProjectRoot = string;
+
+export type Lib_Scaffold_RunScaffold_PrimaryScript = string;
+
+export type Lib_Scaffold_RunScaffold_PresentationOption_Flag = string;
+
+export type Lib_Scaffold_RunScaffold_PresentationOption_Value = string;
+
+export type Lib_Scaffold_RunScaffold_PresentationOption = {
+  flag: Lib_Scaffold_RunScaffold_PresentationOption_Flag;
+  value: Lib_Scaffold_RunScaffold_PresentationOption_Value;
+};
+
+export type Lib_Scaffold_RunScaffold_PresentationOptions = Lib_Scaffold_RunScaffold_PresentationOption[];
+
+export type Lib_Scaffold_RunScaffold_Confirmed = boolean;
+
+export type Lib_Scaffold_RunScaffold_ProgressTotal = number;
+
+export type Lib_Scaffold_RunScaffold_Progress_Clear = () => void;
+
+export type Lib_Scaffold_RunScaffold_Progress_Complete = () => Promise<void>;
+
+export type Lib_Scaffold_RunScaffold_Progress_Finish_Label = string;
+
+export type Lib_Scaffold_RunScaffold_Progress_Finish = (label: Lib_Scaffold_RunScaffold_Progress_Finish_Label) => void;
+
+export type Lib_Scaffold_RunScaffold_Progress_Start_Label = string;
+
+export type Lib_Scaffold_RunScaffold_Progress_Start_Detail = string;
+
+export type Lib_Scaffold_RunScaffold_Progress_Start = (label: Lib_Scaffold_RunScaffold_Progress_Start_Label, detail?: Lib_Scaffold_RunScaffold_Progress_Start_Detail) => void;
+
+export type Lib_Scaffold_RunScaffold_Progress = {
+  clear: Lib_Scaffold_RunScaffold_Progress_Clear;
+  complete: Lib_Scaffold_RunScaffold_Progress_Complete;
+  finish: Lib_Scaffold_RunScaffold_Progress_Finish;
+  start: Lib_Scaffold_RunScaffold_Progress_Start;
+};
+
 export type Lib_Scaffold_RunScaffold_WorkspaceTemplateWrites = Promise<void>[];
 
 export type Lib_Scaffold_RunScaffold_RootTemplateWrites = Promise<void>[];
@@ -698,6 +870,19 @@ export type Lib_Scaffold_RunScaffold_RootWorkspacesValue = unknown;
 export type Lib_Scaffold_RunScaffold_RootWorkspacesObject = Record<string, unknown>;
 
 export type Lib_Scaffold_RunScaffold_RootPackageJsonContents = string;
+
+export type Lib_Scaffold_RunScaffold_InstallSucceeded = boolean;
+
+export type Lib_Scaffold_RunScaffold_InstallResult_Output = string;
+
+export type Lib_Scaffold_RunScaffold_InstallResult_Succeeded = boolean;
+
+export type Lib_Scaffold_RunScaffold_InstallResult = {
+  output: Lib_Scaffold_RunScaffold_InstallResult_Output;
+  succeeded: Lib_Scaffold_RunScaffold_InstallResult_Succeeded;
+};
+
+export type Lib_Scaffold_RunScaffold_InstallOutput = string;
 
 /**
  * Lib - Scaffold - Update Scaffold Package JSON.
@@ -724,7 +909,36 @@ export type Lib_Scaffold_UpdateScaffoldPackageJson_Section = Record<string, unkn
 
 export type Lib_Scaffold_UpdateScaffoldPackageJson_IsSortedSection = boolean;
 
+export type Lib_Scaffold_UpdateScaffoldPackageJson_SectionOutput = Record<string, unknown>;
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_SectionEntry = [string, unknown];
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_SectionEntries = Lib_Scaffold_UpdateScaffoldPackageJson_SectionEntry[];
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_OrderedScriptEntries = Lib_Scaffold_UpdateScaffoldPackageJson_SectionEntry[];
+
+export type Lib_Scaffold_UpdateScaffoldPackageJson_UsedScriptKeys = Set<string>;
+
 export type Lib_Scaffold_UpdateScaffoldPackageJson_Content = string;
+
+/**
+ * Lib - Scaffold - Write Scaffold Gitignore.
+ *
+ * @since 0.31.0
+ */
+export type Lib_Scaffold_WriteScaffoldGitignore_RootDirectory = string;
+
+export type Lib_Scaffold_WriteScaffoldGitignore_ProjectExcludes = string[];
+
+export type Lib_Scaffold_WriteScaffoldGitignore_Returns = Promise<void>;
+
+export type Lib_Scaffold_WriteScaffoldGitignore_TemplatePath = string;
+
+export type Lib_Scaffold_WriteScaffoldGitignore_TemplateContent = string;
+
+export type Lib_Scaffold_WriteScaffoldGitignore_Content = string;
+
+export type Lib_Scaffold_WriteScaffoldGitignore_TargetPath = string;
 
 /**
  * Lib - Scaffold - Write Template Files.
@@ -749,9 +963,13 @@ export type Lib_Scaffold_WriteTemplateFiles_TargetEntry = string;
 
 export type Lib_Scaffold_WriteTemplateFiles_TargetPath = string;
 
-export type Lib_Scaffold_WriteTemplateFiles_SourceContent = string;
+export type Lib_Scaffold_WriteTemplateFiles_SourceContent = Buffer;
 
-export type Lib_Scaffold_WriteTemplateFiles_Content = string;
+export type Lib_Scaffold_WriteTemplateFiles_SourceStats = Stats;
+
+export type Lib_Scaffold_WriteTemplateFiles_IsBinary = boolean;
+
+export type Lib_Scaffold_WriteTemplateFiles_Content = Buffer | string;
 
 export type Lib_Scaffold_WriteTemplateFiles_Pattern = RegExp;
 

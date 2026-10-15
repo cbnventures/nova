@@ -57,7 +57,11 @@ export const cliScaffoldPackageHomebridgeTemplateQuestions: Cli_Scaffold_Package
  * @since 0.29.0
  */
 function resolveWorkspaceTemplateSubpaths(answers: Cli_Scaffold_Package_Homebridge_ResolveWorkspaceTemplateSubpaths_Answers): Cli_Scaffold_Package_Homebridge_ResolveWorkspaceTemplateSubpaths_Returns {
-  return (answers.get('customUi') === 'enabled') ? ['scaffold-options/package/homebridge/custom-ui'] : [];
+  if (answers.get('customUi') === 'enabled') {
+    return ['scaffold-options/package/homebridge/custom-ui'];
+  }
+
+  return ['scaffold-options/package/homebridge/schema-ui'];
 }
 
 /**
@@ -84,6 +88,7 @@ export class Runner {
   public static async run(options: Cli_Scaffold_Package_Homebridge_Runner_Run_Options): Cli_Scaffold_Package_Homebridge_Runner_Run_Returns {
     await runScaffold(options, {
       category: 'package',
+      displayName: 'Homebridge',
       importMetaUrl: import.meta.url,
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldPackageHomebridgeTemplateQuestions,

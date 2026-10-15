@@ -9,7 +9,10 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
  * @since 0.0.0
  */
 const sidebars: SidebarsConfig = {
-  docs: ['intro'],
+  docs: [
+    'intro',
+    'customize',
+  ],
 };
 
 export default sidebars;

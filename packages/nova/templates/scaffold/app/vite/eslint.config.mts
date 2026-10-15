@@ -9,6 +9,7 @@ import {
 import { novaRules } from '@cbnventures/nova/rules/eslint';
 
 import frameworkPreset from './config/eslint-framework.mts';
+import frameworkIgnoreFiles from './config/framework-ignore-files.js';
 
 /**
  * ESLint Configuration.
@@ -59,9 +60,9 @@ export default [
           extraExtensions: [],
           ignoreFiles: [
             './eslint.config.mts',
-            './svelte.config.js',
             './vite.config.mts',
             './vitest.config.mts',
+            ...frameworkIgnoreFiles,
           ],
         },
       ],

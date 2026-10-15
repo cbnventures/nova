@@ -3,6 +3,7 @@ import {
   access,
   mkdir,
   mkdtemp,
+  readFile,
   rm,
   writeFile,
 } from 'node:fs/promises';
@@ -19,6 +20,8 @@ import {
 import { Runner as CliScaffoldAppNextjs } from '../../../../cli/scaffold/app/nextjs.js';
 
 import type {
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_GitignoreContents,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_GitignorePath,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_NextConfigPath,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_NovaConfig,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_NovaConfigPath,
@@ -43,6 +46,9 @@ import type {
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJson,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorWhenInsideChildWorkspace_RootPackageJsonPath,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_OriginalCwd,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RejectsCurrentDirectoryOutput_Exists,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RejectsCurrentDirectoryOutput_PackageJsonPath,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RejectsCurrentDirectoryOutput_ProjectDirectory,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RespectsDryRun_DryRunOutputPath,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RespectsDryRun_Exists,
   Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RespectsDryRun_ProjectDirectory,
@@ -136,6 +142,7 @@ describe.sequential('CliScaffoldAppNextjs.run', async () => {
 
     await CliScaffoldAppNextjs.run({
       dryRun: true,
+      install: false,
       name: 'my-app',
       nonInteractive: true,
       workspaceName: 'nextjs',
@@ -157,6 +164,37 @@ describe.sequential('CliScaffoldAppNextjs.run', async () => {
     return;
   });
 
+  it('rejects current directory output', async () => {
+    const projectDirectory: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RejectsCurrentDirectoryOutput_ProjectDirectory = join(sandboxRoot, 'current-directory-output');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    process.chdir(projectDirectory);
+
+    await CliScaffoldAppNextjs.run({
+      install: false,
+      name: 'my-app',
+      nonInteractive: true,
+      output: '.',
+      workspaceName: 'nextjs',
+    });
+
+    let exists: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RejectsCurrentDirectoryOutput_Exists = true;
+
+    const packageJsonPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RejectsCurrentDirectoryOutput_PackageJsonPath = join(projectDirectory, 'package.json');
+
+    try {
+      await access(packageJsonPath);
+    } catch {
+      exists = false;
+    }
+
+    strictEqual(exists, false);
+    strictEqual(process.exitCode, 1);
+
+    return;
+  });
+
   it('creates monorepo in empty directory', async () => {
     const projectDirectory: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_ProjectDirectory = join(sandboxRoot, 'monorepo-test');
 
@@ -165,10 +203,10 @@ describe.sequential('CliScaffoldAppNextjs.run', async () => {
     process.chdir(projectDirectory);
 
     await CliScaffoldAppNextjs.run({
+      install: false,
       name: 'my-app',
       nonInteractive: true,
       workspaceName: 'nextjs',
-      output: './my-app',
     });
 
     // Verify root files were created.
@@ -225,9 +263,15 @@ describe.sequential('CliScaffoldAppNextjs.run', async () => {
 
     await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
 
+    const gitignorePath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_GitignorePath = join(projectDirectory, '.gitignore');
+    const gitignoreContents: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_GitignoreContents = 'custom-ignore\n';
+
+    await writeFile(gitignorePath, gitignoreContents, 'utf-8');
+
     process.chdir(projectDirectory);
 
     await CliScaffoldAppNextjs.run({
+      install: false,
       nonInteractive: true,
       workspaceName: 'nextjs',
       output: './apps/nextjs',
@@ -243,6 +287,8 @@ describe.sequential('CliScaffoldAppNextjs.run', async () => {
     await access(nextConfigPath);
 
     await access(pageTsxPath);
+
+    strictEqual(await readFile(gitignorePath, 'utf-8'), gitignoreContents);
 
     return;
   });

@@ -25,6 +25,8 @@ export type Cli_Scaffold_App_DockerImage_ResolveRootTemplateSubpaths_Publish = s
  * @since 0.29.0
  */
 export type Cli_Scaffold_App_DockerImage_Runner_Run_Options_DryRun = true;
+
+export type Cli_Scaffold_App_DockerImage_Runner_Run_Options_Install = boolean;
 export type Cli_Scaffold_App_DockerImage_Runner_Run_Options_Architectures = string;
 export type Cli_Scaffold_App_DockerImage_Runner_Run_Options_Name = string;
 export type Cli_Scaffold_App_DockerImage_Runner_Run_Options_NonInteractive = true;
@@ -34,6 +36,7 @@ export type Cli_Scaffold_App_DockerImage_Runner_Run_Options_WorkspaceName = stri
 export type Cli_Scaffold_App_DockerImage_Runner_Run_Options = {
   architectures?: Cli_Scaffold_App_DockerImage_Runner_Run_Options_Architectures;
   dryRun?: Cli_Scaffold_App_DockerImage_Runner_Run_Options_DryRun;
+  install?: Cli_Scaffold_App_DockerImage_Runner_Run_Options_Install;
   name?: Cli_Scaffold_App_DockerImage_Runner_Run_Options_Name;
   nonInteractive?: Cli_Scaffold_App_DockerImage_Runner_Run_Options_NonInteractive;
   output?: Cli_Scaffold_App_DockerImage_Runner_Run_Options_Output;

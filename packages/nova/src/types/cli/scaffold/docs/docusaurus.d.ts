@@ -25,6 +25,8 @@ export type Cli_Scaffold_Docs_Docusaurus_ResolveWorkspaceTemplateSubpaths_Return
  */
 export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_DryRun = true;
 
+export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Install = boolean;
+
 export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Content = string;
 
 export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_DockerImage = true;
@@ -37,19 +39,17 @@ export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Output = string;
 
 export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Preset = string;
 
-export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Search = true;
-
 export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_WorkspaceName = string;
 
 export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options = {
   content?: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Content;
   dockerImage?: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_DockerImage;
   dryRun?: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_DryRun;
+  install?: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Install;
   name?: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Name;
   nonInteractive?: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_NonInteractive;
   output?: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Output;
   preset?: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Preset;
-  search?: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Search;
   workspaceName?: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_WorkspaceName;
 };
 

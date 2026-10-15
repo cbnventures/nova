@@ -267,11 +267,14 @@ export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveAppleAns
  */
 export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions_Name = string;
 
+export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions_Install = false;
+
 export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions_NonInteractive = true;
 
 export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions_Output = string;
 
 export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions = {
+  install: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions_Install;
   name: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions_Name;
   nonInteractive: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions_NonInteractive;
   output: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions_Output;
@@ -323,7 +326,11 @@ export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveExpressJ
  *
  * @since 0.26.0
  */
-export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveNextJsAnswers_ExpectedOptions = Shared_ScaffoldNonInteractiveWorkspaceOptions;
+export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveNextJsAnswers_ExpectedOptions_Install = true;
+
+export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveNextJsAnswers_ExpectedOptions = Shared_ScaffoldNonInteractiveWorkspaceOptions & {
+  install: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveNextJsAnswers_ExpectedOptions_Install;
+};
 
 /**
  * Tests - CLI - Index - Scaffold Options - Passes Complete Non Interactive Vite Answers.

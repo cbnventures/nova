@@ -12,6 +12,7 @@ export type Run_CreateMessage_Returns = string;
  *
  * @since 0.0.0
  */
+export type Run_Run_Message = string;
 export type Run_Run_Name = string;
 
-export type Run_Run_Returns = void;
+export type Run_Run_Returns = Promise<void>;

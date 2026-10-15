@@ -111,11 +111,18 @@ export type Tests_Lib_Scaffold_Prompts_MockModule = Readonly<{
 }>;
 
 /**
- * Tests - Lib - Scaffold - Prompt Scaffold Options - Uses Complete Values Without Prompting.
+ * Tests - Lib - Scaffold - Prompt Scaffold Options - Defaults New Monorepo To Named Directory Without Prompting.
  *
  * @since 0.26.0
  */
-export type Tests_Lib_Scaffold_PromptScaffoldOptions_UsesCompleteValuesWithoutPrompting_Result = Shared_ScaffoldConfig | undefined;
+export type Tests_Lib_Scaffold_PromptScaffoldOptions_DefaultsNewMonorepoToNamedDirectoryWithoutPrompting_Result = Shared_ScaffoldConfig | undefined;
+
+/**
+ * Tests - Lib - Scaffold - Resolve Scaffold Install Invocation - Routes Managers Through Supported Clients.
+ *
+ * @since 0.31.0
+ */
+export type Tests_Lib_Scaffold_ResolveScaffoldInstallInvocation_RoutesManagersThroughSupportedClients_Returns = void;
 
 /**
  * Tests - Lib - Scaffold - Resolve Template Answers - Prompts For A Missing Interactive Value.
@@ -165,6 +172,13 @@ export type Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesAValidNonInteractiveVa
  * @since 0.29.0
  */
 export type Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesNonInteractiveDefaultsWithoutRequiringOptionalFlags_Result = Shared_ScaffoldTemplateResolution | undefined;
+
+/**
+ * Tests - Lib - Scaffold - Workspace Contract - Derives Non Overlapping Environment Prefixes.
+ *
+ * @since 0.31.0
+ */
+export type Tests_Lib_Scaffold_WorkspaceContract_DerivesNonOverlappingEnvironmentPrefixes_Returns = void;
 
 /**
  * Tests - Lib - Scaffold - Workspace Contract - Derives Role Based Package Names.

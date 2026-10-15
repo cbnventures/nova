@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-import { createProgram } from './program.js';
+import { CLI } from './program.js';
 
-await createProgram().parseAsync();
+await new CLI().run();

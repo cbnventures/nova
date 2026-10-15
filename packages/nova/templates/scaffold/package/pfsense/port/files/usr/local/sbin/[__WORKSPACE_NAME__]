@@ -6,7 +6,7 @@ declare(strict_types=1);
 require_once('/etc/inc/config.inc');
 require_once('/etc/inc/util.inc');
 
-$settings = config_get_path('installedpackages/[__WORKSPACE_NAME__]/config/0', []);
+$settings = config_get_path('installedpackages/[__PFSENSE_CONFIG_NAME__]/config/0', []);
 
 if (!is_array($settings) || ($settings['enabled'] ?? '') !== 'on') {
     exit(0);
@@ -15,7 +15,7 @@ if (!is_array($settings) || ($settings['enabled'] ?? '') !== 'on') {
 $message = trim((string) ($settings['message'] ?? ''));
 
 if ($message === '') {
-    $message = 'Scheduled [__WORKSPACE_TITLE__] task completed.';
+    $message = 'Example [__WORKSPACE_TITLE__] background task completed.';
 }
 
-log_error(sprintf('[__WORKSPACE_TITLE__]: %s', $message));
+logger(LOG_NOTICE, sprintf('[__WORKSPACE_TITLE__]: %s', $message));

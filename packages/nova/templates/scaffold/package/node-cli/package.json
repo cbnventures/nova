@@ -1,15 +1,16 @@
 {
   "name": "[__WORKSPACE_PACKAGE_NAME__]",
   "version": "0.0.0",
-  "type": "module",
-  "bin": {
-    "[__WORKSPACE_NAME__]": "./build/index.js"
-  },
+  "description": "[__WORKSPACE_TITLE__] command-line interface",
   "main": "./build/index.js",
-  "types": "./build/index.d.ts",
+  "type": "module",
   "files": [
+    "bin",
     "build"
   ],
+  "bin": {
+    "[__WORKSPACE_NAME__]": "./bin/cli.mjs"
+  },
   "scripts": {
     "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
     "dev:start": "tsx src/index.ts",
@@ -22,12 +23,16 @@
     "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
     "build:reset": "shx rm -rf ./build",
     "build:transpile": "nova utility transpile --project tsconfig.source.json",
-    "build:permissions": "shx chmod +x ./build/index.js",
+    "build:permissions": "shx chmod +x ./bin/cli.mjs ./build/index.js",
     "clean": "nova utility run-scripts --parallel 'clean:*'",
     "clean:build": "shx rm -rf ./build"
   },
+  "engines": {
+    "node": "^22 || ^24"
+  },
   "dependencies": {
-    "@cbnventures/nova": "0.30.1",
+    "@cbnventures/nova": "0.31.0",
+    "chalk": "5.6.2",
     "commander": "15.0.0"
   },
   "devDependencies": {
@@ -38,7 +43,5 @@
     "typescript": "6.0.3",
     "vitest": "4.1.11"
   },
-  "engines": {
-    "node": "^22 || ^24"
-  }
+  "types": "./build/index.d.ts"
 }

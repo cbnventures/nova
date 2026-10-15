@@ -42,6 +42,12 @@ export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Project = {
 
 export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Projects = Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Project[];
 
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_RawTarget = unknown;
+
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Targets = string[];
+
+export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_TargetConditions = Record<string, unknown>;
+
 export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_Target = unknown;
 
 export type Tests_ExportsModuleFormat_CollectNonEsmPackageExports_SourcePath = string | undefined;

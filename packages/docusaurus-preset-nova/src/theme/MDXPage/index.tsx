@@ -146,7 +146,7 @@ function MDXPage(props: Theme_MdxPage_Index_MdxPageProps) {
           <main>
             <ContentVisibility metadata={props['content']['metadata']} />
             <div className="nova-grid">
-              <div className="nova-col-12 nova-col-lg-9">
+              <div className={(canRenderToc === true) ? 'nova-col-12 nova-col-lg-9' : 'nova-col-12'}>
                 <article>
                   <MDXProvider components={mdxComponents}>
                     <div className="nova-mdx-content">

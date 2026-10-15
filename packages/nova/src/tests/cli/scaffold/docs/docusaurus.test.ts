@@ -21,7 +21,7 @@ import { Runner as CliScaffoldDocsDocusaurus } from '../../../../cli/scaffold/do
 import type {
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_DocusaurusConfigPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_FrontmatterTestPath,
-  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_HomeMdxPath,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_HomeTsxPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_IntroMdxPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_NovaConfig,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_NovaConfigPath,
@@ -31,7 +31,7 @@ import type {
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_DocusaurusConfigPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_FrontmatterTestPath,
-  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_HomeMdxPath,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_HomeTsxPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_IntroMdxPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_ProjectDirectory,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath,
@@ -119,6 +119,7 @@ describe.sequential('CliScaffoldDocsDocusaurus.run', async () => {
 
     await CliScaffoldDocsDocusaurus.run({
       dryRun: true,
+      install: false,
       name: 'my-docs',
       nonInteractive: true,
       workspaceName: 'docusaurus',
@@ -149,6 +150,7 @@ describe.sequential('CliScaffoldDocsDocusaurus.run', async () => {
     process.chdir(projectDirectory);
 
     await CliScaffoldDocsDocusaurus.run({
+      install: false,
       name: 'my-docs',
       nonInteractive: true,
       workspaceName: 'docusaurus',
@@ -159,7 +161,7 @@ describe.sequential('CliScaffoldDocsDocusaurus.run', async () => {
     // Verify workspace files were created.
     const workspacePackageJsonPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'package.json');
     const docusaurusConfigPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_DocusaurusConfigPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'docusaurus.config.ts');
-    const homeMdxPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_HomeMdxPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'src', 'pages', 'index.mdx');
+    const homeTsxPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_HomeTsxPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'src', 'pages', 'index.tsx');
     const introMdxPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_IntroMdxPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'docs', 'intro.mdx');
     const frontmatterTestPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_FrontmatterTestPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'src', 'tests', 'frontmatter.test.ts');
 
@@ -167,7 +169,7 @@ describe.sequential('CliScaffoldDocsDocusaurus.run', async () => {
 
     await access(docusaurusConfigPath);
 
-    await access(homeMdxPath);
+    await access(homeTsxPath);
 
     await access(introMdxPath);
 
@@ -230,6 +232,7 @@ describe.sequential('CliScaffoldDocsDocusaurus.run', async () => {
     process.chdir(projectDirectory);
 
     await CliScaffoldDocsDocusaurus.run({
+      install: false,
       nonInteractive: true,
       workspaceName: 'docusaurus',
       output: './apps/docusaurus',
@@ -239,7 +242,7 @@ describe.sequential('CliScaffoldDocsDocusaurus.run', async () => {
     // Verify workspace files were created.
     const workspacePackageJsonPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath = join(projectDirectory, 'apps', 'docusaurus', 'package.json');
     const docusaurusConfigPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_DocusaurusConfigPath = join(projectDirectory, 'apps', 'docusaurus', 'docusaurus.config.ts');
-    const homeMdxPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_HomeMdxPath = join(projectDirectory, 'apps', 'docusaurus', 'src', 'pages', 'index.mdx');
+    const homeTsxPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_HomeTsxPath = join(projectDirectory, 'apps', 'docusaurus', 'src', 'pages', 'index.tsx');
     const introMdxPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_IntroMdxPath = join(projectDirectory, 'apps', 'docusaurus', 'docs', 'intro.mdx');
     const frontmatterTestPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_FrontmatterTestPath = join(projectDirectory, 'apps', 'docusaurus', 'src', 'tests', 'frontmatter.test.ts');
 
@@ -247,13 +250,14 @@ describe.sequential('CliScaffoldDocsDocusaurus.run', async () => {
 
     await access(docusaurusConfigPath);
 
-    await access(homeMdxPath);
+    await access(homeTsxPath);
 
     await access(introMdxPath);
 
     await access(frontmatterTestPath);
 
     await CliScaffoldDocsDocusaurus.run({
+      install: false,
       nonInteractive: true,
       workspaceName: 'docs-two',
       output: './apps/docs-two',

@@ -30,6 +30,7 @@ export class Runner {
   public static async run(options: Cli_Scaffold_App_CloudflareWorkers_Runner_Run_Options): Cli_Scaffold_App_CloudflareWorkers_Runner_Run_Returns {
     await runScaffold(options, {
       category: 'app',
+      displayName: 'Cloudflare Workers',
       importMetaUrl: import.meta.url,
       templateSubpath: 'scaffold/app/cloudflare-workers',
       typeName: 'cloudflare-workers',

@@ -29,6 +29,7 @@ export class Runner {
   public static async run(options: Cli_Scaffold_App_Apple_Runner_Run_Options): Cli_Scaffold_App_Apple_Runner_Run_Returns {
     await runScaffold(options, {
       category: 'app',
+      displayName: 'Apple',
       importMetaUrl: import.meta.url,
       templateSubpath: 'scaffold/app/apple',
       typeName: 'apple',

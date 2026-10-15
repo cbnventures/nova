@@ -1,3 +1,4 @@
+import { spawn } from 'node:child_process';
 import { promises as fs } from 'node:fs';
 import {
   dirname,
@@ -15,6 +16,9 @@ import prompts from 'prompts';
 import novaPackageJson from '../../package.json' with { type: 'json' };
 
 import { Logger } from '../toolkit/index.js';
+import { Runner as LibCorepack } from './corepack.js';
+import { writeDotenvFiles } from './dotenv.js';
+import { libEnvNamespace } from './env-namespace.js';
 import {
   LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN,
   LIB_REGEX_PATTERN_SLUG_SIMPLE,
@@ -25,6 +29,14 @@ import {
   LIB_REGEX_PLACEHOLDER_WORKSPACE_RELATIVE_PATH,
   LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
 } from './regex.js';
+import {
+  confirmScaffoldPlan,
+  createScaffoldProgress,
+  reportScaffoldCompletion,
+  reportScaffoldPlan,
+  resolveDisplayPath,
+  resolveScaffoldInstall,
+} from './scaffold-presentation.js';
 import {
   discoverPathsWithFile,
   isPlainObject,
@@ -47,14 +59,11 @@ import type {
   Lib_Scaffold_CollectFiles_Prefix,
   Lib_Scaffold_CollectFiles_Returns,
   Lib_Scaffold_CreateMonorepoRoot_AppsDirectory,
-  Lib_Scaffold_CreateMonorepoRoot_CurrentDirectory,
   Lib_Scaffold_CreateMonorepoRoot_NovaConfigContent,
   Lib_Scaffold_CreateMonorepoRoot_NovaConfigPath,
-  Lib_Scaffold_CreateMonorepoRoot_NovaConfigRelativePath,
   Lib_Scaffold_CreateMonorepoRoot_OutputDirectory,
   Lib_Scaffold_CreateMonorepoRoot_PackageJsonContent,
   Lib_Scaffold_CreateMonorepoRoot_PackageJsonPath,
-  Lib_Scaffold_CreateMonorepoRoot_PackageJsonRelativePath,
   Lib_Scaffold_CreateMonorepoRoot_PackagesDirectory,
   Lib_Scaffold_CreateMonorepoRoot_ProjectSlug,
   Lib_Scaffold_CreateMonorepoRoot_ProjectTitle,
@@ -63,7 +72,6 @@ import type {
   Lib_Scaffold_CreateMonorepoRoot_RootTemplateDirectory,
   Lib_Scaffold_CreateMonorepoRoot_TurboJsonContent,
   Lib_Scaffold_CreateMonorepoRoot_TurboJsonPath,
-  Lib_Scaffold_CreateMonorepoRoot_TurboJsonRelativePath,
   Lib_Scaffold_CreateWorkspaceDirectory_BasePath,
   Lib_Scaffold_CreateWorkspaceDirectory_Returns,
   Lib_Scaffold_CreateWorkspaceDirectory_WorkspaceDirectory,
@@ -81,6 +89,18 @@ import type {
   Lib_Scaffold_GetMonorepoRootPlannedPaths_Returns,
   Lib_Scaffold_GetMonorepoRootPlannedPaths_TemplateDirectory,
   Lib_Scaffold_GetMonorepoRootPlannedPaths_TemplateEntries,
+  Lib_Scaffold_InstallScaffoldDependencies_Command,
+  Lib_Scaffold_InstallScaffoldDependencies_CommandArguments,
+  Lib_Scaffold_InstallScaffoldDependencies_Executor,
+  Lib_Scaffold_InstallScaffoldDependencies_Executor_AppendOutput,
+  Lib_Scaffold_InstallScaffoldDependencies_Executor_ChildProcess,
+  Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleClose,
+  Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleError,
+  Lib_Scaffold_InstallScaffoldDependencies_Invocation,
+  Lib_Scaffold_InstallScaffoldDependencies_Output,
+  Lib_Scaffold_InstallScaffoldDependencies_PackageManager,
+  Lib_Scaffold_InstallScaffoldDependencies_Returns,
+  Lib_Scaffold_InstallScaffoldDependencies_RootDirectory,
   Lib_Scaffold_LoadExistingRoot_Config,
   Lib_Scaffold_LoadExistingRoot_ConfigFilePath,
   Lib_Scaffold_LoadExistingRoot_ConfigRaw,
@@ -104,38 +124,15 @@ import type {
   Lib_Scaffold_LoadExistingRoot_WorkspacePatternsValue,
   Lib_Scaffold_LoadExistingRoot_WorkspacesObject,
   Lib_Scaffold_LoadExistingRoot_WorkspacesValue,
-  Lib_Scaffold_LoadGenerator_AgentConventionsModule,
-  Lib_Scaffold_LoadGenerator_DotenvModule,
-  Lib_Scaffold_LoadGenerator_EditorconfigModule,
-  Lib_Scaffold_LoadGenerator_FundingModule,
-  Lib_Scaffold_LoadGenerator_GitignoreModule,
-  Lib_Scaffold_LoadGenerator_IssueTemplateModule,
-  Lib_Scaffold_LoadGenerator_LicenseModule,
-  Lib_Scaffold_LoadGenerator_Name,
-  Lib_Scaffold_LoadGenerator_ReadMeModule,
-  Lib_Scaffold_LoadGenerator_Returns,
-  Lib_Scaffold_LoadGenerator_WorkflowsModule,
   Lib_Scaffold_NormalizeWorkspaceRelativePath_NormalizedPath,
   Lib_Scaffold_NormalizeWorkspaceRelativePath_RelativePath,
   Lib_Scaffold_NormalizeWorkspaceRelativePath_Returns,
   Lib_Scaffold_NormalizeWorkspaceRelativePath_RootDirectory,
   Lib_Scaffold_NormalizeWorkspaceRelativePath_WorkspaceDirectory,
-  Lib_Scaffold_PromptPostScaffoldGenerators_Answers,
-  Lib_Scaffold_PromptPostScaffoldGenerators_Cancelled,
-  Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoices,
-  Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorModule,
-  Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorResult,
-  Lib_Scaffold_PromptPostScaffoldGenerators_OriginalCwd,
-  Lib_Scaffold_PromptPostScaffoldGenerators_OutputDirectory,
-  Lib_Scaffold_PromptPostScaffoldGenerators_Returns,
-  Lib_Scaffold_PromptPostScaffoldGenerators_Selected,
   Lib_Scaffold_PromptScaffoldOptions_Cancelled,
   Lib_Scaffold_PromptScaffoldOptions_Context,
   Lib_Scaffold_PromptScaffoldOptions_CurrentDirectory,
   Lib_Scaffold_PromptScaffoldOptions_Defaults,
-  Lib_Scaffold_PromptScaffoldOptions_DirectoryAnswers,
-  Lib_Scaffold_PromptScaffoldOptions_DirectoryChoice,
-  Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices,
   Lib_Scaffold_PromptScaffoldOptions_InitialAnswers,
   Lib_Scaffold_PromptScaffoldOptions_InitialPrev,
   Lib_Scaffold_PromptScaffoldOptions_MonorepoNameValue,
@@ -143,11 +140,9 @@ import type {
   Lib_Scaffold_PromptScaffoldOptions_MonorepoPromptsAnswers,
   Lib_Scaffold_PromptScaffoldOptions_MonorepoQuestions,
   Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedName,
-  Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedOutput,
   Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedWorkspaceName,
   Lib_Scaffold_PromptScaffoldOptions_MonorepoWorkspaceNameValue,
   Lib_Scaffold_PromptScaffoldOptions_NameValue,
-  Lib_Scaffold_PromptScaffoldOptions_OutputAnswers,
   Lib_Scaffold_PromptScaffoldOptions_OutputValue,
   Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers,
   Lib_Scaffold_PromptScaffoldOptions_Questions,
@@ -162,7 +157,13 @@ import type {
   Lib_Scaffold_RegisterWorkspaceInConfig_Category,
   Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath,
   Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Environment,
+  Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables,
+  Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspace,
+  Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspaces,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironment,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironmentWorkspaces,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces,
   Lib_Scaffold_RegisterWorkspaceInConfig_Policy,
   Lib_Scaffold_RegisterWorkspaceInConfig_Project,
@@ -171,6 +172,7 @@ import type {
   Lib_Scaffold_RegisterWorkspaceInConfig_Raw,
   Lib_Scaffold_RegisterWorkspaceInConfig_Returns,
   Lib_Scaffold_RegisterWorkspaceInConfig_Role,
+  Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName,
   Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName,
   Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath,
   Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces,
@@ -178,6 +180,32 @@ import type {
   Lib_Scaffold_ReportError_Returns,
   Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_CurrentDirectory,
   Lib_Scaffold_ResolveMonorepoRootTemplateDirectory_Returns,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_BasePrefix,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Candidate,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_CandidateIndex,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Entry,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_EntryValues,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Environment,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_ExistingPrefixes,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_HasConflict,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_PrefixValue,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Returns,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Scope,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_ScopeValue,
+  Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceName,
+  Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Config,
+  Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Gitignore,
+  Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_GitignoreValue,
+  Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_ProjectExcludes,
+  Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_ProjectExcludesValue,
+  Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_ResolvedProjectExcludeValue,
+  Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Returns,
+  Lib_Scaffold_ResolveScaffoldGitignoreTemplatePath_CurrentDirectory,
+  Lib_Scaffold_ResolveScaffoldGitignoreTemplatePath_Returns,
+  Lib_Scaffold_ResolveScaffoldInstallInvocation_Command,
+  Lib_Scaffold_ResolveScaffoldInstallInvocation_CommandArguments,
+  Lib_Scaffold_ResolveScaffoldInstallInvocation_PackageManager,
+  Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns,
   Lib_Scaffold_ResolveTemplateAnswers_Answer,
   Lib_Scaffold_ResolveTemplateAnswers_Answers,
   Lib_Scaffold_ResolveTemplateAnswers_DependencyValue,
@@ -207,12 +235,15 @@ import type {
   Lib_Scaffold_RunScaffold_ConfigFilePath,
   Lib_Scaffold_RunScaffold_ConfigNameDefault,
   Lib_Scaffold_RunScaffold_ConfigRoot,
+  Lib_Scaffold_RunScaffold_Confirmed,
   Lib_Scaffold_RunScaffold_ConflictingPaths,
   Lib_Scaffold_RunScaffold_ConflictMessage,
   Lib_Scaffold_RunScaffold_Context,
   Lib_Scaffold_RunScaffold_CoreReplacements,
   Lib_Scaffold_RunScaffold_CurrentDirectory,
   Lib_Scaffold_RunScaffold_Definition,
+  Lib_Scaffold_RunScaffold_Destination,
+  Lib_Scaffold_RunScaffold_EnvironmentVariables,
   Lib_Scaffold_RunScaffold_ExistingRoot,
   Lib_Scaffold_RunScaffold_ExistingWorkspace,
   Lib_Scaffold_RunScaffold_ExistingWorkspaceEntries,
@@ -221,16 +252,29 @@ import type {
   Lib_Scaffold_RunScaffold_ExistingWorkspacePath,
   Lib_Scaffold_RunScaffold_ExistingWorkspaceRole,
   Lib_Scaffold_RunScaffold_ExistingWorkspaceValue,
+  Lib_Scaffold_RunScaffold_InstallOutput,
+  Lib_Scaffold_RunScaffold_InstallResult,
+  Lib_Scaffold_RunScaffold_InstallSucceeded,
   Lib_Scaffold_RunScaffold_IsDryRun,
   Lib_Scaffold_RunScaffold_IsNonInteractive,
   Lib_Scaffold_RunScaffold_IsWorkspaceCovered,
   Lib_Scaffold_RunScaffold_NormalizedWorkspacePattern,
   Lib_Scaffold_RunScaffold_NormalizedWorkspaceRelPath,
   Lib_Scaffold_RunScaffold_Options,
+  Lib_Scaffold_RunScaffold_PackageManager,
+  Lib_Scaffold_RunScaffold_PackageManagerDescriptor,
+  Lib_Scaffold_RunScaffold_PackageManagerValue,
   Lib_Scaffold_RunScaffold_PlannedPaths,
+  Lib_Scaffold_RunScaffold_PresentationOptions,
+  Lib_Scaffold_RunScaffold_PrimaryScript,
+  Lib_Scaffold_RunScaffold_Progress,
+  Lib_Scaffold_RunScaffold_ProgressTotal,
+  Lib_Scaffold_RunScaffold_ProjectRoot,
   Lib_Scaffold_RunScaffold_ProjectSlug,
   Lib_Scaffold_RunScaffold_Replacements,
+  Lib_Scaffold_RunScaffold_ResolvedReplacements,
   Lib_Scaffold_RunScaffold_Returns,
+  Lib_Scaffold_RunScaffold_RootGitignorePath,
   Lib_Scaffold_RunScaffold_RootPackageJsonContents,
   Lib_Scaffold_RunScaffold_RootPackageJsonPath,
   Lib_Scaffold_RunScaffold_RootPlannedPathGroups,
@@ -240,6 +284,9 @@ import type {
   Lib_Scaffold_RunScaffold_RootTemplateWrites,
   Lib_Scaffold_RunScaffold_RootWorkspacesObject,
   Lib_Scaffold_RunScaffold_RootWorkspacesValue,
+  Lib_Scaffold_RunScaffold_ScaffoldGitignoreProjectExcludes,
+  Lib_Scaffold_RunScaffold_ShouldCreateRootGitignore,
+  Lib_Scaffold_RunScaffold_ShouldInstall,
   Lib_Scaffold_RunScaffold_TemplateAnswers,
   Lib_Scaffold_RunScaffold_TemplateEntries,
   Lib_Scaffold_RunScaffold_TemplateReplacements,
@@ -261,28 +308,49 @@ import type {
   Lib_Scaffold_RunScaffold_WorkspaceTitle,
   Lib_Scaffold_UpdateScaffoldPackageJson_Content,
   Lib_Scaffold_UpdateScaffoldPackageJson_IsSortedSection,
+  Lib_Scaffold_UpdateScaffoldPackageJson_OrderedScriptEntries,
   Lib_Scaffold_UpdateScaffoldPackageJson_PackageJson,
   Lib_Scaffold_UpdateScaffoldPackageJson_PackageJsonPath,
   Lib_Scaffold_UpdateScaffoldPackageJson_Parsed,
   Lib_Scaffold_UpdateScaffoldPackageJson_Raw,
   Lib_Scaffold_UpdateScaffoldPackageJson_Returns,
   Lib_Scaffold_UpdateScaffoldPackageJson_Section,
+  Lib_Scaffold_UpdateScaffoldPackageJson_SectionEntries,
+  Lib_Scaffold_UpdateScaffoldPackageJson_SectionOutput,
   Lib_Scaffold_UpdateScaffoldPackageJson_SectionValue,
   Lib_Scaffold_UpdateScaffoldPackageJson_Updates,
+  Lib_Scaffold_UpdateScaffoldPackageJson_UsedScriptKeys,
   Lib_Scaffold_UpdateScaffoldPackageJson_WorkspaceDirectory,
+  Lib_Scaffold_WriteScaffoldGitignore_Content,
+  Lib_Scaffold_WriteScaffoldGitignore_ProjectExcludes,
+  Lib_Scaffold_WriteScaffoldGitignore_Returns,
+  Lib_Scaffold_WriteScaffoldGitignore_RootDirectory,
+  Lib_Scaffold_WriteScaffoldGitignore_TargetPath,
+  Lib_Scaffold_WriteScaffoldGitignore_TemplateContent,
+  Lib_Scaffold_WriteScaffoldGitignore_TemplatePath,
   Lib_Scaffold_WriteTemplateFiles_Content,
-  Lib_Scaffold_WriteTemplateFiles_CurrentDirectory,
   Lib_Scaffold_WriteTemplateFiles_Entries,
-  Lib_Scaffold_WriteTemplateFiles_RelativePath,
+  Lib_Scaffold_WriteTemplateFiles_IsBinary,
   Lib_Scaffold_WriteTemplateFiles_Replacements,
   Lib_Scaffold_WriteTemplateFiles_Returns,
   Lib_Scaffold_WriteTemplateFiles_SourceContent,
   Lib_Scaffold_WriteTemplateFiles_SourcePath,
+  Lib_Scaffold_WriteTemplateFiles_SourceStats,
   Lib_Scaffold_WriteTemplateFiles_TargetDirectory,
   Lib_Scaffold_WriteTemplateFiles_TargetEntry,
   Lib_Scaffold_WriteTemplateFiles_TargetPath,
   Lib_Scaffold_WriteTemplateFiles_TemplateDirectory,
 } from '../types/lib/scaffold.d.ts';
+
+/**
+ * Lib - Scaffold - Default Package Manager.
+ *
+ * Defines the exact Corepack package manager written into new monorepo roots.
+ * The creation and installation paths consume the same descriptor.
+ *
+ * @since 0.31.0
+ */
+const LIB_SCAFFOLD_DEFAULT_PACKAGE_MANAGER = 'npm@11.18.0';
 
 /**
  * Lib - Scaffold - Apply Template Replacements.
@@ -331,6 +399,172 @@ function reportError(message: Lib_Scaffold_ReportError_Message): Lib_Scaffold_Re
   process.exitCode = 1;
 
   return;
+}
+
+/**
+ * Lib - Scaffold - Resolve Scaffold Install Invocation.
+ *
+ * Selects npm directly while routing pnpm and Yarn through Corepack.
+ * Keeps the displayed package manager and executed client in lockstep.
+ *
+ * @param {Lib_Scaffold_ResolveScaffoldInstallInvocation_PackageManager} packageManager - Package manager.
+ *
+ * @returns {Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns}
+ *
+ * @since 0.31.0
+ */
+export function resolveScaffoldInstallInvocation(packageManager: Lib_Scaffold_ResolveScaffoldInstallInvocation_PackageManager): Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns {
+  const command: Lib_Scaffold_ResolveScaffoldInstallInvocation_Command = (packageManager === 'npm') ? 'npm' : 'corepack';
+  const commandArguments: Lib_Scaffold_ResolveScaffoldInstallInvocation_CommandArguments = (packageManager === 'npm') ? ['install'] : [
+    packageManager,
+    'install',
+  ];
+
+  return {
+    command,
+    commandArguments,
+  };
+}
+
+/**
+ * Lib - Scaffold - Install Scaffold Dependencies.
+ *
+ * Installs the generated monorepo with the exact Corepack manager from package.json.
+ * Output stays attached so warnings and lifecycle failures remain visible.
+ *
+ * @param {Lib_Scaffold_InstallScaffoldDependencies_RootDirectory}  rootDirectory  - Root directory.
+ * @param {Lib_Scaffold_InstallScaffoldDependencies_PackageManager} packageManager - Package manager.
+ *
+ * @returns {Lib_Scaffold_InstallScaffoldDependencies_Returns}
+ *
+ * @since 0.31.0
+ */
+export async function installScaffoldDependencies(rootDirectory: Lib_Scaffold_InstallScaffoldDependencies_RootDirectory, packageManager: Lib_Scaffold_InstallScaffoldDependencies_PackageManager): Lib_Scaffold_InstallScaffoldDependencies_Returns {
+  const invocation: Lib_Scaffold_InstallScaffoldDependencies_Invocation = resolveScaffoldInstallInvocation(packageManager);
+  const command: Lib_Scaffold_InstallScaffoldDependencies_Command = invocation['command'];
+  const commandArguments: Lib_Scaffold_InstallScaffoldDependencies_CommandArguments = invocation['commandArguments'];
+  let output: Lib_Scaffold_InstallScaffoldDependencies_Output = '';
+
+  /**
+   * Lib - Scaffold - Install Scaffold Dependencies - Executor.
+   *
+   * Starts the selected package manager without a shell and captures its output.
+   * Resolves the installation result after the child process exits or fails to start.
+   *
+   * @param {Lib_Scaffold_InstallScaffoldDependencies_Executor_PromiseResolve} promiseResolve - Promise resolve.
+   *
+   * @private
+   *
+   * @returns {Lib_Scaffold_InstallScaffoldDependencies_Executor_Returns}
+   *
+   * @since 0.31.0
+   */
+  const executor: Lib_Scaffold_InstallScaffoldDependencies_Executor = (promiseResolve) => {
+    const childProcess: Lib_Scaffold_InstallScaffoldDependencies_Executor_ChildProcess = spawn(command, commandArguments, {
+      cwd: rootDirectory,
+      env: {
+        ...process.env,
+        COREPACK_ENABLE_STRICT: '0',
+      },
+      stdio: [
+        'inherit',
+        'pipe',
+        'pipe',
+      ],
+    });
+
+    /**
+     * Lib - Scaffold - Install Scaffold Dependencies - Append Output.
+     *
+     * Collects package-manager output so successful installs stay quiet and
+     * failed installs can replay the complete diagnostic stream.
+     *
+     * @param {Lib_Scaffold_InstallScaffoldDependencies_Executor_AppendOutput_Chunk} chunk - Chunk.
+     *
+     * @private
+     *
+     * @returns {Lib_Scaffold_InstallScaffoldDependencies_Executor_AppendOutput_Returns}
+     *
+     * @since 0.31.0
+     */
+    const appendOutput: Lib_Scaffold_InstallScaffoldDependencies_Executor_AppendOutput = (chunk) => {
+      output += String(chunk);
+
+      return;
+    };
+
+    /**
+     * Lib - Scaffold - Install Scaffold Dependencies - Handle Close.
+     *
+     * Converts the package-manager exit code into the scaffold success result.
+     * Only a normal zero exit code is treated as a completed installation.
+     *
+     * @param {Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleClose_Code} code - Code.
+     *
+     * @private
+     *
+     * @returns {Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleClose_Returns}
+     *
+     * @since 0.31.0
+     */
+    const handleClose: Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleClose = (code) => {
+      promiseResolve({
+        output,
+        succeeded: code === 0,
+      });
+
+      return;
+    };
+
+    /**
+     * Lib - Scaffold - Install Scaffold Dependencies - Handle Error.
+     *
+     * Records child-process startup failures for debug output.
+     * Resolves the installation as unsuccessful without throwing.
+     *
+     * @param {Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleError_Error} error - Error.
+     *
+     * @private
+     *
+     * @returns {Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleError_Returns}
+     *
+     * @since 0.31.0
+     */
+    const handleError: Lib_Scaffold_InstallScaffoldDependencies_Executor_HandleError = (error) => {
+      Logger.customize({
+        name: 'installScaffoldDependencies',
+        purpose: 'spawn',
+      }).debug(error);
+
+      output += `${error.message}\n`;
+
+      promiseResolve({
+        output,
+        succeeded: false,
+      });
+
+      return;
+    };
+
+    if (childProcess.stdout !== null) {
+      childProcess.stdout.setEncoding('utf-8');
+
+      childProcess.stdout.on('data', appendOutput);
+    }
+
+    if (childProcess.stderr !== null) {
+      childProcess.stderr.setEncoding('utf-8');
+
+      childProcess.stderr.on('data', appendOutput);
+    }
+
+    childProcess.once('error', handleError);
+    childProcess.once('close', handleClose);
+
+    return;
+  };
+
+  return new Promise(executor);
 }
 
 /**
@@ -606,8 +840,8 @@ export async function detectMonorepoContext(currentWorkingDirectory: Lib_Scaffol
 /**
  * Lib - Scaffold - Prompt Scaffold Options.
  *
- * Collects project name, workspace name, and output directory through interactive
- * prompts. Adapts the question flow based on monorepo or workspace mode.
+ * Collects project and workspace names through interactive prompts. New monorepos
+ * use a dedicated project directory while workspace mode resolves its own path.
  *
  * @param {Lib_Scaffold_PromptScaffoldOptions_Context}  context  - Context.
  * @param {Lib_Scaffold_PromptScaffoldOptions_Defaults} defaults - Defaults.
@@ -622,7 +856,7 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
   let cancelled: Lib_Scaffold_PromptScaffoldOptions_Cancelled = false;
 
   if (context['context'] === 'monorepo') {
-    // Monorepo mode - prompt for project name, workspace name, and output directory.
+    // Monorepo mode - prompt for project and workspace names.
     const monorepoNameValue: Lib_Scaffold_PromptScaffoldOptions_MonorepoNameValue = defaults['name'] ?? undefined;
     const monorepoOutputValue: Lib_Scaffold_PromptScaffoldOptions_MonorepoOutputValue = defaults['output'] ?? undefined;
     const monorepoWorkspaceNameValue: Lib_Scaffold_PromptScaffoldOptions_MonorepoWorkspaceNameValue = defaults['workspaceName'] ?? undefined;
@@ -670,84 +904,13 @@ export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffold
     const monorepoResolvedName: Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedName = (monorepoNameValue ?? monorepoPromptsAnswers['name']) as Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedName;
     const monorepoResolvedWorkspaceName: Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedWorkspaceName = (monorepoWorkspaceNameValue ?? monorepoPromptsAnswers['workspaceName']) as Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedWorkspaceName;
 
-    // Early return if --output is provided.
-    if (monorepoOutputValue !== undefined) {
-      const resolvedOutputDirectory: Lib_Scaffold_PromptScaffoldOptions_ResolvedOutputDirectory = resolve(currentDirectory, monorepoOutputValue);
-
-      return {
-        mode: 'monorepo',
-        name: monorepoResolvedName,
-        workspaceName: monorepoResolvedWorkspaceName,
-        outputDirectory: resolvedOutputDirectory,
-      };
-    }
-
-    // Prompt for directory choice.
-    const directoryChoices: Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices = [
-      {
-        title: 'Create a new directory',
-        value: 'new-directory',
-      },
-      {
-        title: 'Build in current working directory',
-        value: 'current-directory',
-      },
-    ];
-
-    const directoryAnswers: Lib_Scaffold_PromptScaffoldOptions_DirectoryAnswers = await prompts({
-      type: 'select',
-      name: 'directoryChoice',
-      message: 'Where should the project be created?',
-      choices: directoryChoices,
-      initial: 0,
-    }, {
-      onCancel: () => false,
-    });
-
-    if (directoryAnswers['directoryChoice'] === undefined) {
-      cancelled = true;
-    }
-
-    if (cancelled === true) {
-      return undefined;
-    }
-
-    const directoryChoice: Lib_Scaffold_PromptScaffoldOptions_DirectoryChoice = directoryAnswers['directoryChoice'] as Lib_Scaffold_PromptScaffoldOptions_DirectoryChoice;
-
-    if (directoryChoice === 'current-directory') {
-      return {
-        mode: 'monorepo',
-        name: monorepoResolvedName,
-        workspaceName: monorepoResolvedWorkspaceName,
-        outputDirectory: process.cwd(),
-      };
-    }
-
-    // Prompt for output directory path.
-    const outputAnswers: Lib_Scaffold_PromptScaffoldOptions_OutputAnswers = await prompts({
-      type: 'text',
-      name: 'output',
-      message: 'Output directory:',
-      initial: `./${monorepoResolvedName}`,
-    }, {
-      onCancel: () => false,
-    });
-
-    if (outputAnswers['output'] === undefined) {
-      cancelled = true;
-    }
-
-    if (cancelled === true) {
-      return undefined;
-    }
-
-    const monorepoResolvedOutput: Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedOutput = outputAnswers['output'] as Lib_Scaffold_PromptScaffoldOptions_MonorepoResolvedOutput;
+    const resolvedOutputDirectory: Lib_Scaffold_PromptScaffoldOptions_ResolvedOutputDirectory = resolve(currentDirectory, monorepoOutputValue ?? `./${monorepoResolvedName}`);
 
     return {
       mode: 'monorepo',
       name: monorepoResolvedName,
       workspaceName: monorepoResolvedWorkspaceName,
-      outputDirectory: resolve(currentDirectory, monorepoResolvedOutput),
+      outputDirectory: resolvedOutputDirectory,
     };
   }
 
@@ -1034,24 +1197,22 @@ export async function createWorkspaceDirectory(basePath: Lib_Scaffold_CreateWork
  * @since 0.15.0
  */
 export async function writeTemplateFiles(templateDirectory: Lib_Scaffold_WriteTemplateFiles_TemplateDirectory, targetDirectory: Lib_Scaffold_WriteTemplateFiles_TargetDirectory, replacements: Lib_Scaffold_WriteTemplateFiles_Replacements): Lib_Scaffold_WriteTemplateFiles_Returns {
-  const currentDirectory: Lib_Scaffold_WriteTemplateFiles_CurrentDirectory = process.cwd();
   const entries: Lib_Scaffold_WriteTemplateFiles_Entries = await collectFiles(templateDirectory, '');
 
   for (const entry of entries) {
     const sourcePath: Lib_Scaffold_WriteTemplateFiles_SourcePath = join(templateDirectory, entry);
     const targetEntry: Lib_Scaffold_WriteTemplateFiles_TargetEntry = applyTemplateReplacements(entry, replacements);
     const targetPath: Lib_Scaffold_WriteTemplateFiles_TargetPath = join(targetDirectory, targetEntry);
-    const sourceContent: Lib_Scaffold_WriteTemplateFiles_SourceContent = await fs.readFile(sourcePath, 'utf-8');
-    const content: Lib_Scaffold_WriteTemplateFiles_Content = applyTemplateReplacements(sourceContent, replacements);
+    const sourceContent: Lib_Scaffold_WriteTemplateFiles_SourceContent = await fs.readFile(sourcePath);
+    const sourceStats: Lib_Scaffold_WriteTemplateFiles_SourceStats = await fs.stat(sourcePath);
+    const isBinary: Lib_Scaffold_WriteTemplateFiles_IsBinary = sourceContent.includes(0);
+    const content: Lib_Scaffold_WriteTemplateFiles_Content = (isBinary === true) ? sourceContent : applyTemplateReplacements(sourceContent.toString('utf-8'), replacements);
 
-    await saveGeneratedFile(targetPath, content, true);
+    await fs.mkdir(dirname(targetPath), { recursive: true });
 
-    const relativePath: Lib_Scaffold_WriteTemplateFiles_RelativePath = relative(currentDirectory, targetPath);
+    await fs.writeFile(targetPath, content);
 
-    Logger.customize({
-      name: 'writeTemplateFiles',
-      purpose: 'written',
-    }).info(`Created "${relativePath}".`);
+    await fs.chmod(targetPath, sourceStats.mode);
   }
 
   return;
@@ -1100,8 +1261,43 @@ export async function updateScaffoldPackageJson(workspaceDirectory: Lib_Scaffold
       'optionalDependencies',
       'peerDependencies',
     ].includes(updateEntry[0]);
+    let sectionOutput: Lib_Scaffold_UpdateScaffoldPackageJson_SectionOutput = section;
 
-    Reflect.set(packageJson, updateEntry[0], (isSortedSection === true) ? Object.fromEntries(Object.entries(section).sort((firstEntry, secondEntry) => firstEntry[0].localeCompare(secondEntry[0]))) : section);
+    if (updateEntry[0] === 'scripts') {
+      const sectionEntries: Lib_Scaffold_UpdateScaffoldPackageJson_SectionEntries = Object.entries(section);
+      const orderedScriptEntries: Lib_Scaffold_UpdateScaffoldPackageJson_OrderedScriptEntries = [];
+      const usedScriptKeys: Lib_Scaffold_UpdateScaffoldPackageJson_UsedScriptKeys = new Set();
+
+      for (const sectionEntry of sectionEntries) {
+        if (sectionEntry[0].includes(':') === true) {
+          continue;
+        }
+
+        orderedScriptEntries.push(sectionEntry);
+
+        usedScriptKeys.add(sectionEntry[0]);
+
+        for (const childEntry of sectionEntries) {
+          if (childEntry[0].startsWith(`${sectionEntry[0]}:`) === true) {
+            orderedScriptEntries.push(childEntry);
+
+            usedScriptKeys.add(childEntry[0]);
+          }
+        }
+      }
+
+      for (const sectionEntry of sectionEntries) {
+        if (usedScriptKeys.has(sectionEntry[0]) === false) {
+          orderedScriptEntries.push(sectionEntry);
+        }
+      }
+
+      sectionOutput = Object.fromEntries(orderedScriptEntries);
+    } else if (isSortedSection === true) {
+      sectionOutput = Object.fromEntries(Object.entries(section).sort((firstEntry, secondEntry) => firstEntry[0].localeCompare(secondEntry[0])));
+    }
+
+    Reflect.set(packageJson, updateEntry[0], sectionOutput);
   }
 
   const content: Lib_Scaffold_UpdateScaffoldPackageJson_Content = `${JSON.stringify(packageJson, null, 2)}\n`;
@@ -1167,6 +1363,95 @@ function resolveMonorepoRootTemplateDirectory(): Lib_Scaffold_ResolveMonorepoRoo
 }
 
 /**
+ * Lib - Scaffold - Resolve Scaffold Gitignore Project Excludes.
+ *
+ * Reads valid project-specific ignore patterns from an existing Nova config so
+ * scaffolding can create the same canonical file as the standalone generator.
+ *
+ * @param {Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Config} config - Config.
+ *
+ * @private
+ *
+ * @returns {Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Returns}
+ *
+ * @since 0.31.0
+ */
+function resolveScaffoldGitignoreProjectExcludes(config: Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Config): Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Returns {
+  const gitignoreValue: Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_GitignoreValue = config['gitignore'];
+
+  if (isPlainObject(gitignoreValue) === false) {
+    return [];
+  }
+
+  const gitignore: Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Gitignore = gitignoreValue;
+  const projectExcludesValue: Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_ProjectExcludesValue = gitignore['projectExcludes'];
+
+  if (Array.isArray(projectExcludesValue) === false) {
+    return [];
+  }
+
+  const projectExcludes: Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_ProjectExcludes = [];
+
+  for (const projectExcludeValue of projectExcludesValue) {
+    const resolvedProjectExcludeValue: Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_ResolvedProjectExcludeValue = projectExcludeValue;
+
+    if (typeof resolvedProjectExcludeValue === 'string' && resolvedProjectExcludeValue.trim() !== '') {
+      projectExcludes.push(resolvedProjectExcludeValue);
+    }
+  }
+
+  return projectExcludes;
+}
+
+/**
+ * Lib - Scaffold - Resolve Scaffold Gitignore Template Path.
+ *
+ * Locates the same bundled template consumed by "nova generate must-haves
+ * gitignore" from both the source tree and Nova's compiled package layout.
+ *
+ * @private
+ *
+ * @returns {Lib_Scaffold_ResolveScaffoldGitignoreTemplatePath_Returns}
+ *
+ * @since 0.31.0
+ */
+function resolveScaffoldGitignoreTemplatePath(): Lib_Scaffold_ResolveScaffoldGitignoreTemplatePath_Returns {
+  const currentDirectory: Lib_Scaffold_ResolveScaffoldGitignoreTemplatePath_CurrentDirectory = dirname(fileURLToPath(import.meta.url));
+
+  return join(currentDirectory, '..', '..', 'templates', 'generators', 'must-haves', 'gitignore', 'gitignore');
+}
+
+/**
+ * Lib - Scaffold - Write Scaffold Gitignore.
+ *
+ * Generates a root .gitignore from Nova's canonical template without emitting
+ * generator logs that would interrupt the scaffold progress display.
+ *
+ * @param {Lib_Scaffold_WriteScaffoldGitignore_RootDirectory}   rootDirectory   - Root directory.
+ * @param {Lib_Scaffold_WriteScaffoldGitignore_ProjectExcludes} projectExcludes - Project excludes.
+ *
+ * @private
+ *
+ * @returns {Lib_Scaffold_WriteScaffoldGitignore_Returns}
+ *
+ * @since 0.31.0
+ */
+async function writeScaffoldGitignore(rootDirectory: Lib_Scaffold_WriteScaffoldGitignore_RootDirectory, projectExcludes: Lib_Scaffold_WriteScaffoldGitignore_ProjectExcludes = []): Lib_Scaffold_WriteScaffoldGitignore_Returns {
+  const templatePath: Lib_Scaffold_WriteScaffoldGitignore_TemplatePath = resolveScaffoldGitignoreTemplatePath();
+  const templateContent: Lib_Scaffold_WriteScaffoldGitignore_TemplateContent = await fs.readFile(templatePath, 'utf-8');
+  const content: Lib_Scaffold_WriteScaffoldGitignore_Content = (projectExcludes.length > 0) ? `${templateContent}${projectExcludes.join('\n')}\n` : templateContent;
+  const targetPath: Lib_Scaffold_WriteScaffoldGitignore_TargetPath = join(rootDirectory, '.gitignore');
+
+  await saveGeneratedFile(targetPath, content, false, {
+    command: 'nova generate must-haves gitignore',
+    docsSlug: 'cli/generators/must-haves/gitignore',
+    mode: 'strict',
+  }, false);
+
+  return;
+}
+
+/**
  * Lib - Scaffold - Get Monorepo Root Planned Paths.
  *
  * Lists every root file owned by the base scaffold so conflict detection and
@@ -1183,6 +1468,9 @@ export async function getMonorepoRootPlannedPaths(outputDirectory: Lib_Scaffold_
   const templateEntries: Lib_Scaffold_GetMonorepoRootPlannedPaths_TemplateEntries = await collectFiles(templateDirectory, '');
 
   return [
+    join(outputDirectory, '.env'),
+    join(outputDirectory, '.env.sample'),
+    join(outputDirectory, '.gitignore'),
     join(outputDirectory, 'package.json'),
     join(outputDirectory, 'nova.config.json'),
     join(outputDirectory, 'turbo.json'),
@@ -1205,8 +1493,6 @@ export async function getMonorepoRootPlannedPaths(outputDirectory: Lib_Scaffold_
  * @since 0.15.0
  */
 export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMonorepoRoot_OutputDirectory, projectSlug: Lib_Scaffold_CreateMonorepoRoot_ProjectSlug): Lib_Scaffold_CreateMonorepoRoot_Returns {
-  const currentDirectory: Lib_Scaffold_CreateMonorepoRoot_CurrentDirectory = process.cwd();
-
   await fs.mkdir(outputDirectory, { recursive: true });
 
   const appsDirectory: Lib_Scaffold_CreateMonorepoRoot_AppsDirectory = join(outputDirectory, 'apps');
@@ -1221,8 +1507,8 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
   const packageJsonContent: Lib_Scaffold_CreateMonorepoRoot_PackageJsonContent = {
     name: `${projectSlug}-project`,
     version: '0.0.0',
-    private: true,
     type: 'module',
+    private: true,
     scripts: {
       'dev': 'nova utility run-scripts --parallel --node-env development \'dev:*\'',
       'dev:workspaces': 'turbo run dev',
@@ -1257,7 +1543,7 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
       'apps/*',
       'packages/*',
     ],
-    packageManager: 'npm@11.18.0',
+    packageManager: LIB_SCAFFOLD_DEFAULT_PACKAGE_MANAGER,
     engines: {
       node: '^22 || ^24',
     },
@@ -1277,13 +1563,6 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
   const packageJsonPath: Lib_Scaffold_CreateMonorepoRoot_PackageJsonPath = join(outputDirectory, 'package.json');
 
   await fs.writeFile(packageJsonPath, `${JSON.stringify(packageJsonContent, null, 2)}\n`, 'utf-8');
-
-  const packageJsonRelativePath: Lib_Scaffold_CreateMonorepoRoot_PackageJsonRelativePath = relative(currentDirectory, packageJsonPath);
-
-  Logger.customize({
-    name: 'createMonorepoRoot',
-    purpose: 'written',
-  }).info(`Created "${packageJsonRelativePath}".`);
 
   // Create root turbo.json.
   const turboJsonContent: Lib_Scaffold_CreateMonorepoRoot_TurboJsonContent = {
@@ -1357,13 +1636,6 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
 
   await fs.writeFile(turboJsonPath, `${JSON.stringify(turboJsonContent, null, 2)}\n`, 'utf-8');
 
-  const turboJsonRelativePath: Lib_Scaffold_CreateMonorepoRoot_TurboJsonRelativePath = relative(currentDirectory, turboJsonPath);
-
-  Logger.customize({
-    name: 'createMonorepoRoot',
-    purpose: 'written',
-  }).info(`Created "${turboJsonRelativePath}".`);
-
   // Create baseline nova.config.json.
   const projectTitle: Lib_Scaffold_CreateMonorepoRoot_ProjectTitle = projectSlug
     .split('-')
@@ -1376,6 +1648,8 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
         slug: projectSlug,
         title: projectTitle,
       },
+      legalName: 'Example Company',
+      startingYear: new Date().getFullYear(),
     },
     workspaces: {
       './': {
@@ -1384,18 +1658,18 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
         policy: 'freezable',
       },
     },
+    environment: {
+      workspaces: {
+        './': {
+          prefix: 'ROOT_',
+        },
+      },
+    },
   };
 
   const novaConfigPath: Lib_Scaffold_CreateMonorepoRoot_NovaConfigPath = join(outputDirectory, 'nova.config.json');
 
   await fs.writeFile(novaConfigPath, `${JSON.stringify(novaConfigContent, null, 2)}\n`, 'utf-8');
-
-  const novaConfigRelativePath: Lib_Scaffold_CreateMonorepoRoot_NovaConfigRelativePath = relative(currentDirectory, novaConfigPath);
-
-  Logger.customize({
-    name: 'createMonorepoRoot',
-    purpose: 'written',
-  }).info(`Created "${novaConfigRelativePath}".`);
 
   const rootTemplateDirectory: Lib_Scaffold_CreateMonorepoRoot_RootTemplateDirectory = resolveMonorepoRootTemplateDirectory();
   const replacements: Lib_Scaffold_CreateMonorepoRoot_Replacements = new Map([[
@@ -1405,224 +1679,86 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
 
   await writeTemplateFiles(rootTemplateDirectory, outputDirectory, replacements);
 
+  await writeScaffoldGitignore(outputDirectory);
+
+  await writeDotenvFiles({
+    report: false,
+    targetDirectory: outputDirectory,
+    variables: [],
+  });
+
   return;
 }
 
 /**
- * Lib - Scaffold - Prompt Post Scaffold Generators.
+ * Lib - Scaffold - Resolve Scaffold Environment Prefix.
  *
- * Presents a multi-select prompt after scaffolding completes so the user can run
- * generators like editorconfig, gitignore, license, and workflows.
+ * Derives a readable workspace prefix and falls back to a numbered namespace
+ * when it would overlap any project, workspace, or workflow prefix already in use.
  *
- * @param {Lib_Scaffold_PromptPostScaffoldGenerators_OutputDirectory} outputDirectory - Output directory.
+ * @param {Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Environment}   environment   - Environment.
+ * @param {Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceName} workspaceName - Workspace name.
  *
- * @returns {Lib_Scaffold_PromptPostScaffoldGenerators_Returns}
+ * @returns {Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Returns}
  *
- * @since 0.15.0
+ * @since 0.31.0
  */
-export async function promptPostScaffoldGenerators(outputDirectory: Lib_Scaffold_PromptPostScaffoldGenerators_OutputDirectory): Lib_Scaffold_PromptPostScaffoldGenerators_Returns {
-  let cancelled: Lib_Scaffold_PromptPostScaffoldGenerators_Cancelled = false;
+export function resolveScaffoldEnvironmentPrefix(environment: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Environment, workspaceName: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_WorkspaceName): Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Returns {
+  const existingPrefixes: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_ExistingPrefixes = [];
 
-  const generatorChoices: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoices = [
-    {
-      title: 'editorconfig',
-      description: 'Consistent coding styles across editors',
-      value: 'editorconfig',
-    },
-    {
-      title: 'gitignore',
-      description: 'Exclude build artifacts and dependencies from Git',
-      value: 'gitignore',
-    },
-    {
-      title: 'dotenv',
-      description: 'Environment variable templates for local development',
-      value: 'dotenv',
-    },
-    {
-      title: 'license',
-      description: 'Open source license file for your project',
-      value: 'license',
-    },
-    {
-      title: 'read-me',
-      description: 'Project README with badges and documentation links',
-      value: 'read-me',
-    },
-    {
-      title: 'agent-conventions',
-      description: 'Coding agent rules and conventions',
-      value: 'agent-conventions',
-    },
-    {
-      title: 'funding',
-      description: 'GitHub sponsor and funding links',
-      value: 'funding',
-    },
-    {
-      title: 'issue-template',
-      description: 'GitHub issue forms for bugs, features, and support',
-      value: 'issue-template',
-    },
-    {
-      title: 'workflows',
-      description: 'GitHub Actions CI/CD automation',
-      value: 'workflows',
-    },
-  ];
+  for (const scopeName of [
+    'project',
+    'workspaces',
+    'workflows',
+  ]) {
+    const scopeValue: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_ScopeValue = environment[scopeName];
 
-  const answers: Lib_Scaffold_PromptPostScaffoldGenerators_Answers = await prompts({
-    type: 'multiselect',
-    name: 'generators',
-    message: 'Run generators? (space to select, enter to confirm)',
-    choices: generatorChoices,
-    hint: '- Space to select. Return to submit',
-  }, {
-    onCancel: () => false,
-  });
+    if (isPlainObject(scopeValue) === false) {
+      continue;
+    }
 
-  if (answers['generators'] === undefined) {
-    cancelled = true;
+    const scope: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Scope = scopeValue;
+    const entryValues: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_EntryValues = (scopeName === 'project') ? [scope] : Object.values(scope);
+
+    for (const entryValue of entryValues) {
+      if (isPlainObject(entryValue) === false) {
+        continue;
+      }
+
+      const entry: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Entry = entryValue;
+      const prefixValue: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_PrefixValue = entry['prefix'];
+
+      if (typeof prefixValue === 'string') {
+        existingPrefixes.push(prefixValue);
+      }
+    }
   }
 
-  if (cancelled === true) {
-    return;
-  }
+  const basePrefix: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_BasePrefix = `${workspaceName.toUpperCase().replace(LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN, '_')}_`;
+  let candidate: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_Candidate = basePrefix;
+  let candidateIndex: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_CandidateIndex = 1;
+  let hasConflict: Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_HasConflict = true;
 
-  const selected: Lib_Scaffold_PromptPostScaffoldGenerators_Selected = answers['generators'] as Lib_Scaffold_PromptPostScaffoldGenerators_Selected;
+  while (hasConflict === true) {
+    hasConflict = libEnvNamespace.isReservedPrefix(candidate);
 
-  if (selected.length === 0) {
-    Logger.customize({
-      name: 'promptPostScaffoldGenerators',
-      purpose: 'skip',
-    }).info('No generators selected. Skipping.');
-
-    return;
-  }
-
-  // Change to the scaffolded directory and run selected generators.
-  const originalCwd: Lib_Scaffold_PromptPostScaffoldGenerators_OriginalCwd = process.cwd();
-
-  process.chdir(outputDirectory);
-
-  for (const generatorName of selected) {
-    Logger.customize({
-      name: 'promptPostScaffoldGenerators',
-      purpose: 'running',
-    }).info(`Running generator "${generatorName}" ...`);
-
-    try {
-      const generatorModule: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorModule = await loadGenerator(generatorName);
-
-      if (generatorModule !== undefined) {
-        const generatorResult: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorResult = await generatorModule({ replaceFile: true });
-
-        if (generatorResult === 'cancelled') {
-          Logger.customize({
-            name: 'promptPostScaffoldGenerators',
-            purpose: 'cancelled',
-          }).info('Generator cancelled. Skipping remaining generators.');
+    if (hasConflict === false) {
+      for (const existingPrefix of existingPrefixes) {
+        if (libEnvNamespace.prefixesOverlap(candidate, existingPrefix) === true) {
+          hasConflict = true;
 
           break;
         }
       }
-    } catch (error) {
-      Logger.customize({
-        name: 'promptPostScaffoldGenerators',
-        purpose: 'error',
-      }).error(`Failed to run generator "${generatorName}".`);
+    }
 
-      Logger.customize({
-        name: 'promptPostScaffoldGenerators',
-        purpose: 'errorDetail',
-      }).debug(error);
+    if (hasConflict === true) {
+      candidate = `W${candidateIndex}_${basePrefix}`;
+      candidateIndex += 1;
     }
   }
 
-  process.chdir(originalCwd);
-
-  return;
-}
-
-/**
- * Lib - Scaffold - Load Generator.
- *
- * Dynamically imports a generator module by name and returns a callback
- * that invokes its run method. Called by promptPostScaffoldGenerators.
- *
- * @param {Lib_Scaffold_LoadGenerator_Name} name - Name.
- *
- * @private
- *
- * @returns {Lib_Scaffold_LoadGenerator_Returns}
- *
- * @since 0.15.0
- */
-async function loadGenerator(name: Lib_Scaffold_LoadGenerator_Name): Lib_Scaffold_LoadGenerator_Returns {
-  switch (name) {
-    case 'editorconfig': {
-      const editorconfigModule: Lib_Scaffold_LoadGenerator_EditorconfigModule = await import('../cli/generate/must-haves/editorconfig.js');
-
-      return (options) => editorconfigModule['Runner'].run(options);
-    }
-
-    case 'gitignore': {
-      const gitignoreModule: Lib_Scaffold_LoadGenerator_GitignoreModule = await import('../cli/generate/must-haves/gitignore.js');
-
-      return (options) => gitignoreModule['Runner'].run(options);
-    }
-
-    case 'dotenv': {
-      const dotenvModule: Lib_Scaffold_LoadGenerator_DotenvModule = await import('../cli/generate/must-haves/dotenv.js');
-
-      return (options) => dotenvModule['Runner'].run(options);
-    }
-
-    case 'license': {
-      const licenseModule: Lib_Scaffold_LoadGenerator_LicenseModule = await import('../cli/generate/must-haves/license.js');
-
-      return (options) => licenseModule['Runner'].run(options);
-    }
-
-    case 'read-me': {
-      const readMeModule: Lib_Scaffold_LoadGenerator_ReadMeModule = await import('../cli/generate/must-haves/read-me.js');
-
-      return (options) => readMeModule['Runner'].run(options);
-    }
-
-    case 'agent-conventions': {
-      const agentConventionsModule: Lib_Scaffold_LoadGenerator_AgentConventionsModule = await import('../cli/generate/must-haves/agent-conventions.js');
-
-      return (options) => agentConventionsModule['Runner'].run(options);
-    }
-
-    case 'funding': {
-      const fundingModule: Lib_Scaffold_LoadGenerator_FundingModule = await import('../cli/generate/github/funding.js');
-
-      return (options) => fundingModule['Runner'].run(options);
-    }
-
-    case 'issue-template': {
-      const issueTemplateModule: Lib_Scaffold_LoadGenerator_IssueTemplateModule = await import('../cli/generate/github/issue-template.js');
-
-      return (options) => issueTemplateModule['Runner'].run(options);
-    }
-
-    case 'workflows': {
-      const workflowsModule: Lib_Scaffold_LoadGenerator_WorkflowsModule = await import('../cli/generate/github/workflows-blueprint.js');
-
-      return (options) => workflowsModule['Runner'].generate(options);
-    }
-
-    default: {
-      Logger.customize({
-        name: 'loadGenerator',
-        purpose: 'unknown',
-      }).warn(`Unknown generator "${name}". Skipping.`);
-
-      return undefined;
-    }
-  }
+  return candidate;
 }
 
 /**
@@ -1634,13 +1770,15 @@ async function loadGenerator(name: Lib_Scaffold_LoadGenerator_Name): Lib_Scaffol
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath}       configFilePath       - Config file path.
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath}     workspaceRelPath     - Workspace rel path.
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName} workspacePackageName - Workspace package name.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName}        workspaceName        - Workspace name.
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_Category}             category             - Category.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables} environmentVariables - Environment variables.
  *
  * @returns {Lib_Scaffold_RegisterWorkspaceInConfig_Returns}
  *
  * @since 0.15.0
  */
-export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
+export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName, workspaceName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category, environmentVariables: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
   let parsedConfig: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig = undefined;
 
   try {
@@ -1706,13 +1844,38 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
 
   Reflect.set(parsedConfig, 'workspaces', workspaces);
 
+  const parsedEnvironment: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironment = parsedConfig['environment'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironment;
+
+  if (parsedEnvironment !== undefined && isPlainObject(parsedEnvironment) === false) {
+    reportError('The root nova.config.json "environment" field must be an object.');
+
+    return;
+  }
+
+  const environment: Lib_Scaffold_RegisterWorkspaceInConfig_Environment = parsedEnvironment ?? {};
+  const parsedEnvironmentWorkspaces: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironmentWorkspaces = environment['workspaces'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironmentWorkspaces;
+
+  if (parsedEnvironmentWorkspaces !== undefined && isPlainObject(parsedEnvironmentWorkspaces) === false) {
+    reportError('The root nova.config.json "environment.workspaces" field must be an object.');
+
+    return;
+  }
+
+  const environmentWorkspaces: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspaces = parsedEnvironmentWorkspaces ?? {};
+  const environmentWorkspace: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspace = {
+    prefix: resolveScaffoldEnvironmentPrefix(environment, workspaceName),
+  };
+
+  if (environmentVariables.length > 0) {
+    Reflect.set(environmentWorkspace, 'variables', environmentVariables);
+  }
+
+  Reflect.set(environmentWorkspaces, workspaceRelPath, environmentWorkspace);
+  Reflect.set(environment, 'workspaces', environmentWorkspaces);
+  Reflect.set(parsedConfig, 'environment', environment);
+
   // Write back.
   await fs.writeFile(configFilePath, `${JSON.stringify(parsedConfig, null, 2)}\n`, 'utf-8');
-
-  Logger.customize({
-    name: 'registerWorkspaceInConfig',
-    purpose: 'written',
-  }).info(`Registered workspace "${configName}" in nova.config.json.`);
 
   return;
 }
@@ -1763,11 +1926,6 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
     return;
   }
 
-  Logger.customize({
-    name: 'CliScaffold.run',
-    purpose: 'context',
-  }).info(`Detected mode: ${context['context']}.`);
-
   let existingRoot: Lib_Scaffold_RunScaffold_ExistingRoot = undefined;
 
   if (context['context'] === 'workspace') {
@@ -1786,12 +1944,19 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
 
   if (
     isNonInteractive === true
-    && (
-      options['output'] === undefined
-      || options['workspaceName'] === undefined
-    )
+    && options['workspaceName'] === undefined
   ) {
-    reportError('Non-interactive scaffolding requires --workspace-name and --output. No scaffold files were written.');
+    reportError('Non-interactive scaffolding requires --workspace-name. No scaffold files were written.');
+
+    return;
+  }
+
+  if (
+    isNonInteractive === true
+    && context['context'] === 'workspace'
+    && options['output'] === undefined
+  ) {
+    reportError('Adding a workspace non-interactively also requires --output. No scaffold files were written.');
 
     return;
   }
@@ -1829,6 +1994,12 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
     return;
   }
 
+  if (config['mode'] === 'monorepo' && config['outputDirectory'] === currentDirectory) {
+    reportError('A new project must be created in a new directory, not the current working directory. Choose a different --output path. No scaffold files were written.');
+
+    return;
+  }
+
   if (LIB_REGEX_PATTERN_SLUG_SIMPLE.test(config['name']) === false) {
     reportError('The project name must be a lowercase slug containing only letters, numbers, hyphens, or underscores. No scaffold files were written.');
 
@@ -1841,12 +2012,25 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
     return;
   }
 
+  if (await pathExists(config['outputDirectory']) === true) {
+    if (config['mode'] === 'monorepo') {
+      reportError(`The project destination "${resolveDisplayPath(currentDirectory, config['outputDirectory'])}" already exists. A new project scaffold requires a new directory; choose a different --output path. No scaffold files were written.`);
+    } else {
+      reportError(`The workspace destination "${resolveDisplayPath(currentDirectory, config['outputDirectory'])}" already exists. Choose a different --output path for the new workspace. No scaffold files were written.`);
+    }
+
+    return;
+  }
+
   const projectSlug: Lib_Scaffold_RunScaffold_ProjectSlug = config['name'];
   const workspacePackageNameBase: Lib_Scaffold_RunScaffold_WorkspacePackageNameBase = resolveWorkspacePackageName(projectSlug, config['workspaceName'], definition['category']);
   const workspacePackageNamePrefix: Lib_Scaffold_RunScaffold_WorkspacePackageNamePrefix = definition['workspacePackageNamePrefix'] ?? '';
   const workspacePackageName: Lib_Scaffold_RunScaffold_WorkspacePackageName = (workspacePackageNamePrefix !== '' && workspacePackageNameBase.startsWith(workspacePackageNamePrefix) === false) ? `${workspacePackageNamePrefix}${workspacePackageNameBase}` : workspacePackageNameBase;
   const configRoot: Lib_Scaffold_RunScaffold_ConfigRoot = (config['mode'] === 'monorepo') ? config['outputDirectory'] : currentDirectory;
   const configFilePath: Lib_Scaffold_RunScaffold_ConfigFilePath = join(configRoot, 'nova.config.json');
+  const rootGitignorePath: Lib_Scaffold_RunScaffold_RootGitignorePath = join(configRoot, '.gitignore');
+  const shouldCreateRootGitignore: Lib_Scaffold_RunScaffold_ShouldCreateRootGitignore = config['mode'] === 'workspace' && await pathExists(rootGitignorePath) === false;
+  const scaffoldGitignoreProjectExcludes: Lib_Scaffold_RunScaffold_ScaffoldGitignoreProjectExcludes = (existingRoot === undefined) ? [] : resolveScaffoldGitignoreProjectExcludes(existingRoot['config']);
   const workspaceBaseDirectory: Lib_Scaffold_RunScaffold_WorkspaceBaseDirectory = (definition['category'] === 'package') ? 'packages' : 'apps';
   const workspaceDirectory: Lib_Scaffold_RunScaffold_WorkspaceDirectory = (config['mode'] === 'monorepo') ? join(configRoot, workspaceBaseDirectory, config['workspaceName']) : config['outputDirectory'];
   const workspaceRelPath: Lib_Scaffold_RunScaffold_WorkspaceRelPath = normalizeWorkspaceRelativePath(configRoot, workspaceDirectory);
@@ -1959,7 +2143,12 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
 
   const templateAnswers: Lib_Scaffold_RunScaffold_TemplateAnswers = templateResolution['answers'];
   const templateReplacements: Lib_Scaffold_RunScaffold_TemplateReplacements = templateResolution['replacements'];
+  let resolvedReplacements: Lib_Scaffold_RunScaffold_ResolvedReplacements = new Map();
   const templateValidationError: Lib_Scaffold_RunScaffold_TemplateValidationError = (definition['validateTemplateAnswers'] === undefined) ? undefined : definition.validateTemplateAnswers(templateAnswers);
+
+  if (definition['resolveReplacements'] !== undefined) {
+    resolvedReplacements = definition.resolveReplacements(config['workspaceName']);
+  }
 
   if (templateValidationError !== undefined) {
     reportError(`${templateValidationError} No scaffold files were written.`);
@@ -1967,9 +2156,33 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
     return;
   }
 
+  const shouldInstall: Lib_Scaffold_RunScaffold_ShouldInstall = resolveScaffoldInstall(options['install']);
+  const environmentVariables: Lib_Scaffold_RunScaffold_EnvironmentVariables = definition['environmentVariables'] ?? [];
+
+  let packageManagerValue: Lib_Scaffold_RunScaffold_PackageManagerValue = LIB_SCAFFOLD_DEFAULT_PACKAGE_MANAGER;
+
+  if (existingRoot !== undefined) {
+    packageManagerValue = existingRoot['packageJson']['packageManager'];
+  }
+
+  const packageManagerDescriptor: Lib_Scaffold_RunScaffold_PackageManagerDescriptor = LibCorepack.parsePackageManager(packageManagerValue);
+
+  if (shouldInstall === true && packageManagerDescriptor === undefined) {
+    reportError('Installing scaffold dependencies requires an exact npm, pnpm, or Yarn Corepack descriptor in the root package.json "packageManager" field. No scaffold files were written.');
+
+    return;
+  }
+
+  let packageManager: Lib_Scaffold_RunScaffold_PackageManager = 'npm';
+
+  if (packageManagerDescriptor !== undefined) {
+    packageManager = packageManagerDescriptor['name'];
+  }
+
   const replacements: Lib_Scaffold_RunScaffold_Replacements = new Map([
     ...coreReplacements,
     ...templateReplacements,
+    ...resolvedReplacements,
   ]);
   const workspaceTemplateSubpaths: Lib_Scaffold_RunScaffold_WorkspaceTemplateSubpaths = [definition['templateSubpath']];
 
@@ -2013,7 +2226,7 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
   if (conflictingPaths.length > 0) {
     const conflictMessage: Lib_Scaffold_RunScaffold_ConflictMessage = conflictingPaths.map((conflictingPath) => relative(configRoot, conflictingPath)).join(', ');
 
-    reportError(`Scaffolding would overwrite files Nova does not own: ${conflictMessage}. Move or remove those files, then run the command again. No scaffold files were written.`);
+    reportError(`Scaffolding found existing files at paths it needs to create: ${conflictMessage}. Move those files or choose a different destination, then run the command again. No scaffold files were written.`);
 
     return;
   }
@@ -2032,10 +2245,48 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
     }
   }
 
-  Logger.customize({
-    name: 'CliScaffold.run',
-    purpose: 'config',
-  }).info(`Scaffolding ${definition['category']} ${definition['typeName']} workspace "${workspacePackageName}" in "${workspaceDirectory}".`);
+  const destination: Lib_Scaffold_RunScaffold_Destination = resolveDisplayPath(currentDirectory, workspaceDirectory);
+  const projectRoot: Lib_Scaffold_RunScaffold_ProjectRoot = resolveDisplayPath(currentDirectory, configRoot);
+  const primaryScript: Lib_Scaffold_RunScaffold_PrimaryScript = definition['primaryScript'] ?? 'dev';
+  let presentationOptions: Lib_Scaffold_RunScaffold_PresentationOptions = [];
+
+  if (definition['resolvePresentationOptions'] !== undefined) {
+    presentationOptions = definition.resolvePresentationOptions(config['workspaceName']);
+  }
+
+  if (shouldCreateRootGitignore === true) {
+    presentationOptions.push({
+      flag: 'Root .gitignore',
+      value: 'Generate missing file',
+    });
+  }
+
+  presentationOptions.push({
+    flag: 'Dependencies',
+    value: (shouldInstall === true) ? `Install with ${packageManager}` : 'Skip installation',
+  });
+
+  reportScaffoldPlan({
+    additionalOptions: presentationOptions,
+    answers: templateAnswers,
+    displayName: definition['displayName'],
+    destination,
+    mode: config['mode'],
+    project: projectSlug,
+    questions: definition['templateQuestions'] ?? [],
+    workspacePackageName,
+  });
+
+  const confirmed: Lib_Scaffold_RunScaffold_Confirmed = await confirmScaffoldPlan(isNonInteractive, isDryRun);
+
+  if (confirmed === false) {
+    Logger.customize({
+      name: 'CliScaffold.run',
+      purpose: 'cancelled',
+    }).warn('Scaffold cancelled. No files were written.');
+
+    return;
+  }
 
   if (isDryRun === true) {
     if (config['mode'] === 'monorepo') {
@@ -2043,12 +2294,22 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
         name: 'CliScaffold.run',
         purpose: 'dryRunRoot',
       }).info(`Would create monorepo root at "${configRoot}".`);
+    } else if (shouldCreateRootGitignore === true) {
+      Logger.customize({
+        name: 'CliScaffold.run',
+        purpose: 'dryRunGitignore',
+      }).info(`Would create the missing root .gitignore at "${rootGitignorePath}".`);
     }
 
     Logger.customize({
       name: 'CliScaffold.run',
       purpose: 'dryRunWorkspace',
     }).info(`Would create workspace at "${workspaceDirectory}" and register "${workspaceRelPath}".`);
+
+    Logger.customize({
+      name: 'CliScaffold.run',
+      purpose: 'dryRunDotenv',
+    }).info(`Would create Nova's baseline .env and .env.sample files at "${workspaceDirectory}".`);
 
     if (rootTemplateDirectories.length > 0) {
       Logger.customize({
@@ -2064,13 +2325,47 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
       }).info(`Would add "${normalizedWorkspaceRelPath}" to the root package.json workspaces.`);
     }
 
+    reportScaffoldCompletion({
+      completionNotes: definition['completionNotes'] ?? [],
+      dependenciesInstalled: false,
+      displayName: definition['displayName'],
+      dryRun: true,
+      packageManager,
+      primaryScript,
+      projectRoot,
+      shouldConfigure: config['mode'] === 'monorepo',
+      workspacePackageName,
+    });
+
     return;
   }
 
+  const progressTotal: Lib_Scaffold_RunScaffold_ProgressTotal = 3
+    + ((config['mode'] === 'monorepo') ? 1 : 0)
+    + ((shouldCreateRootGitignore === true) ? 1 : 0)
+    + ((shouldInstall === true) ? 1 : 0);
+  const progress: Lib_Scaffold_RunScaffold_Progress = createScaffoldProgress(progressTotal);
+
   // Create monorepo root structure if needed.
   if (config['mode'] === 'monorepo') {
+    progress.start('Preparing monorepo root', projectRoot);
+
     await createMonorepoRoot(configRoot, projectSlug);
+
+    await progress.complete();
   }
+
+  if (shouldCreateRootGitignore === true) {
+    progress.start('Generating root .gitignore', projectRoot);
+
+    if (await pathExists(rootGitignorePath) === false) {
+      await writeScaffoldGitignore(configRoot, scaffoldGitignoreProjectExcludes);
+    }
+
+    await progress.complete();
+  }
+
+  progress.start(`Writing ${definition['displayName']} workspace`, destination);
 
   await fs.mkdir(workspaceDirectory, { recursive: true });
 
@@ -2092,6 +2387,8 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
         name: 'CliScaffold.run',
         purpose: 'workspaceFinalizer',
       }).debug(workspaceFinalizerError);
+
+      progress.clear();
 
       reportError(`The ${definition['typeName']} framework could not finish preparing the workspace. The generated files were left in place for inspection, but the workspace was not registered.`);
 
@@ -2116,24 +2413,65 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
     const rootPackageJsonContents: Lib_Scaffold_RunScaffold_RootPackageJsonContents = `${JSON.stringify(existingRoot['packageJson'], null, 2)}\n`;
 
     await fs.writeFile(rootPackageJsonPath, rootPackageJsonContents, 'utf-8');
-
-    Logger.customize({
-      name: 'CliScaffold.run',
-      purpose: 'workspaces',
-    }).info(`Added "${normalizedWorkspaceRelPath}" to the root package.json workspaces.`);
   }
 
-  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, workspacePackageName, definition['category']);
+  await progress.complete();
 
-  Logger.customize({
-    name: 'CliScaffold.run',
-    purpose: 'complete',
-  }).info(`Scaffold complete for ${definition['category']} ${definition['typeName']}.`);
+  progress.start('Registering workspace', workspacePackageName);
 
-  // Post-scaffold generators (monorepo mode only).
-  if (config['mode'] === 'monorepo' && isNonInteractive === false) {
-    await promptPostScaffoldGenerators(configRoot);
+  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, workspacePackageName, config['workspaceName'], definition['category'], environmentVariables);
+
+  await progress.complete();
+
+  progress.start('Generating environment files', destination);
+
+  await writeDotenvFiles({
+    report: false,
+    targetDirectory: workspaceDirectory,
+    variables: environmentVariables,
+  });
+
+  await progress.complete();
+
+  let installSucceeded: Lib_Scaffold_RunScaffold_InstallSucceeded = false;
+
+  if (shouldInstall === true) {
+    progress.start(`Installing dependencies with ${packageManager}`, projectRoot);
+
+    const installResult: Lib_Scaffold_RunScaffold_InstallResult = await installScaffoldDependencies(configRoot, packageManager);
+
+    if (installResult['succeeded'] === false) {
+      progress.clear();
+
+      const installOutput: Lib_Scaffold_RunScaffold_InstallOutput = installResult['output'].trim();
+
+      if (installOutput !== '') {
+        process.stderr.write(`\n${installOutput}\n`);
+      }
+
+      reportError(`Dependency installation failed. The scaffold files remain available at "${configRoot}". Run "${packageManager} install" from that directory after resolving the package-manager error.`);
+
+      return;
+    }
+
+    installSucceeded = true;
+
+    await progress.complete();
   }
+
+  progress.finish(`${definition['displayName']} scaffold ready`);
+
+  reportScaffoldCompletion({
+    completionNotes: definition['completionNotes'] ?? [],
+    dependenciesInstalled: installSucceeded,
+    displayName: definition['displayName'],
+    dryRun: false,
+    packageManager,
+    primaryScript,
+    projectRoot,
+    shouldConfigure: config['mode'] === 'monorepo',
+    workspacePackageName,
+  });
 
   return;
 }

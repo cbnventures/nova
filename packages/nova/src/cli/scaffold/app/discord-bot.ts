@@ -2,9 +2,24 @@ import { runScaffold } from '../../../lib/scaffold.js';
 import { Runner as CliGenerateDockerImage } from '../../generate/docker-image/index.js';
 
 import type {
+  Cli_Scaffold_App_DiscordBot_CompletionNotes,
   Cli_Scaffold_App_DiscordBot_Runner_Run_Options,
   Cli_Scaffold_App_DiscordBot_Runner_Run_Returns,
 } from '../../../types/cli/scaffold/app/discord-bot.d.ts';
+
+/**
+ * CLI - Scaffold - App - Discord Bot - Completion Notes.
+ *
+ * Keeps Discord's first-run prerequisites consistent across the standard and
+ * container-ready scaffold paths.
+ *
+ * @since 0.31.0
+ */
+const completionNotes: Cli_Scaffold_App_DiscordBot_CompletionNotes = [
+  'Create a Discord application and bot: https://discord.com/developers/applications',
+  'From the application Installation page, add the bot to a server with the "bot" scope.',
+  'Set "DISCORD_TOKEN" in the generated Discord workspace .env file.',
+];
 
 /**
  * CLI - Scaffold - App - Discord Bot.
@@ -31,12 +46,29 @@ export class Runner {
     if (options['dockerImage'] === true) {
       await runScaffold(options, {
         category: 'app',
+        completionNotes,
+        displayName: 'Discord Bot',
+        environmentVariables: [{
+          key: 'DISCORD_TOKEN',
+          reach: 'local',
+        }],
         importMetaUrl: import.meta.url,
+        resolvePresentationOptions: () => [
+          {
+            flag: '--docker-image',
+            value: 'Yes',
+          },
+          {
+            flag: 'Discord token',
+            value: 'Required at first run; Nova never collects it',
+          },
+        ],
         templateSubpath: 'scaffold/app/discord-bot',
         typeName: 'discord-bot',
         workspaceFinalizer: async (workspaceDirectory) => {
           await CliGenerateDockerImage.generateForTarget({
             profile: 'background-service',
+            reportFiles: false,
             replaceFile: true,
             workspaceDirectory,
           });
@@ -50,7 +82,23 @@ export class Runner {
 
     await runScaffold(options, {
       category: 'app',
+      completionNotes,
+      displayName: 'Discord Bot',
+      environmentVariables: [{
+        key: 'DISCORD_TOKEN',
+        reach: 'local',
+      }],
       importMetaUrl: import.meta.url,
+      resolvePresentationOptions: () => [
+        {
+          flag: '--docker-image',
+          value: 'No',
+        },
+        {
+          flag: 'Discord token',
+          value: 'Required at first run; Nova never collects it',
+        },
+      ],
       templateSubpath: 'scaffold/app/discord-bot',
       typeName: 'discord-bot',
     });

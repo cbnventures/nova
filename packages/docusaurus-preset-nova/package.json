@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/docusaurus-preset-nova",
-  "version": "0.30.1",
+  "version": "0.31.0",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",
@@ -47,7 +47,9 @@
     "directory": "packages/docusaurus-preset-nova"
   },
   "exports": {
-    ".": "./build/src/preset.js",
+    ".": {
+      "default": "./build/src/preset.js"
+    },
     "./theme": "./build/src/index.js",
     "./blocks": "./build/src/blocks/index.js",
     "./icons": "./build/src/icons.js",
@@ -100,7 +102,7 @@
     "node": "^22 || ^24"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.30.1",
+    "@cbnventures/nova": "0.31.0",
     "@codesandbox/sandpack-react": "2.20.0",
     "@docusaurus/plugin-content-blog": "3.10.2",
     "@docusaurus/plugin-content-docs": "3.10.2",

@@ -108,7 +108,7 @@ export type Lib_RunScripts_Runner_Run_SpawnErrorMessage = string;
 
 export type Lib_RunScripts_Runner_Run_BufferMs = number;
 
-export type Lib_RunScripts_Runner_Run_ParallelExitCode = 0 | 1;
+export type Lib_RunScripts_Runner_Run_ParallelResult = Lib_RunScripts_Runner_RunParallel_Result;
 
 /**
  * Lib - Run Scripts - Run Parallel.
@@ -125,9 +125,13 @@ export type Lib_RunScripts_Runner_RunParallel_WriteStderr = (message: string) =>
 
 export type Lib_RunScripts_Runner_RunParallel_WriteStdout = (message: string) => void;
 
-export type Lib_RunScripts_Runner_RunParallel_Returns = Promise<0 | 1>;
+export type Lib_RunScripts_Runner_RunParallel_Result = 'completed' | 'failed' | 'interrupted';
+
+export type Lib_RunScripts_Runner_RunParallel_Returns = Promise<Lib_RunScripts_Runner_RunParallel_Result>;
 
 export type Lib_RunScripts_Runner_RunParallel_NpmCommand = string;
+
+export type Lib_RunScripts_Runner_RunParallel_ScriptEnvironment = NodeJS.ProcessEnv;
 
 export type Lib_RunScripts_Runner_RunParallel_ColorFunctions = ((text: string) => string)[];
 
@@ -139,7 +143,9 @@ export type Lib_RunScripts_Runner_RunParallel_Script = string;
 
 export type Lib_RunScripts_Runner_RunParallel_ColorFunction = (text: string) => string;
 
-export type Lib_RunScripts_Runner_RunParallel_ColoredPrefix = string;
+export type Lib_RunScripts_Runner_RunParallel_ColoredScript = string;
+
+export type Lib_RunScripts_Runner_RunParallel_Queue_Kind = 'output' | 'result';
 
 export type Lib_RunScripts_Runner_RunParallel_Queue_Script = string;
 
@@ -148,6 +154,7 @@ export type Lib_RunScripts_Runner_RunParallel_Queue_Stream = 'stdout' | 'stderr'
 export type Lib_RunScripts_Runner_RunParallel_Queue_Line = string;
 
 export type Lib_RunScripts_Runner_RunParallel_Queue = {
+  kind: Lib_RunScripts_Runner_RunParallel_Queue_Kind;
   script: Lib_RunScripts_Runner_RunParallel_Queue_Script;
   stream: Lib_RunScripts_Runner_RunParallel_Queue_Stream;
   line: Lib_RunScripts_Runner_RunParallel_Queue_Line;
@@ -159,7 +166,17 @@ export type Lib_RunScripts_Runner_RunParallel_Children = ChildProcessWithoutNull
 
 export type Lib_RunScripts_Runner_RunParallel_ExitPromises = Promise<number>[];
 
-export type Lib_RunScripts_Runner_RunParallel_LastFlushedScript = string;
+export type Lib_RunScripts_Runner_RunParallel_FailureReasons = Map<string, string>;
+
+export type Lib_RunScripts_Runner_RunParallel_SettledScripts = Set<string>;
+
+export type Lib_RunScripts_Runner_RunParallel_ActiveScript = string;
+
+export type Lib_RunScripts_Runner_RunParallel_InterruptionState_Requested = boolean;
+
+export type Lib_RunScripts_Runner_RunParallel_InterruptionState = {
+  requested: Lib_RunScripts_Runner_RunParallel_InterruptionState_Requested;
+};
 
 export type Lib_RunScripts_Runner_RunParallel_FlushQueue = () => void;
 
@@ -187,6 +204,12 @@ export type Lib_RunScripts_Runner_RunParallel_ExitResults = PromiseSettledResult
 
 export type Lib_RunScripts_Runner_RunParallel_Failed = boolean;
 
+export type Lib_RunScripts_Runner_RunParallel_FailedScript = string;
+
+export type Lib_RunScripts_Runner_RunParallel_FailureReason = string;
+
+export type Lib_RunScripts_Runner_RunParallel_FailureSummaryLine = string;
+
 /**
  * Lib - Run Scripts - Run Parallel - Close.
  *
@@ -197,6 +220,8 @@ export type Lib_RunScripts_Runner_RunParallel_Close_PartialLineStreams = Map<'st
 export type Lib_RunScripts_Runner_RunParallel_Close_StdoutPartial = string;
 
 export type Lib_RunScripts_Runner_RunParallel_Close_StderrPartial = string;
+
+export type Lib_RunScripts_Runner_RunParallel_Close_ExitCode = number;
 
 /**
  * Lib - Run Scripts - Run Parallel - Data.
@@ -217,7 +242,11 @@ export type Lib_RunScripts_Runner_RunParallel_Error_Returns = void;
  *
  * @since 0.26.0
  */
-export type Lib_RunScripts_Runner_RunParallel_FlushQueue_Prefix = string;
+export type Lib_RunScripts_Runner_RunParallel_FlushQueue_ActiveScriptLabel = string;
+
+export type Lib_RunScripts_Runner_RunParallel_FlushQueue_ScriptLabel = string;
+
+export type Lib_RunScripts_Runner_RunParallel_FlushQueue_FormattedResult = string;
 
 export type Lib_RunScripts_Runner_RunParallel_FlushQueue_FormattedLine = string;
 
@@ -247,6 +276,8 @@ export type Lib_RunScripts_Runner_RunParallel_HandleData_Partial = string;
  * @since 0.26.0
  */
 export type Lib_RunScripts_Runner_RunParallel_HandleSigint_Returns = void;
+
+export type Lib_RunScripts_Runner_RunParallel_HandleSigint_ActiveScriptLabel = string;
 
 /**
  * Lib - Run Scripts - Run Parallel - Handle SIGTERM.

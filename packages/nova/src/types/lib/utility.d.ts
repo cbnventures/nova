@@ -683,6 +683,8 @@ export type Lib_Utility_SaveGeneratedFile_Header = {
   mode: Lib_Utility_SaveGeneratedFile_Header_Mode;
 };
 
+export type Lib_Utility_SaveGeneratedFile_Report = boolean;
+
 export type Lib_Utility_SaveGeneratedFile_Returns = Promise<void>;
 
 export type Lib_Utility_SaveGeneratedFile_ParentDirectory = string;

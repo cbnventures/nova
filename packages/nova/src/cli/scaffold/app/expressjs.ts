@@ -32,12 +32,23 @@ export class Runner {
     if (options['dockerImage'] === true) {
       await runScaffold(options, {
         category: 'app',
+        displayName: 'Express.js',
+        environmentVariables: [{
+          defaultValue: '3000',
+          key: 'PORT',
+          reach: 'local',
+        }],
         importMetaUrl: import.meta.url,
+        resolvePresentationOptions: () => [{
+          flag: '--docker-image',
+          value: 'Yes',
+        }],
         templateSubpath: 'scaffold/app/express',
         typeName: 'express',
         workspaceFinalizer: async (workspaceDirectory) => {
           await CliGenerateDockerImage.generateForTarget({
             profile: 'http-service',
+            reportFiles: false,
             replaceFile: true,
             workspaceDirectory,
           });
@@ -51,7 +62,17 @@ export class Runner {
 
     await runScaffold(options, {
       category: 'app',
+      displayName: 'Express.js',
+      environmentVariables: [{
+        defaultValue: '3000',
+        key: 'PORT',
+        reach: 'local',
+      }],
       importMetaUrl: import.meta.url,
+      resolvePresentationOptions: () => [{
+        flag: '--docker-image',
+        value: 'No',
+      }],
       templateSubpath: 'scaffold/app/express',
       typeName: 'express',
     });

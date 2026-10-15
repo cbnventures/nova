@@ -40,6 +40,7 @@ import type {
   Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_PackageJsonRaw,
   Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_ParsedPackageJson,
   Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_RawScripts,
+  Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_ReportFiles,
   Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Returns,
   Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_RuntimeDirectives,
   Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Scripts,
@@ -270,16 +271,17 @@ export class Runner {
     const packageJsonContent: Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_PackageJsonContent = `${JSON.stringify(packageJson, null, 2)}\n`;
     const isDryRun: Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_IsDryRun = options['dryRun'] === true;
     const isReplaceFile: Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_IsReplaceFile = options['replaceFile'] === true;
+    const reportFiles: Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_ReportFiles = options['reportFiles'] !== false;
 
     if (isDryRun === true) {
       return;
     }
 
     await Promise.all([
-      saveGeneratedFile(join(options['workspaceDirectory'], '.dockerignore'), dockerignoreContent, isReplaceFile),
-      saveGeneratedFile(join(options['workspaceDirectory'], 'Dockerfile'), dockerfileContent, isReplaceFile),
-      saveGeneratedFile(join(options['workspaceDirectory'], 'compose.yml'), composeContent, isReplaceFile),
-      saveGeneratedFile(packageJsonPath, packageJsonContent, isReplaceFile),
+      saveGeneratedFile(join(options['workspaceDirectory'], '.dockerignore'), dockerignoreContent, isReplaceFile, undefined, reportFiles),
+      saveGeneratedFile(join(options['workspaceDirectory'], 'Dockerfile'), dockerfileContent, isReplaceFile, undefined, reportFiles),
+      saveGeneratedFile(join(options['workspaceDirectory'], 'compose.yml'), composeContent, isReplaceFile, undefined, reportFiles),
+      saveGeneratedFile(packageJsonPath, packageJsonContent, isReplaceFile, undefined, reportFiles),
     ]);
 
     return;
@@ -310,7 +312,7 @@ export class Runner {
       '  CMD ["wget", "--spider", "--quiet", "http://127.0.0.1:3000/"]',
     ];
 
-    return lines.join('\n');
+    return `\n${lines.join('\n')}`;
   }
 
   /**

@@ -1,6 +1,7 @@
 import { mount } from 'svelte';
 
 import App from './app.svelte';
+import './styles/nova-launchpad.css';
 
 /**
  * Main - Root.

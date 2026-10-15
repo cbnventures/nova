@@ -108,10 +108,16 @@ export const cliScaffoldAppAstroTemplateQuestions: Cli_Scaffold_App_Astro_Templa
  */
 function resolveWorkspaceTemplateSubpaths(answers: Cli_Scaffold_App_Astro_ResolveWorkspaceTemplateSubpaths_Answers): Cli_Scaffold_App_Astro_ResolveWorkspaceTemplateSubpaths_Returns {
   if (answers.get('rendering') === 'static') {
-    return ['scaffold-options/app/astro/static'];
+    return [
+      'scaffold-options/app/web-launchpad',
+      'scaffold-options/app/astro/static',
+    ];
   }
 
-  return [`scaffold-options/app/astro/${answers.get('adapter') ?? 'node'}`];
+  return [
+    'scaffold-options/app/web-launchpad',
+    `scaffold-options/app/astro/${answers.get('adapter') ?? 'node'}`,
+  ];
 }
 
 /**
@@ -138,6 +144,7 @@ export class Runner {
   public static async run(options: Cli_Scaffold_App_Astro_Runner_Run_Options): Cli_Scaffold_App_Astro_Runner_Run_Returns {
     await runScaffold(options, {
       category: 'app',
+      displayName: 'Astro',
       importMetaUrl: import.meta.url,
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldAppAstroTemplateQuestions,
@@ -171,7 +178,7 @@ export class Runner {
               '@astrojs/cloudflare': '14.3.4',
             },
             devDependencies: {
-              'wrangler': '4.125.0',
+              'wrangler': '4.151.0',
             },
           });
         }
@@ -180,6 +187,7 @@ export class Runner {
           await CliGenerateDockerImage.generateForTarget({
             buildDirectory: 'build',
             profile: (answers.get('rendering') === 'server') ? 'astro-node' : 'static-site',
+            reportFiles: false,
             replaceFile: true,
             workspaceDirectory,
           });

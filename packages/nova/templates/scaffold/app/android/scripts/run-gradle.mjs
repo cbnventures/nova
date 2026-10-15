@@ -1,14 +1,9 @@
 import { spawn } from 'node:child_process';
 
-/**
- * Run Gradle - Is Windows.
- *
- * Identifies whether the generated project is running on Windows.
- * The result selects the platform-appropriate Gradle wrapper executable.
- *
- * @since 0.0.0
- */
-const isWindows = process.platform === 'win32';
+import {
+  androidEnvironment,
+  isWindows,
+} from './android-environment.mjs';
 
 /**
  * Run Gradle - Executable.
@@ -30,6 +25,7 @@ const executable = (isWindows === true) ? 'gradlew.bat' : './gradlew';
  */
 const child = spawn(executable, process.argv.slice(2), {
   cwd: new URL('../', import.meta.url),
+  env: androidEnvironment,
   shell: isWindows,
   stdio: 'inherit',
 });

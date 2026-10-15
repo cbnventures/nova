@@ -422,6 +422,7 @@ describe('scaffold options', () => {
 
   it('passes complete non-interactive Next.js answers', async () => {
     const expectedOptions: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveNextJsAnswers_ExpectedOptions = {
+      install: true,
       name: 'my-app',
       nonInteractive: true,
       output: './my-project',
@@ -434,6 +435,7 @@ describe('scaffold options', () => {
       'scaffold',
       'app',
       'nextjs',
+      '--install',
       '--non-interactive',
       '--name',
       'my-app',
@@ -561,6 +563,7 @@ describe('scaffold options', () => {
 
   it('passes complete non-interactive base answers', async () => {
     const expectedOptions: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions = {
+      install: false,
       name: 'my-project',
       nonInteractive: true,
       output: './my-project',
@@ -572,6 +575,7 @@ describe('scaffold options', () => {
       'scaffold',
       'starter',
       'base',
+      '--no-install',
       '--non-interactive',
       '--name',
       'my-project',

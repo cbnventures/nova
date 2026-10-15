@@ -41,6 +41,27 @@ export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemp
 export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesTheBaseStarterInventory_StarterContractPromise = Promise<void>;
 
 /**
+ * Tests - Scaffold Output Contract - Scaffold Output Contract - Routes The PfSense Single Instance Settings Page Directly To Its Native Editor.
+ *
+ * @since 0.31.0
+ */
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsPagePath = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsPageContent = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsHandlerPath = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsHandlerContent = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageScriptPath = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageScriptContent = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageInfoPath = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageInfoContent = string;
+
+/**
  * Tests - Scaffold Output Contract - Verify Generated Output.
  *
  * @since 0.26.0
@@ -59,11 +80,13 @@ export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedFiles = 
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_InventoryMessage = string;
 
-export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedContent = string;
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedContent = string | undefined;
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedContents = Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedContent[];
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedFilePath = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedBuffer = Buffer;
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_UnresolvedFile = string;
 
@@ -104,6 +127,20 @@ export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigRaw = str
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Tsconfig = Record<string, unknown>;
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigExtends = string[];
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonIndex = number;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonContent = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJson = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonKeys = string[];
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonKnownKeys = Set<string>;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonOrderedKeys = string[];
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageEngines = unknown;
 
 /**
  * Tests - Scaffold Output Contract - Verify Script Contract.

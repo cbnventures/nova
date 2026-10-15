@@ -1,3 +1,4 @@
+import { LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME } from '../../../lib/regex.js';
 import { runScaffold } from '../../../lib/scaffold.js';
 
 import type {
@@ -29,7 +30,13 @@ export class Runner {
   public static async run(options: Cli_Scaffold_Package_Pfsense_Runner_Run_Options): Cli_Scaffold_Package_Pfsense_Runner_Run_Returns {
     await runScaffold(options, {
       category: 'package',
+      displayName: 'pfSense',
       importMetaUrl: import.meta.url,
+      primaryScript: 'build',
+      resolveReplacements: (workspaceName) => new Map([[
+        LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME,
+        workspaceName.replaceAll('-', '').replaceAll('_', ''),
+      ]]),
       rootTemplateSubpath: 'scaffold/package/pfsense-root',
       templateSubpath: 'scaffold/package/pfsense',
       typeName: 'pfsense',

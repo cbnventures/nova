@@ -1,8 +1,9 @@
 import {
-  Client,
-  Events,
-  GatewayIntentBits,
-} from 'discord.js';
+  renderSetupInstructions,
+  startBot,
+} from './bot.js';
+
+import type { Index_Token } from './types/index.d.ts';
 
 /**
  * Index - Token.
@@ -12,28 +13,12 @@ import {
  *
  * @since 0.0.0
  */
-const token = process.env['DISCORD_TOKEN'];
+const token: Index_Token = process.env['DISCORD_TOKEN'] ?? '';
 
-if (token === undefined || token === '') {
-  throw new Error('Set DISCORD_TOKEN before starting the bot.');
+if (token === '') {
+  process.stderr.write(renderSetupInstructions());
+
+  process.exitCode = 1;
+} else {
+  await startBot(token);
 }
-
-/**
- * Index - Client.
- *
- * Creates the Discord client with the minimal guild intent for this starter.
- * Consumers can extend the intent list when they add bot capabilities.
- *
- * @since 0.0.0
- */
-const client = new Client({
-  intents: [GatewayIntentBits.Guilds],
-});
-
-client.once(Events.ClientReady, (readyClient) => {
-  process.stdout.write(`[__WORKSPACE_TITLE__] logged in as ${readyClient.user.tag}.\n`);
-
-  return;
-});
-
-await client.login(token);

@@ -1,0 +1,397 @@
+:root {
+  color-scheme: light dark;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+code {
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+}
+
+.nova-launchpad {
+  --nova-launchpad-accent: #2563eb;
+  --nova-launchpad-accent-bright: #38bdf8;
+  --nova-launchpad-accent-soft: rgb(37 99 235 / 12%);
+  --nova-launchpad-background: #f7f8fb;
+  --nova-launchpad-foreground: #111827;
+  --nova-launchpad-muted: #667085;
+  --nova-launchpad-border: rgb(17 24 39 / 12%);
+  --nova-launchpad-surface: rgb(255 255 255 / 78%);
+  --nova-launchpad-grid: rgb(17 24 39 / 5%);
+
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--nova-launchpad-background);
+  color: var(--nova-launchpad-foreground);
+}
+
+.nova-launchpad[data-nova-framework="nextjs"] {
+  --nova-launchpad-accent: #171717;
+  --nova-launchpad-accent-bright: #0ea5e9;
+  --nova-launchpad-accent-soft: rgb(14 165 233 / 12%);
+}
+
+.nova-launchpad[data-nova-framework="astro"] {
+  --nova-launchpad-accent: #ff5d01;
+  --nova-launchpad-accent-bright: #a855f7;
+  --nova-launchpad-accent-soft: rgb(255 93 1 / 12%);
+}
+
+.nova-launchpad[data-nova-framework="vite"] {
+  --nova-launchpad-accent: #646cff;
+  --nova-launchpad-accent-bright: #f0b90b;
+  --nova-launchpad-accent-soft: rgb(100 108 255 / 12%);
+}
+
+.nova-launchpad[data-nova-framework="react"] {
+  --nova-launchpad-accent: #087ea4;
+  --nova-launchpad-accent-bright: #61dafb;
+  --nova-launchpad-accent-soft: rgb(8 126 164 / 12%);
+}
+
+.nova-launchpad[data-nova-framework="vue"] {
+  --nova-launchpad-accent: #2f8f68;
+  --nova-launchpad-accent-bright: #42b883;
+  --nova-launchpad-accent-soft: rgb(66 184 131 / 13%);
+}
+
+.nova-launchpad[data-nova-framework="svelte"] {
+  --nova-launchpad-accent: #ff3e00;
+  --nova-launchpad-accent-bright: #ff8a66;
+  --nova-launchpad-accent-soft: rgb(255 62 0 / 12%);
+}
+
+.nova-launchpad::before {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--nova-launchpad-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--nova-launchpad-grid) 1px, transparent 1px);
+  background-size: 42px 42px;
+  content: "";
+  mask-image: linear-gradient(to bottom, black, transparent 72%);
+}
+
+.nova-launchpad::after {
+  position: absolute;
+  z-index: -1;
+  width: min(62rem, 92vw);
+  height: min(62rem, 92vw);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, var(--nova-launchpad-accent-soft), transparent 42%),
+    radial-gradient(circle at 65% 65%, rgb(56 189 248 / 10%), transparent 48%);
+  content: "";
+  filter: blur(10px);
+  inset-block-start: -35%;
+  inset-inline-end: -20%;
+}
+
+.nova-launchpad__shell {
+  display: flex;
+  width: min(76rem, calc(100% - 2rem));
+  min-height: 100svh;
+  margin-inline: auto;
+  padding-block: clamp(1.5rem, 4vw, 3.5rem);
+  flex-direction: column;
+}
+
+.nova-launchpad__header,
+.nova-launchpad__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.nova-launchpad__brand,
+.nova-launchpad__footer {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nova-launchpad__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.nova-launchpad__mark {
+  display: block;
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+}
+
+.nova-launchpad__cross {
+  color: var(--nova-launchpad-muted);
+  font-weight: 500;
+}
+
+.nova-launchpad__docs-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--nova-launchpad-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 160ms ease;
+}
+
+.nova-launchpad__docs-link:hover {
+  color: var(--nova-launchpad-accent);
+}
+
+.nova-launchpad__body {
+  display: grid;
+  margin-block: auto;
+  padding-block: clamp(4.5rem, 10vw, 8.5rem);
+  align-items: end;
+  gap: clamp(3rem, 8vw, 8rem);
+  grid-template-columns: minmax(0, 1.4fr) minmax(17rem, 0.6fr);
+}
+
+.nova-launchpad__title {
+  max-width: 12ch;
+  margin: 0;
+  font-size: clamp(3.5rem, 9vw, 7.5rem);
+  font-weight: 760;
+  letter-spacing: -0.075em;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.nova-launchpad__title-accent {
+  display: block;
+  background: linear-gradient(110deg, var(--nova-launchpad-accent), var(--nova-launchpad-accent-bright));
+  background-clip: text;
+  color: transparent;
+}
+
+.nova-launchpad__lede {
+  max-width: 39rem;
+  margin: 1.75rem 0 0;
+  color: var(--nova-launchpad-muted);
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+  line-height: 1.7;
+}
+
+.nova-launchpad__actions {
+  display: flex;
+  margin-block-start: 2rem;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.nova-launchpad__primary-link {
+  display: inline-flex;
+  min-height: 3rem;
+  padding-inline: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--nova-launchpad-foreground);
+  color: var(--nova-launchpad-background);
+  font-size: 0.9rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.nova-launchpad__primary-link:hover {
+  box-shadow: 0 14px 30px rgb(15 23 42 / 16%);
+  transform: translateY(-2px);
+}
+
+.nova-launchpad__edit-hint {
+  color: var(--nova-launchpad-muted);
+  font-size: 0.82rem;
+}
+
+.nova-launchpad__edit-hint code {
+  color: var(--nova-launchpad-foreground);
+  font-weight: 700;
+}
+
+.nova-launchpad__sequence {
+  position: relative;
+  padding-inline-start: 1.5rem;
+  border-inline-start: 1px solid var(--nova-launchpad-border);
+}
+
+.nova-launchpad__sequence-label {
+  margin: 0 0 1.4rem;
+  color: var(--nova-launchpad-muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nova-launchpad__steps {
+  display: grid;
+  padding: 0;
+  margin: 0;
+  gap: 1.35rem;
+  list-style: none;
+}
+
+.nova-launchpad__step {
+  display: grid;
+  align-items: start;
+  gap: 0.25rem;
+  grid-template-columns: 2rem minmax(0, 1fr);
+}
+
+.nova-launchpad__step-number {
+  color: var(--nova-launchpad-accent);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.5rem;
+}
+
+.nova-launchpad__step strong {
+  display: block;
+  font-size: 0.92rem;
+  line-height: 1.5rem;
+}
+
+.nova-launchpad__step p {
+  margin: 0.3rem 0 0;
+  color: var(--nova-launchpad-muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.nova-launchpad__footer {
+  padding-block-start: 1.2rem;
+  border-block-start: 1px solid var(--nova-launchpad-border);
+  color: var(--nova-launchpad-muted);
+  font-size: 0.64rem;
+  font-weight: 700;
+}
+
+.nova-launchpad__socials {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nova-launchpad__social-link {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--nova-launchpad-border);
+  border-radius: 0.6rem;
+  background: var(--nova-launchpad-surface);
+  color: var(--nova-launchpad-muted);
+  transition:
+    color 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.nova-launchpad__social-link:hover {
+  border-color: var(--nova-launchpad-accent);
+  background: var(--nova-launchpad-accent-soft);
+  color: var(--nova-launchpad-accent);
+  transform: translateY(-1px);
+}
+
+.nova-launchpad__social-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .nova-launchpad {
+    --nova-launchpad-background: #080b12;
+    --nova-launchpad-foreground: #f8fafc;
+    --nova-launchpad-muted: #98a2b3;
+    --nova-launchpad-border: rgb(248 250 252 / 13%);
+    --nova-launchpad-surface: rgb(17 24 39 / 76%);
+    --nova-launchpad-grid: rgb(248 250 252 / 4.5%);
+  }
+
+  .nova-launchpad[data-nova-framework="nextjs"] {
+    --nova-launchpad-accent: #f8fafc;
+    --nova-launchpad-accent-bright: #38bdf8;
+  }
+}
+
+@media (max-width: 48rem) {
+  .nova-launchpad__body {
+    align-items: start;
+    gap: 3.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  .nova-launchpad__header,
+  .nova-launchpad__footer {
+    align-items: flex-start;
+  }
+
+  .nova-launchpad__footer {
+    flex-direction: column;
+  }
+
+  .nova-launchpad__title {
+    max-width: 9ch;
+  }
+
+  .nova-launchpad__sequence {
+    margin-inline-start: 0.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nova-launchpad__docs-link,
+  .nova-launchpad__primary-link,
+  .nova-launchpad__social-link {
+    transition: none;
+  }
+}

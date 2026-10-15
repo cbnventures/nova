@@ -21,9 +21,12 @@
     "i18n:check": "theme-nova i18n check",
     "i18n:coverage": "theme-nova i18n coverage"
   },
+  "engines": {
+    "node": "^22 || ^24"
+  },
   "dependencies": {
-    "@cbnventures/docusaurus-preset-nova": "0.30.1",
-    "@cbnventures/nova": "0.30.1",
+    "@cbnventures/docusaurus-preset-nova": "0.31.0",
+    "@cbnventures/nova": "0.31.0",
     "@docusaurus/core": "3.10.2",
     "react": "19.2.8",
     "react-dom": "19.2.8"

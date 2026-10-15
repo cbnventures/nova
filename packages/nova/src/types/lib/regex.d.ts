@@ -727,6 +727,21 @@ export type Lib_Regex_PlaceholderCurrentDate = RegExp;
 export type Lib_Regex_PlaceholderCurrentYear = RegExp;
 
 /**
+ * Lib - Regex - Placeholder Android Application ID.
+ *
+ * @since 0.31.0
+ */
+export type Lib_Regex_PlaceholderAndroidApplicationId = RegExp;
+export type Lib_Regex_AndroidApplicationIdSegment = RegExp;
+
+/**
+ * Lib - Regex - Placeholder Android Package Path.
+ *
+ * @since 0.31.0
+ */
+export type Lib_Regex_PlaceholderAndroidPackagePath = RegExp;
+
+/**
  * Lib - Regex - Placeholder Custom Donation.
  *
  * @since 0.11.0

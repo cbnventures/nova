@@ -53,8 +53,14 @@ import type {
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_CapturedOutput,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_CapturedWrites,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_ChunkString,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_ExpectedColoredHelloA,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesClosingSectionA,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesClosingSectionB,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesColoredHelloA,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesHelloA,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesHelloB,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesOpeningSectionA,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesOpeningSectionB,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesTaskA,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesTaskB,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_OriginalStdoutWrite,
@@ -99,6 +105,15 @@ import type {
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_StopsOnFirstFailureInSequentialMode_ProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_StopsOnFirstFailureInSequentialMode_RealProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_StopsOnFirstFailureInSequentialMode_SecondRan,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_CapturedStderr,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_CapturedStdout,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_OriginalStderrWrite,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_OriginalStdoutWrite,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_PackageJson,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_PackageJsonPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_ProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_RealProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_Summary,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_TemporaryDirectory,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_TemporaryPrefix,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_WarnsWhenNoScriptsMatchThePattern_PackageJson,
@@ -389,7 +404,7 @@ describe('CliUtilityRunScripts.run', async () => {
     const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_PackageJson = JSON.stringify({
       name: 'test-parallel-output',
       scripts: {
-        'task:a': 'node -e "process.stdout.write(\'hello-a\\n\')"',
+        'task:a': 'node -e "process.stdout.write(String.fromCharCode(27) + \'[35mhello-a\' + String.fromCharCode(27) + \'[39m\\n\')"',
         'task:b': 'node -e "process.stdout.write(\'hello-b\\n\')"',
       },
     }, null, 2);
@@ -427,16 +442,27 @@ describe('CliUtilityRunScripts.run', async () => {
     strictEqual(process.exitCode, undefined);
 
     const capturedOutput: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_CapturedOutput = capturedWrites.join('');
+    const expectedColoredHelloA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_ExpectedColoredHelloA = `${String.fromCharCode(27)}[35mhello-a${String.fromCharCode(27)}[39m`;
 
     const includesTaskA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesTaskA = capturedOutput.includes('[task:a]');
     const includesTaskB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesTaskB = capturedOutput.includes('[task:b]');
     const includesHelloA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesHelloA = capturedOutput.includes('hello-a');
     const includesHelloB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesHelloB = capturedOutput.includes('hello-b');
+    const includesOpeningSectionA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesOpeningSectionA = capturedOutput.includes('┌─ task:a ──');
+    const includesOpeningSectionB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesOpeningSectionB = capturedOutput.includes('┌─ task:b ──');
+    const includesClosingSectionA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesClosingSectionA = capturedOutput.includes('└─ task:a ── ✔');
+    const includesClosingSectionB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesClosingSectionB = capturedOutput.includes('└─ task:b ── ✔');
+    const includesColoredHelloA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesColoredHelloA = capturedOutput.includes(expectedColoredHelloA);
 
     strictEqual(includesTaskA, true);
     strictEqual(includesTaskB, true);
     strictEqual(includesHelloA, true);
     strictEqual(includesHelloB, true);
+    strictEqual(includesOpeningSectionA, true);
+    strictEqual(includesOpeningSectionB, true);
+    strictEqual(includesClosingSectionA, true);
+    strictEqual(includesClosingSectionB, true);
+    strictEqual(includesColoredHelloA, true);
 
     return;
   });
@@ -569,6 +595,68 @@ describe('CliUtilityRunScripts.run', async () => {
     }
 
     strictEqual(secondRan, false);
+
+    return;
+  });
+
+  it('summarizes every parallel failure', async () => {
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_ProjectRoot = join(sandboxRoot, 'parallel-failures');
+
+    await mkdir(projectRoot, { recursive: true });
+
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_PackageJson = JSON.stringify({
+      name: 'test-parallel-failures',
+      scripts: {
+        'task:first': 'node -e "process.exit(2)"',
+        'task:second': 'node -e "process.exit(3)"',
+      },
+    }, null, 2);
+
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_PackageJsonPath = join(projectRoot, 'package.json');
+
+    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_RealProjectRoot = await realpath(projectRoot);
+    const capturedStdout: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_CapturedStdout = [];
+    const capturedStderr: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_CapturedStderr = [];
+    const originalStdoutWrite: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_OriginalStdoutWrite = process.stdout.write;
+    const originalStderrWrite: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_OriginalStderrWrite = process.stderr.write;
+
+    process.chdir(realProjectRoot);
+
+    process.stdout.write = ((chunk) => {
+      capturedStdout.push(String(chunk));
+
+      return true;
+    }) as Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_OriginalStdoutWrite;
+
+    process.stderr.write = ((chunk) => {
+      capturedStderr.push(String(chunk));
+
+      return true;
+    }) as Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_OriginalStderrWrite;
+
+    process.exitCode = undefined;
+
+    try {
+      await CliUtilityRunScripts.run({
+        pattern: 'task:*',
+        parallel: true,
+        buffer: '100',
+      });
+    } finally {
+      process.stdout.write = originalStdoutWrite;
+      process.stderr.write = originalStderrWrite;
+    }
+
+    const summary: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_Summary = capturedStderr.join('');
+
+    strictEqual(summary.includes('Failed scripts:'), true);
+    strictEqual(summary.includes('task:first — exit code 2'), true);
+    strictEqual(summary.includes('task:second — exit code 3'), true);
+    strictEqual(process.exitCode, 1);
+
+    process.exitCode = undefined;
 
     return;
   });

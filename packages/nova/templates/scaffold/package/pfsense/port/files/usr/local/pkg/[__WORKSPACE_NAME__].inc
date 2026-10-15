@@ -13,21 +13,22 @@ require_once('services.inc');
  */
 function pfsensePackage[__WORKSPACE_IDENTIFIER__]GetSettings(): array
 {
-    $settings = config_get_path('installedpackages/[__WORKSPACE_NAME__]/config/0', []);
+    $settings = config_get_path('installedpackages/[__PFSENSE_CONFIG_NAME__]/config/0', []);
 
     return is_array($settings) ? $settings : [];
 }
 
 /**
- * Maps the WebGUI schedule value to cron fields.
+ * Maps the WebGUI task frequency to cron fields.
  *
- * @param string $schedule Selected schedule.
+ * @param string $frequency Selected frequency.
  *
  * @return array{string, string, string, string, string} Cron fields.
  */
-function pfsensePackage[__WORKSPACE_IDENTIFIER__]GetSchedule(string $schedule): array
+function pfsensePackage[__WORKSPACE_IDENTIFIER__]GetCronFields(string $frequency): array
 {
-    return match ($schedule) {
+    return match ($frequency) {
+        'minute' => ['*', '*', '*', '*', '*'],
         'daily' => ['0', '0', '*', '*', '*'],
         'weekly' => ['0', '0', '*', '*', '0'],
         default => ['0', '*', '*', '*', '*'],
@@ -49,7 +50,13 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]Sync(): void
         return;
     }
 
-    [$minute, $hour, $dayOfMonth, $month, $dayOfWeek] = pfsensePackage[__WORKSPACE_IDENTIFIER__]GetSchedule((string) ($settings['schedule'] ?? 'hourly'));
+    $taskFrequency = $settings['task_frequency'] ?? 'hourly';
+
+    if (is_array($taskFrequency)) {
+        $taskFrequency = $taskFrequency[0] ?? 'hourly';
+    }
+
+    [$minute, $hour, $dayOfMonth, $month, $dayOfWeek] = pfsensePackage[__WORKSPACE_IDENTIFIER__]GetCronFields((string) $taskFrequency);
 
     install_cron_job($command, true, $minute, $hour, $dayOfMonth, $month, $dayOfWeek, 'root');
 }
@@ -73,6 +80,6 @@ function pfsensePackage[__WORKSPACE_IDENTIFIER__]Validate(array $post, array &$i
     $message = trim((string) ($post['message'] ?? ''));
 
     if ($message === '') {
-        $inputErrors[] = 'The task message cannot be empty.';
+        $inputErrors[] = 'The example log message cannot be empty.';
     }
 }

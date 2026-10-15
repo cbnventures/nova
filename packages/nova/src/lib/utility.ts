@@ -245,6 +245,7 @@ import type {
   Lib_Utility_SaveGeneratedFile_ParentDirectory,
   Lib_Utility_SaveGeneratedFile_PrefixedContents,
   Lib_Utility_SaveGeneratedFile_ReplaceFile,
+  Lib_Utility_SaveGeneratedFile_Report,
   Lib_Utility_SaveGeneratedFile_Returns,
   Lib_Utility_SaveGeneratedFile_TargetPath,
   Lib_Utility_SaveWorkspaceManifest_ReplaceFile,
@@ -1504,12 +1505,13 @@ export function buildGeneratedFileHeader(options: Lib_Utility_BuildGeneratedFile
  * @param {Lib_Utility_SaveGeneratedFile_Contents}    contents    - Contents.
  * @param {Lib_Utility_SaveGeneratedFile_ReplaceFile} replaceFile - Replace file.
  * @param {Lib_Utility_SaveGeneratedFile_Header}      [header]    - Header.
+ * @param {Lib_Utility_SaveGeneratedFile_Report}      [report]    - Report.
  *
  * @returns {Lib_Utility_SaveGeneratedFile_Returns}
  *
  * @since 0.11.0
  */
-export async function saveGeneratedFile(targetPath: Lib_Utility_SaveGeneratedFile_TargetPath, contents: Lib_Utility_SaveGeneratedFile_Contents, replaceFile: Lib_Utility_SaveGeneratedFile_ReplaceFile, header?: Lib_Utility_SaveGeneratedFile_Header): Lib_Utility_SaveGeneratedFile_Returns {
+export async function saveGeneratedFile(targetPath: Lib_Utility_SaveGeneratedFile_TargetPath, contents: Lib_Utility_SaveGeneratedFile_Contents, replaceFile: Lib_Utility_SaveGeneratedFile_ReplaceFile, header?: Lib_Utility_SaveGeneratedFile_Header, report: Lib_Utility_SaveGeneratedFile_Report = true): Lib_Utility_SaveGeneratedFile_Returns {
   const parentDirectory: Lib_Utility_SaveGeneratedFile_ParentDirectory = dirname(targetPath);
   const currentDirectory: Lib_Utility_SaveGeneratedFile_CurrentDirectory = process.cwd();
   const displayName: Lib_Utility_SaveGeneratedFile_DisplayName = relative(currentDirectory, targetPath);
@@ -1535,10 +1537,12 @@ export async function saveGeneratedFile(targetPath: Lib_Utility_SaveGeneratedFil
   // Check if existing file is identical.
   if (await pathExists(targetPath) === true) {
     if (await isFileIdentical(targetPath, prefixedContents) === true) {
-      Logger.customize({
-        name: 'saveGeneratedFile',
-        purpose: 'identical',
-      }).info(`Skipping ${chalk.cyan(`"${displayName}"`)} (identical content).`);
+      if (report === true) {
+        Logger.customize({
+          name: 'saveGeneratedFile',
+          purpose: 'identical',
+        }).info(`Skipping ${chalk.cyan(`"${displayName}"`)} (identical content).`);
+      }
 
       return;
     }
@@ -1551,10 +1555,12 @@ export async function saveGeneratedFile(targetPath: Lib_Utility_SaveGeneratedFil
 
   await fs.writeFile(targetPath, prefixedContents, 'utf-8');
 
-  Logger.customize({
-    name: 'saveGeneratedFile',
-    purpose: 'generated',
-  }).info(`Generated ${chalk.cyan(`"${displayName}"`)}.`);
+  if (report === true) {
+    Logger.customize({
+      name: 'saveGeneratedFile',
+      purpose: 'generated',
+    }).info(`Generated ${chalk.cyan(`"${displayName}"`)}.`);
+  }
 
   return;
 }

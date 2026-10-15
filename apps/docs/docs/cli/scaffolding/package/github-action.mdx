@@ -24,7 +24,8 @@ Scaffold a bundled **GitHub Action** that runs on Node 24 and exposes a typed gr
 
 1. Creates the repository-level `action.yml` and its package source together so their entry paths cannot drift.
 2. Bundles dependencies with NCC so consumers can execute the checked-in `build/index.js` without installing packages.
-3. Includes Vitest and GitHub's local-action runner so logic can be checked before publishing a tag.
+3. Includes Vitest and GitHub's local-action runner so the bundled action can be rebuilt and exercised before publishing a tag.
+4. Starts with grouped GitHub logs, a named output, and a concise job summary without echoing raw input values.
 
 ## Requirements
 
@@ -64,6 +65,8 @@ Scaffold a bundled **GitHub Action** that runs on Node 24 and exposes a typed gr
 | Flag                      | Description                                                          |
 |---------------------------|----------------------------------------------------------------------|
 | `-d, --dry-run`           | Run without writing any files.                                       |
+| `--install`               | Install dependencies after scaffolding; this is the default.         |
+| `--no-install`            | Skip dependency installation.                                        |
 | `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
 | `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
 | `--workspace-name <name>` | Workspace directory and package name.                                |
@@ -71,13 +74,23 @@ Scaffold a bundled **GitHub Action** that runs on Node 24 and exposes a typed gr
 
 ## Output Files
 
-| File              | Description                                               |
-|-------------------|-----------------------------------------------------------|
-| `action.yml`      | Root action metadata using the generated package build.   |
-| `src/index.ts`    | Action entry point with failure reporting.                |
-| `src/run.ts`      | Import-safe action logic and output generation.           |
-| `src/run.test.ts` | Vitest smoke test for the action logic.                   |
-| `package.json`    | GitHub toolkit dependencies, local runner, and NCC build. |
+| File              | Description                                                 |
+|-------------------|-------------------------------------------------------------|
+| `action.yml`      | Root action metadata using the generated package build.     |
+| `.env`            | Untracked Nova defaults and the local action input.         |
+| `.env.sample`     | Shareable Nova defaults with an example `INPUT_NAME` value. |
+| `src/index.ts`    | Action entry point with failure reporting.                  |
+| `src/run.ts`      | Import-safe action logic and output generation.             |
+| `src/run.test.ts` | Vitest smoke test for the action logic.                     |
+| `package.json`    | GitHub toolkit dependencies, local runner, and NCC build.   |
+
+## Local Development
+
+Set `INPUT_NAME` in the generated `.env`, then run `npm run dev` from the action workspace. Nova first rebuilds the NCC bundle, then passes that production entry point and environment file to GitHub's local-action runner.
+
+This mirrors the file consumers execute and avoids source-runner module-format differences.
+
+The action writes a job summary on GitHub. Local runners that do not expose `GITHUB_STEP_SUMMARY` receive a clear informational message and continue successfully.
 
 ## Non-Interactive Mode
 

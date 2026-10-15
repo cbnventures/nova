@@ -1,3 +1,4 @@
-[__WORKSPACE_TITLE__] adds a WebGUI settings page and a scheduled background
-task to pfSense. The task is configured from Services > [__WORKSPACE_TITLE__]
-and runs without an interactive command-line interface.
+[__WORKSPACE_TITLE__] is a Nova-generated pfSense package starter with a native
+WebGUI settings page and an optional background-task example. Configure it from
+Services > [__WORKSPACE_TITLE__], then replace the example with package-specific
+behavior as the project takes shape.

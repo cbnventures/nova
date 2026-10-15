@@ -1,7 +1,7 @@
 ---
 id: "node-cli"
 title: "Node.js CLI"
-description: "Scaffold a publishable Node.js CLI with Commander, TypeScript, Nova's fixed-width CLI header, Vitest, and executable build output."
+description: "Scaffold a publishable Node.js CLI with Nova-style command lifecycles, Commander, TypeScript, Vitest, and executable build output."
 keywords:
   - "nova"
   - "nova scaffold"
@@ -22,8 +22,8 @@ Scaffold a publishable **Node.js command-line package** with Commander, TypeScri
 
 ## Why Use This Command?
 
-1. Separates program construction from the executable entry point so tests can import the command without running it.
-2. Includes a fixed-width Nova `CLIHeader` and executable permissions so the built binary starts with consistent presentation.
+1. Owns Commander in a dedicated CLI class with one registration point for new commands.
+2. Uses the same fixed-width header, current-command label, styled help sections, and cleaned error output as Nova itself.
 3. Registers the workspace as a distributable package so Nova's release workflow can version and publish it.
 
 ## Requirements
@@ -64,6 +64,8 @@ Scaffold a publishable **Node.js command-line package** with Commander, TypeScri
 | Flag                      | Description                                                          |
 |---------------------------|----------------------------------------------------------------------|
 | `-d, --dry-run`           | Run without writing any files.                                       |
+| `--install`               | Install dependencies after scaffolding; this is the default.         |
+| `--no-install`            | Skip dependency installation.                                        |
 | `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
 | `--non-interactive`       | Require every answer as a flag and do not open prompts.              |
 | `--workspace-name <name>` | Workspace directory, package name, and binary name.                  |
@@ -71,13 +73,15 @@ Scaffold a publishable **Node.js command-line package** with Commander, TypeScri
 
 ## Output Files
 
-| File                | Description                                            |
-|---------------------|--------------------------------------------------------|
-| `src/index.ts`      | Executable entry point.                                |
-| `src/program.ts`    | Import-safe Commander program factory.                 |
-| `src/index.test.ts` | Vitest smoke test for the generated binary identity.   |
-| `tsconfig.json`     | Strict Node.js configuration with declaration output.  |
-| `package.json`      | npm `bin` mapping, publish files, and grouped scripts. |
+| File                 | Description                                                         |
+|----------------------|---------------------------------------------------------------------|
+| `bin/cli.mjs`        | Stable npm launcher that loads the compiled CLI after installation. |
+| `src/index.ts`       | Executable entry point.                                             |
+| `src/program.ts`     | Nova-style CLI class, command registry, help, and error lifecycle.  |
+| `src/status.ts`      | Editable starter command behavior.                                  |
+| `src/status.test.ts` | Vitest example covering only the starter command's behavior.        |
+| `tsconfig.json`      | Strict Node.js configuration with declaration output.               |
+| `package.json`       | npm metadata, `bin` mapping, publish files, and grouped scripts.    |
 
 ## Non-Interactive Mode
 

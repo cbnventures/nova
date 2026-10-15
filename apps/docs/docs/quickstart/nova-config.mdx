@@ -675,10 +675,10 @@ Project-scoped deploy credentials (such as a Cloudflare API token) also derive t
 
 | Reach       | Local `.env` | GitHub | CI delivery                                                                 |
 |-------------|:------------:|:------:|-----------------------------------------------------------------------------|
-| `local`     |      ✓       |   ✗    | None. The key stays on the developer machine.                               |
-| `managed`   |  ✓ (blank)   |   ✓    | None. Nova tracks the GitHub name but does not inject it into a build or server. |
-| `build`     |      ✓       |   ✓    | Injected into the build environment.                                        |
-| `runtime`   |      ✓       |   ✓    | Reconciled into every server-bearing deploy target for the workspace.       |
+| `local`     |      ✔       |   ✗    | None. The key stays on the developer machine.                               |
+| `managed`   |  ✔ (blank)   |   ✔    | None. Nova tracks the GitHub name but does not inject it into a build or server. |
+| `build`     |      ✔       |   ✔    | Injected into the build environment.                                        |
+| `runtime`   |      ✔       |   ✔    | Reconciled into every server-bearing deploy target for the workspace.       |
 
 Project-scoped variables support only `managed`. Their Local `.env` column is not applicable because they do not belong to a workspace.
 

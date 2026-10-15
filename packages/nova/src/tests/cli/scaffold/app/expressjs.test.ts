@@ -20,12 +20,23 @@ import {
 import { Runner as CliScaffoldAppExpressjs } from '../../../../cli/scaffold/app/expressjs.js';
 
 import type {
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_EnvPath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_EnvRaw,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_EnvSamplePath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_EnvSampleRaw,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_GitignorePath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_GitignoreRaw,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_IndexTsPath,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_NovaConfig,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_NovaConfigPath,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_PackageJson,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_PackageJsonPath,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_ProjectDirectory,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_RegisteredConfig,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_RegisteredConfigRaw,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_RegisteredEnvironmentVariable,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_RegisteredEnvironmentVariables,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_RegisteredEnvironmentWorkspace,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_TsconfigPath,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_CreatesMonorepoInEmptyDirectory_IndexTsPath,
@@ -124,6 +135,7 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
 
     await CliScaffoldAppExpressjs.run({
       dryRun: true,
+      install: false,
       name: 'my-api',
       nonInteractive: true,
       workspaceName: 'express',
@@ -153,6 +165,7 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
     process.chdir(projectDirectory);
 
     await CliScaffoldAppExpressjs.run({
+      install: false,
       name: 'my-api',
       nonInteractive: true,
       workspaceName: 'express',
@@ -212,6 +225,9 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
           title: 'Workspace Test',
         },
       },
+      gitignore: {
+        projectExcludes: ['private-output/'],
+      },
       workspaces: {
         './': {
           name: 'workspace-test-project',
@@ -227,6 +243,7 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
     process.chdir(projectDirectory);
 
     await CliScaffoldAppExpressjs.run({
+      install: false,
       nonInteractive: true,
       workspaceName: 'express',
       output: './apps/express',
@@ -236,12 +253,46 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
     const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath = join(projectDirectory, 'apps', 'express', 'package.json');
     const tsconfigPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_TsconfigPath = join(projectDirectory, 'apps', 'express', 'tsconfig.source.json');
     const indexTsPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_IndexTsPath = join(projectDirectory, 'apps', 'express', 'src', 'index.ts');
+    const gitignorePath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_GitignorePath = join(projectDirectory, '.gitignore');
+    const envPath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_EnvPath = join(projectDirectory, 'apps', 'express', '.env');
+    const envSamplePath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_EnvSamplePath = join(projectDirectory, 'apps', 'express', '.env.sample');
 
     await access(workspacePackageJsonPath);
 
     await access(tsconfigPath);
 
     await access(indexTsPath);
+
+    const gitignoreRaw: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_GitignoreRaw = await readFile(gitignorePath, 'utf-8');
+    const envRaw: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_EnvRaw = await readFile(envPath, 'utf-8');
+    const envSampleRaw: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_EnvSampleRaw = await readFile(envSamplePath, 'utf-8');
+    const registeredConfigRaw: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_RegisteredConfigRaw = await readFile(novaConfigPath, 'utf-8');
+    const registeredConfig: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_RegisteredConfig = JSON.parse(registeredConfigRaw) as Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_RegisteredConfig;
+    const registeredEnvironmentWorkspace: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_RegisteredEnvironmentWorkspace = registeredConfig['environment']['workspaces']['./apps/express'];
+
+    if (registeredEnvironmentWorkspace === undefined) {
+      throw new Error('Expected the Express.js workspace environment registration.');
+    }
+
+    const registeredEnvironmentVariables: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_RegisteredEnvironmentVariables = registeredEnvironmentWorkspace['variables'];
+
+    if (registeredEnvironmentVariables === undefined) {
+      throw new Error('Expected the Express.js workspace environment variables.');
+    }
+
+    const registeredEnvironmentVariable: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_AddsWorkspaceAtMonorepoRoot_RegisteredEnvironmentVariable = registeredEnvironmentVariables[0];
+
+    if (registeredEnvironmentVariable === undefined) {
+      throw new Error('Expected the Express.js PORT environment variable.');
+    }
+
+    strictEqual(gitignoreRaw.includes('# This file is generated by @cbnventures/nova.'), true);
+    strictEqual(gitignoreRaw.split('\n').includes('private-output/'), true);
+    strictEqual(envRaw.includes('NODE_ENV="development"'), true);
+    strictEqual(envRaw.includes('PORT=""'), true);
+    strictEqual(envSampleRaw.includes('PORT="3000"'), true);
+    strictEqual(registeredEnvironmentWorkspace['prefix'], 'EXPRESS_');
+    strictEqual(registeredEnvironmentVariable['key'], 'PORT');
 
     return;
   });
@@ -282,6 +333,7 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
 
     await CliScaffoldAppExpressjs.run({
       dockerImage: true,
+      install: false,
       nonInteractive: true,
       workspaceName: 'api',
       output: './apps/api',

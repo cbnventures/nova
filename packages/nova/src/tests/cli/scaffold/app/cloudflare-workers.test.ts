@@ -115,6 +115,7 @@ describe.sequential('CliScaffoldAppCloudflareWorkers.run', async () => {
 
     await CliScaffoldAppCloudflareWorkers.run({
       dryRun: true,
+      install: false,
       name: 'my-worker',
       nonInteractive: true,
       workspaceName: 'workers',
@@ -144,6 +145,7 @@ describe.sequential('CliScaffoldAppCloudflareWorkers.run', async () => {
     process.chdir(projectDirectory);
 
     await CliScaffoldAppCloudflareWorkers.run({
+      install: false,
       name: 'my-worker',
       nonInteractive: true,
       workspaceName: 'workers',
@@ -218,6 +220,7 @@ describe.sequential('CliScaffoldAppCloudflareWorkers.run', async () => {
     process.chdir(projectDirectory);
 
     await CliScaffoldAppCloudflareWorkers.run({
+      install: false,
       nonInteractive: true,
       workspaceName: 'workers',
       output: './apps/workers',

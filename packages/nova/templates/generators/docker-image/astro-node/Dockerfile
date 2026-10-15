@@ -1,6 +1,6 @@
-############################
+#############################
 #### Step 1: Build Image ####
-############################
+#############################
 FROM node:24.21.0-alpine3.23 AS build
 WORKDIR /app
 COPY package.json ./
@@ -8,9 +8,9 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-##############################
+###############################
 #### Step 2: Runtime Image ####
-##############################
+###############################
 FROM node:24.21.0-alpine3.23 AS runtime
 ENV HOST=0.0.0.0
 ENV NODE_ENV=production

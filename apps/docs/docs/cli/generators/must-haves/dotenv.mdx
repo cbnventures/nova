@@ -29,6 +29,8 @@ Create `.env` and `.env.sample` files pre-populated with Nova-related environmen
 - Reads each workspace's environment values from `nova.config.json` so the same keys and defaults apply on every run.
 - Preserves the values already filled into an existing `.env`, so regenerating never overwrites a real secret.
 
+Every Nova scaffold registers its root and generated workspace namespaces and writes both files immediately. Existing repositories continue to opt in by declaring the matching `environment.workspaces` entries.
+
 ## Requirements
 
 - **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.

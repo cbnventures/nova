@@ -21,10 +21,11 @@ const identity = new NovaIdentity().forDocs();
  * @since 0.0.0
  */
 const config: DocusaurusNovaConfig = {
-  title: identity['title'] ?? 'Documentation',
+  title: 'Nova × Docusaurus',
   tagline: identity['tagline'] ?? 'Documentation',
   url: identity['url'] ?? 'https://example.com',
   baseUrl: '/',
+  favicon: 'images/nova.svg',
   organizationName: identity['organizationName'] ?? 'your-org',
   projectName: identity['projectName'] ?? '[__PROJECT_SLUG__]',
   onBrokenLinks: 'throw',
@@ -51,9 +52,126 @@ const config: DocusaurusNovaConfig = {
           routeBasePath: 'docs',
         },
       },
-      search: [__DOCUSAURUS_SEARCH__],
+      search: {},
     },
   ]],
+
+  themeConfig: {
+    site: {
+      logo: {
+        alt: 'Nova',
+        src: {
+          light: '/images/nova.svg',
+        },
+        href: '/',
+      },
+    },
+    navbar: {
+      title: 'Nova × Docusaurus',
+      items: [
+        {
+          label: 'Home',
+          position: 'left',
+          to: '/',
+          icon: 'lucide:house',
+        },
+        {
+          label: 'Documentation',
+          position: 'left',
+          type: 'docSidebar',
+          sidebarId: 'docs',
+          icon: 'lucide:book-open',
+        },
+        {
+          label: 'Components',
+          position: 'left',
+          to: '/docs/customize#homepage',
+          icon: 'lucide:blocks',
+        },
+      ],
+    },
+    footer: {
+      sections: {
+        learn: [
+          {
+            label: 'Introduction',
+            href: '/docs/intro',
+          },
+          {
+            label: 'Customize the Site',
+            href: '/docs/customize',
+          },
+          {
+            label: 'Homepage Components',
+            href: '/docs/customize#homepage',
+          },
+        ],
+        resources: [
+          {
+            label: 'Nova',
+            href: 'https://nova.cbnventures.io/',
+          },
+          {
+            label: 'Docusaurus',
+            href: 'https://docusaurus.io/',
+          },
+        ],
+      },
+      layout: {
+        learn: {
+          title: 'Learn',
+          section: 'learn',
+        },
+        resources: {
+          title: 'Resources',
+          section: 'resources',
+        },
+      },
+      socialLinks: [
+        {
+          icon: 'ri:facebook-fill',
+          href: 'https://www.facebook.com/cbnventures',
+          label: 'Facebook',
+        },
+        {
+          icon: 'ri:twitter-x-fill',
+          href: 'https://x.com/cbnventures',
+          label: 'X',
+        },
+        {
+          icon: 'ri:youtube-fill',
+          href: 'https://www.youtube.com/@cbnventures',
+          label: 'YouTube',
+        },
+        {
+          icon: 'ri:instagram-fill',
+          href: 'https://www.instagram.com/cbnventures/',
+          label: 'Instagram',
+        },
+        {
+          icon: 'ri:github-fill',
+          href: 'https://github.com/cbnventures',
+          label: 'GitHub',
+        },
+        {
+          icon: 'ri:google-play-fill',
+          href: 'https://play.google.com/store/apps/dev?id=6419450160526226105',
+          label: 'Google Play',
+        },
+        {
+          icon: 'ri:linkedin-fill',
+          href: 'https://www.linkedin.com/company/cbnventures/',
+          label: 'LinkedIn',
+        },
+      ],
+      copyright: identity['copyright'],
+      credit: true,
+      cta: {
+        label: 'Start reading',
+        href: '/docs/intro',
+      },
+    },
+  },
 };
 
 export default config;

@@ -14,13 +14,13 @@
     "clean": "nova utility run-scripts --parallel 'clean:*'",
     "clean:project": "shx rm -rf ./[__WORKSPACE_IDENTIFIER__].xcodeproj ./build"
   },
+  "engines": {
+    "node": "^22 || ^24"
+  },
   "dependencies": {
-    "@cbnventures/nova": "0.30.1"
+    "@cbnventures/nova": "0.31.0"
   },
   "devDependencies": {
     "shx": "0.4.0"
-  },
-  "engines": {
-    "node": "^22 || ^24"
   }
 }

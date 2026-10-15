@@ -20,13 +20,17 @@ import {
 
 import novaPackageJson from '../../package.json' with { type: 'json' };
 
+import { libItemSortOrderKeys } from '../lib/item.js';
 import {
+  LIB_REGEX_PLACEHOLDER_ANDROID_APPLICATION_ID,
+  LIB_REGEX_PLACEHOLDER_ANDROID_PACKAGE_PATH,
   LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE,
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_CONTENT,
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET,
-  LIB_REGEX_PLACEHOLDER_DOCUSAURUS_SEARCH,
   LIB_REGEX_PLACEHOLDER_HOMEBRIDGE_CUSTOM_UI,
+  LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME,
   LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
+  LIB_REGEX_PLACEHOLDER_VITE_FRAMEWORK,
   LIB_REGEX_PLACEHOLDER_WORKSPACE_IDENTIFIER,
   LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME,
   LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
@@ -44,6 +48,14 @@ import type {
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractResults,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesTheBaseStarterInventory_StarterContractPromise,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_PackageDirectory,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageInfoContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageInfoPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageScriptContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageScriptPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsHandlerContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsHandlerPath,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsPageContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsPagePath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_SandboxRoot,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_TemporaryDirectory,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_TemporaryPrefix,
@@ -55,10 +67,18 @@ import type {
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExtraFinalNewlineFiles,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExtraFinalNewlineGeneratedContent,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExtraFinalNewlineMessage,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedBuffer,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedContents,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedFilePath,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedFiles,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_InventoryMessage,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageEngines,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJson,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonContent,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonIndex,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonKeys,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonKnownKeys,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonOrderedKeys,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PlaceholderGeneratedContent,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PlaceholderMessage,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Returns,
@@ -122,10 +142,66 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
   {
     name: 'android',
     templateSubpath: 'app/android',
+    templateOptionSubpaths: [
+      'scaffold-options/app/android-native',
+      'scaffold-options/app/android-launchpad',
+    ],
     expectedFiles: [
+      '.gitignore',
+      'app/.gitignore',
+      'app/build.gradle.kts',
+      'app/proguard-rules.pro',
+      'app/src/main/AndroidManifest.xml',
+      'app/src/main/java/com/example/mobile/MainActivity.kt',
+      'app/src/main/java/com/example/mobile/Navigation.kt',
+      'app/src/main/java/com/example/mobile/NavigationKeys.kt',
+      'app/src/main/java/com/example/mobile/data/DataRepository.kt',
+      'app/src/main/java/com/example/mobile/theme/Color.kt',
+      'app/src/main/java/com/example/mobile/theme/Theme.kt',
+      'app/src/main/java/com/example/mobile/theme/Type.kt',
+      'app/src/main/java/com/example/mobile/ui/main/MainScreen.kt',
+      'app/src/main/java/com/example/mobile/ui/main/MainScreenViewModel.kt',
+      'app/src/main/res/drawable/arrow_up_right.xml',
+      'app/src/main/res/drawable/ic_launcher_background.xml',
+      'app/src/main/res/drawable/ic_launcher_foreground.xml',
+      'app/src/main/res/drawable/nova_logo.xml',
+      'app/src/main/res/drawable/social_facebook.xml',
+      'app/src/main/res/drawable/social_github.xml',
+      'app/src/main/res/drawable/social_google_play.xml',
+      'app/src/main/res/drawable/social_instagram.xml',
+      'app/src/main/res/drawable/social_linkedin.xml',
+      'app/src/main/res/drawable/social_x.xml',
+      'app/src/main/res/drawable/social_youtube.xml',
+      'app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml',
+      'app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml',
+      'app/src/main/res/mipmap-hdpi/ic_launcher.webp',
+      'app/src/main/res/mipmap-hdpi/ic_launcher_round.webp',
+      'app/src/main/res/mipmap-mdpi/ic_launcher.webp',
+      'app/src/main/res/mipmap-mdpi/ic_launcher_round.webp',
+      'app/src/main/res/mipmap-xhdpi/ic_launcher.webp',
+      'app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp',
+      'app/src/main/res/mipmap-xxhdpi/ic_launcher.webp',
+      'app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp',
+      'app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp',
+      'app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp',
+      'app/src/main/res/values/strings.xml',
+      'app/src/main/res/values/themes.xml',
+      'app/src/main/res/xml/backup_rules.xml',
+      'app/src/main/res/xml/data_extraction_rules.xml',
+      'app/src/test/java/com/example/mobile/ui/main/MainScreenViewModelTest.kt',
+      'build.gradle.kts',
       'eslint.config.mts',
+      'gradle.properties',
+      'gradle/libs.versions.toml',
+      'gradle/wrapper/gradle-wrapper.jar',
+      'gradle/wrapper/gradle-wrapper.properties',
+      'gradlew',
+      'gradlew.bat',
       'package.json',
+      'scripts/android-environment.mjs',
+      'scripts/run-android.mjs',
       'scripts/run-gradle.mjs',
+      'settings.gradle.kts',
       'tests/project.test.ts',
       'tsconfig.scripts.json',
       'tsconfig.tests.json',
@@ -140,6 +216,22 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
         'contract-android-app-mobile',
       ],
+      [
+        LIB_REGEX_PLACEHOLDER_ANDROID_APPLICATION_ID,
+        'com.example.mobile',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_ANDROID_PACKAGE_PATH,
+        'com/example/mobile',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_IDENTIFIER,
+        'Mobile',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
+        'Mobile',
+      ],
     ]),
   },
   {
@@ -147,6 +239,35 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     templateSubpath: 'app/apple',
     expectedFiles: [
       'Sources/App.swift',
+      'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-ios-1024.png',
+      'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-128.png',
+      'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-128@2x.png',
+      'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-16.png',
+      'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-16@2x.png',
+      'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-256.png',
+      'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-256@2x.png',
+      'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-32.png',
+      'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-32@2x.png',
+      'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-512.png',
+      'Sources/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-512@2x.png',
+      'Sources/Assets.xcassets/AppIcon.appiconset/Contents.json',
+      'Sources/Assets.xcassets/Contents.json',
+      'Sources/Assets.xcassets/NovaLogo.imageset/Contents.json',
+      'Sources/Assets.xcassets/NovaLogo.imageset/nova.svg',
+      'Sources/Assets.xcassets/SocialFacebook.imageset/Contents.json',
+      'Sources/Assets.xcassets/SocialFacebook.imageset/facebook.svg',
+      'Sources/Assets.xcassets/SocialGitHub.imageset/Contents.json',
+      'Sources/Assets.xcassets/SocialGitHub.imageset/github.svg',
+      'Sources/Assets.xcassets/SocialGooglePlay.imageset/Contents.json',
+      'Sources/Assets.xcassets/SocialGooglePlay.imageset/google-play.svg',
+      'Sources/Assets.xcassets/SocialInstagram.imageset/Contents.json',
+      'Sources/Assets.xcassets/SocialInstagram.imageset/instagram.svg',
+      'Sources/Assets.xcassets/SocialLinkedIn.imageset/Contents.json',
+      'Sources/Assets.xcassets/SocialLinkedIn.imageset/linkedin.svg',
+      'Sources/Assets.xcassets/SocialX.imageset/Contents.json',
+      'Sources/Assets.xcassets/SocialX.imageset/x.svg',
+      'Sources/Assets.xcassets/SocialYouTube.imageset/Contents.json',
+      'Sources/Assets.xcassets/SocialYouTube.imageset/youtube.svg',
       'Sources/ContentView.swift',
       'Tests/AppTests.swift',
       'package.json',
@@ -178,12 +299,18 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
   {
     name: 'astro',
     templateSubpath: 'app/astro',
-    templateOptionSubpaths: ['scaffold-options/app/astro/static'],
+    templateOptionSubpaths: [
+      'scaffold-options/app/web-launchpad',
+      'scaffold-options/app/astro/static',
+    ],
     expectedFiles: [
       'astro.config.mjs',
       'eslint.config.mts',
       'package.json',
+      'public/favicon.svg',
+      'public/nova-socials.svg',
       'src/pages/index.astro',
+      'src/styles/nova-launchpad.css',
       'tests/project.test.ts',
       'tsconfig.astro.json',
       'tsconfig.config.json',
@@ -209,10 +336,14 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     name: 'discord-bot',
     templateSubpath: 'app/discord-bot',
     expectedFiles: [
-      '.env.sample',
       'eslint.config.mts',
       'package.json',
+      'src/bot.test.ts',
+      'src/bot.ts',
       'src/index.ts',
+      'src/types/bot.d.ts',
+      'src/types/bot.test.d.ts',
+      'src/types/index.d.ts',
       'tests/project.test.ts',
       'tsconfig.config.json',
       'tsconfig.source.json',
@@ -238,18 +369,21 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     name: 'docusaurus',
     templateSubpath: 'docs/docusaurus',
     expectedFiles: [
+      'docs/customize.mdx',
       'docs/intro.mdx',
       'docusaurus.config.ts',
       'eslint.config.mts',
       'package.json',
       'sidebars.ts',
-      'src/pages/index.mdx',
+      'src/pages/index.tsx',
       'src/tests/frontmatter.test.ts',
       'src/tests/link.test.ts',
       'src/tests/markdown-table.test.ts',
       'src/tests/terminology.test.ts',
       'src/tests/type-declarations.test.ts',
+      'src/types/pages/index.d.ts',
       'static/.gitkeep',
+      'static/images/nova.svg',
       'tsconfig.json',
       'vitest.config.mts',
       'vitest.setup.ts',
@@ -269,10 +403,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       ],
       [
         LIB_REGEX_PLACEHOLDER_DOCUSAURUS_CONTENT,
-        'false',
-      ],
-      [
-        LIB_REGEX_PLACEHOLDER_DOCUSAURUS_SEARCH,
         'false',
       ],
     ]),
@@ -309,7 +439,12 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     expectedFiles: [
       'eslint.config.mts',
       'package.json',
+      'src/app.test.ts',
+      'src/app.ts',
       'src/index.ts',
+      'src/types/app.d.ts',
+      'src/types/app.test.d.ts',
+      'src/types/index.d.ts',
       'tests/project.test.ts',
       'tsconfig.config.json',
       'tsconfig.source.json',
@@ -324,6 +459,10 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
         'contract-express-app-api',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
+        'API',
       ],
     ]),
   },
@@ -351,6 +490,14 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
         'my-action',
       ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_RELATIVE_PATH,
+        'packages/my-action',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
+        'My Action',
+      ],
     ]),
   },
   {
@@ -371,10 +518,15 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
   {
     name: 'homebridge',
     templateSubpath: 'package/homebridge',
+    templateOptionSubpaths: ['scaffold-options/package/homebridge/custom-ui'],
     expectedFiles: [
       'config.schema.json',
+      'config/eslint-custom-ui.ts',
       'eslint.config.mts',
+      'homebridge-ui/public/index.html',
+      'homebridge-ui/public/index.js',
       'package.json',
+      'src/config-ui/server.ts',
       'src/index.ts',
       'src/platform.ts',
       'src/types/index.d.ts',
@@ -404,7 +556,7 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       ],
       [
         LIB_REGEX_PLACEHOLDER_HOMEBRIDGE_CUSTOM_UI,
-        'false',
+        'true',
       ],
     ]),
   },
@@ -412,11 +564,15 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     name: 'node-cli',
     templateSubpath: 'package/node-cli',
     expectedFiles: [
+      'bin/cli.mjs',
       'eslint.config.mts',
       'package.json',
-      'src/index.test.ts',
       'src/index.ts',
       'src/program.ts',
+      'src/status.test.ts',
+      'src/status.ts',
+      'src/types/program.d.ts',
+      'src/types/status.d.ts',
       'tsconfig.config.json',
       'tsconfig.source.json',
       'tsconfig.tests.json',
@@ -450,10 +606,10 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'port/Makefile.template',
       'port/files/pkg-deinstall.in',
       'port/files/pkg-install.in',
-      'port/files/usr/local/pkg/scheduler.inc',
-      'port/files/usr/local/pkg/scheduler.xml',
-      'port/files/usr/local/sbin/scheduler',
-      'port/files/usr/local/share/pfSense-pkg-Scheduler/info.xml',
+      'port/files/usr/local/pkg/my-package.inc',
+      'port/files/usr/local/pkg/my-package.xml',
+      'port/files/usr/local/sbin/my-package',
+      'port/files/usr/local/share/pfSense-pkg-MyPackage/info.xml',
       'port/pkg-descr',
       'port/pkg-plist',
       'scripts/build-package.sh',
@@ -461,6 +617,7 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'scripts/regex.mjs',
       'scripts/stage-package.mjs',
       'tests/project.test.ts',
+      'tests/types/project.test.d.ts',
       'tsconfig.scripts.json',
       'tsconfig.tests.json',
       'vitest.config.mts',
@@ -472,51 +629,60 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       ],
       [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
-        'pfsense-pkg-scheduler',
+        'pfsense-pkg-my-package',
       ],
       [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_IDENTIFIER,
-        'Scheduler',
+        'MyPackage',
       ],
       [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME,
-        'scheduler',
+        'my-package',
       ],
       [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
-        'Scheduler',
+        'My Package',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME,
+        'mypackage',
       ],
     ]),
   },
   {
     name: 'pfsense-root',
     templateSubpath: 'package/pfsense-root',
-    expectedFiles: ['.github/workflows/pfsense-scheduler.yml'],
+    expectedFiles: ['.github/workflows/pfsense-my-package.yml'],
     replacements: new Map([
       [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME,
-        'scheduler',
+        'my-package',
       ],
       [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_RELATIVE_PATH,
-        'packages/scheduler',
+        'packages/my-package',
       ],
       [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
-        'Scheduler',
+        'My Package',
       ],
     ]),
   },
   {
     name: 'nextjs',
     templateSubpath: 'app/nextjs',
+    templateOptionSubpaths: ['scaffold-options/app/web-launchpad'],
     expectedFiles: [
       'eslint.config.mts',
       'next.config.mjs',
       'package.json',
+      'public/.gitkeep',
+      'public/favicon.svg',
+      'public/nova-socials.svg',
       'src/app/globals.css',
       'src/app/layout.tsx',
       'src/app/page.tsx',
+      'src/styles/nova-launchpad.css',
       'src/types/app/layout.d.ts',
       'src/types/app/page.d.ts',
       'tests/project.test.ts',
@@ -544,17 +710,22 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     name: 'vite',
     templateSubpath: 'app/vite',
     templateOptionSubpaths: [
+      'scaffold-options/app/web-launchpad',
       'scaffold-options/app/vite/framework/vanilla',
       'scaffold-options/app/vite/pwa/disabled',
     ],
     expectedFiles: [
       'config/eslint-framework.mts',
+      'config/framework-ignore-files.ts',
       'config/framework-plugins.ts',
       'config/pwa-plugins.ts',
       'eslint.config.mts',
       'index.html',
       'package.json',
+      'public/favicon.svg',
+      'public/nova-socials.svg',
       'src/main.ts',
+      'src/styles/nova-launchpad.css',
       'tests/project.test.ts',
       'tsconfig.json',
       'vite.config.mts',
@@ -572,6 +743,10 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
         'Web',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_VITE_FRAMEWORK,
+        'Vite',
       ],
     ]),
   },
@@ -703,10 +878,11 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
 
   deepStrictEqual(generatedFiles, expectedFiles, inventoryMessage);
 
-  const generatedContents: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedContents = await Promise.all(generatedFiles.map((generatedFile) => {
+  const generatedContents: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedContents = await Promise.all(generatedFiles.map(async (generatedFile) => {
     const generatedFilePath: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedFilePath = join(targetDirectory, generatedFile);
+    const generatedBuffer: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedBuffer = await readFile(generatedFilePath);
 
-    return readFile(generatedFilePath, 'utf-8');
+    return (generatedBuffer.includes(0) === true) ? undefined : generatedBuffer.toString('utf-8');
   }));
   const unresolvedFiles: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_UnresolvedFiles = generatedFiles.filter((_generatedFile, index) => {
     const placeholderGeneratedContent: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PlaceholderGeneratedContent = generatedContents[index] ?? '';
@@ -783,6 +959,26 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
   }
 
   if (generatedFiles.includes('package.json') === true) {
+    const packageJsonIndex: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonIndex = generatedFiles.indexOf('package.json');
+    const packageJsonContent: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonContent = generatedContents[packageJsonIndex] ?? '';
+    const packageJson: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJson = JSON.parse(packageJsonContent) as Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJson;
+    const packageJsonKeys: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonKeys = Object.keys(packageJson);
+    const packageJsonKnownKeys: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonKnownKeys = new Set(libItemSortOrderKeys);
+    const packageJsonOrderedKeys: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonOrderedKeys = [
+      ...libItemSortOrderKeys.filter((key) => packageJsonKeys.includes(key)),
+      ...packageJsonKeys.filter((key) => packageJsonKnownKeys.has(key) === false),
+    ];
+    const packageEngines: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageEngines = packageJson['engines'];
+
+    deepStrictEqual(packageJsonKeys, packageJsonOrderedKeys, `Generated package.json keys must follow Nova's canonical order in "${targetDirectory}".`);
+    strictEqual(
+      typeof packageEngines === 'object'
+      && packageEngines !== null
+      && typeof Reflect.get(packageEngines, 'node') === 'string',
+      true,
+      `Generated package.json must declare engines.node in "${targetDirectory}".`,
+    );
+
     await verifyScriptContract(join(targetDirectory, 'package.json'));
   }
 
@@ -807,6 +1003,9 @@ async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_V
   await createMonorepoRoot(targetDirectory, 'contract-starter');
 
   await verifyGeneratedOutput(targetDirectory, [
+    '.env',
+    '.env.sample',
+    '.gitignore',
     'eslint.config.mts',
     'nova.config.json',
     'package.json',
@@ -916,6 +1115,84 @@ describe('scaffold output contract', async () => {
     if (rejectedTemplateContract !== undefined) {
       throw rejectedTemplateContract.reason;
     }
+
+    return;
+  });
+
+  it('routes the pfSense single-instance settings page directly to its native editor', async () => {
+    const settingsPagePath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsPagePath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'pkg', '[__WORKSPACE_NAME__].xml');
+    const settingsPageContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsPageContent = await readFile(settingsPagePath, 'utf-8');
+    const settingsHandlerPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsHandlerPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'pkg', '[__WORKSPACE_NAME__].inc');
+    const settingsHandlerContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_SettingsHandlerContent = await readFile(settingsHandlerPath, 'utf-8');
+    const packageScriptPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageScriptPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'sbin', '[__WORKSPACE_NAME__]');
+    const packageScriptContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageScriptContent = await readFile(packageScriptPath, 'utf-8');
+    const packageInfoPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageInfoPath = join(packageDirectory, 'templates', 'scaffold', 'package', 'pfsense', 'port', 'files', 'usr', 'local', 'share', 'pfSense-pkg-[__WORKSPACE_IDENTIFIER__]', 'info.xml');
+    const packageInfoContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageInfoContent = await readFile(packageInfoPath, 'utf-8');
+
+    strictEqual(
+      settingsPageContent.includes('<url>/pkg_edit.php?xml=[__WORKSPACE_NAME__].xml&amp;id=0</url>'),
+      true,
+    );
+
+    strictEqual(
+      settingsPageContent.includes('<aftersaveredirect>'),
+      false,
+    );
+
+    strictEqual(
+      settingsPageContent.includes('<name>Starter Configuration</name>'),
+      true,
+    );
+
+    strictEqual(
+      settingsPageContent.includes('<name>[__PFSENSE_CONFIG_NAME__]</name>'),
+      true,
+    );
+
+    strictEqual(
+      settingsPageContent.includes('<addedit_string>[__WORKSPACE_TITLE__]: saved settings</addedit_string>'),
+      true,
+    );
+
+    strictEqual(
+      settingsPageContent.includes('<name>Scheduled Task</name>'),
+      false,
+    );
+
+    strictEqual(
+      settingsPageContent.includes('<fieldname>package_status</fieldname>'),
+      false,
+    );
+
+    strictEqual(
+      settingsPageContent.includes('<fieldname>task_frequency</fieldname>'),
+      true,
+    );
+
+    strictEqual(
+      settingsPageContent.includes('<option><name>Every minute</name><value>minute</value></option>'),
+      true,
+    );
+
+    strictEqual(
+      settingsHandlerContent.includes('\'minute\' => [\'*\', \'*\', \'*\', \'*\', \'*\']'),
+      true,
+    );
+
+    strictEqual(
+      settingsPageContent.includes('<fieldname>schedule</fieldname>'),
+      false,
+    );
+
+    strictEqual(
+      packageScriptContent.includes('logger(LOG_NOTICE,'),
+      true,
+    );
+
+    strictEqual(
+      packageInfoContent.includes('<internal_name>[__WORKSPACE_IDENTIFIER__]</internal_name>'),
+      true,
+    );
 
     return;
   });

@@ -65,7 +65,9 @@ export class Runner {
   public static async run(options: Cli_Scaffold_App_Nextjs_Runner_Run_Options): Cli_Scaffold_App_Nextjs_Runner_Run_Returns {
     await runScaffold(options, {
       category: 'app',
+      displayName: 'Next.js',
       importMetaUrl: import.meta.url,
+      resolveWorkspaceTemplateSubpaths: () => ['scaffold-options/app/web-launchpad'],
       templateQuestions: cliScaffoldAppNextjsTemplateQuestions,
       templateSubpath: 'scaffold/app/nextjs',
       typeName: 'nextjs',
@@ -73,6 +75,7 @@ export class Runner {
         if (answers.get('dockerImage') === 'enabled') {
           await CliGenerateDockerImage.generateForTarget({
             profile: 'nextjs-standalone',
+            reportFiles: false,
             replaceFile: true,
             workspaceDirectory,
           });

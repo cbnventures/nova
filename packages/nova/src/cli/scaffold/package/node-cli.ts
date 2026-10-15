@@ -29,6 +29,7 @@ export class Runner {
   public static async run(options: Cli_Scaffold_Package_NodeCli_Runner_Run_Options): Cli_Scaffold_Package_NodeCli_Runner_Run_Returns {
     await runScaffold(options, {
       category: 'package',
+      displayName: 'Node.js CLI',
       importMetaUrl: import.meta.url,
       templateSubpath: 'scaffold/package/node-cli',
       typeName: 'node-cli',

@@ -27,6 +27,8 @@ export type Cli_Scaffold_App_Vite_ResolveWorkspaceTemplateSubpaths_Pwa = string;
  */
 export type Cli_Scaffold_App_Vite_Runner_Run_Options_DryRun = true;
 
+export type Cli_Scaffold_App_Vite_Runner_Run_Options_Install = boolean;
+
 export type Cli_Scaffold_App_Vite_Runner_Run_Options_DockerImage = true;
 
 export type Cli_Scaffold_App_Vite_Runner_Run_Options_Framework = string;
@@ -44,6 +46,7 @@ export type Cli_Scaffold_App_Vite_Runner_Run_Options_WorkspaceName = string;
 export type Cli_Scaffold_App_Vite_Runner_Run_Options = {
   dockerImage?: Cli_Scaffold_App_Vite_Runner_Run_Options_DockerImage;
   dryRun?: Cli_Scaffold_App_Vite_Runner_Run_Options_DryRun;
+  install?: Cli_Scaffold_App_Vite_Runner_Run_Options_Install;
   framework?: Cli_Scaffold_App_Vite_Runner_Run_Options_Framework;
   name?: Cli_Scaffold_App_Vite_Runner_Run_Options_Name;
   nonInteractive?: Cli_Scaffold_App_Vite_Runner_Run_Options_NonInteractive;

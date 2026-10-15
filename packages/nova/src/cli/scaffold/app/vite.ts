@@ -36,21 +36,25 @@ export const cliScaffoldAppViteTemplateQuestions: Cli_Scaffold_App_Vite_Template
       {
         title: 'Vanilla TypeScript (default)',
         description: 'Use the browser platform without a component framework',
+        replacement: 'Vite',
         value: 'vanilla',
       },
       {
         title: 'React',
         description: 'Use React with the official Vite plugin',
+        replacement: 'React',
         value: 'react',
       },
       {
         title: 'Vue',
         description: 'Use Vue with the official Vite plugin',
+        replacement: 'Vue',
         value: 'vue',
       },
       {
         title: 'Svelte',
         description: 'Use Svelte with the official Vite plugin',
+        replacement: 'Svelte',
         value: 'svelte',
       },
     ],
@@ -122,6 +126,7 @@ function resolveWorkspaceTemplateSubpaths(answers: Cli_Scaffold_App_Vite_Resolve
   const pwa: Cli_Scaffold_App_Vite_ResolveWorkspaceTemplateSubpaths_Pwa = answers.get('pwa') ?? 'disabled';
 
   return [
+    'scaffold-options/app/web-launchpad',
     `scaffold-options/app/vite/framework/${framework}`,
     `scaffold-options/app/vite/pwa/${pwa}`,
   ];
@@ -151,6 +156,7 @@ export class Runner {
   public static async run(options: Cli_Scaffold_App_Vite_Runner_Run_Options): Cli_Scaffold_App_Vite_Runner_Run_Returns {
     await runScaffold(options, {
       category: 'app',
+      displayName: 'Vite',
       importMetaUrl: import.meta.url,
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldAppViteTemplateQuestions,
@@ -192,6 +198,7 @@ export class Runner {
           await CliGenerateDockerImage.generateForTarget({
             buildDirectory: 'dist',
             profile: 'static-site',
+            reportFiles: false,
             replaceFile: true,
             workspaceDirectory,
           });

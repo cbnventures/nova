@@ -20,12 +20,14 @@ export type Cli_Generate_DockerImage_Index_Runner_BuildRuntimeDirectives_Lines =
 export type Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options_DryRun = boolean;
 export type Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options_BuildDirectory = string;
 export type Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options_Profile = Shared_DockerImageProfile;
+export type Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options_ReportFiles = boolean;
 export type Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options_ReplaceFile = boolean;
 export type Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options_WorkspaceDirectory = string;
 export type Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options = {
   buildDirectory?: Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options_BuildDirectory;
   dryRun?: Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options_DryRun;
   profile: Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options_Profile;
+  reportFiles?: Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options_ReportFiles;
   replaceFile?: Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options_ReplaceFile;
   workspaceDirectory: Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_Options_WorkspaceDirectory;
 };
@@ -51,6 +53,7 @@ export type Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_DockerfileCo
 export type Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_PackageJsonContent = string;
 export type Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_IsDryRun = boolean;
 export type Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_IsReplaceFile = boolean;
+export type Cli_Generate_DockerImage_Index_Runner_GenerateForTarget_ReportFiles = boolean;
 
 /**
  * CLI - Generate - Docker Image - Is Profile.

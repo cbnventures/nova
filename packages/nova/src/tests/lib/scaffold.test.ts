@@ -31,6 +31,8 @@ import {
   detectMonorepoContext,
   normalizeWorkspaceRelativePath,
   promptScaffoldOptions,
+  resolveScaffoldEnvironmentPrefix,
+  resolveScaffoldInstallInvocation,
   resolveTemplateAnswers,
   resolveWorkspacePackageName,
 } from '../../lib/scaffold.js';
@@ -61,7 +63,7 @@ import type {
   Tests_Lib_Scaffold_DetectMonorepoContext_TemporaryPrefix,
   Tests_Lib_Scaffold_OptionalTemplateQuestions,
   Tests_Lib_Scaffold_Prompts_MockModule,
-  Tests_Lib_Scaffold_PromptScaffoldOptions_UsesCompleteValuesWithoutPrompting_Result,
+  Tests_Lib_Scaffold_PromptScaffoldOptions_DefaultsNewMonorepoToNamedDirectoryWithoutPrompting_Result,
   Tests_Lib_Scaffold_ResolveTemplateAnswers_PromptsForAMissingInteractiveValue_Result,
   Tests_Lib_Scaffold_ResolveTemplateAnswers_RejectsAMissingNonInteractiveValue_Result,
   Tests_Lib_Scaffold_ResolveTemplateAnswers_RejectsAnInvalidProvidedValue_Result,
@@ -216,6 +218,58 @@ describe('workspace contract', () => {
     return;
   });
 
+  it('derives non-overlapping environment prefixes', () => {
+    strictEqual(resolveScaffoldEnvironmentPrefix({
+      project: { prefix: 'PROJECT_' },
+      workspaces: {
+        './apps/api': { prefix: 'API_' },
+      },
+      workflows: {
+        publish: { prefix: 'PUBLISH_' },
+      },
+    }, 'web'), 'WEB_');
+    strictEqual(resolveScaffoldEnvironmentPrefix({
+      workspaces: {
+        './apps/api': { prefix: 'API_' },
+      },
+    }, 'api-admin'), 'W1_API_ADMIN_');
+    strictEqual(resolveScaffoldEnvironmentPrefix({}, 'github'), 'W1_GITHUB_');
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Scaffold - Resolve Scaffold Install Invocation.
+ *
+ * @since 0.31.0
+ */
+describe('resolveScaffoldInstallInvocation', () => {
+  it('routes managers through supported clients', () => {
+    deepStrictEqual(resolveScaffoldInstallInvocation('npm'), {
+      command: 'npm',
+      commandArguments: ['install'],
+    });
+    deepStrictEqual(resolveScaffoldInstallInvocation('pnpm'), {
+      command: 'corepack',
+      commandArguments: [
+        'pnpm',
+        'install',
+      ],
+    });
+    deepStrictEqual(resolveScaffoldInstallInvocation('yarn'), {
+      command: 'corepack',
+      commandArguments: [
+        'yarn',
+        'install',
+      ],
+    });
+
+    return;
+  });
+
   return;
 });
 
@@ -320,10 +374,10 @@ describe('resolveTemplateAnswers', () => {
  * @since 0.26.0
  */
 describe('promptScaffoldOptions', () => {
-  it('uses complete values without prompting', async () => {
-    const result: Tests_Lib_Scaffold_PromptScaffoldOptions_UsesCompleteValuesWithoutPrompting_Result = await promptScaffoldOptions({ context: 'monorepo' }, {
+  it('defaults new monorepo to named directory without prompting', async () => {
+    const result: Tests_Lib_Scaffold_PromptScaffoldOptions_DefaultsNewMonorepoToNamedDirectoryWithoutPrompting_Result = await promptScaffoldOptions({ context: 'monorepo' }, {
       name: 'my-project',
-      output: './my-project',
+      output: undefined,
       typeName: 'vite',
       workspaceBaseDirectory: 'apps',
       workspaceName: 'web',

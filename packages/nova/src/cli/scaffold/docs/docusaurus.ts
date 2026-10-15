@@ -2,7 +2,6 @@ import {
   LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE,
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_CONTENT,
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET,
-  LIB_REGEX_PLACEHOLDER_DOCUSAURUS_SEARCH,
 } from '../../../lib/regex.js';
 import { runScaffold } from '../../../lib/scaffold.js';
 import { Runner as CliGenerateDockerImage } from '../../generate/docker-image/index.js';
@@ -89,29 +88,6 @@ export const cliScaffoldDocsDocusaurusTemplateQuestions: Cli_Scaffold_Docs_Docus
     choices: [
       {
         title: 'No (default)',
-        description: 'Do not build a local search index',
-        replacement: 'false',
-        value: 'disabled',
-      },
-      {
-        title: 'Yes',
-        description: 'Enable Nova preset local search',
-        replacement: '{}',
-        value: 'enabled',
-      },
-    ],
-    defaultValue: 'disabled',
-    flag: '--search',
-    flagValue: 'enabled',
-    initial: 0,
-    message: 'Enable local search?',
-    name: 'search',
-    placeholder: LIB_REGEX_PLACEHOLDER_DOCUSAURUS_SEARCH,
-  },
-  {
-    choices: [
-      {
-        title: 'No (default)',
         description: 'Keep deployment platform-neutral',
         value: 'disabled',
       },
@@ -172,6 +148,7 @@ export class Runner {
   public static async run(options: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options): Cli_Scaffold_Docs_Docusaurus_Runner_Run_Returns {
     await runScaffold(options, {
       category: 'docs',
+      displayName: 'Docusaurus',
       importMetaUrl: import.meta.url,
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldDocsDocusaurusTemplateQuestions,
@@ -182,6 +159,7 @@ export class Runner {
           await CliGenerateDockerImage.generateForTarget({
             buildDirectory: 'build',
             profile: 'static-site',
+            reportFiles: false,
             replaceFile: true,
             workspaceDirectory,
           });

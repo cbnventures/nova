@@ -138,6 +138,7 @@ describe.sequential('CliScaffoldAppVite.run', async () => {
 
     await CliScaffoldAppVite.run({
       dryRun: true,
+      install: false,
       name: 'my-vite-app',
       nonInteractive: true,
       workspaceName: 'vite',
@@ -167,6 +168,7 @@ describe.sequential('CliScaffoldAppVite.run', async () => {
     process.chdir(projectDirectory);
 
     await CliScaffoldAppVite.run({
+      install: false,
       name: 'my-vite-app',
       nonInteractive: true,
       workspaceName: 'vite',
@@ -229,6 +231,7 @@ describe.sequential('CliScaffoldAppVite.run', async () => {
     process.chdir(projectDirectory);
 
     await CliScaffoldAppVite.run({
+      install: false,
       nonInteractive: true,
       workspaceName: 'vite',
       output: './apps/vite',
@@ -284,6 +287,7 @@ describe.sequential('CliScaffoldAppVite.run', async () => {
     process.chdir(projectDirectory);
 
     await CliScaffoldAppVite.run({
+      install: false,
       nonInteractive: true,
       workspaceName: 'vite',
       output: './apps/vite',
@@ -335,6 +339,7 @@ describe.sequential('CliScaffoldAppVite.run', async () => {
     process.chdir(projectDirectory);
 
     await CliScaffoldAppVite.run({
+      install: false,
       nonInteractive: true,
       workspaceName: 'vite',
       output: './apps/vite',
@@ -367,6 +372,7 @@ describe.sequential('CliScaffoldAppVite.run', async () => {
     strictEqual(novaConfigContents.includes('"name": "workspace-test-app-vite"'), true);
 
     await CliScaffoldAppVite.run({
+      install: false,
       nonInteractive: true,
       workspaceName: 'vite',
       output: './apps/vite',

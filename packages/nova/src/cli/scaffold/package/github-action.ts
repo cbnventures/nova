@@ -29,6 +29,13 @@ export class Runner {
   public static async run(options: Cli_Scaffold_Package_GithubAction_Runner_Run_Options): Cli_Scaffold_Package_GithubAction_Runner_Run_Returns {
     await runScaffold(options, {
       category: 'package',
+      completionNotes: ['Set "INPUT_NAME" in the generated GitHub Action workspace .env file before running the local action.'],
+      displayName: 'GitHub Action',
+      environmentVariables: [{
+        defaultValue: 'Nova',
+        key: 'INPUT_NAME',
+        reach: 'local',
+      }],
       importMetaUrl: import.meta.url,
       rootTemplateSubpath: 'scaffold/package/github-action-root',
       templateSubpath: 'scaffold/package/github-action',

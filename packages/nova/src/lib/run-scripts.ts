@@ -23,18 +23,20 @@ import type {
   Lib_RunScripts_Runner_Run_NodeEnvOption,
   Lib_RunScripts_Runner_Run_Options,
   Lib_RunScripts_Runner_Run_PackageJson,
-  Lib_RunScripts_Runner_Run_ParallelExitCode,
+  Lib_RunScripts_Runner_Run_ParallelResult,
   Lib_RunScripts_Runner_Run_Pattern,
   Lib_RunScripts_Runner_Run_Returns,
   Lib_RunScripts_Runner_Run_Scripts,
   Lib_RunScripts_Runner_Run_SpawnErrorMessage,
+  Lib_RunScripts_Runner_RunParallel_ActiveScript,
   Lib_RunScripts_Runner_RunParallel_BufferMs,
   Lib_RunScripts_Runner_RunParallel_Child,
   Lib_RunScripts_Runner_RunParallel_Children,
+  Lib_RunScripts_Runner_RunParallel_Close_ExitCode,
   Lib_RunScripts_Runner_RunParallel_Close_PartialLineStreams,
   Lib_RunScripts_Runner_RunParallel_Close_StderrPartial,
   Lib_RunScripts_Runner_RunParallel_Close_StdoutPartial,
-  Lib_RunScripts_Runner_RunParallel_ColoredPrefix,
+  Lib_RunScripts_Runner_RunParallel_ColoredScript,
   Lib_RunScripts_Runner_RunParallel_ColorFunction,
   Lib_RunScripts_Runner_RunParallel_ColorFunctions,
   Lib_RunScripts_Runner_RunParallel_ColorIndex,
@@ -44,10 +46,16 @@ import type {
   Lib_RunScripts_Runner_RunParallel_ExitPromises,
   Lib_RunScripts_Runner_RunParallel_ExitResults,
   Lib_RunScripts_Runner_RunParallel_Failed,
+  Lib_RunScripts_Runner_RunParallel_FailedScript,
+  Lib_RunScripts_Runner_RunParallel_FailureReason,
+  Lib_RunScripts_Runner_RunParallel_FailureReasons,
+  Lib_RunScripts_Runner_RunParallel_FailureSummaryLine,
   Lib_RunScripts_Runner_RunParallel_FlushInterval,
   Lib_RunScripts_Runner_RunParallel_FlushQueue,
+  Lib_RunScripts_Runner_RunParallel_FlushQueue_ActiveScriptLabel,
   Lib_RunScripts_Runner_RunParallel_FlushQueue_FormattedLine,
-  Lib_RunScripts_Runner_RunParallel_FlushQueue_Prefix,
+  Lib_RunScripts_Runner_RunParallel_FlushQueue_FormattedResult,
+  Lib_RunScripts_Runner_RunParallel_FlushQueue_ScriptLabel,
   Lib_RunScripts_Runner_RunParallel_ForwardSignal,
   Lib_RunScripts_Runner_RunParallel_ForwardSignal_Returns,
   Lib_RunScripts_Runner_RunParallel_HandleData,
@@ -56,8 +64,9 @@ import type {
   Lib_RunScripts_Runner_RunParallel_HandleData_PartialLineStreams,
   Lib_RunScripts_Runner_RunParallel_HandleData_Text,
   Lib_RunScripts_Runner_RunParallel_HandleSigint,
+  Lib_RunScripts_Runner_RunParallel_HandleSigint_ActiveScriptLabel,
   Lib_RunScripts_Runner_RunParallel_HandleSigterm,
-  Lib_RunScripts_Runner_RunParallel_LastFlushedScript,
+  Lib_RunScripts_Runner_RunParallel_InterruptionState,
   Lib_RunScripts_Runner_RunParallel_MatchedScripts,
   Lib_RunScripts_Runner_RunParallel_NodeEnv,
   Lib_RunScripts_Runner_RunParallel_NpmCommand,
@@ -66,7 +75,9 @@ import type {
   Lib_RunScripts_Runner_RunParallel_Queue,
   Lib_RunScripts_Runner_RunParallel_Returns,
   Lib_RunScripts_Runner_RunParallel_Script,
+  Lib_RunScripts_Runner_RunParallel_ScriptEnvironment,
   Lib_RunScripts_Runner_RunParallel_ScriptPartialLines,
+  Lib_RunScripts_Runner_RunParallel_SettledScripts,
   Lib_RunScripts_Runner_RunParallel_WriteStderr,
   Lib_RunScripts_Runner_RunParallel_WriteStdout,
   Lib_RunScripts_Runner_SpawnScript_Child,
@@ -176,7 +187,7 @@ export class Runner {
             return 1;
           }
 
-          options.writeStdout(`└─ ${chalk.cyan(matchedScript)} ── ${chalk.green('✓')}\n`);
+          options.writeStdout(`└─ ${chalk.cyan(matchedScript)} ── ${chalk.green('✔')}\n`);
         } catch (error) {
           const spawnErrorMessage: Lib_RunScripts_Runner_Run_SpawnErrorMessage = (error instanceof Error) ? error.message : String(error);
 
@@ -206,7 +217,7 @@ export class Runner {
         return 1;
       }
 
-      const parallelExitCode: Lib_RunScripts_Runner_Run_ParallelExitCode = await Runner.runParallel(
+      const parallelResult: Lib_RunScripts_Runner_Run_ParallelResult = await Runner.runParallel(
         matchedScripts,
         bufferMs,
         nodeEnv,
@@ -214,7 +225,15 @@ export class Runner {
         options['writeStdout'],
       );
 
-      if (parallelExitCode > 0) {
+      if (parallelResult === 'interrupted') {
+        options.writeStdout('\n');
+
+        options.printInfo('Scripts stopped.');
+
+        return 0;
+      }
+
+      if (parallelResult === 'failed') {
         return 1;
       }
 
@@ -372,9 +391,8 @@ export class Runner {
   /**
    * Lib - Run Scripts - Run Parallel.
    *
-   * Spawns matched scripts with piped stdio and streams their
-   * output through colored prefixes using a time-windowed log queue
-   * that groups consecutive lines from the same script visually.
+   * Spawns matched scripts with piped stdio and streams their output through buffered,
+   * colored sections that preserve child colors and summarize failures.
    *
    * @param {Lib_RunScripts_Runner_RunParallel_MatchedScripts} matchedScripts - Matched scripts.
    * @param {Lib_RunScripts_Runner_RunParallel_BufferMs}       bufferMs       - Buffer ms.
@@ -390,8 +408,20 @@ export class Runner {
    */
   private static async runParallel(matchedScripts: Lib_RunScripts_Runner_RunParallel_MatchedScripts, bufferMs: Lib_RunScripts_Runner_RunParallel_BufferMs, nodeEnv: Lib_RunScripts_Runner_RunParallel_NodeEnv, writeStderr: Lib_RunScripts_Runner_RunParallel_WriteStderr, writeStdout: Lib_RunScripts_Runner_RunParallel_WriteStdout): Lib_RunScripts_Runner_RunParallel_Returns {
     const npmCommand: Lib_RunScripts_Runner_RunParallel_NpmCommand = Runner.getNpmCommand();
+    const scriptEnvironment: Lib_RunScripts_Runner_RunParallel_ScriptEnvironment = Runner.getScriptEnvironment(nodeEnv);
 
-    // Build color-coded prefixes for each script.
+    if (
+      scriptEnvironment['FORCE_COLOR'] === undefined
+      && scriptEnvironment['NO_COLOR'] === undefined
+      && (
+        process.stdout.isTTY === true
+        || process.stderr.isTTY === true
+      )
+    ) {
+      Reflect.set(scriptEnvironment, 'FORCE_COLOR', '1');
+    }
+
+    // Build color-coded labels for each script.
     const colorFunctions: Lib_RunScripts_Runner_RunParallel_ColorFunctions = [
       chalk.cyan,
       chalk.yellow,
@@ -405,9 +435,9 @@ export class Runner {
     for (let colorIndex: Lib_RunScripts_Runner_RunParallel_ColorIndex = 0; colorIndex < matchedScripts.length; colorIndex += 1) {
       const script: Lib_RunScripts_Runner_RunParallel_Script = matchedScripts[colorIndex] as Lib_RunScripts_Runner_RunParallel_Script;
       const colorFunction: Lib_RunScripts_Runner_RunParallel_ColorFunction = colorFunctions[colorIndex % colorFunctions.length] as Lib_RunScripts_Runner_RunParallel_ColorFunction;
-      const coloredPrefix: Lib_RunScripts_Runner_RunParallel_ColoredPrefix = colorFunction(`[${script}]`);
+      const coloredScript: Lib_RunScripts_Runner_RunParallel_ColoredScript = colorFunction(script);
 
-      prefixes.set(script, coloredPrefix);
+      prefixes.set(script, coloredScript);
     }
 
     // Shared queue and state.
@@ -415,14 +445,20 @@ export class Runner {
     const partialLines: Lib_RunScripts_Runner_RunParallel_PartialLines = new Map();
     const children: Lib_RunScripts_Runner_RunParallel_Children = [];
     const exitPromises: Lib_RunScripts_Runner_RunParallel_ExitPromises = [];
+    const failureReasons: Lib_RunScripts_Runner_RunParallel_FailureReasons = new Map();
+    const settledScripts: Lib_RunScripts_Runner_RunParallel_SettledScripts = new Set();
 
-    let lastFlushedScript: Lib_RunScripts_Runner_RunParallel_LastFlushedScript = '';
+    let activeScript: Lib_RunScripts_Runner_RunParallel_ActiveScript = '';
+    const interruptionState: Lib_RunScripts_Runner_RunParallel_InterruptionState = {
+      requested: false,
+    };
 
     /**
      * Lib - Run Scripts - Run Parallel - Flush Queue.
      *
-     * Writes every queued line to stdout or stderr with its colored prefix and
-     * inserts a blank separator whenever output switches to a different script.
+     * Writes every queued line to stdout or stderr with its colored prefix. A
+     * framed section opens when output switches scripts and closes either when
+     * the script finishes or before another script's section begins.
      *
      * @private
      *
@@ -431,15 +467,37 @@ export class Runner {
     // Flush all queued lines with prefixes and blank-line separators.
     const flushQueue: Lib_RunScripts_Runner_RunParallel_FlushQueue = () => {
       for (const entry of queue) {
-        const prefix: Lib_RunScripts_Runner_RunParallel_FlushQueue_Prefix = prefixes.get(entry['script']) ?? `[${entry['script']}]`;
+        if (activeScript !== '' && activeScript !== entry['script']) {
+          const activeScriptLabel: Lib_RunScripts_Runner_RunParallel_FlushQueue_ActiveScriptLabel = prefixes.get(activeScript) ?? activeScript;
 
-        if (lastFlushedScript !== '' && lastFlushedScript !== entry['script']) {
-          writeStdout('\n');
+          writeStdout(`└─ ${activeScriptLabel} ──\n\n`);
+
+          activeScript = '';
         }
 
-        lastFlushedScript = entry['script'];
+        const scriptLabel: Lib_RunScripts_Runner_RunParallel_FlushQueue_ScriptLabel = prefixes.get(entry['script']) ?? entry['script'];
 
-        const formattedLine: Lib_RunScripts_Runner_RunParallel_FlushQueue_FormattedLine = `${prefix} ${entry['line']}\n`;
+        if (activeScript === '') {
+          writeStdout(`┌─ ${scriptLabel} ──\n`);
+
+          activeScript = entry['script'];
+        }
+
+        if (entry['kind'] === 'result') {
+          const formattedResult: Lib_RunScripts_Runner_RunParallel_FlushQueue_FormattedResult = `└─ ${scriptLabel} ── ${entry['line']}\n`;
+
+          if (entry['stream'] === 'stderr') {
+            writeStderr(formattedResult);
+          } else {
+            writeStdout(formattedResult);
+          }
+
+          activeScript = '';
+
+          continue;
+        }
+
+        const formattedLine: Lib_RunScripts_Runner_RunParallel_FlushQueue_FormattedLine = `[${scriptLabel}] ${entry['line']}\n`;
 
         if (entry['stream'] === 'stderr') {
           writeStderr(formattedLine);
@@ -459,7 +517,7 @@ export class Runner {
         'run',
         script,
       ], {
-        env: Runner.getScriptEnvironment(nodeEnv),
+        env: scriptEnvironment,
         stdio: 'pipe',
         shell: false,
       });
@@ -494,6 +552,10 @@ export class Runner {
        */
       // Handle incoming data by splitting into lines and queuing.
       const handleData: Lib_RunScripts_Runner_RunParallel_HandleData = (data, stream) => {
+        if (interruptionState['requested'] === true) {
+          return;
+        }
+
         const partialLineStreams: Lib_RunScripts_Runner_RunParallel_HandleData_PartialLineStreams = partialLines.get(script) ?? new Map([
           [
             'stdout' as const,
@@ -517,6 +579,7 @@ export class Runner {
         for (const line of lines) {
           if (line.length > 0) {
             queue.push({
+              kind: 'output',
               script,
               stream,
               line,
@@ -542,6 +605,20 @@ export class Runner {
       // Track exit and flush remaining partial line.
       const exitPromise: Lib_RunScripts_Runner_RunParallel_ExitPromise = new Promise((promiseResolve) => {
         child.on('close', (code) => {
+          if (settledScripts.has(script) === true) {
+            return;
+          }
+
+          settledScripts.add(script);
+
+          if (interruptionState['requested'] === true) {
+            partialLines.delete(script);
+
+            promiseResolve(0);
+
+            return;
+          }
+
           const partialLineStreams: Lib_RunScripts_Runner_RunParallel_Close_PartialLineStreams = partialLines.get(script) ?? new Map([
             [
               'stdout' as const,
@@ -557,6 +634,7 @@ export class Runner {
 
           if (stdoutPartial.length > 0) {
             queue.push({
+              kind: 'output',
               script,
               stream: 'stdout',
               line: stdoutPartial,
@@ -565,6 +643,7 @@ export class Runner {
 
           if (stderrPartial.length > 0) {
             queue.push({
+              kind: 'output',
               script,
               stream: 'stderr',
               line: stderrPartial,
@@ -576,30 +655,53 @@ export class Runner {
 
           partialLines.set(script, partialLineStreams);
 
-          if (code !== 0) {
+          const exitCode: Lib_RunScripts_Runner_RunParallel_Close_ExitCode = code ?? 1;
+
+          if (exitCode !== 0) {
+            failureReasons.set(script, `exit code ${exitCode}`);
+
             queue.push({
+              kind: 'result',
               script,
               stream: 'stderr',
-              line: `✗ (exit code ${code ?? 1})`,
+              line: chalk.red(`✗ (exit code ${exitCode})`),
             });
           } else {
             queue.push({
+              kind: 'result',
               script,
               stream: 'stdout',
-              line: '✓',
+              line: chalk.green('✔'),
             });
           }
 
-          promiseResolve(code ?? 1);
+          promiseResolve(exitCode);
 
           return;
         });
 
         child.on('error', (error): Lib_RunScripts_Runner_RunParallel_Error_Returns => {
+          if (settledScripts.has(script) === true) {
+            return;
+          }
+
+          settledScripts.add(script);
+
+          if (interruptionState['requested'] === true) {
+            partialLines.delete(script);
+
+            promiseResolve(0);
+
+            return;
+          }
+
+          failureReasons.set(script, `failed to start: ${error.message}`);
+
           queue.push({
+            kind: 'result',
             script,
             stream: 'stderr',
-            line: `error: ${error.message}`,
+            line: chalk.red(`✗ (failed to start: ${error.message})`),
           });
 
           promiseResolve(1);
@@ -642,16 +744,33 @@ export class Runner {
     /**
      * Lib - Run Scripts - Run Parallel - Handle SIGINT.
      *
-     * Detaches this named listener after the parallel run so repeated programmatic runs do not
-     * accumulate process-level signal handlers.
+     * Treats the first interrupt as an intentional cancellation and flushes
+     * output already produced before closing its active frame and asking every child
+     * process to stop without reporting expected signal exits as failures.
      *
      * @private
      *
      * @returns {Lib_RunScripts_Runner_RunParallel_SIGINT_Returns}
      *
-     * @since 0.26.0
+     * @since 0.31.0
      */
     const handleSigint: Lib_RunScripts_Runner_RunParallel_HandleSigint = () => {
+      if (interruptionState['requested'] === true) {
+        return;
+      }
+
+      Reflect.set(interruptionState, 'requested', true);
+
+      flushQueue();
+
+      if (activeScript !== '') {
+        const activeScriptLabel: Lib_RunScripts_Runner_RunParallel_HandleSigint_ActiveScriptLabel = prefixes.get(activeScript) ?? activeScript;
+
+        writeStdout(`└─ ${activeScriptLabel} ──\n`);
+
+        activeScript = '';
+      }
+
       forwardSignal('SIGINT');
 
       return;
@@ -691,6 +810,10 @@ export class Runner {
       return;
     });
 
+    if (interruptionState['requested'] === true) {
+      return 'interrupted';
+    }
+
     const failed: Lib_RunScripts_Runner_RunParallel_Failed = exitResults.some(
       (exitResult) => exitResult.status === 'rejected'
         || (
@@ -700,9 +823,19 @@ export class Runner {
     );
 
     if (failed === true) {
-      return 1;
+      writeStderr(`\n${chalk.red('Failed scripts:')}\n`);
+
+      for (const failureReasonEntry of failureReasons) {
+        const failedScript: Lib_RunScripts_Runner_RunParallel_FailedScript = failureReasonEntry[0];
+        const failureReason: Lib_RunScripts_Runner_RunParallel_FailureReason = failureReasonEntry[1];
+        const failureSummaryLine: Lib_RunScripts_Runner_RunParallel_FailureSummaryLine = `  ${chalk.red('✗')} ${chalk.cyan(failedScript)} — ${failureReason}\n`;
+
+        writeStderr(failureSummaryLine);
+      }
+
+      return 'failed';
     }
 
-    return 0;
+    return 'completed';
   }
 }

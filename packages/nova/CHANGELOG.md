@@ -1,5 +1,44 @@
 # @cbnventures/nova
 
+## 0.31.0 - 2026-10-15
+
+### UPDATED
+- Moved Android scaffolding entirely into Nova with pinned Kotlin, Jetpack Compose, Gradle, resources, and native-test templates
+- Preserved executable and binary Android assets during generation
+- Taught generated Gradle commands to discover locally installed SDKs without machine-specific project files
+- Changed every scaffold command to collect all decisions before writing and create new projects in their own directories
+- Generated a canonical `.gitignore` for every new project and repaired it when adding workspaces to older Nova monorepos
+- Generated Nova-managed `.env` and `.env.sample` files for every root and workspace
+- Installed dependencies by default with an explicit `--no-install` opt-out
+- Added resolved-plan confirmation and precise existing-destination guidance to scaffold runs
+- Added stable staged progress, consistent success markers, and exact next commands to scaffold runs
+- Guided Discord bot users through installing the bot into a server with the `bot` scope
+- Replaced placeholder pages across generated web and native applications with polished framework-native launchpads
+- Added consistent Nova favicons and safely padded native app icons to generated applications
+- Standardized verified documentation links, aligned native launch sequences, and flush rounded social-link controls
+- Expanded the Docusaurus starter with preset-native sample content and local search enabled by default
+- Applied shared example legal identity defaults across generated projects
+- Added a working Android build-and-launch development flow with matching scaffold regression coverage
+- Restored framed parallel run-scripts output while preserving buffered logs, child colors, stream fidelity, and consolidated failure reporting
+- Expanded generated Express and Discord workspaces with testable starter behavior and grouped runtime feedback
+- Added a Nova-style command and help lifecycle to generated Node.js CLIs
+- Added bundled-action local testing to generated GitHub Actions
+- Expanded generated Homebridge plugins with a native tabbed settings and control gallery plus a separate native configuration mode
+- Expanded the pfSense starter WebGUI with saved schedules down to one minute and visible system-log output
+- Standardized Dockerfile section banners across generated container templates
+- Added guided Discord token setup to generated bot projects
+
+### FIXED
+- Updated the Cloudflare Workers and Astro Cloudflare scaffolds to Wrangler 4.151.0 and Workers Types 5.20261015.1
+- Made Worker runtime smoke checks use each workspace's own toolchain
+- Added pre-release detection for compatibility-date drift and cross-workspace binary collisions
+- Aligned generated workspace manifests with Nova's scaffold contracts
+- Applied framework-specific ESLint layers to the correct generated projects
+- Aligned generated Docker ignore files and publishing workflows with Nova's scaffold contracts
+- Restored Next.js public assets and Homebridge script grouping to their scaffold contracts
+- Treated Ctrl+C as an intentional stop for parallel run-scripts sessions
+- Suppressed expected child shutdown noise without leaving npm lifecycle failures or child processes running
+
 ## 0.30.1 - 2026-10-12
 
 ### FIXED

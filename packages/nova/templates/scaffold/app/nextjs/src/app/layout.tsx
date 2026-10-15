@@ -1,3 +1,4 @@
+import '../styles/nova-launchpad.css';
 import './globals.css';
 
 import type {
@@ -15,8 +16,11 @@ import type {
  * @since 0.0.0
  */
 export const metadata: App_Layout_Metadata = {
-  title: '[__PROJECT_SLUG__]',
-  description: 'A Next.js application',
+  title: 'Nova × Next.js',
+  description: 'A Nova-managed Next.js application',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 /**

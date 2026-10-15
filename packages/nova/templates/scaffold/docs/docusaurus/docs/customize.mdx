@@ -1,0 +1,38 @@
+---
+id: customize
+title: Customize the Site
+description: Replace the Docusaurus starter content and connect it to the generated project identity.
+keywords:
+  - customization
+  - docusaurus
+  - navigation
+tags:
+  - guide
+  - customization
+sidebar_position: 2
+---
+
+# Customize the Site
+
+The generated site is a working example, not a design you have to keep. Replace its sample content while preserving the preset-native structure that already handles responsive layout, color modes, and accessibility.
+
+## Project Identity
+
+Update the root `nova.config.json` first. The Docusaurus config reads that shared identity for the site metadata and copyright so the same values can feed other Nova generators and recipes.
+
+## Homepage
+
+Edit `src/pages/index.tsx` to compose the blocks exported by `@cbnventures/docusaurus-preset-nova/blocks`. Remove blocks you do not need and replace every sample label, metric, and link with project content.
+
+## Navigation
+
+Keep the navbar focused on the paths readers use most. Use `sidebars.ts` for the detailed hierarchy and the footer for secondary links, resources, and legal pages.
+
+## Validation
+
+Run the workspace checks before publishing:
+
+```bash
+npm run check --workspace "[__WORKSPACE_PACKAGE_NAME__]"
+npm run build --workspace "[__WORKSPACE_PACKAGE_NAME__]"
+```

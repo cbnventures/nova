@@ -2,6 +2,7 @@ import { createElement, StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from './app.js';
+import './styles/nova-launchpad.css';
 
 /**
  * Main - Root.

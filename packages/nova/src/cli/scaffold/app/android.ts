@@ -1,21 +1,25 @@
-import { spawn } from 'node:child_process';
-
+import {
+  LIB_REGEX_ANDROID_APPLICATION_ID_SEGMENT,
+  LIB_REGEX_PLACEHOLDER_ANDROID_APPLICATION_ID,
+  LIB_REGEX_PLACEHOLDER_ANDROID_PACKAGE_PATH,
+} from '../../../lib/regex.js';
 import { runScaffold } from '../../../lib/scaffold.js';
-import { isCommandExists } from '../../../lib/utility.js';
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ApplicationId,
-  Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ApplicationIdSegment,
-  Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ApplicationIdSegmentBase,
-  Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ApplicationName,
-  Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ApplicationNameSegments,
-  Cli_Scaffold_App_Android_Runner_PrepareWorkspace_Child,
-  Cli_Scaffold_App_Android_Runner_PrepareWorkspace_Exit_Returns,
-  Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ProvidedApplicationId,
-  Cli_Scaffold_App_Android_Runner_PrepareWorkspace_Returns,
-  Cli_Scaffold_App_Android_Runner_PrepareWorkspace_WorkspaceDirectory,
-  Cli_Scaffold_App_Android_Runner_PrepareWorkspace_WorkspaceName,
+  Cli_Scaffold_App_Android_Runner_IsApplicationIdValid_ApplicationId,
+  Cli_Scaffold_App_Android_Runner_IsApplicationIdValid_Returns,
+  Cli_Scaffold_App_Android_Runner_IsApplicationIdValid_Segments,
+  Cli_Scaffold_App_Android_Runner_ResolveApplicationId_ApplicationIdSegment,
+  Cli_Scaffold_App_Android_Runner_ResolveApplicationId_ApplicationIdSegmentBase,
+  Cli_Scaffold_App_Android_Runner_ResolveApplicationId_ProvidedApplicationId,
+  Cli_Scaffold_App_Android_Runner_ResolveApplicationId_Returns,
+  Cli_Scaffold_App_Android_Runner_ResolveApplicationId_WorkspaceName,
+  Cli_Scaffold_App_Android_Runner_ResolveReplacements_ApplicationId,
+  Cli_Scaffold_App_Android_Runner_ResolveReplacements_ApplicationPackagePath,
+  Cli_Scaffold_App_Android_Runner_ResolveReplacements_ProvidedApplicationId,
+  Cli_Scaffold_App_Android_Runner_ResolveReplacements_Returns,
+  Cli_Scaffold_App_Android_Runner_ResolveReplacements_WorkspaceName,
   Cli_Scaffold_App_Android_Runner_Run_Options,
   Cli_Scaffold_App_Android_Runner_Run_Returns,
 } from '../../../types/cli/scaffold/app/android.d.ts';
@@ -23,17 +27,84 @@ import type {
 /**
  * CLI - Scaffold - App - Android.
  *
- * Scaffolds a native Kotlin and Jetpack Compose application through Nova's
- * workspace pipeline and Google's official Android CLI project generator.
+ * Scaffolds a Nova-owned native Kotlin and Jetpack Compose application. The
+ * generated workspace stays deterministic because Nova owns every source file.
  *
  * @since 0.29.0
  */
 export class Runner {
   /**
+   * CLI - Scaffold - App - Android - Java Reserved Segments.
+   *
+   * Java keywords cannot be used as package segments. Nova keeps the Android
+   * application ID and namespace aligned, so this list applies both naming contracts.
+   *
+   * @private
+   *
+   * @since 0.31.0
+   */
+  static readonly #javaReservedSegments = new Set([
+    'abstract',
+    'assert',
+    'boolean',
+    'break',
+    'byte',
+    'case',
+    'catch',
+    'char',
+    'class',
+    'const',
+    'continue',
+    'default',
+    'do',
+    'double',
+    'else',
+    'enum',
+    'extends',
+    'false',
+    'final',
+    'finally',
+    'float',
+    'for',
+    'goto',
+    'if',
+    'implements',
+    'import',
+    'instanceof',
+    'int',
+    'interface',
+    'long',
+    'native',
+    'new',
+    'null',
+    'package',
+    'private',
+    'protected',
+    'public',
+    'return',
+    'short',
+    'static',
+    'strictfp',
+    'super',
+    'switch',
+    'synchronized',
+    'this',
+    'throw',
+    'throws',
+    'transient',
+    'true',
+    'try',
+    'void',
+    'volatile',
+    'while',
+    '_',
+  ]);
+
+  /**
    * CLI - Scaffold - App - Android - Run.
    *
-   * Verifies the Android CLI dependency before Nova writes its workspace files
-   * and delegates native project generation to the official empty activity template.
+   * Validates the application ID, resolves native template replacements, and
+   * delegates deterministic project generation to Nova's workspace pipeline.
    *
    * @param {Cli_Scaffold_App_Android_Runner_Run_Options} options - Options.
    *
@@ -42,11 +113,11 @@ export class Runner {
    * @since 0.29.0
    */
   public static async run(options: Cli_Scaffold_App_Android_Runner_Run_Options): Cli_Scaffold_App_Android_Runner_Run_Returns {
-    if (options['dryRun'] !== true && await isCommandExists('android') === false) {
+    if (options['applicationId'] !== undefined && Runner.isApplicationIdValid(options['applicationId']) === false) {
       Logger.customize({
         name: 'CliScaffoldAppAndroid.run',
-        purpose: 'dependency',
-      }).error('Android CLI must be installed and available on PATH before scaffolding a native Android application. No scaffold files were written.');
+        purpose: 'applicationId',
+      }).error('Android application ID must contain at least two dot-separated segments, each starting with a letter and containing only letters, numbers, or underscores. Java keywords cannot be used as segments. No scaffold files were written.');
 
       process.exitCode = 1;
 
@@ -55,71 +126,94 @@ export class Runner {
 
     await runScaffold(options, {
       category: 'app',
+      displayName: 'Android',
       importMetaUrl: import.meta.url,
+      resolvePresentationOptions: (workspaceName) => [{
+        flag: '--application-id',
+        value: Runner.resolveApplicationId(workspaceName, options['applicationId']),
+      }],
+      resolveReplacements: (workspaceName) => Runner.resolveReplacements(workspaceName, options['applicationId']),
+      resolveWorkspaceTemplateSubpaths: () => [
+        'scaffold-options/app/android-native',
+        'scaffold-options/app/android-launchpad',
+      ],
       templateSubpath: 'scaffold/app/android',
       typeName: 'android',
-      workspaceFinalizer: (workspaceDirectory, workspaceName) => Runner.prepareWorkspace(workspaceDirectory, workspaceName, options['applicationId']),
     });
 
     return;
   }
 
   /**
-   * CLI - Scaffold - App - Android - Prepare Workspace.
+   * CLI - Scaffold - App - Android - Resolve Replacements.
    *
-   * Uses Google's current empty activity template to generate Kotlin, Compose,
-   * Gradle, wrapper, resource, and native test files around Nova's workspace files.
+   * Builds the application-ID and package-path values consumed by Nova's
+   * source-controlled Android project template.
    *
-   * @param {Cli_Scaffold_App_Android_Runner_PrepareWorkspace_WorkspaceDirectory}    workspaceDirectory    - Workspace directory.
-   * @param {Cli_Scaffold_App_Android_Runner_PrepareWorkspace_WorkspaceName}         workspaceName         - Workspace name.
-   * @param {Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ProvidedApplicationId} providedApplicationId - Provided application id.
+   * @param {Cli_Scaffold_App_Android_Runner_ResolveReplacements_WorkspaceName}              workspaceName         - Workspace name.
+   * @param {Cli_Scaffold_App_Android_Runner_ResolveReplacements_ProvidedApplicationId}      providedApplicationId - Provided application id.
    *
    * @private
    *
-   * @returns {Cli_Scaffold_App_Android_Runner_PrepareWorkspace_Returns}
+   * @returns {Cli_Scaffold_App_Android_Runner_ResolveReplacements_Returns}
    *
-   * @since 0.29.0
+   * @since 0.31.0
    */
-  private static prepareWorkspace(workspaceDirectory: Cli_Scaffold_App_Android_Runner_PrepareWorkspace_WorkspaceDirectory, workspaceName: Cli_Scaffold_App_Android_Runner_PrepareWorkspace_WorkspaceName, providedApplicationId: Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ProvidedApplicationId): Cli_Scaffold_App_Android_Runner_PrepareWorkspace_Returns {
-    const applicationIdSegmentBase: Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ApplicationIdSegmentBase = workspaceName.replaceAll('-', '').replaceAll('_', '');
-    const applicationIdSegment: Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ApplicationIdSegment = (Number.isNaN(Number.parseInt(applicationIdSegmentBase.charAt(0), 10)) === true) ? applicationIdSegmentBase : `app${applicationIdSegmentBase}`;
-    const applicationId: Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ApplicationId = providedApplicationId ?? `com.example.${applicationIdSegment}`;
-    const applicationNameSegments: Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ApplicationNameSegments = workspaceName.replaceAll('_', '-').split('-');
-    const applicationName: Cli_Scaffold_App_Android_Runner_PrepareWorkspace_ApplicationName = applicationNameSegments.map((applicationNameSegment) => `${applicationNameSegment.charAt(0).toUpperCase()}${applicationNameSegment.slice(1)}`).join(' ');
+  private static resolveReplacements(workspaceName: Cli_Scaffold_App_Android_Runner_ResolveReplacements_WorkspaceName, providedApplicationId: Cli_Scaffold_App_Android_Runner_ResolveReplacements_ProvidedApplicationId): Cli_Scaffold_App_Android_Runner_ResolveReplacements_Returns {
+    const applicationId: Cli_Scaffold_App_Android_Runner_ResolveReplacements_ApplicationId = Runner.resolveApplicationId(workspaceName, providedApplicationId);
+    const applicationPackagePath: Cli_Scaffold_App_Android_Runner_ResolveReplacements_ApplicationPackagePath = applicationId.replaceAll('.', '/');
 
-    return new Promise((promiseResolve, promiseReject) => {
-      const child: Cli_Scaffold_App_Android_Runner_PrepareWorkspace_Child = spawn('android', [
-        '--no-metrics',
-        'create',
-        '--force',
-        '--name',
-        applicationName,
-        '--application-id',
+    return new Map([
+      [
+        LIB_REGEX_PLACEHOLDER_ANDROID_APPLICATION_ID,
         applicationId,
-        '--namespace',
-        applicationId,
-        '--output',
-        workspaceDirectory,
-        'empty-activity',
-      ], {
-        stdio: 'inherit',
-      });
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_ANDROID_PACKAGE_PATH,
+        applicationPackagePath,
+      ],
+    ]);
+  }
 
-      child.once('error', promiseReject);
+  /**
+   * CLI - Scaffold - App - Android - Is Application ID Valid.
+   *
+   * Applies Android's application-ID format and the Java package constraints
+   * required because Nova deliberately uses the same value as the namespace.
+   *
+   * @param {Cli_Scaffold_App_Android_Runner_IsApplicationIdValid_ApplicationId} applicationId - Application id.
+   *
+   * @private
+   *
+   * @returns {Cli_Scaffold_App_Android_Runner_IsApplicationIdValid_Returns}
+   *
+   * @since 0.31.0
+   */
+  private static isApplicationIdValid(applicationId: Cli_Scaffold_App_Android_Runner_IsApplicationIdValid_ApplicationId): Cli_Scaffold_App_Android_Runner_IsApplicationIdValid_Returns {
+    const segments: Cli_Scaffold_App_Android_Runner_IsApplicationIdValid_Segments = applicationId.split('.');
 
-      child.once('exit', (code): Cli_Scaffold_App_Android_Runner_PrepareWorkspace_Exit_Returns => {
-        if (code === 0) {
-          promiseResolve();
+    return segments.length >= 2 && segments.every((segment) => LIB_REGEX_ANDROID_APPLICATION_ID_SEGMENT.test(segment) === true && Runner.#javaReservedSegments.has(segment) === false);
+  }
 
-          return;
-        }
+  /**
+   * CLI - Scaffold - App - Android - Resolve Application ID.
+   *
+   * Resolves the exact Android application identifier used by both the review
+   * screen and Nova's native project template so their values cannot drift.
+   *
+   * @param {Cli_Scaffold_App_Android_Runner_ResolveApplicationId_WorkspaceName}         workspaceName         - Workspace name.
+   * @param {Cli_Scaffold_App_Android_Runner_ResolveApplicationId_ProvidedApplicationId} providedApplicationId - Provided application id.
+   *
+   * @private
+   *
+   * @returns {Cli_Scaffold_App_Android_Runner_ResolveApplicationId_Returns}
+   *
+   * @since 0.31.0
+   */
+  private static resolveApplicationId(workspaceName: Cli_Scaffold_App_Android_Runner_ResolveApplicationId_WorkspaceName, providedApplicationId: Cli_Scaffold_App_Android_Runner_ResolveApplicationId_ProvidedApplicationId): Cli_Scaffold_App_Android_Runner_ResolveApplicationId_Returns {
+    const applicationIdSegmentBase: Cli_Scaffold_App_Android_Runner_ResolveApplicationId_ApplicationIdSegmentBase = workspaceName.replaceAll('-', '').replaceAll('_', '');
+    const applicationIdSegment: Cli_Scaffold_App_Android_Runner_ResolveApplicationId_ApplicationIdSegment = (Number.isNaN(Number.parseInt(applicationIdSegmentBase.charAt(0), 10)) === false || Runner.#javaReservedSegments.has(applicationIdSegmentBase) === true) ? `app${applicationIdSegmentBase}` : applicationIdSegmentBase;
 
-        promiseReject(new Error(`Android CLI exited with code ${String(code)}.`));
-
-        return;
-      });
-
-      return;
-    });
+    return providedApplicationId ?? `com.example.${applicationIdSegment}`;
   }
 }

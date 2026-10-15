@@ -26,6 +26,10 @@ export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceA
 
 export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_NovaConfigPath = string;
 
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_GitignorePath = string;
+
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_GitignoreContents = string;
+
 export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath = string;
 
 export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_NextConfigPath = string;
@@ -76,6 +80,17 @@ export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithError
 export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJson = string;
 
 export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ExitsWithErrorWhenInsideChildWorkspace_ChildPackageJsonPath = string;
+
+/**
+ * Tests - CLI - Scaffold - App - Next.js - Run - Rejects Current Directory Output.
+ *
+ * @since 0.31.0
+ */
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RejectsCurrentDirectoryOutput_ProjectDirectory = string;
+
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RejectsCurrentDirectoryOutput_Exists = boolean;
+
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RejectsCurrentDirectoryOutput_PackageJsonPath = string;
 
 /**
  * Tests - CLI - Scaffold - App - Next.js - Run - Respects Dry Run.
