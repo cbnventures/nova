@@ -371,8 +371,15 @@ describe('Compiled Nova CLI integration', () => {
 
       const closeResult = await closePromise;
       const exitCode = closeResult[0];
+      const exitSignal = closeResult[1];
 
-      expect(exitCode).toBe(0);
+      if (exitCode === null) {
+        expect(exitSignal).toBe('SIGINT');
+      } else {
+        expect(exitCode).toBe(0);
+
+        expect(exitSignal).toBeNull();
+      }
 
       expect(output).toContain('Scripts stopped.');
 
