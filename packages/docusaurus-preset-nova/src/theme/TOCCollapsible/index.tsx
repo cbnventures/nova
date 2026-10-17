@@ -24,6 +24,8 @@ import type {
  *
  * @param {Theme_TocCollapsible_Index_TocCollapsibleProps} props - Props.
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.15.0
  */
 function TOCCollapsible(props: Theme_TocCollapsible_Index_TocCollapsibleProps) {

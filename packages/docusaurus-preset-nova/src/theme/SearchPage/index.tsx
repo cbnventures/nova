@@ -57,6 +57,8 @@ import type {
  *
  * @param {Theme_SearchPage_Index_SearchPage_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function SearchPage(props: Theme_SearchPage_Index_SearchPage_Props) {

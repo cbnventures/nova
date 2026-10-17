@@ -4,8 +4,8 @@ import {
   fwNextjs,
   langJavascript,
   langTypescript,
+  novaRules,
 } from '@cbnventures/nova/presets/eslint';
-import { novaRules } from '@cbnventures/nova/rules/eslint';
 
 /**
  * ESLint Configuration.

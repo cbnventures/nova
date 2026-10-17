@@ -3,10 +3,16 @@
  *
  * @since 0.20.0
  */
+export type Tests_ScaffoldVersionDrift_ScaffoldVersionDrift_Manifest_Version = string;
+
+export type Tests_ScaffoldVersionDrift_ScaffoldVersionDrift_Manifest_Dependencies = Record<string, string>;
+
+export type Tests_ScaffoldVersionDrift_ScaffoldVersionDrift_Manifest_DevDependencies = Record<string, string>;
+
 export type Tests_ScaffoldVersionDrift_ScaffoldVersionDrift_Manifest = {
-  version?: string;
-  dependencies?: Record<string, string>;
-  devDependencies?: Record<string, string>;
+  version?: Tests_ScaffoldVersionDrift_ScaffoldVersionDrift_Manifest_Version;
+  dependencies?: Tests_ScaffoldVersionDrift_ScaffoldVersionDrift_Manifest_Dependencies;
+  devDependencies?: Tests_ScaffoldVersionDrift_ScaffoldVersionDrift_Manifest_DevDependencies;
 };
 
 export type Tests_ScaffoldVersionDrift_ScaffoldVersionDrift_PackageDirectory = string;

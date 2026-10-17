@@ -17,6 +17,8 @@ import type {
  *
  * @param {Theme_NotFound_Index_NotFound_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function NotFound(props: Theme_NotFound_Index_NotFound_Props) {

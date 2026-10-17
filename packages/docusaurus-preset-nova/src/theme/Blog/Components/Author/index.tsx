@@ -21,6 +21,8 @@ import type {
  *
  * @param {Theme_Blog_Components_Author_Index_Author_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.18.0
  */
 function Author(props: Theme_Blog_Components_Author_Index_Author_Props) {

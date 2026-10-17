@@ -111,9 +111,11 @@ export type Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_JoiSchema = 
 
 export type Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_Validated_Value = unknown;
 
+export type Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_Validated_Error = Error;
+
 export type Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_Validated = {
   value: Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ResolvePreset_RejectsInvalidNavbarVariant_Validated_Error;
 };
 
 /**
@@ -168,9 +170,11 @@ export type Tests_Options_ValidateOptions_AcceptsValidPresetName_JoiSchema = {
 
 export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated_Value = unknown;
 
+export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated_Error = Error;
+
 export type Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated = {
   value: Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ValidateOptions_AcceptsValidPresetName_Validated_Error;
 };
 
 /**
@@ -186,9 +190,11 @@ export type Tests_Options_ValidateOptions_RejectsInvalidHexColor_JoiSchema = {
 
 export type Tests_Options_ValidateOptions_RejectsInvalidHexColor_Validated_Value = unknown;
 
+export type Tests_Options_ValidateOptions_RejectsInvalidHexColor_Validated_Error = Error;
+
 export type Tests_Options_ValidateOptions_RejectsInvalidHexColor_Validated = {
   value: Tests_Options_ValidateOptions_RejectsInvalidHexColor_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ValidateOptions_RejectsInvalidHexColor_Validated_Error;
 };
 
 /**
@@ -204,9 +210,11 @@ export type Tests_Options_ValidateOptions_RejectsInvalidPresetName_JoiSchema = {
 
 export type Tests_Options_ValidateOptions_RejectsInvalidPresetName_Validated_Value = unknown;
 
+export type Tests_Options_ValidateOptions_RejectsInvalidPresetName_Validated_Error = Error;
+
 export type Tests_Options_ValidateOptions_RejectsInvalidPresetName_Validated = {
   value: Tests_Options_ValidateOptions_RejectsInvalidPresetName_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ValidateOptions_RejectsInvalidPresetName_Validated_Error;
 };
 
 /**
@@ -222,9 +230,11 @@ export type Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_JoiSche
 
 export type Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_Validated_Value = unknown;
 
+export type Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_Validated_Error = Error;
+
 export type Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_Validated = {
   value: Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ValidateOptions_RejectsWhenPresetIsNotProvided_Validated_Error;
 };
 
 /**
@@ -264,9 +274,11 @@ export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvide
 
 export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Validated_Value = unknown;
 
+export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Validated_Error = Error;
+
 export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Validated = {
   value: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_Validated_Error;
 };
 
 export type Tests_Options_ValidateOptions_ReturnsDefaultsWhenOnlyPresetIsProvided_PersistentCache = boolean;
@@ -286,9 +298,11 @@ export type Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_Joi
 
 export type Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_Validated_Value = unknown;
 
+export type Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_Validated_Error = Error;
+
 export type Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_Validated = {
   value: Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_Validated_Error;
 };
 
 export type Tests_Options_ValidateThemeConfig_AcceptsAnEmptyErrorPagesObject_ErrorPages = Record<string, unknown>;
@@ -308,9 +322,11 @@ export type Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSin
 
 export type Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_Validated_Value = unknown;
 
+export type Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_Validated_Error = Error;
+
 export type Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_Validated = {
   value: Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_Validated_Error;
 };
 
 export type Tests_Options_ValidateThemeConfig_AcceptsAPartialErrorPagesConfigSingleField_ErrorPages = Record<string, unknown>;
@@ -334,9 +350,11 @@ export type Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayo
 
 export type Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Validated_Value = unknown;
 
+export type Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Validated_Error = Error;
+
 export type Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Validated = {
   value: Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Validated_Error;
 };
 
 export type Tests_Options_ValidateThemeConfig_AcceptsBlogLayoutInsteadOfBlogLayout_Blog = Record<string, unknown>;
@@ -362,9 +380,11 @@ export type Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAn
 
 export type Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_Validated_Value = unknown;
 
+export type Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_Validated_Error = Error;
+
 export type Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_Validated = {
   value: Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_Validated_Error;
 };
 
 export type Tests_Options_ValidateThemeConfig_AcceptsErrorPagesWithAllSurfacesAndFieldsPopulated_ErrorPages = Record<string, unknown>;
@@ -396,9 +416,11 @@ export type Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_JoiSchem
 
 export type Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Validated_Value = unknown;
 
+export type Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Validated_Error = Error;
+
 export type Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Validated = {
   value: Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Validated_Error;
 };
 
 export type Tests_Options_ValidateThemeConfig_AcceptsNavbarHideOnScroll_Navbar = Record<string, unknown>;
@@ -420,9 +442,11 @@ export type Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMe
 
 export type Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Validated_Value = unknown;
 
+export type Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Validated_Error = Error;
+
 export type Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Validated = {
   value: Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Validated_Error;
 };
 
 export type Tests_Options_ValidateThemeConfig_AcceptsSiteNamespaceWithTitleAndMetadata_Site = Record<string, unknown>;
@@ -442,7 +466,9 @@ export type Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhen
 
 export type Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_Validated_Value = unknown;
 
+export type Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_Validated_Error = Error;
+
 export type Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_Validated = {
   value: Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_Validated_Value;
-  error?: Error;
+  error?: Tests_Options_ValidateThemeConfig_RejectsErrorPagesNotFoundTitleWhenNotAString_Validated_Error;
 };

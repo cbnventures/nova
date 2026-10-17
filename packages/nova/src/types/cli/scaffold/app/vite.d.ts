@@ -25,11 +25,11 @@ export type Cli_Scaffold_App_Vite_ResolveWorkspaceTemplateSubpaths_Pwa = string;
  *
  * @since 0.15.0
  */
+export type Cli_Scaffold_App_Vite_Runner_Run_Options_DockerImage = true;
+
 export type Cli_Scaffold_App_Vite_Runner_Run_Options_DryRun = true;
 
 export type Cli_Scaffold_App_Vite_Runner_Run_Options_Install = boolean;
-
-export type Cli_Scaffold_App_Vite_Runner_Run_Options_DockerImage = true;
 
 export type Cli_Scaffold_App_Vite_Runner_Run_Options_Framework = string;
 

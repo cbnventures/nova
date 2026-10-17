@@ -24,6 +24,8 @@ import type {
  *
  * @param {Theme_DocItem_Layout_Index_DocItemLayout_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DocItemLayout(props: Theme_DocItem_Layout_Index_DocItemLayout_Props) {

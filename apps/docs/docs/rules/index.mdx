@@ -78,16 +78,16 @@ Custom rules for JavaScript and TypeScript projects. Each rule is **targeted**, 
 
 ### Scaffold Default
 
-`novaRules` registers every Nova-owned ESLint rule and enables its shared defaults. It is separate from the preset package because presets contain only curated ESLint core and third-party behavior.
+`novaRules` is the preset that registers every Nova-owned ESLint rule and enables its shared defaults. Individual rule implementations remain available from `@cbnventures/nova/rules/eslint`.
 
 ```ts title="eslint.config.mts"
 import {
   dxCodeStyle,
   dxIgnore,
   langTypescript,
+  novaRules,
   runtimeNode,
 } from '@cbnventures/nova/presets/eslint';
-import { novaRules } from '@cbnventures/nova/rules/eslint';
 
 export default [
   ...dxIgnore,
@@ -144,7 +144,7 @@ The later object wins for that consumer only. You can still import individual ru
 | [Require JSDoc Param Name](/docs/rules/eslint/jsdoc/require-jsdoc-param-name)           | Require `@param` descriptions to match param name.                                      |
 | [Require JSDoc Presence](/docs/rules/eslint/jsdoc/require-jsdoc-presence)               | Require a leading JSDoc block on every documentable symbol.                             |
 | [Require JSDoc Private](/docs/rules/eslint/jsdoc/require-jsdoc-private)                 | Require `@private` tag for private class members.                                       |
-| [Require JSDoc Returns](/docs/rules/eslint/jsdoc/require-jsdoc-returns)                 | Require every `@returns` tag to contain only a type in braces.                          |
+| [Require JSDoc Returns](/docs/rules/eslint/jsdoc/require-jsdoc-returns)                 | Require documented functions to declare a type-only `@returns` tag.                     |
 | [Require JSDoc Since](/docs/rules/eslint/jsdoc/require-jsdoc-since)                     | Require a valid `@since` tag (a released version or `UNRELEASED`) in every JSDoc block. |
 | [Require JSDoc Tag Order](/docs/rules/eslint/jsdoc/require-jsdoc-tag-order)             | Require JSDoc tags to follow canonical order with one blank line between groups.        |
 

@@ -519,24 +519,37 @@ A map of relative paths to <Terminology title="package" to="/docs/quickstart/ter
 }
 ```
 
-## `gitignore`
+## `ignoreFiles`
 
-Adds project-specific patterns to the generated root `.gitignore` without mixing them into Nova's built-in templates.
+Maps exact project-relative paths to Nova-managed physical ignore files. The [`ignore-files` generator](/docs/cli/generators/must-haves/ignore-files) combines reviewed bundles with project-specific patterns without mixing those patterns into Nova's templates.
 
-| Field             | Type       | Description                                                                                                     |
-|-------------------|------------|-----------------------------------------------------------------------------------------------------------------|
-| `projectExcludes` | `string[]` | Optional patterns appended under the generated Project Excludes marker. An empty array keeps the section empty. |
+| Entry field | Type       | Description                                                                                                  |
+|-------------|------------|--------------------------------------------------------------------------------------------------------------|
+| `bundles`   | `string[]` | Ordered built-in bundles valid for the target filename.                                                      |
+| `patterns`  | `string[]` | Optional project patterns appended under the generated Project Excludes marker. An empty array is preserved. |
+
+| Target basename | Supported bundle   | Purpose                                                         |
+|-----------------|--------------------|-----------------------------------------------------------------|
+| `.gitignore`    | `nova`             | Git exclusions for the project root.                            |
+| `.dockerignore` | `nova`             | Docker build-context exclusions for a workspace.                |
+| `.assetsignore` | `cloudflare-astro` | Cloudflare Astro asset exclusions for deployment control files. |
 
 ```json
 {
-  "gitignore": {
-    "projectExcludes": [
-      ".wrangler/",
-      "coverage/"
-    ]
+  "ignoreFiles": {
+    "./.gitignore": {
+      "bundles": ["nova"],
+      "patterns": [".wrangler/", "coverage/"]
+    },
+    "./apps/api/.dockerignore": {
+      "bundles": ["nova"],
+      "patterns": []
+    }
   }
 }
 ```
+
+Paths must start with `./`, stay inside the project, and end in a supported physical ignore-file basename. The former `gitignore.projectExcludes` shape is not supported; configure every managed file through `ignoreFiles`.
 
 ## `agents`
 
@@ -729,12 +742,20 @@ Project-wide behavior toggles that affect how Nova commands operate.
 | Field                | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                        |
 |----------------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `lockStepVersioning` | `boolean` | When `true`, `nova utility changelog --release` moves every non-freezable workspace — both trackable and distributable — to the same version, even if some had no recorded changes. Before writing, Nova requires every participating `package.json` to exist, contain a valid version for the selected strategy, and start at the same version. Workspaces without changes receive a "No changes." entry in their `CHANGELOG.md`. |
+| `runWorkspaces`      | `object`  | Configures the native workspace runner. Its `cache` object accepts `enabled`, a project-relative `directory` that must remain below the project root, and exact `scripts` eligible for verified local caching. Defaults are `true`, `./node_modules/.cache/nova/run-workspaces`, and `["build", "check"]`.                                                                                                                         |
 | `versionStrategy`    | `string`  | Version strategy for the project: `"semver"` (default) or `"calver"`. SemVer uses `major.minor.patch` with bump types. CalVer uses `YYYY.MM.MICRO` with automatic date-based versioning. Nova locks this setting to existing version headings found in the root or any non-freezable workspace changelog; missing changelogs and freezable workspaces do not lock it.                                                              |
 
 ```json title="nova.config.json"
 {
   "settings": {
     "lockStepVersioning": true,
+    "runWorkspaces": {
+      "cache": {
+        "directory": "./node_modules/.cache/nova/run-workspaces",
+        "enabled": true,
+        "scripts": ["build", "check"]
+      }
+    },
     "versionStrategy": "semver"
   }
 }

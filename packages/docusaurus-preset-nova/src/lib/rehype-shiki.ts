@@ -131,6 +131,8 @@ function collectNodes(tree: Lib_RehypeShiki_CollectNodes_Tree, tagName: Lib_Rehy
    *
    * @private
    *
+   * @returns {void}
+   *
    * @since 0.21.0
    */
   function walk(node: Lib_RehypeShiki_CollectNodes_Walk_Node) {
@@ -395,6 +397,8 @@ function processDiffLines(code: Lib_RehypeShiki_ProcessDiffLines_Code): Lib_Rehy
  * @param {Lib_RehypeShiki_ProcessNode_Parent}      parent      - Parent.
  * @param {Lib_RehypeShiki_ProcessNode_Highlighter} highlighter - Highlighter.
  * @param {Lib_RehypeShiki_ProcessNode_Options}     options     - Options.
+ *
+ * @returns {void}
  *
  * @since 0.15.0
  */

@@ -14,6 +14,8 @@ import type {
  *
  * @param {Blocks_Hero_Index_BlocksHero_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlocksHero(props: Blocks_Hero_Index_BlocksHero_Props) {

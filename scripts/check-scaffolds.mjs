@@ -4,6 +4,7 @@ import {
   spawnSync,
 } from 'node:child_process';
 import {
+  copyFileSync,
   existsSync,
   mkdirSync,
   mkdtempSync,
@@ -14,6 +15,7 @@ import {
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 import { ensureDockerEngine } from './lib/docker-engine.mjs';
 import { verifyBundlerLoad } from './lib/verify-scaffold-install.mjs';
@@ -129,15 +131,18 @@ function expectCommandFailure(command, args, cwd, expectedMessage) {
  * and invalid-command lifecycles. These Nova-owned assertions keep presentation
  * regressions out of the generated consumer test suite.
  *
- * @param {string} projectDirectory - Project directory.
+ * @param {string} projectDirectory     - Project directory.
+ * @param {string} workspaceName        - Workspace name.
+ * @param {string} workspacePackageName - Workspace package name.
  *
  * @returns {void}
  *
  * @since 0.0.0
  */
-function verifyNodeCliRuntime(projectDirectory) {
-  const cliDirectory = join(projectDirectory, 'packages', 'scaffold-cli');
-  const cliPath = join(projectDirectory, 'node_modules', '.bin', (process.platform === 'win32') ? 'scaffold-cli.cmd' : 'scaffold-cli');
+function verifyNodeCliRuntime(projectDirectory, workspaceName, workspacePackageName = workspaceName) {
+  const cliDirectory = join(projectDirectory, 'packages', workspaceName);
+  const cliExecutable = (process.platform === 'win32') ? `${workspaceName}.cmd` : workspaceName;
+  const cliPath = join(projectDirectory, 'node_modules', '.bin', cliExecutable);
 
   if (existsSync(cliPath) === false) {
     throw new Error('The generated Node CLI should be linked into node_modules/.bin during installation.');
@@ -146,9 +151,9 @@ function verifyNodeCliRuntime(projectDirectory) {
   const statusOutput = readCommandOutput(cliPath, ['status'], cliDirectory);
 
   for (const expectedText of [
-    'scaffold-cli v0.0.0',
+    `${workspacePackageName} v0.0.0`,
     'CURRENTLY RUNNING:',
-    'scaffold-cli status',
+    `${workspacePackageName} status`,
     'Your command is ready.',
   ]) {
     if (statusOutput.includes(expectedText) === false) {
@@ -159,8 +164,8 @@ function verifyNodeCliRuntime(projectDirectory) {
   const helpOutput = readCommandOutput(cliPath, ['--help'], cliDirectory);
 
   for (const expectedText of [
-    'scaffold-cli v0.0.0',
-    'Usage: scaffold-cli <command> [options]',
+    `${workspacePackageName} v0.0.0`,
+    `Usage: ${workspacePackageName} <command> [options]`,
     'Commands:',
     'status [options]',
   ]) {
@@ -176,6 +181,120 @@ function verifyNodeCliRuntime(projectDirectory) {
   }
 
   expectCommandFailure(cliPath, ['unknown-command'], cliDirectory, 'ERROR Unknown command');
+
+  return;
+}
+
+/**
+ * Check Scaffolds - Verify Homebridge Utility Runtime.
+ *
+ * Exercises the built Homebridge REPL and API-test launchers through help mode.
+ * This proves both installed commands resolve compiled output without opening an
+ * interactive shell or requiring a user's live Homebridge configuration.
+ *
+ * @param {string} projectDirectory - Project directory.
+ *
+ * @returns {void}
+ *
+ * @since 0.0.0
+ */
+function verifyHomebridgeUtilityRuntime(projectDirectory) {
+  const pluginDirectory = join(projectDirectory, 'packages', 'scaffold');
+  const commandNames = [
+    'homebridge-scaffold-repl',
+    'homebridge-scaffold-test-api',
+  ];
+
+  for (const commandName of commandNames) {
+    const executableName = (process.platform === 'win32') ? `${commandName}.cmd` : commandName;
+    const commandPath = join(projectDirectory, 'node_modules', '.bin', executableName);
+
+    if (existsSync(commandPath) === false) {
+      throw new Error(`The generated Homebridge utility "${commandName}" should be linked into node_modules/.bin.`);
+    }
+
+    const helpOutput = readCommandOutput(commandPath, ['--help'], pluginDirectory);
+
+    for (const expectedText of [
+      'homebridge-scaffold v0.0.0',
+      `Usage: ${commandName} [options]`,
+      'Display the help menu',
+    ]) {
+      if (helpOutput.includes(expectedText) === false) {
+        throw new Error(`The generated Homebridge utility "${commandName}" should include "${expectedText}".`);
+      }
+    }
+  }
+
+  return;
+}
+
+/**
+ * Check Scaffolds - Verify GitHub Action Runtime.
+ *
+ * Exercises source through local-action and the isolated NCC output without
+ * node_modules, proving simulation and the published artifact independently.
+ *
+ * @param {string} projectDirectory - Project directory.
+ *
+ * @returns {void}
+ *
+ * @since 0.0.0
+ */
+function verifyGithubActionRuntime(projectDirectory) {
+  const workspaceDirectory = join(projectDirectory, 'tools', 'scaffold-action');
+  const environmentPath = join(workspaceDirectory, '.env');
+  const environment = readFileSync(environmentPath, 'utf-8').split('\n').map((environmentLine) => {
+    return (environmentLine.startsWith('INPUT_NAME=') === true) ? 'INPUT_NAME="Nova"' : environmentLine;
+  }).join('\n');
+
+  writeFileSync(environmentPath, environment, 'utf-8');
+
+  runNpm([
+    'run',
+    'dev',
+    '--workspace',
+    './tools/scaffold-action',
+  ], projectDirectory);
+
+  const isolatedDirectory = mkdtempSync(join(tmpdir(), 'nova-github-action-bundle-'));
+
+  try {
+    const isolatedBuildDirectory = join(isolatedDirectory, 'action');
+    const outputPath = join(isolatedDirectory, 'github-output');
+
+    mkdirSync(isolatedBuildDirectory, { recursive: true });
+
+    for (const buildFileName of readdirSync(join(workspaceDirectory, 'build'))) {
+      copyFileSync(join(workspaceDirectory, 'build', buildFileName), join(isolatedBuildDirectory, buildFileName));
+    }
+
+    writeFileSync(outputPath, '', 'utf-8');
+
+    execFileSync(process.execPath, [join(isolatedBuildDirectory, 'index.js')], {
+      cwd: isolatedDirectory,
+      encoding: 'utf-8',
+      env: {
+        ...process.env,
+        GITHUB_OUTPUT: outputPath,
+        INPUT_NAME: 'Nova',
+        NODE_PATH: '',
+      },
+    });
+
+    const actionOutput = readFileSync(outputPath, 'utf-8');
+
+    if (actionOutput.includes('Hello, Nova!') === false) {
+      throw new Error('The isolated GitHub Action bundle should publish the generated greeting without node_modules.');
+    }
+  } finally {
+    rmSync(isolatedDirectory, {
+      force: true,
+      recursive: true,
+    });
+  }
+
+  process.stdout.write('Generated GitHub Action source runner and isolated bundle passed.\n');
 
   return;
 }
@@ -469,7 +588,7 @@ function verifyLaunchSequenceCopy(launchpadPaths) {
  * @since 0.0.0
  */
 async function verifyCloudflareWorkerRuntime(projectDirectory) {
-  const workspaceDirectory = join(projectDirectory, 'apps', 'workers');
+  const workspaceDirectory = join(projectDirectory, 'packages', 'cloudflare-tool');
   const rootWranglerExecutable = join(
     projectDirectory,
     'node_modules',
@@ -570,6 +689,36 @@ async function verifyCloudflareWorkerRuntime(projectDirectory) {
   });
 
   process.stdout.write('Generated Cloudflare Worker runtime started successfully.\n');
+
+  return;
+}
+
+/**
+ * Check Scaffolds - Verify Vercel Function Runtime.
+ *
+ * Loads the compiled starter function through its emitted package boundary and
+ * verifies the web-standard response without requiring a Vercel account.
+ *
+ * @param {string} projectDirectory - Project directory.
+ *
+ * @returns {Promise<void>}
+ *
+ * @since UNRELEASED
+ */
+async function verifyVercelFunctionRuntime(projectDirectory) {
+  const functionPath = join(projectDirectory, 'packages', 'vercel-tool', 'build', 'api', 'index.js');
+  const functionModule = await import(pathToFileURL(functionPath).href);
+  const response = await functionModule.GET(new Request('https://example.com/api'));
+
+  if (
+    response instanceof Response === false
+    || response.status !== 200
+    || await response.text() !== JSON.stringify({ message: 'Welcome to scaffold-smoke' })
+  ) {
+    throw new Error('The generated Vercel Function should return the starter response.');
+  }
+
+  process.stdout.write('Generated Vercel Function runtime loaded successfully.\n');
 
   return;
 }
@@ -716,6 +865,8 @@ async function checkScaffolds() {
       'scaffold',
       'app',
       'apple',
+      '--bundle-id',
+      'io.cbnventures.scaffold-smoke',
       '--non-interactive',
       '--no-install',
       '--workspace-name',
@@ -771,40 +922,6 @@ async function checkScaffolds() {
       'bot',
       '--output',
       './apps/bot',
-    ], projectDirectory);
-
-    runCommand(process.execPath, [
-      novaCliPath,
-      'scaffold',
-      'app',
-      'docker-image',
-      '--architectures',
-      'amd64,arm64',
-      '--non-interactive',
-      '--no-install',
-      '--publish',
-      'ghcr',
-      '--workspace-name',
-      'service',
-      '--output',
-      './apps/service',
-    ], projectDirectory);
-
-    runCommand(process.execPath, [
-      novaCliPath,
-      'scaffold',
-      'app',
-      'docker-image',
-      '--architectures',
-      'arm64',
-      '--non-interactive',
-      '--no-install',
-      '--publish',
-      'docker-hub',
-      '--workspace-name',
-      'service-hub',
-      '--output',
-      './apps/service-hub',
     ], projectDirectory);
 
     runCommand(process.execPath, [
@@ -885,19 +1002,6 @@ async function checkScaffolds() {
     runCommand(process.execPath, [
       novaCliPath,
       'scaffold',
-      'app',
-      'cloudflare-workers',
-      '--non-interactive',
-      '--no-install',
-      '--workspace-name',
-      'workers',
-      '--output',
-      './apps/workers',
-    ], projectDirectory);
-
-    runCommand(process.execPath, [
-      novaCliPath,
-      'scaffold',
       'docs',
       'docusaurus',
       '--content',
@@ -916,14 +1020,31 @@ async function checkScaffolds() {
     runCommand(process.execPath, [
       novaCliPath,
       'scaffold',
-      'package',
-      'node-cli',
+      'tool',
+      'serverless',
       '--non-interactive',
       '--no-install',
+      '--target',
+      'cloudflare-workers',
       '--workspace-name',
-      'scaffold-cli',
+      'cloudflare-tool',
       '--output',
-      './packages/scaffold-cli',
+      './packages/cloudflare-tool',
+    ], projectDirectory);
+
+    runCommand(process.execPath, [
+      novaCliPath,
+      'scaffold',
+      'tool',
+      'serverless',
+      '--non-interactive',
+      '--no-install',
+      '--target',
+      'vercel-functions',
+      '--workspace-name',
+      'vercel-tool',
+      '--output',
+      './packages/vercel-tool',
     ], projectDirectory);
 
     runCommand(process.execPath, [
@@ -997,16 +1118,6 @@ async function checkScaffolds() {
         policy: 'trackable',
         role: 'app',
       },
-      './apps/service': {
-        name: 'scaffold-smoke-app-service',
-        policy: 'trackable',
-        role: 'app',
-      },
-      './apps/service-hub': {
-        name: 'scaffold-smoke-app-service-hub',
-        policy: 'trackable',
-        role: 'app',
-      },
       './apps/express': {
         name: 'scaffold-smoke-app-express',
         policy: 'trackable',
@@ -1032,20 +1143,20 @@ async function checkScaffolds() {
         policy: 'trackable',
         role: 'app',
       },
-      './apps/workers': {
-        name: 'scaffold-smoke-app-workers',
-        policy: 'trackable',
-        role: 'app',
-      },
       './apps/docs': {
         name: 'scaffold-smoke-docs',
         policy: 'freezable',
         role: 'docs',
       },
-      './packages/scaffold-cli': {
-        name: 'scaffold-cli',
+      './packages/cloudflare-tool': {
+        name: 'scaffold-smoke-tool-cloudflare-tool',
         policy: 'distributable',
-        role: 'package',
+        role: 'tool',
+      },
+      './packages/vercel-tool': {
+        name: 'scaffold-smoke-tool-vercel-tool',
+        policy: 'distributable',
+        role: 'tool',
       },
       './tools/scaffold-action': {
         name: 'scaffold-action',
@@ -1082,8 +1193,6 @@ async function checkScaffolds() {
       join(projectDirectory, 'apps', 'docs', 'Dockerfile'),
       join(projectDirectory, 'apps', 'express', 'Dockerfile'),
       join(projectDirectory, 'apps', 'nextjs', 'Dockerfile'),
-      join(projectDirectory, 'apps', 'service', 'Dockerfile'),
-      join(projectDirectory, 'apps', 'service-hub', 'Dockerfile'),
       join(projectDirectory, 'apps', 'vite', 'Dockerfile'),
     ]);
 
@@ -1128,23 +1237,6 @@ async function checkScaffolds() {
       throw new Error('The generated pfSense package should keep its normalized config key and internal package identity aligned.');
     }
 
-    const ghcrWorkflow = readFileSync(join(projectDirectory, '.github', 'workflows', 'service-container.yml'), 'utf-8');
-    const dockerHubWorkflow = readFileSync(join(projectDirectory, '.github', 'workflows', 'service-hub-container.yml'), 'utf-8');
-
-    if (
-      ghcrWorkflow.includes('platforms: linux/amd64,linux/arm64') === false
-      || ghcrWorkflow.includes('registry: ghcr.io') === false
-    ) {
-      throw new Error('The generated GHCR workflow should use both requested architectures and GitHub authentication.');
-    }
-
-    if (
-      dockerHubWorkflow.includes('platforms: linux/arm64') === false
-      || dockerHubWorkflow.includes('secrets.DOCKERHUB_TOKEN') === false
-    ) {
-      throw new Error('The generated Docker Hub workflow should use the requested architecture and Docker Hub authentication.');
-    }
-
     runNpm([
       'pkg',
       'set',
@@ -1167,12 +1259,12 @@ async function checkScaffolds() {
     ], projectDirectory);
 
     // The smoke matrix should report every generated workspace failure in one
-    // pass. This changes only the temporary fixture's Turbo failure strategy.
+    // pass. This changes only the temporary fixture's Nova failure strategy.
     runNpm([
       'pkg',
       'set',
-      'scripts.check:workspaces=turbo run check --concurrency=2 --continue=always',
-      'scripts.build:workspaces=turbo run build --concurrency=2 --continue=always',
+      'scripts.check:workspaces=nova utility run-workspaces --concurrency=2 --continue-on-error check',
+      'scripts.build:workspaces=nova utility run-workspaces --concurrency=2 --continue-on-error --node-env production build',
     ], projectDirectory);
 
     runNpm(['install'], projectDirectory);
@@ -1238,18 +1330,28 @@ async function checkScaffolds() {
         'build',
       ], projectDirectory);
     } else {
-      process.stdout.write('Docker is not installed; building every generated workspace except the container-native image.\n');
+      process.stdout.write('Docker is not installed; building every generated workspace except those with Docker packaging.\n');
 
       runNpm([
         'run',
         'build:workspaces',
         '--',
-        '--filter=!scaffold-smoke-app-service',
-        '--filter=!scaffold-smoke-app-service-hub',
+        '--exclude-workspace',
+        'scaffold-smoke-app-astro',
+        'scaffold-smoke-app-bot',
+        'scaffold-smoke-app-express',
+        'scaffold-smoke-app-nextjs',
+        'scaffold-smoke-app-vite',
+        'scaffold-smoke-docs',
       ], projectDirectory);
     }
 
-    verifyNodeCliRuntime(projectDirectory);
+    await verifyVercelFunctionRuntime(projectDirectory);
+
+    verifyNodeCliRuntime(projectDirectory, 'cloudflare-tool', 'scaffold-smoke-tool-cloudflare-tool');
+    verifyNodeCliRuntime(projectDirectory, 'vercel-tool', 'scaffold-smoke-tool-vercel-tool');
+    verifyHomebridgeUtilityRuntime(projectDirectory);
+    verifyGithubActionRuntime(projectDirectory);
 
     runNpm([
       'run',

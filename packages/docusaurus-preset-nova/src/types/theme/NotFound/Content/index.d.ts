@@ -48,8 +48,10 @@ export type Theme_NotFound_Content_Index_NotFoundContent_Bundle = {
 
 export type Theme_NotFound_Content_Index_NotFoundContent_Bundles = Theme_NotFound_Content_Index_NotFoundContent_Bundle[];
 
+export type Theme_NotFound_Content_Index_NotFoundContent_GlobalData_NotFoundBundleIndex = number;
+
 export type Theme_NotFound_Content_Index_NotFoundContent_GlobalData = {
-  notFoundBundleIndex?: number;
+  notFoundBundleIndex?: Theme_NotFound_Content_Index_NotFoundContent_GlobalData_NotFoundBundleIndex;
   [key: string]: unknown;
 };
 

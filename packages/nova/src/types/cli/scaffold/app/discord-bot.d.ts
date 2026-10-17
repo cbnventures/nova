@@ -12,10 +12,9 @@ export type Cli_Scaffold_App_DiscordBot_CompletionNotes = Cli_Scaffold_App_Disco
  *
  * @since 0.29.0
  */
-export type Cli_Scaffold_App_DiscordBot_Runner_Run_Options_DryRun = true;
-
-export type Cli_Scaffold_App_DiscordBot_Runner_Run_Options_Install = boolean;
 export type Cli_Scaffold_App_DiscordBot_Runner_Run_Options_DockerImage = true;
+export type Cli_Scaffold_App_DiscordBot_Runner_Run_Options_DryRun = true;
+export type Cli_Scaffold_App_DiscordBot_Runner_Run_Options_Install = boolean;
 export type Cli_Scaffold_App_DiscordBot_Runner_Run_Options_Name = string;
 export type Cli_Scaffold_App_DiscordBot_Runner_Run_Options_NonInteractive = true;
 export type Cli_Scaffold_App_DiscordBot_Runner_Run_Options_Output = string;

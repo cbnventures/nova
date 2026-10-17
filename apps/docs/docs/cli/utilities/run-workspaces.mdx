@@ -1,0 +1,133 @@
+---
+id: "run-workspaces"
+title: "Run Workspaces"
+description: "Run dependency-aware package scripts across workspaces configured in nova.config.json without an external monorepo runner."
+keywords:
+  - "nova"
+  - "nova run-workspaces"
+  - "monorepo task runner"
+  - "workspace scripts"
+  - "dependency graph"
+tags:
+  - "cli"
+  - "run-workspaces"
+  - "scripts"
+  - "orchestration"
+  - "monorepo"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Run one package script across Nova workspaces in dependency order without a separate monorepo runner.
+
+## Summary
+
+`run-workspaces` reads workspace paths from `nova.config.json`, reads scripts and internal package relationships from each workspace's `package.json`, validates the complete graph, and runs ready tasks concurrently. The project root remains its own workspace, but is not recursively dispatched as a child.
+
+Nova applies lifecycle prerequisites consistently:
+
+- `check` and `build` first build internal workspace dependencies.
+- `prod` and `deploy` first run the selected workspace's `check` and `build` tasks.
+- `dev`, `clean`, and custom script names run directly.
+- A missing script skips that workspace and is reported instead of failing the entire graph.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova utility run-workspaces <script> [options] [-- <arguments...>]
+
+    # Shorthand
+    nova util run-ws <script> [options] [-- <arguments...>]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest utility run-workspaces <script> [options] [-- <arguments...>]
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest util run-ws <script> [options] [-- <arguments...>]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                              | Description                                                                           |
+|-----------------------------------|---------------------------------------------------------------------------------------|
+| `-b, --buffer <ms>`               | Flush interval in milliseconds for grouped task output. Defaults to `500`.            |
+| `-c, --concurrency <count>`       | Maximum number of ready tasks to run at once. Defaults to every currently ready task. |
+| `-k, --continue-on-error`         | Continue independent tasks after a failure while blocking tasks that depend on it.    |
+| `-d, --dry-run`                   | Validate and print the expanded task plan without running package scripts.            |
+| `-x, --exclude-workspace <name…>` | Exclude package names or configured workspace paths.                                  |
+| `-f, --force`                     | Bypass verified local cache hits and refresh successful task records.                 |
+| `-n, --node-env <environment>`    | Set child `NODE_ENV` to `development`, `production`, or `test`.                       |
+| `-w, --workspace <name…>`         | Limit the requested task to package names or configured workspace paths.              |
+
+Place `--` after Nova's options to forward the remaining arguments to every workspace running the requested script. Lifecycle prerequisites with a different script name do not receive those arguments.
+
+## Examples
+
+```bash title="Check every workspace with two concurrent tasks"
+nova utility run-workspaces check --concurrency 2
+```
+
+```bash title="Build two publish scopes and their internal dependencies"
+nova utility run-workspaces build \
+  --concurrency 2 \
+  --workspace @example/api @example/web
+```
+
+```bash title="Preview cleanup while excluding a workspace"
+nova utility run-workspaces clean \
+  --dry-run \
+  --exclude-workspace @example/container
+```
+
+```bash title="Forward a representative build mode to every build workspace"
+nova utility run-workspaces build -- --representative
+```
+
+## Verified Local Cache
+
+Nova caches successful `check` and `build` tasks locally by default. A task is skipped only when its command, arguments, toolchain, stable environment, root manifests, dependency-task states, and complete workspace state still match the verified record.
+
+The cache stores hashes, not build artifacts or raw environment values. If a source file changes, an output is removed, a dependency task changes, or a record becomes unreadable, Nova runs the real task again. Failed and interrupted tasks are never cached.
+
+```json title="nova.config.json"
+{
+  "settings": {
+    "runWorkspaces": {
+      "cache": {
+        "directory": "./node_modules/.cache/nova/run-workspaces",
+        "enabled": true,
+        "scripts": ["build", "check"]
+      }
+    }
+  }
+}
+```
+
+Use `--force` when you intentionally want every selected cacheable task to execute and replace its successful record. Set `enabled` to `false` to disable cache reads and writes, or change `scripts` to choose which exact package-script names are eligible.
+
+## Failure and Interrupt Behavior
+
+By default, Nova stops scheduling new tasks after the first failure, asks active children to stop, and exits unsuccessfully. With `--continue-on-error`, unrelated branches continue while dependent tasks are listed as blocked.
+
+Pressing <kbd>Ctrl</kbd> + <kbd>C</kbd> stops active workspace scripts and exits cleanly. Buffered output uses the same framed sections as `run-scripts`, labeled as `workspace#script`.
+
+## Troubleshooting
+
+- **Unsupported package manager** — Set the root `packageManager` to an exact npm, pnpm, or Yarn descriptor.
+- **Workspace name drift** — Keep each `nova.config.json` workspace name identical to its package's `package.json` name.
+- **Unknown workspace selection** — Pass an exact package name or configured Nova workspace path.
+- **Dependency cycle** — Remove the circular internal package relationship before retrying; Nova validates this before spawning tasks.
+- **Unexpected cache miss** — Nova intentionally reruns when any verified input or workspace output differs. Use the task output to confirm what regenerated, then let the successful run establish the new record.

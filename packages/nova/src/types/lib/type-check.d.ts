@@ -88,9 +88,13 @@ export type Lib_TypeCheck_RunTypeCheck_CurrentDirectory = string;
 
 export type Lib_TypeCheck_RunTypeCheck_ConfigPath = string | undefined;
 
+export type Lib_TypeCheck_RunTypeCheck_ConfigResult_Config = unknown;
+
+export type Lib_TypeCheck_RunTypeCheck_ConfigResult_Error = Diagnostic;
+
 export type Lib_TypeCheck_RunTypeCheck_ConfigResult = {
-  config?: unknown;
-  error?: Diagnostic;
+  config?: Lib_TypeCheck_RunTypeCheck_ConfigResult_Config;
+  error?: Lib_TypeCheck_RunTypeCheck_ConfigResult_Error;
 };
 
 export type Lib_TypeCheck_RunTypeCheck_Config = unknown;

@@ -22,6 +22,8 @@ import type {
  *
  * @param {Theme_DocSidebarMobile_Index_DocSidebarMobile_Props} props - Props.
  *
+ * @returns {JSX.Element | null}
+ *
  * @since 0.15.0
  */
 function DocSidebarMobile(props: Theme_DocSidebarMobile_Index_DocSidebarMobile_Props) {

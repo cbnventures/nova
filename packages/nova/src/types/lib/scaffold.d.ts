@@ -10,6 +10,10 @@ import type {
   Shared_CorepackPackageManager,
   Shared_CorepackPackageManagerDescriptor,
   Shared_MonorepoContext,
+  Shared_NovaConfig_IgnoreFile,
+  Shared_NovaConfig_IgnoreFile_Bundles,
+  Shared_NovaConfig_IgnoreFile_Patterns,
+  Shared_NovaConfig_IgnoreFiles,
   Shared_NovaConfigEnvironmentValue,
   Shared_ScaffoldConfig,
   Shared_ScaffoldExistingRoot,
@@ -83,12 +87,6 @@ export type Lib_Scaffold_CreateMonorepoRoot_PackageJsonContents = string;
 export type Lib_Scaffold_CreateMonorepoRoot_PackageJsonPath = string;
 
 export type Lib_Scaffold_CreateMonorepoRoot_PackageJsonRelativePath = string;
-
-export type Lib_Scaffold_CreateMonorepoRoot_TurboJsonContent = Record<string, unknown>;
-
-export type Lib_Scaffold_CreateMonorepoRoot_TurboJsonPath = string;
-
-export type Lib_Scaffold_CreateMonorepoRoot_TurboJsonRelativePath = string;
 
 export type Lib_Scaffold_CreateMonorepoRoot_ProjectTitle = string;
 
@@ -370,7 +368,9 @@ export type Lib_Scaffold_PromptScaffoldOptions_InitialPrev = string;
 
 export type Lib_Scaffold_PromptScaffoldOptions_InitialAnswers = Record<string, string>;
 
-export type Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput = (initialPrev: Lib_Scaffold_PromptScaffoldOptions_InitialPrev, initialAnswers: Lib_Scaffold_PromptScaffoldOptions_InitialAnswers) => string;
+export type Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput = (initialPrev: Lib_Scaffold_PromptScaffoldOptions_InitialPrev, initialAnswers: Lib_Scaffold_PromptScaffoldOptions_InitialAnswers) => Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput_Returns;
+
+export type Lib_Scaffold_PromptScaffoldOptions_ResolveInitialOutput_Returns = string;
 
 export type Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers = Record<string, unknown>;
 
@@ -400,7 +400,7 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName = string
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName = string;
 
-export type Lib_Scaffold_RegisterWorkspaceInConfig_Category = 'app' | 'docs' | 'package';
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Category = 'app' | 'docs' | 'package' | 'tool';
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables = Shared_NovaConfigEnvironmentValue[];
 
@@ -416,7 +416,7 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName = Record<string, 
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug = string | undefined;
 
-export type Lib_Scaffold_RegisterWorkspaceInConfig_Role = 'app' | 'docs' | 'package';
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Role = 'app' | 'docs' | 'package' | 'tool';
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Policy = 'distributable' | 'freezable' | 'trackable';
 
@@ -425,6 +425,22 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName = string;
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces = Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces | undefined;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces = Record<string, unknown>;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedIgnoreFiles = Shared_NovaConfig_IgnoreFiles | undefined;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_IgnoreFiles = Shared_NovaConfig_IgnoreFiles;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ConfigRoot = string;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceDirectory = string;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_DockerignorePath = string;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_DockerignoreConfigPath = string;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_AssetsignorePath = string;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_AssetsignoreConfigPath = string;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironment = Lib_Scaffold_RegisterWorkspaceInConfig_Environment | undefined;
 
@@ -492,32 +508,29 @@ export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_CandidateIndex = numbe
 export type Lib_Scaffold_ResolveScaffoldEnvironmentPrefix_HasConflict = boolean;
 
 /**
- * Lib - Scaffold - Resolve Scaffold Gitignore Project Excludes.
+ * Lib - Scaffold - Resolve Scaffold Gitignore Entry.
  *
- * @since 0.31.0
+ * @since 0.32.0
  */
-export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Config = Record<string, unknown>;
+export type Lib_Scaffold_ResolveScaffoldGitignoreEntry_Config = Record<string, unknown>;
 
-export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Returns = string[];
+export type Lib_Scaffold_ResolveScaffoldGitignoreEntry_Returns = Shared_NovaConfig_IgnoreFile;
 
-export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_GitignoreValue = unknown;
+export type Lib_Scaffold_ResolveScaffoldGitignoreEntry_IgnoreFilesValue = unknown;
 
-export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_Gitignore = Record<string, unknown>;
+export type Lib_Scaffold_ResolveScaffoldGitignoreEntry_IgnoreFiles = Record<string, unknown>;
 
-export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_ProjectExcludesValue = unknown;
+export type Lib_Scaffold_ResolveScaffoldGitignoreEntry_EntryValue = unknown;
 
-export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_ProjectExcludes = string[];
+export type Lib_Scaffold_ResolveScaffoldGitignoreEntry_Entry = Record<string, unknown>;
 
-export type Lib_Scaffold_ResolveScaffoldGitignoreProjectExcludes_ResolvedProjectExcludeValue = unknown;
+export type Lib_Scaffold_ResolveScaffoldGitignoreEntry_BundlesValue = unknown;
 
-/**
- * Lib - Scaffold - Resolve Scaffold Gitignore Template Path.
- *
- * @since 0.31.0
- */
-export type Lib_Scaffold_ResolveScaffoldGitignoreTemplatePath_Returns = string;
+export type Lib_Scaffold_ResolveScaffoldGitignoreEntry_PatternsValue = unknown;
 
-export type Lib_Scaffold_ResolveScaffoldGitignoreTemplatePath_CurrentDirectory = string;
+export type Lib_Scaffold_ResolveScaffoldGitignoreEntry_Bundles = Shared_NovaConfig_IgnoreFile_Bundles;
+
+export type Lib_Scaffold_ResolveScaffoldGitignoreEntry_Patterns = Shared_NovaConfig_IgnoreFile_Patterns;
 
 /**
  * Lib - Scaffold - Resolve Scaffold Install Invocation.
@@ -595,7 +608,7 @@ export type Lib_Scaffold_ResolveWorkspacePackageName_ProjectSlug = string;
 
 export type Lib_Scaffold_ResolveWorkspacePackageName_WorkspaceName = string;
 
-export type Lib_Scaffold_ResolveWorkspacePackageName_Category = 'app' | 'docs' | 'package';
+export type Lib_Scaffold_ResolveWorkspacePackageName_Category = 'app' | 'docs' | 'package' | 'tool';
 
 export type Lib_Scaffold_ResolveWorkspacePackageName_Returns = string;
 
@@ -625,7 +638,7 @@ export type Lib_Scaffold_RunScaffold_Options = {
   workspaceName?: Lib_Scaffold_RunScaffold_Options_WorkspaceName;
 };
 
-export type Lib_Scaffold_RunScaffold_Definition_Category = 'app' | 'docs' | 'package';
+export type Lib_Scaffold_RunScaffold_Definition_Category = 'app' | 'docs' | 'package' | 'tool';
 
 export type Lib_Scaffold_RunScaffold_Definition_CompletionNote = string;
 
@@ -645,7 +658,9 @@ export type Lib_Scaffold_RunScaffold_Definition_ResolvePresentationOptions = (wo
 
 export type Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_WorkspaceName = string;
 
-export type Lib_Scaffold_RunScaffold_Definition_ResolveReplacements = (workspaceName: Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_WorkspaceName) => Map<RegExp, string>;
+export type Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_Returns = Map<RegExp, string> | Promise<Map<RegExp, string> | undefined> | undefined;
+
+export type Lib_Scaffold_RunScaffold_Definition_ResolveReplacements = (workspaceName: Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_WorkspaceName) => Lib_Scaffold_RunScaffold_Definition_ResolveReplacements_Returns;
 
 export type Lib_Scaffold_RunScaffold_Definition_ResolveRootTemplateSubpaths = (answers: Shared_ScaffoldTemplateResolution_Answers) => string[];
 
@@ -717,7 +732,7 @@ export type Lib_Scaffold_RunScaffold_RootGitignorePath = string;
 
 export type Lib_Scaffold_RunScaffold_ShouldCreateRootGitignore = boolean;
 
-export type Lib_Scaffold_RunScaffold_ScaffoldGitignoreProjectExcludes = string[];
+export type Lib_Scaffold_RunScaffold_ScaffoldGitignoreEntry = Shared_NovaConfig_IgnoreFile;
 
 export type Lib_Scaffold_RunScaffold_WorkspaceBaseDirectory = 'apps' | 'packages';
 
@@ -758,6 +773,8 @@ export type Lib_Scaffold_RunScaffold_TemplateReplacements = Map<RegExp, string>;
 export type Lib_Scaffold_RunScaffold_ResolvedReplacements = Map<RegExp, string>;
 
 export type Lib_Scaffold_RunScaffold_TemplateValidationError = string | undefined;
+
+export type Lib_Scaffold_RunScaffold_ReplacementResolution = Map<RegExp, string> | undefined;
 
 export type Lib_Scaffold_RunScaffold_ShouldInstall = boolean;
 
@@ -928,13 +945,9 @@ export type Lib_Scaffold_UpdateScaffoldPackageJson_Content = string;
  */
 export type Lib_Scaffold_WriteScaffoldGitignore_RootDirectory = string;
 
-export type Lib_Scaffold_WriteScaffoldGitignore_ProjectExcludes = string[];
+export type Lib_Scaffold_WriteScaffoldGitignore_Entry = Shared_NovaConfig_IgnoreFile;
 
 export type Lib_Scaffold_WriteScaffoldGitignore_Returns = Promise<void>;
-
-export type Lib_Scaffold_WriteScaffoldGitignore_TemplatePath = string;
-
-export type Lib_Scaffold_WriteScaffoldGitignore_TemplateContent = string;
 
 export type Lib_Scaffold_WriteScaffoldGitignore_Content = string;
 

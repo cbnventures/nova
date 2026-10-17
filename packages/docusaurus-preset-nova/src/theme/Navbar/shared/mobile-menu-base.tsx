@@ -65,6 +65,8 @@ import type {
  *
  * @param {Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_Props} props - Props.
  *
+ * @returns {Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_Returns}
+ *
  * @since 0.23.0
  */
 function MobileMenuBase(props: Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_Props): Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase_Returns {
@@ -169,6 +171,8 @@ function MobileMenuBase(props: Theme_Navbar_Shared_MobileMenuBase_MobileMenuBase
    *
    * Triggers the closing animation for the mobile menu panel
  * by setting the isClosing state to true.
+   *
+   * @returns {undefined}
    *
    * @since 0.23.0
    */

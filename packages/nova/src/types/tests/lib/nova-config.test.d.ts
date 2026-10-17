@@ -701,7 +701,7 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnkn
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_Config = LibNovaConfig;
 
-export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows' | 'gitignore' | 'agents'>;
+export type Tests_Lib_NovaConfig_SharedNovaConfigAgents_ParsesAgentsAndDropsUnknownIds_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows' | 'ignoreFiles' | 'agents'>;
 
 /**
  * Tests - Lib - Nova Config - SharedNovaConfigConstructor - CreatesInstanceWithoutErrors.
@@ -748,34 +748,6 @@ export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInva
 export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_LoadedGithub = Shared_NovaConfig_Github | undefined;
 
 export type Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_RejectsInvalidAndDuplicateBugReportFields_Messages = string[];
-
-/**
- * Tests - Lib - Nova Config - SharedNovaConfigGitignore.
- *
- * @since 0.20.0
- */
-export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_OriginalCwd = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_TemporaryDirectory = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_SandboxPrefix = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_SandboxRoot = string;
-
-/**
- * Tests - Lib - Nova Config - SharedNovaConfigGitignore - FiltersEmptyStringsFromProjectExcludes.
- *
- * @since 0.20.0
- */
-export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ProjectDirectory = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ConfigPath = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ConfigContents = string;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_Config = LibNovaConfig;
-
-export type Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows' | 'gitignore'>;
 
 /**
  * Tests - Lib - Nova Config - SharedNovaConfigLoad.

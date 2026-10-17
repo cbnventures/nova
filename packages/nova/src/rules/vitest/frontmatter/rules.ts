@@ -10,8 +10,8 @@ import {
   LIB_REGEX_PATTERN_DESCRIPTION_LINE,
   LIB_REGEX_PATTERN_ID_LINE,
 } from '../../../lib/regex.js';
-import { getActiveVitest } from '../active-vitest.js';
-import { isEnabled } from '../enable.js';
+import { getActiveVitest } from '../internal/active-vitest.js';
+import { isEnabled } from '../internal/is-enabled.js';
 
 import type {
   Rules_Vitest_Frontmatter_Rules_DescriptionNotPlaceholder_Body,

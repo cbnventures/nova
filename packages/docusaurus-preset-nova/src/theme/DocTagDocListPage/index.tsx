@@ -91,6 +91,8 @@ function useDocsTaggedPlural(): Theme_DocTagDocListPage_Index_UseDocsTaggedPlura
  *
  * @param {Theme_DocTagDocListPage_Index_DocTagDocListPage_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DocTagDocListPage(props: Theme_DocTagDocListPage_Index_DocTagDocListPage_Props) {

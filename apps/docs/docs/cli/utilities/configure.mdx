@@ -27,7 +27,7 @@ Generate or update the Nova config file with an interactive wizard that guides y
 
 ## Summary
 
-The `configure` command creates and maintains the <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file by opening a guided flow across project metadata, key entities, and canonical URLs.
+The `configure` command creates and maintains the complete <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file through focused editors for every supported configuration field.
 
 Existing values populate each prompt so you can edit an accurate snapshot and only persist changes when you confirm them.
 
@@ -35,6 +35,7 @@ Existing values populate each prompt so you can edit an accurate snapshot and on
 
 - The wizard writes the JSON with only the fields you confirm, no extra cleanup required.
 - The wizard lists each field, explains what each field is for, and guides you to fill known values.
+- Every supported `nova.config.json` value is reachable through the wizard; no field is reserved for direct JSON editing.
 - Avoid typos and mismatched formats with built-in validation for slugs, emails, and URLs.
 - **Dry run** lets you walk through the questions without touching the config file until you're ready.
 
@@ -151,38 +152,44 @@ Environment variables and secrets live in the top-level [`environment`](/docs/qu
 ### Workflows
 
 - **Purpose**: Manage the list of GitHub Actions workflow templates that the [workflow generator](/docs/cli/generators/github/workflows) reads from at generation time.
-- **Nice to know**: The menu lists existing workflow entries with **Edit** and **Remove** actions alongside an **Add** option and a **Back** option to return to the category menu. When adding or editing, the wizard prompts for a template (chosen from the bundled set), a name, triggers (selected from the template's available options), upstream workflows when using a `workflow-run-*` trigger, and per-variable settings. Each variable prompt includes a description and example value to guide input.
+- **Nice to know**: The menu lists existing workflow entries with **Edit** and **Remove** actions alongside an **Add** option and a **Back** option to return to the category menu. When adding or editing, the wizard prompts for a template, name, trigger filters, build scopes, deployment targets, target ordering, target settings, and workflow settings. Existing custom template and target names remain selectable so opening the wizard never replaces or drops them.
 - **Things to watch**: The name must be unique within the same template so the output filenames remain distinct. Upstream choices use another workflow's `{template}-{name}` key. Multiple upstream choices are alternatives: any one completion can start this workflow; the wizard does not create a wait-for-all chain.
 
 :::note Multiline values
 The interactive prompt is single-line. To include line breaks in a setting value (e.g., issue messages with paragraphs), type `\n` where you want a newline.
 
-The wizard converts `\n` sequences to actual line breaks when saving. Alternatively, edit `nova.config.json` directly.
+The wizard converts `\n` sequences to actual line breaks when saving. Trigger branch, path, tag, and workflow filters use validated JSON arrays; workflow and target setting maps use validated JSON objects whose values must be strings. These focused inputs keep arbitrary template-specific values editable without leaving the configure flow.
 :::
 
 ### GitHub
 
 - **Purpose**: Configure GitHub repository settings, policies, issue-template fields, and the GitHub recipes stored under the top-level `recipes.github` block.
-- **Nice to know**: Recipe toggles cover `sync-actions`, `sync-features`, `sync-identity`, `sync-labels`, `sync-policies`, `sync-rulesets`, and `sync-security`. Features cover Issues, Wiki, Projects, Discussions, and Sponsorships. Guided policies cover visibility, default branch, merge methods, and automatic head-branch deletion.
-- **Advanced repository settings**: Actions, labels, security, rulesets, merge presentation, auto-merge, update-branch, and web-signoff values already in the config are preserved when the wizard saves. Edit those values through the complete [`github` config reference](/docs/quickstart/nova-config#github); the wizard does not invent GitHub policy defaults for you.
+- **Nice to know**: The focused submenu covers repository identity and features, GitHub Actions permissions and allow-lists, ordered labels, every repository policy, the complete default-branch ruleset, security toggles, issue-template fields, and GitHub recipe toggles. Optional booleans include an explicit **Unset** state, so absence stays different from `false`.
+- **Actions and policies**: Configure action availability, SHA requirements, selected-action patterns, workflow-token permissions, artifact retention, merge methods and message presentation, auto-merge, update-branch behavior, web signoff, security features, and every supported default-branch protection field without hand-editing JSON.
 - **Bug report fields**: A multiselect chooses the exact semantic fields and order the [issue template generator](/docs/cli/generators/github/issue-template) includes, saved under `github.issueTemplate.bugReportFields`. When this array has never been configured, the wizard suggests an initial selection from `project.platforms` and configured URLs; saving no choices writes an explicit empty array.
 - **Things to watch**: Owner and repository name are required (non-empty) and trimmed before they're saved.
 
-### Ignores
+### Ignore Files
 
-- **Purpose**: Manage the project-specific `.gitignore` excludes that the [gitignore generator](/docs/cli/generators/must-haves/gitignore) appends under the Project Excludes section, saved under `gitignore.projectExcludes`.
-- **Nice to know**: On first open with nothing configured yet, the editor imports any entries already beneath the Project Excludes marker in your current `.gitignore` so you start from your existing list.
-- **Things to watch**: Patterns are managed as a plain list with Add, Edit, and Remove actions; the generator stays non-interactive and reads only what you save here.
+- **Purpose**: Manage every physical `.gitignore`, `.dockerignore`, and `.assetsignore` generated by the [ignore-files generator](/docs/cli/generators/must-haves/ignore-files).
+- **Nice to know**: Add or remove project-relative file paths, select the ordered Nova bundles for each file, and add, edit, or remove its project-owned patterns. On first open, the root `.gitignore` editor can import entries already beneath the Project Excludes marker.
+- **Things to watch**: Paths must begin with `./`, end in a supported ignore-file basename, and cannot contain traversal or empty path components. Bundle choices are determined by the physical file type.
 
 :::tip Migrating an existing project
-If your repository already has a hand-maintained `.gitignore`, open the **Ignores** category once to import those entries into `nova.config.json` before regenerating. A regenerate emits only what the config holds, so excludes that were never imported are dropped from the output.
+If your repository already has a hand-maintained `.gitignore`, open the **Ignore Files** category once to import those entries into `nova.config.json` before regenerating. A regenerate emits only what the config holds, so excludes that were never imported are dropped from the output.
 :::
 
 ### AI Tools
 
 - **Purpose**: Select which AI tools the [agent-conventions generator](/docs/cli/generators/must-haves/agent-conventions) emits files for, saved under the top-level `agents` field. Claude Code writes `CLAUDE.md` and Codex writes `AGENTS.md`; both share `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md`.
 - **Nice to know**: The category is a multiselect that pre-checks whatever is already stored, so reopening it shows your current selection.
-- **Things to watch**: At least one tool must stay selected — the menu will not let you save an empty list, since the generator has nothing to emit for zero tools.
+- **Things to watch**: Selecting no tools removes the optional `agents` field, which disables agent-convention output until a tool is selected again.
+
+### Recipes
+
+- **Purpose**: Configure all GitHub, license, README, and per-workspace `package.json` recipes from one category.
+- **Nice to know**: Each recipe has an `enabled` toggle. Recipes that expose additional boolean settings can edit their complete settings object through a validated prompt, including settings Nova adds in future releases.
+- **Things to watch**: `package-json` recipes are scoped by workspace path. The menu includes registered workspaces plus any existing recipe path, so temporarily unregistered paths are preserved and remain editable.
 
 ### Environment
 
@@ -192,9 +199,9 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 
 ### Settings
 
-- **Purpose**: Select the project's release strategy: SemVer (`major.minor.patch`) or CalVer (`YYYY.MM.MICRO`).
-- **Nice to know**: With no release history, you can revisit this category and change the strategy before the first release.
-- **Things to watch**: Once the root or any non-freezable workspace changelog contains a release heading, Nova detects that history and makes the strategy read-only. A configured mismatch, mixed strategies, or an unsupported numeric heading stops configuration and identifies the affected changelog.
+- **Purpose**: Select the project's release strategy, lock-step versioning behavior, and verified local workspace-cache settings.
+- **Nice to know**: With no release history, you can revisit this category and change SemVer (`major.minor.patch`) to CalVer (`YYYY.MM.MICRO`) or back. Lock-step versioning and the cache enabled state, project-relative directory, and exact eligible script names remain editable independently at any time.
+- **Things to watch**: Once the root or any non-freezable workspace changelog contains a release heading, Nova detects that history and makes only the version strategy read-only. A configured mismatch, mixed strategies, or an unsupported numeric heading stops configuration and identifies the affected changelog.
 
 ## Saving and Canceling
 
@@ -320,8 +327,11 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
       }
     }
   ],
-  "gitignore": {
-    "projectExcludes": [".local/", "scratch/"]
+  "ignoreFiles": {
+    "./.gitignore": {
+      "bundles": ["nova"],
+      "patterns": [".local/", "scratch/"]
+    }
   },
   "agents": ["claude-code", "codex"],
   "recipes": {
@@ -399,6 +409,13 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
   },
   "settings": {
     "lockStepVersioning": false,
+    "runWorkspaces": {
+      "cache": {
+        "directory": "./node_modules/.cache/nova/run-workspaces",
+        "enabled": true,
+        "scripts": ["build", "check"]
+      }
+    },
     "versionStrategy": "semver"
   }
 }

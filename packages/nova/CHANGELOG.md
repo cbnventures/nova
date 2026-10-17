@@ -1,5 +1,37 @@
 # @cbnventures/nova
 
+## 0.32.0 - 2026-10-16
+
+### UPDATED
+- Replaced Turborepo with Nova's native dependency-aware workspace runner across root scripts, generated publish workflows, scaffolds, and tooling normalization, with scoped execution, concurrency controls, dry runs, failure continuation, buffered logs, lifecycle prerequisites, exact package-script argument forwarding, and a configurable verified local cache that safely reruns tasks whenever their inputs or outputs drift.
+- Reclassified `novaRules` as an ESLint preset while keeping individual Nova rule implementations in the rules entry point, and isolated private Vitest suite state and toggle helpers under an internal runtime boundary.
+- Expanded `nova utility configure` to edit the complete Nova configuration contract, including recipes, all physical ignore files, workflow filters and settings, GitHub Actions, ordered labels, policies, rulesets, security, workflow environment prefixes, lock-step versioning, and every registered workspace role.
+- Standardized package scripts into Nova's canonical command families, project-specific groups, and npm lifecycle tail, with nested hooks kept beside their target and shared Vitest coverage for generated repositories.
+- Updated `normalize-tooling` to repair root orchestration scripts while preserving authored child execution order.
+- Rejected ambiguous top-level package scripts such as `start`, `generate`, `lint`, and `test`, with recommendations for their intended Nova families.
+- Moved generated Homebridge production execution from `start` to `prod:homebridge` so it runs compiled output.
+- Simplified the public scaffold catalog by removing standalone Cloudflare Worker, Docker image, and Node.js CLI entries plus the mistakenly exposed Docker generator. Docker remains a scaffold-only packaging option.
+
+### FIXED
+- Corrected generated GitHub Action validation by running the local simulator against the exported TypeScript `run()` module, removing an unused GitHub API dependency, upgrading the simulator, smoke-testing the isolated NCC bundle without `node_modules`, and removing obsolete workflow fragments superseded by the programmatic generator.
+- Accepted Apple application changelog headings that include a parenthesized build number during release-history validation.
+- Made `require-jsdoc-returns` report documented functions that omit `@returns`, while preserving constructor and setter exemptions and existing type-only validation.
+- Kept declaration-order validation tied to executable type use instead of JSDoc references, so documentation changes no longer force unrelated declaration reordering.
+- Enforced object-property alias ordering across declaration contracts and allowed named recursive array aliases to reference their owning object without permitting inline recursive property types.
+- Kept the checked-in Cloudflare Astro `.assetsignore` aligned with Nova's canonical renderer, labeled its deployment-control group, and stopped malformed ignore-file configuration before any output is written.
+- Forwarded `--force` through the source-first workspace runner.
+- Rejected invalid derived Apple bundle identifiers before writing scaffold files.
+- Stopped the native workspace runner from scheduling pending tasks after Ctrl+C or termination.
+- Closed TypeScript declaration-inspection gaps for arrow-function returns, optional and readonly object properties, and multiple typed declarations on one line while preserving the full Vitest convention suite.
+- Kept generated Vitest infrastructure ready for consumer-owned tests without shipping brittle package-name or starter-copy assertions that fail after normal scaffold customization.
+
+### ADDED
+- Added first-class Apple bundle identifiers to the Apple application scaffold, including interactive and non-interactive validation with exact XcodeGen rendering.
+- Added a centrally managed, tested version snapshot for scaffold dependencies, generated GitHub workflow action references, and platform toolchains, with offline version resolution plus stable update audits and weekly review pull requests.
+- Added centralized physical ignore-file bundles for Git, Docker, and Cloudflare Astro outputs, renamed the Gitignore generator to `nova generate must-haves ignore-files`, replaced the proprietary `.novaignore` marker with exact internal scaffold discovery exclusions, and removed the former `gitignore.projectExcludes` configuration shape.
+- Added built REPL and config-aware API-test starters to generated Homebridge plugins, with installed executables and shared Nova CLI presentation.
+- Added a provider-neutral `nova scaffold tool serverless` workspace that composes one shared Node.js CLI with either a Cloudflare Workers or Vercel Functions service layer, including isolated runtime contracts, development, production builds, deployment, management, live logs, and Vitest coverage.
+
 ## 0.31.1 - 2026-10-15
 
 ### FIXED

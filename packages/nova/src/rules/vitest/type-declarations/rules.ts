@@ -51,8 +51,8 @@ import {
   validateLeaf,
   validateReturnType,
 } from '../../../lib/type-declaration-engine.js';
-import { getActiveVitest } from '../active-vitest.js';
-import { isEnabled } from '../enable.js';
+import { getActiveVitest } from '../internal/active-vitest.js';
+import { isEnabled } from '../internal/is-enabled.js';
 
 import type {
   Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_ClassPrefix,
@@ -191,7 +191,9 @@ import type {
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectPropsCurrentDirectory,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectPropsRelativePath,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectTypes,
+  Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_PreviousProperty,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_PropertyExpectedPrefix,
+  Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_RecursiveOwner,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Returns,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_TypeDefLines,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_TypeDefMatch,
@@ -199,6 +201,7 @@ import type {
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violation2,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violation3,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violation4,
+  Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violation5,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ViolationMessage,
   Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violations,
   Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_ClassPrefix,
@@ -270,6 +273,7 @@ import type {
   Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_PascalCasePattern,
   Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_PositionMatch,
   Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_PrimitiveSet,
+  Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_RecursiveOwner,
   Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Returns,
   Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_SourceClassPrefix,
   Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_StandaloneCurrentDirectory,
@@ -692,6 +696,27 @@ export async function objectPropertyTypes(config: Rules_Vitest_TypeDeclarations_
             violations.push(violation3);
           }
         }
+
+        let previousProperty: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_PreviousProperty = undefined;
+
+        for (const property of objectType['properties']) {
+          if (property['typeLineIndex'] === -1) {
+            continue;
+          }
+
+          if (
+            previousProperty !== undefined
+            && property['typeLineIndex'] < previousProperty['typeLineIndex']
+          ) {
+            const violation5: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violation5 = `"${objectType['name']}": property type "${property['valueType']}" (line ${property['typeLineIndex'] + 1}) is declared before "${previousProperty['valueType']}" (line ${previousProperty['typeLineIndex'] + 1}), but its object property appears after it. Declare named property types in object-property order.`;
+
+            violations.push(violation5);
+
+            break;
+          }
+
+          previousProperty = property;
+        }
       }
 
       const importedNames: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ImportedNames = extractImportedNames(lines);
@@ -736,6 +761,18 @@ export async function objectPropertyTypes(config: Rules_Vitest_TypeDeclarations_
 
         // Skip if element type is not a user-defined type (primitives, built-ins).
         if (definedTypes.has(arrayType['elementTypeName']) === false) {
+          continue;
+        }
+
+        const recursiveOwner: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_RecursiveOwner = objectTypes.find((objectType) => {
+          return (
+            objectType['name'] === arrayType['elementTypeName']
+            && arrayType['arrayTypeName'].startsWith(`${objectType['name']}_`) === true
+            && objectType['properties'].some((property) => property['valueType'] === arrayType['arrayTypeName']) === true
+          );
+        });
+
+        if (recursiveOwner !== undefined) {
           continue;
         }
 
@@ -1361,6 +1398,18 @@ export async function standaloneTypeFiles(config: Rules_Vitest_TypeDeclarations_
       }
 
       for (const arrayType of arrayTypes) {
+        const recursiveOwner: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_RecursiveOwner = objectTypes.find((objectType) => {
+          return (
+            objectType['name'] === arrayType['elementTypeName']
+            && arrayType['arrayTypeName'].startsWith(`${objectType['name']}_`) === true
+            && objectType['properties'].some((property) => property['valueType'] === arrayType['arrayTypeName']) === true
+          );
+        });
+
+        if (recursiveOwner !== undefined) {
+          continue;
+        }
+
         const elementLine: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ElementLine = typePositions.get(arrayType['elementTypeName']) ?? -1;
 
         if (elementLine === -1) {

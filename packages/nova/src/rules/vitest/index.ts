@@ -2,6 +2,7 @@ export { registerDotenvSuite } from './dotenv/register.js';
 export { registerFrontmatterSuite } from './frontmatter/register.js';
 export { registerLinkSuite } from './link/register.js';
 export { registerMarkdownTableSuite } from './markdown-table/register.js';
+export { registerPackageScriptsSuite } from './package-scripts/register.js';
 export { registerTerminologySuite } from './terminology/register.js';
 export { registerTypeDeclarationSuite } from './type-declarations/register.js';
 
@@ -14,6 +15,8 @@ export type {
   Rules_Vitest_Index_LinkToggleKey,
   Rules_Vitest_Index_MarkdownTableSuiteConfig,
   Rules_Vitest_Index_MarkdownTableToggleKey,
+  Rules_Vitest_Index_PackageScriptsSuiteConfig,
+  Rules_Vitest_Index_PackageScriptsToggleKey,
   Rules_Vitest_Index_SuiteBaseConfig,
   Rules_Vitest_Index_SuiteEnable,
   Rules_Vitest_Index_TerminologySuiteConfig,

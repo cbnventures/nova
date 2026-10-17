@@ -267,12 +267,17 @@
       "name": "@cbnventures/nova"
     }
   },
-  "gitignore": {
-    "projectExcludes": [
-      "!packages/nova/bin/",
-      "!packages/docusaurus-preset-nova/bin/",
-      "graphify-out/"
-    ]
+  "ignoreFiles": {
+    "./.gitignore": {
+      "bundles": [
+        "nova"
+      ],
+      "patterns": [
+        "!packages/nova/bin/",
+        "!packages/docusaurus-preset-nova/bin/",
+        "graphify-out/"
+      ]
+    }
   },
   "agents": [
     "claude-code",
@@ -531,6 +536,16 @@
   },
   "settings": {
     "lockStepVersioning": true,
+    "runWorkspaces": {
+      "cache": {
+        "directory": "./node_modules/.cache/nova/run-workspaces",
+        "enabled": true,
+        "scripts": [
+          "build",
+          "check"
+        ]
+      }
+    },
     "versionStrategy": "semver"
   }
 }

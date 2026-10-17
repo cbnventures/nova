@@ -1,0 +1,3 @@
+name = "[__WORKSPACE_PACKAGE_NAME__]"
+main = "src/worker/index.ts"
+compatibility_date = "[__SCAFFOLD_VERSION_CLOUDFLARE_COMPATIBILITY_DATE__]"

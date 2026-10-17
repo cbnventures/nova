@@ -14,5 +14,6 @@ export default defineConfig({
       'src/**/*.test.ts',
       'tests/**/*.test.ts',
     ],
+    passWithNoTests: true,
   },
 });

@@ -21,21 +21,21 @@
     "clean:build": "shx rm -rf ./build"
   },
   "engines": {
-    "node": "^22 || ^24"
+    "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.31.1",
-    "next": "16.3.4",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "@cbnventures/nova": "0.32.0",
+    "next": "[__SCAFFOLD_VERSION_NEXT__]",
+    "react": "[__SCAFFOLD_VERSION_REACT__]",
+    "react-dom": "[__SCAFFOLD_VERSION_REACT_DOM__]"
   },
   "devDependencies": {
-    "@types/node": "24.9.1",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.7",
-    "eslint": "9.39.5",
-    "shx": "0.4.0",
-    "typescript": "6.0.3",
-    "vitest": "4.1.11"
+    "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",
+    "@types/react": "[__SCAFFOLD_VERSION_TYPES_REACT__]",
+    "@types/react-dom": "[__SCAFFOLD_VERSION_TYPES_REACT_DOM__]",
+    "eslint": "[__SCAFFOLD_VERSION_ESLINT__]",
+    "shx": "[__SCAFFOLD_VERSION_SHX__]",
+    "typescript": "[__SCAFFOLD_VERSION_TYPESCRIPT__]",
+    "vitest": "[__SCAFFOLD_VERSION_VITEST__]"
   }
 }

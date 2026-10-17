@@ -4,8 +4,8 @@ import { join } from 'node:path';
 
 import { discoverContentFiles } from '../../../lib/file-discovery.js';
 import { MarkdownTable } from '../../../toolkit/index.js';
-import { getActiveVitest } from '../active-vitest.js';
-import { isEnabled } from '../enable.js';
+import { getActiveVitest } from '../internal/active-vitest.js';
+import { isEnabled } from '../internal/is-enabled.js';
 
 import type {
   Rules_Vitest_MarkdownTable_Rules_TablesMatchMarkdownTableOutput_Config,

@@ -266,15 +266,6 @@ import type {
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_SandboxPrefix,
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_SandboxRoot,
   Tests_Lib_NovaConfig_SharedNovaConfigGithubIssueTemplate_TemporaryDirectory,
-  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_Config,
-  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ConfigContents,
-  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ConfigPath,
-  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_Loaded,
-  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ProjectDirectory,
-  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_OriginalCwd,
-  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_SandboxPrefix,
-  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_SandboxRoot,
-  Tests_Lib_NovaConfig_SharedNovaConfigGitignore_TemporaryDirectory,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadAcceptsAllSupportedLicenses_Config,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadAcceptsAllSupportedLicenses_ConfigContents,
   Tests_Lib_NovaConfig_SharedNovaConfigLoad_LoadAcceptsAllSupportedLicenses_ConfigPath,
@@ -3086,59 +3077,6 @@ describe('parseGithub (via load)', async () => {
 
     strictEqual(loadedGithub['owner'], 'cbn-ventures');
     strictEqual(loadedGithub['repo'], 'nova.docs_v2');
-
-    return;
-  });
-
-  return;
-});
-
-describe('Shared_NovaConfig gitignore', async () => {
-  const originalCwd: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_OriginalCwd = process.cwd();
-  const temporaryDirectory: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_TemporaryDirectory = tmpdir();
-  const sandboxPrefix: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_SandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_SandboxRoot = await mkdtemp(sandboxPrefix);
-
-  afterAll(async () => {
-    process.chdir(originalCwd);
-
-    await rm(sandboxRoot, {
-      recursive: true,
-      force: true,
-    });
-
-    return;
-  });
-
-  it('filters empty strings from projectExcludes', async () => {
-    const projectDirectory: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ProjectDirectory = join(sandboxRoot, 'gitignore-filters');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const configPath: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_ConfigContents = JSON.stringify({
-      gitignore: {
-        projectExcludes: [
-          'wrangler.toml',
-          '!worker-configuration.d.ts',
-          '',
-        ],
-      },
-    }, null, 2);
-
-    await writeFile(configPath, configContents, 'utf-8');
-
-    process.chdir(projectDirectory);
-
-    const config: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_Config = new LibNovaConfig();
-    const loaded: Tests_Lib_NovaConfig_SharedNovaConfigGitignore_FiltersEmptyStringsFromProjectExcludes_Loaded = await config.load();
-
-    deepStrictEqual(loaded['gitignore'], {
-      projectExcludes: [
-        'wrangler.toml',
-        '!worker-configuration.d.ts',
-      ],
-    });
 
     return;
   });

@@ -17,6 +17,8 @@ import type {
  *
  * @param {Theme_BlogPostItems_Index_BlogPostItems_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlogPostItems(props: Theme_BlogPostItems_Index_BlogPostItems_Props) {

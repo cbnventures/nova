@@ -39,6 +39,8 @@ import type {
  *
  * @param {Theme_BlogPostPage_Index_BlogPostPageContent_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlogPostPageContent(props: Theme_BlogPostPage_Index_BlogPostPageContent_Props) {
@@ -117,6 +119,8 @@ function BlogPostPageContent(props: Theme_BlogPostPage_Index_BlogPostPageContent
  * full sidebar and navigation support.
  *
  * @param {Theme_BlogPostPage_Index_BlogPostPage_Props} props - Props.
+ *
+ * @returns {JSX.Element}
  *
  * @since 0.15.0
  */

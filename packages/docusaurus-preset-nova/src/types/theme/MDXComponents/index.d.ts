@@ -25,12 +25,18 @@ export type Theme_MdxComponents_Index_MdxCode_BlockSpread_ShowLineNumbers = bool
 
 export type Theme_MdxComponents_Index_MdxCode_BlockSpread_Live = boolean;
 
+export type Theme_MdxComponents_Index_MdxCode_BlockSpread_Language = string;
+
+export type Theme_MdxComponents_Index_MdxCode_BlockSpread_Title = string;
+
+export type Theme_MdxComponents_Index_MdxCode_BlockSpread_Metastring = string;
+
 export type Theme_MdxComponents_Index_MdxCode_BlockSpread = {
   showLineNumbers: Theme_MdxComponents_Index_MdxCode_BlockSpread_ShowLineNumbers;
   live: Theme_MdxComponents_Index_MdxCode_BlockSpread_Live;
-  language?: string;
-  title?: string;
-  metastring?: string;
+  language?: Theme_MdxComponents_Index_MdxCode_BlockSpread_Language;
+  title?: Theme_MdxComponents_Index_MdxCode_BlockSpread_Title;
+  metastring?: Theme_MdxComponents_Index_MdxCode_BlockSpread_Metastring;
 };
 
 /**

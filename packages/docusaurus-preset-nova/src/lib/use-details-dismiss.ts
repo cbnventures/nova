@@ -35,6 +35,8 @@ export function useDetailsDismiss(detailsRef: Lib_UseDetailsDismiss_DetailsRef):
      *
      * @private
      *
+     * @returns {undefined}
+     *
      * @since 0.21.0
      */
     const handleMouseDown: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown = (mouseEvent: Lib_UseDetailsDismiss_UseDetailsDismiss_MouseEvent) => {
@@ -60,6 +62,8 @@ export function useDetailsDismiss(detailsRef: Lib_UseDetailsDismiss_DetailsRef):
      * @param {Lib_UseDetailsDismiss_UseDetailsDismiss_KeyboardEvent} keyboardEvent - Keyboard event.
      *
      * @private
+     *
+     * @returns {undefined}
      *
      * @since 0.21.0
      */

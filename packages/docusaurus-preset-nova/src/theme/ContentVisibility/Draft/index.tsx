@@ -16,6 +16,8 @@ import type {
  *
  * @param {Theme_ContentVisibility_Draft_Index_Draft_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function Draft(props: Theme_ContentVisibility_Draft_Index_Draft_Props): Theme_ContentVisibility_Draft_Index_Draft_Returns {

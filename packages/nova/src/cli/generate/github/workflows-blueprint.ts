@@ -15,6 +15,7 @@ import {
   LIB_REGEX_PATTERN_DOUBLE_QUOTE,
   LIB_REGEX_PATTERN_LEADING_DOT_SLASH,
 } from '../../../lib/regex.js';
+import { getScaffoldVersion } from '../../../lib/scaffold-versions.js';
 import {
   isProjectRoot,
   pathExists,
@@ -162,7 +163,6 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildJob,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildValues,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Context,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOn,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOnNames,
@@ -211,7 +211,6 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadStep,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadWorkingDir,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UseTurbo,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkflowId,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkflowSettings,
@@ -228,9 +227,6 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ScriptName,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_TurboFlags,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_UseTurbo,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceCommands,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildTagPushTrigger_Returns,
@@ -263,7 +259,6 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Template,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_UseTurbo,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workflow,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dollar_Returns,
@@ -330,7 +325,6 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Suffix,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_TargetPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Template,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_UseTurbo,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ValidatedWorkflows,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Validation,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_WorkflowsDirectory,
@@ -604,10 +598,6 @@ export class Runner {
     const generatedSet: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_GeneratedSet = new Set();
     const setupLines: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SetupLines = [];
 
-    // A project with a turbo.json gets turbo check/build commands; one
-    // without gets npm workspace commands, mirroring the legacy detection.
-    const useTurbo: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_UseTurbo = await pathExists(join(currentDirectory, 'turbo.json'));
-
     for (const workflowEntry of validatedWorkflows) {
       const entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Entry = workflowEntry;
       const template: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Template = entry['template'];
@@ -615,7 +605,7 @@ export class Runner {
 
       // Build output filename: nova-<template>[-<name>].yml.
       const outputFileName: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_OutputFileName = (suffix !== undefined) ? `nova-${template}-${suffix}.yml` : `nova-${template}.yml`;
-      const serialized: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized = Runner.dispatch(entry, workspaces, environment, validatedWorkflows, useTurbo, packageManager);
+      const serialized: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Serialized = Runner.dispatch(entry, workspaces, environment, validatedWorkflows, packageManager);
       const entrySetupLines: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_EntrySetupLines = Variables.collectSetupLines(entry, outputFileName, environment);
 
       generatedSet.add(outputFileName);
@@ -717,14 +707,13 @@ export class Runner {
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces}     workspaces       - Workspaces.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment}    [environment]    - Environment.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings}       [siblings]       - Siblings.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_UseTurbo}       [useTurbo]       - Use turbo.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager} [packageManager] - Package manager.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns}
    *
    * @since 0.21.0
    */
-  public static dispatch(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = [], useTurbo: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_UseTurbo = true, packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager = 'npm'): Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns {
+  public static dispatch(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager = 'npm'): Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns {
     const template: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Template = entry['template'];
 
     let workflow: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workflow = undefined;
@@ -734,7 +723,7 @@ export class Runner {
     } else if (template === 'lock-inactive-issues') {
       workflow = Runner.buildLockInactiveIssues(entry, environment);
     } else {
-      workflow = Runner.buildPublish(entry, workspaces, environment, siblings, useTurbo, packageManager);
+      workflow = Runner.buildPublish(entry, workspaces, environment, siblings, packageManager);
     }
 
     return Runner.serialize(workflow);
@@ -881,7 +870,7 @@ export class Runner {
 
     const step: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCheckSponsorGatedIssues_Step = {
       name: 'Check support issues',
-      uses: 'mrjackyliang/sponsor-gated-support@v2',
+      uses: getScaffoldVersion('workflowActionSponsorGatedSupport'),
       env: [
         {
           key: 'GITHUB_TOKEN',
@@ -951,7 +940,7 @@ export class Runner {
       steps: [
         {
           name: 'Checkout repository',
-          uses: 'actions/checkout@v7',
+          uses: getScaffoldVersion('workflowActionCheckout'),
         },
         step,
       ],
@@ -1041,7 +1030,7 @@ export class Runner {
 
     const step: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildLockInactiveIssues_Step = {
       name: 'Lock inactive threads',
-      uses: 'mrjackyliang/lock-inactive-threads@v1',
+      uses: getScaffoldVersion('workflowActionLockInactiveThreads'),
       env: [{
         key: 'GITHUB_TOKEN',
         value: Runner.resolveVariableExpr(variables, 'GITHUB_TOKEN', undefined, workflowSettings, prefix),
@@ -1121,14 +1110,13 @@ export class Runner {
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces}     workspaces       - Workspaces.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment}    [environment]    - Environment.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings}       [siblings]       - Siblings.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UseTurbo}       [useTurbo]       - Use turbo.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager} [packageManager] - Package manager.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns}
    *
    * @since 0.21.0
    */
-  public static buildPublish(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings = [], useTurbo: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UseTurbo = true, packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager = 'npm'): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns {
+  public static buildPublish(entry: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry, workspaces: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspaces, environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment = {}, siblings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings = [], packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager = 'npm'): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns {
     const suffix: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Suffix = entry['name'];
     const workflowId: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_WorkflowId = Runner.resolveWorkflowId(suffix);
 
@@ -1334,25 +1322,21 @@ export class Runner {
       },
     ];
 
-    // Resolve each scope directory to its workspace name for the turbo
-    // filter list that drives the check and build commands.
+    // Resolve each scope directory to its workspace name for Nova's workspace
+    // selection list. Root checks remain the root package script's concern.
     const scopes: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Scopes = entry['build'] ?? [];
     const names: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Names = scopes.map((scope) => {
       const workspace: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspace = workspaces[scope] as Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspace;
 
       return workspace['name'];
     });
-    const checkNames: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckNames = (useTurbo === true) ? [
-      '//',
-      ...names,
-    ] : names;
-    const checkCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = Runner.buildScopeCommand('check', checkNames, useTurbo, packageManager);
-    const buildCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildCommand = Runner.buildScopeCommand('build', names, useTurbo, packageManager);
+    const checkCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = Runner.runScriptCommand(packageManager, 'check');
+    const buildCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildCommand = Runner.buildScopeCommand('build', names, packageManager);
 
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Steps = [
       {
         name: 'Checkout repository',
-        uses: 'actions/checkout@v7',
+        uses: getScaffoldVersion('workflowActionCheckout'),
         with: [{
           key: 'fetch-depth',
           value: 0,
@@ -1360,7 +1344,7 @@ export class Runner {
       },
       {
         name: 'Setup Node.js',
-        uses: 'actions/setup-node@v6',
+        uses: getScaffoldVersion('workflowActionSetupNode'),
         with: [
           {
             key: 'node-version-file',
@@ -1411,14 +1395,6 @@ export class Runner {
       workingDirectory: Runner.expr('env.ROOT_DIR'),
     });
 
-    if (useTurbo !== true) {
-      steps.push({
-        name: 'Check root',
-        run: Runner.runScriptCommand(packageManager, 'check'),
-        workingDirectory: Runner.expr('env.ROOT_DIR'),
-      });
-    }
-
     steps.push({
       name: 'Build project',
       run: buildCommand,
@@ -1448,7 +1424,7 @@ export class Runner {
 
       const uploadStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadStep = {
         name: `Upload build artifacts (${uploadTarget['to']}/${Runner.slugifyWorkingDir(uploadTarget['path'])})`,
-        uses: 'actions/upload-artifact@v7',
+        uses: getScaffoldVersion('workflowActionUploadArtifact'),
         with: [
           {
             key: 'name',
@@ -1659,11 +1635,11 @@ export class Runner {
       steps: [
         {
           name: 'Checkout repository',
-          uses: 'actions/checkout@v7',
+          uses: getScaffoldVersion('workflowActionCheckout'),
         },
         {
           name: 'Setup Node.js',
-          uses: 'actions/setup-node@v6',
+          uses: getScaffoldVersion('workflowActionSetupNode'),
           with: [
             {
               key: 'node-version-file',
@@ -1685,7 +1661,7 @@ export class Runner {
         },
         {
           name: 'Download build artifacts',
-          uses: 'actions/download-artifact@v8',
+          uses: getScaffoldVersion('workflowActionDownloadArtifact'),
           with: [
             {
               key: 'name',
@@ -1745,11 +1721,11 @@ export class Runner {
       steps: [
         {
           name: 'Checkout repository',
-          uses: 'actions/checkout@v7',
+          uses: getScaffoldVersion('workflowActionCheckout'),
         },
         {
           name: 'Setup Node.js',
-          uses: 'actions/setup-node@v6',
+          uses: getScaffoldVersion('workflowActionSetupNode'),
           with: [
             {
               key: 'node-version-file',
@@ -1763,7 +1739,7 @@ export class Runner {
         },
         {
           name: 'Configure registry for GitHub Packages',
-          uses: 'actions/setup-node@v6',
+          uses: getScaffoldVersion('workflowActionSetupNode'),
           with: [
             {
               key: 'node-version-file',
@@ -1789,7 +1765,7 @@ export class Runner {
         },
         {
           name: 'Download build artifacts',
-          uses: 'actions/download-artifact@v8',
+          uses: getScaffoldVersion('workflowActionDownloadArtifact'),
           with: [
             {
               key: 'name',
@@ -1861,11 +1837,11 @@ export class Runner {
       steps: [
         {
           name: 'Checkout repository',
-          uses: 'actions/checkout@v7',
+          uses: getScaffoldVersion('workflowActionCheckout'),
         },
         {
           name: 'Setup Node.js',
-          uses: 'actions/setup-node@v6',
+          uses: getScaffoldVersion('workflowActionSetupNode'),
           with: [
             {
               key: 'node-version-file',
@@ -1883,7 +1859,7 @@ export class Runner {
         },
         {
           name: 'Download build artifacts',
-          uses: 'actions/download-artifact@v8',
+          uses: getScaffoldVersion('workflowActionDownloadArtifact'),
           with: [
             {
               key: 'name',
@@ -1959,11 +1935,11 @@ export class Runner {
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Steps = [
       {
         name: 'Checkout repository',
-        uses: 'actions/checkout@v7',
+        uses: getScaffoldVersion('workflowActionCheckout'),
       },
       {
         name: 'Setup Node.js',
-        uses: 'actions/setup-node@v6',
+        uses: getScaffoldVersion('workflowActionSetupNode'),
         with: [
           {
             key: 'node-version-file',
@@ -1982,7 +1958,7 @@ export class Runner {
       },
       {
         name: 'Download build artifacts',
-        uses: 'actions/download-artifact@v8',
+        uses: getScaffoldVersion('workflowActionDownloadArtifact'),
         with: [
           {
             key: 'name',
@@ -2065,7 +2041,7 @@ export class Runner {
       imageTagPrefix: '',
       loginStep: {
         name: 'Login to Docker Hub',
-        uses: 'docker/login-action@v3',
+        uses: getScaffoldVersion('workflowActionDockerLogin'),
         env: [{
           key: 'DOCKERHUB_TOKEN',
           value: Runner.resolveScopedCredExpr(variables, 'DOCKERHUB_TOKEN', targetSettings, workflowSettings, environment, appPath),
@@ -2109,7 +2085,7 @@ export class Runner {
       imageTagPrefix: 'ghcr.io/',
       loginStep: {
         name: 'Login to GitHub Container Registry',
-        uses: 'docker/login-action@v3',
+        uses: getScaffoldVersion('workflowActionDockerLogin'),
         with: [
           {
             key: 'registry',
@@ -2173,11 +2149,11 @@ export class Runner {
       steps: [
         {
           name: 'Checkout repository',
-          uses: 'actions/checkout@v7',
+          uses: getScaffoldVersion('workflowActionCheckout'),
         },
         {
           name: 'Download build artifacts',
-          uses: 'actions/download-artifact@v8',
+          uses: getScaffoldVersion('workflowActionDownloadArtifact'),
           with: [
             {
               key: 'name',
@@ -2201,12 +2177,12 @@ export class Runner {
         {
           name: 'Setup GitHub Pages',
           if: Runner.expr('env.PUBLISH == \'true\' && env.PAGES_ENABLED == \'true\''),
-          uses: 'actions/configure-pages@v6',
+          uses: getScaffoldVersion('workflowActionConfigurePages'),
         },
         {
           name: 'Upload artifact to GitHub Pages',
           if: Runner.expr('env.PUBLISH == \'true\' && env.PAGES_ENABLED == \'true\''),
-          uses: 'actions/upload-pages-artifact@v5',
+          uses: getScaffoldVersion('workflowActionUploadPagesArtifact'),
           with: [{
             key: 'path',
             value: `${context['workingDir']}/build`,
@@ -2215,7 +2191,7 @@ export class Runner {
         {
           name: 'Deploy to GitHub Pages',
           if: Runner.expr('env.PUBLISH == \'true\' && env.PAGES_ENABLED == \'true\''),
-          uses: 'actions/deploy-pages@v5',
+          uses: getScaffoldVersion('workflowActionDeployPages'),
         },
       ],
     };
@@ -2365,7 +2341,7 @@ export class Runner {
       steps: [
         {
           name: 'Checkout repository',
-          uses: 'actions/checkout@v7',
+          uses: getScaffoldVersion('workflowActionCheckout'),
           with: [{
             key: 'persist-credentials',
             value: false,
@@ -2373,7 +2349,7 @@ export class Runner {
         },
         {
           name: 'Download build artifacts',
-          uses: 'actions/download-artifact@v8',
+          uses: getScaffoldVersion('workflowActionDownloadArtifact'),
           with: [
             {
               key: 'name',
@@ -2446,7 +2422,7 @@ export class Runner {
         {
           name: 'Attest build provenance',
           if: Runner.expr('env.PUBLISH == \'true\''),
-          uses: 'actions/attest@v4',
+          uses: getScaffoldVersion('workflowActionAttest'),
           with: [{
             key: 'subject-path',
             value: `${actionOutputPath}/${actionEntryPoint}`,
@@ -2483,11 +2459,11 @@ export class Runner {
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarget_Steps = [
       {
         name: 'Checkout repository',
-        uses: 'actions/checkout@v7',
+        uses: getScaffoldVersion('workflowActionCheckout'),
       },
       {
         name: 'Setup Node.js',
-        uses: 'actions/setup-node@v6',
+        uses: getScaffoldVersion('workflowActionSetupNode'),
         with: [
           {
             key: 'node-version-file',
@@ -2501,7 +2477,7 @@ export class Runner {
       },
       {
         name: 'Download build artifacts',
-        uses: 'actions/download-artifact@v8',
+        uses: getScaffoldVersion('workflowActionDownloadArtifact'),
         with: [{
           key: 'name',
           value: context['artifactName'],
@@ -2635,11 +2611,11 @@ export class Runner {
       steps: [
         {
           name: 'Checkout repository',
-          uses: 'actions/checkout@v7',
+          uses: getScaffoldVersion('workflowActionCheckout'),
         },
         {
           name: 'Set up QEMU',
-          uses: 'docker/setup-qemu-action@v3',
+          uses: getScaffoldVersion('workflowActionDockerSetupQemu'),
           with: [{
             key: 'platforms',
             value: 'linux/amd64,linux/arm64',
@@ -2647,13 +2623,13 @@ export class Runner {
         },
         {
           name: 'Set up Docker Buildx',
-          uses: 'docker/setup-buildx-action@v3',
+          uses: getScaffoldVersion('workflowActionDockerSetupBuildx'),
         },
         loginStep,
         {
           name: 'Build and push',
           id: 'build-push',
-          uses: 'docker/build-push-action@v6',
+          uses: getScaffoldVersion('workflowActionDockerBuildPush'),
           with: [
             {
               key: 'context',
@@ -2677,7 +2653,7 @@ export class Runner {
         {
           name: 'Generate build provenance',
           if: Runner.expr('env.PUBLISH == \'true\''),
-          uses: 'actions/attest@v4',
+          uses: getScaffoldVersion('workflowActionAttest'),
           with: [
             {
               key: 'subject-name',
@@ -2700,12 +2676,11 @@ export class Runner {
   /**
    * CLI - Generate - GitHub - Workflows Blueprint - Build Scope Command.
    *
-   * Emits a check or build command through the selected Corepack client.
-   * Turbo projects use filters; other projects use native workspace syntax.
+   * Emits a scoped workspace command through Nova's dependency-aware runner.
+   * The selected workspaces share one invocation so dependencies are deduplicated.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ScriptName}     scriptName     - Script name.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames} workspaceNames - Workspace names.
-   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_UseTurbo}       useTurbo       - Use turbo.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_PackageManager} packageManager - Package manager.
    *
    * @private
@@ -2714,26 +2689,10 @@ export class Runner {
    *
    * @since 0.26.0
    */
-  private static buildScopeCommand(scriptName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ScriptName, workspaceNames: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames, useTurbo: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_UseTurbo, packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_PackageManager): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Returns {
-    if (useTurbo === true) {
-      const turboFlags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_TurboFlags = workspaceNames.map((name) => `--filter=${name}`);
+  private static buildScopeCommand(scriptName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ScriptName, workspaceNames: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames, packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_PackageManager): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Returns {
+    const workspaceFlags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags = workspaceNames.map((workspaceName) => `--workspace ${workspaceName}`).join(' ');
 
-      return `${Runner.corepackExecuteCommand(packageManager, 'turbo')} run ${scriptName} ${turboFlags.join(' ')} --concurrency=2`;
-    }
-
-    if (packageManager === 'yarn') {
-      const workspaceCommands: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceCommands = workspaceNames.map((name) => `yarn workspace ${name} run ${scriptName}`);
-
-      return workspaceCommands.join('\n');
-    }
-
-    const workspaceFlags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags = workspaceNames.map((name) => (packageManager === 'pnpm') ? `--filter=${name}` : `-w ${name}`);
-
-    if (packageManager === 'pnpm') {
-      return `pnpm ${workspaceFlags.join(' ')} run ${scriptName}`;
-    }
-
-    return `npm run ${scriptName} ${workspaceFlags.join(' ')}`;
+    return `${packageManager} run ${scriptName}:workspaces -- ${workspaceFlags}`;
   }
 
   /**

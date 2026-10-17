@@ -1,0 +1,57 @@
+---
+id: "tested-version-snapshot"
+title: "Tested Version Snapshot"
+description: "Learn how Nova keeps scaffold dependencies current without making project generation depend on live package registries."
+keywords:
+  - "nova"
+  - "nova scaffold"
+  - "dependency versions"
+  - "scaffold maintenance"
+  - "deterministic generation"
+  - "version snapshot"
+tags:
+  - "cli"
+  - "scaffold"
+  - "dependencies"
+  - "maintenance"
+---
+
+Nova generates every project from a **bundled, tested version snapshot**. It does not ask npm, GitHub, Docker Hub, Cloudflare, Gradle, or another registry for the newest release while scaffolding.
+
+This gives every published Nova version a repeatable result:
+
+1. The same Nova release generates the same dependency and platform versions.
+2. Scaffolding keeps working offline after Nova is installed.
+3. A newly published upstream release cannot unexpectedly break a project halfway through generation.
+4. Nova's own package versions remain controlled by the normal Nova release process.
+
+## How Updates Reach the Snapshot
+
+Nova reviews the snapshot weekly. The maintenance workflow finds stable candidates from authoritative upstream sources, writes them to a review branch, and runs the complete project check and build—including the scaffold matrix—before opening a pull request.
+
+The workflow never merges its own pull request. Framework major versions, support ranges, Apple deployment targets, and Android SDK policy remain deliberate maintainer decisions.
+
+Cloudflare's Wrangler version, Worker types, and compatibility date are reviewed together. Android libraries, Gradle, and the Gradle Wrapper are also validated as one platform set instead of unrelated numbers.
+
+Generated workflow actions use complete `owner/action@vN` references from the same snapshot. The updater reads each action's latest stable GitHub release and proposes its floating major reference, while Nova's checks validate the resulting workflows before the review pull request can be merged.
+
+## Maintainer Commands
+
+From Nova's repository root, run a read-only audit:
+
+```bash
+npm run scaffold-versions
+```
+
+Use `--check` when an available update should fail automation, or `--write` to apply the candidates locally for review:
+
+```bash
+npm run scaffold-versions -- --check
+npm run scaffold-versions -- --write
+```
+
+Both long and short forms are supported. `--group <group>` limits a local audit, and `--verbose` includes manual policy entries.
+
+## After Scaffolding
+
+The snapshot is a starting point, not a permanent lock. A generated project owns its files and can update dependencies normally. Nova only guarantees that the versions bundled with a released scaffold passed Nova's validation together.

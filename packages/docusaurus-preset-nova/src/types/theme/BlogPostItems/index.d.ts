@@ -13,9 +13,9 @@ export type Theme_BlogPostItems_Index_BlogPostItems_PropsComponentProps = {
   [key: string]: unknown;
 };
 
-export type Theme_BlogPostItems_Index_BlogPostItems_Props_Component = ComponentType<Theme_BlogPostItems_Index_BlogPostItems_PropsComponentProps> | undefined;
-
 export type Theme_BlogPostItems_Index_BlogPostItems_Props_Items = readonly Theme_BlogPostItems_Index_BlogPostItems_PropsItem[];
+
+export type Theme_BlogPostItems_Index_BlogPostItems_Props_Component = ComponentType<Theme_BlogPostItems_Index_BlogPostItems_PropsComponentProps> | undefined;
 
 export type Theme_BlogPostItems_Index_BlogPostItems_Props_ClassName = string | undefined;
 

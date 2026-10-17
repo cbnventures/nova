@@ -12,6 +12,8 @@ import type {
  *
  * @param {Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DocSidebarItemHtml(props: Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props) {

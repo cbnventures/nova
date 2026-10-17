@@ -48,9 +48,13 @@ export type Lib_I18n_ContentScan_Runner_BuildDescriptors_Descriptors = Shared_I1
 
 export type Lib_I18n_ContentScan_Runner_BuildDescriptors_Matches = InitializedPlugin[];
 
+export type Lib_I18n_ContentScan_Runner_BuildDescriptors_PluginOptions_Id = string;
+
+export type Lib_I18n_ContentScan_Runner_BuildDescriptors_PluginOptions_Path = unknown;
+
 export type Lib_I18n_ContentScan_Runner_BuildDescriptors_PluginOptions = {
-  id?: string;
-  path?: unknown;
+  id?: Lib_I18n_ContentScan_Runner_BuildDescriptors_PluginOptions_Id;
+  path?: Lib_I18n_ContentScan_Runner_BuildDescriptors_PluginOptions_Path;
 };
 
 export type Lib_I18n_ContentScan_Runner_BuildDescriptors_RawPluginId = string | undefined;

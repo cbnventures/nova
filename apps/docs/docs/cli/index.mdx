@@ -67,7 +67,6 @@ flowchart TD
 
     subgraph Generators
         direction LR
-        GEN --> DOCKERGEN[docker-image]
         GEN --> GH[github] --> GH1[funding / issue-template / workflows]
         GEN --> MUST[must-haves] --> MUST1[agent-conventions / dotenv / editorconfig / ...]
     end
@@ -81,15 +80,16 @@ flowchart TD
 
     subgraph Scaffolding
         direction LR
-        SCAF --> APP[app] --> APP1[android / apple / astro / cloudflare-workers / discord-bot / docker-image / expressjs / nextjs / vite]
+        SCAF --> APP[app] --> APP1[android / apple / astro / discord-bot / expressjs / nextjs / vite]
         SCAF --> DOCS[docs] --> DOCS1[docusaurus]
-        SCAF --> PACKAGE[package] --> PACKAGE1[github-action / homebridge / node-cli / pfsense]
+        SCAF --> PACKAGE[package] --> PACKAGE1[github-action / homebridge / pfsense]
         SCAF --> START[starter] --> START1[base]
+        SCAF --> TOOL[tool] --> TOOL1[serverless]
     end
 
     subgraph Utilities
         direction LR
-        UTIL --> UTIL1[changelog / configure / run-recipes / run-scripts / ...]
+        UTIL --> UTIL1[changelog / configure / run-recipes / run-scripts / run-workspaces / ...]
     end
 ```
 
@@ -101,17 +101,11 @@ You can freely combine full names and shorthands in the same command. For exampl
 
 ### Generators
 
-Create **semi-tailored** vendor, packaging, and project files at the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>. Generators read <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> when their output needs project-level values.
+Create **semi-tailored** vendor and project files at the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>. Generators read <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> when their output needs project-level values.
 
 :::info
-Category generators use `nova generate <category> <subcommand>`. Direct generators use `nova generate <subcommand>` when another category would add no useful meaning.
+Generators use `nova generate <category> <subcommand>`.
 :::
-
-#### Direct
-
-| Subcommand                                          | Shorthand | What It Does                                                       |
-|-----------------------------------------------------|-----------|--------------------------------------------------------------------|
-| [`docker-image`](/docs/cli/generators/docker-image) | —         | Add an explicit Docker packaging profile to an existing workspace. |
 
 #### GitHub
 _Category: `github` · Alias: `gh`_
@@ -125,14 +119,14 @@ _Category: `github` · Alias: `gh`_
 #### Must-Haves
 _Category: `must-haves` · Alias: `must`_
 
-| Subcommand                                                               | Shorthand | What It Does                                                     |
-|--------------------------------------------------------------------------|-----------|------------------------------------------------------------------|
-| [`agent-conventions`](/docs/cli/generators/must-haves/agent-conventions) | `agent`   | Create agent convention files for coding assistants.             |
-| [`dotenv`](/docs/cli/generators/must-haves/dotenv)                       | `env`     | Create `.env` and `.env.sample` files for environment secrets.   |
-| [`editorconfig`](/docs/cli/generators/must-haves/editorconfig)           | —         | Create a `.editorconfig` file for consistent coding styles.      |
-| [`gitignore`](/docs/cli/generators/must-haves/gitignore)                 | —         | Create a `.gitignore` file for excluding files from Git commits. |
-| [`license`](/docs/cli/generators/must-haves/license)                     | `lic`     | Create a `LICENSE` file for project license agreements.          |
-| [`read-me`](/docs/cli/generators/must-haves/read-me)                     | `read`    | Create a baseline `README.md` file for your project.             |
+| Subcommand                                                               | Shorthand | What It Does                                                   |
+|--------------------------------------------------------------------------|-----------|----------------------------------------------------------------|
+| [`agent-conventions`](/docs/cli/generators/must-haves/agent-conventions) | `agent`   | Create agent convention files for coding assistants.           |
+| [`dotenv`](/docs/cli/generators/must-haves/dotenv)                       | `env`     | Create `.env` and `.env.sample` files for environment secrets. |
+| [`editorconfig`](/docs/cli/generators/must-haves/editorconfig)           | —         | Create a `.editorconfig` file for consistent coding styles.    |
+| [`ignore-files`](/docs/cli/generators/must-haves/ignore-files)           | —         | Create every configured physical ignore file.                  |
+| [`license`](/docs/cli/generators/must-haves/license)                     | `lic`     | Create a `LICENSE` file for project license agreements.        |
+| [`read-me`](/docs/cli/generators/must-haves/read-me)                     | `read`    | Create a baseline `README.md` file for your project.           |
 
 ### Recipes
 
@@ -190,17 +184,15 @@ All commands in "Scaffolding" are shaped as `nova scaffold <category> <subcomman
 #### App
 _Category: `app` · Alias: none_
 
-| Subcommand                                                           | Shorthand | What It Does                             |
-|----------------------------------------------------------------------|-----------|------------------------------------------|
-| [`android`](/docs/cli/scaffolding/app/android)                       | —         | Scaffold a native Android workspace.     |
-| [`apple`](/docs/cli/scaffolding/app/apple)                           | —         | Scaffold a SwiftUI Apple workspace.      |
-| [`astro`](/docs/cli/scaffolding/app/astro)                           | —         | Scaffold an Astro workspace.             |
-| [`cloudflare-workers`](/docs/cli/scaffolding/app/cloudflare-workers) | —         | Scaffold a Cloudflare Workers workspace. |
-| [`discord-bot`](/docs/cli/scaffolding/app/discord-bot)               | —         | Scaffold a Discord bot workspace.        |
-| [`docker-image`](/docs/cli/scaffolding/app/docker-image)             | —         | Scaffold a Docker image workspace.       |
-| [`expressjs`](/docs/cli/scaffolding/app/expressjs)                   | `express` | Scaffold an Express.js workspace.        |
-| [`nextjs`](/docs/cli/scaffolding/app/nextjs)                         | `next`    | Scaffold a Next.js workspace.            |
-| [`vite`](/docs/cli/scaffolding/app/vite)                             | —         | Scaffold a Vite workspace.               |
+| Subcommand                                             | Shorthand | What It Does                         |
+|--------------------------------------------------------|-----------|--------------------------------------|
+| [`android`](/docs/cli/scaffolding/app/android)         | —         | Scaffold a native Android workspace. |
+| [`apple`](/docs/cli/scaffolding/app/apple)             | —         | Scaffold a SwiftUI Apple workspace.  |
+| [`astro`](/docs/cli/scaffolding/app/astro)             | —         | Scaffold an Astro workspace.         |
+| [`discord-bot`](/docs/cli/scaffolding/app/discord-bot) | —         | Scaffold a Discord bot workspace.    |
+| [`expressjs`](/docs/cli/scaffolding/app/expressjs)     | `express` | Scaffold an Express.js workspace.    |
+| [`nextjs`](/docs/cli/scaffolding/app/nextjs)           | `next`    | Scaffold a Next.js workspace.        |
+| [`vite`](/docs/cli/scaffolding/app/vite)               | —         | Scaffold a Vite workspace.           |
 
 #### Docs
 _Category: `docs` · Alias: none_
@@ -216,7 +208,6 @@ _Category: `package` · Alias: `pkg`_
 |----------------------------------------------------------------|-----------|------------------------------------------------|
 | [`github-action`](/docs/cli/scaffolding/package/github-action) | `action`  | Scaffold a bundled GitHub Action package.      |
 | [`homebridge`](/docs/cli/scaffolding/package/homebridge)       | —         | Scaffold a dynamic-platform Homebridge plugin. |
-| [`node-cli`](/docs/cli/scaffolding/package/node-cli)           | —         | Scaffold a Node.js CLI package.                |
 | [`pfsense`](/docs/cli/scaffolding/package/pfsense)             | —         | Scaffold a WebGUI-managed pfSense package.     |
 
 #### Starter
@@ -226,6 +217,13 @@ _Category: `starter` · Alias: `start`_
 |----------------------------------------------|-----------|-----------------------------------------------------------------|
 | [`base`](/docs/cli/scaffolding/starter/base) | —         | Scaffold a base monorepo project without a framework workspace. |
 
+#### Tool
+_Category: `tool` · Alias: none_
+
+| Subcommand                                            | Shorthand | What It Does                                                          |
+|-------------------------------------------------------|-----------|-----------------------------------------------------------------------|
+| [`serverless`](/docs/cli/scaffolding/tool/serverless) | —         | Scaffold a distributable CLI with a user-deployed serverless service. |
+
 ### Utilities
 
 Tools for **diagnostics**, **quick checks**, and **development helpers**.
@@ -234,15 +232,16 @@ Tools for **diagnostics**, **quick checks**, and **development helpers**.
 All commands in "Utilities" are shaped as `nova utility <subcommand>` or `nova util <shorthand>`.
 :::
 
-| Subcommand                                       | Shorthand  | What It Does                                                                                            |
-|--------------------------------------------------|------------|---------------------------------------------------------------------------------------------------------|
-| [`changelog`](/docs/cli/utilities/changelog)     | `log`      | Record changes and release versioned changelogs.                                                        |
-| [`configure`](/docs/cli/utilities/configure)     | `config`   | Create or edit this project's `nova.config.json` configuration file.                                    |
-| [`run-recipes`](/docs/cli/utilities/run-recipes) | `run-rcp`  | Run all enabled recipes and finalize workspace `package.json` files.                                    |
-| [`run-scripts`](/docs/cli/utilities/run-scripts) | `run-scr`  | Run package.json scripts by pattern with sequential, parallel, and explicit child-environment controls. |
-| [`transpile`](/docs/cli/utilities/transpile)     | `xpile`    | Transpile TypeScript with filtered diagnostics, emitting compiled output for project-owned files.       |
-| [`type-check`](/docs/cli/utilities/type-check)   | `type-chk` | Run full TypeScript type checking scoped to project-owned files, filtering out third-party diagnostics. |
-| [`version`](/docs/cli/utilities/version)         | `ver`      | Generate a Markdown-ready snapshot of your development stack versions (e.g., `node --version`).         |
+| Subcommand                                             | Shorthand  | What It Does                                                                                            |
+|--------------------------------------------------------|------------|---------------------------------------------------------------------------------------------------------|
+| [`changelog`](/docs/cli/utilities/changelog)           | `log`      | Record changes and release versioned changelogs.                                                        |
+| [`configure`](/docs/cli/utilities/configure)           | `config`   | Create or edit this project's `nova.config.json` configuration file.                                    |
+| [`run-recipes`](/docs/cli/utilities/run-recipes)       | `run-rcp`  | Run all enabled recipes and finalize workspace `package.json` files.                                    |
+| [`run-scripts`](/docs/cli/utilities/run-scripts)       | `run-scr`  | Run package.json scripts by pattern with sequential, parallel, and explicit child-environment controls. |
+| [`run-workspaces`](/docs/cli/utilities/run-workspaces) | `run-ws`   | Run dependency-aware package scripts across configured Nova workspaces.                                 |
+| [`transpile`](/docs/cli/utilities/transpile)           | `xpile`    | Transpile TypeScript with filtered diagnostics, emitting compiled output for project-owned files.       |
+| [`type-check`](/docs/cli/utilities/type-check)         | `type-chk` | Run full TypeScript type checking scoped to project-owned files, filtering out third-party diagnostics. |
+| [`version`](/docs/cli/utilities/version)               | `ver`      | Generate a Markdown-ready snapshot of your development stack versions (e.g., `node --version`).         |
 
 ## Troubleshooting
 

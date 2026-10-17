@@ -13,6 +13,8 @@ import type {
  *
  * @param {Theme_NavbarItem_HtmlNavbarItem_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function HtmlNavbarItem(props: Theme_NavbarItem_HtmlNavbarItem_Props) {

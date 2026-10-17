@@ -28,6 +28,8 @@ import type {
  * Resolves the docusaurus-preset-nova package root from the
  * current test file location.
  *
+ * @returns {string}
+ *
  * @since 0.18.0
  */
 function getPackageRoot(): Tests_OverlayCompleteness_GetPackageRoot_Returns {
@@ -44,6 +46,8 @@ function getPackageRoot(): Tests_OverlayCompleteness_GetPackageRoot_Returns {
  * returns the paths relative to the theme directory so the
  * comparison against each preset's overlay tree can use a
  * simple set membership test.
+ *
+ * @returns {Tests_OverlayCompleteness_ListSharedThemeFiles_Returns}
  *
  * @since 0.18.0
  */

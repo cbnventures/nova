@@ -18,6 +18,8 @@ import type {
  *
  * @param {Theme_TagsListByLetter_Index_TagsListByLetter_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function TagsListByLetter(props: Theme_TagsListByLetter_Index_TagsListByLetter_Props) {

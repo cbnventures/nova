@@ -119,8 +119,6 @@ export type Options_PluginOptions_Overrides = {
 
 export type Options_PluginOptions_ProgressBarConfig = Shared_ProgressBarConfig;
 
-export type Options_PluginOptions_ProgressBar = boolean | Options_PluginOptions_ProgressBarConfig;
-
 export type Options_PluginOptionsSearchConfig_Language = string[];
 
 export type Options_PluginOptionsSearchConfig_IndexDocs = boolean;
@@ -158,8 +156,6 @@ export type Options_PluginOptionsSearchConfig = {
   [key: string]: unknown;
 };
 
-export type Options_PluginOptions_Search = Options_PluginOptionsSearchConfig | false;
-
 /**
  * Options - Plugin Options Analytics.
  *
@@ -172,10 +168,6 @@ export type Options_PluginOptions_Analytics_Gtm_Value = {
 };
 
 export type Options_PluginOptions_Analytics_Gtm = Options_PluginOptions_Analytics_Gtm_Value | undefined;
-
-export type Options_PluginOptions_Analytics = {
-  gtm: Options_PluginOptions_Analytics_Gtm;
-};
 
 /**
  * Options - Plugin Options Plugins.
@@ -197,11 +189,19 @@ export type Options_PluginOptions_Plugins = {
   sitemap: Options_PluginOptions_Plugins_Sitemap;
 };
 
+export type Options_PluginOptions_Analytics = {
+  gtm: Options_PluginOptions_Analytics_Gtm;
+};
+
+export type Options_PluginOptions_PersistentCache = boolean;
+
+export type Options_PluginOptions_ProgressBar = boolean | Options_PluginOptions_ProgressBarConfig;
+
+export type Options_PluginOptions_Search = Options_PluginOptionsSearchConfig | false;
+
 export type Options_PluginOptions_IconSafelist = string[];
 
 export type Options_PluginOptions_MaxBundleFileSize = number | false;
-
-export type Options_PluginOptions_PersistentCache = boolean;
 
 export type Options_PluginOptions = {
   preset: Options_PluginOptions_Preset;

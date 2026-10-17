@@ -1,13 +1,14 @@
+import { Runner as LibDockerPackaging } from '../../../lib/docker-packaging.js';
 import {
   LIB_REGEX_PLACEHOLDER_ASTRO_ADAPTER,
   LIB_REGEX_PLACEHOLDER_ASTRO_RENDERING,
   LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE,
 } from '../../../lib/regex.js';
+import { getScaffoldVersion } from '../../../lib/scaffold-versions.js';
 import {
   runScaffold,
   updateScaffoldPackageJson,
 } from '../../../lib/scaffold.js';
-import { Runner as CliGenerateDockerImage } from '../../generate/docker-image/index.js';
 
 import type {
   Cli_Scaffold_App_Astro_ResolveWorkspaceTemplateSubpaths_Answers,
@@ -167,7 +168,7 @@ export class Runner {
         if (answers.get('rendering') === 'server' && adapter === 'node') {
           await updateScaffoldPackageJson(workspaceDirectory, {
             dependencies: {
-              '@astrojs/node': '11.1.7',
+              '@astrojs/node': getScaffoldVersion('astroNode'),
             },
           });
         }
@@ -175,16 +176,16 @@ export class Runner {
         if (answers.get('rendering') === 'server' && adapter === 'cloudflare') {
           await updateScaffoldPackageJson(workspaceDirectory, {
             dependencies: {
-              '@astrojs/cloudflare': '14.3.4',
+              '@astrojs/cloudflare': getScaffoldVersion('astroCloudflare'),
             },
             devDependencies: {
-              'wrangler': '4.151.0',
+              'wrangler': getScaffoldVersion('wrangler'),
             },
           });
         }
 
         if (answers.get('dockerImage') === 'enabled') {
-          await CliGenerateDockerImage.generateForTarget({
+          await LibDockerPackaging.generateForTarget({
             buildDirectory: 'build',
             profile: (answers.get('rendering') === 'server') ? 'astro-node' : 'static-site',
             reportFiles: false,

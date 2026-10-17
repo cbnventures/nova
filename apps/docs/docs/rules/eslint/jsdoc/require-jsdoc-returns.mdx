@@ -1,7 +1,7 @@
 ---
 id: "require-jsdoc-returns"
 title: "Require JSDoc Returns"
-description: "Require every @returns tag in JSDoc blocks to contain only a type in braces, with no trailing description after the type annotation."
+description: "Require documented functions to declare an @returns tag containing only a type in braces."
 keywords:
   - "nova"
   - "eslint rule"
@@ -19,19 +19,20 @@ import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Require every `@returns` tag to contain only a type in braces, with no trailing description.
+Require documented functions to declare an `@returns` tag containing only a type in braces.
 
 ## Summary
 
-The `require-jsdoc-returns` rule reports any `@returns` tag that carries more than a braced type. A valid tag reads `@returns {SomeType}` and nothing else — never `@returns {SomeType} the result` or `@returns void`.
+The `require-jsdoc-returns` rule reports a documented function when its JSDoc omits `@returns`. It also reports any `@returns` tag that carries more than a braced type. A valid tag reads `@returns {SomeType}` and nothing else — never `@returns {SomeType} the result` or `@returns void`.
 
-The semantic meaning of the return value lives in the named type alias, so the description belongs there rather than on the tag.
+Constructors and setters are exempt because they cannot declare a return value. Missing JSDoc remains the responsibility of `require-jsdoc-presence`, while the semantic meaning of a return value lives in its named type alias.
 
 ## Why Use This Rule?
 
-1. Keeps every `@returns` tag terse and uniform, so readers get the type at a glance.
-2. Pushes the meaning into the named type alias, where it stays close to the shape it describes.
-3. Blocks bare types like `@returns void` that skip the braces, keeping the syntax consistent.
+1. Prevents documented functions from silently omitting their return contract.
+2. Keeps every `@returns` tag terse and uniform, so readers get the type at a glance.
+3. Pushes the meaning into the named type alias, where it stays close to the shape it describes.
+4. Blocks bare types like `@returns void` that skip the braces, keeping the syntax consistent.
 
 ## Examples
 
@@ -57,7 +58,23 @@ The semantic meaning of the return value lives in the named type alias, so the d
     ```
 
   </TabItem>
-  <TabItem value="incorrect" label="Incorrect">
+  <TabItem value="missing" label="Missing Tag">
+
+    ```ts
+    /**
+     * Parse the configuration file.
+     *
+     * @param {string} path - Path.
+     *
+     * @since UNRELEASED
+     */
+    function parseConfig(path) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="invalid-format" label="Invalid Format">
 
     ```ts
     /**
@@ -149,10 +166,11 @@ The semantic meaning of the return value lives in the named type alias, so the d
 
 ## Autofix
 
-Autofix is not available for this rule. Flagged code must be updated manually by moving the description into the named type alias.
+Autofix is not available for this rule. Add the missing type-only tag manually, or move a trailing description into the named type alias.
 
 ## Troubleshooting
 
+- **Warning reports a missing `@returns` tag** — Add the function's named return type as `@returns {SomeType}`. Constructors and setters are exempt.
 - **Warning fires on `@returns {Config} the result`** — The trailing description is not allowed. Move it into the `Config` type alias and leave only `@returns {Config}`.
 - **Warning fires on `@returns void`** — The type must be wrapped in braces. Write `@returns {void}` instead.
 - **Not sure where the description should go** — Document the meaning of the return value on the named type alias it points to, not on the tag.

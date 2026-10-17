@@ -178,13 +178,13 @@ export type Lib_RunScripts_Runner_RunParallel_InterruptionState = {
   requested: Lib_RunScripts_Runner_RunParallel_InterruptionState_Requested;
 };
 
-export type Lib_RunScripts_Runner_RunParallel_FlushQueue = () => void;
+export type Lib_RunScripts_Runner_RunParallel_FlushQueue = () => Lib_RunScripts_Runner_RunParallel_FlushQueue_Returns;
 
 export type Lib_RunScripts_Runner_RunParallel_Child = ChildProcessWithoutNullStreams;
 
 export type Lib_RunScripts_Runner_RunParallel_ScriptPartialLines = Map<'stdout' | 'stderr', string>;
 
-export type Lib_RunScripts_Runner_RunParallel_HandleData = (data: Buffer, stream: 'stdout' | 'stderr') => void;
+export type Lib_RunScripts_Runner_RunParallel_HandleData = (data: Buffer, stream: 'stdout' | 'stderr') => Lib_RunScripts_Runner_RunParallel_HandleData_Returns;
 
 export type Lib_RunScripts_Runner_RunParallel_ExitPromise = Promise<number>;
 
@@ -242,6 +242,8 @@ export type Lib_RunScripts_Runner_RunParallel_Error_Returns = void;
  *
  * @since 0.26.0
  */
+export type Lib_RunScripts_Runner_RunParallel_FlushQueue_Returns = void;
+
 export type Lib_RunScripts_Runner_RunParallel_FlushQueue_ActiveScriptLabel = string;
 
 export type Lib_RunScripts_Runner_RunParallel_FlushQueue_ScriptLabel = string;
@@ -262,6 +264,8 @@ export type Lib_RunScripts_Runner_RunParallel_ForwardSignal_Returns = void;
  *
  * @since 0.26.0
  */
+export type Lib_RunScripts_Runner_RunParallel_HandleData_Returns = void;
+
 export type Lib_RunScripts_Runner_RunParallel_HandleData_PartialLineStreams = Map<'stdout' | 'stderr', string>;
 
 export type Lib_RunScripts_Runner_RunParallel_HandleData_Text = string;

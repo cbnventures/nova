@@ -2,9 +2,9 @@ import {
   dxCodeStyle,
   dxIgnore,
   langJavascript,
+  novaRules,
   runtimeNode,
 } from '@cbnventures/nova/presets/eslint';
-import { novaRules } from '@cbnventures/nova/rules/eslint';
 
 /**
  * ESLint Configuration.

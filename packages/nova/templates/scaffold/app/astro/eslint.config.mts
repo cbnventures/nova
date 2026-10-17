@@ -4,9 +4,9 @@ import {
   fwAstro,
   langJavascript,
   langTypescript,
+  novaRules,
   runtimeBrowser,
 } from '@cbnventures/nova/presets/eslint';
-import { novaRules } from '@cbnventures/nova/rules/eslint';
 
 /**
  * ESLint Configuration.

@@ -23,13 +23,13 @@ export type Cli_Scaffold_Docs_Docusaurus_ResolveWorkspaceTemplateSubpaths_Return
  *
  * @since 0.15.0
  */
-export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_DryRun = true;
-
-export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Install = boolean;
-
 export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Content = string;
 
 export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_DockerImage = true;
+
+export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_DryRun = true;
+
+export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Install = boolean;
 
 export type Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options_Name = string;
 

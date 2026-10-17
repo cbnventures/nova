@@ -52,6 +52,8 @@ export type Plugins_MermaidTooltip_Client_FindClickable_Unknown = unknown;
  *
  * @since 0.17.0
  */
+export type Plugins_MermaidTooltip_Client_GetOrCreateTooltip_Returns = HTMLDivElement;
+
 export type Plugins_MermaidTooltip_Client_GetOrCreateTooltip_El = HTMLDivElement;
 
 /**

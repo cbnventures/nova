@@ -147,6 +147,8 @@ const layeredScopeFamilies: Tests_LayeredScope_LayeredScopeFamilies = [{
  * Selectors and values are whitespace-normalised so trivial
  * formatting differences do not mask exact duplicates.
  *
+ * @returns {Tests_LayeredScope_ExtractRuleTriples_Returns}
+ *
  * @since 0.18.0
  */
 function extractRuleTriples(source: Tests_LayeredScope_ExtractRuleTriples_Source): Tests_LayeredScope_ExtractRuleTriples_Returns {
@@ -250,6 +252,8 @@ function extractRuleTriples(source: Tests_LayeredScope_ExtractRuleTriples_Source
  * Resolves the package root directory from the current
  * test file location.
  *
+ * @returns {string}
+ *
  * @since 0.18.0
  */
 function getPackageRoot(): Tests_LayeredScope_GetPackageRoot_Returns {
@@ -266,6 +270,8 @@ function getPackageRoot(): Tests_LayeredScope_GetPackageRoot_Returns {
  * and returns the inner strings (whitespace-collapsed).
  * Used by the membership test to verify the umbrella plus
  * member classes co-render on the same element.
+ *
+ * @returns {Tests_LayeredScope_ReadClassNameLiterals_Returns}
  *
  * @since 0.18.0
  */
@@ -312,6 +318,8 @@ async function readClassNameLiterals(filePath: Tests_LayeredScope_ReadClassNameL
  * may legitimately return zero hits during partial
  * scaffolding.
  *
+ * @returns {Tests_LayeredScope_ReadTriples_Returns}
+ *
  * @since 0.18.0
  */
 async function readTriples(filePath: Tests_LayeredScope_ReadTriples_FilePath): Tests_LayeredScope_ReadTriples_Returns {
@@ -331,6 +339,8 @@ async function readTriples(filePath: Tests_LayeredScope_ReadTriples_FilePath): T
  * source string, preserving any comment that carries the
  * `layered-scope:allow-duplicate` opt-out marker so the
  * triple extractor can detect it later.
+ *
+ * @returns {string}
  *
  * @since 0.18.0
  */
@@ -353,6 +363,8 @@ function stripBlockComments(source: Tests_LayeredScope_StripBlockComments_Source
  * lookup. The three fields are joined with a pipe
  * separator so any subfield that contains a pipe would
  * still produce a unique key against an unrelated triple.
+ *
+ * @returns {string}
  *
  * @since 0.18.0
  */

@@ -17,6 +17,8 @@ import type {
  *
  * @param {Theme_ContentFooter_Edit_Index_Edit_Props} props - Props.
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.18.0
  */
 function Edit(props: Theme_ContentFooter_Edit_Index_Edit_Props) {

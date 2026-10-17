@@ -25,6 +25,8 @@ import type {
  *
  * @param {Theme_Navbar_More_Index_More_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.18.0
  */
 function More(props: Theme_Navbar_More_Index_More_Props): Theme_Navbar_More_Index_More_Returns {

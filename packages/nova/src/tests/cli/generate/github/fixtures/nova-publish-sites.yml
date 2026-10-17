@@ -81,12 +81,12 @@ jobs:
 
       - name: "Check project"
         run: |
-          npx turbo run check --filter=// --filter=portfolio-app-cbnventures --filter=portfolio-app-mrjackyliang --concurrency=2
+          npm run check
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
         run: |
-          npx turbo run build --filter=portfolio-app-cbnventures --filter=portfolio-app-mrjackyliang --concurrency=2
+          npm run build:workspaces -- --workspace portfolio-app-cbnventures --workspace portfolio-app-mrjackyliang
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Upload build artifacts (cloudflare-workers/apps-cbnventures)"

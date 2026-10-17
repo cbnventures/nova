@@ -27,17 +27,19 @@ export type Theme_DocItem_Content_Index_UseSyntheticTitle_SyntheticTitle = strin
 
 export type Theme_DocItem_Content_Index_UseSyntheticTitle_Doc_Metadata_Title = string;
 
-export type Theme_DocItem_Content_Index_UseSyntheticTitle_Doc_ContentTitle = string | undefined;
-
 export type Theme_DocItem_Content_Index_UseSyntheticTitle_Doc_Metadata = {
   title: Theme_DocItem_Content_Index_UseSyntheticTitle_Doc_Metadata_Title;
   [key: string]: unknown;
 };
 
+export type Theme_DocItem_Content_Index_UseSyntheticTitle_Doc_FrontMatter_HideTitle = boolean;
+
 export type Theme_DocItem_Content_Index_UseSyntheticTitle_Doc_FrontMatter = {
-  hide_title?: boolean;
+  hide_title?: Theme_DocItem_Content_Index_UseSyntheticTitle_Doc_FrontMatter_HideTitle;
   [key: string]: unknown;
 };
+
+export type Theme_DocItem_Content_Index_UseSyntheticTitle_Doc_ContentTitle = string | undefined;
 
 export type Theme_DocItem_Content_Index_UseSyntheticTitle_Doc = {
   metadata: Theme_DocItem_Content_Index_UseSyntheticTitle_Doc_Metadata;

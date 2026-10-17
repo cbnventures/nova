@@ -66,6 +66,7 @@ Nova stores the Xcode project as a readable `project.yml` definition, then gener
 
 | Flag                      | Description                                                          |
 |---------------------------|----------------------------------------------------------------------|
+| `--bundle-id <id>`        | Apple bundle identifier; defaults to `com.example.{workspaceName}`.  |
 | `-d, --dry-run`           | Run without writing any files.                                       |
 | `--install`               | Install dependencies after scaffolding; this is the default.         |
 | `--no-install`            | Skip dependency installation.                                        |
@@ -90,12 +91,12 @@ Nova stores the Xcode project as a readable `project.yml` definition, then gener
 Agents and automation can create the root and first Apple app in one command, or omit `--name` to add the app from an existing monorepo root.
 
 ```bash
-nova scaffold app apple --non-interactive --name my-apple-app --workspace-name client --output ./my-apple-app
-nova scaffold app apple --non-interactive --workspace-name client --output ./apps/client
+nova scaffold app apple --non-interactive --name my-apple-app --workspace-name client --bundle-id io.example.client --output ./my-apple-app
+nova scaffold app apple --non-interactive --workspace-name client --bundle-id io.example.client --output ./apps/client
 ```
 
 ## Registration and Customization
 
 Nova registers the workspace with the `app` role and `trackable` policy. The generated package name follows `{projectSlug}-app-{workspaceName}`.
 
-The starter bundle identifier uses `com.example.{workspaceName}`. It is recommended to replace that value in `project.yml` before signing or distributing the app.
+The bundle identifier defaults to `com.example.{workspaceName}` when `--bundle-id` is omitted. Nova accepts ASCII letters, numbers, periods, and hyphens, preserves the supplied value exactly, and gives the unit-test target the matching `{bundleId}.tests` identifier.

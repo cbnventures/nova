@@ -206,7 +206,6 @@ export class Runner {
       '.docusaurus',
       '.git',
       '.next',
-      '.turbo',
       ...libItemSkipDirectories,
     ]);
     const markdownExtensions: Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_DiscoverFiles_MarkdownExtensions = new Set([

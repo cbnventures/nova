@@ -5,13 +5,23 @@
  */
 export type Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree_Type = string;
 
+export type Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree_TagName = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree_Properties = Record<string, unknown>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree_Children = Array<Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree_Value = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree_Data = Record<string, unknown>;
+
 export type Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree = {
   type: Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree_Type;
-  tagName?: string;
-  properties?: Record<string, unknown>;
-  children?: Array<Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree>;
-  value?: string;
-  data?: Record<string, unknown>;
+  tagName?: Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree_TagName;
+  properties?: Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree_Properties;
+  children?: Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree_Children;
+  value?: Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree_Value;
+  data?: Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree_Data;
 };
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Transformer = (tree: Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutput_Tree) => Promise<void>;
@@ -29,13 +39,23 @@ export type Tests_Lib_RehypeShiki_RehypeShiki_AddsDataRehypeShikiAttributeToOutp
  */
 export type Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree_Type = string;
 
+export type Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree_TagName = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree_Properties = Record<string, unknown>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree_Children = Array<Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree_Value = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree_Data = Record<string, unknown>;
+
 export type Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree = {
   type: Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree_Type;
-  tagName?: string;
-  properties?: Record<string, unknown>;
-  children?: Array<Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree>;
-  value?: string;
-  data?: Record<string, unknown>;
+  tagName?: Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree_TagName;
+  properties?: Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree_Properties;
+  children?: Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree_Children;
+  value?: Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree_Value;
+  data?: Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree_Data;
 };
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Transformer = (tree: Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Tree) => Promise<void>;
@@ -53,13 +73,23 @@ export type Tests_Lib_RehypeShiki_RehypeShiki_ExtractsLanguageFromClassName_Incl
  */
 export type Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree_Type = string;
 
+export type Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree_TagName = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree_Properties = Record<string, unknown>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree_Children = Array<Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree_Value = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree_Data = Record<string, unknown>;
+
 export type Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree = {
   type: Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree_Type;
-  tagName?: string;
-  properties?: Record<string, unknown>;
-  children?: Array<Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree>;
-  value?: string;
-  data?: Record<string, unknown>;
+  tagName?: Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree_TagName;
+  properties?: Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree_Properties;
+  children?: Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree_Children;
+  value?: Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree_Value;
+  data?: Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree_Data;
 };
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Transformer = (tree: Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageClass_Tree) => Promise<void>;
@@ -77,13 +107,23 @@ export type Tests_Lib_RehypeShiki_RehypeShiki_HandlesCodeBlocksWithoutALanguageC
  */
 export type Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree_Type = string;
 
+export type Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree_TagName = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree_Properties = Record<string, unknown>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree_Children = Array<Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree_Value = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree_Data = Record<string, unknown>;
+
 export type Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree = {
   type: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree_Type;
-  tagName?: string;
-  properties?: Record<string, unknown>;
-  children?: Array<Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree>;
-  value?: string;
-  data?: Record<string, unknown>;
+  tagName?: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree_TagName;
+  properties?: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree_Properties;
+  children?: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree_Children;
+  value?: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree_Value;
+  data?: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree_Data;
 };
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Transformer = (tree: Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Tree) => Promise<void>;
@@ -103,13 +143,23 @@ export type Tests_Lib_RehypeShiki_RehypeShiki_HighlightsCodeWithShikiClasses_Inc
  */
 export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_Type = string;
 
+export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_TagName = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_Properties = Record<string, unknown>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_Children = Array<Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_Value = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_Data = Record<string, unknown>;
+
 export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree = {
   type: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_Type;
-  tagName?: string;
-  properties?: Record<string, unknown>;
-  children?: Array<Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree>;
-  value?: string;
-  data?: Record<string, unknown>;
+  tagName?: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_TagName;
+  properties?: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_Properties;
+  children?: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_Children;
+  value?: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_Value;
+  data?: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree_Data;
 };
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Transformer = (tree: Tests_Lib_RehypeShiki_RehypeShiki_IgnoresLiveWordsInsideQuotedTitles_Tree) => Promise<void>;
@@ -131,13 +181,23 @@ export type Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStart
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree_Type = string;
 
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree_TagName = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree_Properties = Record<string, unknown>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree_Children = Array<Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree_Value = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree_Data = Record<string, unknown>;
+
 export type Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree = {
   type: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree_Type;
-  tagName?: string;
-  properties?: Record<string, unknown>;
-  children?: Array<Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree>;
-  value?: string;
-  data?: Record<string, unknown>;
+  tagName?: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree_TagName;
+  properties?: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree_Properties;
+  children?: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree_Children;
+  value?: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree_Value;
+  data?: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree_Data;
 };
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Transformer = (tree: Tests_Lib_RehypeShiki_RehypeShiki_MarksAddAndRemoveLinesFromAddStartRemoveStartMagicCommentsAndStripsTheMarkers_Tree) => Promise<void>;
@@ -163,13 +223,23 @@ export type Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_DiffCod
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree_Type = string;
 
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree_TagName = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree_Properties = Record<string, unknown>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree_Children = Array<Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree_Value = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree_Data = Record<string, unknown>;
+
 export type Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree = {
   type: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree_Type;
-  tagName?: string;
-  properties?: Record<string, unknown>;
-  children?: Array<Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree>;
-  value?: string;
-  data?: Record<string, unknown>;
+  tagName?: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree_TagName;
+  properties?: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree_Properties;
+  children?: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree_Children;
+  value?: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree_Value;
+  data?: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree_Data;
 };
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Transformer = (tree: Tests_Lib_RehypeShiki_RehypeShiki_MarksDiffAddAndRemoveLines_Tree) => Promise<void>;
@@ -191,13 +261,23 @@ export type Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree_Type = string;
 
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree_TagName = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree_Properties = Record<string, unknown>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree_Children = Array<Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree_Value = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree_Data = Record<string, unknown>;
+
 export type Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree = {
   type: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree_Type;
-  tagName?: string;
-  properties?: Record<string, unknown>;
-  children?: Array<Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree>;
-  value?: string;
-  data?: Record<string, unknown>;
+  tagName?: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree_TagName;
+  properties?: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree_Properties;
+  children?: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree_Children;
+  value?: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree_Value;
+  data?: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree_Data;
 };
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Transformer = (tree: Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_Tree) => Promise<void>;
@@ -215,13 +295,23 @@ export type Tests_Lib_RehypeShiki_RehypeShiki_MarksLinesFromMetastringLineRange_
  */
 export type Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree_Type = string;
 
+export type Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree_TagName = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree_Properties = Record<string, unknown>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree_Children = Array<Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree_Value = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree_Data = Record<string, unknown>;
+
 export type Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree = {
   type: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree_Type;
-  tagName?: string;
-  properties?: Record<string, unknown>;
-  children?: Array<Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree>;
-  value?: string;
-  data?: Record<string, unknown>;
+  tagName?: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree_TagName;
+  properties?: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree_Properties;
+  children?: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree_Children;
+  value?: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree_Value;
+  data?: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree_Data;
 };
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Transformer = (tree: Tests_Lib_RehypeShiki_RehypeShiki_PreservesMetastringMetadataAsDataAttributesOnTheOutputCodeElement_Tree) => Promise<void>;
@@ -249,13 +339,23 @@ export type Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlig
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree_Type = string;
 
+export type Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree_TagName = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree_Properties = Record<string, unknown>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree_Children = Array<Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree>;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree_Value = string;
+
+export type Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree_Data = Record<string, unknown>;
+
 export type Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree = {
   type: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree_Type;
-  tagName?: string;
-  properties?: Record<string, unknown>;
-  children?: Array<Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree>;
-  value?: string;
-  data?: Record<string, unknown>;
+  tagName?: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree_TagName;
+  properties?: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree_Properties;
+  children?: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree_Children;
+  value?: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree_Value;
+  data?: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree_Data;
 };
 
 export type Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Transformer = (tree: Tests_Lib_RehypeShiki_RehypeShiki_StripsMagicCommentsAndMarksHighlightedLines_Tree) => Promise<void>;

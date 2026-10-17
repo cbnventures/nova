@@ -1,10 +1,10 @@
+import { Runner as LibDockerPackaging } from '../../../lib/docker-packaging.js';
 import {
   LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE,
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_CONTENT,
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET,
 } from '../../../lib/regex.js';
 import { runScaffold } from '../../../lib/scaffold.js';
-import { Runner as CliGenerateDockerImage } from '../../generate/docker-image/index.js';
 
 import type {
   Cli_Scaffold_Docs_Docusaurus_ResolveWorkspaceTemplateSubpaths_Answers,
@@ -156,7 +156,7 @@ export class Runner {
       typeName: 'docusaurus',
       workspaceFinalizer: async (workspaceDirectory, _workspaceName, _configRoot, answers) => {
         if (answers.get('dockerImage') === 'enabled') {
-          await CliGenerateDockerImage.generateForTarget({
+          await LibDockerPackaging.generateForTarget({
             buildDirectory: 'build',
             profile: 'static-site',
             reportFiles: false,

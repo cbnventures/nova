@@ -206,6 +206,7 @@ describe('workspace contract', () => {
     strictEqual(resolveWorkspacePackageName('my-project', 'web', 'app'), 'my-project-app-web');
     strictEqual(resolveWorkspacePackageName('my-project', 'website', 'docs'), 'my-project-docs');
     strictEqual(resolveWorkspacePackageName('my-project', 'my-library', 'package'), 'my-library');
+    strictEqual(resolveWorkspacePackageName('my-project', 'serverless', 'tool'), 'my-project-tool-serverless');
 
     return;
   });

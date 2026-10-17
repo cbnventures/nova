@@ -1,0 +1,24 @@
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/role-source.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-node.json"
+  ],
+  "compilerOptions": {
+    "rootDir": ".",
+    "types": [
+      "node"
+    ],
+    "noEmitOnError": false,
+    "outDir": "./build"
+  },
+  "include": [
+    "./api/**/*.ts",
+    "./src/types/api/**/*.d.ts"
+  ],
+  "exclude": [
+    "./api/**/*.test.ts",
+    "./src/types/api/**/*.test.d.ts"
+  ]
+}

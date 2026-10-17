@@ -62,6 +62,8 @@ function useCategoryItemsPlural(): Theme_DocCard_Index_UseCategoryItemsPlural_Se
  *
  * @param {Theme_DocCard_Index_CardLayout_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function CardLayout(props: Theme_DocCard_Index_CardLayout_Props) {
@@ -100,6 +102,8 @@ function CardLayout(props: Theme_DocCard_Index_CardLayout_Props) {
  *
  * @param {Theme_DocCard_Index_CardCategory_Props} props - Props.
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.15.0
  */
 function CardCategory(props: Theme_DocCard_Index_CardCategory_Props) {
@@ -132,6 +136,8 @@ function CardCategory(props: Theme_DocCard_Index_CardCategory_Props) {
  *
  * @param {Theme_DocCard_Index_CardLink_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function CardLink(props: Theme_DocCard_Index_CardLink_Props) {
@@ -159,6 +165,8 @@ function CardLink(props: Theme_DocCard_Index_CardLink_Props) {
  * animations and shadow depth.
  *
  * @param {Theme_DocCard_Index_DocCard_Props} props - Props.
+ *
+ * @returns {JSX.Element}
  *
  * @since 0.15.0
  */

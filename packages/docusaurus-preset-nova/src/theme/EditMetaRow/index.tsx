@@ -15,6 +15,8 @@ import type {
  *
  * @param {Theme_EditMetaRow_Index_EditMetaRow_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function EditMetaRow(props: Theme_EditMetaRow_Index_EditMetaRow_Props) {

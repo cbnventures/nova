@@ -62,6 +62,8 @@ import type {
  *
  * @param {Theme_SearchBar_SearchResults_Props} _props - Props.
  *
+ * @returns {JSX.Element | null}
+ *
  * @since 0.15.0
  */
 function SearchResults(_props: Theme_SearchBar_SearchResults_Props) {

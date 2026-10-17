@@ -1,4 +1,4 @@
-import { setActiveVitest } from '../active-vitest.js';
+import { setActiveVitest } from '../internal/active-vitest.js';
 import { valuesDoubleQuoted } from './rules.js';
 
 import type {

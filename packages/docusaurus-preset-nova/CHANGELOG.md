@@ -1,5 +1,10 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.32.0 - 2026-10-16
+
+### FIXED
+- Aligned published declaration aliases with Nova's property-order and naming contracts, including missing property, return, and runtime aliases, and replaced inline recursive HAST and table-of-contents children with named recursive aliases.
+
 ## 0.31.1 - 2026-10-15
 
 No changes.

@@ -77,6 +77,55 @@ ruleTester.run('requireJsdocReturns', RequireJsdocReturns['rule'], {
       code: 'class Foo {}',
     },
 
+    // A function without JSDoc remains the responsibility of require-jsdoc-presence.
+    {
+      code: 'function foo() {}',
+    },
+
+    // Constructors do not return a value.
+    {
+      code: [
+        'class Foo {',
+        '  /**',
+        '   * Foo - Constructor.',
+        '   *',
+        '   * @since UNRELEASED',
+        '   */',
+        '  constructor() {}',
+        '}',
+      ].join('\n'),
+    },
+
+    // Setters cannot declare a return value.
+    {
+      code: [
+        'class Foo {',
+        '  /**',
+        '   * Foo - Bar.',
+        '   *',
+        '   * @param {number} value - Value.',
+        '   *',
+        '   * @since UNRELEASED',
+        '   */',
+        '  set bar(value) {}',
+        '}',
+      ].join('\n'),
+    },
+
+    // ignoreFiles skips a documented function without @returns.
+    {
+      code: [
+        '/**',
+        ' * Foo.',
+        ' *',
+        ' * @since UNRELEASED',
+        ' */',
+        'function foo() {}',
+      ].join('\n'),
+      options: [{ ignoreFiles: ['ignored-file.ts'] }],
+      filename: '/path/to/ignored-file.ts',
+    },
+
     // LAST: ignoreFiles skips an otherwise invalid @returns.
     {
       code: [
@@ -143,6 +192,60 @@ ruleTester.run('requireJsdocReturns', RequireJsdocReturns['rule'], {
         'function foo() {}',
       ].join('\n'),
       errors: [{ messageId: 'returnsTypeOnly' }],
+    },
+
+    // Documented function declaration without @returns.
+    {
+      code: [
+        '/**',
+        ' * Foo.',
+        ' *',
+        ' * @since UNRELEASED',
+        ' */',
+        'function foo() {}',
+      ].join('\n'),
+      errors: [{ messageId: 'missingReturns' }],
+    },
+
+    // Documented exported function declaration without @returns.
+    {
+      code: [
+        '/**',
+        ' * Foo.',
+        ' *',
+        ' * @since UNRELEASED',
+        ' */',
+        'export function foo() {}',
+      ].join('\n'),
+      errors: [{ messageId: 'missingReturns' }],
+    },
+
+    // Documented function-valued constant without @returns.
+    {
+      code: [
+        '/**',
+        ' * Foo.',
+        ' *',
+        ' * @since UNRELEASED',
+        ' */',
+        'const foo = () => undefined;',
+      ].join('\n'),
+      errors: [{ messageId: 'missingReturns' }],
+    },
+
+    // Documented class method without @returns.
+    {
+      code: [
+        'class Foo {',
+        '  /**',
+        '   * Foo - Bar.',
+        '   *',
+        '   * @since UNRELEASED',
+        '   */',
+        '  bar() {}',
+        '}',
+      ].join('\n'),
+      errors: [{ messageId: 'missingReturns' }],
     },
   ],
 });

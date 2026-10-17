@@ -27,6 +27,8 @@ import type {
  *
  * @param {Lib_Search_UseSearchHighlight_Options} options - Options.
  *
+ * @returns {void}
+ *
  * @since 0.15.0
  */
 export function useSearchHighlight(options: Lib_Search_UseSearchHighlight_Options): Lib_Search_UseSearchHighlight_Returns {

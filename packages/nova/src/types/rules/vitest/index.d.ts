@@ -268,6 +268,62 @@ export type Rules_Vitest_Index_MarkdownTableSuiteConfig = {
 export type Rules_Vitest_Index_MarkdownTableToggleKey = 'tables-match-markdowntable-output';
 
 /**
+ * Rules - Vitest - Index - Package Scripts Resolved Config.
+ *
+ * @since UNRELEASED
+ */
+export type Rules_Vitest_Index_PackageScriptsResolvedConfig_RootDir = string;
+
+export type Rules_Vitest_Index_PackageScriptsResolvedConfig_PackageJsonPath = string;
+
+export type Rules_Vitest_Index_PackageScriptsResolvedConfig_RequireRootScripts = boolean;
+
+export type Rules_Vitest_Index_PackageScriptsResolvedConfig_RequireI18n = boolean;
+
+export type Rules_Vitest_Index_PackageScriptsResolvedConfig_Enable = Rules_Vitest_Index_SuiteEnable<Rules_Vitest_Index_PackageScriptsToggleKey>;
+
+export type Rules_Vitest_Index_PackageScriptsResolvedConfig = {
+  rootDir: Rules_Vitest_Index_PackageScriptsResolvedConfig_RootDir;
+  packageJsonPath: Rules_Vitest_Index_PackageScriptsResolvedConfig_PackageJsonPath;
+  requireRootScripts: Rules_Vitest_Index_PackageScriptsResolvedConfig_RequireRootScripts;
+  requireI18n: Rules_Vitest_Index_PackageScriptsResolvedConfig_RequireI18n;
+  enable: Rules_Vitest_Index_PackageScriptsResolvedConfig_Enable;
+};
+
+/**
+ * Rules - Vitest - Index - Package Scripts Suite Config.
+ *
+ * @since UNRELEASED
+ */
+export type Rules_Vitest_Index_PackageScriptsSuiteConfig_Vitest = Shared_ActiveVitest;
+
+export type Rules_Vitest_Index_PackageScriptsSuiteConfig_RootDir = string;
+
+export type Rules_Vitest_Index_PackageScriptsSuiteConfig_PackageJsonPath = string;
+
+export type Rules_Vitest_Index_PackageScriptsSuiteConfig_RequireRootScripts = boolean;
+
+export type Rules_Vitest_Index_PackageScriptsSuiteConfig_RequireI18n = boolean;
+
+export type Rules_Vitest_Index_PackageScriptsSuiteConfig_Enable = Rules_Vitest_Index_SuiteEnable<Rules_Vitest_Index_PackageScriptsToggleKey>;
+
+export type Rules_Vitest_Index_PackageScriptsSuiteConfig = {
+  vitest: Rules_Vitest_Index_PackageScriptsSuiteConfig_Vitest;
+  rootDir?: Rules_Vitest_Index_PackageScriptsSuiteConfig_RootDir;
+  packageJsonPath?: Rules_Vitest_Index_PackageScriptsSuiteConfig_PackageJsonPath;
+  requireRootScripts?: Rules_Vitest_Index_PackageScriptsSuiteConfig_RequireRootScripts;
+  requireI18n?: Rules_Vitest_Index_PackageScriptsSuiteConfig_RequireI18n;
+  enable: Rules_Vitest_Index_PackageScriptsSuiteConfig_Enable;
+};
+
+/**
+ * Rules - Vitest - Index - Package Scripts Toggle Key.
+ *
+ * @since UNRELEASED
+ */
+export type Rules_Vitest_Index_PackageScriptsToggleKey = 'scripts-follow-canonical-contract';
+
+/**
  * Rules - Vitest - Index - Suite Base Config.
  *
  * @since 0.20.0

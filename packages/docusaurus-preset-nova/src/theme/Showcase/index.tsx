@@ -45,6 +45,8 @@ import type {
  *
  * @param {Theme_Showcase_Index_ItemProps} _props - Props.
  *
+ * @returns {Theme_Showcase_Index_ItemReturns}
+ *
  * @since 0.18.0
  */
 function ShowcaseItem(_props: Theme_Showcase_Index_ItemProps): Theme_Showcase_Index_ItemReturns {
@@ -59,6 +61,8 @@ function ShowcaseItem(_props: Theme_Showcase_Index_ItemProps): Theme_Showcase_In
  * controlled Details - clicks sync the parent's per-item state map.
  *
  * @param {Theme_Showcase_Index_Showcase_Props} props - Props.
+ *
+ * @returns {JSX.Element}
  *
  * @since 0.18.0
  */
@@ -106,6 +110,8 @@ function Showcase(props: Theme_Showcase_Index_Showcase_Props): Theme_Showcase_In
    *
    * @private
    *
+   * @returns {undefined}
+   *
    * @since 0.21.0
    */
   function handleToggleAll() {
@@ -133,6 +139,8 @@ function Showcase(props: Theme_Showcase_Index_Showcase_Props): Theme_Showcase_In
    * @param {Theme_Showcase_Index_Showcase_HandleItemToggle_IsOpen} isOpen - Is open.
    *
    * @private
+   *
+   * @returns {undefined}
    *
    * @since 0.21.0
    */

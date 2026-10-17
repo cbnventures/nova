@@ -22,8 +22,14 @@ import novaPackageJson from '../../package.json' with { type: 'json' };
 
 import { libItemSortOrderKeys } from '../lib/item.js';
 import {
+  findPackageScriptContractViolations,
+  packageScriptCanonicalGroupOrder,
+  packageScriptOptionalGroupOrder,
+} from '../lib/package-scripts.js';
+import {
   LIB_REGEX_PLACEHOLDER_ANDROID_APPLICATION_ID,
   LIB_REGEX_PLACEHOLDER_ANDROID_PACKAGE_PATH,
+  LIB_REGEX_PLACEHOLDER_APPLE_BUNDLE_IDENTIFIER,
   LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE,
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_CONTENT,
   LIB_REGEX_PLACEHOLDER_DOCUSAURUS_PRESET,
@@ -46,6 +52,7 @@ import type {
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_RejectedTemplateContract,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractPromises,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractResults,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractResultTypeGuard,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesTheBaseStarterInventory_StarterContractPromise,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_PackageDirectory,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_RoutesThePfSenseSingleInstanceSettingsPageDirectlyToItsNativeEditor_PackageInfoContent,
@@ -64,6 +71,10 @@ import type {
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_EslintConfigContent,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_EslintConfigIndex,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedFiles,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScriptCommand,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScriptEntries,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScriptName,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScripts,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExtraFinalNewlineFiles,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExtraFinalNewlineGeneratedContent,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExtraFinalNewlineMessage,
@@ -79,8 +90,11 @@ import type {
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonKeys,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonKnownKeys,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonOrderedKeys,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageScripts,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PlaceholderGeneratedContent,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PlaceholderMessage,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_RequireI18n,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_RequireRootScripts,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Returns,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TargetDirectory,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TrailingWhitespaceFiles,
@@ -93,6 +107,7 @@ import type {
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigRaw,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_UnresolvedFiles,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ChildScriptNames,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_ContractViolations,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedGroupNames,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedParentCommand,
   Tests_ScaffoldOutputContract_VerifyScriptContract_HasParent,
@@ -101,6 +116,8 @@ import type {
   Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonRaw,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ParentIndex,
   Tests_ScaffoldOutputContract_VerifyScriptContract_PreviousParentIndex,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_RequireI18n,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_RequireRootScripts,
   Tests_ScaffoldOutputContract_VerifyScriptContract_Returns,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupModes,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupNodeEnvOptions,
@@ -112,15 +129,13 @@ import type {
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJson,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonPath,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRaw,
-  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJson,
-  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonPath,
-  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonRaw,
-  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboTasks,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedScripts,
   Tests_ScaffoldOutputContract_VerifyStarterContract_Returns,
   Tests_ScaffoldOutputContract_VerifyStarterContract_SandboxRoot,
   Tests_ScaffoldOutputContract_VerifyStarterContract_TargetDirectory,
   Tests_ScaffoldOutputContract_VerifyTemplateContract_Contract,
   Tests_ScaffoldOutputContract_VerifyTemplateContract_PackageDirectory,
+  Tests_ScaffoldOutputContract_VerifyTemplateContract_RequireI18n,
   Tests_ScaffoldOutputContract_VerifyTemplateContract_Returns,
   Tests_ScaffoldOutputContract_VerifyTemplateContract_ReviewedTemplateOptionSubpath,
   Tests_ScaffoldOutputContract_VerifyTemplateContract_SandboxRoot,
@@ -202,7 +217,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'scripts/run-android.mjs',
       'scripts/run-gradle.mjs',
       'settings.gradle.kts',
-      'tests/project.test.ts',
       'tsconfig.scripts.json',
       'tsconfig.tests.json',
       'vitest.config.mts',
@@ -283,6 +297,10 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
         'contract-apple-app-apple',
       ],
       [
+        LIB_REGEX_PLACEHOLDER_APPLE_BUNDLE_IDENTIFIER,
+        'com.example.apple',
+      ],
+      [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_IDENTIFIER,
         'Apple',
       ],
@@ -311,7 +329,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'public/nova-socials.svg',
       'src/pages/index.astro',
       'src/styles/nova-launchpad.css',
-      'tests/project.test.ts',
       'tsconfig.astro.json',
       'tsconfig.config.json',
       'tsconfig.tests.json',
@@ -344,7 +361,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'src/types/bot.d.ts',
       'src/types/bot.test.d.ts',
       'src/types/index.d.ts',
-      'tests/project.test.ts',
       'tsconfig.config.json',
       'tsconfig.source.json',
       'tsconfig.tests.json',
@@ -382,7 +398,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'src/tests/terminology.test.ts',
       'src/tests/type-declarations.test.ts',
       'src/types/pages/index.d.ts',
-      'static/.gitkeep',
       'static/images/nova.svg',
       'tsconfig.json',
       'vitest.config.mts',
@@ -408,32 +423,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     ]),
   },
   {
-    name: 'docker-image',
-    templateSubpath: 'app/docker-image',
-    expectedFiles: [
-      'eslint.config.mts',
-      'package.json',
-      'tests/project.test.ts',
-      'tsconfig.config.json',
-      'tsconfig.tests.json',
-      'vitest.config.mts',
-    ],
-    replacements: new Map([
-      [
-        LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
-        'contract-docker-image',
-      ],
-      [
-        LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
-        'contract-docker-image-app-service',
-      ],
-      [
-        LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
-        'Service',
-      ],
-    ]),
-  },
-  {
     name: 'express',
     templateSubpath: 'app/express',
     expectedFiles: [
@@ -445,7 +434,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'src/types/app.d.ts',
       'src/types/app.test.d.ts',
       'src/types/index.d.ts',
-      'tests/project.test.ts',
       'tsconfig.config.json',
       'tsconfig.source.json',
       'tsconfig.tests.json',
@@ -467,6 +455,109 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     ]),
   },
   {
+    name: 'serverless-cloudflare-workers',
+    templateSubpath: 'tool/serverless',
+    templateOptionSubpaths: [
+      'scaffold-options/package/node-cli-core',
+      'scaffold-options/tool/serverless/cloudflare-workers',
+    ],
+    expectedFiles: [
+      'bin/cli.mjs',
+      'eslint.config.mts',
+      'package.json',
+      'src/index.ts',
+      'src/program.ts',
+      'src/status.test.ts',
+      'src/status.ts',
+      'src/types/program.d.ts',
+      'src/types/status.d.ts',
+      'src/types/worker/index.d.ts',
+      'src/types/worker/index.test.d.ts',
+      'src/worker/index.test.ts',
+      'src/worker/index.ts',
+      'tsconfig.cli.json',
+      'tsconfig.config.json',
+      'tsconfig.tests.json',
+      'tsconfig.worker.json',
+      'vitest.config.mts',
+      'wrangler.build.toml',
+      'wrangler.toml',
+    ],
+    expectedScripts: {
+      manage: 'tsx src/index.ts status',
+      tail: 'wrangler tail --config ./wrangler.toml',
+    },
+    replacements: new Map([
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
+        'contract-serverless-cloudflare-workers',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
+        'contract-serverless-tool-cloudflare',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME,
+        'cloudflare',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
+        'Cloudflare',
+      ],
+    ]),
+  },
+  {
+    name: 'serverless-vercel-functions',
+    templateSubpath: 'tool/serverless',
+    templateOptionSubpaths: [
+      'scaffold-options/package/node-cli-core',
+      'scaffold-options/tool/serverless/vercel-functions',
+    ],
+    expectedFiles: [
+      'api/index.test.ts',
+      'api/index.ts',
+      'bin/cli.mjs',
+      'eslint.config.mts',
+      'package.json',
+      'src/index.ts',
+      'src/program.ts',
+      'src/status.test.ts',
+      'src/status.ts',
+      'src/types/api/index.d.ts',
+      'src/types/api/index.test.d.ts',
+      'src/types/program.d.ts',
+      'src/types/status.d.ts',
+      'tsconfig.cli.json',
+      'tsconfig.config.json',
+      'tsconfig.functions.json',
+      'tsconfig.tests.json',
+      'vercel.json',
+      'vitest.config.mts',
+    ],
+    expectedScripts: {
+      manage: 'tsx src/index.ts status',
+      tail: 'vercel logs --follow',
+    },
+    replacements: new Map([
+      [
+        LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
+        'contract-serverless-vercel-functions',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
+        'contract-serverless-tool-vercel',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME,
+        'vercel',
+      ],
+      [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
+        'Vercel',
+      ],
+    ]),
+  },
+  {
     name: 'github-action',
     templateSubpath: 'package/github-action',
     expectedFiles: [
@@ -481,6 +572,9 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'tsconfig.tests.json',
       'vitest.config.mts',
     ],
+    expectedScripts: {
+      'dev:local': 'local-action run ../.. packages/my-action/src/run.ts .env',
+    },
     replacements: new Map([
       [
         LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
@@ -520,23 +614,34 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
     templateSubpath: 'package/homebridge',
     templateOptionSubpaths: ['scaffold-options/package/homebridge/custom-ui'],
     expectedFiles: [
+      'bin/repl.mjs',
+      'bin/test-api.mjs',
       'config.schema.json',
       'config/eslint-custom-ui.ts',
       'eslint.config.mts',
       'homebridge-ui/public/index.html',
       'homebridge-ui/public/index.js',
       'package.json',
+      'src/cli/presentation.ts',
+      'src/cli/repl.ts',
+      'src/cli/test-api.ts',
       'src/config-ui/server.ts',
       'src/index.ts',
       'src/platform.ts',
+      'src/types/cli/presentation.d.ts',
+      'src/types/cli/repl.d.ts',
+      'src/types/cli/test-api.d.ts',
       'src/types/index.d.ts',
       'src/types/platform.d.ts',
-      'tests/project.test.ts',
       'tsconfig.config.json',
       'tsconfig.source.json',
       'tsconfig.tests.json',
       'vitest.config.mts',
     ],
+    expectedScripts: {
+      'repl': 'node ./build/cli/repl.js',
+      'test-api': 'node ./build/cli/test-api.js',
+    },
     replacements: new Map([
       [
         LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
@@ -551,49 +656,16 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
         'Sample',
       ],
       [
+        LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME,
+        'sample',
+      ],
+      [
         LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
         'Sample',
       ],
       [
         LIB_REGEX_PLACEHOLDER_HOMEBRIDGE_CUSTOM_UI,
         'true',
-      ],
-    ]),
-  },
-  {
-    name: 'node-cli',
-    templateSubpath: 'package/node-cli',
-    expectedFiles: [
-      'bin/cli.mjs',
-      'eslint.config.mts',
-      'package.json',
-      'src/index.ts',
-      'src/program.ts',
-      'src/status.test.ts',
-      'src/status.ts',
-      'src/types/program.d.ts',
-      'src/types/status.d.ts',
-      'tsconfig.config.json',
-      'tsconfig.source.json',
-      'tsconfig.tests.json',
-      'vitest.config.mts',
-    ],
-    replacements: new Map([
-      [
-        LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
-        'contract-node-cli',
-      ],
-      [
-        LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
-        'my-node-cli',
-      ],
-      [
-        LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME,
-        'my-node-cli',
-      ],
-      [
-        LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
-        'My Node CLI',
       ],
     ]),
   },
@@ -616,8 +688,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'scripts/check-package.mjs',
       'scripts/regex.mjs',
       'scripts/stage-package.mjs',
-      'tests/project.test.ts',
-      'tests/types/project.test.d.ts',
       'tsconfig.scripts.json',
       'tsconfig.tests.json',
       'vitest.config.mts',
@@ -676,7 +746,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'eslint.config.mts',
       'next.config.mjs',
       'package.json',
-      'public/.gitkeep',
       'public/favicon.svg',
       'public/nova-socials.svg',
       'src/app/globals.css',
@@ -685,7 +754,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'src/styles/nova-launchpad.css',
       'src/types/app/layout.d.ts',
       'src/types/app/page.d.ts',
-      'tests/project.test.ts',
       'tsconfig.config.json',
       'tsconfig.json',
       'tsconfig.tests.json',
@@ -726,7 +794,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'public/nova-socials.svg',
       'src/main.ts',
       'src/styles/nova-launchpad.css',
-      'tests/project.test.ts',
       'tsconfig.json',
       'vite.config.mts',
       'vitest.config.mts',
@@ -750,32 +817,6 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       ],
     ]),
   },
-  {
-    name: 'cloudflare-workers',
-    templateSubpath: 'app/cloudflare-workers',
-    expectedFiles: [
-      'eslint.config.mts',
-      'package.json',
-      'src/index.ts',
-      'src/types/index.d.ts',
-      'tests/project.test.ts',
-      'tsconfig.config.json',
-      'tsconfig.tests.json',
-      'tsconfig.worker.json',
-      'vitest.config.mts',
-      'wrangler.toml',
-    ],
-    replacements: new Map([
-      [
-        LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
-        'contract-cloudflare-workers',
-      ],
-      [
-        LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
-        'contract-cloudflare-workers-app-worker',
-      ],
-    ]),
-  },
 ];
 
 /**
@@ -785,25 +826,22 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
  * keeps its child steps adjacent, and follows the canonical development-first
  * ordering without constraining framework-specific child names.
  *
- * @param {Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonPath} packageJsonPath - Package json path.
+ * @param {Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonPath}    packageJsonPath    - Package json path.
+ * @param {Tests_ScaffoldOutputContract_VerifyScriptContract_RequireRootScripts} requireRootScripts - Require root scripts.
+ * @param {Tests_ScaffoldOutputContract_VerifyScriptContract_RequireI18n}        requireI18n        - Require i18n.
  *
  * @returns {Tests_ScaffoldOutputContract_VerifyScriptContract_Returns}
  *
  * @since 0.27.0
  */
-async function verifyScriptContract(packageJsonPath: Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonPath): Tests_ScaffoldOutputContract_VerifyScriptContract_Returns {
+async function verifyScriptContract(packageJsonPath: Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonPath, requireRootScripts: Tests_ScaffoldOutputContract_VerifyScriptContract_RequireRootScripts = false, requireI18n: Tests_ScaffoldOutputContract_VerifyScriptContract_RequireI18n = false): Tests_ScaffoldOutputContract_VerifyScriptContract_Returns {
   const packageJsonRaw: Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonRaw = await readFile(packageJsonPath, 'utf-8');
   const packageJson: Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJson = JSON.parse(packageJsonRaw) as Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJson;
   const scripts: Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts = packageJson['scripts'] as Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts;
   const scriptNames: Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptNames = Object.keys(scripts);
   const scriptGroupOrder: Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder = [
-    'dev',
-    'prod',
-    'check',
-    'build',
-    'deploy',
-    'clean',
-    'i18n',
+    ...packageScriptCanonicalGroupOrder,
+    ...packageScriptOptionalGroupOrder,
   ];
   const scriptGroupModes: Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupModes = {
     dev: 'parallel',
@@ -823,7 +861,13 @@ async function verifyScriptContract(packageJsonPath: Tests_ScaffoldOutputContrac
     clean: '',
     i18n: '',
   };
+  const contractViolations: Tests_ScaffoldOutputContract_VerifyScriptContract_ContractViolations = findPackageScriptContractViolations(scripts, {
+    requireRootScripts,
+    requireI18n,
+  });
   let previousParentIndex: Tests_ScaffoldOutputContract_VerifyScriptContract_PreviousParentIndex = -1;
+
+  deepStrictEqual(contractViolations, [], `Generated package scripts violate Nova's shared organization contract in "${packageJsonPath}".`);
 
   for (const scriptGroup of scriptGroupOrder) {
     const childScriptNames: Tests_ScaffoldOutputContract_VerifyScriptContract_ChildScriptNames = scriptNames.filter((scriptName) => scriptName.startsWith(`${scriptGroup}:`));
@@ -861,14 +905,17 @@ async function verifyScriptContract(packageJsonPath: Tests_ScaffoldOutputContrac
  * Compares a generated directory with its reviewed file inventory and confirms
  * that no Nova template placeholder survives replacement.
  *
- * @param {Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TargetDirectory} targetDirectory - Target directory.
- * @param {Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedFiles}   expectedFiles   - Expected files.
+ * @param {Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TargetDirectory}    targetDirectory    - Target directory.
+ * @param {Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedFiles}      expectedFiles      - Expected files.
+ * @param {Tests_ScaffoldOutputContract_VerifyGeneratedOutput_RequireRootScripts} requireRootScripts - Require root scripts.
+ * @param {Tests_ScaffoldOutputContract_VerifyGeneratedOutput_RequireI18n}        requireI18n        - Require i18n.
+ * @param {Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScripts}    expectedScripts    - Expected scripts.
  *
  * @returns {Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Returns}
  *
  * @since 0.26.0
  */
-async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TargetDirectory, expectedFiles: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedFiles): Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Returns {
+async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TargetDirectory, expectedFiles: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedFiles, requireRootScripts: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_RequireRootScripts = false, requireI18n: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_RequireI18n = false, expectedScripts: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScripts = {}): Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Returns {
   const generatedFiles: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_GeneratedFiles = globSync('**/*', {
     cwd: targetDirectory,
     dot: true,
@@ -931,9 +978,10 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
     ].join('\n');
 
     strictEqual(eslintConfigContent.includes(eslintBaseline), true, `Generated ESLint config must begin with dxIgnore and dxCodeStyle in "${targetDirectory}".`);
+    strictEqual(eslintConfigContent.includes('from \'@cbnventures/nova/presets/eslint\';'), true, `Generated ESLint config must import preset configuration from the preset entry point in "${targetDirectory}".`);
+    strictEqual(eslintConfigContent.includes('from \'@cbnventures/nova/rules/eslint\';'), false, `Generated ESLint config must not import preset configuration from the rule implementation entry point in "${targetDirectory}".`);
     strictEqual(eslintConfigContent.includes('...novaRules,'), true, `Generated ESLint config must enable Nova custom rules in "${targetDirectory}".`);
     strictEqual(generatedFiles.includes('vitest.config.mts'), true, `Generated JavaScript or TypeScript tooling must include a Vitest config in "${targetDirectory}".`);
-    strictEqual(generatedFiles.some((generatedFile) => generatedFile.endsWith('.test.ts')), true, `Generated JavaScript or TypeScript tooling must include a Vitest suite in "${targetDirectory}".`);
   }
 
   const tsconfigFiles: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigFiles = generatedFiles.filter((generatedFile) => (
@@ -962,6 +1010,8 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
     const packageJsonIndex: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonIndex = generatedFiles.indexOf('package.json');
     const packageJsonContent: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonContent = generatedContents[packageJsonIndex] ?? '';
     const packageJson: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJson = JSON.parse(packageJsonContent) as Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJson;
+    const packageScripts: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageScripts = packageJson['scripts'] as Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageScripts;
+    const expectedScriptEntries: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScriptEntries = Object.entries(expectedScripts);
     const packageJsonKeys: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonKeys = Object.keys(packageJson);
     const packageJsonKnownKeys: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonKnownKeys = new Set(libItemSortOrderKeys);
     const packageJsonOrderedKeys: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonOrderedKeys = [
@@ -979,7 +1029,14 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
       `Generated package.json must declare engines.node in "${targetDirectory}".`,
     );
 
-    await verifyScriptContract(join(targetDirectory, 'package.json'));
+    for (const expectedScriptEntry of expectedScriptEntries) {
+      const expectedScriptName: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScriptName = expectedScriptEntry[0];
+      const expectedScriptCommand: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScriptCommand = expectedScriptEntry[1];
+
+      strictEqual(packageScripts[expectedScriptName], expectedScriptCommand, `Generated package.json script "${expectedScriptName}" drifted in "${targetDirectory}".`);
+    }
+
+    await verifyScriptContract(join(targetDirectory, 'package.json'), requireRootScripts, requireI18n);
   }
 
   return;
@@ -1014,31 +1071,27 @@ async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_V
     'tests/setup.ts',
     'tsconfig.config.json',
     'tsconfig.tests.json',
-    'turbo.json',
     'vitest.config.mts',
-  ]);
+  ], true);
 
   const generatedPackageJsonPath: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonPath = join(targetDirectory, 'package.json');
   const generatedPackageJsonRaw: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRaw = await readFile(generatedPackageJsonPath, 'utf-8');
   const generatedPackageJson: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJson = JSON.parse(generatedPackageJsonRaw) as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJson;
   const generatedDependencies: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDependencies = generatedPackageJson['dependencies'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDependencies;
   const generatedDevDependencies: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies = generatedPackageJson['devDependencies'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies;
-  const generatedTurboJsonPath: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonPath = join(targetDirectory, 'turbo.json');
-  const generatedTurboJsonRaw: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonRaw = await readFile(generatedTurboJsonPath, 'utf-8');
-  const generatedTurboJson: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJson = JSON.parse(generatedTurboJsonRaw) as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJson;
-  const generatedTurboTasks: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboTasks = generatedTurboJson['tasks'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboTasks;
+  const generatedScripts: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedScripts = generatedPackageJson['scripts'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedScripts;
 
   strictEqual(generatedDependencies['@cbnventures/nova'], novaPackageJson['version']);
   strictEqual(generatedDevDependencies['@cbnventures/nova'], undefined);
-  strictEqual(generatedDevDependencies['turbo'], novaPackageJson['devDependencies']['turbo']);
-  deepStrictEqual(Object.keys(generatedTurboTasks), [
-    'dev',
-    'prod',
-    'check',
-    'build',
-    'deploy',
-    'clean',
-  ]);
+  strictEqual(generatedDevDependencies['turbo'], undefined);
+  strictEqual(generatedScripts['dev:workspaces'], 'nova utility run-workspaces --node-env development dev');
+  strictEqual(generatedScripts['prod:workspaces'], 'nova utility run-workspaces --node-env production prod');
+  strictEqual(generatedScripts['check:workspaces'], 'nova utility run-workspaces --concurrency=2 check');
+  strictEqual(generatedScripts['build:workspaces'], 'nova utility run-workspaces --concurrency=2 --node-env production build');
+  strictEqual(generatedScripts['deploy:workspaces'], 'nova utility run-workspaces --concurrency=2 --node-env production deploy');
+  strictEqual(generatedScripts['clean:workspaces'], 'nova utility run-workspaces clean');
+  strictEqual(generatedScripts['changelog'], 'nova utility changelog');
+  strictEqual(generatedScripts['recipes'], 'nova utility run-recipes --replace-file');
 
   return;
 }
@@ -1071,7 +1124,9 @@ async function verifyTemplateContract(contract: Tests_ScaffoldOutputContract_Ver
     await writeTemplateFiles(templateOptionDirectory, targetDirectory, contract['replacements']);
   }
 
-  await verifyGeneratedOutput(targetDirectory, contract['expectedFiles']);
+  const requireI18n: Tests_ScaffoldOutputContract_VerifyTemplateContract_RequireI18n = contract['name'] === 'docusaurus';
+
+  await verifyGeneratedOutput(targetDirectory, contract['expectedFiles'], false, requireI18n, contract['expectedScripts']);
 
   return;
 }
@@ -1110,7 +1165,7 @@ describe('scaffold output contract', async () => {
   it('matches every template inventory', async () => {
     const templateContractPromises: Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractPromises = templateContracts.map((templateContract) => verifyTemplateContract(templateContract, packageDirectory, sandboxRoot));
     const templateContractResults: Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractResults = await Promise.allSettled(templateContractPromises);
-    const rejectedTemplateContract: Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_RejectedTemplateContract = templateContractResults.find((templateContractResult): templateContractResult is PromiseRejectedResult => templateContractResult.status === 'rejected');
+    const rejectedTemplateContract: Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_RejectedTemplateContract = templateContractResults.find((templateContractResult): templateContractResult is Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractResultTypeGuard => templateContractResult.status === 'rejected');
 
     if (rejectedTemplateContract !== undefined) {
       throw rejectedTemplateContract.reason;

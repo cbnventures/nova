@@ -10,8 +10,8 @@ import {
   LIB_REGEX_PATTERN_TERMINOLOGY_TITLE_ATTR,
   LIB_REGEX_PATTERN_TERMINOLOGY_TO_ATTR,
 } from '../../../lib/regex.js';
-import { getActiveVitest } from '../active-vitest.js';
-import { isEnabled } from '../enable.js';
+import { getActiveVitest } from '../internal/active-vitest.js';
+import { isEnabled } from '../internal/is-enabled.js';
 
 import type {
   Rules_Vitest_Terminology_Rules_AnchorResolves_Anchor,

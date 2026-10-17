@@ -16,6 +16,8 @@ import type {
  *
  * @param {Theme_ContentFooter_Share_Index_Share_Props} props - Props.
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.18.0
  */
 function Share(props: Theme_ContentFooter_Share_Index_Share_Props) {

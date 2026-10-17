@@ -17,6 +17,8 @@ import type {
  *
  * @param {Theme_DocBreadcrumbs_StructuredData_Index_DocBreadcrumbsStructuredData_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.18.0
  */
 function DocBreadcrumbsStructuredData(props: Theme_DocBreadcrumbs_StructuredData_Index_DocBreadcrumbsStructuredData_Props) {

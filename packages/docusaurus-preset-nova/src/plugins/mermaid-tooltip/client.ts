@@ -7,6 +7,7 @@ import type {
   Plugins_MermaidTooltip_Client_FindClickable_Match,
   Plugins_MermaidTooltip_Client_FindClickable_Unknown,
   Plugins_MermaidTooltip_Client_GetOrCreateTooltip_El,
+  Plugins_MermaidTooltip_Client_GetOrCreateTooltip_Returns,
   Plugins_MermaidTooltip_Client_HideFor,
   Plugins_MermaidTooltip_Client_HideFor_Stash,
   Plugins_MermaidTooltip_Client_HideFor_Stashed,
@@ -95,9 +96,11 @@ if (typeof document !== 'undefined') {
    *
    * @private
    *
+   * @returns {HTMLDivElement}
+   *
    * @since 0.21.0
    */
-  const getOrCreateTooltip = (): Plugins_MermaidTooltip_Client_GetOrCreateTooltip_El => {
+  const getOrCreateTooltip = (): Plugins_MermaidTooltip_Client_GetOrCreateTooltip_Returns => {
     if (tooltipEl !== null && tooltipEl.isConnected === true) {
       return tooltipEl;
     }
@@ -124,6 +127,8 @@ if (typeof document !== 'undefined') {
    *
    * @private
    *
+   * @returns {SVGGElement | null}
+   *
    * @since 0.21.0
    */
   const findClickable: Plugins_MermaidTooltip_Client_FindClickable = (target) => {
@@ -143,6 +148,8 @@ if (typeof document !== 'undefined') {
    * reveals the shared tooltip near the cursor with that text.
    *
    * @private
+   *
+   * @returns {undefined}
    *
    * @since 0.21.0
    */
@@ -179,6 +186,8 @@ if (typeof document !== 'undefined') {
    *
    * @private
    *
+   * @returns {undefined}
+   *
    * @since 0.21.0
    */
   const hideFor: Plugins_MermaidTooltip_Client_HideFor = (node) => {
@@ -214,6 +223,8 @@ if (typeof document !== 'undefined') {
    *
    * @private
    *
+   * @returns {undefined}
+   *
    * @since 0.21.0
    */
   const pointerover: Plugins_MermaidTooltip_Client_Pointerover = (event) => {
@@ -244,6 +255,8 @@ if (typeof document !== 'undefined') {
    *
    * @private
    *
+   * @returns {undefined}
+   *
    * @since 0.21.0
    */
   const pointermove: Plugins_MermaidTooltip_Client_Pointermove = (event) => {
@@ -271,6 +284,8 @@ if (typeof document !== 'undefined') {
    * and hides any visible tooltip on every click.
    *
    * @private
+   *
+   * @returns {undefined}
    *
    * @since 0.21.0
    */

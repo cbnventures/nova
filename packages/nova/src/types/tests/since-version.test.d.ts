@@ -7,8 +7,10 @@ import type { CommentRange, Node, SourceFile } from 'typescript';
  */
 export type Tests_SinceVersion_PackageJsonRaw = string;
 
+export type Tests_SinceVersion_PackageJson_Version = string;
+
 export type Tests_SinceVersion_PackageJson = {
-  version?: string;
+  version?: Tests_SinceVersion_PackageJson_Version;
 };
 
 export type Tests_SinceVersion_PackageVersion = string;

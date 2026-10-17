@@ -1,3 +1,0 @@
-name = "[__WORKSPACE_PACKAGE_NAME__]"
-main = "src/index.ts"
-compatibility_date = "2026-10-14"

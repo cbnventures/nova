@@ -33,9 +33,9 @@ export type Theme_BlogPostPage_Index_BlogPostPage_BlogPostContent = PropBlogPost
  *
  * @since 0.15.0
  */
-export type Theme_BlogPostPage_Index_BlogPostPageContent_Props_Children = ReactNode;
-
 export type Theme_BlogPostPage_Index_BlogPostPageContent_Props_Sidebar = BlogSidebar;
+
+export type Theme_BlogPostPage_Index_BlogPostPageContent_Props_Children = ReactNode;
 
 export type Theme_BlogPostPage_Index_BlogPostPageContent_Props_ClassName = string | undefined;
 

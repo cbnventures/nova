@@ -45,6 +45,8 @@ import type {
  *
  * @param {Theme_MdxPage_Index_MdxPageProps} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function MDXPage(props: Theme_MdxPage_Index_MdxPageProps) {

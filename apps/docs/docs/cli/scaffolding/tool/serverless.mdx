@@ -1,0 +1,88 @@
+---
+id: "serverless"
+title: "Serverless Tool"
+description: "Scaffold a distributable Node.js CLI with a user-deployed Cloudflare Workers or Vercel Functions service."
+keywords:
+  - "nova"
+  - "nova scaffold"
+  - "serverless tool"
+  - "cloudflare workers"
+  - "vercel functions"
+tags:
+  - "cli"
+  - "scaffold"
+  - "tool"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a distributable **serverless tool** with one npm-installed command line interface and one service that each consumer deploys to their own account.
+
+## Why Use This Command?
+
+1. Keeps the CLI and hosted service in one versioned workspace instead of treating the deployment platform as the product.
+2. Shares one checked, tested CLI foundation across every deployment target.
+3. Selects exactly one provider adapter: Cloudflare Workers or Vercel Functions.
+4. Includes local development, production builds, deployment, log tailing, and Vitest coverage for the selected platform.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Provider account** — Deployment requires either a Cloudflare or Vercel account after the scaffold is created.
+- **Empty directory** or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** — Nova auto-detects whether to create a project or add the tool.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova scaffold tool serverless
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest scaffold tool serverless
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                                                                              |
+|---------------------------|------------------------------------------------------------------------------------------|
+| `-d, --dry-run`           | Validate and preview the scaffold without writing files.                                 |
+| `--install`               | Install dependencies after scaffolding; this is the default.                             |
+| `--no-install`            | Skip dependency installation.                                                            |
+| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root.                     |
+| `--non-interactive`       | Require every answer as a flag and do not open prompts.                                  |
+| `--workspace-name <name>` | Workspace directory, npm binary, and the variable portion of the generated package name. |
+| `--output <dir>`          | Output directory.                                                                        |
+| `--target <target>`       | Select `cloudflare-workers` or `vercel-functions`; defaults to `cloudflare-workers`.     |
+
+## Target Layers
+
+| Target               | Service entry point   | Development service | Deployment command     | Log command            |
+|----------------------|-----------------------|---------------------|------------------------|------------------------|
+| `cloudflare-workers` | `src/worker/index.ts` | `wrangler dev`      | `wrangler deploy`      | `wrangler tail`        |
+| `vercel-functions`   | `api/index.ts`        | `vercel dev`        | `vercel deploy --prod` | `vercel logs --follow` |
+
+Both targets include the same `bin/cli.mjs`, `src/program.ts`, starter `status` command, Nova-style CLI header, and CLI tests. Provider-specific source, TypeScript projects, dependencies, and scripts come only from the selected target layer.
+
+## Non-Interactive Mode
+
+```bash
+nova scaffold tool serverless --non-interactive --name my-tool --workspace-name gateway --output ./my-tool --target cloudflare-workers
+nova scaffold tool serverless --non-interactive --workspace-name gateway --output ./packages/gateway --target vercel-functions
+```
+
+Omitting `--target` in non-interactive mode preserves the Cloudflare Workers default.
+
+## Registration
+
+Nova registers the workspace with the `tool` role and `distributable` policy. The generated npm package uses `{project-name}-tool-{workspace-name}` while its executable keeps the shorter workspace name.

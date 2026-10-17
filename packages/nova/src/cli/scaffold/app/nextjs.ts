@@ -1,6 +1,6 @@
+import { Runner as LibDockerPackaging } from '../../../lib/docker-packaging.js';
 import { LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE } from '../../../lib/regex.js';
 import { runScaffold } from '../../../lib/scaffold.js';
-import { Runner as CliGenerateDockerImage } from '../../generate/docker-image/index.js';
 
 import type {
   Cli_Scaffold_App_Nextjs_Runner_Run_Options,
@@ -73,7 +73,7 @@ export class Runner {
       typeName: 'nextjs',
       workspaceFinalizer: async (workspaceDirectory, _workspaceName, _configRoot, answers) => {
         if (answers.get('dockerImage') === 'enabled') {
-          await CliGenerateDockerImage.generateForTarget({
+          await LibDockerPackaging.generateForTarget({
             profile: 'nextjs-standalone',
             reportFiles: false,
             replaceFile: true,

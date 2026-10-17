@@ -64,17 +64,17 @@ export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details_Completion
 
 export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details_CompletionNotes = Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details_CompletionNote[];
 
+export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details_DependenciesInstalled = boolean;
+
 export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details_DisplayName = string;
 
 export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details_DryRun = boolean;
 
-export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details_DependenciesInstalled = boolean;
+export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details_PackageManager = Shared_CorepackPackageManager;
 
 export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details_PrimaryScript = string;
 
 export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details_ProjectRoot = string;
-
-export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details_PackageManager = Shared_CorepackPackageManager;
 
 export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details_ShouldConfigure = boolean;
 
@@ -104,7 +104,9 @@ export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand_Comm
 
 export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand_Index = number;
 
-export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand = (command: Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand_Command, index: Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand_Index) => void;
+export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand = (command: Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand_Command, index: Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand_Index) => Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand_Returns;
+
+export type Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand_Returns = void;
 
 /**
  * Lib - Scaffold Presentation - Report Scaffold Plan.

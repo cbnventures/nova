@@ -5,10 +5,12 @@ import {
   basename,
   dirname,
   extname,
+  isAbsolute,
   join,
   parse,
   relative,
   resolve,
+  sep,
 } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
@@ -103,12 +105,17 @@ import type {
   Lib_Utility_DiscoverPathsWithFile_CurrentDirectory,
   Lib_Utility_DiscoverPathsWithFile_Direction,
   Lib_Utility_DiscoverPathsWithFile_Entries,
+  Lib_Utility_DiscoverPathsWithFile_ExcludedRoot,
+  Lib_Utility_DiscoverPathsWithFile_ExcludedRoots,
   Lib_Utility_DiscoverPathsWithFile_FileName,
   Lib_Utility_DiscoverPathsWithFile_ForwardDirectory,
   Lib_Utility_DiscoverPathsWithFile_GitPath,
   Lib_Utility_DiscoverPathsWithFile_HasTargetFile,
+  Lib_Utility_DiscoverPathsWithFile_IsExcluded,
+  Lib_Utility_DiscoverPathsWithFile_Options,
   Lib_Utility_DiscoverPathsWithFile_Queue,
   Lib_Utility_DiscoverPathsWithFile_RealDirectory,
+  Lib_Utility_DiscoverPathsWithFile_RelativeToExcludedRoot,
   Lib_Utility_DiscoverPathsWithFile_Results,
   Lib_Utility_DiscoverPathsWithFile_Returns,
   Lib_Utility_DiscoverPathsWithFile_RootDirectory,
@@ -486,12 +493,13 @@ export function detectShell(): Lib_Utility_DetectShell_Returns {
  *
  * @param {Lib_Utility_DiscoverPathsWithFile_FileName}  fileName  - File name.
  * @param {Lib_Utility_DiscoverPathsWithFile_Direction} direction - Direction.
+ * @param {Lib_Utility_DiscoverPathsWithFile_Options}   options   - Options.
  *
  * @returns {Lib_Utility_DiscoverPathsWithFile_Returns}
  *
  * @since 0.11.0
  */
-export async function discoverPathsWithFile(fileName: Lib_Utility_DiscoverPathsWithFile_FileName, direction: Lib_Utility_DiscoverPathsWithFile_Direction): Lib_Utility_DiscoverPathsWithFile_Returns {
+export async function discoverPathsWithFile(fileName: Lib_Utility_DiscoverPathsWithFile_FileName, direction: Lib_Utility_DiscoverPathsWithFile_Direction, options: Lib_Utility_DiscoverPathsWithFile_Options = {}): Lib_Utility_DiscoverPathsWithFile_Returns {
   const startDirectory: Lib_Utility_DiscoverPathsWithFile_StartDirectory = process.cwd();
   const results: Lib_Utility_DiscoverPathsWithFile_Results = [];
 
@@ -540,6 +548,19 @@ export async function discoverPathsWithFile(fileName: Lib_Utility_DiscoverPathsW
     const queue: Lib_Utility_DiscoverPathsWithFile_Queue = [startDirectory];
     const visited: Lib_Utility_DiscoverPathsWithFile_Visited = new Set();
     const skipDirectories: Lib_Utility_DiscoverPathsWithFile_SkipDirectories = new Set(libItemSkipDirectories);
+    const excludedRoots: Lib_Utility_DiscoverPathsWithFile_ExcludedRoots = [];
+
+    for (const excludedRootValue of options['excludeRoots'] ?? []) {
+      let excludedRoot: Lib_Utility_DiscoverPathsWithFile_ExcludedRoot = resolve(excludedRootValue);
+
+      try {
+        excludedRoot = await fs.realpath(excludedRoot);
+      } catch {
+        /* The resolved path remains sufficient when the optional root is absent. */
+      }
+
+      excludedRoots.push(excludedRoot);
+    }
 
     while (queue.length > 0) {
       const forwardDirectory: Lib_Utility_DiscoverPathsWithFile_ForwardDirectory = queue.shift();
@@ -566,6 +587,29 @@ export async function discoverPathsWithFile(fileName: Lib_Utility_DiscoverPathsW
         continue;
       }
 
+      let isExcluded: Lib_Utility_DiscoverPathsWithFile_IsExcluded = false;
+
+      for (const excludedRoot of excludedRoots) {
+        const relativeToExcludedRoot: Lib_Utility_DiscoverPathsWithFile_RelativeToExcludedRoot = relative(excludedRoot, realDirectory);
+
+        if (
+          relativeToExcludedRoot === ''
+          || (
+            relativeToExcludedRoot !== '..'
+            && relativeToExcludedRoot.startsWith(`..${sep}`) === false
+            && isAbsolute(relativeToExcludedRoot) === false
+          )
+        ) {
+          isExcluded = true;
+
+          break;
+        }
+      }
+
+      if (isExcluded === true) {
+        continue;
+      }
+
       visited.add(realDirectory);
 
       let entries: Lib_Utility_DiscoverPathsWithFile_Entries = undefined;
@@ -574,11 +618,6 @@ export async function discoverPathsWithFile(fileName: Lib_Utility_DiscoverPathsW
         // Attempt to read the directory contents.
         entries = await fs.readdir(realDirectory, { withFileTypes: true });
       } catch {
-        continue;
-      }
-
-      // If directory contains the ignore marker, skip this entire tree.
-      if (entries.some((entry) => entry.isFile() === true && entry.name === '.novaignore') === true) {
         continue;
       }
 
@@ -1454,6 +1493,8 @@ export function buildGeneratedFileHeader(options: Lib_Utility_BuildGeneratedFile
   const isHashStyle: Lib_Utility_BuildGeneratedFileHeader_IsHashStyle = (
     extension === '.yml'
     || extension === '.yaml'
+    || baseName === '.assetsignore'
+    || baseName === '.dockerignore'
     || baseName === '.editorconfig'
     || baseName === '.gitignore'
     || baseName === '.env'

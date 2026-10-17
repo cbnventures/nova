@@ -165,11 +165,19 @@ export type Tests_CascadeDefensive_ExtractAnchorClasses_MergeClassTokenTrimmed =
  */
 export type Tests_CascadeDefensive_ExtractRuleTriples_Source = string;
 
+export type Tests_CascadeDefensive_ExtractRuleTriples_CssRuleTriple_Selector = string;
+
+export type Tests_CascadeDefensive_ExtractRuleTriples_CssRuleTriple_Property = string;
+
+export type Tests_CascadeDefensive_ExtractRuleTriples_CssRuleTriple_Value = string;
+
+export type Tests_CascadeDefensive_ExtractRuleTriples_CssRuleTriple_Defensive = boolean;
+
 export type Tests_CascadeDefensive_ExtractRuleTriples_CssRuleTriple = {
-  readonly selector: string;
-  readonly property: string;
-  readonly value: string;
-  readonly defensive: boolean;
+  readonly selector: Tests_CascadeDefensive_ExtractRuleTriples_CssRuleTriple_Selector;
+  readonly property: Tests_CascadeDefensive_ExtractRuleTriples_CssRuleTriple_Property;
+  readonly value: Tests_CascadeDefensive_ExtractRuleTriples_CssRuleTriple_Value;
+  readonly defensive: Tests_CascadeDefensive_ExtractRuleTriples_CssRuleTriple_Defensive;
 };
 
 export type Tests_CascadeDefensive_ExtractRuleTriples_Returns = readonly Tests_CascadeDefensive_ExtractRuleTriples_CssRuleTriple[];
@@ -266,11 +274,19 @@ export type Tests_CascadeDefensive_ReadAnchorClasses_ClassNameToken = string;
  *
  * @since 0.18.0
  */
+export type Tests_CascadeDefensive_ReadCssTriplesByFile_CssRuleTriple_Selector = string;
+
+export type Tests_CascadeDefensive_ReadCssTriplesByFile_CssRuleTriple_Property = string;
+
+export type Tests_CascadeDefensive_ReadCssTriplesByFile_CssRuleTriple_Value = string;
+
+export type Tests_CascadeDefensive_ReadCssTriplesByFile_CssRuleTriple_Defensive = boolean;
+
 export type Tests_CascadeDefensive_ReadCssTriplesByFile_CssRuleTriple = {
-  readonly selector: string;
-  readonly property: string;
-  readonly value: string;
-  readonly defensive: boolean;
+  readonly selector: Tests_CascadeDefensive_ReadCssTriplesByFile_CssRuleTriple_Selector;
+  readonly property: Tests_CascadeDefensive_ReadCssTriplesByFile_CssRuleTriple_Property;
+  readonly value: Tests_CascadeDefensive_ReadCssTriplesByFile_CssRuleTriple_Value;
+  readonly defensive: Tests_CascadeDefensive_ReadCssTriplesByFile_CssRuleTriple_Defensive;
 };
 
 export type Tests_CascadeDefensive_ReadCssTriplesByFile_Returns = Promise<ReadonlyMap<string, readonly Tests_CascadeDefensive_ReadCssTriplesByFile_CssRuleTriple[]>>;
@@ -312,11 +328,19 @@ export type Tests_CascadeDefensive_StripDarkSelectorPrefix_Pattern = RegExp;
  *
  * @since 0.18.0
  */
+export type Tests_CascadeDefensive_TripleKey_CssRuleTriple_Selector = string;
+
+export type Tests_CascadeDefensive_TripleKey_CssRuleTriple_Property = string;
+
+export type Tests_CascadeDefensive_TripleKey_CssRuleTriple_Value = string;
+
+export type Tests_CascadeDefensive_TripleKey_CssRuleTriple_Defensive = boolean;
+
 export type Tests_CascadeDefensive_TripleKey_CssRuleTriple = {
-  readonly selector: string;
-  readonly property: string;
-  readonly value: string;
-  readonly defensive: boolean;
+  readonly selector: Tests_CascadeDefensive_TripleKey_CssRuleTriple_Selector;
+  readonly property: Tests_CascadeDefensive_TripleKey_CssRuleTriple_Property;
+  readonly value: Tests_CascadeDefensive_TripleKey_CssRuleTriple_Value;
+  readonly defensive: Tests_CascadeDefensive_TripleKey_CssRuleTriple_Defensive;
 };
 
 export type Tests_CascadeDefensive_TripleKey_Triple = Tests_CascadeDefensive_TripleKey_CssRuleTriple;

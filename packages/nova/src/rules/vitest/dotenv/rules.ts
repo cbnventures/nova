@@ -3,8 +3,8 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 import { findEnvQuoteViolations } from '../../../lib/dotenv.js';
-import { getActiveVitest } from '../active-vitest.js';
-import { isEnabled } from '../enable.js';
+import { getActiveVitest } from '../internal/active-vitest.js';
+import { isEnabled } from '../internal/is-enabled.js';
 
 import type {
   Rules_Vitest_Dotenv_Rules_ValuesDoubleQuoted_Config,

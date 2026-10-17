@@ -16,8 +16,8 @@ import {
   LIB_REGEX_PATTERN_SLUG_LINE,
   LIB_REGEX_PATTERN_TRAILING_SLASH,
 } from '../../../lib/regex.js';
-import { getActiveVitest } from '../active-vitest.js';
-import { isEnabled } from '../enable.js';
+import { getActiveVitest } from '../internal/active-vitest.js';
+import { isEnabled } from '../internal/is-enabled.js';
 
 import type {
   Rules_Vitest_Link_Rules_BuildLinkIndex_Anchor,

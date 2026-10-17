@@ -1,0 +1,111 @@
+---
+id: "ignore-files"
+title: "Ignore Files"
+description: "Generate every Git, Docker, and Cloudflare Astro physical ignore file declared in nova.config.json."
+keywords:
+  - "nova"
+  - "nova generate"
+  - "ignore files"
+  - "gitignore"
+  - "dockerignore"
+  - "assetsignore"
+tags:
+  - "cli"
+  - "generator"
+  - "must-haves"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Regenerate every physical ignore file declared under `ignoreFiles` in `nova.config.json` from reviewed Nova bundles and project-owned patterns.
+
+## Why Use This Command?
+
+- Keeps `.gitignore`, workspace `.dockerignore`, and Cloudflare Astro `.assetsignore` files synchronized from one configuration.
+- Separates reusable Nova defaults from project-specific patterns.
+- Uses exact project-relative paths so each workspace receives only the ignore file it needs.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Project root** — Run the command from the directory containing `nova.config.json` and the top-level `package.json`.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova generate must-haves ignore-files
+
+    # Shorthand
+    nova gen must ignore-files
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest generate must-haves ignore-files
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest gen must ignore-files
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                                         |
+|----------------------|---------------------------------------------------------------------|
+| `-d, --dry-run`      | Validate and render every configured entry without writing files.   |
+| `-r, --replace-file` | Overwrite existing files instead of creating `.nova-backup` copies. |
+
+## Config Fields
+
+Each `ignoreFiles` key is an exact project-relative output path beginning with `./`.
+
+| Field      | Type       | Description                                                         |
+|------------|------------|---------------------------------------------------------------------|
+| `bundles`  | `string[]` | Ordered Nova content bundles valid for that ignore-file basename.   |
+| `patterns` | `string[]` | Optional project-owned patterns appended after the bundled content. |
+
+```json
+{
+  "ignoreFiles": {
+    "./.gitignore": {
+      "bundles": ["nova"],
+      "patterns": ["graphify-out/"]
+    },
+    "./apps/api/.dockerignore": {
+      "bundles": ["nova"],
+      "patterns": []
+    },
+    "./apps/site/public/.assetsignore": {
+      "bundles": ["cloudflare-astro"],
+      "patterns": []
+    }
+  }
+}
+```
+
+## Supported Files and Bundles
+
+| File basename   | Bundle             | What It Excludes                                                      |
+|-----------------|--------------------|-----------------------------------------------------------------------|
+| `.gitignore`    | `nova`             | Dependencies, generated output, local secrets, editors, and OS files. |
+| `.dockerignore` | `nova`             | Host-only dependencies, builds, secrets, and source-control metadata. |
+| `.assetsignore` | `cloudflare-astro` | Astro's `_worker.js` and `_routes.json` deployment control files.     |
+
+Nova validates that each path is project-relative and that every bundle belongs to the target file type before anything is written.
+
+## How It Works
+
+The command loads every configured entry, joins the selected bundles in order, appends a **Project Excludes** section, and then appends the entry's custom patterns. The established `.gitignore` section layout and ordering remain unchanged. Generated files include the same Nova header as before, updated to point back to this command and documentation.
+
+Nova scaffolds register the physical ignore files they create. A root scaffold registers `./.gitignore`; Docker-enabled workspaces register their `.dockerignore`; and a server-rendered Cloudflare Astro workspace registers `public/.assetsignore`.

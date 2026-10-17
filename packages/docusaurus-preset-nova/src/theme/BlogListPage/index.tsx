@@ -18,6 +18,8 @@ import type {
  *
  * @param {Theme_BlogListPage_Index_BlogListPage_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlogListPage(props: Theme_BlogListPage_Index_BlogListPage_Props) {

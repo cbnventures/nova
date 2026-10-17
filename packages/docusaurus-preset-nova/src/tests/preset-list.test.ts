@@ -79,6 +79,8 @@ import type {
  * the drift test can compare type-level intent against the
  * filesystem and the runtime registry.
  *
+ * @returns {Tests_PresetList_ExtractSharedPresetNameLiterals_Returns}
+ *
  * @since 0.18.0
  */
 async function extractSharedPresetNameLiterals(filePath: Tests_PresetList_ExtractSharedPresetNameLiterals_FilePath): Tests_PresetList_ExtractSharedPresetNameLiterals_Returns {
@@ -115,6 +117,8 @@ async function extractSharedPresetNameLiterals(filePath: Tests_PresetList_Extrac
  * referenced via a `presets/<name>/preset.css` path so the
  * test can verify the expectations match the filesystem.
  *
+ * @returns {Tests_PresetList_ExtractTokenMapPresets_Returns}
+ *
  * @since 0.18.0
  */
 async function extractTokenMapPresets(filePath: Tests_PresetList_ExtractTokenMapPresets_FilePath): Tests_PresetList_ExtractTokenMapPresets_Returns {
@@ -143,6 +147,8 @@ async function extractTokenMapPresets(filePath: Tests_PresetList_ExtractTokenMap
  * Resolves the docusaurus-preset-nova package root from the
  * current test file location.
  *
+ * @returns {string}
+ *
  * @since 0.18.0
  */
 function getPackageRoot(): Tests_PresetList_GetPackageRoot_Returns {
@@ -158,6 +164,8 @@ function getPackageRoot(): Tests_PresetList_GetPackageRoot_Returns {
  * Lists the immediate child directories of a preset root,
  * dropping non-directory entries so the comparison set
  * matches what a contributor would consider a preset.
+ *
+ * @returns {Tests_PresetList_ListPresetDirectories_Returns}
  *
  * @since 0.18.0
  */

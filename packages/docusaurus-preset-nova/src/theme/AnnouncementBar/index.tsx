@@ -30,6 +30,8 @@ import type {
  *
  * @constructor
  *
+ * @returns {Theme_AnnouncementBar_Index_AnnouncementBar_Returns}
+ *
  * @since 0.15.0
  */
 function AnnouncementBar(props: Theme_AnnouncementBar_Index_AnnouncementBar_Props): Theme_AnnouncementBar_Index_AnnouncementBar_Returns {

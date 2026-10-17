@@ -84,6 +84,8 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_TagBranchPushEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_TagBranchPushEntryForBuild,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_TagPushEntry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_UsesPnpmForCorepackInstallsAndNovaWorkspaceCommands_Returns,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_UsesYarnForCorepackInstallsAndNovaWorkspaceCommands_Returns,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_WorkflowRunAnyEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_WorkflowRunEntry,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_WorkflowRunFailureEntry,
@@ -639,9 +641,9 @@ describe('WorkflowsBlueprint.buildPublish', () => {
     }],
   };
 
-  it('uses pnpm for Corepack installs and Turbo commands', () => {
+  it('uses pnpm for Corepack installs and Nova workspace commands', (): Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_UsesPnpmForCorepackInstallsAndNovaWorkspaceCommands_Returns => {
     ok(
-      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], true, 'pnpm')).includes([
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], 'pnpm')).includes([
         'corepack enable pnpm',
         '          pnpm install',
       ].join('\n')),
@@ -649,16 +651,21 @@ describe('WorkflowsBlueprint.buildPublish', () => {
     );
 
     ok(
-      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], true, 'pnpm')).includes('pnpm exec turbo run check --filter=// --filter=plain-app-app --concurrency=2'),
-      'the check step executes Turbo through pnpm',
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], 'pnpm')).includes('pnpm run check'),
+      'the root check uses pnpm',
+    );
+
+    ok(
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], 'pnpm')).includes('pnpm run build:workspaces -- --workspace plain-app-app'),
+      'the workspace build uses Nova',
     );
 
     return;
   });
 
-  it('uses Yarn for Corepack installs and non-turbo workspace commands', () => {
+  it('uses Yarn for Corepack installs and Nova workspace commands', (): Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildPublish_UsesYarnForCorepackInstallsAndNovaWorkspaceCommands_Returns => {
     ok(
-      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], false, 'yarn')).includes([
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], 'yarn')).includes([
         'corepack enable yarn',
         '          yarn install',
       ].join('\n')),
@@ -666,12 +673,12 @@ describe('WorkflowsBlueprint.buildPublish', () => {
     );
 
     ok(
-      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], false, 'yarn')).includes('yarn workspace plain-app-app run check'),
-      'the workspace check uses Yarn syntax',
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], 'yarn')).includes('yarn run build:workspaces -- --workspace plain-app-app'),
+      'the workspace build uses Nova',
     );
 
     ok(
-      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], false, 'yarn')).includes('run: "yarn run check"'),
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], 'yarn')).includes('yarn run check'),
       'the root check uses Yarn',
     );
 

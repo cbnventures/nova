@@ -7,9 +7,13 @@ export type Lib_WebpackCache_ConfigureWebpackCache_Mode = string | undefined;
 
 export type Lib_WebpackCache_ConfigureWebpackCache_PersistentCache = boolean;
 
+export type Lib_WebpackCache_ConfigureWebpackCache_Returns_Cache = Lib_WebpackCache_ConfigureWebpackCache_Cache;
+
+export type Lib_WebpackCache_ConfigureWebpackCache_Returns_MergeStrategy = Lib_WebpackCache_ConfigureWebpackCache_MergeStrategy;
+
 export type Lib_WebpackCache_ConfigureWebpackCache_Returns = {
-  cache?: Lib_WebpackCache_ConfigureWebpackCache_Cache;
-  mergeStrategy?: Lib_WebpackCache_ConfigureWebpackCache_MergeStrategy;
+  cache?: Lib_WebpackCache_ConfigureWebpackCache_Returns_Cache;
+  mergeStrategy?: Lib_WebpackCache_ConfigureWebpackCache_Returns_MergeStrategy;
 };
 
 export type Lib_WebpackCache_ConfigureWebpackCache_Cache_Value_Type = 'memory';

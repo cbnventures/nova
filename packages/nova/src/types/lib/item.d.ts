@@ -27,7 +27,7 @@ export type Lib_Item_AllowedPoliciesByRole_App = Extract<Shared_NovaConfigWorksp
 
 export type Lib_Item_AllowedPoliciesByRole_Package = Extract<Shared_NovaConfigWorkspace_Policy, 'trackable' | 'distributable'>[];
 
-export type Lib_Item_AllowedPoliciesByRole_Tool = Extract<Shared_NovaConfigWorkspace_Policy, 'freezable' | 'trackable'>[];
+export type Lib_Item_AllowedPoliciesByRole_Tool = Extract<Shared_NovaConfigWorkspace_Policy, 'freezable' | 'trackable' | 'distributable'>[];
 
 export type Lib_Item_AllowedPoliciesByRole_Template = Extract<Shared_NovaConfigWorkspace_Policy, 'freezable' | 'trackable'>[];
 

@@ -7,6 +7,8 @@
  *
  * @constructor
  *
+ * @returns {null}
+ *
  * @since 0.15.0
  */
 function ColorModeToggle() {

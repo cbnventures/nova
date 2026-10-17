@@ -14,6 +14,8 @@ import type {
  *
  * @param {Theme_IconExternalLink_Index_IconExternalLink_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.18.0
  */
 function IconExternalLink(props: Theme_IconExternalLink_Index_IconExternalLink_Props) {

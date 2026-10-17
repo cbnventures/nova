@@ -13,6 +13,8 @@ import type { Theme_BlogPostPage_StructuredData_Index_BlogPostPageStructuredData
  *
  * @constructor
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.18.0
  */
 function BlogPostPageStructuredData() {

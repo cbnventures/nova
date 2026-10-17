@@ -33,6 +33,8 @@ export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemp
 
 export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_RejectedTemplateContract = PromiseRejectedResult | undefined;
 
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractResultTypeGuard = PromiseRejectedResult;
+
 /**
  * Tests - Scaffold Output Contract - Scaffold Output Contract - Matches The Base Starter Inventory.
  *
@@ -71,6 +73,12 @@ export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TargetDirectory =
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedFile = string;
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedFiles = Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedFile[];
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_RequireRootScripts = boolean;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_RequireI18n = boolean;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScripts = Record<string, string>;
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Returns = Promise<void>;
 
@@ -134,6 +142,12 @@ export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonConten
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJson = Record<string, unknown>;
 
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageScripts = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScriptEntry = [string, string];
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScriptEntries = Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScriptEntry[];
+
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonKeys = string[];
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonKnownKeys = Set<string>;
@@ -142,12 +156,20 @@ export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonOrdere
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageEngines = unknown;
 
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScriptName = string;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_ExpectedScriptCommand = string;
+
 /**
  * Tests - Scaffold Output Contract - Verify Script Contract.
  *
  * @since 0.27.0
  */
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_PackageJsonPath = string;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_RequireRootScripts = boolean;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_RequireI18n = boolean;
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_Returns = Promise<void>;
 
@@ -159,21 +181,15 @@ export type Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts = Record<s
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptNames = string[];
 
-export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder = readonly [
-  'dev',
-  'prod',
-  'check',
-  'build',
-  'deploy',
-  'clean',
-  'i18n',
-];
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder = readonly ('dev' | 'prod' | 'check' | 'build' | 'deploy' | 'clean' | 'i18n')[];
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroup = Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder[number];
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupModes = Record<Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroup, 'parallel' | 'sequential'>;
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupNodeEnvOptions = Record<Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroup, string>;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_ContractViolations = string[];
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_PreviousParentIndex = number;
 
@@ -208,13 +224,7 @@ export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDependen
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies = Record<string, unknown>;
 
-export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonPath = string;
-
-export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJsonRaw = string;
-
-export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboJson = Record<string, unknown>;
-
-export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedTurboTasks = Record<string, unknown>;
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedScripts = Record<string, unknown>;
 
 /**
  * Tests - Scaffold Output Contract - Verify Template Contract.
@@ -240,3 +250,5 @@ export type Tests_ScaffoldOutputContract_VerifyTemplateContract_TemplateOptionSu
 export type Tests_ScaffoldOutputContract_VerifyTemplateContract_ReviewedTemplateOptionSubpath = string;
 
 export type Tests_ScaffoldOutputContract_VerifyTemplateContract_TemplateOptionDirectory = string;
+
+export type Tests_ScaffoldOutputContract_VerifyTemplateContract_RequireI18n = boolean;

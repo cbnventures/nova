@@ -12,8 +12,10 @@ export type Theme_Blog_Components_Author_Socials_Index_Socials_IconConfigMap = R
  *
  * @since 0.18.0
  */
+export type Theme_Blog_Components_Author_Socials_Index_Socials_Props_Author_Socials = Readonly<Record<string, string>>;
+
 export type Theme_Blog_Components_Author_Socials_Index_Socials_Props_Author = {
-  socials?: Readonly<Record<string, string>>;
+  socials?: Theme_Blog_Components_Author_Socials_Index_Socials_Props_Author_Socials;
   [key: string]: unknown;
 };
 

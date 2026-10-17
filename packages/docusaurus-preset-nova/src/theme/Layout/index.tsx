@@ -32,6 +32,8 @@ import type {
  *
  * @param {Theme_Layout_Index_Layout_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function Layout(props: Theme_Layout_Index_Layout_Props) {

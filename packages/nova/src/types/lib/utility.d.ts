@@ -236,6 +236,12 @@ export type Lib_Utility_DiscoverPathsWithFile_FileName = string;
 
 export type Lib_Utility_DiscoverPathsWithFile_Direction = 'backward' | 'forward';
 
+export type Lib_Utility_DiscoverPathsWithFile_Options_ExcludeRoots = string[];
+
+export type Lib_Utility_DiscoverPathsWithFile_Options = {
+  excludeRoots?: Lib_Utility_DiscoverPathsWithFile_Options_ExcludeRoots;
+};
+
 export type Lib_Utility_DiscoverPathsWithFile_Returns = Promise<string[]>;
 
 export type Lib_Utility_DiscoverPathsWithFile_StartDirectory = string;
@@ -266,9 +272,17 @@ export type Lib_Utility_DiscoverPathsWithFile_Visited = Set<string>;
 
 export type Lib_Utility_DiscoverPathsWithFile_SkipDirectories = Set<string>;
 
+export type Lib_Utility_DiscoverPathsWithFile_ExcludedRoot = string;
+
+export type Lib_Utility_DiscoverPathsWithFile_ExcludedRoots = Lib_Utility_DiscoverPathsWithFile_ExcludedRoot[];
+
 export type Lib_Utility_DiscoverPathsWithFile_ForwardDirectory = string | undefined;
 
 export type Lib_Utility_DiscoverPathsWithFile_RealDirectory = string | undefined;
+
+export type Lib_Utility_DiscoverPathsWithFile_IsExcluded = boolean;
+
+export type Lib_Utility_DiscoverPathsWithFile_RelativeToExcludedRoot = string;
 
 export type Lib_Utility_DiscoverPathsWithFile_Entries = Dirent[] | undefined;
 

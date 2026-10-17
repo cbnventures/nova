@@ -427,6 +427,10 @@ export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violation2 =
 
 export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violation3 = string;
 
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_PreviousProperty = Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectProperty | undefined;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Violation5 = string;
+
 export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ImportedNames = Set<string>;
 
 export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ArrayType_ArrayTypeName = string;
@@ -448,6 +452,8 @@ export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_TypeDefLines
 export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Line2 = string;
 
 export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_DefMatch = RegExpMatchArray | null;
+
+export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_RecursiveOwner = Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectType | undefined;
 
 export type Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ElementLine = number;
 
@@ -705,6 +711,8 @@ export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_I = number;
 export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_LineToScan = string;
 
 export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_PositionMatch = RegExpMatchArray | null;
+
+export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_RecursiveOwner = Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ObjectType | undefined;
 
 export type Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_ElementLine = number;
 

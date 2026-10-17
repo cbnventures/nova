@@ -90,6 +90,8 @@ const parseShortcutKeymap: Theme_SearchBar_SearchInput_ParseShortcutKeymap_Funct
  *
  * @param {Theme_SearchBar_SearchInput_Props} _props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function SearchInput(_props: Theme_SearchBar_SearchInput_Props) {
@@ -166,6 +168,8 @@ function SearchInput(_props: Theme_SearchBar_SearchInput_Props) {
      *
      * @private
      *
+     * @returns {void}
+     *
      * @since 0.21.0
      */
     const onSwapEnd: Theme_SearchBar_SearchInput_SearchInput_OnSwapEnd_Function = (event: Theme_SearchBar_SearchInput_AnimationEvent) => {
@@ -212,6 +216,8 @@ function SearchInput(_props: Theme_SearchBar_SearchInput_Props) {
      * @param {Theme_SearchBar_SearchInput_KeyboardEvent} event - Event.
      *
      * @private
+     *
+     * @returns {void}
      *
      * @since 0.21.0
      */

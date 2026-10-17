@@ -3,9 +3,13 @@
  *
  * @since 0.18.0
  */
+export type Tests_TokenMap_Expectation_File = string;
+
+export type Tests_TokenMap_Expectation_Tokens = readonly string[];
+
 export type Tests_TokenMap_Expectation = {
-  readonly file: string;
-  readonly tokens: readonly string[];
+  readonly file: Tests_TokenMap_Expectation_File;
+  readonly tokens: Tests_TokenMap_Expectation_Tokens;
 };
 
 export type Tests_TokenMap_Expectations = readonly Tests_TokenMap_Expectation[];

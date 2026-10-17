@@ -28,6 +28,8 @@ import type {
  *
  * @constructor
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.15.0
  */
 function DocBreadcrumbs(props: Theme_DocBreadcrumbs_Index_DocBreadcrumbs_Props) {

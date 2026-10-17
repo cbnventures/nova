@@ -1,0 +1,70 @@
+---
+title: "Workspace Orchestration, Native to Nova"
+description: "Nova replaces its external monorepo runner with dependency-aware workspace orchestration built around the project model it already owns."
+slug: "native-workspace-orchestration"
+authors:
+  - "mrjackyliang"
+keywords:
+  - "nova"
+  - "workspace orchestration"
+  - "monorepo task runner"
+  - "dependency graph"
+  - "package scripts"
+tags:
+  - "release"
+  - "nova"
+  - "workspaces"
+  - "monorepo"
+---
+
+Nova already knows which workspaces belong to a project, what each workspace is called, and how packages depend on one another. Workspace execution no longer needs a second tool to rediscover that same project model.
+
+The native workspace runner now coordinates package scripts directly from `nova.config.json` and each workspace's `package.json`.
+
+{/* truncate */}
+
+## One Project Graph
+
+`nova utility run-workspaces` uses the files a Nova project already maintains:
+
+- `nova.config.json` defines the root and child workspaces.
+- Each `package.json` defines its package name, scripts, and internal dependencies.
+- The root `packageManager` selects npm, pnpm, or Yarn consistently.
+
+Before a script starts, Nova validates package manifests, configured names, duplicate package names, requested workspace filters, and dependency cycles. An invalid graph fails before a partial build can leave the repository in a confusing state.
+
+## Lifecycle Rules That Match the Repository
+
+The runner treats common lifecycle commands as contracts rather than unrelated shell strings.
+
+| Requested script | Nova's execution contract                                       |
+|------------------|-----------------------------------------------------------------|
+| `dev`            | Run selected development scripts concurrently                   |
+| `check`          | Build internal dependencies, then check selected workspaces     |
+| `build`          | Build internal dependencies before their consumers              |
+| `prod`           | Check and build each selected workspace before production start |
+| `deploy`         | Check and build each selected workspace before deployment       |
+| `clean`          | Run selected cleanup scripts directly                           |
+| Custom name      | Run the selected script directly                                |
+
+Independent tasks can run concurrently. Dependent tasks wait for their prerequisites, and a failed prerequisite blocks only the tasks that rely on it when continuation is enabled.
+
+## Root Scripts Stay Familiar
+
+Generated repositories still expose ordinary package scripts such as `npm run check`, `npm run build`, and `npm run dev`. Those root scripts call Nova's runner internally, so developers and automation keep a predictable interface without committing a separate orchestration configuration file.
+
+The project root remains its own workspace. Its repository-owned configuration and scripts are linted and type-checked by the root's own commands, while child traversal excludes the root to prevent recursion.
+
+## The Same Path Locally and in GitHub
+
+Nova scaffolds, normalized consumer projects, and generated publish workflows now use the same workspace execution path. A scoped GitHub build therefore follows the same dependency rules as a scoped local build.
+
+The runner also supports workspace filters, exclusions, bounded concurrency, grouped output, failure continuation, explicit `NODE_ENV`, exact package-script argument forwarding, and a dry run that prints the complete task plan without executing it.
+
+```bash title="Preview a scoped build"
+nova utility run-workspaces build \
+  --dry-run \
+  --workspace @example/api @example/web
+```
+
+See the [Run Workspaces documentation](/docs/cli/utilities/run-workspaces) for the complete command and option reference.

@@ -81,6 +81,8 @@ function useReadingTimePlural(): Theme_BlogPostItem_Index_UseReadingTimePlural_S
  *
  * @param {Theme_BlogPostItem_Index_BlogPostItem_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlogPostItem(props: Theme_BlogPostItem_Index_BlogPostItem_Props) {

@@ -19,6 +19,8 @@ import type {
  *
  * @param {Theme_NavbarItem_DocsVersionNavbarItem_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DocsVersionNavbarItem(props: Theme_NavbarItem_DocsVersionNavbarItem_Props) {

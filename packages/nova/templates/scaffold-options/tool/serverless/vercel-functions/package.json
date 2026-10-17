@@ -1,0 +1,66 @@
+{
+  "name": "[__WORKSPACE_PACKAGE_NAME__]",
+  "version": "0.0.0",
+  "description": "[__WORKSPACE_TITLE__] serverless tool for Vercel Functions",
+  "keywords": [
+    "cli",
+    "serverless",
+    "vercel-functions"
+  ],
+  "main": "./build/index.js",
+  "type": "module",
+  "files": [
+    "api/index.ts",
+    "bin",
+    "build",
+    "src/types/api",
+    "vercel.json"
+  ],
+  "bin": {
+    "[__WORKSPACE_NAME__]": "./bin/cli.mjs"
+  },
+  "scripts": {
+    "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
+    "dev:cli": "tsx src/index.ts status",
+    "dev:functions": "vercel dev",
+    "prod": "nova utility run-scripts --sequential --node-env production 'prod:*'",
+    "prod:cli": "npm run build && node ./build/index.js status",
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:lint": "eslint ./ --max-warnings=0",
+    "check:types-cli": "nova utility type-check --project tsconfig.cli.json",
+    "check:types-functions": "nova utility type-check --project tsconfig.functions.json",
+    "check:types-config": "nova utility type-check --project tsconfig.config.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
+    "check:test": "vitest run",
+    "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
+    "build:reset": "shx rm -rf ./build",
+    "build:transpile-cli": "nova utility transpile --project tsconfig.cli.json",
+    "build:transpile-functions": "nova utility transpile --project tsconfig.functions.json",
+    "build:permissions": "shx chmod +x ./bin/cli.mjs ./build/index.js",
+    "deploy": "nova utility run-scripts --sequential --node-env production 'deploy:*'",
+    "deploy:functions": "vercel deploy --prod",
+    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean:build": "shx rm -rf ./build",
+    "clean:vercel": "shx rm -rf ./.vercel",
+    "manage": "tsx src/index.ts status",
+    "tail": "vercel logs --follow"
+  },
+  "engines": {
+    "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
+  },
+  "dependencies": {
+    "@cbnventures/nova": "0.32.0",
+    "chalk": "[__SCAFFOLD_VERSION_CHALK__]",
+    "commander": "[__SCAFFOLD_VERSION_COMMANDER__]",
+    "vercel": "[__SCAFFOLD_VERSION_VERCEL__]"
+  },
+  "devDependencies": {
+    "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",
+    "eslint": "[__SCAFFOLD_VERSION_ESLINT__]",
+    "shx": "[__SCAFFOLD_VERSION_SHX__]",
+    "tsx": "[__SCAFFOLD_VERSION_TSX__]",
+    "typescript": "[__SCAFFOLD_VERSION_TYPESCRIPT__]",
+    "vitest": "[__SCAFFOLD_VERSION_VITEST__]"
+  },
+  "types": "./build/index.d.ts"
+}

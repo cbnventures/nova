@@ -28,6 +28,7 @@ import {
 
 const repositoryDirectory = process.cwd();
 const novaCliPath = resolve(repositoryDirectory, 'packages', 'nova', 'bin', 'nova.mjs');
+const novaRunWorkspacesPath = resolve(repositoryDirectory, 'scripts', 'nova-run-workspaces.mjs');
 const temporaryDirectory = await mkdtemp(join(tmpdir(), 'nova-cli-integration-'));
 
 /**
@@ -172,6 +173,117 @@ describe('Compiled Nova CLI integration', () => {
 
       expect(collectOutput(result)).toContain('Usage:');
     }
+
+    return;
+  });
+
+  it('documents the Apple bundle identifier option', () => {
+    const result = runNova(temporaryDirectory, [
+      'scaffold',
+      'app',
+      'apple',
+      '--help',
+    ]);
+
+    expect(result.error).toBeUndefined();
+
+    expect(result.status).toBe(0);
+
+    expect(collectOutput(result)).toContain('--bundle-id <id>');
+
+    return;
+  });
+
+  it('documents the serverless tool target option', () => {
+    const result = runNova(temporaryDirectory, [
+      'scaffold',
+      'tool',
+      'serverless',
+      '--help',
+    ]);
+
+    expect(result.error).toBeUndefined();
+
+    expect(result.status).toBe(0);
+
+    expect(collectOutput(result)).toContain('--target <target>');
+
+    return;
+  });
+
+  it('forwards force through the source-first workspace runner', async () => {
+    const projectDirectory = join(temporaryDirectory, 'source-first-workspace-runner');
+    const workspaceDirectory = join(projectDirectory, 'packages', 'example');
+
+    await mkdir(workspaceDirectory, { recursive: true });
+
+    await Promise.all([
+      writeFile(join(projectDirectory, 'package.json'), `${JSON.stringify({
+        name: 'source-first-workspace-runner',
+        packageManager: 'npm@11.6.0',
+        private: true,
+        workspaces: ['packages/*'],
+      }, null, 2)}\n`, 'utf-8'),
+      writeFile(join(projectDirectory, 'nova.config.json'), `${JSON.stringify({
+        project: {
+          name: {
+            slug: 'source-first-workspace-runner',
+          },
+        },
+        workspaces: {
+          './packages/example': {
+            name: 'example',
+            policy: 'trackable',
+            role: 'package',
+          },
+        },
+      }, null, 2)}\n`, 'utf-8'),
+      writeFile(join(workspaceDirectory, 'package.json'), `${JSON.stringify({
+        name: 'example',
+        private: true,
+        scripts: {
+          check: 'node --version',
+        },
+        version: '0.0.0',
+      }, null, 2)}\n`, 'utf-8'),
+    ]);
+
+    const result = spawnSync(process.execPath, [
+      novaRunWorkspacesPath,
+      '--force',
+      '--dry-run',
+      'check',
+    ], {
+      cwd: projectDirectory,
+      encoding: 'utf-8',
+      env: {
+        ...process.env,
+        NO_COLOR: '1',
+      },
+    });
+
+    expect(result.error).toBeUndefined();
+
+    expect(result.status).toBe(0);
+
+    expect(collectOutput(result)).toContain('Dry run complete. No workspace scripts were executed.');
+
+    return;
+  });
+
+  it('registers the unified ignore-files generator', () => {
+    const helpResult = runNova(temporaryDirectory, [
+      'generate',
+      'must-haves',
+      '--help',
+    ]);
+    const helpOutput = collectOutput(helpResult);
+
+    expect(helpResult.error).toBeUndefined();
+
+    expect(helpResult.status).toBe(0);
+
+    expect(helpOutput).toContain('ignore-files');
 
     return;
   });

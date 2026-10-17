@@ -42,7 +42,7 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
 
 Configure ESLint by **composing small layers** into a single <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> export. The goal is clear rules, low noise, and fast composition.
 
-ESLint presets and Nova custom rules are separate on purpose. Presets compose curated ESLint core and third-party behavior. `novaRules`, imported from `@cbnventures/nova/rules/eslint`, registers Nova-owned rules and enables all of their scaffold defaults. Consumers can append a later config object to change or disable any rule.
+ESLint preset configurations and rule implementations are separate on purpose. Presets compose curated ESLint behavior, including `novaRules`, which registers Nova-owned rules and enables all of their scaffold defaults. Individual rule implementations remain available from `@cbnventures/nova/rules/eslint`. Consumers can append a later config object to change or disable any rule.
 
 ### Mental Model
 Nova's ESLint <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology> are <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> layers that you **spread** into one export. Think of them as small building blocks.
@@ -88,9 +88,9 @@ import {
   dxCodeStyle,
   dxIgnore,
   langTypescript,
+  novaRules,
   runtimeNode,
 } from '@cbnventures/nova/presets/eslint';
-import { novaRules } from '@cbnventures/nova/rules/eslint';
 
 export default [
   ...dxIgnore,

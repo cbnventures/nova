@@ -16,6 +16,8 @@ import type {
  *
  * @param {Theme_DocTagsListPage_Index_DocTagsListPage_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DocTagsListPage(props: Theme_DocTagsListPage_Index_DocTagsListPage_Props) {

@@ -55,6 +55,7 @@ import type {
   Lib_RunScripts_Runner_RunParallel_FlushQueue_ActiveScriptLabel,
   Lib_RunScripts_Runner_RunParallel_FlushQueue_FormattedLine,
   Lib_RunScripts_Runner_RunParallel_FlushQueue_FormattedResult,
+  Lib_RunScripts_Runner_RunParallel_FlushQueue_Returns,
   Lib_RunScripts_Runner_RunParallel_FlushQueue_ScriptLabel,
   Lib_RunScripts_Runner_RunParallel_ForwardSignal,
   Lib_RunScripts_Runner_RunParallel_ForwardSignal_Returns,
@@ -62,6 +63,7 @@ import type {
   Lib_RunScripts_Runner_RunParallel_HandleData_Lines,
   Lib_RunScripts_Runner_RunParallel_HandleData_Partial,
   Lib_RunScripts_Runner_RunParallel_HandleData_PartialLineStreams,
+  Lib_RunScripts_Runner_RunParallel_HandleData_Returns,
   Lib_RunScripts_Runner_RunParallel_HandleData_Text,
   Lib_RunScripts_Runner_RunParallel_HandleSigint,
   Lib_RunScripts_Runner_RunParallel_HandleSigint_ActiveScriptLabel,
@@ -462,10 +464,12 @@ export class Runner {
      *
      * @private
      *
+     * @returns {Lib_RunScripts_Runner_RunParallel_FlushQueue_Returns}
+     *
      * @since 0.26.0
      */
     // Flush all queued lines with prefixes and blank-line separators.
-    const flushQueue: Lib_RunScripts_Runner_RunParallel_FlushQueue = () => {
+    const flushQueue: Lib_RunScripts_Runner_RunParallel_FlushQueue = (): Lib_RunScripts_Runner_RunParallel_FlushQueue_Returns => {
       for (const entry of queue) {
         if (activeScript !== '' && activeScript !== entry['script']) {
           const activeScriptLabel: Lib_RunScripts_Runner_RunParallel_FlushQueue_ActiveScriptLabel = prefixes.get(activeScript) ?? activeScript;
@@ -548,10 +552,12 @@ export class Runner {
        *
        * @private
        *
+     * @returns {Lib_RunScripts_Runner_RunParallel_HandleData_Returns}
+     *
        * @since 0.26.0
        */
       // Handle incoming data by splitting into lines and queuing.
-      const handleData: Lib_RunScripts_Runner_RunParallel_HandleData = (data, stream) => {
+      const handleData: Lib_RunScripts_Runner_RunParallel_HandleData = (data, stream): Lib_RunScripts_Runner_RunParallel_HandleData_Returns => {
         if (interruptionState['requested'] === true) {
           return;
         }

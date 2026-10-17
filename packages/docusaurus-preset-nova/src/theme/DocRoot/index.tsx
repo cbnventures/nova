@@ -20,6 +20,8 @@ import type {
  *
  * @param {Theme_DocRoot_Index_DocRoot_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DocRoot(props: Theme_DocRoot_Index_DocRoot_Props) {

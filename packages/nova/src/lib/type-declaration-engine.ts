@@ -24,7 +24,9 @@ import {
   isTypePredicateNode,
   isTypeReferenceNode,
   isVariableStatement,
+  NodeFlags,
   ScriptTarget,
+  SyntaxKind,
 } from 'typescript';
 
 import {
@@ -40,7 +42,6 @@ import {
   LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN,
   LIB_REGEX_PATTERN_REGEX_SPECIAL_CHARS,
   LIB_REGEX_PATTERN_SINGLE_PASCAL_TYPE,
-  LIB_REGEX_PATTERN_TYPED_BODY_DECLARATION,
 } from './regex.js';
 
 import type { Node } from 'typescript';
@@ -148,14 +149,17 @@ import type {
   Lib_TypeDeclarationEngine_ExtractArrayTypes_Lines,
   Lib_TypeDeclarationEngine_ExtractArrayTypes_Match,
   Lib_TypeDeclarationEngine_ExtractArrayTypes_Returns,
-  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Declaration,
   Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Declarations,
-  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_I,
-  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Keyword,
-  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Line,
   Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Lines,
-  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Match,
   Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Returns,
+  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_SourceContent,
+  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_SourceFile,
+  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Declaration,
+  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_DeclarationList,
+  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Keyword,
+  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_LineNumber,
+  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Node,
+  Lib_TypeDeclarationEngine_ExtractBodyDeclarations_VisitReturns,
   Lib_TypeDeclarationEngine_ExtractFunctionParams_Content,
   Lib_TypeDeclarationEngine_ExtractFunctionParams_FilePath,
   Lib_TypeDeclarationEngine_ExtractFunctionParams_NodeWithParametersShape,
@@ -241,10 +245,12 @@ import type {
   Lib_TypeDeclarationEngine_FileExists_FilePath,
   Lib_TypeDeclarationEngine_FileExists_Returns,
   Lib_TypeDeclarationEngine_FindFirstOccurrence_I,
+  Lib_TypeDeclarationEngine_FindFirstOccurrence_InBlockComment,
   Lib_TypeDeclarationEngine_FindFirstOccurrence_InImportBlock,
   Lib_TypeDeclarationEngine_FindFirstOccurrence_Line,
   Lib_TypeDeclarationEngine_FindFirstOccurrence_Returns,
   Lib_TypeDeclarationEngine_FindFirstOccurrence_SourceLines,
+  Lib_TypeDeclarationEngine_FindFirstOccurrence_Trimmed,
   Lib_TypeDeclarationEngine_FindFirstOccurrence_TypeName,
   Lib_TypeDeclarationEngine_FindFirstOccurrence_TypeNamePattern,
   Lib_TypeDeclarationEngine_IsAliasToForeignType_BraceClose,
@@ -339,6 +345,8 @@ export const testConfig: Lib_TypeDeclarationEngine_TestConfig = {
  * mirrors. The rule pipeline walks this list to audit each source against its types.
  * The scan root is injected via `config.packageRoot` (default `process.cwd()`).
  *
+ * @returns {Lib_TypeDeclarationEngine_DiscoverSourceFiles_Returns}
+ *
  * @since 0.18.0
  */
 export async function discoverSourceFiles(config: Lib_TypeDeclarationEngine_DiscoverSourceFiles_Config = {}): Lib_TypeDeclarationEngine_DiscoverSourceFiles_Returns {
@@ -369,6 +377,8 @@ export async function discoverSourceFiles(config: Lib_TypeDeclarationEngine_Disc
  * coverage and symmetry rules pair these against their source files. The scan root
  * is injected via `config.packageRoot` (default `process.cwd()`).
  *
+ * @returns {Lib_TypeDeclarationEngine_DiscoverTypeFiles_Returns}
+ *
  * @since 0.15.0
  */
 export async function discoverTypeFiles(config: Lib_TypeDeclarationEngine_DiscoverTypeFiles_Config = {}): Lib_TypeDeclarationEngine_DiscoverTypeFiles_Returns {
@@ -393,6 +403,8 @@ export async function discoverTypeFiles(config: Lib_TypeDeclarationEngine_Discov
  * Turns a file path into its Mode 2 type-name prefix by stripping the type roots and
  * PascalCasing each segment. The anchoring root + type roots are injected via `config`
  * (default `process.cwd()` and `['src']`).
+ *
+ * @returns {Lib_TypeDeclarationEngine_DeriveClassPrefix_Returns}
  *
  * @since 0.15.0
  */
@@ -451,6 +463,8 @@ export function deriveClassPrefix(filePath: Lib_TypeDeclarationEngine_DeriveClas
  * Collects every identifier brought in by import statements so the cross-section rule
  * can tell an imported type from a same-file forward reference.
  *
+ * @returns {Lib_TypeDeclarationEngine_ExtractImportedNames_Returns}
+ *
  * @since 0.15.0
  */
 export function extractImportedNames(lines: Lib_TypeDeclarationEngine_ExtractImportedNames_Lines): Lib_TypeDeclarationEngine_ExtractImportedNames_Returns {
@@ -496,6 +510,8 @@ export function extractImportedNames(lines: Lib_TypeDeclarationEngine_ExtractImp
  *
  * Groups the d.ts lines into ordered sections keyed by the source section each type
  * belongs to. The alphabetical and first-come-first-serve rules walk these sections.
+ *
+ * @returns {Lib_TypeDeclarationEngine_BuildDtsSections_Returns}
  *
  * @since 0.18.0
  */
@@ -556,6 +572,8 @@ export function buildDtsSections(dtsLines: Lib_TypeDeclarationEngine_BuildDtsSec
  * Pulls the same-prefix type names a single d.ts line references. The cross-section
  * rule uses these edges to detect references that cross section boundaries.
  *
+ * @returns {Lib_TypeDeclarationEngine_ExtractReferencedTypes_Returns}
+ *
  * @since 0.15.0
  */
 export function extractReferencedTypes(line: Lib_TypeDeclarationEngine_ExtractReferencedTypes_Line, classPrefix: Lib_TypeDeclarationEngine_ExtractReferencedTypes_ClassPrefix): Lib_TypeDeclarationEngine_ExtractReferencedTypes_Returns {
@@ -591,6 +609,8 @@ export function extractReferencedTypes(line: Lib_TypeDeclarationEngine_ExtractRe
  * the old hardcoded `/src/`->`/src/types/` of the variable-type-symmetry rule. Non-`src`
  * layouts map correctly because the mirror segment is derived from each type root.
  *
+ * @returns {Lib_TypeDeclarationEngine_DeriveDtsMapping_Returns}
+ *
  * @since 0.18.0
  */
 export function deriveDtsMapping(typeRoots: Lib_TypeDeclarationEngine_DeriveDtsMapping_TypeRoots): Lib_TypeDeclarationEngine_DeriveDtsMapping_Returns {
@@ -619,6 +639,8 @@ export function deriveDtsMapping(typeRoots: Lib_TypeDeclarationEngine_DeriveDtsM
  * Maps a d.ts mirror path back to its source `.ts` path by dropping the `/types/`
  * segment. The coverage rule uses it to check each d.ts has a matching source file.
  *
+ * @returns {Lib_TypeDeclarationEngine_DeriveSourcePath_Returns}
+ *
  * @since 0.15.0
  */
 export function deriveSourcePath(dtsPath: Lib_TypeDeclarationEngine_DeriveSourcePath_DtsPath): Lib_TypeDeclarationEngine_DeriveSourcePath_Returns {
@@ -630,6 +652,8 @@ export function deriveSourcePath(dtsPath: Lib_TypeDeclarationEngine_DeriveSource
  *
  * Async existence check via a read attempt, returning a boolean instead of throwing.
  * The coverage rule uses it to decide whether a derived source path is real.
+ *
+ * @returns {Lib_TypeDeclarationEngine_FileExists_Returns}
  *
  * @since 0.15.0
  */
@@ -648,6 +672,8 @@ export async function fileExists(filePath: Lib_TypeDeclarationEngine_FileExists_
  *
  * Pulls the declared name from each `export type` line. Downstream rules index types
  * by name to check locality, ordering, and uniqueness.
+ *
+ * @returns {Lib_TypeDeclarationEngine_ExtractTypeNames_Returns}
  *
  * @since 0.15.0
  */
@@ -668,18 +694,44 @@ export function extractTypeNames(typeLines: Lib_TypeDeclarationEngine_ExtractTyp
 /**
  * Lib - Type Declaration Engine - Find First Occurrence.
  *
- * Returns the first source line a type name appears on, skipping the import block.
- * The first-come-first-serve rule uses it to order types by source appearance.
+ * Returns the first executable source line a type name appears on, skipping imports
+ * and comment-only references. The first-come-first-serve rule uses it to order types
+ * by implementation appearance rather than documentation wording.
+ *
+ * @returns {Lib_TypeDeclarationEngine_FindFirstOccurrence_Returns}
  *
  * @since 0.15.0
  */
 export function findFirstOccurrence(sourceLines: Lib_TypeDeclarationEngine_FindFirstOccurrence_SourceLines, typeName: Lib_TypeDeclarationEngine_FindFirstOccurrence_TypeName): Lib_TypeDeclarationEngine_FindFirstOccurrence_Returns {
   let inImportBlock: Lib_TypeDeclarationEngine_FindFirstOccurrence_InImportBlock = false;
+  let inBlockComment: Lib_TypeDeclarationEngine_FindFirstOccurrence_InBlockComment = false;
 
   for (let i: Lib_TypeDeclarationEngine_FindFirstOccurrence_I = 0; i < sourceLines.length; i += 1) {
     const line: Lib_TypeDeclarationEngine_FindFirstOccurrence_Line = sourceLines[i] as Lib_TypeDeclarationEngine_FindFirstOccurrence_Line;
 
     if (line === undefined) {
+      continue;
+    }
+
+    const trimmed: Lib_TypeDeclarationEngine_FindFirstOccurrence_Trimmed = line.trim();
+
+    if (inBlockComment === true) {
+      if (trimmed.includes('*/') === true) {
+        inBlockComment = false;
+      }
+
+      continue;
+    }
+
+    if (trimmed.startsWith('/*') === true) {
+      if (trimmed.includes('*/') === false) {
+        inBlockComment = true;
+      }
+
+      continue;
+    }
+
+    if (trimmed.startsWith('//') === true) {
       continue;
     }
 
@@ -710,6 +762,8 @@ export function findFirstOccurrence(sourceLines: Lib_TypeDeclarationEngine_FindF
  *
  * Parses object-type literals and their property lines from the d.ts. The property
  * hierarchy rule checks each property type is parent-prefixed and defined first.
+ *
+ * @returns {Lib_TypeDeclarationEngine_ExtractObjectTypes_Returns}
  *
  * @since 0.15.0
  */
@@ -841,6 +895,8 @@ export function parseSourceFile(filePath: Lib_TypeDeclarationEngine_ParseSourceF
  * Walks the AST for every function, method, and constructor parameter with a type.
  * The leaf-naming rule checks each param's type leaf matches the param name.
  *
+ * @returns {Lib_TypeDeclarationEngine_ExtractFunctionParams_Returns}
+ *
  * @since 0.18.0
  */
 export function extractFunctionParams(filePath: Lib_TypeDeclarationEngine_ExtractFunctionParams_FilePath, content: Lib_TypeDeclarationEngine_ExtractFunctionParams_Content): Lib_TypeDeclarationEngine_ExtractFunctionParams_Returns {
@@ -921,39 +977,73 @@ export function extractFunctionParams(filePath: Lib_TypeDeclarationEngine_Extrac
 /**
  * Lib - Type Declaration Engine - Extract Body Declarations.
  *
- * Pulls typed `const`/`let` body variables (skipping for-of and untyped) from source
- * lines. The leaf-naming and locality rules audit each declared body variable.
+ * Pulls typed `const`/`let` body variables from source syntax while skipping
+ * exported, for-of, and untyped declarations so the leaf-naming and locality
+ * rules can audit every declared body variable.
+ *
+ * @returns {Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Returns}
  *
  * @since 0.18.0
  */
 export function extractBodyDeclarations(lines: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Lines): Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Returns {
+  const sourceContent: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_SourceContent = lines.join('\n');
+  const sourceFile: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_SourceFile = parseSourceFile('/virtual/extract-body-declarations.ts', sourceContent);
   const declarations: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Declarations = [];
 
-  for (let i: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_I = 0; i < lines.length; i += 1) {
-    const line: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Line = lines[i] as Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Line;
-
-    if (line === undefined) {
-      continue;
-    }
-
-    const match: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Match = line.match(LIB_REGEX_PATTERN_TYPED_BODY_DECLARATION);
-
+  /**
+   * Lib - Type Declaration Engine - Extract Body Declarations - Visit.
+   *
+   * Visits variable statements and records each identifier declaration with a
+   * simple referenced type. Variable declarations owned by loop headers are not
+   * variable statements and therefore remain outside this body-variable audit.
+   *
+   * @param {Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Node} node - Node.
+   *
+   * @private
+   *
+   * @returns {Lib_TypeDeclarationEngine_ExtractBodyDeclarations_VisitReturns}
+   *
+   * @since UNRELEASED
+   */
+  function visit(node: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Node): Lib_TypeDeclarationEngine_ExtractBodyDeclarations_VisitReturns {
     if (
-      match !== null
-      && match[1] !== undefined
-      && match[2] !== undefined
-      && match[3] !== undefined
+      isVariableStatement(node) === true
+      && (
+        node.modifiers === undefined
+        || node.modifiers.some((modifier) => modifier.kind === SyntaxKind.ExportKeyword) === false
+      )
     ) {
-      const declaration: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Declaration = {
-        keyword: match[1] as Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Keyword,
-        varName: match[2],
-        typeName: match[3],
-        lineNumber: i + 1,
-      };
+      const declarationList: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_DeclarationList = node.declarationList;
+      const keyword: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Keyword = (declarationList.flags === NodeFlags.Const) ? 'const' : 'let';
 
-      declarations.push(declaration);
+      for (const variableDeclaration of declarationList.declarations) {
+        if (
+          isIdentifier(variableDeclaration.name) === false
+          || variableDeclaration.type === undefined
+          || isTypeReferenceNode(variableDeclaration.type) === false
+          || isIdentifier(variableDeclaration.type.typeName) === false
+        ) {
+          continue;
+        }
+
+        const lineNumber: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_LineNumber = sourceFile.getLineAndCharacterOfPosition(variableDeclaration.getStart()).line + 1;
+        const declaration: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Declaration = {
+          keyword,
+          varName: variableDeclaration.name.text,
+          typeName: variableDeclaration.type.typeName.text,
+          lineNumber,
+        };
+
+        declarations.push(declaration);
+      }
     }
+
+    forEachChild(node, visit);
+
+    return;
   }
+
+  forEachChild(sourceFile, visit);
 
   return declarations;
 }
@@ -963,6 +1053,8 @@ export function extractBodyDeclarations(lines: Lib_TypeDeclarationEngine_Extract
  *
  * Lists top-level class, function, and function-typed const names with line numbers.
  * The C1/C2/C3 rule checks none of these equal the file name.
+ *
+ * @returns {Lib_TypeDeclarationEngine_ExtractTopLevelIdentifiers_Returns}
  *
  * @since 0.18.0
  */
@@ -1047,6 +1139,8 @@ export function extractTopLevelIdentifiers(filePath: Lib_TypeDeclarationEngine_E
  *
  * Tags every source line with the section (class/method/function/describe) it sits in.
  * This map is how the rules know which section prefix a line's type should carry.
+ *
+ * @returns {Lib_TypeDeclarationEngine_BuildSourceSectionMap_Returns}
  *
  * @since 0.18.0
  */
@@ -1313,6 +1407,8 @@ export function buildSourceSectionMap(filePath: Lib_TypeDeclarationEngine_BuildS
  * Turns a `(string, fn)` call argument into a PascalCase chunk by splitting on
  * non-word characters. This is how describe/it strings become section name chunks.
  *
+ * @returns {Lib_TypeDeclarationEngine_ParseDescribeString_Returns}
+ *
  * @since 0.18.0
  */
 export function parseDescribeString(input: Lib_TypeDeclarationEngine_ParseDescribeString_Input): Lib_TypeDeclarationEngine_ParseDescribeString_Returns {
@@ -1330,6 +1426,8 @@ export function parseDescribeString(input: Lib_TypeDeclarationEngine_ParseDescri
  * Drops a single leading underscore from a variable name before leaf comparison, so
  * an intentionally-unused `_foo` still maps to the `Foo` leaf.
  *
+ * @returns {Lib_TypeDeclarationEngine_StripUnderscorePrefix_Returns}
+ *
  * @since 0.18.0
  */
 export function stripUnderscorePrefix(input: Lib_TypeDeclarationEngine_StripUnderscorePrefix_Input): Lib_TypeDeclarationEngine_StripUnderscorePrefix_Returns {
@@ -1345,6 +1443,8 @@ export function stripUnderscorePrefix(input: Lib_TypeDeclarationEngine_StripUnde
  *
  * Flags two declarations in one file that would produce the same expected type name.
  * Rule 7.8 catches this before a duplicate `export type` reaches the d.ts.
+ *
+ * @returns {Lib_TypeDeclarationEngine_CheckTypeNameUniqueness_Returns}
  *
  * @since 0.18.0
  */
@@ -1375,6 +1475,8 @@ export function checkTypeNameUniqueness(declarations: Lib_TypeDeclarationEngine_
  *
  * Finds anonymous arrow/function callbacks that carry a typed parameter. Rule 7.4
  * forbids these; they must be extracted to a named const instead.
+ *
+ * @returns {Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Returns}
  *
  * @since 0.18.0
  */
@@ -1467,6 +1569,8 @@ export function detectInlineTypedCallbacks(filePath: Lib_TypeDeclarationEngine_D
  * Pulls plain `X = Y[]` array aliases (skipping generics, unions, multi-dim) from the
  * d.ts. The element-before-array rule checks the element type is defined first.
  *
+ * @returns {Lib_TypeDeclarationEngine_ExtractArrayTypes_Returns}
+ *
  * @since 0.18.0
  */
 export function extractArrayTypes(lines: Lib_TypeDeclarationEngine_ExtractArrayTypes_Lines): Lib_TypeDeclarationEngine_ExtractArrayTypes_Returns {
@@ -1505,6 +1609,8 @@ export function extractArrayTypes(lines: Lib_TypeDeclarationEngine_ExtractArrayT
  * Walks the AST for each function/method return type and whether it is a type guard.
  * Rules 7.5/7.6/7.7 validate the Returns/TypeGuard suffixes against these records.
  *
+ * @returns {Lib_TypeDeclarationEngine_ExtractFunctionReturns_Returns}
+ *
  * @since 0.18.0
  */
 export function extractFunctionReturns(filePath: Lib_TypeDeclarationEngine_ExtractFunctionReturns_FilePath, content: Lib_TypeDeclarationEngine_ExtractFunctionReturns_Content): Lib_TypeDeclarationEngine_ExtractFunctionReturns_Returns {
@@ -1528,6 +1634,8 @@ export function extractFunctionReturns(filePath: Lib_TypeDeclarationEngine_Extra
   function visit(node: Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_Node): Lib_TypeDeclarationEngine_ExtractFunctionReturns_VisitReturns {
     if (
       isFunctionDeclaration(node) === true
+      || isArrowFunction(node) === true
+      || isFunctionExpression(node) === true
       || isMethodDeclaration(node) === true
       || isConstructorDeclaration(node) === true
     ) {
@@ -1583,6 +1691,8 @@ export function extractFunctionReturns(filePath: Lib_TypeDeclarationEngine_Extra
  * Rule 7.2 tightening: detects a local alias whose RHS is a single foreign path-prefixed
  * type, forbidding the "local re-alias" loophole that satisfied 7.2 mechanically. Complex
  * RHS shapes such as objects, unions, or generics are not flagged, only single aliases.
+ *
+ * @returns {Lib_TypeDeclarationEngine_IsAliasToForeignType_Returns}
  *
  * @since 0.18.0
  */
@@ -1670,6 +1780,8 @@ export function isAliasToForeignType(typeName: Lib_TypeDeclarationEngine_IsAlias
  * Checks whether a type name is declared in the given d.ts content via an exact
  * `export type X` line match. Rule 7.2 requires body-var types to be locally defined.
  *
+ * @returns {Lib_TypeDeclarationEngine_IsLocallyDefined_Returns}
+ *
  * @since 0.18.0
  */
 export function isLocallyDefined(typeName: Lib_TypeDeclarationEngine_IsLocallyDefined_TypeName, dtsContent: Lib_TypeDeclarationEngine_IsLocallyDefined_DtsContent): Lib_TypeDeclarationEngine_IsLocallyDefined_Returns {
@@ -1684,6 +1796,8 @@ export function isLocallyDefined(typeName: Lib_TypeDeclarationEngine_IsLocallyDe
  *
  * Reports whether a type name ends in a return-only suffix (Returns/TypeGuard/Return).
  * Rule 7.3 bans these suffixes at body-variable and parameter positions.
+ *
+ * @returns {Lib_TypeDeclarationEngine_IsReservedSuffix_Returns}
  *
  * @since 0.18.0
  */
@@ -1703,6 +1817,8 @@ export function isReservedSuffix(typeName: Lib_TypeDeclarationEngine_IsReservedS
  *
  * Checks a variable's type leaf equals its title-cased name under the right section
  * prefix. This is the core of rule 7.1; returns a reason string or null on pass.
+ *
+ * @returns {Lib_TypeDeclarationEngine_ValidateLeaf_Returns}
  *
  * @since 0.18.0
  */
@@ -1736,6 +1852,8 @@ export function validateLeaf(varName: Lib_TypeDeclarationEngine_ValidateLeaf_Var
  * Checks a function return type uses Returns (or TypeGuard for `value is T`) and not
  * the banned singular Return. Implements rules 7.5/7.6/7.7; returns a reason or null.
  *
+ * @returns {Lib_TypeDeclarationEngine_ValidateReturnType_Returns}
+ *
  * @since 0.18.0
  */
 export function validateReturnType(returnType: Lib_TypeDeclarationEngine_ValidateReturnType_ReturnType, typeGuardFlag: Lib_TypeDeclarationEngine_ValidateReturnType_TypeGuardFlag): Lib_TypeDeclarationEngine_ValidateReturnType_Returns {
@@ -1767,6 +1885,8 @@ export function validateReturnType(returnType: Lib_TypeDeclarationEngine_Validat
  * Wires every body-var rule (7.1-7.5/6/7) end-to-end against an inline source/.d.ts
  * fixture pair and returns the violation list. Used by the end-to-end fixture tests so
  * each fixture only carries its content and assertions, not the pipeline boilerplate.
+ *
+ * @returns {Lib_TypeDeclarationEngine_RunRulePipeline_Returns}
  *
  * @since 0.18.0
  */

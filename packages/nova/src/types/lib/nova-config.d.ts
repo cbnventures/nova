@@ -23,8 +23,10 @@ import type {
   Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusChecks,
   Shared_NovaConfig_Github_Security,
   Shared_NovaConfig_Github_Topics,
-  Shared_NovaConfig_Gitignore,
-  Shared_NovaConfig_Gitignore_ProjectExcludes,
+  Shared_NovaConfig_IgnoreFile,
+  Shared_NovaConfig_IgnoreFile_Bundles,
+  Shared_NovaConfig_IgnoreFile_Patterns,
+  Shared_NovaConfig_IgnoreFiles,
   Shared_NovaConfig_Project,
   Shared_NovaConfig_Project_Description,
   Shared_NovaConfig_Project_License,
@@ -62,6 +64,8 @@ import type {
   Shared_NovaConfigGithubRulesetEnforcement,
   Shared_NovaConfigProjectPlatform,
   Shared_NovaConfigReadMeBadge,
+  Shared_NovaConfigSettings_RunWorkspaces,
+  Shared_NovaConfigSettings_RunWorkspacesCache,
   Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkflow,
   Shared_NovaConfigWorkflow_Triggers,
@@ -166,14 +170,28 @@ export type Lib_NovaConfig_Runner_GetGithubActions_Value = unknown;
 
 export type Lib_NovaConfig_Runner_GetGithubActions_Returns = Shared_NovaConfig_Github_Actions | undefined;
 
+export type Lib_NovaConfig_Runner_GetGithubActions_Result_Enabled = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_Result_AllowedActions = Shared_NovaConfigGithubActionsAllowedActions;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_Result_ShaPinningRequired = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_Result_SelectedActions = Shared_NovaConfig_Github_Actions_SelectedActions;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_Result_DefaultWorkflowPermissions = Shared_NovaConfigGithubActionsDefaultWorkflowPermissions;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_Result_CanApprovePullRequestReviews = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubActions_Result_ArtifactRetentionDays = number;
+
 export type Lib_NovaConfig_Runner_GetGithubActions_Result = {
-  enabled?: boolean;
-  allowedActions?: Shared_NovaConfigGithubActionsAllowedActions;
-  shaPinningRequired?: boolean;
-  selectedActions?: Shared_NovaConfig_Github_Actions_SelectedActions;
-  defaultWorkflowPermissions?: Shared_NovaConfigGithubActionsDefaultWorkflowPermissions;
-  canApprovePullRequestReviews?: boolean;
-  artifactRetentionDays?: number;
+  enabled?: Lib_NovaConfig_Runner_GetGithubActions_Result_Enabled;
+  allowedActions?: Lib_NovaConfig_Runner_GetGithubActions_Result_AllowedActions;
+  shaPinningRequired?: Lib_NovaConfig_Runner_GetGithubActions_Result_ShaPinningRequired;
+  selectedActions?: Lib_NovaConfig_Runner_GetGithubActions_Result_SelectedActions;
+  defaultWorkflowPermissions?: Lib_NovaConfig_Runner_GetGithubActions_Result_DefaultWorkflowPermissions;
+  canApprovePullRequestReviews?: Lib_NovaConfig_Runner_GetGithubActions_Result_CanApprovePullRequestReviews;
+  artifactRetentionDays?: Lib_NovaConfig_Runner_GetGithubActions_Result_ArtifactRetentionDays;
 };
 
 export type Lib_NovaConfig_Runner_GetGithubActions_Enabled = boolean | undefined;
@@ -199,10 +217,16 @@ export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Value = unknow
 
 export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Returns = Shared_NovaConfig_Github_Actions_SelectedActions | undefined;
 
+export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Result_GithubOwned = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Result_Verified = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Result_Patterns = Shared_NovaConfig_Github_Actions_SelectedActions_Patterns;
+
 export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Result = {
-  githubOwned?: boolean;
-  verified?: boolean;
-  patterns?: Shared_NovaConfig_Github_Actions_SelectedActions_Patterns;
+  githubOwned?: Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Result_GithubOwned;
+  verified?: Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Result_Verified;
+  patterns?: Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_Result_Patterns;
 };
 
 export type Lib_NovaConfig_Runner_GetGithubActionsSelectedActions_GithubOwned = boolean | undefined;
@@ -220,12 +244,22 @@ export type Lib_NovaConfig_Runner_GetGithubFeatures_Value = unknown;
 
 export type Lib_NovaConfig_Runner_GetGithubFeatures_Returns = Shared_NovaConfig_Github_Features | undefined;
 
+export type Lib_NovaConfig_Runner_GetGithubFeatures_Result_Issues = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubFeatures_Result_Wiki = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubFeatures_Result_Projects = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubFeatures_Result_Discussions = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubFeatures_Result_Sponsorships = boolean;
+
 export type Lib_NovaConfig_Runner_GetGithubFeatures_Result = {
-  issues?: boolean;
-  wiki?: boolean;
-  projects?: boolean;
-  discussions?: boolean;
-  sponsorships?: boolean;
+  issues?: Lib_NovaConfig_Runner_GetGithubFeatures_Result_Issues;
+  wiki?: Lib_NovaConfig_Runner_GetGithubFeatures_Result_Wiki;
+  projects?: Lib_NovaConfig_Runner_GetGithubFeatures_Result_Projects;
+  discussions?: Lib_NovaConfig_Runner_GetGithubFeatures_Result_Discussions;
+  sponsorships?: Lib_NovaConfig_Runner_GetGithubFeatures_Result_Sponsorships;
 };
 
 export type Lib_NovaConfig_Runner_GetGithubFeatures_Issues = boolean | undefined;
@@ -247,8 +281,10 @@ export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Value = unknown;
 
 export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Returns = Shared_NovaConfig_Github_IssueTemplate | undefined;
 
+export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result_BugReportFields = Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
+
 export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result = {
-  bugReportFields?: Shared_NovaConfig_Github_IssueTemplate_BugReportFields;
+  bugReportFields?: Lib_NovaConfig_Runner_GetGithubIssueTemplate_Result_BugReportFields;
 };
 
 export type Lib_NovaConfig_Runner_GetGithubIssueTemplate_RawBugReportFields = unknown;
@@ -291,16 +327,34 @@ export type Lib_NovaConfig_Runner_GetGithubPolicies_Value = unknown;
 
 export type Lib_NovaConfig_Runner_GetGithubPolicies_Returns = Shared_NovaConfig_Github_Policies | undefined;
 
+export type Lib_NovaConfig_Runner_GetGithubPolicies_Result_Visibility = 'public' | 'private' | 'internal';
+
+export type Lib_NovaConfig_Runner_GetGithubPolicies_Result_DefaultBranch = string;
+
+export type Lib_NovaConfig_Runner_GetGithubPolicies_Result_MergeMethods = Shared_NovaConfig_Github_Policies_MergeMethods;
+
+export type Lib_NovaConfig_Runner_GetGithubPolicies_Result_MergeCommit = Shared_NovaConfig_Github_Policies_MergeCommit;
+
+export type Lib_NovaConfig_Runner_GetGithubPolicies_Result_SquashMerge = Shared_NovaConfig_Github_Policies_SquashMerge;
+
+export type Lib_NovaConfig_Runner_GetGithubPolicies_Result_AutoDeleteHeadBranch = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubPolicies_Result_AutoMerge = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubPolicies_Result_AllowUpdateBranch = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubPolicies_Result_WebCommitSignoffRequired = boolean;
+
 export type Lib_NovaConfig_Runner_GetGithubPolicies_Result = {
-  visibility?: 'public' | 'private' | 'internal';
-  defaultBranch?: string;
-  mergeMethods?: Shared_NovaConfig_Github_Policies_MergeMethods;
-  mergeCommit?: Shared_NovaConfig_Github_Policies_MergeCommit;
-  squashMerge?: Shared_NovaConfig_Github_Policies_SquashMerge;
-  autoDeleteHeadBranch?: boolean;
-  autoMerge?: boolean;
-  allowUpdateBranch?: boolean;
-  webCommitSignoffRequired?: boolean;
+  visibility?: Lib_NovaConfig_Runner_GetGithubPolicies_Result_Visibility;
+  defaultBranch?: Lib_NovaConfig_Runner_GetGithubPolicies_Result_DefaultBranch;
+  mergeMethods?: Lib_NovaConfig_Runner_GetGithubPolicies_Result_MergeMethods;
+  mergeCommit?: Lib_NovaConfig_Runner_GetGithubPolicies_Result_MergeCommit;
+  squashMerge?: Lib_NovaConfig_Runner_GetGithubPolicies_Result_SquashMerge;
+  autoDeleteHeadBranch?: Lib_NovaConfig_Runner_GetGithubPolicies_Result_AutoDeleteHeadBranch;
+  autoMerge?: Lib_NovaConfig_Runner_GetGithubPolicies_Result_AutoMerge;
+  allowUpdateBranch?: Lib_NovaConfig_Runner_GetGithubPolicies_Result_AllowUpdateBranch;
+  webCommitSignoffRequired?: Lib_NovaConfig_Runner_GetGithubPolicies_Result_WebCommitSignoffRequired;
 };
 
 export type Lib_NovaConfig_Runner_GetGithubPolicies_Visibility = 'public' | 'private' | 'internal' | undefined;
@@ -330,9 +384,13 @@ export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Value = unknown;
 
 export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Returns = Shared_NovaConfig_Github_Policies_MergeCommit | undefined;
 
+export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Result_Title = Shared_NovaConfigGithubPoliciesMergeCommitTitle;
+
+export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Result_Message = Shared_NovaConfigGithubPoliciesMergeCommitMessage;
+
 export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Result = {
-  title?: Shared_NovaConfigGithubPoliciesMergeCommitTitle;
-  message?: Shared_NovaConfigGithubPoliciesMergeCommitMessage;
+  title?: Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Result_Title;
+  message?: Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Result_Message;
 };
 
 export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeCommit_Title = Shared_NovaConfigGithubPoliciesMergeCommitTitle | undefined;
@@ -348,10 +406,16 @@ export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Value = unknown;
 
 export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Returns = Shared_NovaConfig_Github_Policies_MergeMethods | undefined;
 
+export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Result_Merge = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Result_Squash = boolean;
+
+export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Result_Rebase = boolean;
+
 export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Result = {
-  merge?: boolean;
-  squash?: boolean;
-  rebase?: boolean;
+  merge?: Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Result_Merge;
+  squash?: Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Result_Squash;
+  rebase?: Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Result_Rebase;
 };
 
 export type Lib_NovaConfig_Runner_GetGithubPoliciesMergeMethods_Merge = boolean | undefined;
@@ -369,9 +433,13 @@ export type Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Value = unknown;
 
 export type Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Returns = Shared_NovaConfig_Github_Policies_SquashMerge | undefined;
 
+export type Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Result_Title = Shared_NovaConfigGithubPoliciesSquashMergeTitle;
+
+export type Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Result_Message = Shared_NovaConfigGithubPoliciesSquashMergeMessage;
+
 export type Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Result = {
-  title?: Shared_NovaConfigGithubPoliciesSquashMergeTitle;
-  message?: Shared_NovaConfigGithubPoliciesSquashMergeMessage;
+  title?: Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Result_Title;
+  message?: Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Result_Message;
 };
 
 export type Lib_NovaConfig_Runner_GetGithubPoliciesSquashMerge_Title = Shared_NovaConfigGithubPoliciesSquashMergeTitle | undefined;
@@ -387,8 +455,10 @@ export type Lib_NovaConfig_Runner_GetGithubRulesets_Value = unknown;
 
 export type Lib_NovaConfig_Runner_GetGithubRulesets_Returns = Shared_NovaConfig_Github_Rulesets | undefined;
 
+export type Lib_NovaConfig_Runner_GetGithubRulesets_Result_DefaultBranch = Shared_NovaConfig_Github_Rulesets_DefaultBranch;
+
 export type Lib_NovaConfig_Runner_GetGithubRulesets_Result = {
-  defaultBranch?: Shared_NovaConfig_Github_Rulesets_DefaultBranch;
+  defaultBranch?: Lib_NovaConfig_Runner_GetGithubRulesets_Result_DefaultBranch;
 };
 
 export type Lib_NovaConfig_Runner_GetGithubRulesets_DefaultBranch = Shared_NovaConfig_Github_Rulesets_DefaultBranch | undefined;
@@ -584,20 +654,46 @@ export type Lib_NovaConfig_Runner_Parse_Value = unknown;
 
 export type Lib_NovaConfig_Runner_Parse_Returns = Shared_NovaConfig;
 
+export type Lib_NovaConfig_Runner_Parse_Result_Project = Shared_NovaConfig_Project;
+
+export type Lib_NovaConfig_Runner_Parse_Result_Entities = Shared_NovaConfig_Entities;
+
+export type Lib_NovaConfig_Runner_Parse_Result_Emails = Shared_NovaConfig_Emails;
+
+export type Lib_NovaConfig_Runner_Parse_Result_Github = Shared_NovaConfig_Github;
+
+export type Lib_NovaConfig_Runner_Parse_Result_Workflows = Shared_NovaConfig_Workflows;
+
+export type Lib_NovaConfig_Runner_Parse_Result_Urls = Shared_NovaConfig_Urls;
+
+export type Lib_NovaConfig_Runner_Parse_Result_Readme = Shared_NovaConfig_ReadMe;
+
+export type Lib_NovaConfig_Runner_Parse_Result_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Lib_NovaConfig_Runner_Parse_Result_IgnoreFiles = Shared_NovaConfig_IgnoreFiles;
+
+export type Lib_NovaConfig_Runner_Parse_Result_Agents = Shared_NovaConfig_Agents;
+
+export type Lib_NovaConfig_Runner_Parse_Result_Recipes = Shared_NovaConfig_Recipes;
+
+export type Lib_NovaConfig_Runner_Parse_Result_Environment = Shared_NovaConfig_Environment;
+
+export type Lib_NovaConfig_Runner_Parse_Result_Settings = Shared_NovaConfig_Settings;
+
 export type Lib_NovaConfig_Runner_Parse_Result = {
-  project?: Shared_NovaConfig_Project;
-  entities?: Shared_NovaConfig_Entities;
-  emails?: Shared_NovaConfig_Emails;
-  github?: Shared_NovaConfig_Github;
-  workflows?: Shared_NovaConfig_Workflows;
-  urls?: Shared_NovaConfig_Urls;
-  readme?: Shared_NovaConfig_ReadMe;
-  workspaces?: Shared_NovaConfig_Workspaces;
-  gitignore?: Shared_NovaConfig_Gitignore;
-  agents?: Shared_NovaConfig_Agents;
-  recipes?: Shared_NovaConfig_Recipes;
-  environment?: Shared_NovaConfig_Environment;
-  settings?: Shared_NovaConfig_Settings;
+  project?: Lib_NovaConfig_Runner_Parse_Result_Project;
+  entities?: Lib_NovaConfig_Runner_Parse_Result_Entities;
+  emails?: Lib_NovaConfig_Runner_Parse_Result_Emails;
+  github?: Lib_NovaConfig_Runner_Parse_Result_Github;
+  workflows?: Lib_NovaConfig_Runner_Parse_Result_Workflows;
+  urls?: Lib_NovaConfig_Runner_Parse_Result_Urls;
+  readme?: Lib_NovaConfig_Runner_Parse_Result_Readme;
+  workspaces?: Lib_NovaConfig_Runner_Parse_Result_Workspaces;
+  ignoreFiles?: Lib_NovaConfig_Runner_Parse_Result_IgnoreFiles;
+  agents?: Lib_NovaConfig_Runner_Parse_Result_Agents;
+  recipes?: Lib_NovaConfig_Runner_Parse_Result_Recipes;
+  environment?: Lib_NovaConfig_Runner_Parse_Result_Environment;
+  settings?: Lib_NovaConfig_Runner_Parse_Result_Settings;
 };
 
 export type Lib_NovaConfig_Runner_Parse_Project = Shared_NovaConfig_Project | undefined;
@@ -616,7 +712,7 @@ export type Lib_NovaConfig_Runner_Parse_ReadMe = Shared_NovaConfig_ReadMe | unde
 
 export type Lib_NovaConfig_Runner_Parse_Workspaces = Shared_NovaConfig_Workspaces | undefined;
 
-export type Lib_NovaConfig_Runner_Parse_Gitignore = Shared_NovaConfig_Gitignore | undefined;
+export type Lib_NovaConfig_Runner_Parse_IgnoreFiles = Shared_NovaConfig_IgnoreFiles | undefined;
 
 export type Lib_NovaConfig_Runner_Parse_Agents = Shared_NovaConfig_Agents | undefined;
 
@@ -646,8 +742,10 @@ export type Lib_NovaConfig_Runner_ParseEmails_Value = unknown;
 
 export type Lib_NovaConfig_Runner_ParseEmails_Returns = Shared_NovaConfig_Emails | undefined;
 
+export type Lib_NovaConfig_Runner_ParseEmails_Emails_Bugs = string;
+
 export type Lib_NovaConfig_Runner_ParseEmails_Emails = {
-  bugs?: string;
+  bugs?: Lib_NovaConfig_Runner_ParseEmails_Emails_Bugs;
 };
 
 export type Lib_NovaConfig_Runner_ParseEmails_EmailFields = readonly ['bugs'];
@@ -663,18 +761,34 @@ export type Lib_NovaConfig_Runner_ParseEntities_Value = unknown;
 
 export type Lib_NovaConfig_Runner_ParseEntities_Returns = Shared_NovaConfig_Entities | undefined;
 
+export type Lib_NovaConfig_Runner_ParseEntities_Entities_Name = string;
+
+export type Lib_NovaConfig_Runner_ParseEntities_Entities_Email = string;
+
+export type Lib_NovaConfig_Runner_ParseEntities_Entities_Url = string;
+
+export type Lib_NovaConfig_Runner_ParseEntities_Entities_Roles = Shared_NovaConfigEntityRole[];
+
 export type Lib_NovaConfig_Runner_ParseEntities_Entities = {
-  name?: string;
-  email?: string;
-  url?: string;
-  roles?: Shared_NovaConfigEntityRole[];
+  name?: Lib_NovaConfig_Runner_ParseEntities_Entities_Name;
+  email?: Lib_NovaConfig_Runner_ParseEntities_Entities_Email;
+  url?: Lib_NovaConfig_Runner_ParseEntities_Entities_Url;
+  roles?: Lib_NovaConfig_Runner_ParseEntities_Entities_Roles;
 }[];
 
+export type Lib_NovaConfig_Runner_ParseEntities_ParsedEntity_Name = string;
+
+export type Lib_NovaConfig_Runner_ParseEntities_ParsedEntity_Email = string;
+
+export type Lib_NovaConfig_Runner_ParseEntities_ParsedEntity_Url = string;
+
+export type Lib_NovaConfig_Runner_ParseEntities_ParsedEntity_Roles = Shared_NovaConfigEntityRole[];
+
 export type Lib_NovaConfig_Runner_ParseEntities_ParsedEntity = {
-  name?: string;
-  email?: string;
-  url?: string;
-  roles?: Shared_NovaConfigEntityRole[];
+  name?: Lib_NovaConfig_Runner_ParseEntities_ParsedEntity_Name;
+  email?: Lib_NovaConfig_Runner_ParseEntities_ParsedEntity_Email;
+  url?: Lib_NovaConfig_Runner_ParseEntities_ParsedEntity_Url;
+  roles?: Lib_NovaConfig_Runner_ParseEntities_ParsedEntity_Roles;
 };
 
 export type Lib_NovaConfig_Runner_ParseEntities_Name = string | undefined;
@@ -686,6 +800,8 @@ export type Lib_NovaConfig_Runner_ParseEntities_Url = string | undefined;
 export type Lib_NovaConfig_Runner_ParseEntities_Roles = unknown;
 
 export type Lib_NovaConfig_Runner_ParseEntities_ParsedRoles = ('author' | 'contributor' | 'supporter')[];
+
+export type Lib_NovaConfig_Runner_ParseEntities_ParsedEntityTypeGuard = Lib_NovaConfig_Runner_ParseEntities_ParsedEntity;
 
 export type Lib_NovaConfig_Runner_ParseEntities_NameA = string;
 
@@ -802,17 +918,37 @@ export type Lib_NovaConfig_Runner_ParseGithub_Value = unknown;
 
 export type Lib_NovaConfig_Runner_ParseGithub_Returns = Shared_NovaConfig_Github | undefined;
 
+export type Lib_NovaConfig_Runner_ParseGithub_Result_Owner = string;
+
+export type Lib_NovaConfig_Runner_ParseGithub_Result_Repo = string;
+
+export type Lib_NovaConfig_Runner_ParseGithub_Result_Topics = string[];
+
+export type Lib_NovaConfig_Runner_ParseGithub_Result_Features = Shared_NovaConfig_Github_Features;
+
+export type Lib_NovaConfig_Runner_ParseGithub_Result_Policies = Shared_NovaConfig_Github_Policies;
+
+export type Lib_NovaConfig_Runner_ParseGithub_Result_Security = Shared_NovaConfig_Github_Security;
+
+export type Lib_NovaConfig_Runner_ParseGithub_Result_Rulesets = Shared_NovaConfig_Github_Rulesets;
+
+export type Lib_NovaConfig_Runner_ParseGithub_Result_Actions = Shared_NovaConfig_Github_Actions;
+
+export type Lib_NovaConfig_Runner_ParseGithub_Result_Labels = Shared_NovaConfig_Github_Labels;
+
+export type Lib_NovaConfig_Runner_ParseGithub_Result_IssueTemplate = Shared_NovaConfig_Github_IssueTemplate;
+
 export type Lib_NovaConfig_Runner_ParseGithub_Result = {
-  owner?: string;
-  repo?: string;
-  topics?: string[];
-  features?: Shared_NovaConfig_Github_Features;
-  policies?: Shared_NovaConfig_Github_Policies;
-  security?: Shared_NovaConfig_Github_Security;
-  rulesets?: Shared_NovaConfig_Github_Rulesets;
-  actions?: Shared_NovaConfig_Github_Actions;
-  labels?: Shared_NovaConfig_Github_Labels;
-  issueTemplate?: Shared_NovaConfig_Github_IssueTemplate;
+  owner?: Lib_NovaConfig_Runner_ParseGithub_Result_Owner;
+  repo?: Lib_NovaConfig_Runner_ParseGithub_Result_Repo;
+  topics?: Lib_NovaConfig_Runner_ParseGithub_Result_Topics;
+  features?: Lib_NovaConfig_Runner_ParseGithub_Result_Features;
+  policies?: Lib_NovaConfig_Runner_ParseGithub_Result_Policies;
+  security?: Lib_NovaConfig_Runner_ParseGithub_Result_Security;
+  rulesets?: Lib_NovaConfig_Runner_ParseGithub_Result_Rulesets;
+  actions?: Lib_NovaConfig_Runner_ParseGithub_Result_Actions;
+  labels?: Lib_NovaConfig_Runner_ParseGithub_Result_Labels;
+  issueTemplate?: Lib_NovaConfig_Runner_ParseGithub_Result_IssueTemplate;
 };
 
 export type Lib_NovaConfig_Runner_ParseGithub_OwnerCandidate = string | undefined;
@@ -840,19 +976,33 @@ export type Lib_NovaConfig_Runner_ParseGithub_Labels = Shared_NovaConfig_Github_
 export type Lib_NovaConfig_Runner_ParseGithub_IssueTemplate = Shared_NovaConfig_Github_IssueTemplate | undefined;
 
 /**
- * Lib - Nova Config - Parse Gitignore.
+ * Lib - Nova Config - Parse Ignore Files.
  *
- * @since 0.20.0
+ * @since 0.32.0
  */
-export type Lib_NovaConfig_Runner_ParseGitignore_Value = unknown;
+export type Lib_NovaConfig_Runner_ParseIgnoreFiles_Value = unknown;
 
-export type Lib_NovaConfig_Runner_ParseGitignore_Returns = Shared_NovaConfig_Gitignore | undefined;
+export type Lib_NovaConfig_Runner_ParseIgnoreFiles_Returns = Shared_NovaConfig_IgnoreFiles | undefined;
 
-export type Lib_NovaConfig_Runner_ParseGitignore_Result = {
-  projectExcludes?: Shared_NovaConfig_Gitignore_ProjectExcludes;
-};
+export type Lib_NovaConfig_Runner_ParseIgnoreFiles_Result = Shared_NovaConfig_IgnoreFiles;
 
-export type Lib_NovaConfig_Runner_ParseGitignore_ProjectExcludes = Shared_NovaConfig_Gitignore_ProjectExcludes | undefined;
+export type Lib_NovaConfig_Runner_ParseIgnoreFiles_ConfigPath = string;
+
+export type Lib_NovaConfig_Runner_ParseIgnoreFiles_RawEntry = unknown;
+
+export type Lib_NovaConfig_Runner_ParseIgnoreFiles_RawBundles = unknown;
+
+export type Lib_NovaConfig_Runner_ParseIgnoreFiles_Bundles = Shared_NovaConfig_IgnoreFile_Bundles;
+
+export type Lib_NovaConfig_Runner_ParseIgnoreFiles_SupportedBundles = string[];
+
+export type Lib_NovaConfig_Runner_ParseIgnoreFiles_HasUnsupportedBundle = boolean;
+
+export type Lib_NovaConfig_Runner_ParseIgnoreFiles_RawPatterns = unknown;
+
+export type Lib_NovaConfig_Runner_ParseIgnoreFiles_Patterns = Shared_NovaConfig_IgnoreFile_Patterns | undefined;
+
+export type Lib_NovaConfig_Runner_ParseIgnoreFiles_Entry = Shared_NovaConfig_IgnoreFile;
 
 /**
  * Lib - Nova Config - Parse Project.
@@ -863,15 +1013,31 @@ export type Lib_NovaConfig_Runner_ParseProject_Value = unknown;
 
 export type Lib_NovaConfig_Runner_ParseProject_Returns = Shared_NovaConfig_Project | undefined;
 
+export type Lib_NovaConfig_Runner_ParseProject_Project_Name = Shared_NovaConfig_Project_Name;
+
+export type Lib_NovaConfig_Runner_ParseProject_Project_Description = Shared_NovaConfig_Project_Description;
+
+export type Lib_NovaConfig_Runner_ParseProject_Project_Keywords = string[];
+
+export type Lib_NovaConfig_Runner_ParseProject_Project_LegalName = string;
+
+export type Lib_NovaConfig_Runner_ParseProject_Project_Pronouns = 'personal' | 'business';
+
+export type Lib_NovaConfig_Runner_ParseProject_Project_Platforms = Shared_NovaConfigProjectPlatform[];
+
+export type Lib_NovaConfig_Runner_ParseProject_Project_StartingYear = number;
+
+export type Lib_NovaConfig_Runner_ParseProject_Project_License = Shared_NovaConfig_Project_License;
+
 export type Lib_NovaConfig_Runner_ParseProject_Project = {
-  name?: Shared_NovaConfig_Project_Name;
-  description?: Shared_NovaConfig_Project_Description;
-  keywords?: string[];
-  legalName?: string;
-  pronouns?: 'personal' | 'business';
-  platforms?: Shared_NovaConfigProjectPlatform[];
-  startingYear?: number;
-  license?: Shared_NovaConfig_Project_License;
+  name?: Lib_NovaConfig_Runner_ParseProject_Project_Name;
+  description?: Lib_NovaConfig_Runner_ParseProject_Project_Description;
+  keywords?: Lib_NovaConfig_Runner_ParseProject_Project_Keywords;
+  legalName?: Lib_NovaConfig_Runner_ParseProject_Project_LegalName;
+  pronouns?: Lib_NovaConfig_Runner_ParseProject_Project_Pronouns;
+  platforms?: Lib_NovaConfig_Runner_ParseProject_Project_Platforms;
+  startingYear?: Lib_NovaConfig_Runner_ParseProject_Project_StartingYear;
+  license?: Lib_NovaConfig_Runner_ParseProject_Project_License;
 };
 
 export type Lib_NovaConfig_Runner_ParseProject_ValueName = unknown;
@@ -880,18 +1046,26 @@ export type Lib_NovaConfig_Runner_ParseProject_ValueDescription = unknown;
 
 export type Lib_NovaConfig_Runner_ParseProject_ValueKeywords = string[] | undefined;
 
+export type Lib_NovaConfig_Runner_ParseProject_Name_Slug = Shared_NovaConfig_Project_Name_Slug;
+
+export type Lib_NovaConfig_Runner_ParseProject_Name_Title = string;
+
 export type Lib_NovaConfig_Runner_ParseProject_Name = {
-  slug?: Shared_NovaConfig_Project_Name_Slug;
-  title?: string;
+  slug?: Lib_NovaConfig_Runner_ParseProject_Name_Slug;
+  title?: Lib_NovaConfig_Runner_ParseProject_Name_Title;
 };
 
 export type Lib_NovaConfig_Runner_ParseProject_Slug = string | undefined;
 
 export type Lib_NovaConfig_Runner_ParseProject_Title = string | undefined;
 
+export type Lib_NovaConfig_Runner_ParseProject_Description_Short = string;
+
+export type Lib_NovaConfig_Runner_ParseProject_Description_Long = string;
+
 export type Lib_NovaConfig_Runner_ParseProject_Description = {
-  short?: string;
-  long?: string;
+  short?: Lib_NovaConfig_Runner_ParseProject_Description_Short;
+  long?: Lib_NovaConfig_Runner_ParseProject_Description_Long;
 };
 
 export type Lib_NovaConfig_Runner_ParseProject_Short = string | undefined;
@@ -908,7 +1082,7 @@ export type Lib_NovaConfig_Runner_ParseProject_AllowedPlatforms = Set<string>;
 
 export type Lib_NovaConfig_Runner_ParseProject_ParsedPlatforms = Shared_NovaConfigProjectPlatform[];
 
-export type Lib_NovaConfig_Runner_ParseProject_Platform = Shared_NovaConfigProjectPlatform;
+export type Lib_NovaConfig_Runner_ParseProject_PlatformTypeGuard = Shared_NovaConfigProjectPlatform;
 
 export type Lib_NovaConfig_Runner_ParseProject_ValueStartingYear = unknown;
 
@@ -981,12 +1155,35 @@ export type Lib_NovaConfig_Runner_ParseSettings_Value = unknown;
 
 export type Lib_NovaConfig_Runner_ParseSettings_Returns = Shared_NovaConfig_Settings | undefined;
 
+export type Lib_NovaConfig_Runner_ParseSettings_Result_LockStepVersioning = boolean;
+
+export type Lib_NovaConfig_Runner_ParseSettings_Result_RunWorkspaces = Shared_NovaConfigSettings_RunWorkspaces;
+
+export type Lib_NovaConfig_Runner_ParseSettings_Result_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
 export type Lib_NovaConfig_Runner_ParseSettings_Result = {
-  lockStepVersioning?: boolean;
-  versionStrategy?: Shared_NovaConfigSettings_VersionStrategy;
+  lockStepVersioning?: Lib_NovaConfig_Runner_ParseSettings_Result_LockStepVersioning;
+  runWorkspaces?: Lib_NovaConfig_Runner_ParseSettings_Result_RunWorkspaces;
+  versionStrategy?: Lib_NovaConfig_Runner_ParseSettings_Result_VersionStrategy;
 };
 
 export type Lib_NovaConfig_Runner_ParseSettings_LockStepVersioning = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_ParseSettings_RunWorkspacesValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseSettings_RunWorkspaces = Shared_NovaConfigSettings_RunWorkspaces | undefined;
+
+export type Lib_NovaConfig_Runner_ParseSettings_CacheValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseSettings_Cache = Shared_NovaConfigSettings_RunWorkspacesCache;
+
+export type Lib_NovaConfig_Runner_ParseSettings_CacheEnabled = boolean | undefined;
+
+export type Lib_NovaConfig_Runner_ParseSettings_CacheDirectory = string | undefined;
+
+export type Lib_NovaConfig_Runner_ParseSettings_CacheScriptsValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseSettings_CacheScripts = string[] | undefined;
 
 export type Lib_NovaConfig_Runner_ParseSettings_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy | undefined;
 
@@ -999,18 +1196,40 @@ export type Lib_NovaConfig_Runner_ParseUrls_Value = unknown;
 
 export type Lib_NovaConfig_Runner_ParseUrls_Returns = Shared_NovaConfig_Urls | undefined;
 
+export type Lib_NovaConfig_Runner_ParseUrls_Urls_Homepage = string;
+
+export type Lib_NovaConfig_Runner_ParseUrls_Urls_Repository = string;
+
+export type Lib_NovaConfig_Runner_ParseUrls_Urls_Bugs = string;
+
+export type Lib_NovaConfig_Runner_ParseUrls_Urls_License = string;
+
+export type Lib_NovaConfig_Runner_ParseUrls_Urls_Logo = string;
+
+export type Lib_NovaConfig_Runner_ParseUrls_Urls_Docker = string;
+
+export type Lib_NovaConfig_Runner_ParseUrls_Urls_Documentation = string;
+
+export type Lib_NovaConfig_Runner_ParseUrls_Urls_Npm = string;
+
+export type Lib_NovaConfig_Runner_ParseUrls_Urls_FundSources = string[];
+
+export type Lib_NovaConfig_Runner_ParseUrls_Urls_PrivacyPolicy = string;
+
+export type Lib_NovaConfig_Runner_ParseUrls_Urls_TermsOfUse = string;
+
 export type Lib_NovaConfig_Runner_ParseUrls_Urls = {
-  homepage?: string;
-  repository?: string;
-  bugs?: string;
-  license?: string;
-  logo?: string;
-  docker?: string;
-  documentation?: string;
-  npm?: string;
-  fundSources?: string[];
-  privacyPolicy?: string;
-  termsOfUse?: string;
+  homepage?: Lib_NovaConfig_Runner_ParseUrls_Urls_Homepage;
+  repository?: Lib_NovaConfig_Runner_ParseUrls_Urls_Repository;
+  bugs?: Lib_NovaConfig_Runner_ParseUrls_Urls_Bugs;
+  license?: Lib_NovaConfig_Runner_ParseUrls_Urls_License;
+  logo?: Lib_NovaConfig_Runner_ParseUrls_Urls_Logo;
+  docker?: Lib_NovaConfig_Runner_ParseUrls_Urls_Docker;
+  documentation?: Lib_NovaConfig_Runner_ParseUrls_Urls_Documentation;
+  npm?: Lib_NovaConfig_Runner_ParseUrls_Urls_Npm;
+  fundSources?: Lib_NovaConfig_Runner_ParseUrls_Urls_FundSources;
+  privacyPolicy?: Lib_NovaConfig_Runner_ParseUrls_Urls_PrivacyPolicy;
+  termsOfUse?: Lib_NovaConfig_Runner_ParseUrls_Urls_TermsOfUse;
 };
 
 export type Lib_NovaConfig_Runner_ParseUrls_UrlFields = readonly ['homepage', 'repository', 'bugs', 'license', 'logo', 'documentation', 'npm', 'docker', 'privacyPolicy', 'termsOfUse'];

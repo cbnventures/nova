@@ -1,14 +1,14 @@
 [versions]
-androidGradlePlugin = "9.0.1"
-androidxCore = "1.18.0"
-androidxLifecycle = "2.10.0"
-androidxActivity = "1.13.0"
-androidxComposeBom = "2026.03.01"
-coroutines = "1.10.2"
-junit = "4.13.2"
-kotlin = "2.3.20"
-nav3Core = "1.0.1"
-lifecycleViewmodelNav3 = "2.10.0"
+androidGradlePlugin = "[__SCAFFOLD_VERSION_ANDROID_GRADLE_PLUGIN__]"
+androidxCore = "[__SCAFFOLD_VERSION_ANDROIDX_CORE__]"
+androidxLifecycle = "[__SCAFFOLD_VERSION_ANDROIDX_LIFECYCLE__]"
+androidxActivity = "[__SCAFFOLD_VERSION_ANDROIDX_ACTIVITY__]"
+androidxComposeBom = "[__SCAFFOLD_VERSION_ANDROIDX_COMPOSE_BOM__]"
+coroutines = "[__SCAFFOLD_VERSION_KOTLIN_COROUTINES__]"
+junit = "[__SCAFFOLD_VERSION_JUNIT__]"
+kotlin = "[__SCAFFOLD_VERSION_KOTLIN__]"
+nav3Core = "[__SCAFFOLD_VERSION_ANDROIDX_NAVIGATION_3__]"
+lifecycleViewmodelNav3 = "[__SCAFFOLD_VERSION_ANDROIDX_LIFECYCLE_NAVIGATION_3__]"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }

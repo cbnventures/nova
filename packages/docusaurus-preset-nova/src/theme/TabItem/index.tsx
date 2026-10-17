@@ -17,6 +17,8 @@ import type {
  *
  * @param {Theme_TabItem_Index_TabItem_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function TabItem(props: Theme_TabItem_Index_TabItem_Props) {

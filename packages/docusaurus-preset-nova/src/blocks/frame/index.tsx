@@ -12,6 +12,8 @@ import type {
  *
  * @param {Blocks_Frame_Index_BlocksFrame_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.18.0
  */
 function BlocksFrame(props: Blocks_Frame_Index_BlocksFrame_Props): Blocks_Frame_Index_BlocksFrame_Returns {

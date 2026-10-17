@@ -11,6 +11,7 @@ import { join } from 'node:path';
 import prompts from 'prompts';
 import {
   afterAll,
+  beforeEach,
   describe,
   it,
   vi,
@@ -32,6 +33,10 @@ import type {
   Tests_Cli_Utility_Configure_CliUtilityConfigureRun_SetsExitCodeWhenNotAtProjectRoot_ProjectDirectory,
   Tests_Cli_Utility_Configure_CliUtilityConfigureRun_TemporaryDirectory,
   Tests_Cli_Utility_Configure_CliUtilityConfigureRun_TemporaryPrefix,
+  Tests_Cli_Utility_Configure_ConfigFieldCoverage,
+  Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Config,
+  Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_PromptAgents,
+  Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Result,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_AddsAGlobalSecretValue_Config,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_AddsAGlobalSecretValue_GlobalVariables,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_AddsAGlobalSecretValue_Next,
@@ -61,6 +66,52 @@ import type {
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Next,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_PromptEnvironment,
   Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_Responses,
+  Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_CapturedQuestions,
+  Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_CategoryChoices,
+  Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_CategoryQuestion,
+  Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Config,
+  Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_ConfiguredChoices,
+  Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Next,
+  Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_PromptFlow,
+  Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Question,
+  Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Result,
+  Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Values,
+  Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Config,
+  Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Github,
+  Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_GithubRecipes,
+  Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Next,
+  Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_PromptGithub,
+  Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Recipes,
+  Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Responses,
+  Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Result,
+  Tests_Cli_Utility_Configure_PromptGitHubActions_EditsEveryActionsField_Config,
+  Tests_Cli_Utility_Configure_PromptGitHubActions_EditsEveryActionsField_PromptGithubActions,
+  Tests_Cli_Utility_Configure_PromptGitHubActions_EditsEveryActionsField_Result,
+  Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Config,
+  Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Github,
+  Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Next,
+  Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_PromptGithubLabels,
+  Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Responses,
+  Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Result,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_Config,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PoliciesResult,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubPolicies,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubRulesets,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubSecurity,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_RulesetsResult,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_SecurityResult,
+  Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Config,
+  Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Next,
+  Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_PromptIgnoreFiles,
+  Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Responses,
+  Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Result,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Config,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_GithubRecipes,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Next,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_PromptRecipes,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Recipes,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Responses,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Result,
   Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_ChangelogContent,
   Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_ChangelogPath,
   Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Config,
@@ -117,6 +168,328 @@ vi.mock('prompts', () => {
   return {
     default: vi.fn(),
   };
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Config Field Coverage.
+ *
+ * Assigns every config field to the configure editor that owns it. The mapped
+ * type makes additions to Shared_NovaConfig fail the test type-check until this
+ * contract and the corresponding editor are updated.
+ *
+ * @since 0.32.0
+ */
+const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
+  project: {
+    name: {
+      slug: 'promptProject',
+      title: 'promptProject',
+    },
+    description: {
+      short: 'promptProject',
+      long: 'promptProject',
+    },
+    keywords: { $item: 'promptProject' },
+    legalName: 'promptProject',
+    pronouns: 'promptProject',
+    platforms: { $item: 'promptProject' },
+    startingYear: 'promptProject',
+    license: 'promptProject',
+  },
+  entities: {
+    $item: {
+      name: 'promptEntities',
+      email: 'promptEntities',
+      url: 'promptEntities',
+      roles: { $item: 'promptEntities' },
+    },
+  },
+  emails: {
+    bugs: 'promptEmails',
+  },
+  github: {
+    owner: 'promptGithub',
+    repo: 'promptGithub',
+    topics: { $item: 'promptGithub' },
+    features: {
+      issues: 'promptGithub',
+      wiki: 'promptGithub',
+      projects: 'promptGithub',
+      discussions: 'promptGithub',
+      sponsorships: 'promptGithub',
+    },
+    policies: {
+      visibility: 'promptGithubPolicies',
+      defaultBranch: 'promptGithubPolicies',
+      mergeMethods: {
+        merge: 'promptGithubPolicies',
+        squash: 'promptGithubPolicies',
+        rebase: 'promptGithubPolicies',
+      },
+      mergeCommit: {
+        title: 'promptGithubPolicies',
+        message: 'promptGithubPolicies',
+      },
+      squashMerge: {
+        title: 'promptGithubPolicies',
+        message: 'promptGithubPolicies',
+      },
+      autoDeleteHeadBranch: 'promptGithubPolicies',
+      autoMerge: 'promptGithubPolicies',
+      allowUpdateBranch: 'promptGithubPolicies',
+      webCommitSignoffRequired: 'promptGithubPolicies',
+    },
+    security: {
+      vulnerabilityAlerts: 'promptGithubSecurity',
+      dependabotSecurityUpdates: 'promptGithubSecurity',
+      secretScanning: 'promptGithubSecurity',
+      pushProtection: 'promptGithubSecurity',
+    },
+    rulesets: {
+      defaultBranch: {
+        enforcement: 'promptGithubRulesets',
+        blockDeletions: 'promptGithubRulesets',
+        blockForcePushes: 'promptGithubRulesets',
+        requireLinearHistory: 'promptGithubRulesets',
+        requireSignedCommits: 'promptGithubRulesets',
+        requirePullRequest: 'promptGithubRulesets',
+        allowedMergeMethods: { $item: 'promptGithubRulesets' },
+        dismissStaleReviews: 'promptGithubRulesets',
+        requireCodeOwnerReview: 'promptGithubRulesets',
+        requireLastPushApproval: 'promptGithubRulesets',
+        requiredApprovals: 'promptGithubRulesets',
+        requireConversationResolution: 'promptGithubRulesets',
+        requiredStatusChecks: { $item: 'promptGithubRulesets' },
+        requireBranchesToBeUpToDate: 'promptGithubRulesets',
+      },
+    },
+    actions: {
+      enabled: 'promptGithubActions',
+      allowedActions: 'promptGithubActions',
+      shaPinningRequired: 'promptGithubActions',
+      selectedActions: {
+        githubOwned: 'promptGithubActions',
+        verified: 'promptGithubActions',
+        patterns: { $item: 'promptGithubActions' },
+      },
+      defaultWorkflowPermissions: 'promptGithubActions',
+      canApprovePullRequestReviews: 'promptGithubActions',
+      artifactRetentionDays: 'promptGithubActions',
+    },
+    labels: {
+      $item: {
+        name: 'promptGithubLabels',
+        color: 'promptGithubLabels',
+        description: 'promptGithubLabels',
+      },
+    },
+    issueTemplate: {
+      bugReportFields: { $item: 'promptGithub' },
+    },
+  },
+  workflows: {
+    $item: {
+      template: 'promptWorkflowsForm',
+      name: 'promptWorkflowsForm',
+      triggers: {
+        $item: {
+          name: 'promptWorkflowsForm',
+          branches: { $item: 'promptWorkflowsForm' },
+          paths: { $item: 'promptWorkflowsForm' },
+          tags: { $item: 'promptWorkflowsForm' },
+          workflows: { $item: 'promptWorkflowsForm' },
+        },
+      },
+      build: { $item: 'promptWorkflowsForm' },
+      deploy: {
+        $item: {
+          to: 'promptWorkflowsForm',
+          path: 'promptWorkflowsForm',
+          after: { $item: 'promptWorkflowsForm' },
+          with: { $entry: 'promptWorkflowsForm' },
+        },
+      },
+      with: { $entry: 'promptWorkflowsForm' },
+    },
+  },
+  urls: {
+    homepage: 'promptUrls',
+    repository: 'promptUrls',
+    bugs: 'promptUrls',
+    license: 'promptUrls',
+    logo: 'promptUrls',
+    docker: 'promptUrls',
+    documentation: 'promptUrls',
+    npm: 'promptUrls',
+    fundSources: { $item: 'promptUrls' },
+    privacyPolicy: 'promptUrls',
+    termsOfUse: 'promptUrls',
+  },
+  readme: {
+    badges: { $item: 'promptReadMe' },
+  },
+  workspaces: {
+    $entry: {
+      name: 'promptWorkspacesForm',
+      role: 'promptWorkspacesForm',
+      policy: 'promptWorkspacesForm',
+    },
+  },
+  ignoreFiles: {
+    $entry: {
+      bundles: { $item: 'promptIgnoreFileBundles' },
+      patterns: { $item: 'promptGitignore' },
+    },
+  },
+  agents: { $item: 'promptAgents' },
+  recipes: {
+    'github': {
+      'sync-actions': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+      'sync-features': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+      'sync-identity': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+      'sync-labels': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+      'sync-policies': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+      'sync-rulesets': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+      'sync-security': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+    },
+    'license': {
+      'update-copyright': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+    },
+    'read-me': {
+      'update-badges': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+      'update-credits': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+      'update-documentation': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+      'update-header': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+      'update-introduction': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
+      },
+    },
+    'package-json': {
+      $entry: {
+        'cleanup': {
+          enabled: 'promptRecipeEntries',
+          settings: { $entry: 'promptRecipeEntries' },
+        },
+        'normalize-artifacts': {
+          enabled: 'promptRecipeEntries',
+          settings: { $entry: 'promptRecipeEntries' },
+        },
+        'normalize-bundler': {
+          enabled: 'promptRecipeEntries',
+          settings: { $entry: 'promptRecipeEntries' },
+        },
+        'normalize-dependencies': {
+          enabled: 'promptRecipeEntries',
+          settings: { $entry: 'promptRecipeEntries' },
+        },
+        'normalize-modules': {
+          enabled: 'promptRecipeEntries',
+          settings: { $entry: 'promptRecipeEntries' },
+        },
+        'normalize-tooling': {
+          enabled: 'promptRecipeEntries',
+          settings: { $entry: 'promptRecipeEntries' },
+        },
+        'sync-environment': {
+          enabled: 'promptRecipeEntries',
+          settings: { $entry: 'promptRecipeEntries' },
+        },
+        'sync-identity': {
+          enabled: 'promptRecipeEntries',
+          settings: { $entry: 'promptRecipeEntries' },
+        },
+        'sync-ownership': {
+          enabled: 'promptRecipeEntries',
+          settings: { $entry: 'promptRecipeEntries' },
+        },
+      },
+    },
+  },
+  environment: {
+    project: {
+      prefix: 'promptEnvironmentProject',
+      variables: {
+        $item: {
+          key: 'promptEnvironmentValueForm',
+          reach: 'promptEnvironmentValueForm',
+          secret: 'promptEnvironmentValueForm',
+          defaultValue: 'promptEnvironmentValueForm',
+        },
+      },
+    },
+    workspaces: {
+      $entry: {
+        prefix: 'promptEnvironmentWorkspace',
+        variables: {
+          $item: {
+            key: 'promptEnvironmentValueForm',
+            reach: 'promptEnvironmentValueForm',
+            secret: 'promptEnvironmentValueForm',
+            defaultValue: 'promptEnvironmentValueForm',
+          },
+        },
+      },
+    },
+    workflows: {
+      $entry: {
+        prefix: 'promptEnvironmentWorkflow',
+      },
+    },
+  },
+  settings: {
+    lockStepVersioning: 'promptSettings',
+    runWorkspaces: {
+      cache: {
+        directory: 'promptSettings',
+        enabled: 'promptSettings',
+        scripts: { $item: 'promptSettings' },
+      },
+    },
+    versionStrategy: 'promptSettings',
+  },
+};
+
+beforeEach(() => {
+  vi.mocked(prompts).mockReset();
+
+  return;
 });
 
 /**
@@ -423,7 +796,7 @@ describe('standalone environment status', () => {
       secrets: [],
     });
 
-    vi.mocked(prompts).mockClear();
+    vi.mocked(prompts).mockResolvedValue({ lockStepVersioning: true });
 
     await CliUtilityConfigure.run({ status: true });
 
@@ -567,6 +940,591 @@ describe('read local filled keys', () => {
 });
 
 /**
+ * Tests - CLI - Utility - Configure - Prompt Flow.
+ *
+ * @since 0.32.0
+ */
+describe('prompt flow', () => {
+  it('exposes every top-level config category', async () => {
+    const capturedQuestions: Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_CapturedQuestions = [];
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      const question: Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Question = (Array.isArray(questions) === true) ? questions[0] as Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Question : questions;
+
+      capturedQuestions.push(question);
+
+      const next: Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Next = { action: 'cancel' };
+
+      return Promise.resolve(next);
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Config = {};
+    const promptFlow: Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_PromptFlow = Reflect.get(CliUtilityConfigure, 'promptFlow') as Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_PromptFlow;
+    const result: Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Result = await promptFlow(config);
+    const categoryQuestion: Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_CategoryQuestion = capturedQuestions[0];
+
+    ok(categoryQuestion !== undefined);
+
+    const configuredChoices: Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_ConfiguredChoices = categoryQuestion['choices'];
+    const categoryChoices: Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_CategoryChoices = (Array.isArray(configuredChoices) === true) ? configuredChoices : [];
+    const values: Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Values = categoryChoices.map((choice) => {
+      if (
+        typeof choice === 'object'
+        && choice !== null
+        && 'value' in choice
+      ) {
+        return choice.value;
+      }
+
+      return undefined;
+    });
+
+    strictEqual(result, 'cancel');
+    deepStrictEqual(values, [
+      'project',
+      'entities',
+      'emails',
+      'github',
+      'workflows',
+      'urls',
+      'readme',
+      'workspaces',
+      'ignoreFiles',
+      'agents',
+      'recipes',
+      'environment',
+      'settings',
+      'save',
+      'cancel',
+    ]);
+    deepStrictEqual(Object.keys(configFieldCoverage), values.slice(0, -2));
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt GitHub.
+ *
+ * @since 0.32.0
+ */
+describe('prompt GitHub', () => {
+  it('edits every basic GitHub field without dropping focused sections', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Responses = [
+      { githubOwner: 'new-owner' },
+      { githubRepo: 'new-repository' },
+      {
+        githubRecipeSyncActions: true,
+        githubRecipeSyncFeatures: true,
+        githubRecipeSyncIdentity: true,
+        githubRecipeSyncLabels: true,
+        githubRecipeSyncPolicies: true,
+        githubRecipeSyncRulesets: true,
+        githubRecipeSyncSecurity: true,
+      },
+      { githubTopics: 'nova, tooling' },
+      {
+        githubFeaturesIssues: true,
+        githubFeaturesWiki: false,
+        githubFeaturesProjects: true,
+        githubFeaturesDiscussions: false,
+        githubFeaturesSponsorships: true,
+      },
+      { githubPoliciesVisibility: 'public' },
+      { githubPoliciesDefaultBranch: 'main' },
+      {
+        githubPoliciesMergeMethodsMerge: false,
+        githubPoliciesMergeMethodsSquash: true,
+        githubPoliciesMergeMethodsRebase: false,
+      },
+      { githubPoliciesAutoDeleteHeadBranch: true },
+      {
+        bugReportFields: [
+          'nodejs',
+          'screenshots',
+        ],
+      },
+    ];
+
+    vi.mocked(prompts).mockImplementation(() => {
+      const next: Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Config = {
+      github: {
+        owner: 'old-owner',
+        repo: 'old-repository',
+        topics: ['old'],
+        policies: {
+          defaultBranch: 'develop',
+          mergeCommit: {
+            title: 'pull-request-title',
+          },
+          autoMerge: true,
+        },
+        actions: {
+          enabled: true,
+        },
+        labels: [{
+          name: 'bug',
+          color: 'ff0000',
+        }],
+        rulesets: {
+          defaultBranch: {
+            enforcement: 'active',
+          },
+        },
+        security: {
+          vulnerabilityAlerts: true,
+        },
+      },
+      recipes: {
+        github: {
+          'sync-labels': {
+            enabled: false,
+            settings: {
+              includeArchived: true,
+            },
+          },
+        },
+      },
+    };
+    const promptGithub: Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_PromptGithub = Reflect.get(CliUtilityConfigure, 'promptGithub') as Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_PromptGithub;
+    const result: Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Result = await promptGithub(config);
+    const github: Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Github = config['github'];
+    const recipes: Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Recipes = config['recipes'];
+
+    strictEqual(result, 'back');
+    ok(github !== undefined);
+    ok(recipes !== undefined);
+    const githubRecipes: Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_GithubRecipes = recipes['github'];
+
+    ok(githubRecipes !== undefined);
+    deepStrictEqual(github, {
+      owner: 'new-owner',
+      repo: 'new-repository',
+      topics: [
+        'nova',
+        'tooling',
+      ],
+      features: {
+        issues: true,
+        wiki: false,
+        projects: true,
+        discussions: false,
+        sponsorships: true,
+      },
+      policies: {
+        visibility: 'public',
+        defaultBranch: 'main',
+        mergeMethods: {
+          merge: false,
+          squash: true,
+          rebase: false,
+        },
+        mergeCommit: {
+          title: 'pull-request-title',
+        },
+        autoDeleteHeadBranch: true,
+        autoMerge: true,
+      },
+      security: {
+        vulnerabilityAlerts: true,
+      },
+      rulesets: {
+        defaultBranch: {
+          enforcement: 'active',
+        },
+      },
+      actions: {
+        enabled: true,
+      },
+      labels: [{
+        name: 'bug',
+        color: 'ff0000',
+      }],
+      issueTemplate: {
+        bugReportFields: [
+          'nodejs',
+          'screenshots',
+        ],
+      },
+    });
+    deepStrictEqual(githubRecipes['sync-actions'], { enabled: true });
+    deepStrictEqual(githubRecipes['sync-labels'], {
+      enabled: true,
+      settings: {
+        includeArchived: true,
+      },
+    });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Agents.
+ *
+ * @since 0.32.0
+ */
+describe('prompt agents', () => {
+  it('removes the optional field when no tools are selected', async () => {
+    vi.mocked(prompts).mockResolvedValue({ agents: [] });
+
+    const config: Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Config = {
+      agents: [
+        'claude-code',
+        'codex',
+      ],
+    };
+    const promptAgents: Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_PromptAgents = Reflect.get(CliUtilityConfigure, 'promptAgents') as Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_PromptAgents;
+    const result: Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Result = await promptAgents(config);
+
+    strictEqual(result, 'back');
+    strictEqual('agents' in config, false);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt GitHub Actions.
+ *
+ * @since 0.32.0
+ */
+describe('prompt GitHub actions', () => {
+  it('edits every actions field', async () => {
+    vi.mocked(prompts).mockResolvedValue({
+      enabled: true,
+      allowedActions: 'selected',
+      shaPinningRequired: true,
+      selectedActionsGithubOwned: true,
+      selectedActionsVerified: false,
+      selectedActionsPatterns: 'example/action@*, another/action@*',
+      defaultWorkflowPermissions: 'read',
+      canApprovePullRequestReviews: false,
+      artifactRetentionDays: '14',
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptGitHubActions_EditsEveryActionsField_Config = {
+      github: {
+        owner: 'example',
+      },
+    };
+    const promptGithubActions: Tests_Cli_Utility_Configure_PromptGitHubActions_EditsEveryActionsField_PromptGithubActions = Reflect.get(CliUtilityConfigure, 'promptGithubActions') as Tests_Cli_Utility_Configure_PromptGitHubActions_EditsEveryActionsField_PromptGithubActions;
+    const result: Tests_Cli_Utility_Configure_PromptGitHubActions_EditsEveryActionsField_Result = await promptGithubActions(config);
+
+    strictEqual(result, 'back');
+    deepStrictEqual(config['github'], {
+      owner: 'example',
+      actions: {
+        enabled: true,
+        allowedActions: 'selected',
+        shaPinningRequired: true,
+        selectedActions: {
+          githubOwned: true,
+          verified: false,
+          patterns: [
+            'example/action@*',
+            'another/action@*',
+          ],
+        },
+        defaultWorkflowPermissions: 'read',
+        canApprovePullRequestReviews: false,
+        artifactRetentionDays: 14,
+      },
+    });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt GitHub Labels.
+ *
+ * @since 0.32.0
+ */
+describe('prompt GitHub labels', () => {
+  it('reorders labels', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Responses = [
+      { action: 'move-down:0' },
+      { action: 'back' },
+    ];
+
+    vi.mocked(prompts).mockImplementation(() => {
+      const next: Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Config = {
+      github: {
+        labels: [
+          {
+            name: 'first',
+            color: '111111',
+          },
+          {
+            name: 'second',
+            color: '222222',
+          },
+        ],
+      },
+    };
+    const promptGithubLabels: Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_PromptGithubLabels = Reflect.get(CliUtilityConfigure, 'promptGithubLabels') as Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_PromptGithubLabels;
+    const result: Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Result = await promptGithubLabels(config);
+    const github: Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Github = config['github'];
+
+    strictEqual(result, 'back');
+    ok(github !== undefined);
+    deepStrictEqual(github['labels'], [
+      {
+        name: 'second',
+        color: '222222',
+      },
+      {
+        name: 'first',
+        color: '111111',
+      },
+    ]);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt GitHub Repository Contracts.
+ *
+ * @since 0.32.0
+ */
+describe('prompt GitHub repository contracts', () => {
+  it('edits every policy, ruleset, and security field', async () => {
+    vi.mocked(prompts)
+      .mockResolvedValueOnce({
+        visibility: 'private',
+        defaultBranch: 'develop',
+        merge: true,
+        squash: false,
+        rebase: true,
+        mergeCommitTitle: 'merge-message',
+        mergeCommitMessage: 'pull-request-title',
+        squashMergeTitle: 'commit-or-pull-request-title',
+        squashMergeMessage: 'commit-messages',
+        autoDeleteHeadBranch: true,
+        autoMerge: false,
+        allowUpdateBranch: true,
+        webCommitSignoffRequired: false,
+      })
+      .mockResolvedValueOnce({
+        enforcement: 'active',
+        blockDeletions: true,
+        blockForcePushes: false,
+        requireLinearHistory: true,
+        requireSignedCommits: false,
+        requirePullRequest: true,
+        allowedMergeMethods: [
+          'squash',
+          'rebase',
+        ],
+        dismissStaleReviews: true,
+        requireCodeOwnerReview: false,
+        requireLastPushApproval: true,
+        requiredApprovals: '2',
+        requireConversationResolution: true,
+        requiredStatusChecks: 'check, build',
+        requireBranchesToBeUpToDate: false,
+      })
+      .mockResolvedValueOnce({
+        vulnerabilityAlerts: true,
+        dependabotSecurityUpdates: false,
+        secretScanning: true,
+        pushProtection: false,
+      });
+
+    const config: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_Config = {
+      github: {
+        owner: 'example',
+      },
+    };
+    const promptGithubPolicies: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubPolicies = Reflect.get(CliUtilityConfigure, 'promptGithubPolicies') as Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubPolicies;
+    const promptGithubRulesets: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubRulesets = Reflect.get(CliUtilityConfigure, 'promptGithubRulesets') as Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubRulesets;
+    const promptGithubSecurity: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubSecurity = Reflect.get(CliUtilityConfigure, 'promptGithubSecurity') as Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubSecurity;
+    const policiesResult: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PoliciesResult = await promptGithubPolicies(config);
+    const rulesetsResult: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_RulesetsResult = await promptGithubRulesets(config);
+    const securityResult: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_SecurityResult = await promptGithubSecurity(config);
+
+    strictEqual(policiesResult, 'back');
+    strictEqual(rulesetsResult, 'back');
+    strictEqual(securityResult, 'back');
+    deepStrictEqual(config['github'], {
+      owner: 'example',
+      policies: {
+        visibility: 'private',
+        defaultBranch: 'develop',
+        mergeMethods: {
+          merge: true,
+          squash: false,
+          rebase: true,
+        },
+        mergeCommit: {
+          title: 'merge-message',
+          message: 'pull-request-title',
+        },
+        squashMerge: {
+          title: 'commit-or-pull-request-title',
+          message: 'commit-messages',
+        },
+        autoDeleteHeadBranch: true,
+        autoMerge: false,
+        allowUpdateBranch: true,
+        webCommitSignoffRequired: false,
+      },
+      rulesets: {
+        defaultBranch: {
+          enforcement: 'active',
+          blockDeletions: true,
+          blockForcePushes: false,
+          requireLinearHistory: true,
+          requireSignedCommits: false,
+          requirePullRequest: true,
+          allowedMergeMethods: [
+            'squash',
+            'rebase',
+          ],
+          dismissStaleReviews: true,
+          requireCodeOwnerReview: false,
+          requireLastPushApproval: true,
+          requiredApprovals: 2,
+          requireConversationResolution: true,
+          requiredStatusChecks: [
+            'check',
+            'build',
+          ],
+          requireBranchesToBeUpToDate: false,
+        },
+      },
+      security: {
+        vulnerabilityAlerts: true,
+        dependabotSecurityUpdates: false,
+        secretScanning: true,
+        pushProtection: false,
+      },
+    });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Ignore Files.
+ *
+ * @since 0.32.0
+ */
+describe('prompt ignore files', () => {
+  it('adds bundles and patterns for a physical ignore file', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Responses = [
+      { action: 'add' },
+      { path: './containers/.dockerignore' },
+      { bundles: ['nova'] },
+      { action: 'patterns:./containers/.dockerignore' },
+      { action: { kind: 'add' } },
+      { pattern: 'tmp/' },
+      { action: { kind: 'back' } },
+      { action: 'back' },
+    ];
+
+    vi.mocked(prompts).mockImplementation(() => {
+      const next: Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Config = {};
+    const promptIgnoreFiles: Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_PromptIgnoreFiles = Reflect.get(CliUtilityConfigure, 'promptIgnoreFiles') as Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_PromptIgnoreFiles;
+    const result: Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Result = await promptIgnoreFiles(config);
+
+    strictEqual(result, 'back');
+    deepStrictEqual(config['ignoreFiles'], {
+      './containers/.dockerignore': {
+        bundles: ['nova'],
+        patterns: ['tmp/'],
+      },
+    });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Recipes.
+ *
+ * @since 0.32.0
+ */
+describe('prompt recipes', () => {
+  it('edits recipe settings without dropping other categories', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Responses = [
+      { target: 'github' },
+      { enabledRecipes: ['sync-labels'] },
+      { settingsRecipes: ['sync-labels'] },
+      { recipeSettings: '{"includeArchived":true}' },
+      { target: 'back' },
+    ];
+
+    vi.mocked(prompts).mockImplementation(() => {
+      const next: Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Config = {
+      recipes: {
+        license: {
+          'update-copyright': { enabled: true },
+        },
+      },
+    };
+    const promptRecipes: Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_PromptRecipes = Reflect.get(CliUtilityConfigure, 'promptRecipes') as Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_PromptRecipes;
+    const result: Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Result = await promptRecipes(config);
+    const recipes: Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Recipes = config['recipes'];
+
+    strictEqual(result, 'back');
+    ok(recipes !== undefined);
+    deepStrictEqual(recipes['license'], {
+      'update-copyright': { enabled: true },
+    });
+    const githubRecipes: Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_GithubRecipes = recipes['github'];
+
+    ok(githubRecipes !== undefined);
+    deepStrictEqual(githubRecipes['sync-labels'], {
+      enabled: true,
+      settings: {
+        includeArchived: true,
+      },
+    });
+
+    return;
+  });
+
+  return;
+});
+
+/**
  * Tests - CLI - Utility - Configure - Prompt Settings.
  *
  * @since 0.26.0
@@ -603,14 +1561,32 @@ describe('prompt settings', () => {
     const cwdSpy: Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_CwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(sandboxRoot);
     const promptSettings: Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_PromptSettings = Reflect.get(CliUtilityConfigure, 'promptSettings') as Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_PromptSettings;
 
-    vi.mocked(prompts).mockClear();
+    vi.mocked(prompts)
+      .mockResolvedValueOnce({ lockStepVersioning: true })
+      .mockResolvedValueOnce({ cacheEnabled: true })
+      .mockResolvedValueOnce({ cacheDirectory: './node_modules/.cache/nova/run-workspaces' })
+      .mockResolvedValueOnce({ cacheScripts: 'build, check' });
 
     const result: Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Result = await promptSettings(config);
 
     cwdSpy.mockRestore();
 
     strictEqual(result, 'back');
-    strictEqual(vi.mocked(prompts).mock.calls.length, 0);
+    strictEqual(vi.mocked(prompts).mock.calls.length, 4);
+    deepStrictEqual(config['settings'], {
+      lockStepVersioning: true,
+      runWorkspaces: {
+        cache: {
+          directory: './node_modules/.cache/nova/run-workspaces',
+          enabled: true,
+          scripts: [
+            'build',
+            'check',
+          ],
+        },
+      },
+      versionStrategy: 'calver',
+    });
 
     await rm(sandboxRoot, {
       recursive: true,
@@ -648,12 +1624,26 @@ describe('prompt workflows', () => {
           triggers: ['release'],
         },
         {
-          template: 'publish',
+          template: 'zz-custom-publish',
           name: 'preset',
           triggers: [{
             name: 'workflow-run-success',
             workflows: ['publish-core'],
+            branches: ['main'],
+            paths: ['packages/preset/**'],
           }],
+          build: ['./packages/preset'],
+          deploy: [{
+            to: 'custom-target',
+            path: './packages/preset',
+            after: ['./packages/core'],
+            with: {
+              channel: 'stable',
+            },
+          }],
+          with: {
+            CUSTOM_TOKEN: 'CUSTOM_TOKEN',
+          },
         },
       ],
     };
@@ -668,12 +1658,26 @@ describe('prompt workflows', () => {
         triggers: ['release'],
       },
       {
-        template: 'publish',
+        template: 'zz-custom-publish',
         name: 'preset',
         triggers: [{
           name: 'workflow-run-success',
           workflows: ['publish-core'],
+          branches: ['main'],
+          paths: ['packages/preset/**'],
         }],
+        build: ['./packages/preset'],
+        deploy: [{
+          to: 'custom-target',
+          path: './packages/preset',
+          after: ['./packages/core'],
+          with: {
+            channel: 'stable',
+          },
+        }],
+        with: {
+          CUSTOM_TOKEN: 'CUSTOM_TOKEN',
+        },
       },
     ], 'Expected configure to keep object-form workflow-run triggers and their upstream references');
 

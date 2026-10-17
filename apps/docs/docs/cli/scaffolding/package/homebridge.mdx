@@ -26,6 +26,7 @@ Scaffold a **Homebridge dynamic-platform plugin** with the required registration
 2. Declares compatibility with Homebridge 1.11 and 2.x while using the current Homebridge types during development.
 3. Applies Nova's Homebridge TSConfig preset and npm package-name convention so framework and publication requirements stay aligned.
 4. Optionally adds the official Config UI X custom frontend and backend layout while keeping schema-rendered settings as the default.
+5. Includes built REPL and API-test starter commands with fixed-width Nova headers for local plugin development.
 
 ## Requirements
 
@@ -75,15 +76,29 @@ Scaffold a **Homebridge dynamic-platform plugin** with the required registration
 
 ## Output Files
 
-| File                   | Description                                                      |
-|------------------------|------------------------------------------------------------------|
-| `config.schema.json`   | Basic Homebridge Config UI schema and generated plugin alias.    |
-| `src/index.ts`         | Homebridge registration entry point.                             |
-| `src/platform.ts`      | Dynamic platform class with cached-accessory restoration.        |
-| `tsconfig.source.json` | Nova strict, Node.js, and Homebridge preset composition.         |
-| `package.json`         | Homebridge metadata, engine ranges, keywords, and local scripts. |
+| File                   | Description                                                                 |
+|------------------------|-----------------------------------------------------------------------------|
+| `bin/`                 | Stable launchers for the installed REPL and API-test commands.              |
+| `config.schema.json`   | Basic Homebridge Config UI schema and generated plugin alias.               |
+| `src/cli/`             | REPL, config-aware API-test starter, and shared CLI presentation.           |
+| `src/index.ts`         | Homebridge registration entry point.                                        |
+| `src/platform.ts`      | Dynamic platform class with cached-accessory restoration.                   |
+| `tsconfig.source.json` | Nova strict, Node.js, and Homebridge preset composition.                    |
+| `package.json`         | Homebridge metadata, executable mappings, engine ranges, and local scripts. |
 
 With `--custom-ui`, Nova also writes `src/config-ui/server.ts` and `homebridge-ui/public/`. The browser entry is an embeddable fragment rather than a competing HTML document, and it uses the Bootstrap styles injected by Homebridge instead of bundling another theme. Its responsive tabs introduce the generated plugin and demonstrate practical input, choice, and component patterns. A dedicated **Open Homebridge Configuration** action replaces the gallery with Homebridge's native schema form and a single return action, keeping the native and custom interfaces visually separate. The examples remain interactive without writing demonstration values into the user's configuration. The build copies those browser assets into `build/config-ui/public`, matching the `customUiPath` written to `config.schema.json`.
+
+## Local Utility Commands
+
+Build the plugin before running either compiled utility:
+
+```bash
+npm run build --workspace "homebridge-lights"
+npm run repl --workspace "homebridge-lights"
+npm run test-api --workspace "homebridge-lights" -- --config ~/.homebridge/config.json
+```
+
+The REPL exposes the generated platform class and package identifiers. The API-test starter validates that the selected Homebridge config contains the generated platform, then points to the source file where provider-specific requests belong. It deliberately does not invent an upstream API contract for the consumer.
 
 ## Non-Interactive Mode
 

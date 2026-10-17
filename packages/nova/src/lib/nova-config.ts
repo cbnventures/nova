@@ -4,6 +4,10 @@ import { join } from 'node:path';
 import { Logger } from '../toolkit/index.js';
 import { libEnvNamespace } from './env-namespace.js';
 import {
+  getSupportedIgnoreFileBundles,
+  isSupportedIgnoreFileConfigPath,
+} from './ignore-files.js';
+import {
   libItemAllowedAgents,
   libItemAllowedPoliciesByRole,
   libItemAllowedRoles,
@@ -187,7 +191,7 @@ import type {
   Lib_NovaConfig_Runner_Parse_Entities,
   Lib_NovaConfig_Runner_Parse_Environment,
   Lib_NovaConfig_Runner_Parse_Github,
-  Lib_NovaConfig_Runner_Parse_Gitignore,
+  Lib_NovaConfig_Runner_Parse_IgnoreFiles,
   Lib_NovaConfig_Runner_Parse_Project,
   Lib_NovaConfig_Runner_Parse_ReadMe,
   Lib_NovaConfig_Runner_Parse_Recipes,
@@ -212,6 +216,7 @@ import type {
   Lib_NovaConfig_Runner_ParseEntities_NameA,
   Lib_NovaConfig_Runner_ParseEntities_NameB,
   Lib_NovaConfig_Runner_ParseEntities_ParsedEntity,
+  Lib_NovaConfig_Runner_ParseEntities_ParsedEntityTypeGuard,
   Lib_NovaConfig_Runner_ParseEntities_ParsedRoles,
   Lib_NovaConfig_Runner_ParseEntities_Returns,
   Lib_NovaConfig_Runner_ParseEntities_Roles,
@@ -278,10 +283,18 @@ import type {
   Lib_NovaConfig_Runner_ParseGithub_Security,
   Lib_NovaConfig_Runner_ParseGithub_Topics,
   Lib_NovaConfig_Runner_ParseGithub_Value,
-  Lib_NovaConfig_Runner_ParseGitignore_ProjectExcludes,
-  Lib_NovaConfig_Runner_ParseGitignore_Result,
-  Lib_NovaConfig_Runner_ParseGitignore_Returns,
-  Lib_NovaConfig_Runner_ParseGitignore_Value,
+  Lib_NovaConfig_Runner_ParseIgnoreFiles_Bundles,
+  Lib_NovaConfig_Runner_ParseIgnoreFiles_ConfigPath,
+  Lib_NovaConfig_Runner_ParseIgnoreFiles_Entry,
+  Lib_NovaConfig_Runner_ParseIgnoreFiles_HasUnsupportedBundle,
+  Lib_NovaConfig_Runner_ParseIgnoreFiles_Patterns,
+  Lib_NovaConfig_Runner_ParseIgnoreFiles_RawBundles,
+  Lib_NovaConfig_Runner_ParseIgnoreFiles_RawEntry,
+  Lib_NovaConfig_Runner_ParseIgnoreFiles_RawPatterns,
+  Lib_NovaConfig_Runner_ParseIgnoreFiles_Result,
+  Lib_NovaConfig_Runner_ParseIgnoreFiles_Returns,
+  Lib_NovaConfig_Runner_ParseIgnoreFiles_SupportedBundles,
+  Lib_NovaConfig_Runner_ParseIgnoreFiles_Value,
   Lib_NovaConfig_Runner_ParseProject_AllowedLicenses,
   Lib_NovaConfig_Runner_ParseProject_AllowedPlatforms,
   Lib_NovaConfig_Runner_ParseProject_Description,
@@ -289,7 +302,7 @@ import type {
   Lib_NovaConfig_Runner_ParseProject_Long,
   Lib_NovaConfig_Runner_ParseProject_Name,
   Lib_NovaConfig_Runner_ParseProject_ParsedPlatforms,
-  Lib_NovaConfig_Runner_ParseProject_Platform,
+  Lib_NovaConfig_Runner_ParseProject_PlatformTypeGuard,
   Lib_NovaConfig_Runner_ParseProject_Project,
   Lib_NovaConfig_Runner_ParseProject_Returns,
   Lib_NovaConfig_Runner_ParseProject_Short,
@@ -325,9 +338,17 @@ import type {
   Lib_NovaConfig_Runner_ParseRecipes_Result,
   Lib_NovaConfig_Runner_ParseRecipes_Returns,
   Lib_NovaConfig_Runner_ParseRecipes_Value,
+  Lib_NovaConfig_Runner_ParseSettings_Cache,
+  Lib_NovaConfig_Runner_ParseSettings_CacheDirectory,
+  Lib_NovaConfig_Runner_ParseSettings_CacheEnabled,
+  Lib_NovaConfig_Runner_ParseSettings_CacheScripts,
+  Lib_NovaConfig_Runner_ParseSettings_CacheScriptsValue,
+  Lib_NovaConfig_Runner_ParseSettings_CacheValue,
   Lib_NovaConfig_Runner_ParseSettings_LockStepVersioning,
   Lib_NovaConfig_Runner_ParseSettings_Result,
   Lib_NovaConfig_Runner_ParseSettings_Returns,
+  Lib_NovaConfig_Runner_ParseSettings_RunWorkspaces,
+  Lib_NovaConfig_Runner_ParseSettings_RunWorkspacesValue,
   Lib_NovaConfig_Runner_ParseSettings_Value,
   Lib_NovaConfig_Runner_ParseSettings_VersionStrategy,
   Lib_NovaConfig_Runner_ParseUrls_FundSources,
@@ -643,7 +664,7 @@ export class Runner {
       value['workspaces'],
       (project !== undefined && project['name'] !== undefined) ? project['name']['slug'] : undefined,
     );
-    const gitignore: Lib_NovaConfig_Runner_Parse_Gitignore = this.parseGitignore(value['gitignore']);
+    const ignoreFiles: Lib_NovaConfig_Runner_Parse_IgnoreFiles = this.parseIgnoreFiles(value['ignoreFiles']);
     const agents: Lib_NovaConfig_Runner_Parse_Agents = this.parseAgents(value['agents']);
     const recipes: Lib_NovaConfig_Runner_Parse_Recipes = this.parseRecipes(value['recipes']);
     const environment: Lib_NovaConfig_Runner_Parse_Environment = this.parseEnvironment(value['environment'], workspaces, workflows);
@@ -686,8 +707,8 @@ export class Runner {
       result.workspaces = workspaces;
     }
 
-    if (gitignore !== undefined) {
-      result.gitignore = gitignore;
+    if (ignoreFiles !== undefined) {
+      result.ignoreFiles = ignoreFiles;
     }
 
     if (agents !== undefined) {
@@ -870,7 +891,7 @@ export class Runner {
         'web',
       ]);
       const parsedPlatforms: Lib_NovaConfig_Runner_ParseProject_ParsedPlatforms = valuePlatforms
-        .filter((item): item is Lib_NovaConfig_Runner_ParseProject_Platform => typeof item === 'string' && allowedPlatforms.has(item));
+        .filter((item): item is Lib_NovaConfig_Runner_ParseProject_PlatformTypeGuard => typeof item === 'string' && allowedPlatforms.has(item));
 
       if (parsedPlatforms.length > 0) {
         project.platforms = parsedPlatforms;
@@ -1076,7 +1097,7 @@ export class Runner {
 
         return (Object.keys(parsedEntity).length > 0) ? parsedEntity : null;
       })
-      .filter((entity): entity is Lib_NovaConfig_Runner_ParseEntities_ParsedEntity => entity !== null);
+      .filter((entity): entity is Lib_NovaConfig_Runner_ParseEntities_ParsedEntityTypeGuard => entity !== null);
 
     if (entities.length === 0) {
       return undefined;
@@ -2356,30 +2377,86 @@ export class Runner {
   }
 
   /**
-   * Lib - Nova Config - Parse Gitignore.
+   * Lib - Nova Config - Parse Ignore Files.
    *
-   * Parses the gitignore block from the config, extracting the projectExcludes
-   * list of additional ignore patterns. Returns undefined when the block is absent
-   * or not a plain object.
+   * Validates path-keyed physical ignore files. Unsupported paths, bundles,
+   * and entry shapes are excluded from the returned configuration.
    *
-   * @param {Lib_NovaConfig_Runner_ParseGitignore_Value} value - Value.
+   * @param {Lib_NovaConfig_Runner_ParseIgnoreFiles_Value} value - Value.
    *
    * @private
    *
-   * @returns {Lib_NovaConfig_Runner_ParseGitignore_Returns}
+   * @returns {Lib_NovaConfig_Runner_ParseIgnoreFiles_Returns}
    *
-   * @since 0.20.0
+   * @since 0.32.0
    */
-  private parseGitignore(value: Lib_NovaConfig_Runner_ParseGitignore_Value): Lib_NovaConfig_Runner_ParseGitignore_Returns {
-    if (isPlainObject(value) === false) {
-      return undefined;
+  private parseIgnoreFiles(value: Lib_NovaConfig_Runner_ParseIgnoreFiles_Value): Lib_NovaConfig_Runner_ParseIgnoreFiles_Returns {
+    const result: Lib_NovaConfig_Runner_ParseIgnoreFiles_Result = {};
+
+    if (value !== undefined && isPlainObject(value) === false) {
+      this.pushError('Runner.parseIgnoreFiles', 'ignoreFiles', 'Ignore files must be an object keyed by project-relative file paths. Skipping ...');
     }
 
-    const result: Lib_NovaConfig_Runner_ParseGitignore_Result = {};
-    const projectExcludes: Lib_NovaConfig_Runner_ParseGitignore_ProjectExcludes = this.getArrayOfNonEmptyStrings(value['projectExcludes']);
+    if (isPlainObject(value) === true) {
+      for (const valueEntry of Object.entries(value)) {
+        const configPath: Lib_NovaConfig_Runner_ParseIgnoreFiles_ConfigPath = valueEntry[0];
+        const rawEntry: Lib_NovaConfig_Runner_ParseIgnoreFiles_RawEntry = valueEntry[1];
 
-    if (projectExcludes !== undefined) {
-      result.projectExcludes = projectExcludes;
+        if (isSupportedIgnoreFileConfigPath(configPath) === false) {
+          this.pushError('Runner.parseIgnoreFiles', 'ignoreFiles', `Ignore file path "${configPath}" must start with "./", stay inside the project, and target .gitignore, .dockerignore, or .assetsignore. Skipping ...`);
+
+          continue;
+        }
+
+        if (isPlainObject(rawEntry) === false) {
+          this.pushError('Runner.parseIgnoreFiles', 'ignoreFiles', `Ignore file "${configPath}" must contain an object. Skipping ...`);
+
+          continue;
+        }
+
+        const rawBundles: Lib_NovaConfig_Runner_ParseIgnoreFiles_RawBundles = rawEntry['bundles'];
+
+        if (Array.isArray(rawBundles) === false) {
+          this.pushError('Runner.parseIgnoreFiles', 'ignoreFiles', `Ignore file "${configPath}" must contain a bundles array. Skipping ...`);
+
+          continue;
+        }
+
+        const bundles: Lib_NovaConfig_Runner_ParseIgnoreFiles_Bundles = this.getArrayOfNonEmptyStrings(rawBundles) ?? [];
+        const supportedBundles: Lib_NovaConfig_Runner_ParseIgnoreFiles_SupportedBundles = getSupportedIgnoreFileBundles(configPath);
+        let hasUnsupportedBundle: Lib_NovaConfig_Runner_ParseIgnoreFiles_HasUnsupportedBundle = false;
+
+        for (const bundle of bundles) {
+          if (supportedBundles.includes(bundle) === false) {
+            this.pushError('Runner.parseIgnoreFiles', 'ignoreFiles', `Ignore bundle "${bundle}" is not supported for "${configPath}". Skipping ...`);
+
+            hasUnsupportedBundle = true;
+          }
+        }
+
+        if (hasUnsupportedBundle === true) {
+          continue;
+        }
+
+        const rawPatterns: Lib_NovaConfig_Runner_ParseIgnoreFiles_RawPatterns = rawEntry['patterns'];
+
+        if (rawPatterns !== undefined && Array.isArray(rawPatterns) === false) {
+          this.pushError('Runner.parseIgnoreFiles', 'ignoreFiles', `Ignore file "${configPath}" patterns must be an array. Skipping ...`);
+
+          continue;
+        }
+
+        const patterns: Lib_NovaConfig_Runner_ParseIgnoreFiles_Patterns = (rawPatterns === undefined) ? undefined : (this.getArrayOfNonEmptyStrings(rawPatterns) ?? []);
+        const entry: Lib_NovaConfig_Runner_ParseIgnoreFiles_Entry = {
+          bundles,
+        };
+
+        if (patterns !== undefined) {
+          entry.patterns = patterns;
+        }
+
+        Reflect.set(result, configPath, entry);
+      }
     }
 
     return (Object.keys(result).length > 0) ? result : undefined;
@@ -2406,10 +2483,47 @@ export class Runner {
 
     const result: Lib_NovaConfig_Runner_ParseSettings_Result = {};
     const lockStepVersioning: Lib_NovaConfig_Runner_ParseSettings_LockStepVersioning = (value['lockStepVersioning'] === true) ? true : undefined;
+    const runWorkspacesValue: Lib_NovaConfig_Runner_ParseSettings_RunWorkspacesValue = value['runWorkspaces'];
+    let runWorkspaces: Lib_NovaConfig_Runner_ParseSettings_RunWorkspaces = undefined;
+
+    if (isPlainObject(runWorkspacesValue) === true) {
+      const cacheValue: Lib_NovaConfig_Runner_ParseSettings_CacheValue = runWorkspacesValue['cache'];
+
+      if (isPlainObject(cacheValue) === true) {
+        const cache: Lib_NovaConfig_Runner_ParseSettings_Cache = {};
+        const cacheEnabled: Lib_NovaConfig_Runner_ParseSettings_CacheEnabled = (typeof cacheValue['enabled'] === 'boolean') ? cacheValue['enabled'] : undefined;
+        const cacheDirectory: Lib_NovaConfig_Runner_ParseSettings_CacheDirectory = (typeof cacheValue['directory'] === 'string' && cacheValue['directory'].trim().length > 0) ? cacheValue['directory'].trim() : undefined;
+        const cacheScriptsValue: Lib_NovaConfig_Runner_ParseSettings_CacheScriptsValue = cacheValue['scripts'];
+        const cacheScripts: Lib_NovaConfig_Runner_ParseSettings_CacheScripts = (Array.isArray(cacheScriptsValue) === true) ? this.getArrayOfNonEmptyStrings(cacheScriptsValue) : undefined;
+
+        if (cacheEnabled !== undefined) {
+          cache.enabled = cacheEnabled;
+        }
+
+        if (cacheDirectory !== undefined) {
+          cache.directory = cacheDirectory;
+        }
+
+        if (cacheScripts !== undefined && cacheScripts.length > 0) {
+          cache.scripts = cacheScripts;
+        }
+
+        if (Object.keys(cache).length > 0) {
+          runWorkspaces = {
+            cache,
+          };
+        }
+      }
+    }
+
     const versionStrategy: Lib_NovaConfig_Runner_ParseSettings_VersionStrategy = (value['versionStrategy'] === 'semver' || value['versionStrategy'] === 'calver') ? value['versionStrategy'] : undefined;
 
     if (lockStepVersioning !== undefined) {
       result.lockStepVersioning = lockStepVersioning;
+    }
+
+    if (runWorkspaces !== undefined) {
+      result.runWorkspaces = runWorkspaces;
     }
 
     if (versionStrategy !== undefined) {

@@ -14,12 +14,12 @@ import type {
   Tests_Cli_Index_CliRecipeReadMeUpdateHeaderJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldAppAndroidJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldAppAppleJs_MockedRunner,
-  Tests_Cli_Index_CliScaffoldAppCloudflareWorkersJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldAppExpressjsJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldAppNextjsJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldAppViteJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldDocsDocusaurusJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldStarterBaseJs_MockedRunner,
+  Tests_Cli_Index_CliScaffoldToolServerlessJs_MockedRunner,
   Tests_Cli_Index_NestedRecipeOptions_OriginalArgv,
   Tests_Cli_Index_NestedRecipeOptions_PassesDryRunAndReplaceFileToADirectLicenseRecipe_ExpectedOptions,
   Tests_Cli_Index_NestedRecipeOptions_PassesDryRunAndReplaceFileToADirectREADMERecipe_ExpectedOptions,
@@ -30,10 +30,10 @@ import type {
   Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveAndroidAnswers_ExpectedOptions,
   Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveAppleAnswers_ExpectedOptions,
   Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveBaseAnswers_ExpectedOptions,
-  Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveCloudflareWorkersAnswers_ExpectedOptions,
   Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveDocusaurusAnswers_ExpectedOptions,
   Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveExpressJsAnswers_ExpectedOptions,
   Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveNextJsAnswers_ExpectedOptions,
+  Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveServerlessToolAnswers_ExpectedOptions,
   Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveViteAnswers_ExpectedOptions,
 } from '../../types/tests/cli/index.test.d.ts';
 
@@ -52,12 +52,12 @@ const runnerMocks: Tests_Cli_Index_RunnerMocks = vi.hoisted(() => ({
   readMeUpdateHeaderRun: vi.fn(),
   scaffoldAppAndroidRun: vi.fn(),
   scaffoldAppAppleRun: vi.fn(),
-  scaffoldAppCloudflareWorkersRun: vi.fn(),
   scaffoldAppExpressjsRun: vi.fn(),
   scaffoldAppNextjsRun: vi.fn(),
   scaffoldAppViteRun: vi.fn(),
   scaffoldDocsDocusaurusRun: vi.fn(),
   scaffoldStarterBaseRun: vi.fn(),
+  scaffoldToolServerlessRun: vi.fn(),
 }));
 
 vi.mock('../../cli/recipe/github/sync-policies.js', () => {
@@ -108,14 +108,6 @@ vi.mock('../../cli/scaffold/app/apple.js', () => {
   return { Runner: mockedRunner };
 });
 
-vi.mock('../../cli/scaffold/app/cloudflare-workers.js', () => {
-  const mockedRunner: Tests_Cli_Index_CliScaffoldAppCloudflareWorkersJs_MockedRunner = {
-    run: runnerMocks['scaffoldAppCloudflareWorkersRun'],
-  };
-
-  return { Runner: mockedRunner };
-});
-
 vi.mock('../../cli/scaffold/app/expressjs.js', () => {
   const mockedRunner: Tests_Cli_Index_CliScaffoldAppExpressjsJs_MockedRunner = {
     run: runnerMocks['scaffoldAppExpressjsRun'],
@@ -143,6 +135,14 @@ vi.mock('../../cli/scaffold/app/nextjs.js', () => {
 vi.mock('../../cli/scaffold/docs/docusaurus.js', () => {
   const mockedRunner: Tests_Cli_Index_CliScaffoldDocsDocusaurusJs_MockedRunner = {
     run: runnerMocks['scaffoldDocsDocusaurusRun'],
+  };
+
+  return { Runner: mockedRunner };
+});
+
+vi.mock('../../cli/scaffold/tool/serverless.js', () => {
+  const mockedRunner: Tests_Cli_Index_CliScaffoldToolServerlessJs_MockedRunner = {
+    run: runnerMocks['scaffoldToolServerlessRun'],
   };
 
   return { Runner: mockedRunner };
@@ -315,6 +315,7 @@ describe('scaffold options', () => {
 
   it('passes complete non-interactive Apple answers', async () => {
     const expectedOptions: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveAppleAnswers_ExpectedOptions = {
+      bundleId: 'io.cbnventures.my-apple-app',
       name: 'my-apple-app',
       nonInteractive: true,
       output: './my-project',
@@ -328,6 +329,8 @@ describe('scaffold options', () => {
       'app',
       'apple',
       '--non-interactive',
+      '--bundle-id',
+      'io.cbnventures.my-apple-app',
       '--name',
       'my-apple-app',
       '--workspace-name',
@@ -490,40 +493,6 @@ describe('scaffold options', () => {
     return;
   });
 
-  it('passes complete non-interactive Cloudflare Workers answers', async () => {
-    const expectedOptions: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveCloudflareWorkersAnswers_ExpectedOptions = {
-      name: 'my-worker',
-      nonInteractive: true,
-      output: './my-project',
-      workspaceName: 'worker',
-    };
-
-    process.argv = [
-      'node',
-      'nova',
-      'scaffold',
-      'app',
-      'cloudflare-workers',
-      '--non-interactive',
-      '--name',
-      'my-worker',
-      '--workspace-name',
-      'worker',
-      '--output',
-      './my-project',
-    ];
-
-    await import('../../cli/index.js');
-
-    await vi.waitFor(() => {
-      expect(runnerMocks['scaffoldAppCloudflareWorkersRun']).toHaveBeenCalledWith(expectedOptions);
-
-      return;
-    });
-
-    return;
-  });
-
   it('passes complete non-interactive Docusaurus answers', async () => {
     const expectedOptions: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveDocusaurusAnswers_ExpectedOptions = {
       name: 'my-docs',
@@ -554,6 +523,43 @@ describe('scaffold options', () => {
 
     await vi.waitFor(() => {
       expect(runnerMocks['scaffoldDocsDocusaurusRun']).toHaveBeenCalledWith(expectedOptions);
+
+      return;
+    });
+
+    return;
+  });
+
+  it('passes complete non-interactive serverless tool answers', async () => {
+    const expectedOptions: Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveServerlessToolAnswers_ExpectedOptions = {
+      name: 'my-serverless-tool',
+      nonInteractive: true,
+      output: './my-project',
+      target: 'vercel-functions',
+      workspaceName: 'serverless',
+    };
+
+    process.argv = [
+      'node',
+      'nova',
+      'scaffold',
+      'tool',
+      'serverless',
+      '--non-interactive',
+      '--name',
+      'my-serverless-tool',
+      '--workspace-name',
+      'serverless',
+      '--output',
+      './my-project',
+      '--target',
+      'vercel-functions',
+    ];
+
+    await import('../../cli/index.js');
+
+    await vi.waitFor(() => {
+      expect(runnerMocks['scaffoldToolServerlessRun']).toHaveBeenCalledWith(expectedOptions);
 
       return;
     });

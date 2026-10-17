@@ -1,4 +1,5 @@
 import { LIB_REGEX_PLACEHOLDER_HOMEBRIDGE_CUSTOM_UI } from '../../../lib/regex.js';
+import { getScaffoldVersion } from '../../../lib/scaffold-versions.js';
 import {
   runScaffold,
   updateScaffoldPackageJson,
@@ -98,7 +99,7 @@ export class Runner {
         if (answers.get('customUi') === 'enabled') {
           await updateScaffoldPackageJson(workspaceDirectory, {
             dependencies: {
-              '@homebridge/plugin-ui-utils': '2.2.6',
+              '@homebridge/plugin-ui-utils': getScaffoldVersion('homebridgePluginUiUtils'),
             },
             scripts: {
               'build:copy-ui': 'shx cp -r ./homebridge-ui/public ./build/config-ui/public',

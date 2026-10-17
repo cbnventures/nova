@@ -24,7 +24,7 @@ Scaffold a bundled **GitHub Action** that runs on Node 24 and exposes a typed gr
 
 1. Creates the repository-level `action.yml` and its package source together so their entry paths cannot drift.
 2. Bundles dependencies with NCC so consumers can execute the checked-in `build/index.js` without installing packages.
-3. Includes Vitest and GitHub's local-action runner so the bundled action can be rebuilt and exercised before publishing a tag.
+3. Includes Vitest and GitHub's local-action runner so the source action can be exercised before publishing a tag.
 4. Starts with grouped GitHub logs, a named output, and a concise job summary without echoing raw input values.
 
 ## Requirements
@@ -86,9 +86,9 @@ Scaffold a bundled **GitHub Action** that runs on Node 24 and exposes a typed gr
 
 ## Local Development
 
-Set `INPUT_NAME` in the generated `.env`, then run `npm run dev` from the action workspace. Nova first rebuilds the NCC bundle, then passes that production entry point and environment file to GitHub's local-action runner.
+Set `INPUT_NAME` in the generated `.env`, then run `npm run dev` from the action workspace. The command passes the TypeScript `run()` module and environment file to GitHub's local-action runner.
 
-This mirrors the file consumers execute and avoids source-runner module-format differences.
+The local runner targets source because it replaces GitHub Actions Toolkit dependencies while the action executes. Run `npm run build` separately to produce the NCC bundle that consumers execute.
 
 The action writes a job summary on GitHub. Local runners that do not expose `GITHUB_STEP_SUMMARY` receive a clear informational message and continue successfully.
 

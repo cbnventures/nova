@@ -10,14 +10,13 @@ import {
   LIB_REGEX_PATTERN_WHITESPACE,
 } from '../lib/regex.js';
 import { Bootstrap, CLIHeader, Logger } from '../toolkit/index.js';
-import { Runner as CliGenerateDockerImage } from './generate/docker-image/index.js';
 import { Runner as CliGenerateGithubFunding } from './generate/github/funding.js';
 import { Runner as CliGenerateGithubIssueTemplate } from './generate/github/issue-template.js';
 import { Runner as CliGenerateGithubWorkflowsBlueprint } from './generate/github/workflows-blueprint.js';
 import { Runner as CliGenerateMustHavesAgentConventions } from './generate/must-haves/agent-conventions.js';
 import { Runner as CliGenerateMustHavesDotenv } from './generate/must-haves/dotenv.js';
 import { Runner as CliGenerateMustHavesEditorconfig } from './generate/must-haves/editorconfig.js';
-import { Runner as CliGenerateMustHavesGitignore } from './generate/must-haves/gitignore.js';
+import { Runner as CliGenerateMustHavesIgnoreFiles } from './generate/must-haves/ignore-files.js';
 import { Runner as CliGenerateMustHavesLicense } from './generate/must-haves/license.js';
 import { Runner as CliGenerateMustHavesReadMe } from './generate/must-haves/read-me.js';
 import { Runner as CliRecipeGithubSyncActions } from './recipe/github/sync-actions.js';
@@ -46,22 +45,21 @@ import { Runner as CliRecipeReadMeUpdateIntroduction } from './recipe/read-me/up
 import { Runner as CliScaffoldAppAndroid } from './scaffold/app/android.js';
 import { Runner as CliScaffoldAppApple } from './scaffold/app/apple.js';
 import { Runner as CliScaffoldAppAstro } from './scaffold/app/astro.js';
-import { Runner as CliScaffoldAppCloudflareWorkers } from './scaffold/app/cloudflare-workers.js';
 import { Runner as CliScaffoldAppDiscordBot } from './scaffold/app/discord-bot.js';
-import { Runner as CliScaffoldAppDockerImage } from './scaffold/app/docker-image.js';
 import { Runner as CliScaffoldAppExpressjs } from './scaffold/app/expressjs.js';
 import { Runner as CliScaffoldAppNextjs } from './scaffold/app/nextjs.js';
 import { Runner as CliScaffoldAppVite } from './scaffold/app/vite.js';
 import { Runner as CliScaffoldDocsDocusaurus } from './scaffold/docs/docusaurus.js';
 import { Runner as CliScaffoldPackageGithubAction } from './scaffold/package/github-action.js';
 import { Runner as CliScaffoldPackageHomebridge } from './scaffold/package/homebridge.js';
-import { Runner as CliScaffoldPackageNodeCli } from './scaffold/package/node-cli.js';
 import { Runner as CliScaffoldPackagePfSense } from './scaffold/package/pfsense.js';
 import { Runner as CliScaffoldStarterBase } from './scaffold/starter/base.js';
+import { Runner as CliScaffoldToolServerless } from './scaffold/tool/serverless.js';
 import { Runner as CliUtilityChangelog } from './utility/changelog.js';
 import { Runner as CliUtilityConfigure } from './utility/configure.js';
 import { Runner as CliUtilityRunRecipes } from './utility/run-recipes.js';
 import { Runner as CliUtilityRunScripts } from './utility/run-scripts.js';
+import { Runner as CliUtilityRunWorkspaces } from './utility/run-workspaces.js';
 import { Runner as CliUtilityTranspile } from './utility/transpile.js';
 import { Runner as CliUtilityTypeCheck } from './utility/type-check.js';
 import { Runner as CliUtilityVersion } from './utility/version.js';
@@ -116,11 +114,13 @@ import type {
   Cli_Index_CLI_RegisterCommands_Returns,
   Cli_Index_CLI_RegisterCommands_RunRecipesOptions,
   Cli_Index_CLI_RegisterCommands_RunScriptsOptions,
+  Cli_Index_CLI_RegisterCommands_RunWorkspacesOptions,
   Cli_Index_CLI_RegisterCommands_Scaffold,
   Cli_Index_CLI_RegisterCommands_ScaffoldApp,
   Cli_Index_CLI_RegisterCommands_ScaffoldDocs,
   Cli_Index_CLI_RegisterCommands_ScaffoldPackage,
   Cli_Index_CLI_RegisterCommands_ScaffoldStarter,
+  Cli_Index_CLI_RegisterCommands_ScaffoldTool,
   Cli_Index_CLI_RegisterCommands_Utility,
   Cli_Index_CLI_StyleText_CategoryFunctions,
   Cli_Index_CLI_StyleText_CategoryStyles,
@@ -248,20 +248,6 @@ class CLI {
       .commandsGroup('Subcommands:')
       .helpCommand(false);
 
-    generate
-      .command('docker-image')
-      .usage('[options]')
-      .description('Add Docker packaging to an existing workspace')
-      .option('-d, --dry-run', 'Run without writing any files')
-      .requiredOption('--profile <profile>', 'Docker workload profile')
-      .option('-r, --replace-file', 'Replace original files without creating backups')
-      .requiredOption('--workspace <path>', 'Workspace path relative to the project root')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliGenerateDockerImage['run']);
-
-        return;
-      });
-
     const generateGitHub: Cli_Index_CLI_RegisterCommands_GenerateGitHub = generate
       .command('github')
       .alias('gh')
@@ -355,13 +341,13 @@ class CLI {
       });
 
     generateMustHaves
-      .command('gitignore')
+      .command('ignore-files')
       .usage('[options]')
-      .description('Create a .gitignore file for excluding files from Git commits')
+      .description('Create configured physical ignore files from Nova bundles')
       .option('-d, --dry-run', 'Run without writing any files')
-      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .option('-r, --replace-file', 'Replace the original files without creating backups')
       .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliGenerateMustHavesGitignore['run']);
+        await this.executeCommand<typeof options>(options, CliGenerateMustHavesIgnoreFiles['run']);
 
         return;
       });
@@ -788,8 +774,8 @@ class CLI {
     /**
      * CLI - Register Commands - Scaffold.
      *
-     * Parent command for bootstrapping monorepo-style projects. Groups app, docs, package, and
-     * starter templates under a single namespace.
+     * Parent command for bootstrapping monorepo-style projects. Groups app, docs, package,
+     * starter, and tool templates under a single namespace.
      *
      * @since 0.11.0
      */
@@ -830,6 +816,7 @@ class CLI {
       .command('apple')
       .usage('[options]')
       .description('Scaffold a SwiftUI Apple application workspace')
+      .option('--bundle-id <id>', 'Apple application bundle identifier')
       .option('-d, --dry-run', 'Run without writing any files')
       .option('--install', 'Install dependencies after scaffolding')
       .option('--no-install', 'Skip dependency installation')
@@ -864,23 +851,6 @@ class CLI {
       });
 
     scaffoldApp
-      .command('cloudflare-workers')
-      .usage('[options]')
-      .description('Scaffold a Cloudflare Workers application workspace')
-      .option('-d, --dry-run', 'Run without writing any files')
-      .option('--install', 'Install dependencies after scaffolding')
-      .option('--no-install', 'Skip dependency installation')
-      .option('--name <name>', 'Project slug when creating a new monorepo')
-      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
-      .option('--workspace-name <name>', 'Workspace directory name')
-      .option('--output <dir>', 'Output directory')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliScaffoldAppCloudflareWorkers['run']);
-
-        return;
-      });
-
-    scaffoldApp
       .command('discord-bot')
       .usage('[options]')
       .description('Scaffold a Discord bot application workspace')
@@ -894,25 +864,6 @@ class CLI {
       .option('--output <dir>', 'Output directory')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliScaffoldAppDiscordBot['run']);
-
-        return;
-      });
-
-    scaffoldApp
-      .command('docker-image')
-      .usage('[options]')
-      .description('Scaffold a container-native image workspace')
-      .option('--architectures <architectures>', 'Published architectures: amd64, arm64, or amd64,arm64')
-      .option('-d, --dry-run', 'Run without writing any files')
-      .option('--install', 'Install dependencies after scaffolding')
-      .option('--no-install', 'Skip dependency installation')
-      .option('--name <name>', 'Project slug when creating a new monorepo')
-      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
-      .option('--workspace-name <name>', 'Workspace directory name')
-      .option('--output <dir>', 'Output directory')
-      .option('--publish <registry>', 'Container registry: none, ghcr, or docker-hub')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliScaffoldAppDockerImage['run']);
 
         return;
       });
@@ -1047,23 +998,6 @@ class CLI {
       });
 
     scaffoldPackage
-      .command('node-cli')
-      .usage('[options]')
-      .description('Scaffold a publishable Node.js command-line package')
-      .option('-d, --dry-run', 'Run without writing any files')
-      .option('--install', 'Install dependencies after scaffolding')
-      .option('--no-install', 'Skip dependency installation')
-      .option('--name <name>', 'Project slug when creating a new monorepo')
-      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
-      .option('--workspace-name <name>', 'Workspace directory, package name, and binary name')
-      .option('--output <dir>', 'Output directory')
-      .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CliScaffoldPackageNodeCli['run']);
-
-        return;
-      });
-
-    scaffoldPackage
       .command('pfsense')
       .usage('[options]')
       .description('Scaffold a pfSense package with WebGUI and scheduled task support')
@@ -1100,6 +1034,31 @@ class CLI {
       .option('--output <dir>', 'Output directory')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliScaffoldStarterBase['run']);
+
+        return;
+      });
+
+    const scaffoldTool: Cli_Index_CLI_RegisterCommands_ScaffoldTool = scaffold
+      .command('tool')
+      .usage('<subcommand> [options]')
+      .description('Scaffold distributable tool workspaces')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false);
+
+    scaffoldTool
+      .command('serverless')
+      .usage('[options]')
+      .description('Scaffold a distributable CLI with a serverless service')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('--install', 'Install dependencies after scaffolding')
+      .option('--no-install', 'Skip dependency installation')
+      .option('--name <name>', 'Project slug when creating a new monorepo')
+      .option('--non-interactive', 'Require every answer as a flag and do not open prompts')
+      .option('--workspace-name <name>', 'Workspace directory, npm package, and binary name')
+      .option('--output <dir>', 'Output directory')
+      .option('--target <target>', 'Deployment target: cloudflare-workers or vercel-functions')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliScaffoldToolServerless['run']);
 
         return;
       });
@@ -1180,6 +1139,31 @@ class CLI {
           ...options,
           pattern,
         }, CliUtilityRunScripts['run']);
+
+        return;
+      });
+
+    utility
+      .command('run-workspaces')
+      .alias('run-ws')
+      .usage('<script> [options] [-- <arguments...>]')
+      .description('Run dependency-aware scripts across Nova workspaces')
+      .argument('<script>', 'Workspace script name')
+      .argument('[scriptArgs...]', 'Arguments forwarded to the requested workspace script')
+      .option('-b, --buffer <ms>', 'Flush interval in ms for grouped workspace logs (default: 500)')
+      .option('-c, --concurrency <count>', 'Maximum number of workspace scripts to run concurrently')
+      .option('-k, --continue-on-error', 'Continue independent workspace tasks after a failure')
+      .option('-d, --dry-run', 'Print the workspace task plan without running scripts')
+      .option('-x, --exclude-workspace <name...>', 'Exclude workspace package names or Nova workspace paths')
+      .option('-f, --force', 'Bypass verified cache hits and refresh successful task records')
+      .option('-n, --node-env <environment>', 'Set NODE_ENV for workspace scripts (development, production, or test)')
+      .option('-w, --workspace <name...>', 'Run only selected workspace package names or Nova workspace paths')
+      .action(async (task, scriptArgs, options) => {
+        await this.executeCommand<Cli_Index_CLI_RegisterCommands_RunWorkspacesOptions>({
+          ...options,
+          scriptArgs,
+          task,
+        }, CliUtilityRunWorkspaces['run']);
 
         return;
       });

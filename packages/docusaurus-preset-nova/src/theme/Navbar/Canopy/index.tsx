@@ -45,6 +45,8 @@ import type { Theme_Navbar_Index_Navbar_Item } from '../../../types/theme/Navbar
  *
  * @param {Theme_Navbar_Canopy_Index_Canopy_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function Canopy(props: Theme_Navbar_Canopy_Index_Canopy_Props): Theme_Navbar_Canopy_Index_Canopy_Returns {

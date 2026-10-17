@@ -188,6 +188,8 @@ function extractDocument(htmlFilePath: Lib_Search_Indexer_ExtractDocument_HtmlFi
    *
    * @private
    *
+   * @returns {void}
+   *
    * @since 0.21.0
    */
   const headingIterator: Lib_Search_Indexer_ExtractDocument_HeadingIterator = (_index, element) => {
@@ -233,6 +235,8 @@ function extractDocument(htmlFilePath: Lib_Search_Indexer_ExtractDocument_HtmlFi
  * and writes the serialized index and manifest files to the output directory.
  *
  * @param options - Options.
+ *
+ * @returns {void}
  *
  * @since 0.15.0
  */
@@ -375,6 +379,8 @@ export function buildSearchIndex(options: Lib_Search_Indexer_BuildSearchIndex_Op
    * fields, then adds every document entry to the search index.
    *
    * @private
+   *
+   * @returns {void}
    *
    * @since 0.21.0
    */

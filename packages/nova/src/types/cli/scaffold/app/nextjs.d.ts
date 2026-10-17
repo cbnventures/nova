@@ -12,11 +12,11 @@ export type Cli_Scaffold_App_Nextjs_TemplateQuestions = Shared_ScaffoldTemplateQ
  *
  * @since 0.15.0
  */
+export type Cli_Scaffold_App_Nextjs_Runner_Run_Options_DockerImage = true;
+
 export type Cli_Scaffold_App_Nextjs_Runner_Run_Options_DryRun = true;
 
 export type Cli_Scaffold_App_Nextjs_Runner_Run_Options_Install = boolean;
-
-export type Cli_Scaffold_App_Nextjs_Runner_Run_Options_DockerImage = true;
 
 export type Cli_Scaffold_App_Nextjs_Runner_Run_Options_Name = string;
 

@@ -72,6 +72,8 @@ const categoryStateMap: Theme_DocSidebarItem_Category_Index_DocSidebarItemCatego
  *
  * @param {Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DocSidebarItemCategory(props: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props) {
@@ -225,6 +227,8 @@ function DocSidebarItemCategory(props: Theme_DocSidebarItem_Category_Index_DocSi
    * and auto-collapse categories is enabled, producing accordion behavior.
    *
    * @param {Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_HandleToggle_ToggleEvent} toggleEvent - Toggle event.
+   *
+   * @returns {undefined}
    *
    * @since 0.15.0
    */

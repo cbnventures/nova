@@ -18,6 +18,8 @@ import type {
  *
  * @param {Theme_ContentVisibility_Unlisted_Index_Unlisted_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function Unlisted(props: Theme_ContentVisibility_Unlisted_Index_Unlisted_Props): Theme_ContentVisibility_Unlisted_Index_Unlisted_Returns {

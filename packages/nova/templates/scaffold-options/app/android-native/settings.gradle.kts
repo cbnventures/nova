@@ -27,7 +27,7 @@ dependencyResolutionManagement {
 }
 
 plugins {
-  id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+  id("org.gradle.toolchains.foojay-resolver-convention") version "[__SCAFFOLD_VERSION_FOOJAY_RESOLVER__]"
 }
 
 rootProject.name = "[__WORKSPACE_TITLE__]"

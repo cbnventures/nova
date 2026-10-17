@@ -52,6 +52,8 @@ import type {
  * Resolves the docusaurus-preset-nova package root from the
  * current test file location.
  *
+ * @returns {string}
+ *
  * @since 0.18.0
  */
 function getPackageRoot(): Tests_FolderAxis_GetPackageRoot_Returns {
@@ -66,6 +68,8 @@ function getPackageRoot(): Tests_FolderAxis_GetPackageRoot_Returns {
  *
  * Returns the direct subfolder names of `src/blocks/` so the
  * kebab-case + index.ts re-export integrity checks can iterate.
+ *
+ * @returns {Tests_FolderAxis_ListBlockDirectories_Returns}
  *
  * @since 0.18.0
  */
@@ -82,6 +86,8 @@ function listBlockDirectories(): Tests_FolderAxis_ListBlockDirectories_Returns {
  * Returns the direct subfolder names of `src/theme/` so the
  * PascalCase casing check can iterate.
  *
+ * @returns {Tests_FolderAxis_ListThemeDirectories_Returns}
+ *
  * @since 0.18.0
  */
 function listThemeDirectories(): Tests_FolderAxis_ListThemeDirectories_Returns {
@@ -97,6 +103,8 @@ function listThemeDirectories(): Tests_FolderAxis_ListThemeDirectories_Returns {
  * Parses `src/blocks/index.ts` line-by-line and returns the
  * set of kebab-case folder names referenced in each
  * `export { default as X } from './y/index.js';` statement.
+ *
+ * @returns {Tests_FolderAxis_ReadBlocksIndexExports_Returns}
  *
  * @since 0.18.0
  */

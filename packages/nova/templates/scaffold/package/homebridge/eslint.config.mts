@@ -3,9 +3,9 @@ import {
   dxIgnore,
   langJavascript,
   langTypescript,
+  novaRules,
   runtimeNode,
 } from '@cbnventures/nova/presets/eslint';
-import { novaRules } from '@cbnventures/nova/rules/eslint';
 
 import customUiPreset from './config/eslint-custom-ui.js';
 

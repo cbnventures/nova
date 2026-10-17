@@ -38,8 +38,10 @@ export type Theme_ErrorPageContent_Index_ErrorPageContent_Message = string;
 
 export type Theme_ErrorPageContent_Index_ErrorPageContent_TitlePool = string[];
 
+export type Theme_ErrorPageContent_Index_ErrorPageContent_GlobalData_ErrorPageContentTitleIndex = number;
+
 export type Theme_ErrorPageContent_Index_ErrorPageContent_GlobalData = {
-  errorPageContentTitleIndex?: number;
+  errorPageContentTitleIndex?: Theme_ErrorPageContent_Index_ErrorPageContent_GlobalData_ErrorPageContentTitleIndex;
   [key: string]: unknown;
 };
 

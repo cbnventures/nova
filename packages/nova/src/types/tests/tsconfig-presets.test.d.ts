@@ -53,9 +53,13 @@ export type Tests_TsconfigPresets_SourcePresetFilename = string;
 
 export type Tests_TsconfigPresets_SourcePresetPath = string;
 
+export type Tests_TsconfigPresets_ReadResult_Config = Record<string, unknown>;
+
+export type Tests_TsconfigPresets_ReadResult_Error = Diagnostic;
+
 export type Tests_TsconfigPresets_ReadResult = {
-  config?: Record<string, unknown>;
-  error?: Diagnostic;
+  config?: Tests_TsconfigPresets_ReadResult_Config;
+  error?: Tests_TsconfigPresets_ReadResult_Error;
 };
 
 export type Tests_TsconfigPresets_ReadDiagnosticMessage = string;

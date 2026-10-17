@@ -12,9 +12,9 @@ import type { Lib_EnvManagedSet_LibEnvManagedSet_ManagedKey } from './env-manage
  *
  * @since 0.22.0
  */
-export type Lib_EnvStatus_LibEnvStatus_StatusEntryState = 'declared' | 'missing' | 'stale' | 'type-mismatch' | 'unmanaged' | 'empty-bake' | 'local-orphan' | 'optional-absent' | 'stub-unreplaced';
-
 export type Lib_EnvStatus_LibEnvStatus_StatusEntryName = string;
+
+export type Lib_EnvStatus_LibEnvStatus_StatusEntryState = 'declared' | 'missing' | 'stale' | 'type-mismatch' | 'unmanaged' | 'empty-bake' | 'local-orphan' | 'optional-absent' | 'stub-unreplaced';
 
 export type Lib_EnvStatus_LibEnvStatus_StatusEntry = {
   name: Lib_EnvStatus_LibEnvStatus_StatusEntryName;

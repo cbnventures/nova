@@ -92,6 +92,8 @@ Scaffold an **Astro** application with strict TypeScript checking and an explici
 
 When `--docker-image` is enabled, Nova also writes `.dockerignore`, `Dockerfile`, and `compose.yml`. Static sites use an unprivileged NGINX image; Node.js server rendering uses Astro's standalone server output. Cloudflare server rendering cannot be combined with `--docker-image` because Cloudflare owns that runtime.
 
+A server-rendered Cloudflare workspace also receives `public/.assetsignore`, which keeps `_worker.js` and `_routes.json` out of the copied public asset set. Nova registers that exact path in `ignoreFiles` with the `cloudflare-astro` bundle so the generic ignore-files generator can reproduce it later.
+
 Astro does not enable MDX by default, so this scaffold does not pretend `.mdx` files are buildable. If you add Astro's MDX integration, also add `langMdx` to the ESLint config; Nova's MDX language preset composes with the Astro framework layer.
 
 ## Non-Interactive Mode

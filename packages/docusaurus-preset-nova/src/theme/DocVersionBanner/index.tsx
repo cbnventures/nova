@@ -19,6 +19,8 @@ import type {
  *
  * @constructor
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.15.0
  */
 function DocVersionBanner(props: Theme_DocVersionBanner_Index_DocVersionBanner_Props) {

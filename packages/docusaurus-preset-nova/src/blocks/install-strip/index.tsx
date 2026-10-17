@@ -25,6 +25,8 @@ import type {
  *
  * @param {Blocks_InstallStrip_Index_BlocksInstallStrip_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlocksInstallStrip(props: Blocks_InstallStrip_Index_BlocksInstallStrip_Props) {
@@ -55,6 +57,8 @@ function BlocksInstallStrip(props: Blocks_InstallStrip_Index_BlocksInstallStrip_
    *
    * Copies the install command text to the clipboard and shows a temporary visual confirmation
    * before reverting the icon back to the default copy state.
+   *
+   * @returns {undefined}
    *
    * @since 0.15.0
    */

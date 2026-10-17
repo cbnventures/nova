@@ -1,5 +1,5 @@
+import { Runner as LibDockerPackaging } from '../../../lib/docker-packaging.js';
 import { runScaffold } from '../../../lib/scaffold.js';
-import { Runner as CliGenerateDockerImage } from '../../generate/docker-image/index.js';
 
 import type {
   Cli_Scaffold_App_Expressjs_Runner_Run_Options,
@@ -46,7 +46,7 @@ export class Runner {
         templateSubpath: 'scaffold/app/express',
         typeName: 'express',
         workspaceFinalizer: async (workspaceDirectory) => {
-          await CliGenerateDockerImage.generateForTarget({
+          await LibDockerPackaging.generateForTarget({
             profile: 'http-service',
             reportFiles: false,
             replaceFile: true,

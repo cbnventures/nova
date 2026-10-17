@@ -55,6 +55,13 @@ export type Tests_Lib_Item_AllowedRolesAndPolicies_TemplateRoleAcceptsFreezable_
 export type Tests_Lib_Item_AllowedRolesAndPolicies_TemplateRoleAcceptsTrackable_HasTrackable = boolean;
 
 /**
+ * Tests - Lib - Item - Allowed Roles And Policies - Tool Role Accepts Distributable.
+ *
+ * @since UNRELEASED
+ */
+export type Tests_Lib_Item_AllowedRolesAndPolicies_ToolRoleAcceptsDistributable_HasDistributable = boolean;
+
+/**
  * Tests - Lib - Item - Changelog Constants - libItemChangelogAdjectives Has No Duplicates.
  *
  * @since 0.13.0

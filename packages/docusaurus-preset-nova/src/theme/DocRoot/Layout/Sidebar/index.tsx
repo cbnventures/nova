@@ -34,6 +34,8 @@ import type {
  *
  * @param {Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DocRootLayoutSidebar(props: Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Props) {

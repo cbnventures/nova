@@ -102,6 +102,8 @@ import type {
  *
  * @constructor
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
@@ -271,6 +273,8 @@ function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
      * Compares the current scroll position against the last recorded position to
      * determine direction, then toggles the navbar hidden state accordingly.
      *
+     * @returns {undefined}
+     *
      * @since 0.15.0
      */
     function handleScroll() {
@@ -316,6 +320,8 @@ function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
      * Reads the operating system color scheme preference and applies
      * it to the document data-theme attribute when the user has
      * explicitly chosen system mode via the toggle.
+     *
+     * @returns {undefined}
      *
      * @since 0.15.0
      */

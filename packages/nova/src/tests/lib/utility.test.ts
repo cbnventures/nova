@@ -108,6 +108,15 @@ import type {
   Tests_Lib_Utility_DiscoverPathsWithFile_OriginalCwd,
   Tests_Lib_Utility_DiscoverPathsWithFile_SandboxPrefix,
   Tests_Lib_Utility_DiscoverPathsWithFile_SandboxRoot,
+  Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_AbsolutePaths,
+  Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ConsumerPackage,
+  Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ConsumerTemplatesRoot,
+  Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ExcludedPackage,
+  Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ExcludedRoot,
+  Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ProjectPackage,
+  Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ProjectRoot,
+  Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_RealProjectRoot,
+  Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_RelativePaths,
   Tests_Lib_Utility_DiscoverPathsWithFile_TemporaryDirectory,
   Tests_Lib_Utility_ExecuteShell_ReturnsNonZeroCodeForFailingCommand_Result,
   Tests_Lib_Utility_ExecuteShell_RunsASimpleEchoCommand_IncludesHello,
@@ -414,6 +423,43 @@ describe('discoverPathsWithFile', async () => {
       '',
       'apps/some-app',
       'packages/some-package',
+    ]);
+
+    return;
+  });
+
+  it('skips only explicitly excluded roots', async () => {
+    const projectRoot: Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ProjectRoot = join(sandboxRoot, 'excluded-forward');
+    const excludedRoot: Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ExcludedRoot = join(projectRoot, 'nova-internal', 'scaffold');
+    const consumerTemplatesRoot: Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ConsumerTemplatesRoot = join(projectRoot, 'templates', 'consumer');
+
+    await Promise.all([
+      mkdir(excludedRoot, { recursive: true }),
+      mkdir(consumerTemplatesRoot, { recursive: true }),
+    ]);
+
+    const projectPackage: Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ProjectPackage = join(projectRoot, 'package.json');
+    const excludedPackage: Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ExcludedPackage = join(excludedRoot, 'package.json');
+    const consumerPackage: Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ConsumerPackage = join(consumerTemplatesRoot, 'package.json');
+
+    await Promise.all([
+      writeFile(projectPackage, '{}\n'),
+      writeFile(excludedPackage, '{}\n'),
+      writeFile(consumerPackage, '{}\n'),
+    ]);
+
+    const realProjectRoot: Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_RealProjectRoot = await realpath(projectRoot);
+
+    process.chdir(realProjectRoot);
+
+    const absolutePaths: Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_AbsolutePaths = await discoverPathsWithFile('package.json', 'forward', {
+      excludeRoots: [excludedRoot],
+    });
+    const relativePaths: Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_RelativePaths = absolutePaths.map((absolutePath) => relative(realProjectRoot, absolutePath).split(sep).join('/'));
+
+    deepStrictEqual(relativePaths, [
+      '',
+      'templates/consumer',
     ]);
 
     return;
@@ -2045,8 +2091,8 @@ describe('buildGeneratedFileHeader', () => {
 
   it('produces a #-prefixed strict banner for a .gitignore basename', () => {
     const result: Tests_Lib_Utility_BuildGeneratedFileHeader_ProducesAPrefixedStrictBannerForAGitignoreBasename_Result = buildGeneratedFileHeader({
-      command: 'nova generate must-haves gitignore',
-      docsSlug: 'cli/generators/must-haves/gitignore',
+      command: 'nova generate must-haves ignore-files',
+      docsSlug: 'cli/generators/must-haves/ignore-files',
       targetPath: '/tmp/proj/.gitignore',
       mode: 'strict',
     });
@@ -2174,15 +2220,15 @@ describe('saveGeneratedFile (with header)', async () => {
     const targetPath: Tests_Lib_Utility_SaveGeneratedFileWithHeader_PrependsTheBannerBeforeWritingWhenHeaderIsSupplied_TargetPath = join(projectDirectory, '.gitignore');
 
     await saveGeneratedFile(targetPath, 'node_modules\n', false, {
-      command: 'nova generate must-haves gitignore',
-      docsSlug: 'cli/generators/must-haves/gitignore',
+      command: 'nova generate must-haves ignore-files',
+      docsSlug: 'cli/generators/must-haves/ignore-files',
       mode: 'strict',
     });
 
     const written: Tests_Lib_Utility_SaveGeneratedFileWithHeader_PrependsTheBannerBeforeWritingWhenHeaderIsSupplied_Written = await readFile(targetPath, 'utf-8');
     const expectedHeader: Tests_Lib_Utility_SaveGeneratedFileWithHeader_PrependsTheBannerBeforeWritingWhenHeaderIsSupplied_ExpectedHeader = buildGeneratedFileHeader({
-      command: 'nova generate must-haves gitignore',
-      docsSlug: 'cli/generators/must-haves/gitignore',
+      command: 'nova generate must-haves ignore-files',
+      docsSlug: 'cli/generators/must-haves/ignore-files',
       targetPath,
       mode: 'strict',
     });
@@ -2199,8 +2245,8 @@ describe('saveGeneratedFile (with header)', async () => {
 
     const targetPath: Tests_Lib_Utility_SaveGeneratedFileWithHeader_SkipsTheWriteWhenTheHeaderPrefixedContentAlreadyMatchesDisk_TargetPath = join(projectDirectory, '.gitignore');
     const headerOptions: Tests_Lib_Utility_SaveGeneratedFileWithHeader_SkipsTheWriteWhenTheHeaderPrefixedContentAlreadyMatchesDisk_HeaderOptions = {
-      command: 'nova generate must-haves gitignore',
-      docsSlug: 'cli/generators/must-haves/gitignore',
+      command: 'nova generate must-haves ignore-files',
+      docsSlug: 'cli/generators/must-haves/ignore-files',
       mode: 'strict' as const,
     };
 

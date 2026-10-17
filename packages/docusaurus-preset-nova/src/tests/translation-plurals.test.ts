@@ -35,6 +35,8 @@ import type {
  *
  * Reads a Docusaurus translation JSON file as a flat message map.
  *
+ * @returns {Tests_TranslationPlurals_ReadMessageBundle_Returns}
+ *
  * @since 0.27.0
  */
 function readMessageBundle(filePath: Tests_TranslationPlurals_ReadMessageBundle_FilePath): Tests_TranslationPlurals_ReadMessageBundle_Returns {

@@ -22,25 +22,25 @@
     "i18n:coverage": "theme-nova i18n coverage"
   },
   "engines": {
-    "node": "^22 || ^24"
+    "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/docusaurus-preset-nova": "0.31.1",
-    "@cbnventures/nova": "0.31.1",
-    "@docusaurus/core": "3.10.2",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "@cbnventures/docusaurus-preset-nova": "0.32.0",
+    "@cbnventures/nova": "0.32.0",
+    "@docusaurus/core": "[__SCAFFOLD_VERSION_DOCUSAURUS__]",
+    "react": "[__SCAFFOLD_VERSION_REACT__]",
+    "react-dom": "[__SCAFFOLD_VERSION_REACT_DOM__]"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.10.2",
-    "@docusaurus/types": "3.10.2",
-    "@types/node": "24.9.1",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.4",
-    "eslint": "9.39.5",
-    "glob": "13.0.6",
-    "shx": "0.4.0",
-    "typescript": "6.0.3",
-    "vitest": "4.1.11"
+    "@docusaurus/module-type-aliases": "[__SCAFFOLD_VERSION_DOCUSAURUS__]",
+    "@docusaurus/types": "[__SCAFFOLD_VERSION_DOCUSAURUS__]",
+    "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",
+    "@types/react": "[__SCAFFOLD_VERSION_TYPES_REACT__]",
+    "@types/react-dom": "[__SCAFFOLD_VERSION_TYPES_REACT_DOM_DOCUSAURUS__]",
+    "eslint": "[__SCAFFOLD_VERSION_ESLINT__]",
+    "glob": "[__SCAFFOLD_VERSION_GLOB__]",
+    "shx": "[__SCAFFOLD_VERSION_SHX__]",
+    "typescript": "[__SCAFFOLD_VERSION_TYPESCRIPT__]",
+    "vitest": "[__SCAFFOLD_VERSION_VITEST__]"
   }
 }

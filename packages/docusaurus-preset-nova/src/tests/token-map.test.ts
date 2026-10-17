@@ -69,6 +69,8 @@ import type {
  * from the current test file location to reach the
  * docusaurus-preset-nova package root.
  *
+ * @returns {string}
+ *
  * @since 0.18.0
  */
 function getPackageRoot(): Tests_TokenMap_GetPackageRoot_Returns {
@@ -85,6 +87,8 @@ function getPackageRoot(): Tests_TokenMap_GetPackageRoot_Returns {
  * given list appears as a custom-property declaration at
  * least once. Light/dark parity is a separate convention
  * enforced by 9C tests.
+ *
+ * @returns {Tests_TokenMap_AssertTokensPresent_Returns}
  *
  * @since 0.18.0
  */
@@ -123,6 +127,8 @@ async function assertTokensPresent(relativeFile: Tests_TokenMap_AssertTokensPres
  * either is preset-prefixed, or aliases a preset-prefixed
  * owner with a matching suffix.
  *
+ * @returns {Tests_TokenMap_Rename_Returns}
+ *
  * @since 0.18.0
  */
 function rename(preset: Tests_TokenMap_Rename_Preset, suffixes: Tests_TokenMap_Rename_Suffixes): Tests_TokenMap_Rename_Returns {
@@ -137,6 +143,8 @@ function rename(preset: Tests_TokenMap_Rename_Preset, suffixes: Tests_TokenMap_R
  *
  * Skip-to-content link tokens - uniform 4-facet contract
  * (bg, color, border, shadow) across every preset.
+ *
+ * @returns {Tests_TokenMap_Skip_Returns}
  *
  * @since 0.18.0
  */
@@ -155,6 +163,8 @@ function skip(preset: Tests_TokenMap_Skip_Preset): Tests_TokenMap_Skip_Returns {
  * Blog description-color token - single facet, declared
  * by every preset that overrides blog description ink.
  *
+ * @returns {Tests_TokenMap_BlogDescription_Returns}
+ *
  * @since 0.18.0
  */
 function blogDescription(preset: Tests_TokenMap_BlogDescription_Preset): Tests_TokenMap_BlogDescription_Returns {
@@ -170,6 +180,8 @@ function blogDescription(preset: Tests_TokenMap_BlogDescription_Preset): Tests_T
  * Declared in each preset's `theme/BlogLayout/style.css`
  * overlay so each preset can express its identity through
  * editorial rhythm.
+ *
+ * @returns {Tests_TokenMap_BlogTypography_Returns}
  *
  * @since 0.18.0
  */
@@ -194,6 +206,8 @@ function blogTypography(preset: Tests_TokenMap_BlogTypography_Preset): Tests_Tok
  * preset can express its identity through editorial
  * post-detail rhythm.
  *
+ * @returns {Tests_TokenMap_BlogPostTypography_Returns}
+ *
  * @since 0.18.0
  */
 function blogPostTypography(preset: Tests_TokenMap_BlogPostTypography_Preset): Tests_TokenMap_BlogPostTypography_Returns {
@@ -217,6 +231,8 @@ function blogPostTypography(preset: Tests_TokenMap_BlogPostTypography_Preset): T
  * Section-gap token - single facet, declared by every
  * preset for the canonical section spacing rhythm.
  *
+ * @returns {Tests_TokenMap_SectionGap_Returns}
+ *
  * @since 0.18.0
  */
 function sectionGap(preset: Tests_TokenMap_SectionGap_Preset): Tests_TokenMap_SectionGap_Returns {
@@ -232,6 +248,8 @@ function sectionGap(preset: Tests_TokenMap_SectionGap_Preset): Tests_TokenMap_Se
  * a preset can opt into additional tokens if its mermaid
  * overlay grows.
  *
+ * @returns {Tests_TokenMap_Mermaid_Returns}
+ *
  * @since 0.18.0
  */
 function mermaid(preset: Tests_TokenMap_Mermaid_Preset, facets: Tests_TokenMap_Mermaid_Facets): Tests_TokenMap_Mermaid_Returns {
@@ -246,6 +264,8 @@ function mermaid(preset: Tests_TokenMap_Mermaid_Preset, facets: Tests_TokenMap_M
  * owner + canonical alias. Types are admonition variants
  * (note, tip, info, warning, danger); facets are visual
  * facets (rail, fill, ink).
+ *
+ * @returns {Tests_TokenMap_Admonition_Returns}
  *
  * @since 0.18.0
  */
@@ -263,6 +283,8 @@ function admonition(preset: Tests_TokenMap_Admonition_Preset, types: Tests_Token
  * other surface variants. Not all presets define all
  * semantics.
  *
+ * @returns {Tests_TokenMap_ColorBg_Returns}
+ *
  * @since 0.18.0
  */
 function colorBg(preset: Tests_TokenMap_ColorBg_Preset, semantics: Tests_TokenMap_ColorBg_Semantics): Tests_TokenMap_ColorBg_Returns {
@@ -275,6 +297,8 @@ function colorBg(preset: Tests_TokenMap_ColorBg_Preset, semantics: Tests_TokenMa
  * Semantic color scale overrides - semantics x levels
  * matrix. Each (semantic, level) pair becomes a
  * preset-prefixed owner + canonical alias.
+ *
+ * @returns {Tests_TokenMap_ColorScale_Returns}
  *
  * @since 0.18.0
  */
@@ -290,6 +314,8 @@ function colorScale(preset: Tests_TokenMap_ColorScale_Preset, semantics: Tests_T
  * Depth-tier overrides (e.g., card-border, code-border,
  * card-shadow). Suffix list varies per preset.
  *
+ * @returns {Tests_TokenMap_Depth_Returns}
+ *
  * @since 0.18.0
  */
 function depth(preset: Tests_TokenMap_Depth_Preset, suffixes: Tests_TokenMap_Depth_Suffixes): Tests_TokenMap_Depth_Returns {
@@ -302,6 +328,8 @@ function depth(preset: Tests_TokenMap_Depth_Preset, suffixes: Tests_TokenMap_Dep
  * Grid-tier overrides (padding, gutter). Suffix list
  * varies per preset.
  *
+ * @returns {Tests_TokenMap_Grid_Returns}
+ *
  * @since 0.18.0
  */
 function grid(preset: Tests_TokenMap_Grid_Preset, suffixes: Tests_TokenMap_Grid_Suffixes): Tests_TokenMap_Grid_Returns {
@@ -313,6 +341,8 @@ function grid(preset: Tests_TokenMap_Grid_Preset, suffixes: Tests_TokenMap_Grid_
  *
  * Layout-tier overrides (docs-max, blog-max, footer-max,
  * navbar-max, sticky-top). Suffix list varies per preset.
+ *
+ * @returns {Tests_TokenMap_Layout_Returns}
  *
  * @since 0.18.0
  */

@@ -960,6 +960,13 @@ export type Lib_Regex_PlaceholderViteFramework = RegExp;
 export type Lib_Regex_PlaceholderVitePwa = RegExp;
 
 /**
+ * Lib - Regex - Placeholder Serverless Target.
+ *
+ * @since UNRELEASED
+ */
+export type Lib_Regex_PlaceholderServerlessTarget = RegExp;
+
+/**
  * Lib - Regex - Placeholder Terms Of Use.
  *
  * @since 0.11.0

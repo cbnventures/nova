@@ -32,9 +32,9 @@ export type Theme_BlogArchivePage_Index_BlogArchivePage_DateTimeFormat = Intl.Da
 
 export type Theme_BlogArchivePage_Index_BlogArchivePage_YearPost = PropBlogPostContent;
 
-export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Posts = Theme_BlogArchivePage_Index_BlogArchivePage_YearPost[];
-
 export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Year = string;
+
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Posts = Theme_BlogArchivePage_Index_BlogArchivePage_YearPost[];
 
 export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup = {
   year: Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Year;

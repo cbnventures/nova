@@ -8,11 +8,17 @@ import type {
   Shared_BlueprintConfig_Workflows,
   Shared_BlueprintConfigDeployTarget,
   Shared_BlueprintConfigDeployTarget_After,
+  Shared_BlueprintConfigDeployTarget_With,
+  Shared_BlueprintConfigTriggerObject,
+  Shared_BlueprintConfigTriggerObject_Branches,
+  Shared_BlueprintConfigTriggerObject_Paths,
+  Shared_BlueprintConfigTriggerObject_Tags,
   Shared_BlueprintConfigTriggerObject_Workflows,
   Shared_BlueprintConfigWorkflow,
   Shared_BlueprintConfigWorkflow_Build,
   Shared_BlueprintConfigWorkflow_Deploy,
   Shared_BlueprintConfigWorkflow_Triggers,
+  Shared_BlueprintConfigWorkflow_With,
   Shared_DialogAction,
   Shared_EntityMenuAction,
   Shared_NormalizedResult,
@@ -21,13 +27,25 @@ import type {
   Shared_NovaConfig_Emails,
   Shared_NovaConfig_Entities,
   Shared_NovaConfig_Github,
+  Shared_NovaConfig_Github_Actions,
+  Shared_NovaConfig_Github_Actions_SelectedActions,
   Shared_NovaConfig_Github_Features,
   Shared_NovaConfig_Github_IssueTemplate,
   Shared_NovaConfig_Github_IssueTemplate_BugReportFields,
+  Shared_NovaConfig_Github_Label,
+  Shared_NovaConfig_Github_Labels,
   Shared_NovaConfig_Github_Policies,
+  Shared_NovaConfig_Github_Policies_MergeCommit,
   Shared_NovaConfig_Github_Policies_MergeMethods,
+  Shared_NovaConfig_Github_Policies_SquashMerge,
+  Shared_NovaConfig_Github_Rulesets,
+  Shared_NovaConfig_Github_Rulesets_DefaultBranch,
+  Shared_NovaConfig_Github_Rulesets_DefaultBranch_AllowedMergeMethods,
+  Shared_NovaConfig_Github_Security,
   Shared_NovaConfig_Github_Topics,
-  Shared_NovaConfig_Gitignore,
+  Shared_NovaConfig_IgnoreFile,
+  Shared_NovaConfig_IgnoreFile_Bundles,
+  Shared_NovaConfig_IgnoreFiles,
   Shared_NovaConfig_Project_Description,
   Shared_NovaConfig_Project_Keywords,
   Shared_NovaConfig_Project_LegalName,
@@ -54,12 +72,16 @@ import type {
   Shared_NovaConfigEntity_Roles,
   Shared_NovaConfigEntityRole,
   Shared_NovaConfigEnvironment,
+  Shared_NovaConfigEnvironment_Workflows,
   Shared_NovaConfigEnvironment_Workspaces,
   Shared_NovaConfigEnvironmentProject,
   Shared_NovaConfigEnvironmentValue,
   Shared_NovaConfigEnvironmentValue_Reach,
+  Shared_NovaConfigEnvironmentWorkflow,
   Shared_NovaConfigEnvironmentWorkspace,
   Shared_NovaConfigProjectPlatform,
+  Shared_NovaConfigSettings_RunWorkspaces,
+  Shared_NovaConfigSettings_RunWorkspacesCache,
   Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkflowScope,
   Shared_NovaConfigWorkflowTarget_Needs,
@@ -95,6 +117,15 @@ export type Cli_Utility_Configure_Runner_CheckPath_GreaterThanOneMessage = strin
 export type Cli_Utility_Configure_Runner_CheckPath_NotProjectRootDirectoryMessage = string;
 
 /**
+ * CLI - Utility - Configure - Get Optional Boolean Initial.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_GetOptionalBooleanInitial_Value = boolean | undefined;
+
+export type Cli_Utility_Configure_Runner_GetOptionalBooleanInitial_Returns = number;
+
+/**
  * CLI - Utility - Configure - Import Gitignore Excludes.
  *
  * @since 0.20.0
@@ -116,6 +147,30 @@ export type Cli_Utility_Configure_Runner_ImportGitignoreExcludes_Result = string
 export type Cli_Utility_Configure_Runner_ImportGitignoreExcludes_Trimmed = string;
 
 /**
+ * CLI - Utility - Configure - Is Boolean Record Input.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_IsBooleanRecordInput_Value = unknown;
+
+export type Cli_Utility_Configure_Runner_IsBooleanRecordInput_Returns = true | string;
+
+export type Cli_Utility_Configure_Runner_IsBooleanRecordInput_Trimmed = string;
+
+export type Cli_Utility_Configure_Runner_IsBooleanRecordInput_Parsed = unknown;
+
+/**
+ * CLI - Utility - Configure - Is Ignore File Path Input.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_IsIgnoreFilePathInput_Value = unknown;
+
+export type Cli_Utility_Configure_Runner_IsIgnoreFilePathInput_Returns = true | string;
+
+export type Cli_Utility_Configure_Runner_IsIgnoreFilePathInput_Trimmed = string;
+
+/**
  * CLI - Utility - Configure - Is Non Empty Literal Input.
  *
  * @since 0.18.0
@@ -123,6 +178,45 @@ export type Cli_Utility_Configure_Runner_ImportGitignoreExcludes_Trimmed = strin
 export type Cli_Utility_Configure_Runner_IsNonEmptyLiteralInput_Value = unknown;
 
 export type Cli_Utility_Configure_Runner_IsNonEmptyLiteralInput_Returns = true | string;
+
+/**
+ * CLI - Utility - Configure - Is Optional Nonnegative Integer Input.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_IsOptionalNonnegativeIntegerInput_Value = unknown;
+
+export type Cli_Utility_Configure_Runner_IsOptionalNonnegativeIntegerInput_Returns = true | string;
+
+export type Cli_Utility_Configure_Runner_IsOptionalNonnegativeIntegerInput_Trimmed = string;
+
+export type Cli_Utility_Configure_Runner_IsOptionalNonnegativeIntegerInput_Parsed = number;
+
+/**
+ * CLI - Utility - Configure - Is String Array Input.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_IsStringArrayInput_Value = unknown;
+
+export type Cli_Utility_Configure_Runner_IsStringArrayInput_Returns = true | string;
+
+export type Cli_Utility_Configure_Runner_IsStringArrayInput_Trimmed = string;
+
+export type Cli_Utility_Configure_Runner_IsStringArrayInput_Parsed = unknown;
+
+/**
+ * CLI - Utility - Configure - Is String Record Input.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_IsStringRecordInput_Value = unknown;
+
+export type Cli_Utility_Configure_Runner_IsStringRecordInput_Returns = true | string;
+
+export type Cli_Utility_Configure_Runner_IsStringRecordInput_Trimmed = string;
+
+export type Cli_Utility_Configure_Runner_IsStringRecordInput_Parsed = unknown;
 
 /**
  * CLI - Utility - Configure - Normalize Email.
@@ -265,6 +359,39 @@ export type Cli_Utility_Configure_Runner_NormalizeWorkspaceName_ExpectedPrefix =
 export type Cli_Utility_Configure_Runner_NormalizeWorkspaceName_Descriptor = string;
 
 /**
+ * CLI - Utility - Configure - Parse Boolean Record Input.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Value = string;
+
+export type Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Returns = Shared_NovaConfig_RecipeEntry_Settings;
+
+export type Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Trimmed = string;
+
+/**
+ * CLI - Utility - Configure - Parse String Array Input.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_ParseStringArrayInput_Value = string;
+
+export type Cli_Utility_Configure_Runner_ParseStringArrayInput_Returns = string[];
+
+export type Cli_Utility_Configure_Runner_ParseStringArrayInput_Trimmed = string;
+
+/**
+ * CLI - Utility - Configure - Parse String Record Input.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_ParseStringRecordInput_Value = string;
+
+export type Cli_Utility_Configure_Runner_ParseStringRecordInput_Returns = Record<string, string>;
+
+export type Cli_Utility_Configure_Runner_ParseStringRecordInput_Trimmed = string;
+
+/**
  * CLI - Utility - Configure - Prompt Agents.
  *
  * @since 0.20.0
@@ -314,9 +441,9 @@ export type Cli_Utility_Configure_Runner_PromptEmails_Emails = Partial<Shared_No
 
 export type Cli_Utility_Configure_Runner_PromptEmails_EmailsBugsValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptEmails_ValidateEmailsBugs = (emailsBugsValue: Cli_Utility_Configure_Runner_PromptEmails_EmailsBugsValue) => Cli_Utility_Configure_Runner_PromptEmails_ValidateEmailsBugs_Result;
+export type Cli_Utility_Configure_Runner_PromptEmails_ValidateEmailsBugs = (emailsBugsValue: Cli_Utility_Configure_Runner_PromptEmails_EmailsBugsValue) => Cli_Utility_Configure_Runner_PromptEmails_ValidateEmailsBugs_Returns;
 
-export type Cli_Utility_Configure_Runner_PromptEmails_ValidateEmailsBugs_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptEmails_ValidateEmailsBugs_Returns = Shared_NormalizedResult<string>['result'];
 
 export type Cli_Utility_Configure_Runner_PromptEmails_QuestionsOutputKey =
   'emailsBugs';
@@ -476,21 +603,21 @@ export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ExistingRoles = Shar
 
 export type Cli_Utility_Configure_Runner_PromptEntitiesForm_EntityNameValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityName = (entityNameValue: Cli_Utility_Configure_Runner_PromptEntitiesForm_EntityNameValue) => Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityName_Result;
+export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityName = (entityNameValue: Cli_Utility_Configure_Runner_PromptEntitiesForm_EntityNameValue) => Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityName_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptEntitiesForm_EntityEmailValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityEmail = (entityEmailValue: Cli_Utility_Configure_Runner_PromptEntitiesForm_EntityEmailValue) => Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityEmail_Result;
+export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityEmail = (entityEmailValue: Cli_Utility_Configure_Runner_PromptEntitiesForm_EntityEmailValue) => Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityEmail_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptEntitiesForm_EntityUrlValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityUrl = (entityUrlValue: Cli_Utility_Configure_Runner_PromptEntitiesForm_EntityUrlValue) => Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityUrl_Result;
+export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityUrl = (entityUrlValue: Cli_Utility_Configure_Runner_PromptEntitiesForm_EntityUrlValue) => Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityUrl_Returns;
 
-export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityEmail_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityEmail_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityName_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityName_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityUrl_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptEntitiesForm_ValidateEntityUrl_Returns = Shared_NormalizedResult<string>['result'];
 
 export type Cli_Utility_Configure_Runner_PromptEntitiesForm_QuestionsOutputKey = 'entityName' | 'entityEmail' | 'entityUrl' | 'entityRoles';
 
@@ -525,9 +652,9 @@ export type Cli_Utility_Configure_Runner_PromptEnvironment_ProjectScope = Shared
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_WorkspacesGroup = Shared_NovaConfigEnvironment_Workspaces;
 
-export type Cli_Utility_Configure_Runner_PromptEnvironment_Workspaces = Shared_NovaConfig_Workspaces;
+export type Cli_Utility_Configure_Runner_PromptEnvironment_WorkflowsGroup = Shared_NovaConfigEnvironment_Workflows;
 
-export type Cli_Utility_Configure_Runner_PromptEnvironment_AppPaths = string[];
+export type Cli_Utility_Configure_Runner_PromptEnvironment_Workspaces = Shared_NovaConfig_Workspaces;
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_Choice_Title = string;
 
@@ -535,14 +662,17 @@ export type Cli_Utility_Configure_Runner_PromptEnvironment_Choice_Description = 
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueScope_Kind = 'scope';
 
-export type Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueScope_Scope = 'project' | 'workspace';
+export type Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueScope_Scope = 'project' | 'workspace' | 'workflow';
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueScope_AppPath = string;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueScope_WorkflowName = string;
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueScope = {
   kind: Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueScope_Kind;
   scope: Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueScope_Scope;
   appPath?: Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueScope_AppPath;
+  workflowName?: Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueScope_WorkflowName;
 };
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_ChoiceValueStatus_Kind = 'status';
@@ -575,6 +705,8 @@ export type Cli_Utility_Configure_Runner_PromptEnvironment_Choice = {
   value: Cli_Utility_Configure_Runner_PromptEnvironment_Choice_Value;
 };
 
+export type Cli_Utility_Configure_Runner_PromptEnvironment_AppPaths = string[];
+
 export type Cli_Utility_Configure_Runner_PromptEnvironment_Choices = Cli_Utility_Configure_Runner_PromptEnvironment_Choice[];
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_ProjectVariables = Shared_NovaConfigEnvironmentValue[];
@@ -587,6 +719,12 @@ export type Cli_Utility_Configure_Runner_PromptEnvironment_AppVariables = Shared
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_AppSummary = string;
 
+export type Cli_Utility_Configure_Runner_PromptEnvironment_WorkflowNames = string[];
+
+export type Cli_Utility_Configure_Runner_PromptEnvironment_WorkflowScope = Shared_NovaConfigEnvironmentWorkflow | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironment_WorkflowSummary = string;
+
 export type Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputKey = 'action';
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputResult = Cli_Utility_Configure_Runner_PromptEnvironment_Choice_Value;
@@ -594,6 +732,8 @@ export type Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputResult = Cl
 export type Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputKey, Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputResult> | Shared_PromptWithCancelReject;
 
 export type Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputResultValue = Record<Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputKey, Cli_Utility_Configure_Runner_PromptEnvironment_MenuOutputResult>;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironment_WorkflowName = string;
 
 /**
  * CLI - Utility - Configure - Prompt Environment Reconcile.
@@ -928,6 +1068,33 @@ export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_DefaultValue
 export type Cli_Utility_Configure_Runner_PromptEnvironmentValueForm_DefaultValue = string;
 
 /**
+ * CLI - Utility - Configure - Prompt Environment Workflow.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_WorkflowName = string;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_Environment = Shared_NovaConfigEnvironment;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_Workflows = Shared_NovaConfigEnvironment_Workflows;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_Existing = Shared_NovaConfigEnvironmentWorkflow | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_PrefixOutputKey = 'prefix';
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_PrefixOutputValue = string;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_PrefixOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_PrefixOutputKey, Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_PrefixOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_Prefix = string;
+
+export type Cli_Utility_Configure_Runner_PromptEnvironmentWorkflow_NextEnvironment = Shared_NovaConfigEnvironment;
+
+/**
  * CLI - Utility - Configure - Prompt Flow.
  *
  * @since 0.11.0
@@ -993,7 +1160,9 @@ export type Cli_Utility_Configure_Runner_PromptGithub_Github = Partial<Shared_No
 
 export type Cli_Utility_Configure_Runner_PromptGithub_GithubOwnerValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubOwner = (githubOwnerValue: Cli_Utility_Configure_Runner_PromptGithub_GithubOwnerValue) => true | string;
+export type Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubOwner = (githubOwnerValue: Cli_Utility_Configure_Runner_PromptGithub_GithubOwnerValue) => Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubOwner_Returns;
+
+export type Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubOwner_Returns = true | string;
 
 export type Cli_Utility_Configure_Runner_PromptGithub_OwnerOutput = Shared_PromptWithCancelResolved<'githubOwner', string> | Shared_PromptWithCancelReject;
 
@@ -1003,7 +1172,9 @@ export type Cli_Utility_Configure_Runner_PromptGithub_GithubOwnerInput = string;
 
 export type Cli_Utility_Configure_Runner_PromptGithub_GithubRepoValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubRepo = (githubRepoValue: Cli_Utility_Configure_Runner_PromptGithub_GithubRepoValue) => true | string;
+export type Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubRepo = (githubRepoValue: Cli_Utility_Configure_Runner_PromptGithub_GithubRepoValue) => Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubRepo_Returns;
+
+export type Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubRepo_Returns = true | string;
 
 export type Cli_Utility_Configure_Runner_PromptGithub_RepoOutput = Shared_PromptWithCancelResolved<'githubRepo', string> | Shared_PromptWithCancelReject;
 
@@ -1062,13 +1233,13 @@ export type Cli_Utility_Configure_Runner_PromptGithub_TopicsSkip = 'skip';
 
 export type Cli_Utility_Configure_Runner_PromptGithub_TopicsOutputResult = Record<Cli_Utility_Configure_Runner_PromptGithub_TopicsOutputKey, Cli_Utility_Configure_Runner_PromptGithub_TopicsValue>;
 
-export type Cli_Utility_Configure_Runner_PromptGithub_GithubTopicsInput = Shared_NovaConfig_Github_Topics | undefined;
-
-export type Cli_Utility_Configure_Runner_PromptGithub_TopicsTextOutput = Shared_PromptWithCancelResolved<'githubOwner', string> | Shared_PromptWithCancelReject;
+export type Cli_Utility_Configure_Runner_PromptGithub_TopicsTextOutput = Shared_PromptWithCancelResolved<'githubTopics', string> | Shared_PromptWithCancelReject;
 
 export type Cli_Utility_Configure_Runner_PromptGithub_RawTopics = string;
 
 export type Cli_Utility_Configure_Runner_PromptGithub_ParsedTopics = string[];
+
+export type Cli_Utility_Configure_Runner_PromptGithub_GithubTopicsInput = Shared_NovaConfig_Github_Topics | undefined;
 
 export type Cli_Utility_Configure_Runner_PromptGithub_ExistingFeatures = Shared_NovaConfig_Github_Features | undefined;
 
@@ -1265,15 +1436,275 @@ export type Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubOwner_Trimme
 export type Cli_Utility_Configure_Runner_PromptGithub_ValidateGithubRepo_Trimmed = string;
 
 /**
+ * CLI - Utility - Configure - Prompt GitHub Actions.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_PromptGithubActions_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_PromptGithubActions_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Configure_Runner_PromptGithubActions_Github = Shared_NovaConfig_Github;
+
+export type Cli_Utility_Configure_Runner_PromptGithubActions_Existing = Shared_NovaConfig_Github_Actions;
+
+export type Cli_Utility_Configure_Runner_PromptGithubActions_OutputKey =
+  | 'enabled'
+  | 'allowedActions'
+  | 'shaPinningRequired'
+  | 'selectedActionsGithubOwned'
+  | 'selectedActionsVerified'
+  | 'selectedActionsPatterns'
+  | 'defaultWorkflowPermissions'
+  | 'canApprovePullRequestReviews'
+  | 'artifactRetentionDays';
+
+export type Cli_Utility_Configure_Runner_PromptGithubActions_OutputValue = boolean | string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubActions_Output = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptGithubActions_OutputKey, Cli_Utility_Configure_Runner_PromptGithubActions_OutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptGithubActions_OutputResult = Record<Cli_Utility_Configure_Runner_PromptGithubActions_OutputKey, Cli_Utility_Configure_Runner_PromptGithubActions_OutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptGithubActions_SelectedActions = Shared_NovaConfig_Github_Actions_SelectedActions;
+
+export type Cli_Utility_Configure_Runner_PromptGithubActions_Patterns = string[];
+
+export type Cli_Utility_Configure_Runner_PromptGithubActions_ArtifactRetentionDaysRaw = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubActions_Actions = Shared_NovaConfig_Github_Actions;
+
+export type Cli_Utility_Configure_Runner_PromptGithubActions_ArtifactRetentionDays = number;
+
+/**
+ * CLI - Utility - Configure - Prompt GitHub Labels.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_Labels = Shared_NovaConfig_Github_Labels;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_Choice_Title = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_Choice_Description = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_Choice_Value = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_Choice = {
+  title: Cli_Utility_Configure_Runner_PromptGithubLabels_Choice_Title;
+  description: Cli_Utility_Configure_Runner_PromptGithubLabels_Choice_Description;
+  value: Cli_Utility_Configure_Runner_PromptGithubLabels_Choice_Value;
+};
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_Choices = Cli_Utility_Configure_Runner_PromptGithubLabels_Choice[];
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_ChoiceLabel = Shared_NovaConfig_Github_Label | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_Description = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_MenuOutputKey = 'action';
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_MenuOutputResult = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_MenuOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptGithubLabels_MenuOutputKey, Cli_Utility_Configure_Runner_PromptGithubLabels_MenuOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_Github = Shared_NovaConfig_Github;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_Action = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_ActionPrefix = 'move-up:' | 'move-down:';
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_MoveLabelIndex = number;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_DestinationIndex = number;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_MoveLabel = Shared_NovaConfig_Github_Label | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_EditLabelIndex = number;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_EditableLabel = Shared_NovaConfig_Github_Label | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_FormOutputKey = 'name' | 'color' | 'description';
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_FormOutputValue = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_FormOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptGithubLabels_FormOutputKey, Cli_Utility_Configure_Runner_PromptGithubLabels_FormOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_Label = Shared_NovaConfig_Github_Label;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_RemoveLabelIndex = number;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_RemoveLabel = Shared_NovaConfig_Github_Label | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_RemoveOutputKey = 'confirm';
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_RemoveOutputResult = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptGithubLabels_RemoveOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptGithubLabels_RemoveOutputKey, Cli_Utility_Configure_Runner_PromptGithubLabels_RemoveOutputResult> | Shared_PromptWithCancelReject;
+
+/**
+ * CLI - Utility - Configure - Prompt GitHub Menu.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_PromptGithubMenu_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_PromptGithubMenu_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Configure_Runner_PromptGithubMenu_Choice_Title = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubMenu_Choice_Description = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubMenu_Choice_Value = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubMenu_Choice = {
+  title: Cli_Utility_Configure_Runner_PromptGithubMenu_Choice_Title;
+  description: Cli_Utility_Configure_Runner_PromptGithubMenu_Choice_Description;
+  value: Cli_Utility_Configure_Runner_PromptGithubMenu_Choice_Value;
+};
+
+export type Cli_Utility_Configure_Runner_PromptGithubMenu_Choices = Cli_Utility_Configure_Runner_PromptGithubMenu_Choice[];
+
+export type Cli_Utility_Configure_Runner_PromptGithubMenu_OutputKey = 'section';
+
+export type Cli_Utility_Configure_Runner_PromptGithubMenu_OutputResult = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubMenu_Output = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptGithubMenu_OutputKey, Cli_Utility_Configure_Runner_PromptGithubMenu_OutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptGithubMenu_Section = string;
+
+/**
+ * CLI - Utility - Configure - Prompt GitHub Policies.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_PromptGithubPolicies_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_PromptGithubPolicies_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Configure_Runner_PromptGithubPolicies_Github = Shared_NovaConfig_Github;
+
+export type Cli_Utility_Configure_Runner_PromptGithubPolicies_Existing = Shared_NovaConfig_Github_Policies;
+
+export type Cli_Utility_Configure_Runner_PromptGithubPolicies_OutputKey =
+  | 'visibility'
+  | 'defaultBranch'
+  | 'merge'
+  | 'squash'
+  | 'rebase'
+  | 'mergeCommitTitle'
+  | 'mergeCommitMessage'
+  | 'squashMergeTitle'
+  | 'squashMergeMessage'
+  | 'autoDeleteHeadBranch'
+  | 'autoMerge'
+  | 'allowUpdateBranch'
+  | 'webCommitSignoffRequired';
+
+export type Cli_Utility_Configure_Runner_PromptGithubPolicies_OutputValue = boolean | string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubPolicies_Output = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptGithubPolicies_OutputKey, Cli_Utility_Configure_Runner_PromptGithubPolicies_OutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptGithubPolicies_OutputResult = Record<Cli_Utility_Configure_Runner_PromptGithubPolicies_OutputKey, Cli_Utility_Configure_Runner_PromptGithubPolicies_OutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptGithubPolicies_MergeMethods = Shared_NovaConfig_Github_Policies_MergeMethods;
+
+export type Cli_Utility_Configure_Runner_PromptGithubPolicies_MergeCommit = Shared_NovaConfig_Github_Policies_MergeCommit;
+
+export type Cli_Utility_Configure_Runner_PromptGithubPolicies_SquashMerge = Shared_NovaConfig_Github_Policies_SquashMerge;
+
+export type Cli_Utility_Configure_Runner_PromptGithubPolicies_Policies = Shared_NovaConfig_Github_Policies;
+
+/**
+ * CLI - Utility - Configure - Prompt GitHub Rulesets.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_Github = Shared_NovaConfig_Github;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_ExistingRulesets = Shared_NovaConfig_Github_Rulesets;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_Existing = Shared_NovaConfig_Github_Rulesets_DefaultBranch;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputKey =
+  | 'enforcement'
+  | 'blockDeletions'
+  | 'blockForcePushes'
+  | 'requireLinearHistory'
+  | 'requireSignedCommits'
+  | 'requirePullRequest'
+  | 'allowedMergeMethods'
+  | 'dismissStaleReviews'
+  | 'requireCodeOwnerReview'
+  | 'requireLastPushApproval'
+  | 'requiredApprovals'
+  | 'requireConversationResolution'
+  | 'requiredStatusChecks'
+  | 'requireBranchesToBeUpToDate';
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputValue = boolean | string | string[];
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_Output = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputKey, Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputResult = Record<Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputKey, Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_AllowedMergeMethods = Shared_NovaConfig_Github_Rulesets_DefaultBranch_AllowedMergeMethods;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_DefaultBranch = Shared_NovaConfig_Github_Rulesets_DefaultBranch;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredApprovalsRaw = string;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredApprovals = number;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecks = string[];
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_Rulesets = Shared_NovaConfig_Github_Rulesets;
+
+/**
+ * CLI - Utility - Configure - Prompt GitHub Security.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_PromptGithubSecurity_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_PromptGithubSecurity_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Configure_Runner_PromptGithubSecurity_Github = Shared_NovaConfig_Github;
+
+export type Cli_Utility_Configure_Runner_PromptGithubSecurity_Existing = Shared_NovaConfig_Github_Security;
+
+export type Cli_Utility_Configure_Runner_PromptGithubSecurity_OutputKey = 'vulnerabilityAlerts' | 'dependabotSecurityUpdates' | 'secretScanning' | 'pushProtection';
+
+export type Cli_Utility_Configure_Runner_PromptGithubSecurity_OutputValue = boolean | 'unset';
+
+export type Cli_Utility_Configure_Runner_PromptGithubSecurity_Output = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptGithubSecurity_OutputKey, Cli_Utility_Configure_Runner_PromptGithubSecurity_OutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptGithubSecurity_OutputResult = Record<Cli_Utility_Configure_Runner_PromptGithubSecurity_OutputKey, Cli_Utility_Configure_Runner_PromptGithubSecurity_OutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptGithubSecurity_Security = Shared_NovaConfig_Github_Security;
+
+/**
  * CLI - Utility - Configure - Prompt Gitignore.
  *
  * @since 0.20.0
  */
 export type Cli_Utility_Configure_Runner_PromptGitignore_Config = Shared_NovaConfig;
 
+export type Cli_Utility_Configure_Runner_PromptGitignore_TargetPath = string;
+
 export type Cli_Utility_Configure_Runner_PromptGitignore_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
 
-export type Cli_Utility_Configure_Runner_PromptGitignore_Existing = Shared_NovaConfig_Gitignore | undefined;
+export type Cli_Utility_Configure_Runner_PromptGitignore_ExistingIgnoreFiles = Shared_NovaConfig_IgnoreFiles;
+
+export type Cli_Utility_Configure_Runner_PromptGitignore_Existing = Shared_NovaConfig_IgnoreFile | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptGitignore_Bundles = Shared_NovaConfig_IgnoreFile_Bundles;
 
 export type Cli_Utility_Configure_Runner_PromptGitignore_Excludes = string[];
 
@@ -1383,6 +1814,88 @@ export type Cli_Utility_Configure_Runner_PromptGitignore_RemoveOutputResultValue
 export type Cli_Utility_Configure_Runner_PromptGitignore_Sync_Returns = void;
 
 /**
+ * CLI - Utility - Configure - Prompt Ignore File Bundles.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_PromptIgnoreFileBundles_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFileBundles_TargetPath = string;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFileBundles_Returns = Promise<boolean>;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFileBundles_IgnoreFiles = Shared_NovaConfig_IgnoreFiles;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFileBundles_Existing = Shared_NovaConfig_IgnoreFile | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFileBundles_SupportedBundles = string[];
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFileBundles_OutputKey = 'bundles';
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFileBundles_OutputResult = string[];
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFileBundles_Output = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptIgnoreFileBundles_OutputKey, Cli_Utility_Configure_Runner_PromptIgnoreFileBundles_OutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFileBundles_SelectedBundles = Shared_NovaConfig_IgnoreFile_Bundles;
+
+/**
+ * CLI - Utility - Configure - Prompt Ignore Files.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_IgnoreFiles = Shared_NovaConfig_IgnoreFiles;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_Paths = string[];
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_Choice_Title = string;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_Choice_Description = string;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_Choice_Value = string;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_Choice = {
+  title: Cli_Utility_Configure_Runner_PromptIgnoreFiles_Choice_Title;
+  description: Cli_Utility_Configure_Runner_PromptIgnoreFiles_Choice_Description;
+  value: Cli_Utility_Configure_Runner_PromptIgnoreFiles_Choice_Value;
+};
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_Choices = Cli_Utility_Configure_Runner_PromptIgnoreFiles_Choice[];
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_Entry = Shared_NovaConfig_IgnoreFile | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_PatternCount = number;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_MenuOutputKey = 'action';
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_MenuOutputResult = string;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_MenuOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptIgnoreFiles_MenuOutputKey, Cli_Utility_Configure_Runner_PromptIgnoreFiles_MenuOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_Action = string;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_PathOutputKey = 'path';
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_PathOutputResult = string;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_PathOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptIgnoreFiles_PathOutputKey, Cli_Utility_Configure_Runner_PromptIgnoreFiles_PathOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_AddedTargetPath = string;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_SeparatorIndex = number;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_SelectedTargetPath = string;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_RemoveOutputKey = 'confirm';
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_RemoveOutputResult = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_RemoveOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptIgnoreFiles_RemoveOutputKey, Cli_Utility_Configure_Runner_PromptIgnoreFiles_RemoveOutputResult> | Shared_PromptWithCancelReject;
+
+/**
  * CLI - Utility - Configure - Prompt Project.
  *
  * @since 0.11.0
@@ -1419,33 +1932,33 @@ export type Cli_Utility_Configure_Runner_PromptProject_ProjectKeywords = Shared_
 
 export type Cli_Utility_Configure_Runner_PromptProject_ProjectNameTitleValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameTitle = (projectNameTitleValue: Cli_Utility_Configure_Runner_PromptProject_ProjectNameTitleValue) => Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameTitle_Result;
+export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameTitle = (projectNameTitleValue: Cli_Utility_Configure_Runner_PromptProject_ProjectNameTitleValue) => Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameTitle_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptProject_ProjectNameSlugValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameSlug = (projectNameSlugValue: Cli_Utility_Configure_Runner_PromptProject_ProjectNameSlugValue) => Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameSlug_Result;
+export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameSlug = (projectNameSlugValue: Cli_Utility_Configure_Runner_PromptProject_ProjectNameSlugValue) => Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameSlug_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionShortValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort = (projectDescriptionShortValue: Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionShortValue) => Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort_Result;
+export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort = (projectDescriptionShortValue: Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionShortValue) => Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionLongValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionLong = (projectDescriptionLongValue: Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionLongValue) => Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionLong_Result;
+export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionLong = (projectDescriptionLongValue: Cli_Utility_Configure_Runner_PromptProject_ProjectDescriptionLongValue) => Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionLong_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptProject_ProjectKeywordsValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords = (projectKeywordsValue: Cli_Utility_Configure_Runner_PromptProject_ProjectKeywordsValue) => Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords_Result;
+export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords = (projectKeywordsValue: Cli_Utility_Configure_Runner_PromptProject_ProjectKeywordsValue) => Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords_Returns;
 
-export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionLong_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionLong_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectDescriptionShort_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords_Result = Shared_NormalizedResult<string[]>['result'];
+export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectKeywords_Returns = Shared_NormalizedResult<string[]>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameSlug_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameSlug_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameTitle_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectNameTitle_Returns = Shared_NormalizedResult<string>['result'];
 
 export type Cli_Utility_Configure_Runner_PromptProject_QuestionsOutputKey =
   'projectNameTitle'
@@ -1510,7 +2023,9 @@ export type Cli_Utility_Configure_Runner_PromptProject_ProjectPlatformsInput = S
 
 export type Cli_Utility_Configure_Runner_PromptProject_ProjectStartingYearValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectStartingYear = (projectStartingYearValue: Cli_Utility_Configure_Runner_PromptProject_ProjectStartingYearValue) => true | string;
+export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectStartingYear = (projectStartingYearValue: Cli_Utility_Configure_Runner_PromptProject_ProjectStartingYearValue) => Cli_Utility_Configure_Runner_PromptProject_ValidateProjectStartingYear_Returns;
+
+export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectStartingYear_Returns = true | string;
 
 export type Cli_Utility_Configure_Runner_PromptProject_ValidateProjectStartingYear_Trimmed = string;
 
@@ -1601,6 +2116,102 @@ export type Cli_Utility_Configure_Runner_PromptReadMe_BadgesOutput = Shared_Prom
 export type Cli_Utility_Configure_Runner_PromptReadMe_Badges = Shared_NovaConfig_ReadMe_Badges;
 
 /**
+ * CLI - Utility - Configure - Prompt Recipe Entries.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_Entries = Record<string, Shared_NovaConfig_RecipeEntry> | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_AllowedRecipeNames = readonly string[];
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_Label = string;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_Returns = Promise<Cli_Utility_Configure_Runner_PromptRecipeEntries_NextEntries | undefined>;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_ExistingEntries = Record<string, Shared_NovaConfig_RecipeEntry>;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledRecipes = string[];
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledOutputKey = 'enabledRecipes';
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledOutputResult = string[];
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledOutputKey, Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsRecipes = string[];
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsOutputKey = 'settingsRecipes';
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsOutputResult = string[];
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsOutputKey, Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsByRecipe = Record<string, Shared_NovaConfig_RecipeEntry_Settings>;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_ExistingSettings = Shared_NovaConfig_RecipeEntry_Settings;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_RecipeSettingsOutputKey = 'recipeSettings';
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_RecipeSettingsOutputResult = string;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_RecipeSettingsOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptRecipeEntries_RecipeSettingsOutputKey, Cli_Utility_Configure_Runner_PromptRecipeEntries_RecipeSettingsOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_NextEntries = Record<string, Shared_NovaConfig_RecipeEntry>;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_Entry = Shared_NovaConfig_RecipeEntry;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_RecipeSettings = Shared_NovaConfig_RecipeEntry_Settings;
+
+/**
+ * CLI - Utility - Configure - Prompt Recipes.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_PromptRecipes_Config = Shared_NovaConfig;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_Returns = Promise<Extract<Shared_DialogAction, 'back'>>;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_Recipes = Shared_NovaConfig_Recipes;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_PackageJsonRecipes = Shared_NovaConfig_Recipes_PackageJson;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_TargetPaths = string[];
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_Choice_Title = string;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_Choice_Description = string;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_Choice_Value = string;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_Choice = {
+  title: Cli_Utility_Configure_Runner_PromptRecipes_Choice_Title;
+  description: Cli_Utility_Configure_Runner_PromptRecipes_Choice_Description;
+  value: Cli_Utility_Configure_Runner_PromptRecipes_Choice_Value;
+};
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_Choices = Cli_Utility_Configure_Runner_PromptRecipes_Choice[];
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_MenuOutputKey = 'target';
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_MenuOutputResult = string;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_MenuOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptRecipes_MenuOutputKey, Cli_Utility_Configure_Runner_PromptRecipes_MenuOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_Target = string;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_Entries = Record<string, Shared_NovaConfig_RecipeEntry> | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_AllowedRecipeNames = readonly string[];
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_Label = string;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_WorkspacePath = string;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_WorkspaceEntries = Record<string, Shared_NovaConfig_RecipeEntry> | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_CategoryEntries = Record<string, Shared_NovaConfig_RecipeEntry> | undefined;
+
+/**
  * CLI - Utility - Configure - Prompt Settings.
  *
  * @since 0.23.0
@@ -1616,6 +2227,8 @@ export type Cli_Utility_Configure_Runner_PromptSettings_CurrentStrategy = Shared
 export type Cli_Utility_Configure_Runner_PromptSettings_CurrentDirectory = string;
 
 export type Cli_Utility_Configure_Runner_PromptSettings_LockedStrategy = Shared_NovaConfigSettings_VersionStrategy | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_StrategyInput = Shared_NovaConfigSettings_VersionStrategy;
 
 export type Cli_Utility_Configure_Runner_PromptSettings_StrategyChoice_Title = string;
 
@@ -1641,7 +2254,55 @@ export type Cli_Utility_Configure_Runner_PromptSettings_StrategyOutput = Shared_
 
 export type Cli_Utility_Configure_Runner_PromptSettings_StrategyOutputResult = Record<Cli_Utility_Configure_Runner_PromptSettings_StrategyOutputKey, Cli_Utility_Configure_Runner_PromptSettings_StrategyOutputValue>;
 
-export type Cli_Utility_Configure_Runner_PromptSettings_StrategyInput = Shared_NovaConfigSettings_VersionStrategy;
+export type Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningInitial = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputKey = 'lockStepVersioning';
+
+export type Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputValue = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputKey, Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputResult = Record<Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputKey, Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_RunWorkspacesSettings = Shared_NovaConfigSettings_RunWorkspaces | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_ExistingCache = Shared_NovaConfigSettings_RunWorkspacesCache;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledInitial = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledOutputKey = 'cacheEnabled';
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledOutputValue = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledOutputKey, Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledOutputResult = Record<Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledOutputKey, Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledOutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheDirectoryInitial = string;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheDirectoryOutputKey = 'cacheDirectory';
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheDirectoryOutputValue = string;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheDirectoryOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptSettings_CacheDirectoryOutputKey, Cli_Utility_Configure_Runner_PromptSettings_CacheDirectoryOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheDirectoryOutputResult = Record<Cli_Utility_Configure_Runner_PromptSettings_CacheDirectoryOutputKey, Cli_Utility_Configure_Runner_PromptSettings_CacheDirectoryOutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheDirectory = string;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsInitial = string;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutputKey = 'cacheScripts';
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutputValue = string;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutputKey, Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutputResult = Record<Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutputKey, Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_CacheScripts = string[];
+
+export type Cli_Utility_Configure_Runner_PromptSettings_RunWorkspaces = Shared_NovaConfigSettings_RunWorkspaces;
 
 export type Cli_Utility_Configure_Runner_PromptSettings_UpdatedSettings = Shared_NovaConfig_Settings;
 
@@ -1660,69 +2321,69 @@ export type Cli_Utility_Configure_Runner_PromptUrls_Urls = Partial<Shared_NovaCo
 
 export type Cli_Utility_Configure_Runner_PromptUrls_UrlsHomepageValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsHomepage = (urlsHomepageValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsHomepageValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsHomepage_Result;
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsHomepage = (urlsHomepageValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsHomepageValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsHomepage_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptUrls_UrlsRepositoryValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsRepository = (urlsRepositoryValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsRepositoryValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsRepository_Result;
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsRepository = (urlsRepositoryValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsRepositoryValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsRepository_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptUrls_UrlsBugsValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsBugs = (urlsBugsValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsBugsValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsBugs_Result;
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsBugs = (urlsBugsValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsBugsValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsBugs_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptUrls_UrlsLicenseValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsLicense = (urlsLicenseValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsLicenseValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsLicense_Result;
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsLicense = (urlsLicenseValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsLicenseValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsLicense_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptUrls_UrlsLogoValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsLogo = (urlsLogoValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsLogoValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsLogo_Result;
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsLogo = (urlsLogoValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsLogoValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsLogo_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptUrls_UrlsDocumentationValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsDocumentation = (urlsDocumentationValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsDocumentationValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsDocumentation_Result;
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsDocumentation = (urlsDocumentationValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsDocumentationValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsDocumentation_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptUrls_UrlsNpmValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsNpm = (urlsNpmValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsNpmValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsNpm_Result;
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsNpm = (urlsNpmValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsNpmValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsNpm_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptUrls_UrlsDockerValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsDocker = (urlsDockerValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsDockerValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsDocker_Result;
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsDocker = (urlsDockerValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsDockerValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsDocker_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptUrls_UrlsFundSourcesValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsFundSources = (urlsFundSourcesValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsFundSourcesValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsFundSources_Result;
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsFundSources = (urlsFundSourcesValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsFundSourcesValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsFundSources_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptUrls_UrlsPrivacyPolicyValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsPrivacyPolicy = (urlsPrivacyPolicyValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsPrivacyPolicyValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsPrivacyPolicy_Result;
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsPrivacyPolicy = (urlsPrivacyPolicyValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsPrivacyPolicyValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsPrivacyPolicy_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptUrls_UrlsTermsOfUseValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsTermsOfUse = (urlsTermsOfUseValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsTermsOfUseValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsTermsOfUse_Result;
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsTermsOfUse = (urlsTermsOfUseValue: Cli_Utility_Configure_Runner_PromptUrls_UrlsTermsOfUseValue) => Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsTermsOfUse_Returns;
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsBugs_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsBugs_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsDocker_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsDocker_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsDocumentation_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsDocumentation_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsFundSources_Result = Shared_NormalizedResult<string[]>['result'];
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsFundSources_Returns = Shared_NormalizedResult<string[]>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsHomepage_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsHomepage_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsLicense_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsLicense_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsLogo_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsLogo_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsNpm_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsNpm_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsPrivacyPolicy_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsPrivacyPolicy_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsRepository_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsRepository_Returns = Shared_NormalizedResult<string>['result'];
 
-export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsTermsOfUse_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptUrls_ValidateUrlsTermsOfUse_Returns = Shared_NormalizedResult<string>['result'];
 
 export type Cli_Utility_Configure_Runner_PromptUrls_QuestionsOutputKey =
   'urlsHomepage'
@@ -1794,6 +2455,14 @@ export type Cli_Utility_Configure_Runner_PromptWorkflows_ConfigWorkflowsRaw = un
 export type Cli_Utility_Configure_Runner_PromptWorkflows_ConfigWorkflows = Shared_BlueprintConfig_Workflows;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflows_ClonedWorkflow = Shared_BlueprintConfigWorkflow;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflows_ClonedTrigger = Shared_BlueprintConfigTriggerObject;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflows_ClonedTarget = Shared_BlueprintConfigDeployTarget;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflows_Sync_Returns = void;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflows_Sync_NormalizedWorkflows = Shared_BlueprintConfig_Workflows;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflows_Choice_Title = string;
 
@@ -1906,11 +2575,11 @@ export type Cli_Utility_Configure_Runner_PromptWorkflows_ShouldRemove = boolean;
  *
  * @since 0.15.0
  */
-export type Cli_Utility_Configure_Runner_PromptWorkflows_Sync_Returns = void;
-
-export type Cli_Utility_Configure_Runner_PromptWorkflows_Sync_NormalizedWorkflows = Shared_BlueprintConfig_Workflows;
-
 export type Cli_Utility_Configure_Runner_PromptWorkflows_Sync_NormalizedWorkflow = Shared_BlueprintConfigWorkflow;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflows_Sync_ClonedTrigger = Shared_BlueprintConfigTriggerObject;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflows_Sync_ClonedTarget = Shared_BlueprintConfigDeployTarget;
 
 /**
  * CLI - Utility - Configure - Prompt Workflows Delete Form.
@@ -1979,9 +2648,9 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTriggers = 
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTriggerNames = string[];
 
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingUpstreamWorkflows = Shared_BlueprintConfigTriggerObject_Workflows;
-
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTargets = Shared_BlueprintConfigWorkflow_Deploy;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingUpstreamWorkflows = Shared_BlueprintConfigTriggerObject_Workflows;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingScopes = Shared_BlueprintConfigWorkflow_Build;
 
@@ -2025,10 +2694,6 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersDir = strin
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersDirExists = boolean;
 
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTriggers = Shared_NovaConfigWorkflowTrigger[];
-
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersFiles = string[];
-
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerChoice_Title = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerChoice_Value = Shared_NovaConfigWorkflowTrigger;
@@ -2043,6 +2708,10 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerChoice = {
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerChoices = Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerChoice[];
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTriggers = Shared_NovaConfigWorkflowTrigger[];
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersFiles = string[];
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerName = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersOutputKey = 'triggers';
@@ -2054,6 +2723,38 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersOutput = Sh
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersOutputResultValue = Record<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersOutputResult>;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScheduleVariants = string[];
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggerChoices = Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerChoices;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggerNames = Shared_NovaConfigWorkflowTrigger[];
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutputKey = 'advancedTriggers';
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutputResult = Shared_NovaConfigWorkflowTrigger[];
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutputResultValue = Record<Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutputResult>;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ResolvedTriggers = Shared_BlueprintConfigWorkflow_Triggers;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTrigger = Shared_BlueprintConfigTriggerObject | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerFilterOutputKey = 'branches' | 'paths' | 'tags' | 'workflows';
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerFilterOutputValue = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerFilterOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerFilterOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerFilterOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerFilterOutputResult = Record<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerFilterOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerFilterOutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_Branches = Shared_BlueprintConfigTriggerObject_Branches;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_Paths = Shared_BlueprintConfigTriggerObject_Paths;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_Tags = Shared_BlueprintConfigTriggerObject_Tags;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerWorkflows = Shared_BlueprintConfigTriggerObject_Workflows;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedUpstreamWorkflows = Shared_BlueprintConfigTriggerObject_Workflows | undefined;
 
@@ -2081,13 +2782,13 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_UpstreamWorkflowsOu
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputResultValue = Record<Cli_Utility_Configure_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_UpstreamWorkflowsOutputResult>;
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerObject = Shared_BlueprintConfigTriggerObject;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_MatchedMetadata = Lib_WorkflowTemplates_Entry | undefined;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_WorkspaceKeys = string[];
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargets = Shared_BlueprintConfigWorkflow_Deploy;
-
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetTypes = string[];
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuChoice_Title = string;
 
@@ -2132,6 +2833,10 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuChoice = 
   value: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuChoice_Value;
 };
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetTypes = string[];
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTargetTypes = string[];
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuChoices = Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuChoice[];
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTarget = Shared_BlueprintConfigDeployTarget | undefined;
@@ -2156,8 +2861,6 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEditIndex = n
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetToEdit = Shared_BlueprintConfigDeployTarget | undefined;
 
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeInitial = number;
-
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeChoice_Title = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeChoice_Value = string;
@@ -2166,6 +2869,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeChoice = 
   title: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeChoice_Title;
   value: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeChoice_Value;
 };
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeInitial = number;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeChoices = Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeChoice[];
 
@@ -2179,8 +2884,6 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeOutputRes
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetType = string;
 
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirInitial = number;
-
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice_Title = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice_Value = string;
@@ -2189,6 +2892,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirCho
   title: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice_Title;
   value: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice_Value;
 };
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirInitial = number;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoices = Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice[];
 
@@ -2206,8 +2911,6 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetIsDuplicate =
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetNeeds = Shared_BlueprintConfigDeployTarget_After | undefined;
 
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetToEditExistingNeeds = Shared_BlueprintConfigDeployTarget_After;
-
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsChoice_Title = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsChoice_Value = string;
@@ -2220,6 +2923,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsChoice =
   selected: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsChoice_Selected;
 };
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetToEditExistingNeeds = Shared_BlueprintConfigDeployTarget_After;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsChoices = Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsChoice[];
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputKey = 'targetNeeds';
@@ -2228,15 +2933,21 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputRe
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputResult> | Shared_PromptWithCancelReject;
 
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputResultValue = Record<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputResult>;
-
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry_Type = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry_WorkingDir = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry_Needs = Shared_NovaConfigWorkflowTarget_Needs;
 
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_NewTarget = Shared_BlueprintConfigDeployTarget;
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputResultValue = Record<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputResult>;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputKey = 'targetSettings';
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputResult = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettings = Shared_BlueprintConfigDeployTarget_With;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry = {
   type: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry_Type;
@@ -2244,11 +2955,13 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry = {
   needs?: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry_Needs;
 };
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_NewTarget = Shared_BlueprintConfigDeployTarget;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedScopes = Shared_BlueprintConfigWorkflow_Build;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_LockedPaths = Set<string>;
 
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExtraWorkspaceKeys = string[];
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopeCandidates = string[];
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopeChoice_Title = string;
 
@@ -2261,6 +2974,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopeChoice = {
   value: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopeChoice_Value;
   selected: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopeChoice_Selected;
 };
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExtraWorkspaceKeys = string[];
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopeChoices = Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopeChoice[];
 
@@ -2302,13 +3017,13 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetVariableNameK
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_VariableEntries = [string, Shared_WorkflowTemplateVariable][];
 
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_VariableEntry = [string, Shared_WorkflowTemplateVariable];
-
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_VariableName = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_VariableConfig = Shared_WorkflowTemplateVariable;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_PromptMessage = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_VariableEntry = [string, Shared_WorkflowTemplateVariable];
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_InitialValue = string;
 
@@ -2332,7 +3047,13 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SettingValue = stri
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_IsDefaultRootWorkingDir = boolean;
 
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ResolvedTriggers = Shared_BlueprintConfigWorkflow_Triggers;
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ReviewedSettingsOutputKey = 'reviewedSettings';
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ReviewedSettingsOutputResult = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ReviewedSettingsOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptWorkflowsForm_ReviewedSettingsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_ReviewedSettingsOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ReviewedSettings = Shared_BlueprintConfigWorkflow_With;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ResolvedWorkflow = Shared_BlueprintConfigWorkflow;
 
@@ -2350,6 +3071,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkspaces_Workspaces = Shared_No
 export type Cli_Utility_Configure_Runner_PromptWorkspaces_Recipes = Shared_NovaConfig_Recipes;
 
 export type Cli_Utility_Configure_Runner_PromptWorkspaces_PackageJsonRecipes = Shared_NovaConfig_Recipes_PackageJson;
+
+export type Cli_Utility_Configure_Runner_PromptWorkspaces_ScaffoldTemplateRoot = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkspaces_RawWorkspacePaths = string[];
 
@@ -2549,7 +3272,7 @@ export type Cli_Utility_Configure_Runner_PromptWorkspacesForm_ResolveName_Base =
 
 export type Cli_Utility_Configure_Runner_PromptWorkspacesForm_ResolveName_WorkspaceNameValue = unknown;
 
-export type Cli_Utility_Configure_Runner_PromptWorkspacesForm_ResolveName_ValidateWorkspaceName = (workspaceNameValue: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ResolveName_WorkspaceNameValue) => Cli_Utility_Configure_Runner_PromptWorkspacesForm_ResolveName_ValidateWorkspaceName_Result;
+export type Cli_Utility_Configure_Runner_PromptWorkspacesForm_ResolveName_ValidateWorkspaceName = (workspaceNameValue: Cli_Utility_Configure_Runner_PromptWorkspacesForm_ResolveName_WorkspaceNameValue) => Cli_Utility_Configure_Runner_PromptWorkspacesForm_ResolveName_ValidateWorkspaceName_Returns;
 
 export type Cli_Utility_Configure_Runner_PromptWorkspacesForm_ResolveName_PromptKey = 'workspaceName';
 
@@ -2562,7 +3285,7 @@ export type Cli_Utility_Configure_Runner_PromptWorkspacesForm_ResolveName_NamePr
  *
  * @since 0.11.0
  */
-export type Cli_Utility_Configure_Runner_PromptWorkspacesForm_ResolveName_ValidateWorkspaceName_Result = Shared_NormalizedResult<string>['result'];
+export type Cli_Utility_Configure_Runner_PromptWorkspacesForm_ResolveName_ValidateWorkspaceName_Returns = Shared_NormalizedResult<string>['result'];
 
 /**
  * CLI - Utility - Configure - Read Local Filled Keys.

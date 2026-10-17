@@ -74,6 +74,8 @@ const exemptComponents: Tests_ClassNameStylePassthrough_ExemptComponents = [
  * Resolves the docusaurus-preset-nova package root from the
  * current test file location.
  *
+ * @returns {string}
+ *
  * @since 0.18.0
  */
 function getPackageRoot(): Tests_ClassNameStylePassthrough_GetPackageRoot_Returns {
@@ -91,6 +93,8 @@ function getPackageRoot(): Tests_ClassNameStylePassthrough_GetPackageRoot_Return
  * for stable assertion order. Keys are forward-slashed so
  * the comparison against the exempt list is consistent
  * across operating systems.
+ *
+ * @returns {Tests_ClassNameStylePassthrough_DiscoverComponents_Returns}
  *
  * @since 0.18.0
  */

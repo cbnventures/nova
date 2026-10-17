@@ -78,6 +78,8 @@ export function useSearchWorker(options: Lib_Search_UseSearchWorker_Options): Li
      * Handles messages posted back from the search worker, dispatching ready,
      * results, and error notifications to the corresponding React state setters.
      *
+     * @returns {undefined}
+     *
      * @since 0.15.0
      */
     const handleMessage: Lib_Search_UseSearchWorker_HandleMessage = (messageEvent: Lib_Search_UseSearchWorker_MessageEvent) => {
@@ -190,6 +192,8 @@ export function useSearchWorker(options: Lib_Search_UseSearchWorker_Options): Li
    * Posts a search query to the worker once it is ready, applying the
    * configured result limit and fuzzy matching distance so the worker
    * returns a bounded set of hits.
+   *
+   * @returns {undefined}
    *
    * @since 0.15.0
    */

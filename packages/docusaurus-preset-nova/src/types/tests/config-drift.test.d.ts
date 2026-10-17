@@ -9,9 +9,13 @@ export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTy
 
 export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_PublicLeaves = readonly string[];
 
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description_Type = string;
+
+export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description_Keys = Record<string, Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description>;
+
 export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description = {
-  type?: string;
-  keys?: Record<string, Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description>;
+  type?: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description_Type;
+  keys?: Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description_Keys;
 };
 
 export type Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_JoiSchema_Describe = () => Tests_ConfigDrift_ConfigDriftOverridesSchemaParity_PublicOverridesTypeMatchesTheJoiOverridesSchema_Description;
@@ -75,9 +79,11 @@ export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulate
 
 export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Validated_Value = unknown;
 
+export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Validated_Error = Error;
+
 export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Validated = {
   value: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Validated_Value;
-  error?: Error;
+  error?: Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_Validated_Error;
 };
 
 export type Tests_ConfigDrift_ConfigDriftValidateOptions_ValidatesAFullyPopulatedPresetOptionsObject_PresetValue = string;
@@ -159,9 +165,11 @@ export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopu
 
 export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Validated_Value = unknown;
 
+export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Validated_Error = Error;
+
 export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Validated = {
   value: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Validated_Value;
-  error?: Error;
+  error?: Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Validated_Error;
 };
 
 export type Tests_ConfigDrift_ConfigDriftValidateThemeConfig_ValidatesAFullyPopulatedThemeConfigObject_Site = Record<string, unknown>;
@@ -356,9 +364,13 @@ export type Tests_ConfigDrift_DerivePublicOverrideLeafPaths_WalkFieldType = stri
  *
  * @since 0.19.0
  */
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode_Type = string;
+
+export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode_Keys = Record<string, Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode>;
+
 export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode = {
-  type?: string;
-  keys?: Record<string, Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode>;
+  type?: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode_Type;
+  keys?: Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_RootNode_Keys;
 };
 
 export type Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_Returns = readonly string[];

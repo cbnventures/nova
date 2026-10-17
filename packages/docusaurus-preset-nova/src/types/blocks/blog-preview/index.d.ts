@@ -78,12 +78,12 @@ export type Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalDataBlogPost = {
   date: Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalDataBlogPost_Date;
 };
 
+export type Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalData_BlogPosts = Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalDataBlogPost[];
+
 export type Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalData = {
   blogPosts?: Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalData_BlogPosts;
   [key: string]: unknown;
 };
-
-export type Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalData_BlogPosts = Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalDataBlogPost[];
 
 export type Blocks_BlogPreview_Index_BlocksBlogPreview_ResolvedPosts = Blocks_BlogPreview_Index_BlocksBlogPreview_Post[];
 

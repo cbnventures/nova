@@ -220,6 +220,29 @@ export type Tests_Lib_Utility_DiscoverPathsWithFile_FindsEveryPackageJsonWhenTra
 export type Tests_Lib_Utility_DiscoverPathsWithFile_FindsEveryPackageJsonWhenTraversingForward_RelativePaths = string[];
 
 /**
+ * Tests - Lib - Utility - DiscoverPathsWithFile - SkipsOnlyExplicitlyExcludedRoots.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ProjectRoot = string;
+
+export type Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ExcludedRoot = string;
+
+export type Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ConsumerTemplatesRoot = string;
+
+export type Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ProjectPackage = string;
+
+export type Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ExcludedPackage = string;
+
+export type Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_ConsumerPackage = string;
+
+export type Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_RealProjectRoot = string;
+
+export type Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_AbsolutePaths = string[];
+
+export type Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_RelativePaths = string[];
+
+/**
  * Tests - Lib - Utility - ExecuteShell - ReturnsNonZeroCodeForFailingCommand.
  *
  * @since 0.12.0

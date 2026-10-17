@@ -11,6 +11,8 @@ import type { Blocks_Stats_Index_BlocksStats_Props } from '../../types/blocks/st
  *
  * @param {Blocks_Stats_Index_BlocksStats_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlocksStats(props: Blocks_Stats_Index_BlocksStats_Props) {

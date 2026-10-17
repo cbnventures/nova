@@ -77,13 +77,13 @@ The generator validates each entry against its template, builds the workflow fro
 
 The project root's `packageManager` field selects how generated `publish` workflows install dependencies and run project-owned tools. Nova passes the client through the entire workflow instead of translating every project to npm.
 
-| Root descriptor        | Install step   | Local executable   | Workspace scripts without Turbo           |
-|------------------------|----------------|--------------------|-------------------------------------------|
-| `npm@<exact-version>`  | `npm install`  | `npx <tool>`       | `npm run <script> -w <workspace>`         |
-| `pnpm@<exact-version>` | `pnpm install` | `pnpm exec <tool>` | `pnpm --filter=<workspace> run <script>`  |
-| `yarn@<exact-version>` | `yarn install` | `yarn exec <tool>` | `yarn workspace <workspace> run <script>` |
+| Root descriptor        | Install step   | Local executable   | Root script         |
+|------------------------|----------------|--------------------|---------------------|
+| `npm@<exact-version>`  | `npm install`  | `npx <tool>`       | `npm run <script>`  |
+| `pnpm@<exact-version>` | `pnpm install` | `pnpm exec <tool>` | `pnpm run <script>` |
+| `yarn@<exact-version>` | `yarn install` | `yarn exec <tool>` | `yarn run <script>` |
 
-Each install job first runs `corepack enable <client>`. Corepack then reads the full descriptor from the checked-out root `package.json`, so the workflow uses the pinned version instead of installing a floating `latest` release. Turbo projects use the same client to execute `turbo`.
+Each install job first runs `corepack enable <client>`. Corepack then reads the full descriptor from the checked-out root `package.json`, so the workflow uses the pinned version instead of installing a floating `latest` release. Root scripts that orchestrate workspaces share the client-independent command `nova utility run-workspaces <script>`. Nova reads the workspace graph from `nova.config.json` and executes each child through the pinned client.
 
 This selection governs project tooling; it does not rename deploy destinations. The `npm` and `github-packages` targets still use the npm publishing protocol and commands even when pnpm or Yarn manages the repository.
 
@@ -531,7 +531,7 @@ You can set these on the deploy's `with` as shown, or on the workflow-level `wit
 
 When a GitHub Release is published:
 
-1. The base `build` job runs the workspace's build command through the root `packageManager` client (executing Turbo when a `turbo.json` is present, otherwise using the client's workspace command), producing output in the workspace's `build/` directory.
+1. The base `build` job runs the root checks and then uses Nova's dependency-aware workspace runner to build the configured scopes, producing output in each workspace's `build/` directory.
 2. The `publish-github-action-*` job spins up a separate git workspace at `$RUNNER_TEMP/release`, initialized with the release branch name.
 3. If the release branch already exists remotely, the workspace fetches and resets to it. Otherwise it stays as a fresh orphan branch.
 4. The release tree is staged: `action.yml`, the optional files above, and the built output copied into `action/` (renaming `build/` → `action/`).

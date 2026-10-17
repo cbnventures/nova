@@ -14,6 +14,8 @@ import type {
  *
  * @param {Blocks_Terminology_Index_BlocksTerminology_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlocksTerminology(props: Blocks_Terminology_Index_BlocksTerminology_Props) {

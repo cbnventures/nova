@@ -19,6 +19,8 @@ import type {
  *
  * @param {Theme_DocRoot_Layout_Index_DocRootLayout_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DocRootLayout(props: Theme_DocRoot_Layout_Index_DocRootLayout_Props) {

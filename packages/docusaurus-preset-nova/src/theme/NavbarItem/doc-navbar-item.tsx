@@ -23,6 +23,8 @@ import type {
  *
  * @param {Theme_NavbarItem_DocNavbarItem_Props} props - Props.
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.15.0
  */
 function DocNavbarItem(props: Theme_NavbarItem_DocNavbarItem_Props) {

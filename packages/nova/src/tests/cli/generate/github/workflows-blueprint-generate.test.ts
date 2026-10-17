@@ -134,10 +134,6 @@ describe('WorkflowsBlueprint.generate', async () => {
 
     await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
 
-    // The real portfolio is a turbo monorepo, so the sandbox carries a
-    // turbo.json for the generator's turbo detection to find.
-    await writeFile(join(projectDirectory, 'turbo.json'), '{}\n', 'utf-8');
-
     const novaConfig: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_ReproducesAllThreePortfolioWorkflowsByteForByteAndSkipsOnASecondRun_NovaConfig = {
       project: {
         name: {

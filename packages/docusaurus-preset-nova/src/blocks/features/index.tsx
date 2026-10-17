@@ -12,6 +12,8 @@ import type { Blocks_Features_Index_BlocksFeatures_Props } from '../../types/blo
  *
  * @param {Blocks_Features_Index_BlocksFeatures_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlocksFeatures(props: Blocks_Features_Index_BlocksFeatures_Props) {

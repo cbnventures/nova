@@ -225,8 +225,11 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
           title: 'Workspace Test',
         },
       },
-      gitignore: {
-        projectExcludes: ['private-output/'],
+      ignoreFiles: {
+        './.gitignore': {
+          bundles: ['nova'],
+          patterns: ['private-output/'],
+        },
       },
       workspaces: {
         './': {

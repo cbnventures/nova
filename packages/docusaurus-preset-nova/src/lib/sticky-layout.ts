@@ -29,6 +29,8 @@ if (typeof window !== 'undefined') {
    * Measures the navbar height, checks if it is sticky,
    * and sets the CSS variable for sticky elements.
    *
+   * @returns {undefined}
+   *
    * @since 0.15.0
    */
   function update(): Lib_StickyLayout_Update_Returns {
@@ -60,6 +62,8 @@ if (typeof window !== 'undefined') {
    * Defers update to the next animation frame to ensure
    * the DOM and CSS are fully rendered before measuring.
    *
+   * @returns {undefined}
+   *
    * @since 0.15.0
    */
   function scheduleUpdate(): Lib_StickyLayout_ScheduleUpdate_Returns {
@@ -90,6 +94,8 @@ if (typeof window !== 'undefined') {
  *
  * Docusaurus lifecycle hook that fires after client-side
  * navigation so the sticky top recalculates.
+ *
+ * @returns {undefined}
  *
  * @since 0.15.0
  */

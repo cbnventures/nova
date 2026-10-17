@@ -30,6 +30,8 @@ import type {
  *
  * @param {Blocks_BlogPreview_Index_BlocksBlogPreview_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlocksBlogPreview(props: Blocks_BlogPreview_Index_BlocksBlogPreview_Props) {

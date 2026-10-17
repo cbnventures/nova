@@ -10,12 +10,19 @@
   "main": "./build/index.js",
   "type": "module",
   "files": [
+    "bin",
     "build",
     "config.schema.json"
   ],
+  "bin": {
+    "[__WORKSPACE_PACKAGE_NAME__]-repl": "./bin/repl.mjs",
+    "[__WORKSPACE_PACKAGE_NAME__]-test-api": "./bin/test-api.mjs"
+  },
   "scripts": {
     "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
     "dev:watch": "nova utility transpile --project tsconfig.source.json --watch",
+    "prod": "nova utility run-scripts --sequential --node-env production 'prod:*'",
+    "prod:homebridge": "npm run build && homebridge --debug --keep-orphans --plugin-path $(pwd)",
     "check": "nova utility run-scripts --sequential 'check:*'",
     "check:lint": "eslint ./ --max-warnings=0",
     "check:types-source": "nova utility type-check --project tsconfig.source.json",
@@ -25,23 +32,25 @@
     "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
     "build:reset": "shx rm -rf ./build",
     "build:transpile": "nova utility transpile --project tsconfig.source.json",
+    "build:permissions": "shx chmod +x ./bin/repl.mjs ./bin/test-api.mjs ./build/cli/repl.js ./build/cli/test-api.js",
     "clean": "nova utility run-scripts --parallel 'clean:*'",
     "clean:build": "shx rm -rf ./build",
-    "start": "homebridge --debug --keep-orphans --plugin-path $(pwd)"
+    "repl": "node ./build/cli/repl.js",
+    "test-api": "node ./build/cli/test-api.js"
   },
   "engines": {
-    "homebridge": "^1.11.0 || ^2.0.0",
-    "node": "^22 || ^24"
+    "homebridge": "[__SCAFFOLD_VERSION_HOMEBRIDGE_PEER__]",
+    "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.31.1"
+    "@cbnventures/nova": "0.32.0"
   },
   "devDependencies": {
-    "@types/node": "24.9.1",
-    "eslint": "9.39.5",
-    "homebridge": "2.4.0",
-    "shx": "0.4.0",
-    "typescript": "6.0.3",
-    "vitest": "4.1.11"
+    "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",
+    "eslint": "[__SCAFFOLD_VERSION_ESLINT__]",
+    "homebridge": "[__SCAFFOLD_VERSION_HOMEBRIDGE__]",
+    "shx": "[__SCAFFOLD_VERSION_SHX__]",
+    "typescript": "[__SCAFFOLD_VERSION_TYPESCRIPT__]",
+    "vitest": "[__SCAFFOLD_VERSION_VITEST__]"
   }
 }

@@ -5,11 +5,31 @@ import type { vi } from 'vitest';
 import type {
   Cli_Utility_Configure_Runner_CheckPath_CurrentDirectory,
   Cli_Utility_Configure_Runner_CheckPath_Returns,
+  Cli_Utility_Configure_Runner_PromptAgents_Config,
+  Cli_Utility_Configure_Runner_PromptAgents_Returns,
   Cli_Utility_Configure_Runner_PromptEnvironment_Config,
   Cli_Utility_Configure_Runner_PromptEnvironment_Returns,
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Config,
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Mutate,
   Cli_Utility_Configure_Runner_PromptEnvironmentReconcile_Returns,
+  Cli_Utility_Configure_Runner_PromptFlow_Config,
+  Cli_Utility_Configure_Runner_PromptFlow_Returns,
+  Cli_Utility_Configure_Runner_PromptGithub_Config,
+  Cli_Utility_Configure_Runner_PromptGithub_Returns,
+  Cli_Utility_Configure_Runner_PromptGithubActions_Config,
+  Cli_Utility_Configure_Runner_PromptGithubActions_Returns,
+  Cli_Utility_Configure_Runner_PromptGithubLabels_Config,
+  Cli_Utility_Configure_Runner_PromptGithubLabels_Returns,
+  Cli_Utility_Configure_Runner_PromptGithubPolicies_Config,
+  Cli_Utility_Configure_Runner_PromptGithubPolicies_Returns,
+  Cli_Utility_Configure_Runner_PromptGithubRulesets_Config,
+  Cli_Utility_Configure_Runner_PromptGithubRulesets_Returns,
+  Cli_Utility_Configure_Runner_PromptGithubSecurity_Config,
+  Cli_Utility_Configure_Runner_PromptGithubSecurity_Returns,
+  Cli_Utility_Configure_Runner_PromptIgnoreFiles_Config,
+  Cli_Utility_Configure_Runner_PromptIgnoreFiles_Returns,
+  Cli_Utility_Configure_Runner_PromptRecipes_Config,
+  Cli_Utility_Configure_Runner_PromptRecipes_Returns,
   Cli_Utility_Configure_Runner_PromptSettings_Config,
   Cli_Utility_Configure_Runner_PromptSettings_Returns,
   Cli_Utility_Configure_Runner_PromptWorkflows_Config,
@@ -26,12 +46,70 @@ import type {
 import type {
   Shared_BlueprintConfig_Workflows,
   Shared_NovaConfig,
+  Shared_NovaConfig_Github,
+  Shared_NovaConfig_Recipes,
   Shared_NovaConfig_Recipes_PackageJsonWorkspace,
   Shared_NovaConfigEnvironmentProject,
   Shared_NovaConfigEnvironmentValue,
   Shared_NovaConfigEnvironmentWorkspace,
 } from '../../../shared.d.ts';
 import type { Toolkit_Logger_Runner_Customize_Returns } from '../../../toolkit/logger.d.ts';
+
+/**
+ * Tests - CLI - Utility - Configure - Config Field Coverage.
+ *
+ * Converts the complete config contract into a required editor map. Arrays use
+ * "$item", while string-keyed records use "$entry" as the representative
+ * value shape. Adding a config field therefore breaks the test type-check until
+ * the field is assigned to its configure editor.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_UnionToIntersection<Value> = (
+  Value extends unknown ? (input: Value) => void : never
+) extends ((input: infer Intersection) => void) ? Intersection : never;
+
+export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_Object<Value> = Extract<NonNullable<Value>, object>;
+
+export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_Intersection<Value> = Tests_Cli_Utility_Configure_ConfigFieldCoverage_UnionToIntersection<Tests_Cli_Utility_Configure_ConfigFieldCoverage_Object<Value>>;
+
+export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_Value<Value, Key extends PropertyKey> = Key extends keyof Tests_Cli_Utility_Configure_ConfigFieldCoverage_Intersection<Value> ? Tests_Cli_Utility_Configure_ConfigFieldCoverage_Intersection<Value>[Key] : never;
+
+export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_Editor =
+  'promptAgents'
+  | 'promptEmails'
+  | 'promptEntities'
+  | 'promptEnvironmentProject'
+  | 'promptEnvironmentValueForm'
+  | 'promptEnvironmentWorkflow'
+  | 'promptEnvironmentWorkspace'
+  | 'promptGithub'
+  | 'promptGithubActions'
+  | 'promptGithubLabels'
+  | 'promptGithubPolicies'
+  | 'promptGithubRulesets'
+  | 'promptGithubSecurity'
+  | 'promptGitignore'
+  | 'promptIgnoreFileBundles'
+  | 'promptProject'
+  | 'promptReadMe'
+  | 'promptRecipeEntries'
+  | 'promptSettings'
+  | 'promptUrls'
+  | 'promptWorkflowsForm'
+  | 'promptWorkspacesForm';
+
+export type Tests_Cli_Utility_Configure_BuildConfigFieldCoverage<Value> = [NonNullable<Value>] extends [readonly (infer Item)[]]
+  ? {
+      $item: Tests_Cli_Utility_Configure_BuildConfigFieldCoverage<Item>;
+    }
+  : [Tests_Cli_Utility_Configure_ConfigFieldCoverage_Object<Value>] extends [never]
+      ? Tests_Cli_Utility_Configure_ConfigFieldCoverage_Editor
+      : {
+          [Key in keyof Required<Tests_Cli_Utility_Configure_ConfigFieldCoverage_Intersection<Value>>]: Tests_Cli_Utility_Configure_BuildConfigFieldCoverage<Tests_Cli_Utility_Configure_ConfigFieldCoverage_Value<Value, Key>>;
+        };
+
+export type Tests_Cli_Utility_Configure_ConfigFieldCoverage = Tests_Cli_Utility_Configure_BuildConfigFieldCoverage<Shared_NovaConfig>;
 
 /**
  * Tests - CLI - Utility - Configure - Is Non Empty Literal Input - Returns The Error Message For An Empty String.
@@ -80,6 +158,17 @@ export type Tests_Cli_Utility_Configure_CliUtilityConfigureRun_SandboxRoot = str
  * @since 0.14.0
  */
 export type Tests_Cli_Utility_Configure_CliUtilityConfigureRun_SetsExitCodeWhenNotAtProjectRoot_ProjectDirectory = string;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Agents - Removes The Optional Field When No Tools Are Selected.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_PromptAgents = (config: Cli_Utility_Configure_Runner_PromptAgents_Config) => Cli_Utility_Configure_Runner_PromptAgents_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptAgents_RemovesTheOptionalFieldWhenNoToolsAreSelected_Result = Awaited<Cli_Utility_Configure_Runner_PromptAgents_Returns>;
 
 /**
  * Tests - CLI - Utility - Configure - Prompt Environment Section - Adds A Global Secret Value.
@@ -176,6 +265,133 @@ export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAV
 export type Tests_Cli_Utility_Configure_PromptEnvironmentSection_RejectsAddingAValueWhenTheNamespaceHasNoPrefix_ErrorCalls = unknown[][];
 
 /**
+ * Tests - CLI - Utility - Configure - Prompt Flow - Exposes Every Top Level Config Category.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_CapturedQuestions = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Question = PromptObject;
+
+export type Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Next = Record<string, unknown>;
+
+export type Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_PromptFlow = (config: Cli_Utility_Configure_Runner_PromptFlow_Config) => Cli_Utility_Configure_Runner_PromptFlow_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Result = Awaited<Cli_Utility_Configure_Runner_PromptFlow_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_CategoryQuestion = PromptObject | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_ConfiguredChoices = PromptObject['choices'];
+
+export type Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_CategoryChoices = unknown[];
+
+export type Tests_Cli_Utility_Configure_PromptFlow_ExposesEveryTopLevelConfigCategory_Values = unknown[];
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt GitHub - Edits Every Basic GitHub Field Without Dropping Focused Sections.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Next = Record<string, unknown> | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_PromptGithub = (config: Cli_Utility_Configure_Runner_PromptGithub_Config) => Cli_Utility_Configure_Runner_PromptGithub_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Result = Awaited<Cli_Utility_Configure_Runner_PromptGithub_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Github = Shared_NovaConfig_Github | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_Recipes = Shared_NovaConfig_Recipes | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptGitHub_EditsEveryBasicGitHubFieldWithoutDroppingFocusedSections_GithubRecipes = Shared_NovaConfig_Recipes['github'];
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt GitHub Actions - Edits Every Actions Field.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Utility_Configure_PromptGitHubActions_EditsEveryActionsField_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubActions_EditsEveryActionsField_PromptGithubActions = (config: Cli_Utility_Configure_Runner_PromptGithubActions_Config) => Cli_Utility_Configure_Runner_PromptGithubActions_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubActions_EditsEveryActionsField_Result = Awaited<Cli_Utility_Configure_Runner_PromptGithubActions_Returns>;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt GitHub Labels - Reorders Labels.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Next = Record<string, unknown> | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_PromptGithubLabels = (config: Cli_Utility_Configure_Runner_PromptGithubLabels_Config) => Cli_Utility_Configure_Runner_PromptGithubLabels_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Result = Awaited<Cli_Utility_Configure_Runner_PromptGithubLabels_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubLabels_ReordersLabels_Github = Shared_NovaConfig_Github | undefined;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt GitHub Repository Contracts - Edits Every Policy Ruleset And Security Field.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubPolicies = (config: Cli_Utility_Configure_Runner_PromptGithubPolicies_Config) => Cli_Utility_Configure_Runner_PromptGithubPolicies_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubRulesets = (config: Cli_Utility_Configure_Runner_PromptGithubRulesets_Config) => Cli_Utility_Configure_Runner_PromptGithubRulesets_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubSecurity = (config: Cli_Utility_Configure_Runner_PromptGithubSecurity_Config) => Cli_Utility_Configure_Runner_PromptGithubSecurity_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PoliciesResult = Awaited<Cli_Utility_Configure_Runner_PromptGithubPolicies_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_RulesetsResult = Awaited<Cli_Utility_Configure_Runner_PromptGithubRulesets_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_SecurityResult = Awaited<Cli_Utility_Configure_Runner_PromptGithubSecurity_Returns>;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Ignore Files - Adds Bundles And Patterns For A Physical Ignore File.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Next = Record<string, unknown> | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_PromptIgnoreFiles = (config: Cli_Utility_Configure_Runner_PromptIgnoreFiles_Config) => Cli_Utility_Configure_Runner_PromptIgnoreFiles_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Result = Awaited<Cli_Utility_Configure_Runner_PromptIgnoreFiles_Returns>;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Recipes - Edits Recipe Settings Without Dropping Other Categories.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Next = Record<string, unknown> | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_PromptRecipes = (config: Cli_Utility_Configure_Runner_PromptRecipes_Config) => Cli_Utility_Configure_Runner_PromptRecipes_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Result = Awaited<Cli_Utility_Configure_Runner_PromptRecipes_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Recipes = Shared_NovaConfig_Recipes | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_GithubRecipes = Shared_NovaConfig_Recipes['github'];
+
+/**
  * Tests - CLI - Utility - Configure - Prompts.
  *
  * @since 0.14.0
@@ -216,8 +432,10 @@ export type Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTrig
 
 export type Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Next = Record<string, unknown> | undefined;
 
+export type Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Config_Workflows = Shared_BlueprintConfig_Workflows;
+
 export type Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Config = {
-  workflows?: Shared_BlueprintConfig_Workflows;
+  workflows?: Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Config_Workflows;
 };
 
 export type Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_PromptWorkflows = (config: Cli_Utility_Configure_Runner_PromptWorkflows_Config) => Cli_Utility_Configure_Runner_PromptWorkflows_Returns;

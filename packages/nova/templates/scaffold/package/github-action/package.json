@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
-    "dev:local": "npm run build && local-action run ../.. [__WORKSPACE_RELATIVE_PATH__]/build/index.js .env",
+    "dev:local": "local-action run ../.. [__WORKSPACE_RELATIVE_PATH__]/src/run.ts .env",
     "check": "nova utility run-scripts --sequential 'check:*'",
     "check:lint": "eslint ./ --max-warnings=0",
     "check:types-source": "nova utility type-check --project tsconfig.json",
@@ -22,20 +22,19 @@
     "clean:build": "shx rm -rf ./build"
   },
   "engines": {
-    "node": "^22 || ^24"
+    "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@actions/core": "3.0.1",
-    "@actions/github": "9.1.1",
-    "@cbnventures/nova": "0.31.1"
+    "@actions/core": "[__SCAFFOLD_VERSION_ACTIONS_CORE__]",
+    "@cbnventures/nova": "0.32.0"
   },
   "devDependencies": {
-    "@github/local-action": "1.5.1",
-    "@types/node": "24.9.1",
-    "@vercel/ncc": "0.45.0",
-    "eslint": "9.39.5",
-    "shx": "0.4.0",
-    "typescript": "6.0.3",
-    "vitest": "4.1.11"
+    "@github/local-action": "[__SCAFFOLD_VERSION_GITHUB_LOCAL_ACTION__]",
+    "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",
+    "@vercel/ncc": "[__SCAFFOLD_VERSION_VERCEL_NCC__]",
+    "eslint": "[__SCAFFOLD_VERSION_ESLINT__]",
+    "shx": "[__SCAFFOLD_VERSION_SHX__]",
+    "typescript": "[__SCAFFOLD_VERSION_TYPESCRIPT__]",
+    "vitest": "[__SCAFFOLD_VERSION_VITEST__]"
   }
 }

@@ -622,6 +622,8 @@ describe('configDrift validateThemeConfig', async () => {
  * Resolves the docusaurus-preset-nova package root from the
  * current test file location.
  *
+ * @returns {string}
+ *
  * @since 0.19.0
  */
 function getPackageRoot(): Tests_ConfigDrift_GetPackageRoot_Returns {
@@ -644,6 +646,8 @@ function getPackageRoot(): Tests_ConfigDrift_GetPackageRoot_Returns {
  * (covering the navbar/footer union aliases and the per-color and
  * per-font primitive aliases). The result is compared against the
  * live Joi `overrides` schema so neither side can drift silently.
+ *
+ * @returns {Tests_ConfigDrift_DerivePublicOverrideLeafPaths_Returns}
  *
  * @since 0.19.0
  */
@@ -734,6 +738,8 @@ async function derivePublicOverrideLeafPaths(typeFilePath: Tests_ConfigDrift_Der
  * property is an object - the walk recurses into each child key,
  * appending the key name to the path; a node WITHOUT `keys` is a
  * leaf and the accumulated path is recorded.
+ *
+ * @returns {Tests_ConfigDrift_DeriveSchemaOverrideLeafPaths_Returns}
  *
  * @since 0.19.0
  */

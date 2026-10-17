@@ -54,24 +54,24 @@ export type Theme_BlogPostItem_Index_BlogPostItem_Tags = readonly TagMetadata[];
 
 export type Theme_BlogPostItem_Index_BlogPostItem_ArticleClassName = string;
 
-export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig = {
-  blog?: Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog;
-  [key: string]: unknown;
-};
-
-export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfigCast = unknown;
-
-export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog = {
-  share?: Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share;
-  [key: string]: unknown;
-};
+export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share_Platforms = string[];
 
 export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share = {
   platforms?: Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share_Platforms;
   [key: string]: unknown;
 };
 
-export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share_Platforms = string[];
+export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog = {
+  share?: Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share;
+  [key: string]: unknown;
+};
+
+export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig = {
+  blog?: Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog;
+  [key: string]: unknown;
+};
+
+export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfigCast = unknown;
 
 export type Theme_BlogPostItem_Index_BlogPostItem_HasShareButtons = boolean;
 

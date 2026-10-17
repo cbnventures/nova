@@ -25,6 +25,8 @@ import type {
  *
  * @param {Theme_BlogLayout_Index_BlogLayout_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlogLayout(props: Theme_BlogLayout_Index_BlogLayout_Props) {

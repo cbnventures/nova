@@ -15,12 +15,12 @@
     "clean:project": "shx rm -rf ./[__WORKSPACE_IDENTIFIER__].xcodeproj ./build"
   },
   "engines": {
-    "node": "^22 || ^24"
+    "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.31.1"
+    "@cbnventures/nova": "0.32.0"
   },
   "devDependencies": {
-    "shx": "0.4.0"
+    "shx": "[__SCAFFOLD_VERSION_SHX__]"
   }
 }

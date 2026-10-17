@@ -61,13 +61,13 @@ export type Index_Runner_Default_Returns_ConfigurePostCss = (postCssOptions: Ind
 
 export type Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve_Alias = Record<string, string>;
 
-export type Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve = {
-  alias: Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve_Alias;
-};
-
 export type Index_Runner_Default_ReturnsConfigureWebpackReturns_Cache = Lib_WebpackCache_ConfigureWebpackCache_Cache;
 
 export type Index_Runner_Default_ReturnsConfigureWebpackReturns_MergeStrategy = Lib_WebpackCache_ConfigureWebpackCache_MergeStrategy;
+
+export type Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve = {
+  alias: Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve_Alias;
+};
 
 export type Index_Runner_Default_Returns_ConfigureWebpack = (config: Index_Runner_Default_ConfigureWebpack_Config) => Index_Runner_Default_ReturnsConfigureWebpackReturns;
 
@@ -468,10 +468,12 @@ export type Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig_Path = stri
 
 export type Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig_Component = string;
 
+export type Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig_Exact = boolean;
+
 export type Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig = {
   path: Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig_Path;
   component: Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig_Component;
-  exact?: boolean;
+  exact?: Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig_Exact;
   [key: string]: unknown;
 };
 

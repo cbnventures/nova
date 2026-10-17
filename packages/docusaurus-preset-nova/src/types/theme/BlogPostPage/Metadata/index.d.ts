@@ -17,10 +17,16 @@ export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Title = strin
 
 export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Date = string;
 
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Spread_Description = string;
+
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Spread_Keywords = readonly string[];
+
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Spread_Image = string;
+
 export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Spread = {
-  description?: string;
-  keywords?: readonly string[];
-  image?: string;
+  description?: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Spread_Description;
+  keywords?: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Spread_Keywords;
+  image?: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Spread_Image;
 };
 
 export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Image = string | undefined;

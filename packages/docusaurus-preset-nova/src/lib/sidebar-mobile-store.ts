@@ -34,6 +34,8 @@ const sidebarMobileListeners: Lib_SidebarMobileStore_SidebarMobileListeners = ne
  * Adds a store listener and returns an unsubscribe function,
  * matching the subscribe contract of `useSyncExternalStore`.
  *
+ * @returns {Lib_SidebarMobileStore_SidebarMobileSubscribe_Returns}
+ *
  * @since 0.21.0
  */
 export function sidebarMobileSubscribe(listener: Lib_SidebarMobileStore_SidebarMobileSubscribe_Listener): Lib_SidebarMobileStore_SidebarMobileSubscribe_Returns {
@@ -52,6 +54,8 @@ export function sidebarMobileSubscribe(listener: Lib_SidebarMobileStore_SidebarM
  * Returns the current open flag as a stable primitive boolean
  * for `useSyncExternalStore` to read on every render.
  *
+ * @returns {boolean}
+ *
  * @since 0.21.0
  */
 export function sidebarMobileGetSnapshot(): Lib_SidebarMobileStore_SidebarMobileGetSnapshot_Returns {
@@ -63,6 +67,8 @@ export function sidebarMobileGetSnapshot(): Lib_SidebarMobileStore_SidebarMobile
  *
  * Updates the module-level open flag and notifies every
  * registered listener so subscribed components re-render.
+ *
+ * @returns {void}
  *
  * @since 0.21.0
  */

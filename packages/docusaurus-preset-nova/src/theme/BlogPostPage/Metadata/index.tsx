@@ -23,6 +23,8 @@ import type {
  *
  * @constructor
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.18.0
  */
 function BlogPostPageMetadata() {

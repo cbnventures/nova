@@ -25,6 +25,8 @@ export type Shared_HastNode_TagName = string | undefined;
 
 export type Shared_HastNode_Properties = Record<string, unknown>;
 
+export type Shared_HastNode_Children = Shared_HastNode[];
+
 export type Shared_HastNode_Value = string | undefined;
 
 export type Shared_HastNode_Data = Record<string, unknown> | undefined;
@@ -37,8 +39,6 @@ export type Shared_HastNode = {
   value?: Shared_HastNode_Value;
   data?: Shared_HastNode_Data;
 };
-
-export type Shared_HastNode_Children = Shared_HastNode[];
 
 /**
  * Shared - Hast Node Result.
@@ -218,6 +218,15 @@ export type Shared_ProgressBarDefaults = {
  */
 export type Shared_PresetName = 'envoy' | 'foundry' | 'lantern' | 'marshal' | 'sentinel' | 'signal';
 
+export type Shared_Preset_Logo_Alt = string;
+
+export type Shared_Preset_Logo_Src = string;
+
+export type Shared_Preset_Logo = {
+  alt: Shared_Preset_Logo_Alt;
+  src: Shared_Preset_Logo_Src;
+};
+
 export type Shared_Preset_Colors_Primary_Light = Shared_HexColor;
 
 export type Shared_Preset_Colors_Primary_Dark = Shared_HexColor;
@@ -331,15 +340,6 @@ export type Shared_Preset_Cta_Contained = boolean;
 
 export type Shared_Preset_Cta = {
   contained: Shared_Preset_Cta_Contained;
-};
-
-export type Shared_Preset_Logo_Alt = string;
-
-export type Shared_Preset_Logo_Src = string;
-
-export type Shared_Preset_Logo = {
-  alt: Shared_Preset_Logo_Alt;
-  src: Shared_Preset_Logo_Src;
 };
 
 export type Shared_Preset = {
@@ -461,8 +461,6 @@ export type Shared_SearchWorkerSearchHit_Title = string;
 
 export type Shared_SearchWorkerSearchHit_Snippet = string;
 
-export type Shared_SearchWorkerSearchHit_Score = number;
-
 export type Shared_SearchWorkerSearchHitSnippetSegment_Text = string;
 
 export type Shared_SearchWorkerSearchHitSnippetSegment_Highlight = boolean;
@@ -473,6 +471,8 @@ export type Shared_SearchWorkerSearchHitSnippetSegment = {
 };
 
 export type Shared_SearchWorkerSearchHit_SnippetSegments = Shared_SearchWorkerSearchHitSnippetSegment[];
+
+export type Shared_SearchWorkerSearchHit_Score = number;
 
 export type Shared_SearchWorkerSearchHit = {
   path: Shared_SearchWorkerSearchHit_Path;

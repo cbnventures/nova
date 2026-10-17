@@ -6,12 +6,12 @@ plugins {
 
 android {
   namespace = "[__ANDROID_APPLICATION_ID__]"
-  compileSdk = 36
+  compileSdk = [__SCAFFOLD_VERSION_ANDROID_COMPILE_SDK__]
 
   defaultConfig {
     applicationId = "[__ANDROID_APPLICATION_ID__]"
-    minSdk = 24
-    targetSdk = 36
+    minSdk = [__SCAFFOLD_VERSION_ANDROID_MIN_SDK__]
+    targetSdk = [__SCAFFOLD_VERSION_ANDROID_TARGET_SDK__]
     versionCode = 1
     versionName = "1.0"
   }

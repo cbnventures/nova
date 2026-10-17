@@ -46,12 +46,12 @@ export type Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost = {
   date: Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost_Date;
 };
 
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData_BlogPosts = Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost[];
+
 export type Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData = {
   blogPosts?: Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData_BlogPosts;
   [key: string]: unknown;
 };
-
-export type Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData_BlogPosts = Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost[];
 
 export type Theme_BlogPostPaginator_Index_BlogPostPaginator_NavAriaLabel = string;
 

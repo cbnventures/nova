@@ -45,6 +45,8 @@ import type { Theme_Navbar_Index_Navbar_Item } from '../../../types/theme/Navbar
  *
  * @param {Theme_Navbar_Bridge_Index_Bridge_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function Bridge(props: Theme_Navbar_Bridge_Index_Bridge_Props): Theme_Navbar_Bridge_Index_Bridge_Returns {

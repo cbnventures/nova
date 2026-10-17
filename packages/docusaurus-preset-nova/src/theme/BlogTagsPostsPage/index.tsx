@@ -22,6 +22,8 @@ import type {
  *
  * @param {Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlogTagsPostsPage(props: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props) {

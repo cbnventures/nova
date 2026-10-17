@@ -26,6 +26,8 @@ import type {
  *
  * @param {Theme_NavbarItem_DropdownNavbarItem_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DropdownNavbarItem(props: Theme_NavbarItem_DropdownNavbarItem_Props) {

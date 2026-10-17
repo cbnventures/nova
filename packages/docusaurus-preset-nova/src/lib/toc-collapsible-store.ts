@@ -49,6 +49,8 @@ const tocCollapsibleListeners: Lib_TocCollapsibleStore_TocCollapsibleListeners =
  * Adds a store listener and returns an unsubscribe function,
  * matching the subscribe contract of `useSyncExternalStore`.
  *
+ * @returns {Lib_TocCollapsibleStore_TocCollapsibleSubscribe_Returns}
+ *
  * @since 0.21.0
  */
 export function tocCollapsibleSubscribe(listener: Lib_TocCollapsibleStore_TocCollapsibleSubscribe_Listener): Lib_TocCollapsibleStore_TocCollapsibleSubscribe_Returns {
@@ -67,6 +69,8 @@ export function tocCollapsibleSubscribe(listener: Lib_TocCollapsibleStore_TocCol
  * Returns the current open flag as a stable primitive boolean
  * for `useSyncExternalStore` to read on every render.
  *
+ * @returns {boolean}
+ *
  * @since 0.21.0
  */
 export function tocCollapsibleGetOpenSnapshot(): Lib_TocCollapsibleStore_TocCollapsibleGetOpenSnapshot_Returns {
@@ -79,6 +83,8 @@ export function tocCollapsibleGetOpenSnapshot(): Lib_TocCollapsibleStore_TocColl
  * Returns the current payload as a stable object reference for
  * `useSyncExternalStore` to read on every render.
  *
+ * @returns {Shared_TocOverlayPayload}
+ *
  * @since 0.21.0
  */
 export function tocCollapsibleGetPayloadSnapshot(): Lib_TocCollapsibleStore_TocCollapsibleGetPayloadSnapshot_Returns {
@@ -90,6 +96,8 @@ export function tocCollapsibleGetPayloadSnapshot(): Lib_TocCollapsibleStore_TocC
  *
  * Updates the module-level open flag and notifies every
  * registered listener so subscribed components re-render.
+ *
+ * @returns {void}
  *
  * @since 0.21.0
  */
@@ -111,6 +119,8 @@ export function tocCollapsibleSetOpen(value: Lib_TocCollapsibleStore_TocCollapsi
  * Replaces the module-level payload with the current page's
  * headings and notifies every registered listener so the
  * persistent panel host renders the active page's headings.
+ *
+ * @returns {void}
  *
  * @since 0.21.0
  */

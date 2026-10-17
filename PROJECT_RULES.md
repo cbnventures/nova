@@ -114,7 +114,8 @@ src/
 | `packages/docusaurus-preset-nova/src/get-swizzle-config.ts` | Swizzle safety config                    | Marking theme components as safe/unsafe for ejection        |
 | `nova.config.json`                                          | Project metadata source of truth         | Changing project identity, entities, or workspaces          |
 | `package.json`                                              | Monorepo root manifest                   | Adding dependencies, changing scripts, bumping version      |
-| `turbo.json`                                                | Turborepo build orchestration            | Changing build pipeline, adding tasks, adjusting caches     |
+| `packages/nova/src/lib/run-workspaces.ts`                   | Native workspace task orchestration      | Changing task graphs, prerequisites, or workspace execution |
+| `scripts/nova-run-workspaces.mjs`                           | Source-first workspace runner bootstrap  | Changing how root scripts load the unbuilt runner           |
 | `apps/docs/sidebars.ts`                                     | Docusaurus sidebar navigation            | Adding or reorganizing documentation pages                  |
 | `apps/docs/docusaurus.config.ts`                            | Docusaurus site configuration            | Changing site metadata, plugins, or theme settings          |
 | `{workspace}/CHANGELOG.md`                                  | Release notes (non-freezable only)       | Every user-facing change                                    |
@@ -130,20 +131,20 @@ src/
 
 ### Commands
 
-All commands must be run from the **monorepo root**. The `changelog` and `recipes` scripts call the `nova` CLI binary directly — if Nova isn't built, those commands fail. The root `check` script uses Nova's repository bootstrap to run every `check:*` script sequentially in `package.json` order. The root `check` task in `turbo.json` depends on `^build` so consumer workspaces can load their compiled Nova dependencies without rebuilding the workspace being checked. Workspaces check their own TypeScript source directly; the Docusaurus worker compatibility test transpiles its current source in memory instead of requiring preset build output.
+All commands must be run from the **monorepo root**. The `changelog` and `recipes` scripts call the `nova` CLI binary directly — if Nova isn't built, those commands fail. The root `check` script uses Nova's repository bootstrap to run every `check:*` script sequentially in `package.json` order. The native workspace runner reads Nova's configured workspaces and npm package relationships, then builds internal dependencies before checking or building their consumers. Workspaces check their own TypeScript source directly; the Docusaurus worker compatibility test transpiles its current source in memory instead of requiring preset build output.
 
 The repository-only `nova-run-scripts.mjs` and `nova-type-check.mjs` bootstraps load canonical TypeScript implementations from `packages/nova/src/lib` with Jiti filesystem and module caches disabled. This lets build and check tasks use current source before the compiled CLI exists without maintaining duplicated logic.
 
 | Command                   | What it does                                                      |
 |---------------------------|-------------------------------------------------------------------|
 | `npm install`             | Install all dependencies                                          |
-| `npm run dev`             | Start development servers (via Turborepo)                         |
-| `npm run prod`            | Start production servers (via Turborepo, depends on build)        |
-| `npm run build`           | Compile TypeScript to JavaScript (`tsc` via Turborepo)            |
+| `npm run dev`             | Start development servers through Nova's native workspace runner  |
+| `npm run prod`            | Check, build, and start production workspace servers              |
+| `npm run build`           | Build every workspace in dependency order                         |
 | `npm run check`           | Run every nested `check:*` script sequentially                    |
 | `npm run check:cli`       | Build Nova and run the Vitest CLI integration suite               |
 | `npm run check:scaffolds` | Pack, install, check, and build every generated scaffold consumer |
-| `npm run deploy`          | Run deployment scripts (via Turborepo)                            |
+| `npm run deploy`          | Check, build, and run workspace deployment scripts                |
 | `npm run clean`           | Remove build artifacts                                            |
 | `npm run changelog`       | Generate changelog from `.changelog/` entries                     |
 | `npm run recipes`         | Run Nova recipes across all workspaces                            |

@@ -55,13 +55,13 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityInvariant_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityInvariant_Environment,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityInvariant_Workspaces,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_Entry,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_ReproducesTheSyntheticNoTurboWorkflowByteForByte_Committed,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_ReproducesTheSyntheticNoTurboWorkflowByteForByte_FixturePath,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_ReproducesTheSyntheticNoTurboWorkflowByteForByte_FixturesDir,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_ReproducesTheSyntheticNoTurboWorkflowByteForByte_Generated,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_ReproducesTheSyntheticNoTurboWorkflowByteForByte_Ir,
-  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_Workspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_Entry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Committed,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_FixturePath,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_FixturesDir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Generated,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Ir,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_Entry,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_Committed,
   Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityPages_ReproducesTheSyntheticPagesWorkflowByteForByte_FixturePath,
@@ -504,12 +504,12 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
 });
 
 /**
- * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - No Turbo.
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Publish Parity - Native Workspaces.
  *
  * @since 0.21.0
  */
-describe('WorkflowsBlueprintPublishParity.noTurbo', () => {
-  const workspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_Workspaces = {
+describe('WorkflowsBlueprintPublishParity.nativeWorkspaces', () => {
+  const workspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_Workspaces = {
     './packages/plain': {
       name: 'sandbox-plain',
       role: 'package',
@@ -517,7 +517,7 @@ describe('WorkflowsBlueprintPublishParity.noTurbo', () => {
     },
   };
 
-  const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_Entry = {
+  const entry: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_Entry = {
     template: 'publish',
     name: 'plain',
     triggers: ['release'],
@@ -531,12 +531,12 @@ describe('WorkflowsBlueprintPublishParity.noTurbo', () => {
     },
   };
 
-  it('reproduces the synthetic no-turbo workflow byte-for-byte', async () => {
-    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_ReproducesTheSyntheticNoTurboWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces, {}, [], false);
-    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_ReproducesTheSyntheticNoTurboWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
-    const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_ReproducesTheSyntheticNoTurboWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
-    const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_ReproducesTheSyntheticNoTurboWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-no-turbo.yml');
-    const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNoTurbo_ReproducesTheSyntheticNoTurboWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
+  it('reproduces the synthetic native-workspaces workflow byte-for-byte', async () => {
+    const ir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Ir = WorkflowsBlueprint.buildPublish(entry, workspaces);
+    const generated: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Generated = WorkflowsBlueprint.serialize(ir);
+    const fixturesDir: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_FixturesDir = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
+    const fixturePath: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_FixturePath = join(fixturesDir, 'synthetic-publish-native-workspaces.yml');
+    const committed: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityNativeWorkspaces_ReproducesTheSyntheticNativeWorkspacesWorkflowByteForByte_Committed = await readFile(fixturePath, 'utf-8');
 
     strictEqual(generated, committed);
 

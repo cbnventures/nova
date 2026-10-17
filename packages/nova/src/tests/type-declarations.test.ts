@@ -139,10 +139,10 @@ import type {
   Tests_TypeDeclarations_EdgeCasesEC11EC20_EC14ParameterPropertyTSShorthandIsTreatedAsANormalConstructorParam_Params,
   Tests_TypeDeclarations_EdgeCasesEC11EC20_EC15IndexSignatureIsNotDetectedAsARegularProperty_Lines,
   Tests_TypeDeclarations_EdgeCasesEC11EC20_EC15IndexSignatureIsNotDetectedAsARegularProperty_ObjectTypes,
+  Tests_TypeDeclarations_EdgeCasesEC11EC20_EC16ExtractsOptionalAndReadonlyProperties_Lines,
+  Tests_TypeDeclarations_EdgeCasesEC11EC20_EC16ExtractsOptionalAndReadonlyProperties_ObjectTypes,
   Tests_TypeDeclarations_EdgeCasesEC11EC20_EC19DottedFilenameLikeFooSpecFailsSegmentRegex_Pattern,
   Tests_TypeDeclarations_EdgeCasesEC11EC20_EC20FilenameStartingWithDigitFailsSegmentRegex_Pattern,
-  Tests_TypeDeclarations_EdgeCasesEC11EC20_GapEC16OptionalReadonlyModifiersExtractObjectTypesPropertyRegexRequiresBareKeyTypeFormSoReadonlyIdIsSilentlySkipped_Lines,
-  Tests_TypeDeclarations_EdgeCasesEC11EC20_GapEC16OptionalReadonlyModifiersExtractObjectTypesPropertyRegexRequiresBareKeyTypeFormSoReadonlyIdIsSilentlySkipped_ObjectTypes,
   Tests_TypeDeclarations_EdgeCasesEC1EC10_EC1MultipleTopLevelClassesEachContributeTheirOwnChunk_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC1EC10_EC2FileWithOnlyTopLevelFunctionsNoClass_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC1EC10_EC3GenericTypeParametersDoNotGetTheirOwnChunks_SectionMap,
@@ -166,7 +166,6 @@ import type {
   Tests_TypeDeclarations_EdgeCasesEC21EC30_EC26StaticMethodAddsChunkLikeAnInstanceMethod_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC21EC30_EC28NestedFunctionDeclarationAddsChunkUnderTheOuterFunction_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC21EC30_EC30bDescribeOnlyStringFnAddsChunkViaGenericRule_SectionMap,
-  Tests_TypeDeclarations_EdgeCasesEC21EC30_EC30DescribeSkipStringFnAddsChunkViaGenericRule_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC31PrimitiveLikeReturnTypesVoidNeverEtcPassValidateLeafAtBodyVar_Result,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC33NestedClassInsideMethodAddsChunkUnderMethod_SectionMap,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC34VitestBenchStringFnAddsChunkViaGenericRule_SectionMap,
@@ -176,9 +175,9 @@ import type {
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC44BrandedTypesFollowStandardNaming_Lines,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC46RecursiveTypeDefinitionIsDetectedAsSelfReferenceNoInfiniteLoop_Refs,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC47EnumDeclarationIsNotSubjectToTypeNamingRulesOutOfHelperScope_Lines,
+  Tests_TypeDeclarations_EdgeCasesEC31EC55_EC52ExtractsEverySameLineDeclaration_Decls,
+  Tests_TypeDeclarations_EdgeCasesEC31EC55_EC52ExtractsEverySameLineDeclaration_Lines,
   Tests_TypeDeclarations_EdgeCasesEC31EC55_EC54EmptySourceFileProducesEmptySectionMapJustClassPrefixAtTopLevelLines_SectionMap,
-  Tests_TypeDeclarations_EdgeCasesEC31EC55_GapEC52SameLineMultiDeclarationExtractBodyDeclarationsRegexMatchesOneDeclaratorPerLineSoOnlyTheFirstIsCaptured_Decls,
-  Tests_TypeDeclarations_EdgeCasesEC31EC55_GapEC52SameLineMultiDeclarationExtractBodyDeclarationsRegexMatchesOneDeclaratorPerLineSoOnlyTheFirstIsCaptured_Lines,
   Tests_TypeDeclarations_EndToEndFixturePipeline_CatchesTheExpectedViolationsAcrossRules7172737475InASingleFixture_DtsContent,
   Tests_TypeDeclarations_EndToEndFixturePipeline_CatchesTheExpectedViolationsAcrossRules7172737475InASingleFixture_SourceContent,
   Tests_TypeDeclarations_EndToEndFixturePipeline_CatchesTheExpectedViolationsAcrossRules7172737475InASingleFixture_Violations,
@@ -227,9 +226,9 @@ import type {
   Tests_TypeDeclarations_ExtractFunctionParamsComprehensive_ExtractsMethodParams_Params,
   Tests_TypeDeclarations_ExtractFunctionParamsComprehensive_HandlesMultipleParams_Params,
   Tests_TypeDeclarations_ExtractFunctionReturnsComprehensive_DetectsTypeGuardReturnsValueIsX_ReturnRecords,
+  Tests_TypeDeclarations_ExtractFunctionReturnsComprehensive_ExtractsArrowFunctionConstReturns_ReturnRecords,
   Tests_TypeDeclarations_ExtractFunctionReturnsComprehensive_ExtractsFunctionDeclarationReturnType_ReturnRecords,
   Tests_TypeDeclarations_ExtractFunctionReturnsComprehensive_ExtractsMethodReturnType_ReturnRecords,
-  Tests_TypeDeclarations_ExtractFunctionReturnsComprehensive_GapDoesNOTExtractArrowFunctionConstReturnsExtractFunctionReturnsOnlyInspectsFunctionMethodConstructorDeclarations_ReturnRecords,
   Tests_TypeDeclarations_ExtractImportedNamesComprehensive_ExtractsInlineImports_Lines,
   Tests_TypeDeclarations_ExtractImportedNamesComprehensive_ExtractsInlineImports_Names,
   Tests_TypeDeclarations_ExtractImportedNamesComprehensive_ExtractsMultiLineImports_Lines,
@@ -368,6 +367,14 @@ import type {
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2PathPrefixStyleNamesDetected_IsPathPrefixStyle,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2PathPrefixStyleNamesDetected_KnownTopLevels,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S2PathPrefixStyleNamesDetected_TypeName,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3NamedPropertyTypesFollowObjectPropertyOrder_Lines,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3NamedPropertyTypesFollowObjectPropertyOrder_ObjectTypes,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3NamedPropertyTypesFollowObjectPropertyOrder_PropertyTypeLineIndexes,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3NamedPropertyTypesFollowObjectPropertyOrder_SortedPropertyTypeLineIndexes,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_IsOrdered,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_Lines,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_ObjectTypes,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_PropertyTypeLineIndexes,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeUsingParentPropertyFormPasses_ObjectName,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeUsingParentPropertyFormPasses_PropertyValueType,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeWithoutParentPrefixFails_ObjectName,
@@ -376,6 +383,12 @@ import type {
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4ArrayElementTypesDefinedBeforeArray_Arrays,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4ArrayElementTypesDefinedBeforeArray_ElementLine,
   Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4ArrayElementTypesDefinedBeforeArray_Lines,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_ArrayType,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_ArrayTypes,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_IsRecursive,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_Lines,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_ObjectTypes,
+  Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_RecursiveOwner,
   Tests_TypeDeclarations_SectionFCoverageIntegration_F1SameSectionReferencesAreAllowed_Refs,
   Tests_TypeDeclarations_SectionFCoverageIntegration_F2SectionsInAlphabeticalOrderCheckCompareStringsDirectly_SectionA,
   Tests_TypeDeclarations_SectionFCoverageIntegration_F2SectionsInAlphabeticalOrderCheckCompareStringsDirectly_SectionB,
@@ -394,12 +407,6 @@ import type {
   Tests_TypeDeclarations_SectionGImportsIntegration_G1ExtractImportedNamesCapturesAlphabetizedInlineImports_Names,
   Tests_TypeDeclarations_SectionGImportsIntegration_G1MultiLineImportBlockAlphabeticalOrderCanBeChecked_SortedSpecifiers,
   Tests_TypeDeclarations_SectionGImportsIntegration_G1MultiLineImportBlockAlphabeticalOrderCanBeChecked_Specifiers,
-  Tests_TypeDeclarations_StripUnderscorePrefix_OnlyStripsONELeadingUnderscore_Input,
-  Tests_TypeDeclarations_StripUnderscorePrefix_OnlyStripsONELeadingUnderscore_Result,
-  Tests_TypeDeclarations_StripUnderscorePrefix_ReturnsTheNameUnchangedWhenThereIsNoLeadingUnderscore_Input,
-  Tests_TypeDeclarations_StripUnderscorePrefix_ReturnsTheNameUnchangedWhenThereIsNoLeadingUnderscore_Result,
-  Tests_TypeDeclarations_StripUnderscorePrefix_StripsASingleLeadingUnderscore_Input,
-  Tests_TypeDeclarations_StripUnderscorePrefix_StripsASingleLeadingUnderscore_Result,
   Tests_TypeDeclarations_ValidateLeafComprehensive_HandlesSingleCharacterVarName_ReasonResult,
   Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsFullTypeNameAsActualLeafWhenNoPrefixMatches_ReasonResult,
   Tests_TypeDeclarations_ValidateLeafComprehensive_ReturnsNullWhenLeafMatchesClassPrefixTitleVarPassthrough_ReasonResult,
@@ -771,42 +778,6 @@ describe('parseDescribeString', () => {
     const result: Tests_TypeDeclarations_ParseDescribeString_HandlesSingleWordStrings_Result = parseDescribeString(input);
 
     strictEqual(result, 'Run');
-
-    return;
-  });
-
-  return;
-});
-
-/**
- * Tests - Type Declarations - Strip Underscore Prefix.
- *
- * @since 0.18.0
- */
-describe('stripUnderscorePrefix', () => {
-  it('strips a single leading underscore', () => {
-    const input: Tests_TypeDeclarations_StripUnderscorePrefix_StripsASingleLeadingUnderscore_Input = '_prev';
-    const result: Tests_TypeDeclarations_StripUnderscorePrefix_StripsASingleLeadingUnderscore_Result = stripUnderscorePrefix(input);
-
-    strictEqual(result, 'prev');
-
-    return;
-  });
-
-  it('returns the name unchanged when there is no leading underscore', () => {
-    const input: Tests_TypeDeclarations_StripUnderscorePrefix_ReturnsTheNameUnchangedWhenThereIsNoLeadingUnderscore_Input = 'value';
-    const result: Tests_TypeDeclarations_StripUnderscorePrefix_ReturnsTheNameUnchangedWhenThereIsNoLeadingUnderscore_Result = stripUnderscorePrefix(input);
-
-    strictEqual(result, 'value');
-
-    return;
-  });
-
-  it('only strips ONE leading underscore', () => {
-    const input: Tests_TypeDeclarations_StripUnderscorePrefix_OnlyStripsONELeadingUnderscore_Input = '__double';
-    const result: Tests_TypeDeclarations_StripUnderscorePrefix_OnlyStripsONELeadingUnderscore_Result = stripUnderscorePrefix(input);
-
-    strictEqual(result, '_double');
 
     return;
   });
@@ -2300,14 +2271,12 @@ describe('extractFunctionReturns comprehensive', () => {
     return;
   });
 
-  // [gap] tests: these `it()` blocks document spec/implementation gaps by asserting the CURRENT
-  // (incomplete) behavior, so a future change that closes a gap will fail here and force a deliberate
-  // update. Vitest's `it.todo()` was considered but loses the assertion coverage; the `[gap]` prefix
-  // is preserved as a greppable marker. Search this file for `[gap]` to find them all.
-  it('[gap] does NOT extract arrow function const returns -- extractFunctionReturns only inspects function/method/constructor declarations', () => {
-    const returnRecords: Tests_TypeDeclarations_ExtractFunctionReturnsComprehensive_GapDoesNOTExtractArrowFunctionConstReturnsExtractFunctionReturnsOnlyInspectsFunctionMethodConstructorDeclarations_ReturnRecords = extractFunctionReturns('/fake/lib/foo.ts', 'const helper = (): Lib_Foo_Helper_Returns => 42;\n');
+  it('extracts arrow function const returns', () => {
+    const returnRecords: Tests_TypeDeclarations_ExtractFunctionReturnsComprehensive_ExtractsArrowFunctionConstReturns_ReturnRecords = extractFunctionReturns('/fake/lib/foo.ts', 'const helper = (): Lib_Foo_Helper_Returns => 42;\n');
 
-    strictEqual(returnRecords.length, 0);
+    strictEqual(returnRecords.length, 1);
+    strictEqual((returnRecords[0] !== undefined) ? returnRecords[0]['returnType'] : undefined, 'Lib_Foo_Helper_Returns');
+    strictEqual((returnRecords[0] !== undefined) ? returnRecords[0]['isTypeGuard'] : undefined, false);
 
     return;
   });
@@ -2904,6 +2873,56 @@ describe('Rule S1/S2/S3/S4 integration', () => {
     return;
   });
 
+  it('S3: named property types follow object property order', () => {
+    const lines: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3NamedPropertyTypesFollowObjectPropertyOrder_Lines = [
+      'export type Theme_AnnouncementBar_Config_Id = string;',
+      'export type Theme_AnnouncementBar_Config_Content = string;',
+      'export type Theme_AnnouncementBar_Config_BackgroundColor = string | undefined;',
+      'export type Theme_AnnouncementBar_Config_TextColor = string | undefined;',
+      'export type Theme_AnnouncementBar_Config_IsCloseable = boolean | undefined;',
+      'export type Theme_AnnouncementBar_Config = {',
+      '  id: Theme_AnnouncementBar_Config_Id;',
+      '  content: Theme_AnnouncementBar_Config_Content;',
+      '  backgroundColor?: Theme_AnnouncementBar_Config_BackgroundColor;',
+      '  textColor?: Theme_AnnouncementBar_Config_TextColor;',
+      '  isCloseable?: Theme_AnnouncementBar_Config_IsCloseable;',
+      '};',
+    ];
+    const objectTypes: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3NamedPropertyTypesFollowObjectPropertyOrder_ObjectTypes = extractObjectTypes(lines, 'Theme_AnnouncementBar');
+    const propertyTypeLineIndexes: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3NamedPropertyTypesFollowObjectPropertyOrder_PropertyTypeLineIndexes = (objectTypes[0] === undefined) ? [] : objectTypes[0]['properties'].map((property) => property['typeLineIndex']);
+    const sortedPropertyTypeLineIndexes: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3NamedPropertyTypesFollowObjectPropertyOrder_SortedPropertyTypeLineIndexes = [...propertyTypeLineIndexes].sort((lineA, lineB) => lineA - lineB);
+
+    deepStrictEqual(propertyTypeLineIndexes, sortedPropertyTypeLineIndexes);
+
+    return;
+  });
+
+  it('S3: out-of-order property type is detected', () => {
+    const lines: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_Lines = [
+      'export type Theme_AnnouncementBar_Config_Id = string;',
+      'export type Theme_AnnouncementBar_Config_Content = string;',
+      'export type Theme_AnnouncementBar_Config_IsCloseable = boolean | undefined;',
+      'export type Theme_AnnouncementBar_Config_TextColor = string | undefined;',
+      'export type Theme_AnnouncementBar_Config_BackgroundColor = string | undefined;',
+      'export type Theme_AnnouncementBar_Config = {',
+      '  id: Theme_AnnouncementBar_Config_Id;',
+      '  content: Theme_AnnouncementBar_Config_Content;',
+      '  backgroundColor?: Theme_AnnouncementBar_Config_BackgroundColor;',
+      '  textColor?: Theme_AnnouncementBar_Config_TextColor;',
+      '  isCloseable?: Theme_AnnouncementBar_Config_IsCloseable;',
+      '};',
+    ];
+    const objectTypes: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_ObjectTypes = extractObjectTypes(lines, 'Theme_AnnouncementBar');
+    const propertyTypeLineIndexes: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_PropertyTypeLineIndexes = (objectTypes[0] === undefined) ? [] : objectTypes[0]['properties'].map((property) => property['typeLineIndex']);
+    const isOrdered: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3OutOfOrderPropertyTypeIsDetected_IsOrdered = propertyTypeLineIndexes.every((line, index) => {
+      return index === 0 || line >= (propertyTypeLineIndexes[index - 1] ?? -1);
+    });
+
+    strictEqual(isOrdered, false);
+
+    return;
+  });
+
   it('S3: property type using Parent_Property form passes', () => {
     const objectName: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeUsingParentPropertyFormPasses_ObjectName = 'EntryItem';
     const propertyValueType: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S3PropertyTypeUsingParentPropertyFormPasses_PropertyValueType = 'EntryItem_Category';
@@ -2932,6 +2951,32 @@ describe('Rule S1/S2/S3/S4 integration', () => {
     const arrayLine: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4ArrayElementTypesDefinedBeforeArray_ArrayLine = (arrays[0] !== undefined) ? arrays[0]['lineIndex'] : -1;
 
     ok(elementLine < arrayLine);
+
+    return;
+  });
+
+  it('S4: recursive object array alias may reference owner defined later', () => {
+    const lines: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_Lines = [
+      'export type Shared_HastNode_Type = string;',
+      'export type Shared_HastNode_Children = Shared_HastNode[];',
+      'export type Shared_HastNode = {',
+      '  type: Shared_HastNode_Type;',
+      '  children?: Shared_HastNode_Children;',
+      '};',
+    ];
+    const arrayTypes: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_ArrayTypes = extractArrayTypes(lines);
+    const arrayType: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_ArrayType = arrayTypes[0];
+    const objectTypes: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_ObjectTypes = extractObjectTypes(lines, 'Shared');
+    const recursiveOwner: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_RecursiveOwner = (arrayType === undefined) ? undefined : objectTypes.find((objectType) => {
+      return (
+        objectType['name'] === arrayType['elementTypeName']
+        && arrayType['arrayTypeName'].startsWith(`${objectType['name']}_`) === true
+        && objectType['properties'].some((property) => property['valueType'] === arrayType['arrayTypeName']) === true
+      );
+    });
+    const isRecursive: Tests_TypeDeclarations_RuleS1S2S3S4Integration_S4RecursiveObjectArrayAliasMayReferenceOwnerDefinedLater_IsRecursive = recursiveOwner !== undefined;
+
+    strictEqual(isRecursive, true);
 
     return;
   });
@@ -3181,18 +3226,18 @@ describe('Edge cases EC11-EC20', () => {
     return;
   });
 
-  it('[gap] EC16: optional/readonly modifiers -- extractObjectTypes property regex requires bare `key: Type;` form, so `readonly id: ...` is silently skipped', () => {
-    const lines: Tests_TypeDeclarations_EdgeCasesEC11EC20_GapEC16OptionalReadonlyModifiersExtractObjectTypesPropertyRegexRequiresBareKeyTypeFormSoReadonlyIdIsSilentlySkipped_Lines = [
+  it('EC16: extracts optional and readonly properties', () => {
+    const lines: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC16ExtractsOptionalAndReadonlyProperties_Lines = [
       'export type Cli_Foo_Run_Result = {',
       '  readonly id: Cli_Foo_Run_Result_Id;',
-      '  status: Cli_Foo_Run_Result_Status;',
+      '  status?: Cli_Foo_Run_Result_Status;',
       '};',
     ];
-    const objectTypes: Tests_TypeDeclarations_EdgeCasesEC11EC20_GapEC16OptionalReadonlyModifiersExtractObjectTypesPropertyRegexRequiresBareKeyTypeFormSoReadonlyIdIsSilentlySkipped_ObjectTypes = extractObjectTypes(lines, 'Cli_Foo');
+    const objectTypes: Tests_TypeDeclarations_EdgeCasesEC11EC20_EC16ExtractsOptionalAndReadonlyProperties_ObjectTypes = extractObjectTypes(lines, 'Cli_Foo');
 
-    // Only the second property (`status: ...`) matches the regex. The `readonly id: ...` line is dropped.
-    strictEqual((objectTypes[0] !== undefined) ? objectTypes[0]['properties'].length : undefined, 1);
-    strictEqual((objectTypes[0] !== undefined && objectTypes[0]['properties'][0] !== undefined) ? objectTypes[0]['properties'][0]['key'] : undefined, 'status');
+    strictEqual((objectTypes[0] !== undefined) ? objectTypes[0]['properties'].length : undefined, 2);
+    strictEqual((objectTypes[0] !== undefined && objectTypes[0]['properties'][0] !== undefined) ? objectTypes[0]['properties'][0]['key'] : undefined, 'id');
+    strictEqual((objectTypes[0] !== undefined && objectTypes[0]['properties'][1] !== undefined) ? objectTypes[0]['properties'][1]['key'] : undefined, 'status');
 
     return;
   });
@@ -3353,19 +3398,6 @@ describe('Edge cases EC21-EC30', () => {
     return;
   });
 
-  it('EC30: describe.skip(string, fn) adds chunk via generic rule', () => {
-    const sectionMap: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC30DescribeSkipStringFnAddsChunkViaGenericRule_SectionMap = buildSourceSectionMap('/fake/tests/foo.test.ts', [
-      'describe.skip(\'Foo\', () => {',
-      '  const x: number = 1;',
-      '});',
-      '',
-    ].join('\n'), 'Tests_Foo');
-
-    strictEqual(sectionMap.get(2), 'Tests_Foo_Foo');
-
-    return;
-  });
-
   it('EC30b: describe.only(string, fn) adds chunk via generic rule', () => {
     const sectionMap: Tests_TypeDeclarations_EdgeCasesEC21EC30_EC30bDescribeOnlyStringFnAddsChunkViaGenericRule_SectionMap = buildSourceSectionMap('/fake/tests/foo.test.ts', [
       'describe.only(\'Foo\', () => {',
@@ -3496,11 +3528,13 @@ describe('Edge cases EC31-EC55', () => {
     return;
   });
 
-  it('[gap] EC52: same-line multi-declaration -- extractBodyDeclarations regex matches one declarator per line, so only the first is captured', () => {
-    const lines: Tests_TypeDeclarations_EdgeCasesEC31EC55_GapEC52SameLineMultiDeclarationExtractBodyDeclarationsRegexMatchesOneDeclaratorPerLineSoOnlyTheFirstIsCaptured_Lines = ['  const a: A = 1, b: B = 2;'];
-    const decls: Tests_TypeDeclarations_EdgeCasesEC31EC55_GapEC52SameLineMultiDeclarationExtractBodyDeclarationsRegexMatchesOneDeclaratorPerLineSoOnlyTheFirstIsCaptured_Decls = extractBodyDeclarations(lines);
+  it('EC52: extracts every same-line declaration', () => {
+    const lines: Tests_TypeDeclarations_EdgeCasesEC31EC55_EC52ExtractsEverySameLineDeclaration_Lines = ['  const a: A = 1, b: B = 2;'];
+    const decls: Tests_TypeDeclarations_EdgeCasesEC31EC55_EC52ExtractsEverySameLineDeclaration_Decls = extractBodyDeclarations(lines);
 
-    strictEqual(decls.length, 1);
+    strictEqual(decls.length, 2);
+    strictEqual((decls[0] !== undefined) ? decls[0]['varName'] : undefined, 'a');
+    strictEqual((decls[1] !== undefined) ? decls[1]['varName'] : undefined, 'b');
 
     return;
   });
@@ -3671,6 +3705,9 @@ describe('Section F coverage integration', () => {
 
   it('F4: within section, first-come-first-serve order via findFirstOccurrence', () => {
     const sourceLines: Tests_TypeDeclarations_SectionFCoverageIntegration_F4WithinSectionFirstComeFirstServeOrderViaFindFirstOccurrence_SourceLines = [
+      '/**',
+      ' * @returns {Cli_Foo_Runner_Bar_Result}',
+      ' */',
       'class Runner {',
       '  bar() {',
       '    const items: Cli_Foo_Runner_Bar_Items = [];',

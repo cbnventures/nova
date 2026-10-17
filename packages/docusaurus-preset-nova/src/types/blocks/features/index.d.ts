@@ -22,9 +22,9 @@ export type Blocks_Features_Index_BlocksFeatures_Item = {
 
 export type Blocks_Features_Index_BlocksFeatures_Items = Blocks_Features_Index_BlocksFeatures_Item[];
 
-export type Blocks_Features_Index_BlocksFeatures_Props_Items = Blocks_Features_Index_BlocksFeatures_Item[];
-
 export type Blocks_Features_Index_BlocksFeatures_Props_Heading = string | undefined;
+
+export type Blocks_Features_Index_BlocksFeatures_Props_Items = Blocks_Features_Index_BlocksFeatures_Item[];
 
 export type Blocks_Features_Index_BlocksFeatures_Props_Surface = Shared_Surface | undefined;
 

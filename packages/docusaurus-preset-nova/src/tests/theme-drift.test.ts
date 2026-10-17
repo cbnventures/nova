@@ -73,6 +73,8 @@ const variantDirectories: Tests_ThemeDrift_VariantDirectories = [
  * test file location by traversing two levels up from
  * the tests directory to reach the package root.
  *
+ * @returns {string}
+ *
  * @since 0.15.0
  */
 function getPackageRoot(): Tests_ThemeDrift_GetPackageRoot_Returns {
@@ -88,6 +90,8 @@ function getPackageRoot(): Tests_ThemeDrift_GetPackageRoot_Returns {
  * Reads the ambient theme declaration file and extracts
  * all module names that follow the theme alias pattern
  * while filtering out non-theme third-party modules.
+ *
+ * @returns {Tests_ThemeDrift_ExtractDeclaredModules_Returns}
  *
  * @since 0.15.0
  */
@@ -117,6 +121,8 @@ async function extractDeclaredModules(): Tests_ThemeDrift_ExtractDeclaredModules
  * Scans the theme source directory for all component
  * directories that contain an index entry point and
  * converts their file paths to module alias names.
+ *
+ * @returns {Tests_ThemeDrift_DiscoverThemeComponents_Returns}
  *
  * @since 0.15.0
  */

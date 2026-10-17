@@ -67,6 +67,8 @@ export function isSandpackSupported(language: Theme_CodeBlock_LiveEditor_IsSandp
  *
  * @param {Theme_CodeBlock_LiveEditor_LiveEditor_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function LiveEditor(props: Theme_CodeBlock_LiveEditor_LiveEditor_Props) {

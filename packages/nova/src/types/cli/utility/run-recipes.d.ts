@@ -5,11 +5,11 @@ import type { Cli_Recipe_RegistryCategory, Cli_Recipe_RegistryEntry } from '../.
  *
  * @since 0.14.0
  */
+export type Cli_Utility_RunRecipes_Runner_Run_Options_Category = Cli_Recipe_RegistryCategory | undefined;
+
 export type Cli_Utility_RunRecipes_Runner_Run_Options_DryRun = true;
 
 export type Cli_Utility_RunRecipes_Runner_Run_Options_ReplaceFile = true;
-
-export type Cli_Utility_RunRecipes_Runner_Run_Options_Category = Cli_Recipe_RegistryCategory | undefined;
 
 export type Cli_Utility_RunRecipes_Runner_Run_Options = {
   category?: Cli_Utility_RunRecipes_Runner_Run_Options_Category;

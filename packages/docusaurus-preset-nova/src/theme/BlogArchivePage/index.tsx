@@ -29,6 +29,8 @@ import type {
  *
  * @param {Theme_BlogArchivePage_Index_BlogArchivePage_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function BlogArchivePage(props: Theme_BlogArchivePage_Index_BlogArchivePage_Props) {

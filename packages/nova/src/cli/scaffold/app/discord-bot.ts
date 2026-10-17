@@ -1,5 +1,5 @@
+import { Runner as LibDockerPackaging } from '../../../lib/docker-packaging.js';
 import { runScaffold } from '../../../lib/scaffold.js';
-import { Runner as CliGenerateDockerImage } from '../../generate/docker-image/index.js';
 
 import type {
   Cli_Scaffold_App_DiscordBot_CompletionNotes,
@@ -66,7 +66,7 @@ export class Runner {
         templateSubpath: 'scaffold/app/discord-bot',
         typeName: 'discord-bot',
         workspaceFinalizer: async (workspaceDirectory) => {
-          await CliGenerateDockerImage.generateForTarget({
+          await LibDockerPackaging.generateForTarget({
             profile: 'background-service',
             reportFiles: false,
             replaceFile: true,

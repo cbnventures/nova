@@ -1,0 +1,67 @@
+{
+  "name": "[__WORKSPACE_PACKAGE_NAME__]",
+  "version": "0.0.0",
+  "description": "[__WORKSPACE_TITLE__] serverless tool for Cloudflare Workers",
+  "keywords": [
+    "cli",
+    "cloudflare-workers",
+    "serverless"
+  ],
+  "main": "./build/index.js",
+  "type": "module",
+  "files": [
+    "bin",
+    "build",
+    "wrangler.build.toml",
+    "wrangler.toml"
+  ],
+  "bin": {
+    "[__WORKSPACE_NAME__]": "./bin/cli.mjs"
+  },
+  "scripts": {
+    "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
+    "dev:cli": "tsx src/index.ts status",
+    "dev:worker": "wrangler dev --config ./wrangler.toml",
+    "prod": "nova utility run-scripts --sequential --node-env production 'prod:*'",
+    "prod:cli": "npm run build && node ./build/index.js status",
+    "prod:worker": "npm run build && wrangler dev --config ./wrangler.build.toml",
+    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check:lint": "eslint ./ --max-warnings=0",
+    "check:types-cli": "nova utility type-check --project tsconfig.cli.json",
+    "check:types-worker": "nova utility type-check --project tsconfig.worker.json",
+    "check:types-config": "nova utility type-check --project tsconfig.config.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
+    "check:test": "vitest run",
+    "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
+    "build:reset": "shx rm -rf ./build",
+    "build:transpile-cli": "nova utility transpile --project tsconfig.cli.json",
+    "build:transpile-worker": "nova utility transpile --project tsconfig.worker.json",
+    "build:permissions": "shx chmod +x ./bin/cli.mjs ./build/index.js",
+    "deploy": "nova utility run-scripts --sequential --node-env production 'deploy:*'",
+    "deploy:worker": "npm run build && wrangler deploy --config ./wrangler.build.toml",
+    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean:build": "shx rm -rf ./build",
+    "clean:wrangler": "shx rm -rf ./.wrangler",
+    "manage": "tsx src/index.ts status",
+    "tail": "wrangler tail --config ./wrangler.toml"
+  },
+  "engines": {
+    "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
+  },
+  "dependencies": {
+    "@cbnventures/nova": "0.32.0",
+    "chalk": "[__SCAFFOLD_VERSION_CHALK__]",
+    "commander": "[__SCAFFOLD_VERSION_COMMANDER__]",
+    "wrangler": "[__SCAFFOLD_VERSION_WRANGLER__]"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "[__SCAFFOLD_VERSION_CLOUDFLARE_WORKERS_TYPES__]",
+    "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",
+    "eslint": "[__SCAFFOLD_VERSION_ESLINT__]",
+    "shx": "[__SCAFFOLD_VERSION_SHX__]",
+    "tsx": "[__SCAFFOLD_VERSION_TSX__]",
+    "typescript": "[__SCAFFOLD_VERSION_TYPESCRIPT__]",
+    "vitest": "[__SCAFFOLD_VERSION_VITEST__]"
+  },
+  "types": "./build/index.d.ts"
+}

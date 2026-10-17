@@ -16,6 +16,8 @@ import type {
  *
  * @param {Theme_ThemedImage_Index_ThemedImage_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function ThemedImage(props: Theme_ThemedImage_Index_ThemedImage_Props): Theme_ThemedImage_Index_ThemedImage_Returns {

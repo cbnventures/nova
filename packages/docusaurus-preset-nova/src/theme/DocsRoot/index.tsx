@@ -14,6 +14,8 @@ import type {
  *
  * @param {Theme_DocsRoot_Index_DocsRoot_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DocsRoot(props: Theme_DocsRoot_Index_DocsRoot_Props) {

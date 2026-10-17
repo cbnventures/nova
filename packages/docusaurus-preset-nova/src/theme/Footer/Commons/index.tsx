@@ -35,6 +35,8 @@ import type {
  *
  * @param {Theme_Footer_Commons_Index_Commons_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function Commons(props: Theme_Footer_Commons_Index_Commons_Props): Theme_Footer_Commons_Index_Commons_Returns {

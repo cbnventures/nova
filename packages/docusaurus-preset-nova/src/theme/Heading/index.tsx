@@ -19,6 +19,8 @@ import type {
  *
  * @param {Theme_Heading_Index_Heading_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function Heading(props: Theme_Heading_Index_Heading_Props) {

@@ -1,5 +1,5 @@
 import { deriveDtsMapping } from '../../../lib/type-declaration-engine.js';
-import { setActiveVitest } from '../active-vitest.js';
+import { setActiveVitest } from '../internal/active-vitest.js';
 import {
   crossSectionReferences,
   dtsImportVerbatim,

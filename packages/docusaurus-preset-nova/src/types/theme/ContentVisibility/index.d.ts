@@ -9,12 +9,12 @@ export type Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_Front
 
 export type Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_FrontMatter_Unlisted = boolean | undefined;
 
+export type Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_Unlisted = boolean;
+
 export type Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_FrontMatter = {
   draft?: Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_FrontMatter_Draft;
   unlisted?: Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_FrontMatter_Unlisted;
 };
-
-export type Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_Unlisted = boolean;
 
 export type Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata = {
   unlisted: Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_Unlisted;

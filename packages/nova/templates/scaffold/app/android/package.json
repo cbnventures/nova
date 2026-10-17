@@ -19,15 +19,15 @@
     "clean:gradle": "node ./scripts/run-gradle.mjs clean"
   },
   "engines": {
-    "node": "^22 || ^24"
+    "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.31.1"
+    "@cbnventures/nova": "0.32.0"
   },
   "devDependencies": {
-    "@types/node": "24.9.1",
-    "eslint": "9.39.5",
-    "typescript": "6.0.3",
-    "vitest": "4.1.11"
+    "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",
+    "eslint": "[__SCAFFOLD_VERSION_ESLINT__]",
+    "typescript": "[__SCAFFOLD_VERSION_TYPESCRIPT__]",
+    "vitest": "[__SCAFFOLD_VERSION_VITEST__]"
   }
 }

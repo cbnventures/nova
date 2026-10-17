@@ -19,11 +19,11 @@ export type Blocks_Stats_Index_BlocksStats_Item = {
   color?: Blocks_Stats_Index_BlocksStats_Item_Color;
 };
 
-export type Blocks_Stats_Index_BlocksStats_Props_Items = Blocks_Stats_Index_BlocksStats_Item[];
-
 export type Blocks_Stats_Index_BlocksStats_Props_Heading = string | undefined;
 
 export type Blocks_Stats_Index_BlocksStats_Props_Description = string | undefined;
+
+export type Blocks_Stats_Index_BlocksStats_Props_Items = Blocks_Stats_Index_BlocksStats_Item[];
 
 export type Blocks_Stats_Index_BlocksStats_Props_Surface = Shared_Surface | undefined;
 

@@ -1,0 +1,828 @@
+{
+  "schemaVersion": 1,
+  "entries": {
+    "nodeEngine": {
+      "value": "^22 || ^24",
+      "placeholder": "[__SCAFFOLD_VERSION_NODE_ENGINE__]",
+      "group": "javascript",
+      "source": {
+        "type": "node-lts",
+        "strategy": "active-lts"
+      }
+    },
+    "nodeEnginePfsense": {
+      "value": ">=22.3 <23 || ^24",
+      "placeholder": "[__SCAFFOLD_VERSION_NODE_ENGINE_PFSENSE__]",
+      "group": "pfsense",
+      "source": {
+        "type": "manual",
+        "reason": "The pfSense tooling baseline preserves its tested Node 22.3 minimum."
+      }
+    },
+    "npmPackageManager": {
+      "value": "npm@11.18.0",
+      "placeholder": "[__SCAFFOLD_VERSION_NPM_PACKAGE_MANAGER__]",
+      "group": "javascript",
+      "source": {
+        "type": "npm",
+        "package": "npm",
+        "strategy": "same-major",
+        "prefix": "npm@"
+      }
+    },
+    "typesNode24": {
+      "value": "24.9.1",
+      "placeholder": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",
+      "group": "javascript",
+      "source": {
+        "type": "npm",
+        "package": "@types/node",
+        "strategy": "same-major"
+      }
+    },
+    "typesNode22": {
+      "value": "22.15.17",
+      "placeholder": "[__SCAFFOLD_VERSION_TYPES_NODE_22__]",
+      "group": "javascript",
+      "source": {
+        "type": "npm",
+        "package": "@types/node",
+        "strategy": "same-major"
+      }
+    },
+    "eslint": {
+      "value": "9.39.5",
+      "placeholder": "[__SCAFFOLD_VERSION_ESLINT__]",
+      "group": "javascript",
+      "source": {
+        "type": "npm",
+        "package": "eslint",
+        "strategy": "same-major"
+      }
+    },
+    "jiti": {
+      "value": "2.7.0",
+      "placeholder": "[__SCAFFOLD_VERSION_JITI__]",
+      "group": "javascript",
+      "source": {
+        "type": "npm",
+        "package": "jiti",
+        "strategy": "same-major"
+      }
+    },
+    "shx": {
+      "value": "0.4.0",
+      "placeholder": "[__SCAFFOLD_VERSION_SHX__]",
+      "group": "javascript",
+      "source": {
+        "type": "npm",
+        "package": "shx",
+        "strategy": "same-major"
+      }
+    },
+    "typescript": {
+      "value": "6.0.3",
+      "placeholder": "[__SCAFFOLD_VERSION_TYPESCRIPT__]",
+      "group": "javascript",
+      "source": {
+        "type": "npm",
+        "package": "typescript",
+        "strategy": "same-major"
+      }
+    },
+    "vitest": {
+      "value": "4.1.11",
+      "placeholder": "[__SCAFFOLD_VERSION_VITEST__]",
+      "group": "javascript",
+      "source": {
+        "type": "npm",
+        "package": "vitest",
+        "strategy": "same-major"
+      }
+    },
+    "tsx": {
+      "value": "4.23.15",
+      "placeholder": "[__SCAFFOLD_VERSION_TSX__]",
+      "group": "javascript",
+      "source": {
+        "type": "npm",
+        "package": "tsx",
+        "strategy": "same-major"
+      }
+    },
+    "tsxExpress": {
+      "value": "4.19.4",
+      "placeholder": "[__SCAFFOLD_VERSION_TSX_EXPRESS__]",
+      "group": "express",
+      "source": {
+        "type": "npm",
+        "package": "tsx",
+        "strategy": "same-major"
+      }
+    },
+    "astro": {
+      "value": "7.3.5",
+      "placeholder": "[__SCAFFOLD_VERSION_ASTRO__]",
+      "group": "astro",
+      "source": {
+        "type": "npm",
+        "package": "astro",
+        "strategy": "same-major"
+      }
+    },
+    "astroCheck": {
+      "value": "0.9.10",
+      "placeholder": "[__SCAFFOLD_VERSION_ASTRO_CHECK__]",
+      "group": "astro",
+      "source": {
+        "type": "npm",
+        "package": "@astrojs/check",
+        "strategy": "same-major"
+      }
+    },
+    "astroNode": {
+      "value": "11.1.7",
+      "placeholder": "[__SCAFFOLD_VERSION_ASTRO_NODE__]",
+      "group": "astro",
+      "source": {
+        "type": "npm",
+        "package": "@astrojs/node",
+        "strategy": "same-major"
+      }
+    },
+    "astroCloudflare": {
+      "value": "14.3.4",
+      "placeholder": "[__SCAFFOLD_VERSION_ASTRO_CLOUDFLARE__]",
+      "group": "cloudflare",
+      "source": {
+        "type": "npm",
+        "package": "@astrojs/cloudflare",
+        "strategy": "same-major"
+      }
+    },
+    "cookie": {
+      "value": "2.0.1",
+      "placeholder": "[__SCAFFOLD_VERSION_COOKIE__]",
+      "group": "astro",
+      "source": {
+        "type": "npm",
+        "package": "cookie",
+        "strategy": "same-major"
+      }
+    },
+    "cloudflareWorkersTypes": {
+      "value": "5.20261015.1",
+      "placeholder": "[__SCAFFOLD_VERSION_CLOUDFLARE_WORKERS_TYPES__]",
+      "group": "cloudflare",
+      "source": {
+        "type": "npm",
+        "package": "@cloudflare/workers-types",
+        "strategy": "latest"
+      }
+    },
+    "wrangler": {
+      "value": "4.151.0",
+      "placeholder": "[__SCAFFOLD_VERSION_WRANGLER__]",
+      "group": "cloudflare",
+      "source": {
+        "type": "npm",
+        "package": "wrangler",
+        "strategy": "same-major"
+      }
+    },
+    "vercel": {
+      "value": "64.4.0",
+      "placeholder": "[__SCAFFOLD_VERSION_VERCEL__]",
+      "group": "serverless-tool",
+      "source": {
+        "type": "npm",
+        "package": "vercel",
+        "strategy": "same-major"
+      }
+    },
+    "cloudflareCompatibilityDate": {
+      "value": "2026-10-14",
+      "placeholder": "[__SCAFFOLD_VERSION_CLOUDFLARE_COMPATIBILITY_DATE__]",
+      "group": "cloudflare",
+      "source": {
+        "type": "cloudflare-date",
+        "strategy": "coupled"
+      }
+    },
+    "discordJs": {
+      "value": "14.27.0",
+      "placeholder": "[__SCAFFOLD_VERSION_DISCORD_JS__]",
+      "group": "discord",
+      "source": {
+        "type": "npm",
+        "package": "discord.js",
+        "strategy": "same-major"
+      }
+    },
+    "express": {
+      "value": "5.1.0",
+      "placeholder": "[__SCAFFOLD_VERSION_EXPRESS__]",
+      "group": "express",
+      "source": {
+        "type": "npm",
+        "package": "express",
+        "strategy": "same-major"
+      }
+    },
+    "typesExpress": {
+      "value": "5.0.2",
+      "placeholder": "[__SCAFFOLD_VERSION_TYPES_EXPRESS__]",
+      "group": "express",
+      "source": {
+        "type": "npm",
+        "package": "@types/express",
+        "strategy": "same-major"
+      }
+    },
+    "next": {
+      "value": "16.3.4",
+      "placeholder": "[__SCAFFOLD_VERSION_NEXT__]",
+      "group": "nextjs",
+      "source": {
+        "type": "npm",
+        "package": "next",
+        "strategy": "same-major"
+      }
+    },
+    "react": {
+      "value": "19.2.8",
+      "placeholder": "[__SCAFFOLD_VERSION_REACT__]",
+      "group": "react",
+      "source": {
+        "type": "npm",
+        "package": "react",
+        "strategy": "same-major"
+      }
+    },
+    "reactDom": {
+      "value": "19.2.8",
+      "placeholder": "[__SCAFFOLD_VERSION_REACT_DOM__]",
+      "group": "react",
+      "source": {
+        "type": "npm",
+        "package": "react-dom",
+        "strategy": "same-major"
+      }
+    },
+    "typesReact": {
+      "value": "19.2.18",
+      "placeholder": "[__SCAFFOLD_VERSION_TYPES_REACT__]",
+      "group": "react",
+      "source": {
+        "type": "npm",
+        "package": "@types/react",
+        "strategy": "same-major"
+      }
+    },
+    "typesReactDom": {
+      "value": "19.2.7",
+      "placeholder": "[__SCAFFOLD_VERSION_TYPES_REACT_DOM__]",
+      "group": "react",
+      "source": {
+        "type": "npm",
+        "package": "@types/react-dom",
+        "strategy": "same-major"
+      }
+    },
+    "typesReactDomDocusaurus": {
+      "value": "19.2.4",
+      "placeholder": "[__SCAFFOLD_VERSION_TYPES_REACT_DOM_DOCUSAURUS__]",
+      "group": "docusaurus",
+      "source": {
+        "type": "npm",
+        "package": "@types/react-dom",
+        "strategy": "same-major"
+      }
+    },
+    "vite": {
+      "value": "6.4.3",
+      "placeholder": "[__SCAFFOLD_VERSION_VITE__]",
+      "group": "vite",
+      "source": {
+        "type": "npm",
+        "package": "vite",
+        "strategy": "same-major"
+      }
+    },
+    "viteReactPlugin": {
+      "value": "5.2.0",
+      "placeholder": "[__SCAFFOLD_VERSION_VITE_REACT_PLUGIN__]",
+      "group": "vite",
+      "source": {
+        "type": "npm",
+        "package": "@vitejs/plugin-react",
+        "strategy": "same-major"
+      }
+    },
+    "vue": {
+      "value": "3.5.43",
+      "placeholder": "[__SCAFFOLD_VERSION_VUE__]",
+      "group": "vite",
+      "source": {
+        "type": "npm",
+        "package": "vue",
+        "strategy": "same-major"
+      }
+    },
+    "viteVuePlugin": {
+      "value": "6.0.9",
+      "placeholder": "[__SCAFFOLD_VERSION_VITE_VUE_PLUGIN__]",
+      "group": "vite",
+      "source": {
+        "type": "npm",
+        "package": "@vitejs/plugin-vue",
+        "strategy": "same-major"
+      }
+    },
+    "svelte": {
+      "value": "5.57.2",
+      "placeholder": "[__SCAFFOLD_VERSION_SVELTE__]",
+      "group": "vite",
+      "source": {
+        "type": "npm",
+        "package": "svelte",
+        "strategy": "same-major"
+      }
+    },
+    "viteSveltePlugin": {
+      "value": "6.2.4",
+      "placeholder": "[__SCAFFOLD_VERSION_VITE_SVELTE_PLUGIN__]",
+      "group": "vite",
+      "source": {
+        "type": "npm",
+        "package": "@sveltejs/vite-plugin-svelte",
+        "strategy": "same-major"
+      }
+    },
+    "vitePwa": {
+      "value": "2.0.0",
+      "placeholder": "[__SCAFFOLD_VERSION_VITE_PWA__]",
+      "group": "vite",
+      "source": {
+        "type": "npm",
+        "package": "vite-plugin-pwa",
+        "strategy": "same-major"
+      }
+    },
+    "docusaurus": {
+      "value": "3.10.2",
+      "placeholder": "[__SCAFFOLD_VERSION_DOCUSAURUS__]",
+      "group": "docusaurus",
+      "source": {
+        "type": "npm",
+        "package": "@docusaurus/core",
+        "strategy": "same-major"
+      }
+    },
+    "glob": {
+      "value": "13.0.6",
+      "placeholder": "[__SCAFFOLD_VERSION_GLOB__]",
+      "group": "docusaurus",
+      "source": {
+        "type": "npm",
+        "package": "glob",
+        "strategy": "same-major"
+      }
+    },
+    "actionsCore": {
+      "value": "3.0.1",
+      "placeholder": "[__SCAFFOLD_VERSION_ACTIONS_CORE__]",
+      "group": "github-action",
+      "source": {
+        "type": "npm",
+        "package": "@actions/core",
+        "strategy": "same-major"
+      }
+    },
+    "githubLocalAction": {
+      "value": "7.0.1",
+      "placeholder": "[__SCAFFOLD_VERSION_GITHUB_LOCAL_ACTION__]",
+      "group": "github-action",
+      "source": {
+        "type": "npm",
+        "package": "@github/local-action",
+        "strategy": "same-major"
+      }
+    },
+    "vercelNcc": {
+      "value": "0.45.0",
+      "placeholder": "[__SCAFFOLD_VERSION_VERCEL_NCC__]",
+      "group": "github-action",
+      "source": {
+        "type": "npm",
+        "package": "@vercel/ncc",
+        "strategy": "same-major"
+      }
+    },
+    "workflowActionAttest": {
+      "value": "actions/attest@v4",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_ATTEST__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "actions/attest",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionCheckout": {
+      "value": "actions/checkout@v7",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_CHECKOUT__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "actions/checkout",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionConfigurePages": {
+      "value": "actions/configure-pages@v6",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_CONFIGURE_PAGES__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "actions/configure-pages",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionDeployPages": {
+      "value": "actions/deploy-pages@v5",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_DEPLOY_PAGES__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "actions/deploy-pages",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionDownloadArtifact": {
+      "value": "actions/download-artifact@v8",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_DOWNLOAD_ARTIFACT__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "actions/download-artifact",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionSetupNode": {
+      "value": "actions/setup-node@v6",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_SETUP_NODE__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "actions/setup-node",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionUploadArtifact": {
+      "value": "actions/upload-artifact@v7",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_UPLOAD_ARTIFACT__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "actions/upload-artifact",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionUploadPagesArtifact": {
+      "value": "actions/upload-pages-artifact@v5",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_UPLOAD_PAGES_ARTIFACT__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "actions/upload-pages-artifact",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionDockerBuildPush": {
+      "value": "docker/build-push-action@v7",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_DOCKER_BUILD_PUSH__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "docker/build-push-action",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionDockerLogin": {
+      "value": "docker/login-action@v4",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_DOCKER_LOGIN__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "docker/login-action",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionDockerSetupBuildx": {
+      "value": "docker/setup-buildx-action@v3",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_DOCKER_SETUP_BUILDX__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "docker/setup-buildx-action",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionDockerSetupQemu": {
+      "value": "docker/setup-qemu-action@v3",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_DOCKER_SETUP_QEMU__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "docker/setup-qemu-action",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionLockInactiveThreads": {
+      "value": "mrjackyliang/lock-inactive-threads@v1",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_LOCK_INACTIVE_THREADS__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "mrjackyliang/lock-inactive-threads",
+        "strategy": "latest-major"
+      }
+    },
+    "workflowActionSponsorGatedSupport": {
+      "value": "mrjackyliang/sponsor-gated-support@v2",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_SPONSOR_GATED_SUPPORT__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "github-release",
+        "repository": "mrjackyliang/sponsor-gated-support",
+        "strategy": "latest-major"
+      }
+    },
+    "homebridgePeer": {
+      "value": "^1.11.0 || ^2.0.0",
+      "placeholder": "[__SCAFFOLD_VERSION_HOMEBRIDGE_PEER__]",
+      "group": "homebridge",
+      "source": {
+        "type": "manual",
+        "reason": "The peer range represents supported Homebridge majors rather than one package release."
+      }
+    },
+    "homebridge": {
+      "value": "2.4.0",
+      "placeholder": "[__SCAFFOLD_VERSION_HOMEBRIDGE__]",
+      "group": "homebridge",
+      "source": {
+        "type": "npm",
+        "package": "homebridge",
+        "strategy": "same-major"
+      }
+    },
+    "homebridgePluginUiUtils": {
+      "value": "2.2.6",
+      "placeholder": "[__SCAFFOLD_VERSION_HOMEBRIDGE_PLUGIN_UI_UTILS__]",
+      "group": "homebridge",
+      "source": {
+        "type": "npm",
+        "package": "@homebridge/plugin-ui-utils",
+        "strategy": "same-major"
+      }
+    },
+    "chalk": {
+      "value": "5.6.2",
+      "placeholder": "[__SCAFFOLD_VERSION_CHALK__]",
+      "group": "serverless-tool",
+      "source": {
+        "type": "npm",
+        "package": "chalk",
+        "strategy": "same-major"
+      }
+    },
+    "commander": {
+      "value": "15.0.0",
+      "placeholder": "[__SCAFFOLD_VERSION_COMMANDER__]",
+      "group": "serverless-tool",
+      "source": {
+        "type": "npm",
+        "package": "commander",
+        "strategy": "same-major"
+      }
+    },
+    "dockerNode": {
+      "value": "24.21.0-alpine3.23",
+      "placeholder": "[__SCAFFOLD_VERSION_DOCKER_NODE__]",
+      "group": "docker",
+      "source": {
+        "type": "docker-hub",
+        "repository": "library/node",
+        "strategy": "pattern",
+        "pattern": "^24\\.\\d+\\.\\d+-alpine3\\.23$"
+      }
+    },
+    "dockerAlpine": {
+      "value": "3.23.3",
+      "placeholder": "[__SCAFFOLD_VERSION_DOCKER_ALPINE__]",
+      "group": "docker",
+      "source": {
+        "type": "docker-hub",
+        "repository": "library/alpine",
+        "strategy": "pattern",
+        "pattern": "^3\\.23\\.\\d+$"
+      }
+    },
+    "dockerNginxUnprivileged": {
+      "value": "1.30.5-alpine3.24",
+      "placeholder": "[__SCAFFOLD_VERSION_DOCKER_NGINX_UNPRIVILEGED__]",
+      "group": "docker",
+      "source": {
+        "type": "docker-hub",
+        "repository": "nginxinc/nginx-unprivileged",
+        "strategy": "pattern",
+        "pattern": "^1\\.30\\.\\d+-alpine3\\.24$"
+      }
+    },
+    "androidGradlePlugin": {
+      "value": "9.0.1",
+      "placeholder": "[__SCAFFOLD_VERSION_ANDROID_GRADLE_PLUGIN__]",
+      "group": "android",
+      "source": {
+        "type": "maven-metadata",
+        "url": "https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle/maven-metadata.xml",
+        "strategy": "same-major"
+      }
+    },
+    "androidxCore": {
+      "value": "1.18.0",
+      "placeholder": "[__SCAFFOLD_VERSION_ANDROIDX_CORE__]",
+      "group": "android",
+      "source": {
+        "type": "maven-metadata",
+        "url": "https://dl.google.com/dl/android/maven2/androidx/core/core-ktx/maven-metadata.xml",
+        "strategy": "same-major"
+      }
+    },
+    "androidxLifecycle": {
+      "value": "2.10.0",
+      "placeholder": "[__SCAFFOLD_VERSION_ANDROIDX_LIFECYCLE__]",
+      "group": "android",
+      "source": {
+        "type": "maven-metadata",
+        "url": "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-ktx/maven-metadata.xml",
+        "strategy": "same-major"
+      }
+    },
+    "androidxActivity": {
+      "value": "1.13.0",
+      "placeholder": "[__SCAFFOLD_VERSION_ANDROIDX_ACTIVITY__]",
+      "group": "android",
+      "source": {
+        "type": "maven-metadata",
+        "url": "https://dl.google.com/dl/android/maven2/androidx/activity/activity-compose/maven-metadata.xml",
+        "strategy": "same-major"
+      }
+    },
+    "androidxComposeBom": {
+      "value": "2026.03.01",
+      "placeholder": "[__SCAFFOLD_VERSION_ANDROIDX_COMPOSE_BOM__]",
+      "group": "android",
+      "source": {
+        "type": "maven-metadata",
+        "url": "https://dl.google.com/dl/android/maven2/androidx/compose/compose-bom/maven-metadata.xml",
+        "strategy": "latest"
+      }
+    },
+    "kotlinCoroutines": {
+      "value": "1.10.2",
+      "placeholder": "[__SCAFFOLD_VERSION_KOTLIN_COROUTINES__]",
+      "group": "android",
+      "source": {
+        "type": "maven-metadata",
+        "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-test/maven-metadata.xml",
+        "strategy": "same-major"
+      }
+    },
+    "junit": {
+      "value": "4.13.2",
+      "placeholder": "[__SCAFFOLD_VERSION_JUNIT__]",
+      "group": "android",
+      "source": {
+        "type": "maven-metadata",
+        "url": "https://repo1.maven.org/maven2/junit/junit/maven-metadata.xml",
+        "strategy": "same-major"
+      }
+    },
+    "kotlin": {
+      "value": "2.3.20",
+      "placeholder": "[__SCAFFOLD_VERSION_KOTLIN__]",
+      "group": "android",
+      "source": {
+        "type": "maven-metadata",
+        "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin/maven-metadata.xml",
+        "strategy": "same-major"
+      }
+    },
+    "androidxNavigation3": {
+      "value": "1.0.1",
+      "placeholder": "[__SCAFFOLD_VERSION_ANDROIDX_NAVIGATION_3__]",
+      "group": "android",
+      "source": {
+        "type": "maven-metadata",
+        "url": "https://dl.google.com/dl/android/maven2/androidx/navigation3/navigation3-runtime/maven-metadata.xml",
+        "strategy": "same-major"
+      }
+    },
+    "androidxLifecycleNavigation3": {
+      "value": "2.10.0",
+      "placeholder": "[__SCAFFOLD_VERSION_ANDROIDX_LIFECYCLE_NAVIGATION_3__]",
+      "group": "android",
+      "source": {
+        "type": "maven-metadata",
+        "url": "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-navigation3/maven-metadata.xml",
+        "strategy": "same-major"
+      }
+    },
+    "foojayResolver": {
+      "value": "1.0.0",
+      "placeholder": "[__SCAFFOLD_VERSION_FOOJAY_RESOLVER__]",
+      "group": "android",
+      "source": {
+        "type": "maven-metadata",
+        "url": "https://plugins.gradle.org/m2/org/gradle/toolchains/foojay-resolver-convention/org.gradle.toolchains.foojay-resolver-convention.gradle.plugin/maven-metadata.xml",
+        "strategy": "same-major"
+      }
+    },
+    "gradle": {
+      "value": "9.1.0",
+      "placeholder": "[__SCAFFOLD_VERSION_GRADLE__]",
+      "group": "android",
+      "source": {
+        "type": "gradle-current",
+        "strategy": "same-major"
+      }
+    },
+    "gradleSha256": {
+      "value": "a17ddd85a26b6a7f5ddb71ff8b05fc5104c0202c6e64782429790c933686c806",
+      "placeholder": "[__SCAFFOLD_VERSION_GRADLE_SHA256__]",
+      "group": "android",
+      "source": {
+        "type": "derived",
+        "from": "gradle",
+        "field": "downloadChecksum"
+      }
+    },
+    "androidCompileSdk": {
+      "value": "36",
+      "placeholder": "[__SCAFFOLD_VERSION_ANDROID_COMPILE_SDK__]",
+      "group": "android",
+      "source": {
+        "type": "manual",
+        "reason": "SDK levels advance with Android platform migrations and are validated as a bundle."
+      }
+    },
+    "androidMinSdk": {
+      "value": "24",
+      "placeholder": "[__SCAFFOLD_VERSION_ANDROID_MIN_SDK__]",
+      "group": "android",
+      "source": {
+        "type": "manual",
+        "reason": "The minimum SDK is a support policy rather than an update candidate."
+      }
+    },
+    "androidTargetSdk": {
+      "value": "36",
+      "placeholder": "[__SCAFFOLD_VERSION_ANDROID_TARGET_SDK__]",
+      "group": "android",
+      "source": {
+        "type": "manual",
+        "reason": "Target SDK changes require an Android platform review."
+      }
+    },
+    "appleIosDeploymentTarget": {
+      "value": "17.0",
+      "placeholder": "[__SCAFFOLD_VERSION_APPLE_IOS_DEPLOYMENT_TARGET__]",
+      "group": "apple",
+      "source": {
+        "type": "manual",
+        "reason": "Deployment targets are Nova support policy."
+      }
+    },
+    "appleMacosDeploymentTarget": {
+      "value": "14.0",
+      "placeholder": "[__SCAFFOLD_VERSION_APPLE_MACOS_DEPLOYMENT_TARGET__]",
+      "group": "apple",
+      "source": {
+        "type": "manual",
+        "reason": "Deployment targets are Nova support policy."
+      }
+    },
+    "appleSwiftVersion": {
+      "value": "6.0",
+      "placeholder": "[__SCAFFOLD_VERSION_APPLE_SWIFT__]",
+      "group": "apple",
+      "source": {
+        "type": "manual",
+        "reason": "Swift language mode changes require an Apple scaffold migration."
+      }
+    }
+  }
+}

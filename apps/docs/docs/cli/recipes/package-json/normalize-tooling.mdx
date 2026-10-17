@@ -46,11 +46,27 @@ It normalizes the `scripts` object, `allowScripts` object, `gypfile` flag, `conf
 
 For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects tooling-related fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
 
-- **`scripts` (Required)** — If the field is missing, it is added as an empty object `{}`. Existing lifecycle groups are ordered as `dev`, `prod`, `check`, `build`, `deploy`, and `clean`; each group's `name:*` children stay directly beneath their parent in authored order so sequential pipelines keep their intended execution order. Other scripts retain their relative order after those groups.
+- **`scripts` (Required)** — If the field is missing, it is added as an empty object `{}`. Nova organizes command families as `dev`, `prod`, `check`, `build`, `deploy`, `clean`, `changelog`, `recipes`, optional `i18n`, project-specific commands, and npm lifecycle scripts.
 - **`allowScripts` (Conditional)** — Removed if the field is present but empty. A non-empty policy is preserved exactly; Nova never adds an approval or changes an existing decision.
 - **`gypfile` (Required)** — If present but no `binding.gyp` file exists in the workspace directory, the field is removed. If missing but `binding.gyp` exists and neither `scripts.preinstall` nor `scripts.install` are defined, it is added as `true`.
 - **`config` (Conditional)** — Removed if the field is present but empty.
 - **`workspaces` (Required)** — Removed if the workspace role is not `project`. If the role is `project` and the field is missing, it is added as an empty array `[]`.
+
+### Script Organization
+
+- Matching `pre<name>` and `post<name>` hooks wrap their parent or child command, while `name:*` children retain their authored order.
+- Project-specific command families follow optional `i18n`, and npm installation, preparation, packaging, publishing, versioning, and dependency hooks remain together at the end.
+- Project roots receive the standard `dev`, `prod`, `check`, `build`, `deploy`, `clean`, `changelog`, and `recipes` commands plus their workspace-runner children.
+- Generated projects register Nova's package-script Vitest suite so ordering drift, missing parents, recursive hooks, and ambiguous phase-less aliases fail checks.
+
+Nova rejects only exact top-level aliases; their scoped forms remain valid:
+
+- **Runtime aliases** — `develop`, `development`, `production`, `run`, `serve`, `start`, `preview`, and `watch` must move under `dev:*` or `prod:*` according to whether they execute source or compiled output.
+- **Check aliases** — `lint`, `test`, `type-check`, `typecheck`, and `coverage` must move under `check:*`.
+- **Build aliases** — `bundle`, `compile`, `generate`, `package`, and `transpile` must move under the phase that owns their output, usually `build:*`.
+- **Mutation and release aliases** — `fix` and `format` must identify a check or recipe phase, while `release` must identify its changelog or deployment phase.
+
+Distinct project capabilities such as `manage`, `tail`, `repl`, `test-api`, and `scaffold-versions` remain valid top-level commands. npm lifecycle commands such as `prepare`, `postinstall`, `prepack`, and `publish` also remain valid and stay in the final lifecycle section.
 
 ## Install-Script Trust Boundary
 

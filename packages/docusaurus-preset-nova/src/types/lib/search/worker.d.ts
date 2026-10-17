@@ -23,6 +23,8 @@ export type Lib_Search_Worker_LunrGlobal = {
   Index: Lib_Search_Worker_LunrGlobal_Index;
 };
 
+export type Lib_Search_Worker_Lunr = Lib_Search_Worker_LunrGlobal;
+
 /**
  * Lib - Search - Worker - Regex Special Chars.
  *

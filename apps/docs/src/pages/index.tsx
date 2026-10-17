@@ -32,6 +32,8 @@ import type {
  *
  * @constructor
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.11.0
  */
 function Home() {

@@ -1,5 +1,5 @@
 import { discoverContentFiles } from '../../../lib/file-discovery.js';
-import { setActiveVitest } from '../active-vitest.js';
+import { setActiveVitest } from '../internal/active-vitest.js';
 import {
   buildLinkIndex,
   internalBlogAnchorExists,

@@ -24,6 +24,8 @@ export type Theme_DocCard_Index_DocCard_LayoutDescription = string | undefined;
  */
 export type Theme_DocCard_Index_CardLayout_Props_ClassName = string | undefined;
 
+export type Theme_DocCard_Index_CardLayout_Props_Style = CSSProperties | undefined;
+
 export type Theme_DocCard_Index_CardLayout_Props_Href = string;
 
 export type Theme_DocCard_Index_CardLayout_Props_Icon = string;
@@ -31,8 +33,6 @@ export type Theme_DocCard_Index_CardLayout_Props_Icon = string;
 export type Theme_DocCard_Index_CardLayout_Props_Title = string;
 
 export type Theme_DocCard_Index_CardLayout_Props_Description = string | undefined;
-
-export type Theme_DocCard_Index_CardLayout_Props_Style = CSSProperties | undefined;
 
 export type Theme_DocCard_Index_CardLayout_Props = {
   className?: Theme_DocCard_Index_CardLayout_Props_ClassName;

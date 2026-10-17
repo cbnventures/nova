@@ -1,7 +1,7 @@
 import type { Command, CommandUnknownOpts } from '@commander-js/extra-typings';
 import type { ChalkInstance } from 'chalk';
 
-import type { Shared_GeneratorRunResult, Shared_RunScriptsOptions } from '../shared.d.ts';
+import type { Shared_GeneratorRunResult, Shared_RunScriptsOptions, Shared_RunWorkspacesOptions } from '../shared.d.ts';
 import type { Cli_Utility_RunRecipes_Runner_Run_Options } from './utility/run-recipes.d.ts';
 
 /**
@@ -133,28 +133,40 @@ export type Cli_Index_CLI_RegisterCommands_RecipeGithub = Command;
 
 export type Cli_Index_CLI_RegisterCommands_RunRecipesOptions = Cli_Utility_RunRecipes_Runner_Run_Options;
 
+export type Cli_Index_CLI_RegisterCommands_RecipeGithubOptions_DryRun = true;
+
 export type Cli_Index_CLI_RegisterCommands_RecipeGithubOptions = {
-  dryRun?: true;
+  dryRun?: Cli_Index_CLI_RegisterCommands_RecipeGithubOptions_DryRun;
 };
 
 export type Cli_Index_CLI_RegisterCommands_RecipeLicense = Command;
 
+export type Cli_Index_CLI_RegisterCommands_RecipeLicenseOptions_DryRun = true;
+
+export type Cli_Index_CLI_RegisterCommands_RecipeLicenseOptions_ReplaceFile = true;
+
 export type Cli_Index_CLI_RegisterCommands_RecipeLicenseOptions = {
-  dryRun?: true;
-  replaceFile?: true;
+  dryRun?: Cli_Index_CLI_RegisterCommands_RecipeLicenseOptions_DryRun;
+  replaceFile?: Cli_Index_CLI_RegisterCommands_RecipeLicenseOptions_ReplaceFile;
 };
 
 export type Cli_Index_CLI_RegisterCommands_RecipeMiscellaneous = Command;
 
+export type Cli_Index_CLI_RegisterCommands_RecipeMiscellaneousOptions_DryRun = true;
+
 export type Cli_Index_CLI_RegisterCommands_RecipeMiscellaneousOptions = {
-  dryRun?: true;
+  dryRun?: Cli_Index_CLI_RegisterCommands_RecipeMiscellaneousOptions_DryRun;
 };
 
 export type Cli_Index_CLI_RegisterCommands_RecipeReadMe = Command;
 
+export type Cli_Index_CLI_RegisterCommands_RecipeReadMeOptions_DryRun = true;
+
+export type Cli_Index_CLI_RegisterCommands_RecipeReadMeOptions_ReplaceFile = true;
+
 export type Cli_Index_CLI_RegisterCommands_RecipeReadMeOptions = {
-  dryRun?: true;
-  replaceFile?: true;
+  dryRun?: Cli_Index_CLI_RegisterCommands_RecipeReadMeOptions_DryRun;
+  replaceFile?: Cli_Index_CLI_RegisterCommands_RecipeReadMeOptions_ReplaceFile;
 };
 
 export type Cli_Index_CLI_RegisterCommands_Scaffold = Command;
@@ -167,9 +179,13 @@ export type Cli_Index_CLI_RegisterCommands_ScaffoldPackage = Command;
 
 export type Cli_Index_CLI_RegisterCommands_ScaffoldStarter = Command;
 
+export type Cli_Index_CLI_RegisterCommands_ScaffoldTool = Command;
+
 export type Cli_Index_CLI_RegisterCommands_Utility = Command;
 
 export type Cli_Index_CLI_RegisterCommands_RunScriptsOptions = Shared_RunScriptsOptions;
+
+export type Cli_Index_CLI_RegisterCommands_RunWorkspacesOptions = Shared_RunWorkspacesOptions;
 
 /**
  * CLI - Style Text.

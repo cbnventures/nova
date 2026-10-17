@@ -16,14 +16,15 @@ export type Theme_AnnouncementBar_Index_AnnouncementBar_Props = {
 
 export type Theme_AnnouncementBar_Index_AnnouncementBar_Returns = React.JSX.Element | null;
 
-export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig = {
-  announcementBar?: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar;
-  [key: string]: unknown;
-};
-
 export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id = string;
 
 export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Content = string;
+
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_BackgroundColor = string | undefined;
+
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_TextColor = string | undefined;
+
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_IsCloseable = boolean | undefined;
 
 export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar = {
   id: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id;
@@ -33,11 +34,10 @@ export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_Announcement
   isCloseable?: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_IsCloseable;
 } | undefined;
 
-export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_BackgroundColor = string | undefined;
-
-export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_TextColor = string | undefined;
-
-export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_IsCloseable = boolean | undefined;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig = {
+  announcementBar?: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar;
+  [key: string]: unknown;
+};
 
 export type Theme_AnnouncementBar_Index_AnnouncementBar_DismissStorageKey = string;
 

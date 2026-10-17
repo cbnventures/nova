@@ -150,6 +150,8 @@ function getPageNumbers(currentPage: Theme_BlogListPaginator_Index_GetPageNumber
  *
  * @param {Theme_BlogListPaginator_Index_BlogListPaginator_Props} props - Props.
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.15.0
  */
 function BlogListPaginator(props: Theme_BlogListPaginator_Index_BlogListPaginator_Props) {

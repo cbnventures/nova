@@ -74,6 +74,8 @@ function TocList(items: Theme_TocCollapsible_Panel_TocList_Items, onLinkClick: T
  * Mounted once from the persistent doc-root layout (docs) or the page
  * shell (src/pages, blog) so navigation does not blink the open overlay.
  *
+ * @returns {ReactPortal | null}
+ *
  * @since 0.21.0
  */
 function TOCCollapsiblePanel() {

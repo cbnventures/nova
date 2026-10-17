@@ -58,6 +58,8 @@ function TabList(tabs: Theme_Tabs_Index_TabList_TabsResult) {
    *
    * @param {Theme_Tabs_Index_TabList_HandleKeyDown_Event} event - Event.
    *
+   * @returns {undefined}
+   *
    * @since 0.15.0
    */
   function handleKeyDown(event: Theme_Tabs_Index_TabList_HandleKeyDown_Event): Theme_Tabs_Index_TabList_HandleKeyDown_Returns {
@@ -146,6 +148,8 @@ function TabList(tabs: Theme_Tabs_Index_TabList_TabsResult) {
  *
  * @param {Theme_Tabs_Index_Tabs_Props} props - Props.
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.15.0
  */
 function Tabs(props: Theme_Tabs_Index_Tabs_Props) {
@@ -161,6 +165,8 @@ function Tabs(props: Theme_Tabs_Index_Tabs_Props) {
      * Checks whether the current URL hash targets an element inside
      * one of this tab group's panels and switches to that tab when
      * the target is found in a non-selected panel.
+     *
+     * @returns {undefined}
      *
      * @since 0.15.0
      */

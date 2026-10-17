@@ -33,6 +33,8 @@ import type {
  *
  * @param {Theme_NavbarItem_LocaleDropdownNavbarItem_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function LocaleDropdownNavbarItem(props: Theme_NavbarItem_LocaleDropdownNavbarItem_Props) {

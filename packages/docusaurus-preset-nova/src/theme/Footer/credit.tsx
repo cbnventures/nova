@@ -27,6 +27,8 @@ import type {
  *
  * @constructor
  *
+ * @returns {ReactNode}
+ *
  * @since 0.15.0
  */
 function FooterCredit(): Theme_Footer_Credit_Returns {

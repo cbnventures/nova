@@ -52,9 +52,8 @@ import type {
 /**
  * CLI - Scaffold - Starter - Base.
  *
- * Creates a new monorepo from scratch with root-level
- * config files including package.json, nova.config.json, and turbo.json.
- * Sets up the directory structure and baseline Nova configuration.
+ * Creates a new monorepo with root-level package and Nova configuration files.
+ * Sets up its dedicated directory structure and baseline Nova conventions.
  *
  * @since 0.15.0
  */

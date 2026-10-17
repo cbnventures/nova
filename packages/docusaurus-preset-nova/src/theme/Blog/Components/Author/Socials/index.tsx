@@ -84,6 +84,8 @@ const socialIconConfigs: Theme_Blog_Components_Author_Socials_Index_Socials_Icon
  *
  * @param {Theme_Blog_Components_Author_Socials_Index_Socials_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.18.0
  */
 function Socials(props: Theme_Blog_Components_Author_Socials_Index_Socials_Props) {

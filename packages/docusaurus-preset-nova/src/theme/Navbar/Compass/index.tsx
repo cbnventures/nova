@@ -45,6 +45,8 @@ import type { Theme_Navbar_Index_Navbar_Item } from '../../../types/theme/Navbar
  *
  * @param {Theme_Navbar_Compass_Index_Compass_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function Compass(props: Theme_Navbar_Compass_Index_Compass_Props): Theme_Navbar_Compass_Index_Compass_Returns {

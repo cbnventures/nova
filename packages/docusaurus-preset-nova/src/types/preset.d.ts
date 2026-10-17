@@ -45,9 +45,9 @@ export type Preset_Preset_OptionsAnalytics = {
   gtm?: Preset_Preset_OptionsAnalyticsGtm;
 };
 
-export type Preset_Preset_OptionsSearch = Record<string, unknown> | false | undefined;
-
 export type Preset_Preset_OptionsPersistentCache = boolean | undefined;
+
+export type Preset_Preset_OptionsSearch = Record<string, unknown> | false | undefined;
 
 export type Preset_Preset_OptionsProgressBar = Options_PluginOptions_ProgressBar | undefined;
 

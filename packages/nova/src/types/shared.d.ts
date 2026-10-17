@@ -460,6 +460,8 @@ export type Shared_BlueprintStep_Name = string;
 
 export type Shared_BlueprintStep_Id = string;
 
+export type Shared_BlueprintStep_If = string;
+
 export type Shared_BlueprintStep_Uses = string;
 
 export type Shared_BlueprintStep_Env = Shared_BlueprintEnvMap;
@@ -475,8 +477,6 @@ export type Shared_BlueprintStep_RunBlock = boolean;
 export type Shared_BlueprintStep_RunPlain = boolean;
 
 export type Shared_BlueprintStep_WorkingDirectory = string;
-
-export type Shared_BlueprintStep_If = string;
 
 export type Shared_BlueprintStep = {
   name: Shared_BlueprintStep_Name;
@@ -501,7 +501,9 @@ export type Shared_BlueprintSteps = Shared_BlueprintStep[];
  */
 export type Shared_BlueprintJob_Id = string;
 
-export type Shared_BlueprintJob_If = string;
+export type Shared_BlueprintJobNeedsEntry = string;
+
+export type Shared_BlueprintJob_Needs = Shared_BlueprintJobNeedsEntry[];
 
 export type Shared_BlueprintJob_RunsOn = string;
 
@@ -509,11 +511,9 @@ export type Shared_BlueprintJob_TimeoutMinutes = number;
 
 export type Shared_BlueprintJob_Permissions = Shared_BlueprintPermissions;
 
+export type Shared_BlueprintJob_If = string;
+
 export type Shared_BlueprintJob_Steps = Shared_BlueprintSteps;
-
-export type Shared_BlueprintJobNeedsEntry = string;
-
-export type Shared_BlueprintJob_Needs = Shared_BlueprintJobNeedsEntry[];
 
 export type Shared_BlueprintJob = {
   id: Shared_BlueprintJob_Id;
@@ -862,12 +862,22 @@ export type Shared_NovaConfigGithubRecipeName =
 
 export type Shared_NovaConfig_Github_Topics = string[];
 
+export type Shared_NovaConfig_Github_Features_Issues = boolean;
+
+export type Shared_NovaConfig_Github_Features_Wiki = boolean;
+
+export type Shared_NovaConfig_Github_Features_Projects = boolean;
+
+export type Shared_NovaConfig_Github_Features_Discussions = boolean;
+
+export type Shared_NovaConfig_Github_Features_Sponsorships = boolean;
+
 export type Shared_NovaConfig_Github_Features = {
-  issues?: boolean;
-  wiki?: boolean;
-  projects?: boolean;
-  discussions?: boolean;
-  sponsorships?: boolean;
+  issues?: Shared_NovaConfig_Github_Features_Issues;
+  wiki?: Shared_NovaConfig_Github_Features_Wiki;
+  projects?: Shared_NovaConfig_Github_Features_Projects;
+  discussions?: Shared_NovaConfig_Github_Features_Discussions;
+  sponsorships?: Shared_NovaConfig_Github_Features_Sponsorships;
 };
 
 export type Shared_NovaConfigGithubActionsAllowedActions = 'all' | 'local-only' | 'selected';
@@ -876,23 +886,29 @@ export type Shared_NovaConfigGithubActionsDefaultWorkflowPermissions = 'read' | 
 
 export type Shared_NovaConfig_Github_Actions_SelectedActions_Pattern = string;
 
+export type Shared_NovaConfig_Github_Actions_SelectedActions_GithubOwned = boolean;
+
+export type Shared_NovaConfig_Github_Actions_SelectedActions_Verified = boolean;
+
 export type Shared_NovaConfig_Github_Actions_SelectedActions_Patterns = Shared_NovaConfig_Github_Actions_SelectedActions_Pattern[];
 
+export type Shared_NovaConfig_Github_Actions_Enabled = boolean;
+
+export type Shared_NovaConfig_Github_Actions_AllowedActions = Shared_NovaConfigGithubActionsAllowedActions;
+
+export type Shared_NovaConfig_Github_Actions_ShaPinningRequired = boolean;
+
 export type Shared_NovaConfig_Github_Actions_SelectedActions = {
-  githubOwned?: boolean;
-  verified?: boolean;
+  githubOwned?: Shared_NovaConfig_Github_Actions_SelectedActions_GithubOwned;
+  verified?: Shared_NovaConfig_Github_Actions_SelectedActions_Verified;
   patterns?: Shared_NovaConfig_Github_Actions_SelectedActions_Patterns;
 };
 
-export type Shared_NovaConfig_Github_Actions = {
-  enabled?: boolean;
-  allowedActions?: Shared_NovaConfigGithubActionsAllowedActions;
-  shaPinningRequired?: boolean;
-  selectedActions?: Shared_NovaConfig_Github_Actions_SelectedActions;
-  defaultWorkflowPermissions?: Shared_NovaConfigGithubActionsDefaultWorkflowPermissions;
-  canApprovePullRequestReviews?: boolean;
-  artifactRetentionDays?: number;
-};
+export type Shared_NovaConfig_Github_Actions_DefaultWorkflowPermissions = Shared_NovaConfigGithubActionsDefaultWorkflowPermissions;
+
+export type Shared_NovaConfig_Github_Actions_CanApprovePullRequestReviews = boolean;
+
+export type Shared_NovaConfig_Github_Actions_ArtifactRetentionDays = number;
 
 export type Shared_NovaConfig_Github_Label_Name = string;
 
@@ -906,81 +922,149 @@ export type Shared_NovaConfig_Github_Label = {
   description?: Shared_NovaConfig_Github_Label_Description;
 };
 
-export type Shared_NovaConfig_Github_Labels = Shared_NovaConfig_Github_Label[];
+export type Shared_NovaConfig_Github_Policies_MergeMethods_Merge = boolean;
+
+export type Shared_NovaConfig_Github_Policies_MergeMethods_Squash = boolean;
+
+export type Shared_NovaConfig_Github_Policies_MergeMethods_Rebase = boolean;
+
+export type Shared_NovaConfig_Github_Policies_Visibility = 'public' | 'private' | 'internal';
+
+export type Shared_NovaConfig_Github_Policies_DefaultBranch = string;
 
 export type Shared_NovaConfig_Github_Policies_MergeMethods = {
-  merge?: boolean;
-  squash?: boolean;
-  rebase?: boolean;
+  merge?: Shared_NovaConfig_Github_Policies_MergeMethods_Merge;
+  squash?: Shared_NovaConfig_Github_Policies_MergeMethods_Squash;
+  rebase?: Shared_NovaConfig_Github_Policies_MergeMethods_Rebase;
 };
 
 export type Shared_NovaConfigGithubPoliciesMergeCommitTitle = 'pull-request-title' | 'merge-message';
 
 export type Shared_NovaConfigGithubPoliciesMergeCommitMessage = 'pull-request-body' | 'pull-request-title' | 'blank';
 
+export type Shared_NovaConfig_Github_Policies_MergeCommit_Title = Shared_NovaConfigGithubPoliciesMergeCommitTitle;
+
+export type Shared_NovaConfig_Github_Policies_MergeCommit_Message = Shared_NovaConfigGithubPoliciesMergeCommitMessage;
+
 export type Shared_NovaConfig_Github_Policies_MergeCommit = {
-  title?: Shared_NovaConfigGithubPoliciesMergeCommitTitle;
-  message?: Shared_NovaConfigGithubPoliciesMergeCommitMessage;
+  title?: Shared_NovaConfig_Github_Policies_MergeCommit_Title;
+  message?: Shared_NovaConfig_Github_Policies_MergeCommit_Message;
 };
 
 export type Shared_NovaConfigGithubPoliciesSquashMergeTitle = 'pull-request-title' | 'commit-or-pull-request-title';
 
 export type Shared_NovaConfigGithubPoliciesSquashMergeMessage = 'pull-request-body' | 'commit-messages' | 'blank';
 
+export type Shared_NovaConfig_Github_Policies_SquashMerge_Title = Shared_NovaConfigGithubPoliciesSquashMergeTitle;
+
+export type Shared_NovaConfig_Github_Policies_SquashMerge_Message = Shared_NovaConfigGithubPoliciesSquashMergeMessage;
+
 export type Shared_NovaConfig_Github_Policies_SquashMerge = {
-  title?: Shared_NovaConfigGithubPoliciesSquashMergeTitle;
-  message?: Shared_NovaConfigGithubPoliciesSquashMergeMessage;
+  title?: Shared_NovaConfig_Github_Policies_SquashMerge_Title;
+  message?: Shared_NovaConfig_Github_Policies_SquashMerge_Message;
 };
 
+export type Shared_NovaConfig_Github_Policies_AutoDeleteHeadBranch = boolean;
+
+export type Shared_NovaConfig_Github_Policies_AutoMerge = boolean;
+
+export type Shared_NovaConfig_Github_Policies_AllowUpdateBranch = boolean;
+
+export type Shared_NovaConfig_Github_Policies_WebCommitSignoffRequired = boolean;
+
 export type Shared_NovaConfig_Github_Policies = {
-  visibility?: 'public' | 'private' | 'internal';
-  defaultBranch?: string;
+  visibility?: Shared_NovaConfig_Github_Policies_Visibility;
+  defaultBranch?: Shared_NovaConfig_Github_Policies_DefaultBranch;
   mergeMethods?: Shared_NovaConfig_Github_Policies_MergeMethods;
   mergeCommit?: Shared_NovaConfig_Github_Policies_MergeCommit;
   squashMerge?: Shared_NovaConfig_Github_Policies_SquashMerge;
-  autoDeleteHeadBranch?: boolean;
-  autoMerge?: boolean;
-  allowUpdateBranch?: boolean;
-  webCommitSignoffRequired?: boolean;
+  autoDeleteHeadBranch?: Shared_NovaConfig_Github_Policies_AutoDeleteHeadBranch;
+  autoMerge?: Shared_NovaConfig_Github_Policies_AutoMerge;
+  allowUpdateBranch?: Shared_NovaConfig_Github_Policies_AllowUpdateBranch;
+  webCommitSignoffRequired?: Shared_NovaConfig_Github_Policies_WebCommitSignoffRequired;
 };
 
 export type Shared_NovaConfigGithubRulesetEnforcement = 'active' | 'disabled' | 'evaluate';
 
 export type Shared_NovaConfigGithubRulesetAllowedMergeMethod = 'merge' | 'squash' | 'rebase';
 
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusCheck = string;
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_Enforcement = Shared_NovaConfigGithubRulesetEnforcement;
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_BlockDeletions = boolean;
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_BlockForcePushes = boolean;
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequireLinearHistory = boolean;
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequireSignedCommits = boolean;
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequirePullRequest = boolean;
+
 export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_AllowedMergeMethods = Shared_NovaConfigGithubRulesetAllowedMergeMethod[];
 
-export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusCheck = string;
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_DismissStaleReviews = boolean;
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequireCodeOwnerReview = boolean;
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequireLastPushApproval = boolean;
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredApprovals = number;
+
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequireConversationResolution = boolean;
 
 export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusChecks = Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusCheck[];
 
+export type Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequireBranchesToBeUpToDate = boolean;
+
 export type Shared_NovaConfig_Github_Rulesets_DefaultBranch = {
-  enforcement?: Shared_NovaConfigGithubRulesetEnforcement;
-  blockDeletions?: boolean;
-  blockForcePushes?: boolean;
-  requireLinearHistory?: boolean;
-  requireSignedCommits?: boolean;
-  requirePullRequest?: boolean;
+  enforcement?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_Enforcement;
+  blockDeletions?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_BlockDeletions;
+  blockForcePushes?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_BlockForcePushes;
+  requireLinearHistory?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequireLinearHistory;
+  requireSignedCommits?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequireSignedCommits;
+  requirePullRequest?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequirePullRequest;
   allowedMergeMethods?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_AllowedMergeMethods;
-  dismissStaleReviews?: boolean;
-  requireCodeOwnerReview?: boolean;
-  requireLastPushApproval?: boolean;
-  requiredApprovals?: number;
-  requireConversationResolution?: boolean;
+  dismissStaleReviews?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_DismissStaleReviews;
+  requireCodeOwnerReview?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequireCodeOwnerReview;
+  requireLastPushApproval?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequireLastPushApproval;
+  requiredApprovals?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredApprovals;
+  requireConversationResolution?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequireConversationResolution;
   requiredStatusChecks?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequiredStatusChecks;
-  requireBranchesToBeUpToDate?: boolean;
+  requireBranchesToBeUpToDate?: Shared_NovaConfig_Github_Rulesets_DefaultBranch_RequireBranchesToBeUpToDate;
+};
+
+export type Shared_NovaConfig_Github_Security_VulnerabilityAlerts = boolean;
+
+export type Shared_NovaConfig_Github_Security_DependabotSecurityUpdates = boolean;
+
+export type Shared_NovaConfig_Github_Security_SecretScanning = boolean;
+
+export type Shared_NovaConfig_Github_Security_PushProtection = boolean;
+
+export type Shared_NovaConfig_Github_Security = {
+  vulnerabilityAlerts?: Shared_NovaConfig_Github_Security_VulnerabilityAlerts;
+  dependabotSecurityUpdates?: Shared_NovaConfig_Github_Security_DependabotSecurityUpdates;
+  secretScanning?: Shared_NovaConfig_Github_Security_SecretScanning;
+  pushProtection?: Shared_NovaConfig_Github_Security_PushProtection;
 };
 
 export type Shared_NovaConfig_Github_Rulesets = {
   defaultBranch?: Shared_NovaConfig_Github_Rulesets_DefaultBranch;
 };
 
-export type Shared_NovaConfig_Github_Security = {
-  vulnerabilityAlerts?: boolean;
-  dependabotSecurityUpdates?: boolean;
-  secretScanning?: boolean;
-  pushProtection?: boolean;
+export type Shared_NovaConfig_Github_Actions = {
+  enabled?: Shared_NovaConfig_Github_Actions_Enabled;
+  allowedActions?: Shared_NovaConfig_Github_Actions_AllowedActions;
+  shaPinningRequired?: Shared_NovaConfig_Github_Actions_ShaPinningRequired;
+  selectedActions?: Shared_NovaConfig_Github_Actions_SelectedActions;
+  defaultWorkflowPermissions?: Shared_NovaConfig_Github_Actions_DefaultWorkflowPermissions;
+  canApprovePullRequestReviews?: Shared_NovaConfig_Github_Actions_CanApprovePullRequestReviews;
+  artifactRetentionDays?: Shared_NovaConfig_Github_Actions_ArtifactRetentionDays;
 };
+
+export type Shared_NovaConfig_Github_Labels = Shared_NovaConfig_Github_Label[];
 
 export type Shared_NovaConfig_Github_IssueTemplate_BugReportField =
   'nodejs'
@@ -1013,91 +1097,6 @@ export type Shared_NovaConfig_Github = {
   actions?: Shared_NovaConfig_Github_Actions;
   labels?: Shared_NovaConfig_Github_Labels;
   issueTemplate?: Shared_NovaConfig_Github_IssueTemplate;
-};
-
-export type Shared_NovaConfig_Urls_Homepage = string;
-
-export type Shared_NovaConfig_Urls_Repository = string;
-
-export type Shared_NovaConfig_Urls_Bugs = string;
-
-export type Shared_NovaConfig_Urls_License = string;
-
-export type Shared_NovaConfig_Urls_Logo = string;
-
-export type Shared_NovaConfig_Urls_Docker = string;
-
-export type Shared_NovaConfig_Urls_Documentation = string;
-
-export type Shared_NovaConfig_Urls_Npm = string;
-
-export type Shared_NovaConfigUrlsFundSource = string;
-
-export type Shared_NovaConfig_Urls_FundSources = Shared_NovaConfigUrlsFundSource[];
-
-export type Shared_NovaConfig_Urls_PrivacyPolicy = string;
-
-export type Shared_NovaConfig_Urls_TermsOfUse = string;
-
-export type Shared_NovaConfig_Urls = {
-  homepage?: Shared_NovaConfig_Urls_Homepage;
-  repository?: Shared_NovaConfig_Urls_Repository;
-  bugs?: Shared_NovaConfig_Urls_Bugs;
-  license?: Shared_NovaConfig_Urls_License;
-  logo?: Shared_NovaConfig_Urls_Logo;
-  docker?: Shared_NovaConfig_Urls_Docker;
-  documentation?: Shared_NovaConfig_Urls_Documentation;
-  npm?: Shared_NovaConfig_Urls_Npm;
-  fundSources?: Shared_NovaConfig_Urls_FundSources;
-  privacyPolicy?: Shared_NovaConfig_Urls_PrivacyPolicy;
-  termsOfUse?: Shared_NovaConfig_Urls_TermsOfUse;
-};
-
-export type Shared_NovaConfigReadMeBadge =
-  'homebridge'
-  | 'homebridge-verified'
-  | 'npm-version'
-  | 'npm-downloads'
-  | 'docker-pulls'
-  | 'docker-image-size'
-  | 'github-release'
-  | 'github-top-language'
-  | 'github-license'
-  | 'funding';
-
-export type Shared_NovaConfig_ReadMe_Badges = Shared_NovaConfigReadMeBadge[];
-
-export type Shared_NovaConfig_ReadMe = {
-  badges?: Shared_NovaConfig_ReadMe_Badges;
-};
-
-export type Shared_NovaConfigWorkspace_Name = string;
-
-export type Shared_NovaConfigWorkspace_Role = 'project' | 'docs' | 'config' | 'app' | 'package' | 'tool' | 'template';
-
-export type Shared_NovaConfigWorkspace_Policy = 'freezable' | 'trackable' | 'distributable';
-
-export type Shared_NovaConfigWorkspaceRecipeName =
-  'cleanup'
-  | 'normalize-artifacts'
-  | 'normalize-bundler'
-  | 'normalize-dependencies'
-  | 'normalize-modules'
-  | 'normalize-tooling'
-  | 'sync-environment'
-  | 'sync-identity'
-  | 'sync-ownership';
-
-export type Shared_NovaConfigWorkspaceRecipeSettings = Record<string, boolean>;
-
-export type Shared_NovaConfigWorkspace = {
-  name: Shared_NovaConfigWorkspace_Name;
-  role: Shared_NovaConfigWorkspace_Role;
-  policy: Shared_NovaConfigWorkspace_Policy;
-};
-
-export type Shared_NovaConfig_Workspaces = {
-  [key: string]: Shared_NovaConfigWorkspace;
 };
 
 export type Shared_NovaConfigWorkflow_Name = string;
@@ -1201,6 +1200,91 @@ export type Shared_NovaConfigWorkflowTargetNeedsEntry = Shared_NovaConfigWorkflo
 export type Shared_NovaConfigWorkflowTarget_Needs = Shared_NovaConfigWorkflowDeployTarget_After;
 
 export type Shared_NovaConfig_Workflows = Shared_NovaConfigWorkflow[];
+
+export type Shared_NovaConfig_Urls_Homepage = string;
+
+export type Shared_NovaConfig_Urls_Repository = string;
+
+export type Shared_NovaConfig_Urls_Bugs = string;
+
+export type Shared_NovaConfig_Urls_License = string;
+
+export type Shared_NovaConfig_Urls_Logo = string;
+
+export type Shared_NovaConfig_Urls_Docker = string;
+
+export type Shared_NovaConfig_Urls_Documentation = string;
+
+export type Shared_NovaConfig_Urls_Npm = string;
+
+export type Shared_NovaConfigUrlsFundSource = string;
+
+export type Shared_NovaConfig_Urls_FundSources = Shared_NovaConfigUrlsFundSource[];
+
+export type Shared_NovaConfig_Urls_PrivacyPolicy = string;
+
+export type Shared_NovaConfig_Urls_TermsOfUse = string;
+
+export type Shared_NovaConfig_Urls = {
+  homepage?: Shared_NovaConfig_Urls_Homepage;
+  repository?: Shared_NovaConfig_Urls_Repository;
+  bugs?: Shared_NovaConfig_Urls_Bugs;
+  license?: Shared_NovaConfig_Urls_License;
+  logo?: Shared_NovaConfig_Urls_Logo;
+  docker?: Shared_NovaConfig_Urls_Docker;
+  documentation?: Shared_NovaConfig_Urls_Documentation;
+  npm?: Shared_NovaConfig_Urls_Npm;
+  fundSources?: Shared_NovaConfig_Urls_FundSources;
+  privacyPolicy?: Shared_NovaConfig_Urls_PrivacyPolicy;
+  termsOfUse?: Shared_NovaConfig_Urls_TermsOfUse;
+};
+
+export type Shared_NovaConfigReadMeBadge =
+  'homebridge'
+  | 'homebridge-verified'
+  | 'npm-version'
+  | 'npm-downloads'
+  | 'docker-pulls'
+  | 'docker-image-size'
+  | 'github-release'
+  | 'github-top-language'
+  | 'github-license'
+  | 'funding';
+
+export type Shared_NovaConfig_ReadMe_Badges = Shared_NovaConfigReadMeBadge[];
+
+export type Shared_NovaConfig_ReadMe = {
+  badges?: Shared_NovaConfig_ReadMe_Badges;
+};
+
+export type Shared_NovaConfigWorkspace_Name = string;
+
+export type Shared_NovaConfigWorkspace_Role = 'project' | 'docs' | 'config' | 'app' | 'package' | 'tool' | 'template';
+
+export type Shared_NovaConfigWorkspace_Policy = 'freezable' | 'trackable' | 'distributable';
+
+export type Shared_NovaConfigWorkspaceRecipeName =
+  'cleanup'
+  | 'normalize-artifacts'
+  | 'normalize-bundler'
+  | 'normalize-dependencies'
+  | 'normalize-modules'
+  | 'normalize-tooling'
+  | 'sync-environment'
+  | 'sync-identity'
+  | 'sync-ownership';
+
+export type Shared_NovaConfigWorkspaceRecipeSettings = Record<string, boolean>;
+
+export type Shared_NovaConfigWorkspace = {
+  name: Shared_NovaConfigWorkspace_Name;
+  role: Shared_NovaConfigWorkspace_Role;
+  policy: Shared_NovaConfigWorkspace_Policy;
+};
+
+export type Shared_NovaConfig_Workspaces = {
+  [key: string]: Shared_NovaConfigWorkspace;
+};
 
 export type Shared_BlueprintConfigWorkflow_Template = Shared_NovaConfigWorkflow_Template;
 
@@ -1306,13 +1390,27 @@ export type Shared_BlueprintPublishTargetContext = {
   packageManager: Shared_BlueprintPublishTargetContext_PackageManager;
 };
 
-export type Shared_NovaConfigGitignoreProjectExclude = string;
+/**
+ * Shared - Nova Config Ignore File.
+ *
+ * @since 0.32.0
+ */
+export type Shared_NovaConfigIgnoreFile_Bundle = string;
 
-export type Shared_NovaConfig_Gitignore_ProjectExcludes = Shared_NovaConfigGitignoreProjectExclude[];
+export type Shared_NovaConfig_IgnoreFile_Bundles = Shared_NovaConfigIgnoreFile_Bundle[];
 
-export type Shared_NovaConfig_Gitignore = {
-  projectExcludes?: Shared_NovaConfig_Gitignore_ProjectExcludes;
+export type Shared_NovaConfigIgnoreFile_Pattern = string;
+
+export type Shared_NovaConfig_IgnoreFile_Patterns = Shared_NovaConfigIgnoreFile_Pattern[];
+
+export type Shared_NovaConfig_IgnoreFile = {
+  bundles: Shared_NovaConfig_IgnoreFile_Bundles;
+  patterns?: Shared_NovaConfig_IgnoreFile_Patterns;
 };
+
+export type Shared_NovaConfigIgnoreFiles_Path = string;
+
+export type Shared_NovaConfig_IgnoreFiles = Record<Shared_NovaConfigIgnoreFiles_Path, Shared_NovaConfig_IgnoreFile>;
 
 export type Shared_BlueprintPublicDotenvVariable_Key = string;
 
@@ -1511,8 +1609,6 @@ export type Shared_NovaConfigEnvironment = {
   workflows?: Shared_NovaConfigEnvironment_Workflows;
 };
 
-export type Shared_NovaConfig_Environment = Shared_NovaConfigEnvironment;
-
 export type Shared_NovaConfigAgent = 'claude-code' | 'codex';
 
 export type Shared_NovaConfig_Agents = Shared_NovaConfigAgent[];
@@ -1564,6 +1660,8 @@ export type Shared_NovaConfig_Recipes = {
   'package-json'?: Shared_NovaConfig_Recipes_PackageJson;
 };
 
+export type Shared_NovaConfig_Environment = Shared_NovaConfigEnvironment;
+
 /**
  * Shared - Nova Config Settings - Version Strategy.
  *
@@ -1571,9 +1669,34 @@ export type Shared_NovaConfig_Recipes = {
  */
 export type Shared_NovaConfigSettings_VersionStrategy = 'semver' | 'calver';
 
+export type Shared_NovaConfigSettings_RunWorkspacesCache_Directory = string;
+
+export type Shared_NovaConfigSettings_RunWorkspacesCache_Enabled = boolean;
+
+export type Shared_NovaConfigSettings_RunWorkspacesCache_Scripts = string[];
+
+export type Shared_NovaConfigSettings_RunWorkspacesCache = {
+  directory?: Shared_NovaConfigSettings_RunWorkspacesCache_Directory;
+  enabled?: Shared_NovaConfigSettings_RunWorkspacesCache_Enabled;
+  scripts?: Shared_NovaConfigSettings_RunWorkspacesCache_Scripts;
+};
+
+export type Shared_NovaConfigSettings_RunWorkspaces_Cache = Shared_NovaConfigSettings_RunWorkspacesCache;
+
+export type Shared_NovaConfigSettings_RunWorkspaces = {
+  cache?: Shared_NovaConfigSettings_RunWorkspaces_Cache;
+};
+
+export type Shared_NovaConfig_Settings_LockStepVersioning = boolean;
+
+export type Shared_NovaConfig_Settings_RunWorkspaces = Shared_NovaConfigSettings_RunWorkspaces;
+
+export type Shared_NovaConfig_Settings_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
 export type Shared_NovaConfig_Settings = {
-  lockStepVersioning?: boolean;
-  versionStrategy?: Shared_NovaConfigSettings_VersionStrategy;
+  lockStepVersioning?: Shared_NovaConfig_Settings_LockStepVersioning;
+  runWorkspaces?: Shared_NovaConfig_Settings_RunWorkspaces;
+  versionStrategy?: Shared_NovaConfig_Settings_VersionStrategy;
 };
 
 export type Shared_NovaConfig = {
@@ -1585,7 +1708,7 @@ export type Shared_NovaConfig = {
   urls?: Shared_NovaConfig_Urls;
   readme?: Shared_NovaConfig_ReadMe;
   workspaces?: Shared_NovaConfig_Workspaces;
-  gitignore?: Shared_NovaConfig_Gitignore;
+  ignoreFiles?: Shared_NovaConfig_IgnoreFiles;
   agents?: Shared_NovaConfig_Agents;
   recipes?: Shared_NovaConfig_Recipes;
   environment?: Shared_NovaConfig_Environment;
@@ -1599,7 +1722,7 @@ export type Shared_NovaConfigConfig = Shared_NovaConfig;
  *
  * @since 0.11.0
  */
-export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'readme' | 'workspaces' | 'workflows' | 'gitignore' | 'agents' | 'environment' | 'settings';
+export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'readme' | 'workspaces' | 'workflows' | 'ignoreFiles' | 'agents' | 'recipes' | 'environment' | 'settings';
 
 /**
  * Shared - Prompt With Cancel.
@@ -1642,6 +1765,218 @@ export type Shared_RunScriptsOptions = {
   parallel?: Shared_RunScriptsOptions_Parallel;
   buffer?: Shared_RunScriptsOptions_Buffer;
   nodeEnv?: Shared_RunScriptsOptions_NodeEnv;
+};
+
+/**
+ * Shared - Run Workspaces Cache Record.
+ *
+ * @since 0.32.0
+ */
+export type Shared_RunWorkspacesCacheRecord_ContextDigest = string;
+
+export type Shared_RunWorkspacesCacheRecord_StateDigest = string;
+
+export type Shared_RunWorkspacesCacheRecord_Version = 1;
+
+export type Shared_RunWorkspacesCacheRecord = {
+  contextDigest: Shared_RunWorkspacesCacheRecord_ContextDigest;
+  stateDigest: Shared_RunWorkspacesCacheRecord_StateDigest;
+  version: Shared_RunWorkspacesCacheRecord_Version;
+};
+
+/**
+ * Shared - Run Workspaces Options.
+ *
+ * @since 0.32.0
+ */
+export type Shared_RunWorkspacesOptions_Task = string;
+
+export type Shared_RunWorkspacesOptions_Buffer = string | undefined;
+
+export type Shared_RunWorkspacesOptions_Concurrency = string | undefined;
+
+export type Shared_RunWorkspacesOptions_ContinueOnError = true | undefined;
+
+export type Shared_RunWorkspacesOptions_DryRun = true | undefined;
+
+export type Shared_RunWorkspacesOptions_ExcludeWorkspace = string[] | undefined;
+
+export type Shared_RunWorkspacesOptions_Force = true | undefined;
+
+export type Shared_RunWorkspacesOptions_NodeEnv = string | undefined;
+
+export type Shared_RunWorkspacesOptions_ScriptArgs = string[] | undefined;
+
+export type Shared_RunWorkspacesOptions_Workspace = string[] | undefined;
+
+export type Shared_RunWorkspacesOptions = {
+  task?: Shared_RunWorkspacesOptions_Task;
+  buffer?: Shared_RunWorkspacesOptions_Buffer;
+  concurrency?: Shared_RunWorkspacesOptions_Concurrency;
+  continueOnError?: Shared_RunWorkspacesOptions_ContinueOnError;
+  dryRun?: Shared_RunWorkspacesOptions_DryRun;
+  excludeWorkspace?: Shared_RunWorkspacesOptions_ExcludeWorkspace;
+  force?: Shared_RunWorkspacesOptions_Force;
+  nodeEnv?: Shared_RunWorkspacesOptions_NodeEnv;
+  scriptArgs?: Shared_RunWorkspacesOptions_ScriptArgs;
+  workspace?: Shared_RunWorkspacesOptions_Workspace;
+};
+
+/**
+ * Shared - Run Workspaces Output Entry.
+ *
+ * @since 0.32.0
+ */
+export type Shared_RunWorkspacesOutputEntry_Kind = 'output' | 'result';
+
+export type Shared_RunWorkspacesOutputEntry_Key = string;
+
+export type Shared_RunWorkspacesOutputEntry_Stream = 'stdout' | 'stderr';
+
+export type Shared_RunWorkspacesOutputEntry_Line = string;
+
+export type Shared_RunWorkspacesOutputEntry = {
+  kind: Shared_RunWorkspacesOutputEntry_Kind;
+  key: Shared_RunWorkspacesOutputEntry_Key;
+  stream: Shared_RunWorkspacesOutputEntry_Stream;
+  line: Shared_RunWorkspacesOutputEntry_Line;
+};
+
+export type Shared_RunWorkspacesOutputQueue = Shared_RunWorkspacesOutputEntry[];
+
+/**
+ * Shared - Run Workspaces Plan.
+ *
+ * @since 0.32.0
+ */
+export type Shared_RunWorkspacesPlan_Tasks = Map<string, Shared_RunWorkspacesTask>;
+
+export type Shared_RunWorkspacesPlan_Skipped = string[];
+
+export type Shared_RunWorkspacesPlan = {
+  tasks: Shared_RunWorkspacesPlan_Tasks;
+  skipped: Shared_RunWorkspacesPlan_Skipped;
+};
+
+/**
+ * Shared - Run Workspaces Project.
+ *
+ * @since 0.32.0
+ */
+export type Shared_RunWorkspacesProject_Cache_Directory = string;
+
+export type Shared_RunWorkspacesProject_Cache_Enabled = boolean;
+
+export type Shared_RunWorkspacesProject_Cache_Scripts = Set<string>;
+
+export type Shared_RunWorkspacesProject_Cache = {
+  directory: Shared_RunWorkspacesProject_Cache_Directory;
+  enabled: Shared_RunWorkspacesProject_Cache_Enabled;
+  scripts: Shared_RunWorkspacesProject_Cache_Scripts;
+};
+
+export type Shared_RunWorkspacesProject_PackageManager = Shared_CorepackPackageManager;
+
+export type Shared_RunWorkspacesProject_PackageManagerDescriptor = string;
+
+export type Shared_RunWorkspacesProject_RootDirectory = string;
+
+export type Shared_RunWorkspacesProject_Workspaces = Map<string, Shared_RunWorkspacesWorkspace>;
+
+export type Shared_RunWorkspacesProject = {
+  cache: Shared_RunWorkspacesProject_Cache;
+  packageManager: Shared_RunWorkspacesProject_PackageManager;
+  packageManagerDescriptor: Shared_RunWorkspacesProject_PackageManagerDescriptor;
+  rootDirectory: Shared_RunWorkspacesProject_RootDirectory;
+  workspaces: Shared_RunWorkspacesProject_Workspaces;
+};
+
+/**
+ * Shared - Run Workspaces State.
+ *
+ * @since 0.32.0
+ */
+export type Shared_RunWorkspacesState_Interrupted = boolean;
+
+export type Shared_RunWorkspacesState_Stopping = boolean;
+
+export type Shared_RunWorkspacesState = {
+  interrupted: Shared_RunWorkspacesState_Interrupted;
+  stopping: Shared_RunWorkspacesState_Stopping;
+};
+
+/**
+ * Shared - Run Workspaces Task.
+ *
+ * @since 0.32.0
+ */
+export type Shared_RunWorkspacesTask_Key = string;
+
+export type Shared_RunWorkspacesTask_Label = string;
+
+export type Shared_RunWorkspacesTask_Script = string;
+
+export type Shared_RunWorkspacesTask_Command = string;
+
+export type Shared_RunWorkspacesTask_WorkspaceName = string;
+
+export type Shared_RunWorkspacesTask_Directory = string;
+
+export type Shared_RunWorkspacesTask_Dependencies = Set<string>;
+
+export type Shared_RunWorkspacesTask = {
+  key: Shared_RunWorkspacesTask_Key;
+  label: Shared_RunWorkspacesTask_Label;
+  script: Shared_RunWorkspacesTask_Script;
+  command: Shared_RunWorkspacesTask_Command;
+  workspaceName: Shared_RunWorkspacesTask_WorkspaceName;
+  directory: Shared_RunWorkspacesTask_Directory;
+  dependencies: Shared_RunWorkspacesTask_Dependencies;
+};
+
+/**
+ * Shared - Run Workspaces Task Result.
+ *
+ * @since 0.32.0
+ */
+export type Shared_RunWorkspacesTaskResult_Key = string;
+
+export type Shared_RunWorkspacesTaskResult_Status = 'cached' | 'cancelled' | 'failed' | 'interrupted' | 'succeeded';
+
+export type Shared_RunWorkspacesTaskResult_ExitCode = number;
+
+export type Shared_RunWorkspacesTaskResult_StateDigest = string | undefined;
+
+export type Shared_RunWorkspacesTaskResult = {
+  key: Shared_RunWorkspacesTaskResult_Key;
+  status: Shared_RunWorkspacesTaskResult_Status;
+  exitCode: Shared_RunWorkspacesTaskResult_ExitCode;
+  stateDigest?: Shared_RunWorkspacesTaskResult_StateDigest;
+};
+
+/**
+ * Shared - Run Workspaces Workspace.
+ *
+ * @since 0.32.0
+ */
+export type Shared_RunWorkspacesWorkspace_Path = string;
+
+export type Shared_RunWorkspacesWorkspace_Directory = string;
+
+export type Shared_RunWorkspacesWorkspace_Name = string;
+
+export type Shared_RunWorkspacesWorkspace_Scripts = Record<string, string>;
+
+export type Shared_RunWorkspacesWorkspace_Dependency = string;
+
+export type Shared_RunWorkspacesWorkspace_Dependencies = Shared_RunWorkspacesWorkspace_Dependency[];
+
+export type Shared_RunWorkspacesWorkspace = {
+  path: Shared_RunWorkspacesWorkspace_Path;
+  directory: Shared_RunWorkspacesWorkspace_Directory;
+  name: Shared_RunWorkspacesWorkspace_Name;
+  scripts: Shared_RunWorkspacesWorkspace_Scripts;
+  dependencies: Shared_RunWorkspacesWorkspace_Dependencies;
 };
 
 /**
@@ -1724,6 +2059,8 @@ export type Shared_ScaffoldOutputContract_ExpectedFile = string;
 
 export type Shared_ScaffoldOutputContract_ExpectedFiles = Shared_ScaffoldOutputContract_ExpectedFile[];
 
+export type Shared_ScaffoldOutputContract_ExpectedScripts = Record<string, string>;
+
 export type Shared_ScaffoldOutputContract_Replacements = Map<RegExp, string>;
 
 export type Shared_ScaffoldOutputContract = {
@@ -1731,7 +2068,37 @@ export type Shared_ScaffoldOutputContract = {
   templateSubpath: Shared_ScaffoldOutputContract_TemplateSubpath;
   templateOptionSubpaths?: Shared_ScaffoldOutputContract_TemplateOptionSubpaths;
   expectedFiles: Shared_ScaffoldOutputContract_ExpectedFiles;
+  expectedScripts?: Shared_ScaffoldOutputContract_ExpectedScripts;
   replacements: Shared_ScaffoldOutputContract_Replacements;
+};
+
+/**
+ * Shared - Scaffold Version Catalog.
+ *
+ * @since 0.32.0
+ */
+export type Shared_ScaffoldVersionCatalog_Entry_Value = string;
+
+export type Shared_ScaffoldVersionCatalog_Entry_Placeholder = string;
+
+export type Shared_ScaffoldVersionCatalog_Entry_Group = string;
+
+export type Shared_ScaffoldVersionCatalog_Entry_Source = Record<string, unknown>;
+
+export type Shared_ScaffoldVersionCatalog_Entry = {
+  value: Shared_ScaffoldVersionCatalog_Entry_Value;
+  placeholder: Shared_ScaffoldVersionCatalog_Entry_Placeholder;
+  group: Shared_ScaffoldVersionCatalog_Entry_Group;
+  source: Shared_ScaffoldVersionCatalog_Entry_Source;
+};
+
+export type Shared_ScaffoldVersionCatalog_SchemaVersion = number;
+
+export type Shared_ScaffoldVersionCatalog_Entries = Record<string, Shared_ScaffoldVersionCatalog_Entry>;
+
+export type Shared_ScaffoldVersionCatalog = {
+  schemaVersion: Shared_ScaffoldVersionCatalog_SchemaVersion;
+  entries: Shared_ScaffoldVersionCatalog_Entries;
 };
 
 /**
@@ -1739,9 +2106,11 @@ export type Shared_ScaffoldOutputContract = {
  *
  * @since 0.26.0
  */
-export type Shared_ScaffoldTemplateQuestionChoice_Title = string;
-
 export type Shared_ScaffoldTemplateQuestionChoice_Description = string;
+
+export type Shared_ScaffoldTemplateQuestionChoice_Replacement = string;
+
+export type Shared_ScaffoldTemplateQuestionChoice_Title = string;
 
 export type Shared_ScaffoldTemplateQuestionChoice_Value = string;
 
@@ -1751,8 +2120,6 @@ export type Shared_ScaffoldTemplateQuestionChoice = {
   title: Shared_ScaffoldTemplateQuestionChoice_Title;
   value: Shared_ScaffoldTemplateQuestionChoice_Value;
 };
-
-export type Shared_ScaffoldTemplateQuestionChoice_Replacement = string;
 
 export type Shared_ScaffoldTemplateQuestion_Choices = Shared_ScaffoldTemplateQuestionChoice[];
 

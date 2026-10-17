@@ -24,6 +24,8 @@ import type {
  *
  * @param {Theme_ContentFooter_ShareButton_Index_ShareButton_Props} props - Props.
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.18.0
  */
 function ShareButton(props: Theme_ContentFooter_ShareButton_Index_ShareButton_Props) {

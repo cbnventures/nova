@@ -17,6 +17,7 @@ import type {
   Lib_ScaffoldPresentation_CreateScaffoldProgress_Returns,
   Lib_ScaffoldPresentation_CreateScaffoldProgress_Total,
   Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand,
+  Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand_Returns,
   Lib_ScaffoldPresentation_ReportScaffoldCompletion_Commands,
   Lib_ScaffoldPresentation_ReportScaffoldCompletion_Details,
   Lib_ScaffoldPresentation_ReportScaffoldCompletion_Lines,
@@ -685,9 +686,11 @@ export function reportScaffoldCompletion(details: Lib_ScaffoldPresentation_Repor
    *
    * @private
    *
+   * @returns {Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand_Returns}
+   *
    * @since 0.31.0
    */
-  const appendCommand: Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand = (command, index) => {
+  const appendCommand: Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand = (command, index): Lib_ScaffoldPresentation_ReportScaffoldCompletion_AppendCommand_Returns => {
     lines.push(`  ${index + 1}. ${chalk.cyan(command)}`);
 
     return;

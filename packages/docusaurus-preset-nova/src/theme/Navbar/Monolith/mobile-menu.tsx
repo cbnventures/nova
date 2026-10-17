@@ -21,6 +21,8 @@ import type {
  *
  * @param {Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props} props - Props.
  *
+ * @returns {Theme_Navbar_Monolith_MobileMenu_MobileMenu_Returns}
+ *
  * @since 0.15.0
  */
 function MobileMenu(props: Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props): Theme_Navbar_Monolith_MobileMenu_MobileMenu_Returns {

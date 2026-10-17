@@ -21,6 +21,8 @@ import type {
  *
  * @param {Theme_DocPaginator_Index_DocPaginator_Props} props - Props.
  *
+ * @returns {JSX.Element | null}
+ *
  * @since 0.15.0
  */
 function DocPaginator(props: Theme_DocPaginator_Index_DocPaginator_Props) {

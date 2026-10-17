@@ -30,6 +30,8 @@ import type {
  *
  * @param {Theme_Footer_Index_Footer_Props} props - Props.
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.15.0
  */
 function Footer(props: Theme_Footer_Index_Footer_Props) {

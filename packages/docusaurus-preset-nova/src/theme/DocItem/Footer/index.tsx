@@ -26,6 +26,8 @@ import type {
  *
  * @constructor
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.15.0
  */
 function DocItemFooter(props: Theme_DocItem_Footer_Index_DocItemFooter_Props) {

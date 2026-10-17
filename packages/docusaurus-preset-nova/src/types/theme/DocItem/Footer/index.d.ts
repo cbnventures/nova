@@ -31,24 +31,24 @@ export type Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayTagsRow = boolean
 
 export type Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayEditMetaRow = boolean;
 
-export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig = {
-  blog?: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog;
-  [key: string]: unknown;
-};
-
-export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfigCast = unknown;
-
-export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog = {
-  share?: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share;
-  [key: string]: unknown;
-};
+export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share_Platforms = string[];
 
 export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share = {
   platforms?: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share_Platforms;
   [key: string]: unknown;
 };
 
-export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share_Platforms = string[];
+export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog = {
+  share?: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share;
+  [key: string]: unknown;
+};
+
+export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig = {
+  blog?: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog;
+  [key: string]: unknown;
+};
+
+export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfigCast = unknown;
 
 export type Theme_DocItem_Footer_Index_DocItemFooter_ShareUrl = string;
 

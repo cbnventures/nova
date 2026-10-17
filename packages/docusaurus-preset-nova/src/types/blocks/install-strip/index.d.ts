@@ -11,6 +11,8 @@ export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_Command = string;
 
 export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_Label = string | undefined;
 
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_CopyTarget = 'block' | 'icon' | 'text' | undefined;
+
 export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_Surface = Shared_Surface | undefined;
 
 export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_ClassName = string | undefined;
@@ -31,8 +33,6 @@ export type Blocks_InstallStrip_Index_BlocksInstallStrip_Copied = boolean;
 export type Blocks_InstallStrip_Index_BlocksInstallStrip_State = [Blocks_InstallStrip_Index_BlocksInstallStrip_Copied, Blocks_InstallStrip_Index_BlocksInstallStrip_SetCopied];
 
 export type Blocks_InstallStrip_Index_BlocksInstallStrip_SetCopied = Dispatch<SetStateAction<Blocks_InstallStrip_Index_BlocksInstallStrip_Copied>>;
-
-export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_CopyTarget = 'block' | 'icon' | 'text' | undefined;
 
 export type Blocks_InstallStrip_Index_BlocksInstallStrip_Icon = string;
 

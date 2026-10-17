@@ -28,6 +28,8 @@ import type {
  *
  * @constructor
  *
+ * @returns {Theme_BackToTopButton_Index_BackToTopButton_Returns}
+ *
  * @since 0.15.0
  */
 function BackToTopButton(props: Theme_BackToTopButton_Index_BackToTopButton_Props): Theme_BackToTopButton_Index_BackToTopButton_Returns {
@@ -44,6 +46,8 @@ function BackToTopButton(props: Theme_BackToTopButton_Index_BackToTopButton_Prop
      *
      * Toggles the button visibility based on whether the current
      * scroll position exceeds the defined threshold.
+     *
+     * @returns {undefined}
      *
      * @since 0.15.0
      */

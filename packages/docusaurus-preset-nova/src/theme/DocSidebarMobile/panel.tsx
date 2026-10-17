@@ -40,6 +40,8 @@ import type {
  * Mounted once from the persistent doc-root layout so it survives
  * doc-to-doc navigation without the open overlay blinking.
  *
+ * @returns {ReactPortal | null}
+ *
  * @since 0.21.0
  */
 function DocSidebarMobilePanel() {

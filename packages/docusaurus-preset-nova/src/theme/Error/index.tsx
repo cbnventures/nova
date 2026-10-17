@@ -21,6 +21,8 @@ import type {
  *
  * @param {Theme_Error_Index_Error_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function Error(props: Theme_Error_Index_Error_Props) {

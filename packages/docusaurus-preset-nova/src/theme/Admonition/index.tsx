@@ -78,6 +78,8 @@ const admonitionTypeLabels: Theme_Admonition_Index_Admonition_TypeLabels = {
  *
  * @param {Theme_Admonition_Index_Admonition_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function Admonition(props: Theme_Admonition_Index_Admonition_Props) {

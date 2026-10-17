@@ -19,17 +19,17 @@
     "clean:build": "shx rm -rf ./dist"
   },
   "engines": {
-    "node": "^22 || ^24"
+    "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.31.1"
+    "@cbnventures/nova": "0.32.0"
   },
   "devDependencies": {
-    "@types/node": "22.15.17",
-    "eslint": "9.39.5",
-    "shx": "0.4.0",
-    "typescript": "6.0.3",
-    "vite": "6.4.3",
-    "vitest": "4.1.11"
+    "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_22__]",
+    "eslint": "[__SCAFFOLD_VERSION_ESLINT__]",
+    "shx": "[__SCAFFOLD_VERSION_SHX__]",
+    "typescript": "[__SCAFFOLD_VERSION_TYPESCRIPT__]",
+    "vite": "[__SCAFFOLD_VERSION_VITE__]",
+    "vitest": "[__SCAFFOLD_VERSION_VITEST__]"
   }
 }

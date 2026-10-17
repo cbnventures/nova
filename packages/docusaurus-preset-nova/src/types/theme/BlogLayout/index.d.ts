@@ -16,11 +16,11 @@ export type Theme_BlogLayout_Index_BlogLayout_Props_Sidebar = BlogSidebar;
 
 export type Theme_BlogLayout_Index_BlogLayout_Props_Toc = ReactNode;
 
-export type Theme_BlogLayout_Index_BlogLayout_Props_Children = ReactNode;
-
 export type Theme_BlogLayout_Index_BlogLayout_Props_Header = ReactNode;
 
 export type Theme_BlogLayout_Index_BlogLayout_Props_ShowHeader = boolean;
+
+export type Theme_BlogLayout_Index_BlogLayout_Props_Children = ReactNode;
 
 export type Theme_BlogLayout_Index_BlogLayout_Props_ClassName = string | undefined;
 

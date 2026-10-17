@@ -30,10 +30,16 @@ export type Tests_LayeredScope_ExtractRuleTriples_Returns = readonly {
 
 export type Tests_LayeredScope_ExtractRuleTriples_Stripped = string;
 
+export type Tests_LayeredScope_ExtractRuleTriples_Triples_Selector = string;
+
+export type Tests_LayeredScope_ExtractRuleTriples_Triples_Property = string;
+
+export type Tests_LayeredScope_ExtractRuleTriples_Triples_Value = string;
+
 export type Tests_LayeredScope_ExtractRuleTriples_Triples = {
-  readonly selector: string;
-  readonly property: string;
-  readonly value: string;
+  readonly selector: Tests_LayeredScope_ExtractRuleTriples_Triples_Selector;
+  readonly property: Tests_LayeredScope_ExtractRuleTriples_Triples_Property;
+  readonly value: Tests_LayeredScope_ExtractRuleTriples_Triples_Value;
 }[];
 
 export type Tests_LayeredScope_ExtractRuleTriples_AllowDuplicatePattern = RegExp;
@@ -90,37 +96,73 @@ export type Tests_LayeredScope_GetPackageRoot_CurrentFileDirectory = string;
  *
  * @since 0.18.0
  */
+export type Tests_LayeredScope_LayeredScope_FamilyContext_Umbrella = string;
+
+export type Tests_LayeredScope_LayeredScope_FamilyContext_SharedUmbrellaFile = string;
+
+export type Tests_LayeredScope_LayeredScope_FamilyContext_PerPresetUmbrellaGlob = string;
+
+export type Tests_LayeredScope_LayeredScope_FamilyContext_Class = string;
+
+export type Tests_LayeredScope_LayeredScope_FamilyContext_Tsx = string;
+
+export type Tests_LayeredScope_LayeredScope_FamilyContext_SharedFile = string;
+
+export type Tests_LayeredScope_LayeredScope_FamilyContext_PerPresetGlob = string;
+
 export type Tests_LayeredScope_LayeredScope_FamilyContext = {
-  readonly umbrella: string;
-  readonly sharedUmbrellaFile: string;
-  readonly perPresetUmbrellaGlob: string;
+  readonly umbrella: Tests_LayeredScope_LayeredScope_FamilyContext_Umbrella;
+  readonly sharedUmbrellaFile: Tests_LayeredScope_LayeredScope_FamilyContext_SharedUmbrellaFile;
+  readonly perPresetUmbrellaGlob: Tests_LayeredScope_LayeredScope_FamilyContext_PerPresetUmbrellaGlob;
   readonly members: readonly {
-    readonly class: string;
-    readonly tsx: string;
-    readonly sharedFile: string;
-    readonly perPresetGlob: string;
+    readonly class: Tests_LayeredScope_LayeredScope_FamilyContext_Class;
+    readonly tsx: Tests_LayeredScope_LayeredScope_FamilyContext_Tsx;
+    readonly sharedFile: Tests_LayeredScope_LayeredScope_FamilyContext_SharedFile;
+    readonly perPresetGlob: Tests_LayeredScope_LayeredScope_FamilyContext_PerPresetGlob;
   }[];
 };
 
+export type Tests_LayeredScope_LayeredScope_FamilyParam_Umbrella = string;
+
+export type Tests_LayeredScope_LayeredScope_FamilyParam_SharedUmbrellaFile = string;
+
+export type Tests_LayeredScope_LayeredScope_FamilyParam_PerPresetUmbrellaGlob = string;
+
+export type Tests_LayeredScope_LayeredScope_FamilyParam_Class = string;
+
+export type Tests_LayeredScope_LayeredScope_FamilyParam_Tsx = string;
+
+export type Tests_LayeredScope_LayeredScope_FamilyParam_SharedFile = string;
+
+export type Tests_LayeredScope_LayeredScope_FamilyParam_PerPresetGlob = string;
+
 export type Tests_LayeredScope_LayeredScope_FamilyParam = {
-  readonly umbrella: string;
-  readonly sharedUmbrellaFile: string;
-  readonly perPresetUmbrellaGlob: string;
+  readonly umbrella: Tests_LayeredScope_LayeredScope_FamilyParam_Umbrella;
+  readonly sharedUmbrellaFile: Tests_LayeredScope_LayeredScope_FamilyParam_SharedUmbrellaFile;
+  readonly perPresetUmbrellaGlob: Tests_LayeredScope_LayeredScope_FamilyParam_PerPresetUmbrellaGlob;
   readonly members: readonly {
-    readonly class: string;
-    readonly tsx: string;
-    readonly sharedFile: string;
-    readonly perPresetGlob: string;
+    readonly class: Tests_LayeredScope_LayeredScope_FamilyParam_Class;
+    readonly tsx: Tests_LayeredScope_LayeredScope_FamilyParam_Tsx;
+    readonly sharedFile: Tests_LayeredScope_LayeredScope_FamilyParam_SharedFile;
+    readonly perPresetGlob: Tests_LayeredScope_LayeredScope_FamilyParam_PerPresetGlob;
   }[];
 };
 
 export type Tests_LayeredScope_LayeredScope_Missing = string[];
 
+export type Tests_LayeredScope_LayeredScope_MemberParam_Class = string;
+
+export type Tests_LayeredScope_LayeredScope_MemberParam_Tsx = string;
+
+export type Tests_LayeredScope_LayeredScope_MemberParam_SharedFile = string;
+
+export type Tests_LayeredScope_LayeredScope_MemberParam_PerPresetGlob = string;
+
 export type Tests_LayeredScope_LayeredScope_MemberParam = {
-  readonly class: string;
-  readonly tsx: string;
-  readonly sharedFile: string;
-  readonly perPresetGlob: string;
+  readonly class: Tests_LayeredScope_LayeredScope_MemberParam_Class;
+  readonly tsx: Tests_LayeredScope_LayeredScope_MemberParam_Tsx;
+  readonly sharedFile: Tests_LayeredScope_LayeredScope_MemberParam_SharedFile;
+  readonly perPresetGlob: Tests_LayeredScope_LayeredScope_MemberParam_PerPresetGlob;
 };
 
 export type Tests_LayeredScope_LayeredScope_TsxPath = string;
@@ -133,15 +175,29 @@ export type Tests_LayeredScope_LayeredScope_Tokens = readonly string[];
 
 export type Tests_LayeredScope_LayeredScope_MembershipMessage = string;
 
+export type Tests_LayeredScope_LayeredScope_DryFamilyParam_Umbrella = string;
+
+export type Tests_LayeredScope_LayeredScope_DryFamilyParam_SharedUmbrellaFile = string;
+
+export type Tests_LayeredScope_LayeredScope_DryFamilyParam_PerPresetUmbrellaGlob = string;
+
+export type Tests_LayeredScope_LayeredScope_DryFamilyParam_Class = string;
+
+export type Tests_LayeredScope_LayeredScope_DryFamilyParam_Tsx = string;
+
+export type Tests_LayeredScope_LayeredScope_DryFamilyParam_SharedFile = string;
+
+export type Tests_LayeredScope_LayeredScope_DryFamilyParam_PerPresetGlob = string;
+
 export type Tests_LayeredScope_LayeredScope_DryFamilyParam = {
-  readonly umbrella: string;
-  readonly sharedUmbrellaFile: string;
-  readonly perPresetUmbrellaGlob: string;
+  readonly umbrella: Tests_LayeredScope_LayeredScope_DryFamilyParam_Umbrella;
+  readonly sharedUmbrellaFile: Tests_LayeredScope_LayeredScope_DryFamilyParam_SharedUmbrellaFile;
+  readonly perPresetUmbrellaGlob: Tests_LayeredScope_LayeredScope_DryFamilyParam_PerPresetUmbrellaGlob;
   readonly members: readonly {
-    readonly class: string;
-    readonly tsx: string;
-    readonly sharedFile: string;
-    readonly perPresetGlob: string;
+    readonly class: Tests_LayeredScope_LayeredScope_DryFamilyParam_Class;
+    readonly tsx: Tests_LayeredScope_LayeredScope_DryFamilyParam_Tsx;
+    readonly sharedFile: Tests_LayeredScope_LayeredScope_DryFamilyParam_SharedFile;
+    readonly perPresetGlob: Tests_LayeredScope_LayeredScope_DryFamilyParam_PerPresetGlob;
   }[];
 };
 
@@ -179,11 +235,19 @@ export type Tests_LayeredScope_LayeredScope_Triples = readonly {
   readonly value: string;
 }[];
 
+export type Tests_LayeredScope_LayeredScope_DryMemberParam_Class = string;
+
+export type Tests_LayeredScope_LayeredScope_DryMemberParam_Tsx = string;
+
+export type Tests_LayeredScope_LayeredScope_DryMemberParam_SharedFile = string;
+
+export type Tests_LayeredScope_LayeredScope_DryMemberParam_PerPresetGlob = string;
+
 export type Tests_LayeredScope_LayeredScope_DryMemberParam = {
-  readonly class: string;
-  readonly tsx: string;
-  readonly sharedFile: string;
-  readonly perPresetGlob: string;
+  readonly class: Tests_LayeredScope_LayeredScope_DryMemberParam_Class;
+  readonly tsx: Tests_LayeredScope_LayeredScope_DryMemberParam_Tsx;
+  readonly sharedFile: Tests_LayeredScope_LayeredScope_DryMemberParam_SharedFile;
+  readonly perPresetGlob: Tests_LayeredScope_LayeredScope_DryMemberParam_PerPresetGlob;
 };
 
 export type Tests_LayeredScope_LayeredScope_SharedMemberPath = string;
@@ -276,10 +340,16 @@ export type Tests_LayeredScope_StripBlockComments_Pattern = RegExp;
  *
  * @since 0.18.0
  */
+export type Tests_LayeredScope_TripleKey_Triple_Selector = string;
+
+export type Tests_LayeredScope_TripleKey_Triple_Property = string;
+
+export type Tests_LayeredScope_TripleKey_Triple_Value = string;
+
 export type Tests_LayeredScope_TripleKey_Triple = {
-  readonly selector: string;
-  readonly property: string;
-  readonly value: string;
+  readonly selector: Tests_LayeredScope_TripleKey_Triple_Selector;
+  readonly property: Tests_LayeredScope_TripleKey_Triple_Property;
+  readonly value: Tests_LayeredScope_TripleKey_Triple_Value;
 };
 
 export type Tests_LayeredScope_TripleKey_Returns = string;

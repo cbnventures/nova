@@ -15,6 +15,8 @@ import type {
  *
  * @param {Theme_ContentFooter_Tags_Index_Tags_Props} props - Props.
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.18.0
  */
 function Tags(props: Theme_ContentFooter_Tags_Index_Tags_Props) {

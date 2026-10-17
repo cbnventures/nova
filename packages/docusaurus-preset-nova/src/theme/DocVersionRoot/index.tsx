@@ -21,6 +21,8 @@ import type {
  *
  * @param {Theme_DocVersionRoot_Index_DocVersionRoot_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DocVersionRoot(props: Theme_DocVersionRoot_Index_DocVersionRoot_Props) {

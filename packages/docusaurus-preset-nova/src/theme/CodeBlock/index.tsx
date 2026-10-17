@@ -101,6 +101,8 @@ function extractPlainText(node: Theme_CodeBlock_Index_ExtractPlainText_Node): Th
  *
  * @param {Theme_CodeBlock_Index_CodeBlock_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function CodeBlock(props: Theme_CodeBlock_Index_CodeBlock_Props) {
@@ -174,6 +176,8 @@ function CodeBlock(props: Theme_CodeBlock_Index_CodeBlock_Props) {
    * Copies the extracted plain text to the system clipboard and sets a temporary
    * visual confirmation state that reverts after two seconds.
    *
+   * @returns {undefined}
+   *
    * @since 0.15.0
    */
   function handleCopy() {
@@ -219,6 +223,8 @@ function CodeBlock(props: Theme_CodeBlock_Index_CodeBlock_Props) {
    * Toggles the word wrap state between enabled and disabled, updating the
    * data attribute on the container element.
    *
+   * @returns {undefined}
+   *
    * @since 0.15.0
    */
   function toggleWordWrap() {
@@ -232,6 +238,8 @@ function CodeBlock(props: Theme_CodeBlock_Index_CodeBlock_Props) {
    *
    * Toggles the collapsed state between expanded and collapsed, controlling
    * the visibility of long code blocks.
+   *
+   * @returns {undefined}
    *
    * @since 0.15.0
    */

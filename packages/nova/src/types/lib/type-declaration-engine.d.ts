@@ -5,6 +5,7 @@ import type {
   SetAccessorDeclaration,
   SourceFile,
   StringLiteral,
+  VariableDeclarationList,
 } from 'typescript';
 
 import type {
@@ -274,12 +275,16 @@ export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Callbacks = Lib
 
 export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_VisitReturns = void;
 
+export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_NodeWithKindShape_Kind = number;
+
 export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_NodeWithKindShape = {
-  kind?: number;
+  kind?: Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_NodeWithKindShape_Kind;
 };
 
+export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_NodeWithParentShape_Parent = Node;
+
 export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_NodeWithParentShape = {
-  parent?: Node;
+  parent?: Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_NodeWithParentShape_Parent;
 };
 
 export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_NodeWithTypeNameShape_TypeName = Node;
@@ -315,9 +320,13 @@ export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Visit_IsFunctio
 
 export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Visit_Walker = Node | undefined;
 
+export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Visit_ParamNode_Name = Node;
+
+export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Visit_ParamNode_Type = Node;
+
 export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Visit_ParamNode = {
-  name?: Node;
-  type?: Node;
+  name?: Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Visit_ParamNode_Name;
+  type?: Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Visit_ParamNode_Type;
 };
 
 export type Lib_TypeDeclarationEngine_DetectInlineTypedCallbacks_Visit_LineNumber = number;
@@ -423,15 +432,36 @@ export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Declaration = {
 
 export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Returns = Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Declaration[];
 
+export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_SourceContent = string;
+
+export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_SourceFile = SourceFile;
+
 export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Declarations = Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Declaration[];
 
-export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_I = number;
+export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Node = Node;
 
-export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Line = string;
+export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_DeclarationList = VariableDeclarationList;
 
-export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Match = RegExpMatchArray | null;
+export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Keyword = 'const' | 'let';
 
-export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Keyword = 'const' | 'let';
+export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_LineNumber = number;
+
+export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Declaration_Keyword = 'const' | 'let';
+
+export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Declaration_VarName = string;
+
+export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Declaration_TypeName = string;
+
+export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Declaration_LineNumber = number;
+
+export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Declaration = {
+  keyword: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Declaration_Keyword;
+  varName: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Declaration_VarName;
+  typeName: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Declaration_TypeName;
+  lineNumber: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Declaration_LineNumber;
+};
+
+export type Lib_TypeDeclarationEngine_ExtractBodyDeclarations_VisitReturns = void;
 
 /**
  * Lib - Type Declaration Engine - Extract Function Params.
@@ -499,9 +529,13 @@ export type Lib_TypeDeclarationEngine_ExtractFunctionParams_Visit_Node = Node;
 
 export type Lib_TypeDeclarationEngine_ExtractFunctionParams_Visit_ParameterList = readonly Node[] | undefined;
 
+export type Lib_TypeDeclarationEngine_ExtractFunctionParams_Visit_ParamNode_Name = Node;
+
+export type Lib_TypeDeclarationEngine_ExtractFunctionParams_Visit_ParamNode_Type = Node;
+
 export type Lib_TypeDeclarationEngine_ExtractFunctionParams_Visit_ParamNode = {
-  name?: Node;
-  type?: Node;
+  name?: Lib_TypeDeclarationEngine_ExtractFunctionParams_Visit_ParamNode_Name;
+  type?: Lib_TypeDeclarationEngine_ExtractFunctionParams_Visit_ParamNode_Type;
 };
 
 export type Lib_TypeDeclarationEngine_ExtractFunctionParams_Visit_LineNumber = number;
@@ -570,8 +604,10 @@ export type Lib_TypeDeclarationEngine_ExtractFunctionReturns_NodeWithTypeNameTex
  */
 export type Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_Node = Node;
 
+export type Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_FnNode_Type = Node;
+
 export type Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_FnNode = {
-  type?: Node;
+  type?: Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_FnNode_Type;
 };
 
 export type Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_TypeNode = Node | undefined;
@@ -580,8 +616,10 @@ export type Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_ReturnType = 
 
 export type Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_TypeGuardFlag = boolean;
 
+export type Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_PredicateNode_Type = Node;
+
 export type Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_PredicateNode = {
-  type?: Node;
+  type?: Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_PredicateNode_Type;
 };
 
 export type Lib_TypeDeclarationEngine_ExtractFunctionReturns_Visit_LineNumber = number;
@@ -806,9 +844,13 @@ export type Lib_TypeDeclarationEngine_FindFirstOccurrence_TypeName = string;
 
 export type Lib_TypeDeclarationEngine_FindFirstOccurrence_InImportBlock = boolean;
 
+export type Lib_TypeDeclarationEngine_FindFirstOccurrence_InBlockComment = boolean;
+
 export type Lib_TypeDeclarationEngine_FindFirstOccurrence_I = number;
 
 export type Lib_TypeDeclarationEngine_FindFirstOccurrence_Line = string;
+
+export type Lib_TypeDeclarationEngine_FindFirstOccurrence_Trimmed = string;
 
 export type Lib_TypeDeclarationEngine_FindFirstOccurrence_TypeNamePattern = RegExp;
 

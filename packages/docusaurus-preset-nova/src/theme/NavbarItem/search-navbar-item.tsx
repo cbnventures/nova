@@ -11,6 +11,8 @@ import type { Theme_NavbarItem_SearchNavbarItem_Props } from '../../types/theme/
  *
  * @param {Theme_NavbarItem_SearchNavbarItem_Props} _props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function SearchNavbarItem(_props: Theme_NavbarItem_SearchNavbarItem_Props) {

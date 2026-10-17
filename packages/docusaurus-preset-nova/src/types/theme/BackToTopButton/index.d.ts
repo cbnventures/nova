@@ -16,12 +16,12 @@ export type Theme_BackToTopButton_Index_BackToTopButton_Props = {
 
 export type Theme_BackToTopButton_Index_BackToTopButton_Returns = React.JSX.Element | null;
 
+export type Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig_BackToTopButton = boolean;
+
 export type Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig = {
   backToTopButton?: Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig_BackToTopButton;
   [key: string]: unknown;
 };
-
-export type Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig_BackToTopButton = boolean;
 
 export type Theme_BackToTopButton_Index_BackToTopButton_ScrollThreshold = number;
 

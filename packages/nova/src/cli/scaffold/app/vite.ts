@@ -1,13 +1,14 @@
+import { Runner as LibDockerPackaging } from '../../../lib/docker-packaging.js';
 import {
   LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE,
   LIB_REGEX_PLACEHOLDER_VITE_FRAMEWORK,
   LIB_REGEX_PLACEHOLDER_VITE_PWA,
 } from '../../../lib/regex.js';
+import { getScaffoldVersion } from '../../../lib/scaffold-versions.js';
 import {
   runScaffold,
   updateScaffoldPackageJson,
 } from '../../../lib/scaffold.js';
-import { Runner as CliGenerateDockerImage } from '../../generate/docker-image/index.js';
 
 import type {
   Cli_Scaffold_App_Vite_ResolveWorkspaceTemplateSubpaths_Answers,
@@ -168,25 +169,25 @@ export class Runner {
         const devDependencies: Cli_Scaffold_App_Vite_Runner_Run_DevDependencies = {};
 
         if (framework === 'react') {
-          Reflect.set(dependencies, 'react', '19.2.8');
-          Reflect.set(dependencies, 'react-dom', '19.2.8');
-          Reflect.set(devDependencies, '@types/react', '19.2.18');
-          Reflect.set(devDependencies, '@types/react-dom', '19.2.7');
-          Reflect.set(devDependencies, '@vitejs/plugin-react', '5.2.0');
+          Reflect.set(dependencies, 'react', getScaffoldVersion('react'));
+          Reflect.set(dependencies, 'react-dom', getScaffoldVersion('reactDom'));
+          Reflect.set(devDependencies, '@types/react', getScaffoldVersion('typesReact'));
+          Reflect.set(devDependencies, '@types/react-dom', getScaffoldVersion('typesReactDom'));
+          Reflect.set(devDependencies, '@vitejs/plugin-react', getScaffoldVersion('viteReactPlugin'));
         }
 
         if (framework === 'vue') {
-          Reflect.set(dependencies, 'vue', '3.5.43');
-          Reflect.set(devDependencies, '@vitejs/plugin-vue', '6.0.9');
+          Reflect.set(dependencies, 'vue', getScaffoldVersion('vue'));
+          Reflect.set(devDependencies, '@vitejs/plugin-vue', getScaffoldVersion('viteVuePlugin'));
         }
 
         if (framework === 'svelte') {
-          Reflect.set(dependencies, 'svelte', '5.57.2');
-          Reflect.set(devDependencies, '@sveltejs/vite-plugin-svelte', '6.2.4');
+          Reflect.set(dependencies, 'svelte', getScaffoldVersion('svelte'));
+          Reflect.set(devDependencies, '@sveltejs/vite-plugin-svelte', getScaffoldVersion('viteSveltePlugin'));
         }
 
         if (answers.get('pwa') === 'enabled') {
-          Reflect.set(devDependencies, 'vite-plugin-pwa', '2.0.0');
+          Reflect.set(devDependencies, 'vite-plugin-pwa', getScaffoldVersion('vitePwa'));
         }
 
         await updateScaffoldPackageJson(workspaceDirectory, {
@@ -195,7 +196,7 @@ export class Runner {
         });
 
         if (answers.get('dockerImage') === 'enabled') {
-          await CliGenerateDockerImage.generateForTarget({
+          await LibDockerPackaging.generateForTarget({
             buildDirectory: 'dist',
             profile: 'static-site',
             reportFiles: false,

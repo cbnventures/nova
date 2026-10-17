@@ -112,6 +112,8 @@ describe('validate strategy', async () => {
     const changelogContent: Tests_Lib_ReleaseHistory_ValidateStrategy_RecognizesLegacySemVerHeadings_ChangelogContent = [
       '# Project Changelog',
       '',
+      '## 1.4.1 (450) - 2026-10-11',
+      '',
       '## 0.13.0 (2026-02-27)',
       '',
     ].join('\n');

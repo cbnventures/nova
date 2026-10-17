@@ -45,9 +45,9 @@ export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_Ret
 
 export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_Lines = string[];
 
-export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_Tables_Item_Start = number;
-
 export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_Tables_Item_Lines = string[];
+
+export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_Tables_Item_Start = number;
 
 export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_Tables_Item = {
   lines: Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_Tables_Item_Lines;
@@ -68,9 +68,9 @@ export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_Fen
 
 export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_TableCount = number;
 
-export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_CurrentTable_Start = number;
-
 export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_CurrentTable_Lines = string[];
+
+export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_CurrentTable_Start = number;
 
 export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_CurrentTable = {
   lines: Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_FormatContents_CurrentTable_Lines;

@@ -1,0 +1,41 @@
+import type {
+  Rules_Vitest_Index_PackageScriptsSuiteConfig,
+  Rules_Vitest_Index_PackageScriptsToggleKey,
+} from '../index.d.ts';
+
+/**
+ * Rules - Vitest - Package Scripts - Register - Register Package Scripts Suite.
+ *
+ * @since UNRELEASED
+ */
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_Config = Rules_Vitest_Index_PackageScriptsSuiteConfig;
+
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_Returns = void;
+
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_RootDir = string;
+
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_PackageJsonPath = string;
+
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_RequireRootScripts = boolean;
+
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_RequireI18n = boolean;
+
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_Enable = 'all' | Rules_Vitest_Index_PackageScriptsToggleKey[];
+
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_Resolved_RootDir = string;
+
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_Resolved_PackageJsonPath = string;
+
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_Resolved_RequireRootScripts = boolean;
+
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_Resolved_RequireI18n = boolean;
+
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_Resolved_Enable = 'all' | Rules_Vitest_Index_PackageScriptsToggleKey[];
+
+export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_Resolved = {
+  rootDir: Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_Resolved_RootDir;
+  packageJsonPath: Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_Resolved_PackageJsonPath;
+  requireRootScripts: Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_Resolved_RequireRootScripts;
+  requireI18n: Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_Resolved_RequireI18n;
+  enable: Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_PackageScripts_Resolved_Enable;
+};

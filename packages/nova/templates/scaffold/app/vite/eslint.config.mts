@@ -3,10 +3,10 @@ import {
   dxIgnore,
   langJavascript,
   langTypescript,
+  novaRules,
   runtimeBrowser,
   toolVite,
 } from '@cbnventures/nova/presets/eslint';
-import { novaRules } from '@cbnventures/nova/rules/eslint';
 
 import frameworkPreset from './config/eslint-framework.mts';
 import frameworkIgnoreFiles from './config/framework-ignore-files.js';

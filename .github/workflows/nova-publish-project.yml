@@ -57,12 +57,12 @@ jobs:
 
       - name: "Check project"
         run: |
-          npx turbo run check --filter=// --filter=@cbnventures/nova --filter=@cbnventures/docusaurus-preset-nova --filter=nova-docs --concurrency=2
+          npm run check
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
         run: |
-          npx turbo run build --filter=@cbnventures/nova --filter=@cbnventures/docusaurus-preset-nova --filter=nova-docs --concurrency=2
+          npm run build:workspaces -- --workspace @cbnventures/nova --workspace @cbnventures/docusaurus-preset-nova --workspace nova-docs
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Upload build artifacts (npm/packages-nova)"

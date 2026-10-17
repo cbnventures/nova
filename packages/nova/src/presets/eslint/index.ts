@@ -10,6 +10,7 @@ export { default as fwVue } from './fw-vue.js';
 export { default as langJavascript } from './lang-javascript.js';
 export { default as langMdx } from './lang-mdx.js';
 export { default as langTypescript } from './lang-typescript.js';
+export { default as novaRules } from './nova-rules.js';
 export { default as runtimeBrowser } from './runtime-browser.js';
 export { default as runtimeCloudflareWorkers } from './runtime-cloudflare-workers.js';
 export { default as runtimeEdge } from './runtime-edge.js';

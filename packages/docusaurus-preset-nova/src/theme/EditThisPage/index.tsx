@@ -14,6 +14,8 @@ import type {
  *
  * @param {Theme_EditThisPage_Index_EditThisPage_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function EditThisPage(props: Theme_EditThisPage_Index_EditThisPage_Props) {

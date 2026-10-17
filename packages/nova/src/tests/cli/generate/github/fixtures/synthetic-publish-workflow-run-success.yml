@@ -60,12 +60,12 @@ jobs:
 
       - name: "Check project"
         run: |
-          npx turbo run check --filter=// --filter=sandbox-addon --concurrency=2
+          npm run check
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
         run: |
-          npx turbo run build --filter=sandbox-addon --concurrency=2
+          npm run build:workspaces -- --workspace sandbox-addon
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Upload build artifacts (npm/packages-addon)"

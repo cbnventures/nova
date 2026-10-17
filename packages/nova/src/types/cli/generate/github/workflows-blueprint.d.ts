@@ -441,8 +441,6 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environme
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Siblings = Shared_BlueprintConfigWorkflow[];
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UseTurbo = boolean;
-
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PackageManager = Shared_CorepackPackageManager;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Returns = Shared_BlueprintWorkflow;
@@ -520,8 +518,6 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Scopes = 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Names = string[];
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspace = Shared_NovaConfigWorkspace;
-
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckNames = string[];
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = string;
 
@@ -607,17 +603,11 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Scri
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames = string[];
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_UseTurbo = boolean;
-
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_PackageManager = Shared_CorepackPackageManager;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Returns = string;
 
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_TurboFlags = string[];
-
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceCommands = string[];
-
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags = string[];
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags = string;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
@@ -704,8 +694,6 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces = 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment = Shared_NovaConfigEnvironment;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings = Shared_BlueprintConfigWorkflow[];
-
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_UseTurbo = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager = Shared_CorepackPackageManager;
 
@@ -886,8 +874,6 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_WorkflowsDire
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_GeneratedSet = Set<string>;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_SetupLines = string[];
-
-export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_UseTurbo = boolean;
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Entry = Shared_BlueprintConfigWorkflow;
 

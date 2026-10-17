@@ -18,11 +18,11 @@ import type { Lib_WorkflowTemplates_Entry } from './workflow-templates.d.ts';
  *
  * @since 0.21.0
  */
-export type Lib_EnvManagedSet_LibEnvManagedSet_ManagedKeyKind = 'workspace' | 'project' | 'workflow' | 'deploy-cred';
-
 export type Lib_EnvManagedSet_LibEnvManagedSet_ManagedKeyName = string;
 
 export type Lib_EnvManagedSet_LibEnvManagedSet_ManagedKeySecret = boolean;
+
+export type Lib_EnvManagedSet_LibEnvManagedSet_ManagedKeyKind = 'workspace' | 'project' | 'workflow' | 'deploy-cred';
 
 export type Lib_EnvManagedSet_LibEnvManagedSet_ManagedKeyOptional = boolean;
 

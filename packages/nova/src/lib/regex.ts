@@ -233,12 +233,12 @@ export const LIB_REGEX_PATTERN_CHANGELOG_NUMERIC_HEADING = /^## \d/;
 /**
  * Lib - Regex - Pattern Changelog Semver Heading.
  *
- * Matches current and legacy Nova semantic-version release headings, including
- * prerelease and build metadata plus both dash-prefixed and parenthesized ISO dates.
+ * Matches Nova SemVer release headings with prerelease, build metadata, optional
+ * Apple build numbers, and current or legacy ISO date delimiters.
  *
  * @since 0.26.0
  */
-export const LIB_REGEX_PATTERN_CHANGELOG_SEMVER_HEADING = /^## (?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)? (?:- \d{4}-\d{2}-\d{2}|\(\d{4}-\d{2}-\d{2}\))$/;
+export const LIB_REGEX_PATTERN_CHANGELOG_SEMVER_HEADING = /^## (?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?: \((?:0|[1-9]\d*)\))? (?:- \d{4}-\d{2}-\d{2}|\(\d{4}-\d{2}-\d{2}\))$/;
 
 /**
  * Lib - Regex - Pattern Code Block.
@@ -314,12 +314,12 @@ export const LIB_REGEX_PATTERN_DTS_ARRAY_ALIAS = /^export type (\w+) = (\w+)\[\]
 /**
  * Lib - Regex - Pattern Dts Property Line.
  *
- * Captures the name and type of a single `name: Type;` property line in a
- * generated .d.ts interface body so the type-declaration engine can parse members.
+ * Captures the name and type of a single property line, including optional and
+ * readonly modifiers, in a generated .d.ts interface body.
  *
  * @since 0.20.0
  */
-export const LIB_REGEX_PATTERN_DTS_PROPERTY_LINE = /^(\w+):\s+(.+);$/;
+export const LIB_REGEX_PATTERN_DTS_PROPERTY_LINE = /^(?:readonly\s+)?(\w+)\??:\s+(.+);$/;
 
 /**
  * Lib - Regex - Pattern Email Simple.
@@ -1282,16 +1282,6 @@ export const LIB_REGEX_PATTERN_TRAILING_NEWLINES = /\n+$/;
 export const LIB_REGEX_PATTERN_TRAILING_NEWLINES_OR_NONE = /\n*$/;
 
 /**
- * Lib - Regex - Pattern Typed Body Declaration.
- *
- * Captures the kind, identifier, and annotated type from a `const`/`let name: Type =`
- * declaration line in a source body.
- *
- * @since 0.20.0
- */
-export const LIB_REGEX_PATTERN_TYPED_BODY_DECLARATION = /^\s*(const|let)\s+(\w+):\s+(\w+)\s*=/;
-
-/**
  * Lib - Regex - Pattern Unreleased Leading.
  *
  * Matches the literal "UNRELEASED" sentinel at the start of a string, with an
@@ -1373,6 +1363,26 @@ export const LIB_REGEX_ANDROID_APPLICATION_ID_SEGMENT = /^[A-Za-z][A-Za-z0-9_]*$
 export const LIB_REGEX_PLACEHOLDER_ANDROID_PACKAGE_PATH = /\[__ANDROID_PACKAGE_PATH__\]/;
 
 /**
+ * Lib - Regex - Placeholder Apple Bundle Identifier.
+ *
+ * Replaces the application bundle identifier in Nova-owned XcodeGen project
+ * definitions without altering Apple-supported hyphens or letter casing.
+ *
+ * @since 0.32.0
+ */
+export const LIB_REGEX_PLACEHOLDER_APPLE_BUNDLE_IDENTIFIER = /\[__APPLE_BUNDLE_IDENTIFIER__\]/;
+
+/**
+ * Lib - Regex - Apple Bundle Identifier Segment.
+ *
+ * Validates one non-empty dot-separated Apple bundle identifier component
+ * against the character set documented for CFBundleIdentifier values.
+ *
+ * @since 0.32.0
+ */
+export const LIB_REGEX_APPLE_BUNDLE_IDENTIFIER_SEGMENT = /^[A-Za-z0-9-]+$/;
+
+/**
  * Lib - Regex - Placeholder Astro Adapter.
  *
  * Matches the adapter selection token used by the Astro scaffold. The shared
@@ -1391,6 +1401,16 @@ export const LIB_REGEX_PLACEHOLDER_ASTRO_ADAPTER = /\[__ASTRO_ADAPTER__\]/;
  * @since 0.29.0
  */
 export const LIB_REGEX_PLACEHOLDER_ASTRO_RENDERING = /\[__ASTRO_RENDERING__\]/;
+
+/**
+ * Lib - Regex - Placeholder Serverless Target.
+ *
+ * Matches the deployment-target token used by the serverless tool scaffold.
+ * The scaffold resolver uses the validated answer to select one target layer.
+ *
+ * @since UNRELEASED
+ */
+export const LIB_REGEX_PLACEHOLDER_SERVERLESS_TARGET = /\[__SERVERLESS_TARGET__\]/;
 
 /**
  * Lib - Regex - Placeholder Custom Donation.

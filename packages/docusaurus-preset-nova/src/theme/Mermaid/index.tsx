@@ -77,6 +77,8 @@ import type {
  *
  * @param {Theme_Mermaid_Index_MermaidContent_Props} props - Props.
  *
+ * @returns {Theme_Mermaid_Index_MermaidContent_Returns}
+ *
  * @since 0.15.0
  */
 function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_Mermaid_Index_MermaidContent_Returns {
@@ -152,6 +154,8 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
    * Increases the diagram scale by one supported step while respecting the
    * maximum magnification boundary.
    *
+   * @returns {undefined}
+   *
    * @since 0.30.0
    */
   function zoomIn(): Theme_Mermaid_Index_MermaidContent_ZoomIn_Returns {
@@ -167,6 +171,8 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
    *
    * Decreases the diagram scale by one supported step and recenters the
    * diagram when magnification no longer requires panning.
+   *
+   * @returns {undefined}
    *
    * @since 0.30.0
    */
@@ -192,6 +198,8 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
    * dragging a magnified diagram outside a clickable node.
    *
    * @param {PointerEvent} event - Event.
+   *
+   * @returns {undefined}
    *
    * @since 0.30.0
    */
@@ -228,6 +236,8 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
    *
    * @param {PointerEvent} event - Event.
    *
+   * @returns {undefined}
+   *
    * @since 0.30.0
    */
   function handlePointerMove(event: Theme_Mermaid_Index_MermaidContent_HandlePointerMove_Event): Theme_Mermaid_Index_MermaidContent_HandlePointerMove_Returns {
@@ -255,6 +265,8 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
    *
    * @param {PointerEvent} event - Event.
    *
+   * @returns {undefined}
+   *
    * @since 0.30.0
    */
   function handlePointerEnd(event: Theme_Mermaid_Index_MermaidContent_HandlePointerEnd_Event): Theme_Mermaid_Index_MermaidContent_HandlePointerEnd_Returns {
@@ -279,6 +291,8 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
    * inside the focused viewport.
    *
    * @param {KeyboardEvent} event - Event.
+   *
+   * @returns {undefined}
    *
    * @since 0.30.0
    */
@@ -422,6 +436,8 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
  * does not crash the page and color-mode changes remount the diagram cleanly.
  *
  * @param {Theme_Mermaid_Index_Mermaid_Props} props - Props.
+ *
+ * @returns {JSX.Element}
  *
  * @since 0.15.0
  */

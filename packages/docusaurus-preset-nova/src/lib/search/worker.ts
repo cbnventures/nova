@@ -17,7 +17,7 @@ import type {
   Lib_Search_Worker_HandleSearch_Hits,
   Lib_Search_Worker_HandleSearch_Message,
   Lib_Search_Worker_HandleSearch_Returns,
-  Lib_Search_Worker_LunrGlobal,
+  Lib_Search_Worker_Lunr,
   Lib_Search_Worker_PerformSearch_A,
   Lib_Search_Worker_PerformSearch_AllResults,
   Lib_Search_Worker_PerformSearch_B,
@@ -70,7 +70,7 @@ import type {
   Lib_Search_Worker_SearchIndex,
 } from '../../types/lib/search/worker.d.ts';
 
-declare const lunr: Lib_Search_Worker_LunrGlobal;
+declare const lunr: Lib_Search_Worker_Lunr;
 
 importScripts('lunr.min.js');
 
@@ -159,6 +159,8 @@ async function handleInit(message: Lib_Search_Worker_HandleInit_Message): Lib_Se
  * back to the main thread.
  *
  * @param message - Message.
+ *
+ * @returns {void}
  *
  * @since 0.15.0
  */
@@ -370,6 +372,8 @@ function performSearch(index: Lib_Search_Worker_PerformSearch_Index, documents: 
  * the message type field.
  *
  * @param event - Event.
+ *
+ * @returns {void}
  *
  * @since 0.15.0
  */

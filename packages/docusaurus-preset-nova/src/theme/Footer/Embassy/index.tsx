@@ -35,6 +35,8 @@ import type {
  *
  * @param {Theme_Footer_Embassy_Index_Embassy_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function Embassy(props: Theme_Footer_Embassy_Index_Embassy_Props): Theme_Footer_Embassy_Index_Embassy_Returns {

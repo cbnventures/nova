@@ -17,6 +17,8 @@ import type {
  *
  * @param {Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function DocSidebarItemLink(props: Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props) {

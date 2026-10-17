@@ -147,6 +147,8 @@ import type {
  * `>` of the opening tag (not the first `>` encountered,
  * which may sit inside a JSX expression).
  *
+ * @returns {Tests_CascadeDefensive_ExtractAnchorClasses_Returns}
+ *
  * @since 0.18.0
  */
 function extractAnchorClasses(content: Tests_CascadeDefensive_ExtractAnchorClasses_Content): Tests_CascadeDefensive_ExtractAnchorClasses_Returns {
@@ -241,6 +243,8 @@ function extractAnchorClasses(content: Tests_CascadeDefensive_ExtractAnchorClass
  * comment immediately before a rule prelude tags every
  * triple from that rule with `defensive: true` so the
  * Pattern 2 check can skip it.
+ *
+ * @returns {Tests_CascadeDefensive_ExtractRuleTriples_Returns}
  *
  * @since 0.18.0
  */
@@ -343,6 +347,8 @@ function extractRuleTriples(source: Tests_CascadeDefensive_ExtractRuleTriples_So
  * Resolves the docusaurus-preset-nova package root from the
  * current test file location.
  *
+ * @returns {string}
+ *
  * @since 0.18.0
  */
 function getPackageRoot(): Tests_CascadeDefensive_GetPackageRoot_Returns {
@@ -360,6 +366,8 @@ function getPackageRoot(): Tests_CascadeDefensive_GetPackageRoot_Returns {
  * anchor-class scan can read each in turn. Non-JSX helper
  * files (`*.ts`) are excluded because they cannot render
  * JSX anchor tags.
+ *
+ * @returns {Tests_CascadeDefensive_ListThemeAndBlockTsx_Returns}
  *
  * @since 0.18.0
  */
@@ -396,6 +404,8 @@ async function listThemeAndBlockTsx(): Tests_CascadeDefensive_ListThemeAndBlockT
  * `listThemeAndBlockTsx` so callers can short-circuit
  * re-scanning on the same invocation.
  *
+ * @returns {Tests_CascadeDefensive_ReadAnchorClasses_Returns}
+ *
  * @since 0.18.0
  */
 async function readAnchorClasses(tsxPaths: Tests_CascadeDefensive_ReadAnchorClasses_TsxPaths): Tests_CascadeDefensive_ReadAnchorClasses_Returns {
@@ -423,6 +433,8 @@ async function readAnchorClasses(tsxPaths: Tests_CascadeDefensive_ReadAnchorClas
  * Returning a map (instead of one flat list) lets both the
  * Pattern 5 cross-file guard search and the Pattern 2
  * per-file redundancy check share one disk pass.
+ *
+ * @returns {Tests_CascadeDefensive_ReadCssTriplesByFile_Returns}
  *
  * @since 0.18.0
  */
@@ -452,6 +464,8 @@ async function readCssTriplesByFile(): Tests_CascadeDefensive_ReadCssTriplesByFi
  * `cascade-defensive` opt-out marker so the triple extractor
  * can detect it later when classifying the rule.
  *
+ * @returns {string}
+ *
  * @since 0.18.0
  */
 function stripBlockComments(source: Tests_CascadeDefensive_StripBlockComments_Source): Tests_CascadeDefensive_StripBlockComments_Returns {
@@ -479,6 +493,8 @@ function stripBlockComments(source: Tests_CascadeDefensive_StripBlockComments_So
  * downstream regex filters reject, so this helper only has
  * to bail when the prefix itself is absent.
  *
+ * @returns {Tests_CascadeDefensive_StripDarkSelectorPrefix_Returns}
+ *
  * @since 0.18.0
  */
 function stripDarkSelectorPrefix(selector: Tests_CascadeDefensive_StripDarkSelectorPrefix_Selector): Tests_CascadeDefensive_StripDarkSelectorPrefix_Returns {
@@ -500,6 +516,8 @@ function stripDarkSelectorPrefix(selector: Tests_CascadeDefensive_StripDarkSelec
  * needs to look up bare values by (selector, property) to
  * compare against the dark rule's value, so the key omits
  * the value to make the lookup match dark/light pairs.
+ *
+ * @returns {string}
  *
  * @since 0.18.0
  */

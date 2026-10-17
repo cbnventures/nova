@@ -39,6 +39,8 @@ const Provider: Theme_Layout_Provider_Index_LayoutProvider_Provider = composePro
  *
  * @param {Theme_Layout_Provider_Index_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function LayoutProvider(props: Theme_Layout_Provider_Index_Props) {

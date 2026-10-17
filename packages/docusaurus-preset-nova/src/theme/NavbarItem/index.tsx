@@ -17,6 +17,8 @@ import type {
  *
  * @param {Theme_NavbarItem_Index_NavbarItem_Props} props - Props.
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.15.0
  */
 function NavbarItem(props: Theme_NavbarItem_Index_NavbarItem_Props) {

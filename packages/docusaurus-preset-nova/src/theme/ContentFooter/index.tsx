@@ -19,6 +19,8 @@ import type {
  *
  * @param {Theme_ContentFooter_Index_ContentFooter_Props} props - Props.
  *
+ * @returns {JSX.Element | undefined}
+ *
  * @since 0.15.0
  */
 function ContentFooter(props: Theme_ContentFooter_Index_ContentFooter_Props) {

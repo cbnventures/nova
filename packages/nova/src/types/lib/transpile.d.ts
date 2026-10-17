@@ -28,9 +28,13 @@ export type Lib_Transpile_Compile_Options = Shared_TranspileOptions;
 
 export type Lib_Transpile_Compile_Returns = number;
 
+export type Lib_Transpile_Compile_ConfigResult_Config = unknown;
+
+export type Lib_Transpile_Compile_ConfigResult_Error = Diagnostic;
+
 export type Lib_Transpile_Compile_ConfigResult = {
-  config?: unknown;
-  error?: Diagnostic;
+  config?: Lib_Transpile_Compile_ConfigResult_Config;
+  error?: Lib_Transpile_Compile_ConfigResult_Error;
 };
 
 export type Lib_Transpile_Compile_ConfigReadDiagnostics = readonly Diagnostic[];
@@ -151,9 +155,13 @@ export type Lib_Transpile_StartWatch_AfterProgramCreate_Program = Program;
 
 export type Lib_Transpile_StartWatch_AfterProgramCreate_PreEmitDiagnostics = Diagnostic[];
 
+export type Lib_Transpile_StartWatch_AfterProgramCreate_ConfigResult_Config = unknown;
+
+export type Lib_Transpile_StartWatch_AfterProgramCreate_ConfigResult_Error = Diagnostic;
+
 export type Lib_Transpile_StartWatch_AfterProgramCreate_ConfigResult = {
-  config?: unknown;
-  error?: Diagnostic;
+  config?: Lib_Transpile_StartWatch_AfterProgramCreate_ConfigResult_Config;
+  error?: Lib_Transpile_StartWatch_AfterProgramCreate_ConfigResult_Error;
 };
 
 export type Lib_Transpile_StartWatch_AfterProgramCreate_CurrentConfig = ParsedCommandLine | undefined;

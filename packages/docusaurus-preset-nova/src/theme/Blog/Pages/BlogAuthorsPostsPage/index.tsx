@@ -26,6 +26,8 @@ import type {
  *
  * @constructor
  *
+ * @returns {JSX.Element}
+ *
  * @since 0.18.0
  */
 function ViewAllAuthorsLink() {
@@ -46,6 +48,8 @@ function ViewAllAuthorsLink() {
  * above the paginated post list with a "view all authors" link back.
  *
  * @param {Theme_Blog_Pages_BlogAuthorsPostsPage_Index_BlogAuthorsPostsPage_Props} props - Props.
+ *
+ * @returns {JSX.Element}
  *
  * @since 0.18.0
  */

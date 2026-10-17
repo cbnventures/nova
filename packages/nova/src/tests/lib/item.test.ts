@@ -43,6 +43,7 @@ import type {
   Tests_Lib_Item_AllowedRolesAndPolicies_LibItemAllowedRolesHasNoDuplicates_Unique,
   Tests_Lib_Item_AllowedRolesAndPolicies_TemplateRoleAcceptsFreezable_HasFreezable,
   Tests_Lib_Item_AllowedRolesAndPolicies_TemplateRoleAcceptsTrackable_HasTrackable,
+  Tests_Lib_Item_AllowedRolesAndPolicies_ToolRoleAcceptsDistributable_HasDistributable,
   Tests_Lib_Item_ChangelogConstants_LibItemChangelogAdjectivesHasNoDuplicates_Unique,
   Tests_Lib_Item_ChangelogConstants_LibItemChangelogCategoryBumpMapCoversAllCategories_Categories,
   Tests_Lib_Item_ChangelogConstants_LibItemChangelogCategoryBumpMapValuesAreValidBumps_Bump,
@@ -166,6 +167,14 @@ describe('allowed roles and policies', async () => {
     const hasFreezable: Tests_Lib_Item_AllowedRolesAndPolicies_TemplateRoleAcceptsFreezable_HasFreezable = libItemAllowedPoliciesByRole['template'].includes('freezable');
 
     strictEqual(hasFreezable, true);
+
+    return;
+  });
+
+  it('tool role accepts distributable', () => {
+    const hasDistributable: Tests_Lib_Item_AllowedRolesAndPolicies_ToolRoleAcceptsDistributable_HasDistributable = libItemAllowedPoliciesByRole['tool'].includes('distributable');
+
+    strictEqual(hasDistributable, true);
 
     return;
   });

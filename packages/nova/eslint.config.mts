@@ -2,9 +2,9 @@ import {
   dxCodeStyle,
   dxIgnore,
   langTypescript,
+  novaRules,
   runtimeNode,
 } from './src/presets/eslint/index.js';
-import { novaRules } from './src/rules/eslint/index.js';
 
 /**
  * ESLint Configuration.

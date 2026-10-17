@@ -18,8 +18,10 @@ export type Theme_Footer_Credit_CreditDocusaurusUrl = string;
 
 export type Theme_Footer_Credit_CreditPhrases = string[];
 
+export type Theme_Footer_Credit_GlobalData_CreditPhraseIndex = number;
+
 export type Theme_Footer_Credit_GlobalData = {
-  creditPhraseIndex?: number;
+  creditPhraseIndex?: Theme_Footer_Credit_GlobalData_CreditPhraseIndex;
   [key: string]: unknown;
 };
 
