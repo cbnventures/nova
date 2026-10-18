@@ -27,7 +27,10 @@ import type {
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasBindingGyp,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_IsNovaBootstrap,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Manifest,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedPackageScriptEntries,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedPackageScripts,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedScriptCommand,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedScriptName,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_OrderedScriptNames,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_OrderedScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageAllowScripts,
@@ -35,13 +38,17 @@ import type {
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageGypfile,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PortableScriptCommand,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PortableScriptCommandsChanged,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Returns,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_RunnerPrefix,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptCommand,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptName,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptOrderChanged,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptRunnerPrefix,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_SingleQuotedPattern,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedCanonicalRootScriptEntry,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedNormalizedPackageScriptEntry,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Workspace,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_ConfigRecipes,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_ConfigRecipesPackageJson,
@@ -235,23 +242,62 @@ export class Runner {
     }
 
     const normalizedPackageScripts: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedPackageScripts = (isPlainObject(fileContents['scripts']) === true) ? fileContents['scripts'] : {};
+    const normalizedPackageScriptEntries: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedPackageScriptEntries = Object.entries(normalizedPackageScripts);
+    let portableScriptCommandsChanged: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PortableScriptCommandsChanged = false;
+
+    for (const normalizedPackageScriptEntry of normalizedPackageScriptEntries) {
+      const typedNormalizedPackageScriptEntry: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedNormalizedPackageScriptEntry = normalizedPackageScriptEntry;
+      const normalizedScriptName: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedScriptName = typedNormalizedPackageScriptEntry[0];
+      const normalizedScriptCommand: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedScriptCommand = typedNormalizedPackageScriptEntry[1];
+
+      if (
+        typeof normalizedScriptCommand !== 'string'
+        || (
+          normalizedScriptCommand.includes('nova utility run-scripts') === false
+          && normalizedScriptCommand.includes('nova-run-scripts.mjs') === false
+        )
+      ) {
+        continue;
+      }
+
+      const singleQuotedPattern: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_SingleQuotedPattern = `'${normalizedScriptName}:*'`;
+
+      if (normalizedScriptCommand.endsWith(singleQuotedPattern) === false) {
+        continue;
+      }
+
+      const portableScriptCommand: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PortableScriptCommand = `${normalizedScriptCommand.slice(0, -singleQuotedPattern.length)}"${normalizedScriptName}:*"`;
+
+      Reflect.set(normalizedPackageScripts, normalizedScriptName, portableScriptCommand);
+
+      portableScriptCommandsChanged = true;
+    }
+
+    if (portableScriptCommandsChanged === true) {
+      Reflect.set(fileContents, 'scripts', normalizedPackageScripts);
+
+      Logger.customize({
+        name: 'Runner.handle',
+        purpose: 'scripts',
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Normalizing package-script patterns for cross-platform shells ...`);
+    }
 
     if (manifest['role'] === 'project') {
       const isNovaBootstrap: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_IsNovaBootstrap = typeof normalizedPackageScripts['dev'] === 'string' && normalizedPackageScripts['dev'].includes('node ./scripts/nova-run-scripts.mjs');
       const runnerPrefix: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_RunnerPrefix = (isNovaBootstrap === true) ? 'node ./scripts/nova-run-workspaces.mjs' : 'nova utility run-workspaces';
       const scriptRunnerPrefix: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptRunnerPrefix = (isNovaBootstrap === true) ? 'node ./scripts/nova-run-scripts.mjs' : 'nova utility run-scripts';
       const canonicalRootScripts: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalRootScripts = {
-        'dev': `${scriptRunnerPrefix} --parallel --node-env development 'dev:*'`,
+        'dev': `${scriptRunnerPrefix} --parallel --node-env development "dev:*"`,
         'dev:workspaces': `${runnerPrefix} --node-env development dev`,
-        'prod': `${scriptRunnerPrefix} --sequential --node-env production 'prod:*'`,
+        'prod': `${scriptRunnerPrefix} --sequential --node-env production "prod:*"`,
         'prod:workspaces': `${runnerPrefix} --node-env production prod`,
-        'check': `${scriptRunnerPrefix} --sequential 'check:*'`,
+        'check': `${scriptRunnerPrefix} --sequential "check:*"`,
         'check:workspaces': `${runnerPrefix} --concurrency=2 check`,
-        'build': `${scriptRunnerPrefix} --sequential --node-env production 'build:*'`,
+        'build': `${scriptRunnerPrefix} --sequential --node-env production "build:*"`,
         'build:workspaces': `${runnerPrefix} --concurrency=2 --node-env production build`,
-        'deploy': `${scriptRunnerPrefix} --sequential --node-env production 'deploy:*'`,
+        'deploy': `${scriptRunnerPrefix} --sequential --node-env production "deploy:*"`,
         'deploy:workspaces': `${runnerPrefix} --concurrency=2 --node-env production deploy`,
-        'clean': `${scriptRunnerPrefix} --parallel 'clean:*'`,
+        'clean': `${scriptRunnerPrefix} --parallel "clean:*"`,
         'clean:workspaces': `${runnerPrefix} clean`,
         'changelog': 'nova utility changelog',
         'recipes': 'nova utility run-recipes --replace-file',

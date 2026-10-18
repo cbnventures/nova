@@ -43,7 +43,7 @@ import type {
 /**
  * Tests - Lib - Docker Packaging - Lib Docker Packaging.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 describe('LibDockerPackaging', async () => {
   const temporaryDirectory: Tests_Lib_DockerPackaging_LibDockerPackaging_TemporaryDirectory = tmpdir();
@@ -67,9 +67,9 @@ describe('LibDockerPackaging', async () => {
     await writeFile(packageJsonPath, `${JSON.stringify({
       name: 'http-service',
       scripts: {
-        'build': 'nova utility run-scripts --sequential --node-env production \'build:*\'',
+        'build': 'nova utility run-scripts --sequential --node-env production "build:*"',
         'build:source': 'nova utility transpile --project tsconfig.source.json',
-        'clean': 'nova utility run-scripts --parallel \'clean:*\'',
+        'clean': 'nova utility run-scripts --parallel "clean:*"',
         'clean:build': 'shx rm -rf ./build',
       },
     }, null, 2)}\n`, 'utf-8');

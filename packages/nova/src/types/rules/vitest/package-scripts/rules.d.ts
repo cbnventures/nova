@@ -3,7 +3,7 @@ import type { Rules_Vitest_Index_PackageScriptsResolvedConfig } from '../index.d
 /**
  * Rules - Vitest - Package Scripts - Rules - Canonical Contract.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Rules_Vitest_PackageScripts_Rules_CanonicalContract_Config = Rules_Vitest_Index_PackageScriptsResolvedConfig;
 

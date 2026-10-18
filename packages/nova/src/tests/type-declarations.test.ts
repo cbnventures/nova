@@ -595,6 +595,10 @@ describe('deriveClassPrefix', () => {
     const result: Tests_TypeDeclarations_DeriveClassPrefix_HandlesDeepPaths_Result = deriveClassPrefix(filePath, testConfig);
 
     strictEqual(result, 'Cli_Recipe_PackageJson_Cleanup');
+    strictEqual(deriveClassPrefix('C:\\repo\\src\\types\\cli\\utility\\changelog.d.ts', {
+      packageRoot: 'C:\\repo',
+      typeRoots: ['src'],
+    }), 'Cli_Utility_Changelog');
 
     return;
   });
@@ -663,6 +667,8 @@ describe('engine root injection', () => {
 
     strictEqual(dtsPath, '/home/proj/lib/types/toolkit/markdown-table.d.ts');
     strictEqual(mapping.dtsToSource(dtsPath), sourcePath);
+    strictEqual(deriveDtsMapping(['src']).sourceToDts('C:\\repo\\src\\cli\\index.ts'), 'C:/repo/src/types/cli/index.d.ts');
+    strictEqual(deriveDtsMapping(['src']).dtsToSource('C:\\repo\\src\\types\\cli\\index.d.ts'), 'C:/repo/src/cli/index.ts');
 
     return;
   });
@@ -741,7 +747,7 @@ describe('discoverSourceFiles', () => {
     ok(files.length > 0, 'should find at least one source file');
     ok(files.every((file) => file.endsWith('.ts')), 'all results should end with .ts');
     ok(files.every((file) => file.endsWith('.d.ts') === false), 'no result should end with .d.ts');
-    ok(files.some((file) => file.endsWith('toolkit/markdown-table.ts')), 'should include markdown-table.ts');
+    ok(files.some((file) => file.replaceAll('\\', '/').endsWith('toolkit/markdown-table.ts')), 'should include markdown-table.ts');
 
     return;
   });

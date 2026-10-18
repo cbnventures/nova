@@ -1,8 +1,5 @@
 import { readFile } from 'node:fs/promises';
-import {
-  relative,
-  sep,
-} from 'node:path';
+import { relative } from 'node:path';
 
 import { glob } from 'glob';
 import {
@@ -411,9 +408,9 @@ export async function discoverTypeFiles(config: Lib_TypeDeclarationEngine_Discov
 export function deriveClassPrefix(filePath: Lib_TypeDeclarationEngine_DeriveClassPrefix_FilePath, config: Lib_TypeDeclarationEngine_DeriveClassPrefix_Config = {}): Lib_TypeDeclarationEngine_DeriveClassPrefix_Returns {
   const packageRoot: Lib_TypeDeclarationEngine_DeriveClassPrefix_PackageRoot = config['packageRoot'] ?? process.cwd();
   const typeRoots: Lib_TypeDeclarationEngine_DeriveClassPrefix_TypeRoots = config['typeRoots'] ?? ['src'];
-  const currentDirectory: Lib_TypeDeclarationEngine_DeriveClassPrefix_CurrentDirectory = packageRoot;
-  const relativePath: Lib_TypeDeclarationEngine_DeriveClassPrefix_RelativePath = relative(currentDirectory, filePath);
-  let relativeCleaned: Lib_TypeDeclarationEngine_DeriveClassPrefix_RelativeCleaned = relativePath;
+  const currentDirectory: Lib_TypeDeclarationEngine_DeriveClassPrefix_CurrentDirectory = packageRoot.replaceAll('\\', '/');
+  const relativePath: Lib_TypeDeclarationEngine_DeriveClassPrefix_RelativePath = relative(currentDirectory, filePath.replaceAll('\\', '/'));
+  let relativeCleaned: Lib_TypeDeclarationEngine_DeriveClassPrefix_RelativeCleaned = relativePath.replaceAll('\\', '/');
 
   for (const typeRoot of typeRoots) {
     relativeCleaned = relativeCleaned.replace(`${typeRoot}/types/`, '');
@@ -424,8 +421,6 @@ export function deriveClassPrefix(filePath: Lib_TypeDeclarationEngine_DeriveClas
     .replace('.d.ts', '')
     .replace('.ts', '')
     .replace('.test', '')
-    .split(sep)
-    .join('/')
     .split('/');
 
   // Reuses LIB_REGEX_PATTERN_CAMEL_CASE_WORDS from src/lib/regex.ts -- the same
@@ -616,11 +611,11 @@ export function extractReferencedTypes(line: Lib_TypeDeclarationEngine_ExtractRe
 export function deriveDtsMapping(typeRoots: Lib_TypeDeclarationEngine_DeriveDtsMapping_TypeRoots): Lib_TypeDeclarationEngine_DeriveDtsMapping_Returns {
   return {
     sourceToDts: (file) => {
-      let mapped: Lib_TypeDeclarationEngine_DeriveDtsMapping_Mapped = file;
+      let mapped: Lib_TypeDeclarationEngine_DeriveDtsMapping_Mapped = file.replaceAll('\\', '/');
 
       for (const typeRoot of typeRoots) {
-        if (file.includes(`/${typeRoot}/`) === true) {
-          mapped = file.replace(`/${typeRoot}/`, `/${typeRoot}/types/`);
+        if (mapped.includes(`/${typeRoot}/`) === true) {
+          mapped = mapped.replace(`/${typeRoot}/`, `/${typeRoot}/types/`);
           break;
         }
       }
@@ -628,7 +623,7 @@ export function deriveDtsMapping(typeRoots: Lib_TypeDeclarationEngine_DeriveDtsM
       return mapped.replace('.ts', '.d.ts');
     },
     dtsToSource: (file) => {
-      return file.replace('/types/', '/').replace('.d.ts', '.ts');
+      return file.replaceAll('\\', '/').replace('/types/', '/').replace('.d.ts', '.ts');
     },
   };
 }
@@ -644,7 +639,7 @@ export function deriveDtsMapping(typeRoots: Lib_TypeDeclarationEngine_DeriveDtsM
  * @since 0.15.0
  */
 export function deriveSourcePath(dtsPath: Lib_TypeDeclarationEngine_DeriveSourcePath_DtsPath): Lib_TypeDeclarationEngine_DeriveSourcePath_Returns {
-  return dtsPath.replace('/types/', '/').replace('.d.ts', '.ts');
+  return dtsPath.replaceAll('\\', '/').replace('/types/', '/').replace('.d.ts', '.ts');
 }
 
 /**
@@ -1003,7 +998,7 @@ export function extractBodyDeclarations(lines: Lib_TypeDeclarationEngine_Extract
    *
    * @returns {Lib_TypeDeclarationEngine_ExtractBodyDeclarations_VisitReturns}
    *
-   * @since UNRELEASED
+   * @since 0.32.0
    */
   function visit(node: Lib_TypeDeclarationEngine_ExtractBodyDeclarations_Visit_Node): Lib_TypeDeclarationEngine_ExtractBodyDeclarations_VisitReturns {
     if (

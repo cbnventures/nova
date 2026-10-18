@@ -57,7 +57,7 @@ export type Tests_Lib_Item_AllowedRolesAndPolicies_TemplateRoleAcceptsTrackable_
 /**
  * Tests - Lib - Item - Allowed Roles And Policies - Tool Role Accepts Distributable.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Lib_Item_AllowedRolesAndPolicies_ToolRoleAcceptsDistributable_HasDistributable = boolean;
 

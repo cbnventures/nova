@@ -117,6 +117,7 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Filename,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_FilenameStem,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_LastSlashIndex,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_NormalizedFilename,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_NormalizedStem,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Options,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Parts,
@@ -138,6 +139,7 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_AnchorToken,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Filename,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_LastSegmentIndex,
+  Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_NormalizedFilename,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Options,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_RawSegments,
   Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_RelativePath,
@@ -1035,13 +1037,14 @@ export class Runner {
    * @since 0.17.0
    */
   private static derivePathParts(filename: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Filename, options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Options): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Returns {
+    const normalizedFilename: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_NormalizedFilename = filename.replaceAll('\\', '/');
     let srcIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_SrcIndex = -1;
     let anchorIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_AnchorIndex = -1;
 
     for (const dir of options['anchorDirectories']) {
       const anchorToken: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_AnchorToken = `/${dir}/`;
 
-      anchorIndex = filename.lastIndexOf(anchorToken);
+      anchorIndex = normalizedFilename.lastIndexOf(anchorToken);
 
       if (anchorIndex !== -1) {
         srcIndex = anchorIndex + anchorToken.length;
@@ -1054,7 +1057,7 @@ export class Runner {
       return [];
     }
 
-    const relativePath: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_RelativePath = filename.slice(srcIndex);
+    const relativePath: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_RelativePath = normalizedFilename.slice(srcIndex);
     const rawSegments: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_RawSegments = relativePath.split('/');
     const lastSegmentIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_LastSegmentIndex = rawSegments.length - 1;
 
@@ -1129,13 +1132,14 @@ export class Runner {
    * @since 0.15.0
    */
   private static deriveHierarchy(filename: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Filename, segments: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Segments, options: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Options): Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Returns {
-    const parts: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Parts = Runner.derivePathParts(filename, options);
+    const normalizedFilename: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_NormalizedFilename = filename.replaceAll('\\', '/');
+    const parts: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Parts = Runner.derivePathParts(normalizedFilename, options);
 
     // No anchor directory found in path. Use the filename stem as the sole hierarchy base.
     if (parts.length === 0) {
-      const lastSlashIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_LastSlashIndex = filename.lastIndexOf('/');
+      const lastSlashIndex: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_LastSlashIndex = normalizedFilename.lastIndexOf('/');
       const safeExtensionPattern: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_SafeExtensionPattern = LIB_REGEX_PATTERN_TRAILING_EXTENSION;
-      const filenameStem: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_FilenameStem = filename.slice(lastSlashIndex + 1).replace(safeExtensionPattern, '').replace(safeExtensionPattern, '').replace(safeExtensionPattern, '');
+      const filenameStem: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_FilenameStem = normalizedFilename.slice(lastSlashIndex + 1).replace(safeExtensionPattern, '').replace(safeExtensionPattern, '').replace(safeExtensionPattern, '');
       const normalizedStem: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_NormalizedStem = normalizeRouteSegment(filenameStem);
 
       const stemPrettySegments: Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_StemPrettySegments = segments.map((segment) => {

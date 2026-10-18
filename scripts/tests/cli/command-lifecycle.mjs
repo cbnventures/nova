@@ -323,7 +323,7 @@ describe('Compiled Nova CLI integration', () => {
       name: 'interrupt-parallel-scripts',
       private: true,
       scripts: {
-        'dev': `${JSON.stringify(process.execPath)} ${JSON.stringify(novaCliPath)} utility run-scripts --parallel \'dev:*\'`,
+        'dev': `${JSON.stringify(process.execPath)} ${JSON.stringify(novaCliPath)} utility run-scripts --parallel "dev:*"`,
         'dev:wait': `${JSON.stringify(process.execPath)} ./wait.mjs`,
       },
     }, null, 2);
@@ -616,7 +616,7 @@ describe('Compiled Nova CLI integration', () => {
     const aliasResult = runNova(projectDirectory, [
       'rcp',
       'misc',
-      'fix-markdown-tables',
+      'fix-md-tables',
       '--dry-run',
     ]);
 
@@ -654,6 +654,58 @@ describe('Compiled Nova CLI integration', () => {
     expect(recheckResult.status).toBe(0);
 
     expect(await readFile(markdownPath, 'utf-8')).toBe(formattedContents);
+
+    return;
+  });
+
+  it('previews and applies operating-system cleanup through its alias', async () => {
+    const projectDirectory = join(temporaryDirectory, 'operating-system-files');
+
+    await createProject(projectDirectory, 'operating-system-files-project');
+
+    const configContents = JSON.stringify({
+      recipes: {
+        miscellaneous: {
+          'remove-operating-system-files': {
+            enabled: true,
+            settings: {
+              macos: {
+                desktopServicesStore: true,
+              },
+            },
+          },
+        },
+      },
+    }, null, 2);
+    const filePath = join(projectDirectory, '.DS_Store');
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), `${configContents}\n`, 'utf-8');
+    await writeFile(filePath, '', 'utf-8');
+
+    const dryRunResult = runNova(projectDirectory, [
+      'rcp',
+      'misc',
+      'remove-os-files',
+      '--dry-run',
+    ]);
+
+    expect(dryRunResult.error).toBeUndefined();
+
+    expect(dryRunResult.status).toBe(0);
+
+    expect(await pathExists(filePath)).toBe(true);
+
+    const writeResult = runNova(projectDirectory, [
+      'recipe',
+      'miscellaneous',
+      'remove-operating-system-files',
+    ]);
+
+    expect(writeResult.error).toBeUndefined();
+
+    expect(writeResult.status).toBe(0);
+
+    expect(await pathExists(filePath)).toBe(false);
 
     return;
   });

@@ -1,7 +1,7 @@
 /**
  * Tests - Lib - Docker Packaging - Lib Docker Packaging.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Lib_DockerPackaging_LibDockerPackaging_TemporaryDirectory = string;
 export type Tests_Lib_DockerPackaging_LibDockerPackaging_TemporaryPrefix = string;
@@ -10,7 +10,7 @@ export type Tests_Lib_DockerPackaging_LibDockerPackaging_SandboxRoot = string;
 /**
  * Tests - Lib - Docker Packaging - Lib Docker Packaging - Generates A Framework Free Container Native Image.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesAFrameworkFreeContainerNativeImage_WorkspaceDirectory = string;
 export type Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesAFrameworkFreeContainerNativeImage_PackageJsonPath = string;
@@ -20,7 +20,7 @@ export type Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesAFrameworkFree
 /**
  * Tests - Lib - Docker Packaging - Lib Docker Packaging - Generates Background Service Packaging Without HTTP Assumptions.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesBackgroundServicePackagingWithoutHTTPAssumptions_WorkspaceDirectory = string;
 export type Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesBackgroundServicePackagingWithoutHTTPAssumptions_PackageJsonPath = string;
@@ -30,7 +30,7 @@ export type Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesBackgroundServ
 /**
  * Tests - Lib - Docker Packaging - Lib Docker Packaging - Generates HTTP Service Packaging And Inserts The Deploy Group Before Clean.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesHTTPServicePackagingAndInsertsTheDeployGroupBeforeClean_WorkspaceDirectory = string;
 export type Tests_Lib_DockerPackaging_LibDockerPackaging_GeneratesHTTPServicePackagingAndInsertsTheDeployGroupBeforeClean_PackageJsonPath = string;

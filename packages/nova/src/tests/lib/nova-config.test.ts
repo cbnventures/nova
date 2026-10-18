@@ -1187,6 +1187,23 @@ describe('Shared_NovaConfig load', async () => {
             enabled: true,
           },
         },
+        'miscellaneous': {
+          'remove-operating-system-files': {
+            enabled: true,
+            settings: {
+              linux: {},
+              macos: {
+                appleDouble: true,
+                desktopServicesStore: false,
+              },
+              windows: {
+                enhancedThumbnailDatabase: false,
+                enhancedVistaThumbnailDatabase: true,
+                thumbnailDatabase: true,
+              },
+            },
+          },
+        },
         'read-me': {
           'update-badges': {
             enabled: true,
@@ -1249,6 +1266,23 @@ describe('Shared_NovaConfig load', async () => {
         enabled: true,
       },
     });
+    deepStrictEqual(recipes['miscellaneous'], {
+      'remove-operating-system-files': {
+        enabled: true,
+        settings: {
+          linux: {},
+          macos: {
+            appleDouble: true,
+            desktopServicesStore: false,
+          },
+          windows: {
+            enhancedThumbnailDatabase: false,
+            enhancedVistaThumbnailDatabase: true,
+            thumbnailDatabase: true,
+          },
+        },
+      },
+    });
     deepStrictEqual(recipes['read-me'], {
       'update-badges': {
         enabled: true,
@@ -1295,6 +1329,28 @@ describe('Shared_NovaConfig load', async () => {
           },
         },
         'license': {},
+        'miscellaneous': {
+          'remove-operating-system-files': {
+            enabled: true,
+            settings: {
+              freebsd: {
+                trash: true,
+              },
+              linux: {
+                temporary: true,
+              },
+              macos: {
+                appleDouble: true,
+                desktopServicesStore: 'yes',
+                arbitraryFile: true,
+              },
+              windows: 'yes',
+            },
+          },
+          'not-a-recipe': {
+            enabled: true,
+          },
+        },
       },
     }, null, 2);
 
@@ -1320,6 +1376,17 @@ describe('Shared_NovaConfig load', async () => {
       },
     });
     strictEqual(recipes['license'], undefined);
+    deepStrictEqual(recipes['miscellaneous'], {
+      'remove-operating-system-files': {
+        enabled: true,
+        settings: {
+          linux: {},
+          macos: {
+            appleDouble: true,
+          },
+        },
+      },
+    });
     strictEqual(recipes['read-me'], undefined);
 
     return;

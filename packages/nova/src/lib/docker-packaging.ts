@@ -54,7 +54,7 @@ import type {
  * Composes reviewed Docker packaging into scaffolds without exposing a
  * standalone generator or changing the scaffold's application source.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export class Runner {
   /**
@@ -67,7 +67,7 @@ export class Runner {
    *
    * @returns {Lib_DockerPackaging_Runner_GenerateForTarget_Returns}
    *
-   * @since UNRELEASED
+   * @since 0.32.0
    */
   public static async generateForTarget(options: Lib_DockerPackaging_Runner_GenerateForTarget_Options): Lib_DockerPackaging_Runner_GenerateForTarget_Returns {
     const templateRoot: Lib_DockerPackaging_Runner_GenerateForTarget_TemplateRoot = fileURLToPath(new URL('../../templates/scaffold-options/docker-image/', import.meta.url));
@@ -174,7 +174,7 @@ export class Runner {
    *
    * @returns {Lib_DockerPackaging_Runner_BuildRuntimeDirectives_Returns}
    *
-   * @since UNRELEASED
+   * @since 0.32.0
    */
   private static buildRuntimeDirectives(profile: Lib_DockerPackaging_Runner_BuildRuntimeDirectives_Profile): Lib_DockerPackaging_Runner_BuildRuntimeDirectives_Returns {
     if (profile !== 'http-service') {
@@ -202,7 +202,7 @@ export class Runner {
    *
    * @returns {Lib_DockerPackaging_Runner_MergeScripts_Returns}
    *
-   * @since UNRELEASED
+   * @since 0.32.0
    */
   private static mergeScripts(scripts: Lib_DockerPackaging_Runner_MergeScripts_Scripts): Lib_DockerPackaging_Runner_MergeScripts_Returns {
     const entries: Lib_DockerPackaging_Runner_MergeScripts_Entries = Object.entries(scripts).filter((scriptEntry) => scriptEntry[0] !== 'deploy' && scriptEntry[0].startsWith('deploy:') === false);
@@ -212,7 +212,7 @@ export class Runner {
 
     for (const scriptEntry of entries) {
       if (scriptEntry[0] === 'clean' && isDeployInserted === false) {
-        Reflect.set(merged, 'deploy', 'nova utility run-scripts --sequential --node-env production \'deploy:*\'');
+        Reflect.set(merged, 'deploy', 'nova utility run-scripts --sequential --node-env production "deploy:*"');
         Reflect.set(merged, 'deploy:container', 'docker compose up --build --detach');
 
         for (const deployEntry of deployEntries) {
@@ -226,7 +226,7 @@ export class Runner {
     }
 
     if (isDeployInserted === false) {
-      Reflect.set(merged, 'deploy', 'nova utility run-scripts --sequential --node-env production \'deploy:*\'');
+      Reflect.set(merged, 'deploy', 'nova utility run-scripts --sequential --node-env production "deploy:*"');
       Reflect.set(merged, 'deploy:container', 'docker compose up --build --detach');
 
       for (const deployEntry of deployEntries) {

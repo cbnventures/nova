@@ -11,7 +11,7 @@ import type { Tests_Rules_Vitest_PackageScripts_FixtureRoot } from '../../../typ
 /**
  * Tests - Rules - Vitest - Package Scripts - Fixture Root.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 const fixtureRoot: Tests_Rules_Vitest_PackageScripts_FixtureRoot = mkdtempSync(join(tmpdir(), 'nova-package-scripts-kit-'));
 

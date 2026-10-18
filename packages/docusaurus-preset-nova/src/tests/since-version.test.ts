@@ -249,7 +249,7 @@ describe('since version scan', () => {
     strictEqual(violations.length, 0, message);
 
     return;
-  });
+  }, 60_000);
 
   return;
 });

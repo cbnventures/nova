@@ -100,6 +100,8 @@ export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options = Readonly
   skipDirectories: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options_SkipDirectories;
 }>;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_NormalizedFilename = string;
+
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Body - Create - Program.
  *

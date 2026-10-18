@@ -91,6 +91,7 @@ export type Tests_Cli_Utility_Configure_ConfigFieldCoverage_Editor =
   | 'promptGithubSecurity'
   | 'promptGitignore'
   | 'promptIgnoreFileBundles'
+  | 'promptMiscellaneousRecipes'
   | 'promptProject'
   | 'promptReadMe'
   | 'promptRecipeEntries'
@@ -371,6 +372,23 @@ export type Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatterns
 export type Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_PromptIgnoreFiles = (config: Cli_Utility_Configure_Runner_PromptIgnoreFiles_Config) => Cli_Utility_Configure_Runner_PromptIgnoreFiles_Returns;
 
 export type Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Result = Awaited<Cli_Utility_Configure_Runner_PromptIgnoreFiles_Returns>;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Recipes - Edits Closed Operating System Cleanup Settings.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Next = Record<string, unknown> | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_PromptRecipes = (config: Cli_Utility_Configure_Runner_PromptRecipes_Config) => Cli_Utility_Configure_Runner_PromptRecipes_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Result = Awaited<Cli_Utility_Configure_Runner_PromptRecipes_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Recipes = Shared_NovaConfig_Recipes | undefined;
 
 /**
  * Tests - CLI - Utility - Configure - Prompt Recipes - Edits Recipe Settings Without Dropping Other Categories.

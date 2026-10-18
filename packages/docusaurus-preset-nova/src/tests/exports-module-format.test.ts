@@ -124,7 +124,7 @@ function loadProject(packageRoot: Tests_ExportsModuleFormat_LoadProject_PackageR
   return {
     name: tsconfigName,
     esm: emitsEsm(moduleKind, packageType),
-    files: new Set(parsed['fileNames']),
+    files: new Set(parsed['fileNames'].map((fileName) => fileName.replaceAll('\\', '/'))),
   };
 }
 
@@ -151,7 +151,7 @@ function resolveExportSource(packageRoot: Tests_ExportsModuleFormat_ResolveExpor
   ];
 
   for (const extension of extensions) {
-    const candidate: Tests_ExportsModuleFormat_ResolveExportSource_Candidate = resolve(packageRoot, `${relativeSource}${extension}`);
+    const candidate: Tests_ExportsModuleFormat_ResolveExportSource_Candidate = resolve(packageRoot, `${relativeSource}${extension}`).replaceAll('\\', '/');
 
     if (existsSync(candidate) === true) {
       return candidate;

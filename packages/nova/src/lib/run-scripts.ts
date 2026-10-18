@@ -1,12 +1,12 @@
 import { spawn } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
-import { platform } from 'node:os';
 import { resolve } from 'node:path';
 
 import chalk from 'chalk';
 
+import { Runner as LibCorepack } from './corepack.js';
+
 import type {
-  Lib_RunScripts_Runner_GetNpmCommand_Returns,
   Lib_RunScripts_Runner_GetScriptEnvironment_NodeEnv,
   Lib_RunScripts_Runner_GetScriptEnvironment_Returns,
   Lib_RunScripts_Runner_MatchScripts_Pattern,
@@ -71,7 +71,6 @@ import type {
   Lib_RunScripts_Runner_RunParallel_InterruptionState,
   Lib_RunScripts_Runner_RunParallel_MatchedScripts,
   Lib_RunScripts_Runner_RunParallel_NodeEnv,
-  Lib_RunScripts_Runner_RunParallel_NpmCommand,
   Lib_RunScripts_Runner_RunParallel_PartialLines,
   Lib_RunScripts_Runner_RunParallel_Prefixes,
   Lib_RunScripts_Runner_RunParallel_Queue,
@@ -80,15 +79,16 @@ import type {
   Lib_RunScripts_Runner_RunParallel_ScriptEnvironment,
   Lib_RunScripts_Runner_RunParallel_ScriptPartialLines,
   Lib_RunScripts_Runner_RunParallel_SettledScripts,
+  Lib_RunScripts_Runner_RunParallel_SpawnInvocation,
   Lib_RunScripts_Runner_RunParallel_WriteStderr,
   Lib_RunScripts_Runner_RunParallel_WriteStdout,
   Lib_RunScripts_Runner_SpawnScript_Child,
   Lib_RunScripts_Runner_SpawnScript_Close_ExitCode,
   Lib_RunScripts_Runner_SpawnScript_Error_Returns,
   Lib_RunScripts_Runner_SpawnScript_NodeEnv,
-  Lib_RunScripts_Runner_SpawnScript_NpmCommand,
   Lib_RunScripts_Runner_SpawnScript_Returns,
   Lib_RunScripts_Runner_SpawnScript_Script,
+  Lib_RunScripts_Runner_SpawnScript_SpawnInvocation,
 } from '../types/lib/run-scripts.d.ts';
 
 /**
@@ -274,22 +274,6 @@ export class Runner {
   }
 
   /**
-   * Lib - Run Scripts - Get npm Command.
-   *
-   * Returns the platform-appropriate npm executable name. Windows requires "npm.cmd" while
-   * POSIX systems use "npm" directly.
-   *
-   * @private
-   *
-   * @returns {Lib_RunScripts_Runner_GetNpmCommand_Returns}
-   *
-   * @since 0.26.0
-   */
-  private static getNpmCommand(): Lib_RunScripts_Runner_GetNpmCommand_Returns {
-    return (platform() === 'win32') ? 'npm.cmd' : 'npm';
-  }
-
-  /**
    * Lib - Run Scripts - Get Script Environment.
    *
    * Creates an isolated child environment for the requested NODE_ENV value.
@@ -360,13 +344,13 @@ export class Runner {
    * @since 0.26.0
    */
   private static spawnScript(script: Lib_RunScripts_Runner_SpawnScript_Script, nodeEnv: Lib_RunScripts_Runner_SpawnScript_NodeEnv): Lib_RunScripts_Runner_SpawnScript_Returns {
-    const npmCommand: Lib_RunScripts_Runner_SpawnScript_NpmCommand = Runner.getNpmCommand();
+    const spawnInvocation: Lib_RunScripts_Runner_SpawnScript_SpawnInvocation = LibCorepack.resolveSpawnInvocation('npm', [
+      'run',
+      script,
+    ]);
 
     return new Promise((promiseResolve, reject) => {
-      const child: Lib_RunScripts_Runner_SpawnScript_Child = spawn(npmCommand, [
-        'run',
-        script,
-      ], {
+      const child: Lib_RunScripts_Runner_SpawnScript_Child = spawn(spawnInvocation['command'], spawnInvocation['commandArguments'], {
         env: Runner.getScriptEnvironment(nodeEnv),
         stdio: 'inherit',
         shell: false,
@@ -409,7 +393,6 @@ export class Runner {
    * @since 0.26.0
    */
   private static async runParallel(matchedScripts: Lib_RunScripts_Runner_RunParallel_MatchedScripts, bufferMs: Lib_RunScripts_Runner_RunParallel_BufferMs, nodeEnv: Lib_RunScripts_Runner_RunParallel_NodeEnv, writeStderr: Lib_RunScripts_Runner_RunParallel_WriteStderr, writeStdout: Lib_RunScripts_Runner_RunParallel_WriteStdout): Lib_RunScripts_Runner_RunParallel_Returns {
-    const npmCommand: Lib_RunScripts_Runner_RunParallel_NpmCommand = Runner.getNpmCommand();
     const scriptEnvironment: Lib_RunScripts_Runner_RunParallel_ScriptEnvironment = Runner.getScriptEnvironment(nodeEnv);
 
     if (
@@ -517,10 +500,11 @@ export class Runner {
 
     // Spawn all scripts with piped stdio.
     for (const script of matchedScripts) {
-      const child: Lib_RunScripts_Runner_RunParallel_Child = spawn(npmCommand, [
+      const spawnInvocation: Lib_RunScripts_Runner_RunParallel_SpawnInvocation = LibCorepack.resolveSpawnInvocation('npm', [
         'run',
         script,
-      ], {
+      ]);
+      const child: Lib_RunScripts_Runner_RunParallel_Child = spawn(spawnInvocation['command'], spawnInvocation['commandArguments'], {
         env: scriptEnvironment,
         stdio: 'pipe',
         shell: false,

@@ -104,6 +104,7 @@ import type {
   Lib_Scaffold_InstallScaffoldDependencies_PackageManager,
   Lib_Scaffold_InstallScaffoldDependencies_Returns,
   Lib_Scaffold_InstallScaffoldDependencies_RootDirectory,
+  Lib_Scaffold_InstallScaffoldDependencies_SpawnInvocation,
   Lib_Scaffold_LoadExistingRoot_Config,
   Lib_Scaffold_LoadExistingRoot_ConfigFilePath,
   Lib_Scaffold_LoadExistingRoot_ConfigRaw,
@@ -443,8 +444,9 @@ export function resolveScaffoldInstallInvocation(packageManager: Lib_Scaffold_Re
  */
 export async function installScaffoldDependencies(rootDirectory: Lib_Scaffold_InstallScaffoldDependencies_RootDirectory, packageManager: Lib_Scaffold_InstallScaffoldDependencies_PackageManager): Lib_Scaffold_InstallScaffoldDependencies_Returns {
   const invocation: Lib_Scaffold_InstallScaffoldDependencies_Invocation = resolveScaffoldInstallInvocation(packageManager);
-  const command: Lib_Scaffold_InstallScaffoldDependencies_Command = invocation['command'];
-  const commandArguments: Lib_Scaffold_InstallScaffoldDependencies_CommandArguments = invocation['commandArguments'];
+  const spawnInvocation: Lib_Scaffold_InstallScaffoldDependencies_SpawnInvocation = LibCorepack.resolveSpawnInvocation(invocation['command'], invocation['commandArguments']);
+  const command: Lib_Scaffold_InstallScaffoldDependencies_Command = spawnInvocation['command'];
+  const commandArguments: Lib_Scaffold_InstallScaffoldDependencies_CommandArguments = spawnInvocation['commandArguments'];
   let output: Lib_Scaffold_InstallScaffoldDependencies_Output = '';
 
   /**
@@ -1508,21 +1510,21 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
     type: 'module',
     private: true,
     scripts: {
-      'dev': 'nova utility run-scripts --parallel --node-env development \'dev:*\'',
+      'dev': 'nova utility run-scripts --parallel --node-env development "dev:*"',
       'dev:workspaces': 'nova utility run-workspaces --node-env development dev',
-      'prod': 'nova utility run-scripts --sequential --node-env production \'prod:*\'',
+      'prod': 'nova utility run-scripts --sequential --node-env production "prod:*"',
       'prod:workspaces': 'nova utility run-workspaces --node-env production prod',
-      'check': 'nova utility run-scripts --sequential \'check:*\'',
+      'check': 'nova utility run-scripts --sequential "check:*"',
       'check:lint': 'eslint ./ --max-warnings=0',
       'check:types-config': 'nova utility type-check --project tsconfig.config.json',
       'check:types-tests': 'nova utility type-check --project tsconfig.tests.json',
       'check:test': 'vitest run',
       'check:workspaces': 'nova utility run-workspaces --concurrency=2 check',
-      'build': 'nova utility run-scripts --sequential --node-env production \'build:*\'',
+      'build': 'nova utility run-scripts --sequential --node-env production "build:*"',
       'build:workspaces': 'nova utility run-workspaces --concurrency=2 --node-env production build',
-      'deploy': 'nova utility run-scripts --sequential --node-env production \'deploy:*\'',
+      'deploy': 'nova utility run-scripts --sequential --node-env production "deploy:*"',
       'deploy:workspaces': 'nova utility run-workspaces --concurrency=2 --node-env production deploy',
-      'clean': 'nova utility run-scripts --parallel \'clean:*\'',
+      'clean': 'nova utility run-scripts --parallel "clean:*"',
       'clean:workspaces': 'nova utility run-workspaces clean',
       'changelog': 'nova utility changelog',
       'recipes': 'nova utility run-recipes --replace-file',
@@ -1587,6 +1589,25 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
         name: `${projectSlug}-project`,
         role: 'project',
         policy: 'freezable',
+      },
+    },
+    recipes: {
+      miscellaneous: {
+        'remove-operating-system-files': {
+          enabled: false,
+          settings: {
+            linux: {},
+            macos: {
+              appleDouble: false,
+              desktopServicesStore: false,
+            },
+            windows: {
+              enhancedThumbnailDatabase: false,
+              enhancedVistaThumbnailDatabase: false,
+              thumbnailDatabase: false,
+            },
+          },
+        },
       },
     },
     environment: {

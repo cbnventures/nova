@@ -1,7 +1,7 @@
 /**
  * Lib - Package Scripts.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Lib_PackageScripts_CanonicalGroupOrder = readonly [
   'dev',
@@ -123,28 +123,28 @@ export type Lib_PackageScripts_HasChildScript = boolean;
 /**
  * Lib - Package Scripts - Add Script.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Lib_PackageScripts_AddScript_Returns = void;
 
 /**
  * Lib - Package Scripts - Add Script Group.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Lib_PackageScripts_AddScriptGroup_Returns = void;
 
 /**
  * Lib - Package Scripts - Add Script With Hooks.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Lib_PackageScripts_AddScriptWithHooks_Returns = void;
 
 /**
  * Lib - Package Scripts - Find Package Script Contract Violations.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Lib_PackageScripts_FindPackageScriptContractViolations_Returns = string[];
 
@@ -153,20 +153,20 @@ export type Lib_PackageScripts_FindPackageScriptContractViolations_Recommendatio
 /**
  * Lib - Package Scripts - Get Custom Script Group Roots.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Lib_PackageScripts_GetCustomScriptGroupRoots_Returns = string[];
 
 /**
  * Lib - Package Scripts - Get Hook Target.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Lib_PackageScripts_GetHookTarget_Returns = string | undefined;
 
 /**
  * Lib - Package Scripts - Order Package Scripts.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Lib_PackageScripts_OrderPackageScripts_Returns = Record<string, unknown>;

@@ -39,6 +39,7 @@ import type {
   Shared_NovaConfig_Recipes,
   Shared_NovaConfig_Recipes_Github,
   Shared_NovaConfig_Recipes_License,
+  Shared_NovaConfig_Recipes_Miscellaneous,
   Shared_NovaConfig_Recipes_PackageJson,
   Shared_NovaConfig_Recipes_ReadMe,
   Shared_NovaConfig_Settings,
@@ -62,6 +63,11 @@ import type {
   Shared_NovaConfigGithubPoliciesSquashMergeMessage,
   Shared_NovaConfigGithubPoliciesSquashMergeTitle,
   Shared_NovaConfigGithubRulesetEnforcement,
+  Shared_NovaConfigMiscellaneousRecipeName,
+  Shared_NovaConfigOperatingSystemFileName,
+  Shared_NovaConfigOperatingSystemFilePlatform,
+  Shared_NovaConfigOperatingSystemFileRecipeEntry,
+  Shared_NovaConfigOperatingSystemFileSettings,
   Shared_NovaConfigProjectPlatform,
   Shared_NovaConfigReadMeBadge,
   Shared_NovaConfigSettings_RunWorkspaces,
@@ -533,6 +539,21 @@ export type Lib_NovaConfig_Runner_GetGithubTopics_Returns = Shared_NovaConfig_Gi
 export type Lib_NovaConfig_Runner_GetGithubTopics_TypeGuard = string;
 
 /**
+ * Lib - Nova Config - Get Miscellaneous Recipes.
+ *
+ * @since 0.32.0
+ */
+export type Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Value = unknown;
+
+export type Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Returns = Shared_NovaConfig_Recipes_Miscellaneous | undefined;
+
+export type Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Result = Shared_NovaConfig_Recipes_Miscellaneous;
+
+export type Lib_NovaConfig_Runner_GetMiscellaneousRecipes_AllowedName = Shared_NovaConfigMiscellaneousRecipeName | undefined;
+
+export type Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Entry = Shared_NovaConfigOperatingSystemFileRecipeEntry | undefined;
+
+/**
  * Lib - Nova Config - Get Non Empty String.
  *
  * @since 0.11.0
@@ -542,6 +563,37 @@ export type Lib_NovaConfig_Runner_GetNonEmptyString_Value = unknown;
 export type Lib_NovaConfig_Runner_GetNonEmptyString_Returns = string | undefined;
 
 export type Lib_NovaConfig_Runner_GetNonEmptyString_String = string;
+
+/**
+ * Lib - Nova Config - Get Operating System File Recipe Entry.
+ *
+ * @since 0.32.0
+ */
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Value = unknown;
+
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Returns = Shared_NovaConfigOperatingSystemFileRecipeEntry | undefined;
+
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Enabled = unknown;
+
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Result = Shared_NovaConfigOperatingSystemFileRecipeEntry;
+
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_SettingsCandidate = unknown;
+
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Settings = Shared_NovaConfigOperatingSystemFileSettings;
+
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_PlatformCandidates = Shared_NovaConfigOperatingSystemFilePlatform[];
+
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Platform = Shared_NovaConfigOperatingSystemFilePlatform | undefined;
+
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_PlatformValue = unknown;
+
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_SupportedFileNames = readonly Shared_NovaConfigOperatingSystemFileName[];
+
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_FileSettings = Partial<Record<Shared_NovaConfigOperatingSystemFileName, boolean>>;
+
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_FileName = Shared_NovaConfigOperatingSystemFileName | undefined;
+
+export type Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_FileValue = unknown;
 
 /**
  * Lib - Nova Config - Get Package JSON Recipes.
@@ -1141,6 +1193,8 @@ export type Lib_NovaConfig_Runner_ParseRecipes_Result = Shared_NovaConfig_Recipe
 export type Lib_NovaConfig_Runner_ParseRecipes_Github = Shared_NovaConfig_Recipes_Github | undefined;
 
 export type Lib_NovaConfig_Runner_ParseRecipes_License = Shared_NovaConfig_Recipes_License | undefined;
+
+export type Lib_NovaConfig_Runner_ParseRecipes_Miscellaneous = Shared_NovaConfig_Recipes_Miscellaneous | undefined;
 
 export type Lib_NovaConfig_Runner_ParseRecipes_ReadMe = Shared_NovaConfig_Recipes_ReadMe | undefined;
 

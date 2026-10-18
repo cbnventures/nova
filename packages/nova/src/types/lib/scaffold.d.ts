@@ -7,8 +7,10 @@ import type {
 import type { PromptObject } from 'prompts';
 
 import type {
+  Shared_CorepackCommand,
   Shared_CorepackPackageManager,
   Shared_CorepackPackageManagerDescriptor,
+  Shared_CorepackSpawnInvocation,
   Shared_MonorepoContext,
   Shared_NovaConfig_IgnoreFile,
   Shared_NovaConfig_IgnoreFile_Bundles,
@@ -178,7 +180,7 @@ export type Lib_Scaffold_InstallScaffoldDependencies_ReturnValue = {
 
 export type Lib_Scaffold_InstallScaffoldDependencies_Returns = Promise<Lib_Scaffold_InstallScaffoldDependencies_ReturnValue>;
 
-export type Lib_Scaffold_InstallScaffoldDependencies_Invocation_Command = string;
+export type Lib_Scaffold_InstallScaffoldDependencies_Invocation_Command = Shared_CorepackCommand;
 
 export type Lib_Scaffold_InstallScaffoldDependencies_Invocation_CommandArguments = string[];
 
@@ -186,6 +188,8 @@ export type Lib_Scaffold_InstallScaffoldDependencies_Invocation = {
   command: Lib_Scaffold_InstallScaffoldDependencies_Invocation_Command;
   commandArguments: Lib_Scaffold_InstallScaffoldDependencies_Invocation_CommandArguments;
 };
+
+export type Lib_Scaffold_InstallScaffoldDependencies_SpawnInvocation = Shared_CorepackSpawnInvocation;
 
 export type Lib_Scaffold_InstallScaffoldDependencies_Command = string;
 
@@ -539,7 +543,7 @@ export type Lib_Scaffold_ResolveScaffoldGitignoreEntry_Patterns = Shared_NovaCon
  */
 export type Lib_Scaffold_ResolveScaffoldInstallInvocation_PackageManager = Shared_CorepackPackageManager;
 
-export type Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns_Command = string;
+export type Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns_Command = Shared_CorepackCommand;
 
 export type Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns_CommandArguments = string[];
 
@@ -548,7 +552,7 @@ export type Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns = {
   commandArguments: Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns_CommandArguments;
 };
 
-export type Lib_Scaffold_ResolveScaffoldInstallInvocation_Command = string;
+export type Lib_Scaffold_ResolveScaffoldInstallInvocation_Command = Shared_CorepackCommand;
 
 export type Lib_Scaffold_ResolveScaffoldInstallInvocation_CommandArguments = string[];
 

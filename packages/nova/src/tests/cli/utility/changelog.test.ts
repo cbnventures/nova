@@ -255,17 +255,6 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampIsIdempotentSecondRunChangesNothing_WorkspaceDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampIsIdempotentSecondRunChangesNothing_WorkspacePackageContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampIsIdempotentSecondRunChangesNothing_WorkspacePackagePath,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsConfigPath,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsDirectory,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsSourcePath,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageConfigPath,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageDirectory,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageSourcePath,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_ProjectDirectory,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootConfigPath,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootManifest,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootScriptPath,
-  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_Sentinel,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDOnlyInTheReleasingPackageNotInOthers_ChangelogDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDOnlyInTheReleasingPackageNotInOthers_ConfigContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDOnlyInTheReleasingPackageNotInOthers_ConfigPath,
@@ -314,6 +303,17 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_WorkspaceDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_WorkspacePackageContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_WorkspacePackagePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_DocsConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_DocsDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_DocsSourcePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_PackageConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_PackageDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_PackageSourcePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_ProjectDirectory,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_RootConfigPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_RootManifest,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_RootScriptPath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_Sentinel,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SyncsExactPinnedReferencesToReleasedPackages_ChangelogDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SyncsExactPinnedReferencesToReleasedPackages_ConfigContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SyncsExactPinnedReferencesToReleasedPackages_ConfigPath,
@@ -990,17 +990,17 @@ describe('CliUtilityChangelog.run', async () => {
     return;
   });
 
-  it('stamps freezable without entries', async () => {
-    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_ProjectDirectory = join(sandboxRoot, 'freezable-no-entries');
-    const docsDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsDirectory = join(projectDirectory, 'apps', 'docs');
-    const packageDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageDirectory = join(projectDirectory, 'packages', 'core');
-    const rootConfigPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootConfigPath = join(projectDirectory, 'eslint.config.mts');
-    const rootScriptPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootScriptPath = join(projectDirectory, 'scripts', 'root.mjs');
-    const docsConfigPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsConfigPath = join(docsDirectory, 'docusaurus.config.ts');
-    const docsSourcePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsSourcePath = join(docsDirectory, 'src', 'index.ts');
-    const packageConfigPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageConfigPath = join(packageDirectory, 'vite.config.mts');
-    const packageSourcePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageSourcePath = join(packageDirectory, 'src', 'index.ts');
-    const rootManifest: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootManifest = JSON.stringify({
+  it('stamps workspace versions without entries', async () => {
+    const projectDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_ProjectDirectory = join(sandboxRoot, 'workspace-versions-no-entries');
+    const docsDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_DocsDirectory = join(projectDirectory, 'apps', 'docs');
+    const packageDirectory: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_PackageDirectory = join(projectDirectory, 'packages', 'core');
+    const rootConfigPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_RootConfigPath = join(projectDirectory, 'eslint.config.mts');
+    const rootScriptPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_RootScriptPath = join(projectDirectory, 'scripts', 'root.mjs');
+    const docsConfigPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_DocsConfigPath = join(docsDirectory, 'docusaurus.config.ts');
+    const docsSourcePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_DocsSourcePath = join(docsDirectory, 'src', 'index.ts');
+    const packageConfigPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_PackageConfigPath = join(packageDirectory, 'vite.config.mts');
+    const packageSourcePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_PackageSourcePath = join(packageDirectory, 'src', 'index.ts');
+    const rootManifest: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_RootManifest = JSON.stringify({
       name: 'project',
       version: '0.0.0',
     });
@@ -1038,7 +1038,7 @@ describe('CliUtilityChangelog.run', async () => {
       },
     }), 'utf-8');
 
-    const sentinel: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_Sentinel = [
+    const sentinel: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_Sentinel = [
       '/**',
       ' * @since UNRELEASED',
       ' */',
@@ -1075,8 +1075,8 @@ describe('CliUtilityChangelog.run', async () => {
     strictEqual((await readFile(rootScriptPath, 'utf-8')).includes('@since 0.0.0'), true);
     strictEqual((await readFile(docsConfigPath, 'utf-8')).includes('@since 0.0.0'), true);
     strictEqual((await readFile(docsSourcePath, 'utf-8')).includes('@since 0.0.0'), true);
-    strictEqual(await readFile(packageConfigPath, 'utf-8'), sentinel);
-    strictEqual(await readFile(packageSourcePath, 'utf-8'), sentinel);
+    strictEqual((await readFile(packageConfigPath, 'utf-8')).includes('@since 1.2.3'), true);
+    strictEqual((await readFile(packageSourcePath, 'utf-8')).includes('@since 1.2.3'), true);
     strictEqual(await readFile(join(projectDirectory, 'package.json'), 'utf-8'), rootManifest);
 
     await rejects(readFile(join(projectDirectory, 'CHANGELOG.md'), 'utf-8'), {
@@ -1575,6 +1575,7 @@ describe('CliUtilityChangelog.run', async () => {
     const packageJsonPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SkipsReleaseWhenNoEntriesExist_PackageJsonPath = join(projectDirectory, 'package.json');
     const packageJsonContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SkipsReleaseWhenNoEntriesExist_PackageJsonContents = JSON.stringify({
       name: 'test-no-entries',
+      version: '0.0.0',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
@@ -1582,10 +1583,10 @@ describe('CliUtilityChangelog.run', async () => {
     const configPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SkipsReleaseWhenNoEntriesExist_ConfigPath = join(projectDirectory, 'nova.config.json');
     const configContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SkipsReleaseWhenNoEntriesExist_ConfigContents = JSON.stringify({
       workspaces: {
-        './packages/core': {
-          name: '@test/core',
-          role: 'package',
-          policy: 'distributable',
+        './': {
+          name: 'test-no-entries',
+          role: 'project',
+          policy: 'freezable',
         },
       },
     }, null, 2);

@@ -597,33 +597,6 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampIsIdempotent
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampIsIdempotentSecondRunChangesNothing_IsIdempotent = boolean;
 
 /**
- * Tests - CLI - Utility - Changelog - Run - Stamps Freezable Without Entries.
- *
- * @since 0.27.1
- */
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_ProjectDirectory = string;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsDirectory = string;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageDirectory = string;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootConfigPath = string;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootScriptPath = string;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsConfigPath = string;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_DocsSourcePath = string;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageConfigPath = string;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_PackageSourcePath = string;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_RootManifest = string;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsFreezableWithoutEntries_Sentinel = string;
-
-/**
  * Tests - CLI - Utility - Changelog - Run - Stamps UNRELEASED Only In The Releasing Package Not In Others.
  *
  * @since 0.20.0
@@ -728,6 +701,33 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDT
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_HasDeprecated = boolean;
 
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_StringLiteralPreserved = boolean;
+
+/**
+ * Tests - CLI - Utility - Changelog - Run - Stamps Workspace Versions Without Entries.
+ *
+ * @since 0.27.1
+ */
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_DocsDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_PackageDirectory = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_RootConfigPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_RootScriptPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_DocsConfigPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_DocsSourcePath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_PackageConfigPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_PackageSourcePath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_RootManifest = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsWorkspaceVersionsWithoutEntries_Sentinel = string;
 
 /**
  * Tests - CLI - Utility - Changelog - Run - Syncs Exact Pinned References To Released Packages.

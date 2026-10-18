@@ -6,14 +6,14 @@ import type {
 /**
  * CLI - Scaffold - Tool - Serverless - Template Questions.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Cli_Scaffold_Tool_Serverless_TemplateQuestions = Shared_ScaffoldTemplateQuestions;
 
 /**
  * CLI - Scaffold - Tool - Serverless - Resolve Workspace Template Subpaths.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Cli_Scaffold_Tool_Serverless_ResolveWorkspaceTemplateSubpaths_Answers = Shared_ScaffoldTemplateResolution_Answers;
 
@@ -22,7 +22,7 @@ export type Cli_Scaffold_Tool_Serverless_ResolveWorkspaceTemplateSubpaths_Return
 /**
  * CLI - Scaffold - Tool - Serverless - Run.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Cli_Scaffold_Tool_Serverless_Runner_Run_Options_DryRun = true;
 

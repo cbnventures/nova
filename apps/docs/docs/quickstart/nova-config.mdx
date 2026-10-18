@@ -570,23 +570,24 @@ The shared `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md` files are gen
 
 ## `recipes`
 
-Stores every recipe toggle in one top-level block. Repository, license, and README recipes are project-scoped; `package-json` recipes are nested under the workspace path they modify.
+Stores every recipe toggle in one top-level block. Repository, license, miscellaneous, and README recipes are project-scoped; `package-json` recipes are nested under the workspace path they modify.
 
 ### Recipe Entry Fields
 
-| Field      | Type      | Description                                                                                      |
-|------------|-----------|--------------------------------------------------------------------------------------------------|
-| `enabled`  | `boolean` | Required. Runs the recipe when `true` and skips it when `false`.                                 |
-| `settings` | `object`  | Optional boolean settings supported by that recipe. Unknown or non-boolean settings are dropped. |
+| Field      | Type      | Description                                                                                                                                       |
+|------------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| `enabled`  | `boolean` | Required. Runs the recipe when `true` and skips it when `false`.                                                                                  |
+| `settings` | `object`  | Optional settings supported by that recipe. Generic recipe settings retain valid booleans; closed recipes reject unsupported keys or value types. |
 
 ### Recipe Categories
 
-| Category       | Supported recipes                                                                                                                                                                |
-|----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `github`       | `sync-actions`, `sync-features`, `sync-identity`, `sync-labels`, `sync-policies`, `sync-rulesets`, `sync-security`                                                               |
-| `license`      | `update-copyright`                                                                                                                                                               |
-| `read-me`      | `update-badges`, `update-credits`, `update-documentation`, `update-header`, `update-introduction`                                                                                |
-| `package-json` | `cleanup`, `normalize-artifacts`, `normalize-bundler`, `normalize-dependencies`, `normalize-modules`, `normalize-tooling`, `sync-environment`, `sync-identity`, `sync-ownership` |
+| Category        | Supported recipes                                                                                                                                                                |
+|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `github`        | `sync-actions`, `sync-features`, `sync-identity`, `sync-labels`, `sync-policies`, `sync-rulesets`, `sync-security`                                                               |
+| `license`       | `update-copyright`                                                                                                                                                               |
+| `miscellaneous` | `remove-operating-system-files`                                                                                                                                                  |
+| `read-me`       | `update-badges`, `update-credits`, `update-documentation`, `update-header`, `update-introduction`                                                                                |
+| `package-json`  | `cleanup`, `normalize-artifacts`, `normalize-bundler`, `normalize-dependencies`, `normalize-modules`, `normalize-tooling`, `sync-environment`, `sync-identity`, `sync-ownership` |
 
 Package JSON recipes accept these optional settings where applicable:
 
@@ -609,6 +610,23 @@ Package JSON recipes accept these optional settings where applicable:
     "license": {
       "update-copyright": {
         "enabled": true
+      }
+    },
+    "miscellaneous": {
+      "remove-operating-system-files": {
+        "enabled": false,
+        "settings": {
+          "linux": {},
+          "macos": {
+            "appleDouble": false,
+            "desktopServicesStore": false
+          },
+          "windows": {
+            "enhancedThumbnailDatabase": false,
+            "enhancedVistaThumbnailDatabase": false,
+            "thumbnailDatabase": false
+          }
+        }
       }
     },
     "read-me": {

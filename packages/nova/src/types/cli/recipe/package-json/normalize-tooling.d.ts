@@ -39,6 +39,20 @@ export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasBindingGyp 
 
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedPackageScripts = Record<string, unknown>;
 
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedPackageScriptEntries = [string, unknown][];
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PortableScriptCommandsChanged = boolean;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedNormalizedPackageScriptEntry = [string, unknown];
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedScriptName = string;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedScriptCommand = unknown;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_SingleQuotedPattern = string;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PortableScriptCommand = string;
+
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_IsNovaBootstrap = boolean;
 
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_RunnerPrefix = string;

@@ -63,3 +63,79 @@ describe('LibCorepack.parsePackageManager', () => {
 
   return;
 });
+
+/**
+ * Tests - Lib - Corepack - Resolve Spawn Invocation.
+ *
+ * @since 0.32.0
+ */
+describe('LibCorepack.resolveSpawnInvocation', () => {
+  it('keeps POSIX commands direct', () => {
+    deepStrictEqual(LibCorepack.resolveSpawnInvocation('npm', [
+      'run',
+      'check:test',
+    ], 'linux', '/usr/local/bin/node'), {
+      command: 'npm',
+      commandArguments: [
+        'run',
+        'check:test',
+      ],
+    });
+
+    return;
+  });
+
+  it('runs Windows npm through its JavaScript entry point', () => {
+    deepStrictEqual(LibCorepack.resolveSpawnInvocation('npm', [
+      'run',
+      'check:test',
+      '--',
+      'space value',
+      'a&b',
+    ], 'win32', 'C:/node/node.exe'), {
+      command: 'C:/node/node.exe',
+      commandArguments: [
+        [
+          'C:',
+          'node',
+          'node_modules',
+          'npm',
+          'bin',
+          'npm-cli.js',
+        ].join('\\'),
+        'run',
+        'check:test',
+        '--',
+        'space value',
+        'a&b',
+      ],
+    });
+
+    return;
+  });
+
+  it('runs Windows Corepack through its JavaScript entry point', () => {
+    deepStrictEqual(LibCorepack.resolveSpawnInvocation('corepack', [
+      'pnpm',
+      'install',
+    ], 'win32', 'C:/node/node.exe'), {
+      command: 'C:/node/node.exe',
+      commandArguments: [
+        [
+          'C:',
+          'node',
+          'node_modules',
+          'corepack',
+          'dist',
+          'corepack.js',
+        ].join('\\'),
+        'pnpm',
+        'install',
+      ],
+    });
+
+    return;
+  });
+
+  return;
+});

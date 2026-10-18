@@ -75,7 +75,7 @@ flowchart TD
         direction LR
         RCP --> GHR[github] --> GHR1[sync-features / sync-identity / sync-policies]
         RCP --> PKG[package-json] --> PKG1[cleanup / normalize-* / sync-*]
-        RCP --> MISC[miscellaneous] --> MISC1[fix-markdown-tables]
+        RCP --> MISC[miscellaneous] --> MISC1[fix-markdown-tables / remove-operating-system-files]
     end
 
     subgraph Scaffolding
@@ -166,12 +166,13 @@ _Category: `package-json` · Alias: `pkg`_
 #### Miscellaneous
 _Category: `miscellaneous` · Alias: `misc`_
 
-| Subcommand                                                                   | Shorthand | What It Does                                                |
-|------------------------------------------------------------------------------|-----------|-------------------------------------------------------------|
-| _(none)_                                                                     | —         | Run every miscellaneous recipe for the current repository.  |
-| [`fix-markdown-tables`](/docs/cli/recipes/miscellaneous/fix-markdown-tables) | —         | Format Markdown and MDX tables throughout the project root. |
+| Subcommand                                                                                       | Shorthand         | What It Does                                                                                |
+|--------------------------------------------------------------------------------------------------|-------------------|---------------------------------------------------------------------------------------------|
+| _(none)_                                                                                         | —                 | Run every miscellaneous recipe for the current repository.                                  |
+| [`fix-markdown-tables`](/docs/cli/recipes/miscellaneous/fix-markdown-tables)                     | `fix-md-tables`   | Format Markdown and MDX tables throughout the project root.                                 |
+| [`remove-operating-system-files`](/docs/cli/recipes/miscellaneous/remove-operating-system-files) | `remove-os-files` | Remove explicitly enabled, untracked operating-system metadata files from the project root. |
 
-Running `nova recipe miscellaneous` (alias `nova rcp misc`) without a subcommand runs every miscellaneous recipe. Currently, that means `fix-markdown-tables`.
+Running `nova recipe miscellaneous` (alias `nova rcp misc`) without a subcommand runs every miscellaneous recipe in sequence.
 
 ### Scaffolding
 

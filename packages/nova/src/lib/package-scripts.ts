@@ -40,7 +40,7 @@ import type {
  * Defines Nova's required development-first command families. Child commands
  * retain their authored order inside each family.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export const packageScriptCanonicalGroupOrder: Lib_PackageScripts_CanonicalGroupOrder = [
   'dev',
@@ -57,7 +57,7 @@ export const packageScriptCanonicalGroupOrder: Lib_PackageScripts_CanonicalGroup
  * Keeps changelog and recipe maintenance immediately after the six standard
  * lifecycle families because neither command dispatches a child namespace.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export const packageScriptCanonicalSingletonOrder: Lib_PackageScripts_CanonicalSingletonOrder = [
   'changelog',
@@ -70,7 +70,7 @@ export const packageScriptCanonicalSingletonOrder: Lib_PackageScripts_CanonicalS
  * Places framework-specific families after the universal repository commands
  * while keeping them ahead of project-specific utilities.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export const packageScriptOptionalGroupOrder: Lib_PackageScripts_OptionalGroupOrder = ['i18n'];
 
@@ -80,7 +80,7 @@ export const packageScriptOptionalGroupOrder: Lib_PackageScripts_OptionalGroupOr
  * Lists the repository-level commands every Nova project root exposes so checks
  * can distinguish root coordination from optional workspace phases.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export const packageScriptRequiredRootOrder: Lib_PackageScripts_RequiredRootScriptOrder = [
   'dev',
@@ -100,7 +100,7 @@ export const packageScriptRequiredRootOrder: Lib_PackageScripts_RequiredRootScri
  * and dependency hooks at the end of the scripts object without changing how npm
  * invokes them.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export const packageScriptNpmLifecycleOrder: Lib_PackageScripts_NpmLifecycleOrder = [
   'preinstall',
@@ -128,7 +128,7 @@ export const packageScriptNpmLifecycleOrder: Lib_PackageScripts_NpmLifecycleOrde
  * check, build, recipe, and deployment command families. Exact project-specific
  * commands remain valid when they describe a distinct capability.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export const packageScriptForbiddenTopLevelScripts: Lib_PackageScripts_ForbiddenTopLevelScripts = [
   'develop',
@@ -160,7 +160,7 @@ export const packageScriptForbiddenTopLevelScripts: Lib_PackageScripts_Forbidden
  * Explains why each phase-less alias is ambiguous and names the explicit Nova
  * family or project capability that should replace it.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export const packageScriptForbiddenTopLevelScriptRecommendations: Lib_PackageScripts_ForbiddenTopLevelScriptRecommendations = {
   'develop': 'Development execution belongs to the "dev" family; use "dev" or a descriptive "dev:*" child.',
@@ -201,7 +201,7 @@ export const packageScriptForbiddenTopLevelScriptRecommendations: Lib_PackageScr
  *
  * @returns {Lib_PackageScripts_AddScript_Returns}
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 function addScript(orderedScripts: Lib_PackageScripts_OrderedScripts, handledScripts: Lib_PackageScripts_HandledScripts, scripts: Lib_PackageScripts_Scripts, scriptName: Lib_PackageScripts_ScriptName): Lib_PackageScripts_AddScript_Returns {
   if (
@@ -231,7 +231,7 @@ function addScript(orderedScripts: Lib_PackageScripts_OrderedScripts, handledScr
  *
  * @returns {Lib_PackageScripts_GetHookTarget_Returns}
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 function getHookTarget(scriptName: Lib_PackageScripts_ScriptName, scripts: Lib_PackageScripts_Scripts): Lib_PackageScripts_GetHookTarget_Returns {
   const hookPrefixes: Lib_PackageScripts_HookPrefixes = [
@@ -272,7 +272,7 @@ function getHookTarget(scriptName: Lib_PackageScripts_ScriptName, scripts: Lib_P
  *
  * @returns {Lib_PackageScripts_AddScriptWithHooks_Returns}
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 function addScriptWithHooks(orderedScripts: Lib_PackageScripts_OrderedScripts, handledScripts: Lib_PackageScripts_HandledScripts, scripts: Lib_PackageScripts_Scripts, scriptName: Lib_PackageScripts_ScriptName): Lib_PackageScripts_AddScriptWithHooks_Returns {
   addScript(orderedScripts, handledScripts, scripts, `pre${scriptName}`);
@@ -298,7 +298,7 @@ function addScriptWithHooks(orderedScripts: Lib_PackageScripts_OrderedScripts, h
  *
  * @returns {Lib_PackageScripts_AddScriptGroup_Returns}
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 function addScriptGroup(orderedScripts: Lib_PackageScripts_OrderedScripts, handledScripts: Lib_PackageScripts_HandledScripts, scripts: Lib_PackageScripts_Scripts, scriptNames: Lib_PackageScripts_ScriptNames, scriptGroup: Lib_PackageScripts_ScriptGroup): Lib_PackageScripts_AddScriptGroup_Returns {
   addScript(orderedScripts, handledScripts, scripts, `pre${scriptGroup}`);
@@ -329,7 +329,7 @@ function addScriptGroup(orderedScripts: Lib_PackageScripts_OrderedScripts, handl
  *
  * @returns {Lib_PackageScripts_GetCustomScriptGroupRoots_Returns}
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 function getCustomScriptGroupRoots(scripts: Lib_PackageScripts_Scripts, scriptNames: Lib_PackageScripts_ScriptNames, handledScripts: Lib_PackageScripts_HandledScripts): Lib_PackageScripts_GetCustomScriptGroupRoots_Returns {
   const customScriptGroupRoots: Lib_PackageScripts_CustomScriptGroupRoots = [];
@@ -369,7 +369,7 @@ function getCustomScriptGroupRoots(scripts: Lib_PackageScripts_Scripts, scriptNa
  *
  * @returns {Lib_PackageScripts_OrderPackageScripts_Returns}
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export function orderPackageScripts(scripts: Lib_PackageScripts_Scripts): Lib_PackageScripts_OrderPackageScripts_Returns {
   const scriptNames: Lib_PackageScripts_ScriptNames = Object.keys(scripts);
@@ -416,7 +416,7 @@ export function orderPackageScripts(scripts: Lib_PackageScripts_Scripts): Lib_Pa
  *
  * @returns {Lib_PackageScripts_FindPackageScriptContractViolations_Returns}
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export function findPackageScriptContractViolations(scripts: Lib_PackageScripts_Scripts, options: Lib_PackageScripts_Options = {}): Lib_PackageScripts_FindPackageScriptContractViolations_Returns {
   const violations: Lib_PackageScripts_Violations = [];

@@ -299,6 +299,8 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
     const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+
+    // Seed the former POSIX-only quoting so this test also proves its migration.
     const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ReordersLifecycleScriptGroups_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
@@ -339,11 +341,15 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
       'build:first',
       'custom',
     ]);
+    strictEqual(scripts['dev'], 'nova utility run-scripts --parallel "dev:*"');
+    strictEqual(scripts['check'], 'nova utility run-scripts --sequential "check:*"');
+    strictEqual(scripts['build'], 'nova utility run-scripts --sequential "build:*"');
 
     return;
   });
 
   it('normalizes canonical root workspace scripts', async () => {
+    // Seed both former root command spellings so the recipe upgrades each one.
     const cases: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_Cases = [
       {
         directoryName: 'consumer-root-scripts',
@@ -411,17 +417,17 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
       const scripts: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_Scripts = parsed['scripts'] as Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_Scripts;
 
       deepStrictEqual(scripts, {
-        'dev': testCase['dev'],
+        'dev': `${testCase['scriptRunnerPrefix']} --parallel --node-env development "dev:*"`,
         'dev:workspaces': `${testCase['runnerPrefix']} --node-env development dev`,
-        'prod': `${testCase['scriptRunnerPrefix']} --sequential --node-env production 'prod:*'`,
+        'prod': `${testCase['scriptRunnerPrefix']} --sequential --node-env production "prod:*"`,
         'prod:workspaces': `${testCase['runnerPrefix']} --node-env production prod`,
-        'check': `${testCase['scriptRunnerPrefix']} --sequential 'check:*'`,
+        'check': `${testCase['scriptRunnerPrefix']} --sequential "check:*"`,
         'check:workspaces': `${testCase['runnerPrefix']} --concurrency=2 check`,
-        'build': `${testCase['scriptRunnerPrefix']} --sequential --node-env production 'build:*'`,
+        'build': `${testCase['scriptRunnerPrefix']} --sequential --node-env production "build:*"`,
         'build:workspaces': `${testCase['runnerPrefix']} --concurrency=2 --node-env production build`,
-        'deploy': `${testCase['scriptRunnerPrefix']} --sequential --node-env production 'deploy:*'`,
+        'deploy': `${testCase['scriptRunnerPrefix']} --sequential --node-env production "deploy:*"`,
         'deploy:workspaces': `${testCase['runnerPrefix']} --concurrency=2 --node-env production deploy`,
-        'clean': `${testCase['scriptRunnerPrefix']} --parallel 'clean:*'`,
+        'clean': `${testCase['scriptRunnerPrefix']} --parallel "clean:*"`,
         'clean:workspaces': `${testCase['runnerPrefix']} clean`,
         'changelog': 'nova utility changelog',
         'recipes': 'nova utility run-recipes --replace-file',

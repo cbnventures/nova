@@ -6,7 +6,7 @@ import type {
 /**
  * Rules - Vitest - Package Scripts - Register - Register Package Scripts Suite.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_Config = Rules_Vitest_Index_PackageScriptsSuiteConfig;
 

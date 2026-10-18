@@ -7,18 +7,18 @@
     "build"
   ],
   "scripts": {
-    "dev": "nova utility run-scripts --parallel --node-env development 'dev:*'",
+    "dev": "nova utility run-scripts --parallel --node-env development \"dev:*\"",
     "dev:local": "local-action run ../.. [__WORKSPACE_RELATIVE_PATH__]/src/run.ts .env",
-    "check": "nova utility run-scripts --sequential 'check:*'",
+    "check": "nova utility run-scripts --sequential \"check:*\"",
     "check:lint": "eslint ./ --max-warnings=0",
     "check:types-source": "nova utility type-check --project tsconfig.json",
     "check:types-config": "nova utility type-check --project tsconfig.config.json",
     "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
     "check:test": "vitest run",
-    "build": "nova utility run-scripts --sequential --node-env production 'build:*'",
+    "build": "nova utility run-scripts --sequential --node-env production \"build:*\"",
     "build:reset": "shx rm -rf ./build",
     "build:ncc": "ncc build src/index.ts -o build --source-map --license licenses.txt",
-    "clean": "nova utility run-scripts --parallel 'clean:*'",
+    "clean": "nova utility run-scripts --parallel \"clean:*\"",
     "clean:build": "shx rm -rf ./build"
   },
   "engines": {

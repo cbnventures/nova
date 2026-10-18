@@ -6,7 +6,7 @@ import type {
 /**
  * Lib - Docker Packaging - Build Runtime Directives.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Lib_DockerPackaging_Runner_BuildRuntimeDirectives_Profile = Shared_DockerImageProfile;
 export type Lib_DockerPackaging_Runner_BuildRuntimeDirectives_Returns = string;
@@ -15,7 +15,7 @@ export type Lib_DockerPackaging_Runner_BuildRuntimeDirectives_Lines = string[];
 /**
  * Lib - Docker Packaging - Generate For Target.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Lib_DockerPackaging_Runner_GenerateForTarget_Options_BuildDirectory = string;
 export type Lib_DockerPackaging_Runner_GenerateForTarget_Options_DryRun = boolean;
@@ -59,7 +59,7 @@ export type Lib_DockerPackaging_Runner_GenerateForTarget_ReportFiles = boolean;
 /**
  * Lib - Docker Packaging - Merge Scripts.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Lib_DockerPackaging_Runner_MergeScripts_Scripts = Record<string, string>;
 export type Lib_DockerPackaging_Runner_MergeScripts_Returns = Record<string, string>;

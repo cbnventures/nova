@@ -61,6 +61,7 @@ import type {
   Shared_NovaConfig_RecipeEntry_Settings,
   Shared_NovaConfig_Recipes,
   Shared_NovaConfig_Recipes_Github,
+  Shared_NovaConfig_Recipes_Miscellaneous,
   Shared_NovaConfig_Recipes_PackageJson,
   Shared_NovaConfig_Recipes_PackageJsonWorkspace,
   Shared_NovaConfig_Settings,
@@ -79,6 +80,10 @@ import type {
   Shared_NovaConfigEnvironmentValue_Reach,
   Shared_NovaConfigEnvironmentWorkflow,
   Shared_NovaConfigEnvironmentWorkspace,
+  Shared_NovaConfigOperatingSystemFileName,
+  Shared_NovaConfigOperatingSystemFilePlatform,
+  Shared_NovaConfigOperatingSystemFileRecipeEntry,
+  Shared_NovaConfigOperatingSystemFileSettings,
   Shared_NovaConfigProjectPlatform,
   Shared_NovaConfigSettings_RunWorkspaces,
   Shared_NovaConfigSettings_RunWorkspacesCache,
@@ -1896,6 +1901,45 @@ export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_RemoveOutputResult = 
 export type Cli_Utility_Configure_Runner_PromptIgnoreFiles_RemoveOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptIgnoreFiles_RemoveOutputKey, Cli_Utility_Configure_Runner_PromptIgnoreFiles_RemoveOutputResult> | Shared_PromptWithCancelReject;
 
 /**
+ * CLI - Utility - Configure - Prompt Miscellaneous Recipes.
+ *
+ * @since 0.32.0
+ */
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entries = Shared_NovaConfig_Recipes_Miscellaneous | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Returns = Promise<Shared_NovaConfig_Recipes_Miscellaneous | undefined>;
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingEntry = Shared_NovaConfigOperatingSystemFileRecipeEntry | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputKey = 'enabled';
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputResult = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputKey, Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Settings = Shared_NovaConfigOperatingSystemFileSettings;
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Platforms = Shared_NovaConfigOperatingSystemFilePlatform[];
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingPlatformSettings = Shared_NovaConfigOperatingSystemFileSettings[Shared_NovaConfigOperatingSystemFilePlatform];
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SupportedFileNames = readonly Shared_NovaConfigOperatingSystemFileName[];
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileSettings = Partial<Record<Shared_NovaConfigOperatingSystemFileName, boolean>>;
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedFileNames = Shared_NovaConfigOperatingSystemFileName[];
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputKey = 'fileNames';
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputResult = Shared_NovaConfigOperatingSystemFileName[];
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputKey, Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entry = Shared_NovaConfigOperatingSystemFileRecipeEntry;
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_NextEntries = Shared_NovaConfig_Recipes_Miscellaneous;
+
+/**
  * CLI - Utility - Configure - Prompt Project.
  *
  * @since 0.11.0
@@ -2208,6 +2252,8 @@ export type Cli_Utility_Configure_Runner_PromptRecipes_Label = string;
 export type Cli_Utility_Configure_Runner_PromptRecipes_WorkspacePath = string;
 
 export type Cli_Utility_Configure_Runner_PromptRecipes_WorkspaceEntries = Record<string, Shared_NovaConfig_RecipeEntry> | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptRecipes_MiscellaneousEntries = Shared_NovaConfig_Recipes_Miscellaneous | undefined;
 
 export type Cli_Utility_Configure_Runner_PromptRecipes_CategoryEntries = Record<string, Shared_NovaConfig_RecipeEntry> | undefined;
 

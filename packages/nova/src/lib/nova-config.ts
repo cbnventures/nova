@@ -13,6 +13,7 @@ import {
   libItemAllowedRoles,
   libItemEmailFields,
   libItemGenericProtocols,
+  libItemOperatingSystemFilesByPlatform,
   libItemRecipesByCategory,
   libItemRepositoryProtocols,
   libItemUrlFields,
@@ -149,9 +150,27 @@ import type {
   Lib_NovaConfig_Runner_GetGithubTopics_Returns,
   Lib_NovaConfig_Runner_GetGithubTopics_TypeGuard,
   Lib_NovaConfig_Runner_GetGithubTopics_Value,
+  Lib_NovaConfig_Runner_GetMiscellaneousRecipes_AllowedName,
+  Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Entry,
+  Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Result,
+  Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Returns,
+  Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Value,
   Lib_NovaConfig_Runner_GetNonEmptyString_Returns,
   Lib_NovaConfig_Runner_GetNonEmptyString_String,
   Lib_NovaConfig_Runner_GetNonEmptyString_Value,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Enabled,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_FileName,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_FileSettings,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_FileValue,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Platform,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_PlatformCandidates,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_PlatformValue,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Result,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Returns,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Settings,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_SettingsCandidate,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_SupportedFileNames,
+  Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Value,
   Lib_NovaConfig_Runner_GetPackageJsonRecipes_Entries,
   Lib_NovaConfig_Runner_GetPackageJsonRecipes_Result,
   Lib_NovaConfig_Runner_GetPackageJsonRecipes_Returns,
@@ -333,6 +352,7 @@ import type {
   Lib_NovaConfig_Runner_ParseReadMe_ValueBadges,
   Lib_NovaConfig_Runner_ParseRecipes_Github,
   Lib_NovaConfig_Runner_ParseRecipes_License,
+  Lib_NovaConfig_Runner_ParseRecipes_Miscellaneous,
   Lib_NovaConfig_Runner_ParseRecipes_PackageJson,
   Lib_NovaConfig_Runner_ParseRecipes_ReadMe,
   Lib_NovaConfig_Runner_ParseRecipes_Result,
@@ -2213,7 +2233,7 @@ export class Runner {
   /**
    * Lib - Nova Config - Parse Recipes.
    *
-   * Parses the unified recipes block into its four categories, validating each entry
+   * Parses the unified recipes block into its five categories, validating each entry
    * against the canonical recipe names. Returns undefined when the block is absent or empty.
    *
    * @param {Lib_NovaConfig_Runner_ParseRecipes_Value} value - Value.
@@ -2243,6 +2263,12 @@ export class Runner {
       result.license = license;
     }
 
+    const miscellaneous: Lib_NovaConfig_Runner_ParseRecipes_Miscellaneous = this.getMiscellaneousRecipes(value['miscellaneous']);
+
+    if (miscellaneous !== undefined) {
+      result.miscellaneous = miscellaneous;
+    }
+
     const readMe: Lib_NovaConfig_Runner_ParseRecipes_ReadMe = this.getRecipeEntries(value['read-me'], libItemRecipesByCategory['read-me']);
 
     if (readMe !== undefined) {
@@ -2256,6 +2282,149 @@ export class Runner {
     }
 
     return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get Miscellaneous Recipes.
+   *
+   * Validates the closed miscellaneous recipe map and delegates the operating-system
+   * cleanup entry to its platform-aware settings parser.
+   *
+   * @param {Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Returns}
+   *
+   * @since 0.32.0
+   */
+  private getMiscellaneousRecipes(value: Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Value): Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Returns {
+    if (value === undefined) {
+      return undefined;
+    }
+
+    if (isPlainObject(value) === false) {
+      this.pushError('Runner.getMiscellaneousRecipes', 'recipes', 'The "recipes.miscellaneous" field must be an object. Skipping ...');
+
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Result = {};
+
+    for (const valueKey of Object.keys(value)) {
+      const allowedName: Lib_NovaConfig_Runner_GetMiscellaneousRecipes_AllowedName = libItemRecipesByCategory['miscellaneous'].find((recipeName) => recipeName === valueKey);
+
+      if (allowedName === undefined) {
+        this.pushError('Runner.getMiscellaneousRecipes', 'recipes', `Unknown miscellaneous recipe "${valueKey}". Skipping ...`);
+      }
+    }
+
+    const entry: Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Entry = this.getOperatingSystemFileRecipeEntry(value['remove-operating-system-files']);
+
+    if (entry !== undefined) {
+      Reflect.set(result, 'remove-operating-system-files', entry);
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get Operating System File Recipe Entry.
+   *
+   * Accepts only Nova's reviewed platform and file-toggle names so cleanup settings
+   * cannot be expanded into arbitrary deletion patterns through configuration.
+   *
+   * @param {Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Returns}
+   *
+   * @since 0.32.0
+   */
+  private getOperatingSystemFileRecipeEntry(value: Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Value): Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Returns {
+    if (value === undefined) {
+      return undefined;
+    }
+
+    if (isPlainObject(value) === false) {
+      this.pushError('Runner.getOperatingSystemFileRecipeEntry', 'recipes', 'The "remove-operating-system-files" recipe entry must be an object. Skipping ...');
+
+      return undefined;
+    }
+
+    const enabled: Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Enabled = value['enabled'];
+
+    if (typeof enabled !== 'boolean') {
+      this.pushError('Runner.getOperatingSystemFileRecipeEntry', 'recipes', 'The "remove-operating-system-files.enabled" field must be a boolean. Skipping ...');
+
+      return undefined;
+    }
+
+    const result: Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Result = { enabled };
+    const settingsCandidate: Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_SettingsCandidate = value['settings'];
+
+    if (settingsCandidate === undefined) {
+      return result;
+    }
+
+    if (isPlainObject(settingsCandidate) === false) {
+      this.pushError('Runner.getOperatingSystemFileRecipeEntry', 'recipes', 'The "remove-operating-system-files.settings" field must be an object. Skipping ...');
+
+      return result;
+    }
+
+    const settings: Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Settings = {};
+    const platformCandidates: Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_PlatformCandidates = Object.keys(libItemOperatingSystemFilesByPlatform) as Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_PlatformCandidates;
+
+    for (const platformCandidate of Object.keys(settingsCandidate)) {
+      const platform: Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_Platform = platformCandidates.find((knownPlatform) => knownPlatform === platformCandidate);
+
+      if (platform === undefined) {
+        this.pushError('Runner.getOperatingSystemFileRecipeEntry', 'recipes', `Unknown operating-system group "${platformCandidate}". Skipping ...`);
+
+        continue;
+      }
+
+      const platformValue: Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_PlatformValue = settingsCandidate[platformCandidate];
+
+      if (isPlainObject(platformValue) === false) {
+        this.pushError('Runner.getOperatingSystemFileRecipeEntry', 'recipes', `The "${platformCandidate}" operating-system group must be an object. Skipping ...`);
+
+        continue;
+      }
+
+      const supportedFileNames: Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_SupportedFileNames = libItemOperatingSystemFilesByPlatform[platform];
+      const fileSettings: Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_FileSettings = {};
+
+      for (const fileNameCandidate of Object.keys(platformValue)) {
+        const fileName: Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_FileName = supportedFileNames.find((supportedFileName) => supportedFileName === fileNameCandidate);
+
+        if (fileName === undefined) {
+          this.pushError('Runner.getOperatingSystemFileRecipeEntry', 'recipes', `Unknown ${platform} operating-system file toggle "${fileNameCandidate}". Skipping ...`);
+
+          continue;
+        }
+
+        const fileValue: Lib_NovaConfig_Runner_GetOperatingSystemFileRecipeEntry_FileValue = platformValue[fileNameCandidate];
+
+        if (typeof fileValue !== 'boolean') {
+          this.pushError('Runner.getOperatingSystemFileRecipeEntry', 'recipes', `The ${platform} operating-system file toggle "${fileNameCandidate}" must be a boolean. Skipping ...`);
+
+          continue;
+        }
+
+        Reflect.set(fileSettings, fileName, fileValue);
+      }
+
+      Reflect.set(settings, platform, fileSettings);
+    }
+
+    if (Object.keys(settings).length > 0) {
+      result.settings = settings;
+    }
+
+    return result;
   }
 
   /**

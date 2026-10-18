@@ -187,9 +187,9 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 
 ### Recipes
 
-- **Purpose**: Configure all GitHub, license, README, and per-workspace `package.json` recipes from one category.
-- **Nice to know**: Each recipe has an `enabled` toggle. Recipes that expose additional boolean settings can edit their complete settings object through a validated prompt, including settings Nova adds in future releases.
-- **Things to watch**: `package-json` recipes are scoped by workspace path. The menu includes registered workspaces plus any existing recipe path, so temporarily unregistered paths are preserved and remain editable.
+- **Purpose**: Configure all GitHub, license, miscellaneous, README, and per-workspace `package.json` recipes from one category.
+- **Nice to know**: Each recipe has an `enabled` toggle. Generic recipe settings remain editable through a validated prompt, while closed recipes such as `remove-operating-system-files` present only Nova's reviewed platform and file choices.
+- **Things to watch**: `package-json` recipes are scoped by workspace path. The menu includes registered workspaces plus any existing recipe path, so temporarily unregistered paths are preserved and remain editable. Cleanup recipes do not accept arbitrary paths or patterns.
 
 ### Environment
 

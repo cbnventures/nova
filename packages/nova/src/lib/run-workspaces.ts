@@ -1,6 +1,5 @@
 import { spawn } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
-import { platform } from 'node:os';
 import { join, resolve } from 'node:path';
 
 import chalk from 'chalk';
@@ -118,9 +117,6 @@ import type {
   Lib_RunWorkspaces_Runner_GetDependencyNames_Names,
   Lib_RunWorkspaces_Runner_GetDependencyNames_PackageJson,
   Lib_RunWorkspaces_Runner_GetDependencyNames_Returns,
-  Lib_RunWorkspaces_Runner_GetPackageManagerCommand_CurrentPlatform,
-  Lib_RunWorkspaces_Runner_GetPackageManagerCommand_PackageManager,
-  Lib_RunWorkspaces_Runner_GetPackageManagerCommand_Returns,
   Lib_RunWorkspaces_Runner_GetScriptEnvironment_Environment,
   Lib_RunWorkspaces_Runner_GetScriptEnvironment_NodeEnv,
   Lib_RunWorkspaces_Runner_GetScriptEnvironment_Returns,
@@ -189,7 +185,6 @@ import type {
   Lib_RunWorkspaces_Runner_RunTask_Close_StderrPartial,
   Lib_RunWorkspaces_Runner_RunTask_Close_StdoutPartial,
   Lib_RunWorkspaces_Runner_RunTask_Close_Stream,
-  Lib_RunWorkspaces_Runner_RunTask_Command,
   Lib_RunWorkspaces_Runner_RunTask_CommandArguments,
   Lib_RunWorkspaces_Runner_RunTask_ContextDigest,
   Lib_RunWorkspaces_Runner_RunTask_Data_Returns,
@@ -214,6 +209,7 @@ import type {
   Lib_RunWorkspaces_Runner_RunTask_RootDirectory,
   Lib_RunWorkspaces_Runner_RunTask_ScriptArgs,
   Lib_RunWorkspaces_Runner_RunTask_Settled,
+  Lib_RunWorkspaces_Runner_RunTask_SpawnInvocation,
   Lib_RunWorkspaces_Runner_RunTask_State,
   Lib_RunWorkspaces_Runner_RunTask_StateDigest,
   Lib_RunWorkspaces_Runner_RunTask_StateDigests,
@@ -1222,7 +1218,6 @@ export class Runner {
       }
     }
 
-    const command: Lib_RunWorkspaces_Runner_RunTask_Command = Runner.getPackageManagerCommand(packageManager);
     const environment: Lib_RunWorkspaces_Runner_RunTask_Environment = Runner.getScriptEnvironment(nodeEnv);
     const commandArguments: Lib_RunWorkspaces_Runner_RunTask_CommandArguments = [
       'run',
@@ -1233,7 +1228,16 @@ export class Runner {
       commandArguments.push('--', ...scriptArgs);
     }
 
-    const child: Lib_RunWorkspaces_Runner_RunTask_Child = spawn(command, commandArguments, {
+    let spawnInvocation: Lib_RunWorkspaces_Runner_RunTask_SpawnInvocation = LibCorepack.resolveSpawnInvocation('npm', commandArguments);
+
+    if (packageManager !== 'npm') {
+      spawnInvocation = LibCorepack.resolveSpawnInvocation('corepack', [
+        packageManager,
+        ...commandArguments,
+      ]);
+    }
+
+    const child: Lib_RunWorkspaces_Runner_RunTask_Child = spawn(spawnInvocation['command'], spawnInvocation['commandArguments'], {
       cwd: task['directory'],
       env: environment,
       stdio: 'pipe',
@@ -1511,26 +1515,6 @@ export class Runner {
     }
 
     return undefined;
-  }
-
-  /**
-   * Lib - Run Workspaces - Get Package Manager Command.
-   *
-   * Resolves the executable name for the root's supported package manager.
-   * Windows receives the command-shim suffix required by child processes.
-   *
-   * @param {Lib_RunWorkspaces_Runner_GetPackageManagerCommand_PackageManager} packageManager - Package manager.
-   *
-   * @private
-   *
-   * @returns {Lib_RunWorkspaces_Runner_GetPackageManagerCommand_Returns}
-   *
-   * @since 0.32.0
-   */
-  private static getPackageManagerCommand(packageManager: Lib_RunWorkspaces_Runner_GetPackageManagerCommand_PackageManager): Lib_RunWorkspaces_Runner_GetPackageManagerCommand_Returns {
-    const currentPlatform: Lib_RunWorkspaces_Runner_GetPackageManagerCommand_CurrentPlatform = platform();
-
-    return (currentPlatform === 'win32') ? `${packageManager}.cmd` : packageManager;
   }
 
   /**

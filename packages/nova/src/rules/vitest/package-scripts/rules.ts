@@ -29,7 +29,7 @@ import type {
  *
  * @returns {Rules_Vitest_PackageScripts_Rules_CanonicalContract_Returns}
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export function canonicalContract(config: Rules_Vitest_PackageScripts_Rules_CanonicalContract_Config, enable: Rules_Vitest_PackageScripts_Rules_CanonicalContract_Enable): Rules_Vitest_PackageScripts_Rules_CanonicalContract_Returns {
   if (isEnabled('scripts-follow-canonical-contract', enable) === false) {

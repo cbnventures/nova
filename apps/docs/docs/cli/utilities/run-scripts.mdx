@@ -107,7 +107,7 @@ Pressing <kbd>Ctrl</kbd> + <kbd>C</kbd> in parallel mode stops every active chil
 
         ```bash title="Sequential build pipeline"
         # Original
-        nova utility run-scripts 'build:*' --sequential --node-env production
+        nova utility run-scripts "build:*" --sequential --node-env production
 
         # Shorthand
         nova util run-scr -s 'build:*' -n production
@@ -118,7 +118,7 @@ Pressing <kbd>Ctrl</kbd> + <kbd>C</kbd> in parallel mode stops every active chil
 
         ```bash title="Parallel dev watchers"
         # Original
-        nova utility run-scripts 'dev:*' --parallel --node-env development
+        nova utility run-scripts "dev:*" --parallel --node-env development
 
         # Shorthand
         nova util run-scr -p 'dev:*' -n development
@@ -133,7 +133,7 @@ Pressing <kbd>Ctrl</kbd> + <kbd>C</kbd> in parallel mode stops every active chil
 
         ```bash title="Sequential build pipeline"
         # Original
-        npx --yes @cbnventures/nova@latest utility run-scripts 'build:*' --sequential --node-env production
+        npx --yes @cbnventures/nova@latest utility run-scripts "build:*" --sequential --node-env production
 
         # Shorthand
         npx --yes @cbnventures/nova@latest util run-scr -s 'build:*' -n production
@@ -144,7 +144,7 @@ Pressing <kbd>Ctrl</kbd> + <kbd>C</kbd> in parallel mode stops every active chil
 
         ```bash title="Parallel dev watchers"
         # Original
-        npx --yes @cbnventures/nova@latest utility run-scripts 'dev:*' --parallel --node-env development
+        npx --yes @cbnventures/nova@latest utility run-scripts "dev:*" --parallel --node-env development
 
         # Shorthand
         npx --yes @cbnventures/nova@latest util run-scr -p 'dev:*' -n development
@@ -161,10 +161,10 @@ For users migrating from the [npm-run-all](https://github.com/mysticatea/npm-run
 
 | Command                                                                 | Equivalent                         | What It Does                                        |
 |-------------------------------------------------------------------------|------------------------------------|-----------------------------------------------------|
-| `nova utility run-scripts 'build:*' --sequential`                       | `npm-run-all --sequential build:*` | Run matched scripts one at a time.                  |
-| `nova utility run-scripts 'dev:*' --parallel`                           | `npm-run-all --parallel dev:*`     | Run matched scripts concurrently.                   |
-| `nova utility run-scripts 'dev:*' --parallel --buffer 200`              | —                                  | Run concurrently with 200 ms log flush interval.    |
-| `nova utility run-scripts 'build:*' --sequential --node-env production` | —                                  | Run sequentially with an explicit child `NODE_ENV`. |
+| `nova utility run-scripts "build:*" --sequential`                       | `npm-run-all --sequential build:*` | Run matched scripts one at a time.                  |
+| `nova utility run-scripts "dev:*" --parallel`                           | `npm-run-all --parallel dev:*`     | Run matched scripts concurrently.                   |
+| `nova utility run-scripts "dev:*" --parallel --buffer 200`              | —                                  | Run concurrently with 200 ms log flush interval.    |
+| `nova utility run-scripts "build:*" --sequential --node-env production` | —                                  | Run sequentially with an explicit child `NODE_ENV`. |
 
 After updating your `scripts` in `package.json`, `npm-run-all` can be removed from `devDependencies`.
 

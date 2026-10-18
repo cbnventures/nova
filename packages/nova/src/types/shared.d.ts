@@ -12,7 +12,9 @@ export type Shared_ActiveVitest_Factory = () => void | Promise<void>;
 
 export type Shared_ActiveVitest_Describe = (name: string, factory: Shared_ActiveVitest_Factory) => void;
 
-export type Shared_ActiveVitest_It = (name: string, factory: Shared_ActiveVitest_Factory) => void;
+export type Shared_ActiveVitest_It_Timeout = number;
+
+export type Shared_ActiveVitest_It = (name: string, factory: Shared_ActiveVitest_Factory, timeout?: Shared_ActiveVitest_It_Timeout) => void;
 
 export type Shared_ActiveVitest = {
   describe: Shared_ActiveVitest_Describe;
@@ -121,6 +123,17 @@ export type Shared_CorepackPackageManagerDescriptor = {
   name: Shared_CorepackPackageManagerDescriptor_Name;
   version: Shared_CorepackPackageManagerDescriptor_Version;
   value: Shared_CorepackPackageManagerDescriptor_Value;
+};
+
+export type Shared_CorepackCommand = 'corepack' | 'npm';
+
+export type Shared_CorepackSpawnInvocation_Command = string;
+
+export type Shared_CorepackSpawnInvocation_CommandArguments = string[];
+
+export type Shared_CorepackSpawnInvocation = {
+  command: Shared_CorepackSpawnInvocation_Command;
+  commandArguments: Shared_CorepackSpawnInvocation_CommandArguments;
 };
 
 /**
@@ -1624,6 +1637,53 @@ export type Shared_NovaConfig_RecipeEntry = {
   settings?: Shared_NovaConfig_RecipeEntry_Settings;
 };
 
+export type Shared_NovaConfigOperatingSystemFilePlatform = 'linux' | 'macos' | 'windows';
+
+export type Shared_NovaConfigOperatingSystemFileName =
+  'appleDouble'
+  | 'desktopServicesStore'
+  | 'enhancedThumbnailDatabase'
+  | 'enhancedVistaThumbnailDatabase'
+  | 'thumbnailDatabase';
+
+export type Shared_NovaConfigOperatingSystemFileSettings_Linux = Record<never, never>;
+
+export type Shared_NovaConfigOperatingSystemFileSettings_Macos_AppleDouble = boolean;
+
+export type Shared_NovaConfigOperatingSystemFileSettings_Macos_DesktopServicesStore = boolean;
+
+export type Shared_NovaConfigOperatingSystemFileSettings_Macos = {
+  appleDouble?: Shared_NovaConfigOperatingSystemFileSettings_Macos_AppleDouble;
+  desktopServicesStore?: Shared_NovaConfigOperatingSystemFileSettings_Macos_DesktopServicesStore;
+};
+
+export type Shared_NovaConfigOperatingSystemFileSettings_Windows_EnhancedThumbnailDatabase = boolean;
+
+export type Shared_NovaConfigOperatingSystemFileSettings_Windows_EnhancedVistaThumbnailDatabase = boolean;
+
+export type Shared_NovaConfigOperatingSystemFileSettings_Windows_ThumbnailDatabase = boolean;
+
+export type Shared_NovaConfigOperatingSystemFileSettings_Windows = {
+  enhancedThumbnailDatabase?: Shared_NovaConfigOperatingSystemFileSettings_Windows_EnhancedThumbnailDatabase;
+  enhancedVistaThumbnailDatabase?: Shared_NovaConfigOperatingSystemFileSettings_Windows_EnhancedVistaThumbnailDatabase;
+  thumbnailDatabase?: Shared_NovaConfigOperatingSystemFileSettings_Windows_ThumbnailDatabase;
+};
+
+export type Shared_NovaConfigOperatingSystemFileSettings = {
+  linux?: Shared_NovaConfigOperatingSystemFileSettings_Linux;
+  macos?: Shared_NovaConfigOperatingSystemFileSettings_Macos;
+  windows?: Shared_NovaConfigOperatingSystemFileSettings_Windows;
+};
+
+export type Shared_NovaConfigOperatingSystemFileRecipeEntry_Enabled = boolean;
+
+export type Shared_NovaConfigOperatingSystemFileRecipeEntry_Settings = Shared_NovaConfigOperatingSystemFileSettings;
+
+export type Shared_NovaConfigOperatingSystemFileRecipeEntry = {
+  enabled: Shared_NovaConfigOperatingSystemFileRecipeEntry_Enabled;
+  settings?: Shared_NovaConfigOperatingSystemFileRecipeEntry_Settings;
+};
+
 export type Shared_NovaConfig_Recipes_Github = {
   [K in Shared_NovaConfigGithubRecipeName]?: Shared_NovaConfig_RecipeEntry;
 };
@@ -1632,6 +1692,12 @@ export type Shared_NovaConfigLicenseRecipeName = 'update-copyright';
 
 export type Shared_NovaConfig_Recipes_License = {
   [K in Shared_NovaConfigLicenseRecipeName]?: Shared_NovaConfig_RecipeEntry;
+};
+
+export type Shared_NovaConfigMiscellaneousRecipeName = 'remove-operating-system-files';
+
+export type Shared_NovaConfig_Recipes_Miscellaneous = {
+  [K in Shared_NovaConfigMiscellaneousRecipeName]?: Shared_NovaConfigOperatingSystemFileRecipeEntry;
 };
 
 export type Shared_NovaConfigReadMeRecipeName =
@@ -1656,6 +1722,7 @@ export type Shared_NovaConfig_Recipes_PackageJson = {
 export type Shared_NovaConfig_Recipes = {
   'github'?: Shared_NovaConfig_Recipes_Github;
   'license'?: Shared_NovaConfig_Recipes_License;
+  'miscellaneous'?: Shared_NovaConfig_Recipes_Miscellaneous;
   'read-me'?: Shared_NovaConfig_Recipes_ReadMe;
   'package-json'?: Shared_NovaConfig_Recipes_PackageJson;
 };

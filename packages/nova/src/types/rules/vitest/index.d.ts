@@ -270,7 +270,7 @@ export type Rules_Vitest_Index_MarkdownTableToggleKey = 'tables-match-markdownta
 /**
  * Rules - Vitest - Index - Package Scripts Resolved Config.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Rules_Vitest_Index_PackageScriptsResolvedConfig_RootDir = string;
 
@@ -293,7 +293,7 @@ export type Rules_Vitest_Index_PackageScriptsResolvedConfig = {
 /**
  * Rules - Vitest - Index - Package Scripts Suite Config.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Rules_Vitest_Index_PackageScriptsSuiteConfig_Vitest = Shared_ActiveVitest;
 
@@ -319,7 +319,7 @@ export type Rules_Vitest_Index_PackageScriptsSuiteConfig = {
 /**
  * Rules - Vitest - Index - Package Scripts Toggle Key.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Rules_Vitest_Index_PackageScriptsToggleKey = 'scripts-follow-canonical-contract';
 

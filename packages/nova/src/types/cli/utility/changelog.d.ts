@@ -218,11 +218,23 @@ export type Cli_Utility_Changelog_Runner_Release_FilterFreezableWorkspaceConfig 
 
 export type Cli_Utility_Changelog_Runner_Release_FilterFreezableWorkspacePolicy = Shared_NovaConfigWorkspace['policy'];
 
-export type Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspacePath = string;
+export type Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePath = string;
 
-export type Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspaceDirectory = string;
+export type Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePolicy = Shared_NovaConfigWorkspace['policy'];
 
-export type Cli_Utility_Changelog_Runner_Release_EmptyFreezableStampSucceeded = boolean;
+export type Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceStampVersion = string;
+
+export type Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePackageJsonPath = string;
+
+export type Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePackageJsonRaw = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceParsedPackageJson = Record<string, unknown> | undefined;
+
+export type Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceCurrentVersion = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceStampSucceeded = boolean;
 
 export type Cli_Utility_Changelog_Runner_Release_Groups = Map<Shared_ChangelogEntry_Package, Shared_ChangelogEntry[]>;
 

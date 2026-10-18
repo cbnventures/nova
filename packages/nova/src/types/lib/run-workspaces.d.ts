@@ -6,6 +6,7 @@ import type { Runner as LibNovaConfig } from '../../lib/nova-config.js';
 
 import type {
   Shared_CorepackPackageManager,
+  Shared_CorepackSpawnInvocation,
   Shared_NovaConfigConfig,
   Shared_NovaConfigSettings_RunWorkspacesCache,
   Shared_NovaConfigWorkspace,
@@ -293,17 +294,6 @@ export type Lib_RunWorkspaces_Runner_GetDependencyNames_Names = Set<string>;
 export type Lib_RunWorkspaces_Runner_GetDependencyNames_FieldValue = unknown;
 
 /**
- * Lib - Run Workspaces - Get Package Manager Command.
- *
- * @since 0.32.0
- */
-export type Lib_RunWorkspaces_Runner_GetPackageManagerCommand_PackageManager = Shared_CorepackPackageManager;
-
-export type Lib_RunWorkspaces_Runner_GetPackageManagerCommand_Returns = string;
-
-export type Lib_RunWorkspaces_Runner_GetPackageManagerCommand_CurrentPlatform = NodeJS.Platform;
-
-/**
  * Lib - Run Workspaces - Get Script Environment.
  *
  * @since 0.32.0
@@ -536,11 +526,11 @@ export type Lib_RunWorkspaces_Runner_RunTask_ContextDigest = string | undefined;
 
 export type Lib_RunWorkspaces_Runner_RunTask_CacheRecord = Shared_RunWorkspacesCacheRecord | undefined;
 
-export type Lib_RunWorkspaces_Runner_RunTask_Command = string;
-
 export type Lib_RunWorkspaces_Runner_RunTask_Environment = NodeJS.ProcessEnv;
 
 export type Lib_RunWorkspaces_Runner_RunTask_CommandArguments = string[];
+
+export type Lib_RunWorkspaces_Runner_RunTask_SpawnInvocation = Shared_CorepackSpawnInvocation;
 
 export type Lib_RunWorkspaces_Runner_RunTask_Child = ChildProcessWithoutNullStreams;
 

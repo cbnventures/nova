@@ -126,9 +126,15 @@ import type {
   Cli_Utility_Changelog_Runner_Release_ConfirmOutputValue,
   Cli_Utility_Changelog_Runner_Release_CurrentDirectory,
   Cli_Utility_Changelog_Runner_Release_CurrentVersion,
-  Cli_Utility_Changelog_Runner_Release_EmptyFreezableStampSucceeded,
-  Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspaceDirectory,
-  Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspacePath,
+  Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceCurrentVersion,
+  Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceDirectory,
+  Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePackageJsonPath,
+  Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePackageJsonRaw,
+  Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceParsedPackageJson,
+  Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePath,
+  Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePolicy,
+  Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceStampSucceeded,
+  Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceStampVersion,
   Cli_Utility_Changelog_Runner_Release_Entries,
   Cli_Utility_Changelog_Runner_Release_Existing,
   Cli_Utility_Changelog_Runner_Release_FilterFreezableWorkspaceConfig,
@@ -831,12 +837,80 @@ export class Runner {
 
     if (entries.length === 0) {
       if (isDryRun !== true) {
-        for (const freezableWorkspace of freezableWorkspaces) {
-          const emptyFreezableWorkspacePath: Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspacePath = freezableWorkspace[0];
-          const emptyFreezableWorkspaceDirectory: Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspaceDirectory = resolve(process.cwd(), emptyFreezableWorkspacePath);
-          const emptyFreezableStampSucceeded: Cli_Utility_Changelog_Runner_Release_EmptyFreezableStampSucceeded = await Runner.stampUnreleased(emptyFreezableWorkspaceDirectory, '0.0.0');
+        for (const emptyWorkspace of Object.entries(workspaces)) {
+          const emptyWorkspacePath: Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePath = emptyWorkspace[0];
+          const emptyWorkspacePolicy: Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePolicy = emptyWorkspace[1]['policy'];
+          const emptyWorkspaceDirectory: Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceDirectory = resolve(process.cwd(), emptyWorkspacePath);
+          let emptyWorkspaceStampVersion: Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceStampVersion = '0.0.0';
 
-          if (emptyFreezableStampSucceeded === false) {
+          if (emptyWorkspacePolicy !== 'freezable') {
+            const emptyWorkspacePackageJsonPath: Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePackageJsonPath = join(emptyWorkspaceDirectory, 'package.json');
+            let emptyWorkspacePackageJsonRaw: Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePackageJsonRaw = undefined;
+
+            try {
+              emptyWorkspacePackageJsonRaw = await fs.readFile(emptyWorkspacePackageJsonPath, 'utf-8');
+            } catch {
+              Logger.customize({
+                name: 'Runner.release',
+                purpose: 'readPackageJson',
+              }).error(`Unable to read "${emptyWorkspacePackageJsonPath}".`);
+
+              process.exitCode = 1;
+
+              return;
+            }
+
+            let emptyWorkspaceParsedPackageJson: Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceParsedPackageJson = undefined;
+
+            try {
+              emptyWorkspaceParsedPackageJson = JSON.parse(emptyWorkspacePackageJsonRaw);
+            } catch {
+              Logger.customize({
+                name: 'Runner.release',
+                purpose: 'parsePackageJson',
+              }).error(`Unable to parse "${emptyWorkspacePackageJsonPath}".`);
+
+              process.exitCode = 1;
+
+              return;
+            }
+
+            const emptyWorkspaceCurrentVersion: Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceCurrentVersion = (
+              emptyWorkspaceParsedPackageJson !== undefined
+              && emptyWorkspaceParsedPackageJson !== null
+              && typeof emptyWorkspaceParsedPackageJson['version'] === 'string'
+            ) ? emptyWorkspaceParsedPackageJson['version'] : undefined;
+
+            if (emptyWorkspaceCurrentVersion === undefined) {
+              Logger.customize({
+                name: 'Runner.release',
+                purpose: 'version',
+              }).error(`No "version" field found in "${emptyWorkspacePackageJsonPath}".`);
+
+              process.exitCode = 1;
+
+              return;
+            }
+
+            try {
+              Runner.validateVersion(emptyWorkspaceCurrentVersion, versionStrategy, emptyWorkspacePackageJsonPath);
+            } catch (error) {
+              Logger.customize({
+                name: 'Runner.release',
+                purpose: 'version',
+              }).error((error instanceof Error) ? error.message : `Unable to validate the version in "${emptyWorkspacePackageJsonPath}".`);
+
+              process.exitCode = 1;
+
+              return;
+            }
+
+            emptyWorkspaceStampVersion = emptyWorkspaceCurrentVersion;
+          }
+
+          const emptyWorkspaceStampSucceeded: Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceStampSucceeded = await Runner.stampUnreleased(emptyWorkspaceDirectory, emptyWorkspaceStampVersion);
+
+          if (emptyWorkspaceStampSucceeded === false) {
             process.exitCode = 1;
 
             return;

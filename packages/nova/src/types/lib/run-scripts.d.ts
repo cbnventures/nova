@@ -1,19 +1,13 @@
 import type { ChildProcess, ChildProcessWithoutNullStreams } from 'node:child_process';
 
 import type {
+  Shared_CorepackSpawnInvocation,
   Shared_RunScriptsOptions_Buffer,
   Shared_RunScriptsOptions_NodeEnv,
   Shared_RunScriptsOptions_Parallel,
   Shared_RunScriptsOptions_Pattern,
   Shared_RunScriptsOptions_Sequential,
 } from '../shared.d.ts';
-
-/**
- * Lib - Run Scripts - Get npm Command.
- *
- * @since 0.26.0
- */
-export type Lib_RunScripts_Runner_GetNpmCommand_Returns = string;
 
 /**
  * Lib - Run Scripts - Get Script Environment.
@@ -129,8 +123,6 @@ export type Lib_RunScripts_Runner_RunParallel_Result = 'completed' | 'failed' | 
 
 export type Lib_RunScripts_Runner_RunParallel_Returns = Promise<Lib_RunScripts_Runner_RunParallel_Result>;
 
-export type Lib_RunScripts_Runner_RunParallel_NpmCommand = string;
-
 export type Lib_RunScripts_Runner_RunParallel_ScriptEnvironment = NodeJS.ProcessEnv;
 
 export type Lib_RunScripts_Runner_RunParallel_ColorFunctions = ((text: string) => string)[];
@@ -179,6 +171,8 @@ export type Lib_RunScripts_Runner_RunParallel_InterruptionState = {
 };
 
 export type Lib_RunScripts_Runner_RunParallel_FlushQueue = () => Lib_RunScripts_Runner_RunParallel_FlushQueue_Returns;
+
+export type Lib_RunScripts_Runner_RunParallel_SpawnInvocation = Shared_CorepackSpawnInvocation;
 
 export type Lib_RunScripts_Runner_RunParallel_Child = ChildProcessWithoutNullStreams;
 
@@ -301,7 +295,7 @@ export type Lib_RunScripts_Runner_SpawnScript_NodeEnv = 'development' | 'product
 
 export type Lib_RunScripts_Runner_SpawnScript_Returns = Promise<number>;
 
-export type Lib_RunScripts_Runner_SpawnScript_NpmCommand = string;
+export type Lib_RunScripts_Runner_SpawnScript_SpawnInvocation = Shared_CorepackSpawnInvocation;
 
 export type Lib_RunScripts_Runner_SpawnScript_Child = ChildProcess;
 

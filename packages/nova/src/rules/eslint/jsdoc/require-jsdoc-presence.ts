@@ -16,6 +16,7 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocPresence_Runner_Create_FunctionDeclaration_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocPresence_Runner_Create_MethodDefinition_Node,
   Rules_Eslint_Jsdoc_RequireJsdocPresence_Runner_Create_MethodDefinition_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocPresence_Runner_Create_NormalizedFilename,
   Rules_Eslint_Jsdoc_RequireJsdocPresence_Runner_Create_Options,
   Rules_Eslint_Jsdoc_RequireJsdocPresence_Runner_Create_PropertyDefinition_Node,
   Rules_Eslint_Jsdoc_RequireJsdocPresence_Runner_Create_PropertyDefinition_Returns,
@@ -85,6 +86,7 @@ export class Runner {
     }],
     create(context, defaultOptions) {
       const options: Rules_Eslint_Jsdoc_RequireJsdocPresence_Runner_Create_Options = defaultOptions[0];
+      const normalizedFilename: Rules_Eslint_Jsdoc_RequireJsdocPresence_Runner_Create_NormalizedFilename = context.filename.replaceAll('\\', '/');
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -93,13 +95,13 @@ export class Runner {
 
       // Skip files in configured directories.
       for (const skipDirectory of options['skipDirectories']) {
-        if (context.filename.includes(`/${skipDirectory}/`) === true) {
+        if (normalizedFilename.includes(`/${skipDirectory}/`) === true) {
           return {};
         }
       }
 
       // Skip .d.ts declaration files; their type aliases use the section-header convention, not per-symbol JSDoc.
-      if (context.filename.endsWith('.d.ts') === true) {
+      if (normalizedFilename.endsWith('.d.ts') === true) {
         return {};
       }
 

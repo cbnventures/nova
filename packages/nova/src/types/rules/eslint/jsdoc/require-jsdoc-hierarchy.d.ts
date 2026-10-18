@@ -331,6 +331,8 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Opti
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Returns = string;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_NormalizedFilename = string;
+
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_Parts = ReadonlyArray<string>;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DeriveHierarchy_LastSlashIndex = number;
@@ -389,6 +391,8 @@ export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_File
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Options = Shared_JsdocHierarchyCreateOptions;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_Returns = ReadonlyArray<string>;
+
+export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_NormalizedFilename = string;
 
 export type Rules_Eslint_Jsdoc_RequireJsdocHierarchy_Runner_DerivePathParts_SrcIndex = number;
 

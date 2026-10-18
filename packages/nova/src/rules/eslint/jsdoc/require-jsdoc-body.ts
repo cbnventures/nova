@@ -20,6 +20,7 @@ import type {
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Trimmed,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_WidthTrimmed,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_NormalizedFilename,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Program_Returns,
   Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsDiamond,
@@ -105,6 +106,7 @@ export class Runner {
     }],
     create(context, defaultOptions) {
       const options: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_Options = defaultOptions[0];
+      const normalizedFilename: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_Create_NormalizedFilename = context.filename.replaceAll('\\', '/');
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -113,7 +115,7 @@ export class Runner {
 
       // Skip files in configured directories.
       for (const skipDirectory of options['skipDirectories']) {
-        if (context.filename.includes(`/${skipDirectory}/`) === true) {
+        if (normalizedFilename.includes(`/${skipDirectory}/`) === true) {
           return {};
         }
       }

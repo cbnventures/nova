@@ -52,7 +52,7 @@ vi.mock('prompts', () => {
 /**
  * Tests - CLI - Scaffold - Tool - Serverless - Run.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 describe.sequential('CliScaffoldToolServerless.run', async () => {
   const originalCwd: Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_OriginalCwd = process.cwd();

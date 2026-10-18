@@ -15,7 +15,7 @@ import type {
  * Selects the serverless platform without exposing separate public scaffolds
  * for each provider.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export const cliScaffoldToolServerlessTemplateQuestions: Cli_Scaffold_Tool_Serverless_TemplateQuestions = [{
   choices: [
@@ -48,7 +48,7 @@ export const cliScaffoldToolServerlessTemplateQuestions: Cli_Scaffold_Tool_Serve
  *
  * @returns {Cli_Scaffold_Tool_Serverless_ResolveWorkspaceTemplateSubpaths_Returns}
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 function resolveWorkspaceTemplateSubpaths(answers: Cli_Scaffold_Tool_Serverless_ResolveWorkspaceTemplateSubpaths_Answers): Cli_Scaffold_Tool_Serverless_ResolveWorkspaceTemplateSubpaths_Returns {
   return [
@@ -63,7 +63,7 @@ function resolveWorkspaceTemplateSubpaths(answers: Cli_Scaffold_Tool_Serverless_
  * Scaffolds a distributable Node.js CLI paired with a user-deployed serverless
  * service on one explicitly selected platform.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export class Runner {
   /**
@@ -76,7 +76,7 @@ export class Runner {
    *
    * @returns {Cli_Scaffold_Tool_Serverless_Runner_Run_Returns}
    *
-   * @since UNRELEASED
+   * @since 0.32.0
    */
   public static async run(options: Cli_Scaffold_Tool_Serverless_Runner_Run_Options): Cli_Scaffold_Tool_Serverless_Runner_Run_Returns {
     await runScaffold(options, {

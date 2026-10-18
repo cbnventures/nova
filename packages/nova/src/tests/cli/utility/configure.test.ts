@@ -105,6 +105,12 @@ import type {
   Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_PromptIgnoreFiles,
   Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Responses,
   Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Result,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Config,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Next,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_PromptRecipes,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Recipes,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Responses,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Result,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Config,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_GithubRecipes,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Next,
@@ -377,6 +383,23 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
       'update-copyright': {
         enabled: 'promptRecipeEntries',
         settings: { $entry: 'promptRecipeEntries' },
+      },
+    },
+    'miscellaneous': {
+      'remove-operating-system-files': {
+        enabled: 'promptMiscellaneousRecipes',
+        settings: {
+          linux: {},
+          macos: {
+            appleDouble: 'promptMiscellaneousRecipes',
+            desktopServicesStore: 'promptMiscellaneousRecipes',
+          },
+          windows: {
+            enhancedThumbnailDatabase: 'promptMiscellaneousRecipes',
+            enhancedVistaThumbnailDatabase: 'promptMiscellaneousRecipes',
+            thumbnailDatabase: 'promptMiscellaneousRecipes',
+          },
+        },
       },
     },
     'read-me': {
@@ -1477,6 +1500,49 @@ describe('prompt ignore files', () => {
  * @since 0.32.0
  */
 describe('prompt recipes', () => {
+  it('edits closed operating-system cleanup settings', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Responses = [
+      { target: 'miscellaneous' },
+      { enabled: true },
+      { fileNames: ['appleDouble'] },
+      { fileNames: ['thumbnailDatabase'] },
+      { target: 'back' },
+    ];
+
+    vi.mocked(prompts).mockImplementation(() => {
+      const next: Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Config = {};
+    const promptRecipes: Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_PromptRecipes = Reflect.get(CliUtilityConfigure, 'promptRecipes') as Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_PromptRecipes;
+    const result: Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Result = await promptRecipes(config);
+    const recipes: Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Recipes = config['recipes'];
+
+    strictEqual(result, 'back');
+    ok(recipes !== undefined);
+    deepStrictEqual(recipes['miscellaneous'], {
+      'remove-operating-system-files': {
+        enabled: true,
+        settings: {
+          linux: {},
+          macos: {
+            appleDouble: true,
+            desktopServicesStore: false,
+          },
+          windows: {
+            enhancedThumbnailDatabase: false,
+            enhancedVistaThumbnailDatabase: false,
+            thumbnailDatabase: true,
+          },
+        },
+      },
+    });
+
+    return;
+  });
+
   it('edits recipe settings without dropping other categories', async () => {
     const responses: Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Responses = [
       { target: 'github' },

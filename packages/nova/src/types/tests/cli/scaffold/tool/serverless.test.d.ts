@@ -3,7 +3,7 @@ import type { vi } from 'vitest';
 /**
  * Tests - CLI - Scaffold - Tool - Serverless - Run.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_OriginalCwd = string;
 
@@ -16,7 +16,7 @@ export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_Sand
 /**
  * Tests - CLI - Scaffold - Tool - Serverless - Run - Creates The Default Cloudflare Workers Target As A Distributable Tool.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheDefaultCloudflareWorkersTargetAsADistributableTool_OutputPath = string;
 
@@ -47,7 +47,7 @@ export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_Crea
 /**
  * Tests - CLI - Scaffold - Tool - Serverless - Run - Creates The Vercel Functions Target Without Cloudflare Files.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_CreatesTheVercelFunctionsTargetWithoutCloudflareFiles_OutputPath = string;
 
@@ -62,7 +62,7 @@ export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_Crea
 /**
  * Tests - CLI - Scaffold - Tool - Serverless - Run - Rejects An Invalid Target Before Writing.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_RejectsAnInvalidTargetBeforeWriting_OutputPath = string;
 
@@ -71,7 +71,7 @@ export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_Reje
 /**
  * Tests - CLI - Scaffold - Tool - Serverless - Run - Resolves The Target Interactively Before Confirming The Scaffold.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_ResolvesTheTargetInteractivelyBeforeConfirmingTheScaffold_OutputPath = string;
 
@@ -80,7 +80,7 @@ export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_Reso
 /**
  * Tests - CLI - Scaffold - Tool - Serverless - Run - Validates Dry Run Without Writing.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_ValidatesDryRunWithoutWriting_OutputPath = string;
 
@@ -89,7 +89,7 @@ export type Tests_Cli_Scaffold_Tool_Serverless_CliScaffoldToolServerlessRun_Vali
 /**
  * Tests - CLI - Scaffold - Tool - Serverless - Prompts Mock Module.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Cli_Scaffold_Tool_Serverless_Prompts_MockModule_Default = ReturnType<typeof vi['fn']>;
 

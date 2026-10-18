@@ -1,7 +1,7 @@
 /**
  * Tests - Lib - Package Scripts - Lib Package Scripts - Accepts A Complete Ordered Root Contract And Distinct Project Commands.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Lib_PackageScripts_LibPackageScripts_AcceptsACompleteOrderedRootContractAndDistinctProjectCommands_Input = Record<string, unknown>;
 
@@ -10,7 +10,7 @@ export type Tests_Lib_PackageScripts_LibPackageScripts_AcceptsACompleteOrderedRo
 /**
  * Tests - Lib - Package Scripts - Lib Package Scripts - Orders Command Families Authored Children Hooks Custom Commands And Npm Lifecycle Scripts.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Lib_PackageScripts_LibPackageScripts_OrdersCommandFamiliesAuthoredChildrenHooksCustomCommandsAndNpmLifecycleScripts_Input = Record<string, unknown>;
 
@@ -19,7 +19,7 @@ export type Tests_Lib_PackageScripts_LibPackageScripts_OrdersCommandFamiliesAuth
 /**
  * Tests - Lib - Package Scripts - Lib Package Scripts - Reports Ambiguous Missing Recursive And Out Of Order Script Structures.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Lib_PackageScripts_LibPackageScripts_ReportsAmbiguousMissingRecursiveAndOutOfOrderScriptStructures_ForbiddenScriptsInput = Record<string, string>;
 

@@ -72,13 +72,13 @@
   },
   "private": false,
   "scripts": {
-    "dev": "node ../../scripts/nova-run-scripts.mjs --parallel --node-env development 'dev:*'",
+    "dev": "node ../../scripts/nova-run-scripts.mjs --parallel --node-env development \"dev:*\"",
     "dev:watch-plugin": "node ../../scripts/nova-transpile.mjs --project tsconfig.plugin.json --watch",
     "dev:watch-styles": "node ../../scripts/copy-styles.mjs --watch",
     "dev:watch-theme": "node ../../scripts/nova-transpile.mjs --project tsconfig.theme.json --watch",
     "dev:watch-cli": "node ../../scripts/nova-transpile.mjs --project tsconfig.cli.json --watch",
     "dev:fix-shiki-import": "node ../../scripts/fix-shiki-import.mjs --watch",
-    "check": "node ../../scripts/nova-run-scripts.mjs --sequential 'check:*'",
+    "check": "node ../../scripts/nova-run-scripts.mjs --sequential \"check:*\"",
     "check:lint": "eslint ./ --max-warnings=0",
     "check:types-plugin": "node ../../scripts/nova-type-check.mjs --project tsconfig.plugin.json",
     "check:types-theme": "node ../../scripts/nova-type-check.mjs --project tsconfig.theme.json",
@@ -86,7 +86,7 @@
     "check:types-cli": "node ../../scripts/nova-type-check.mjs --project tsconfig.cli.json",
     "check:types-config": "node ../../scripts/nova-type-check.mjs --project tsconfig.config.json",
     "check:test": "vitest run",
-    "build": "node ../../scripts/nova-run-scripts.mjs --sequential --node-env production 'build:*'",
+    "build": "node ../../scripts/nova-run-scripts.mjs --sequential --node-env production \"build:*\"",
     "build:transpile-theme": "node ../../scripts/nova-transpile.mjs --project tsconfig.theme.json",
     "build:transpile-plugin": "node ../../scripts/nova-transpile.mjs --project tsconfig.plugin.json",
     "build:transpile-worker": "node ../../scripts/nova-transpile.mjs --project tsconfig.worker.json",
@@ -95,7 +95,7 @@
     "build:fix-shiki-import": "node ../../scripts/fix-shiki-import.mjs",
     "build:copy-styles": "node ../../scripts/copy-styles.mjs",
     "build:fix-perms": "shx chmod +x ./build/src/cli/index.js",
-    "clean": "node ../../scripts/nova-run-scripts.mjs --parallel 'clean:*'",
+    "clean": "node ../../scripts/nova-run-scripts.mjs --parallel \"clean:*\"",
     "clean:build": "shx rm -rf ./build"
   },
   "engines": {

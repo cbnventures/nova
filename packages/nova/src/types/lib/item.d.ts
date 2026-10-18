@@ -6,6 +6,9 @@ import type {
   Shared_NovaConfigEntityRole,
   Shared_NovaConfigGithubRecipeName,
   Shared_NovaConfigLicenseRecipeName,
+  Shared_NovaConfigMiscellaneousRecipeName,
+  Shared_NovaConfigOperatingSystemFileName,
+  Shared_NovaConfigOperatingSystemFilePlatform,
   Shared_NovaConfigReadMeRecipeName,
   Shared_NovaConfigWorkspace_Policy,
   Shared_NovaConfigWorkspace_Role,
@@ -57,6 +60,8 @@ export type Lib_Item_RecipesByCategory_Github = readonly Shared_NovaConfigGithub
 
 export type Lib_Item_RecipesByCategory_License = readonly Shared_NovaConfigLicenseRecipeName[];
 
+export type Lib_Item_RecipesByCategory_Miscellaneous = readonly Shared_NovaConfigMiscellaneousRecipeName[];
+
 export type Lib_Item_RecipesByCategory_ReadMe = readonly Shared_NovaConfigReadMeRecipeName[];
 
 export type Lib_Item_RecipesByCategory_PackageJson = readonly Shared_NovaConfigWorkspaceRecipeName[];
@@ -64,8 +69,27 @@ export type Lib_Item_RecipesByCategory_PackageJson = readonly Shared_NovaConfigW
 export type Lib_Item_RecipesByCategory = {
   'github': Lib_Item_RecipesByCategory_Github;
   'license': Lib_Item_RecipesByCategory_License;
+  'miscellaneous': Lib_Item_RecipesByCategory_Miscellaneous;
   'read-me': Lib_Item_RecipesByCategory_ReadMe;
   'package-json': Lib_Item_RecipesByCategory_PackageJson;
+};
+
+/**
+ * Lib - Item - Operating System Files By Platform.
+ *
+ * @since 0.32.0
+ */
+export type Lib_Item_OperatingSystemFilesByPlatform = {
+  [K in Shared_NovaConfigOperatingSystemFilePlatform]: readonly Shared_NovaConfigOperatingSystemFileName[];
+};
+
+/**
+ * Lib - Item - Operating System File Patterns.
+ *
+ * @since 0.32.0
+ */
+export type Lib_Item_OperatingSystemFilePatterns = {
+  [K in Shared_NovaConfigOperatingSystemFileName]: string;
 };
 
 /**

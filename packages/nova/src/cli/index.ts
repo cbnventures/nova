@@ -28,6 +28,7 @@ import { Runner as CliRecipeGithubSyncRulesets } from './recipe/github/sync-rule
 import { Runner as CliRecipeGithubSyncSecurity } from './recipe/github/sync-security.js';
 import { Runner as CliRecipeLicenseUpdateCopyright } from './recipe/license/update-copyright.js';
 import { Runner as CliRecipeMiscellaneousFixMarkdownTables } from './recipe/miscellaneous/fix-markdown-tables.js';
+import { Runner as CliRecipeMiscellaneousRemoveOperatingSystemFiles } from './recipe/miscellaneous/remove-operating-system-files.js';
 import { Runner as CliRecipePackageJsonCleanup } from './recipe/package-json/cleanup.js';
 import { Runner as CliRecipePackageJsonNormalizeArtifacts } from './recipe/package-json/normalize-artifacts.js';
 import { Runner as CliRecipePackageJsonNormalizeBundler } from './recipe/package-json/normalize-bundler.js';
@@ -670,12 +671,25 @@ class CLI {
 
     recipeMiscellaneous
       .command('fix-markdown-tables')
+      .alias('fix-md-tables')
       .usage('[options]')
       .description('Format Markdown and MDX tables across the project')
       .option('-c, --check', 'Report formatting drift without writing files')
       .option('-d, --dry-run', 'Preview formatting changes without writing files')
       .action(async (options, command) => {
         await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeMiscellaneousFixMarkdownTables['run']);
+
+        return;
+      });
+
+    recipeMiscellaneous
+      .command('remove-operating-system-files')
+      .alias('remove-os-files')
+      .usage('[options]')
+      .description('Remove enabled operating-system artifacts without touching tracked files')
+      .option('-d, --dry-run', 'Preview matching files without removing them')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeMiscellaneousRemoveOperatingSystemFiles['run']);
 
         return;
       });

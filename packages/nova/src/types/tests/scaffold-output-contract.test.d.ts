@@ -220,6 +220,16 @@ export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJ
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJson = Record<string, unknown>;
 
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedNovaConfigPath = string;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedNovaConfigRaw = string;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedNovaConfig = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRecipes = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedMiscellaneousRecipes = Record<string, unknown>;
+
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDependencies = Record<string, unknown>;
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies = Record<string, unknown>;

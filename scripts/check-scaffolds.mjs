@@ -14,11 +14,28 @@ import {
   writeFileSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import {
+  join,
+  win32,
+} from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 import { ensureDockerEngine } from './lib/docker-engine.mjs';
 import { verifyBundlerLoad } from './lib/verify-scaffold-install.mjs';
+
+/**
+ * Check Scaffolds - Corepack Invocation.
+ *
+ * Describes one Corepack process launch.
+ * Arguments remain separate from every command shell.
+ *
+ * @typedef {{
+ *   command: string,
+ *   commandArguments: string[],
+ * }} CheckScaffoldsCorepackInvocation
+ *
+ * @since 0.0.0
+ */
 
 /**
  * Check Scaffolds - Find Tarball.
@@ -90,6 +107,35 @@ function runCommand(command, args, cwd) {
 }
 
 /**
+ * Check Scaffolds - Resolve Corepack Invocation.
+ *
+ * Keeps POSIX execution direct while bypassing Windows command shims through
+ * Corepack's JavaScript entry point and the active Node.js executable.
+ *
+ * @param {string[]} args - Args.
+ *
+ * @returns {CheckScaffoldsCorepackInvocation}
+ *
+ * @since 0.0.0
+ */
+function resolveCorepackInvocation(args) {
+  if (process.platform !== 'win32') {
+    return {
+      command: 'corepack',
+      commandArguments: args,
+    };
+  }
+
+  return {
+    command: process.execPath,
+    commandArguments: [
+      win32.join(win32.dirname(process.execPath), 'node_modules', 'corepack', 'dist', 'corepack.js'),
+      ...args,
+    ],
+  };
+}
+
+/**
  * Check Scaffolds - Expect Command Failure.
  *
  * Runs an invalid consumer command and verifies the installed CLI rejects it
@@ -125,6 +171,31 @@ function expectCommandFailure(command, args, cwd, expectedMessage) {
 }
 
 /**
+ * Check Scaffolds - Expect npm Command Failure.
+ *
+ * Executes one installed package command through npm so Windows consumers do
+ * not ask Node.js to launch a generated `.cmd` shim directly.
+ *
+ * @param {string[]} args            - Args.
+ * @param {string}   cwd             - Cwd.
+ * @param {string}   expectedMessage - Expected message.
+ *
+ * @returns {void}
+ *
+ * @since 0.0.0
+ */
+function expectNpmCommandFailure(args, cwd, expectedMessage) {
+  const invocation = resolveCorepackInvocation([
+    'npm',
+    ...args,
+  ]);
+
+  expectCommandFailure(invocation['command'], invocation['commandArguments'], cwd, expectedMessage);
+
+  return;
+}
+
+/**
  * Check Scaffolds - Verify Node CLI Runtime.
  *
  * Exercises the built scaffolded executable across its normal, help, version,
@@ -140,7 +211,6 @@ function expectCommandFailure(command, args, cwd, expectedMessage) {
  * @since 0.0.0
  */
 function verifyNodeCliRuntime(projectDirectory, workspaceName, workspacePackageName = workspaceName) {
-  const cliDirectory = join(projectDirectory, 'packages', workspaceName);
   const cliExecutable = (process.platform === 'win32') ? `${workspaceName}.cmd` : workspaceName;
   const cliPath = join(projectDirectory, 'node_modules', '.bin', cliExecutable);
 
@@ -148,7 +218,18 @@ function verifyNodeCliRuntime(projectDirectory, workspaceName, workspacePackageN
     throw new Error('The generated Node CLI should be linked into node_modules/.bin during installation.');
   }
 
-  const statusOutput = readCommandOutput(cliPath, ['status'], cliDirectory);
+  const npmExecArguments = [
+    'exec',
+    '--offline',
+    '--workspace',
+    workspacePackageName,
+    '--',
+    workspaceName,
+  ];
+  const statusOutput = readNpmOutput([
+    ...npmExecArguments,
+    'status',
+  ], projectDirectory);
 
   for (const expectedText of [
     `${workspacePackageName} v0.0.0`,
@@ -161,7 +242,10 @@ function verifyNodeCliRuntime(projectDirectory, workspaceName, workspacePackageN
     }
   }
 
-  const helpOutput = readCommandOutput(cliPath, ['--help'], cliDirectory);
+  const helpOutput = readNpmOutput([
+    ...npmExecArguments,
+    '--help',
+  ], projectDirectory);
 
   for (const expectedText of [
     `${workspacePackageName} v0.0.0`,
@@ -174,13 +258,19 @@ function verifyNodeCliRuntime(projectDirectory, workspaceName, workspacePackageN
     }
   }
 
-  const versionOutput = readCommandOutput(cliPath, ['--version'], cliDirectory).trim();
+  const versionOutput = readNpmOutput([
+    ...npmExecArguments,
+    '--version',
+  ], projectDirectory).trim();
 
   if (versionOutput !== '0.0.0') {
     throw new Error(`The generated Node CLI should report version "0.0.0"; received "${versionOutput}".`);
   }
 
-  expectCommandFailure(cliPath, ['unknown-command'], cliDirectory, 'ERROR Unknown command');
+  expectNpmCommandFailure([
+    ...npmExecArguments,
+    'unknown-command',
+  ], projectDirectory, 'ERROR Unknown command');
 
   return;
 }
@@ -199,7 +289,6 @@ function verifyNodeCliRuntime(projectDirectory, workspaceName, workspacePackageN
  * @since 0.0.0
  */
 function verifyHomebridgeUtilityRuntime(projectDirectory) {
-  const pluginDirectory = join(projectDirectory, 'packages', 'scaffold');
   const commandNames = [
     'homebridge-scaffold-repl',
     'homebridge-scaffold-test-api',
@@ -213,7 +302,15 @@ function verifyHomebridgeUtilityRuntime(projectDirectory) {
       throw new Error(`The generated Homebridge utility "${commandName}" should be linked into node_modules/.bin.`);
     }
 
-    const helpOutput = readCommandOutput(commandPath, ['--help'], pluginDirectory);
+    const helpOutput = readNpmOutput([
+      'exec',
+      '--offline',
+      '--workspace',
+      './packages/scaffold',
+      '--',
+      commandName,
+      '--help',
+    ], projectDirectory);
 
     for (const expectedText of [
       'homebridge-scaffold v0.0.0',
@@ -313,10 +410,12 @@ function verifyGithubActionRuntime(projectDirectory) {
  * @since 0.0.0
  */
 function readNpmOutput(args, cwd) {
-  return readCommandOutput('corepack', [
+  const invocation = resolveCorepackInvocation([
     'npm',
     ...args,
-  ], cwd);
+  ]);
+
+  return readCommandOutput(invocation['command'], invocation['commandArguments'], cwd);
 }
 
 /**
@@ -333,10 +432,12 @@ function readNpmOutput(args, cwd) {
  * @since 0.0.0
  */
 function runNpm(args, cwd) {
-  runCommand('corepack', [
+  const invocation = resolveCorepackInvocation([
     'npm',
     ...args,
-  ], cwd);
+  ]);
+
+  runCommand(invocation['command'], invocation['commandArguments'], cwd);
 
   return;
 }
@@ -602,7 +703,17 @@ async function verifyCloudflareWorkerRuntime(projectDirectory) {
     (process.platform === 'win32') ? 'wrangler.cmd' : 'wrangler',
   );
   const wranglerExecutable = (existsSync(workspaceWranglerExecutable) === true) ? workspaceWranglerExecutable : rootWranglerExecutable;
-  const wranglerProcess = spawn(wranglerExecutable, [
+
+  if (existsSync(wranglerExecutable) === false) {
+    throw new Error('The generated Cloudflare Worker should install the Wrangler executable.');
+  }
+
+  const wranglerInvocation = resolveCorepackInvocation([
+    'npm',
+    'exec',
+    '--offline',
+    '--',
+    'wrangler',
     'dev',
     '--ip',
     '127.0.0.1',
@@ -610,7 +721,8 @@ async function verifyCloudflareWorkerRuntime(projectDirectory) {
     '0',
     '--inspector-port',
     '0',
-  ], {
+  ]);
+  const wranglerProcess = spawn(wranglerInvocation['command'], wranglerInvocation['commandArguments'], {
     cwd: workspaceDirectory,
     env: {
       ...process.env,
@@ -703,7 +815,7 @@ async function verifyCloudflareWorkerRuntime(projectDirectory) {
  *
  * @returns {Promise<void>}
  *
- * @since UNRELEASED
+ * @since 0.0.0
  */
 async function verifyVercelFunctionRuntime(projectDirectory) {
   const functionPath = join(projectDirectory, 'packages', 'vercel-tool', 'build', 'api', 'index.js');

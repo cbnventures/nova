@@ -1,0 +1,131 @@
+---
+id: "remove-operating-system-files"
+title: "Remove Operating System Files"
+description: "Remove explicitly enabled macOS and Windows metadata files without following symlinks or deleting Git-tracked files."
+keywords:
+  - "nova"
+  - "operating system files"
+  - "appledouble"
+  - "ds store"
+  - "thumbs db"
+  - "project cleanup"
+tags:
+  - "cli"
+  - "recipe"
+  - "miscellaneous"
+  - "cleanup"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Remove reviewed operating-system metadata files that are explicitly enabled in Nova config.
+
+## Summary
+
+The `remove-operating-system-files` recipe recursively scans the project root for a closed set of macOS and Windows metadata files. It removes only enabled, untracked regular files and never accepts arbitrary paths or patterns from configuration.
+
+New scaffolds include the complete settings block with the recipe and every file toggle disabled.
+
+## Why Use This Command?
+
+1. Removes common operating-system artifacts without maintaining a custom cleanup script in every repository.
+2. Protects Git-tracked files even when their names match an enabled cleanup toggle.
+3. Fails closed when Git metadata exists but Nova cannot read the tracked-file index.
+4. Supports `--dry-run` so you can review every candidate before removal.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
+- **Project root** — Run the command from the directory containing the root `package.json`.
+- <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>**`nova.config.json`**</Terminology> — Enable the recipe and the exact reviewed file toggles you want removed.
+
+## Supported Files
+
+| Operating system | Setting                          | Matched file        |
+|------------------|----------------------------------|---------------------|
+| Linux            | —                                | None                |
+| macOS            | `appleDouble`                    | `._*`               |
+| macOS            | `desktopServicesStore`           | `.DS_Store`         |
+| Windows          | `enhancedThumbnailDatabase`      | `ehthumbs.db`       |
+| Windows          | `enhancedVistaThumbnailDatabase` | `ehthumbs_vista.db` |
+| Windows          | `thumbnailDatabase`              | `Thumbs.db`         |
+
+Windows file-name matching is case-insensitive. Linux currently has no reviewed cleanup targets, so its settings object remains empty.
+
+## Safety Boundaries
+
+1. Scan only beneath the project root.
+2. Skip symbolic links, `.git`, dependencies, coverage, and common build-output directories.
+3. Select only regular files matching Nova's closed catalog.
+4. Read `git ls-files` and protect every tracked match.
+5. Abort without deleting anything when Git metadata exists but the tracked-file list cannot be read.
+
+## Configuration
+
+```json title="nova.config.json"
+{
+  "recipes": {
+    "miscellaneous": {
+      "remove-operating-system-files": {
+        "enabled": true,
+        "settings": {
+          "linux": {},
+          "macos": {
+            "appleDouble": true,
+            "desktopServicesStore": true
+          },
+          "windows": {
+            "enhancedThumbnailDatabase": true,
+            "enhancedVistaThumbnailDatabase": true,
+            "thumbnailDatabase": true
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Unknown operating systems, unknown file toggles, and non-boolean values make Nova config invalid. Use [`nova utility configure`](/docs/cli/utilities/configure) to edit the closed choices interactively.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova recipe miscellaneous remove-operating-system-files
+
+    # Shorthand
+    nova rcp misc remove-os-files
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest recipe miscellaneous remove-operating-system-files
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest rcp misc remove-os-files
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag            | Description                                                      |
+|-----------------|------------------------------------------------------------------|
+| `-d, --dry-run` | List enabled files that would be removed without deleting files. |
+
+## Troubleshooting
+
+- **Recipe is skipped** — Set `recipes.miscellaneous.remove-operating-system-files.enabled` to `true`.
+- **A matching file remains** — Confirm its semantic file toggle is enabled. Nova also preserves symlinks, generated output, dependency contents, and Git-tracked files.
+- **Nova reports invalid configuration** — Remove unsupported platforms or file names and make every supported toggle a boolean.
+- **Nova cannot read the Git index** — Repair the repository metadata before retrying; Nova intentionally removes nothing in this state.

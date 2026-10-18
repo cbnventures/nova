@@ -13,6 +13,8 @@ export type Tests_Cli_Index_RunnerMocks_LicenseUpdateCopyrightRun = ReturnType<t
 
 export type Tests_Cli_Index_RunnerMocks_MiscellaneousFixMarkdownTablesRun = ReturnType<typeof vi['fn']>;
 
+export type Tests_Cli_Index_RunnerMocks_MiscellaneousRemoveOperatingSystemFilesRun = ReturnType<typeof vi['fn']>;
+
 export type Tests_Cli_Index_RunnerMocks_ReadMeUpdateHeaderRun = ReturnType<typeof vi['fn']>;
 
 export type Tests_Cli_Index_RunnerMocks_ScaffoldAppAndroidRun = ReturnType<typeof vi['fn']>;
@@ -35,6 +37,7 @@ export type Tests_Cli_Index_RunnerMocks = {
   githubSyncPoliciesRun: Tests_Cli_Index_RunnerMocks_GithubSyncPoliciesRun;
   licenseUpdateCopyrightRun: Tests_Cli_Index_RunnerMocks_LicenseUpdateCopyrightRun;
   miscellaneousFixMarkdownTablesRun: Tests_Cli_Index_RunnerMocks_MiscellaneousFixMarkdownTablesRun;
+  miscellaneousRemoveOperatingSystemFilesRun: Tests_Cli_Index_RunnerMocks_MiscellaneousRemoveOperatingSystemFilesRun;
   readMeUpdateHeaderRun: Tests_Cli_Index_RunnerMocks_ReadMeUpdateHeaderRun;
   scaffoldAppAndroidRun: Tests_Cli_Index_RunnerMocks_ScaffoldAppAndroidRun;
   scaffoldAppAppleRun: Tests_Cli_Index_RunnerMocks_ScaffoldAppAppleRun;
@@ -77,6 +80,17 @@ export type Tests_Cli_Index_CliRecipeMiscellaneousFixMarkdownTablesJs_MockedRunn
 
 export type Tests_Cli_Index_CliRecipeMiscellaneousFixMarkdownTablesJs_MockedRunner = {
   run: Tests_Cli_Index_CliRecipeMiscellaneousFixMarkdownTablesJs_MockedRunner_Run;
+};
+
+/**
+ * Tests - CLI - Index - CLI Recipe Miscellaneous Remove Operating System Files JS.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Index_CliRecipeMiscellaneousRemoveOperatingSystemFilesJs_MockedRunner_Run = ReturnType<typeof vi['fn']>;
+
+export type Tests_Cli_Index_CliRecipeMiscellaneousRemoveOperatingSystemFilesJs_MockedRunner = {
+  run: Tests_Cli_Index_CliRecipeMiscellaneousRemoveOperatingSystemFilesJs_MockedRunner_Run;
 };
 
 /**
@@ -170,7 +184,7 @@ export type Tests_Cli_Index_CliScaffoldStarterBaseJs_MockedRunner = {
 /**
  * Tests - CLI - Index - CLI Scaffold Tool Serverless JS.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Cli_Index_CliScaffoldToolServerlessJs_MockedRunner_Run = ReturnType<typeof vi['fn']>;
 
@@ -222,6 +236,17 @@ export type Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughAliasesToAMis
 
 export type Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughAliasesToAMiscellaneousRecipe_ExpectedOptions = {
   dryRun: Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughAliasesToAMiscellaneousRecipe_ExpectedOptions_DryRun;
+};
+
+/**
+ * Tests - CLI - Index - Nested Recipe Options - Passes Dry Run Through Cleanup Aliases To A Miscellaneous Recipe.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughCleanupAliasesToAMiscellaneousRecipe_ExpectedOptions_DryRun = true;
+
+export type Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughCleanupAliasesToAMiscellaneousRecipe_ExpectedOptions = {
+  dryRun: Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughCleanupAliasesToAMiscellaneousRecipe_ExpectedOptions_DryRun;
 };
 
 /**
@@ -332,7 +357,7 @@ export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveNextJsAn
 /**
  * Tests - CLI - Index - Scaffold Options - Passes Complete Non Interactive Serverless Tool Answers.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Tests_Cli_Index_ScaffoldOptions_PassesCompleteNonInteractiveServerlessToolAnswers_ExpectedOptions_Target = string;
 

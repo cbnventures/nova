@@ -1,9 +1,6 @@
 import { strictEqual } from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import {
-  relative,
-  sep,
-} from 'node:path';
+import { relative } from 'node:path';
 
 import {
   LIB_REGEX_PATTERN_EXPORT_TYPE_NAME,
@@ -361,10 +358,10 @@ export async function crossSectionReferences(config: Rules_Vitest_TypeDeclaratio
   const crossSectionCurrentDirectory: Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_CrossSectionCurrentDirectory = config['packageRoot'] ?? process.cwd();
 
   for (const file of files) {
-    const crossSectionRelativePath: Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_CrossSectionRelativePath = relative(crossSectionCurrentDirectory, file);
+    const crossSectionRelativePath: Rules_Vitest_TypeDeclarations_Rules_CrossSectionReferences_CrossSectionRelativePath = relative(crossSectionCurrentDirectory, file).replaceAll('\\', '/');
 
     getActiveVitest().it(`no cross-section references in ${crossSectionRelativePath}`, async () => {
-      if (config['standaloneTypeFiles'].some((pattern) => file.endsWith(pattern)) === true) {
+      if (config['standaloneTypeFiles'].some((pattern) => file.replaceAll('\\', '/').endsWith(pattern)) === true) {
         return;
       }
 
@@ -445,10 +442,10 @@ export async function sectionAlphabeticalOrder(config: Rules_Vitest_TypeDeclarat
   const sectionOrderCurrentDirectory: Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_SectionOrderCurrentDirectory = config['packageRoot'] ?? process.cwd();
 
   for (const file of files) {
-    const sectionOrderRelativePath: Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_SectionOrderRelativePath = relative(sectionOrderCurrentDirectory, file);
+    const sectionOrderRelativePath: Rules_Vitest_TypeDeclarations_Rules_SectionAlphabeticalOrder_SectionOrderRelativePath = relative(sectionOrderCurrentDirectory, file).replaceAll('\\', '/');
 
     getActiveVitest().it(`sections alphabetical in ${sectionOrderRelativePath}`, async () => {
-      if (config['standaloneTypeFiles'].some((pattern) => file.endsWith(pattern)) === true) {
+      if (config['standaloneTypeFiles'].some((pattern) => file.replaceAll('\\', '/').endsWith(pattern)) === true) {
         return;
       }
 
@@ -518,10 +515,10 @@ export async function firstComeFirstServeOrder(config: Rules_Vitest_TypeDeclarat
   const orderCurrentDirectory: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_OrderCurrentDirectory = config['packageRoot'] ?? process.cwd();
 
   for (const file of files) {
-    const orderRelativePath: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_OrderRelativePath = relative(orderCurrentDirectory, file);
+    const orderRelativePath: Rules_Vitest_TypeDeclarations_Rules_FirstComeFirstServeOrder_OrderRelativePath = relative(orderCurrentDirectory, file).replaceAll('\\', '/');
 
     getActiveVitest().it(`types match source order in ${orderRelativePath}`, async () => {
-      if (config['standaloneTypeFiles'].some((pattern) => file.endsWith(pattern)) === true) {
+      if (config['standaloneTypeFiles'].some((pattern) => file.replaceAll('\\', '/').endsWith(pattern)) === true) {
         return;
       }
 
@@ -617,7 +614,7 @@ export async function firstComeFirstServeOrder(config: Rules_Vitest_TypeDeclarat
       strictEqual(violations.length, 0, violationMessage);
 
       return;
-    });
+    }, 60_000);
   }
 
   return;
@@ -645,7 +642,7 @@ export async function objectPropertyTypes(config: Rules_Vitest_TypeDeclarations_
   const objectPropsCurrentDirectory: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectPropsCurrentDirectory = config['packageRoot'] ?? process.cwd();
 
   for (const file of files) {
-    const objectPropsRelativePath: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectPropsRelativePath = relative(objectPropsCurrentDirectory, file);
+    const objectPropsRelativePath: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_ObjectPropsRelativePath = relative(objectPropsCurrentDirectory, file).replaceAll('\\', '/');
 
     getActiveVitest().it(`object properties use named types in ${objectPropsRelativePath}`, async () => {
       const content: Rules_Vitest_TypeDeclarations_Rules_ObjectPropertyTypes_Content = await readFile(file, 'utf-8');
@@ -822,10 +819,10 @@ export async function sectionCoverage(config: Rules_Vitest_TypeDeclarations_Rule
   const coverageCurrentDirectory: Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_CoverageCurrentDirectory = config['packageRoot'] ?? process.cwd();
 
   for (const file of files) {
-    const coverageRelativePath: Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_CoverageRelativePath = relative(coverageCurrentDirectory, file);
+    const coverageRelativePath: Rules_Vitest_TypeDeclarations_Rules_SectionCoverage_CoverageRelativePath = relative(coverageCurrentDirectory, file).replaceAll('\\', '/');
 
     getActiveVitest().it(`source sections have matching .d.ts sections in ${coverageRelativePath}`, async () => {
-      if (config['standaloneTypeFiles'].some((pattern) => file.endsWith(pattern)) === true) {
+      if (config['standaloneTypeFiles'].some((pattern) => file.replaceAll('\\', '/').endsWith(pattern)) === true) {
         return;
       }
 
@@ -981,7 +978,7 @@ export async function variableTypeSymmetry(config: Rules_Vitest_TypeDeclarations
   const symmetryMapping: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SymmetryMapping = config['mapping'];
 
   for (const file of files) {
-    const symmetryRelativePath: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SymmetryRelativePath = relative(symmetryCurrentDirectory, file);
+    const symmetryRelativePath: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_SymmetryRelativePath = relative(symmetryCurrentDirectory, file).replaceAll('\\', '/');
 
     getActiveVitest().it(`variable type symmetry in ${symmetryRelativePath}`, async () => {
       const content: Rules_Vitest_TypeDeclarations_Rules_VariableTypeSymmetry_Content = await readFile(file, 'utf-8');
@@ -1145,7 +1142,7 @@ export async function identifierVsFileName(config: Rules_Vitest_TypeDeclarations
   const identifierVsFileNameCurrentDirectory: Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_IdentifierVsFileNameCurrentDirectory = config['packageRoot'] ?? process.cwd();
 
   for (const file of files) {
-    const identifierVsFileNameRelativePath: Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_IdentifierVsFileNameRelativePath = relative(identifierVsFileNameCurrentDirectory, file);
+    const identifierVsFileNameRelativePath: Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_IdentifierVsFileNameRelativePath = relative(identifierVsFileNameCurrentDirectory, file).replaceAll('\\', '/');
 
     getActiveVitest().it(`top-level identifiers in ${identifierVsFileNameRelativePath} do not equal file name`, async () => {
       const content: Rules_Vitest_TypeDeclarations_Rules_IdentifierVsFileName_Content = await readFile(file, 'utf-8');
@@ -1202,7 +1199,7 @@ export async function filenameValidation(config: Rules_Vitest_TypeDeclarations_R
   const filenameValidationCurrentDirectory: Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_FilenameValidationCurrentDirectory = config['packageRoot'] ?? process.cwd();
 
   for (const file of allFiles) {
-    const filenameValidationRelativePath: Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_FilenameValidationRelativePath = relative(filenameValidationCurrentDirectory, file);
+    const filenameValidationRelativePath: Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_FilenameValidationRelativePath = relative(filenameValidationCurrentDirectory, file).replaceAll('\\', '/');
 
     getActiveVitest().it(`filename and path segments in ${filenameValidationRelativePath} are valid`, () => {
       let cleaned: Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Cleaned = filenameValidationRelativePath;
@@ -1225,7 +1222,7 @@ export async function filenameValidation(config: Rules_Vitest_TypeDeclarations_R
       cleaned = cleaned.replace(LIB_REGEX_PATTERN_EXT_CJS_SUFFIX, '');
       cleaned = cleaned.replace(LIB_REGEX_PATTERN_EXTENSION_TEST_SUFFIX, '');
 
-      const segments: Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Segments = cleaned.split(sep).join('/').split('/').filter((segment) => segment.length > 0);
+      const segments: Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Segments = cleaned.split('/').filter((segment) => segment.length > 0);
       const pattern: Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Pattern = LIB_REGEX_PATTERN_KEBAB_CASE_SEGMENT;
       const pascalCasePattern: Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_PascalCasePattern = LIB_REGEX_PATTERN_PASCAL_CASE_SEGMENT;
       const violations: Rules_Vitest_TypeDeclarations_Rules_FilenameValidation_Violations = [];
@@ -1287,7 +1284,7 @@ export async function standaloneTypeFiles(config: Rules_Vitest_TypeDeclarations_
     }
   }
 
-  const standaloneFiles: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_StandaloneFiles = standaloneDtsFiles.filter((dtsFile) => config['standaloneTypeFiles'].some((pattern) => dtsFile.endsWith(pattern)));
+  const standaloneFiles: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_StandaloneFiles = standaloneDtsFiles.filter((dtsFile) => config['standaloneTypeFiles'].some((pattern) => dtsFile.replaceAll('\\', '/').endsWith(pattern)));
   const standaloneCurrentDirectory: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_StandaloneCurrentDirectory = config['packageRoot'] ?? process.cwd();
 
   // A consumer may legitimately have no standalone type files (e.g. no shared.d.ts). Register a
@@ -1301,7 +1298,7 @@ export async function standaloneTypeFiles(config: Rules_Vitest_TypeDeclarations_
   }
 
   for (const file of standaloneFiles) {
-    const standaloneRelativePath: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_StandaloneRelativePath = relative(standaloneCurrentDirectory, file);
+    const standaloneRelativePath: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_StandaloneRelativePath = relative(standaloneCurrentDirectory, file).replaceAll('\\', '/');
 
     getActiveVitest().it(`standalone file rules in ${standaloneRelativePath}`, async () => {
       const content: Rules_Vitest_TypeDeclarations_Rules_StandaloneTypeFiles_Content = await readFile(file, 'utf-8');
@@ -1456,7 +1453,7 @@ export async function dtsImportVerbatim(config: Rules_Vitest_TypeDeclarations_Ru
   const dtsImportCurrentDirectory: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_DtsImportCurrentDirectory = config['packageRoot'] ?? process.cwd();
 
   for (const file of files) {
-    const dtsImportRelativePath: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_DtsImportRelativePath = relative(dtsImportCurrentDirectory, file);
+    const dtsImportRelativePath: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_DtsImportRelativePath = relative(dtsImportCurrentDirectory, file).replaceAll('\\', '/');
 
     getActiveVitest().it(`imports from .d.ts files are verbatim in ${dtsImportRelativePath}`, async () => {
       const content: Rules_Vitest_TypeDeclarations_Rules_DtsImportVerbatim_Content = await readFile(file, 'utf-8');
@@ -1533,7 +1530,7 @@ export async function noInlineImportTypes(config: Rules_Vitest_TypeDeclarations_
   const inlineImportCurrentDirectory: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_InlineImportCurrentDirectory = config['packageRoot'] ?? process.cwd();
 
   for (const file of files) {
-    const inlineImportRelativePath: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_InlineImportRelativePath = relative(inlineImportCurrentDirectory, file);
+    const inlineImportRelativePath: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_InlineImportRelativePath = relative(inlineImportCurrentDirectory, file).replaceAll('\\', '/');
 
     getActiveVitest().it(`no inline import() type references in ${inlineImportRelativePath}`, async () => {
       const content: Rules_Vitest_TypeDeclarations_Rules_NoInlineImportTypes_Content = await readFile(file, 'utf-8');

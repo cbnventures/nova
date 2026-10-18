@@ -962,7 +962,7 @@ export type Lib_Regex_PlaceholderVitePwa = RegExp;
 /**
  * Lib - Regex - Placeholder Serverless Target.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Lib_Regex_PlaceholderServerlessTarget = RegExp;
 

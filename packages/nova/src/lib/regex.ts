@@ -1408,7 +1408,7 @@ export const LIB_REGEX_PLACEHOLDER_ASTRO_RENDERING = /\[__ASTRO_RENDERING__\]/;
  * Matches the deployment-target token used by the serverless tool scaffold.
  * The scaffold resolver uses the validated answer to select one target layer.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export const LIB_REGEX_PLACEHOLDER_SERVERLESS_TARGET = /\[__SERVERLESS_TARGET__\]/;
 

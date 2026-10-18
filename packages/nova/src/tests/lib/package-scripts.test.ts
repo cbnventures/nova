@@ -33,7 +33,7 @@ import type {
  * Proves one shared contract owns physical ordering and validation for recipes,
  * scaffolds, and the public consumer Vitest registration.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 describe('Lib package scripts', () => {
   it('orders command families, authored children, hooks, custom commands, and npm lifecycle scripts', () => {

@@ -39,6 +39,8 @@ export type Rules_Eslint_Jsdoc_RequireJsdocPresence_Runner_Create_Options = Read
   skipDirectories: Rules_Eslint_Jsdoc_RequireJsdocPresence_Runner_Create_Options_SkipDirectories;
 }>;
 
+export type Rules_Eslint_Jsdoc_RequireJsdocPresence_Runner_Create_NormalizedFilename = string;
+
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Presence - Create - Class Declaration.
  *

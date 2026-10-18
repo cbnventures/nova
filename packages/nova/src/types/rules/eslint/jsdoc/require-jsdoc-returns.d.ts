@@ -11,7 +11,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_RuleDefaultOptionsIgno
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Returns - Check Node.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_CheckNode_Context = Readonly<RuleContext<string, unknown[]>>;
 
@@ -72,7 +72,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_Create_Options = Reado
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Returns - Create - Function Declaration.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_Create_FunctionDeclaration_Node = TSESTree.FunctionDeclaration;
 
@@ -81,7 +81,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_Create_FunctionDeclara
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Returns - Create - Method Definition.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_Create_MethodDefinition_Node = TSESTree.MethodDefinition;
 
@@ -97,7 +97,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_Create_Program_Returns
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Returns - Create - Property Definition.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_Create_PropertyDefinition_Node = TSESTree.PropertyDefinition;
 
@@ -108,7 +108,7 @@ export type Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_Create_PropertyDefinit
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Returns - Create - Variable Declaration.
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export type Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_Create_VariableDeclaration_Node = TSESTree.VariableDeclaration;
 

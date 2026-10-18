@@ -185,7 +185,7 @@ export class Runner {
    *
    * @returns {Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_CheckNode_Returns}
    *
-   * @since UNRELEASED
+   * @since 0.32.0
    */
   private static checkNode(context: Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_CheckNode_Context, node: Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_CheckNode_Node): Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_CheckNode_Returns {
     let target: Rules_Eslint_Jsdoc_RequireJsdocReturns_Runner_CheckNode_Target = node;

@@ -17,6 +17,8 @@ import {
   libItemAllowedAgents,
   libItemAllowedPoliciesByRole,
   libItemAllowedRecipes,
+  libItemOperatingSystemFilePatterns,
+  libItemOperatingSystemFilesByPlatform,
   libItemRecipesByCategory,
   libItemSyncRoles,
   libItemValidEntityRoles,
@@ -622,6 +624,23 @@ import type {
   Cli_Utility_Configure_Runner_PromptIgnoreFiles_Returns,
   Cli_Utility_Configure_Runner_PromptIgnoreFiles_SelectedTargetPath,
   Cli_Utility_Configure_Runner_PromptIgnoreFiles_SeparatorIndex,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutput,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputKey,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputResult,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entries,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entry,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingEntry,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingPlatformSettings,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutput,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputKey,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputResult,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileSettings,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_NextEntries,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Platforms,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Returns,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedFileNames,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Settings,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SupportedFileNames,
   Cli_Utility_Configure_Runner_PromptProject_Config,
   Cli_Utility_Configure_Runner_PromptProject_CurrentLabel,
   Cli_Utility_Configure_Runner_PromptProject_CurrentSlug,
@@ -744,6 +763,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptRecipes_MenuOutput,
   Cli_Utility_Configure_Runner_PromptRecipes_MenuOutputKey,
   Cli_Utility_Configure_Runner_PromptRecipes_MenuOutputResult,
+  Cli_Utility_Configure_Runner_PromptRecipes_MiscellaneousEntries,
   Cli_Utility_Configure_Runner_PromptRecipes_PackageJsonRecipes,
   Cli_Utility_Configure_Runner_PromptRecipes_Recipes,
   Cli_Utility_Configure_Runner_PromptRecipes_Returns,
@@ -4887,6 +4907,81 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Configure - Prompt Miscellaneous Recipes.
+   *
+   * Edits the operating-system cleanup recipe through closed platform and file
+   * choices so configure never exposes arbitrary deletion paths or patterns.
+   *
+   * @param {Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entries} entries - Entries.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Returns}
+   *
+   * @since 0.32.0
+   */
+  private static async promptMiscellaneousRecipes(entries: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entries): Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Returns {
+    const existingEntry: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingEntry = (entries !== undefined) ? entries['remove-operating-system-files'] : undefined;
+    const enabledOutput: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputKey, Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputResult>({
+      type: 'confirm',
+      name: 'enabled',
+      message: 'Enable remove-operating-system-files?',
+      initial: existingEntry !== undefined && existingEntry['enabled'] === true,
+    });
+
+    if (enabledOutput['cancelled'] === true) {
+      return undefined;
+    }
+
+    const settings: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Settings = {};
+    const platforms: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Platforms = Object.keys(libItemOperatingSystemFilesByPlatform) as Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Platforms;
+
+    for (const platform of platforms) {
+      const existingPlatformSettings: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingPlatformSettings = (existingEntry !== undefined && existingEntry['settings'] !== undefined) ? existingEntry['settings'][platform] : undefined;
+      const supportedFileNames: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SupportedFileNames = libItemOperatingSystemFilesByPlatform[platform];
+      const fileSettings: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileSettings = {};
+
+      if (supportedFileNames.length === 0) {
+        Reflect.set(settings, platform, fileSettings);
+
+        continue;
+      }
+
+      const selectedFileNames: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedFileNames = supportedFileNames.filter((supportedFileName) => existingPlatformSettings !== undefined && Reflect.get(existingPlatformSettings, supportedFileName) === true);
+      const fileOutput: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputKey, Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputResult>({
+        type: 'multiselect',
+        name: 'fileNames',
+        message: `${platform} files to remove (space to select)`,
+        choices: supportedFileNames.map((supportedFileName) => ({
+          title: libItemOperatingSystemFilePatterns[supportedFileName],
+          description: supportedFileName,
+          value: supportedFileName,
+          selected: selectedFileNames.includes(supportedFileName),
+        })),
+        hint: '- Space to select. Return to submit',
+      });
+
+      if (fileOutput['cancelled'] === true) {
+        return undefined;
+      }
+
+      for (const supportedFileName of supportedFileNames) {
+        Reflect.set(fileSettings, supportedFileName, fileOutput['result'].fileNames.includes(supportedFileName));
+      }
+
+      Reflect.set(settings, platform, fileSettings);
+    }
+
+    const entry: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entry = {
+      enabled: enabledOutput['result'].enabled,
+      settings,
+    };
+    return {
+      'remove-operating-system-files': entry,
+    } satisfies Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_NextEntries;
+  }
+
+  /**
    * CLI - Utility - Configure - Prompt Recipe Entries.
    *
    * Edits the complete recipe-entry contract for one recipe category: every
@@ -5015,6 +5110,11 @@ export class Runner {
           value: 'license',
         },
         {
+          title: 'Miscellaneous',
+          description: 'Project cleanup recipes.',
+          value: 'miscellaneous',
+        },
+        {
           title: 'README',
           description: 'README generation recipes.',
           value: 'read-me',
@@ -5066,6 +5166,16 @@ export class Runner {
 
         if (workspaceEntries !== undefined) {
           Reflect.set(packageJsonRecipes, workspacePath, workspaceEntries);
+        }
+
+        continue;
+      }
+
+      if (target === 'miscellaneous') {
+        const miscellaneousEntries: Cli_Utility_Configure_Runner_PromptRecipes_MiscellaneousEntries = await Runner.promptMiscellaneousRecipes(recipes['miscellaneous']);
+
+        if (miscellaneousEntries !== undefined) {
+          Reflect.set(recipes, 'miscellaneous', miscellaneousEntries);
         }
 
         continue;

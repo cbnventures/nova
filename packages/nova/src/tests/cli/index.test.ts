@@ -11,6 +11,7 @@ import type {
   Tests_Cli_Index_CliRecipeGithubSyncPoliciesJs_MockedRunner,
   Tests_Cli_Index_CliRecipeLicenseUpdateCopyrightJs_MockedRunner,
   Tests_Cli_Index_CliRecipeMiscellaneousFixMarkdownTablesJs_MockedRunner,
+  Tests_Cli_Index_CliRecipeMiscellaneousRemoveOperatingSystemFilesJs_MockedRunner,
   Tests_Cli_Index_CliRecipeReadMeUpdateHeaderJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldAppAndroidJs_MockedRunner,
   Tests_Cli_Index_CliScaffoldAppAppleJs_MockedRunner,
@@ -24,6 +25,7 @@ import type {
   Tests_Cli_Index_NestedRecipeOptions_PassesDryRunAndReplaceFileToADirectLicenseRecipe_ExpectedOptions,
   Tests_Cli_Index_NestedRecipeOptions_PassesDryRunAndReplaceFileToADirectREADMERecipe_ExpectedOptions,
   Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughAliasesToAMiscellaneousRecipe_ExpectedOptions,
+  Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughCleanupAliasesToAMiscellaneousRecipe_ExpectedOptions,
   Tests_Cli_Index_NestedRecipeOptions_PassesDryRunToADirectGitHubRecipe_ExpectedOptions,
   Tests_Cli_Index_RunnerMocks,
   Tests_Cli_Index_ScaffoldOptions_OriginalArgv,
@@ -49,6 +51,7 @@ const runnerMocks: Tests_Cli_Index_RunnerMocks = vi.hoisted(() => ({
   githubSyncPoliciesRun: vi.fn(),
   licenseUpdateCopyrightRun: vi.fn(),
   miscellaneousFixMarkdownTablesRun: vi.fn(),
+  miscellaneousRemoveOperatingSystemFilesRun: vi.fn(),
   readMeUpdateHeaderRun: vi.fn(),
   scaffoldAppAndroidRun: vi.fn(),
   scaffoldAppAppleRun: vi.fn(),
@@ -79,6 +82,14 @@ vi.mock('../../cli/recipe/license/update-copyright.js', () => {
 vi.mock('../../cli/recipe/miscellaneous/fix-markdown-tables.js', () => {
   const mockedRunner: Tests_Cli_Index_CliRecipeMiscellaneousFixMarkdownTablesJs_MockedRunner = {
     run: runnerMocks['miscellaneousFixMarkdownTablesRun'],
+  };
+
+  return { Runner: mockedRunner };
+});
+
+vi.mock('../../cli/recipe/miscellaneous/remove-operating-system-files.js', () => {
+  const mockedRunner: Tests_Cli_Index_CliRecipeMiscellaneousRemoveOperatingSystemFilesJs_MockedRunner = {
+    run: runnerMocks['miscellaneousRemoveOperatingSystemFilesRun'],
   };
 
   return { Runner: mockedRunner };
@@ -216,7 +227,7 @@ describe('nested recipe options', () => {
       'nova',
       'rcp',
       'misc',
-      'fix-markdown-tables',
+      'fix-md-tables',
       '--dry-run',
     ];
 
@@ -224,6 +235,31 @@ describe('nested recipe options', () => {
 
     await vi.waitFor(() => {
       expect(runnerMocks['miscellaneousFixMarkdownTablesRun']).toHaveBeenCalledWith(expectedOptions);
+
+      return;
+    });
+
+    return;
+  });
+
+  it('passes dry run through cleanup aliases to a miscellaneous recipe', async () => {
+    const expectedOptions: Tests_Cli_Index_NestedRecipeOptions_PassesDryRunThroughCleanupAliasesToAMiscellaneousRecipe_ExpectedOptions = {
+      dryRun: true,
+    };
+
+    process.argv = [
+      'node',
+      'nova',
+      'rcp',
+      'misc',
+      'remove-os-files',
+      '--dry-run',
+    ];
+
+    await import('../../cli/index.js');
+
+    await vi.waitFor(() => {
+      expect(runnerMocks['miscellaneousRemoveOperatingSystemFilesRun']).toHaveBeenCalledWith(expectedOptions);
 
       return;
     });

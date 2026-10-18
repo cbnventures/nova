@@ -17,6 +17,8 @@ import type {
   Lib_Item_GenericProtocols,
   Lib_Item_NodeJsKeys,
   Lib_Item_NpmKeys,
+  Lib_Item_OperatingSystemFilePatterns,
+  Lib_Item_OperatingSystemFilesByPlatform,
   Lib_Item_PrettyNamesAbbreviation,
   Lib_Item_PrettyNamesBrand,
   Lib_Item_PrettyNamesCategory,
@@ -108,6 +110,7 @@ export const libItemRecipesByCategory: Lib_Item_RecipesByCategory = {
     'sync-security',
   ],
   'license': ['update-copyright'],
+  'miscellaneous': ['remove-operating-system-files'],
   'read-me': [
     'update-badges',
     'update-credits',
@@ -126,6 +129,43 @@ export const libItemRecipesByCategory: Lib_Item_RecipesByCategory = {
     'sync-identity',
     'sync-ownership',
   ],
+};
+
+/**
+ * Lib - Item - Operating System Files By Platform.
+ *
+ * Keeps the cleanup recipe's accepted settings closed to reviewed operating-system
+ * artifacts instead of accepting arbitrary paths or user-provided patterns.
+ *
+ * @since 0.32.0
+ */
+export const libItemOperatingSystemFilesByPlatform: Lib_Item_OperatingSystemFilesByPlatform = {
+  linux: [],
+  macos: [
+    'appleDouble',
+    'desktopServicesStore',
+  ],
+  windows: [
+    'enhancedThumbnailDatabase',
+    'enhancedVistaThumbnailDatabase',
+    'thumbnailDatabase',
+  ],
+};
+
+/**
+ * Lib - Item - Operating System File Patterns.
+ *
+ * Gives configuration-friendly toggle names their documented on-disk filenames so
+ * configure and recipe output can show the exact artifacts each toggle controls.
+ *
+ * @since 0.32.0
+ */
+export const libItemOperatingSystemFilePatterns: Lib_Item_OperatingSystemFilePatterns = {
+  appleDouble: '._*',
+  desktopServicesStore: '.DS_Store',
+  enhancedThumbnailDatabase: 'ehthumbs.db',
+  enhancedVistaThumbnailDatabase: 'ehthumbs_vista.db',
+  thumbnailDatabase: 'Thumbs.db',
 };
 
 /**

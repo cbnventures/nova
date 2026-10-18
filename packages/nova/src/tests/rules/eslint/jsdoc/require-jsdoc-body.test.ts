@@ -89,6 +89,27 @@ ruleTester.run('requireJsdocBody', RequireJsdocBody['rule'], {
       filename: '/path/to/types/my-type.d.ts',
     },
 
+    // skipDirectories normalizes Windows separators before matching.
+    {
+      code: [
+        '/**',
+        ' * My type.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'export type MyType = string;',
+      ].join('\n'),
+      options: [{
+        diamond: false,
+        ignoreFiles: [],
+        maxLines: 3,
+        maxWidth: 80,
+        minLines: 2,
+        skipDirectories: ['types'],
+      }],
+      filename: 'C:\\project\\src\\types\\my-type.d.ts',
+    },
+
     // skipDirectories: skip files in tests directory.
     {
       code: [

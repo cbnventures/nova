@@ -37,6 +37,19 @@ ruleTester.run('requireJsdocHierarchy', RequireJsdocHierarchy['rule'], {
       filename: '/project/src/cli/utility/changelog.ts',
     },
 
+    // Windows separators produce the same hierarchy as POSIX separators.
+    {
+      code: [
+        '/**',
+        ' * CLI - Utility - Changelog.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'class CliUtilityChangelog {}',
+      ].join('\n'),
+      filename: 'C:\\project\\src\\cli\\utility\\changelog.ts',
+    },
+
     // Correct method hierarchy.
     {
       code: [

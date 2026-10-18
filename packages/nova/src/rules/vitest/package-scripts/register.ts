@@ -22,7 +22,7 @@ import type {
  *
  * @returns {Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_Returns}
  *
- * @since UNRELEASED
+ * @since 0.32.0
  */
 export function registerPackageScriptsSuite(config: Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_Config): Rules_Vitest_PackageScripts_Register_RegisterPackageScriptsSuite_Returns {
   setActiveVitest(config['vitest']);

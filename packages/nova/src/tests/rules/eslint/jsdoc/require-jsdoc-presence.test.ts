@@ -157,6 +157,16 @@ ruleTester.run('requireJsdocPresence', RequireJsdocPresence['rule'], {
       filename: '/path/to/nova-config.d.ts',
     },
 
+    // skipDirectories normalizes Windows separators before matching.
+    {
+      code: 'function foo() {}',
+      options: [{
+        ignoreFiles: [],
+        skipDirectories: ['tests'],
+      }],
+      filename: 'C:\\project\\src\\tests\\foo.test.ts',
+    },
+
     // LAST: ignoreFiles skips an otherwise undocumented symbol.
     {
       code: 'class Foo {}',

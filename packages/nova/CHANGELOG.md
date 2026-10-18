@@ -24,6 +24,8 @@
 - Stopped the native workspace runner from scheduling pending tasks after Ctrl+C or termination.
 - Closed TypeScript declaration-inspection gaps for arrow-function returns, optional and readonly object properties, and multiple typed declarations on one line while preserving the full Vitest convention suite.
 - Kept generated Vitest infrastructure ready for consumer-owned tests without shipping brittle package-name or starter-copy assertions that fail after normal scaffold customization.
+- Made Windows checks, scaffold installs, type-declaration validation, and package builds portable by normalizing wildcard quoting and file paths, launching npm and Corepack through Node instead of Windows command shims, and allowing repository-wide declaration checks enough time on slower hosts.
+- Stamped unreleased API annotations across every workspace during no-entry release repairs, using `0.0.0` for freezable roots and each versioned workspace's current package version.
 
 ### ADDED
 - Added first-class Apple bundle identifiers to the Apple application scaffold, including interactive and non-interactive validation with exact XcodeGen rendering.
@@ -31,6 +33,7 @@
 - Added centralized physical ignore-file bundles for Git, Docker, and Cloudflare Astro outputs, renamed the Gitignore generator to `nova generate must-haves ignore-files`, replaced the proprietary `.novaignore` marker with exact internal scaffold discovery exclusions, and removed the former `gitignore.projectExcludes` configuration shape.
 - Added built REPL and config-aware API-test starters to generated Homebridge plugins, with installed executables and shared Nova CLI presentation.
 - Added a provider-neutral `nova scaffold tool serverless` workspace that composes one shared Node.js CLI with either a Cloudflare Workers or Vercel Functions service layer, including isolated runtime contracts, development, production builds, deployment, management, live logs, and Vitest coverage.
+- Added the configurable `remove-operating-system-files` recipe with reviewed macOS and Windows file toggles, dry-run support, Git-tracked-file protection, scaffold defaults, and `nova utility configure` integration, plus the `remove-os-files` and `fix-md-tables` recipe shorthands.
 
 ## 0.31.1 - 2026-10-15
 
