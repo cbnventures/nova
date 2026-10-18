@@ -16,7 +16,7 @@
     "check:types-scripts": "node ./scripts/nova-type-check.mjs --project tsconfig.scripts.json",
     "check:types-tests": "node ./scripts/nova-type-check.mjs --project tsconfig.tests.json",
     "check:test": "vitest run --exclude \"scripts/tests/**/*.mjs\"",
-    "check:cli": "npm run build --workspace=@cbnventures/nova && vitest run scripts/tests/cli",
+    "check:cli": "node ./scripts/nova-run-workspaces.mjs build --workspace @cbnventures/nova && vitest run scripts/tests/cli",
     "check:scaffolds": "node ./scripts/check-scaffolds.mjs",
     "build": "node ./scripts/nova-run-scripts.mjs --sequential --node-env production \"build:*\"",
     "build:workspaces": "node ./scripts/nova-run-workspaces.mjs --concurrency=2 --node-env production build",

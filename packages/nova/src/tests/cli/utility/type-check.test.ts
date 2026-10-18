@@ -18,6 +18,10 @@ import type {
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_DelegatesTheRepositoryBootstrapToTheSharedChecker_BootstrapScriptContents,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_DelegatesTheRepositoryBootstrapToTheSharedChecker_BootstrapScriptPath,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ErrorsWhenNoTsconfigJsonFound_ProjectDirectory,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_IndexPath,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_ProjectDirectory,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_TsconfigContents,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_TsconfigPath,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_OriginalCwd,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RejectsAnInvalidCompilerOption_IndexPath,
   Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_RejectsAnInvalidCompilerOption_ProjectDirectory,
@@ -201,6 +205,53 @@ describe('CliUtilityTypeCheck.run', async () => {
     CliUtilityTypeCheck.run({});
 
     strictEqual(process.exitCode, 1);
+
+    return;
+  });
+
+  it('ignores diagnostics owned exclusively by dependency files', async () => {
+    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_ProjectDirectory = join(sandboxRoot, 'dependency-diagnostics');
+
+    await mkdir(join(projectDirectory, 'node_modules', 'example'), { recursive: true });
+    await writeFile(join(projectDirectory, 'node_modules', 'example', 'package.json'), `${JSON.stringify({
+      name: 'example',
+      type: 'module',
+      types: './index.d.ts',
+    }, null, 2)}\n`, 'utf-8');
+    await writeFile(join(projectDirectory, 'node_modules', 'example', 'index.d.ts'), [
+      'export interface Broken {',
+      '  value: string;',
+      '  value: number;',
+      '}',
+      'export type Greeting = string;',
+      '',
+    ].join('\n'), 'utf-8');
+
+    const tsconfigPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_TsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_TsconfigContents = JSON.stringify({
+      compilerOptions: {
+        module: 'NodeNext',
+        moduleResolution: 'NodeNext',
+        noEmit: true,
+        skipLibCheck: false,
+        strict: true,
+      },
+      include: ['*.ts'],
+    }, null, 2);
+
+    await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
+
+    const indexPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_IndexPath = join(projectDirectory, 'index.ts');
+
+    await writeFile(indexPath, 'import type { Greeting } from "example";\nconst greeting: Greeting = "hello";\nconsole.log(greeting);\n', 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    CliUtilityTypeCheck.run({
+      project: tsconfigPath,
+    });
+
+    strictEqual(process.exitCode, undefined);
 
     return;
   });

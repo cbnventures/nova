@@ -13,6 +13,9 @@
 - Simplified the public scaffold catalog by removing standalone Cloudflare Worker, Docker image, and Node.js CLI entries plus the mistakenly exposed Docker generator. Docker remains a scaffold-only packaging option.
 
 ### FIXED
+- Prevented Cloudflare Worker scaffold validation from leaking Wrangler child processes and hanging CI by using Wrangler's managed test harness.
+- Reduced TypeScript check time by collecting diagnostics only for project-owned files while retaining dependency resolution, strict project diagnostics, and declaration validation.
+- Reused verified workspace builds and one fully validated generated project in scaffold checks, removing redundant installs and builds without reducing scaffold coverage.
 - Corrected generated GitHub Action validation by running the local simulator against the exported TypeScript `run()` module, removing an unused GitHub API dependency, upgrading the simulator, smoke-testing the isolated NCC bundle without `node_modules`, and removing obsolete workflow fragments superseded by the programmatic generator.
 - Accepted Apple application changelog headings that include a parenthesized build number during release-history validation.
 - Made `require-jsdoc-returns` report documented functions that omit `@returns`, while preserving constructor and setter exemptions and existing type-only validation.

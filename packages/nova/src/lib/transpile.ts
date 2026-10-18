@@ -7,11 +7,12 @@ import {
   createWatchProgram,
   findConfigFile,
   flattenDiagnosticMessageText,
-  getPreEmitDiagnostics,
   parseJsonConfigFileContent,
   readConfigFile,
   sys,
 } from 'typescript';
+
+import { getDiagnostics } from './type-check.js';
 
 import type {
   Lib_Transpile_Compile_CompilerOptions,
@@ -203,7 +204,7 @@ function compile(configPath: Lib_Transpile_Compile_ConfigPath, currentDirectory:
     noEmitOnError: false,
   };
   const program: Lib_Transpile_Compile_Program = createProgram(parsed.fileNames, compilerOptions);
-  const preEmitDiagnostics: Lib_Transpile_Compile_PreEmitDiagnostics = filterDiagnostics(getPreEmitDiagnostics(program), currentDirectory);
+  const preEmitDiagnostics: Lib_Transpile_Compile_PreEmitDiagnostics = getDiagnostics(program, currentDirectory);
   const shouldBlockEmit: Lib_Transpile_Compile_ShouldBlockEmit = parsed.options.noEmitOnError === true && preEmitDiagnostics.length > 0;
   const emitResult: Lib_Transpile_Compile_EmitResult = (shouldBlockEmit === true) ? undefined : program.emit();
   const emitDiagnostics: Lib_Transpile_Compile_EmitDiagnostics = (emitResult === undefined) ? [] : filterDiagnostics(emitResult.diagnostics, currentDirectory);
@@ -246,7 +247,7 @@ function startWatch(configPath: Lib_Transpile_StartWatch_ConfigPath, currentDire
    */
   function afterProgramCreate(builderProgram: Lib_Transpile_StartWatch_AfterProgramCreate_BuilderProgram): Lib_Transpile_StartWatch_AfterProgramCreate_Returns {
     const program: Lib_Transpile_StartWatch_AfterProgramCreate_Program = builderProgram.getProgram();
-    const preEmitDiagnostics: Lib_Transpile_StartWatch_AfterProgramCreate_PreEmitDiagnostics = filterDiagnostics(getPreEmitDiagnostics(program), currentDirectory);
+    const preEmitDiagnostics: Lib_Transpile_StartWatch_AfterProgramCreate_PreEmitDiagnostics = getDiagnostics(program, currentDirectory);
     const configResult: Lib_Transpile_StartWatch_AfterProgramCreate_ConfigResult = readConfigFile(configPath, sys.readFile);
     const currentConfig: Lib_Transpile_StartWatch_AfterProgramCreate_CurrentConfig = (configResult['error'] === undefined) ? parseJsonConfigFileContent(configResult['config'], sys, dirname(configPath), undefined, configPath) : undefined;
     const shouldBlockEmit: Lib_Transpile_StartWatch_AfterProgramCreate_ShouldBlockEmit = currentConfig !== undefined

@@ -4,9 +4,9 @@ import {
   createProgram,
   findConfigFile,
   flattenDiagnosticMessageText,
-  getPreEmitDiagnostics,
   parseJsonConfigFileContent,
   readConfigFile,
+  sortAndDeduplicateDiagnostics,
   sys,
 } from 'typescript';
 
@@ -19,8 +19,14 @@ import type {
   Lib_TypeCheck_GetConfigPath_Project,
   Lib_TypeCheck_GetConfigPath_Resolved,
   Lib_TypeCheck_GetConfigPath_Returns,
+  Lib_TypeCheck_GetDiagnostics_CurrentDirectory,
+  Lib_TypeCheck_GetDiagnostics_Diagnostics,
+  Lib_TypeCheck_GetDiagnostics_FileName,
+  Lib_TypeCheck_GetDiagnostics_IsProjectOwned,
   Lib_TypeCheck_GetDiagnostics_Program,
   Lib_TypeCheck_GetDiagnostics_Returns,
+  Lib_TypeCheck_GetDiagnostics_ShouldCheckDeclarations,
+  Lib_TypeCheck_GetDiagnostics_TypedSourceFile,
   Lib_TypeCheck_PrintDiagnostics_Character,
   Lib_TypeCheck_PrintDiagnostics_Diagnostics,
   Lib_TypeCheck_PrintDiagnostics_FileName,
@@ -93,17 +99,45 @@ function getConfigPath(project: Lib_TypeCheck_GetConfigPath_Project, currentDire
 /**
  * Lib - Type Check - Get Diagnostics.
  *
- * Collects every pre-emit compiler diagnostic without writing output files.
- * The wrapper keeps this operation isolated for focused regression coverage.
+ * Collects global diagnostics once.
+ * Checks project-owned syntax, semantics, and declaration output directly.
+ * Dependencies still participate in resolution without eager diagnostics.
  *
- * @param {Lib_TypeCheck_GetDiagnostics_Program} program - Program.
+ * @param {Lib_TypeCheck_GetDiagnostics_Program}          program          - Program.
+ * @param {Lib_TypeCheck_GetDiagnostics_CurrentDirectory} currentDirectory - Current directory.
  *
  * @returns {Lib_TypeCheck_GetDiagnostics_Returns}
  *
  * @since 0.26.0
  */
-function getDiagnostics(program: Lib_TypeCheck_GetDiagnostics_Program): Lib_TypeCheck_GetDiagnostics_Returns {
-  return getPreEmitDiagnostics(program);
+export function getDiagnostics(program: Lib_TypeCheck_GetDiagnostics_Program, currentDirectory: Lib_TypeCheck_GetDiagnostics_CurrentDirectory): Lib_TypeCheck_GetDiagnostics_Returns {
+  const diagnostics: Lib_TypeCheck_GetDiagnostics_Diagnostics = [
+    ...program.getConfigFileParsingDiagnostics(),
+    ...program.getOptionsDiagnostics(),
+    ...program.getGlobalDiagnostics(),
+  ];
+  const shouldCheckDeclarations: Lib_TypeCheck_GetDiagnostics_ShouldCheckDeclarations = program.getCompilerOptions().declaration === true || program.getCompilerOptions().composite === true;
+
+  for (const sourceFile of program.getSourceFiles()) {
+    const typedSourceFile: Lib_TypeCheck_GetDiagnostics_TypedSourceFile = sourceFile;
+    const fileName: Lib_TypeCheck_GetDiagnostics_FileName = typedSourceFile.fileName;
+    const isProjectOwned: Lib_TypeCheck_GetDiagnostics_IsProjectOwned = fileName.startsWith(currentDirectory) === true && fileName.includes('node_modules') === false;
+
+    if (isProjectOwned === false) {
+      continue;
+    }
+
+    diagnostics.push(
+      ...program.getSyntacticDiagnostics(typedSourceFile),
+      ...program.getSemanticDiagnostics(typedSourceFile),
+    );
+
+    if (shouldCheckDeclarations === true) {
+      diagnostics.push(...program.getDeclarationDiagnostics(typedSourceFile));
+    }
+  }
+
+  return filterDiagnostics(sortAndDeduplicateDiagnostics(diagnostics), currentDirectory);
 }
 
 /**
@@ -189,7 +223,7 @@ export function runTypeCheck(options: Lib_TypeCheck_RunTypeCheck_Options): Lib_T
   }
 
   const program: Lib_TypeCheck_RunTypeCheck_Program = createProgram(parsed.fileNames, parsed.options);
-  const filteredDiagnostics: Lib_TypeCheck_RunTypeCheck_FilteredDiagnostics = filterDiagnostics(getDiagnostics(program), currentDirectory);
+  const filteredDiagnostics: Lib_TypeCheck_RunTypeCheck_FilteredDiagnostics = getDiagnostics(program, currentDirectory);
 
   printDiagnostics(filteredDiagnostics, options['printError'], options['printInfo']);
 

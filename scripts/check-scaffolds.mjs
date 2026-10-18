@@ -1,6 +1,5 @@
 import {
   execFileSync,
-  spawn,
   spawnSync,
 } from 'node:child_process';
 import {
@@ -13,7 +12,11 @@ import {
   rmSync,
   writeFileSync,
 } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { createRequire } from 'node:module';
+import {
+  availableParallelism,
+  tmpdir,
+} from 'node:os';
 import {
   join,
   win32,
@@ -690,117 +693,32 @@ function verifyLaunchSequenceCopy(launchpadPaths) {
  */
 async function verifyCloudflareWorkerRuntime(projectDirectory) {
   const workspaceDirectory = join(projectDirectory, 'packages', 'cloudflare-tool');
-  const rootWranglerExecutable = join(
-    projectDirectory,
-    'node_modules',
-    '.bin',
-    (process.platform === 'win32') ? 'wrangler.cmd' : 'wrangler',
-  );
-  const workspaceWranglerExecutable = join(
-    workspaceDirectory,
-    'node_modules',
-    '.bin',
-    (process.platform === 'win32') ? 'wrangler.cmd' : 'wrangler',
-  );
-  const wranglerExecutable = (existsSync(workspaceWranglerExecutable) === true) ? workspaceWranglerExecutable : rootWranglerExecutable;
+  const workspaceRequire = createRequire(join(workspaceDirectory, 'package.json'));
+  const wranglerModulePath = workspaceRequire.resolve('wrangler');
+  const wranglerModule = await import(pathToFileURL(wranglerModulePath).href);
+  const server = wranglerModule.createTestHarness({
+    root: workspaceDirectory,
+    workers: [{
+      configPath: './wrangler.toml',
+    }],
+  });
 
-  if (existsSync(wranglerExecutable) === false) {
-    throw new Error('The generated Cloudflare Worker should install the Wrangler executable.');
+  try {
+    await server.listen();
+
+    const response = await server.fetch('/');
+
+    if (
+      response.status !== 200
+      || await response.text() !== JSON.stringify({ message: 'Welcome to scaffold-smoke' })
+    ) {
+      throw new Error('The generated Cloudflare Worker should return the starter response.');
+    }
+  } finally {
+    await server.close();
   }
 
-  const wranglerInvocation = resolveCorepackInvocation([
-    'npm',
-    'exec',
-    '--offline',
-    '--',
-    'wrangler',
-    'dev',
-    '--ip',
-    '127.0.0.1',
-    '--port',
-    '0',
-    '--inspector-port',
-    '0',
-  ]);
-  const wranglerProcess = spawn(wranglerInvocation['command'], wranglerInvocation['commandArguments'], {
-    cwd: workspaceDirectory,
-    env: {
-      ...process.env,
-      CLOUDFLARE_TELEMETRY_DISABLED: '1',
-      NO_COLOR: '1',
-    },
-    stdio: [
-      'ignore',
-      'pipe',
-      'pipe',
-    ],
-  });
-
-  let output = '';
-  let runtimeReady = false;
-
-  await new Promise((resolve, reject) => {
-    const timeout = setTimeout(() => {
-      wranglerProcess.kill('SIGTERM');
-
-      return;
-    }, 30000);
-
-    /**
-     * Check Scaffolds - Verify Cloudflare Worker Runtime - Collect Output.
-     *
-     * Combines both streams because Wrangler may report startup readiness and
-     * configuration failures through different channels.
-     *
-     * @param {Buffer} data - Data.
-     *
-     * @returns {void}
-     *
-     * @since 0.0.0
-     */
-    const collectOutput = (data) => {
-      output += data.toString();
-
-      if (runtimeReady === false && output.includes('Ready on') === true) {
-        runtimeReady = true;
-        wranglerProcess.kill('SIGTERM');
-      }
-
-      return;
-    };
-
-    wranglerProcess.stdout.on('data', collectOutput);
-
-    wranglerProcess.stderr.on('data', collectOutput);
-
-    wranglerProcess.once('error', (error) => {
-      clearTimeout(timeout);
-      reject(error);
-
-      return;
-    });
-
-    wranglerProcess.once('close', (exitCode) => {
-      clearTimeout(timeout);
-
-      if (runtimeReady === true) {
-        resolve(undefined);
-
-        return;
-      }
-
-      reject(new Error([
-        `Generated Cloudflare Worker runtime exited before becoming ready (exit code ${String(exitCode)}).`,
-        output,
-      ].join('\n')));
-
-      return;
-    });
-
-    return;
-  });
-
-  process.stdout.write('Generated Cloudflare Worker runtime started successfully.\n');
+  process.stdout.write('Generated Cloudflare Worker runtime responded successfully.\n');
 
   return;
 }
@@ -849,14 +767,15 @@ async function verifyVercelFunctionRuntime(projectDirectory) {
 async function checkScaffolds() {
   const repositoryDirectory = process.cwd();
   const dockerAvailable = ensureDockerEngine();
+  const scaffoldConcurrency = (process.platform === 'win32') ? 2 : Math.min(4, availableParallelism());
   const temporaryDirectory = mkdtempSync(join(tmpdir(), 'nova-scaffold-smoke-'));
   const projectDirectory = join(temporaryDirectory, 'project');
-  const directProjectDirectory = join(temporaryDirectory, 'direct-project');
-  const cliHostDirectory = join(temporaryDirectory, 'cli-host');
+  const baseProjectDirectory = join(temporaryDirectory, 'base-project');
+  const novaCliPath = join(repositoryDirectory, 'packages', 'nova', 'bin', 'nova.mjs');
 
   try {
-    runNpm([
-      'run',
+    runCommand(process.execPath, [
+      './scripts/nova-run-workspaces.mjs',
       'build',
       '--workspace',
       '@cbnventures/nova',
@@ -878,22 +797,8 @@ async function checkScaffolds() {
     const novaTarballPath = findTarball(temporaryDirectory, 'cbnventures-nova-');
     const docusaurusPresetTarballPath = findTarball(temporaryDirectory, 'cbnventures-docusaurus-preset-nova-');
 
-    mkdirSync(cliHostDirectory, { recursive: true });
-
-    writeFileSync(join(cliHostDirectory, 'package.json'), `${JSON.stringify({
-      name: 'nova-scaffold-cli-host',
-      private: true,
-      dependencies: {
-        '@cbnventures/nova': `file:${novaTarballPath}`,
-      },
-    }, null, 2)}\n`, 'utf-8');
-
-    runNpm(['install'], cliHostDirectory);
-
-    const novaCliPath = join(cliHostDirectory, 'node_modules', '@cbnventures', 'nova', 'bin', 'nova.mjs');
-
-    // Prove that starter base is optional: this one command creates the root
-    // and its first workspace together.
+    // Prove that starter base is optional while making the resulting project
+    // the one fully installed, checked, and built by this smoke matrix.
     runCommand(process.execPath, [
       novaCliPath,
       'scaffold',
@@ -902,38 +807,25 @@ async function checkScaffolds() {
       '--non-interactive',
       '--no-install',
       '--name',
-      'direct-smoke',
+      'scaffold-smoke',
       '--workspace-name',
       'web',
       '--output',
-      './direct-project',
+      './project',
     ], temporaryDirectory);
 
-    verifyWorkspaceRegistrations(directProjectDirectory, {
+    verifyWorkspaceRegistrations(projectDirectory, {
       './': {
-        name: 'direct-smoke-project',
+        name: 'scaffold-smoke-project',
         policy: 'freezable',
         role: 'project',
       },
       './apps/web': {
-        name: 'direct-smoke-app-web',
+        name: 'scaffold-smoke-app-web',
         policy: 'trackable',
         role: 'app',
       },
     });
-
-    runCommand(process.execPath, [
-      novaCliPath,
-      'scaffold',
-      'starter',
-      'base',
-      '--non-interactive',
-      '--no-install',
-      '--name',
-      'scaffold-smoke',
-      '--output',
-      './project',
-    ], temporaryDirectory);
 
     expectCommandFailure(process.execPath, [
       novaCliPath,
@@ -1255,6 +1147,11 @@ async function checkScaffolds() {
         policy: 'trackable',
         role: 'app',
       },
+      './apps/web': {
+        name: 'scaffold-smoke-app-web',
+        policy: 'trackable',
+        role: 'app',
+      },
       './apps/docs': {
         name: 'scaffold-smoke-docs',
         policy: 'freezable',
@@ -1309,7 +1206,7 @@ async function checkScaffolds() {
     ]);
 
     verifyLaunchSequenceCopy([
-      join(directProjectDirectory, 'apps', 'web', 'src', 'main.ts'),
+      join(projectDirectory, 'apps', 'web', 'src', 'main.ts'),
       join(projectDirectory, 'apps', 'android', 'app', 'src', 'main', 'java', 'io', 'cbnventures', 'scaffoldsmoke', 'ui', 'main', 'MainScreen.kt'),
       join(projectDirectory, 'apps', 'apple', 'Sources', 'ContentView.swift'),
       join(projectDirectory, 'apps', 'astro', 'src', 'pages', 'index.astro'),
@@ -1353,12 +1250,6 @@ async function checkScaffolds() {
       'pkg',
       'set',
       `dependencies.@cbnventures/nova=file:${novaTarballPath}`,
-    ], directProjectDirectory);
-
-    runNpm([
-      'pkg',
-      'set',
-      `dependencies.@cbnventures/nova=file:${novaTarballPath}`,
     ], projectDirectory);
 
     runNpm([
@@ -1375,13 +1266,41 @@ async function checkScaffolds() {
     runNpm([
       'pkg',
       'set',
-      'scripts.check:workspaces=nova utility run-workspaces --concurrency=2 --continue-on-error check',
-      'scripts.build:workspaces=nova utility run-workspaces --concurrency=2 --continue-on-error --node-env production build',
+      `scripts.check:workspaces=nova utility run-workspaces --concurrency=${scaffoldConcurrency} --continue-on-error check`,
+      `scripts.build:workspaces=nova utility run-workspaces --concurrency=${scaffoldConcurrency} --continue-on-error --node-env production build`,
     ], projectDirectory);
 
-    runNpm(['install'], projectDirectory);
+    runNpm([
+      'install',
+      '--no-audit',
+      '--no-fund',
+    ], projectDirectory);
 
-    runNpm(['install'], directProjectDirectory);
+    const installedNovaCliPath = join(projectDirectory, 'node_modules', '@cbnventures', 'nova', 'bin', 'nova.mjs');
+
+    // Exercise the explicit starter through the packed, installed CLI. Its
+    // shared root template is already covered by the fully checked project, so
+    // a second dependency tree and duplicate check/build pass add no coverage.
+    runCommand(process.execPath, [
+      installedNovaCliPath,
+      'scaffold',
+      'starter',
+      'base',
+      '--non-interactive',
+      '--no-install',
+      '--name',
+      'base-smoke',
+      '--output',
+      './base-project',
+    ], temporaryDirectory);
+
+    verifyWorkspaceRegistrations(baseProjectDirectory, {
+      './': {
+        name: 'base-smoke-project',
+        policy: 'freezable',
+        role: 'project',
+      },
+    });
 
     await verifyCloudflareWorkerRuntime(projectDirectory);
 
@@ -1389,7 +1308,7 @@ async function checkScaffolds() {
     verifyBundlerLoad(projectDirectory, 'apps/vite', 'vite');
     verifyBundlerLoad(projectDirectory, 'apps/vite-svelte', 'vite');
     verifyBundlerLoad(projectDirectory, 'apps/vite-vue', 'vite');
-    verifyBundlerLoad(directProjectDirectory, 'apps/web', 'vite');
+    verifyBundlerLoad(projectDirectory, 'apps/web', 'vite');
 
     const novaPackageJson = JSON.parse(readFileSync(join(repositoryDirectory, 'packages', 'nova', 'package.json'), 'utf-8'));
     const novaVersion = novaPackageJson['version'];
@@ -1399,7 +1318,7 @@ async function checkScaffolds() {
       '--',
       'nova',
       '--help',
-    ], directProjectDirectory);
+    ], projectDirectory);
 
     process.stdout.write(novaHelpOutput);
 
@@ -1464,16 +1383,6 @@ async function checkScaffolds() {
     verifyNodeCliRuntime(projectDirectory, 'vercel-tool', 'scaffold-smoke-tool-vercel-tool');
     verifyHomebridgeUtilityRuntime(projectDirectory);
     verifyGithubActionRuntime(projectDirectory);
-
-    runNpm([
-      'run',
-      'check',
-    ], directProjectDirectory);
-
-    runNpm([
-      'run',
-      'build',
-    ], directProjectDirectory);
   } finally {
     rmSync(temporaryDirectory, {
       force: true,

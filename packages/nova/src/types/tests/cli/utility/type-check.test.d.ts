@@ -30,6 +30,19 @@ export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_DelegatesTheRepos
 export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ErrorsWhenNoTsconfigJsonFound_ProjectDirectory = string;
 
 /**
+ * Tests - CLI - Utility - Type Check - Run - Ignores Diagnostics Owned Exclusively By Dependency Files.
+ *
+ * @since 0.32.0
+ */
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_ProjectDirectory = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_TsconfigPath = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_TsconfigContents = string;
+
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IgnoresDiagnosticsOwnedExclusivelyByDependencyFiles_IndexPath = string;
+
+/**
  * Tests - CLI - Utility - Type Check - Run - Rejects Invalid Compiler Option.
  *
  * @since 0.26.0

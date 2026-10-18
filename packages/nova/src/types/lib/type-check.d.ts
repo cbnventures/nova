@@ -3,6 +3,7 @@ import type {
   LineAndCharacter,
   ParsedCommandLine,
   Program,
+  SourceFile,
 } from 'typescript';
 
 /**
@@ -38,7 +39,19 @@ export type Lib_TypeCheck_GetConfigPath_Resolved = string;
  */
 export type Lib_TypeCheck_GetDiagnostics_Program = Program;
 
-export type Lib_TypeCheck_GetDiagnostics_Returns = readonly Diagnostic[];
+export type Lib_TypeCheck_GetDiagnostics_CurrentDirectory = string;
+
+export type Lib_TypeCheck_GetDiagnostics_Returns = Diagnostic[];
+
+export type Lib_TypeCheck_GetDiagnostics_Diagnostics = Diagnostic[];
+
+export type Lib_TypeCheck_GetDiagnostics_ShouldCheckDeclarations = boolean;
+
+export type Lib_TypeCheck_GetDiagnostics_TypedSourceFile = SourceFile;
+
+export type Lib_TypeCheck_GetDiagnostics_FileName = string;
+
+export type Lib_TypeCheck_GetDiagnostics_IsProjectOwned = boolean;
 
 /**
  * Lib - Type Check - Print Diagnostics.
