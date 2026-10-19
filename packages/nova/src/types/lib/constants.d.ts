@@ -11,3 +11,10 @@ export type Lib_Constants_DocsBaseUrl = string;
  * @since 0.18.0
  */
 export type Lib_Constants_GhMinVersion = string;
+
+/**
+ * Lib - Constants - Run Workspaces Default Concurrency.
+ *
+ * @since 0.33.0
+ */
+export type Lib_Constants_RunWorkspacesDefaultConcurrency = number;

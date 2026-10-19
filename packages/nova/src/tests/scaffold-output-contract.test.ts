@@ -1,5 +1,6 @@
 import {
   deepStrictEqual,
+  ok,
   strictEqual,
 } from 'node:assert/strict';
 import {
@@ -20,7 +21,10 @@ import {
 
 import novaPackageJson from '../../package.json' with { type: 'json' };
 
-import { libItemSortOrderKeys } from '../lib/item.js';
+import {
+  libItemAllowedRecipes,
+  libItemSortOrderKeys,
+} from '../lib/item.js';
 import {
   findPackageScriptContractViolations,
   packageScriptCanonicalGroupOrder,
@@ -133,8 +137,16 @@ import type {
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJson,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonPath,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRaw,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipe,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipeName,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipeNames,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipes,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedProject,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRecipes,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRootPackageJsonRecipes,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRunWorkspacesSettings,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedScripts,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedSettings,
   Tests_ScaffoldOutputContract_VerifyStarterContract_Returns,
   Tests_ScaffoldOutputContract_VerifyStarterContract_SandboxRoot,
   Tests_ScaffoldOutputContract_VerifyStarterContract_TargetDirectory,
@@ -289,12 +301,20 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'Sources/Assets.xcassets/SocialYouTube.imageset/youtube.svg',
       'Sources/ContentView.swift',
       'Tests/AppTests.swift',
+      'eslint.config.mts',
       'package.json',
       'project.yml',
       'scripts/run-apple.mjs',
+      'tsconfig.scripts.json',
+      'tsconfig.tests.json',
+      'vitest.config.mts',
     ],
     expectedScripts: {
       'dev:project': 'node ./scripts/run-apple.mjs generate',
+      'check:lint-scripts': 'eslint ./ --max-warnings=0',
+      'check:types-scripts': 'nova utility type-check --project tsconfig.scripts.json',
+      'check:types-tests': 'nova utility type-check --project tsconfig.tests.json',
+      'check:test-scripts': 'vitest run',
       'check:project': 'node ./scripts/run-apple.mjs generate',
       'check:test': 'node ./scripts/run-apple.mjs test',
       'build:project': 'node ./scripts/run-apple.mjs generate',
@@ -1070,7 +1090,7 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
 async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_VerifyStarterContract_SandboxRoot): Tests_ScaffoldOutputContract_VerifyStarterContract_Returns {
   const targetDirectory: Tests_ScaffoldOutputContract_VerifyStarterContract_TargetDirectory = join(sandboxRoot, 'starter');
 
-  await createMonorepoRoot(targetDirectory, 'contract-starter');
+  await createMonorepoRoot(targetDirectory, 'contract-starter', ['nodejs']);
 
   await verifyGeneratedOutput(targetDirectory, [
     '.env',
@@ -1093,8 +1113,14 @@ async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_V
   const generatedNovaConfigPath: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedNovaConfigPath = join(targetDirectory, 'nova.config.json');
   const generatedNovaConfigRaw: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedNovaConfigRaw = await readFile(generatedNovaConfigPath, 'utf-8');
   const generatedNovaConfig: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedNovaConfig = JSON.parse(generatedNovaConfigRaw) as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedNovaConfig;
+  const generatedProject: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedProject = generatedNovaConfig['project'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedProject;
+  const generatedSettings: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedSettings = generatedNovaConfig['settings'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedSettings;
+  const generatedRunWorkspacesSettings: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRunWorkspacesSettings = generatedSettings['runWorkspaces'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRunWorkspacesSettings;
   const generatedRecipes: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRecipes = generatedNovaConfig['recipes'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRecipes;
   const generatedMiscellaneousRecipes: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedMiscellaneousRecipes = generatedRecipes['miscellaneous'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedMiscellaneousRecipes;
+  const generatedPackageJsonRecipes: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipes = generatedRecipes['package-json'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipes;
+  const generatedRootPackageJsonRecipes: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRootPackageJsonRecipes = generatedPackageJsonRecipes['./'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRootPackageJsonRecipes;
+  const generatedPackageJsonRecipeNames: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipeNames = Object.keys(generatedRootPackageJsonRecipes);
   const generatedDependencies: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDependencies = generatedPackageJson['dependencies'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDependencies;
   const generatedDevDependencies: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies = generatedPackageJson['devDependencies'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies;
   const generatedScripts: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedScripts = generatedPackageJson['scripts'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedScripts;
@@ -1104,12 +1130,51 @@ async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_V
   strictEqual(generatedDevDependencies['turbo'], undefined);
   strictEqual(generatedScripts['dev:workspaces'], 'nova utility run-workspaces --node-env development dev');
   strictEqual(generatedScripts['prod:workspaces'], 'nova utility run-workspaces --node-env production prod');
-  strictEqual(generatedScripts['check:workspaces'], 'nova utility run-workspaces --concurrency=2 check');
-  strictEqual(generatedScripts['build:workspaces'], 'nova utility run-workspaces --concurrency=2 --node-env production build');
-  strictEqual(generatedScripts['deploy:workspaces'], 'nova utility run-workspaces --concurrency=2 --node-env production deploy');
+  strictEqual(generatedScripts['check:workspaces'], 'nova utility run-workspaces check');
+  strictEqual(generatedScripts['build:workspaces'], 'nova utility run-workspaces --node-env production build');
+  strictEqual(generatedScripts['deploy:workspaces'], 'nova utility run-workspaces --node-env production deploy');
   strictEqual(generatedScripts['clean:workspaces'], 'nova utility run-workspaces clean');
   strictEqual(generatedScripts['changelog'], 'nova utility changelog');
   strictEqual(generatedScripts['recipes'], 'nova utility run-recipes --replace-file');
+  deepStrictEqual(generatedRunWorkspacesSettings['concurrency'], {
+    build: 2,
+    check: 2,
+    deploy: 2,
+  });
+  deepStrictEqual(generatedProject['platforms'], ['nodejs']);
+  deepStrictEqual(generatedPackageJsonRecipeNames, [...libItemAllowedRecipes]);
+
+  for (const recipeName of libItemAllowedRecipes) {
+    const generatedPackageJsonRecipeName: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipeName = recipeName;
+    const generatedPackageJsonRecipe: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipe = generatedRootPackageJsonRecipes[generatedPackageJsonRecipeName];
+
+    ok(generatedPackageJsonRecipe !== undefined);
+    strictEqual(generatedPackageJsonRecipe['enabled'], true);
+  }
+
+  deepStrictEqual(generatedRootPackageJsonRecipes['cleanup'], {
+    enabled: true,
+    settings: {
+      removeUnknownKeys: true,
+      reorderKeys: true,
+    },
+  });
+  deepStrictEqual(generatedRootPackageJsonRecipes['normalize-dependencies'], {
+    enabled: true,
+    settings: {
+      pinDependencyVersions: true,
+      pinDevDependencyVersions: true,
+    },
+  });
+  deepStrictEqual(generatedRootPackageJsonRecipes['sync-environment'], {
+    enabled: true,
+    settings: {
+      trackNodeLtsVersions: true,
+    },
+  });
+  deepStrictEqual(generatedMiscellaneousRecipes['fix-markdown-tables'], {
+    enabled: true,
+  });
   deepStrictEqual(generatedMiscellaneousRecipes['remove-operating-system-files'], {
     enabled: false,
     settings: {
@@ -1123,6 +1188,11 @@ async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_V
         enhancedVistaThumbnailDatabase: false,
         thumbnailDatabase: false,
       },
+    },
+  });
+  deepStrictEqual(generatedRecipes['nova-config'], {
+    'normalize-order': {
+      enabled: true,
     },
   });
 

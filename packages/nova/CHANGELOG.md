@@ -1,5 +1,25 @@
 # @cbnventures/nova
 
+## 0.33.0 - 2026-10-18
+
+### UPDATED
+- Enabled every package.json recipe with Nova's reviewed defaults for generated monorepo roots and newly scaffolded workspaces.
+- Kept project platform metadata synchronized by merging every scaffold's required runtimes, ecosystems, and deployment targets into `project.platforms`, with first-class Discord, iOS, and visionOS selections.
+- Seeded Docusaurus scaffolds with explicit `https://www.example.com` homepage and documentation URLs, then derived both the deployment origin and path-aware base URL through Nova identity.
+
+### FIXED
+- Restored recipe category commands as alphabetized subcommand menus, aligned the CLI reference and generated documentation navigation, and kept batch execution behind `nova utility run-recipes`, with individual configuration toggles for every registered recipe.
+- Equipped Apple application scaffolds with linting, strict type checks, and empty-suite-safe Vitest coverage for their generated Node.js lifecycle helpers.
+- Corrected the README generator reference to document every consumer-facing workspace copy it produces.
+- Preserved project-owned root package scripts when normalize-tooling adds missing canonical commands, preventing recipe runs from replacing custom build planners.
+- Stamped unreleased API annotations across every source layout Nova scaffolds, including Astro, Kotlin, Java, Swift, PHP, Vue, Svelte, Android, Apple, serverless, CLI, and pfSense trees, while continuing to exclude nested workspaces, templates, and documentation examples.
+- Kept managed GitHub ruleset discovery compatible with current GitHub CLI pagination instead of combining mutually exclusive query flags.
+
+### ADDED
+- Added per-workflow runner and timeout controls to generated GitHub Actions, with `ubuntu-latest` as the sole runner selection and validated timeout ceilings from 1 through 360 minutes.
+- Added centrally configured per-script workspace concurrency with explicit CLI overrides and a reusable default of 10.
+- Added a `nova-config normalize-order` recipe that applies Nova's canonical top-level configuration order without changing nested or unrecognized values.
+
 ## 0.32.0 - 2026-10-16
 
 ### UPDATED

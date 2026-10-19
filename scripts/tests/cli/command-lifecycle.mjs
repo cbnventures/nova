@@ -586,6 +586,15 @@ describe('Compiled Nova CLI integration', () => {
     ].join('\n');
 
     await writeFile(markdownPath, originalContents, 'utf-8');
+    await writeFile(join(projectDirectory, 'nova.config.json'), `${JSON.stringify({
+      recipes: {
+        miscellaneous: {
+          'fix-markdown-tables': {
+            enabled: true,
+          },
+        },
+      },
+    }, null, 2)}\n`, 'utf-8');
 
     const checkResult = runNova(projectDirectory, [
       'recipe',

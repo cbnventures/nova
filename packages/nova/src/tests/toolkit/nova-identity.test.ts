@@ -196,9 +196,9 @@ describe('NovaIdentity.stripTrailingSlash', () => {
  */
 describe('NovaIdentity.docsUrl', () => {
   it('returns the origin of a documentation url', () => {
-    const url: Tests_Toolkit_NovaIdentity_NovaIdentityDocsUrl_ReturnsTheOriginOfADocumentationUrl_Url = NovaIdentity.docsUrl('https://acme.example/docs/');
+    const url: Tests_Toolkit_NovaIdentity_NovaIdentityDocsUrl_ReturnsTheOriginOfADocumentationUrl_Url = NovaIdentity.docsUrl('https://www.acme.example/docs/');
 
-    strictEqual(url, 'https://acme.example');
+    strictEqual(url, 'https://www.acme.example');
 
     return;
   });

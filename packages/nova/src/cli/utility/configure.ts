@@ -73,6 +73,18 @@ import type {
   Cli_Utility_Configure_Runner_IsOptionalNonnegativeIntegerInput_Returns,
   Cli_Utility_Configure_Runner_IsOptionalNonnegativeIntegerInput_Trimmed,
   Cli_Utility_Configure_Runner_IsOptionalNonnegativeIntegerInput_Value,
+  Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Parsed,
+  Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Returns,
+  Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Trimmed,
+  Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Value,
+  Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Entries,
+  Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_EntryKey,
+  Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_EntryValue,
+  Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Parsed,
+  Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Returns,
+  Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Trimmed,
+  Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_TypedEntry,
+  Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Value,
   Cli_Utility_Configure_Runner_IsStringArrayInput_Parsed,
   Cli_Utility_Configure_Runner_IsStringArrayInput_Returns,
   Cli_Utility_Configure_Runner_IsStringArrayInput_Trimmed,
@@ -127,6 +139,9 @@ import type {
   Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Returns,
   Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Trimmed,
   Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Value,
+  Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Returns,
+  Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Trimmed,
+  Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Value,
   Cli_Utility_Configure_Runner_ParseStringArrayInput_Returns,
   Cli_Utility_Configure_Runner_ParseStringArrayInput_Trimmed,
   Cli_Utility_Configure_Runner_ParseStringArrayInput_Value,
@@ -416,12 +431,14 @@ import type {
   Cli_Utility_Configure_Runner_PromptGithub_HasAndroidPlatform,
   Cli_Utility_Configure_Runner_PromptGithub_HasDockerUrl,
   Cli_Utility_Configure_Runner_PromptGithub_HasExplicitBugReportFields,
+  Cli_Utility_Configure_Runner_PromptGithub_HasIosPlatform,
   Cli_Utility_Configure_Runner_PromptGithub_HasJavaPlatform,
   Cli_Utility_Configure_Runner_PromptGithub_HasKotlinPlatform,
   Cli_Utility_Configure_Runner_PromptGithub_HasMacosPlatform,
   Cli_Utility_Configure_Runner_PromptGithub_HasNodejsPlatform,
   Cli_Utility_Configure_Runner_PromptGithub_HasNpmUrl,
   Cli_Utility_Configure_Runner_PromptGithub_HasSwiftPlatform,
+  Cli_Utility_Configure_Runner_PromptGithub_HasVisionosPlatform,
   Cli_Utility_Configure_Runner_PromptGithub_IssueTemplateInput,
   Cli_Utility_Configure_Runner_PromptGithub_IssueTemplateOutput,
   Cli_Utility_Configure_Runner_PromptGithub_MergeInitial,
@@ -624,21 +641,24 @@ import type {
   Cli_Utility_Configure_Runner_PromptIgnoreFiles_Returns,
   Cli_Utility_Configure_Runner_PromptIgnoreFiles_SelectedTargetPath,
   Cli_Utility_Configure_Runner_PromptIgnoreFiles_SeparatorIndex,
-  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutput,
-  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputKey,
-  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputResult,
   Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entries,
-  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entry,
-  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingEntry,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingFixMarkdownTables,
   Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingPlatformSettings,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingRemoveOperatingSystemFiles,
   Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutput,
   Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputKey,
   Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputResult,
   Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileSettings,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FixMarkdownTables,
   Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_NextEntries,
   Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Platforms,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_PromptEntries,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_RemoveOperatingSystemFiles,
   Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Returns,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedEntries,
   Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedFileNames,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedFixMarkdownTables,
+  Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedRemoveOperatingSystemFiles,
   Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Settings,
   Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SupportedFileNames,
   Cli_Utility_Configure_Runner_PromptProject_Config,
@@ -734,6 +754,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptReadMe_SuggestedBadges,
   Cli_Utility_Configure_Runner_PromptReadMe_Urls,
   Cli_Utility_Configure_Runner_PromptRecipeEntries_AllowedRecipeNames,
+  Cli_Utility_Configure_Runner_PromptRecipeEntries_AllowedSettingsRecipeNames,
   Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledOutput,
   Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledOutputKey,
   Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledOutputResult,
@@ -753,6 +774,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsOutput,
   Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsOutputKey,
   Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsOutputResult,
+  Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsRecipeNames,
   Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsRecipes,
   Cli_Utility_Configure_Runner_PromptRecipes_AllowedRecipeNames,
   Cli_Utility_Configure_Runner_PromptRecipes_CategoryEntries,
@@ -788,10 +810,17 @@ import type {
   Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutputKey,
   Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutputResult,
   Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutputValue,
+  Cli_Utility_Configure_Runner_PromptSettings_Concurrency,
+  Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyInitial,
+  Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutput,
+  Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputKey,
+  Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputResult,
+  Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputValue,
   Cli_Utility_Configure_Runner_PromptSettings_Config,
   Cli_Utility_Configure_Runner_PromptSettings_CurrentDirectory,
   Cli_Utility_Configure_Runner_PromptSettings_CurrentStrategy,
   Cli_Utility_Configure_Runner_PromptSettings_ExistingCache,
+  Cli_Utility_Configure_Runner_PromptSettings_ExistingConcurrency,
   Cli_Utility_Configure_Runner_PromptSettings_LockedStrategy,
   Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningInitial,
   Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutput,
@@ -932,12 +961,17 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExampleRaw,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExampleResolved,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExampleWorkingDir,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutput,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputKey,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResult,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResultValue,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingScopes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingSuffix,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTargets,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTargetTypes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTemplate,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTimeoutMinutes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTrigger,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTriggerNames,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTriggers,
@@ -969,6 +1003,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopesOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopesOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopesOutputResultValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedRunsOn,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedScopes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedSuffix,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetNeeds,
@@ -976,6 +1011,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetType,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTemplate,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTimeoutMinutes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTriggers,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_Settings,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SettingsOutput,
@@ -1035,6 +1071,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TemplateOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TemplateOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TemplateOutputResultValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TimeoutMinutesRaw,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerChoices,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerFilterOutput,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggerFilterOutputKey,
@@ -1401,6 +1438,96 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Configure - Is Optional Workflow Timeout Input.
+   *
+   * Accepts a blank value so each workflow template can retain its built-in
+   * job ceilings, or a whole number from 1 through 360 for an explicit ceiling.
+   *
+   * @param {Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Value} value - Value.
+   *
+   * @returns {Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Returns}
+   *
+   * @since 0.33.0
+   */
+  public static isOptionalWorkflowTimeoutInput(value: Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Value): Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Returns {
+    if (typeof value !== 'string') {
+      return 'Enter a whole number from 1 through 360, or leave the field blank.';
+    }
+
+    const trimmed: Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Trimmed = value.trim();
+
+    if (trimmed === '') {
+      return true;
+    }
+
+    const parsed: Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Parsed = Number.parseInt(trimmed, 10);
+
+    if (
+      Number.isInteger(parsed) === false
+      || parsed < 1
+      || parsed > 360
+      || `${parsed}` !== trimmed
+    ) {
+      return 'Enter a whole number from 1 through 360, or leave the field blank.';
+    }
+
+    return true;
+  }
+
+  /**
+   * CLI - Utility - Configure - Is Positive Integer Record Input.
+   *
+   * Validates an optional compact JSON object whose keys identify workspace
+   * scripts and whose values define positive concurrency limits.
+   *
+   * @param {Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Value} value - Value.
+   *
+   * @returns {Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Returns}
+   *
+   * @since 0.33.0
+   */
+  public static isPositiveIntegerRecordInput(value: Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Value): Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Returns {
+    if (typeof value !== 'string') {
+      return 'Enter a JSON object with positive integer values.';
+    }
+
+    const trimmed: Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Trimmed = value.trim();
+
+    if (trimmed === '') {
+      return true;
+    }
+
+    try {
+      const parsed: Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Parsed = JSON.parse(trimmed);
+
+      if (isPlainObject(parsed) === false) {
+        return 'Enter a JSON object with positive integer values.';
+      }
+
+      const entries: Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Entries = Object.entries(parsed);
+
+      if (entries.some((entry) => {
+        const typedEntry: Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_TypedEntry = entry;
+        const entryKey: Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_EntryKey = typedEntry[0].trim();
+        const entryValue: Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_EntryValue = typedEntry[1];
+
+        return (
+          entryKey.length === 0
+          || typeof entryValue !== 'number'
+          || Number.isInteger(entryValue) === false
+          || entryValue < 1
+        );
+      }) === true) {
+        return 'Enter non-empty script names with whole-number limits greater than zero.';
+      }
+    } catch {
+      return 'Enter valid JSON, for example {"build":2,"check":2}.';
+    }
+
+    return true;
+  }
+
+  /**
    * CLI - Utility - Configure - Is String Array Input.
    *
    * Validates an optional compact JSON array and ensures every entry is a
@@ -1494,6 +1621,30 @@ export class Runner {
    */
   private static parseBooleanRecordInput(value: Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Value): Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Returns {
     const trimmed: Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Trimmed = value.trim();
+
+    if (trimmed === '') {
+      return {};
+    }
+
+    return JSON.parse(trimmed);
+  }
+
+  /**
+   * CLI - Utility - Configure - Parse Positive Integer Record Input.
+   *
+   * Converts a prompt value that passed isPositiveIntegerRecordInput into the
+   * per-script workspace concurrency record stored in nova.config.json.
+   *
+   * @param {Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Returns}
+   *
+   * @since 0.33.0
+   */
+  private static parsePositiveIntegerRecordInput(value: Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Value): Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Returns {
+    const trimmed: Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Trimmed = value.trim();
 
     if (trimmed === '') {
       return {};
@@ -1956,6 +2107,16 @@ export class Runner {
         selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('swift') === true,
       },
       {
+        title: 'iOS',
+        value: 'ios',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('ios') === true,
+      },
+      {
+        title: 'visionOS',
+        value: 'visionos',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('visionos') === true,
+      },
+      {
         title: 'Android',
         value: 'android',
         selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('android') === true,
@@ -1999,6 +2160,11 @@ export class Runner {
         title: 'Windows',
         value: 'windows',
         selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('windows') === true,
+      },
+      {
+        title: 'Discord',
+        value: 'discord',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('discord') === true,
       },
       {
         title: 'Homebridge',
@@ -3437,9 +3603,16 @@ export class Runner {
     }
 
     const hasSwiftPlatform: Cli_Utility_Configure_Runner_PromptGithub_HasSwiftPlatform = configuredPlatforms !== undefined && configuredPlatforms.includes('swift') === true;
+    const hasIosPlatform: Cli_Utility_Configure_Runner_PromptGithub_HasIosPlatform = configuredPlatforms !== undefined && configuredPlatforms.includes('ios') === true;
     const hasMacosPlatform: Cli_Utility_Configure_Runner_PromptGithub_HasMacosPlatform = configuredPlatforms !== undefined && configuredPlatforms.includes('macos') === true;
+    const hasVisionosPlatform: Cli_Utility_Configure_Runner_PromptGithub_HasVisionosPlatform = configuredPlatforms !== undefined && configuredPlatforms.includes('visionos') === true;
 
-    if (hasSwiftPlatform === true || hasMacosPlatform === true) {
+    if (
+      hasSwiftPlatform === true
+      || hasIosPlatform === true
+      || hasMacosPlatform === true
+      || hasVisionosPlatform === true
+    ) {
       suggestedBugReportFields.push('apple');
     }
 
@@ -4909,8 +5082,8 @@ export class Runner {
   /**
    * CLI - Utility - Configure - Prompt Miscellaneous Recipes.
    *
-   * Edits the operating-system cleanup recipe through closed platform and file
-   * choices so configure never exposes arbitrary deletion paths or patterns.
+   * Edits every miscellaneous recipe toggle and presents closed operating-system cleanup
+   * choices without exposing arbitrary deletion paths or patterns.
    *
    * @param {Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entries} entries - Entries.
    *
@@ -4921,23 +5094,28 @@ export class Runner {
    * @since 0.32.0
    */
   private static async promptMiscellaneousRecipes(entries: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entries): Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Returns {
-    const existingEntry: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingEntry = (entries !== undefined) ? entries['remove-operating-system-files'] : undefined;
-    const enabledOutput: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputKey, Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputResult>({
-      type: 'confirm',
-      name: 'enabled',
-      message: 'Enable remove-operating-system-files?',
-      initial: existingEntry !== undefined && existingEntry['enabled'] === true,
-    });
+    const existingFixMarkdownTables: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingFixMarkdownTables = (entries !== undefined) ? entries['fix-markdown-tables'] : undefined;
+    const existingRemoveOperatingSystemFiles: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingRemoveOperatingSystemFiles = (entries !== undefined) ? entries['remove-operating-system-files'] : undefined;
+    const promptEntries: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_PromptEntries = {
+      'fix-markdown-tables': existingFixMarkdownTables ?? { enabled: false },
+      'remove-operating-system-files': {
+        enabled: (existingRemoveOperatingSystemFiles !== undefined) ? existingRemoveOperatingSystemFiles['enabled'] : false,
+      },
+    };
+    const selectedEntries: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedEntries = await Runner.promptRecipeEntries(promptEntries, libItemRecipesByCategory['miscellaneous'], 'Miscellaneous', ['fix-markdown-tables']);
 
-    if (enabledOutput['cancelled'] === true) {
+    if (selectedEntries === undefined) {
       return undefined;
     }
+
+    const selectedFixMarkdownTables: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedFixMarkdownTables = selectedEntries['fix-markdown-tables'] ?? { enabled: false };
+    const selectedRemoveOperatingSystemFiles: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedRemoveOperatingSystemFiles = selectedEntries['remove-operating-system-files'] ?? { enabled: false };
 
     const settings: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Settings = {};
     const platforms: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Platforms = Object.keys(libItemOperatingSystemFilesByPlatform) as Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Platforms;
 
     for (const platform of platforms) {
-      const existingPlatformSettings: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingPlatformSettings = (existingEntry !== undefined && existingEntry['settings'] !== undefined) ? existingEntry['settings'][platform] : undefined;
+      const existingPlatformSettings: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingPlatformSettings = (existingRemoveOperatingSystemFiles !== undefined && existingRemoveOperatingSystemFiles['settings'] !== undefined) ? existingRemoveOperatingSystemFiles['settings'][platform] : undefined;
       const supportedFileNames: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SupportedFileNames = libItemOperatingSystemFilesByPlatform[platform];
       const fileSettings: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileSettings = {};
 
@@ -4972,12 +5150,16 @@ export class Runner {
       Reflect.set(settings, platform, fileSettings);
     }
 
-    const entry: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entry = {
-      enabled: enabledOutput['result'].enabled,
+    const fixMarkdownTables: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FixMarkdownTables = {
+      ...selectedFixMarkdownTables,
+    };
+    const removeOperatingSystemFiles: Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_RemoveOperatingSystemFiles = {
+      enabled: selectedRemoveOperatingSystemFiles['enabled'],
       settings,
     };
     return {
-      'remove-operating-system-files': entry,
+      'fix-markdown-tables': fixMarkdownTables,
+      'remove-operating-system-files': removeOperatingSystemFiles,
     } satisfies Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_NextEntries;
   }
 
@@ -4987,9 +5169,10 @@ export class Runner {
    * Edits the complete recipe-entry contract for one recipe category: every
    * enabled toggle and every arbitrary boolean setting key.
    *
-   * @param {Cli_Utility_Configure_Runner_PromptRecipeEntries_Entries}            entries            - Entries.
-   * @param {Cli_Utility_Configure_Runner_PromptRecipeEntries_AllowedRecipeNames} allowedRecipeNames - Allowed recipe names.
-   * @param {Cli_Utility_Configure_Runner_PromptRecipeEntries_Label}              label              - Label.
+   * @param {Cli_Utility_Configure_Runner_PromptRecipeEntries_Entries}             entries             - Entries.
+   * @param {Cli_Utility_Configure_Runner_PromptRecipeEntries_AllowedRecipeNames}  allowedRecipeNames  - Allowed recipe names.
+   * @param {Cli_Utility_Configure_Runner_PromptRecipeEntries_Label}               label               - Label.
+   * @param {Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsRecipeNames} settingsRecipeNames - Settings recipe names.
    *
    * @private
    *
@@ -4997,8 +5180,9 @@ export class Runner {
    *
    * @since 0.32.0
    */
-  private static async promptRecipeEntries(entries: Cli_Utility_Configure_Runner_PromptRecipeEntries_Entries, allowedRecipeNames: Cli_Utility_Configure_Runner_PromptRecipeEntries_AllowedRecipeNames, label: Cli_Utility_Configure_Runner_PromptRecipeEntries_Label): Cli_Utility_Configure_Runner_PromptRecipeEntries_Returns {
+  private static async promptRecipeEntries(entries: Cli_Utility_Configure_Runner_PromptRecipeEntries_Entries, allowedRecipeNames: Cli_Utility_Configure_Runner_PromptRecipeEntries_AllowedRecipeNames, label: Cli_Utility_Configure_Runner_PromptRecipeEntries_Label, settingsRecipeNames?: Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsRecipeNames): Cli_Utility_Configure_Runner_PromptRecipeEntries_Returns {
     const existingEntries: Cli_Utility_Configure_Runner_PromptRecipeEntries_ExistingEntries = entries ?? {};
+    const allowedSettingsRecipeNames: Cli_Utility_Configure_Runner_PromptRecipeEntries_AllowedSettingsRecipeNames = settingsRecipeNames ?? allowedRecipeNames;
     const enabledRecipes: Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledRecipes = allowedRecipeNames.filter((recipeName) => existingEntries[recipeName] !== undefined && existingEntries[recipeName]['enabled'] === true);
     const enabledOutput: Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledOutputKey, Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledOutputResult>({
       type: 'multiselect',
@@ -5016,12 +5200,12 @@ export class Runner {
       return undefined;
     }
 
-    const settingsRecipes: Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsRecipes = allowedRecipeNames.filter((recipeName) => existingEntries[recipeName] !== undefined && existingEntries[recipeName]['settings'] !== undefined);
+    const settingsRecipes: Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsRecipes = allowedSettingsRecipeNames.filter((recipeName) => existingEntries[recipeName] !== undefined && existingEntries[recipeName]['settings'] !== undefined);
     const settingsOutput: Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsOutputKey, Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsOutputResult>({
       type: 'multiselect',
       name: 'settingsRecipes',
       message: `${label} recipes with custom settings (space to select)`,
-      choices: allowedRecipeNames.map((recipeName) => ({
+      choices: allowedSettingsRecipeNames.map((recipeName) => ({
         title: recipeName,
         value: recipeName,
         selected: settingsRecipes.includes(recipeName),
@@ -5115,6 +5299,11 @@ export class Runner {
           value: 'miscellaneous',
         },
         {
+          title: 'Nova Config',
+          description: 'Nova configuration-file recipes.',
+          value: 'nova-config',
+        },
+        {
           title: 'README',
           description: 'README generation recipes.',
           value: 'read-me',
@@ -5189,6 +5378,10 @@ export class Runner {
         entries = recipes['license'];
         allowedRecipeNames = libItemRecipesByCategory['license'];
         label = 'License';
+      } else if (target === 'nova-config') {
+        entries = recipes['nova-config'];
+        allowedRecipeNames = libItemRecipesByCategory['nova-config'];
+        label = 'Nova Config';
       }
 
       const categoryEntries: Cli_Utility_Configure_Runner_PromptRecipes_CategoryEntries = await Runner.promptRecipeEntries(entries, allowedRecipeNames, label);
@@ -5990,6 +6183,7 @@ export class Runner {
   private static async promptWorkflowsForm(workflow: Cli_Utility_Configure_Runner_PromptWorkflowsForm_Workflow, mode: Cli_Utility_Configure_Runner_PromptWorkflowsForm_Mode, workflows: Cli_Utility_Configure_Runner_PromptWorkflowsForm_Workflows, config: Cli_Utility_Configure_Runner_PromptWorkflowsForm_Config): Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns {
     const existingTemplate: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTemplate = (workflow !== undefined && typeof workflow['template'] === 'string') ? workflow['template'] : '';
     const existingSuffix: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingSuffix = (workflow !== undefined && typeof workflow['name'] === 'string') ? workflow['name'] : '';
+    const existingTimeoutMinutes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTimeoutMinutes = (workflow !== undefined && typeof workflow['timeoutMinutes'] === 'number') ? workflow['timeoutMinutes'] : undefined;
     const existingTriggers: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTriggers = (workflow !== undefined && Array.isArray(workflow['triggers']) === true) ? workflow['triggers'] : [];
 
     // Normalize existing triggers to their bare names so the multiselect can
@@ -6084,6 +6278,37 @@ export class Runner {
 
     const suffixOutputResultValue: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SuffixOutputResultValue = suffixOutput['result'];
     const selectedSuffix: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedSuffix = (typeof suffixOutputResultValue.suffix === 'string') ? suffixOutputResultValue.suffix.trim() : '';
+
+    const executionOutput: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResult>([
+      {
+        type: 'select',
+        name: 'runsOn',
+        message: 'GitHub-hosted runner',
+        choices: [{
+          title: 'ubuntu-latest',
+          value: 'ubuntu-latest',
+        }],
+        initial: 0,
+      },
+      {
+        type: 'text',
+        name: 'timeoutMinutes',
+        message: 'Job timeout in minutes (1-360; blank keeps template defaults)',
+        initial: (existingTimeoutMinutes === undefined) ? '' : `${existingTimeoutMinutes}`,
+        validate: Runner['isOptionalWorkflowTimeoutInput'],
+      },
+    ]);
+
+    if (executionOutput['cancelled'] === true) {
+      return {
+        action: 'back',
+      };
+    }
+
+    const executionOutputResultValue: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResultValue = executionOutput['result'];
+    const selectedRunsOn: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedRunsOn = (executionOutputResultValue.runsOn === 'ubuntu-latest') ? executionOutputResultValue.runsOn : 'ubuntu-latest';
+    const timeoutMinutesRaw: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TimeoutMinutesRaw = (typeof executionOutputResultValue.timeoutMinutes === 'string') ? executionOutputResultValue.timeoutMinutes.trim() : '';
+    const selectedTimeoutMinutes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTimeoutMinutes = (timeoutMinutesRaw === '') ? undefined : Number.parseInt(timeoutMinutesRaw, 10);
 
     // Discover available triggers from the template's triggers/ folder.
     const triggersDir: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersDir = join(resolveTemplatePath(import.meta.url, 'generators/github/workflows'), selectedTemplate, 'triggers');
@@ -6692,12 +6917,18 @@ export class Runner {
     Object.assign(settings, reviewedSettings);
 
     // Build the resolved workflow (locked field order: template, name,
-    // triggers, build, deploy, with).
+    // triggers, runsOn, timeoutMinutes, build, deploy, with).
     const resolvedWorkflow: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ResolvedWorkflow = {
       template: selectedTemplate,
       name: selectedSuffix,
       triggers: resolvedTriggers,
+      runsOn: selectedRunsOn,
     };
+
+    // Workflow - Timeout Minutes.
+    if (selectedTimeoutMinutes !== undefined) {
+      Reflect.set(resolvedWorkflow, 'timeoutMinutes', selectedTimeoutMinutes);
+    }
 
     // Workflow - Build.
     if (selectedScopes.length > 0) {
@@ -8303,6 +8534,22 @@ export class Runner {
 
     const lockStepVersioningOutputResult: Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputResult = lockStepVersioningOutput['result'];
     const runWorkspacesSettings: Cli_Utility_Configure_Runner_PromptSettings_RunWorkspacesSettings = settings['runWorkspaces'];
+    const existingConcurrency: Cli_Utility_Configure_Runner_PromptSettings_ExistingConcurrency = (runWorkspacesSettings === undefined || runWorkspacesSettings['concurrency'] === undefined) ? {} : runWorkspacesSettings['concurrency'];
+    const concurrencyInitial: Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyInitial = JSON.stringify(existingConcurrency);
+    const concurrencyOutput: Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputKey, Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputValue>({
+      type: 'text',
+      name: 'concurrency',
+      message: 'Workspace concurrency limits by script as JSON (blank unsets):',
+      initial: concurrencyInitial,
+      validate: Runner['isPositiveIntegerRecordInput'],
+    });
+
+    if (concurrencyOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const concurrencyOutputResult: Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputResult = concurrencyOutput['result'];
+    const concurrency: Cli_Utility_Configure_Runner_PromptSettings_Concurrency = Runner.parsePositiveIntegerRecordInput(concurrencyOutputResult.concurrency);
     const existingCache: Cli_Utility_Configure_Runner_PromptSettings_ExistingCache = (runWorkspacesSettings === undefined || runWorkspacesSettings['cache'] === undefined) ? {} : runWorkspacesSettings['cache'];
     const cacheEnabledInitial: Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledInitial = existingCache['enabled'] ?? true;
     const cacheEnabledOutput: Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledOutputKey, Cli_Utility_Configure_Runner_PromptSettings_CacheEnabledOutputValue>({
@@ -8374,6 +8621,13 @@ export class Runner {
         scripts: cacheScripts,
       },
     };
+
+    if (Object.keys(concurrency).length > 0) {
+      runWorkspaces.concurrency = concurrency;
+    } else {
+      Reflect.deleteProperty(runWorkspaces, 'concurrency');
+    }
+
     const updatedSettings: Cli_Utility_Configure_Runner_PromptSettings_UpdatedSettings = {
       ...settings,
       lockStepVersioning: lockStepVersioningOutputResult.lockStepVersioning,

@@ -10,6 +10,7 @@ import {
 } from 'node:path';
 
 import { libItemSkipDirectories } from '../../../lib/item.js';
+import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import { Bootstrap, Logger, MarkdownTable } from '../../../toolkit/index.js';
 
 import type {
@@ -62,8 +63,13 @@ import type {
   Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_ParseCells_Returns,
   Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_ParseCells_Row,
   Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_ParseCells_WithPlaceholders,
+  Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Config,
+  Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Diagnostics,
   Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_FilePaths,
+  Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_FixMarkdownTables,
   Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Formatted,
+  Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_MiscellaneousRecipes,
+  Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_NovaConfig,
   Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Options,
   Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_OriginalContents,
   Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_ProjectRoot,
@@ -111,6 +117,27 @@ export class Runner {
         Logger.error('No "package.json" file was found. Re-run this command inside a project.');
 
         process.exitCode = 1;
+
+        return;
+      }
+
+      const novaConfig: Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_NovaConfig = new LibNovaConfig();
+      const config: Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Config = await novaConfig.load(projectRoot);
+      const diagnostics: Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Diagnostics = novaConfig.diagnostics();
+
+      if (diagnostics.some((diagnostic) => diagnostic['severity'] === 'error') === true) {
+        Logger.error('Unable to fix Markdown tables because "nova.config.json" is invalid.');
+
+        process.exitCode = 1;
+
+        return;
+      }
+
+      const miscellaneousRecipes: Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_MiscellaneousRecipes = (config['recipes'] !== undefined) ? config['recipes']['miscellaneous'] : undefined;
+      const fixMarkdownTables: Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_FixMarkdownTables = (miscellaneousRecipes !== undefined) ? miscellaneousRecipes['fix-markdown-tables'] : undefined;
+
+      if (fixMarkdownTables === undefined || fixMarkdownTables['enabled'] !== true) {
+        Logger.warn('Skipping fix-markdown-tables. The recipe is not enabled in the "nova.config.json" file.');
 
         return;
       }

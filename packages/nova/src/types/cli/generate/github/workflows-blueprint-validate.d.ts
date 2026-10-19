@@ -243,6 +243,10 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Suffi
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkflowKey = string;
 
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunsOn = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TimeoutMinutes = unknown;
+
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TriggerName = 'issues' | 'issue-comment' | 'schedule-weekly' | 'schedule-daily' | 'schedule-monthly' | 'release' | 'tag-push' | 'push' | 'workflow-run-success' | 'workflow-run-any' | 'workflow-run-failure';
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ValidTriggers = Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TriggerName[];

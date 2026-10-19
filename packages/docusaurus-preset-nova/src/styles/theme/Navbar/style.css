@@ -76,7 +76,7 @@
  *
  * Hidden duplicate of the items cluster rendered by Bridge / Compass /
  * Canopy when `useNavbarOverflow` is in play. Sits at position absolute
- * so children render at their natural widths (no max-width constraint),
+ * so children render at their natural widths (no available-slot constraint),
  * lets the hook read each child's `getBoundingClientRect().width`, then
  * the visible cluster renders the resulting slice.
  *
@@ -85,8 +85,8 @@
  * font-family, font-size, font-weight) cascades into the measure
  * children - those declarations affect each child's natural width.
  * Layout-only properties below use `!important` so the variant's
- * `display: none` (narrow widths) and `max-width: var(...)` rules
- * don't kill the measure container; without these overrides, children
+ * `display: none` rules at narrow widths do not kill the measure container;
+ * without this override, children
  * would have `width: 0` while the cluster is hidden, `compute()` would
  * return `count = itemCount`, and the resize-back-to-wide transition
  * would render every item before `compute()` could clamp them into
@@ -139,10 +139,10 @@
  * ============================
  * Navbar - Items Overflow Initial-Measure Guard
  *
- * Applied to the VISIBLE items cluster by Bridge / Compass / Canopy while
+ * Applied to the visible items cluster by Bridge / Compass / Canopy while
  * `useNavbarOverflow` is in its pre-compute state (initial state assumes
  * `visibleCount = itemCount`, so all items render and would visually
- * overflow `max-width` since `overflow: visible` + `flex-wrap: nowrap`
+ * overflow its live slot since `overflow: visible` + `flex-wrap: nowrap`
  * don't clip). Hidden via `visibility` so the layout box is preserved
  * (no width reservation in surrounding elements) but the overflowing
  * items don't paint. After the first `compute()` resolves in
@@ -161,10 +161,10 @@
  * Navbar - Items Cluster Height Guard
  *
  * Shared with Bridge / Compass / Canopy visible item clusters. Each
- * cluster is `display: flex; flex-wrap: nowrap` with a `max-width`
- * budget, so flex items can be shrunk below their natural width when
+ * cluster is `display: flex; flex-wrap: nowrap` inside a live-width slot,
+ * so flex items can be shrunk below their natural width while
  * `useNavbarOverflow` is mid-recompute (visibleCount has not yet been
- * clamped to the new budget). Without this guard, each item's link text
+ * clamped to the new slot). Without this guard, each item's link text
  * wraps to a second line, doubling the navbar height for one frame
  * (~12ms) before React re-renders with fewer items + `<More>` - the
  * navbar-items height-spell. `white-space: nowrap` keeps each link

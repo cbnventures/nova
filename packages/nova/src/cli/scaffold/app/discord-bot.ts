@@ -53,6 +53,11 @@ export class Runner {
           reach: 'local',
         }],
         importMetaUrl: import.meta.url,
+        platforms: [
+          'nodejs',
+          'discord',
+          'docker',
+        ],
         resolvePresentationOptions: () => [
           {
             flag: '--docker-image',
@@ -89,6 +94,10 @@ export class Runner {
         reach: 'local',
       }],
       importMetaUrl: import.meta.url,
+      platforms: [
+        'nodejs',
+        'discord',
+      ],
       resolvePresentationOptions: () => [
         {
           flag: '--docker-image',

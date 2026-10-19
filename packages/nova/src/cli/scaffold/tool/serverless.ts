@@ -83,6 +83,10 @@ export class Runner {
       category: 'tool',
       displayName: 'Serverless Tool',
       importMetaUrl: import.meta.url,
+      platforms: [
+        'nodejs',
+        'web',
+      ],
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldToolServerlessTemplateQuestions,
       templateSubpath: 'scaffold/tool/serverless',

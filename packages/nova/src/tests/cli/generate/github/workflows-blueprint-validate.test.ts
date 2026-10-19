@@ -43,6 +43,9 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionMissingLiteralSettingsAreFlagged_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionMissingLiteralSettingsAreFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_GithubActionMissingLiteralSettingsAreFlagged_Workspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_InvalidExecutionSettingsAreFlagged_RawWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_InvalidExecutionSettingsAreFlagged_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_InvalidExecutionSettingsAreFlagged_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingLiteralIsFlagged_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingLiteralIsFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingLiteralIsFlagged_Workspaces,
@@ -134,6 +137,8 @@ describe('Validator.validate', () => {
         template: 'check-sponsor-gated-issues',
         name: 'project',
         triggers: ['issues'],
+        runsOn: 'ubuntu-latest',
+        timeoutMinutes: 30,
       },
       {
         template: 'lock-inactive-issues',
@@ -157,6 +162,32 @@ describe('Validator.validate', () => {
     strictEqual(result['diagnostics'].length, 0);
 
     strictEqual(result['workflows'].length, 3);
+
+    return;
+  });
+
+  it('invalid execution settings are flagged', () => {
+    const workspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_InvalidExecutionSettingsAreFlagged_Workspaces = {};
+    const rawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_InvalidExecutionSettingsAreFlagged_RawWorkflows = [
+      {
+        template: 'lock-inactive-issues',
+        name: 'runner',
+        triggers: ['schedule-weekly'],
+        runsOn: 'ubuntu-24.04',
+      },
+      {
+        template: 'lock-inactive-issues',
+        name: 'timeout',
+        triggers: ['schedule-weekly'],
+        timeoutMinutes: 361,
+      },
+    ];
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_InvalidExecutionSettingsAreFlagged_Result = Validator.validate(rawWorkflows, workspaces);
+
+    strictEqual(result['workflows'].length, 0);
+    strictEqual(result['diagnostics'].length, 2);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('Allowed value: ubuntu-latest')), true);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('whole number from 1 through 360')), true);
 
     return;
   });

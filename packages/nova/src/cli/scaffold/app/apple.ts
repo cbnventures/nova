@@ -67,6 +67,11 @@ export class Runner {
       category: 'app',
       displayName: 'Apple',
       importMetaUrl: import.meta.url,
+      platforms: [
+        'swift',
+        'ios',
+        'macos',
+      ],
       resolvePresentationOptions: (workspaceName) => [{
         flag: '--bundle-id',
         value: resolvedBundleIdentifier ?? Runner.resolveBundleIdentifierDefault(workspaceName),

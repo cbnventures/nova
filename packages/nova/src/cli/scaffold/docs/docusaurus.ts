@@ -150,6 +150,11 @@ export class Runner {
       category: 'docs',
       displayName: 'Docusaurus',
       importMetaUrl: import.meta.url,
+      platforms: [
+        'nodejs',
+        'web',
+      ],
+      resolvePlatforms: (answers) => (answers.get('dockerImage') === 'enabled') ? ['docker'] : [],
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldDocsDocusaurusTemplateQuestions,
       templateSubpath: 'scaffold/docs/docusaurus',

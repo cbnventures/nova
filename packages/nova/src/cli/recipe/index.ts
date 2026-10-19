@@ -8,6 +8,7 @@ import { Runner as CliRecipeGithubSyncSecurity } from './github/sync-security.js
 import { Runner as CliRecipeLicenseUpdateCopyright } from './license/update-copyright.js';
 import { Runner as CliRecipeMiscellaneousFixMarkdownTables } from './miscellaneous/fix-markdown-tables.js';
 import { Runner as CliRecipeMiscellaneousRemoveOperatingSystemFiles } from './miscellaneous/remove-operating-system-files.js';
+import { Runner as CliRecipeNovaConfigNormalizeOrder } from './nova-config/normalize-order.js';
 import { Runner as CliRecipePackageJsonCleanup } from './package-json/cleanup.js';
 import { Runner as CliRecipePackageJsonNormalizeArtifacts } from './package-json/normalize-artifacts.js';
 import { Runner as CliRecipePackageJsonNormalizeBundler } from './package-json/normalize-bundler.js';
@@ -78,6 +79,10 @@ export const registry: Cli_Recipe_Registry = {
       run: CliRecipeMiscellaneousRemoveOperatingSystemFiles['run'],
     },
   ],
+  'nova-config': [{
+    name: 'normalize-order',
+    run: CliRecipeNovaConfigNormalizeOrder['run'],
+  }],
   'read-me': [
     {
       name: 'update-badges',

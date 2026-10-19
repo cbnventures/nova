@@ -151,7 +151,8 @@ import type {
   Lib_NovaConfig_Runner_GetGithubTopics_TypeGuard,
   Lib_NovaConfig_Runner_GetGithubTopics_Value,
   Lib_NovaConfig_Runner_GetMiscellaneousRecipes_AllowedName,
-  Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Entry,
+  Lib_NovaConfig_Runner_GetMiscellaneousRecipes_FixMarkdownTables,
+  Lib_NovaConfig_Runner_GetMiscellaneousRecipes_RemoveOperatingSystemFiles,
   Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Result,
   Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Returns,
   Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Value,
@@ -202,6 +203,7 @@ import type {
   Lib_NovaConfig_Runner_Load_ConfigFileName,
   Lib_NovaConfig_Runner_Load_ConfigPath,
   Lib_NovaConfig_Runner_Load_CurrentDirectory,
+  Lib_NovaConfig_Runner_Load_Directory,
   Lib_NovaConfig_Runner_Load_ParsedFile,
   Lib_NovaConfig_Runner_Load_RawFile,
   Lib_NovaConfig_Runner_Load_Returns,
@@ -353,6 +355,7 @@ import type {
   Lib_NovaConfig_Runner_ParseRecipes_Github,
   Lib_NovaConfig_Runner_ParseRecipes_License,
   Lib_NovaConfig_Runner_ParseRecipes_Miscellaneous,
+  Lib_NovaConfig_Runner_ParseRecipes_NovaConfig,
   Lib_NovaConfig_Runner_ParseRecipes_PackageJson,
   Lib_NovaConfig_Runner_ParseRecipes_ReadMe,
   Lib_NovaConfig_Runner_ParseRecipes_Result,
@@ -364,11 +367,17 @@ import type {
   Lib_NovaConfig_Runner_ParseSettings_CacheScripts,
   Lib_NovaConfig_Runner_ParseSettings_CacheScriptsValue,
   Lib_NovaConfig_Runner_ParseSettings_CacheValue,
+  Lib_NovaConfig_Runner_ParseSettings_Concurrency,
+  Lib_NovaConfig_Runner_ParseSettings_ConcurrencyEntries,
+  Lib_NovaConfig_Runner_ParseSettings_ConcurrencyLimit,
+  Lib_NovaConfig_Runner_ParseSettings_ConcurrencyScript,
+  Lib_NovaConfig_Runner_ParseSettings_ConcurrencyValue,
   Lib_NovaConfig_Runner_ParseSettings_LockStepVersioning,
   Lib_NovaConfig_Runner_ParseSettings_Result,
   Lib_NovaConfig_Runner_ParseSettings_Returns,
   Lib_NovaConfig_Runner_ParseSettings_RunWorkspaces,
   Lib_NovaConfig_Runner_ParseSettings_RunWorkspacesValue,
+  Lib_NovaConfig_Runner_ParseSettings_TypedConcurrencyEntry,
   Lib_NovaConfig_Runner_ParseSettings_Value,
   Lib_NovaConfig_Runner_ParseSettings_VersionStrategy,
   Lib_NovaConfig_Runner_ParseUrls_FundSources,
@@ -397,10 +406,14 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeploy,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeployAfter,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeployValue,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawRunsOn,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawTimeoutMinutes,
   Lib_NovaConfig_Runner_ParseWorkflows_RawTriggers,
   Lib_NovaConfig_Runner_ParseWorkflows_Returns,
+  Lib_NovaConfig_Runner_ParseWorkflows_RunsOn,
   Lib_NovaConfig_Runner_ParseWorkflows_Template,
   Lib_NovaConfig_Runner_ParseWorkflows_TemplateCompare,
+  Lib_NovaConfig_Runner_ParseWorkflows_TimeoutMinutes,
   Lib_NovaConfig_Runner_ParseWorkflows_Trigger,
   Lib_NovaConfig_Runner_ParseWorkflows_TriggerBranches,
   Lib_NovaConfig_Runner_ParseWorkflows_TriggerName,
@@ -550,12 +563,14 @@ export class Runner {
    * dropped rather than causing failures. Dropped workspaces and reserved dotenv-key
    * collisions warn; other salvaged fields are dropped silently.
    *
+   * @param {Lib_NovaConfig_Runner_Load_Directory} directory - Directory.
+   *
    * @returns {Lib_NovaConfig_Runner_Load_Returns}
    *
    * @since 0.11.0
    */
-  public async load(): Lib_NovaConfig_Runner_Load_Returns {
-    const currentDirectory: Lib_NovaConfig_Runner_Load_CurrentDirectory = process.cwd();
+  public async load(directory?: Lib_NovaConfig_Runner_Load_Directory): Lib_NovaConfig_Runner_Load_Returns {
+    const currentDirectory: Lib_NovaConfig_Runner_Load_CurrentDirectory = directory ?? process.cwd();
     const configFileName: Lib_NovaConfig_Runner_Load_ConfigFileName = 'nova.config.json';
     const configPath: Lib_NovaConfig_Runner_Load_ConfigPath = join(currentDirectory, configFileName);
 
@@ -895,6 +910,8 @@ export class Runner {
       const allowedPlatforms: Lib_NovaConfig_Runner_ParseProject_AllowedPlatforms = new Set([
         'nodejs',
         'swift',
+        'ios',
+        'visionos',
         'android',
         'java',
         'kotlin',
@@ -904,6 +921,7 @@ export class Runner {
         'macos',
         'linux',
         'windows',
+        'discord',
         'homebridge',
         'docker',
         'pfsense',
@@ -2012,6 +2030,15 @@ export class Runner {
         triggers.push(triggerObject);
       }
 
+      const rawRunsOn: Lib_NovaConfig_Runner_ParseWorkflows_RawRunsOn = castItem['runsOn'];
+      const runsOn: Lib_NovaConfig_Runner_ParseWorkflows_RunsOn = (rawRunsOn === 'ubuntu-latest') ? rawRunsOn : undefined;
+      const rawTimeoutMinutes: Lib_NovaConfig_Runner_ParseWorkflows_RawTimeoutMinutes = castItem['timeoutMinutes'];
+      const timeoutMinutes: Lib_NovaConfig_Runner_ParseWorkflows_TimeoutMinutes = (
+        typeof rawTimeoutMinutes === 'number'
+        && Number.isInteger(rawTimeoutMinutes) === true
+        && rawTimeoutMinutes >= 1
+        && rawTimeoutMinutes <= 360
+      ) ? rawTimeoutMinutes : undefined;
       const rawBuild: Lib_NovaConfig_Runner_ParseWorkflows_RawBuild = castItem['build'];
       const build: Lib_NovaConfig_Runner_ParseWorkflows_Build = (Array.isArray(rawBuild) === true) ? rawBuild.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as Lib_NovaConfig_Runner_ParseWorkflows_Build : [];
       const rawDeploy: Lib_NovaConfig_Runner_ParseWorkflows_RawDeploy = castItem['deploy'];
@@ -2057,12 +2084,21 @@ export class Runner {
 
       const withMap: Lib_NovaConfig_Runner_ParseWorkflows_WithMap = castItem['with'];
 
-      // Build workflow object with properties in type-definition order: template, name, triggers, build, deploy, with.
+      // Build workflow object with properties in type-definition order: template, name, triggers,
+      // runsOn, timeoutMinutes, build, deploy, with.
       const workflow: Lib_NovaConfig_Runner_ParseWorkflows_Workflow = {
         template,
         name,
         triggers,
       };
+
+      if (runsOn !== undefined) {
+        Reflect.set(workflow, 'runsOn', runsOn);
+      }
+
+      if (timeoutMinutes !== undefined) {
+        Reflect.set(workflow, 'timeoutMinutes', timeoutMinutes);
+      }
 
       if (build.length > 0) {
         Reflect.set(workflow, 'build', build);
@@ -2233,7 +2269,7 @@ export class Runner {
   /**
    * Lib - Nova Config - Parse Recipes.
    *
-   * Parses the unified recipes block into its five categories, validating each entry
+   * Parses the unified recipes block into its six categories, validating each entry
    * against the canonical recipe names. Returns undefined when the block is absent or empty.
    *
    * @param {Lib_NovaConfig_Runner_ParseRecipes_Value} value - Value.
@@ -2267,6 +2303,12 @@ export class Runner {
 
     if (miscellaneous !== undefined) {
       result.miscellaneous = miscellaneous;
+    }
+
+    const novaConfig: Lib_NovaConfig_Runner_ParseRecipes_NovaConfig = this.getRecipeEntries(value['nova-config'], libItemRecipesByCategory['nova-config']);
+
+    if (novaConfig !== undefined) {
+      Reflect.set(result, 'nova-config', novaConfig);
     }
 
     const readMe: Lib_NovaConfig_Runner_ParseRecipes_ReadMe = this.getRecipeEntries(value['read-me'], libItemRecipesByCategory['read-me']);
@@ -2319,10 +2361,16 @@ export class Runner {
       }
     }
 
-    const entry: Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Entry = this.getOperatingSystemFileRecipeEntry(value['remove-operating-system-files']);
+    const fixMarkdownTables: Lib_NovaConfig_Runner_GetMiscellaneousRecipes_FixMarkdownTables = this.getRecipeEntry(value['fix-markdown-tables']);
 
-    if (entry !== undefined) {
-      Reflect.set(result, 'remove-operating-system-files', entry);
+    if (fixMarkdownTables !== undefined) {
+      Reflect.set(result, 'fix-markdown-tables', fixMarkdownTables);
+    }
+
+    const removeOperatingSystemFiles: Lib_NovaConfig_Runner_GetMiscellaneousRecipes_RemoveOperatingSystemFiles = this.getOperatingSystemFileRecipeEntry(value['remove-operating-system-files']);
+
+    if (removeOperatingSystemFiles !== undefined) {
+      Reflect.set(result, 'remove-operating-system-files', removeOperatingSystemFiles);
     }
 
     return (Object.keys(result).length > 0) ? result : undefined;
@@ -2681,6 +2729,36 @@ export class Runner {
           runWorkspaces = {
             cache,
           };
+        }
+      }
+
+      const concurrencyValue: Lib_NovaConfig_Runner_ParseSettings_ConcurrencyValue = runWorkspacesValue['concurrency'];
+
+      if (isPlainObject(concurrencyValue) === true) {
+        const concurrency: Lib_NovaConfig_Runner_ParseSettings_Concurrency = {};
+        const concurrencyEntries: Lib_NovaConfig_Runner_ParseSettings_ConcurrencyEntries = Object.entries(concurrencyValue);
+
+        for (const concurrencyEntry of concurrencyEntries) {
+          const typedConcurrencyEntry: Lib_NovaConfig_Runner_ParseSettings_TypedConcurrencyEntry = concurrencyEntry;
+          const concurrencyScript: Lib_NovaConfig_Runner_ParseSettings_ConcurrencyScript = typedConcurrencyEntry[0].trim();
+          const concurrencyLimit: Lib_NovaConfig_Runner_ParseSettings_ConcurrencyLimit = typedConcurrencyEntry[1];
+
+          if (
+            concurrencyScript.length > 0
+            && typeof concurrencyLimit === 'number'
+            && Number.isInteger(concurrencyLimit) === true
+            && concurrencyLimit > 0
+          ) {
+            Reflect.set(concurrency, concurrencyScript, concurrencyLimit);
+          }
+        }
+
+        if (Object.keys(concurrency).length > 0) {
+          if (runWorkspaces === undefined) {
+            runWorkspaces = {};
+          }
+
+          runWorkspaces.concurrency = concurrency;
         }
       }
     }

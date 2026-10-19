@@ -1562,9 +1562,9 @@ export class Runner {
   /**
    * CLI - Utility - Changelog - Stamp Unreleased.
    *
-   * Replaces unreleased JSDoc sentinels in each workspace root and its
-   * src/ and scripts/ trees with the workspace's release version, then checks
-   * every scanned file for survivors.
+   * Replaces unreleased documentation sentinels throughout each workspace's
+   * supported source trees with the workspace's release version, then verifies
+   * that every scanned source file is fully stamped.
    *
    * @param {Cli_Utility_Changelog_Runner_StampUnreleased_PackageDirectory} packageDirectory - Package directory.
    * @param {Cli_Utility_Changelog_Runner_StampUnreleased_NewVersion}       newVersion       - New version.
@@ -1585,6 +1585,12 @@ export class Runner {
     const sourceDirectories: Cli_Utility_Changelog_Runner_StampUnreleased_SourceDirectories = [
       join(packageDirectory, 'src'),
       join(packageDirectory, 'scripts'),
+      join(packageDirectory, 'bin'),
+      join(packageDirectory, 'api'),
+      join(packageDirectory, 'app', 'src'),
+      join(packageDirectory, 'Sources'),
+      join(packageDirectory, 'Tests'),
+      join(packageDirectory, 'port', 'files', 'usr', 'local'),
     ];
     const sourceFiles: Cli_Utility_Changelog_Runner_StampUnreleased_SourceFiles = [];
     const supportedExtensions: Cli_Utility_Changelog_Runner_StampUnreleased_SupportedExtensions = [
@@ -1593,9 +1599,19 @@ export class Runner {
       '.mts',
       '.cts',
       '.js',
+      '.jsx',
       '.mjs',
       '.cjs',
       '.css',
+      '.astro',
+      '.inc',
+      '.java',
+      '.kt',
+      '.kts',
+      '.php',
+      '.svelte',
+      '.swift',
+      '.vue',
     ];
 
     try {

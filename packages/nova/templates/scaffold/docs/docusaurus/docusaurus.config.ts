@@ -23,8 +23,8 @@ const identity = new NovaIdentity().forDocs();
 const config: DocusaurusNovaConfig = {
   title: 'Nova × Docusaurus',
   tagline: identity['tagline'] ?? 'Documentation',
-  url: identity['url'] ?? 'https://example.com',
-  baseUrl: '/',
+  url: identity['url'] ?? 'https://www.example.com',
+  baseUrl: identity['baseUrl'] ?? '/',
   favicon: 'images/nova.svg',
   organizationName: identity['organizationName'] ?? 'your-org',
   projectName: identity['projectName'] ?? '[__PROJECT_SLUG__]',

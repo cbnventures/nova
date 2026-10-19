@@ -61,7 +61,9 @@ export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptRunnerPr
 
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalRootScripts = Record<string, string>;
 
-export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalScriptsChanged = boolean;
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalRootScriptEntries = [string, string][];
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MissingCanonicalRootScriptEntries = [string, string][];
 
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedCanonicalRootScriptEntry = [string, string];
 

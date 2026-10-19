@@ -20,6 +20,8 @@ import { Runner as LibCorepack } from './corepack.js';
 import { writeDotenvFiles } from './dotenv.js';
 import { libEnvNamespace } from './env-namespace.js';
 import { renderIgnoreFile } from './ignore-files.js';
+import { libItemAllowedRecipes } from './item.js';
+import { normalizeNovaConfigTopLevelOrder } from './nova-config-order.js';
 import {
   LIB_REGEX_PATTERN_NON_ALPHANUMERIC_RUN,
   LIB_REGEX_PATTERN_SLUG_SIMPLE,
@@ -70,6 +72,7 @@ import type {
   Lib_Scaffold_CreateMonorepoRoot_PackageJsonContent,
   Lib_Scaffold_CreateMonorepoRoot_PackageJsonPath,
   Lib_Scaffold_CreateMonorepoRoot_PackagesDirectory,
+  Lib_Scaffold_CreateMonorepoRoot_Platforms,
   Lib_Scaffold_CreateMonorepoRoot_ProjectSlug,
   Lib_Scaffold_CreateMonorepoRoot_ProjectTitle,
   Lib_Scaffold_CreateMonorepoRoot_Replacements,
@@ -167,23 +170,34 @@ import type {
   Lib_Scaffold_RegisterWorkspaceInConfig_ConfigRoot,
   Lib_Scaffold_RegisterWorkspaceInConfig_DockerignoreConfigPath,
   Lib_Scaffold_RegisterWorkspaceInConfig_DockerignorePath,
+  Lib_Scaffold_RegisterWorkspaceInConfig_DocumentationUrl,
   Lib_Scaffold_RegisterWorkspaceInConfig_Environment,
   Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables,
   Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspace,
   Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspaces,
   Lib_Scaffold_RegisterWorkspaceInConfig_IgnoreFiles,
+  Lib_Scaffold_RegisterWorkspaceInConfig_NormalizedConfig,
+  Lib_Scaffold_RegisterWorkspaceInConfig_PackageJsonRecipes,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironment,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedEnvironmentWorkspaces,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedIgnoreFiles,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ParsedPackageJsonRecipes,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ParsedPlatforms,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ParsedRecipes,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ParsedUrls,
   Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Platforms,
+  Lib_Scaffold_RegisterWorkspaceInConfig_PlatformsMerged,
   Lib_Scaffold_RegisterWorkspaceInConfig_Policy,
   Lib_Scaffold_RegisterWorkspaceInConfig_Project,
   Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName,
   Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug,
   Lib_Scaffold_RegisterWorkspaceInConfig_Raw,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Recipes,
   Lib_Scaffold_RegisterWorkspaceInConfig_Returns,
   Lib_Scaffold_RegisterWorkspaceInConfig_Role,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Urls,
   Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceDirectory,
   Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName,
   Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName,
@@ -220,6 +234,9 @@ import type {
   Lib_Scaffold_ResolveScaffoldInstallInvocation_CommandArguments,
   Lib_Scaffold_ResolveScaffoldInstallInvocation_PackageManager,
   Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns,
+  Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Recipe,
+  Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Recipes,
+  Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Returns,
   Lib_Scaffold_ResolveTemplateAnswers_Answer,
   Lib_Scaffold_ResolveTemplateAnswers_Answers,
   Lib_Scaffold_ResolveTemplateAnswers_DependencyValue,
@@ -279,6 +296,7 @@ import type {
   Lib_Scaffold_RunScaffold_PackageManagerDescriptor,
   Lib_Scaffold_RunScaffold_PackageManagerValue,
   Lib_Scaffold_RunScaffold_PlannedPaths,
+  Lib_Scaffold_RunScaffold_Platforms,
   Lib_Scaffold_RunScaffold_PresentationOptions,
   Lib_Scaffold_RunScaffold_PrimaryScript,
   Lib_Scaffold_RunScaffold_Progress,
@@ -1422,6 +1440,51 @@ function resolveScaffoldGitignoreEntry(config: Lib_Scaffold_ResolveScaffoldGitig
 }
 
 /**
+ * Lib - Scaffold - Resolve Scaffold package.json Recipes.
+ *
+ * Enables every package.json recipe for a scaffolded workspace and applies
+ * Nova's reviewed defaults for recipes with configurable behavior.
+ *
+ * @private
+ *
+ * @returns {Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Returns}
+ *
+ * @since 0.33.0
+ */
+function resolveScaffoldPackageJsonRecipes(): Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Returns {
+  const recipes: Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Recipes = {};
+
+  for (const recipeName of libItemAllowedRecipes) {
+    const recipe: Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Recipe = { enabled: true };
+
+    Reflect.set(recipes, recipeName, recipe);
+  }
+
+  Reflect.set(recipes, 'cleanup', {
+    enabled: true,
+    settings: {
+      removeUnknownKeys: true,
+      reorderKeys: true,
+    },
+  });
+  Reflect.set(recipes, 'normalize-dependencies', {
+    enabled: true,
+    settings: {
+      pinDependencyVersions: true,
+      pinDevDependencyVersions: true,
+    },
+  });
+  Reflect.set(recipes, 'sync-environment', {
+    enabled: true,
+    settings: {
+      trackNodeLtsVersions: true,
+    },
+  });
+
+  return recipes;
+}
+
+/**
  * Lib - Scaffold - Write Scaffold Gitignore.
  *
  * Generates a root .gitignore from Nova's canonical template without emitting
@@ -1487,12 +1550,13 @@ export async function getMonorepoRootPlannedPaths(outputDirectory: Lib_Scaffold_
  *
  * @param {Lib_Scaffold_CreateMonorepoRoot_OutputDirectory} outputDirectory - Output directory.
  * @param {Lib_Scaffold_CreateMonorepoRoot_ProjectSlug}     projectSlug     - Project slug.
+ * @param {Lib_Scaffold_CreateMonorepoRoot_Platforms}       platforms       - Platforms.
  *
  * @returns {Lib_Scaffold_CreateMonorepoRoot_Returns}
  *
  * @since 0.15.0
  */
-export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMonorepoRoot_OutputDirectory, projectSlug: Lib_Scaffold_CreateMonorepoRoot_ProjectSlug): Lib_Scaffold_CreateMonorepoRoot_Returns {
+export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMonorepoRoot_OutputDirectory, projectSlug: Lib_Scaffold_CreateMonorepoRoot_ProjectSlug, platforms: Lib_Scaffold_CreateMonorepoRoot_Platforms): Lib_Scaffold_CreateMonorepoRoot_Returns {
   await fs.mkdir(outputDirectory, { recursive: true });
 
   const appsDirectory: Lib_Scaffold_CreateMonorepoRoot_AppsDirectory = join(outputDirectory, 'apps');
@@ -1519,11 +1583,11 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
       'check:types-config': 'nova utility type-check --project tsconfig.config.json',
       'check:types-tests': 'nova utility type-check --project tsconfig.tests.json',
       'check:test': 'vitest run',
-      'check:workspaces': 'nova utility run-workspaces --concurrency=2 check',
+      'check:workspaces': 'nova utility run-workspaces check',
       'build': 'nova utility run-scripts --sequential --node-env production "build:*"',
-      'build:workspaces': 'nova utility run-workspaces --concurrency=2 --node-env production build',
+      'build:workspaces': 'nova utility run-workspaces --node-env production build',
       'deploy': 'nova utility run-scripts --sequential --node-env production "deploy:*"',
-      'deploy:workspaces': 'nova utility run-workspaces --concurrency=2 --node-env production deploy',
+      'deploy:workspaces': 'nova utility run-workspaces --node-env production deploy',
       'clean': 'nova utility run-scripts --parallel "clean:*"',
       'clean:workspaces': 'nova utility run-workspaces clean',
       'changelog': 'nova utility changelog',
@@ -1576,13 +1640,8 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
         title: projectTitle,
       },
       legalName: 'Example Company',
+      platforms,
       startingYear: new Date().getFullYear(),
-    },
-    ignoreFiles: {
-      './.gitignore': {
-        bundles: ['nova'],
-        patterns: [],
-      },
     },
     workspaces: {
       './': {
@@ -1591,8 +1650,17 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
         policy: 'freezable',
       },
     },
+    ignoreFiles: {
+      './.gitignore': {
+        bundles: ['nova'],
+        patterns: [],
+      },
+    },
     recipes: {
-      miscellaneous: {
+      'miscellaneous': {
+        'fix-markdown-tables': {
+          enabled: true,
+        },
         'remove-operating-system-files': {
           enabled: false,
           settings: {
@@ -1609,11 +1677,28 @@ export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMon
           },
         },
       },
+      'nova-config': {
+        'normalize-order': {
+          enabled: true,
+        },
+      },
+      'package-json': {
+        './': resolveScaffoldPackageJsonRecipes(),
+      },
     },
     environment: {
       workspaces: {
         './': {
           prefix: 'ROOT_',
+        },
+      },
+    },
+    settings: {
+      runWorkspaces: {
+        concurrency: {
+          build: 2,
+          check: 2,
+          deploy: 2,
         },
       },
     },
@@ -1725,12 +1810,13 @@ export function resolveScaffoldEnvironmentPrefix(environment: Lib_Scaffold_Resol
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName}        workspaceName        - Workspace name.
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_Category}             category             - Category.
  * @param {Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables} environmentVariables - Environment variables.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_Platforms}            platforms            - Platforms.
  *
  * @returns {Lib_Scaffold_RegisterWorkspaceInConfig_Returns}
  *
  * @since 0.15.0
  */
-export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName, workspaceName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category, environmentVariables: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
+export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspacePackageName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspacePackageName, workspaceName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category, environmentVariables: Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables, platforms: Lib_Scaffold_RegisterWorkspaceInConfig_Platforms): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
   let parsedConfig: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig = undefined;
 
   try {
@@ -1759,11 +1845,30 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
   const projectName: Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName = (project !== undefined) ? project['name'] as Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName : undefined;
   const projectSlug: Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug = (projectName !== undefined) ? projectName['slug'] as Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug : undefined;
 
-  if (typeof projectSlug !== 'string' || LIB_REGEX_PATTERN_SLUG_SIMPLE.test(projectSlug) === false) {
+  if (
+    project === undefined
+    || typeof projectSlug !== 'string'
+    || LIB_REGEX_PATTERN_SLUG_SIMPLE.test(projectSlug) === false
+  ) {
     reportError('The root nova.config.json must define a valid project.name.slug before registering a workspace.');
 
     return;
   }
+
+  const parsedPlatforms: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedPlatforms = project['platforms'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedPlatforms;
+
+  if (parsedPlatforms !== undefined && Array.isArray(parsedPlatforms) === false) {
+    reportError('The root nova.config.json "project.platforms" field must be an array.');
+
+    return;
+  }
+
+  const platformsMerged: Lib_Scaffold_RegisterWorkspaceInConfig_PlatformsMerged = [...new Set([
+    ...((Array.isArray(parsedPlatforms) === true) ? parsedPlatforms : []),
+    ...platforms,
+  ])];
+
+  Reflect.set(project, 'platforms', platformsMerged);
 
   // Determine role and config name based on category.
   const role: Lib_Scaffold_RegisterWorkspaceInConfig_Role = (category === 'package') ? 'package' : category;
@@ -1795,6 +1900,52 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
   });
 
   Reflect.set(parsedConfig, 'workspaces', workspaces);
+
+  if (category === 'docs') {
+    const parsedUrls: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedUrls = parsedConfig['urls'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedUrls;
+
+    if (parsedUrls !== undefined && isPlainObject(parsedUrls) === false) {
+      reportError('The root nova.config.json "urls" field must be an object.');
+
+      return;
+    }
+
+    const urls: Lib_Scaffold_RegisterWorkspaceInConfig_Urls = parsedUrls ?? {};
+    const documentationUrl: Lib_Scaffold_RegisterWorkspaceInConfig_DocumentationUrl = 'https://www.example.com';
+
+    if (urls['homepage'] === undefined) {
+      Reflect.set(urls, 'homepage', documentationUrl);
+    }
+
+    if (urls['documentation'] === undefined) {
+      Reflect.set(urls, 'documentation', documentationUrl);
+    }
+
+    Reflect.set(parsedConfig, 'urls', urls);
+  }
+
+  const parsedRecipes: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedRecipes = parsedConfig['recipes'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedRecipes;
+
+  if (parsedRecipes !== undefined && isPlainObject(parsedRecipes) === false) {
+    reportError('The root nova.config.json "recipes" field must be an object.');
+
+    return;
+  }
+
+  const recipes: Lib_Scaffold_RegisterWorkspaceInConfig_Recipes = parsedRecipes ?? {};
+  const parsedPackageJsonRecipes: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedPackageJsonRecipes = recipes['package-json'];
+
+  if (parsedPackageJsonRecipes !== undefined && isPlainObject(parsedPackageJsonRecipes) === false) {
+    reportError('The root nova.config.json "recipes.package-json" field must be an object.');
+
+    return;
+  }
+
+  const packageJsonRecipes: Lib_Scaffold_RegisterWorkspaceInConfig_PackageJsonRecipes = parsedPackageJsonRecipes ?? {};
+
+  Reflect.set(packageJsonRecipes, workspaceRelPath, resolveScaffoldPackageJsonRecipes());
+  Reflect.set(recipes, 'package-json', packageJsonRecipes);
+  Reflect.set(parsedConfig, 'recipes', recipes);
 
   const parsedIgnoreFiles: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedIgnoreFiles = parsedConfig['ignoreFiles'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedIgnoreFiles;
 
@@ -1864,8 +2015,10 @@ export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_Reg
   Reflect.set(environment, 'workspaces', environmentWorkspaces);
   Reflect.set(parsedConfig, 'environment', environment);
 
+  const normalizedConfig: Lib_Scaffold_RegisterWorkspaceInConfig_NormalizedConfig = normalizeNovaConfigTopLevelOrder(parsedConfig);
+
   // Write back.
-  await fs.writeFile(configFilePath, `${JSON.stringify(parsedConfig, null, 2)}\n`, 'utf-8');
+  await fs.writeFile(configFilePath, `${JSON.stringify(normalizedConfig, null, 2)}\n`, 'utf-8');
 
   return;
 }
@@ -2164,6 +2317,10 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
 
   const shouldInstall: Lib_Scaffold_RunScaffold_ShouldInstall = resolveScaffoldInstall(options['install']);
   const environmentVariables: Lib_Scaffold_RunScaffold_EnvironmentVariables = definition['environmentVariables'] ?? [];
+  const platforms: Lib_Scaffold_RunScaffold_Platforms = [...new Set([
+    ...definition['platforms'],
+    ...((definition['resolvePlatforms'] === undefined) ? [] : definition.resolvePlatforms(templateAnswers)),
+  ])];
 
   let packageManagerValue: Lib_Scaffold_RunScaffold_PackageManagerValue = getScaffoldVersion('npmPackageManager');
 
@@ -2356,7 +2513,7 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
   if (config['mode'] === 'monorepo') {
     progress.start('Preparing monorepo root', projectRoot);
 
-    await createMonorepoRoot(configRoot, projectSlug);
+    await createMonorepoRoot(configRoot, projectSlug, platforms);
 
     await progress.complete();
   }
@@ -2425,7 +2582,7 @@ export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, def
 
   progress.start('Registering workspace', workspacePackageName);
 
-  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, workspacePackageName, config['workspaceName'], definition['category'], environmentVariables);
+  await registerWorkspaceInConfig(configFilePath, workspaceRelPath, workspacePackageName, config['workspaceName'], definition['category'], environmentVariables, platforms);
 
   await progress.complete();
 

@@ -4,6 +4,7 @@ import { join, resolve } from 'node:path';
 
 import chalk from 'chalk';
 
+import { LIB_CONSTANTS_RUN_WORKSPACES_DEFAULT_CONCURRENCY } from './constants.js';
 import { Runner as LibCorepack } from './corepack.js';
 import { Runner as LibNovaConfig } from './nova-config.js';
 import {
@@ -127,6 +128,8 @@ import type {
   Lib_RunWorkspaces_Runner_LoadProject_CacheScripts,
   Lib_RunWorkspaces_Runner_LoadProject_CacheScriptsValue,
   Lib_RunWorkspaces_Runner_LoadProject_CacheSettings,
+  Lib_RunWorkspaces_Runner_LoadProject_Concurrency,
+  Lib_RunWorkspaces_Runner_LoadProject_ConcurrencySettings,
   Lib_RunWorkspaces_Runner_LoadProject_Config,
   Lib_RunWorkspaces_Runner_LoadProject_ConfigLoader,
   Lib_RunWorkspaces_Runner_LoadProject_ConfiguredWorkspaces,
@@ -158,6 +161,10 @@ import type {
   Lib_RunWorkspaces_Runner_ParsePositiveInteger_Parsed,
   Lib_RunWorkspaces_Runner_ParsePositiveInteger_Returns,
   Lib_RunWorkspaces_Runner_ParsePositiveInteger_Value,
+  Lib_RunWorkspaces_Runner_ResolveConcurrency_Concurrency,
+  Lib_RunWorkspaces_Runner_ResolveConcurrency_ConfiguredConcurrency,
+  Lib_RunWorkspaces_Runner_ResolveConcurrency_Returns,
+  Lib_RunWorkspaces_Runner_ResolveConcurrency_Task,
   Lib_RunWorkspaces_Runner_Run_BufferMs,
   Lib_RunWorkspaces_Runner_Run_Concurrency,
   Lib_RunWorkspaces_Runner_Run_EffectiveConcurrency,
@@ -324,7 +331,11 @@ export class Runner {
         return 0;
       }
 
-      const effectiveConcurrency: Lib_RunWorkspaces_Runner_Run_EffectiveConcurrency = concurrency ?? orderedTasks.length;
+      const effectiveConcurrency: Lib_RunWorkspaces_Runner_Run_EffectiveConcurrency = Runner.resolveConcurrency(
+        concurrency,
+        project['concurrency'],
+        task,
+      );
 
       return await Runner.executeTasks(
         plan['tasks'],
@@ -384,9 +395,11 @@ export class Runner {
 
     const configuredWorkspaces: Lib_RunWorkspaces_Runner_LoadProject_ConfiguredWorkspaces = config['workspaces'] ?? {};
     let cacheSettings: Lib_RunWorkspaces_Runner_LoadProject_CacheSettings = undefined;
+    let concurrencySettings: Lib_RunWorkspaces_Runner_LoadProject_ConcurrencySettings = undefined;
 
     if (config['settings'] !== undefined && config['settings']['runWorkspaces'] !== undefined) {
       cacheSettings = config['settings']['runWorkspaces']['cache'];
+      concurrencySettings = config['settings']['runWorkspaces']['concurrency'];
     }
 
     let cacheDirectoryValue: Lib_RunWorkspaces_Runner_LoadProject_CacheDirectoryValue = './node_modules/.cache/nova/run-workspaces';
@@ -420,6 +433,7 @@ export class Runner {
       enabled: cacheEnabled,
       scripts: cacheScripts,
     };
+    const concurrency: Lib_RunWorkspaces_Runner_LoadProject_Concurrency = concurrencySettings ?? {};
     const workspaceEntries: Lib_RunWorkspaces_Runner_LoadProject_WorkspaceEntries = Object.entries(configuredWorkspaces).filter((workspaceEntry) => workspaceEntry[0] !== './');
     const loadedWorkspaces: Lib_RunWorkspaces_Runner_LoadProject_LoadedWorkspaces = await Promise.all(workspaceEntries.map(async (workspaceEntry) => {
       const typedWorkspaceEntry: Lib_RunWorkspaces_Runner_LoadProject_TypedWorkspaceEntry = workspaceEntry;
@@ -487,6 +501,7 @@ export class Runner {
 
     return {
       cache,
+      concurrency,
       packageManager: packageManagerDescriptor['name'],
       packageManagerDescriptor: packageManagerDescriptor['value'],
       rootDirectory: currentDirectory,
@@ -1515,6 +1530,30 @@ export class Runner {
     }
 
     return undefined;
+  }
+
+  /**
+   * Lib - Run Workspaces - Resolve Concurrency.
+   *
+   * Gives an explicit CLI limit priority, then selects the configured limit for
+   * the requested script before falling back to Nova's reusable default.
+   *
+   * @param {Lib_RunWorkspaces_Runner_ResolveConcurrency_Concurrency}           concurrency           - Concurrency.
+   * @param {Lib_RunWorkspaces_Runner_ResolveConcurrency_ConfiguredConcurrency} configuredConcurrency - Configured concurrency.
+   * @param {Lib_RunWorkspaces_Runner_ResolveConcurrency_Task}                  task                  - Task.
+   *
+   * @private
+   *
+   * @returns {Lib_RunWorkspaces_Runner_ResolveConcurrency_Returns}
+   *
+   * @since 0.33.0
+   */
+  private static resolveConcurrency(concurrency: Lib_RunWorkspaces_Runner_ResolveConcurrency_Concurrency, configuredConcurrency: Lib_RunWorkspaces_Runner_ResolveConcurrency_ConfiguredConcurrency, task: Lib_RunWorkspaces_Runner_ResolveConcurrency_Task): Lib_RunWorkspaces_Runner_ResolveConcurrency_Returns {
+    return (
+      concurrency
+      ?? configuredConcurrency[task]
+      ?? LIB_CONSTANTS_RUN_WORKSPACES_DEFAULT_CONCURRENCY
+    );
   }
 
   /**

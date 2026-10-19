@@ -110,7 +110,11 @@ export const libItemRecipesByCategory: Lib_Item_RecipesByCategory = {
     'sync-security',
   ],
   'license': ['update-copyright'],
-  'miscellaneous': ['remove-operating-system-files'],
+  'miscellaneous': [
+    'fix-markdown-tables',
+    'remove-operating-system-files',
+  ],
+  'nova-config': ['normalize-order'],
   'read-me': [
     'update-badges',
     'update-credits',

@@ -15,6 +15,7 @@ const workspaceDirectory = fileURLToPath(new URL('../', import.meta.url));
  * Run Apple - Action.
  *
  * Selects the Xcode lifecycle operation requested by the package script.
+ * The resolved value chooses one supported native lifecycle command.
  *
  * @since 0.0.0
  */
@@ -78,7 +79,7 @@ const commands = new Map([
  *
  * @since 0.0.0
  */
-const command = commands.get(action);
+const command = (action === undefined) ? undefined : commands.get(action);
 
 if (command === undefined) {
   process.stderr.write(`Unknown Apple lifecycle action: ${action ?? '(missing)'}.\n`);

@@ -9,7 +9,7 @@ import {
   writeFile,
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 
 import { afterAll, describe, it } from 'vitest';
 
@@ -286,6 +286,7 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_EntryPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_HasDeprecated,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_HasSince,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_IgnoredSourceFixturePaths,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageConfigPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageJsonContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_PackageJsonPath,
@@ -297,6 +298,7 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SourceFileContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SourceFilePath,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SourceFixturePaths,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SrcDirectory,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_StringLiteralPreserved,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_UpdatedSource,
@@ -1156,6 +1158,38 @@ describe('CliUtilityChangelog.run', async () => {
     await writeFile(sourceFilePath, sourceFileContents, 'utf-8');
     await writeFile(packageConfigPath, sourceFileContents, 'utf-8');
 
+    const sourceFixturePaths: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_SourceFixturePaths = [
+      join(workspaceDirectory, 'src', 'component.astro'),
+      join(workspaceDirectory, 'src', 'component.jsx'),
+      join(workspaceDirectory, 'src', 'component.svelte'),
+      join(workspaceDirectory, 'src', 'component.vue'),
+      join(workspaceDirectory, 'src', 'server.java'),
+      join(workspaceDirectory, 'src', 'server.php'),
+      join(workspaceDirectory, 'app', 'src', 'main', 'Main.kt'),
+      join(workspaceDirectory, 'app', 'src', 'main', 'build.gradle.kts'),
+      join(workspaceDirectory, 'Sources', 'App.swift'),
+      join(workspaceDirectory, 'Tests', 'AppTests.swift'),
+      join(workspaceDirectory, 'api', 'index.ts'),
+      join(workspaceDirectory, 'bin', 'cli.mjs'),
+      join(workspaceDirectory, 'port', 'files', 'usr', 'local', 'pkg', 'service.inc'),
+    ];
+
+    for (const sourceFixturePath of sourceFixturePaths) {
+      await mkdir(dirname(sourceFixturePath), { recursive: true });
+      await writeFile(sourceFixturePath, sourceFileContents, 'utf-8');
+    }
+
+    const ignoredSourceFixturePaths: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_IgnoredSourceFixturePaths = [
+      join(workspaceDirectory, 'docs', 'example.astro'),
+      join(workspaceDirectory, 'templates', 'example.kt'),
+      join(workspaceDirectory, 'packages', 'nested', 'src', 'index.ts'),
+    ];
+
+    for (const ignoredSourceFixturePath of ignoredSourceFixturePaths) {
+      await mkdir(dirname(ignoredSourceFixturePath), { recursive: true });
+      await writeFile(ignoredSourceFixturePath, sourceFileContents, 'utf-8');
+    }
+
     const rootScriptPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptPath = join(rootScriptDirectory, 'root.mjs');
     const rootScriptContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_StampsUNRELEASEDTokensInSourceFilesOnRelease_RootScriptContents = [
       '/**',
@@ -1213,6 +1247,15 @@ describe('CliUtilityChangelog.run', async () => {
     strictEqual((await readFile(packageScriptPath, 'utf-8')).includes('@since 0.20.0'), true);
     strictEqual((await readFile(packageConfigPath, 'utf-8')).includes('@since 0.20.0'), true);
     strictEqual((await readFile(sourceFilePath, 'utf-8')).includes('@since 0.0.0'), false);
+
+    for (const sourceFixturePath of sourceFixturePaths) {
+      strictEqual((await readFile(sourceFixturePath, 'utf-8')).includes('@since 0.20.0'), true);
+    }
+
+    for (const ignoredSourceFixturePath of ignoredSourceFixturePaths) {
+      strictEqual((await readFile(ignoredSourceFixturePath, 'utf-8')).includes('@since UNRELEASED'), true);
+    }
+
     strictEqual(await readFile(packageJsonPath, 'utf-8'), packageJsonContents);
 
     await rejects(readFile(join(projectDirectory, 'CHANGELOG.md'), 'utf-8'), { code: 'ENOENT' });

@@ -91,6 +91,10 @@ export class Runner {
       category: 'package',
       displayName: 'Homebridge',
       importMetaUrl: import.meta.url,
+      platforms: [
+        'nodejs',
+        'homebridge',
+      ],
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldPackageHomebridgeTemplateQuestions,
       templateSubpath: 'scaffold/package/homebridge',

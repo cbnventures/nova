@@ -7,6 +7,10 @@
     "dev": "nova utility run-scripts --parallel --node-env development \"dev:*\"",
     "dev:project": "node ./scripts/run-apple.mjs generate",
     "check": "nova utility run-scripts --sequential \"check:*\"",
+    "check:lint-scripts": "eslint ./ --max-warnings=0",
+    "check:types-scripts": "nova utility type-check --project tsconfig.scripts.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
+    "check:test-scripts": "vitest run",
     "check:project": "node ./scripts/run-apple.mjs generate",
     "check:test": "node ./scripts/run-apple.mjs test",
     "build": "nova utility run-scripts --sequential --node-env production \"build:*\"",
@@ -19,9 +23,13 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.32.0"
+    "@cbnventures/nova": "0.33.0"
   },
   "devDependencies": {
-    "shx": "[__SCAFFOLD_VERSION_SHX__]"
+    "@types/node": "[__SCAFFOLD_VERSION_TYPES_NODE_24__]",
+    "eslint": "[__SCAFFOLD_VERSION_ESLINT__]",
+    "shx": "[__SCAFFOLD_VERSION_SHX__]",
+    "typescript": "[__SCAFFOLD_VERSION_TYPESCRIPT__]",
+    "vitest": "[__SCAFFOLD_VERSION_VITEST__]"
   }
 }

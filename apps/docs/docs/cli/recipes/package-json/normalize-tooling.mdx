@@ -56,7 +56,7 @@ For each eligible <Terminology title="package" to="/docs/quickstart/terminology#
 
 - Matching `pre<name>` and `post<name>` hooks wrap their parent or child command, while `name:*` children retain their authored order.
 - Project-specific command families follow optional `i18n`, and npm installation, preparation, packaging, publishing, versioning, and dependency hooks remain together at the end.
-- Project roots receive the standard `dev`, `prod`, `check`, `build`, `deploy`, `clean`, `changelog`, and `recipes` commands plus their workspace-runner children.
+- Project roots receive any missing standard `dev`, `prod`, `check`, `build`, `deploy`, `clean`, `changelog`, and `recipes` commands plus their workspace-runner children. Existing command bodies remain project-owned and are never replaced by the defaults.
 - Generated projects register Nova's package-script Vitest suite so ordering drift, missing parents, recursive hooks, and ambiguous phase-less aliases fail checks.
 
 Nova rejects only exact top-level aliases; their scoped forms remain valid:

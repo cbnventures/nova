@@ -36,6 +36,22 @@ export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_Adds
 
 export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_FrontmatterTestPath = string;
 
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_NovaConfigContents = string;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_ParsedNovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_Urls = Record<string, unknown>;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_Recipes = Record<string, unknown>;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_PackageJsonRecipes = Record<string, unknown>;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_WorkspaceRecipes = Record<string, Record<string, unknown>>;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_ReviewedRecipeName = string;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_Recipe = Record<string, unknown> | undefined;
+
 /**
  * Tests - CLI - Scaffold - Docs - Docusaurus - Run - Creates Monorepo In Empty Directory.
  *
@@ -52,6 +68,16 @@ export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_Crea
 export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_IntroMdxPath = string;
 
 export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_FrontmatterTestPath = string;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_NovaConfigPath = string;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_DocusaurusConfigContents = string;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_NovaConfigContents = string;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_ParsedNovaConfig = Record<string, unknown>;
+
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_Urls = Record<string, unknown>;
 
 /**
  * Tests - CLI - Scaffold - Docs - Docusaurus - Run - Exits With Error For Standalone Project.

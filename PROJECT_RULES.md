@@ -18,10 +18,6 @@
 ```
 ./                              → role: project, policy: freezable
 ├── apps/
-│   ├── demo-envoy/             → role: docs, policy: freezable (preset showcase)
-│   ├── demo-foundry/           → role: docs, policy: freezable (preset showcase)
-│   ├── demo-sentinel/          → role: docs, policy: freezable (preset showcase)
-│   ├── demo-signal/            → role: docs, policy: freezable (preset showcase)
 │   └── docs/                   → role: docs, policy: freezable (Docusaurus)
 ├── packages/
 │   ├── docusaurus-preset-nova/ → role: package, policy: distributable (@cbnventures/docusaurus-preset-nova)
@@ -34,13 +30,9 @@
 - Every monorepo created with Nova should include a Docusaurus documentation workspace.
 - Local development uses [portless](https://portless.sh) for automatic port assignment and stable `.localhost` URLs:
 
-| Portless Name        | Workspace            | URL                                    |
-|----------------------|----------------------|----------------------------------------|
-| `nova-docs`          | `apps/docs`          | `https://nova-docs.localhost`          |
-| `nova-demo-envoy`    | `apps/demo-envoy`    | `https://nova-demo-envoy.localhost`    |
-| `nova-demo-foundry`  | `apps/demo-foundry`  | `https://nova-demo-foundry.localhost`  |
-| `nova-demo-sentinel` | `apps/demo-sentinel` | `https://nova-demo-sentinel.localhost` |
-| `nova-demo-signal`   | `apps/demo-signal`   | `https://nova-demo-signal.localhost`   |
+| Portless Name | Workspace   | URL                           |
+|---------------|-------------|-------------------------------|
+| `nova-docs`   | `apps/docs` | `https://nova-docs.localhost` |
 
 ## Source Structure
 
@@ -52,9 +44,12 @@ src/
 ├── cli/
 │   ├── recipe/
 │   │   ├── index.ts        → recipe entry point
-│   │   ├── miscellaneous/  → config-free maintenance recipes (fix-markdown-tables)
+│   │   ├── github/         → repository settings and metadata recipes
+│   │   ├── license/        → license maintenance recipes
+│   │   ├── miscellaneous/  → config-free maintenance recipes
+│   │   ├── nova-config/    → nova.config.json normalization recipes
 │   │   └── package-json/   → package.json recipes (sync-identity.ts, normalize-modules.ts, etc.)
-│   ├── utility/            → utility commands (changelog, initialize, run-recipes, run-scripts, transpile, type-check, version)
+│   ├── utility/            → utility commands (changelog, configure, run-recipes, run-scripts, run-workspaces, transpile, type-check, version)
 │   └── index.ts            → CLI entry point (Commander setup)
 ├── lib/                    → shared libraries (item.ts, nova-config.ts, regex.ts, schema.ts, utility.ts)
 ├── presets/
@@ -64,9 +59,12 @@ src/
 │   └── eslint/
 │       ├── index.ts        → rule registry (exports all custom rules)
 │       ├── formatting/     → formatting rules (no-raw-text-in-code, require-padding-lines)
+│       ├── jsdoc/          → JSDoc structure and consistency rules
 │       ├── nova/           → Nova-specific rules (no-logger-dev)
 │       ├── patterns/       → code pattern rules (switch-case-blocks, no-destructuring, etc.)
 │       ├── regex/          → regex rules (no-regex-literals, no-regex-literal-flags)
+│       ├── safety/         → defensive coding rules
+│       ├── syntax/         → language syntax rules
 │       └── typescript/     → TypeScript rules (no-inline-type-annotation, etc.)
 ├── toolkit/                → importable batteries (Logger, CLIHeader, MarkdownTable)
 └── types/                  → all type definitions, mirroring the source tree
@@ -84,10 +82,12 @@ src/
 
 ```
 src/
-├── components/             → landing page components (Hero, Features, Stats, etc.)
+├── blocks/                 → public preset-native content blocks
+├── cli/                    → theme-nova CLI commands
 ├── lib/                    → color pipeline, CSS generator, search, Shiki rehype
 │   └── search/             → client-side search (indexer, worker, hooks)
-├── presets/                → visual identity presets (envoy, foundry, sentinel, signal)
+├── plugins/                → Docusaurus plugin integrations
+├── presets/                → visual identity presets (see this directory for the current set)
 ├── scripts/                → client-side init scripts (color mode, announcement bar)
 ├── styles/                 → three-layer CSS (base, component, preset)
 │   ├── components/         → structural component styles
@@ -207,7 +207,7 @@ Every `package.json` key is classified into one of three buckets based on each w
 - The monorepo root (`project` role) must have `packageManager` and `workspaces` keys; no other workspace should.
 - Only **distributable** workspaces may have `files` in their `package.json`.
 - **Trackable** and **distributable** workspace versions must match `settings.versionStrategy`; when lock-step versioning is enabled, they must also start each release at the same version.
-- **Freezable** workspaces stay at `0.0.0` and are never deployed or published.
+- **Freezable** workspaces keep their sentinel version and are never deployed or published.
 - Always pair `module` with `moduleResolution` in TSConfig.
 - Relative paths do not belong in exported TSConfig presets (TypeScript resolves from where the config is, not where the command runs).
 - If a project uses its own build tool instead of `tsc`, set `isolatedModules: true` and `noEmit: true`.
@@ -318,7 +318,7 @@ Command-specific logic
   (changelog: prompt → write .md file)
   (type-check: shell out to tsc)
   (version: read package.json → print)
-  (initialize: scaffold nova.config.json)
+  (configure: edit nova.config.json)
   │
   ▼
 Output (files, stdout, or exit code)
@@ -379,10 +379,10 @@ apps/docs/
 
 ### Commands
 
-| Command              | What it does                           |
-|----------------------|----------------------------------------|
-| `npm run docs:dev`   | Start local dev server with hot reload |
-| `npm run docs:build` | Build the static site for production   |
+| Command                               | What it does                           |
+|---------------------------------------|----------------------------------------|
+| `npm run dev --workspace nova-docs`   | Start local dev server with hot reload |
+| `npm run build --workspace nova-docs` | Build the static site for production   |
 
 ## Publishing and Deployment
 
@@ -393,7 +393,7 @@ apps/docs/
 3. Run the real changelog release. It folds the released workspace changelog files, bumps versions, stamps sentinels, and syncs exact internal pins.
 4. Run `check` and `build` again.
 5. Write a separate concise thematic commit message; it is not the same text as the changelog block.
-6. Tag the commit (e.g., `v1.2.0`) and push the commit and tag.
+6. Tag the commit with the released version and push the commit and tag.
 7. The configured publish workflow runs from its configured trigger; Nova's signed npm workflow uses the pushed version tag.
 8. Create the GitHub Release from that tag. Its notes are one combined block copied from the released workspace changelog files, with version/date headings removed and workspace names retained.
 

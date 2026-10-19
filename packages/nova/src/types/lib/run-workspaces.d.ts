@@ -9,6 +9,7 @@ import type {
   Shared_CorepackSpawnInvocation,
   Shared_NovaConfigConfig,
   Shared_NovaConfigSettings_RunWorkspacesCache,
+  Shared_NovaConfigSettings_RunWorkspacesConcurrency,
   Shared_NovaConfigWorkspace,
   Shared_RunWorkspacesCacheRecord,
   Shared_RunWorkspacesOptions_Buffer,
@@ -341,6 +342,8 @@ export type Lib_RunWorkspaces_Runner_LoadProject_ConfiguredWorkspaces = Record<s
 
 export type Lib_RunWorkspaces_Runner_LoadProject_CacheSettings = Shared_NovaConfigSettings_RunWorkspacesCache | undefined;
 
+export type Lib_RunWorkspaces_Runner_LoadProject_ConcurrencySettings = Shared_NovaConfigSettings_RunWorkspacesConcurrency | undefined;
+
 export type Lib_RunWorkspaces_Runner_LoadProject_CacheDirectoryValue = string;
 
 export type Lib_RunWorkspaces_Runner_LoadProject_CacheEnabled = boolean;
@@ -352,6 +355,8 @@ export type Lib_RunWorkspaces_Runner_LoadProject_CacheDirectory = string;
 export type Lib_RunWorkspaces_Runner_LoadProject_CacheScripts = Set<string>;
 
 export type Lib_RunWorkspaces_Runner_LoadProject_Cache = Shared_RunWorkspacesProject_Cache;
+
+export type Lib_RunWorkspaces_Runner_LoadProject_Concurrency = Shared_NovaConfigSettings_RunWorkspacesConcurrency;
 
 export type Lib_RunWorkspaces_Runner_LoadProject_WorkspaceEntries = [string, Shared_NovaConfigWorkspace][];
 
@@ -399,6 +404,19 @@ export type Lib_RunWorkspaces_Runner_ParsePositiveInteger_Value = string | undef
 export type Lib_RunWorkspaces_Runner_ParsePositiveInteger_Returns = number | undefined;
 
 export type Lib_RunWorkspaces_Runner_ParsePositiveInteger_Parsed = number;
+
+/**
+ * Lib - Run Workspaces - Resolve Concurrency.
+ *
+ * @since 0.33.0
+ */
+export type Lib_RunWorkspaces_Runner_ResolveConcurrency_Concurrency = number | undefined;
+
+export type Lib_RunWorkspaces_Runner_ResolveConcurrency_ConfiguredConcurrency = Shared_NovaConfigSettings_RunWorkspacesConcurrency;
+
+export type Lib_RunWorkspaces_Runner_ResolveConcurrency_Task = string;
+
+export type Lib_RunWorkspaces_Runner_ResolveConcurrency_Returns = number;
 
 /**
  * Lib - Run Workspaces - Run.

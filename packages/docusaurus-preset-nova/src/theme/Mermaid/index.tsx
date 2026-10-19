@@ -31,6 +31,15 @@ import type {
   Theme_Mermaid_Index_MermaidContent_ClassName,
   Theme_Mermaid_Index_MermaidContent_ContainerRef,
   Theme_Mermaid_Index_MermaidContent_DragRef,
+  Theme_Mermaid_Index_MermaidContent_EnterFullscreenLabel,
+  Theme_Mermaid_Index_MermaidContent_ExitFullscreenLabel,
+  Theme_Mermaid_Index_MermaidContent_FallbackFullscreenEffect_CleanupReturns,
+  Theme_Mermaid_Index_MermaidContent_FullscreenClassName,
+  Theme_Mermaid_Index_MermaidContent_FullscreenEffect_CleanupReturns,
+  Theme_Mermaid_Index_MermaidContent_FullscreenLabel,
+  Theme_Mermaid_Index_MermaidContent_HandleFallbackKeyDown_Event,
+  Theme_Mermaid_Index_MermaidContent_HandleFallbackKeyDown_Returns,
+  Theme_Mermaid_Index_MermaidContent_HandleFullscreenChange_Returns,
   Theme_Mermaid_Index_MermaidContent_HandleKeyDown_Event,
   Theme_Mermaid_Index_MermaidContent_HandleKeyDown_NextPosition,
   Theme_Mermaid_Index_MermaidContent_HandleKeyDown_Returns,
@@ -42,20 +51,30 @@ import type {
   Theme_Mermaid_Index_MermaidContent_HandlePointerMove_Returns,
   Theme_Mermaid_Index_MermaidContent_IsDragging,
   Theme_Mermaid_Index_MermaidContent_IsDraggingState,
+  Theme_Mermaid_Index_MermaidContent_IsFallbackFullscreen,
+  Theme_Mermaid_Index_MermaidContent_IsFallbackFullscreenState,
+  Theme_Mermaid_Index_MermaidContent_IsFullscreen,
   Theme_Mermaid_Index_MermaidContent_IsInteractive,
+  Theme_Mermaid_Index_MermaidContent_IsNativeFullscreen,
+  Theme_Mermaid_Index_MermaidContent_IsNativeFullscreenState,
   Theme_Mermaid_Index_MermaidContent_Position,
   Theme_Mermaid_Index_MermaidContent_PositionState,
   Theme_Mermaid_Index_MermaidContent_Props,
   Theme_Mermaid_Index_MermaidContent_RenderResult,
+  Theme_Mermaid_Index_MermaidContent_RequestFullscreen,
   Theme_Mermaid_Index_MermaidContent_ResetLabel,
+  Theme_Mermaid_Index_MermaidContent_ResetView_Returns,
   Theme_Mermaid_Index_MermaidContent_Returns,
   Theme_Mermaid_Index_MermaidContent_Scale,
   Theme_Mermaid_Index_MermaidContent_ScaleLabel,
   Theme_Mermaid_Index_MermaidContent_ScaleState,
   Theme_Mermaid_Index_MermaidContent_SetIsDragging,
+  Theme_Mermaid_Index_MermaidContent_SetIsFallbackFullscreen,
+  Theme_Mermaid_Index_MermaidContent_SetIsNativeFullscreen,
   Theme_Mermaid_Index_MermaidContent_SetPosition,
   Theme_Mermaid_Index_MermaidContent_SetScale,
   Theme_Mermaid_Index_MermaidContent_StageStyle,
+  Theme_Mermaid_Index_MermaidContent_ToggleFullscreen_Returns,
   Theme_Mermaid_Index_MermaidContent_ViewportClassName,
   Theme_Mermaid_Index_MermaidContent_ViewportLabel,
   Theme_Mermaid_Index_MermaidContent_ZoomIn_NextScale,
@@ -96,6 +115,12 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
   const isDraggingState: Theme_Mermaid_Index_MermaidContent_IsDraggingState = useState<Theme_Mermaid_Index_MermaidContent_IsDragging>(false);
   const isDragging: Theme_Mermaid_Index_MermaidContent_IsDragging = isDraggingState[0];
   const setIsDragging: Theme_Mermaid_Index_MermaidContent_SetIsDragging = isDraggingState[1];
+  const isNativeFullscreenState: Theme_Mermaid_Index_MermaidContent_IsNativeFullscreenState = useState<Theme_Mermaid_Index_MermaidContent_IsNativeFullscreen>(false);
+  const isNativeFullscreen: Theme_Mermaid_Index_MermaidContent_IsNativeFullscreen = isNativeFullscreenState[0];
+  const setIsNativeFullscreen: Theme_Mermaid_Index_MermaidContent_SetIsNativeFullscreen = isNativeFullscreenState[1];
+  const isFallbackFullscreenState: Theme_Mermaid_Index_MermaidContent_IsFallbackFullscreenState = useState<Theme_Mermaid_Index_MermaidContent_IsFallbackFullscreen>(false);
+  const isFallbackFullscreen: Theme_Mermaid_Index_MermaidContent_IsFallbackFullscreen = isFallbackFullscreenState[0];
+  const setIsFallbackFullscreen: Theme_Mermaid_Index_MermaidContent_SetIsFallbackFullscreen = isFallbackFullscreenState[1];
   const dragRef: Theme_Mermaid_Index_MermaidContent_DragRef = useRef(null);
 
   useEffect(() => {
@@ -110,14 +135,84 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
     return undefined;
   }, [renderResult]);
 
+  useEffect(() => {
+    if (typeof document === 'undefined') {
+      return undefined;
+    }
+
+    /**
+     * Theme - Mermaid - Mermaid Content - Handle Fullscreen Change.
+     *
+     * Synchronizes component state when the browser enters fullscreen or the
+     * reader leaves it with Escape or browser chrome.
+     *
+     * @returns {undefined}
+     *
+     * @since 0.33.0
+     */
+    function handleFullscreenChange(): Theme_Mermaid_Index_MermaidContent_HandleFullscreenChange_Returns {
+      setIsNativeFullscreen(document.fullscreenElement === containerRef.current);
+
+      return undefined;
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+
+    return (): Theme_Mermaid_Index_MermaidContent_FullscreenEffect_CleanupReturns => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+
+      return undefined;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof document === 'undefined' || isFallbackFullscreen === false) {
+      return undefined;
+    }
+
+    /**
+     * Theme - Mermaid - Mermaid Content - Handle Fallback Key Down.
+     *
+     * Leaves the fixed-position fullscreen fallback when Escape is pressed in
+     * browsers that do not provide the native Fullscreen API.
+     *
+     * @param {KeyboardEvent} event - Event.
+     *
+     * @returns {undefined}
+     *
+     * @since 0.33.0
+     */
+    function handleFallbackKeyDown(event: Theme_Mermaid_Index_MermaidContent_HandleFallbackKeyDown_Event): Theme_Mermaid_Index_MermaidContent_HandleFallbackKeyDown_Returns {
+      if (event['key'] === 'Escape') {
+        setIsFallbackFullscreen(false);
+      }
+
+      return undefined;
+    }
+
+    document.documentElement.classList.add('nova-mermaid-fullscreen-open');
+
+    window.addEventListener('keydown', handleFallbackKeyDown);
+
+    return (): Theme_Mermaid_Index_MermaidContent_FallbackFullscreenEffect_CleanupReturns => {
+      window.removeEventListener('keydown', handleFallbackKeyDown);
+
+      document.documentElement.classList.remove('nova-mermaid-fullscreen-open');
+
+      return undefined;
+    };
+  }, [isFallbackFullscreen]);
+
   if (renderResult === null) {
     return null;
   }
 
   const className: Theme_Mermaid_Index_MermaidContent_ClassName = (props['className'] !== undefined) ? `${MERMAID_CONTAINER_CLASS_NAME} ${props['className']}` : MERMAID_CONTAINER_CLASS_NAME;
+  const fullscreenClassName: Theme_Mermaid_Index_MermaidContent_FullscreenClassName = (isFallbackFullscreen === true) ? `${className} nova-mermaid-container--fullscreen` : className;
   const canZoomIn: Theme_Mermaid_Index_MermaidContent_CanZoomIn = scale < MERMAID_MAX_SCALE;
   const canZoomOut: Theme_Mermaid_Index_MermaidContent_CanZoomOut = scale > MERMAID_MIN_SCALE;
   const isInteractive: Theme_Mermaid_Index_MermaidContent_IsInteractive = scale > 1;
+  const isFullscreen: Theme_Mermaid_Index_MermaidContent_IsFullscreen = isNativeFullscreen === true || isFallbackFullscreen === true;
   const scaleLabel: Theme_Mermaid_Index_MermaidContent_ScaleLabel = `${Math.round(scale * 100)}%`;
   const zoomInLabel: Theme_Mermaid_Index_MermaidContent_ZoomInLabel = translate({
     id: 'theme.mermaid.zoomIn',
@@ -134,6 +229,17 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
     message: 'Reset diagram view',
     description: 'Accessible label for the Mermaid diagram reset button',
   });
+  const enterFullscreenLabel: Theme_Mermaid_Index_MermaidContent_EnterFullscreenLabel = translate({
+    id: 'theme.mermaid.enterFullscreen',
+    message: 'View diagram fullscreen',
+    description: 'Accessible label for the Mermaid diagram enter-fullscreen button',
+  });
+  const exitFullscreenLabel: Theme_Mermaid_Index_MermaidContent_ExitFullscreenLabel = translate({
+    id: 'theme.mermaid.exitFullscreen',
+    message: 'Exit diagram fullscreen',
+    description: 'Accessible label for the Mermaid diagram exit-fullscreen button',
+  });
+  const fullscreenLabel: Theme_Mermaid_Index_MermaidContent_FullscreenLabel = (isFullscreen === true) ? exitFullscreenLabel : enterFullscreenLabel;
   const viewportLabel: Theme_Mermaid_Index_MermaidContent_ViewportLabel = translate({
     id: 'theme.mermaid.viewport',
     message: 'Interactive diagram. Zoom in, then drag or use the arrow keys to pan.',
@@ -147,6 +253,74 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
     (isInteractive === true) ? 'nova-mermaid-viewport--interactive' : '',
     (isDragging === true) ? 'nova-mermaid-viewport--dragging' : '',
   ].filter((value) => value !== '').join(' ');
+
+  /**
+   * Theme - Mermaid - Mermaid Content - Reset View.
+   *
+   * Restores the diagram to its fitted scale and places its stage back at the
+   * centered origin.
+   *
+   * @returns {undefined}
+   *
+   * @since 0.33.0
+   */
+  function resetView(): Theme_Mermaid_Index_MermaidContent_ResetView_Returns {
+    setScale(1);
+    setPosition({
+      x: 0,
+      y: 0,
+    });
+
+    return undefined;
+  }
+
+  /**
+   * Theme - Mermaid - Mermaid Content - Toggle Fullscreen.
+   *
+   * Enters the browser's native fullscreen surface when available and falls
+   * back to a fixed viewport overlay otherwise. Entry always fits and centers
+   * the graph; native and fallback modes both retain the same controls.
+   *
+   * @returns {undefined}
+   *
+   * @since 0.33.0
+   */
+  function toggleFullscreen(): Theme_Mermaid_Index_MermaidContent_ToggleFullscreen_Returns {
+    if (typeof document === 'undefined' || containerRef.current === null) {
+      return undefined;
+    }
+
+    if (isFallbackFullscreen === true) {
+      setIsFallbackFullscreen(false);
+
+      return undefined;
+    }
+
+    if (document.fullscreenElement === containerRef.current) {
+      void document.exitFullscreen().catch(() => undefined);
+
+      return undefined;
+    }
+
+    resetView();
+    setIsDragging(false);
+
+    const requestFullscreen: Theme_Mermaid_Index_MermaidContent_RequestFullscreen = Reflect.get(containerRef.current, 'requestFullscreen') as Theme_Mermaid_Index_MermaidContent_RequestFullscreen;
+
+    if (requestFullscreen === undefined) {
+      setIsFallbackFullscreen(true);
+
+      return undefined;
+    }
+
+    void requestFullscreen.call(containerRef.current).catch(() => {
+      setIsFallbackFullscreen(true);
+
+      return undefined;
+    });
+
+    return undefined;
+  }
 
   /**
    * Theme - Mermaid - Mermaid Content - Zoom In.
@@ -353,7 +527,7 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
   return (
     <div
       ref={containerRef}
-      className={className}
+      className={fullscreenClassName}
       style={props['style']}
     >
       <div
@@ -384,11 +558,7 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
             && position['y'] === 0
           )}
           onClick={() => {
-            setScale(1);
-            setPosition({
-              x: 0,
-              y: 0,
-            });
+            resetView();
 
             return undefined;
           }}
@@ -406,6 +576,21 @@ function MermaidContent(props: Theme_Mermaid_Index_MermaidContent_Props): Theme_
           title={zoomInLabel}
         >
           <Icon icon="lucide:zoom-in" width="16" height="16" aria-hidden="true" />
+        </button>
+        <button
+          className="nova-mermaid-control"
+          type="button"
+          onClick={toggleFullscreen}
+          aria-label={fullscreenLabel}
+          aria-pressed={isFullscreen}
+          title={fullscreenLabel}
+        >
+          <Icon
+            icon={(isFullscreen === true) ? 'lucide:minimize-2' : 'lucide:maximize-2'}
+            width="16"
+            height="16"
+            aria-hidden="true"
+          />
         </button>
       </div>
       <div

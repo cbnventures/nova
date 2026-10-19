@@ -40,6 +40,7 @@ import type {
   Shared_NovaConfig_Recipes_Github,
   Shared_NovaConfig_Recipes_License,
   Shared_NovaConfig_Recipes_Miscellaneous,
+  Shared_NovaConfig_Recipes_NovaConfig,
   Shared_NovaConfig_Recipes_PackageJson,
   Shared_NovaConfig_Recipes_ReadMe,
   Shared_NovaConfig_Settings,
@@ -72,8 +73,11 @@ import type {
   Shared_NovaConfigReadMeBadge,
   Shared_NovaConfigSettings_RunWorkspaces,
   Shared_NovaConfigSettings_RunWorkspacesCache,
+  Shared_NovaConfigSettings_RunWorkspacesConcurrency,
   Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkflow,
+  Shared_NovaConfigWorkflow_RunsOn,
+  Shared_NovaConfigWorkflow_TimeoutMinutes,
   Shared_NovaConfigWorkflow_Triggers,
   Shared_NovaConfigWorkflowTriggerObject,
   Shared_NovaConfigWorkflowTriggerObject_Branches,
@@ -551,7 +555,9 @@ export type Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Result = Shared_NovaCo
 
 export type Lib_NovaConfig_Runner_GetMiscellaneousRecipes_AllowedName = Shared_NovaConfigMiscellaneousRecipeName | undefined;
 
-export type Lib_NovaConfig_Runner_GetMiscellaneousRecipes_Entry = Shared_NovaConfigOperatingSystemFileRecipeEntry | undefined;
+export type Lib_NovaConfig_Runner_GetMiscellaneousRecipes_FixMarkdownTables = Shared_NovaConfig_RecipeEntry | undefined;
+
+export type Lib_NovaConfig_Runner_GetMiscellaneousRecipes_RemoveOperatingSystemFiles = Shared_NovaConfigOperatingSystemFileRecipeEntry | undefined;
 
 /**
  * Lib - Nova Config - Get Non Empty String.
@@ -686,6 +692,8 @@ export type Lib_NovaConfig_Runner_IsEntityRole_TypeGuard = Shared_NovaConfigEnti
  * @since 0.11.0
  */
 export type Lib_NovaConfig_Runner_Load_Returns = Promise<Shared_NovaConfigConfig>;
+
+export type Lib_NovaConfig_Runner_Load_Directory = string;
 
 export type Lib_NovaConfig_Runner_Load_CurrentDirectory = string;
 
@@ -1196,6 +1204,8 @@ export type Lib_NovaConfig_Runner_ParseRecipes_License = Shared_NovaConfig_Recip
 
 export type Lib_NovaConfig_Runner_ParseRecipes_Miscellaneous = Shared_NovaConfig_Recipes_Miscellaneous | undefined;
 
+export type Lib_NovaConfig_Runner_ParseRecipes_NovaConfig = Shared_NovaConfig_Recipes_NovaConfig | undefined;
+
 export type Lib_NovaConfig_Runner_ParseRecipes_ReadMe = Shared_NovaConfig_Recipes_ReadMe | undefined;
 
 export type Lib_NovaConfig_Runner_ParseRecipes_PackageJson = Shared_NovaConfig_Recipes_PackageJson | undefined;
@@ -1238,6 +1248,18 @@ export type Lib_NovaConfig_Runner_ParseSettings_CacheDirectory = string | undefi
 export type Lib_NovaConfig_Runner_ParseSettings_CacheScriptsValue = unknown;
 
 export type Lib_NovaConfig_Runner_ParseSettings_CacheScripts = string[] | undefined;
+
+export type Lib_NovaConfig_Runner_ParseSettings_ConcurrencyValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseSettings_Concurrency = Shared_NovaConfigSettings_RunWorkspacesConcurrency;
+
+export type Lib_NovaConfig_Runner_ParseSettings_ConcurrencyEntries = [string, unknown][];
+
+export type Lib_NovaConfig_Runner_ParseSettings_TypedConcurrencyEntry = [string, unknown];
+
+export type Lib_NovaConfig_Runner_ParseSettings_ConcurrencyScript = string;
+
+export type Lib_NovaConfig_Runner_ParseSettings_ConcurrencyLimit = unknown;
 
 export type Lib_NovaConfig_Runner_ParseSettings_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy | undefined;
 
@@ -1336,6 +1358,14 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_TriggerPaths = Shared_NovaConfi
 export type Lib_NovaConfig_Runner_ParseWorkflows_TriggerTags = Shared_NovaConfigWorkflowTriggerObject_Tags | undefined;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_TriggerWorkflows = Shared_NovaConfigWorkflowTriggerObject_Workflows | undefined;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_RawRunsOn = unknown;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_RunsOn = Shared_NovaConfigWorkflow_RunsOn | undefined;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_RawTimeoutMinutes = unknown;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_TimeoutMinutes = Shared_NovaConfigWorkflow_TimeoutMinutes | undefined;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_RawBuild = unknown;
 

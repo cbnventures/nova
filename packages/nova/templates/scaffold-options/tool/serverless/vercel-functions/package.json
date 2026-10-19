@@ -49,7 +49,7 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.32.0",
+    "@cbnventures/nova": "0.33.0",
     "chalk": "[__SCAFFOLD_VERSION_CHALK__]",
     "commander": "[__SCAFFOLD_VERSION_COMMANDER__]",
     "vercel": "[__SCAFFOLD_VERSION_VERCEL__]"

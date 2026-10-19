@@ -16,11 +16,11 @@ export type Tests_Lib_NovaConfigRunWorkspacesCache_TemporaryPrefix = string;
 export type Tests_Lib_NovaConfigRunWorkspacesCache_SandboxRoot = string;
 
 /**
- * Tests - Lib - Nova Config Run Workspaces Cache - Reads The Complete Verified Cache Contract.
+ * Tests - Lib - Nova Config Run Workspaces Cache - Reads The Complete Workspace Runner Settings Contract.
  *
  * @since 0.32.0
  */
-export type Tests_Lib_NovaConfigRunWorkspacesCache_NovaConfigRunWorkspacesCache_ReadsTheCompleteVerifiedCacheContract_Returns = Promise<void>;
+export type Tests_Lib_NovaConfigRunWorkspacesCache_NovaConfigRunWorkspacesCache_ReadsTheCompleteWorkspaceRunnerSettingsContract_Returns = Promise<void>;
 
 export type Tests_Lib_NovaConfigRunWorkspacesCache_ProjectDirectory = string;
 

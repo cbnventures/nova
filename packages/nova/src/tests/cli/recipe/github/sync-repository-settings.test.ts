@@ -278,7 +278,9 @@ describe('sync repository settings', () => {
 
     await CliRecipeGithubSyncRulesets.run({});
 
-    expect(utility['executeShell']).toHaveBeenCalledWith(expect.stringContaining('map(select(.name == \\"Nova default branch\\"'));
+    expect(utility['executeShell']).toHaveBeenCalledWith(expect.stringContaining('.[] | select(.name == \\"Nova default branch\\"'));
+
+    expect(utility['executeShell']).toHaveBeenCalledWith(expect.not.stringContaining('--slurp'));
 
     expect(executeGhCommands).toHaveBeenCalledWith([expect.stringContaining('gh api --method PUT repos/acme/widget/rulesets/42 ')], 'sync-rulesets', false);
 

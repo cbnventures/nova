@@ -312,6 +312,17 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 };
 
 /**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate - Invalid Execution Settings Are Flagged.
+ *
+ * @since 0.33.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_InvalidExecutionSettingsAreFlagged_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_InvalidExecutionSettingsAreFlagged_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_InvalidExecutionSettingsAreFlagged_Result = Shared_BlueprintValidationResult;
+
+/**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
  *
  * @since 0.21.0

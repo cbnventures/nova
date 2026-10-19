@@ -1,8 +1,13 @@
-import { strictEqual } from 'node:assert/strict';
+import {
+  deepStrictEqual,
+  ok,
+  strictEqual,
+} from 'node:assert/strict';
 import {
   access,
   mkdir,
   mkdtemp,
+  readFile,
   rm,
   writeFile,
 } from 'node:fs/promises';
@@ -17,6 +22,7 @@ import {
 } from 'vitest';
 
 import { Runner as CliScaffoldDocsDocusaurus } from '../../../../cli/scaffold/docs/docusaurus.js';
+import { libItemAllowedRecipes } from '../../../../lib/item.js';
 
 import type {
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_DocusaurusConfigPath,
@@ -24,16 +30,29 @@ import type {
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_HomeTsxPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_IntroMdxPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_NovaConfig,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_NovaConfigContents,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_NovaConfigPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_PackageJson,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_PackageJsonPath,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_PackageJsonRecipes,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_ParsedNovaConfig,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_ProjectDirectory,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_Recipe,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_Recipes,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_ReviewedRecipeName,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_Urls,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_WorkspaceRecipes,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_DocusaurusConfigContents,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_DocusaurusConfigPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_FrontmatterTestPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_HomeTsxPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_IntroMdxPath,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_NovaConfigContents,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_NovaConfigPath,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_ParsedNovaConfig,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_ProjectDirectory,
+  Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_Urls,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ExitsWithErrorForStandaloneProject_PackageJson,
   Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ExitsWithErrorForStandaloneProject_PackageJsonPath,
@@ -164,6 +183,7 @@ describe.sequential('CliScaffoldDocsDocusaurus.run', async () => {
     const homeTsxPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_HomeTsxPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'src', 'pages', 'index.tsx');
     const introMdxPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_IntroMdxPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'docs', 'intro.mdx');
     const frontmatterTestPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_FrontmatterTestPath = join(projectDirectory, 'my-docs', 'apps', 'docusaurus', 'src', 'tests', 'frontmatter.test.ts');
+    const novaConfigPath: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_NovaConfigPath = join(projectDirectory, 'my-docs', 'nova.config.json');
 
     await access(workspacePackageJsonPath);
 
@@ -174,6 +194,20 @@ describe.sequential('CliScaffoldDocsDocusaurus.run', async () => {
     await access(introMdxPath);
 
     await access(frontmatterTestPath);
+
+    const docusaurusConfigContents: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_DocusaurusConfigContents = await readFile(docusaurusConfigPath, 'utf-8');
+
+    ok(docusaurusConfigContents.includes('url: identity[\'url\'] ?? \'https://www.example.com\''));
+    ok(docusaurusConfigContents.includes('baseUrl: identity[\'baseUrl\'] ?? \'/\''));
+
+    const novaConfigContents: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_NovaConfigContents = await readFile(novaConfigPath, 'utf-8');
+    const parsedNovaConfig: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_ParsedNovaConfig = JSON.parse(novaConfigContents) as Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_ParsedNovaConfig;
+    const urls: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_Urls = parsedNovaConfig['urls'] as Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_CreatesMonorepoInEmptyDirectory_Urls;
+
+    deepStrictEqual(urls, {
+      homepage: 'https://www.example.com',
+      documentation: 'https://www.example.com',
+    });
 
     return;
   });
@@ -217,6 +251,9 @@ describe.sequential('CliScaffoldDocsDocusaurus.run', async () => {
           title: 'Workspace Test',
         },
       },
+      urls: {
+        homepage: 'https://www.existing.example',
+      },
       workspaces: {
         './': {
           name: 'workspace-test-project',
@@ -255,6 +292,28 @@ describe.sequential('CliScaffoldDocsDocusaurus.run', async () => {
     await access(introMdxPath);
 
     await access(frontmatterTestPath);
+
+    const novaConfigContents: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_NovaConfigContents = await readFile(novaConfigPath, 'utf-8');
+    const parsedNovaConfig: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_ParsedNovaConfig = JSON.parse(novaConfigContents) as Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_ParsedNovaConfig;
+    const urls: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_Urls = parsedNovaConfig['urls'] as Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_Urls;
+    const recipes: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_Recipes = parsedNovaConfig['recipes'] as Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_Recipes;
+    const packageJsonRecipes: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_PackageJsonRecipes = recipes['package-json'] as Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_PackageJsonRecipes;
+    const workspaceRecipes: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_WorkspaceRecipes = packageJsonRecipes['./apps/docusaurus'] as Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_WorkspaceRecipes;
+
+    deepStrictEqual(urls, {
+      homepage: 'https://www.existing.example',
+      documentation: 'https://www.example.com',
+    });
+
+    deepStrictEqual(Object.keys(workspaceRecipes), [...libItemAllowedRecipes]);
+
+    for (const recipeName of libItemAllowedRecipes) {
+      const reviewedRecipeName: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_ReviewedRecipeName = recipeName;
+      const recipe: Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_AddsWorkspaceAtMonorepoRoot_Recipe = workspaceRecipes[reviewedRecipeName];
+
+      ok(recipe !== undefined);
+      strictEqual(recipe['enabled'], true);
+    }
 
     await CliScaffoldDocsDocusaurus.run({
       install: false,

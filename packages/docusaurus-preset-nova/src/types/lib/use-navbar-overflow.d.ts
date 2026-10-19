@@ -9,19 +9,22 @@ import type {
  *
  * @since 0.18.0
  */
+export type Lib_UseNavbarOverflow_Cumulative = number;
+
+export type Lib_UseNavbarOverflow_Count = number;
+
 export type Lib_UseNavbarOverflow_InputItem = unknown;
 
 export type Lib_UseNavbarOverflow_Input_Items = readonly Lib_UseNavbarOverflow_InputItem[];
-
-export type Lib_UseNavbarOverflow_Input_BudgetVariable = string;
 
 export type Lib_UseNavbarOverflow_Input_TriggerVariable = string;
 
 export type Lib_UseNavbarOverflow_Input = {
   items: Lib_UseNavbarOverflow_Input_Items;
-  budgetVariable: Lib_UseNavbarOverflow_Input_BudgetVariable;
   triggerVariable: Lib_UseNavbarOverflow_Input_TriggerVariable;
 };
+
+export type Lib_UseNavbarOverflow_Returns_AvailableRef = RefObject<HTMLDivElement | null>;
 
 export type Lib_UseNavbarOverflow_Returns_MeasureRef = RefObject<HTMLDivElement | null>;
 
@@ -32,6 +35,7 @@ export type Lib_UseNavbarOverflow_Returns_HasOverflow = boolean;
 export type Lib_UseNavbarOverflow_Returns_Measuring = boolean;
 
 export type Lib_UseNavbarOverflow_Returns = {
+  availableRef: Lib_UseNavbarOverflow_Returns_AvailableRef;
   measureRef: Lib_UseNavbarOverflow_Returns_MeasureRef;
   visibleCount: Lib_UseNavbarOverflow_Returns_VisibleCount;
   hasOverflow: Lib_UseNavbarOverflow_Returns_HasOverflow;
@@ -43,6 +47,8 @@ export type Lib_UseNavbarOverflow_ItemCount = number;
 export type Lib_UseNavbarOverflow_ContainerElement = HTMLDivElement;
 
 export type Lib_UseNavbarOverflow_MeasureRef = RefObject<Lib_UseNavbarOverflow_ContainerElement | null>;
+
+export type Lib_UseNavbarOverflow_AvailableRef = RefObject<Lib_UseNavbarOverflow_ContainerElement | null>;
 
 export type Lib_UseNavbarOverflow_VisibleCountState = [Lib_UseNavbarOverflow_VisibleCount, Lib_UseNavbarOverflow_SetVisibleCount];
 
@@ -58,11 +64,11 @@ export type Lib_UseNavbarOverflow_SetMeasuring = Dispatch<SetStateAction<Lib_Use
 
 export type Lib_UseNavbarOverflow_Container = HTMLDivElement;
 
-export type Lib_UseNavbarOverflow_BudgetRaw = string;
+export type Lib_UseNavbarOverflow_AvailableContainer = HTMLDivElement;
 
 export type Lib_UseNavbarOverflow_TriggerRaw = string;
 
-export type Lib_UseNavbarOverflow_BudgetPixels = number;
+export type Lib_UseNavbarOverflow_AvailablePixels = number;
 
 export type Lib_UseNavbarOverflow_TriggerPixels = number;
 
@@ -71,18 +77,6 @@ export type Lib_UseNavbarOverflow_Gap = number;
 export type Lib_UseNavbarOverflow_ChildWidth = number;
 
 export type Lib_UseNavbarOverflow_ChildrenWidths = Lib_UseNavbarOverflow_ChildWidth[];
-
-export type Lib_UseNavbarOverflow_Cumulative = number;
-
-export type Lib_UseNavbarOverflow_Count = number;
-
-export type Lib_UseNavbarOverflow_Width = number;
-
-export type Lib_UseNavbarOverflow_Proposed = number;
-
-export type Lib_UseNavbarOverflow_IsLast = boolean;
-
-export type Lib_UseNavbarOverflow_MoreReservation = number;
 
 export type Lib_UseNavbarOverflow_Cancelled = boolean;
 
@@ -104,10 +98,38 @@ export type Lib_UseNavbarOverflow_ParseLength_Numeric = number;
 export type Lib_UseNavbarOverflow_ParseLength_RootFontSize = number;
 
 /**
+ * Lib - Use Navbar Overflow - Resolve Navbar Visible Count.
+ *
+ * @since 0.33.0
+ */
+export type Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Input_AvailablePixels = number;
+
+export type Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Input_ChildrenWidths = number[];
+
+export type Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Input_Gap = number;
+
+export type Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Input_TriggerPixels = number;
+
+export type Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Input = {
+  availablePixels: Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Input_AvailablePixels;
+  childrenWidths: Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Input_ChildrenWidths;
+  gap: Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Input_Gap;
+  triggerPixels: Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Input_TriggerPixels;
+};
+
+export type Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Returns = number;
+
+export type Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_FullWidth = number;
+
+export type Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_AvailableForItems = number;
+
+export type Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_ChildWidth = number | undefined;
+
+export type Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Proposed = number;
+
+/**
  * Lib - Use Navbar Overflow - Use Navbar Overflow - Compute.
  *
  * @since 0.18.0
  */
 export type Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_Returns = undefined;
-
-export type Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_ChildWidth = number | undefined;

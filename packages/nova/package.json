@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/nova",
-  "version": "0.32.0",
+  "version": "0.33.0",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",

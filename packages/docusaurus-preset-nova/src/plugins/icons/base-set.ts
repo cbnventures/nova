@@ -30,6 +30,8 @@ export const iconBaseSet: Plugins_Icons_BaseSet_IconBaseSet = [
   'lucide:list-tree',
   'lucide:loader',
   'lucide:menu',
+  'lucide:maximize-2',
+  'lucide:minimize-2',
   'lucide:monitor',
   'lucide:moon',
   'lucide:newspaper',

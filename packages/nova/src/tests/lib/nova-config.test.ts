@@ -1188,6 +1188,9 @@ describe('Shared_NovaConfig load', async () => {
           },
         },
         'miscellaneous': {
+          'fix-markdown-tables': {
+            enabled: true,
+          },
           'remove-operating-system-files': {
             enabled: true,
             settings: {
@@ -1202,6 +1205,11 @@ describe('Shared_NovaConfig load', async () => {
                 thumbnailDatabase: true,
               },
             },
+          },
+        },
+        'nova-config': {
+          'normalize-order': {
+            enabled: false,
           },
         },
         'read-me': {
@@ -1267,6 +1275,9 @@ describe('Shared_NovaConfig load', async () => {
       },
     });
     deepStrictEqual(recipes['miscellaneous'], {
+      'fix-markdown-tables': {
+        enabled: true,
+      },
       'remove-operating-system-files': {
         enabled: true,
         settings: {
@@ -1281,6 +1292,11 @@ describe('Shared_NovaConfig load', async () => {
             thumbnailDatabase: true,
           },
         },
+      },
+    });
+    deepStrictEqual(recipes['nova-config'], {
+      'normalize-order': {
+        enabled: false,
       },
     });
     deepStrictEqual(recipes['read-me'], {
@@ -1330,6 +1346,13 @@ describe('Shared_NovaConfig load', async () => {
         },
         'license': {},
         'miscellaneous': {
+          'fix-markdown-tables': {
+            enabled: false,
+            settings: {
+              good: true,
+              bad: 'no',
+            },
+          },
           'remove-operating-system-files': {
             enabled: true,
             settings: {
@@ -1349,6 +1372,11 @@ describe('Shared_NovaConfig load', async () => {
           },
           'not-a-recipe': {
             enabled: true,
+          },
+        },
+        'nova-config': {
+          'normalize-order': {
+            enabled: 'yes',
           },
         },
       },
@@ -1377,6 +1405,12 @@ describe('Shared_NovaConfig load', async () => {
     });
     strictEqual(recipes['license'], undefined);
     deepStrictEqual(recipes['miscellaneous'], {
+      'fix-markdown-tables': {
+        enabled: false,
+        settings: {
+          good: true,
+        },
+      },
       'remove-operating-system-files': {
         enabled: true,
         settings: {
@@ -1387,6 +1421,7 @@ describe('Shared_NovaConfig load', async () => {
         },
       },
     });
+    strictEqual(recipes['nova-config'], undefined);
     strictEqual(recipes['read-me'], undefined);
 
     return;
@@ -1657,6 +1692,9 @@ describe('Shared_NovaConfig load', async () => {
         platforms: [
           'nodejs',
           'swift',
+          'ios',
+          'visionos',
+          'discord',
           'python',
         ],
       },
@@ -1678,6 +1716,9 @@ describe('Shared_NovaConfig load', async () => {
     deepStrictEqual(loadedProject['platforms'], [
       'nodejs',
       'swift',
+      'ios',
+      'visionos',
+      'discord',
       'python',
     ]);
 
@@ -2195,6 +2236,8 @@ describe('parseWorkflows (via load)', async () => {
               tags: ['v*'],
             },
           ],
+          runsOn: 'ubuntu-latest',
+          timeoutMinutes: 45,
           with: {
             region: 'us-east-1',
             stage: 'prod',
@@ -2246,6 +2289,8 @@ describe('parseWorkflows (via load)', async () => {
         tags: ['v*'],
       },
     ]);
+    strictEqual(firstWorkflow['runsOn'], 'ubuntu-latest');
+    strictEqual(firstWorkflow['timeoutMinutes'], 45);
     deepStrictEqual(firstWorkflow['with'], {
       region: 'us-east-1',
       stage: 'prod',
@@ -2288,6 +2333,8 @@ describe('parseWorkflows (via load)', async () => {
             name: 'workflow-run-success',
             workflows: ['publish-core'],
           }],
+          runsOn: 'ubuntu-latest',
+          timeoutMinutes: 60,
           build: [
             './packages/thing',
             './apps/docs',
@@ -2338,6 +2385,8 @@ describe('parseWorkflows (via load)', async () => {
       name: 'workflow-run-success',
       workflows: ['publish-core'],
     }]);
+    strictEqual(reloadedWorkflow['runsOn'], 'ubuntu-latest');
+    strictEqual(reloadedWorkflow['timeoutMinutes'], 60);
     deepStrictEqual(reloadedWorkflow['build'], [
       './packages/thing',
       './apps/docs',
@@ -2555,6 +2604,8 @@ describe('parseWorkflows (via load)', async () => {
           template: 'valid-entry',
           name: 'valid-entry',
           triggers: ['release'],
+          runsOn: 'ubuntu-24.04',
+          timeoutMinutes: 0,
         },
       ],
     }, null, 2);
@@ -2581,6 +2632,8 @@ describe('parseWorkflows (via load)', async () => {
     }
 
     strictEqual(firstWorkflow['template'], 'valid-entry');
+    strictEqual(firstWorkflow['runsOn'], undefined);
+    strictEqual(firstWorkflow['timeoutMinutes'], undefined);
 
     return;
   });

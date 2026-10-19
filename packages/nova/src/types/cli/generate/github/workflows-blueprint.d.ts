@@ -703,6 +703,12 @@ export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Template = Sh
 
 export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workflow = Shared_BlueprintWorkflow | undefined;
 
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunsOn = Shared_BlueprintConfigWorkflow['runsOn'];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_TimeoutMinutes = Shared_BlueprintConfigWorkflow['timeoutMinutes'];
+
+export type Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Job = Shared_BlueprintJob;
+
 /**
  * CLI - Generate - GitHub - Workflows Blueprint.
  *

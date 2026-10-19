@@ -8,6 +8,7 @@ import { useNavbarOverflow } from '../../../lib/use-navbar-overflow.js';
 import More from '../More/index.js';
 
 import type {
+  Lib_UseNavbarOverflow_AvailableRef as LibUseNavbarOverflowAvailableRef,
   Lib_UseNavbarOverflow_HasOverflow as LibUseNavbarOverflowHasOverflow,
   Lib_UseNavbarOverflow_MeasureRef as LibUseNavbarOverflowMeasureRef,
   Lib_UseNavbarOverflow_Measuring as LibUseNavbarOverflowMeasuring,
@@ -78,9 +79,9 @@ function Compass(props: Theme_Navbar_Compass_Index_Compass_Props): Theme_Navbar_
 
   const overflow: LibUseNavbarOverflowReturns = useNavbarOverflow({
     items,
-    budgetVariable: '--nova-navbar-compass-items-max-width',
     triggerVariable: '--nova-navbar-more-width',
   });
+  const availableRef: LibUseNavbarOverflowAvailableRef = overflow['availableRef'];
   const measureRef: LibUseNavbarOverflowMeasureRef = overflow['measureRef'];
   const visibleCount: LibUseNavbarOverflowVisibleCount = overflow['visibleCount'];
   const hasOverflow: LibUseNavbarOverflowHasOverflow = overflow['hasOverflow'];
@@ -118,7 +119,7 @@ function Compass(props: Theme_Navbar_Compass_Index_Compass_Props): Theme_Navbar_
             }
           </div>
         </div>
-        <div className={(measuring === true) ? 'nova-navbar-compass-items nova-navbar-items-measuring' : 'nova-navbar-compass-items'}>
+        <div ref={availableRef} className={(measuring === true) ? 'nova-navbar-compass-items nova-navbar-items-measuring' : 'nova-navbar-compass-items'}>
           {
             visibleItems.map((navItem: Theme_Navbar_Index_Navbar_Item) => (
               <NavbarItem

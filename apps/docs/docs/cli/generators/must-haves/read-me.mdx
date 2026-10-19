@@ -26,7 +26,7 @@ Create a baseline `README.md` populated with project name, description, dynamic 
 - Produces a consistent README with shields badges, documentation links, and correct pronoun usage without manual editing.
 - Generates only the badges selected in `readme.badges`, preserving their configured order.
 - Draws every value from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, so regenerating after a config change keeps the file in sync.
-- Automatically copies the generated file into each <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> workspace.
+- Automatically copies the generated file into each consumer-facing workspace with the `app`, `package`, `tool`, or `config` role.
 
 ## Requirements
 
@@ -117,6 +117,7 @@ Badges render in the same order as `readme.badges`. Unknown identifiers, duplica
 
 ## Output Files
 
-| File        | Description                                         |
-|-------------|-----------------------------------------------------|
-| `README.md` | Project README with badges, links, and description. |
+| File                    | Description                                                                                                                                      |
+|-------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| `README.md`             | Project README with badges, links, and description.                                                                                              |
+| `<workspace>/README.md` | A copy of the same README placed in each consumer-facing workspace (roles `app`, `package`, `tool`, and `config`), excluding the root workspace. |

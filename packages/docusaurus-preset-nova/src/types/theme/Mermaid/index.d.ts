@@ -76,6 +76,18 @@ export type Theme_Mermaid_Index_MermaidContent_IsDraggingState = [Theme_Mermaid_
 
 export type Theme_Mermaid_Index_MermaidContent_SetIsDragging = Dispatch<SetStateAction<Theme_Mermaid_Index_MermaidContent_IsDragging>>;
 
+export type Theme_Mermaid_Index_MermaidContent_IsNativeFullscreen = boolean;
+
+export type Theme_Mermaid_Index_MermaidContent_IsNativeFullscreenState = [Theme_Mermaid_Index_MermaidContent_IsNativeFullscreen, Dispatch<SetStateAction<Theme_Mermaid_Index_MermaidContent_IsNativeFullscreen>>];
+
+export type Theme_Mermaid_Index_MermaidContent_SetIsNativeFullscreen = Dispatch<SetStateAction<Theme_Mermaid_Index_MermaidContent_IsNativeFullscreen>>;
+
+export type Theme_Mermaid_Index_MermaidContent_IsFallbackFullscreen = boolean;
+
+export type Theme_Mermaid_Index_MermaidContent_IsFallbackFullscreenState = [Theme_Mermaid_Index_MermaidContent_IsFallbackFullscreen, Dispatch<SetStateAction<Theme_Mermaid_Index_MermaidContent_IsFallbackFullscreen>>];
+
+export type Theme_Mermaid_Index_MermaidContent_SetIsFallbackFullscreen = Dispatch<SetStateAction<Theme_Mermaid_Index_MermaidContent_IsFallbackFullscreen>>;
+
 export type Theme_Mermaid_Index_MermaidContent_Drag_PointerId = number;
 
 export type Theme_Mermaid_Index_MermaidContent_Drag_Start = Shared_MermaidViewportPosition;
@@ -90,13 +102,37 @@ export type Theme_Mermaid_Index_MermaidContent_Drag = {
 
 export type Theme_Mermaid_Index_MermaidContent_DragRef = RefObject<Theme_Mermaid_Index_MermaidContent_Drag | null>;
 
+/**
+ * Theme - Mermaid - Mermaid Content - Handle Fullscreen Change.
+ *
+ * @since 0.33.0
+ */
+export type Theme_Mermaid_Index_MermaidContent_HandleFullscreenChange_Returns = undefined;
+
+export type Theme_Mermaid_Index_MermaidContent_FullscreenEffect_CleanupReturns = undefined;
+
+/**
+ * Theme - Mermaid - Mermaid Content - Handle Fallback Key Down.
+ *
+ * @since 0.33.0
+ */
+export type Theme_Mermaid_Index_MermaidContent_HandleFallbackKeyDown_Event = globalThis.KeyboardEvent;
+
+export type Theme_Mermaid_Index_MermaidContent_HandleFallbackKeyDown_Returns = undefined;
+
+export type Theme_Mermaid_Index_MermaidContent_FallbackFullscreenEffect_CleanupReturns = undefined;
+
 export type Theme_Mermaid_Index_MermaidContent_ClassName = string;
+
+export type Theme_Mermaid_Index_MermaidContent_FullscreenClassName = string;
 
 export type Theme_Mermaid_Index_MermaidContent_CanZoomIn = boolean;
 
 export type Theme_Mermaid_Index_MermaidContent_CanZoomOut = boolean;
 
 export type Theme_Mermaid_Index_MermaidContent_IsInteractive = boolean;
+
+export type Theme_Mermaid_Index_MermaidContent_IsFullscreen = boolean;
 
 export type Theme_Mermaid_Index_MermaidContent_ScaleLabel = string;
 
@@ -106,11 +142,33 @@ export type Theme_Mermaid_Index_MermaidContent_ZoomOutLabel = string;
 
 export type Theme_Mermaid_Index_MermaidContent_ResetLabel = string;
 
+export type Theme_Mermaid_Index_MermaidContent_EnterFullscreenLabel = string;
+
+export type Theme_Mermaid_Index_MermaidContent_ExitFullscreenLabel = string;
+
+export type Theme_Mermaid_Index_MermaidContent_FullscreenLabel = string;
+
 export type Theme_Mermaid_Index_MermaidContent_ViewportLabel = string;
 
 export type Theme_Mermaid_Index_MermaidContent_StageStyle = CSSProperties;
 
 export type Theme_Mermaid_Index_MermaidContent_ViewportClassName = string;
+
+export type Theme_Mermaid_Index_MermaidContent_RequestFullscreen = (() => Promise<void>) | undefined;
+
+/**
+ * Theme - Mermaid - Mermaid Content - Reset View.
+ *
+ * @since 0.33.0
+ */
+export type Theme_Mermaid_Index_MermaidContent_ResetView_Returns = undefined;
+
+/**
+ * Theme - Mermaid - Mermaid Content - Toggle Fullscreen.
+ *
+ * @since 0.33.0
+ */
+export type Theme_Mermaid_Index_MermaidContent_ToggleFullscreen_Returns = undefined;
 
 /**
  * Theme - Mermaid - Mermaid Content - Handle Key Down.

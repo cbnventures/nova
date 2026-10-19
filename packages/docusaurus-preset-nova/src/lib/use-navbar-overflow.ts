@@ -1,8 +1,8 @@
 /**
  * Lib - Use Navbar Overflow.
  *
- * Measures inline navbar items against a CSS-variable width budget so
- * variants can render the visible slice plus a trailing "More" dropdown.
+ * Measures inline navbar items against their live rendered space so variants
+ * can render the visible slice plus a trailing "More" dropdown.
  *
  * @since 0.18.0
  */
@@ -15,8 +15,9 @@ import {
 } from 'react';
 
 import type {
-  Lib_UseNavbarOverflow_BudgetPixels,
-  Lib_UseNavbarOverflow_BudgetRaw,
+  Lib_UseNavbarOverflow_AvailableContainer,
+  Lib_UseNavbarOverflow_AvailablePixels,
+  Lib_UseNavbarOverflow_AvailableRef,
   Lib_UseNavbarOverflow_Cancelled,
   Lib_UseNavbarOverflow_ChildrenWidths,
   Lib_UseNavbarOverflow_Container,
@@ -26,28 +27,29 @@ import type {
   Lib_UseNavbarOverflow_Gap,
   Lib_UseNavbarOverflow_HasOverflow,
   Lib_UseNavbarOverflow_Input,
-  Lib_UseNavbarOverflow_IsLast,
   Lib_UseNavbarOverflow_ItemCount,
   Lib_UseNavbarOverflow_MeasureRef,
   Lib_UseNavbarOverflow_Measuring,
   Lib_UseNavbarOverflow_MeasuringState,
-  Lib_UseNavbarOverflow_MoreReservation,
   Lib_UseNavbarOverflow_Observer,
   Lib_UseNavbarOverflow_ParseLength_Numeric,
   Lib_UseNavbarOverflow_ParseLength_Returns,
   Lib_UseNavbarOverflow_ParseLength_RootFontSize,
   Lib_UseNavbarOverflow_ParseLength_Value,
-  Lib_UseNavbarOverflow_Proposed,
+  Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_AvailableForItems,
+  Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_ChildWidth,
+  Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_FullWidth,
+  Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Input,
+  Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Proposed,
+  Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Returns,
   Lib_UseNavbarOverflow_Returns,
   Lib_UseNavbarOverflow_SetMeasuring,
   Lib_UseNavbarOverflow_SetVisibleCount,
   Lib_UseNavbarOverflow_TriggerPixels,
   Lib_UseNavbarOverflow_TriggerRaw,
-  Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_ChildWidth,
   Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_Returns,
   Lib_UseNavbarOverflow_VisibleCount,
   Lib_UseNavbarOverflow_VisibleCountState,
-  Lib_UseNavbarOverflow_Width,
 } from '../types/lib/use-navbar-overflow.d.ts';
 
 /**
@@ -80,11 +82,62 @@ function parseLength(value: Lib_UseNavbarOverflow_ParseLength_Value): Lib_UseNav
 }
 
 /**
+ * Lib - Use Navbar Overflow - Resolve Navbar Visible Count.
+ *
+ * Returns every item when the complete row fits. Only after overflow is
+ * confirmed does it reserve room for the trailing More control and determine
+ * how many leading items can remain visible.
+ *
+ * @param {Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Input} input - Input.
+ *
+ * @returns {number}
+ *
+ * @since 0.33.0
+ */
+export function resolveNavbarVisibleCount(input: Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Input): Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Returns {
+  const fullWidth: Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_FullWidth = input['childrenWidths'].reduce(
+    (total, width, index) => total + width + ((index > 0) ? input['gap'] : 0),
+    0,
+  );
+
+  if (fullWidth <= input['availablePixels']) {
+    return input['childrenWidths'].length;
+  }
+
+  const availableForItems: Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_AvailableForItems = Math.max(
+    0,
+    input['availablePixels'] - input['triggerPixels'] - input['gap'],
+  );
+
+  let cumulative: Lib_UseNavbarOverflow_Cumulative = 0;
+  let count: Lib_UseNavbarOverflow_Count = 0;
+
+  for (let i = 0; i < input['childrenWidths'].length; i += 1) {
+    const childWidth: Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_ChildWidth = input['childrenWidths'][i];
+
+    if (childWidth === undefined) {
+      continue;
+    }
+
+    const proposed: Lib_UseNavbarOverflow_ResolveNavbarVisibleCount_Proposed = cumulative + ((i > 0) ? input['gap'] : 0) + childWidth;
+
+    if (proposed > availableForItems) {
+      break;
+    }
+
+    cumulative = proposed;
+    count = i + 1;
+  }
+
+  return count;
+}
+
+/**
  * Lib - Use Navbar Overflow - Use Navbar Overflow.
  *
- * Measures navbar items against a width budget and returns the count
- * that fit alongside a measuring flag, recomputing on resize so the
- * overflow menu only appears once items no longer fit.
+ * Measures navbar items against the actual width of their rendered slot and
+ * returns the count that fits alongside a measuring flag. Resize observers
+ * keep the result synchronized with browser, font, brand, and action changes.
  *
  * @param {Lib_UseNavbarOverflow_Input} input - Input.
  *
@@ -95,6 +148,7 @@ function parseLength(value: Lib_UseNavbarOverflow_ParseLength_Value): Lib_UseNav
 export function useNavbarOverflow(input: Lib_UseNavbarOverflow_Input): Lib_UseNavbarOverflow_Returns {
   const itemCount: Lib_UseNavbarOverflow_ItemCount = input['items'].length;
   const measureRef: Lib_UseNavbarOverflow_MeasureRef = useRef<Lib_UseNavbarOverflow_ContainerElement | null>(null);
+  const availableRef: Lib_UseNavbarOverflow_AvailableRef = useRef<Lib_UseNavbarOverflow_ContainerElement | null>(null);
   const visibleCountState: Lib_UseNavbarOverflow_VisibleCountState = useState<Lib_UseNavbarOverflow_VisibleCount>(itemCount);
   const visibleCount: Lib_UseNavbarOverflow_VisibleCount = visibleCountState[0];
   const setVisibleCount: Lib_UseNavbarOverflow_SetVisibleCount = visibleCountState[1];
@@ -105,7 +159,7 @@ export function useNavbarOverflow(input: Lib_UseNavbarOverflow_Input): Lib_UseNa
   /**
    * Lib - Use Navbar Overflow - Use Navbar Overflow - Compute.
    *
-   * Measures each navbar child against the width budget and updates
+   * Measures each navbar child against the live available width and updates
    * the visible count and measuring state to reflect what fits.
    *
    * @private
@@ -115,7 +169,7 @@ export function useNavbarOverflow(input: Lib_UseNavbarOverflow_Input): Lib_UseNa
    * @since 0.21.0
    */
   function compute(): Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_Returns {
-    if (measureRef.current === null) {
+    if (measureRef.current === null || availableRef.current === null) {
       return undefined;
     }
 
@@ -124,9 +178,9 @@ export function useNavbarOverflow(input: Lib_UseNavbarOverflow_Input): Lib_UseNa
     }
 
     const container: Lib_UseNavbarOverflow_Container = measureRef.current;
-    const budgetRaw: Lib_UseNavbarOverflow_BudgetRaw = getComputedStyle(document.documentElement).getPropertyValue(input['budgetVariable']).trim();
+    const availableContainer: Lib_UseNavbarOverflow_AvailableContainer = availableRef.current;
     const triggerRaw: Lib_UseNavbarOverflow_TriggerRaw = getComputedStyle(document.documentElement).getPropertyValue(input['triggerVariable']).trim();
-    const budgetPixels: Lib_UseNavbarOverflow_BudgetPixels = parseLength(budgetRaw);
+    const availablePixels: Lib_UseNavbarOverflow_AvailablePixels = availableContainer.getBoundingClientRect().width;
     const triggerPixels: Lib_UseNavbarOverflow_TriggerPixels = parseLength(triggerRaw);
     const gap: Lib_UseNavbarOverflow_Gap = parseFloat(getComputedStyle(container).gap) || 0;
 
@@ -134,28 +188,12 @@ export function useNavbarOverflow(input: Lib_UseNavbarOverflow_Input): Lib_UseNa
       (child) => child.getBoundingClientRect().width,
     );
 
-    let cumulative: Lib_UseNavbarOverflow_Cumulative = 0;
-    let count: Lib_UseNavbarOverflow_Count = 0;
-
-    for (let i = 0; i < childrenWidths.length; i += 1) {
-      const childWidth: Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_ChildWidth = childrenWidths[i];
-
-      if (childWidth === undefined) {
-        continue;
-      }
-
-      const width: Lib_UseNavbarOverflow_Width = childWidth;
-      const proposed: Lib_UseNavbarOverflow_Proposed = cumulative + ((i > 0) ? gap : 0) + width;
-      const isLast: Lib_UseNavbarOverflow_IsLast = (i === childrenWidths.length - 1);
-      const moreReservation: Lib_UseNavbarOverflow_MoreReservation = (isLast === true) ? 0 : (triggerPixels + gap);
-
-      if (proposed + moreReservation > budgetPixels) {
-        break;
-      }
-
-      cumulative = proposed;
-      count = i + 1;
-    }
+    const count: Lib_UseNavbarOverflow_Count = resolveNavbarVisibleCount({
+      availablePixels,
+      childrenWidths,
+      gap,
+      triggerPixels,
+    });
 
     setVisibleCount(count);
 
@@ -210,9 +248,15 @@ export function useNavbarOverflow(input: Lib_UseNavbarOverflow_Input): Lib_UseNa
       observer.observe(measureRef.current);
     }
 
-    observer.observe(document.documentElement);
+    if (availableRef.current !== null) {
+      observer.observe(availableRef.current);
+    }
+
+    window.addEventListener('resize', compute);
 
     return () => {
+      window.removeEventListener('resize', compute);
+
       observer.disconnect();
 
       return undefined;
@@ -222,6 +266,7 @@ export function useNavbarOverflow(input: Lib_UseNavbarOverflow_Input): Lib_UseNa
   const hasOverflow: Lib_UseNavbarOverflow_HasOverflow = (visibleCount < itemCount);
 
   return {
+    availableRef,
     measureRef,
     visibleCount,
     hasOverflow,

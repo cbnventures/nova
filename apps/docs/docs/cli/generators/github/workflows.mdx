@@ -96,14 +96,32 @@ Configs written for the previous generator must migrate to the new field names (
 
 Each entry in the `"workflows"` array maps to one output file. An entry contains:
 
-| Field      | Required | Description                                                                                                        |
-|------------|----------|--------------------------------------------------------------------------------------------------------------------|
-| `template` | Yes      | The name of a bundled workflow template (see [Available Templates](#available-templates)).                         |
-| `name`     | Yes      | A label appended to the output filename and workflow name. Must be unique within the same template.                |
-| `triggers` | Yes      | An array of triggers (see [Available Triggers](#available-triggers)). Each trigger must be valid for the template. |
-| `build`    | No       | An array of workspace paths (keys from `workspaces`) to include in the `check` / `build` step filter.              |
-| `deploy`   | No       | An array of publish destinations for the `publish` template. See [Deploy Fields](#deploy-fields).                  |
-| `with`     | No       | Key-value pairs that remap secret / variable names or supply values for literal template variables.                |
+| Field            | Required | Description                                                                                                                 |
+|------------------|----------|-----------------------------------------------------------------------------------------------------------------------------|
+| `template`       | Yes      | The name of a bundled workflow template (see [Available Templates](#available-templates)).                                  |
+| `name`           | Yes      | A label appended to the output filename and workflow name. Must be unique within the same template.                         |
+| `triggers`       | Yes      | An array of triggers (see [Available Triggers](#available-triggers)). Each trigger must be valid for the template.          |
+| `runsOn`         | No       | Runner applied to every generated job. The only supported value is `"ubuntu-latest"`; omission keeps the template defaults. |
+| `timeoutMinutes` | No       | Whole number from `1` through `360` applied to every generated job; omission keeps each job's template timeout.             |
+| `build`          | No       | An array of workspace paths (keys from `workspaces`) to include in the `check` / `build` step filter.                       |
+| `deploy`         | No       | An array of publish destinations for the `publish` template. See [Deploy Fields](#deploy-fields).                           |
+| `with`           | No       | Key-value pairs that remap secret / variable names or supply values for literal template variables.                         |
+
+### Job Execution
+
+Use `runsOn` and `timeoutMinutes` when every job in one generated workflow should share the same execution ceiling:
+
+```json
+{
+  "template": "publish",
+  "name": "project",
+  "triggers": ["release"],
+  "runsOn": "ubuntu-latest",
+  "timeoutMinutes": 45
+}
+```
+
+Nova intentionally offers only `ubuntu-latest` as the runner selection. `timeoutMinutes` accepts a whole number from `1` through `360`. A timeout is only the point where GitHub cancels a still-running job; it does not reserve that amount of runner time. Leave the timeout unset to retain the different defaults owned by each workflow template and job.
 
 ### Deploy Fields
 

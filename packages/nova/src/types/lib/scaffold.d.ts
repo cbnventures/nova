@@ -16,6 +16,12 @@ import type {
   Shared_NovaConfig_IgnoreFile_Bundles,
   Shared_NovaConfig_IgnoreFile_Patterns,
   Shared_NovaConfig_IgnoreFiles,
+  Shared_NovaConfig_Project_Platforms,
+  Shared_NovaConfig_RecipeEntry,
+  Shared_NovaConfig_Recipes,
+  Shared_NovaConfig_Recipes_PackageJson,
+  Shared_NovaConfig_Recipes_PackageJsonWorkspace,
+  Shared_NovaConfig_Urls,
   Shared_NovaConfigEnvironmentValue,
   Shared_ScaffoldConfig,
   Shared_ScaffoldExistingRoot,
@@ -71,6 +77,8 @@ export type Lib_Scaffold_CollectFiles_Nested = string[];
 export type Lib_Scaffold_CreateMonorepoRoot_OutputDirectory = string;
 
 export type Lib_Scaffold_CreateMonorepoRoot_ProjectSlug = string;
+
+export type Lib_Scaffold_CreateMonorepoRoot_Platforms = Shared_NovaConfig_Project_Platforms;
 
 export type Lib_Scaffold_CreateMonorepoRoot_Returns = Promise<void>;
 
@@ -408,6 +416,8 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_Category = 'app' | 'docs' | '
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentVariables = Shared_NovaConfigEnvironmentValue[];
 
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Platforms = Shared_NovaConfig_Project_Platforms;
+
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Returns = Promise<void>;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig = Record<string, unknown> | undefined;
@@ -420,6 +430,10 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName = Record<string, 
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug = string | undefined;
 
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedPlatforms = Shared_NovaConfig_Project_Platforms | undefined;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_PlatformsMerged = Shared_NovaConfig_Project_Platforms;
+
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Role = 'app' | 'docs' | 'package' | 'tool';
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Policy = 'distributable' | 'freezable' | 'trackable';
@@ -429,6 +443,20 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName = string;
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces = Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces | undefined;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces = Record<string, unknown>;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedUrls = Shared_NovaConfig_Urls | undefined;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Urls = Shared_NovaConfig_Urls;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_DocumentationUrl = string;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedRecipes = Shared_NovaConfig_Recipes | undefined;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Recipes = Shared_NovaConfig_Recipes;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedPackageJsonRecipes = Shared_NovaConfig_Recipes_PackageJson | undefined;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_PackageJsonRecipes = Shared_NovaConfig_Recipes_PackageJson;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedIgnoreFiles = Shared_NovaConfig_IgnoreFiles | undefined;
 
@@ -459,6 +487,8 @@ export type Lib_Scaffold_RegisterWorkspaceInConfig_EnvironmentWorkspace = Record
 export type Lib_Scaffold_RegisterWorkspaceInConfig_Json = string;
 
 export type Lib_Scaffold_RegisterWorkspaceInConfig_JsonContents = string;
+
+export type Lib_Scaffold_RegisterWorkspaceInConfig_NormalizedConfig = Record<string, unknown>;
 
 /**
  * Lib - Scaffold - Report Error.
@@ -555,6 +585,17 @@ export type Lib_Scaffold_ResolveScaffoldInstallInvocation_Returns = {
 export type Lib_Scaffold_ResolveScaffoldInstallInvocation_Command = Shared_CorepackCommand;
 
 export type Lib_Scaffold_ResolveScaffoldInstallInvocation_CommandArguments = string[];
+
+/**
+ * Lib - Scaffold - Resolve Scaffold package.json Recipes.
+ *
+ * @since 0.33.0
+ */
+export type Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Returns = Shared_NovaConfig_Recipes_PackageJsonWorkspace;
+
+export type Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Recipes = Shared_NovaConfig_Recipes_PackageJsonWorkspace;
+
+export type Lib_Scaffold_ResolveScaffoldPackageJsonRecipes_Recipe = Shared_NovaConfig_RecipeEntry;
 
 /**
  * Lib - Scaffold - Resolve Template Answers.
@@ -654,7 +695,11 @@ export type Lib_Scaffold_RunScaffold_Definition_EnvironmentVariables = Shared_No
 
 export type Lib_Scaffold_RunScaffold_Definition_ImportMetaUrl = string;
 
+export type Lib_Scaffold_RunScaffold_Definition_Platforms = Shared_NovaConfig_Project_Platforms;
+
 export type Lib_Scaffold_RunScaffold_Definition_PrimaryScript = string;
+
+export type Lib_Scaffold_RunScaffold_Definition_ResolvePlatforms = (answers: Shared_ScaffoldTemplateResolution_Answers) => Shared_NovaConfig_Project_Platforms;
 
 export type Lib_Scaffold_RunScaffold_Definition_ResolvePresentationOptions_WorkspaceName = string;
 
@@ -690,7 +735,9 @@ export type Lib_Scaffold_RunScaffold_Definition = {
   displayName: Lib_Scaffold_RunScaffold_Definition_DisplayName;
   environmentVariables?: Lib_Scaffold_RunScaffold_Definition_EnvironmentVariables;
   importMetaUrl: Lib_Scaffold_RunScaffold_Definition_ImportMetaUrl;
+  platforms: Lib_Scaffold_RunScaffold_Definition_Platforms;
   primaryScript?: Lib_Scaffold_RunScaffold_Definition_PrimaryScript;
+  resolvePlatforms?: Lib_Scaffold_RunScaffold_Definition_ResolvePlatforms;
   resolvePresentationOptions?: Lib_Scaffold_RunScaffold_Definition_ResolvePresentationOptions;
   resolveReplacements?: Lib_Scaffold_RunScaffold_Definition_ResolveReplacements;
   resolveRootTemplateSubpaths?: Lib_Scaffold_RunScaffold_Definition_ResolveRootTemplateSubpaths;
@@ -783,6 +830,8 @@ export type Lib_Scaffold_RunScaffold_ReplacementResolution = Map<RegExp, string>
 export type Lib_Scaffold_RunScaffold_ShouldInstall = boolean;
 
 export type Lib_Scaffold_RunScaffold_EnvironmentVariables = Shared_NovaConfigEnvironmentValue[];
+
+export type Lib_Scaffold_RunScaffold_Platforms = Shared_NovaConfig_Project_Platforms;
 
 export type Lib_Scaffold_RunScaffold_PackageManagerValue = unknown;
 

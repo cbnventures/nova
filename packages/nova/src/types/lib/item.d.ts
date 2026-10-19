@@ -7,6 +7,7 @@ import type {
   Shared_NovaConfigGithubRecipeName,
   Shared_NovaConfigLicenseRecipeName,
   Shared_NovaConfigMiscellaneousRecipeName,
+  Shared_NovaConfigNovaConfigRecipeName,
   Shared_NovaConfigOperatingSystemFileName,
   Shared_NovaConfigOperatingSystemFilePlatform,
   Shared_NovaConfigReadMeRecipeName,
@@ -62,6 +63,8 @@ export type Lib_Item_RecipesByCategory_License = readonly Shared_NovaConfigLicen
 
 export type Lib_Item_RecipesByCategory_Miscellaneous = readonly Shared_NovaConfigMiscellaneousRecipeName[];
 
+export type Lib_Item_RecipesByCategory_NovaConfig = readonly Shared_NovaConfigNovaConfigRecipeName[];
+
 export type Lib_Item_RecipesByCategory_ReadMe = readonly Shared_NovaConfigReadMeRecipeName[];
 
 export type Lib_Item_RecipesByCategory_PackageJson = readonly Shared_NovaConfigWorkspaceRecipeName[];
@@ -70,6 +73,7 @@ export type Lib_Item_RecipesByCategory = {
   'github': Lib_Item_RecipesByCategory_Github;
   'license': Lib_Item_RecipesByCategory_License;
   'miscellaneous': Lib_Item_RecipesByCategory_Miscellaneous;
+  'nova-config': Lib_Item_RecipesByCategory_NovaConfig;
   'read-me': Lib_Item_RecipesByCategory_ReadMe;
   'package-json': Lib_Item_RecipesByCategory_PackageJson;
 };

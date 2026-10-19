@@ -280,6 +280,17 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuild
 export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildWorkflowRunTrigger_ReturnsTheWorkflowRunTriggerWithTheResolvedNames_Result = Shared_BlueprintTriggerWorkflowRun;
 
 /**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint - Dispatch.
+ *
+ * @since 0.33.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Entry = Shared_BlueprintConfigWorkflow;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Workspaces = Shared_NovaConfig_Workspaces;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Result = string;
+
+/**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint - Emit Runtime Sync Step.
  *
  * @since 0.21.0

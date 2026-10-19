@@ -37,6 +37,7 @@ export class Runner {
         reach: 'local',
       }],
       importMetaUrl: import.meta.url,
+      platforms: ['nodejs'],
       rootTemplateSubpath: 'scaffold/package/github-action-root',
       templateSubpath: 'scaffold/package/github-action',
       typeName: 'github-action',

@@ -29,18 +29,18 @@ For your first working file, follow the [first successful check](/docs/quickstar
 
 Describes the project identity, display info, and build metadata.
 
-| Field               | Type       | Description                                                                                                                                                                                                                                                              |
-|---------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name.slug`         | `string`   | URL-safe project identifier. Letters, numbers, hyphens, and underscores only. The 214-character npm limit is enforced by the `nova utility configure` wizard; the parser only requires a non-empty trimmed string.                                                       |
-| `name.title`        | `string`   | Human-readable project name for display.                                                                                                                                                                                                                                 |
-| `description.short` | `string`   | One-line summary used in `package.json` and meta tags.                                                                                                                                                                                                                   |
-| `description.long`  | `string`   | Extended description for README and documentation pages.                                                                                                                                                                                                                 |
-| `keywords`          | `string[]` | Search keywords (max 50 characters each).                                                                                                                                                                                                                                |
-| `legalName`         | `string`   | Legal entity name used in LICENSE and copyright notices.                                                                                                                                                                                                                 |
-| `pronouns`          | `string`   | Controls first-person wording in generated files. One of `"business"` (we/our) or `"personal"` (I/my).                                                                                                                                                                   |
-| `platforms`         | `string[]` | Supported project platforms. One or more of `"nodejs"`, `"swift"`, `"android"`, `"java"`, `"kotlin"`, `"csharp"`, `"php"`, `"python"`, `"macos"`, `"linux"`, `"windows"`, `"homebridge"`, `"docker"`, `"pfsense"`, `"synology"`, or `"web"`. Unknown values are dropped. |
-| `startingYear`      | `number`   | Year the project began (integer >= 1970). Used in LICENSE copyright ranges.                                                                                                                                                                                              |
-| `license`           | `string`   | License identifier. One of `"AGPL-3.0"`, `"Apache-2.0"`, `"BSD-2-Clause"`, `"BSD-3-Clause"`, `"BSL-1.0"`, `"CC0-1.0"`, `"EPL-2.0"`, `"GPL-2.0"`, `"GPL-3.0"`, `"LGPL-2.1"`, `"MIT"`, `"MPL-2.0"`, `"Proprietary"`, or `"Unlicense"`.                                     |
+| Field               | Type       | Description                                                                                                                                                                                                                                                                                                  |
+|---------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name.slug`         | `string`   | URL-safe project identifier. Letters, numbers, hyphens, and underscores only. The 214-character npm limit is enforced by the `nova utility configure` wizard; the parser only requires a non-empty trimmed string.                                                                                           |
+| `name.title`        | `string`   | Human-readable project name for display.                                                                                                                                                                                                                                                                     |
+| `description.short` | `string`   | One-line summary used in `package.json` and meta tags.                                                                                                                                                                                                                                                       |
+| `description.long`  | `string`   | Extended description for README and documentation pages.                                                                                                                                                                                                                                                     |
+| `keywords`          | `string[]` | Search keywords (max 50 characters each).                                                                                                                                                                                                                                                                    |
+| `legalName`         | `string`   | Legal entity name used in LICENSE and copyright notices.                                                                                                                                                                                                                                                     |
+| `pronouns`          | `string`   | Controls first-person wording in generated files. One of `"business"` (we/our) or `"personal"` (I/my).                                                                                                                                                                                                       |
+| `platforms`         | `string[]` | Supported project platforms. One or more of `"nodejs"`, `"swift"`, `"ios"`, `"visionos"`, `"android"`, `"java"`, `"kotlin"`, `"csharp"`, `"php"`, `"python"`, `"macos"`, `"linux"`, `"windows"`, `"discord"`, `"homebridge"`, `"docker"`, `"pfsense"`, `"synology"`, or `"web"`. Unknown values are dropped. |
+| `startingYear`      | `number`   | Year the project began (integer >= 1970). Used in LICENSE copyright ranges.                                                                                                                                                                                                                                  |
+| `license`           | `string`   | License identifier. One of `"AGPL-3.0"`, `"Apache-2.0"`, `"BSD-2-Clause"`, `"BSD-3-Clause"`, `"BSL-1.0"`, `"CC0-1.0"`, `"EPL-2.0"`, `"GPL-2.0"`, `"GPL-3.0"`, `"LGPL-2.1"`, `"MIT"`, `"MPL-2.0"`, `"Proprietary"`, or `"Unlicense"`.                                                                         |
 
 ```json
 {
@@ -318,14 +318,16 @@ Each entry in `labels` has these fields. An explicit empty array is valid and pe
 
 An array of GitHub Actions workflow entries consumed by [`nova generate github workflows`](/docs/cli/generators/github/workflows). Each entry maps to one generated `.yml` file.
 
-| Field      | Type       | Description                                                                                                       |
-|------------|------------|-------------------------------------------------------------------------------------------------------------------|
-| `template` | `string`   | Name of a bundled workflow template: `"publish"`, `"lock-inactive-issues"`, or `"check-sponsor-gated-issues"`.    |
-| `name`     | `string`   | Required label appended to the output filename and workflow name. Must be unique within the same template.        |
-| `triggers` | `array`    | Triggers for the template. Each is a bare string or an object such as `{ "name": "push", "branches": ["main"] }`. |
-| `build`    | `string[]` | Optional. Workspace paths (keys from `workspaces`) that the `check` / `build` step should filter to.              |
-| `deploy`   | `object[]` | Optional. Publish destinations for the `publish` template. Each destination has `to`, `path`, `after`, `with`.    |
-| `with`     | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.     |
+| Field            | Type       | Description                                                                                                                       |
+|------------------|------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| `template`       | `string`   | Name of a bundled workflow template: `"publish"`, `"lock-inactive-issues"`, or `"check-sponsor-gated-issues"`.                    |
+| `name`           | `string`   | Required label appended to the output filename and workflow name. Must be unique within the same template.                        |
+| `triggers`       | `array`    | Triggers for the template. Each is a bare string or an object such as `{ "name": "push", "branches": ["main"] }`.                 |
+| `runsOn`         | `string`   | Optional. Runner applied to every generated job. The only supported value is `"ubuntu-latest"`; omission keeps template defaults. |
+| `timeoutMinutes` | `number`   | Optional. Whole number from `1` through `360` applied to every generated job; omission keeps each template's existing timeout.    |
+| `build`          | `string[]` | Optional. Workspace paths (keys from `workspaces`) that the `check` / `build` step should filter to.                              |
+| `deploy`         | `object[]` | Optional. Publish destinations for the `publish` template. Each destination has `to`, `path`, `after`, `with`.                    |
+| `with`           | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.                     |
 
 Field names changed in the rebuilt generator: `suffix` is now `name`, `scopes` is now `build`, `targets` is now `deploy`, and `settings` is now `with`. The former top-level `depends-on` moved onto the workflow-run trigger object as a `workflows` array.
 
@@ -570,7 +572,7 @@ The shared `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md` files are gen
 
 ## `recipes`
 
-Stores every recipe toggle in one top-level block. Repository, license, miscellaneous, and README recipes are project-scoped; `package-json` recipes are nested under the workspace path they modify.
+Stores every recipe toggle in one top-level block. Repository, license, miscellaneous, Nova config, and README recipes are project-scoped; `package-json` recipes are nested under the workspace path they modify.
 
 ### Recipe Entry Fields
 
@@ -585,7 +587,8 @@ Stores every recipe toggle in one top-level block. Repository, license, miscella
 |-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `github`        | `sync-actions`, `sync-features`, `sync-identity`, `sync-labels`, `sync-policies`, `sync-rulesets`, `sync-security`                                                               |
 | `license`       | `update-copyright`                                                                                                                                                               |
-| `miscellaneous` | `remove-operating-system-files`                                                                                                                                                  |
+| `miscellaneous` | `fix-markdown-tables`, `remove-operating-system-files`                                                                                                                           |
+| `nova-config`   | `normalize-order`                                                                                                                                                                |
 | `read-me`       | `update-badges`, `update-credits`, `update-documentation`, `update-header`, `update-introduction`                                                                                |
 | `package-json`  | `cleanup`, `normalize-artifacts`, `normalize-bundler`, `normalize-dependencies`, `normalize-modules`, `normalize-tooling`, `sync-environment`, `sync-identity`, `sync-ownership` |
 
@@ -613,6 +616,9 @@ Package JSON recipes accept these optional settings where applicable:
       }
     },
     "miscellaneous": {
+      "fix-markdown-tables": {
+        "enabled": true
+      },
       "remove-operating-system-files": {
         "enabled": false,
         "settings": {
@@ -627,6 +633,11 @@ Package JSON recipes accept these optional settings where applicable:
             "thumbnailDatabase": false
           }
         }
+      }
+    },
+    "nova-config": {
+      "normalize-order": {
+        "enabled": true
       }
     },
     "read-me": {
@@ -760,7 +771,7 @@ Project-wide behavior toggles that affect how Nova commands operate.
 | Field                | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                        |
 |----------------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `lockStepVersioning` | `boolean` | When `true`, `nova utility changelog --release` moves every non-freezable workspace — both trackable and distributable — to the same version, even if some had no recorded changes. Before writing, Nova requires every participating `package.json` to exist, contain a valid version for the selected strategy, and start at the same version. Workspaces without changes receive a "No changes." entry in their `CHANGELOG.md`. |
-| `runWorkspaces`      | `object`  | Configures the native workspace runner. Its `cache` object accepts `enabled`, a project-relative `directory` that must remain below the project root, and exact `scripts` eligible for verified local caching. Defaults are `true`, `./node_modules/.cache/nova/run-workspaces`, and `["build", "check"]`.                                                                                                                         |
+| `runWorkspaces`      | `object`  | Configures the native workspace runner. Its `cache` object controls verified local caching. Its `concurrency` object maps workspace script names to positive integer limits; scripts omitted from the map default to `10`, and an explicit CLI option overrides the map.                                                                                                                                                           |
 | `versionStrategy`    | `string`  | Version strategy for the project: `"semver"` (default) or `"calver"`. SemVer uses `major.minor.patch` with bump types. CalVer uses `YYYY.MM.MICRO` with automatic date-based versioning. Nova locks this setting to existing version headings found in the root or any non-freezable workspace changelog; missing changelogs and freezable workspaces do not lock it.                                                              |
 
 ```json title="nova.config.json"
@@ -772,6 +783,11 @@ Project-wide behavior toggles that affect how Nova commands operate.
         "directory": "./node_modules/.cache/nova/run-workspaces",
         "enabled": true,
         "scripts": ["build", "check"]
+      },
+      "concurrency": {
+        "build": 2,
+        "check": 2,
+        "deploy": 2
       }
     },
     "versionStrategy": "semver"

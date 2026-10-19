@@ -14,10 +14,8 @@ import type {
   Cli_Utility_RunRecipes_Runner_Run_IsDryRun,
   Cli_Utility_RunRecipes_Runner_Run_IsReplaceFile,
   Cli_Utility_RunRecipes_Runner_Run_Options,
-  Cli_Utility_RunRecipes_Runner_Run_Recipes,
   Cli_Utility_RunRecipes_Runner_Run_RegistryCategories,
   Cli_Utility_RunRecipes_Runner_Run_ReplaceFileNotice,
-  Cli_Utility_RunRecipes_Runner_Run_RequestedCategory,
   Cli_Utility_RunRecipes_Runner_Run_Returns,
   Cli_Utility_RunRecipes_Runner_Run_TotalRecipes,
 } from '../../types/cli/utility/run-recipes.d.ts';
@@ -26,7 +24,7 @@ import type {
  * CLI - Utility - Run Recipes.
  *
  * Executes every recipe in the registry sequentially.
- * Used as a batch runner for all package.json maintenance tasks.
+ * Used as the batch runner for all configured project maintenance tasks.
  *
  * @since 0.14.0
  */
@@ -34,8 +32,8 @@ export class Runner {
   /**
    * CLI - Utility - Run Recipes - Run.
    *
-   * Verifies the working directory is a project root, then iterates the recipe registry for
-   * the given category and calls each recipe's run method with options.
+   * Verifies the working directory is a project root, then iterates the complete recipe
+   * registry and calls each recipe's run method with options.
    *
    * @param {Cli_Utility_RunRecipes_Runner_Run_Options} options - Options.
    *
@@ -72,39 +70,15 @@ export class Runner {
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const requestedCategory: Cli_Utility_RunRecipes_Runner_Run_RequestedCategory = options['category'];
-
-    let entries: Cli_Utility_RunRecipes_Runner_Run_Entries = undefined;
-
-    if (requestedCategory === undefined) {
-      entries = (Object.keys(registry) as Cli_Utility_RunRecipes_Runner_Run_RegistryCategories)
-        .sort()
-        .map((category) => [
-          category,
-          registry[category],
-        ]);
-    } else {
-      const recipes: Cli_Utility_RunRecipes_Runner_Run_Recipes = registry[requestedCategory];
-
-      if (recipes === undefined) {
-        Logger.customize({
-          name: 'Runner.run',
-          purpose: 'category',
-        }).error(`Unknown category "${requestedCategory}".`);
-
-        process.exitCode = 1;
-
-        return;
-      }
-
-      entries = [[
-        requestedCategory,
-        recipes,
-      ]];
-    }
+    const entries: Cli_Utility_RunRecipes_Runner_Run_Entries = (Object.keys(registry) as Cli_Utility_RunRecipes_Runner_Run_RegistryCategories)
+      .sort()
+      .map((category) => [
+        category,
+        registry[category],
+      ]);
 
     const totalRecipes: Cli_Utility_RunRecipes_Runner_Run_TotalRecipes = entries.reduce((sum, entry) => sum + entry[1].length, 0);
-    const categoryDescription: Cli_Utility_RunRecipes_Runner_Run_CategoryDescription = (requestedCategory === undefined) ? 'all category' : requestedCategory;
+    const categoryDescription: Cli_Utility_RunRecipes_Runner_Run_CategoryDescription = 'all category';
 
     Logger.customize({
       name: 'Runner.run',

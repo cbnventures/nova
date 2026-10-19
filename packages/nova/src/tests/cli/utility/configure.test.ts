@@ -28,6 +28,8 @@ import type {
   Tests_Cli_Utility_Configure_CliUtilityConfigureIsNonEmptyLiteralInput_ReturnsTheErrorMessageForNonStringInput_Result,
   Tests_Cli_Utility_Configure_CliUtilityConfigureIsNonEmptyLiteralInput_ReturnsTheErrorMessageForWhitespaceOnlyInput_Result,
   Tests_Cli_Utility_Configure_CliUtilityConfigureIsNonEmptyLiteralInput_ReturnsTrueForANonEmptyString_Result,
+  Tests_Cli_Utility_Configure_CliUtilityConfigureIsOptionalWorkflowTimeoutInput_AcceptsBlankInputAndWholeNumbersFrom1Through360_Result,
+  Tests_Cli_Utility_Configure_CliUtilityConfigureIsOptionalWorkflowTimeoutInput_RejectsValuesOutsideTheSupportedGitHubRange_Result,
   Tests_Cli_Utility_Configure_CliUtilityConfigureRun_OriginalCwd,
   Tests_Cli_Utility_Configure_CliUtilityConfigureRun_SandboxRoot,
   Tests_Cli_Utility_Configure_CliUtilityConfigureRun_SetsExitCodeWhenNotAtProjectRoot_ProjectDirectory,
@@ -111,6 +113,12 @@ import type {
   Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Recipes,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Responses,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Result,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Config,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Next,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_PromptRecipes,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Recipes,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Responses,
+  Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Result,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Config,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_GithubRecipes,
   Tests_Cli_Utility_Configure_PromptRecipes_EditsRecipeSettingsWithoutDroppingOtherCategories_Next,
@@ -306,6 +314,8 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
           workflows: { $item: 'promptWorkflowsForm' },
         },
       },
+      runsOn: 'promptWorkflowsForm',
+      timeoutMinutes: 'promptWorkflowsForm',
       build: { $item: 'promptWorkflowsForm' },
       deploy: {
         $item: {
@@ -386,6 +396,10 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
       },
     },
     'miscellaneous': {
+      'fix-markdown-tables': {
+        enabled: 'promptMiscellaneousRecipes',
+        settings: { $entry: 'promptMiscellaneousRecipes' },
+      },
       'remove-operating-system-files': {
         enabled: 'promptMiscellaneousRecipes',
         settings: {
@@ -400,6 +414,12 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
             thumbnailDatabase: 'promptMiscellaneousRecipes',
           },
         },
+      },
+    },
+    'nova-config': {
+      'normalize-order': {
+        enabled: 'promptRecipeEntries',
+        settings: { $entry: 'promptRecipeEntries' },
       },
     },
     'read-me': {
@@ -504,6 +524,7 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
         enabled: 'promptSettings',
         scripts: { $item: 'promptSettings' },
       },
+      concurrency: { $entry: 'promptSettings' },
     },
     versionStrategy: 'promptSettings',
   },
@@ -588,6 +609,49 @@ describe('CliUtilityConfigure.isNonEmptyLiteralInput', () => {
     const result: Tests_Cli_Utility_Configure_CliUtilityConfigureIsNonEmptyLiteralInput_ReturnsTheErrorMessageForNonStringInput_Result = CliUtilityConfigure.isNonEmptyLiteralInput(undefined);
 
     strictEqual(result, 'This field is required.');
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Is Optional Workflow Timeout Input.
+ *
+ * @since 0.33.0
+ */
+describe('CliUtilityConfigure.isOptionalWorkflowTimeoutInput', () => {
+  it('accepts blank input and whole numbers from 1 through 360', () => {
+    const result: Tests_Cli_Utility_Configure_CliUtilityConfigureIsOptionalWorkflowTimeoutInput_AcceptsBlankInputAndWholeNumbersFrom1Through360_Result = [
+      CliUtilityConfigure.isOptionalWorkflowTimeoutInput(''),
+      CliUtilityConfigure.isOptionalWorkflowTimeoutInput('1'),
+      CliUtilityConfigure.isOptionalWorkflowTimeoutInput('360'),
+    ];
+
+    deepStrictEqual(result, [
+      true,
+      true,
+      true,
+    ]);
+
+    return;
+  });
+
+  it('rejects values outside the supported GitHub range', () => {
+    const result: Tests_Cli_Utility_Configure_CliUtilityConfigureIsOptionalWorkflowTimeoutInput_RejectsValuesOutsideTheSupportedGitHubRange_Result = [
+      CliUtilityConfigure.isOptionalWorkflowTimeoutInput('0'),
+      CliUtilityConfigure.isOptionalWorkflowTimeoutInput('361'),
+      CliUtilityConfigure.isOptionalWorkflowTimeoutInput('1.5'),
+      CliUtilityConfigure.isOptionalWorkflowTimeoutInput(undefined),
+    ];
+
+    deepStrictEqual(result, [
+      'Enter a whole number from 1 through 360, or leave the field blank.',
+      'Enter a whole number from 1 through 360, or leave the field blank.',
+      'Enter a whole number from 1 through 360, or leave the field blank.',
+      'Enter a whole number from 1 through 360, or leave the field blank.',
+    ]);
 
     return;
   });
@@ -1503,7 +1567,13 @@ describe('prompt recipes', () => {
   it('edits closed operating-system cleanup settings', async () => {
     const responses: Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Responses = [
       { target: 'miscellaneous' },
-      { enabled: true },
+      {
+        enabledRecipes: [
+          'fix-markdown-tables',
+          'remove-operating-system-files',
+        ],
+      },
+      { settingsRecipes: [] },
       { fileNames: ['appleDouble'] },
       { fileNames: ['thumbnailDatabase'] },
       { target: 'back' },
@@ -1523,6 +1593,9 @@ describe('prompt recipes', () => {
     strictEqual(result, 'back');
     ok(recipes !== undefined);
     deepStrictEqual(recipes['miscellaneous'], {
+      'fix-markdown-tables': {
+        enabled: true,
+      },
       'remove-operating-system-files': {
         enabled: true,
         settings: {
@@ -1537,6 +1610,36 @@ describe('prompt recipes', () => {
             thumbnailDatabase: true,
           },
         },
+      },
+    });
+
+    return;
+  });
+
+  it('edits Nova Config recipe toggles', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Responses = [
+      { target: 'nova-config' },
+      { enabledRecipes: ['normalize-order'] },
+      { settingsRecipes: [] },
+      { target: 'back' },
+    ];
+
+    vi.mocked(prompts).mockImplementation(() => {
+      const next: Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Next = responses.shift();
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Config = {};
+    const promptRecipes: Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_PromptRecipes = Reflect.get(CliUtilityConfigure, 'promptRecipes') as Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_PromptRecipes;
+    const result: Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Result = await promptRecipes(config);
+    const recipes: Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Recipes = config['recipes'];
+
+    strictEqual(result, 'back');
+    ok(recipes !== undefined);
+    deepStrictEqual(recipes['nova-config'], {
+      'normalize-order': {
+        enabled: true,
       },
     });
 
@@ -1629,6 +1732,7 @@ describe('prompt settings', () => {
 
     vi.mocked(prompts)
       .mockResolvedValueOnce({ lockStepVersioning: true })
+      .mockResolvedValueOnce({ concurrency: '{"build":2,"check":3}' })
       .mockResolvedValueOnce({ cacheEnabled: true })
       .mockResolvedValueOnce({ cacheDirectory: './node_modules/.cache/nova/run-workspaces' })
       .mockResolvedValueOnce({ cacheScripts: 'build, check' });
@@ -1638,7 +1742,7 @@ describe('prompt settings', () => {
     cwdSpy.mockRestore();
 
     strictEqual(result, 'back');
-    strictEqual(vi.mocked(prompts).mock.calls.length, 4);
+    strictEqual(vi.mocked(prompts).mock.calls.length, 5);
     deepStrictEqual(config['settings'], {
       lockStepVersioning: true,
       runWorkspaces: {
@@ -1649,6 +1753,10 @@ describe('prompt settings', () => {
             'build',
             'check',
           ],
+        },
+        concurrency: {
+          build: 2,
+          check: 3,
         },
       },
       versionStrategy: 'calver',

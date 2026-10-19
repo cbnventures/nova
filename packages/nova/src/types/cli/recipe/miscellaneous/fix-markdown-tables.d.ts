@@ -1,6 +1,13 @@
 import type { Dirent } from 'node:fs';
 
+import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 import type MarkdownTable from '../../../../toolkit/markdown-table.js';
+
+import type {
+  Shared_NovaConfig,
+  Shared_NovaConfig_RecipeEntry,
+  Shared_NovaConfig_Recipes_Miscellaneous,
+} from '../../../shared.d.ts';
 
 /**
  * CLI - Recipe - Miscellaneous - Fix Markdown Tables - Discover Files.
@@ -165,6 +172,25 @@ export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Options = {
 export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Returns = Promise<void>;
 
 export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_ProjectRoot = string | undefined;
+
+export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_NovaConfig = LibNovaConfig;
+
+export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Config = Shared_NovaConfig;
+
+export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Diagnostics_Item_Severity = 'error' | 'warning';
+
+export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Diagnostics_Item_Message = string;
+
+export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Diagnostics_Item = {
+  severity: Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Diagnostics_Item_Severity;
+  message: Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Diagnostics_Item_Message;
+};
+
+export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Diagnostics = Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_Diagnostics_Item[];
+
+export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_MiscellaneousRecipes = Shared_NovaConfig_Recipes_Miscellaneous | undefined;
+
+export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_FixMarkdownTables = Shared_NovaConfig_RecipeEntry | undefined;
 
 export type Cli_Recipe_Miscellaneous_FixMarkdownTables_Runner_Run_FilePaths = string[];
 

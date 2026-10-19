@@ -39,6 +39,11 @@ export class Runner {
           reach: 'local',
         }],
         importMetaUrl: import.meta.url,
+        platforms: [
+          'nodejs',
+          'web',
+          'docker',
+        ],
         resolvePresentationOptions: () => [{
           flag: '--docker-image',
           value: 'Yes',
@@ -69,6 +74,10 @@ export class Runner {
         reach: 'local',
       }],
       importMetaUrl: import.meta.url,
+      platforms: [
+        'nodejs',
+        'web',
+      ],
       resolvePresentationOptions: () => [{
         flag: '--docker-image',
         value: 'No',

@@ -23,7 +23,7 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.32.0",
+    "@cbnventures/nova": "0.33.0",
     "astro": "[__SCAFFOLD_VERSION_ASTRO__]",
     "cookie": "[__SCAFFOLD_VERSION_COOKIE__]"
   },

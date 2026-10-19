@@ -102,6 +102,13 @@ describe('CliRecipeMiscellaneousFixMarkdownTables.run', async () => {
     });
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify({
+      recipes: {
+        miscellaneous: {
+          'fix-markdown-tables': { enabled: true },
+        },
+      },
+    }, null, 2), 'utf-8');
 
     const markdownPath: Tests_Cli_Recipe_Miscellaneous_FixMarkdownTables_CliRecipeMiscellaneousFixMarkdownTablesRun_FormatsProjectRootTablesFromANestedWorkspace_MarkdownPath = join(projectDirectory, 'README.md');
     const markdownContents: Tests_Cli_Recipe_Miscellaneous_FixMarkdownTables_CliRecipeMiscellaneousFixMarkdownTablesRun_FormatsProjectRootTablesFromANestedWorkspace_MarkdownContents = [
@@ -141,6 +148,13 @@ describe('CliRecipeMiscellaneousFixMarkdownTables.run', async () => {
     });
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify({
+      recipes: {
+        miscellaneous: {
+          'fix-markdown-tables': { enabled: true },
+        },
+      },
+    }, null, 2), 'utf-8');
 
     const markdownPath: Tests_Cli_Recipe_Miscellaneous_FixMarkdownTables_CliRecipeMiscellaneousFixMarkdownTablesRun_PreservesFencesAlignedTablesAndGeneratedOutput_MarkdownPath = join(projectDirectory, 'README.md');
     const markdownContents: Tests_Cli_Recipe_Miscellaneous_FixMarkdownTables_CliRecipeMiscellaneousFixMarkdownTablesRun_PreservesFencesAlignedTablesAndGeneratedOutput_MarkdownContents = [
@@ -202,6 +216,13 @@ describe('CliRecipeMiscellaneousFixMarkdownTables.run', async () => {
     });
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify({
+      recipes: {
+        miscellaneous: {
+          'fix-markdown-tables': { enabled: true },
+        },
+      },
+    }, null, 2), 'utf-8');
 
     const markdownPath: Tests_Cli_Recipe_Miscellaneous_FixMarkdownTables_CliRecipeMiscellaneousFixMarkdownTablesRun_PreviewsChangesWithoutWritingFiles_MarkdownPath = join(projectDirectory, 'README.md');
     const markdownContents: Tests_Cli_Recipe_Miscellaneous_FixMarkdownTables_CliRecipeMiscellaneousFixMarkdownTablesRun_PreviewsChangesWithoutWritingFiles_MarkdownContents = [
@@ -237,6 +258,13 @@ describe('CliRecipeMiscellaneousFixMarkdownTables.run', async () => {
     });
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify({
+      recipes: {
+        miscellaneous: {
+          'fix-markdown-tables': { enabled: true },
+        },
+      },
+    }, null, 2), 'utf-8');
 
     const markdownPath: Tests_Cli_Recipe_Miscellaneous_FixMarkdownTables_CliRecipeMiscellaneousFixMarkdownTablesRun_ReportsFormattingDriftWithoutWritingFiles_MarkdownPath = join(projectDirectory, 'README.md');
     const markdownContents: Tests_Cli_Recipe_Miscellaneous_FixMarkdownTables_CliRecipeMiscellaneousFixMarkdownTablesRun_ReportsFormattingDriftWithoutWritingFiles_MarkdownContents = [

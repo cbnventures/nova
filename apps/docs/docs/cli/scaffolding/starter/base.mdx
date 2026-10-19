@@ -35,7 +35,7 @@ You do not need to run `starter base` before a direct app, docs, or package comm
 1. Creates the root `package.json` with `workspaces` configured for `apps/*` and `packages/*` so you can add workspaces immediately.
 2. Creates standard `dev`, `prod`, `check`, `build`, `deploy`, and `clean` script groups. Each top-level script delegates to adjacent `name:*` steps through `nova utility run-scripts`, while `name:workspaces` uses Nova's dependency-aware workspace runner.
 3. Pins the npm and Node.js toolchain used by current Nova projects and records explicit install-script decisions used by the built-in scaffolds.
-4. Generates a baseline `nova.config.json` with the project name, current starting year, and `Example Company` legal-name placeholder so recipes, utilities, and identity-aware workspaces have valid input from the start.
+4. Generates a baseline `nova.config.json` with the project name, current starting year, `nodejs` project platform, and `Example Company` legal-name placeholder so recipes, utilities, and identity-aware workspaces have valid input from the start.
 5. Registers the root environment namespace and generates `.env` plus `.env.sample` with Nova's Node.js and logging defaults.
 6. Generates Nova's canonical root `.gitignore` for secrets, dependencies, build output, editor metadata, and supported platform tooling.
 7. Installs `@cbnventures/nova` as a dependency so its CLI, presets, and runtime toolkit remain available to generated workspaces.
@@ -142,7 +142,7 @@ Before creating any file, Nova validates the project slug and checks every root 
 
 ## Next Steps
 
-After scaffolding, enter the new monorepo and add as many workspaces as the project needs. Each scaffold command detects the existing workspace root, creates only the requested workspace, and adds it to the same `nova.config.json`. Running another scaffold command later preserves the workspaces that are already registered.
+After scaffolding, enter the new monorepo and add as many workspaces as the project needs. Each scaffold command detects the existing workspace root, creates only the requested workspace, adds it to the same `nova.config.json`, and merges its required runtimes and deployment targets into `project.platforms`. Running another scaffold command later preserves the workspaces and platforms that are already registered.
 
 For example, these commands add a Docusaurus documentation site and a Cloudflare Workers serverless tool to one project:
 

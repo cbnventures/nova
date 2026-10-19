@@ -39,6 +39,7 @@ It can write changes, preview them with `--dry-run`, or report formatting drift 
 
 - **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
 - **Project manifest** — A `package.json` file must exist in the current directory or one of its parent directories.
+- **Recipe toggle** — Set `recipes.miscellaneous.fix-markdown-tables.enabled` to `true` in `nova.config.json`.
 - **Supported sources** — Tables must use leading pipes in `.md` or `.mdx` files and include a header, delimiter, and at least one data row.
 
 ## Behavior
@@ -60,7 +61,19 @@ Include the formatter in routine project maintenance by exposing Nova's batch re
 }
 ```
 
-The `fix-markdown-tables` recipe is registered in the `miscellaneous` category, so `npm run recipes` invokes it automatically along with every other registered recipe. A separate `postbuild` lifecycle script is not required.
+The `fix-markdown-tables` recipe is registered in the `miscellaneous` category, so `npm run recipes` invokes it when its individual toggle is enabled. A separate `postbuild` lifecycle script is not required.
+
+```json title="nova.config.json"
+{
+  "recipes": {
+    "miscellaneous": {
+      "fix-markdown-tables": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
 
 ## Usage
 

@@ -278,7 +278,7 @@ export class Runner {
     progress.start('Writing base monorepo files', displayPath);
 
     // Create monorepo root structure.
-    await createMonorepoRoot(outputDirectory, resolvedName);
+    await createMonorepoRoot(outputDirectory, resolvedName, ['nodejs']);
 
     await progress.complete();
 

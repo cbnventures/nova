@@ -789,6 +789,8 @@ export type Shared_NovaConfig_Project_Pronouns = 'personal' | 'business';
 export type Shared_NovaConfigProjectPlatform =
   'nodejs'
   | 'swift'
+  | 'ios'
+  | 'visionos'
   | 'android'
   | 'java'
   | 'kotlin'
@@ -798,6 +800,7 @@ export type Shared_NovaConfigProjectPlatform =
   | 'macos'
   | 'linux'
   | 'windows'
+  | 'discord'
   | 'homebridge'
   | 'docker'
   | 'pfsense'
@@ -1150,6 +1153,10 @@ export type Shared_NovaConfigWorkflow_Triggers = Shared_NovaConfigWorkflowTrigge
 
 export type Shared_NovaConfigWorkflowTriggersWide = Shared_NovaConfigWorkflow_Triggers;
 
+export type Shared_NovaConfigWorkflow_RunsOn = 'ubuntu-latest';
+
+export type Shared_NovaConfigWorkflow_TimeoutMinutes = number;
+
 export type Shared_NovaConfigWorkflowBuildEntry = string;
 
 export type Shared_NovaConfigWorkflow_Build = Shared_NovaConfigWorkflowBuildEntry[];
@@ -1187,6 +1194,8 @@ export type Shared_NovaConfigWorkflow = {
   'template': Shared_NovaConfigWorkflow_Template;
   'name': Shared_NovaConfigWorkflow_Name;
   'triggers': Shared_NovaConfigWorkflow_Triggers;
+  'runsOn'?: Shared_NovaConfigWorkflow_RunsOn;
+  'timeoutMinutes'?: Shared_NovaConfigWorkflow_TimeoutMinutes;
   'build'?: Shared_NovaConfigWorkflow_Build;
   'deploy'?: Shared_NovaConfigWorkflow_Deploy;
   'with'?: Shared_NovaConfigWorkflow_With;
@@ -1321,6 +1330,10 @@ export type Shared_BlueprintConfigTriggerWideEntry = Shared_NovaConfigWorkflowTr
 
 export type Shared_BlueprintConfigWorkflow_Triggers = Shared_NovaConfigWorkflow_Triggers;
 
+export type Shared_BlueprintConfigWorkflow_RunsOn = Shared_NovaConfigWorkflow_RunsOn;
+
+export type Shared_BlueprintConfigWorkflow_TimeoutMinutes = Shared_NovaConfigWorkflow_TimeoutMinutes;
+
 export type Shared_BlueprintConfigWorkflow_Build = Shared_NovaConfigWorkflow_Build;
 
 export type Shared_BlueprintConfigDeployTarget_To = Shared_NovaConfigWorkflowDeployTarget_To;
@@ -1346,6 +1359,8 @@ export type Shared_BlueprintConfigWorkflow = {
   'template': Shared_BlueprintConfigWorkflow_Template;
   'name': Shared_BlueprintConfigWorkflow_Name;
   'triggers': Shared_BlueprintConfigWorkflow_Triggers;
+  'runsOn'?: Shared_BlueprintConfigWorkflow_RunsOn;
+  'timeoutMinutes'?: Shared_BlueprintConfigWorkflow_TimeoutMinutes;
   'build'?: Shared_BlueprintConfigWorkflow_Build;
   'deploy'?: Shared_BlueprintConfigWorkflow_Deploy;
   'with'?: Shared_BlueprintConfigWorkflow_With;
@@ -1694,10 +1709,17 @@ export type Shared_NovaConfig_Recipes_License = {
   [K in Shared_NovaConfigLicenseRecipeName]?: Shared_NovaConfig_RecipeEntry;
 };
 
-export type Shared_NovaConfigMiscellaneousRecipeName = 'remove-operating-system-files';
+export type Shared_NovaConfigMiscellaneousRecipeName = 'fix-markdown-tables' | 'remove-operating-system-files';
 
 export type Shared_NovaConfig_Recipes_Miscellaneous = {
-  [K in Shared_NovaConfigMiscellaneousRecipeName]?: Shared_NovaConfigOperatingSystemFileRecipeEntry;
+  'fix-markdown-tables'?: Shared_NovaConfig_RecipeEntry;
+  'remove-operating-system-files'?: Shared_NovaConfigOperatingSystemFileRecipeEntry;
+};
+
+export type Shared_NovaConfigNovaConfigRecipeName = 'normalize-order';
+
+export type Shared_NovaConfig_Recipes_NovaConfig = {
+  [K in Shared_NovaConfigNovaConfigRecipeName]?: Shared_NovaConfig_RecipeEntry;
 };
 
 export type Shared_NovaConfigReadMeRecipeName =
@@ -1723,6 +1745,7 @@ export type Shared_NovaConfig_Recipes = {
   'github'?: Shared_NovaConfig_Recipes_Github;
   'license'?: Shared_NovaConfig_Recipes_License;
   'miscellaneous'?: Shared_NovaConfig_Recipes_Miscellaneous;
+  'nova-config'?: Shared_NovaConfig_Recipes_NovaConfig;
   'read-me'?: Shared_NovaConfig_Recipes_ReadMe;
   'package-json'?: Shared_NovaConfig_Recipes_PackageJson;
 };
@@ -1750,8 +1773,15 @@ export type Shared_NovaConfigSettings_RunWorkspacesCache = {
 
 export type Shared_NovaConfigSettings_RunWorkspaces_Cache = Shared_NovaConfigSettings_RunWorkspacesCache;
 
+export type Shared_NovaConfigSettings_RunWorkspacesConcurrency_Value = number;
+
+export type Shared_NovaConfigSettings_RunWorkspacesConcurrency = Record<string, Shared_NovaConfigSettings_RunWorkspacesConcurrency_Value>;
+
+export type Shared_NovaConfigSettings_RunWorkspaces_Concurrency = Shared_NovaConfigSettings_RunWorkspacesConcurrency;
+
 export type Shared_NovaConfigSettings_RunWorkspaces = {
   cache?: Shared_NovaConfigSettings_RunWorkspaces_Cache;
+  concurrency?: Shared_NovaConfigSettings_RunWorkspaces_Concurrency;
 };
 
 export type Shared_NovaConfig_Settings_LockStepVersioning = boolean;
@@ -1942,6 +1972,8 @@ export type Shared_RunWorkspacesProject_Cache = {
   scripts: Shared_RunWorkspacesProject_Cache_Scripts;
 };
 
+export type Shared_RunWorkspacesProject_Concurrency = Shared_NovaConfigSettings_RunWorkspacesConcurrency;
+
 export type Shared_RunWorkspacesProject_PackageManager = Shared_CorepackPackageManager;
 
 export type Shared_RunWorkspacesProject_PackageManagerDescriptor = string;
@@ -1952,6 +1984,7 @@ export type Shared_RunWorkspacesProject_Workspaces = Map<string, Shared_RunWorks
 
 export type Shared_RunWorkspacesProject = {
   cache: Shared_RunWorkspacesProject_Cache;
+  concurrency: Shared_RunWorkspacesProject_Concurrency;
   packageManager: Shared_RunWorkspacesProject_PackageManager;
   packageManagerDescriptor: Shared_RunWorkspacesProject_PackageManagerDescriptor;
   rootDirectory: Shared_RunWorkspacesProject_RootDirectory;

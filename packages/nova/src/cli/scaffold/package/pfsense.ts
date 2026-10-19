@@ -32,6 +32,10 @@ export class Runner {
       category: 'package',
       displayName: 'pfSense',
       importMetaUrl: import.meta.url,
+      platforms: [
+        'php',
+        'pfsense',
+      ],
       primaryScript: 'build',
       resolveReplacements: (workspaceName) => new Map([[
         LIB_REGEX_PLACEHOLDER_PFSENSE_CONFIG_NAME,

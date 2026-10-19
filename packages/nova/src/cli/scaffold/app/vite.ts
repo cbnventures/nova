@@ -159,6 +159,11 @@ export class Runner {
       category: 'app',
       displayName: 'Vite',
       importMetaUrl: import.meta.url,
+      platforms: [
+        'nodejs',
+        'web',
+      ],
+      resolvePlatforms: (answers) => (answers.get('dockerImage') === 'enabled') ? ['docker'] : [],
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldAppViteTemplateQuestions,
       templateSubpath: 'scaffold/app/vite',

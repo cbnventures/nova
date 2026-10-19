@@ -61,18 +61,42 @@ Nova applies lifecycle prerequisites consistently:
 
 ## Options
 
-| Flag                              | Description                                                                           |
-|-----------------------------------|---------------------------------------------------------------------------------------|
-| `-b, --buffer <ms>`               | Flush interval in milliseconds for grouped task output. Defaults to `500`.            |
-| `-c, --concurrency <count>`       | Maximum number of ready tasks to run at once. Defaults to every currently ready task. |
-| `-k, --continue-on-error`         | Continue independent tasks after a failure while blocking tasks that depend on it.    |
-| `-d, --dry-run`                   | Validate and print the expanded task plan without running package scripts.            |
-| `-x, --exclude-workspace <name…>` | Exclude package names or configured workspace paths.                                  |
-| `-f, --force`                     | Bypass verified local cache hits and refresh successful task records.                 |
-| `-n, --node-env <environment>`    | Set child `NODE_ENV` to `development`, `production`, or `test`.                       |
-| `-w, --workspace <name…>`         | Limit the requested task to package names or configured workspace paths.              |
+| Flag                              | Description                                                                            |
+|-----------------------------------|----------------------------------------------------------------------------------------|
+| `-b, --buffer <ms>`               | Flush interval in milliseconds for grouped task output. Defaults to `500`.             |
+| `-c, --concurrency <count>`       | Override the configured limit for this run. Falls back to the script limit, then `10`. |
+| `-k, --continue-on-error`         | Continue independent tasks after a failure while blocking tasks that depend on it.     |
+| `-d, --dry-run`                   | Validate and print the expanded task plan without running package scripts.             |
+| `-x, --exclude-workspace <name…>` | Exclude package names or configured workspace paths.                                   |
+| `-f, --force`                     | Bypass verified local cache hits and refresh successful task records.                  |
+| `-n, --node-env <environment>`    | Set child `NODE_ENV` to `development`, `production`, or `test`.                        |
+| `-w, --workspace <name…>`         | Limit the requested task to package names or configured workspace paths.               |
 
 Place `--` after Nova's options to forward the remaining arguments to every workspace running the requested script. Lifecycle prerequisites with a different script name do not receive those arguments.
+
+The default limit belongs to Nova's reusable runner. A consumer can define per-script limits under `settings.runWorkspaces.concurrency` without restricting unrelated tasks such as long-running development servers.
+
+An explicit `--concurrency` option overrides the configured limit for that run. Scripts omitted from the map use Nova's default of `10`.
+
+## Config Fields
+
+| Field                                         | Description                                                                  |
+|-----------------------------------------------|------------------------------------------------------------------------------|
+| `settings.runWorkspaces.concurrency.<script>` | Positive integer limit for one workspace script, such as `check` or `build`. |
+
+```json title="nova.config.json"
+{
+  "settings": {
+    "runWorkspaces": {
+      "concurrency": {
+        "build": 2,
+        "check": 2,
+        "deploy": 2
+      }
+    }
+  }
+}
+```
 
 ## Examples
 

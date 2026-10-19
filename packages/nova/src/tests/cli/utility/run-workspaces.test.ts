@@ -727,6 +727,13 @@ describe('LibRunWorkspaces.run', async () => {
           title: 'Interrupted Scheduling',
         },
       },
+      settings: {
+        runWorkspaces: {
+          concurrency: {
+            dev: 1,
+          },
+        },
+      },
       workspaces: {
         './': {
           name: 'interrupted-scheduling-project',
@@ -771,7 +778,7 @@ describe('LibRunWorkspaces.run', async () => {
     const runPromise: Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_StopsSchedulingPendingTasksAfterInterruption_RunPromise = LibRunWorkspaces.run({
       task: 'dev',
       buffer: '10',
-      concurrency: '1',
+      concurrency: undefined,
       continueOnError: undefined,
       dryRun: undefined,
       excludeWorkspace: undefined,

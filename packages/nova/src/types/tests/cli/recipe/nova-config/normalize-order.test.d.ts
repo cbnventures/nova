@@ -1,0 +1,31 @@
+/**
+ * Tests - CLI - Recipe - Nova Config - Normalize Order - Run.
+ *
+ * @since 0.33.0
+ */
+export type Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OriginalCwd = string;
+
+export type Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_TemporaryDirectory = string;
+
+export type Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_TemporaryBase = string;
+
+export type Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_SandboxRoot = string;
+
+/**
+ * Tests - CLI - Recipe - Nova Config - Normalize Order - Run - Orders Known Sections While Preserving Nested And Unknown Values.
+ *
+ * @since 0.33.0
+ */
+export type Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_PackageJsonPath = string;
+
+export type Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_ConfigPath = string;
+
+export type Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_Config = Record<string, unknown>;
+
+export type Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_Output = string;
+
+export type Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_ParsedOutput = Record<string, unknown>;
+
+export type Tests_Cli_Recipe_NovaConfig_NormalizeOrder_CliRecipeNovaConfigNormalizeOrderRun_OrdersKnownSectionsWhilePreservingNestedAndUnknownValues_Keys = string[];

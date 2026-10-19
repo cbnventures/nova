@@ -34,7 +34,7 @@ env:
 jobs:
   build:
     runs-on: "ubuntu-latest"
-    timeout-minutes: 15
+    timeout-minutes: 30
     permissions:
       contents: "read"
     steps:
@@ -108,7 +108,7 @@ jobs:
   publish-npm-packages-nova:
     needs: "build"
     runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    timeout-minutes: 30
     permissions:
       contents: "read"
       id-token: "write"
@@ -169,7 +169,7 @@ jobs:
   publish-npm-packages-docusaurus-preset-nova:
     needs: ["build", "publish-npm-packages-nova"]
     runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    timeout-minutes: 30
     permissions:
       contents: "read"
       id-token: "write"
@@ -230,7 +230,7 @@ jobs:
   publish-github-packages-packages-nova:
     needs: "build"
     runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    timeout-minutes: 30
     permissions:
       contents: "read"
       packages: "write"
@@ -315,7 +315,7 @@ jobs:
   publish-github-packages-packages-docusaurus-preset-nova:
     needs: ["build", "publish-github-packages-packages-nova"]
     runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    timeout-minutes: 30
     permissions:
       contents: "read"
       packages: "write"
@@ -400,7 +400,7 @@ jobs:
   publish-cloudflare-pages-docusaurus-apps-docs:
     needs: "build"
     runs-on: "ubuntu-latest"
-    timeout-minutes: 10
+    timeout-minutes: 30
     permissions:
       contents: "read"
     steps:

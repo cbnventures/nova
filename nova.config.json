@@ -6,7 +6,7 @@
     },
     "description": {
       "short": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
-      "long": "Nova is a JavaScript and TypeScript monorepo suite, offering strict presets and guided tooling to help you build with confidence, predictability, and minimal setup. It delivers strong defaults, robust linting and typing, and scaffolded project generators \u2014 all wrapped in guardrails that keep your workflow safe without sacrificing flexibility."
+      "long": "Nova is a JavaScript and TypeScript monorepo suite, offering strict presets and guided tooling to help you build with confidence, predictability, and minimal setup. It delivers strong defaults, robust linting and typing, and scaffolded project generators — all wrapped in guardrails that keep your workflow safe without sacrificing flexibility."
     },
     "keywords": [
       "eslint",
@@ -28,7 +28,8 @@
     "legalName": "CBN Ventures LLC",
     "pronouns": "business",
     "platforms": [
-      "nodejs"
+      "nodejs",
+      "web"
     ],
     "startingYear": 2025,
     "license": "MIT"
@@ -100,7 +101,19 @@
       "vulnerabilityAlerts": true,
       "dependabotSecurityUpdates": false,
       "secretScanning": true,
-      "pushProtection": false
+      "pushProtection": true
+    },
+    "rulesets": {
+      "defaultBranch": {
+        "enforcement": "active",
+        "blockDeletions": true,
+        "blockForcePushes": true,
+        "requireLinearHistory": false,
+        "requireSignedCommits": true,
+        "requirePullRequest": false,
+        "requiredStatusChecks": [],
+        "requireBranchesToBeUpToDate": false
+      }
     },
     "actions": {
       "enabled": true,
@@ -108,7 +121,7 @@
       "shaPinningRequired": false,
       "defaultWorkflowPermissions": "read",
       "canApprovePullRequestReviews": false,
-      "artifactRetentionDays": 90
+      "artifactRetentionDays": 7
     },
     "labels": [
       {
@@ -170,14 +183,18 @@
       "triggers": [
         "issue-comment",
         "issues"
-      ]
+      ],
+      "runsOn": "ubuntu-latest",
+      "timeoutMinutes": 5
     },
     {
       "template": "lock-inactive-issues",
       "name": "lock-inactive",
       "triggers": [
         "schedule-weekly"
-      ]
+      ],
+      "runsOn": "ubuntu-latest",
+      "timeoutMinutes": 5
     },
     {
       "template": "publish",
@@ -185,6 +202,8 @@
       "triggers": [
         "tag-push"
       ],
+      "runsOn": "ubuntu-latest",
+      "timeoutMinutes": 30,
       "build": [
         "./packages/nova",
         "./packages/docusaurus-preset-nova",
@@ -301,7 +320,7 @@
         "enabled": true
       },
       "sync-rulesets": {
-        "enabled": false
+        "enabled": true
       },
       "sync-security": {
         "enabled": true
@@ -309,6 +328,31 @@
     },
     "license": {
       "update-copyright": {
+        "enabled": true
+      }
+    },
+    "miscellaneous": {
+      "fix-markdown-tables": {
+        "enabled": true
+      },
+      "remove-operating-system-files": {
+        "enabled": true,
+        "settings": {
+          "linux": {},
+          "macos": {
+            "appleDouble": true,
+            "desktopServicesStore": true
+          },
+          "windows": {
+            "enhancedThumbnailDatabase": true,
+            "enhancedVistaThumbnailDatabase": true,
+            "thumbnailDatabase": true
+          }
+        }
+      }
+    },
+    "nova-config": {
+      "normalize-order": {
         "enabled": true
       }
     },
@@ -526,6 +570,12 @@
       },
       "./apps/docs": {
         "prefix": "DOCS_"
+      },
+      "./packages/docusaurus-preset-nova": {
+        "prefix": "DOCUSAURUS_PRESET_NOVA_"
+      },
+      "./packages/nova": {
+        "prefix": "NOVA_"
       }
     },
     "workflows": {
@@ -544,6 +594,11 @@
           "build",
           "check"
         ]
+      },
+      "concurrency": {
+        "build": 2,
+        "check": 2,
+        "deploy": 2
       }
     },
     "versionStrategy": "semver"

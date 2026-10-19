@@ -17,6 +17,8 @@ import type {
   Shared_BlueprintConfigWorkflow,
   Shared_BlueprintConfigWorkflow_Build,
   Shared_BlueprintConfigWorkflow_Deploy,
+  Shared_BlueprintConfigWorkflow_RunsOn,
+  Shared_BlueprintConfigWorkflow_TimeoutMinutes,
   Shared_BlueprintConfigWorkflow_Triggers,
   Shared_BlueprintConfigWorkflow_With,
   Shared_DialogAction,
@@ -87,6 +89,7 @@ import type {
   Shared_NovaConfigProjectPlatform,
   Shared_NovaConfigSettings_RunWorkspaces,
   Shared_NovaConfigSettings_RunWorkspacesCache,
+  Shared_NovaConfigSettings_RunWorkspacesConcurrency,
   Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkflowScope,
   Shared_NovaConfigWorkflowTarget_Needs,
@@ -196,6 +199,40 @@ export type Cli_Utility_Configure_Runner_IsOptionalNonnegativeIntegerInput_Retur
 export type Cli_Utility_Configure_Runner_IsOptionalNonnegativeIntegerInput_Trimmed = string;
 
 export type Cli_Utility_Configure_Runner_IsOptionalNonnegativeIntegerInput_Parsed = number;
+
+/**
+ * CLI - Utility - Configure - Is Optional Workflow Timeout Input.
+ *
+ * @since 0.33.0
+ */
+export type Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Value = unknown;
+
+export type Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Returns = true | string;
+
+export type Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Trimmed = string;
+
+export type Cli_Utility_Configure_Runner_IsOptionalWorkflowTimeoutInput_Parsed = number;
+
+/**
+ * CLI - Utility - Configure - Is Positive Integer Record Input.
+ *
+ * @since 0.33.0
+ */
+export type Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Value = unknown;
+
+export type Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Returns = true | string;
+
+export type Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Trimmed = string;
+
+export type Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Parsed = unknown;
+
+export type Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_Entries = [string, unknown][];
+
+export type Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_TypedEntry = [string, unknown];
+
+export type Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_EntryKey = string;
+
+export type Cli_Utility_Configure_Runner_IsPositiveIntegerRecordInput_EntryValue = unknown;
 
 /**
  * CLI - Utility - Configure - Is String Array Input.
@@ -373,6 +410,17 @@ export type Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Value = string;
 export type Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Returns = Shared_NovaConfig_RecipeEntry_Settings;
 
 export type Cli_Utility_Configure_Runner_ParseBooleanRecordInput_Trimmed = string;
+
+/**
+ * CLI - Utility - Configure - Parse Positive Integer Record Input.
+ *
+ * @since 0.33.0
+ */
+export type Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Value = string;
+
+export type Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Returns = Shared_NovaConfigSettings_RunWorkspacesConcurrency;
+
+export type Cli_Utility_Configure_Runner_ParsePositiveIntegerRecordInput_Trimmed = string;
 
 /**
  * CLI - Utility - Configure - Parse String Array Input.
@@ -1396,7 +1444,11 @@ export type Cli_Utility_Configure_Runner_PromptGithub_HasNpmUrl = boolean;
 
 export type Cli_Utility_Configure_Runner_PromptGithub_HasSwiftPlatform = boolean;
 
+export type Cli_Utility_Configure_Runner_PromptGithub_HasIosPlatform = boolean;
+
 export type Cli_Utility_Configure_Runner_PromptGithub_HasMacosPlatform = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptGithub_HasVisionosPlatform = boolean;
 
 export type Cli_Utility_Configure_Runner_PromptGithub_HasAndroidPlatform = boolean;
 
@@ -1909,13 +1961,17 @@ export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entries = Sh
 
 export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Returns = Promise<Shared_NovaConfig_Recipes_Miscellaneous | undefined>;
 
-export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingEntry = Shared_NovaConfigOperatingSystemFileRecipeEntry | undefined;
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingFixMarkdownTables = Shared_NovaConfig_RecipeEntry | undefined;
 
-export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputKey = 'enabled';
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_ExistingRemoveOperatingSystemFiles = Shared_NovaConfigOperatingSystemFileRecipeEntry | undefined;
 
-export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputResult = boolean;
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_PromptEntries = Record<string, Shared_NovaConfig_RecipeEntry>;
 
-export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputKey, Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_EnabledOutputResult> | Shared_PromptWithCancelReject;
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedEntries = Record<string, Shared_NovaConfig_RecipeEntry> | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedFixMarkdownTables = Shared_NovaConfig_RecipeEntry;
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_SelectedRemoveOperatingSystemFiles = Shared_NovaConfig_RecipeEntry;
 
 export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Settings = Shared_NovaConfigOperatingSystemFileSettings;
 
@@ -1935,7 +1991,9 @@ export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputRe
 
 export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputKey, Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FileOutputResult> | Shared_PromptWithCancelReject;
 
-export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_Entry = Shared_NovaConfigOperatingSystemFileRecipeEntry;
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_FixMarkdownTables = Shared_NovaConfig_RecipeEntry;
+
+export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_RemoveOperatingSystemFiles = Shared_NovaConfigOperatingSystemFileRecipeEntry;
 
 export type Cli_Utility_Configure_Runner_PromptMiscellaneousRecipes_NextEntries = Shared_NovaConfig_Recipes_Miscellaneous;
 
@@ -2168,11 +2226,15 @@ export type Cli_Utility_Configure_Runner_PromptRecipeEntries_Entries = Record<st
 
 export type Cli_Utility_Configure_Runner_PromptRecipeEntries_AllowedRecipeNames = readonly string[];
 
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_SettingsRecipeNames = readonly string[] | undefined;
+
 export type Cli_Utility_Configure_Runner_PromptRecipeEntries_Label = string;
 
 export type Cli_Utility_Configure_Runner_PromptRecipeEntries_Returns = Promise<Cli_Utility_Configure_Runner_PromptRecipeEntries_NextEntries | undefined>;
 
 export type Cli_Utility_Configure_Runner_PromptRecipeEntries_ExistingEntries = Record<string, Shared_NovaConfig_RecipeEntry>;
+
+export type Cli_Utility_Configure_Runner_PromptRecipeEntries_AllowedSettingsRecipeNames = readonly string[];
 
 export type Cli_Utility_Configure_Runner_PromptRecipeEntries_EnabledRecipes = string[];
 
@@ -2311,6 +2373,20 @@ export type Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutput
 export type Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputResult = Record<Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputKey, Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputValue>;
 
 export type Cli_Utility_Configure_Runner_PromptSettings_RunWorkspacesSettings = Shared_NovaConfigSettings_RunWorkspaces | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_ExistingConcurrency = Shared_NovaConfigSettings_RunWorkspacesConcurrency;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyInitial = string;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputKey = 'concurrency';
+
+export type Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputValue = string;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputKey, Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputResult = Record<Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputKey, Cli_Utility_Configure_Runner_PromptSettings_ConcurrencyOutputValue>;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_Concurrency = Shared_NovaConfigSettings_RunWorkspacesConcurrency;
 
 export type Cli_Utility_Configure_Runner_PromptSettings_ExistingCache = Shared_NovaConfigSettings_RunWorkspacesCache;
 
@@ -2690,6 +2766,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTemplate = 
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingSuffix = string;
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTimeoutMinutes = Shared_BlueprintConfigWorkflow_TimeoutMinutes | undefined;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTriggers = Shared_BlueprintConfigWorkflow_Triggers;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTriggerNames = string[];
@@ -2735,6 +2813,20 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingKey = strin
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SuffixOutputResultValue = Record<Cli_Utility_Configure_Runner_PromptWorkflowsForm_SuffixOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_SuffixOutputResult>;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedSuffix = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputKey = 'runsOn' | 'timeoutMinutes';
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResult = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResultValue = Record<Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResult>;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedRunsOn = Shared_BlueprintConfigWorkflow_RunsOn;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TimeoutMinutesRaw = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTimeoutMinutes = Shared_BlueprintConfigWorkflow_TimeoutMinutes | undefined;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TriggersDir = string;
 

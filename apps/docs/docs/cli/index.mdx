@@ -134,6 +134,8 @@ Apply **scripted edits** that automate routine maintenance, using values from <T
 
 :::info
 All commands in "Recipes" are shaped as `nova recipe <category> <subcommand>` or `nova rcp <alias> <shorthand>`.
+
+Recipe categories are navigation menus, not batch commands. Use [`nova utility run-recipes`](/docs/cli/utilities/run-recipes) when you want Nova to run every enabled recipe.
 :::
 
 #### GitHub
@@ -141,12 +143,35 @@ _Category: `github` · Alias: `gh`_
 
 | Subcommand                                                | Shorthand   | What It Does                                                                                            |
 |-----------------------------------------------------------|-------------|---------------------------------------------------------------------------------------------------------|
-| _(none)_                                                  | —           | Run all GitHub recipes (`sync-features`, `sync-identity`, `sync-policies`) for the current repository.  |
+| [`sync-actions`](/docs/cli/recipes/github/sync-actions)   | `sync-act`  | Sync GitHub Actions permissions, token defaults, and artifact retention.                                |
 | [`sync-features`](/docs/cli/recipes/github/sync-features) | `sync-feat` | Sync repository feature flags (issues, wiki, projects, discussions) to [GitHub](https://github.com/).   |
 | [`sync-identity`](/docs/cli/recipes/github/sync-identity) | `sync-id`   | Sync repository identity (description, homepage URL, topics) to [GitHub](https://github.com/).          |
+| [`sync-labels`](/docs/cli/recipes/github/sync-labels)     | `sync-lab`  | Create or update configured GitHub repository labels.                                                   |
 | [`sync-policies`](/docs/cli/recipes/github/sync-policies) | `sync-pol`  | Sync repository policies (visibility, merge methods, branch settings) to [GitHub](https://github.com/). |
+| [`sync-rulesets`](/docs/cli/recipes/github/sync-rulesets) | `sync-rule` | Create or update Nova's managed default-branch ruleset.                                                 |
+| [`sync-security`](/docs/cli/recipes/github/sync-security) | `sync-sec`  | Sync vulnerability, Dependabot, secret scanning, and push protection settings.                          |
 
-Running `nova recipe github` (alias `nova rcp gh`) without a subcommand executes all three GitHub recipes in sequence. Pass `-d` or `--dry-run` to run without executing any GitHub commands.
+#### License
+_Category: `license` · Alias: `lic`_
+
+| Subcommand                                                       | Shorthand     | What It Does                                                   |
+|------------------------------------------------------------------|---------------|----------------------------------------------------------------|
+| [`update-copyright`](/docs/cli/recipes/license/update-copyright) | `update-copy` | Refresh the generated license copyright holder and year range. |
+
+#### Miscellaneous
+_Category: `miscellaneous` · Alias: `misc`_
+
+| Subcommand                                                                                       | Shorthand         | What It Does                                                                                |
+|--------------------------------------------------------------------------------------------------|-------------------|---------------------------------------------------------------------------------------------|
+| [`fix-markdown-tables`](/docs/cli/recipes/miscellaneous/fix-markdown-tables)                     | `fix-md-tables`   | Format Markdown and MDX tables throughout the project root.                                 |
+| [`remove-operating-system-files`](/docs/cli/recipes/miscellaneous/remove-operating-system-files) | `remove-os-files` | Remove explicitly enabled, untracked operating-system metadata files from the project root. |
+
+#### nova.config.json
+_Category: `nova-config` · Alias: `config`_
+
+| Subcommand                                                         | Shorthand    | What It Does                                                                       |
+|--------------------------------------------------------------------|--------------|------------------------------------------------------------------------------------|
+| [`normalize-order`](/docs/cli/recipes/nova-config/normalize-order) | `norm-order` | Normalize top-level `nova.config.json` key order without changing configured data. |
 
 #### package.json
 _Category: `package-json` · Alias: `pkg`_
@@ -163,16 +188,16 @@ _Category: `package-json` · Alias: `pkg`_
 | [`sync-identity`](/docs/cli/recipes/package-json/sync-identity)                   | `sync-id`   | Sync name, version, description, keywords, displayName, and license to workspace `package.json` files. |
 | [`sync-ownership`](/docs/cli/recipes/package-json/sync-ownership)                 | `sync-own`  | Sync homepage, bugs, author, contributors, funding, and repository to workspace `package.json` files.  |
 
-#### Miscellaneous
-_Category: `miscellaneous` · Alias: `misc`_
+#### README
+_Category: `read-me` · Alias: `read`_
 
-| Subcommand                                                                                       | Shorthand         | What It Does                                                                                |
-|--------------------------------------------------------------------------------------------------|-------------------|---------------------------------------------------------------------------------------------|
-| _(none)_                                                                                         | —                 | Run every miscellaneous recipe for the current repository.                                  |
-| [`fix-markdown-tables`](/docs/cli/recipes/miscellaneous/fix-markdown-tables)                     | `fix-md-tables`   | Format Markdown and MDX tables throughout the project root.                                 |
-| [`remove-operating-system-files`](/docs/cli/recipes/miscellaneous/remove-operating-system-files) | `remove-os-files` | Remove explicitly enabled, untracked operating-system metadata files from the project root. |
-
-Running `nova recipe miscellaneous` (alias `nova rcp misc`) without a subcommand runs every miscellaneous recipe in sequence.
+| Subcommand                                                               | Shorthand       | What It Does                                       |
+|--------------------------------------------------------------------------|-----------------|----------------------------------------------------|
+| [`update-badges`](/docs/cli/recipes/read-me/update-badges)               | `update-badge`  | Refresh the generated README badge region.         |
+| [`update-credits`](/docs/cli/recipes/read-me/update-credits)             | `update-credit` | Refresh the generated README credits region.       |
+| [`update-documentation`](/docs/cli/recipes/read-me/update-documentation) | `update-doc`    | Refresh the generated README documentation region. |
+| [`update-header`](/docs/cli/recipes/read-me/update-header)               | `update-head`   | Refresh the generated README header region.        |
+| [`update-introduction`](/docs/cli/recipes/read-me/update-introduction)   | `update-intro`  | Refresh the generated README introduction region.  |
 
 ### Scaffolding
 

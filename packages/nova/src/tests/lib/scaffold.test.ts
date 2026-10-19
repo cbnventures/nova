@@ -6,6 +6,7 @@ import {
 import {
   mkdir,
   mkdtemp,
+  readFile,
   rm,
   writeFile,
 } from 'node:fs/promises';
@@ -31,6 +32,7 @@ import {
   detectMonorepoContext,
   normalizeWorkspaceRelativePath,
   promptScaffoldOptions,
+  registerWorkspaceInConfig,
   resolveScaffoldEnvironmentPrefix,
   resolveScaffoldInstallInvocation,
   resolveTemplateAnswers,
@@ -72,6 +74,13 @@ import type {
   Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesAValidNonInteractiveValueWithoutPrompting_Result,
   Tests_Lib_Scaffold_ResolveTemplateAnswers_UsesNonInteractiveDefaultsWithoutRequiringOptionalFlags_Result,
   Tests_Lib_Scaffold_TemplateQuestions,
+  Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_Config,
+  Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ConfigContents,
+  Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ConfigPath,
+  Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ConfigRaw,
+  Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_Project,
+  Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ProjectDirectory,
+  Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_WorkspaceDirectory,
 } from '../../types/tests/lib/scaffold.test.d.ts';
 
 vi.mock('prompts', () => {
@@ -215,6 +224,53 @@ describe('workspace contract', () => {
     strictEqual(normalizeWorkspaceRelativePath('/project', '/project/apps/web'), './apps/web');
     strictEqual(normalizeWorkspaceRelativePath('/project', '/project'), undefined);
     strictEqual(normalizeWorkspaceRelativePath('/project', '/outside/web'), undefined);
+
+    return;
+  });
+
+  it('merges required platforms when registering workspaces', async () => {
+    const projectDirectory: Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ProjectDirectory = await mkdtemp(join(tmpdir(), 'nova-platforms-'));
+
+    try {
+      const workspaceDirectory: Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_WorkspaceDirectory = join(projectDirectory, 'apps', 'apple');
+
+      await mkdir(workspaceDirectory, { recursive: true });
+
+      const configPath: Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ConfigPath = join(projectDirectory, 'nova.config.json');
+      const configContents: Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ConfigContents = `${JSON.stringify({
+        project: {
+          name: {
+            slug: 'example',
+          },
+          platforms: ['nodejs'],
+        },
+        workspaces: {},
+      }, null, 2)}\n`;
+
+      await writeFile(configPath, configContents, 'utf-8');
+      await registerWorkspaceInConfig(configPath, './apps/apple', 'example-app-apple', 'apple', 'app', [], [
+        'swift',
+        'ios',
+        'macos',
+        'nodejs',
+      ]);
+
+      const configRaw: Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ConfigRaw = await readFile(configPath, 'utf-8');
+      const config: Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_Config = JSON.parse(configRaw) as Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_Config;
+      const project: Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_Project = config['project'] as Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_Project;
+
+      deepStrictEqual(project['platforms'], [
+        'nodejs',
+        'swift',
+        'ios',
+        'macos',
+      ]);
+    } finally {
+      await rm(projectDirectory, {
+        recursive: true,
+        force: true,
+      });
+    }
 
     return;
   });

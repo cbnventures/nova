@@ -255,10 +255,13 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackExecuteCommand_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Entry,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Environment,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Job,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunsOn,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Siblings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Template,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_TimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workflow,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Workspaces,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Dollar_Returns,
@@ -724,6 +727,21 @@ export class Runner {
       workflow = Runner.buildLockInactiveIssues(entry, environment);
     } else {
       workflow = Runner.buildPublish(entry, workspaces, environment, siblings, packageManager);
+    }
+
+    const runsOn: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_RunsOn = entry['runsOn'];
+    const timeoutMinutes: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_TimeoutMinutes = entry['timeoutMinutes'];
+
+    for (const jobEntry of workflow['jobs']) {
+      const job: Cli_Generate_Github_WorkflowsBlueprint_Runner_Dispatch_Job = jobEntry;
+
+      if (runsOn !== undefined) {
+        job.runsOn = runsOn;
+      }
+
+      if (timeoutMinutes !== undefined) {
+        job.timeoutMinutes = timeoutMinutes;
+      }
     }
 
     return Runner.serialize(workflow);

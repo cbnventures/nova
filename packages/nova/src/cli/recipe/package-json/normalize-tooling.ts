@@ -18,8 +18,8 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalRootScriptEntries,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalRootScripts,
-  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalScriptsChanged,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CurrentPackageScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CurrentScriptNames,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_FileContents,
@@ -27,6 +27,7 @@ import type {
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasBindingGyp,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_IsNovaBootstrap,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Manifest,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MissingCanonicalRootScriptEntries,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedPackageScriptEntries,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedPackageScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedScriptCommand,
@@ -71,9 +72,9 @@ import type {
 /**
  * CLI - Recipe - package.json - Normalize Tooling.
  *
- * Enforces scripts, allowScripts, gypfile, config,
- * workspaces fields based on workspace role. Ensures project-role
- * workspaces always have a workspaces array.
+ * Adds missing root scripts, orders existing scripts, and normalizes
+ * allowScripts, gypfile, config, and workspaces fields based on workspace role.
+ * Existing script commands remain owned by the project.
  *
  * @since 0.14.0
  */
@@ -292,20 +293,21 @@ export class Runner {
         'prod': `${scriptRunnerPrefix} --sequential --node-env production "prod:*"`,
         'prod:workspaces': `${runnerPrefix} --node-env production prod`,
         'check': `${scriptRunnerPrefix} --sequential "check:*"`,
-        'check:workspaces': `${runnerPrefix} --concurrency=2 check`,
+        'check:workspaces': `${runnerPrefix} check`,
         'build': `${scriptRunnerPrefix} --sequential --node-env production "build:*"`,
-        'build:workspaces': `${runnerPrefix} --concurrency=2 --node-env production build`,
+        'build:workspaces': `${runnerPrefix} --node-env production build`,
         'deploy': `${scriptRunnerPrefix} --sequential --node-env production "deploy:*"`,
-        'deploy:workspaces': `${runnerPrefix} --concurrency=2 --node-env production deploy`,
+        'deploy:workspaces': `${runnerPrefix} --node-env production deploy`,
         'clean': `${scriptRunnerPrefix} --parallel "clean:*"`,
         'clean:workspaces': `${runnerPrefix} clean`,
         'changelog': 'nova utility changelog',
         'recipes': 'nova utility run-recipes --replace-file',
       };
-      const canonicalScriptsChanged: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalScriptsChanged = Object.entries(canonicalRootScripts).some((canonicalRootScriptEntry) => normalizedPackageScripts[canonicalRootScriptEntry[0]] !== canonicalRootScriptEntry[1]);
+      const canonicalRootScriptEntries: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalRootScriptEntries = Object.entries(canonicalRootScripts);
+      const missingCanonicalRootScriptEntries: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MissingCanonicalRootScriptEntries = canonicalRootScriptEntries.filter((canonicalRootScriptEntry) => Object.hasOwn(normalizedPackageScripts, canonicalRootScriptEntry[0]) === false);
 
-      if (canonicalScriptsChanged === true) {
-        for (const canonicalRootScriptEntry of Object.entries(canonicalRootScripts)) {
+      if (missingCanonicalRootScriptEntries.length > 0) {
+        for (const canonicalRootScriptEntry of missingCanonicalRootScriptEntries) {
           const typedCanonicalRootScriptEntry: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedCanonicalRootScriptEntry = canonicalRootScriptEntry;
           const scriptName: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptName = typedCanonicalRootScriptEntry[0];
           const scriptCommand: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptCommand = typedCanonicalRootScriptEntry[1];
@@ -318,7 +320,7 @@ export class Runner {
         Logger.customize({
           name: 'Runner.handle',
           purpose: 'scripts',
-        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Normalizing Nova root workspace scripts ...`);
+        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding missing Nova root workspace scripts ...`);
       }
     }
 

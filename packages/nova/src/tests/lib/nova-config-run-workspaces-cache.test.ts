@@ -13,7 +13,7 @@ import type {
   Tests_Lib_NovaConfigRunWorkspacesCache_Config,
   Tests_Lib_NovaConfigRunWorkspacesCache_ConfigContents,
   Tests_Lib_NovaConfigRunWorkspacesCache_Loaded,
-  Tests_Lib_NovaConfigRunWorkspacesCache_NovaConfigRunWorkspacesCache_ReadsTheCompleteVerifiedCacheContract_Returns,
+  Tests_Lib_NovaConfigRunWorkspacesCache_NovaConfigRunWorkspacesCache_ReadsTheCompleteWorkspaceRunnerSettingsContract_Returns,
   Tests_Lib_NovaConfigRunWorkspacesCache_OriginalCwd,
   Tests_Lib_NovaConfigRunWorkspacesCache_ProjectDirectory,
   Tests_Lib_NovaConfigRunWorkspacesCache_SandboxRoot,
@@ -43,7 +43,7 @@ describe('Nova config run-workspaces cache', async () => {
     return;
   });
 
-  it('reads the complete verified cache contract', async (): Tests_Lib_NovaConfigRunWorkspacesCache_NovaConfigRunWorkspacesCache_ReadsTheCompleteVerifiedCacheContract_Returns => {
+  it('reads the complete workspace runner settings contract', async (): Tests_Lib_NovaConfigRunWorkspacesCache_NovaConfigRunWorkspacesCache_ReadsTheCompleteWorkspaceRunnerSettingsContract_Returns => {
     const projectDirectory: Tests_Lib_NovaConfigRunWorkspacesCache_ProjectDirectory = join(sandboxRoot, 'valid');
     const configContents: Tests_Lib_NovaConfigRunWorkspacesCache_ConfigContents = JSON.stringify({
       project: {
@@ -62,6 +62,10 @@ describe('Nova config run-workspaces cache', async () => {
               'check',
               'docs',
             ],
+          },
+          concurrency: {
+            build: 2,
+            check: 3,
           },
         },
       },
@@ -85,6 +89,10 @@ describe('Nova config run-workspaces cache', async () => {
             'check',
             'docs',
           ],
+        },
+        concurrency: {
+          build: 2,
+          check: 3,
         },
       },
     });

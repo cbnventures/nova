@@ -67,6 +67,11 @@ export class Runner {
       category: 'app',
       displayName: 'Next.js',
       importMetaUrl: import.meta.url,
+      platforms: [
+        'nodejs',
+        'web',
+      ],
+      resolvePlatforms: (answers) => (answers.get('dockerImage') === 'enabled') ? ['docker'] : [],
       resolveWorkspaceTemplateSubpaths: () => ['scaffold-options/app/web-launchpad'],
       templateQuestions: cliScaffoldAppNextjsTemplateQuestions,
       templateSubpath: 'scaffold/app/nextjs',

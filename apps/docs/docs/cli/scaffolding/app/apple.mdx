@@ -27,7 +27,8 @@ Nova stores the Xcode project as a readable `project.yml` definition, then gener
 
 1. Creates iOS and macOS targets together so one workspace can serve both Apple platforms.
 2. Includes a Swift Testing target so the generated app starts with a working verification path.
-3. Keeps Xcode build data inside the workspace so local and automated builds do not depend on a global DerivedData location.
+3. Lints and type-checks the generated Node.js lifecycle helper while keeping native tests owned by Xcode.
+4. Keeps Xcode build data inside the workspace so local and automated builds do not depend on a global DerivedData location.
 
 ## Requirements
 
@@ -85,6 +86,10 @@ Nova stores the Xcode project as a readable `project.yml` definition, then gener
 | `Sources/ContentView.swift` | Starter interface shared by iOS and macOS.                                    |
 | `Tests/AppTests.swift`      | Swift Testing smoke test.                                                     |
 | `package.json`              | Nova script groups for project generation, checking, and building.            |
+| `eslint.config.mts`         | Nova ESLint presets and custom rules for the Node.js lifecycle helper.        |
+| `tsconfig.scripts.json`     | Strict Node.js type-checking for generated lifecycle scripts.                 |
+| `tsconfig.tests.json`       | Strict type-checking for future helper tests and Vitest configuration.        |
+| `vitest.config.mts`         | Helper-test discovery with an empty-suite-safe starting point.                |
 
 ## Non-Interactive Mode
 
@@ -97,6 +102,6 @@ nova scaffold app apple --non-interactive --workspace-name client --bundle-id io
 
 ## Registration and Customization
 
-Nova registers the workspace with the `app` role and `trackable` policy. The generated package name follows `{projectSlug}-app-{workspaceName}`.
+Nova registers the workspace with the `app` role and `trackable` policy, then adds `swift`, `ios`, and `macos` to the root `project.platforms` list without removing existing entries. The generated package name follows `{projectSlug}-app-{workspaceName}`.
 
 The bundle identifier defaults to `com.example.{workspaceName}` when `--bundle-id` is omitted. Nova accepts ASCII letters, numbers, periods, and hyphens, preserves the supplied value exactly, and gives the unit-test target the matching `{bundleId}.tests` identifier.

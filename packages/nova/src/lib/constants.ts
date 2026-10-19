@@ -1,4 +1,8 @@
-import type { Lib_Constants_DocsBaseUrl, Lib_Constants_GhMinVersion } from '../types/lib/constants.d.ts';
+import type {
+  Lib_Constants_DocsBaseUrl,
+  Lib_Constants_GhMinVersion,
+  Lib_Constants_RunWorkspacesDefaultConcurrency,
+} from '../types/lib/constants.d.ts';
 
 /**
  * Lib - Constants - Docs Base URL.
@@ -20,3 +24,13 @@ export const LIB_CONSTANTS_DOCS_BASE_URL: Lib_Constants_DocsBaseUrl = 'https://n
  * @since 0.18.0
  */
 export const LIB_GH_MIN_VERSION: Lib_Constants_GhMinVersion = '2.40.0';
+
+/**
+ * Lib - Constants - Run Workspaces Default Concurrency.
+ *
+ * Default task limit for the reusable workspace runner. Consumers remain free
+ * to choose a project-specific limit through `--concurrency`.
+ *
+ * @since 0.33.0
+ */
+export const LIB_CONSTANTS_RUN_WORKSPACES_DEFAULT_CONCURRENCY: Lib_Constants_RunWorkspacesDefaultConcurrency = 10;

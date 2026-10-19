@@ -64,6 +64,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ResolvedValue,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ResolvedValues,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunsOn,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Scope,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Scopes,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenKeys,
@@ -75,6 +76,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Template,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TemplateName,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TimeoutMinutes,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Trigger,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TriggerList,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TriggerName,
@@ -318,7 +320,35 @@ export class Runner {
 
       const suffixValue: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SuffixValue = suffix;
       const workflowKey: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkflowKey = `${templateName}-${suffixValue}`;
+      const runsOn: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunsOn = entry['runsOn'];
+      const timeoutMinutes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TimeoutMinutes = entry['timeoutMinutes'];
       const validTriggers: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ValidTriggers = validTriggersByTemplate[templateName];
+
+      if (runsOn !== undefined && runsOn !== 'ubuntu-latest') {
+        diagnostics.push({
+          severity: 'error',
+          message: `Workflow "${workflowKey}" has an invalid "runsOn" value. Allowed value: ubuntu-latest. Skipping.`,
+        });
+
+        hasError = true;
+      }
+
+      if (
+        timeoutMinutes !== undefined
+        && (
+          typeof timeoutMinutes !== 'number'
+          || Number.isInteger(timeoutMinutes) === false
+          || timeoutMinutes < 1
+          || timeoutMinutes > 360
+        )
+      ) {
+        diagnostics.push({
+          severity: 'error',
+          message: `Workflow "${workflowKey}" has an invalid "timeoutMinutes" value. Enter a whole number from 1 through 360. Skipping.`,
+        });
+
+        hasError = true;
+      }
 
       // Check 3c: triggers present, a non-empty array, each valid for the template.
       if (Array.isArray(triggers) === false || triggers.length === 0) {

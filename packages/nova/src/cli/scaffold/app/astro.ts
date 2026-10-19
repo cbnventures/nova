@@ -147,6 +147,11 @@ export class Runner {
       category: 'app',
       displayName: 'Astro',
       importMetaUrl: import.meta.url,
+      platforms: [
+        'nodejs',
+        'web',
+      ],
+      resolvePlatforms: (answers) => (answers.get('dockerImage') === 'enabled') ? ['docker'] : [],
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldAppAstroTemplateQuestions,
       templateSubpath: 'scaffold/app/astro',

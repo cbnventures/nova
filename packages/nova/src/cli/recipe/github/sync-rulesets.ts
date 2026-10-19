@@ -198,8 +198,8 @@ export class Runner {
       return;
     }
 
-    const query: Cli_Recipe_Github_SyncRulesets_Runner_Run_Query = `flatten | map(select(.name == "${rulesetName}" and .source_type == "Repository")) | first | .id // empty`;
-    const lookupCommand: Cli_Recipe_Github_SyncRulesets_Runner_Run_LookupCommand = `gh api repos/${owner}/${repo}/rulesets --paginate --slurp --jq ${shellQuote(query)}`;
+    const query: Cli_Recipe_Github_SyncRulesets_Runner_Run_Query = `.[] | select(.name == "${rulesetName}" and .source_type == "Repository") | .id`;
+    const lookupCommand: Cli_Recipe_Github_SyncRulesets_Runner_Run_LookupCommand = `gh api repos/${owner}/${repo}/rulesets --paginate --jq ${shellQuote(query)}`;
     const lookupResult: Cli_Recipe_Github_SyncRulesets_Runner_Run_LookupResult = await executeShell(lookupCommand);
 
     if (lookupResult['code'] !== 0) {

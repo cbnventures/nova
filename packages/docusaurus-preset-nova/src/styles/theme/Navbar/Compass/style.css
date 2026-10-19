@@ -16,7 +16,7 @@
 }
 
 .nova-navbar-compass-brand {
-  margin-right: auto;
+  flex: 0 1 auto;
   min-width: 0;
 }
 
@@ -31,12 +31,14 @@
 }
 
 .nova-navbar-compass-items {
+  flex: 1 1 0;
+
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: var(--nova-shape-gap);
 
-  max-width: var(--nova-navbar-compass-items-max-width);
+  min-width: 0;
 }
 
 .nova-navbar-compass-items a {
@@ -45,6 +47,8 @@
 }
 
 .nova-navbar-compass-actions {
+  flex-shrink: 0;
+
   display: flex;
   align-items: center;
   gap: 8px;

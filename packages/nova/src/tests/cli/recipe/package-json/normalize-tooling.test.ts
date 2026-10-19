@@ -17,6 +17,15 @@ import { afterAll, describe, it } from 'vitest';
 import { Runner as CliRecipePackageJsonNormalizeTooling } from '../../../../cli/recipe/package-json/normalize-tooling.js';
 
 import type {
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_Cases,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_Output,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_Parsed,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_Scripts,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsScriptsWhenMissing_NovaConfigContents,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsScriptsWhenMissing_NovaConfigPath,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsScriptsWhenMissing_Output,
@@ -37,15 +46,6 @@ import type {
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_WorkspaceDirectory,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_WorkspacePackageJsonPath,
-  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_Cases,
-  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_NovaConfigContents,
-  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_NovaConfigPath,
-  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_Output,
-  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_PackageJsonContents,
-  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_PackageJsonPath,
-  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_Parsed,
-  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_ProjectDirectory,
-  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_Scripts,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_OriginalCwd,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_AllowScripts,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_NovaConfigContents,
@@ -348,42 +348,44 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
     return;
   });
 
-  it('normalizes canonical root workspace scripts', async () => {
-    // Seed both former root command spellings so the recipe upgrades each one.
-    const cases: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_Cases = [
+  it('adds missing canonical root workspace scripts without replacing existing commands', async () => {
+    // Seed both runner modes plus opaque project-owned commands. This verifies the general
+    // preservation contract without encoding another repository's script implementation.
+    const cases: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_Cases = [
       {
         directoryName: 'consumer-root-scripts',
-        dev: 'nova utility run-scripts --parallel --node-env development \'dev:*\'',
+        dev: 'nova utility run-scripts --parallel --node-env development "dev:*"',
         runnerPrefix: 'nova utility run-workspaces',
         scriptRunnerPrefix: 'nova utility run-scripts',
       },
       {
         directoryName: 'bootstrap-root-scripts',
-        dev: 'node ./scripts/nova-run-scripts.mjs --parallel --node-env development \'dev:*\'',
+        dev: 'node ./scripts/nova-run-scripts.mjs --parallel --node-env development "dev:*"',
         runnerPrefix: 'node ./scripts/nova-run-workspaces.mjs',
         scriptRunnerPrefix: 'node ./scripts/nova-run-scripts.mjs',
       },
     ];
 
     for (const testCase of cases) {
-      const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_ProjectDirectory = join(sandboxRoot, testCase['directoryName']);
+      const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_ProjectDirectory = join(sandboxRoot, testCase['directoryName']);
 
       await mkdir(projectDirectory, { recursive: true });
 
-      const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_PackageJsonPath = join(projectDirectory, 'package.json');
-      const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_PackageJsonContents = JSON.stringify({
+      const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_PackageJsonPath = join(projectDirectory, 'package.json');
+      const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_PackageJsonContents = JSON.stringify({
         'name': testCase['directoryName'],
         'scripts': {
-          'custom': 'preserved',
+          'custom': 'echo project-owned-custom',
           'dev': testCase['dev'],
-          'dev:workspaces': 'turbo run dev',
+          'dev:workspaces': 'echo project-owned-workspace-dev',
+          'build': 'echo project-owned-build',
         },
       }, null, 2);
 
       await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-      const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_NovaConfigPath = join(projectDirectory, 'nova.config.json');
-      const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_NovaConfigContents = JSON.stringify({
+      const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+      const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_NovaConfigContents = JSON.stringify({
         workspaces: {
           './': {
             name: 'project',
@@ -412,27 +414,17 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
 
       strictEqual(process.exitCode, undefined);
 
-      const output: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_Output = await readFile(packageJsonPath, 'utf-8');
-      const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_Parsed = JSON.parse(output);
-      const scripts: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_Scripts = parsed['scripts'] as Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NormalizesCanonicalRootWorkspaceScripts_Scripts;
+      const output: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_Output = await readFile(packageJsonPath, 'utf-8');
+      const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_Parsed = JSON.parse(output);
+      const scripts: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_Scripts = parsed['scripts'] as Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_Scripts;
 
-      deepStrictEqual(scripts, {
-        'dev': `${testCase['scriptRunnerPrefix']} --parallel --node-env development "dev:*"`,
-        'dev:workspaces': `${testCase['runnerPrefix']} --node-env development dev`,
-        'prod': `${testCase['scriptRunnerPrefix']} --sequential --node-env production "prod:*"`,
-        'prod:workspaces': `${testCase['runnerPrefix']} --node-env production prod`,
-        'check': `${testCase['scriptRunnerPrefix']} --sequential "check:*"`,
-        'check:workspaces': `${testCase['runnerPrefix']} --concurrency=2 check`,
-        'build': `${testCase['scriptRunnerPrefix']} --sequential --node-env production "build:*"`,
-        'build:workspaces': `${testCase['runnerPrefix']} --concurrency=2 --node-env production build`,
-        'deploy': `${testCase['scriptRunnerPrefix']} --sequential --node-env production "deploy:*"`,
-        'deploy:workspaces': `${testCase['runnerPrefix']} --concurrency=2 --node-env production deploy`,
-        'clean': `${testCase['scriptRunnerPrefix']} --parallel "clean:*"`,
-        'clean:workspaces': `${testCase['runnerPrefix']} clean`,
-        'changelog': 'nova utility changelog',
-        'recipes': 'nova utility run-recipes --replace-file',
-        'custom': 'preserved',
-      });
+      strictEqual(scripts['dev'], testCase['dev']);
+      strictEqual(scripts['dev:workspaces'], 'echo project-owned-workspace-dev');
+      strictEqual(scripts['build'], 'echo project-owned-build');
+      strictEqual(scripts['custom'], 'echo project-owned-custom');
+      strictEqual(scripts['prod'], `${testCase['scriptRunnerPrefix']} --sequential --node-env production "prod:*"`);
+      strictEqual(scripts['prod:workspaces'], `${testCase['runnerPrefix']} --node-env production prod`);
+      strictEqual(scripts['recipes'], 'nova utility run-recipes --replace-file');
     }
 
     return;

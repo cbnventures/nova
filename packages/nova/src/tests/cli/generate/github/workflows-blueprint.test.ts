@@ -99,6 +99,9 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildTagPushTrigger_AppliesCustomTagGlobs_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildTagPushTrigger_ReturnsTheTagPushTriggerWithTheDefaultGlob_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintBuildWorkflowRunTrigger_ReturnsTheWorkflowRunTriggerWithTheResolvedNames_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Entry,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Workspaces,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintEmitRuntimeSyncStep_Emit,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintEmitRuntimeSyncStep_ReturnsUndefinedWhenTheTargetDeclaresNoRuntimeValues_Step,
   Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintEmitRuntimeSyncStep_RoutesACloudflareSecretThroughTheEncryptedChannelAndAVariableThroughTheDeployChannel_Step,
@@ -472,6 +475,44 @@ describe('WorkflowsBlueprint.serialize', () => {
     const expected: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintSerialize_EmitsPushBranchesBeforePaths_Expected = expectedLines.join('\n');
 
     ok(result.includes(expected), 'the push node emits branches then paths');
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint - Dispatch.
+ *
+ * @since 0.33.0
+ */
+describe('WorkflowsBlueprint.dispatch', () => {
+  it('applies configured execution settings to every generated job', () => {
+    const entry: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Entry = {
+      template: 'publish',
+      name: 'project',
+      triggers: ['release'],
+      runsOn: 'ubuntu-latest',
+      timeoutMinutes: 42,
+      build: ['./packages/tool'],
+      deploy: [{
+        to: 'npm',
+        path: './packages/tool',
+      }],
+    };
+    const workspaces: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Workspaces = {
+      './packages/tool': {
+        name: 'tool-package',
+        role: 'package',
+        policy: 'distributable',
+      },
+    };
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprint_WorkflowsBlueprintDispatch_AppliesConfiguredExecutionSettingsToEveryGeneratedJob_Result = WorkflowsBlueprint.dispatch(entry, workspaces);
+
+    strictEqual(result.split('runs-on: "ubuntu-latest"').length, 3, 'both generated jobs use the configured runner');
+
+    strictEqual(result.split('timeout-minutes: 42').length, 3, 'both generated jobs use the configured timeout');
 
     return;
   });

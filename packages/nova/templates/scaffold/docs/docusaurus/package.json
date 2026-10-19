@@ -25,8 +25,8 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/docusaurus-preset-nova": "0.32.0",
-    "@cbnventures/nova": "0.32.0",
+    "@cbnventures/docusaurus-preset-nova": "0.33.0",
+    "@cbnventures/nova": "0.33.0",
     "@docusaurus/core": "[__SCAFFOLD_VERSION_DOCUSAURUS__]",
     "react": "[__SCAFFOLD_VERSION_REACT__]",
     "react-dom": "[__SCAFFOLD_VERSION_REACT_DOM__]"

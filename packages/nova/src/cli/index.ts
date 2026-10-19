@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 
 import packageJson from '../../package.json' with { type: 'json' };
+import { LIB_CONSTANTS_RUN_WORKSPACES_DEFAULT_CONCURRENCY } from '../lib/constants.js';
 import {
   LIB_REGEX_PATTERN_ANSI,
   LIB_REGEX_PATTERN_ERROR_PREFIX,
@@ -29,6 +30,7 @@ import { Runner as CliRecipeGithubSyncSecurity } from './recipe/github/sync-secu
 import { Runner as CliRecipeLicenseUpdateCopyright } from './recipe/license/update-copyright.js';
 import { Runner as CliRecipeMiscellaneousFixMarkdownTables } from './recipe/miscellaneous/fix-markdown-tables.js';
 import { Runner as CliRecipeMiscellaneousRemoveOperatingSystemFiles } from './recipe/miscellaneous/remove-operating-system-files.js';
+import { Runner as CliRecipeNovaConfigNormalizeOrder } from './recipe/nova-config/normalize-order.js';
 import { Runner as CliRecipePackageJsonCleanup } from './recipe/package-json/cleanup.js';
 import { Runner as CliRecipePackageJsonNormalizeArtifacts } from './recipe/package-json/normalize-artifacts.js';
 import { Runner as CliRecipePackageJsonNormalizeBundler } from './recipe/package-json/normalize-bundler.js';
@@ -104,16 +106,12 @@ import type {
   Cli_Index_CLI_RegisterCommands_GenerateMustHaves,
   Cli_Index_CLI_RegisterCommands_Recipe,
   Cli_Index_CLI_RegisterCommands_RecipeGithub,
-  Cli_Index_CLI_RegisterCommands_RecipeGithubOptions,
   Cli_Index_CLI_RegisterCommands_RecipeLicense,
-  Cli_Index_CLI_RegisterCommands_RecipeLicenseOptions,
   Cli_Index_CLI_RegisterCommands_RecipeMiscellaneous,
-  Cli_Index_CLI_RegisterCommands_RecipeMiscellaneousOptions,
+  Cli_Index_CLI_RegisterCommands_RecipeNovaConfig,
   Cli_Index_CLI_RegisterCommands_RecipePackageJson,
   Cli_Index_CLI_RegisterCommands_RecipeReadMe,
-  Cli_Index_CLI_RegisterCommands_RecipeReadMeOptions,
   Cli_Index_CLI_RegisterCommands_Returns,
-  Cli_Index_CLI_RegisterCommands_RunRecipesOptions,
   Cli_Index_CLI_RegisterCommands_RunScriptsOptions,
   Cli_Index_CLI_RegisterCommands_RunWorkspacesOptions,
   Cli_Index_CLI_RegisterCommands_Scaffold,
@@ -198,6 +196,7 @@ class CLI {
         .configureHelp({
           commandDescription: () => '',
           commandUsage: (command) => this.getCommandUsage(command),
+          sortSubcommands: true,
           styleDescriptionText: (text) => this.styleText('description', text),
           styleTitle: (text) => this.styleText('title', text),
           subcommandTerm: (command) => this.getSubcommandTerm(command),
@@ -520,22 +519,34 @@ class CLI {
         return;
       });
 
-    const recipeGithub: Cli_Index_CLI_RegisterCommands_RecipeGithub = recipe
-      .command('github')
-      .alias('gh')
-      .usage('[subcommand] [options]')
-      .description('Run all GitHub recipes')
+    const recipeNovaConfig: Cli_Index_CLI_RegisterCommands_RecipeNovaConfig = recipe
+      .command('nova-config')
+      .alias('config')
+      .usage('<subcommand> [options]')
+      .description('Recipes for "nova.config.json" file synchronization')
       .commandsGroup('Subcommands:')
-      .helpCommand(false)
-      .option('-d, --dry-run', 'Run read-only checks without changing GitHub settings')
-      .action(async (options) => {
-        await this.executeCommand<Cli_Index_CLI_RegisterCommands_RunRecipesOptions>({
-          ...(options as Cli_Index_CLI_RegisterCommands_RecipeGithubOptions),
-          category: 'github',
-        }, CliUtilityRunRecipes['run']);
+      .helpCommand(false);
+
+    recipeNovaConfig
+      .command('normalize-order')
+      .alias('norm-order')
+      .usage('[options]')
+      .description('Normalize the top-level key order without changing configured values')
+      .option('-d, --dry-run', 'Run without writing any files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options, command) => {
+        await this.executeCommand<typeof options>(command.optsWithGlobals(), CliRecipeNovaConfigNormalizeOrder['run']);
 
         return;
       });
+
+    const recipeGithub: Cli_Index_CLI_RegisterCommands_RecipeGithub = recipe
+      .command('github')
+      .alias('gh')
+      .usage('<subcommand> [options]')
+      .description('Recipes for GitHub repository synchronization')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false);
 
     recipeGithub
       .command('sync-actions')
@@ -624,20 +635,10 @@ class CLI {
     const recipeLicense: Cli_Index_CLI_RegisterCommands_RecipeLicense = recipe
       .command('license')
       .alias('lic')
-      .usage('[subcommand] [options]')
-      .description('Run all license recipes')
+      .usage('<subcommand> [options]')
+      .description('Recipes for license file synchronization')
       .commandsGroup('Subcommands:')
-      .helpCommand(false)
-      .option('-d, --dry-run', 'Run without writing any files')
-      .option('-r, --replace-file', 'Replace the original file without creating a backup')
-      .action(async (options) => {
-        await this.executeCommand<Cli_Index_CLI_RegisterCommands_RunRecipesOptions>({
-          ...(options as Cli_Index_CLI_RegisterCommands_RecipeLicenseOptions),
-          category: 'license',
-        }, CliUtilityRunRecipes['run']);
-
-        return;
-      });
+      .helpCommand(false);
 
     recipeLicense
       .command('update-copyright')
@@ -655,19 +656,10 @@ class CLI {
     const recipeMiscellaneous: Cli_Index_CLI_RegisterCommands_RecipeMiscellaneous = recipe
       .command('miscellaneous')
       .alias('misc')
-      .usage('[subcommand] [options]')
-      .description('Run all miscellaneous recipes')
+      .usage('<subcommand> [options]')
+      .description('Recipes for project-wide maintenance')
       .commandsGroup('Subcommands:')
-      .helpCommand(false)
-      .option('-d, --dry-run', 'Run without writing any files')
-      .action(async (options) => {
-        await this.executeCommand<Cli_Index_CLI_RegisterCommands_RunRecipesOptions>({
-          ...(options as Cli_Index_CLI_RegisterCommands_RecipeMiscellaneousOptions),
-          category: 'miscellaneous',
-        }, CliUtilityRunRecipes['run']);
-
-        return;
-      });
+      .helpCommand(false);
 
     recipeMiscellaneous
       .command('fix-markdown-tables')
@@ -698,27 +690,17 @@ class CLI {
      * CLI - Register Commands - Recipe Read Me.
      *
      * Parent command for the README refresh recipes. Each subcommand splices one marked region
-     * of the README.md in place; the parent runs every read-me recipe via run-recipes.
+     * of the README.md in place.
      *
      * @since 0.21.0
      */
     const recipeReadMe: Cli_Index_CLI_RegisterCommands_RecipeReadMe = recipe
       .command('read-me')
       .alias('read')
-      .usage('[subcommand] [options]')
-      .description('Run all README recipes')
+      .usage('<subcommand> [options]')
+      .description('Recipes for "README.md" file synchronization')
       .commandsGroup('Subcommands:')
-      .helpCommand(false)
-      .option('-d, --dry-run', 'Run without writing any files')
-      .option('-r, --replace-file', 'Replace the original file without creating a backup')
-      .action(async (options) => {
-        await this.executeCommand<Cli_Index_CLI_RegisterCommands_RunRecipesOptions>({
-          ...(options as Cli_Index_CLI_RegisterCommands_RecipeReadMeOptions),
-          category: 'read-me',
-        }, CliUtilityRunRecipes['run']);
-
-        return;
-      });
+      .helpCommand(false);
 
     recipeReadMe
       .command('update-badges')
@@ -1165,7 +1147,7 @@ class CLI {
       .argument('<script>', 'Workspace script name')
       .argument('[scriptArgs...]', 'Arguments forwarded to the requested workspace script')
       .option('-b, --buffer <ms>', 'Flush interval in ms for grouped workspace logs (default: 500)')
-      .option('-c, --concurrency <count>', 'Maximum number of workspace scripts to run concurrently')
+      .option('-c, --concurrency <count>', `Override the configured workspace concurrency (unconfigured default: ${LIB_CONSTANTS_RUN_WORKSPACES_DEFAULT_CONCURRENCY})`)
       .option('-k, --continue-on-error', 'Continue independent workspace tasks after a failure')
       .option('-d, --dry-run', 'Print the workspace task plan without running scripts')
       .option('-x, --exclude-workspace <name...>', 'Exclude workspace package names or Nova workspace paths')

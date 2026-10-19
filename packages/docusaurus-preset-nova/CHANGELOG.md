@@ -1,5 +1,13 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.33.0 - 2026-10-18
+
+### FIXED
+- Measured desktop navbar links against the live space between the brand and action controls, recalculated overflow as the browser resizes, and reserved the More control only when the complete navigation row cannot fit.
+
+### ADDED
+- Added a fullscreen Mermaid view that fits the diagram on entry, preserves zoom and pan controls, supports Escape, and falls back to an in-page fullscreen surface when the browser Fullscreen API is unavailable.
+
 ## 0.32.0 - 2026-10-16
 
 ### FIXED

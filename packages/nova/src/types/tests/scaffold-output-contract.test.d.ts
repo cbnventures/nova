@@ -226,15 +226,31 @@ export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedNovaConf
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedNovaConfig = Record<string, unknown>;
 
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedProject = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedSettings = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRunWorkspacesSettings = Record<string, unknown>;
+
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRecipes = Record<string, unknown>;
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedMiscellaneousRecipes = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipes = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRootPackageJsonRecipes = Record<string, Record<string, unknown>>;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipeNames = string[];
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDependencies = Record<string, unknown>;
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies = Record<string, unknown>;
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedScripts = Record<string, unknown>;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipeName = string;
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipe = Record<string, unknown> | undefined;
 
 /**
  * Tests - Scaffold Output Contract - Verify Template Contract.

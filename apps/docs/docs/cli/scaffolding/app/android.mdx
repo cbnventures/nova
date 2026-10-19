@@ -99,6 +99,6 @@ nova scaffold app android --non-interactive --workspace-name mobile --applicatio
 
 ## Registration and Failure Safety
 
-Nova registers the workspace with the `app` role and `trackable` policy only after every Nova-owned native and workspace file is written successfully. If generation fails, Nova does not record a partially prepared workspace.
+Nova registers the workspace with the `app` role and `trackable` policy only after every Nova-owned native and workspace file is written successfully, then adds `android` and `kotlin` to the root `project.platforms` list without removing existing entries. If generation fails, Nova does not record a partially prepared workspace.
 
 The package name follows `{projectSlug}-app-{workspaceName}`. The Android application ID defaults to `com.example.{normalizedWorkspaceName}` unless you provide `--application-id`.

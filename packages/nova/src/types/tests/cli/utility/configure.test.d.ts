@@ -141,6 +141,20 @@ export type Tests_Cli_Utility_Configure_CliUtilityConfigureIsNonEmptyLiteralInpu
 export type Tests_Cli_Utility_Configure_CliUtilityConfigureIsNonEmptyLiteralInput_ReturnsTrueForANonEmptyString_Result = true | string;
 
 /**
+ * Tests - CLI - Utility - Configure - Is Optional Workflow Timeout Input - Accepts Blank Input And Whole Numbers From 1 Through 360.
+ *
+ * @since 0.33.0
+ */
+export type Tests_Cli_Utility_Configure_CliUtilityConfigureIsOptionalWorkflowTimeoutInput_AcceptsBlankInputAndWholeNumbersFrom1Through360_Result = (true | string)[];
+
+/**
+ * Tests - CLI - Utility - Configure - Is Optional Workflow Timeout Input - Rejects Values Outside The Supported GitHub Range.
+ *
+ * @since 0.33.0
+ */
+export type Tests_Cli_Utility_Configure_CliUtilityConfigureIsOptionalWorkflowTimeoutInput_RejectsValuesOutsideTheSupportedGitHubRange_Result = (true | string)[];
+
+/**
  * Tests - CLI - Utility - Configure - Run.
  *
  * @since 0.14.0
@@ -389,6 +403,23 @@ export type Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystem
 export type Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Result = Awaited<Cli_Utility_Configure_Runner_PromptRecipes_Returns>;
 
 export type Tests_Cli_Utility_Configure_PromptRecipes_EditsClosedOperatingSystemCleanupSettings_Recipes = Shared_NovaConfig_Recipes | undefined;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Recipes - Edits Nova Config Recipe Toggles.
+ *
+ * @since 0.33.0
+ */
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Responses = Record<string, unknown>[];
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Next = Record<string, unknown> | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_PromptRecipes = (config: Cli_Utility_Configure_Runner_PromptRecipes_Config) => Cli_Utility_Configure_Runner_PromptRecipes_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Result = Awaited<Cli_Utility_Configure_Runner_PromptRecipes_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptRecipes_EditsNovaConfigRecipeToggles_Recipes = Shared_NovaConfig_Recipes | undefined;
 
 /**
  * Tests - CLI - Utility - Configure - Prompt Recipes - Edits Recipe Settings Without Dropping Other Categories.

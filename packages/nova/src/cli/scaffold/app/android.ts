@@ -128,6 +128,10 @@ export class Runner {
       category: 'app',
       displayName: 'Android',
       importMetaUrl: import.meta.url,
+      platforms: [
+        'android',
+        'kotlin',
+      ],
       resolvePresentationOptions: (workspaceName) => [{
         flag: '--application-id',
         value: Runner.resolveApplicationId(workspaceName, options['applicationId']),

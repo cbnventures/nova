@@ -152,8 +152,8 @@ Environment variables and secrets live in the top-level [`environment`](/docs/qu
 ### Workflows
 
 - **Purpose**: Manage the list of GitHub Actions workflow templates that the [workflow generator](/docs/cli/generators/github/workflows) reads from at generation time.
-- **Nice to know**: The menu lists existing workflow entries with **Edit** and **Remove** actions alongside an **Add** option and a **Back** option to return to the category menu. When adding or editing, the wizard prompts for a template, name, trigger filters, build scopes, deployment targets, target ordering, target settings, and workflow settings. Existing custom template and target names remain selectable so opening the wizard never replaces or drops them.
-- **Things to watch**: The name must be unique within the same template so the output filenames remain distinct. Upstream choices use another workflow's `{template}-{name}` key. Multiple upstream choices are alternatives: any one completion can start this workflow; the wizard does not create a wait-for-all chain.
+- **Nice to know**: The menu lists existing workflow entries with **Edit** and **Remove** actions alongside an **Add** option and a **Back** option to return to the category menu. When adding or editing, the wizard prompts for a template, name, runner, optional timeout, trigger filters, build scopes, deployment targets, target ordering, target settings, and workflow settings. Existing custom template and target names remain selectable so opening the wizard never replaces or drops them.
+- **Things to watch**: `runsOn` currently offers only `ubuntu-latest`. Enter a whole number from `1` through `360` for `timeoutMinutes`, or leave it blank to preserve each generated job's template timeout. The name must be unique within the same template so the output filenames remain distinct. Upstream choices use another workflow's `{template}-{name}` key. Multiple upstream choices are alternatives: any one completion can start this workflow; the wizard does not create a wait-for-all chain.
 
 :::note Multiline values
 The interactive prompt is single-line. To include line breaks in a setting value (e.g., issue messages with paragraphs), type `\n` where you want a newline.
@@ -187,8 +187,8 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 
 ### Recipes
 
-- **Purpose**: Configure all GitHub, license, miscellaneous, README, and per-workspace `package.json` recipes from one category.
-- **Nice to know**: Each recipe has an `enabled` toggle. Generic recipe settings remain editable through a validated prompt, while closed recipes such as `remove-operating-system-files` present only Nova's reviewed platform and file choices.
+- **Purpose**: Configure all GitHub, license, miscellaneous, Nova config, README, and per-workspace `package.json` recipes from one category.
+- **Nice to know**: Each recipe has an individual `enabled` toggle, including `fix-markdown-tables` and `normalize-order`. Generic recipe settings remain editable through a validated prompt, while closed recipes such as `remove-operating-system-files` present only Nova's reviewed platform and file choices.
 - **Things to watch**: `package-json` recipes are scoped by workspace path. The menu includes registered workspaces plus any existing recipe path, so temporarily unregistered paths are preserved and remain editable. Cleanup recipes do not accept arbitrary paths or patterns.
 
 ### Environment
@@ -199,8 +199,8 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
 
 ### Settings
 
-- **Purpose**: Select the project's release strategy, lock-step versioning behavior, and verified local workspace-cache settings.
-- **Nice to know**: With no release history, you can revisit this category and change SemVer (`major.minor.patch`) to CalVer (`YYYY.MM.MICRO`) or back. Lock-step versioning and the cache enabled state, project-relative directory, and exact eligible script names remain editable independently at any time.
+- **Purpose**: Select the project's release strategy, lock-step versioning behavior, per-script workspace concurrency, and verified local cache settings.
+- **Nice to know**: With no release history, you can revisit this category and change SemVer (`major.minor.patch`) to CalVer (`YYYY.MM.MICRO`) or back. Workspace limits, lock-step versioning, and every cache setting remain editable independently at any time.
 - **Things to watch**: Once the root or any non-freezable workspace changelog contains a release heading, Nova detects that history and makes only the version strategy read-only. A configured mismatch, mixed strategies, or an unsupported numeric heading stops configuration and identifies the affected changelog.
 
 ## Saving and Canceling
@@ -347,6 +347,12 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
     "license": {
       "update-copyright": { "enabled": true }
     },
+    "miscellaneous": {
+      "fix-markdown-tables": { "enabled": true }
+    },
+    "nova-config": {
+      "normalize-order": { "enabled": true }
+    },
     "read-me": {
       "update-badges": { "enabled": true },
       "update-credits": { "enabled": true }
@@ -414,6 +420,11 @@ If your repository already has a hand-maintained `.gitignore`, open the **Ignore
         "directory": "./node_modules/.cache/nova/run-workspaces",
         "enabled": true,
         "scripts": ["build", "check"]
+      },
+      "concurrency": {
+        "build": 2,
+        "check": 2,
+        "deploy": 2
       }
     },
     "versionStrategy": "semver"

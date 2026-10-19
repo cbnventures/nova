@@ -188,6 +188,25 @@ export type Tests_Lib_Scaffold_WorkspaceContract_DerivesNonOverlappingEnvironmen
 export type Tests_Lib_Scaffold_WorkspaceContract_DerivesRoleBasedPackageNames_Returns = void;
 
 /**
+ * Tests - Lib - Scaffold - Workspace Contract - Merges Required Platforms When Registering Workspaces.
+ *
+ * @since 0.33.0
+ */
+export type Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ProjectDirectory = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_WorkspaceDirectory = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ConfigPath = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ConfigContents = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_ConfigRaw = string;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_Config = Record<string, unknown>;
+
+export type Tests_Lib_Scaffold_WorkspaceContract_MergesRequiredPlatformsWhenRegisteringWorkspaces_Project = Record<string, unknown>;
+
+/**
  * Tests - Lib - Scaffold - Workspace Contract - Normalizes Only Workspace Paths Inside The Root.
  *
  * @since 0.26.0

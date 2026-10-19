@@ -1,0 +1,90 @@
+---
+id: "normalize-order"
+title: "Normalize Order"
+description: "Normalize the top-level nova.config.json key order without changing configured values."
+keywords:
+  - "nova"
+  - "nova config"
+  - "normalize order"
+  - "recipe"
+tags:
+  - "cli"
+  - "normalize-order"
+  - "recipe"
+  - "nova-config"
+---
+
+Normalize the top-level key order in `nova.config.json` while preserving all configured values.
+
+## Summary
+
+The `normalize-order` recipe applies the same canonical top-level sequence produced by `nova utility configure` and Nova scaffolds. It does not parse the file through Nova's configuration schema, so nested data and unrecognized top-level keys are preserved exactly as JSON values.
+
+Recognized sections are ordered as follows:
+
+1. `project`
+2. `entities`
+3. `emails`
+4. `github`
+5. `workflows`
+6. `urls`
+7. `readme`
+8. `workspaces`
+9. `ignoreFiles`
+10. `agents`
+11. `recipes`
+12. `environment`
+13. `settings`
+
+Unrecognized top-level keys follow the recognized sections in their existing relative order.
+
+## Why Use This Command?
+
+1. Keeps every Nova configuration visually consistent without changing its configured behavior.
+2. Applies the same top-level order used by the interactive configuration utility and new scaffolds.
+3. Preserves nested data and unrecognized top-level keys instead of coercing the file through Nova's schema.
+
+## Requirements
+
+- **Node.js runtime** — Use a supported Node.js LTS release with the Nova CLI available.
+- **Project config** — Run the command from a project root containing a readable `nova.config.json` object.
+- **Recipe toggle** — Set `recipes.nova-config.normalize-order.enabled` to `true`.
+
+```json title="nova.config.json"
+{
+  "recipes": {
+    "nova-config": {
+      "normalize-order": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+## Usage
+
+```shell
+nova recipe nova-config normalize-order
+```
+
+Use `--replace-file` to update the existing file without creating a dated Nova backup:
+
+```shell
+nova recipe nova-config normalize-order --replace-file
+```
+
+Preview whether normalization is needed without writing files:
+
+```shell
+nova recipe nova-config normalize-order --dry-run
+```
+
+The recipe is also included in `nova utility run-recipes` when its individual toggle is enabled.
+
+## Options
+
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview whether normalization is needed without writing any files.     |
+| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |
