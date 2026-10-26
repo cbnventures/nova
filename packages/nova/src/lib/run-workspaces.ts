@@ -19,17 +19,25 @@ import { isPlainObject } from './utility.js';
 import type {
   Lib_RunWorkspaces_Runner_AddRootTasks_IsParallel,
   Lib_RunWorkspaces_Runner_AddRootTasks_Key,
+  Lib_RunWorkspaces_Runner_AddRootTasks_PendingPrerequisiteKeys,
   Lib_RunWorkspaces_Runner_AddRootTasks_Prefix,
+  Lib_RunWorkspaces_Runner_AddRootTasks_PrerequisiteTask,
   Lib_RunWorkspaces_Runner_AddRootTasks_PreviousKey,
   Lib_RunWorkspaces_Runner_AddRootTasks_Returns,
   Lib_RunWorkspaces_Runner_AddRootTasks_Root,
+  Lib_RunWorkspaces_Runner_AddRootTasks_RootDependencyBuildKey,
+  Lib_RunWorkspaces_Runner_AddRootTasks_RootDependencyWorkspace,
+  Lib_RunWorkspaces_Runner_AddRootTasks_RootPrerequisiteKeys,
   Lib_RunWorkspaces_Runner_AddRootTasks_RootScriptCommand,
   Lib_RunWorkspaces_Runner_AddRootTasks_RootScriptName,
   Lib_RunWorkspaces_Runner_AddRootTasks_Script,
   Lib_RunWorkspaces_Runner_AddRootTasks_Task,
   Lib_RunWorkspaces_Runner_AddRootTasks_Tasks,
+  Lib_RunWorkspaces_Runner_AddRootTasks_TypedPrerequisiteDependencyKey,
+  Lib_RunWorkspaces_Runner_AddRootTasks_TypedRootDependencyName,
   Lib_RunWorkspaces_Runner_AddRootTasks_TypedRootScriptEntry,
   Lib_RunWorkspaces_Runner_AddRootTasks_WorkspaceKeys,
+  Lib_RunWorkspaces_Runner_AddRootTasks_Workspaces,
   Lib_RunWorkspaces_Runner_AddRootTasks_WorkspaceTask,
   Lib_RunWorkspaces_Runner_AddTask_DependencyBuildKey,
   Lib_RunWorkspaces_Runner_AddTask_DependencyWorkspace,
@@ -160,6 +168,7 @@ import type {
   Lib_RunWorkspaces_Runner_LoadProject_PackageManagerDescriptor,
   Lib_RunWorkspaces_Runner_LoadProject_Returns,
   Lib_RunWorkspaces_Runner_LoadProject_Root,
+  Lib_RunWorkspaces_Runner_LoadProject_RootInternalDependencies,
   Lib_RunWorkspaces_Runner_LoadProject_RootName,
   Lib_RunWorkspaces_Runner_LoadProject_RootOrder,
   Lib_RunWorkspaces_Runner_LoadProject_RootScripts,
@@ -349,7 +358,7 @@ export class Runner {
       const plan: Lib_RunWorkspaces_Runner_Run_Plan = Runner.buildPlan(project['workspaces'], selectedWorkspaces, task);
 
       if (project['root'] !== undefined && rootSelection['includeRoot'] === true) {
-        Runner.addRootTasks(plan['tasks'], project['root'], task);
+        Runner.addRootTasks(plan['tasks'], project['workspaces'], project['root'], task);
       }
       const orderedTasks: Lib_RunWorkspaces_Runner_Run_OrderedTasks = Runner.sortTasks(plan['tasks']);
 
@@ -556,6 +565,7 @@ export class Runner {
     }
 
     const rootName: Lib_RunWorkspaces_Runner_LoadProject_RootName = (typeof packageJson['name'] === 'string' && packageJson['name'].length > 0) ? packageJson['name'] : './';
+    const rootInternalDependencies: Lib_RunWorkspaces_Runner_LoadProject_RootInternalDependencies = Runner.getDependencyNames(packageJson).filter((dependencyName) => workspaces.has(dependencyName));
 
     // A run started from inside the tree, or by a legacy "<task>:workspaces" script, must not
     // add the root again, or its steps would run twice.
@@ -568,7 +578,7 @@ export class Runner {
       directory: currentDirectory,
       name: rootName,
       scripts: rootScripts,
-      dependencies: [],
+      dependencies: rootInternalDependencies,
     };
 
     return {
@@ -802,12 +812,14 @@ export class Runner {
   /**
    * Lib - Run Workspaces - Add Root Tasks.
    *
-   * Adds the root node's own "<script>:*" steps in package.json order. Sequential
-   * lifecycles chain them and make every workspace task wait for the last one.
+   * Adds the root node's own "<script>:*" steps in package.json order. Root
+   * checks and builds wait for internal dependency builds. Sequential lifecycles
+   * then make every remaining workspace task wait for the last root step.
    *
-   * @param {Lib_RunWorkspaces_Runner_AddRootTasks_Tasks}  tasks  - Tasks.
-   * @param {Lib_RunWorkspaces_Runner_AddRootTasks_Root}   root   - Root.
-   * @param {Lib_RunWorkspaces_Runner_AddRootTasks_Script} script - Script.
+   * @param {Lib_RunWorkspaces_Runner_AddRootTasks_Tasks}      tasks      - Tasks.
+   * @param {Lib_RunWorkspaces_Runner_AddRootTasks_Workspaces} workspaces - Workspaces.
+   * @param {Lib_RunWorkspaces_Runner_AddRootTasks_Root}       root       - Root.
+   * @param {Lib_RunWorkspaces_Runner_AddRootTasks_Script}     script     - Script.
    *
    * @private
    *
@@ -815,10 +827,47 @@ export class Runner {
    *
    * @since 0.34.0
    */
-  private static addRootTasks(tasks: Lib_RunWorkspaces_Runner_AddRootTasks_Tasks, root: Lib_RunWorkspaces_Runner_AddRootTasks_Root, script: Lib_RunWorkspaces_Runner_AddRootTasks_Script): Lib_RunWorkspaces_Runner_AddRootTasks_Returns {
+  private static addRootTasks(tasks: Lib_RunWorkspaces_Runner_AddRootTasks_Tasks, workspaces: Lib_RunWorkspaces_Runner_AddRootTasks_Workspaces, root: Lib_RunWorkspaces_Runner_AddRootTasks_Root, script: Lib_RunWorkspaces_Runner_AddRootTasks_Script): Lib_RunWorkspaces_Runner_AddRootTasks_Returns {
     const prefix: Lib_RunWorkspaces_Runner_AddRootTasks_Prefix = `${script}:`;
     const isParallel: Lib_RunWorkspaces_Runner_AddRootTasks_IsParallel = script === 'dev' || script === 'clean';
-    const workspaceKeys: Lib_RunWorkspaces_Runner_AddRootTasks_WorkspaceKeys = [...tasks.keys()];
+    const rootPrerequisiteKeys: Lib_RunWorkspaces_Runner_AddRootTasks_RootPrerequisiteKeys = new Set();
+
+    if (script === 'check' || script === 'build') {
+      for (const rootDependencyName of root['dependencies']) {
+        const typedRootDependencyName: Lib_RunWorkspaces_Runner_AddRootTasks_TypedRootDependencyName = rootDependencyName;
+        const rootDependencyWorkspace: Lib_RunWorkspaces_Runner_AddRootTasks_RootDependencyWorkspace = workspaces.get(typedRootDependencyName);
+
+        if (rootDependencyWorkspace === undefined) {
+          continue;
+        }
+
+        const rootDependencyBuildKey: Lib_RunWorkspaces_Runner_AddRootTasks_RootDependencyBuildKey = Runner.addTask(tasks, workspaces, rootDependencyWorkspace, 'build');
+
+        if (rootDependencyBuildKey === undefined) {
+          continue;
+        }
+
+        const pendingPrerequisiteKeys: Lib_RunWorkspaces_Runner_AddRootTasks_PendingPrerequisiteKeys = new Set([rootDependencyBuildKey]);
+
+        for (const prerequisiteKey of pendingPrerequisiteKeys) {
+          rootPrerequisiteKeys.add(prerequisiteKey);
+
+          const prerequisiteTask: Lib_RunWorkspaces_Runner_AddRootTasks_PrerequisiteTask = tasks.get(prerequisiteKey);
+
+          if (prerequisiteTask === undefined) {
+            continue;
+          }
+
+          for (const prerequisiteDependencyKey of prerequisiteTask['dependencies']) {
+            const typedPrerequisiteDependencyKey: Lib_RunWorkspaces_Runner_AddRootTasks_TypedPrerequisiteDependencyKey = prerequisiteDependencyKey;
+
+            pendingPrerequisiteKeys.add(typedPrerequisiteDependencyKey);
+          }
+        }
+      }
+    }
+
+    const workspaceKeys: Lib_RunWorkspaces_Runner_AddRootTasks_WorkspaceKeys = [...tasks.keys()].filter((workspaceKey) => rootPrerequisiteKeys.has(workspaceKey) === false);
     let previousKey: Lib_RunWorkspaces_Runner_AddRootTasks_PreviousKey = undefined;
 
     for (const rootScriptEntry of Object.entries(root['scripts'])) {
@@ -843,7 +892,7 @@ export class Runner {
         command: rootScriptCommand,
         workspaceName: root['name'],
         directory: root['directory'],
-        dependencies: new Set(),
+        dependencies: new Set((previousKey === undefined) ? rootPrerequisiteKeys : []),
         cacheable: false,
       };
 

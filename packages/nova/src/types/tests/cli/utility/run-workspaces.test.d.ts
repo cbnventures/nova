@@ -103,6 +103,13 @@ export type Tests_Cli_Utility_RunWorkspaces_IndependentOutput = string;
 export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsInternalDependenciesBeforeASelectedWorkspaceCheck_Returns = Promise<void>;
 
 /**
+ * Tests - CLI - Utility - Run Workspaces - Run - Builds Root Dependencies Before Root Steps And Workspace Tasks.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsRootDependenciesBeforeRootStepsAndWorkspaceTasks_Returns = Promise<void>;
+
+/**
  * Tests - CLI - Utility - Run Workspaces - Run - Continues Independent Tasks And Blocks Dependents After Failure.
  *
  * @since 0.32.0
@@ -179,13 +186,6 @@ export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RejectsAnUnknown
  * @since 0.32.0
  */
 export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RejectsInternalDependencyCyclesBeforeExecutingTasks_Returns = Promise<void>;
-
-/**
- * Tests - CLI - Utility - Run Workspaces - Run - Runs Root Steps Before Workspace Tasks.
- *
- * @since 0.34.0
- */
-export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RunsRootStepsBeforeWorkspaceTasks_Returns = Promise<void>;
 
 /**
  * Tests - CLI - Utility - Run Workspaces - Run - Skips The Root Inside A Nested Run.

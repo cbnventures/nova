@@ -13,6 +13,7 @@
 - Updated pre-release SemVer and CalVer strategy changes to migrate workspace versions, exact internal dependency pins, and native version mirrors together, while blocking changes after release history or with pending changelog entries.
 
 ### FIXED
+- Built root workspace dependencies before root checks and builds, preventing clean environments from loading unbuilt local packages while preserving root-first ordering for unrelated workspaces.
 - Corrected generated agent documentation conventions to import Nova rules from the public ESLint preset entry point.
 - Clarified generated documentation conventions so standalone Docusaurus pages place their visible H1 title before the opening paragraph while documentation pages continue using synthesized titles.
 - Corrected CalVer releases to keep `.0` for the first release in a UTC month, increment MICRO for later releases in that month, reset MICRO when the month changes, and reject unsafe numeric overflow.

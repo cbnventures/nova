@@ -40,6 +40,8 @@ import type {
  */
 export type Lib_RunWorkspaces_Runner_AddRootTasks_Tasks = Map<string, Shared_RunWorkspacesTask>;
 
+export type Lib_RunWorkspaces_Runner_AddRootTasks_Workspaces = Map<string, Shared_RunWorkspacesWorkspace>;
+
 export type Lib_RunWorkspaces_Runner_AddRootTasks_Root = Shared_RunWorkspacesWorkspace;
 
 export type Lib_RunWorkspaces_Runner_AddRootTasks_Script = string;
@@ -49,6 +51,20 @@ export type Lib_RunWorkspaces_Runner_AddRootTasks_Returns = void;
 export type Lib_RunWorkspaces_Runner_AddRootTasks_Prefix = string;
 
 export type Lib_RunWorkspaces_Runner_AddRootTasks_IsParallel = boolean;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_RootPrerequisiteKeys = Set<string>;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_TypedRootDependencyName = string;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_RootDependencyWorkspace = Shared_RunWorkspacesWorkspace | undefined;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_RootDependencyBuildKey = string | undefined;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_PendingPrerequisiteKeys = Set<string>;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_PrerequisiteTask = Shared_RunWorkspacesTask | undefined;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_TypedPrerequisiteDependencyKey = string;
 
 export type Lib_RunWorkspaces_Runner_AddRootTasks_WorkspaceKeys = string[];
 
@@ -437,6 +453,8 @@ export type Lib_RunWorkspaces_Runner_LoadProject_RootScripts = Record<string, st
 export type Lib_RunWorkspaces_Runner_LoadProject_TypedRootScriptEntry = [string, unknown];
 
 export type Lib_RunWorkspaces_Runner_LoadProject_RootName = string;
+
+export type Lib_RunWorkspaces_Runner_LoadProject_RootInternalDependencies = string[];
 
 export type Lib_RunWorkspaces_Runner_LoadProject_IsNestedRun = boolean;
 

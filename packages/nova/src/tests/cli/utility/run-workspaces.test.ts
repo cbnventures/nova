@@ -48,6 +48,7 @@ import type {
   Tests_Cli_Utility_RunWorkspaces_IndependentOutputPath,
   Tests_Cli_Utility_RunWorkspaces_Infos,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsInternalDependenciesBeforeASelectedWorkspaceCheck_Returns,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsRootDependenciesBeforeRootStepsAndWorkspaceTasks_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_ContinuesIndependentTasksAndBlocksDependentsAfterFailure_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_ContinuesIndependentTasksAndBlocksDependentsAfterFailure_WorkspacePackageJsonContents,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_DoesNotCacheFailedTasks_Returns,
@@ -62,7 +63,6 @@ import type {
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_PreviewsAWorkspaceTaskGraphWithoutExecutingScripts_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RejectsAnUnknownWorkspaceBeforeExecutingTasks_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RejectsInternalDependencyCyclesBeforeExecutingTasks_Returns,
-  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RunsRootStepsBeforeWorkspaceTasks_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_SkipsTheRootInsideANestedRun_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_SkipsTheRootWhenConfiguredTo_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_StopsSchedulingPendingTasksAfterInterruption_ExitCode,
@@ -982,17 +982,22 @@ describe('LibRunWorkspaces.run', async () => {
     return;
   });
 
-  it('runs root steps before workspace tasks', async (): Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RunsRootStepsBeforeWorkspaceTasks_Returns => {
+  it('builds root dependencies before root steps and workspace tasks', async (): Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_BuildsRootDependenciesBeforeRootStepsAndWorkspaceTasks_Returns => {
     const projectRoot: Tests_Cli_Utility_RunWorkspaces_ProjectRoot = join(sandboxRoot, 'root-runsRootStepsBeforeWorkspaceTasks');
+    const coreDirectory: Tests_Cli_Utility_RunWorkspaces_CoreDirectory = join(projectRoot, 'packages', 'core');
     const appDirectory: Tests_Cli_Utility_RunWorkspaces_AppDirectory = join(projectRoot, 'apps', 'app');
     const errors: Tests_Cli_Utility_RunWorkspaces_Errors = [];
 
+    await mkdir(coreDirectory, { recursive: true });
     await mkdir(appDirectory, { recursive: true });
 
     const packageJsonContents: Tests_Cli_Utility_RunWorkspaces_PackageJsonContents = JSON.stringify({
       name: 'workspace-project',
       private: true,
       packageManager: 'npm@11.18.0',
+      dependencies: {
+        '@example/core': 'workspace:*',
+      },
       scripts: {
         'check': 'nova utility run-workspaces check',
         'check:lint': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-lint\' + String.fromCharCode(10))"',
@@ -1013,11 +1018,22 @@ describe('LibRunWorkspaces.run', async () => {
           role: 'project',
           policy: 'freezable',
         },
+        './packages/core': {
+          name: '@example/core',
+          role: 'package',
+          policy: 'distributable',
+        },
         './apps/app': {
           name: '@example/app',
           role: 'package',
           policy: 'distributable',
         },
+      },
+    }, null, 2);
+    const corePackageJsonContents: Tests_Cli_Utility_RunWorkspaces_CorePackageJsonContents = JSON.stringify({
+      name: '@example/core',
+      scripts: {
+        build: 'node -e "require(\'node:fs\').appendFileSync(\'../../order.txt\', \'core-build\' + String.fromCharCode(10))"',
       },
     }, null, 2);
     const appPackageJsonContents: Tests_Cli_Utility_RunWorkspaces_AppPackageJsonContents = JSON.stringify({
@@ -1029,6 +1045,7 @@ describe('LibRunWorkspaces.run', async () => {
 
     await writeFile(join(projectRoot, 'package.json'), `${packageJsonContents}\n`, 'utf-8');
     await writeFile(join(projectRoot, 'nova.config.json'), `${novaConfigContents}\n`, 'utf-8');
+    await writeFile(join(coreDirectory, 'package.json'), `${corePackageJsonContents}\n`, 'utf-8');
     await writeFile(join(appDirectory, 'package.json'), `${appPackageJsonContents}\n`, 'utf-8');
 
     process.chdir(projectRoot);
@@ -1042,7 +1059,7 @@ describe('LibRunWorkspaces.run', async () => {
       excludeWorkspace: undefined,
       nodeEnv: undefined,
       scriptArgs: undefined,
-      workspace: undefined,
+      workspace: ['@example/app'],
       printError: (message) => {
         errors.push(message);
 
@@ -1076,6 +1093,7 @@ describe('LibRunWorkspaces.run', async () => {
     const output: Tests_Cli_Utility_RunWorkspaces_Output = await readFile(outputPath, 'utf-8');
 
     strictEqual(output, [
+      'core-build',
       'root-lint',
       'root-types',
       'app-check',

@@ -36,7 +36,7 @@ Nova applies lifecycle prerequisites consistently:
 
 The root `package.json` is the top of the tree. Each lifecycle script there calls `run-workspaces`, such as `"check": "nova utility run-workspaces check"`, and the root's own work lives in child steps such as `check:lint` and `check:test`.
 
-- **Order** — For `check`, `build`, `prod`, and `deploy`, the root's `<script>:*` steps run first, one at a time in `package.json` order, and every workspace task waits for them. For `dev` and `clean`, they run alongside the workspaces.
+- **Order** — For `check` and `build`, Nova first builds any internal workspace packages used by the root. The root's `<script>:*` steps then run one at a time in `package.json` order before the remaining workspace tasks. For `prod` and `deploy`, the root steps still precede every workspace task. For `dev` and `clean`, they run alongside the workspaces.
 - **Filtering** — `--workspace` keeps the root. Pass `--workspace ./` to run only the root, or `--exclude-workspace ./` (or the root package name) to leave it out.
 - **Caching** — Root steps read the whole repository, so they always run and are never cached. Workspace tasks still cache normally.
 - **Skipping** — Set `settings.runWorkspaces.root` to `"skip"` to leave the root out of every run.
