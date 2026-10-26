@@ -9,6 +9,7 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { stripVTControlCharacters } from 'node:util';
 
 import { afterAll, describe, it } from 'vitest';
 
@@ -51,6 +52,7 @@ import type {
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_ProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PreservesTheInheritedEnvironmentWhenNodeEnvIsOmitted_RealProjectRoot,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_CapturedOutput,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_CapturedOutputWithoutControlCharacters,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_CapturedWrites,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_ChunkString,
   Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_ExpectedColoredHelloA,
@@ -442,16 +444,17 @@ describe('CliUtilityRunScripts.run', async () => {
     strictEqual(process.exitCode, undefined);
 
     const capturedOutput: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_CapturedOutput = capturedWrites.join('');
+    const capturedOutputWithoutControlCharacters: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_CapturedOutputWithoutControlCharacters = stripVTControlCharacters(capturedOutput);
     const expectedColoredHelloA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_ExpectedColoredHelloA = `${String.fromCharCode(27)}[35mhello-a${String.fromCharCode(27)}[39m`;
 
-    const includesTaskA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesTaskA = capturedOutput.includes('[task:a]');
-    const includesTaskB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesTaskB = capturedOutput.includes('[task:b]');
-    const includesHelloA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesHelloA = capturedOutput.includes('hello-a');
-    const includesHelloB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesHelloB = capturedOutput.includes('hello-b');
-    const includesOpeningSectionA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesOpeningSectionA = capturedOutput.includes('┌─ task:a ──');
-    const includesOpeningSectionB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesOpeningSectionB = capturedOutput.includes('┌─ task:b ──');
-    const includesClosingSectionA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesClosingSectionA = capturedOutput.includes('└─ task:a ── ✔');
-    const includesClosingSectionB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesClosingSectionB = capturedOutput.includes('└─ task:b ── ✔');
+    const includesTaskA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesTaskA = capturedOutputWithoutControlCharacters.includes('[task:a]');
+    const includesTaskB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesTaskB = capturedOutputWithoutControlCharacters.includes('[task:b]');
+    const includesHelloA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesHelloA = capturedOutputWithoutControlCharacters.includes('hello-a');
+    const includesHelloB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesHelloB = capturedOutputWithoutControlCharacters.includes('hello-b');
+    const includesOpeningSectionA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesOpeningSectionA = capturedOutputWithoutControlCharacters.includes('┌─ task:a ──');
+    const includesOpeningSectionB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesOpeningSectionB = capturedOutputWithoutControlCharacters.includes('┌─ task:b ──');
+    const includesClosingSectionA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesClosingSectionA = capturedOutputWithoutControlCharacters.includes('└─ task:a ── ✔');
+    const includesClosingSectionB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesClosingSectionB = capturedOutputWithoutControlCharacters.includes('└─ task:b ── ✔');
     const includesColoredHelloA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProducesPrefixedOutputInParallelMode_IncludesColoredHelloA = capturedOutput.includes(expectedColoredHelloA);
 
     strictEqual(includesTaskA, true);
@@ -516,8 +519,8 @@ describe('CliUtilityRunScripts.run', async () => {
       process.stderr.write = originalStderrWrite;
     }
 
-    strictEqual(capturedStdout.join('').includes('[task:streams] out-part'), true);
-    strictEqual(capturedStderr.join('').includes('[task:streams] err-part'), true);
+    strictEqual(stripVTControlCharacters(capturedStdout.join('')).includes('[task:streams] out-part'), true);
+    strictEqual(stripVTControlCharacters(capturedStderr.join('')).includes('[task:streams] err-part'), true);
     strictEqual(process.listenerCount('SIGINT'), originalSigintListeners);
     strictEqual(process.listenerCount('SIGTERM'), originalSigtermListeners);
 
@@ -649,7 +652,7 @@ describe('CliUtilityRunScripts.run', async () => {
       process.stderr.write = originalStderrWrite;
     }
 
-    const summary: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_Summary = capturedStderr.join('');
+    const summary: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SummarizesEveryParallelFailure_Summary = stripVTControlCharacters(capturedStderr.join(''));
 
     strictEqual(summary.includes('Failed scripts:'), true);
     strictEqual(summary.includes('task:first — exit code 2'), true);

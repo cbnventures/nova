@@ -1,0 +1,145 @@
+import type { Runner as ApiGooglePlayConsole } from '../../../api/google-play-console.js';
+import type {
+  Shared_GooglePlayConsoleIntegrationOptions,
+  Shared_GooglePlayConsoleWorkspaceContext,
+  Shared_IntegrationAssetFile,
+  Shared_IntegrationAssetTarget,
+  Shared_IntegrationMetadataTarget,
+  Shared_IntegrationWorkspace,
+} from '../../shared.d.ts';
+
+export type Cli_Integration_GooglePlayConsole_Runner_CreateClient_Context = Shared_GooglePlayConsoleWorkspaceContext;
+
+export type Cli_Integration_GooglePlayConsole_Runner_CreateClient_Returns = ApiGooglePlayConsole;
+
+export type Cli_Integration_GooglePlayConsole_Runner_FilterAssetTargets_Targets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_FilterAssetTargets_Options = Shared_GooglePlayConsoleIntegrationOptions;
+
+export type Cli_Integration_GooglePlayConsole_Runner_FilterAssetTargets_Returns = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_FilterAssetTargets_Locales = string[] | undefined;
+
+export type Cli_Integration_GooglePlayConsole_Runner_FilterMetadataTargets_Targets = Shared_IntegrationMetadataTarget[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_FilterMetadataTargets_Options = Shared_GooglePlayConsoleIntegrationOptions;
+
+export type Cli_Integration_GooglePlayConsole_Runner_FilterMetadataTargets_Returns = Shared_IntegrationMetadataTarget[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_FilterMetadataTargets_Locales = string[] | undefined;
+
+export type Cli_Integration_GooglePlayConsole_Runner_GraphicAssets_Options = Shared_GooglePlayConsoleIntegrationOptions;
+
+export type Cli_Integration_GooglePlayConsole_Runner_GraphicAssets_Returns = Promise<void>;
+
+export type Cli_Integration_GooglePlayConsole_Runner_GraphicAssets_Context = Shared_GooglePlayConsoleWorkspaceContext;
+
+export type Cli_Integration_GooglePlayConsole_Runner_GraphicAssets_Directory = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_GraphicAssets_CollectedTargets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_GraphicAssets_Targets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_GraphicAssets_Lines = string[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_GraphicAssets_File = Shared_IntegrationAssetFile | undefined;
+
+export type Cli_Integration_GooglePlayConsole_Runner_GraphicAssets_FileName = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_GraphicAssets_Client = ApiGooglePlayConsole;
+
+export type Cli_Integration_GooglePlayConsole_Runner_GraphicAssets_EditId = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_Metadata_Options = Shared_GooglePlayConsoleIntegrationOptions;
+
+export type Cli_Integration_GooglePlayConsole_Runner_Metadata_Returns = Promise<void>;
+
+export type Cli_Integration_GooglePlayConsole_Runner_Metadata_Context = Shared_GooglePlayConsoleWorkspaceContext;
+
+export type Cli_Integration_GooglePlayConsole_Runner_Metadata_Directory = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_Metadata_CollectedTargets = Shared_IntegrationMetadataTarget[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_Metadata_Targets = Shared_IntegrationMetadataTarget[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_Metadata_Lines = string[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_Metadata_Client = ApiGooglePlayConsole;
+
+export type Cli_Integration_GooglePlayConsole_Runner_Metadata_EditId = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_PrepareWorkspace_Options = Shared_GooglePlayConsoleIntegrationOptions;
+
+export type Cli_Integration_GooglePlayConsole_Runner_PrepareWorkspace_Returns = Promise<Shared_GooglePlayConsoleWorkspaceContext>;
+
+export type Cli_Integration_GooglePlayConsole_Runner_PrepareWorkspace_Workspace = Shared_IntegrationWorkspace;
+
+export type Cli_Integration_GooglePlayConsole_Runner_PrepareWorkspace_PackageName = string | undefined;
+
+export type Cli_Integration_GooglePlayConsole_Runner_PrepareWorkspace_BuildFilePath = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_PrepareWorkspace_BuildFile = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_PrepareWorkspace_Lines = string[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_PrepareWorkspace_ApplicationIdPrefix = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_PrepareWorkspace_ApplicationIdLine = string | undefined;
+
+export type Cli_Integration_GooglePlayConsole_Runner_ReplaceImages_Client = ApiGooglePlayConsole;
+
+export type Cli_Integration_GooglePlayConsole_Runner_ReplaceImages_EditId = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_ReplaceImages_Target = Shared_IntegrationAssetTarget;
+
+export type Cli_Integration_GooglePlayConsole_Runner_ReplaceImages_Returns = Promise<void>;
+
+export type Cli_Integration_GooglePlayConsole_Runner_RollbackEdit_Client = ApiGooglePlayConsole;
+
+export type Cli_Integration_GooglePlayConsole_Runner_RollbackEdit_EditId = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_RollbackEdit_Returns = Promise<void>;
+
+export type Cli_Integration_GooglePlayConsole_Runner_Screenshots_Options = Shared_GooglePlayConsoleIntegrationOptions;
+
+export type Cli_Integration_GooglePlayConsole_Runner_Screenshots_Returns = Promise<void>;
+
+export type Cli_Integration_GooglePlayConsole_Runner_Screenshots_Context = Shared_GooglePlayConsoleWorkspaceContext;
+
+export type Cli_Integration_GooglePlayConsole_Runner_Screenshots_Directory = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_Screenshots_CollectedTargets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_Screenshots_Targets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_Screenshots_Lines = string[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_Screenshots_Client = ApiGooglePlayConsole;
+
+export type Cli_Integration_GooglePlayConsole_Runner_Screenshots_EditId = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_UploadFiles_Client = ApiGooglePlayConsole;
+
+export type Cli_Integration_GooglePlayConsole_Runner_UploadFiles_EditId = string;
+
+export type Cli_Integration_GooglePlayConsole_Runner_UploadFiles_Target = Shared_IntegrationAssetTarget;
+
+export type Cli_Integration_GooglePlayConsole_Runner_UploadFiles_Index = number;
+
+export type Cli_Integration_GooglePlayConsole_Runner_UploadFiles_Returns = Promise<void>;
+
+export type Cli_Integration_GooglePlayConsole_Runner_UploadFiles_File = Shared_IntegrationAssetFile | undefined;
+
+export type Cli_Integration_GooglePlayConsole_Runner_UploadFiles_Buffer = Buffer;
+
+export type Cli_Integration_GooglePlayConsole_Runner_ValidateAssetTargets_Targets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_ValidateAssetTargets_AllowedTargets = Set<string>;
+
+export type Cli_Integration_GooglePlayConsole_Runner_ValidateAssetTargets_OneFile = boolean;
+
+export type Cli_Integration_GooglePlayConsole_Runner_ValidateAssetTargets_Returns = void;
+
+export type Cli_Integration_GooglePlayConsole_Runner_ValidateMetadataTargets_Targets = Shared_IntegrationMetadataTarget[];
+
+export type Cli_Integration_GooglePlayConsole_Runner_ValidateMetadataTargets_Returns = void;

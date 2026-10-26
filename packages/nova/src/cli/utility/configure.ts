@@ -40,6 +40,7 @@ import {
   pathExists,
   resolveTemplatePath,
 } from '../../lib/utility.js';
+import { Runner as LibVersionStrategyMigration } from '../../lib/version-strategy-migration.js';
 import { libWorkflowTemplatesMetadata } from '../../lib/workflow-templates.js';
 import { Logger } from '../../toolkit/index.js';
 
@@ -566,6 +567,11 @@ import type {
   Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredApprovals,
   Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredApprovalsRaw,
   Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecks,
+  Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksMode,
+  Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksModeInitial,
+  Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksOutput,
+  Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksOutputKey,
+  Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksOutputResult,
   Cli_Utility_Configure_Runner_PromptGithubRulesets_Returns,
   Cli_Utility_Configure_Runner_PromptGithubRulesets_Rulesets,
   Cli_Utility_Configure_Runner_PromptGithubSecurity_Config,
@@ -828,6 +834,11 @@ import type {
   Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputResult,
   Cli_Utility_Configure_Runner_PromptSettings_LockStepVersioningOutputValue,
   Cli_Utility_Configure_Runner_PromptSettings_Returns,
+  Cli_Utility_Configure_Runner_PromptSettings_RootIncludedInitial,
+  Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutput,
+  Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputKey,
+  Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputResult,
+  Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputValue,
   Cli_Utility_Configure_Runner_PromptSettings_RunWorkspaces,
   Cli_Utility_Configure_Runner_PromptSettings_RunWorkspacesSettings,
   Cli_Utility_Configure_Runner_PromptSettings_Settings,
@@ -950,11 +961,19 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_AdvancedTriggersOutputResultValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetIsContainer,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetTypes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_Branches,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_BuildWorkspaceKeys,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_CompositeKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_Config,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformChoices,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutput,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputKey,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputResult,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputResultValue,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTarget,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTargetIsContainer,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTargetType,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTargetWorkingDir,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_EditIndex,
@@ -965,6 +984,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExecutionOutputResultValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingContainerPlatforms,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingScopes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingSuffix,
@@ -978,7 +998,12 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExtraScopes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExtraWorkspaceKeys,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_FoundIndex,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTarget,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTargetCollision,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTargetInAnotherWorkflow,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasDuplicateContainerTarget,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_InitialValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_IsContainerTarget,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_IsDefaultRootWorkingDir,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_IsDuplicate,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_LockedPaths,
@@ -1003,9 +1028,12 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopesOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopesOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopesOutputResultValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectableTargetTypes,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedContainerPlatforms,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedRunsOn,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedScopes,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedSuffix,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetMetadata,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetNeeds,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargets,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetType,
@@ -1038,6 +1066,17 @@ import type {
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputKey,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputResult,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetNeedsOutputResultValue,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralEntries,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralInitial,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralKey,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralMetadata,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralOutput,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralOutputKey,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralOutputResult,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralPromptCancelled,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralPromptMessage,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiterals,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralValue,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettings,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutput,
   Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutputKey,
@@ -1181,9 +1220,12 @@ import type {
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_SeparatorIndex,
   Cli_Utility_Configure_Runner_ReadLocalFilledKeys_Workspaces,
   Cli_Utility_Configure_Runner_Run_CurrentDirectory,
+  Cli_Utility_Configure_Runner_Run_CurrentStrategy,
   Cli_Utility_Configure_Runner_Run_IsDryRun,
   Cli_Utility_Configure_Runner_Run_IsProjectRoot,
   Cli_Utility_Configure_Runner_Run_IsReplaceFile,
+  Cli_Utility_Configure_Runner_Run_MigrationPlan,
+  Cli_Utility_Configure_Runner_Run_NextStrategy,
   Cli_Utility_Configure_Runner_Run_NovaConfig,
   Cli_Utility_Configure_Runner_Run_Options,
   Cli_Utility_Configure_Runner_Run_PromptFlowResult,
@@ -1244,6 +1286,7 @@ export class Runner {
 
     const novaConfig: Cli_Utility_Configure_Runner_Run_NovaConfig = new LibNovaConfig();
     const workingFile: Cli_Utility_Configure_Runner_Run_WorkingFile = await novaConfig.load();
+    const currentStrategy: Cli_Utility_Configure_Runner_Run_CurrentStrategy = (workingFile['settings'] === undefined) ? 'semver' : workingFile['settings']['versionStrategy'] ?? 'semver';
 
     try {
       await LibReleaseHistory.validateStrategy(workingFile, currentDirectory);
@@ -1277,6 +1320,22 @@ export class Runner {
       return;
     }
 
+    const nextStrategy: Cli_Utility_Configure_Runner_Run_NextStrategy = (workingFile['settings'] === undefined) ? 'semver' : workingFile['settings']['versionStrategy'] ?? 'semver';
+    let migrationPlan: Cli_Utility_Configure_Runner_Run_MigrationPlan = undefined;
+
+    try {
+      migrationPlan = await LibVersionStrategyMigration.prepare(currentDirectory, workingFile, currentStrategy, nextStrategy);
+    } catch (error) {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'versionStrategyMigration',
+      }).error((error instanceof Error) ? error.message : 'Unable to prepare the version strategy migration.');
+
+      process.exitCode = 1;
+
+      return;
+    }
+
     novaConfig.set(workingFile);
 
     if (isDryRun === true) {
@@ -1289,6 +1348,15 @@ export class Runner {
     }
 
     await novaConfig.save(isReplaceFile);
+
+    await LibVersionStrategyMigration.apply(migrationPlan);
+
+    if (migrationPlan['writes'].length > 0) {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'versionStrategyMigration',
+      }).info(`Migrated ${migrationPlan['writes'].length} file(s) from ${migrationPlan['currentStrategy']} to ${migrationPlan['nextStrategy']}.`);
+    }
 
     return;
   }
@@ -1374,7 +1442,7 @@ export class Runner {
     const trimmed: Cli_Utility_Configure_Runner_IsIgnoreFilePathInput_Trimmed = value.trim();
 
     if (isSupportedIgnoreFileConfigPath(trimmed) === false) {
-      return 'Use a project-relative path ending in .gitignore, .dockerignore, or .assetsignore.';
+      return 'Use a project-relative .gitignore or .assetsignore path, or the root path ./.dockerignore.';
     }
 
     return true;
@@ -4633,6 +4701,12 @@ export class Runner {
     const github: Cli_Utility_Configure_Runner_PromptGithubRulesets_Github = config['github'] ?? {};
     const existingRulesets: Cli_Utility_Configure_Runner_PromptGithubRulesets_ExistingRulesets = github['rulesets'] ?? {};
     const existing: Cli_Utility_Configure_Runner_PromptGithubRulesets_Existing = existingRulesets['defaultBranch'] ?? {};
+    let requiredStatusChecksModeInitial: Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksModeInitial = 0;
+
+    if (existing['requiredStatusChecks'] !== undefined) {
+      requiredStatusChecksModeInitial = (existing['requiredStatusChecks'].length === 0) ? 1 : 2;
+    }
+
     const output: Cli_Utility_Configure_Runner_PromptGithubRulesets_Output = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputKey, Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputValue>([
       {
         type: 'select',
@@ -4773,10 +4847,24 @@ export class Runner {
         initial: Runner.getOptionalBooleanInitial(existing['requireConversationResolution']),
       },
       {
-        type: 'text',
-        name: 'requiredStatusChecks',
-        message: 'Required status checks (comma-separated; blank unsets)',
-        initial: (existing['requiredStatusChecks'] === undefined) ? '' : existing['requiredStatusChecks'].join(', '),
+        type: 'select',
+        name: 'requiredStatusChecksMode',
+        message: 'Required status checks',
+        choices: [
+          {
+            title: 'Unset',
+            value: 'unset',
+          },
+          {
+            title: 'No required status checks',
+            value: 'none',
+          },
+          {
+            title: 'Require specific status checks',
+            value: 'list',
+          },
+        ],
+        initial: requiredStatusChecksModeInitial,
       },
       {
         type: 'select',
@@ -4807,6 +4895,10 @@ export class Runner {
     const outputResult: Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputResult = output['result'];
     const allowedMergeMethods: Cli_Utility_Configure_Runner_PromptGithubRulesets_AllowedMergeMethods = [];
     const defaultBranch: Cli_Utility_Configure_Runner_PromptGithubRulesets_DefaultBranch = {};
+    const requiredStatusChecksMode: Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksMode = (
+      outputResult.requiredStatusChecksMode === 'none'
+      || outputResult.requiredStatusChecksMode === 'list'
+    ) ? outputResult.requiredStatusChecksMode : 'unset';
 
     if (
       outputResult.enforcement === 'active'
@@ -4855,10 +4947,27 @@ export class Runner {
       defaultBranch.requiredApprovals = requiredApprovals;
     }
 
-    const requiredStatusChecks: Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecks = (typeof outputResult.requiredStatusChecks === 'string') ? outputResult.requiredStatusChecks.split(',').map((statusCheck) => statusCheck.trim()).filter((statusCheck) => statusCheck !== '') : [];
+    if (requiredStatusChecksMode === 'none') {
+      defaultBranch.requiredStatusChecks = [];
+    } else if (requiredStatusChecksMode === 'list') {
+      const requiredStatusChecksOutput: Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksOutputKey, string>({
+        type: 'text',
+        name: 'requiredStatusChecks',
+        message: 'Required status checks (comma-separated)',
+        initial: (existing['requiredStatusChecks'] === undefined) ? '' : existing['requiredStatusChecks'].join(', '),
+        validate: Runner['isNonEmptyLiteralInput'],
+      });
 
-    if (requiredStatusChecks.length > 0) {
-      defaultBranch.requiredStatusChecks = requiredStatusChecks;
+      if (requiredStatusChecksOutput['cancelled'] === true) {
+        return 'back';
+      }
+
+      const requiredStatusChecksOutputResult: Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksOutputResult = requiredStatusChecksOutput['result'];
+      const requiredStatusChecks: Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecks = requiredStatusChecksOutputResult.requiredStatusChecks.split(',').map((statusCheck) => statusCheck.trim()).filter((statusCheck) => statusCheck !== '');
+
+      if (requiredStatusChecks.length > 0) {
+        defaultBranch.requiredStatusChecks = requiredStatusChecks;
+      }
     }
 
     if (Object.keys(defaultBranch).length > 0) {
@@ -5834,6 +5943,11 @@ export class Runner {
           });
         }
 
+        // Workflows - Container Platforms.
+        if (configWorkflow['containerPlatforms'] !== undefined) {
+          clonedWorkflow.containerPlatforms = [...configWorkflow['containerPlatforms']];
+        }
+
         // Workflows - Build.
         if (configWorkflow['build'] !== undefined) {
           clonedWorkflow.build = [...configWorkflow['build']];
@@ -5909,6 +6023,13 @@ export class Runner {
 
               return clonedTrigger;
             });
+          }
+
+          // Workflows - Container Platforms.
+          if (workflow['containerPlatforms'] !== undefined && workflow['containerPlatforms'].length > 0) {
+            normalizedWorkflow.containerPlatforms = [...workflow['containerPlatforms']];
+          } else {
+            Reflect.deleteProperty(normalizedWorkflow, 'containerPlatforms');
           }
 
           // Workflows - Build.
@@ -6184,6 +6305,14 @@ export class Runner {
     const existingTemplate: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTemplate = (workflow !== undefined && typeof workflow['template'] === 'string') ? workflow['template'] : '';
     const existingSuffix: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingSuffix = (workflow !== undefined && typeof workflow['name'] === 'string') ? workflow['name'] : '';
     const existingTimeoutMinutes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTimeoutMinutes = (workflow !== undefined && typeof workflow['timeoutMinutes'] === 'number') ? workflow['timeoutMinutes'] : undefined;
+    const existingContainerPlatforms: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingContainerPlatforms = (
+      workflow !== undefined
+      && Array.isArray(workflow['containerPlatforms']) === true
+      && workflow['containerPlatforms'].length > 0
+    ) ? [...workflow['containerPlatforms']] : [
+          'linux/amd64',
+          'linux/arm64',
+        ];
     const existingTriggers: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTriggers = (workflow !== undefined && Array.isArray(workflow['triggers']) === true) ? workflow['triggers'] : [];
 
     // Normalize existing triggers to their bare names so the multiselect can
@@ -6468,6 +6597,7 @@ export class Runner {
 
     // Collect available workspace keys for target and scope prompts.
     const workspaceKeys: Cli_Utility_Configure_Runner_PromptWorkflowsForm_WorkspaceKeys = Object.keys(config['workspaces'] ?? {});
+    const buildWorkspaceKeys: Cli_Utility_Configure_Runner_PromptWorkflowsForm_BuildWorkspaceKeys = workspaceKeys.filter((workspaceKey) => workspaceKey !== './');
 
     // Prompt for targets when the template supports them or an existing custom
     // template already carries targets that must remain editable.
@@ -6486,6 +6616,13 @@ export class Runner {
     ) {
       const availableTargetTypes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetTypes = (matchedMetadata !== undefined) ? Object.keys(matchedMetadata['targets'] ?? {}) : [];
       const existingTargetTypes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTargetTypes = selectedTargets.map((target) => target['to']);
+      const hasContainerTargetInAnotherWorkflow: Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTargetInAnotherWorkflow = workflows.some((candidate) => {
+        if (candidate === workflow || Array.isArray(candidate['deploy']) === false) {
+          return false;
+        }
+
+        return candidate['deploy'].some((target) => target['to'] === 'docker-hub' || target['to'] === 'ghcr');
+      });
 
       for (const existingTargetType of existingTargetTypes) {
         if (availableTargetTypes.includes(existingTargetType) === false) {
@@ -6505,14 +6642,20 @@ export class Runner {
 
           const currentTargetType: Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTargetType = currentTarget['to'];
           const currentTargetWorkingDir: Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTargetWorkingDir = currentTarget['path'];
+          const currentTargetIsContainer: Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTargetIsContainer = currentTargetType === 'docker-hub' || currentTargetType === 'ghcr';
 
-          targetMenuChoices.push({
-            title: `${chalk.yellow.bold('[EDIT]')} ${currentTargetType} → ${currentTargetWorkingDir}`,
-            value: {
-              kind: 'edit',
-              index: i,
-            },
-          });
+          // A repository may declare only one container image. If another
+          // workflow already owns it, an existing conflicting declaration can
+          // be removed here, but Configure must not offer a path that saves it.
+          if (hasContainerTargetInAnotherWorkflow === false || currentTargetIsContainer === false) {
+            targetMenuChoices.push({
+              title: `${chalk.yellow.bold('[EDIT]')} ${currentTargetType} → ${currentTargetWorkingDir}`,
+              value: {
+                kind: 'edit',
+                index: i,
+              },
+            });
+          }
 
           targetMenuChoices.push({
             title: `${chalk.red.bold('[REMOVE]')} ${currentTargetType} → ${currentTargetWorkingDir}`,
@@ -6555,6 +6698,26 @@ export class Runner {
 
         // Done: exit target loop.
         if (targetMenuAction['kind'] === 'done') {
+          const hasContainerTargetCollision: Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTargetCollision = hasContainerTargetInAnotherWorkflow === true && selectedTargets.some((target) => target['to'] === 'docker-hub' || target['to'] === 'ghcr');
+          const hasDuplicateContainerTarget: Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasDuplicateContainerTarget = selectedTargets.some((target, targetIndex) => {
+            if (target['to'] !== 'docker-hub' && target['to'] !== 'ghcr') {
+              return false;
+            }
+
+            return selectedTargets.findIndex((candidate) => candidate['to'] === target['to']) !== targetIndex;
+          });
+
+          if (hasContainerTargetCollision === true || hasDuplicateContainerTarget === true) {
+            Logger.customize({
+              name: 'Runner.promptWorkflowsForm',
+              purpose: 'validation',
+              padTop: 1,
+              padBottom: 1,
+            }).error((hasContainerTargetCollision === true) ? 'Another workflow already owns the repository container image. Remove this workflow\'s Docker Hub and GHCR targets before continuing.' : 'Each container registry can appear only once. Remove or change the duplicate Docker Hub or GHCR target before continuing.');
+
+            continue;
+          }
+
           break;
         }
 
@@ -6575,8 +6738,21 @@ export class Runner {
         if (targetMenuAction['kind'] === 'add' || targetMenuAction['kind'] === 'edit') {
           const targetEditIndex: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEditIndex = (targetMenuAction['kind'] === 'edit') ? targetMenuAction['index'] : -1;
           const targetToEdit: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetToEdit = (targetEditIndex >= 0) ? selectedTargets[targetEditIndex] : undefined;
-          const targetTypeInitial: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeInitial = (targetToEdit !== undefined) ? availableTargetTypes.indexOf(targetToEdit['to']) : 0;
-          const targetTypeChoices: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeChoices = availableTargetTypes.map((availableTargetType) => ({
+          const selectableTargetTypes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectableTargetTypes = availableTargetTypes.filter((availableTargetType) => {
+            const availableTargetIsContainer: Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetIsContainer = availableTargetType === 'docker-hub' || availableTargetType === 'ghcr';
+
+            if (availableTargetIsContainer === false) {
+              return true;
+            }
+
+            if (hasContainerTargetInAnotherWorkflow === true) {
+              return false;
+            }
+
+            return selectedTargets.some((candidate, candidateIndex) => candidateIndex !== targetEditIndex && candidate['to'] === availableTargetType) === false;
+          });
+          const targetTypeInitial: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeInitial = (targetToEdit !== undefined) ? selectableTargetTypes.indexOf(targetToEdit['to']) : 0;
+          const targetTypeChoices: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeChoices = selectableTargetTypes.map((availableTargetType) => ({
             title: availableTargetType,
             value: availableTargetType,
           }));
@@ -6595,34 +6771,39 @@ export class Runner {
 
           const targetTypeOutputResultValue: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeOutputResultValue = targetTypeOutput['result'];
           const selectedTargetType: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetType = targetTypeOutputResultValue.targetType;
+          const isContainerTarget: Cli_Utility_Configure_Runner_PromptWorkflowsForm_IsContainerTarget = selectedTargetType === 'docker-hub' || selectedTargetType === 'ghcr';
+          let selectedTargetWorkingDir: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir = './';
 
-          const targetWorkingDirInitial: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirInitial = (targetToEdit !== undefined) ? workspaceKeys.indexOf(targetToEdit['path']) : 0;
-          const targetWorkingDirChoices: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoices = workspaceKeys.map((workspaceKey) => ({
-            title: workspaceKey,
-            value: workspaceKey,
-          }));
+          if (isContainerTarget === false) {
+            const targetWorkingDirInitial: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirInitial = (targetToEdit !== undefined) ? workspaceKeys.indexOf(targetToEdit['path']) : 0;
+            const targetWorkingDirChoices: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoices = workspaceKeys.map((workspaceKey) => ({
+              title: workspaceKey,
+              value: workspaceKey,
+            }));
 
-          if (targetToEdit !== undefined && targetWorkingDirChoices.some((choice) => choice['value'] === targetToEdit['path']) === false) {
-            targetWorkingDirChoices.unshift({
-              title: targetToEdit['path'],
-              value: targetToEdit['path'],
+            if (targetToEdit !== undefined && targetWorkingDirChoices.some((choice) => choice['value'] === targetToEdit['path']) === false) {
+              targetWorkingDirChoices.unshift({
+                title: targetToEdit['path'],
+                value: targetToEdit['path'],
+              });
+            }
+
+            const targetWorkingDirOutput: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputResult>({
+              type: 'select',
+              name: 'targetWorkingDir',
+              message: 'Select a working directory.',
+              choices: targetWorkingDirChoices,
+              initial: (targetWorkingDirInitial >= 0) ? targetWorkingDirInitial : 0,
             });
+
+            if (targetWorkingDirOutput['cancelled'] === true) {
+              continue;
+            }
+
+            const targetWorkingDirOutputResultValue: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputResultValue = targetWorkingDirOutput['result'];
+
+            selectedTargetWorkingDir = targetWorkingDirOutputResultValue.targetWorkingDir;
           }
-
-          const targetWorkingDirOutput: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputResult>({
-            type: 'select',
-            name: 'targetWorkingDir',
-            message: 'Select a working directory.',
-            choices: targetWorkingDirChoices,
-            initial: (targetWorkingDirInitial >= 0) ? targetWorkingDirInitial : 0,
-          });
-
-          if (targetWorkingDirOutput['cancelled'] === true) {
-            continue;
-          }
-
-          const targetWorkingDirOutputResultValue: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputResultValue = targetWorkingDirOutput['result'];
-          const selectedTargetWorkingDir: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir = targetWorkingDirOutputResultValue.targetWorkingDir;
 
           // Validate tuple uniqueness. When editing, exclude the current entry.
           const targetIsDuplicate: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetIsDuplicate = selectedTargets.some((selectedTarget, selectedTargetIndex) => {
@@ -6690,6 +6871,42 @@ export class Runner {
           }
 
           const targetSettings: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettings = Runner.parseStringRecordInput(targetSettingsOutput['result'].targetSettings);
+          const selectedTargetMetadata: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetMetadata = (matchedMetadata === undefined || matchedMetadata['targets'] === undefined) ? undefined : matchedMetadata['targets'][selectedTargetType];
+          const targetRequiredLiterals: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiterals = (selectedTargetMetadata === undefined || selectedTargetMetadata['requiredLiterals'] === undefined) ? {} : selectedTargetMetadata['requiredLiterals'];
+          const targetRequiredLiteralEntries: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralEntries = Object.entries(targetRequiredLiterals);
+          let targetRequiredLiteralPromptCancelled: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralPromptCancelled = false;
+
+          for (const targetRequiredLiteralEntry of targetRequiredLiteralEntries) {
+            const targetRequiredLiteralKey: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralKey = targetRequiredLiteralEntry[0];
+            const targetRequiredLiteralMetadata: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralMetadata = targetRequiredLiteralEntry[1];
+            const targetRequiredLiteralInitial: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralInitial = (typeof targetSettings[targetRequiredLiteralKey] === 'string') ? targetSettings[targetRequiredLiteralKey] : '';
+            let targetRequiredLiteralPromptMessage: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralPromptMessage = `Target literal: ${targetRequiredLiteralKey} (${targetRequiredLiteralMetadata['description']})`;
+
+            if (targetRequiredLiteralMetadata['example'] !== undefined) {
+              targetRequiredLiteralPromptMessage = `Target literal: ${targetRequiredLiteralKey} (${targetRequiredLiteralMetadata['description']}, e.g. ${targetRequiredLiteralMetadata['example']})`;
+            }
+            const targetRequiredLiteralOutput: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralOutputResult>({
+              type: 'text',
+              name: 'targetRequiredLiteral',
+              message: targetRequiredLiteralPromptMessage,
+              initial: targetRequiredLiteralInitial,
+              validate: Runner['isNonEmptyLiteralInput'],
+            });
+
+            if (targetRequiredLiteralOutput['cancelled'] === true) {
+              targetRequiredLiteralPromptCancelled = true;
+
+              break;
+            }
+
+            const targetRequiredLiteralValue: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralValue = targetRequiredLiteralOutput['result'].targetRequiredLiteral.trim().replaceAll('\\n', '\n');
+
+            Reflect.set(targetSettings, targetRequiredLiteralKey, targetRequiredLiteralValue);
+          }
+
+          if (targetRequiredLiteralPromptCancelled === true) {
+            continue;
+          }
 
           const newTarget: Cli_Utility_Configure_Runner_PromptWorkflowsForm_NewTarget = {
             to: selectedTargetType,
@@ -6715,15 +6932,72 @@ export class Runner {
       }
     }
 
+    const hasContainerTarget: Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTarget = selectedTargets.some((target) => target['to'] === 'docker-hub' || target['to'] === 'ghcr');
+    let selectedContainerPlatforms: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedContainerPlatforms = [];
+
+    if (hasContainerTarget === true) {
+      const containerPlatformChoices: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformChoices = [
+        {
+          title: 'Linux AMD64',
+          value: 'linux/amd64',
+          selected: existingContainerPlatforms.includes('linux/amd64'),
+        },
+        {
+          title: 'Linux ARM64',
+          value: 'linux/arm64',
+          selected: existingContainerPlatforms.includes('linux/arm64'),
+        },
+      ];
+      const containerPlatformsOutput: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputResult>({
+        type: 'multiselect',
+        name: 'containerPlatforms',
+        message: 'Select platforms for the repository container image.',
+        choices: containerPlatformChoices,
+      });
+
+      if (containerPlatformsOutput['cancelled'] === true) {
+        return {
+          action: 'back',
+        };
+      }
+
+      const containerPlatformsOutputResultValue: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputResultValue = containerPlatformsOutput['result'];
+
+      selectedContainerPlatforms = (Array.isArray(containerPlatformsOutputResultValue.containerPlatforms) === true) ? containerPlatformsOutputResultValue.containerPlatforms : [];
+
+      if (selectedContainerPlatforms.length === 0) {
+        Logger.customize({
+          name: 'Runner.promptWorkflowsForm',
+          purpose: 'validation',
+          padTop: 1,
+          padBottom: 1,
+        }).error('Select at least one container platform.');
+
+        return {
+          action: 'back',
+        };
+      }
+    }
+
     // Prompt for scopes if the template supports them.
     let selectedScopes: Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedScopes = [...existingScopes];
 
     if (matchedMetadata !== undefined && matchedMetadata['supportsScopes'] === true) {
-      const lockedPaths: Cli_Utility_Configure_Runner_PromptWorkflowsForm_LockedPaths = new Set(selectedTargets.map((selectedTarget) => selectedTarget['path']));
-      const scopeCandidates: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopeCandidates = [...workspaceKeys];
+      const lockedPaths: Cli_Utility_Configure_Runner_PromptWorkflowsForm_LockedPaths = new Set();
+      const scopeCandidates: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ScopeCandidates = [...buildWorkspaceKeys];
+
+      for (const selectedTarget of selectedTargets) {
+        if (
+          selectedTarget['path'] !== './'
+          && selectedTarget['to'] !== 'docker-hub'
+          && selectedTarget['to'] !== 'ghcr'
+        ) {
+          lockedPaths.add(selectedTarget['path']);
+        }
+      }
 
       for (const existingScope of existingScopes) {
-        if (scopeCandidates.includes(existingScope) === false) {
+        if (existingScope !== './' && scopeCandidates.includes(existingScope) === false) {
           scopeCandidates.push(existingScope);
         }
       }
@@ -6917,7 +7191,7 @@ export class Runner {
     Object.assign(settings, reviewedSettings);
 
     // Build the resolved workflow (locked field order: template, name,
-    // triggers, runsOn, timeoutMinutes, build, deploy, with).
+    // triggers, runsOn, timeoutMinutes, containerPlatforms, build, deploy, with).
     const resolvedWorkflow: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ResolvedWorkflow = {
       template: selectedTemplate,
       name: selectedSuffix,
@@ -6928,6 +7202,11 @@ export class Runner {
     // Workflow - Timeout Minutes.
     if (selectedTimeoutMinutes !== undefined) {
       Reflect.set(resolvedWorkflow, 'timeoutMinutes', selectedTimeoutMinutes);
+    }
+
+    // Workflow - Container Platforms.
+    if (selectedContainerPlatforms.length > 0) {
+      Reflect.set(resolvedWorkflow, 'containerPlatforms', selectedContainerPlatforms);
     }
 
     // Workflow - Build.
@@ -7347,7 +7626,7 @@ export class Runner {
 
       choices.push({
         title: 'Add an ignore file',
-        description: 'Add a project-relative .gitignore, .dockerignore, or .assetsignore path.',
+        description: 'Add a project-relative .gitignore or .assetsignore path, or the root .dockerignore.',
         value: 'add',
       });
       choices.push({
@@ -8612,6 +8891,19 @@ export class Runner {
 
     const cacheScriptsOutputResult: Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutputResult = cacheScriptsOutput['result'];
     const cacheScripts: Cli_Utility_Configure_Runner_PromptSettings_CacheScripts = [...new Set(cacheScriptsOutputResult.cacheScripts.split(',').map((script) => script.trim()).filter((script) => script.length > 0))].sort();
+    const rootIncludedInitial: Cli_Utility_Configure_Runner_PromptSettings_RootIncludedInitial = runWorkspacesSettings === undefined || runWorkspacesSettings['root'] !== 'skip';
+    const rootIncludedOutput: Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutput = await Runner.promptWithCancel<Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputKey, Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputValue>({
+      type: 'confirm',
+      name: 'rootIncluded',
+      message: 'Run the root project\'s own steps as part of the workspace tree?',
+      initial: rootIncludedInitial,
+    });
+
+    if (rootIncludedOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const rootIncludedOutputResult: Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputResult = rootIncludedOutput['result'];
     const runWorkspaces: Cli_Utility_Configure_Runner_PromptSettings_RunWorkspaces = {
       ...settings['runWorkspaces'],
       cache: {
@@ -8626,6 +8918,12 @@ export class Runner {
       runWorkspaces.concurrency = concurrency;
     } else {
       Reflect.deleteProperty(runWorkspaces, 'concurrency');
+    }
+
+    if (rootIncludedOutputResult.rootIncluded === true) {
+      Reflect.deleteProperty(runWorkspaces, 'root');
+    } else {
+      runWorkspaces.root = 'skip';
     }
 
     const updatedSettings: Cli_Utility_Configure_Runner_PromptSettings_UpdatedSettings = {

@@ -51,6 +51,8 @@ export type Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsABundleThatDoesNotBelongToT
  */
 export type Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_AbsoluteResult = boolean;
 
+export type Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_NestedDockerignoreResult = boolean;
+
 export type Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_TraversalResult = boolean;
 
 export type Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_UnsupportedResult = boolean;

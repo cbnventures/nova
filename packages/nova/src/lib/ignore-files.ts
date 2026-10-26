@@ -48,7 +48,7 @@ const libIgnoreFileBundleTemplates: Lib_IgnoreFiles_LibIgnoreFileBundleTemplates
     'cloudflare-astro': 'generators/must-haves/ignore-files/cloudflare-astro.assetsignore',
   },
   '.dockerignore': {
-    nova: 'scaffold-options/docker-image/common/.dockerignore',
+    nova: 'scaffold-options/docker-image/common/dockerignore',
   },
   '.gitignore': {
     nova: 'generators/must-haves/ignore-files/gitignore',
@@ -102,6 +102,10 @@ export function getSupportedIgnoreFileBundles(targetPath: Lib_IgnoreFiles_GetSup
  */
 export function isSupportedIgnoreFileConfigPath(configPath: Lib_IgnoreFiles_IsSupportedIgnoreFileConfigPath_ConfigPath): Lib_IgnoreFiles_IsSupportedIgnoreFileConfigPath_Returns {
   if (configPath.startsWith('./') === false || configPath.includes('\\') === true) {
+    return false;
+  }
+
+  if (basename(configPath) === '.dockerignore' && configPath !== './.dockerignore') {
     return false;
   }
 

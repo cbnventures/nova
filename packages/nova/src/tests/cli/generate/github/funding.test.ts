@@ -1,4 +1,5 @@
 import { ok, strictEqual } from 'node:assert/strict';
+import { basename } from 'node:path';
 
 import {
   describe,
@@ -72,7 +73,7 @@ describe('CliGenerateGithubFunding.run', () => {
 
     const calls: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_Calls = saveSpy['mock']['calls'];
 
-    const targetCall: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_TargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.github/FUNDING.yml'));
+    const targetCall: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_TargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === 'FUNDING.yml');
 
     ok(targetCall !== undefined, 'Expected saveGeneratedFile to be called for FUNDING.yml');
 

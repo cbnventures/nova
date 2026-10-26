@@ -57,12 +57,12 @@ jobs:
 
       - name: "Check project"
         run: |
-          npm run check
+          npm run check -- --workspace synthetic-app-api
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
         run: |
-          npm run build:workspaces -- --workspace synthetic-app-api
+          npm run build -- --workspace synthetic-app-api
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Upload build artifacts (cloudflare-workers/apps-api)"

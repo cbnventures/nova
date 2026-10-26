@@ -1,6 +1,7 @@
 import { Runner as Variables } from './workflows-blueprint-variables.js';
 
 import type {
+  Cli_Generate_Github_WorkflowsBlueprintValidate_AllowedContainerPlatforms,
   Cli_Generate_Github_WorkflowsBlueprintValidate_AllowedTemplates,
   Cli_Generate_Github_WorkflowsBlueprintValidate_BuildableTargetTypes,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_CollectWorkflowRunReferences_References,
@@ -29,23 +30,44 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_EnvMigrationHint_WorkspaceEntry,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_EnvMigrationHint_WorkspaceList,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_EnvMigrationHint_Workspaces,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinate_Returns,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinate_Value,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_IsAlphanumeric,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_IsSeparator,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_PreviousWasSeparator,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Returns,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Value,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsNonEmptyStringArray_Returns,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsNonEmptyStringArray_Value,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsPlainObject_Returns,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsPlainObject_Value,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Composite,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerCoordinate,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatform,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatformList,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatformName,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatforms,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerTargetSettings,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerWorkflowKey,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DependsOnEntries,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DeployMigration,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DetailEntries,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Diagnostics,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubTargetCount,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Entry,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EntryKeys,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_EnvMigration,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Existing,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_GhcrTargetCount,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasError,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_HasWorkflowRunTrigger,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageNamespace,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageRepository,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsContainerTarget,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredScope,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredWorkingDir,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralRequiredName,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralRequiredResolved,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralResolved,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralTarget,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralTargetMetadata,
@@ -67,6 +89,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunsOn,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Scope,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Scopes,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenContainerPlatforms,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenKeys,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Suffix,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SuffixValue,
@@ -101,6 +124,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ValidTriggers,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VariableMeta,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VariableName,
+  Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkflowKey,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkflowMigration,
   Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workflows,
@@ -147,6 +171,19 @@ const buildableTargetTypes: Cli_Generate_Github_WorkflowsBlueprintValidate_Build
 ];
 
 /**
+ * CLI - Generate - GitHub - Workflows Blueprint Validate - Allowed Container Platforms.
+ *
+ * Mirrors the architectures supported by the generated s6-overlay Dockerfile.
+ * Keeping this list explicit prevents unsupported manifests from being emitted.
+ *
+ * @since 0.34.0
+ */
+const allowedContainerPlatforms: Cli_Generate_Github_WorkflowsBlueprintValidate_AllowedContainerPlatforms = [
+  'linux/amd64',
+  'linux/arm64',
+];
+
+/**
  * CLI - Generate - GitHub - Workflows Blueprint Validate - Valid Triggers By Template.
  *
  * Maps each template name to the trigger names it accepts, so a trigger that
@@ -189,18 +226,20 @@ export class Runner {
    * Runs every parse-and-validate check over the raw entries and the workspaces.
    * The surviving typed workflows and the diagnostics are returned; failures drop.
    *
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows} rawWorkflows - Raw workflows.
-   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces}   workspaces   - Workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows}    rawWorkflows    - Raw workflows.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces}      workspaces      - Workspaces.
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy} versionStrategy - Version strategy.
    *
    * @returns {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns}
    *
    * @since 0.26.0
    */
-  public static validate(rawWorkflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows, workspaces: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns {
+  public static validate(rawWorkflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows, workspaces: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces, versionStrategy: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy = 'semver'): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Returns {
     const diagnostics: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Diagnostics = [];
     const workflows: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workflows = [];
     const seenKeys: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenKeys = new Set();
     const uniquenessMap: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniquenessMap = new Map();
+    let containerWorkflowKey: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerWorkflowKey = undefined;
 
     const rawEntries: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEntries = (Array.isArray(rawWorkflows) === true) ? rawWorkflows : [];
 
@@ -322,6 +361,7 @@ export class Runner {
       const workflowKey: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkflowKey = `${templateName}-${suffixValue}`;
       const runsOn: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunsOn = entry['runsOn'];
       const timeoutMinutes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TimeoutMinutes = entry['timeoutMinutes'];
+      const containerPlatforms: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatforms = entry['containerPlatforms'];
       const validTriggers: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ValidTriggers = validTriggersByTemplate[templateName];
 
       if (runsOn !== undefined && runsOn !== 'ubuntu-latest') {
@@ -348,6 +388,61 @@ export class Runner {
         });
 
         hasError = true;
+      }
+
+      if (containerPlatforms !== undefined) {
+        if (Array.isArray(containerPlatforms) === false || containerPlatforms.length === 0) {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" has an invalid "containerPlatforms" value. Select one or more of: ${allowedContainerPlatforms.join(', ')}. Skipping.`,
+          });
+
+          hasError = true;
+        } else {
+          const containerPlatformList: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatformList = containerPlatforms;
+          const seenContainerPlatforms: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenContainerPlatforms = new Set();
+
+          for (const containerPlatformValue of containerPlatformList) {
+            const containerPlatform: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatform = containerPlatformValue;
+            const containerPlatformName: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatformName = containerPlatform as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatformName;
+
+            if (
+              typeof containerPlatform !== 'string'
+              || allowedContainerPlatforms.includes(containerPlatformName) === false
+            ) {
+              diagnostics.push({
+                severity: 'error',
+                message: `Workflow "${workflowKey}" has unsupported container platform "${String(containerPlatform)}". Allowed platforms: ${allowedContainerPlatforms.join(', ')}. Skipping.`,
+              });
+
+              hasError = true;
+
+              continue;
+            }
+
+            if (seenContainerPlatforms.has(containerPlatformName) === true) {
+              diagnostics.push({
+                severity: 'error',
+                message: `Workflow "${workflowKey}" repeats container platform "${containerPlatformName}". Select each platform once. Skipping.`,
+              });
+
+              hasError = true;
+
+              continue;
+            }
+
+            seenContainerPlatforms.add(containerPlatformName);
+          }
+        }
+
+        if (templateName !== 'publish') {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" declares "containerPlatforms", but only publish workflows with a container target can select container platforms. Skipping.`,
+          });
+
+          hasError = true;
+        }
       }
 
       // Check 3c: triggers present, a non-empty array, each valid for the template.
@@ -534,10 +629,24 @@ export class Runner {
       // Check 3e: publish build scopes, deploy paths, and deploy destinations.
       if (templateName === 'publish') {
         const scopes: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Scopes = entry['build'];
+        let dockerHubTargetCount: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubTargetCount = 0;
+        let ghcrTargetCount: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_GhcrTargetCount = 0;
 
         if (Array.isArray(scopes) === true) {
           for (const scopeValue of scopes) {
             const scope: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Scope = scopeValue;
+
+            if (scope === './') {
+              diagnostics.push({
+                severity: 'error',
+                message: `Workflow "${workflowKey}" declares "./" in "build". The build list accepts non-root workspaces only; the root Dockerfile assembles container inputs itself. Skipping.`,
+              });
+
+              hasError = true;
+
+              continue;
+            }
+
             const isRegisteredScope: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredScope = typeof scope === 'string' && workspaces[scope] !== undefined;
 
             if (isRegisteredScope === false) {
@@ -559,6 +668,16 @@ export class Runner {
             const targetType: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetType = target['to'];
             const targetTypeName: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName = targetType as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TargetTypeName;
             const workingDir: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkingDir = target['path'];
+            const isContainerTarget: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsContainerTarget = targetTypeName === 'docker-hub' || targetTypeName === 'ghcr';
+            const containerTargetSettings: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerTargetSettings = (Runner.isPlainObject(target['with']) === true) ? target['with'] as Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerTargetSettings : undefined;
+
+            if (targetTypeName === 'docker-hub') {
+              dockerHubTargetCount += 1;
+            }
+
+            if (targetTypeName === 'ghcr') {
+              ghcrTargetCount += 1;
+            }
 
             if (typeof targetType !== 'string' || buildableTargetTypes.includes(targetTypeName) === false) {
               diagnostics.push({
@@ -569,7 +688,38 @@ export class Runner {
               hasError = true;
             }
 
-            const isRegisteredWorkingDir: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredWorkingDir = typeof workingDir === 'string' && workspaces[workingDir] !== undefined;
+            if (targetTypeName === 'github-action' && versionStrategy === 'calver') {
+              diagnostics.push({
+                severity: 'error',
+                message: `Target type "github-action" in workflow "${workflowKey}" requires SemVer because its release branch publishes floating major aliases. CalVer projects must use another publish target or change settings.versionStrategy before release history exists.`,
+              });
+
+              hasError = true;
+            }
+
+            if (isContainerTarget === true && workingDir !== './') {
+              diagnostics.push({
+                severity: 'error',
+                message: `Container target "${String(targetType)}" in workflow "${workflowKey}" must use path "./" because Nova supports one root-context OCI image per repository. Multiple Docker images per repository are unsupported.`,
+              });
+
+              hasError = true;
+            }
+
+            if (
+              isContainerTarget === true
+              && Array.isArray(target['after']) === true
+              && target['after'].length > 0
+            ) {
+              diagnostics.push({
+                severity: 'error',
+                message: `Container target "${String(targetType)}" in workflow "${workflowKey}" cannot declare "after". Registry jobs fan out independently from the same OCI artifact.`,
+              });
+
+              hasError = true;
+            }
+
+            const isRegisteredWorkingDir: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredWorkingDir = (isContainerTarget === true) ? workingDir === './' : typeof workingDir === 'string' && workspaces[workingDir] !== undefined;
 
             if (isRegisteredWorkingDir === false) {
               diagnostics.push({
@@ -579,6 +729,79 @@ export class Runner {
 
               hasError = true;
             }
+
+            if (isContainerTarget === true && containerTargetSettings !== undefined) {
+              const imageRepository: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageRepository = containerTargetSettings['IMAGE_REPOSITORY'];
+
+              if (imageRepository !== undefined && Runner.isContainerCoordinateComponent(imageRepository) === false) {
+                diagnostics.push({
+                  severity: 'error',
+                  message: `Container target "${String(targetType)}" in workflow "${workflowKey}" has invalid IMAGE_REPOSITORY "${String(imageRepository)}". Use one lowercase repository component without a registry host, namespace, tag, digest, or slash.`,
+                });
+
+                hasError = true;
+              }
+
+              if (targetTypeName === 'docker-hub') {
+                const imageNamespace: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageNamespace = containerTargetSettings['IMAGE_NAMESPACE'];
+
+                if (imageNamespace !== undefined && Runner.isContainerCoordinateComponent(imageNamespace) === false) {
+                  diagnostics.push({
+                    severity: 'error',
+                    message: `Container target "docker-hub" in workflow "${workflowKey}" has invalid IMAGE_NAMESPACE "${String(imageNamespace)}". Use one lowercase namespace component without a registry host, repository, tag, digest, or slash.`,
+                  });
+
+                  hasError = true;
+                }
+
+                if (
+                  Runner.isContainerCoordinateComponent(imageNamespace) === true
+                  && Runner.isContainerCoordinateComponent(imageRepository) === true
+                ) {
+                  const containerCoordinate: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerCoordinate = `docker.io/${String(imageNamespace)}/${String(imageRepository)}`;
+
+                  if (Runner.isContainerCoordinate(containerCoordinate) === false) {
+                    diagnostics.push({
+                      severity: 'error',
+                      message: `Container target "docker-hub" in workflow "${workflowKey}" resolves to invalid coordinate "${containerCoordinate}". Expected host/namespace/repository with no tag or digest.`,
+                    });
+
+                    hasError = true;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        if (dockerHubTargetCount > 1 || ghcrTargetCount > 1) {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" declares multiple targets for the same container registry. Nova supports one OCI image per repository, optionally published once to Docker Hub and once to GHCR; multiple Docker images per repository are unsupported.`,
+          });
+
+          hasError = true;
+        }
+
+        if (containerPlatforms !== undefined && dockerHubTargetCount + ghcrTargetCount === 0) {
+          diagnostics.push({
+            severity: 'error',
+            message: `Workflow "${workflowKey}" declares "containerPlatforms" without a Docker Hub or GHCR target. Container platforms belong to the repository image deliverable. Skipping.`,
+          });
+
+          hasError = true;
+        }
+
+        if (dockerHubTargetCount + ghcrTargetCount > 0) {
+          if (containerWorkflowKey !== undefined && containerWorkflowKey !== workflowKey) {
+            diagnostics.push({
+              severity: 'error',
+              message: `Container workflow collision: workflows "${containerWorkflowKey}" and "${workflowKey}" both declare container publishing. Nova supports exactly one OCI deliverable in one publish workflow per repository; multiple Docker images per repository are unsupported.`,
+            });
+
+            hasError = true;
+          } else {
+            containerWorkflowKey = workflowKey;
           }
         }
       }
@@ -638,6 +861,19 @@ export class Runner {
               missingLiterals.push(literalVariableName);
             }
           }
+
+          for (const literalRequiredNameValue of Object.keys(literalTargetMetadata['requiredLiterals'] ?? {})) {
+            const literalRequiredName: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralRequiredName = literalRequiredNameValue;
+            let literalRequiredResolved: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralRequiredResolved = literalRequiredName;
+
+            if (literalTargetSettings !== undefined) {
+              literalRequiredResolved = literalTargetSettings[literalRequiredName] ?? literalRequiredName;
+            }
+
+            if (literalRequiredResolved === literalRequiredName && missingLiterals.includes(literalRequiredName) === false) {
+              missingLiterals.push(literalRequiredName);
+            }
+          }
         }
       }
 
@@ -685,7 +921,18 @@ export class Runner {
             const uniqueVariableName: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniqueVariableName = uniquenessVariableName;
             const uniqueVariableMeta: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniqueVariableMeta = uniqueTargetMetadata['variables'][uniqueVariableName];
             const uniqueVariableMetaResolved: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniqueVariableMetaResolved = uniqueVariableMeta ?? { format: 'literal' };
-            const resolvedValue: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ResolvedValue = Variables.resolve(uniqueVariableName, uniqueTargetSettings, workflowSettings, uniqueVariableMetaResolved);
+            let resolvedValue: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ResolvedValue = Variables.resolve(uniqueVariableName, uniqueTargetSettings, workflowSettings, uniqueVariableMetaResolved);
+
+            if (
+              uniqueTargetMetadata['requiredLiterals'] !== undefined
+              && uniqueTargetMetadata['requiredLiterals'][uniqueVariableName] !== undefined
+            ) {
+              resolvedValue = uniqueVariableName;
+
+              if (uniqueTargetSettings !== undefined) {
+                resolvedValue = uniqueTargetSettings[uniqueVariableName] ?? uniqueVariableName;
+              }
+            }
 
             resolvedValues.push(resolvedValue);
 
@@ -835,6 +1082,87 @@ export class Runner {
     return Array.isArray(value) === true
       && value.length > 0
       && value.every((entry) => typeof entry === 'string' && entry.length > 0) === true;
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint Validate - Is Container Coordinate Component.
+   *
+   * Accepts one lowercase registry coordinate component. Hosts, nested paths,
+   * tags, and digests fail because their separators are outside this grammar.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static isContainerCoordinateComponent(value: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Value): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Returns {
+    if (
+      typeof value !== 'string'
+      || value.length === 0
+      || value.length > 255
+    ) {
+      return false;
+    }
+
+    let previousWasSeparator: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_PreviousWasSeparator = true;
+
+    for (const character of value) {
+      const isAlphanumeric: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_IsAlphanumeric = (
+        character >= 'a'
+        && character <= 'z'
+      )
+      || (
+        character >= '0'
+        && character <= '9'
+      );
+      const isSeparator: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_IsSeparator = (
+        character === '.'
+        || character === '_'
+        || character === '-'
+      );
+
+      if (isAlphanumeric === false && isSeparator === false) {
+        return false;
+      }
+
+      if (isSeparator === true && previousWasSeparator === true) {
+        return false;
+      }
+
+      previousWasSeparator = isSeparator;
+    }
+
+    return previousWasSeparator === false;
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint Validate - Is Container Coordinate.
+   *
+   * Validates Nova's host/namespace/repository identity shape before a target
+   * may be emitted. Registry jobs repeat this check after dynamic resolution.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinate_Value} value - Value.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinate_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static isContainerCoordinate(value: Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinate_Value): Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinate_Returns {
+    return (
+      value.length <= 255
+      && value.split('/').length === 3
+      && (
+        value.startsWith('docker.io/') === true
+        || value.startsWith('ghcr.io/') === true
+      )
+      && Runner.isContainerCoordinateComponent(value.split('/')[1])
+      && Runner.isContainerCoordinateComponent(value.split('/')[2])
+    );
   }
 
   /**

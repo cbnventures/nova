@@ -33,7 +33,7 @@ You do not need to run `starter base` before a direct app, docs, or package comm
 ## Why Use This Command?
 
 1. Creates the root `package.json` with `workspaces` configured for `apps/*` and `packages/*` so you can add workspaces immediately.
-2. Creates standard `dev`, `prod`, `check`, `build`, `deploy`, and `clean` script groups. Each top-level script delegates to adjacent `name:*` steps through `nova utility run-scripts`, while `name:workspaces` uses Nova's dependency-aware workspace runner.
+2. Creates standard `dev`, `prod`, `check`, `build`, `deploy`, and `clean` scripts. Each one runs `nova utility run-workspaces`, which runs the root's own `name:*` steps first and then every workspace's `name` script in dependency order.
 3. Pins the npm and Node.js toolchain used by current Nova projects and records explicit install-script decisions used by the built-in scaffolds.
 4. Generates a baseline `nova.config.json` with the project name, current starting year, `nodejs` project platform, and `Example Company` legal-name placeholder so recipes, utilities, and identity-aware workspaces have valid input from the start.
 5. Registers the root environment namespace and generates `.env` plus `.env.sample` with Nova's Node.js and logging defaults.

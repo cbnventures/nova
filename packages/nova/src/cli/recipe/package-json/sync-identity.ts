@@ -8,13 +8,14 @@ import chalk from 'chalk';
 
 import { Runner as ApiSpdxLicenses } from '../../../api/spdx-licenses.js';
 import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
-import { LIB_REGEX_PATTERN_SEMVER_STRICT } from '../../../lib/regex.js';
+import { Runner as LibReleaseHistory } from '../../../lib/release-history.js';
 import {
   isProjectRoot,
   loadWorkspaceManifests,
   pathExists,
   saveWorkspaceManifest,
 } from '../../../lib/utility.js';
+import { Runner as LibVersionContract } from '../../../lib/version-contract.js';
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
@@ -23,6 +24,7 @@ import type {
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FallbackLicense,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FileContents,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FilePath,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_HasReleaseHistory,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_LicenseCandidates,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Manifest,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_NormalizedLicenseReference,
@@ -46,6 +48,8 @@ import type {
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidDisplayName,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidKeywords,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidVersion,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_VersionError,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_VersionStrategy,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Workspace,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkspacePath,
@@ -59,6 +63,7 @@ import type {
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_PackageJsonRecipesFilter,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipeEntryFilter,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipesFilter,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_ReleaseHistoryStrategy,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_ReplaceFileNotice,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Returns,
   Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFile,
@@ -120,6 +125,21 @@ export class Runner {
     }
 
     const workingFile: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFile = await new LibNovaConfig().load();
+    let releaseHistoryStrategy: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_ReleaseHistoryStrategy = undefined;
+
+    try {
+      releaseHistoryStrategy = await LibReleaseHistory.validateStrategy(workingFile, currentDirectory);
+    } catch (error) {
+      Logger.customize({
+        name: 'Runner.run',
+        purpose: 'versionStrategy',
+      }).error((error instanceof Error) ? error.message : 'Unable to validate the configured version strategy.');
+
+      process.exitCode = 1;
+
+      return;
+    }
+
     const workingFileWorkspaces: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
 
     if (workingFileWorkspaces.length === 0) {
@@ -179,20 +199,32 @@ export class Runner {
       purpose: 'summary',
     }).info(`Prepared ${workspaces.length} workspace "package.json" file(s) for sync-identity.`);
 
-    // Handle all workspace "package.json" files.
-    for (const workspace of workspaces) {
+    // Validate and prepare every manifest before the first write so one invalid
+    // established version cannot leave a partially synchronized project.
+    try {
+      for (const workspace of workspaces) {
+        Logger.customize({
+          name: 'Runner.run',
+          purpose: 'iteration',
+        }).info(`Running sync-identity for the "${workspace['manifest']['name']}" workspace ...`);
+
+        await Runner.handle(workspace, workingFile, releaseHistoryStrategy !== undefined);
+      }
+    } catch (error) {
       Logger.customize({
         name: 'Runner.run',
-        purpose: 'iteration',
-      }).info(`Running sync-identity for the "${workspace['manifest']['name']}" workspace ...`);
+        purpose: 'version',
+      }).error((error instanceof Error) ? error.message : 'Unable to synchronize workspace versions.');
 
-      await Runner.handle(workspace, workingFile);
+      process.exitCode = 1;
 
-      if (isDryRun === true) {
-        continue;
+      return;
+    }
+
+    if (isDryRun === false) {
+      for (const workspace of workspaces) {
+        await saveWorkspaceManifest(workspace, isReplaceFile);
       }
-
-      await saveWorkspaceManifest(workspace, isReplaceFile);
     }
 
     return;
@@ -204,8 +236,9 @@ export class Runner {
    * Processes one workspace manifest to sync name, version, description, keywords,
    * displayName, and license. Resolves license paths and validates SPDX.
    *
-   * @param {Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Workspace}   workspace   - Workspace.
-   * @param {Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile} workingFile - Working file.
+   * @param {Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Workspace}         workspace         - Workspace.
+   * @param {Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile}       workingFile       - Working file.
+   * @param {Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_HasReleaseHistory} hasReleaseHistory - Has release history.
    *
    * @private
    *
@@ -213,7 +246,7 @@ export class Runner {
    *
    * @since 0.14.0
    */
-  private static async handle(workspace: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Workspace, workingFile: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile): Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Returns {
+  private static async handle(workspace: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Workspace, workingFile: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile, hasReleaseHistory: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_HasReleaseHistory): Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Returns {
     const fileContents: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FileContents = workspace['fileContents'];
     const filePath: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FilePath = workspace['filePath'];
     const manifest: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Manifest = workspace['manifest'];
@@ -246,22 +279,26 @@ export class Runner {
       Reflect.set(fileContents, 'name', manifest['name']);
     }
 
-    // Sync the "version" field.
-    if (
-      typeof packageVersion !== 'string' // Package "version" is not a string.
-      || LIB_REGEX_PATTERN_SEMVER_STRICT.test(packageVersion) === false // Package "version" must be valid semver.
-      || (
-        ['freezable'].includes(manifest['policy']) === true // Workspace policy is "freezable".
-        && packageVersion !== '0.0.0' // Freezable workspaces must stay on "0.0.0".
-      ) || (
-        [
-          'trackable',
-          'distributable',
-        ].includes(manifest['policy']) === true // Workspace policy is "trackable" or "distributable".
-        && packageVersion === '0.0.0' // "trackable" or "distributable" workspaces cannot stay on "0.0.0".
-      )
-    ) {
-      const validVersion: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidVersion = (manifest['policy'] === 'freezable') ? '0.0.0' : '0.0.1';
+    // Sync the "version" field through the shared policy and strategy contract.
+    const versionStrategy: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_VersionStrategy = (workingFile['settings'] === undefined) ? 'semver' : workingFile['settings']['versionStrategy'] ?? 'semver';
+    let versionError: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_VersionError = undefined;
+
+    if (typeof packageVersion !== 'string') {
+      versionError = new Error(`Invalid version in "${filePath}": expected a string.`);
+    } else {
+      try {
+        LibVersionContract.validate(packageVersion, manifest['policy'], versionStrategy, filePath);
+      } catch (error) {
+        versionError = (error instanceof Error) ? error : new Error(`Unable to validate the version in "${filePath}".`);
+      }
+    }
+
+    if (versionError !== undefined) {
+      if (manifest['policy'] !== 'freezable' && hasReleaseHistory === true) {
+        throw versionError;
+      }
+
+      const validVersion: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidVersion = LibVersionContract.getInitialVersion(manifest['policy'], versionStrategy);
 
       Logger.customize({
         name: 'Runner.handle',

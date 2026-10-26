@@ -1,8 +1,0 @@
-services:
-  app:
-    build:
-      context: .
-    init: true
-    ports:
-      - "8080:8080"
-    restart: unless-stopped

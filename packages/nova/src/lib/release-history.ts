@@ -8,6 +8,11 @@ import {
 } from './regex.js';
 
 import type {
+  Lib_ReleaseHistory_Runner_HasHistory_ChangelogPath,
+  Lib_ReleaseHistory_Runner_HasHistory_Content,
+  Lib_ReleaseHistory_Runner_HasHistory_Lines,
+  Lib_ReleaseHistory_Runner_HasHistory_Returns,
+  Lib_ReleaseHistory_Runner_HasHistory_WorkspaceDirectory,
   Lib_ReleaseHistory_Runner_ValidateStrategy_CalverPaths,
   Lib_ReleaseHistory_Runner_ValidateStrategy_ChangelogFiles,
   Lib_ReleaseHistory_Runner_ValidateStrategy_ChangelogPath,
@@ -37,6 +42,42 @@ import type {
  * @since 0.26.0
  */
 export class Runner {
+  /**
+   * Lib - Release History - Has History.
+   *
+   * Reports whether one workspace changelog contains a supported Nova release
+   * heading. A missing changelog represents a project with no release history.
+   *
+   * @param {Lib_ReleaseHistory_Runner_HasHistory_WorkspaceDirectory} workspaceDirectory - Workspace directory.
+   *
+   * @returns {Lib_ReleaseHistory_Runner_HasHistory_Returns}
+   *
+   * @since 0.34.0
+   */
+  public static async hasHistory(workspaceDirectory: Lib_ReleaseHistory_Runner_HasHistory_WorkspaceDirectory): Lib_ReleaseHistory_Runner_HasHistory_Returns {
+    const changelogPath: Lib_ReleaseHistory_Runner_HasHistory_ChangelogPath = join(workspaceDirectory, 'CHANGELOG.md');
+    let content: Lib_ReleaseHistory_Runner_HasHistory_Content = undefined;
+
+    try {
+      content = await fs.readFile(changelogPath, 'utf-8');
+    } catch (error) {
+      if (
+        typeof error === 'object'
+        && error !== null
+        && 'code' in error
+        && error.code === 'ENOENT'
+      ) {
+        return false;
+      }
+
+      throw new Error(`Unable to read release history from "${changelogPath}".`);
+    }
+
+    const lines: Lib_ReleaseHistory_Runner_HasHistory_Lines = content.split('\n');
+
+    return lines.some((line) => LIB_REGEX_PATTERN_CHANGELOG_SEMVER_HEADING.test(line) === true || LIB_REGEX_PATTERN_CHANGELOG_CALVER_HEADING.test(line) === true);
+  }
+
   /**
    * Lib - Release History - Validate Strategy.
    *

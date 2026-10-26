@@ -218,7 +218,7 @@ export const LIB_REGEX_PATTERN_CASING_UPPER_SNAKE_CASE = /^[A-Z][A-Z0-9]*(?:_[A-
  *
  * @since 0.26.0
  */
-export const LIB_REGEX_PATTERN_CHANGELOG_CALVER_HEADING = /^## (?:[1-9]\d{3})\.(?:[1-9]|1[0-2])\.(?:0|[1-9]\d*)$/;
+export const LIB_REGEX_PATTERN_CHANGELOG_CALVER_HEADING = /^## (?:[1-9]\d{3})\.(?:[1-9]|1[0-2])\.(?:0|[1-9]\d*)(?: \((?:0|[1-9]\d*)\))?$/;
 
 /**
  * Lib - Regex - Pattern Changelog Numeric Heading.
@@ -400,7 +400,7 @@ export const LIB_REGEX_PATTERN_ERROR_PREFIX = /^error:\s*/;
  *
  * @since 0.20.0
  */
-export const LIB_REGEX_PATTERN_EXACT_SEMVER = /^\d+\.\d+\.\d+$/;
+export const LIB_REGEX_PATTERN_EXACT_SEMVER = /^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)$/;
 
 /**
  * Lib - Regex - Pattern Example Value Inline.
@@ -1383,6 +1383,66 @@ export const LIB_REGEX_PLACEHOLDER_APPLE_BUNDLE_IDENTIFIER = /\[__APPLE_BUNDLE_I
 export const LIB_REGEX_APPLE_BUNDLE_IDENTIFIER_SEGMENT = /^[A-Za-z0-9-]+$/;
 
 /**
+ * Lib - Regex - Android Gradle Version Code.
+ *
+ * Captures a numeric Android versionCode assignment in Kotlin or Groovy Gradle
+ * files while preserving surrounding whitespace and comments.
+ *
+ * @since 0.34.0
+ */
+export const LIB_REGEX_ANDROID_GRADLE_VERSION_CODE = /^(\s*versionCode\s*(?:=\s*)?)(\d+)(\s*(?:\/\/.*)?)$/;
+
+/**
+ * Lib - Regex - Android Gradle Version Name.
+ *
+ * Captures an Android versionName assignment in Kotlin or Groovy Gradle files
+ * while preserving quote style, whitespace, and comments.
+ *
+ * @since 0.34.0
+ */
+export const LIB_REGEX_ANDROID_GRADLE_VERSION_NAME = /^(\s*versionName\s*(?:=\s*)?)(["'])([^"']+)(["'])(\s*(?:\/\/.*)?)$/;
+
+/**
+ * Lib - Regex - Apple Pbxproj Current Project Version.
+ *
+ * Captures every Xcode build-number assignment in a checked-in project file so
+ * Apple app releases can keep all targets on one monotonically increasing build.
+ *
+ * @since 0.34.0
+ */
+export const LIB_REGEX_APPLE_PBXPROJ_CURRENT_PROJECT_VERSION = /(\bCURRENT_PROJECT_VERSION = )(\d+)(;)/;
+
+/**
+ * Lib - Regex - Apple Pbxproj Marketing Version.
+ *
+ * Captures every Xcode marketing-version assignment in a checked-in project file
+ * so Nova can synchronize it with the workspace package version during release.
+ *
+ * @since 0.34.0
+ */
+export const LIB_REGEX_APPLE_PBXPROJ_MARKETING_VERSION = /(\bMARKETING_VERSION = )([^;]+)(;)/;
+
+/**
+ * Lib - Regex - Apple Xcodegen Current Project Version.
+ *
+ * Captures a CURRENT_PROJECT_VERSION scalar while retaining indentation, quote
+ * style, and trailing comments in Nova-owned XcodeGen project definitions.
+ *
+ * @since 0.34.0
+ */
+export const LIB_REGEX_APPLE_XCODEGEN_CURRENT_PROJECT_VERSION = /^(\s*CURRENT_PROJECT_VERSION:\s*)(["']?)(\d+)(["']?)(\s*(?:#.*)?)$/;
+
+/**
+ * Lib - Regex - Apple Xcodegen Marketing Version.
+ *
+ * Captures a MARKETING_VERSION scalar while retaining indentation, quote style,
+ * and trailing comments in Nova-owned XcodeGen project definitions.
+ *
+ * @since 0.34.0
+ */
+export const LIB_REGEX_APPLE_XCODEGEN_MARKETING_VERSION = /^(\s*MARKETING_VERSION:\s*)(["']?)([^"'\s#]+)(["']?)(\s*(?:#.*)?)$/;
+
+/**
  * Lib - Regex - Placeholder Astro Adapter.
  *
  * Matches the adapter selection token used by the Astro scaffold. The shared
@@ -1471,6 +1531,16 @@ export const LIB_REGEX_PLACEHOLDER_DOCKER_IMAGE = /\[__DOCKER_IMAGE__\]/;
  * @since 0.29.0
  */
 export const LIB_REGEX_PLACEHOLDER_DOCKER_PUBLISH = /\[__DOCKER_PUBLISH__\]/;
+
+/**
+ * Lib - Regex - Pattern Docker Runtime Path.
+ *
+ * Accepts literal workspace-relative path characters for runtime assets while
+ * excluding whitespace, shell syntax, and Docker COPY glob syntax.
+ *
+ * @since 0.34.0
+ */
+export const LIB_REGEX_PATTERN_DOCKER_RUNTIME_PATH = /^[A-Za-z0-9._/-]+$/;
 
 /**
  * Lib - Regex - Placeholder Docusaurus Content.
@@ -1763,6 +1833,17 @@ export const LIB_REGEX_PLACEHOLDER_WORKSPACE_NAME = /\[__WORKSPACE_NAME__\]/;
  * @since 0.29.0
  */
 export const LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE = /\[__WORKSPACE_TITLE__\]/;
+
+/**
+ * Lib - Regex - Placeholder Workspace Version.
+ *
+ * Matches the "[__WORKSPACE_VERSION__]" token in scaffold templates. The
+ * scaffold pipeline resolves it from the workspace policy and the project's
+ * configured SemVer or CalVer strategy.
+ *
+ * @since 0.34.0
+ */
+export const LIB_REGEX_PLACEHOLDER_WORKSPACE_VERSION = /\[__WORKSPACE_VERSION__\]/;
 
 /**
  * Lib - Regex - Placeholder Terms Of Use.

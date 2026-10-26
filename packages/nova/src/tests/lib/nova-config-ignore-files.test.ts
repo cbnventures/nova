@@ -76,9 +76,13 @@ describe('Shared_NovaConfig ignoreFiles', async () => {
             '',
           ],
         },
-        './apps/api/.dockerignore': {
+        './.dockerignore': {
           bundles: ['nova'],
           patterns: ['local-output/'],
+        },
+        './apps/api/.dockerignore': {
+          bundles: ['nova'],
+          patterns: ['must-not-survive/'],
         },
         './apps/site/public/.assetsignore': {
           bundles: ['cloudflare-astro'],
@@ -99,7 +103,7 @@ describe('Shared_NovaConfig ignoreFiles', async () => {
         bundles: ['nova'],
         patterns: ['graphify-out/'],
       },
-      './apps/api/.dockerignore': {
+      './.dockerignore': {
         bundles: ['nova'],
         patterns: ['local-output/'],
       },

@@ -157,6 +157,12 @@ import type {
   Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesPartialGithubBlockWithMissingOwnerAndRepo_LoadedGithub,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesPartialGithubBlockWithMissingOwnerAndRepo_LoadedTopics,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesPartialGithubBlockWithMissingOwnerAndRepo_ProjectDirectory,
+  Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_Config,
+  Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_ConfigContents,
+  Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_ConfigPath,
+  Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_Loaded,
+  Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_LoadedGithub,
+  Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_ProjectDirectory,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_RejectsMalformedOwnerWithShellMetacharacters_Config,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_RejectsMalformedOwnerWithShellMetacharacters_ConfigContents,
   Tests_Lib_NovaConfig_ParseGithubViaLoad_RejectsMalformedOwnerWithShellMetacharacters_ConfigPath,
@@ -2238,6 +2244,12 @@ describe('parseWorkflows (via load)', async () => {
           ],
           runsOn: 'ubuntu-latest',
           timeoutMinutes: 45,
+          containerPlatforms: [
+            'linux/arm64',
+            'unsupported/platform',
+            'linux/amd64',
+            'linux/arm64',
+          ],
           with: {
             region: 'us-east-1',
             stage: 'prod',
@@ -2291,6 +2303,12 @@ describe('parseWorkflows (via load)', async () => {
     ]);
     strictEqual(firstWorkflow['runsOn'], 'ubuntu-latest');
     strictEqual(firstWorkflow['timeoutMinutes'], 45);
+    deepStrictEqual(firstWorkflow['containerPlatforms'], [
+      'linux/arm64',
+      'unsupported/platform',
+      'linux/amd64',
+      'linux/arm64',
+    ]);
     deepStrictEqual(firstWorkflow['with'], {
       region: 'us-east-1',
       stage: 'prod',
@@ -2985,6 +3003,41 @@ describe('parseGithub (via load)', async () => {
         color: '008672',
       },
     ]);
+
+    return;
+  });
+
+  it('preserves explicit empty required status checks', async () => {
+    const projectDirectory: Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_ProjectDirectory = join(sandboxRoot, 'github-empty-required-status-checks');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_ConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_ConfigContents = JSON.stringify({
+      github: {
+        rulesets: {
+          defaultBranch: {
+            requiredStatusChecks: [],
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_Config = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_Loaded = await config.load();
+    const loadedGithub: Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_LoadedGithub = loaded['github'];
+
+    deepStrictEqual(loadedGithub, {
+      rulesets: {
+        defaultBranch: {
+          requiredStatusChecks: [],
+        },
+      },
+    });
 
     return;
   });

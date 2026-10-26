@@ -1,0 +1,49 @@
+---
+id: "graphic-assets"
+title: "Graphic Assets"
+description: "Replace selected Google Play graphic assets from repository-owned images."
+keywords:
+  - "nova"
+  - "google play console"
+  - "graphic assets"
+tags:
+  - "cli"
+  - "integration"
+  - "google-play-console"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Replace selected Google Play graphic assets from `assets/google-play-console/{workspace}/graphic-assets`.
+
+```text
+android/<locale>/featureGraphic/feature.png
+android/<locale>/icon/icon.png
+android/<locale>/promoGraphic/promo.png
+android/<locale>/tvBanner/banner.png
+```
+
+Nova preserves Google's official `imageType` names. Each target accepts exactly one PNG or JPEG. Absent targets remain untouched, while existing empty or multi-file targets fail before authentication.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova integration google-play-console graphic-assets [options]
+    nova int gpc graphic-assets [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest integration google-play-console graphic-assets [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+The command uses the same workspace, package, locale, dry-run, and confirmation options as [`metadata`](../metadata/). All selected targets are applied through one transactional Google Play edit.

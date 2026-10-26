@@ -26,7 +26,7 @@ Scaffold a **Discord bot** with discord.js, TypeScript, and explicit development
 2. Keeps the bot token in an untracked `.env` file while documenting the required key in the tracked `.env.sample`.
 3. Uses a fixed-width Nova header and clear connection states while keeping the bot token out of terminal output.
 4. Uses Nova's type-check and transpile utilities so checking and production output follow the same contract as other workspaces.
-5. Can compose the background-service Docker profile with `--docker-image` without adding an HTTP port or health check.
+5. Can contribute the background service to the repository-wide s6 Docker appliance without adding an HTTP port.
 
 ## Requirements
 
@@ -66,7 +66,7 @@ Scaffold a **Discord bot** with discord.js, TypeScript, and explicit development
 | Flag                      | Description                                                          |
 |---------------------------|----------------------------------------------------------------------|
 | `-d, --dry-run`           | Run without writing any files.                                       |
-| `--docker-image`          | Add a production Node image and background-service Compose file.     |
+| `--docker-image`          | Add the bot as a supervised service in the repository-wide s6 image. |
 | `--install`               | Install dependencies after scaffolding; this is the default.         |
 | `--no-install`            | Skip dependency installation.                                        |
 | `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root. |
@@ -85,6 +85,10 @@ Scaffold a **Discord bot** with discord.js, TypeScript, and explicit development
 | `src/index.ts`    | Runtime token lookup and bot startup.                         |
 | `tsconfig.*.json` | Nova strict Node.js configs for source, tooling, and tests.   |
 | `package.json`    | discord.js dependencies and Nova-managed workspace scripts.   |
+
+With `--docker-image`, Nova adds root `.dockerignore`, `Dockerfile`, and `compose.yml` entry points plus private assembly files under `packages/docker`. The bot runs as a supervised longrun inside the repository's one s6 image.
+
+See [Docker Images](/docs/cli/scaffolding/docker-images) for the shared runtime and layout contract.
 
 ## First Run
 

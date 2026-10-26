@@ -1,97 +1,124 @@
 import {
-  chmod,
-  mkdir,
-  mkdtemp,
-  readFile,
-  rm,
-  symlink,
-  writeFile,
-} from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+  execFileSync,
+  spawnSync,
+} from 'node:child_process';
 
 import {
-  afterAll,
   afterEach,
-  beforeEach,
   describe,
   expect,
   it,
+  vi,
 } from 'vitest';
 
 import { ensureDockerEngine } from '../../lib/docker-engine.mjs';
 
-const originalPath = process.env['PATH'];
-const temporaryDirectory = await mkdtemp(join(tmpdir(), 'nova-docker-engine-test-'));
-const binaryDirectory = join(temporaryDirectory, 'bin');
-const engineStatePath = join(temporaryDirectory, 'engine-state');
-const launcherStatePath = join(temporaryDirectory, 'launcher-state');
+vi.mock('node:child_process');
+
+let engineRunning = false;
+let launcherStarted = false;
 
 /**
- * Tests - CLI - Docker Engine - Write Command.
+ * Tests - CLI - Docker Engine - Spawn Result.
  *
- * Creates an executable command fixture inside the isolated test path.
+ * Creates the complete result shape returned by spawnSync while keeping each
+ * test focused on the status and launch error used by the production probe.
  *
- * @param {string} name    - Name.
- * @param {string} content - Content.
+ * @param {number | null} status  - Status.
+ * @param {Error}         [error] - Error.
  *
- * @returns {Promise<void>}
+ * @returns {ReturnType<typeof spawnSync>}
  *
  * @since 0.0.0
  */
-async function writeCommand(name, content) {
-  const commandPath = join(binaryDirectory, name);
+function spawnResult(status, error) {
+  const result = {
+    pid: 1,
+    output: [
+      null,
+      '',
+      '',
+    ],
+    signal: null,
+    status,
+    stderr: '',
+    stdout: '',
+  };
 
-  await writeFile(commandPath, content, 'utf-8');
-  await chmod(commandPath, parseInt('755', 8));
+  if (error === undefined) {
+    return result;
+  }
+
+  return {
+    ...result,
+    error,
+  };
+}
+
+/**
+ * Tests - CLI - Docker Engine - Configure Commands.
+ *
+ * Models installed command-line tools without relying on POSIX executable
+ * permissions, shebangs, or symlinks that Windows cannot execute.
+ *
+ * @param {object}  options                 - Options.
+ * @param {boolean} options.colimaInstalled - Colima installed.
+ * @param {string}  options.context         - Context.
+ * @param {boolean} options.dockerInstalled - Docker installed.
+ * @param {boolean} options.running         - Running.
+ *
+ * @returns {void}
+ *
+ * @since 0.0.0
+ */
+function configureCommands(options) {
+  engineRunning = options['running'];
+  launcherStarted = false;
+
+  vi.mocked(spawnSync).mockImplementation((command, args = []) => {
+    if (command === 'docker' && args[0] === '--version') {
+      if (options['dockerInstalled'] === true) {
+        return spawnResult(0);
+      }
+
+      return spawnResult(null, new Error('docker missing'));
+    }
+
+    if (command === 'colima' && args[0] === '--version') {
+      if (options['colimaInstalled'] === true) {
+        return spawnResult(0);
+      }
+
+      return spawnResult(null, new Error('colima missing'));
+    }
+
+    if (command === 'colima' && args[0] === 'start') {
+      engineRunning = true;
+      launcherStarted = true;
+
+      return spawnResult(0);
+    }
+
+    return spawnResult(1, new Error(`unexpected command: ${String(command)}`));
+  });
+
+  vi.mocked(execFileSync).mockImplementation((command, args = []) => {
+    if (command === 'docker' && args[0] === 'context') {
+      return options['context'];
+    }
+
+    if (
+      command === 'docker'
+      && args[0] === 'info'
+      && engineRunning === true
+    ) {
+      return '';
+    }
+
+    throw new Error(`unavailable command: ${String(command)}`);
+  });
 
   return;
-}
-
-/**
- * Tests - CLI - Docker Engine - Docker Command.
- *
- * Returns a fake Docker CLI that reports engine health through a marker file.
- *
- * @returns {string}
- *
- * @since 0.0.0
- */
-function dockerCommand() {
-  return [
-    '#!/usr/bin/env node',
-    'const { existsSync } = require(\'node:fs\');',
-    'const args = process.argv.slice(2);',
-    'if (args[0] === \'--version\') process.exit(0);',
-    'if (args[0] === \'context\' && args[1] === \'show\') {',
-    '  process.stdout.write(\'default\');',
-    '  process.exit(0);',
-    '}',
-    `if (args[0] === 'info') process.exit(existsSync(${JSON.stringify(engineStatePath)}) ? 0 : 1);`,
-    'process.exit(1);',
-    '',
-  ].join('\n');
-}
-
-/**
- * Tests - CLI - Docker Engine - Colima Command.
- *
- * Returns a fake Colima launcher that marks the Docker engine as running.
- *
- * @returns {string}
- *
- * @since 0.0.0
- */
-function colimaCommand() {
-  return [
-    '#!/usr/bin/env node',
-    'const { writeFileSync } = require(\'node:fs\');',
-    'const args = process.argv.slice(2);',
-    'if (args[0] === \'--version\') process.exit(0);',
-    `if (args[0] === 'start') { writeFileSync(${JSON.stringify(engineStatePath)}, 'running'); writeFileSync(${JSON.stringify(launcherStatePath)}, 'started'); process.exit(0); }`,
-    'process.exit(1);',
-    '',
-  ].join('\n');
 }
 
 /**
@@ -103,60 +130,53 @@ function colimaCommand() {
  * @since 0.0.0
  */
 describe('Docker engine startup', () => {
-  beforeEach(async () => {
-    await rm(binaryDirectory, {
-      force: true,
-      recursive: true,
-    });
-    await rm(engineStatePath, { force: true });
-    await rm(launcherStatePath, { force: true });
-    await mkdir(binaryDirectory, { recursive: true });
-    await symlink(process.execPath, join(binaryDirectory, 'node'));
-
-    Reflect.set(process.env, 'PATH', binaryDirectory);
-
-    return;
-  });
-
   afterEach(() => {
-    Reflect.set(process.env, 'PATH', originalPath);
-
-    return;
-  });
-
-  afterAll(async () => {
-    await rm(temporaryDirectory, {
-      force: true,
-      recursive: true,
-    });
+    vi.resetAllMocks();
+    engineRunning = false;
+    launcherStarted = false;
 
     return;
   });
 
   it('allows container-only builds to be skipped when Docker is not installed', () => {
+    configureCommands({
+      colimaInstalled: false,
+      context: '',
+      dockerInstalled: false,
+      running: false,
+    });
+
     expect(ensureDockerEngine()).toBe(false);
 
     return;
   });
 
-  it('uses an already-running Docker engine without launching another one', async () => {
-    await writeCommand('docker', dockerCommand());
-    await writeFile(engineStatePath, 'running', 'utf-8');
+  it('uses an already-running Docker engine without launching another one', () => {
+    configureCommands({
+      colimaInstalled: false,
+      context: 'default',
+      dockerInstalled: true,
+      running: true,
+    });
 
     expect(ensureDockerEngine()).toBe(true);
 
-    await expect(readFile(launcherStatePath, 'utf-8')).rejects.toThrow();
+    expect(launcherStarted).toBe(false);
 
     return;
   });
 
-  it('starts an installed local engine before container smoke builds', async () => {
-    await writeCommand('docker', dockerCommand());
-    await writeCommand('colima', colimaCommand());
+  it('starts an installed local engine before container smoke builds', () => {
+    configureCommands({
+      colimaInstalled: true,
+      context: 'colima',
+      dockerInstalled: true,
+      running: false,
+    });
 
     expect(ensureDockerEngine()).toBe(true);
 
-    await expect(readFile(launcherStatePath, 'utf-8')).resolves.toBe('started');
+    expect(launcherStarted).toBe(true);
 
     return;
   });

@@ -16,11 +16,10 @@
     "check:test": "vitest run",
     "build": "node ../../scripts/nova-run-scripts.mjs --sequential --node-env production \"build:*\"",
     "build:build": "docusaurus build",
-    "build:transpile-app": "nova utility transpile --project tsconfig.app.json",
     "clean": "node ../../scripts/nova-run-scripts.mjs --parallel \"clean:*\"",
     "clean:build": "shx rm -rf ./build",
     "clean:clear": "docusaurus clear",
-    "i18n": "nova utility run-scripts --sequential \"i18n:*\"",
+    "i18n": "node ../../scripts/nova-run-scripts.mjs --sequential \"i18n:*\"",
     "i18n:sync": "theme-nova i18n sync",
     "i18n:check": "theme-nova i18n check",
     "i18n:coverage": "theme-nova i18n coverage"
@@ -32,6 +31,7 @@
     "@cbnventures/docusaurus-preset-nova": "file:../../packages/docusaurus-preset-nova",
     "@cbnventures/nova": "file:../../packages/nova",
     "@docusaurus/core": "3.10.2",
+    "@iconify/react": "6.0.2",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },

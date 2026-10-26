@@ -2,7 +2,10 @@
 
 import { existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import {
+  fileURLToPath,
+  pathToFileURL,
+} from 'node:url';
 
 /**
  * CLI - Root.
@@ -30,4 +33,4 @@ if (existsSync(cli) === false) {
   throw new Error('CLI build output not found');
 }
 
-await import(cli);
+await import(pathToFileURL(cli).href);

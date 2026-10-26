@@ -3,6 +3,7 @@ import {
   access,
   mkdir,
   mkdtemp,
+  readFile,
   rm,
   writeFile,
 } from 'node:fs/promises';
@@ -24,6 +25,8 @@ import type {
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_AgentsMdPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_ClaudeMdPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_ConfigPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentationMdContent,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentationMdPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_PackageJson,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_PackageJsonPath,
   Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_ProjectDirectory,
@@ -156,6 +159,7 @@ describe('CliGenerateMustHavesAgentConventions.run', async () => {
     const visionMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_VisionMdPath = join(projectDirectory, 'VISION.md');
     const projectRulesMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_ProjectRulesMdPath = join(projectDirectory, 'PROJECT_RULES.md');
     const universalMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_UniversalMdPath = join(projectDirectory, 'conventions', 'universal.md');
+    const documentationMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentationMdPath = join(projectDirectory, 'conventions', 'documentation.md');
 
     await access(claudeMdPath);
 
@@ -164,6 +168,12 @@ describe('CliGenerateMustHavesAgentConventions.run', async () => {
     await access(projectRulesMdPath);
 
     await access(universalMdPath);
+
+    const documentationMdContent: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_DocumentationMdContent = await readFile(documentationMdPath, 'utf-8');
+
+    strictEqual(documentationMdContent.includes('import { novaRules } from \'@cbnventures/nova/presets/eslint\';'), true);
+
+    strictEqual(documentationMdContent.includes('import { novaRules } from \'@cbnventures/nova\';'), false);
 
     let agentsMdExists: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_GeneratesClaudeCodeOnly_AgentsMdExists = true;
 

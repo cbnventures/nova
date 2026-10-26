@@ -11,6 +11,10 @@ export type Tests_Cli_Utility_RunWorkspaces_TemporaryPrefix = string;
 
 export type Tests_Cli_Utility_RunWorkspaces_SandboxRoot = string;
 
+export type Tests_Cli_Utility_RunWorkspaces_SavedRunnerMarker = string | undefined;
+
+export type Tests_Cli_Utility_RunWorkspaces_SavedLifecycleEvent = string | undefined;
+
 export type Tests_Cli_Utility_RunWorkspaces_ProjectRoot = string;
 
 export type Tests_Cli_Utility_RunWorkspaces_CoreDirectory = string;
@@ -133,6 +137,29 @@ export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_DoesNotCacheFail
 export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_ForwardsArgumentsAndMarksWorkspaceChildren_Returns = Promise<void>;
 
 /**
+ * Tests - CLI - Utility - Run Workspaces - Run - Keeps The Root When Filtering Workspaces.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_KeepsTheRootWhenFilteringWorkspaces_Returns = Promise<void>;
+
+/**
+ * Tests - CLI - Utility - Run Workspaces - Run - Leaves The Root Out When It Is Excluded.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_LeavesTheRootOutWhenItIsExcluded_Returns = Promise<void>;
+
+/**
+ * Tests - CLI - Utility - Run Workspaces - Run - Never Caches Root Steps.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_NeverCachesRootSteps_Returns = Promise<void>;
+
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_NeverCachesRootSteps_SecondExitCode = 0 | 1;
+
+/**
  * Tests - CLI - Utility - Run Workspaces - Run - Previews A Workspace Task Graph Without Executing Scripts.
  *
  * @since 0.32.0
@@ -152,6 +179,27 @@ export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RejectsAnUnknown
  * @since 0.32.0
  */
 export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RejectsInternalDependencyCyclesBeforeExecutingTasks_Returns = Promise<void>;
+
+/**
+ * Tests - CLI - Utility - Run Workspaces - Run - Runs Root Steps Before Workspace Tasks.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RunsRootStepsBeforeWorkspaceTasks_Returns = Promise<void>;
+
+/**
+ * Tests - CLI - Utility - Run Workspaces - Run - Skips The Root Inside A Nested Run.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_SkipsTheRootInsideANestedRun_Returns = Promise<void>;
+
+/**
+ * Tests - CLI - Utility - Run Workspaces - Run - Skips The Root When Configured To.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_SkipsTheRootWhenConfiguredTo_Returns = Promise<void>;
 
 /**
  * Tests - CLI - Utility - Run Workspaces - Run - Stops Scheduling Pending Tasks After Interruption.

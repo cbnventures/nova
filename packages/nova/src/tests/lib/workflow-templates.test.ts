@@ -17,6 +17,10 @@ import type {
   Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_PublishEntry,
   Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_Targets,
   Tests_Lib_WorkflowTemplates_PublishTargets_MarksPerAppDeployCredsWithAppScopeAndAccountCredsWithAccountScope_Vercel,
+  Tests_Lib_WorkflowTemplates_PublishTargets_StoresContainerIdentityAsTargetRequiredLiterals_DockerHub,
+  Tests_Lib_WorkflowTemplates_PublishTargets_StoresContainerIdentityAsTargetRequiredLiterals_Ghcr,
+  Tests_Lib_WorkflowTemplates_PublishTargets_StoresContainerIdentityAsTargetRequiredLiterals_PublishEntry,
+  Tests_Lib_WorkflowTemplates_PublishTargets_StoresContainerIdentityAsTargetRequiredLiterals_Targets,
 } from '../../types/tests/lib/workflow-templates.test.d.ts';
 
 for (const currentEntry of libWorkflowTemplatesMetadata) {
@@ -91,6 +95,25 @@ describe('publish targets', () => {
     strictEqual(vercel!['variables']['VERCEL_ORG_ID']!['scope'], 'account', 'Expected "VERCEL_ORG_ID" to be account scoped');
     strictEqual(cloudflareWorkers!['variables']['CLOUDFLARE_API_TOKEN']!['scope'], 'account', 'Expected "CLOUDFLARE_API_TOKEN" to be account scoped');
     strictEqual(cloudflareWorkers!['variables']['CLOUDFLARE_ACCOUNT_ID']!['scope'], 'account', 'Expected "CLOUDFLARE_ACCOUNT_ID" to be account scoped');
+
+    return;
+  });
+
+  it('stores container identity as target required literals', () => {
+    const publishEntry: Tests_Lib_WorkflowTemplates_PublishTargets_StoresContainerIdentityAsTargetRequiredLiterals_PublishEntry = libWorkflowTemplatesMetadata.find((entry) => entry['name'] === 'publish');
+
+    strictEqual(publishEntry !== undefined, true, 'Expected a "publish" template entry to exist');
+
+    const targets: Tests_Lib_WorkflowTemplates_PublishTargets_StoresContainerIdentityAsTargetRequiredLiterals_Targets = publishEntry!['targets'];
+    const dockerHub: Tests_Lib_WorkflowTemplates_PublishTargets_StoresContainerIdentityAsTargetRequiredLiterals_DockerHub = targets!['docker-hub'];
+    const ghcr: Tests_Lib_WorkflowTemplates_PublishTargets_StoresContainerIdentityAsTargetRequiredLiterals_Ghcr = targets!['ghcr'];
+
+    strictEqual(dockerHub!['variables']['IMAGE_NAMESPACE'], undefined);
+    strictEqual(dockerHub!['variables']['IMAGE_REPOSITORY'], undefined);
+    strictEqual(dockerHub!['requiredLiterals']!['IMAGE_NAMESPACE']!['description'].length > 0, true);
+    strictEqual(dockerHub!['requiredLiterals']!['IMAGE_REPOSITORY']!['description'].length > 0, true);
+    strictEqual(ghcr!['variables']['IMAGE_REPOSITORY'], undefined);
+    strictEqual(ghcr!['requiredLiterals']!['IMAGE_REPOSITORY']!['description'].length > 0, true);
 
     return;
   });

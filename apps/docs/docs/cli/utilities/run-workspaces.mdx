@@ -23,7 +23,7 @@ Run one package script across Nova workspaces in dependency order without a sepa
 
 ## Summary
 
-`run-workspaces` reads workspace paths from `nova.config.json`, reads scripts and internal package relationships from each workspace's `package.json`, validates the complete graph, and runs ready tasks concurrently. The project root remains its own workspace, but is not recursively dispatched as a child.
+`run-workspaces` reads workspace paths from `nova.config.json`, reads scripts and internal package relationships from each workspace's `package.json`, validates the complete graph, and runs ready tasks concurrently. The project root is the top node of that graph, so its own steps run as part of the same command.
 
 Nova applies lifecycle prerequisites consistently:
 
@@ -31,6 +31,16 @@ Nova applies lifecycle prerequisites consistently:
 - `prod` and `deploy` first run the selected workspace's `check` and `build` tasks.
 - `dev`, `clean`, and custom script names run directly.
 - A missing script skips that workspace and is reported instead of failing the entire graph.
+
+## Root Node
+
+The root `package.json` is the top of the tree. Each lifecycle script there calls `run-workspaces`, such as `"check": "nova utility run-workspaces check"`, and the root's own work lives in child steps such as `check:lint` and `check:test`.
+
+- **Order** — For `check`, `build`, `prod`, and `deploy`, the root's `<script>:*` steps run first, one at a time in `package.json` order, and every workspace task waits for them. For `dev` and `clean`, they run alongside the workspaces.
+- **Filtering** — `--workspace` keeps the root. Pass `--workspace ./` to run only the root, or `--exclude-workspace ./` (or the root package name) to leave it out.
+- **Caching** — Root steps read the whole repository, so they always run and are never cached. Workspace tasks still cache normally.
+- **Skipping** — Set `settings.runWorkspaces.root` to `"skip"` to leave the root out of every run.
+- **Nesting** — A run started from inside the tree, or by a legacy `<script>:workspaces` script, does not add the root again.
 
 ## Usage
 
@@ -80,9 +90,10 @@ An explicit `--concurrency` option overrides the configured limit for that run. 
 
 ## Config Fields
 
-| Field                                         | Description                                                                  |
-|-----------------------------------------------|------------------------------------------------------------------------------|
-| `settings.runWorkspaces.concurrency.<script>` | Positive integer limit for one workspace script, such as `check` or `build`. |
+| Field                                         | Description                                                                                        |
+|-----------------------------------------------|----------------------------------------------------------------------------------------------------|
+| `settings.runWorkspaces.concurrency.<script>` | Positive integer limit for one workspace script, such as `check` or `build`.                       |
+| `settings.runWorkspaces.root`                 | `"first"` (default) runs the root's own steps before the workspaces. `"skip"` leaves the root out. |
 
 ```json title="nova.config.json"
 {

@@ -93,7 +93,7 @@ export const cliScaffoldDocsDocusaurusTemplateQuestions: Cli_Scaffold_Docs_Docus
       },
       {
         title: 'Yes',
-        description: 'Serve the production site from an unprivileged NGINX image',
+        description: 'Serve the production site as a service in the root s6 appliance image',
         value: 'enabled',
       },
     ],
@@ -147,6 +147,10 @@ export class Runner {
    */
   public static async run(options: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options): Cli_Scaffold_Docs_Docusaurus_Runner_Run_Returns {
     await runScaffold(options, {
+      allowScriptProfiles: [
+        'docusaurus',
+        'file-watching',
+      ],
       category: 'docs',
       displayName: 'Docusaurus',
       importMetaUrl: import.meta.url,
@@ -159,14 +163,16 @@ export class Runner {
       templateQuestions: cliScaffoldDocsDocusaurusTemplateQuestions,
       templateSubpath: 'scaffold/docs/docusaurus',
       typeName: 'docusaurus',
-      workspaceFinalizer: async (workspaceDirectory, _workspaceName, _configRoot, answers) => {
+      projectFinalizer: async (workspaceDirectory, workspaceName, configRoot, answers) => {
         if (answers.get('dockerImage') === 'enabled') {
           await LibDockerPackaging.generateForTarget({
             buildDirectory: 'build',
             profile: 'static-site',
+            projectDirectory: configRoot,
             reportFiles: false,
             replaceFile: true,
             workspaceDirectory,
+            workspaceName,
           });
         }
 

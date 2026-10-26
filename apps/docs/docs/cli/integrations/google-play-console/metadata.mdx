@@ -1,0 +1,58 @@
+---
+id: "metadata"
+title: "Metadata"
+description: "Update selected localized Google Play listing metadata from repository-owned JSON files."
+keywords:
+  - "nova"
+  - "google play console"
+  - "metadata"
+  - "listing"
+tags:
+  - "cli"
+  - "integration"
+  - "google-play-console"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Update localized Google Play listings from `assets/google-play-console/{workspace}/metadata/android/{locale}.json`.
+
+Nova accepts Google's `fullDescription`, `shortDescription`, `title`, and `video` fields. A string updates that field. `null` is a local placeholder and is never sent to Google. Files without any populated editable fields fail before authentication.
+
+## Credentials
+
+Nova uses [Google Application Default Credentials](https://cloud.google.com/docs/authentication/application-default-credentials) with the Android Publisher scope. Configure ADC using Google's supported tools or credential locations. Nova does not accept alternative credential flags and never stores credentials in `nova.config.json`.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova integration google-play-console metadata [options]
+    nova int gpc metadata [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest integration google-play-console metadata [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                                                     |
+|---------------------------|-----------------------------------------------------------------|
+| `-d, --dry-run`           | Validate and print the complete plan without authenticating.    |
+| `--locales <locales>`     | Comma-separated locales to include.                             |
+| `-n, --non-interactive`   | Disable prompts; mutations also require `-y, --yes`.            |
+| `--package-name <name>`   | Override the application ID derived from the Android workspace. |
+| `--workspace <workspace>` | Select a configured Android workspace by name or path.          |
+| `-y, --yes`               | Confirm the complete mutation plan.                             |
+
+Nova opens one transactional Google Play edit, applies only the printed local targets, and commits after every operation succeeds. A failed operation abandons that edit.

@@ -57,7 +57,10 @@ function BlogTagsPostsPage(props: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPag
         </>
       )}
     >
-      <PageMetadata title={title} />
+      <PageMetadata
+        title={title}
+        {...(props['tag']['description'] !== undefined) ? { description: props['tag']['description'] } : {}}
+      />
       <BlogPostItems items={props['items']} />
       <BlogListPaginator metadata={props['listMetadata']} />
     </BlogLayout>

@@ -12,8 +12,8 @@ import {
   getPluginI18nPath,
   globTranslatableSourceFiles,
 } from '@docusaurus/utils';
-import { Joi } from '@docusaurus/utils-validation';
 
+import { joi } from '../docusaurus-utils-validation.js';
 import { resolveModulePath } from '../module-loader.js';
 
 import type {
@@ -81,10 +81,10 @@ import type {
  *
  * @since 0.21.0
  */
-const areaFileSchema = Joi.object()
-  .pattern(Joi.string(), Joi.object({
-    message: Joi.string().allow('').required(),
-    description: Joi.string().optional(),
+const areaFileSchema = joi.object()
+  .pattern(joi.string(), joi.object({
+    message: joi.string().allow('').required(),
+    description: joi.string().optional(),
   }))
   .required();
 
@@ -285,7 +285,7 @@ export class Runner {
 
       // Validate the bundle shape exactly as Docusaurus validates `code.json`, so
       // a malformed entry fails the run closed rather than being rebuilt to `{}`.
-      Joi.attempt(parsed, areaFileSchema, {
+      joi.attempt(parsed, areaFileSchema, {
         abortEarly: false,
         allowUnknown: false,
         convert: false,

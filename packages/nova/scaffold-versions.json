@@ -539,6 +539,15 @@
         "strategy": "latest-major"
       }
     },
+    "workflowActionSetupOras": {
+      "value": "oras-project/setup-oras@v2.0.1",
+      "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_SETUP_ORAS__]",
+      "group": "github-workflow",
+      "source": {
+        "type": "manual",
+        "reason": "The ORAS setup action is pinned to the reviewed patch release used to install the workflow's separately pinned ORAS CLI."
+      }
+    },
     "workflowActionLockInactiveThreads": {
       "value": "mrjackyliang/lock-inactive-threads@v1",
       "placeholder": "[__SCAFFOLD_VERSION_WORKFLOW_ACTION_LOCK_INACTIVE_THREADS__]",
@@ -609,36 +618,34 @@
       }
     },
     "dockerNode": {
-      "value": "24.21.0-alpine3.23",
+      "value": "24.22.0-trixie-slim",
       "placeholder": "[__SCAFFOLD_VERSION_DOCKER_NODE__]",
       "group": "docker",
       "source": {
         "type": "docker-hub",
         "repository": "library/node",
         "strategy": "pattern",
-        "pattern": "^24\\.\\d+\\.\\d+-alpine3\\.23$"
+        "pattern": "^24\\.\\d+\\.\\d+-trixie-slim$"
       }
     },
-    "dockerAlpine": {
-      "value": "3.23.3",
-      "placeholder": "[__SCAFFOLD_VERSION_DOCKER_ALPINE__]",
+    "dockerDebian": {
+      "value": "trixie-20261005-slim",
+      "placeholder": "[__SCAFFOLD_VERSION_DOCKER_DEBIAN__]",
       "group": "docker",
       "source": {
         "type": "docker-hub",
-        "repository": "library/alpine",
+        "repository": "library/debian",
         "strategy": "pattern",
-        "pattern": "^3\\.23\\.\\d+$"
+        "pattern": "^trixie-\\d{8}-slim$"
       }
     },
-    "dockerNginxUnprivileged": {
-      "value": "1.30.5-alpine3.24",
-      "placeholder": "[__SCAFFOLD_VERSION_DOCKER_NGINX_UNPRIVILEGED__]",
+    "dockerS6Overlay": {
+      "value": "3.2.3.2",
+      "placeholder": "[__SCAFFOLD_VERSION_DOCKER_S6_OVERLAY__]",
       "group": "docker",
       "source": {
-        "type": "docker-hub",
-        "repository": "nginxinc/nginx-unprivileged",
-        "strategy": "pattern",
-        "pattern": "^1\\.30\\.\\d+-alpine3\\.24$"
+        "type": "manual",
+        "reason": "s6-overlay publishes a four-part release and architecture-specific assets that Nova validates as one appliance-runtime contract."
       }
     },
     "androidGradlePlugin": {

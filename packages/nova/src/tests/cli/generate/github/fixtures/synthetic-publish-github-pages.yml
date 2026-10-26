@@ -57,12 +57,12 @@ jobs:
 
       - name: "Check project"
         run: |
-          npm run check
+          npm run check -- --workspace nova-app-docs
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
         run: |
-          npm run build:workspaces -- --workspace nova-app-docs
+          npm run build -- --workspace nova-app-docs
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Upload build artifacts (github-pages-docusaurus/apps-docs)"

@@ -1,0 +1,21 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PGID: "${PGID:-1000}"
+      PUID: "${PUID:-1000}"
+      S6_READ_ONLY_ROOT: "${S6_READ_ONLY_ROOT:-0}"
+      TZ: "${TZ:-UTC}"
+[__DOCKER_COMPOSE_ENV_FILES__]
+[__DOCKER_COMPOSE_PORTS__]
+    restart: unless-stopped
+[__DOCKER_COMPOSE_INTERACTIVE__]
+    # The appliance supports a read-only root filesystem when project-specific
+    # writable paths are mounted, s6 runtime paths use tmpfs, and
+    # S6_READ_ONLY_ROOT is set to 1.
+    # read_only: true
+    # tmpfs:
+    #   - /run
+    #   - /tmp

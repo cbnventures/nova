@@ -462,9 +462,9 @@ describe('WorkflowsBlueprintPublishParity.cloudflareWorkersSecretSync', () => {
  */
 describe('WorkflowsBlueprintPublishParity.containers', () => {
   const workspaces: Tests_Cli_Generate_Github_WorkflowsBlueprintPublishParity_WorkflowsBlueprintPublishParityContainers_Workspaces = {
-    './services/api': {
-      name: 'sandbox-api',
-      role: 'package',
+    './apps/docs': {
+      name: 'sandbox-docs',
+      role: 'docs',
       policy: 'trackable',
     },
   };
@@ -473,15 +473,32 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
     template: 'publish',
     name: 'containers',
     triggers: ['release'],
-    build: ['./services/api'],
+    timeoutMinutes: 45,
+    containerPlatforms: ['linux/arm64'],
+    build: ['./apps/docs'],
     deploy: [
       {
         to: 'docker-hub',
-        path: './services/api',
+        path: './',
+        with: {
+          IMAGE_NAMESPACE: 'cbnventures',
+          IMAGE_REPOSITORY: 'sandbox',
+        },
       },
       {
         to: 'ghcr',
-        path: './services/api',
+        path: './',
+        with: {
+          IMAGE_REPOSITORY: 'sandbox',
+        },
+      },
+      {
+        to: 'github-pages-docusaurus',
+        path: './apps/docs',
+      },
+      {
+        to: 'cloudflare-pages-docusaurus',
+        path: './apps/docs',
       },
     ],
   };
@@ -496,6 +513,32 @@ describe('WorkflowsBlueprintPublishParity.containers', () => {
     strictEqual(generated, committed);
     strictEqual(generated.includes('uses: "actions/attest@v4"'), true);
     strictEqual(generated.includes('artifact-metadata: "write"'), true);
+    strictEqual(generated.split('uses: "docker/build-push-action@v7"').length - 1, 1);
+    strictEqual(generated.split('platforms: "linux/arm64"').length - 1, 2);
+    strictEqual(generated.includes('linux/amd64'), false);
+    strictEqual(generated.split('name: "Download immutable OCI artifact"').length - 1, 2);
+    strictEqual(generated.split('name: "container-oci"').length - 1, 3);
+    strictEqual(generated.includes('context: "./"'), true);
+    strictEqual(generated.includes('uses: "oras-project/setup-oras@v2.0.1"'), true);
+    strictEqual(generated.includes('oras cp --from-oci-layout'), true);
+    strictEqual(generated.includes('publish-github-pages-docusaurus-apps-docs:'), true);
+    strictEqual(generated.includes('publish-cloudflare-pages-docusaurus-apps-docs:'), true);
+    strictEqual(generated.includes('branch-$(normalize_channel "$REF_NAME")'), true);
+    strictEqual(generated.includes('workflow-$(normalize_channel "$WORKFLOW_BRANCH")'), true);
+    strictEqual(generated.includes('The exact $source image tag latest is reserved for stable releases.'), true);
+    strictEqual(generated.includes([
+      'IMAGE_NAMESPACE: "$',
+      '{{ github.repository_owner }}"',
+    ].join('')), true);
+    strictEqual(generated.includes([
+      'username: "$',
+      '{{ github.actor }}"',
+    ].join('')), true);
+    strictEqual(generated.includes('Unable to determine whether immutable image tag $IMAGE:$tag exists'), true);
+    strictEqual(generated.includes('oras resolve "$IMAGE:$tag" 2>/dev/null'), false);
+    strictEqual(generated.split('name: "Verify immutable image tags"').length - 1, 2);
+    strictEqual(generated.includes('oras tag \\"$IMAGE@$IMAGE_DIGEST\\" latest'), true);
+    strictEqual(generated.split('timeout-minutes: 45').length - 1, 5);
 
     return;
   });

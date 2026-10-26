@@ -1,0 +1,92 @@
+---
+id: "docker-images"
+title: "Docker Images"
+description: "Package one Nova repository as an s6-overlay container appliance with consistent build, runtime identity, and registry behavior."
+keywords:
+  - "nova"
+  - "nova scaffold"
+  - "docker"
+  - "s6-overlay"
+  - "container image"
+  - "container appliance"
+tags:
+  - "cli"
+  - "scaffold"
+  - "docker"
+---
+
+Package a Nova monorepo as one repository-wide s6-overlay container appliance while keeping Docker support optional.
+
+## Why Use This Contract?
+
+1. Keeps one container boundary per repository so every workspace contributes to the same deployable appliance.
+2. Uses the same s6 service model for one service or many so the image can expand without changing its structure.
+3. Builds from the repository root so services can consume any workspace they depend on without copying artifacts from a host build.
+
+## Repository Boundary
+
+Nova supports exactly one generated container image per repository. Publishing several independent container images from one repository is unsupported.
+
+That image can contain any number of native s6-rc longruns and oneshots:
+
+- One workspace can contribute several supervised services.
+- Several workspaces can contribute services to the same appliance.
+- Auxiliary services can run beside the primary application services.
+- A single-service or documentation-only image keeps the same s6 structure.
+
+Docker remains opt-in. Selecting Docker for a supported scaffold contributes that workspace to the repository's one appliance without changing its non-container deployment choices.
+
+## Generated Layout
+
+Docker-enabled repositories keep the public build entry points at the project root and the private assembly files in one workspace:
+
+```text
+.
+├── .dockerignore
+├── Dockerfile
+├── compose.yml
+├── apps/
+└── packages/
+    └── docker/    # Private image assembly and s6 service definitions
+```
+
+The root `Dockerfile` uses the repository root as its build context. The private `packages/docker` workspace assembles the root filesystem and service graph; it is not a separately published package or image.
+
+Native service definitions live beneath `packages/docker/rootfs/etc/s6-overlay/s6-rc.d/<service>`. Their activation markers live separately beneath `packages/docker/rootfs/etc/s6-overlay/user-bundles.d/user/contents.d/<service>`, which is the current s6-overlay user-bundle interface. Do not place the `user` bundle inside `s6-rc.d`; that legacy-compatible location is deprecated by s6-overlay.
+
+:::warning Workspace-local Docker layouts are unsupported
+
+Nova does not retain compatibility with generated `Dockerfile`, `compose.yml`, or `.dockerignore` files inside individual workspaces.
+:::
+
+## Runtime Contract
+
+Every generated image exposes the same identity and timezone settings:
+
+| Variable | Default | Purpose                                                  |
+|----------|---------|----------------------------------------------------------|
+| `PUID`   | `1000`  | Numeric user ID for the primary runtime identity.        |
+| `PGID`   | `1000`  | Numeric group ID for the primary runtime identity.       |
+| `TZ`     | `UTC`   | Effective timezone applied inside the running container. |
+
+Initialization starts as root so the image can prepare its declared writable paths and runtime identity. Primary long-running services then drop privileges to the configured identity instead of running as root.
+
+The appliance writes only to paths declared writable by its service contract. Adding a service therefore includes deciding which persistent or temporary paths it owns before that service enters the s6 graph.
+
+## Build and Distribution
+
+The root `Dockerfile` compiles container inputs inside named stages and copies only runtime output into the final s6 image. A host-side workspace build is not an input to the container build.
+
+Workspace files needed after compilation are declared as workspace-relative runtime paths in the private assembly manifest. Nova copies those paths from the build stage into the same `/app/apps/...` or `/app/packages/...` runtime workspace; generated root Dockerfiles are not extended with hand-maintained `COPY` instructions.
+
+Non-container deliverables continue through the normal workspace pipeline. If one workspace feeds both the container and another destination, it compiles once for each deliverable because the two outputs have independent build boundaries.
+
+Container publishing builds one OCI artifact once for the workflow's selected platforms. `linux/amd64` and `linux/arm64` are supported, and selecting both produces one multi-platform artifact. Docker Hub and GitHub Container Registry jobs distribute that same artifact instead of rebuilding registry-specific images.
+
+## Documentation-Only Example
+
+A repository containing only a Docusaurus workspace can still opt into Docker. The result is one s6-overlay image whose supervised static service serves the compiled documentation site.
+
+GitHub Pages and Cloudflare Pages remain independent destinations. You can publish the same Docusaurus workspace to either or both Pages targets in addition to the container image; choosing one target does not disable the others.
+
+See [Workflows](/docs/cli/generators/github/workflows#publishing-container-images) for the registry configuration contract.

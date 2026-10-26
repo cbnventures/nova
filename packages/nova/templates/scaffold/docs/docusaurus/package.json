@@ -9,10 +9,12 @@
     "prod:serve": "docusaurus serve --port 3000",
     "check": "nova utility run-scripts --sequential \"check:*\"",
     "check:lint": "eslint ./ --max-warnings=0",
-    "check:types": "nova utility type-check --project tsconfig.json",
+    "check:types-app": "nova utility type-check --project tsconfig.app.json",
+    "check:types-config": "nova utility type-check --project tsconfig.config.json",
+    "check:types-tests": "nova utility type-check --project tsconfig.tests.json",
     "check:test": "vitest run",
     "build": "nova utility run-scripts --sequential --node-env production \"build:*\"",
-    "build:site": "docusaurus build",
+    "build:build": "docusaurus build",
     "clean": "nova utility run-scripts --parallel \"clean:*\"",
     "clean:build": "shx rm -rf ./build",
     "clean:clear": "docusaurus clear",
@@ -25,8 +27,8 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/docusaurus-preset-nova": "0.33.0",
-    "@cbnventures/nova": "0.33.0",
+    "@cbnventures/docusaurus-preset-nova": "0.34.0",
+    "@cbnventures/nova": "0.34.0",
     "@docusaurus/core": "[__SCAFFOLD_VERSION_DOCUSAURUS__]",
     "react": "[__SCAFFOLD_VERSION_REACT__]",
     "react-dom": "[__SCAFFOLD_VERSION_REACT_DOM__]"

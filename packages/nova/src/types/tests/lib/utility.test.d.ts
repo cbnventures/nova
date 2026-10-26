@@ -243,6 +243,27 @@ export type Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedR
 export type Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_RelativePaths = string[];
 
 /**
+ * Tests - Lib - Utility - ExecuteShell - Preserves Quoted Commands From Directories With Shell Metacharacters.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_OriginalCwd = string;
+
+export type Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_SandboxDirectory = string;
+
+export type Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_Result_TextOut = string;
+
+export type Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_Result_TextError = string;
+
+export type Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_Result_Code = number;
+
+export type Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_Result = Readonly<{
+  textOut: Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_Result_TextOut;
+  textError: Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_Result_TextError;
+  code: Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_Result_Code;
+}>;
+
+/**
  * Tests - Lib - Utility - ExecuteShell - ReturnsNonZeroCodeForFailingCommand.
  *
  * @since 0.12.0

@@ -2,11 +2,12 @@
 id: "overview"
 title: "CLI Reference"
 sidebar_label: "Overview"
-description: "Generate files, apply recipes, scaffold projects, and run utilities with explicit Nova CLI commands and predictable behavior."
+description: "Generate files, use vendor integrations, apply recipes, scaffold projects, and run utilities with explicit Nova CLI commands and predictable behavior."
 sidebar_position: 1
 keywords:
   - "nova cli"
   - "generate files"
+  - "vendor integrations"
   - "apply recipes"
   - "scaffold projects"
   - "monorepo utilities"
@@ -16,17 +17,18 @@ keywords:
 tags:
   - "cli"
   - "generators"
+  - "integrations"
   - "recipes"
   - "scaffolding"
   - "utilities"
-  - "getting-started"
+  - "getting started"
 ---
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The **Nova <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology>** lets you generate files, apply <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology>, <Terminology title="project starter" to="/docs/quickstart/terminology#nova-concepts" color={true}>scaffold</Terminology> projects, and run utilities.
+The **Nova <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology>** lets you generate files, apply local assets through vendor integrations, run <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology>, <Terminology title="project starter" to="/docs/quickstart/terminology#nova-concepts" color={true}>scaffold</Terminology> projects, and use development utilities.
 
 :::tip Step by step
 Not sure what to type? Build the command **one section at a time**.
@@ -61,6 +63,7 @@ Start with `nova`, then the **command** and **subcommand** (if available), and f
 ```mermaid
 flowchart TD
     CLI[nova] --> GEN[generate]
+    CLI --> INT[integration]
     CLI --> RCP[recipe]
     CLI --> SCAF[scaffold]
     CLI --> UTIL[utility]
@@ -69,6 +72,13 @@ flowchart TD
         direction LR
         GEN --> GH[github] --> GH1[funding / issue-template / workflows]
         GEN --> MUST[must-haves] --> MUST1[agent-conventions / dotenv / editorconfig / ...]
+    end
+
+    subgraph Integrations
+        direction LR
+        INT --> ASC[app-store-connect] --> ASC1[creative-assets / metadata / screenshots]
+        INT --> DDP[discord-developer-portal] --> DDP1[validate-token]
+        INT --> GPC[google-play-console] --> GPC1[graphic-assets / metadata / screenshots]
     end
 
     subgraph Recipes
@@ -127,6 +137,41 @@ _Category: `must-haves` · Alias: `must`_
 | [`ignore-files`](/docs/cli/generators/must-haves/ignore-files)           | —         | Create every configured physical ignore file.                  |
 | [`license`](/docs/cli/generators/must-haves/license)                     | `lic`     | Create a `LICENSE` file for project license agreements.        |
 | [`read-me`](/docs/cli/generators/must-haves/read-me)                     | `read`    | Create a baseline `README.md` file for your project.           |
+
+### Integrations
+
+Apply local project assets through supported vendor services without storing credentials in `nova.config.json`. Running `nova integration` or a vendor category opens an interactive menu; leaf commands remain directly scriptable.
+
+:::info
+Integration commands use `nova integration <vendor> <operation>` or `nova int <alias> <operation>`.
+
+Mutating commands print their complete plan before authentication. Use `-d, --dry-run` to validate without authenticating or changing remote data. Non-interactive mutations require `-n, --non-interactive` together with `-y, --yes`.
+:::
+
+#### App Store Connect
+_Category: `app-store-connect` · Alias: `asc`_
+
+| Subcommand                                                                    | Shorthand | What It Does                                                        |
+|-------------------------------------------------------------------------------|-----------|---------------------------------------------------------------------|
+| [`creative-assets`](/docs/cli/integrations/app-store-connect/creative-assets) | —         | Replace selected App Store promotional artwork.                     |
+| [`metadata`](/docs/cli/integrations/app-store-connect/metadata)               | —         | Update selected localized App Store version metadata.               |
+| [`screenshots`](/docs/cli/integrations/app-store-connect/screenshots)         | —         | Replace selected iPhone, iPad, Apple Watch, or Mac screenshot sets. |
+
+#### Discord Developer Portal
+_Category: `discord-developer-portal` · Alias: `ddp`_
+
+| Subcommand                                                                         | Shorthand | What It Does                                                 |
+|------------------------------------------------------------------------------------|-----------|--------------------------------------------------------------|
+| [`validate-token`](/docs/cli/integrations/discord-developer-portal/validate-token) | —         | Validate a Discord bot token without storing or printing it. |
+
+#### Google Play Console
+_Category: `google-play-console` · Alias: `gpc`_
+
+| Subcommand                                                                    | Shorthand | What It Does                                          |
+|-------------------------------------------------------------------------------|-----------|-------------------------------------------------------|
+| [`graphic-assets`](/docs/cli/integrations/google-play-console/graphic-assets) | —         | Replace selected Google Play graphic asset sets.      |
+| [`metadata`](/docs/cli/integrations/google-play-console/metadata)             | —         | Update selected localized Google Play listing fields. |
+| [`screenshots`](/docs/cli/integrations/google-play-console/screenshots)       | —         | Replace selected Google Play screenshot sets.         |
 
 ### Recipes
 

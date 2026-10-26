@@ -22,6 +22,7 @@ import TabItem from '@theme/TabItem';
 Scaffold a universal **SwiftUI** application that shares one codebase across iOS and macOS.
 
 Nova stores the Xcode project as a readable `project.yml` definition, then generates the disposable `.xcodeproj` file with XcodeGen.
+The generated `package.json` and `MARKETING_VERSION` share the strategy-aware initial version: `0.0.1` for SemVer or the current UTC `YYYY.M.0` period for CalVer. In an existing lock-step project, the app inherits the shared non-freezable version instead. Nova's changelog release flow keeps the two versions synchronized and advances the Apple build number from its initial value of `1`.
 
 ## Why Use This Command?
 
@@ -29,6 +30,7 @@ Nova stores the Xcode project as a readable `project.yml` definition, then gener
 2. Includes a Swift Testing target so the generated app starts with a working verification path.
 3. Lints and type-checks the generated Node.js lifecycle helper while keeping native tests owned by Xcode.
 4. Keeps Xcode build data inside the workspace so local and automated builds do not depend on a global DerivedData location.
+5. Seeds editable App Store Connect metadata and asset directories under the repository's root `assets/` folder.
 
 ## Requirements
 
@@ -78,18 +80,19 @@ Nova stores the Xcode project as a readable `project.yml` definition, then gener
 
 ## Output Files
 
-| File                        | Description                                                                   |
-|-----------------------------|-------------------------------------------------------------------------------|
-| `project.yml`               | XcodeGen definition for the universal app, test target, scheme, and app icon. |
-| `Sources/App.swift`         | SwiftUI application entry point.                                              |
-| `Sources/Assets.xcassets/`  | Nova app icon, launchpad mark, and social-link vector assets.                 |
-| `Sources/ContentView.swift` | Starter interface shared by iOS and macOS.                                    |
-| `Tests/AppTests.swift`      | Swift Testing smoke test.                                                     |
-| `package.json`              | Nova script groups for project generation, checking, and building.            |
-| `eslint.config.mts`         | Nova ESLint presets and custom rules for the Node.js lifecycle helper.        |
-| `tsconfig.scripts.json`     | Strict Node.js type-checking for generated lifecycle scripts.                 |
-| `tsconfig.tests.json`       | Strict type-checking for future helper tests and Vitest configuration.        |
-| `vitest.config.mts`         | Helper-test discovery with an empty-suite-safe starting point.                |
+| File                                    | Description                                                                   |
+|-----------------------------------------|-------------------------------------------------------------------------------|
+| `project.yml`                           | XcodeGen definition for the universal app, test target, scheme, and app icon. |
+| `Sources/App.swift`                     | SwiftUI application entry point.                                              |
+| `Sources/Assets.xcassets/`              | Nova app icon, launchpad mark, and social-link vector assets.                 |
+| `Sources/ContentView.swift`             | Starter interface shared by iOS and macOS.                                    |
+| `Tests/AppTests.swift`                  | Swift Testing smoke test.                                                     |
+| `package.json`                          | Nova script groups for project generation, checking, and building.            |
+| `eslint.config.mts`                     | Nova ESLint presets and custom rules for the Node.js lifecycle helper.        |
+| `tsconfig.scripts.json`                 | Strict Node.js type-checking for generated lifecycle scripts.                 |
+| `tsconfig.tests.json`                   | Strict type-checking for future helper tests and Vitest configuration.        |
+| `vitest.config.mts`                     | Helper-test discovery with an empty-suite-safe starting point.                |
+| `assets/app-store-connect/{workspace}/` | Root-owned App Store Connect metadata, screenshots, and creative assets.      |
 
 ## Non-Interactive Mode
 
@@ -105,3 +108,5 @@ nova scaffold app apple --non-interactive --workspace-name client --bundle-id io
 Nova registers the workspace with the `app` role and `trackable` policy, then adds `swift`, `ios`, and `macos` to the root `project.platforms` list without removing existing entries. The generated package name follows `{projectSlug}-app-{workspaceName}`.
 
 The bundle identifier defaults to `com.example.{workspaceName}` when `--bundle-id` is omitted. Nova accepts ASCII letters, numbers, periods, and hyphens, preserves the supplied value exactly, and gives the unit-test target the matching `{bundleId}.tests` identifier.
+
+The scaffold creates `en-US` metadata placeholders for iOS and macOS plus documented screenshot and creative-asset directories. Fill only the fields and asset targets you intend to change, then use [`nova integration app-store-connect`](/docs/cli/integrations/app-store-connect/metadata). Nova does not add `/assets/` to the generated `.gitignore`; store assets remain project-owned and trackable by default.

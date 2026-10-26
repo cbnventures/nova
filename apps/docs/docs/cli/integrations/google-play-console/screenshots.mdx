@@ -1,0 +1,50 @@
+---
+id: "screenshots"
+title: "Screenshots"
+description: "Replace selected Google Play screenshot sets from ordered repository-owned images."
+keywords:
+  - "nova"
+  - "google play console"
+  - "screenshots"
+tags:
+  - "cli"
+  - "integration"
+  - "google-play-console"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Replace only screenshot targets present under `assets/google-play-console/{workspace}/screenshots`.
+
+```text
+android/<locale>/phoneScreenshots/01-name.png
+android/<locale>/sevenInchScreenshots/01-name.png
+android/<locale>/tenInchScreenshots/01-name.png
+android/<locale>/tvScreenshots/01-name.png
+android/<locale>/wearScreenshots/01-name.png
+```
+
+Nova preserves Google's official `imageType` names. Each PNG or JPEG filename begins with a unique position from `01` through `10`. Absent targets remain untouched, while existing empty targets fail before authentication.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova integration google-play-console screenshots [options]
+    nova int gpc screenshots [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest integration google-play-console screenshots [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+The command uses the same workspace, package, locale, dry-run, and confirmation options as [`metadata`](../metadata/). All selected targets are applied through one transactional Google Play edit.

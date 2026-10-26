@@ -443,6 +443,23 @@ export type Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesPartialGithubBlockWith
 export type Tests_Lib_NovaConfig_ParseGithubViaLoad_ParsesPartialGithubBlockWithMissingOwnerAndRepo_LoadedTopics = Shared_NovaConfig_Github_Topics | undefined;
 
 /**
+ * Tests - Lib - Nova Config - ParseGithubViaLoad - Preserves Explicit Empty Required Status Checks.
+ *
+ * @since 0.33.0
+ */
+export type Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_ProjectDirectory = string;
+
+export type Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_ConfigPath = string;
+
+export type Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_ConfigContents = string;
+
+export type Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_Config = LibNovaConfig;
+
+export type Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_Loaded = Pick<Shared_NovaConfigConfig, 'project' | 'workspaces' | 'entities' | 'urls' | 'github' | 'workflows'>;
+
+export type Tests_Lib_NovaConfig_ParseGithubViaLoad_PreservesExplicitEmptyRequiredStatusChecks_LoadedGithub = Shared_NovaConfig_Github | undefined;
+
+/**
  * Tests - Lib - Nova Config - ParseGithubViaLoad - RejectsMalformedOwnerWithShellMetacharacters.
  *
  * @since 0.13.0

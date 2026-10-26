@@ -1,5 +1,9 @@
 import { ok, strictEqual } from 'node:assert/strict';
 import { promises as fsPromises } from 'node:fs';
+import {
+  basename,
+  join,
+} from 'node:path';
 
 import prompts from 'prompts';
 import {
@@ -131,7 +135,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     const actualReadFile: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_ActualReadFile = fsPromises.readFile;
     const readFileSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_ReadFileSpy = vi.spyOn(fsPromises, 'readFile').mockImplementation((filePath, encoding) => {
-      if (typeof filePath === 'string' && filePath.endsWith('/.env') === true) {
+      if (typeof filePath === 'string' && basename(filePath) === '.env') {
         return Promise.resolve(existingEnvContent);
       }
 
@@ -142,7 +146,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_Calls = saveSpy['mock']['calls'];
 
-    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env'));
+    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === '.env');
 
     ok(envTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env');
 
@@ -152,7 +156,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     ok(envTargetCall[1].includes('NEW_KEY=""'), 'Expected .env content to blank the newly-added config variable');
 
-    const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env.sample'));
+    const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesExistingEnvValues_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === '.env.sample');
 
     ok(sampleTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env.sample');
 
@@ -196,7 +200,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     const actualReadFile: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_ActualReadFile = fsPromises.readFile;
     const readFileSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_ReadFileSpy = vi.spyOn(fsPromises, 'readFile').mockImplementation((filePath, encoding) => {
-      if (typeof filePath === 'string' && filePath.endsWith('/.env') === true) {
+      if (typeof filePath === 'string' && basename(filePath) === '.env') {
         return Promise.resolve(existingEnvContent);
       }
 
@@ -215,7 +219,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_Calls = saveSpy['mock']['calls'];
 
-    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env'));
+    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_DropsKeysNotDeclaredInTheConfigOrTemplate_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === '.env');
 
     ok(envTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env');
 
@@ -261,7 +265,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     const actualReadFile: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_ActualReadFile = fsPromises.readFile;
     const readFileSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_ReadFileSpy = vi.spyOn(fsPromises, 'readFile').mockImplementation((filePath, encoding) => {
-      if (typeof filePath === 'string' && filePath.endsWith('/.env') === true) {
+      if (typeof filePath === 'string' && basename(filePath) === '.env') {
         return Promise.resolve(existingEnvContent);
       }
 
@@ -272,7 +276,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_Calls = saveSpy['mock']['calls'];
 
-    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env'));
+    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesUndeclaredKeysWithoutPrune_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === '.env');
 
     ok(envTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env');
 
@@ -319,7 +323,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     const actualReadFile: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesMultiLineQuotedValues_ActualReadFile = fsPromises.readFile;
     const readFileSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesMultiLineQuotedValues_ReadFileSpy = vi.spyOn(fsPromises, 'readFile').mockImplementation((filePath, encoding) => {
-      if (typeof filePath === 'string' && filePath.endsWith('/.env') === true) {
+      if (typeof filePath === 'string' && basename(filePath) === '.env') {
         return Promise.resolve(existingEnvContent);
       }
 
@@ -330,7 +334,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesMultiLineQuotedValues_Calls = saveSpy['mock']['calls'];
 
-    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesMultiLineQuotedValues_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env'));
+    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_PreservesMultiLineQuotedValues_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === '.env');
 
     ok(envTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env');
 
@@ -396,7 +400,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
     // Force the existing ".env" read to resolve empty so the blank-value assertion is deterministic.
     const actualReadFile: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_ActualReadFile = fsPromises.readFile;
     const readFileSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_ReadFileSpy = vi.spyOn(fsPromises, 'readFile').mockImplementation((filePath, encoding) => {
-      if (typeof filePath === 'string' && filePath.endsWith('/.env') === true) {
+      if (typeof filePath === 'string' && basename(filePath) === '.env') {
         return Promise.resolve('');
       }
 
@@ -407,7 +411,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_Calls = saveSpy['mock']['calls'];
 
-    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env'));
+    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === '.env');
 
     ok(envTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env');
 
@@ -417,7 +421,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     strictEqual((envTargetCall[3] !== undefined) ? envTargetCall[3]['mode'] : undefined, 'fillable');
 
-    const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env.sample'));
+    const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesConfigVariablesToEnvAndEnvSample_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === '.env.sample');
 
     ok(sampleTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env.sample');
 
@@ -497,7 +501,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
     // Force every existing ".env" read to resolve empty so blank-value assertions stay deterministic.
     const actualReadFile: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesAFileForEachWorkspaceThatDeclaresDotenv_ActualReadFile = fsPromises.readFile;
     const readFileSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesAFileForEachWorkspaceThatDeclaresDotenv_ReadFileSpy = vi.spyOn(fsPromises, 'readFile').mockImplementation((filePath, encoding) => {
-      if (typeof filePath === 'string' && filePath.endsWith('/.env') === true) {
+      if (typeof filePath === 'string' && basename(filePath) === '.env') {
         return Promise.resolve('');
       }
 
@@ -508,13 +512,13 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesAFileForEachWorkspaceThatDeclaresDotenv_Calls = saveSpy['mock']['calls'];
 
-    const rootEnvCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesAFileForEachWorkspaceThatDeclaresDotenv_RootEnvCall = calls.find((call) => call[0].endsWith('/.env') && call[0].includes('/apps/web/') === false);
+    const rootEnvCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesAFileForEachWorkspaceThatDeclaresDotenv_RootEnvCall = calls.find((call) => call[0] === join(process.cwd(), '.env'));
 
     ok(rootEnvCall !== undefined, 'Expected saveGeneratedFile to be called for the root .env');
 
     ok(rootEnvCall[1].includes('ROOT_KEY=""'), 'Expected the root .env to include the root workspace variable');
 
-    const webEnvCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesAFileForEachWorkspaceThatDeclaresDotenv_WebEnvCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/apps/web/.env'));
+    const webEnvCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesAFileForEachWorkspaceThatDeclaresDotenv_WebEnvCall = calls.find((call) => typeof call[0] === 'string' && call[0] === join(process.cwd(), 'apps', 'web', '.env'));
 
     ok(webEnvCall !== undefined, 'Expected saveGeneratedFile to be called for the apps/web .env');
 
@@ -559,7 +563,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
     // Force the existing ".env" read to resolve empty so the sample assertions stay deterministic.
     const actualReadFile: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_ActualReadFile = fsPromises.readFile;
     const readFileSpy: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_ReadFileSpy = vi.spyOn(fsPromises, 'readFile').mockImplementation((filePath, encoding) => {
-      if (typeof filePath === 'string' && filePath.endsWith('/.env') === true) {
+      if (typeof filePath === 'string' && basename(filePath) === '.env') {
         return Promise.resolve('');
       }
 
@@ -570,7 +574,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_Calls = saveSpy['mock']['calls'];
 
-    const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env.sample'));
+    const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_KeepsManagedValuesInTheSample_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === '.env.sample');
 
     ok(sampleTargetCall !== undefined, 'Expected saveGeneratedFile to be called for .env.sample');
 
@@ -609,8 +613,8 @@ describe('CliGenerateMustHavesDotenv.run', () => {
       if (
         typeof filePath === 'string'
         && (
-          filePath.endsWith('/.env') === true
-          || filePath.endsWith('/.env.sample') === true
+          basename(filePath) === '.env'
+          || basename(filePath) === '.env.sample'
         )
       ) {
         return Promise.resolve('');
@@ -623,7 +627,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
 
     const calls: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_Calls = saveSpy['mock']['calls'];
 
-    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env'));
+    const envTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_EnvTargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === '.env');
 
     ok(envTargetCall !== undefined, 'Expected saveGeneratedFile to be called for the root .env');
 
@@ -634,7 +638,7 @@ describe('CliGenerateMustHavesDotenv.run', () => {
       'Expected the root .env to carry the reserved keys',
     );
 
-    const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.env.sample'));
+    const sampleTargetCall: Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_WritesTheRootEnvWhenTheRootWorkspaceIsDeclaredWithNoVariables_SampleTargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === '.env.sample');
 
     ok(sampleTargetCall !== undefined, 'Expected saveGeneratedFile to be called for the root .env.sample');
 

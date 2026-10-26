@@ -76,6 +76,12 @@ export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCust
 
 export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_ProjectYml = string;
 
+export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_Gitignore = string;
+
+export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_IosMetadata = string;
+
+export type Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_MacosMetadata = string;
+
 /**
  * Tests - CLI - Scaffold - App - Apple - Run - Validates Dry Run Without Writing.
  *

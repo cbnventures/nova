@@ -20,6 +20,29 @@ Nova eliminates the gap between starting a project and having it production-read
 
 The trade-off is intentional: Nova is strict by default. Teams who want maximum flexibility should look elsewhere. Teams who want guardrails that prevent mistakes while still allowing overrides will find Nova eliminates an entire class of configuration debt.
 
+## Product Direction
+
+No additional product-direction constraints are currently documented beyond the project purpose and existing capabilities.
+
+## Product Design
+
+The current capabilities and intended experience are described by the value proposition and key features; domain terminology is defined in the glossary.
+
+## Positioning
+
+### Differentiators
+
+| Nova                                                                           | Alternatives                                                                                  |
+|--------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| Single package covers presets, CLI tooling, batteries, and project maintenance | Separate tools for linting, config, scaffolding, maintenance (mix-and-match, drift over time) |
+| Recipes enforce consistency across workspaces automatically                    | Manual updates across workspaces or reliance on Renovate/Dependabot                           |
+| Strict-by-default with explicit override control                               | Lenient defaults that teams must tighten manually                                             |
+| No magic — every config detail is visible and independent                      | Shared configs hide base presets and cross-dependencies                                       |
+
+## Risks and Future
+
+No additional risks, open questions, roadmap commitments, or success criteria are currently documented.
+
 ## Marketing Copy
 
 ### Tagline
@@ -43,15 +66,6 @@ Nova gives you strict presets and guided tooling so you skip the busywork of wir
 - **Node.js LTS first** — Nova tracks the latest long-term support baselines.
 - **Modern modules** — ESM-based builds only; no legacy "script" pipelines.
 - **No experimental features** — Only officially supported and stable options are allowed.
-
-### Differentiators
-
-| Nova                                                                           | Alternatives                                                                                  |
-|--------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
-| Single package covers presets, CLI tooling, batteries, and project maintenance | Separate tools for linting, config, scaffolding, maintenance (mix-and-match, drift over time) |
-| Recipes enforce consistency across workspaces automatically                    | Manual updates across workspaces or reliance on Renovate/Dependabot                           |
-| Strict-by-default with explicit override control                               | Lenient defaults that teams must tighten manually                                             |
-| No magic — every config detail is visible and independent                      | Shared configs hide base presets and cross-dependencies                                       |
 
 ### Voice
 
@@ -92,20 +106,24 @@ Nova classifies every workspace along two axes: **role** (what it is) and **poli
 
 #### Policies
 
-| Policy            | Version   | Private | Behavior                                                   |
-|-------------------|-----------|---------|------------------------------------------------------------|
-| **freezable**     | `0.0.0`   | `true`  | Not deployed, not published. Internal coordination only.   |
-| **trackable**     | `> 0.0.0` | `true`  | Versioned and deployable internally. Never published.      |
-| **distributable** | `> 0.0.0` | `false` | Published to a package registry and installable by others. |
+| Policy            | Version   | Private | Behavior                                                                           |
+|-------------------|-----------|---------|------------------------------------------------------------------------------------|
+| **freezable**     | `0.0.0`   | `true`  | Not version-bumped or package-published; deployment is allowed independently.      |
+| **trackable**     | `> 0.0.0` | `true`  | Versioned and private; may be deployed but is not published to a package registry. |
+| **distributable** | `> 0.0.0` | `false` | Versioned, package-publishable, and installable by others.                         |
 
 #### Role-to-policy matrix
 
-| Role     | Allowed policies         |
-|----------|--------------------------|
-| project  | freezable                |
-| docs     | freezable, trackable     |
-| config   | freezable, trackable     |
-| app      | trackable                |
-| package  | trackable, distributable |
-| tool     | freezable, trackable     |
-| template | freezable                |
+| Role     | Allowed policies                    |
+|----------|-------------------------------------|
+| project  | freezable                           |
+| docs     | freezable, trackable                |
+| config   | freezable, trackable                |
+| app      | trackable                           |
+| package  | trackable, distributable            |
+| tool     | freezable, trackable, distributable |
+| template | freezable, trackable                |
+
+## Additional Vision Notes
+
+No additional vision notes are currently documented.

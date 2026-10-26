@@ -80,6 +80,10 @@ export class Runner {
    */
   public static async run(options: Cli_Scaffold_Tool_Serverless_Runner_Run_Options): Cli_Scaffold_Tool_Serverless_Runner_Run_Returns {
     await runScaffold(options, {
+      allowScriptProfiles: [
+        'esbuild',
+        'file-watching',
+      ],
       category: 'tool',
       displayName: 'Serverless Tool',
       importMetaUrl: import.meta.url,
@@ -87,6 +91,7 @@ export class Runner {
         'nodejs',
         'web',
       ],
+      resolveAllowScriptProfiles: (answers) => (answers.get('target') === 'cloudflare-workers') ? ['cloudflare'] : [],
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldToolServerlessTemplateQuestions,
       templateSubpath: 'scaffold/tool/serverless',

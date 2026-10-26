@@ -6,6 +6,7 @@ import {
 import prompts from 'prompts';
 
 import { LIB_REGEX_PATTERN_SLUG_SIMPLE } from '../../../lib/regex.js';
+import { resolveScaffoldAllowScripts } from '../../../lib/scaffold-allow-scripts.js';
 import {
   confirmScaffoldPlan,
   createScaffoldProgress,
@@ -278,7 +279,7 @@ export class Runner {
     progress.start('Writing base monorepo files', displayPath);
 
     // Create monorepo root structure.
-    await createMonorepoRoot(outputDirectory, resolvedName, ['nodejs']);
+    await createMonorepoRoot(outputDirectory, resolvedName, ['nodejs'], resolveScaffoldAllowScripts(['file-watching']));
 
     await progress.complete();
 

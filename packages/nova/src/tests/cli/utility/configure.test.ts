@@ -24,6 +24,8 @@ import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import * as toolkit from '../../../toolkit/index.js';
 
 import type {
+  Tests_Cli_Utility_Configure_CliUtilityConfigureIsIgnoreFilePathInput_AcceptsRootDockerAndNestedGitOrAssetPaths_Results,
+  Tests_Cli_Utility_Configure_CliUtilityConfigureIsIgnoreFilePathInput_RejectsAWorkspaceLocalDockerignore_Result,
   Tests_Cli_Utility_Configure_CliUtilityConfigureIsNonEmptyLiteralInput_ReturnsTheErrorMessageForAnEmptyString_Result,
   Tests_Cli_Utility_Configure_CliUtilityConfigureIsNonEmptyLiteralInput_ReturnsTheErrorMessageForNonStringInput_Result,
   Tests_Cli_Utility_Configure_CliUtilityConfigureIsNonEmptyLiteralInput_ReturnsTheErrorMessageForWhitespaceOnlyInput_Result,
@@ -102,6 +104,14 @@ import type {
   Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_PromptGithubSecurity,
   Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_RulesetsResult,
   Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_SecurityResult,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_Config,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_ModeQuestion,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_PromptCall,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_PromptGithubRulesets,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_Questions,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_Result,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_UnsetConfig,
+  Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_UnsetResult,
   Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Config,
   Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Next,
   Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_PromptIgnoreFiles,
@@ -134,6 +144,27 @@ import type {
   Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Result,
   Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_SandboxRoot,
   Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_WorkspaceDirectory,
+  Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_CapturedQuestions,
+  Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Config,
+  Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_ContainerWorkflow,
+  Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Next,
+  Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_PromptWorkflowsForm,
+  Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_QuestionList,
+  Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Responses,
+  Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Result,
+  Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_TargetTypeQuestion,
+  Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Workflow,
+  Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_CapturedQuestions,
+  Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Config,
+  Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Next,
+  Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_PromptWorkflowsForm,
+  Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_QuestionList,
+  Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Responses,
+  Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Result,
+  Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_ScopesQuestion,
+  Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_TargetTypeQuestions,
+  Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_TargetWorkingDirQuestions,
+  Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Workflow,
   Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Config,
   Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Next,
   Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_PromptWorkflows,
@@ -316,6 +347,7 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
       },
       runsOn: 'promptWorkflowsForm',
       timeoutMinutes: 'promptWorkflowsForm',
+      containerPlatforms: { $item: 'promptWorkflowsForm' },
       build: { $item: 'promptWorkflowsForm' },
       deploy: {
         $item: {
@@ -525,6 +557,7 @@ const configFieldCoverage: Tests_Cli_Utility_Configure_ConfigFieldCoverage = {
         scripts: { $item: 'promptSettings' },
       },
       concurrency: { $entry: 'promptSettings' },
+      root: 'promptSettings',
     },
     versionStrategy: 'promptSettings',
   },
@@ -609,6 +642,39 @@ describe('CliUtilityConfigure.isNonEmptyLiteralInput', () => {
     const result: Tests_Cli_Utility_Configure_CliUtilityConfigureIsNonEmptyLiteralInput_ReturnsTheErrorMessageForNonStringInput_Result = CliUtilityConfigure.isNonEmptyLiteralInput(undefined);
 
     strictEqual(result, 'This field is required.');
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Configure - Is Ignore File Path Input.
+ *
+ * @since 0.34.0
+ */
+describe('CliUtilityConfigure.isIgnoreFilePathInput', () => {
+  it('accepts root Docker and nested Git or asset paths', () => {
+    const results: Tests_Cli_Utility_Configure_CliUtilityConfigureIsIgnoreFilePathInput_AcceptsRootDockerAndNestedGitOrAssetPaths_Results = [
+      CliUtilityConfigure.isIgnoreFilePathInput('./.dockerignore'),
+      CliUtilityConfigure.isIgnoreFilePathInput('./apps/api/.gitignore'),
+      CliUtilityConfigure.isIgnoreFilePathInput('./apps/site/public/.assetsignore'),
+    ];
+
+    deepStrictEqual(results, [
+      true,
+      true,
+      true,
+    ]);
+
+    return;
+  });
+
+  it('rejects a workspace-local Dockerignore', () => {
+    const result: Tests_Cli_Utility_Configure_CliUtilityConfigureIsIgnoreFilePathInput_RejectsAWorkspaceLocalDockerignore_Result = CliUtilityConfigure.isIgnoreFilePathInput('./apps/api/.dockerignore');
+
+    strictEqual(result, 'Use a project-relative .gitignore or .assetsignore path, or the root path ./.dockerignore.');
 
     return;
   });
@@ -1430,8 +1496,11 @@ describe('prompt GitHub repository contracts', () => {
         requireLastPushApproval: true,
         requiredApprovals: '2',
         requireConversationResolution: true,
-        requiredStatusChecks: 'check, build',
+        requiredStatusChecksMode: 'list',
         requireBranchesToBeUpToDate: false,
+      })
+      .mockResolvedValueOnce({
+        requiredStatusChecks: 'check, build',
       })
       .mockResolvedValueOnce({
         vulnerabilityAlerts: true,
@@ -1513,6 +1582,60 @@ describe('prompt GitHub repository contracts', () => {
     return;
   });
 
+  it('preserves and unsets explicit empty required status checks', async () => {
+    vi.mocked(prompts).mockResolvedValueOnce({
+      requiredStatusChecksMode: 'none',
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_Config = {
+      github: {
+        rulesets: {
+          defaultBranch: {
+            requiredStatusChecks: [],
+          },
+        },
+      },
+    };
+    const promptGithubRulesets: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_PromptGithubRulesets = Reflect.get(CliUtilityConfigure, 'promptGithubRulesets') as Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_PromptGithubRulesets;
+    const result: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_Result = await promptGithubRulesets(config);
+    const promptCall: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_PromptCall = vi.mocked(prompts).mock.calls[0];
+    const questions: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_Questions = (promptCall === undefined) ? undefined : promptCall[0];
+    const modeQuestion: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_ModeQuestion = (Array.isArray(questions) === true) ? questions.find((question) => question['name'] === 'requiredStatusChecksMode') : undefined;
+
+    strictEqual(result, 'back');
+    ok(modeQuestion !== undefined);
+    strictEqual(modeQuestion['initial'], 1);
+    deepStrictEqual(config, {
+      github: {
+        rulesets: {
+          defaultBranch: {
+            requiredStatusChecks: [],
+          },
+        },
+      },
+    });
+
+    vi.mocked(prompts).mockResolvedValueOnce({
+      requiredStatusChecksMode: 'unset',
+    });
+
+    const unsetConfig: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_UnsetConfig = {
+      github: {
+        rulesets: {
+          defaultBranch: {
+            requiredStatusChecks: [],
+          },
+        },
+      },
+    };
+    const unsetResult: Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_UnsetResult = await promptGithubRulesets(unsetConfig);
+
+    strictEqual(unsetResult, 'back');
+    deepStrictEqual(unsetConfig, { github: {} });
+
+    return;
+  });
+
   return;
 });
 
@@ -1525,9 +1648,9 @@ describe('prompt ignore files', () => {
   it('adds bundles and patterns for a physical ignore file', async () => {
     const responses: Tests_Cli_Utility_Configure_PromptIgnoreFiles_AddsBundlesAndPatternsForAPhysicalIgnoreFile_Responses = [
       { action: 'add' },
-      { path: './containers/.dockerignore' },
+      { path: './.dockerignore' },
       { bundles: ['nova'] },
-      { action: 'patterns:./containers/.dockerignore' },
+      { action: 'patterns:./.dockerignore' },
       { action: { kind: 'add' } },
       { pattern: 'tmp/' },
       { action: { kind: 'back' } },
@@ -1546,7 +1669,7 @@ describe('prompt ignore files', () => {
 
     strictEqual(result, 'back');
     deepStrictEqual(config['ignoreFiles'], {
-      './containers/.dockerignore': {
+      './.dockerignore': {
         bundles: ['nova'],
         patterns: ['tmp/'],
       },
@@ -1735,14 +1858,15 @@ describe('prompt settings', () => {
       .mockResolvedValueOnce({ concurrency: '{"build":2,"check":3}' })
       .mockResolvedValueOnce({ cacheEnabled: true })
       .mockResolvedValueOnce({ cacheDirectory: './node_modules/.cache/nova/run-workspaces' })
-      .mockResolvedValueOnce({ cacheScripts: 'build, check' });
+      .mockResolvedValueOnce({ cacheScripts: 'build, check' })
+      .mockResolvedValueOnce({ rootIncluded: true });
 
     const result: Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Result = await promptSettings(config);
 
     cwdSpy.mockRestore();
 
     strictEqual(result, 'back');
-    strictEqual(vi.mocked(prompts).mock.calls.length, 5);
+    strictEqual(vi.mocked(prompts).mock.calls.length, 6);
     deepStrictEqual(config['settings'], {
       lockStepVersioning: true,
       runWorkspaces: {
@@ -1779,6 +1903,227 @@ describe('prompt settings', () => {
  * @since 0.26.0
  */
 describe('prompt workflows', () => {
+  it('keeps container identity target local while Pages stay additive', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Responses = [
+      { template: 'publish' },
+      { suffix: 'containers' },
+      {
+        runsOn: 'ubuntu-latest',
+        timeoutMinutes: '',
+      },
+      { triggers: ['release'] },
+      { advancedTriggers: [] },
+      { targetAction: { kind: 'add' } },
+      { targetType: 'docker-hub' },
+      { targetSettings: '' },
+      { targetRequiredLiteral: 'cbnventures' },
+      { targetRequiredLiteral: 'nova' },
+      { targetAction: { kind: 'add' } },
+      { targetType: 'ghcr' },
+      { targetSettings: '' },
+      { targetRequiredLiteral: 'nova' },
+      { targetAction: { kind: 'add' } },
+      { targetType: 'github-pages-docusaurus' },
+      { targetWorkingDir: './apps/docs' },
+      { targetSettings: '' },
+      { targetAction: { kind: 'done' } },
+      { containerPlatforms: ['linux/arm64'] },
+      { scopes: [] },
+      { settingValue: './' },
+      { settingValue: 'DOCKERHUB_TOKEN' },
+      { settingValue: 'DOCKERHUB_USERNAME' },
+      { reviewedSettings: '{"DOCKERHUB_TOKEN":"DOCKERHUB_TOKEN","DOCKERHUB_USERNAME":"DOCKERHUB_USERNAME"}' },
+    ];
+    const capturedQuestions: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_CapturedQuestions = [];
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      const questionList: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_QuestionList = (Array.isArray(questions) === true) ? questions : [questions];
+
+      capturedQuestions.push(...questionList);
+
+      const next: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Next = responses.shift();
+
+      if (next !== undefined && Object.keys(next).some((key) => questionList.some((question) => question['name'] === key) === false) === true) {
+        throw new Error(JSON.stringify({
+          names: questionList.map((question) => question['name']),
+          next,
+        }));
+      }
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Config = {
+      workspaces: {
+        './': {
+          name: 'sandbox',
+          role: 'package',
+          policy: 'trackable',
+        },
+        './apps/docs': {
+          name: 'sandbox-docs',
+          role: 'docs',
+          policy: 'trackable',
+        },
+        './apps/web': {
+          name: 'sandbox-web',
+          role: 'app',
+          policy: 'trackable',
+        },
+      },
+    };
+    const workflow: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Workflow = {
+      template: 'publish',
+      name: 'containers',
+      triggers: ['release'],
+    };
+    const promptWorkflowsForm: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_PromptWorkflowsForm = Reflect.get(CliUtilityConfigure, 'promptWorkflowsForm') as Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_PromptWorkflowsForm;
+    const result: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Result = await promptWorkflowsForm(workflow, 'update', [workflow], config);
+    const targetWorkingDirQuestions: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_TargetWorkingDirQuestions = capturedQuestions.filter((question) => question['name'] === 'targetWorkingDir');
+    const targetTypeQuestions: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_TargetTypeQuestions = capturedQuestions.filter((question) => question['name'] === 'targetType');
+    const scopesQuestion: Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_ScopesQuestion = capturedQuestions.find((question) => question['name'] === 'scopes');
+
+    deepStrictEqual(result, {
+      action: 'apply',
+      workflow: {
+        template: 'publish',
+        name: 'containers',
+        triggers: ['release'],
+        runsOn: 'ubuntu-latest',
+        containerPlatforms: ['linux/arm64'],
+        build: ['./apps/docs'],
+        deploy: [
+          {
+            to: 'docker-hub',
+            path: './',
+            with: {
+              IMAGE_NAMESPACE: 'cbnventures',
+              IMAGE_REPOSITORY: 'nova',
+            },
+          },
+          {
+            to: 'ghcr',
+            path: './',
+            with: {
+              IMAGE_REPOSITORY: 'nova',
+            },
+          },
+          {
+            to: 'github-pages-docusaurus',
+            path: './apps/docs',
+          },
+        ],
+        with: {
+          DOCKERHUB_TOKEN: 'DOCKERHUB_TOKEN',
+          DOCKERHUB_USERNAME: 'DOCKERHUB_USERNAME',
+        },
+      },
+    });
+    strictEqual(targetWorkingDirQuestions.length, 1);
+    strictEqual(targetTypeQuestions.length, 3);
+    strictEqual(JSON.stringify(targetTypeQuestions[0]!['choices']).includes('"value":"docker-hub"'), true);
+    strictEqual(JSON.stringify(targetTypeQuestions[0]!['choices']).includes('"value":"ghcr"'), true);
+    strictEqual(JSON.stringify(targetTypeQuestions[1]!['choices']).includes('"value":"docker-hub"'), false);
+    strictEqual(JSON.stringify(targetTypeQuestions[1]!['choices']).includes('"value":"ghcr"'), true);
+    strictEqual(JSON.stringify(targetTypeQuestions[2]!['choices']).includes('"value":"docker-hub"'), false);
+    strictEqual(JSON.stringify(targetTypeQuestions[2]!['choices']).includes('"value":"ghcr"'), false);
+    strictEqual(scopesQuestion !== undefined, true);
+    strictEqual(JSON.stringify(scopesQuestion!['choices']).includes('"value":"./"'), false);
+
+    return;
+  });
+
+  it('does not offer container targets when another workflow owns the image', async () => {
+    const responses: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Responses = [
+      { template: 'publish' },
+      { suffix: 'pages' },
+      {
+        runsOn: 'ubuntu-latest',
+        timeoutMinutes: '',
+      },
+      { triggers: ['release'] },
+      { advancedTriggers: [] },
+      { targetAction: { kind: 'add' } },
+      { targetType: 'github-pages-docusaurus' },
+      { targetWorkingDir: './apps/docs' },
+      { targetSettings: '' },
+      { targetAction: { kind: 'done' } },
+      { settingValue: './' },
+      { reviewedSettings: '' },
+    ];
+    const capturedQuestions: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_CapturedQuestions = [];
+
+    vi.mocked(prompts).mockImplementation((questions) => {
+      const questionList: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_QuestionList = (Array.isArray(questions) === true) ? questions : [questions];
+
+      capturedQuestions.push(...questionList);
+
+      const next: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Next = responses.shift();
+
+      if (next !== undefined && Object.keys(next).some((key) => questionList.some((question) => question['name'] === key) === false) === true) {
+        throw new Error(JSON.stringify({
+          names: questionList.map((question) => question['name']),
+          next,
+        }));
+      }
+
+      return Promise.resolve((next !== undefined) ? next : {});
+    });
+
+    const config: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Config = {
+      workspaces: {
+        './apps/docs': {
+          name: 'sandbox-docs',
+          role: 'docs',
+          policy: 'trackable',
+        },
+      },
+    };
+    const containerWorkflow: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_ContainerWorkflow = {
+      template: 'publish',
+      name: 'containers',
+      triggers: ['release'],
+      deploy: [{
+        to: 'ghcr',
+        path: './',
+        with: {
+          IMAGE_REPOSITORY: 'sandbox',
+        },
+      }],
+    };
+    const workflow: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Workflow = {
+      template: 'publish',
+      name: 'pages',
+      triggers: ['release'],
+    };
+    const promptWorkflowsForm: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_PromptWorkflowsForm = Reflect.get(CliUtilityConfigure, 'promptWorkflowsForm') as Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_PromptWorkflowsForm;
+    const result: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Result = await promptWorkflowsForm(workflow, 'update', [
+      containerWorkflow,
+      workflow,
+    ], config);
+    const targetTypeQuestion: Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_TargetTypeQuestion = capturedQuestions.find((question) => question['name'] === 'targetType');
+
+    deepStrictEqual(result, {
+      action: 'apply',
+      workflow: {
+        template: 'publish',
+        name: 'pages',
+        triggers: ['release'],
+        runsOn: 'ubuntu-latest',
+        build: ['./apps/docs'],
+        deploy: [{
+          to: 'github-pages-docusaurus',
+          path: './apps/docs',
+        }],
+      },
+    });
+    strictEqual(targetTypeQuestion !== undefined, true);
+    strictEqual(JSON.stringify(targetTypeQuestion!['choices']).includes('"value":"docker-hub"'), false);
+    strictEqual(JSON.stringify(targetTypeQuestion!['choices']).includes('"value":"ghcr"'), false);
+
+    return;
+  });
+
   it('preserves workflow-run trigger objects when syncing existing workflows', async () => {
     const responses: Tests_Cli_Utility_Configure_PromptWorkflows_PreservesWorkflowRunTriggerObjectsWhenSyncingExistingWorkflows_Responses = [{
       action: { kind: 'back' },

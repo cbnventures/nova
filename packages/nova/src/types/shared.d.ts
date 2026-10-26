@@ -151,6 +151,216 @@ export type Shared_DialogAction = 'save' | 'cancel' | 'back';
 export type Shared_DockerImageProfile = 'astro-node' | 'background-service' | 'container-native' | 'http-service' | 'nextjs-standalone' | 'static-site';
 
 /**
+ * Shared - Docker Packaging.
+ *
+ * @since 0.34.0
+ */
+export type Shared_DockerPackagingStringMap = Record<string, string>;
+
+export type Shared_DockerPackagingServiceKind = 'longrun' | 'oneshot';
+
+export type Shared_DockerPackagingService_Command = string;
+
+export type Shared_DockerPackagingService_Critical = boolean;
+
+export type Shared_DockerPackagingService_Dependency = string;
+
+export type Shared_DockerPackagingService_Dependencies = Shared_DockerPackagingService_Dependency[];
+
+export type Shared_DockerPackagingService_Environment = Shared_DockerPackagingStringMap;
+
+export type Shared_DockerPackagingService_HealthCommand = string;
+
+export type Shared_DockerPackagingService_Kind = Shared_DockerPackagingServiceKind;
+
+export type Shared_DockerPackagingService_Name = string;
+
+export type Shared_DockerPackagingService_Port = number;
+
+export type Shared_DockerPackagingService_RequiredForHealth = boolean;
+
+export type Shared_DockerPackagingService_RunAsRoot = boolean;
+
+export type Shared_DockerPackagingService_Workspace = string;
+
+export type Shared_DockerPackagingService_WritablePath = string;
+
+export type Shared_DockerPackagingService_WritablePaths = Shared_DockerPackagingService_WritablePath[];
+
+export type Shared_DockerPackagingService = {
+  command: Shared_DockerPackagingService_Command;
+  critical: Shared_DockerPackagingService_Critical;
+  dependencies: Shared_DockerPackagingService_Dependencies;
+  environment: Shared_DockerPackagingService_Environment;
+  healthCommand?: Shared_DockerPackagingService_HealthCommand;
+  kind: Shared_DockerPackagingService_Kind;
+  name: Shared_DockerPackagingService_Name;
+  port?: Shared_DockerPackagingService_Port;
+  requiredForHealth: Shared_DockerPackagingService_RequiredForHealth;
+  runAsRoot: Shared_DockerPackagingService_RunAsRoot;
+  workspace: Shared_DockerPackagingService_Workspace;
+  writablePaths: Shared_DockerPackagingService_WritablePaths;
+};
+
+export type Shared_DockerPackagingServices = Shared_DockerPackagingService[];
+
+export type Shared_DockerPackagingServicesByName = Map<string, Shared_DockerPackagingService>;
+
+export type Shared_DockerPackagingServiceInput_Command = string;
+
+export type Shared_DockerPackagingServiceInput_Critical = boolean;
+
+export type Shared_DockerPackagingServiceInput_Dependency = string;
+
+export type Shared_DockerPackagingServiceInput_Dependencies = Shared_DockerPackagingServiceInput_Dependency[];
+
+export type Shared_DockerPackagingServiceInput_Environment = Shared_DockerPackagingStringMap;
+
+export type Shared_DockerPackagingServiceInput_HealthCommand = string;
+
+export type Shared_DockerPackagingServiceInput_Kind = Shared_DockerPackagingServiceKind;
+
+export type Shared_DockerPackagingServiceInput_Name = string;
+
+export type Shared_DockerPackagingServiceInput_Port = number;
+
+export type Shared_DockerPackagingServiceInput_RequiredForHealth = boolean;
+
+export type Shared_DockerPackagingServiceInput_RunAsRoot = boolean;
+
+export type Shared_DockerPackagingServiceInput_WritablePath = string;
+
+export type Shared_DockerPackagingServiceInput_WritablePaths = Shared_DockerPackagingServiceInput_WritablePath[];
+
+export type Shared_DockerPackagingServiceInput = {
+  command?: Shared_DockerPackagingServiceInput_Command;
+  critical?: Shared_DockerPackagingServiceInput_Critical;
+  dependencies?: Shared_DockerPackagingServiceInput_Dependencies;
+  environment?: Shared_DockerPackagingServiceInput_Environment;
+  healthCommand?: Shared_DockerPackagingServiceInput_HealthCommand;
+  kind?: Shared_DockerPackagingServiceInput_Kind;
+  name: Shared_DockerPackagingServiceInput_Name;
+  port?: Shared_DockerPackagingServiceInput_Port;
+  requiredForHealth?: Shared_DockerPackagingServiceInput_RequiredForHealth;
+  runAsRoot?: Shared_DockerPackagingServiceInput_RunAsRoot;
+  writablePaths?: Shared_DockerPackagingServiceInput_WritablePaths;
+};
+
+export type Shared_DockerPackagingServiceInputs = Shared_DockerPackagingServiceInput[];
+
+export type Shared_DockerPackagingWorkspace_BuildDirectory = string;
+
+export type Shared_DockerPackagingWorkspace_PackageName = string;
+
+export type Shared_DockerPackagingWorkspace_Path = string;
+
+export type Shared_DockerPackagingWorkspace_Profile = Shared_DockerImageProfile;
+
+export type Shared_DockerPackagingWorkspace_RuntimePath = string;
+
+export type Shared_DockerPackagingWorkspace_RuntimePaths = Shared_DockerPackagingWorkspace_RuntimePath[];
+
+export type Shared_DockerPackagingWorkspace = {
+  buildDirectory: Shared_DockerPackagingWorkspace_BuildDirectory;
+  packageName: Shared_DockerPackagingWorkspace_PackageName;
+  path: Shared_DockerPackagingWorkspace_Path;
+  profile: Shared_DockerPackagingWorkspace_Profile;
+  runtimePaths: Shared_DockerPackagingWorkspace_RuntimePaths;
+};
+
+export type Shared_DockerPackagingWorkspaces = Shared_DockerPackagingWorkspace[];
+
+export type Shared_DockerPackagingManifest_SchemaVersion = number;
+
+export type Shared_DockerPackagingManifest_Services = Shared_DockerPackagingServices;
+
+export type Shared_DockerPackagingManifest_Workspaces = Shared_DockerPackagingWorkspaces;
+
+export type Shared_DockerPackagingManifest = {
+  schemaVersion: Shared_DockerPackagingManifest_SchemaVersion;
+  services: Shared_DockerPackagingManifest_Services;
+  workspaces: Shared_DockerPackagingManifest_Workspaces;
+};
+
+export type Shared_DockerPackagingGenerateOptions_BuildDirectory = string;
+
+export type Shared_DockerPackagingGenerateOptions_DryRun = boolean;
+
+export type Shared_DockerPackagingGenerateOptions_IgnoreFileEntry = Shared_NovaConfig_IgnoreFile;
+
+export type Shared_DockerPackagingGenerateOptions_Profile = Shared_DockerImageProfile;
+
+export type Shared_DockerPackagingGenerateOptions_ProjectDirectory = string;
+
+export type Shared_DockerPackagingGenerateOptions_ReportFiles = boolean;
+
+export type Shared_DockerPackagingGenerateOptions_ReplaceFile = boolean;
+
+export type Shared_DockerPackagingGenerateOptions_RuntimePath = string;
+
+export type Shared_DockerPackagingGenerateOptions_RuntimePaths = Shared_DockerPackagingGenerateOptions_RuntimePath[];
+
+export type Shared_DockerPackagingGenerateOptions_Services = Shared_DockerPackagingServiceInputs;
+
+export type Shared_DockerPackagingGenerateOptions_WorkspaceDirectory = string;
+
+export type Shared_DockerPackagingGenerateOptions_WorkspaceName = string;
+
+export type Shared_DockerPackagingGenerateOptions = {
+  buildDirectory?: Shared_DockerPackagingGenerateOptions_BuildDirectory;
+  dryRun?: Shared_DockerPackagingGenerateOptions_DryRun;
+  ignoreFileEntry?: Shared_DockerPackagingGenerateOptions_IgnoreFileEntry;
+  profile: Shared_DockerPackagingGenerateOptions_Profile;
+  projectDirectory: Shared_DockerPackagingGenerateOptions_ProjectDirectory;
+  reportFiles?: Shared_DockerPackagingGenerateOptions_ReportFiles;
+  replaceFile?: Shared_DockerPackagingGenerateOptions_ReplaceFile;
+  runtimePaths?: Shared_DockerPackagingGenerateOptions_RuntimePaths;
+  services?: Shared_DockerPackagingGenerateOptions_Services;
+  workspaceDirectory: Shared_DockerPackagingGenerateOptions_WorkspaceDirectory;
+  workspaceName?: Shared_DockerPackagingGenerateOptions_WorkspaceName;
+};
+
+export type Shared_DockerPackagingGenerateResult_AssemblyDirectory = string;
+
+export type Shared_DockerPackagingGenerateResult_ComposePath = string;
+
+export type Shared_DockerPackagingGenerateResult_DockerfilePath = string;
+
+export type Shared_DockerPackagingGenerateResult_DockerignorePath = string;
+
+export type Shared_DockerPackagingGenerateResult_ManifestPath = string;
+
+export type Shared_DockerPackagingGenerateResult_ProjectDirectory = string;
+
+export type Shared_DockerPackagingGenerateResult_ServiceName = string;
+
+export type Shared_DockerPackagingGenerateResult_ServiceNames = Shared_DockerPackagingGenerateResult_ServiceName[];
+
+export type Shared_DockerPackagingGenerateResult_WorkspacePath = string;
+
+export type Shared_DockerPackagingGenerateResult = {
+  assemblyDirectory: Shared_DockerPackagingGenerateResult_AssemblyDirectory;
+  composePath: Shared_DockerPackagingGenerateResult_ComposePath;
+  dockerfilePath: Shared_DockerPackagingGenerateResult_DockerfilePath;
+  dockerignorePath: Shared_DockerPackagingGenerateResult_DockerignorePath;
+  manifestPath: Shared_DockerPackagingGenerateResult_ManifestPath;
+  projectDirectory: Shared_DockerPackagingGenerateResult_ProjectDirectory;
+  serviceNames: Shared_DockerPackagingGenerateResult_ServiceNames;
+  workspacePath: Shared_DockerPackagingGenerateResult_WorkspacePath;
+};
+
+export type Shared_DockerPackagingWorkspacePackage_PackageJson = Record<string, unknown>;
+
+export type Shared_DockerPackagingWorkspacePackage_Path = string;
+
+export type Shared_DockerPackagingWorkspacePackage = {
+  packageJson: Shared_DockerPackagingWorkspacePackage_PackageJson;
+  path: Shared_DockerPackagingWorkspacePackage_Path;
+};
+
+export type Shared_DockerPackagingWorkspacePackages = Map<string, Shared_DockerPackagingWorkspacePackage>;
+
+/**
  * Shared - Entity Menu Action.
  *
  * @since 0.11.0
@@ -338,7 +548,7 @@ export type Shared_BlueprintDispatchInput_Required = boolean;
 
 export type Shared_BlueprintDispatchInput_Type = string;
 
-export type Shared_BlueprintDispatchInput_Default = boolean;
+export type Shared_BlueprintDispatchInput_Default = boolean | string;
 
 export type Shared_BlueprintDispatchInput = {
   name: Shared_BlueprintDispatchInput_Name;
@@ -1157,6 +1367,10 @@ export type Shared_NovaConfigWorkflow_RunsOn = 'ubuntu-latest';
 
 export type Shared_NovaConfigWorkflow_TimeoutMinutes = number;
 
+export type Shared_NovaConfigWorkflowContainerPlatform = 'linux/amd64' | 'linux/arm64';
+
+export type Shared_NovaConfigWorkflow_ContainerPlatforms = Shared_NovaConfigWorkflowContainerPlatform[];
+
 export type Shared_NovaConfigWorkflowBuildEntry = string;
 
 export type Shared_NovaConfigWorkflow_Build = Shared_NovaConfigWorkflowBuildEntry[];
@@ -1196,6 +1410,7 @@ export type Shared_NovaConfigWorkflow = {
   'triggers': Shared_NovaConfigWorkflow_Triggers;
   'runsOn'?: Shared_NovaConfigWorkflow_RunsOn;
   'timeoutMinutes'?: Shared_NovaConfigWorkflow_TimeoutMinutes;
+  'containerPlatforms'?: Shared_NovaConfigWorkflow_ContainerPlatforms;
   'build'?: Shared_NovaConfigWorkflow_Build;
   'deploy'?: Shared_NovaConfigWorkflow_Deploy;
   'with'?: Shared_NovaConfigWorkflow_With;
@@ -1334,6 +1549,8 @@ export type Shared_BlueprintConfigWorkflow_RunsOn = Shared_NovaConfigWorkflow_Ru
 
 export type Shared_BlueprintConfigWorkflow_TimeoutMinutes = Shared_NovaConfigWorkflow_TimeoutMinutes;
 
+export type Shared_BlueprintConfigWorkflow_ContainerPlatforms = Shared_NovaConfigWorkflow_ContainerPlatforms;
+
 export type Shared_BlueprintConfigWorkflow_Build = Shared_NovaConfigWorkflow_Build;
 
 export type Shared_BlueprintConfigDeployTarget_To = Shared_NovaConfigWorkflowDeployTarget_To;
@@ -1361,6 +1578,7 @@ export type Shared_BlueprintConfigWorkflow = {
   'triggers': Shared_BlueprintConfigWorkflow_Triggers;
   'runsOn'?: Shared_BlueprintConfigWorkflow_RunsOn;
   'timeoutMinutes'?: Shared_BlueprintConfigWorkflow_TimeoutMinutes;
+  'containerPlatforms'?: Shared_BlueprintConfigWorkflow_ContainerPlatforms;
   'build'?: Shared_BlueprintConfigWorkflow_Build;
   'deploy'?: Shared_BlueprintConfigWorkflow_Deploy;
   'with'?: Shared_BlueprintConfigWorkflow_With;
@@ -1779,9 +1997,12 @@ export type Shared_NovaConfigSettings_RunWorkspacesConcurrency = Record<string, 
 
 export type Shared_NovaConfigSettings_RunWorkspaces_Concurrency = Shared_NovaConfigSettings_RunWorkspacesConcurrency;
 
+export type Shared_NovaConfigSettings_RunWorkspaces_Root = 'first' | 'skip';
+
 export type Shared_NovaConfigSettings_RunWorkspaces = {
   cache?: Shared_NovaConfigSettings_RunWorkspaces_Cache;
   concurrency?: Shared_NovaConfigSettings_RunWorkspaces_Concurrency;
+  root?: Shared_NovaConfigSettings_RunWorkspaces_Root;
 };
 
 export type Shared_NovaConfig_Settings_LockStepVersioning = boolean;
@@ -1982,6 +2203,8 @@ export type Shared_RunWorkspacesProject_RootDirectory = string;
 
 export type Shared_RunWorkspacesProject_Workspaces = Map<string, Shared_RunWorkspacesWorkspace>;
 
+export type Shared_RunWorkspacesProject_Root = Shared_RunWorkspacesWorkspace | undefined;
+
 export type Shared_RunWorkspacesProject = {
   cache: Shared_RunWorkspacesProject_Cache;
   concurrency: Shared_RunWorkspacesProject_Concurrency;
@@ -1989,6 +2212,7 @@ export type Shared_RunWorkspacesProject = {
   packageManagerDescriptor: Shared_RunWorkspacesProject_PackageManagerDescriptor;
   rootDirectory: Shared_RunWorkspacesProject_RootDirectory;
   workspaces: Shared_RunWorkspacesProject_Workspaces;
+  root: Shared_RunWorkspacesProject_Root;
 };
 
 /**
@@ -2024,6 +2248,8 @@ export type Shared_RunWorkspacesTask_Directory = string;
 
 export type Shared_RunWorkspacesTask_Dependencies = Set<string>;
 
+export type Shared_RunWorkspacesTask_Cacheable = boolean;
+
 export type Shared_RunWorkspacesTask = {
   key: Shared_RunWorkspacesTask_Key;
   label: Shared_RunWorkspacesTask_Label;
@@ -2032,6 +2258,7 @@ export type Shared_RunWorkspacesTask = {
   workspaceName: Shared_RunWorkspacesTask_WorkspaceName;
   directory: Shared_RunWorkspacesTask_Directory;
   dependencies: Shared_RunWorkspacesTask_Dependencies;
+  cacheable: Shared_RunWorkspacesTask_Cacheable;
 };
 
 /**
@@ -2425,6 +2652,21 @@ export type Shared_WorkflowTemplateTarget_ArtifactPaths = Shared_WorkflowTemplat
 
 export type Shared_WorkflowTemplateTarget_Variables = Shared_WorkflowTemplateVariables;
 
+export type Shared_WorkflowTemplateTargetRequiredLiteral_Description = string;
+
+export type Shared_WorkflowTemplateTargetRequiredLiteral_Example = string;
+
+export type Shared_WorkflowTemplateTargetRequiredLiteral = {
+  description: Shared_WorkflowTemplateTargetRequiredLiteral_Description;
+  example?: Shared_WorkflowTemplateTargetRequiredLiteral_Example;
+};
+
+export type Shared_WorkflowTemplateTargetRequiredLiteralName = string;
+
+export type Shared_WorkflowTemplateTarget_RequiredLiterals = {
+  [key: Shared_WorkflowTemplateTargetRequiredLiteralName]: Shared_WorkflowTemplateTargetRequiredLiteral;
+};
+
 export type Shared_WorkflowTemplateTarget_Permissions = Shared_WorkflowTemplatePermissions;
 
 export type Shared_WorkflowTemplateTargetUniquenessKeyEntry = Shared_WorkflowTemplateVariableName;
@@ -2437,6 +2679,7 @@ export type Shared_WorkflowTemplateTarget = {
   description: Shared_WorkflowTemplateTarget_Description;
   artifactPaths: Shared_WorkflowTemplateTarget_ArtifactPaths;
   variables: Shared_WorkflowTemplateTarget_Variables;
+  requiredLiterals?: Shared_WorkflowTemplateTarget_RequiredLiterals;
   permissions: Shared_WorkflowTemplateTarget_Permissions;
   uniquenessKey?: Shared_WorkflowTemplateTarget_UniquenessKey;
   supportsRuntimeSecretSync?: Shared_WorkflowTemplateTarget_SupportsRuntimeSecretSync;
@@ -2522,4 +2765,216 @@ export type Shared_WorkspaceManifest = {
   manifest: Shared_WorkspaceManifest_Manifest;
   filePath: Shared_WorkspaceManifest_FilePath;
   fileContents: Shared_WorkspaceManifest_FileContents;
+};
+
+/**
+ * Shared - Vendor Integrations.
+ *
+ * @since 0.34.0
+ */
+export type Shared_IntegrationWorkspace_AbsolutePath = string;
+
+export type Shared_IntegrationWorkspace_ConfiguredName = string;
+
+export type Shared_IntegrationWorkspace_Name = string;
+
+export type Shared_IntegrationWorkspace_Path = string;
+
+export type Shared_IntegrationWorkspace_RelativePath = string;
+
+export type Shared_IntegrationWorkspace = {
+  absolutePath: Shared_IntegrationWorkspace_AbsolutePath;
+  configuredName: Shared_IntegrationWorkspace_ConfiguredName;
+  name: Shared_IntegrationWorkspace_Name;
+  path: Shared_IntegrationWorkspace_Path;
+  relativePath: Shared_IntegrationWorkspace_RelativePath;
+};
+
+export type Shared_IntegrationMetadataTarget_Attributes = Record<string, string>;
+
+export type Shared_IntegrationMetadataTarget_FilePath = string;
+
+export type Shared_IntegrationMetadataTarget_Locale = string;
+
+export type Shared_IntegrationMetadataTarget_Platform = string;
+
+export type Shared_IntegrationMetadataTarget = {
+  attributes: Shared_IntegrationMetadataTarget_Attributes;
+  filePath: Shared_IntegrationMetadataTarget_FilePath;
+  locale: Shared_IntegrationMetadataTarget_Locale;
+  platform: Shared_IntegrationMetadataTarget_Platform;
+};
+
+export type Shared_IntegrationAssetFile_FileName = string;
+
+export type Shared_IntegrationAssetFile_FilePath = string;
+
+export type Shared_IntegrationAssetFile_Position = number;
+
+export type Shared_IntegrationAssetFile = {
+  fileName: Shared_IntegrationAssetFile_FileName;
+  filePath: Shared_IntegrationAssetFile_FilePath;
+  position: Shared_IntegrationAssetFile_Position;
+};
+
+export type Shared_IntegrationAssetTarget_Files = Shared_IntegrationAssetFile[];
+
+export type Shared_IntegrationAssetTarget_Locale = string;
+
+export type Shared_IntegrationAssetTarget_Platform = string;
+
+export type Shared_IntegrationAssetTarget_RelativePath = string;
+
+export type Shared_IntegrationAssetTarget_Target = string;
+
+export type Shared_IntegrationAssetTarget = {
+  files: Shared_IntegrationAssetTarget_Files;
+  locale: Shared_IntegrationAssetTarget_Locale;
+  platform: Shared_IntegrationAssetTarget_Platform;
+  relativePath: Shared_IntegrationAssetTarget_RelativePath;
+  target: Shared_IntegrationAssetTarget_Target;
+};
+
+export type Shared_AppStoreConnectResource = Record<string, unknown>;
+
+export type Shared_AppStoreConnectCredentials_IssuerId = string;
+
+export type Shared_AppStoreConnectCredentials_KeyId = string;
+
+export type Shared_AppStoreConnectCredentials_PrivateKey = string;
+
+export type Shared_AppStoreConnectCredentials = {
+  issuerId?: Shared_AppStoreConnectCredentials_IssuerId;
+  keyId: Shared_AppStoreConnectCredentials_KeyId;
+  privateKey: Shared_AppStoreConnectCredentials_PrivateKey;
+};
+
+export type Shared_AppStoreConnectRequestOptions_Body = Record<string, unknown>;
+
+export type Shared_AppStoreConnectRequestOptions_ExpectedStatuses = number[];
+
+export type Shared_AppStoreConnectRequestOptions_Method = string;
+
+export type Shared_AppStoreConnectRequestOptions = {
+  body?: Shared_AppStoreConnectRequestOptions_Body;
+  expectedStatuses?: Shared_AppStoreConnectRequestOptions_ExpectedStatuses;
+  method?: Shared_AppStoreConnectRequestOptions_Method;
+};
+
+export type Shared_AppStoreConnectIntegrationOptions_BundleId = string;
+
+export type Shared_AppStoreConnectIntegrationOptions_DryRun = true;
+
+export type Shared_AppStoreConnectIntegrationOptions_IssuerId = string;
+
+export type Shared_AppStoreConnectIntegrationOptions_KeyId = string;
+
+export type Shared_AppStoreConnectIntegrationOptions_Locales = string;
+
+export type Shared_AppStoreConnectIntegrationOptions_NonInteractive = true;
+
+export type Shared_AppStoreConnectIntegrationOptions_Platforms = string;
+
+export type Shared_AppStoreConnectIntegrationOptions_Version = string;
+
+export type Shared_AppStoreConnectIntegrationOptions_Workspace = string;
+
+export type Shared_AppStoreConnectIntegrationOptions_Yes = true;
+
+export type Shared_AppStoreConnectIntegrationOptions = {
+  bundleId?: Shared_AppStoreConnectIntegrationOptions_BundleId;
+  dryRun?: Shared_AppStoreConnectIntegrationOptions_DryRun;
+  issuerId?: Shared_AppStoreConnectIntegrationOptions_IssuerId;
+  keyId?: Shared_AppStoreConnectIntegrationOptions_KeyId;
+  locales?: Shared_AppStoreConnectIntegrationOptions_Locales;
+  nonInteractive?: Shared_AppStoreConnectIntegrationOptions_NonInteractive;
+  platforms?: Shared_AppStoreConnectIntegrationOptions_Platforms;
+  version?: Shared_AppStoreConnectIntegrationOptions_Version;
+  workspace?: Shared_AppStoreConnectIntegrationOptions_Workspace;
+  yes?: Shared_AppStoreConnectIntegrationOptions_Yes;
+};
+
+export type Shared_AppStoreConnectWorkspaceContext_BundleIdentifier = string;
+
+export type Shared_AppStoreConnectWorkspaceContext_Version = string;
+
+export type Shared_AppStoreConnectWorkspaceContext_Workspace = Shared_IntegrationWorkspace;
+
+export type Shared_AppStoreConnectWorkspaceContext = {
+  bundleIdentifier: Shared_AppStoreConnectWorkspaceContext_BundleIdentifier;
+  version: Shared_AppStoreConnectWorkspaceContext_Version;
+  workspace: Shared_AppStoreConnectWorkspaceContext_Workspace;
+};
+
+export type Shared_AppStoreConnectRemoteContext_Localization = Shared_AppStoreConnectResource;
+
+export type Shared_AppStoreConnectRemoteContext_Version = Shared_AppStoreConnectResource;
+
+export type Shared_AppStoreConnectRemoteContext = {
+  localization: Shared_AppStoreConnectRemoteContext_Localization;
+  version: Shared_AppStoreConnectRemoteContext_Version;
+};
+
+export type Shared_AppStoreConnectContextCache = Map<string, Promise<Shared_AppStoreConnectRemoteContext>>;
+
+export type Shared_AppStoreConnectKeyCandidate_KeyId = string;
+
+export type Shared_AppStoreConnectKeyCandidate_Path = string;
+
+export type Shared_AppStoreConnectKeyCandidate = {
+  keyId: Shared_AppStoreConnectKeyCandidate_KeyId;
+  path: Shared_AppStoreConnectKeyCandidate_Path;
+};
+
+export type Shared_GooglePlayConsoleResource = Record<string, unknown>;
+
+export type Shared_GooglePlayConsoleRequestOptions_Body = Record<string, unknown>;
+
+export type Shared_GooglePlayConsoleRequestOptions_ExpectedStatuses = number[];
+
+export type Shared_GooglePlayConsoleRequestOptions_Method = string;
+
+export type Shared_GooglePlayConsoleRequestOptions = {
+  body?: Shared_GooglePlayConsoleRequestOptions_Body;
+  expectedStatuses?: Shared_GooglePlayConsoleRequestOptions_ExpectedStatuses;
+  method?: Shared_GooglePlayConsoleRequestOptions_Method;
+};
+
+export type Shared_GooglePlayConsoleIntegrationOptions_DryRun = true;
+
+export type Shared_GooglePlayConsoleIntegrationOptions_Locales = string;
+
+export type Shared_GooglePlayConsoleIntegrationOptions_NonInteractive = true;
+
+export type Shared_GooglePlayConsoleIntegrationOptions_PackageName = string;
+
+export type Shared_GooglePlayConsoleIntegrationOptions_Workspace = string;
+
+export type Shared_GooglePlayConsoleIntegrationOptions_Yes = true;
+
+export type Shared_GooglePlayConsoleIntegrationOptions = {
+  dryRun?: Shared_GooglePlayConsoleIntegrationOptions_DryRun;
+  locales?: Shared_GooglePlayConsoleIntegrationOptions_Locales;
+  nonInteractive?: Shared_GooglePlayConsoleIntegrationOptions_NonInteractive;
+  packageName?: Shared_GooglePlayConsoleIntegrationOptions_PackageName;
+  workspace?: Shared_GooglePlayConsoleIntegrationOptions_Workspace;
+  yes?: Shared_GooglePlayConsoleIntegrationOptions_Yes;
+};
+
+export type Shared_GooglePlayConsoleWorkspaceContext_PackageName = string;
+
+export type Shared_GooglePlayConsoleWorkspaceContext_Workspace = Shared_IntegrationWorkspace;
+
+export type Shared_GooglePlayConsoleWorkspaceContext = {
+  packageName: Shared_GooglePlayConsoleWorkspaceContext_PackageName;
+  workspace: Shared_GooglePlayConsoleWorkspaceContext_Workspace;
+};
+
+export type Shared_DiscordDeveloperPortalOptions_Token = string;
+
+export type Shared_DiscordDeveloperPortalOptions_Workspace = string;
+
+export type Shared_DiscordDeveloperPortalOptions = {
+  token?: Shared_DiscordDeveloperPortalOptions_Token;
+  workspace?: Shared_DiscordDeveloperPortalOptions_Workspace;
 };

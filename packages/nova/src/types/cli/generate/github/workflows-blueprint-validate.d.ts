@@ -2,7 +2,10 @@ import type { Lib_WorkflowTemplates_Entry } from '../../../lib/workflow-template
 import type {
   Shared_BlueprintConfigWorkflow,
   Shared_NovaConfig_Workspaces,
+  Shared_NovaConfigSettings_VersionStrategy,
+  Shared_NovaConfigWorkflow_ContainerPlatforms,
   Shared_NovaConfigWorkflow_Settings,
+  Shared_NovaConfigWorkflowContainerPlatform,
   Shared_NovaConfigWorkflowTriggerObject_Workflows,
   Shared_NovaConfigWorkspace,
   Shared_WorkflowTemplateTarget,
@@ -78,6 +81,8 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_AllowedTemplates = Cl
  * @since 0.21.0
  */
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_BuildableTargetTypes = Cli_Generate_Github_WorkflowsBlueprintValidate_TargetType[];
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_AllowedContainerPlatforms = Shared_NovaConfigWorkflow_ContainerPlatforms;
 
 /**
  * CLI - Generate - GitHub - Workflows Blueprint Validate - Valid Triggers By Template.
@@ -159,6 +164,30 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_EnvMigrationHi
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_EnvMigrationHint_WorkspaceEntry = Record<string, unknown>;
 
 /**
+ * CLI - Generate - GitHub - Workflows Blueprint Validate - Runner - Is Container Coordinate.
+ *
+ * @since 0.26.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinate_Value = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinate_Returns = boolean;
+
+/**
+ * CLI - Generate - GitHub - Workflows Blueprint Validate - Runner - Is Container Coordinate Component.
+ *
+ * @since 0.26.0
+ */
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Value = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_Returns = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_PreviousWasSeparator = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_IsAlphanumeric = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsContainerCoordinateComponent_IsSeparator = boolean;
+
+/**
  * CLI - Generate - GitHub - Workflows Blueprint Validate - Runner - Is Non Empty String Array.
  *
  * @since 0.21.0
@@ -182,6 +211,8 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_IsPlainObject_
  * @since 0.26.0
  */
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawWorkflows = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workspaces = Shared_NovaConfig_Workspaces;
 
@@ -210,6 +241,8 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Workf
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenKeys = Set<string>;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniquenessMap = Map<string, string>;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerWorkflowKey = string | undefined;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RawEntries = unknown[];
 
@@ -247,9 +280,19 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_RunsO
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TimeoutMinutes = unknown;
 
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatforms = unknown;
+
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TriggerName = 'issues' | 'issue-comment' | 'schedule-weekly' | 'schedule-daily' | 'schedule-monthly' | 'release' | 'tag-push' | 'push' | 'workflow-run-success' | 'workflow-run-any' | 'workflow-run-failure';
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ValidTriggers = Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TriggerName[];
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatformList = unknown[];
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_SeenContainerPlatforms = Set<Shared_NovaConfigWorkflowContainerPlatform>;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatform = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerPlatformName = Shared_NovaConfigWorkflowContainerPlatform;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_TriggerList = unknown[];
 
@@ -277,6 +320,10 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Targe
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Scopes = unknown;
 
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_DockerHubTargetCount = number;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_GhcrTargetCount = number;
+
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Scope = unknown;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredScope = boolean;
@@ -289,7 +336,17 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Targe
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_WorkingDir = unknown;
 
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsContainerTarget = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerTargetSettings = Record<string, unknown> | undefined;
+
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_IsRegisteredWorkingDir = boolean;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageRepository = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ImageNamespace = unknown;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_ContainerCoordinate = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_MissingLiterals = string[];
 
@@ -314,6 +371,10 @@ export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_Liter
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralVariableMeta = Shared_WorkflowTemplateVariable;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralResolved = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralRequiredName = string;
+
+export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_LiteralRequiredResolved = string;
 
 export type Cli_Generate_Github_WorkflowsBlueprintValidate_Runner_Validate_UniqueTarget = Record<string, unknown>;
 

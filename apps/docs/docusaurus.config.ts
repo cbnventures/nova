@@ -19,7 +19,7 @@ const identity = new NovaIdentity().forDocs();
 const config: DocusaurusNovaConfig = {
   // Site Metadata.
   title: identity['title'] ?? '',
-  titleDelimiter: ' - ',
+  titleDelimiter: '-',
   tagline: identity['tagline'],
   favicon: './favicon.ico',
 

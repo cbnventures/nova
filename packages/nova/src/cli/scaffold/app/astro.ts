@@ -144,6 +144,10 @@ export class Runner {
    */
   public static async run(options: Cli_Scaffold_App_Astro_Runner_Run_Options): Cli_Scaffold_App_Astro_Runner_Run_Returns {
     await runScaffold(options, {
+      allowScriptProfiles: [
+        'esbuild',
+        'file-watching',
+      ],
       category: 'app',
       displayName: 'Astro',
       importMetaUrl: import.meta.url,
@@ -151,6 +155,7 @@ export class Runner {
         'nodejs',
         'web',
       ],
+      resolveAllowScriptProfiles: (answers) => (answers.get('adapter') === 'cloudflare') ? ['cloudflare'] : [],
       resolvePlatforms: (answers) => (answers.get('dockerImage') === 'enabled') ? ['docker'] : [],
       resolveWorkspaceTemplateSubpaths,
       templateQuestions: cliScaffoldAppAstroTemplateQuestions,
@@ -189,13 +194,18 @@ export class Runner {
           });
         }
 
+        return;
+      },
+      projectFinalizer: async (workspaceDirectory, workspaceName, configRoot, answers) => {
         if (answers.get('dockerImage') === 'enabled') {
           await LibDockerPackaging.generateForTarget({
             buildDirectory: 'build',
             profile: (answers.get('rendering') === 'server') ? 'astro-node' : 'static-site',
+            projectDirectory: configRoot,
             reportFiles: false,
             replaceFile: true,
             workspaceDirectory,
+            workspaceName,
           });
         }
 

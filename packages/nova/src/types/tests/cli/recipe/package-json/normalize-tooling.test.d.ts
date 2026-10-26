@@ -98,6 +98,27 @@ export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNo
 export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_Parsed = Record<string, unknown>;
 
 /**
+ * Tests - CLI - Recipe - package.json - Normalize Tooling - Run - Moves Exact Legacy Root Scripts Onto The Workspace Tree.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_ProjectDirectory = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_PackageJsonPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_PackageJsonContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_NovaConfigPath = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_NovaConfigContents = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_Output = string;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_Parsed = Record<string, unknown>;
+
+export type Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_Scripts = Record<string, unknown>;
+
+/**
  * Tests - CLI - Recipe - package.json - Normalize Tooling - Run - Preserves Non Empty Allow Scripts.
  *
  * @since 0.25.0

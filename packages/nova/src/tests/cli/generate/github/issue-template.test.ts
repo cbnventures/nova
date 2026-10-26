@@ -1,4 +1,5 @@
 import { ok, strictEqual } from 'node:assert/strict';
+import { basename } from 'node:path';
 
 import {
   describe,
@@ -64,7 +65,7 @@ describe('CliGenerateGithubIssueTemplate.run', () => {
 
     const bugReportCall: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SelectsBugReportFieldsFromConfig_BugReportCall = calls.find((call) => (
       typeof call[0] === 'string'
-      && call[0].endsWith('/BUG-REPORT.yml')
+      && basename(call[0]) === 'BUG-REPORT.yml'
     ));
 
     ok(bugReportCall !== undefined, 'Expected saveGeneratedFile to be called for BUG-REPORT.yml');
@@ -95,7 +96,7 @@ describe('CliGenerateGithubIssueTemplate.run', () => {
 
     const bugReportCall: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_DoesNotInferFieldsFromProjectPlatforms_BugReportCall = calls.find((call) => (
       typeof call[0] === 'string'
-      && call[0].endsWith('/BUG-REPORT.yml')
+      && basename(call[0]) === 'BUG-REPORT.yml'
     ));
 
     ok(bugReportCall !== undefined, 'Expected saveGeneratedFile to be called for BUG-REPORT.yml');
@@ -122,7 +123,7 @@ describe('CliGenerateGithubIssueTemplate.run', () => {
 
     const bugReportCall: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_GeneratesBugReportWithoutPlatformFieldsWhenConfigIsEmpty_BugReportCall = calls.find((call) => (
       typeof call[0] === 'string'
-      && call[0].endsWith('/BUG-REPORT.yml')
+      && basename(call[0]) === 'BUG-REPORT.yml'
     ));
 
     ok(bugReportCall !== undefined, 'Expected saveGeneratedFile to be called for BUG-REPORT.yml');

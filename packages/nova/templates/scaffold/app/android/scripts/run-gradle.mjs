@@ -8,12 +8,29 @@ import {
 /**
  * Run Gradle - Executable.
  *
- * Selects the checked-in Gradle wrapper for the current operating system.
- * Keeping this choice here makes every package script platform-neutral.
+ * Selects the platform-specific command used to launch Gradle.
+ *
+ * Uses a POSIX shell outside Windows so a generated wrapper does not rely on
+ * executable mode bits that Windows Git clients cannot infer for new files.
  *
  * @since 0.0.0
  */
-const executable = (isWindows === true) ? 'gradlew.bat' : './gradlew';
+const executable = (isWindows === true) ? 'gradlew.bat' : 'sh';
+
+/**
+ * Run Gradle - Wrapper Arguments.
+ *
+ * Selects the arguments forwarded to the platform-specific Gradle command.
+ *
+ * Prepends the POSIX wrapper path when a shell reads it while Windows keeps
+ * forwarding user arguments directly to its native batch wrapper.
+ *
+ * @since UNRELEASED
+ */
+const wrapperArguments = (isWindows === true) ? process.argv.slice(2) : [
+  './gradlew',
+  ...process.argv.slice(2),
+];
 
 /**
  * Run Gradle - Child.
@@ -23,7 +40,7 @@ const executable = (isWindows === true) ? 'gradlew.bat' : './gradlew';
  *
  * @since 0.0.0
  */
-const child = spawn(executable, process.argv.slice(2), {
+const child = spawn(executable, wrapperArguments, {
   cwd: new URL('../', import.meta.url),
   env: androidEnvironment,
   shell: isWindows,

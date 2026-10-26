@@ -236,6 +236,12 @@ export type Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceCurrentVersion = 
 
 export type Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceStampSucceeded = boolean;
 
+export type Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspacePath = string;
+
+export type Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspaceDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_Release_EmptyFreezableStampSucceeded = boolean;
+
 export type Cli_Utility_Changelog_Runner_Release_Groups = Map<Shared_ChangelogEntry_Package, Shared_ChangelogEntry[]>;
 
 export type Cli_Utility_Changelog_Runner_Release_Existing = Shared_ChangelogEntry[];
@@ -341,6 +347,8 @@ export type Cli_Utility_Changelog_Runner_Release_HighestBump = Shared_ChangelogE
 
 export type Cli_Utility_Changelog_Runner_Release_NewVersion = string;
 
+export type Cli_Utility_Changelog_Runner_Release_HasReleaseHistory = boolean;
+
 export type Cli_Utility_Changelog_Runner_Release_CalverToday = Date;
 
 export type Cli_Utility_Changelog_Runner_Release_CalverYear = number;
@@ -372,6 +380,10 @@ export type Cli_Utility_Changelog_Runner_Release_HighestParts = number[];
 export type Cli_Utility_Changelog_Runner_Release_LockStepI = number;
 
 export type Cli_Utility_Changelog_Runner_Release_ReleasedNames = Set<string>;
+
+export type Cli_Utility_Changelog_Runner_Release_ValidationAndroidBuild = number | undefined;
+
+export type Cli_Utility_Changelog_Runner_Release_ValidationAppleBuild = number | undefined;
 
 export type Cli_Utility_Changelog_Runner_Release_CategoryOrder = string[];
 
@@ -414,6 +426,12 @@ export type Cli_Utility_Changelog_Runner_Release_ApplyPackageJsonPath = string;
 export type Cli_Utility_Changelog_Runner_Release_ApplyPackageJsonRaw = string;
 
 export type Cli_Utility_Changelog_Runner_Release_PackageJson = Record<string, unknown>;
+
+export type Cli_Utility_Changelog_Runner_Release_AndroidBuild = number | undefined;
+
+export type Cli_Utility_Changelog_Runner_Release_AppleBuild = number | undefined;
+
+export type Cli_Utility_Changelog_Runner_Release_NativeBuild = number | undefined;
 
 export type Cli_Utility_Changelog_Runner_Release_ApplyUpdatedPackageJson = string;
 
@@ -516,6 +534,135 @@ export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckError = unknown;
 export type Cli_Utility_Changelog_Runner_StampUnreleased_CheckErrorMessage = string;
 
 /**
+ * CLI - Utility - Changelog - Sync Android Version.
+ *
+ * @since 0.34.0
+ */
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_PackageDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersion = string;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_NewVersion = string;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_EntryCount = number;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_ShouldWrite = boolean;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_Returns = Promise<number | undefined>;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFilePaths = string[];
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFile_Path = string;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFile_Content = string;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFile = {
+  path: Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFile_Path;
+  content: Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFile_Content;
+};
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFiles = Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFile[];
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionNames = Set<string>;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionCodes = Set<number>;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFileContent = string;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionNamePattern = RegExp;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionCodePattern = RegExp;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_HasVersionName = boolean;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_HasVersionCode = boolean;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionNameValue = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionCodeValue = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_ParsedVersionCode = number;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersionName = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersionCode = number | undefined;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_NewVersionCode = number;
+
+export type Cli_Utility_Changelog_Runner_SyncAndroidVersion_UpdatedContent = string;
+
+/**
+ * CLI - Utility - Changelog - Sync Apple Version.
+ *
+ * @since 0.34.0
+ */
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_PackageDirectory = string;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_CurrentVersion = string;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_NewVersion = string;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_EntryCount = number;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_ShouldWrite = boolean;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_Returns = Promise<number | undefined>;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_DirectoryEntries = Dirent[];
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFilePaths = string[];
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_HasXcodeGenProject = boolean;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFile_Path = string;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFile_Content = string;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFile_IsXcodeGen = boolean;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFile = {
+  path: Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFile_Path;
+  content: Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFile_Content;
+  isXcodeGen: Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFile_IsXcodeGen;
+};
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_MarketingVersions = Set<string>;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_BuildVersions = Set<number>;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFiles = Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFile[];
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFileContent = string;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_IsXcodeGen = boolean;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_MarketingPattern = RegExp;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_BuildPattern = RegExp;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_HasMarketingVersion = boolean;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_HasBuildVersion = boolean;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_TypedMarketingMatch = RegExpMatchArray;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_MarketingValue = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_TypedBuildMatch = RegExpMatchArray;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_BuildValue = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_ParsedBuild = number;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_CurrentMarketingVersion = string | undefined;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_CurrentBuild = number | undefined;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_NewBuild = number;
+
+export type Cli_Utility_Changelog_Runner_SyncAppleVersion_UpdatedContent = string;
+
+/**
  * CLI - Utility - Changelog - Sync Package References.
  *
  * @since 0.20.0
@@ -604,6 +751,8 @@ export type Cli_Utility_Changelog_Runner_WriteChangelog_Version = string;
 export type Cli_Utility_Changelog_Runner_WriteChangelog_Entries = Shared_ChangelogEntry[];
 
 export type Cli_Utility_Changelog_Runner_WriteChangelog_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
+export type Cli_Utility_Changelog_Runner_WriteChangelog_NativeBuild = number | undefined;
 
 export type Cli_Utility_Changelog_Runner_WriteChangelog_Returns = Promise<void>;
 

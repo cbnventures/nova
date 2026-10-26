@@ -80,15 +80,18 @@ An npm-managed project keeps its dependency lifecycle-script decisions in the ro
 ```json
 {
   "allowScripts": {
-    "core-js": false,
+    "core-js": true,
+    "es5-ext": false,
     "node-pty@1.1.0": true
   }
 }
 ```
 
-Use an exact `name@version` key for an approval so a future dependency upgrade requires a new review. Use a name-only `false` entry for an explicit denial. A missing entry is unreviewed: npm 11 reports it while still running the script, whereas npm 12 blocks it by default.
+Use an exact `name@version` key when approval belongs to one reviewed release, or a name-only key when the repository intentionally carries that decision through dependency updates. Use a name-only `false` entry for an explicit denial. A missing entry is unreviewed: npm 11 reports it while still running the script, whereas npm 12 blocks it by default.
 
-Nova recognizes and preserves non-empty `allowScripts` objects but never infers that dependency code is trustworthy. Review the pending set with the command that belongs to the npm version pinned by `packageManager`:
+Nova recipes recognize and preserve non-empty `allowScripts` objects but never infer that arbitrary dependency code is trustworthy. A scaffold is narrower: Nova knows the dependency capabilities it is generating, so it composes only their reviewed lifecycle-script profiles. Adding a scaffold to an existing monorepo fills missing decisions without overriding choices already recorded by the consumer.
+
+Review the pending set with the command that belongs to the npm version pinned by `packageManager`:
 
 <Tabs groupId="npm-install-script-policy">
   <TabItem value="npm-11" label="npm 11" default>
@@ -111,13 +114,17 @@ Both commands above are read-only. Approve or deny a package only after reviewin
 
 ## Policies
 
-A policy describes how the workspace is **versioned and published**. It determines whether the workspace is locked, tracked, or released to a registry.
+A policy describes how the workspace is **versioned and package-published**. It determines whether the workspace is locked, tracked privately, or eligible for release to a package registry.
 
-| Policy          | Version behavior                        | Publishing               | `private` value |
-|-----------------|-----------------------------------------|--------------------------|-----------------|
-| `freezable`     | Locked at `0.0.0`. Never incremented.   | Never published.         | `true`          |
-| `trackable`     | Tracked via semver. Can be incremented. | Never published.         | `true`          |
-| `distributable` | Tracked via semver. Can be incremented. | Published to a registry. | `false`         |
+| Policy          | Version behavior                                                 | Package publishing       | `private` value |
+|-----------------|------------------------------------------------------------------|--------------------------|-----------------|
+| `freezable`     | Locked at the reserved `0.0.0` sentinel. Never incremented.      | Never package-published. | `true`          |
+| `trackable`     | Tracked with the project's configured SemVer or CalVer strategy. | Never package-published. | `true`          |
+| `distributable` | Tracked with the project's configured SemVer or CalVer strategy. | Published to a registry. | `false`         |
+
+Deployment is independent of workspace policy. A freezable documentation site can deploy to a hosting platform while its package version remains locked at `0.0.0`; a trackable application can deploy without becoming registry-publishable.
+
+`0.0.0` belongs exclusively to freezable workspaces. A new non-freezable workspace starts at `0.0.1` under SemVer or the current UTC `YYYY.M.0` period under CalVer. When lock-step versioning is enabled in an existing project, a newly scaffolded non-freezable workspace inherits the one shared project version instead.
 
 ### Policy-Gated Fields
 
@@ -146,7 +153,7 @@ Not every policy is available to every role. The following table shows which pol
 | `config`   | Yes         | Yes         |                 |
 | `app`      |             | Yes         |                 |
 | `package`  |             | Yes         | Yes             |
-| `tool`     | Yes         | Yes         |                 |
+| `tool`     | Yes         | Yes         | Yes             |
 | `template` | Yes         | Yes         |                 |
 
 ## Workspace Naming

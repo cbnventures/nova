@@ -1,5 +1,4 @@
-import { Joi } from '@docusaurus/utils-validation';
-
+import { joi } from './lib/docusaurus-utils-validation.js';
 import { progressBarDefaults } from './lib/progress-bar.js';
 import { LIB_REGEX_HEX_COLOR } from './lib/regex.js';
 import { presetsIndexNames, presetsIndexPresets } from './presets/index.js';
@@ -41,105 +40,105 @@ import type {
  *
  * @since 0.15.0
  */
-const pluginOptionsSchema = Joi.object({
-  preset: Joi.string()
+const pluginOptionsSchema = joi.object({
+  preset: joi.string()
     .valid(...presetsIndexNames)
     .required(),
-  overrides: Joi.object({
-    colors: Joi.object({
-      primary: Joi.object({
-        light: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
-        dark: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+  overrides: joi.object({
+    colors: joi.object({
+      primary: joi.object({
+        light: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
       }).optional(),
-      secondary: Joi.object({
-        light: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
-        dark: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+      secondary: joi.object({
+        light: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
       }).optional(),
-      text: Joi.object({
-        light: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
-        dark: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+      text: joi.object({
+        light: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
       }).optional(),
-      border: Joi.object({
-        light: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
-        dark: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+      border: joi.object({
+        light: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
       }).optional(),
-      warning: Joi.object({
-        light: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
-        dark: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+      warning: joi.object({
+        light: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
       }).optional(),
-      danger: Joi.object({
-        light: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
-        dark: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+      danger: joi.object({
+        light: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
       }).optional(),
     }).default(),
-    fonts: Joi.object({
-      display: Joi.string().optional(),
-      body: Joi.string().optional(),
-      code: Joi.string().optional(),
+    fonts: joi.object({
+      display: joi.string().optional(),
+      body: joi.string().optional(),
+      code: joi.string().optional(),
     }).default(),
-    navbar: Joi.string().valid('bridge', 'canopy', 'monolith', 'compass').optional(),
-    footer: Joi.string().valid('commons', 'embassy', 'ledger', 'launchpad').optional(),
+    navbar: joi.string().valid('bridge', 'canopy', 'monolith', 'compass').optional(),
+    footer: joi.string().valid('commons', 'embassy', 'ledger', 'launchpad').optional(),
   }).default(),
-  plugins: Joi.object({
-    docs: Joi.object().unknown(true).optional(),
-    blog: Joi.alternatives()
-      .try(Joi.boolean().valid(false), Joi.object().unknown(true))
+  plugins: joi.object({
+    docs: joi.object().unknown(true).optional(),
+    blog: joi.alternatives()
+      .try(joi.boolean().valid(false), joi.object().unknown(true))
       .optional(),
-    pages: Joi.alternatives()
-      .try(Joi.boolean().valid(false), Joi.object().unknown(true))
+    pages: joi.alternatives()
+      .try(joi.boolean().valid(false), joi.object().unknown(true))
       .optional(),
-    sitemap: Joi.alternatives()
-      .try(Joi.boolean().valid(false), Joi.object().unknown(true))
+    sitemap: joi.alternatives()
+      .try(joi.boolean().valid(false), joi.object().unknown(true))
       .optional(),
   }).default(),
-  analytics: Joi.object({
-    gtm: Joi.object({
-      containerId: Joi.string().required(),
+  analytics: joi.object({
+    gtm: joi.object({
+      containerId: joi.string().required(),
     }).optional(),
   }).default(),
-  persistentCache: Joi.boolean().default(false),
-  progressBar: Joi.alternatives()
+  persistentCache: joi.boolean().default(false),
+  progressBar: joi.alternatives()
     .try(
-      Joi.boolean(),
-      Joi.object({
-        minimum: Joi.number().min(0).max(1).default(progressBarDefaults['minimum']),
-        easing: Joi.string().default(progressBarDefaults['easing']),
-        positionUsing: Joi.string().valid('', 'translate3d', 'translate', 'margin').default(progressBarDefaults['positionUsing']),
-        speed: Joi.number().integer().min(0).default(progressBarDefaults['speed']),
-        trickle: Joi.boolean().default(progressBarDefaults['trickle']),
-        trickleRate: Joi.number().min(0).max(1).default(progressBarDefaults['trickleRate']),
-        trickleSpeed: Joi.number().integer().min(0).default(progressBarDefaults['trickleSpeed']),
-        showSpinner: Joi.boolean().default(progressBarDefaults['showSpinner']),
-        barSelector: Joi.string().default(progressBarDefaults['barSelector']),
-        spinnerSelector: Joi.string().default(progressBarDefaults['spinnerSelector']),
-        parent: Joi.string().default(progressBarDefaults['parent']),
-        template: Joi.string().default(progressBarDefaults['template']),
+      joi.boolean(),
+      joi.object({
+        minimum: joi.number().min(0).max(1).default(progressBarDefaults['minimum']),
+        easing: joi.string().default(progressBarDefaults['easing']),
+        positionUsing: joi.string().valid('', 'translate3d', 'translate', 'margin').default(progressBarDefaults['positionUsing']),
+        speed: joi.number().integer().min(0).default(progressBarDefaults['speed']),
+        trickle: joi.boolean().default(progressBarDefaults['trickle']),
+        trickleRate: joi.number().min(0).max(1).default(progressBarDefaults['trickleRate']),
+        trickleSpeed: joi.number().integer().min(0).default(progressBarDefaults['trickleSpeed']),
+        showSpinner: joi.boolean().default(progressBarDefaults['showSpinner']),
+        barSelector: joi.string().default(progressBarDefaults['barSelector']),
+        spinnerSelector: joi.string().default(progressBarDefaults['spinnerSelector']),
+        parent: joi.string().default(progressBarDefaults['parent']),
+        template: joi.string().default(progressBarDefaults['template']),
       }).unknown(true),
     )
     .default(false),
-  search: Joi.alternatives()
+  search: joi.alternatives()
     .try(
-      Joi.boolean().valid(false),
-      Joi.object({
-        language: Joi.array().items(Joi.string()).default(['en']),
-        indexDocs: Joi.boolean().default(true),
-        indexBlog: Joi.boolean().default(true),
-        indexPages: Joi.boolean().default(false),
-        hashed: Joi.boolean().default(true),
-        searchResultLimits: Joi.number().integer().default(8),
-        highlightSearchTermsOnTargetPage: Joi.boolean().default(true),
-        searchBarShortcutKeymap: Joi.string().default('mod+k'),
-        fuzzyMatchingDistance: Joi.number().integer().default(1),
-        ignorePatterns: Joi.array().items(Joi.string()).default([]),
-        docsRouteBasePath: Joi.string().default('docs'),
+      joi.boolean().valid(false),
+      joi.object({
+        language: joi.array().items(joi.string()).default(['en']),
+        indexDocs: joi.boolean().default(true),
+        indexBlog: joi.boolean().default(true),
+        indexPages: joi.boolean().default(false),
+        hashed: joi.boolean().default(true),
+        searchResultLimits: joi.number().integer().default(8),
+        highlightSearchTermsOnTargetPage: joi.boolean().default(true),
+        searchBarShortcutKeymap: joi.string().default('mod+k'),
+        fuzzyMatchingDistance: joi.number().integer().default(1),
+        ignorePatterns: joi.array().items(joi.string()).default([]),
+        docsRouteBasePath: joi.string().default('docs'),
       }).unknown(true),
     )
     .default(false),
-  iconSafelist: Joi.array().items(Joi.string()).default([]),
-  maxBundleFileSize: Joi.alternatives()
+  iconSafelist: joi.array().items(joi.string()).default([]),
+  maxBundleFileSize: joi.alternatives()
     .try(
-      Joi.number().positive(),
-      Joi.boolean().valid(false),
+      joi.number().positive(),
+      joi.boolean().valid(false),
     )
     .default(3),
 });
@@ -153,91 +152,91 @@ const pluginOptionsSchema = Joi.object({
  *
  * @since 0.15.0
  */
-const themeConfigSchema = Joi.object({
-  site: Joi.object({
-    logo: Joi.object({
-      alt: Joi.string().optional(),
-      src: Joi.object({
-        light: Joi.string().optional(),
-        dark: Joi.string().optional(),
+const themeConfigSchema = joi.object({
+  site: joi.object({
+    logo: joi.object({
+      alt: joi.string().optional(),
+      src: joi.object({
+        light: joi.string().optional(),
+        dark: joi.string().optional(),
       }).default(),
-      href: Joi.string().optional(),
-      target: Joi.string().optional(),
-      rel: Joi.string().optional(),
-      ariaLabel: Joi.string().optional(),
-      wordmark: Joi.object({
-        light: Joi.string().optional(),
-        dark: Joi.string().optional(),
+      href: joi.string().optional(),
+      target: joi.string().optional(),
+      rel: joi.string().optional(),
+      ariaLabel: joi.string().optional(),
+      wordmark: joi.object({
+        light: joi.string().optional(),
+        dark: joi.string().optional(),
       }).default(),
     }).default(),
-    image: Joi.string().allow('').default(''),
-    metadata: Joi.array().default([]),
+    image: joi.string().allow('').default(''),
+    metadata: joi.array().default([]),
   }).default(),
-  colorMode: Joi.object({
-    defaultMode: Joi.string().valid('system', 'light', 'dark').default('system'),
-    disableSwitch: Joi.boolean().default(false),
-    respectPrefersColorScheme: Joi.forbidden(),
+  colorMode: joi.object({
+    defaultMode: joi.string().valid('system', 'light', 'dark').default('system'),
+    disableSwitch: joi.boolean().default(false),
+    respectPrefersColorScheme: joi.forbidden(),
   }).unknown(true).default(),
-  navbar: Joi.object({
-    hideOnScroll: Joi.boolean().default(false),
-    items: Joi.array().default([]),
+  navbar: joi.object({
+    hideOnScroll: joi.boolean().default(false),
+    items: joi.array().default([]),
   }).unknown(true).default(),
-  docs: Joi.object({
-    versionPersistence: Joi.string().default('localStorage'),
-    sidebar: Joi.object({
-      hideable: Joi.boolean().default(false),
-      autoCollapseCategories: Joi.boolean().default(false),
+  docs: joi.object({
+    versionPersistence: joi.string().default('localStorage'),
+    sidebar: joi.object({
+      hideable: joi.boolean().default(false),
+      autoCollapseCategories: joi.boolean().default(false),
     }).unknown(true).default(),
   }).unknown(true).default(),
-  blog: Joi.object({
-    sidebar: Joi.object({
-      groupByYear: Joi.boolean().default(true),
+  blog: joi.object({
+    sidebar: joi.object({
+      groupByYear: joi.boolean().default(true),
     }).unknown(true).default(),
-    layout: Joi.object({
-      heading: Joi.string().default('Blog'),
-      description: Joi.string().allow('').default(''),
+    layout: joi.object({
+      heading: joi.string().default('Blog'),
+      description: joi.string().allow('').default(''),
     }).unknown(true).default(),
-    share: Joi.object({
-      platforms: Joi.array().items(Joi.string().valid('x', 'facebook', 'linkedin', 'reddit', 'copy')).default([]),
+    share: joi.object({
+      platforms: joi.array().items(joi.string().valid('x', 'facebook', 'linkedin', 'reddit', 'copy')).default([]),
     }).unknown(true).default(),
   }).unknown(true).default(),
-  tableOfContents: Joi.object({
-    minHeadingLevel: Joi.number().integer().min(2).max(6).default(2),
-    maxHeadingLevel: Joi.number().integer().min(2).max(6).default(3),
+  tableOfContents: joi.object({
+    minHeadingLevel: joi.number().integer().min(2).max(6).default(2),
+    maxHeadingLevel: joi.number().integer().min(2).max(6).default(3),
   }).unknown(true).default(),
-  announcementBar: Joi.object({
-    id: Joi.string().required(),
-    content: Joi.string().required(),
-    backgroundColor: Joi.string().optional(),
-    textColor: Joi.string().optional(),
-    isCloseable: Joi.boolean().default(true),
+  announcementBar: joi.object({
+    id: joi.string().required(),
+    content: joi.string().required(),
+    backgroundColor: joi.string().optional(),
+    textColor: joi.string().optional(),
+    isCloseable: joi.boolean().default(true),
   }).optional(),
-  backToTopButton: Joi.boolean().default(true),
-  errorPages: Joi.object({
-    notFound: Joi.object({
-      title: Joi.string().optional(),
-      description: Joi.string().optional(),
-      backHomeLabel: Joi.string().optional(),
-      backHomeHref: Joi.string().optional(),
+  backToTopButton: joi.boolean().default(true),
+  errorPages: joi.object({
+    notFound: joi.object({
+      title: joi.string().optional(),
+      description: joi.string().optional(),
+      backHomeLabel: joi.string().optional(),
+      backHomeHref: joi.string().optional(),
     }).optional(),
-    errorPageContent: Joi.object({
-      title: Joi.string().optional(),
-      retryLabel: Joi.string().optional(),
+    errorPageContent: joi.object({
+      title: joi.string().optional(),
+      retryLabel: joi.string().optional(),
     }).optional(),
-    error: Joi.object({
-      retryLabel: Joi.string().optional(),
+    error: joi.object({
+      retryLabel: joi.string().optional(),
     }).optional(),
   }).optional(),
-  footer: Joi.alternatives()
+  footer: joi.alternatives()
     .try(
-      Joi.boolean().valid(false),
-      Joi.object({
-        cta: Joi.alternatives()
+      joi.boolean().valid(false),
+      joi.object({
+        cta: joi.alternatives()
           .try(
-            Joi.string(),
-            Joi.object({
-              label: Joi.string().required(),
-              href: Joi.string().required(),
+            joi.string(),
+            joi.object({
+              label: joi.string().required(),
+              href: joi.string().required(),
             }),
           )
           .optional(),

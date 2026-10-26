@@ -141,9 +141,13 @@ export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_Generate
 
 export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfilePath = string;
 
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerignorePath = string;
+
 export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_ComposePath = string;
 
 export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfileContent = string;
+
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerignoreContent = string;
 
 /**
  * Tests - CLI - Scaffold - App - Express.js - Run - Respects Dry Run.

@@ -120,6 +120,8 @@ export type Lib_PackageScripts_HookTarget = string | undefined;
 
 export type Lib_PackageScripts_HasChildScript = boolean;
 
+export type Lib_PackageScripts_IsTreeDispatcher = boolean;
+
 /**
  * Lib - Package Scripts - Add Script.
  *

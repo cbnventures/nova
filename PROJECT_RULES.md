@@ -13,7 +13,9 @@
 
 - **URL:** https://github.com/cbnventures/nova
 
-## Repository Layout
+## Repository Structure
+
+### Repository Layout
 
 ```
 ./                              → role: project, policy: freezable
@@ -34,9 +36,9 @@
 |---------------|-------------|-------------------------------|
 | `nova-docs`   | `apps/docs` | `https://nova-docs.localhost` |
 
-## Source Structure
+### Source Structure
 
-### @cbnventures/nova
+#### @cbnventures/nova
 
 ```
 src/
@@ -78,7 +80,7 @@ src/
     └── shared.d.ts         → shared types (only imported by other .d.ts files)
 ```
 
-### @cbnventures/docusaurus-preset-nova
+#### @cbnventures/docusaurus-preset-nova
 
 ```
 src/
@@ -97,7 +99,7 @@ src/
 └── types/                  → all type definitions
 ```
 
-## Key Files
+### Key Files
 
 | File                                                        | Purpose                                  | When to modify                                              |
 |-------------------------------------------------------------|------------------------------------------|-------------------------------------------------------------|
@@ -167,7 +169,9 @@ None. This project does not read any environment variables at runtime.
 | package  | simple slug or `@scope/name` (scoped allowed)               |
 | template | simple slug or `@scope/name` (scoped allowed)               |
 
-### package.json Key Ordering
+### Manifest and Configuration Rules
+
+#### package.json Key Ordering
 
 When recipes write or reorder a `package.json`, keys follow this canonical order:
 
@@ -188,7 +192,7 @@ Keys not in the npm official spec or bundler list should be flagged or removed b
 - `bundleDependencies` is the preferred key. `bundledDependencies` is always merged into `bundleDependencies` and then deleted.
 - `typings` is always merged into `types` and then deleted (same treatment as `bundledDependencies`).
 
-### package.json Key Classification
+#### package.json Key Classification
 
 Every `package.json` key is classified into one of three buckets based on each workspace's role and policy:
 
@@ -207,7 +211,7 @@ Every `package.json` key is classified into one of three buckets based on each w
 - The monorepo root (`project` role) must have `packageManager` and `workspaces` keys; no other workspace should.
 - Only **distributable** workspaces may have `files` in their `package.json`.
 - **Trackable** and **distributable** workspace versions must match `settings.versionStrategy`; when lock-step versioning is enabled, they must also start each release at the same version.
-- **Freezable** workspaces keep their sentinel version and are never deployed or published.
+- **Freezable** workspaces keep their sentinel version and are never package-published; deployment remains independent of workspace policy.
 - Always pair `module` with `moduleResolution` in TSConfig.
 - Relative paths do not belong in exported TSConfig presets (TypeScript resolves from where the config is, not where the command runs).
 - If a project uses its own build tool instead of `tsc`, set `isolatedModules: true` and `noEmit: true`.
@@ -234,7 +238,7 @@ Every `package.json` key is classified into one of three buckets based on each w
 **Don't:**
 - Do not repeat the same advice across multiple admonitions on the same page.
 
-## Project-Specific Patterns
+## Architecture and Data
 
 ### Architecture
 
@@ -285,7 +289,7 @@ Layers stack in defined order:
 Custom ESLint rules (src/rules/eslint/) bundled into presets
 ```
 
-### Data Flow
+### Data Flow and Ownership
 
 #### Recipes
 
@@ -348,15 +352,25 @@ This describes current behavior, not necessarily the ideal end state.
 | API clients     | Zod `.parse()` for validation. try/catch for network errors. Return `undefined` on failure (static caching pattern). |
 | Toolkit         | Batteries don't throw — they log.                                                                                    |
 
-## Documentation Site
+## Project Guardrails
 
-### Framework
+No additional project-specific guardrails are currently documented beyond the workspace rules and shared convention files.
+
+## Testing and Verification
+
+The supported verification commands are documented under Build and Tooling. Changes must pass every check applicable to the affected workspaces and platforms.
+
+## Documentation and Ownership
+
+### Documentation Structure
+
+#### Framework
 
 - **Framework:** Docusaurus
 - **Source directory:** `apps/docs/`
 - **Build output:** `apps/docs/build/`
 
-### Site Structure
+#### Site Structure
 
 ```
 apps/docs/
@@ -377,7 +391,7 @@ apps/docs/
     └── images/            → Static images and logos
 ```
 
-### Commands
+#### Commands
 
 | Command                               | What it does                           |
 |---------------------------------------|----------------------------------------|
@@ -411,3 +425,7 @@ apps/docs/
 |------------------|---------------------------------------------------|-------------------------|
 | npm              | `https://www.npmjs.com/package/@cbnventures/nova` | Public package registry |
 | Cloudflare Pages | `https://nova.cbnventures.io/`                    | Documentation site      |
+
+## Additional Project Rules
+
+No additional project rules are currently documented.

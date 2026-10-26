@@ -134,6 +134,10 @@ export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigRaw = str
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Tsconfig = Record<string, unknown>;
 
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigReferences = unknown;
+
+export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigFileList = unknown;
+
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigExtends = string[];
 
 export type Tests_ScaffoldOutputContract_VerifyGeneratedOutput_PackageJsonIndex = number;
@@ -199,6 +203,10 @@ export type Tests_ScaffoldOutputContract_VerifyScriptContract_HasParent = boolea
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ParentIndex = number;
 
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_WorkspaceParentCommand = string;
+
+export type Tests_ScaffoldOutputContract_VerifyScriptContract_RootParentCommand = string;
+
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedParentCommand = string;
 
 export type Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedGroupNames = string[];
@@ -241,6 +249,8 @@ export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJ
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRootPackageJsonRecipes = Record<string, Record<string, unknown>>;
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipeNames = string[];
+
+export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedAllowScripts = Record<string, boolean>;
 
 export type Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDependencies = Record<string, unknown>;
 

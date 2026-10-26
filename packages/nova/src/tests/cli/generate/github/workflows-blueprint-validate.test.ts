@@ -17,6 +17,14 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CleanConfigProducesNoDiagnosticsAndKeepsAllWorkflows_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CleanConfigProducesNoDiagnosticsAndKeepsAllWorkflows_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CleanConfigProducesNoDiagnosticsAndKeepsAllWorkflows_Workspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_BoundaryRawWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_BoundaryResult,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_RawWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerIdentityMustBeTargetLocal_RawWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerIdentityMustBeTargetLocal_Result,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerPlatformsAreValidated_RawWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerPlatformsAreValidated_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CrossWorkflowDestinationCollisionIsFlagged_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CrossWorkflowDestinationCollisionIsFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CrossWorkflowDestinationCollisionIsFlagged_Workspaces,
@@ -55,6 +63,8 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingTriggersIsFlagged_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingTriggersIsFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MissingTriggersIsFlagged_Workspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MultipleContainerDeliverablesAreFlagged_RawWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MultipleContainerDeliverablesAreFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ObjectFormTriggersPass_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ObjectFormTriggersPass_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ObjectFormTriggersPass_Workspaces,
@@ -67,6 +77,8 @@ import type {
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithInvalidPathsIsFlagged_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithInvalidPathsIsFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithInvalidPathsIsFlagged_Workspaces,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_RootBuildScopeIsFlagged_RawWorkflows,
+  Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_RootBuildScopeIsFlagged_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ScheduleDailyAndMonthlyTriggersPass_RawWorkflows,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ScheduleDailyAndMonthlyTriggersPass_Result,
   Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ScheduleDailyAndMonthlyTriggersPass_Workspaces,
@@ -481,6 +493,167 @@ describe('Validator.validate', () => {
     strictEqual(result['diagnostics'].length, 1);
 
     strictEqual(result['diagnostics'].map((diagnostic) => diagnostic['message']).join(' ').includes('Scope "./packages/missing" is not a registered workspace'), true);
+
+    return;
+  });
+
+  it('root build scope is flagged', () => {
+    const rawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_RootBuildScopeIsFlagged_RawWorkflows = [{
+      template: 'publish',
+      name: 'containers',
+      triggers: ['release'],
+      build: ['./'],
+      deploy: [{
+        to: 'ghcr',
+        path: './',
+        with: {
+          IMAGE_REPOSITORY: 'nova',
+        },
+      }],
+    }];
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_RootBuildScopeIsFlagged_Result = Validator.validate(rawWorkflows, {});
+
+    strictEqual(result['workflows'].length, 0);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('declares "./" in "build"')), true);
+
+    return;
+  });
+
+  it('container identity must be target local', () => {
+    const rawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerIdentityMustBeTargetLocal_RawWorkflows = [{
+      template: 'publish',
+      name: 'containers',
+      triggers: ['release'],
+      deploy: [{
+        to: 'docker-hub',
+        path: './',
+      }],
+      with: {
+        IMAGE_NAMESPACE: 'cbnventures',
+        IMAGE_REPOSITORY: 'nova',
+      },
+    }];
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerIdentityMustBeTargetLocal_Result = Validator.validate(rawWorkflows, {});
+
+    strictEqual(result['workflows'].length, 0);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('missing required literal settings: IMAGE_NAMESPACE, IMAGE_REPOSITORY')), true);
+
+    return;
+  });
+
+  it('container coordinate components are validated', () => {
+    const rawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_RawWorkflows = [{
+      template: 'publish',
+      name: 'containers',
+      triggers: ['release'],
+      deploy: [{
+        to: 'docker-hub',
+        path: './',
+        with: {
+          IMAGE_NAMESPACE: 'docker.io/cbnventures',
+          IMAGE_REPOSITORY: 'nova:latest',
+        },
+      }],
+    }];
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_Result = Validator.validate(rawWorkflows, {});
+
+    strictEqual(result['workflows'].length, 0);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('invalid IMAGE_NAMESPACE "docker.io/cbnventures"')), true);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('invalid IMAGE_REPOSITORY "nova:latest"')), true);
+
+    const boundaryRawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_BoundaryRawWorkflows = [{
+      template: 'publish',
+      name: 'containers',
+      triggers: ['release'],
+      deploy: [{
+        to: 'docker-hub',
+        path: './',
+        with: {
+          IMAGE_NAMESPACE: '.cbnventures',
+          IMAGE_REPOSITORY: 'nova-',
+        },
+      }],
+    }];
+    const boundaryResult: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_BoundaryResult = Validator.validate(boundaryRawWorkflows, {});
+
+    strictEqual(boundaryResult['workflows'].length, 0);
+    strictEqual(boundaryResult['diagnostics'].some((diagnostic) => diagnostic['message'].includes('invalid IMAGE_NAMESPACE ".cbnventures"')), true);
+    strictEqual(boundaryResult['diagnostics'].some((diagnostic) => diagnostic['message'].includes('invalid IMAGE_REPOSITORY "nova-"')), true);
+
+    return;
+  });
+
+  it('container platforms are validated', () => {
+    const rawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerPlatformsAreValidated_RawWorkflows = [{
+      template: 'publish',
+      name: 'containers',
+      triggers: ['release'],
+      containerPlatforms: [
+        'linux/s390x',
+        'linux/amd64',
+        'linux/amd64',
+      ],
+      deploy: [{
+        to: 'ghcr',
+        path: './',
+        with: {
+          IMAGE_REPOSITORY: 'nova',
+        },
+      }],
+    }];
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerPlatformsAreValidated_Result = Validator.validate(rawWorkflows, {});
+
+    strictEqual(result['workflows'].length, 0);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('unsupported container platform "linux/s390x"')), true);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('repeats container platform "linux/amd64"')), true);
+
+    return;
+  });
+
+  it('multiple container deliverables are flagged', () => {
+    const rawWorkflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MultipleContainerDeliverablesAreFlagged_RawWorkflows = [
+      {
+        template: 'publish',
+        name: 'first',
+        triggers: ['release'],
+        deploy: [
+          {
+            to: 'docker-hub',
+            path: './',
+            with: {
+              IMAGE_NAMESPACE: 'cbnventures',
+              IMAGE_REPOSITORY: 'nova',
+            },
+          },
+          {
+            to: 'docker-hub',
+            path: './',
+            with: {
+              IMAGE_NAMESPACE: 'cbnventures',
+              IMAGE_REPOSITORY: 'nova-alt',
+            },
+          },
+        ],
+      },
+      {
+        template: 'publish',
+        name: 'second',
+        triggers: ['release'],
+        deploy: [{
+          to: 'ghcr',
+          path: './',
+          with: {
+            IMAGE_REPOSITORY: 'nova',
+          },
+        }],
+      },
+    ];
+    const result: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MultipleContainerDeliverablesAreFlagged_Result = Validator.validate(rawWorkflows, {});
+
+    strictEqual(result['workflows'].length, 0);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('multiple targets for the same container registry')), true);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('Container workflow collision')), true);
+    strictEqual(result['diagnostics'].some((diagnostic) => diagnostic['message'].includes('multiple Docker images per repository are unsupported')), true);
 
     return;
   });

@@ -55,6 +55,8 @@ import type {
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_ComposePath,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfileContent,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfilePath,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerignoreContent,
+  Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerignorePath,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_NovaConfig,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_NovaConfigPath,
   Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_PackageJson,
@@ -342,14 +344,24 @@ describe.sequential('CliScaffoldAppExpressjs.run', async () => {
       output: './apps/api',
     });
 
-    const dockerfilePath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfilePath = join(projectDirectory, 'apps', 'api', 'Dockerfile');
-    const composePath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_ComposePath = join(projectDirectory, 'apps', 'api', 'compose.yml');
+    const dockerfilePath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfilePath = join(projectDirectory, 'Dockerfile');
+    const dockerignorePath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerignorePath = join(projectDirectory, '.dockerignore');
+    const composePath: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_ComposePath = join(projectDirectory, 'compose.yml');
     const dockerfileContent: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerfileContent = await readFile(dockerfilePath, 'utf-8');
+    const dockerignoreContent: Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_GeneratesDockerPackagingWhenRequested_DockerignoreContent = await readFile(dockerignorePath, 'utf-8');
 
     await access(composePath);
+    await access(join(projectDirectory, 'packages', 'docker', 'package.json'));
+    await access(join(projectDirectory, 'packages', 'docker', 'rootfs', 'etc', 's6-overlay', 's6-rc.d', 'api', 'run'));
 
     strictEqual(dockerfileContent.includes('EXPOSE 3000'), true);
     strictEqual(dockerfileContent.includes('HEALTHCHECK'), true);
+    strictEqual(dockerfileContent.includes('ENTRYPOINT ["/init"]'), true);
+    strictEqual(dockerfileContent.includes('[__'), false);
+    strictEqual(dockerignoreContent.includes('**/build'), true);
+    strictEqual(dockerignoreContent.includes('**/dist'), true);
+    strictEqual(dockerignoreContent.includes('**/node_modules'), true);
+    strictEqual(dockerignoreContent.includes('**/.secrets'), true);
 
     return;
   });

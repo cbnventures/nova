@@ -1,97 +1,62 @@
 # PROJECT_RULES.md
 
+<!--
+PROJECT_RULES.md records the repository's current, enforceable operating contract. Describe what
+exists and how contributors work with it today. Product aspirations, future capabilities, and
+unresolved product decisions belong in VISION.md.
+
+Keep the top-level sections below in this order. If an enforceable repository rule does not fit a
+canonical section, add a descriptive third-level heading under "Additional Project Rules" rather
+than creating another second-level section. Do not hard-code tool, dependency, platform, or
+release versions; point to the authoritative manifest or configuration instead.
+-->
+
 ## Project Identity
 
 ### Name and Description
 
 <!--
-The canonical project name, a one-line description, and the primary programming language.
-
-- **Project name:** Name
+- **Project name:** Canonical name.
 - **Description:** One-line description.
-- **Primary language:** Language
-- **Framework / runtime:** Framework or runtime (e.g. Next.js, Express, SwiftUI, Spring Boot)
+- **Primary languages:** Languages used by the repository.
+- **Frameworks / runtimes:** Frameworks and runtimes used by the repository.
 -->
 
 ### Repository URL
 
-<!--
-The full GitHub URL for this repository.
+<!-- - **URL:** Full canonical repository URL. -->
 
-- **URL:** https://github.com/owner/repo
--->
+## Repository Structure
 
-## Repository Layout
+### Repository Layout
 
 <!--
-A top-level directory tree showing every folder at the first two levels. Annotate each entry with a short description. Files that live at the root level should also be listed.
+Show the root and the first useful level of every owned directory. Include important root files
+and annotate each entry with its current responsibility. Do not list generated dependency or
+build directories.
 
-```
-repo-root/
-├── .github/              — GitHub Actions workflows, issue templates, funding
-├── docs/                 — Documentation site source (Docusaurus)
-├── src/                  — Application source code
-│   ├── lib/              — Shared libraries and utilities
-│   ├── cli/              — CLI entry points and commands
-│   ├── types/            — TypeScript type definitions (.d.ts)
-│   └── tests/            — Unit and integration tests
-├── scripts/              — Build, deploy, and maintenance scripts
-├── .editorconfig         — Editor formatting rules
-├── .gitignore            — Git ignore patterns
-├── CHANGELOG.md          — Release history
-├── LICENSE               — MIT license
-├── README.md             — Project overview and badges
-├── package.json          — Node.js manifest and scripts
-└── tsconfig.json         — TypeScript compiler configuration
+```text
+repository/
+├── apps/                  — Deployable application workspaces
+├── packages/              — Reusable package workspaces
+├── scripts/               — Repository maintenance scripts
+├── nova.config.json       — Nova project and workspace configuration
+└── package.json           — Root workspace manifest
 ```
 -->
 
-## Source Structure
+### Source Structure
+
+<!-- Describe each source root deeply enough that a contributor can find the correct ownership boundary without searching the entire repository. -->
+
+### Key Files
 
 <!--
-A detailed directory tree of the primary source folder (e.g. `src/`, `app/`, `lib/`). Go as deep as needed to show every module, grouped by domain. Annotate each file or folder with its responsibility.
+List the files a contributor or agent must understand before changing the repository.
 
-```
-src/
-├── cli/
-│   ├── commands/
-│   │   ├── build.ts      — `build` command handler
-│   │   └── publish.ts    — `publish` command handler
-│   └── index.ts          — CLI entry point, argument parsing
-├── lib/
-│   ├── config.ts         — Configuration loader and validator
-│   ├── schema.ts         — Zod schemas for external API responses
-│   └── regex.ts          — Shared regex patterns
-├── toolkit/
-│   ├── logger.ts         — Structured logging utility
-│   ├── markdown-table.ts — Markdown table builder
-│   └── index.ts          — Barrel exports for toolkit
-├── types/
-│   ├── cli/
-│   │   └── commands.d.ts — Types for CLI commands
-│   ├── lib/
-│   │   └── config.d.ts   — Types for configuration
-│   └── shared.d.ts       — Shared type aliases
-└── tests/
-    ├── cli/
-    │   └── commands.test.ts
-    └── lib/
-        └── config.test.ts
-```
--->
-
-## Key Files
-
-<!--
-List the most important files a contributor or AI agent should know about. Include the file path, what it does, and when you would need to touch it.
-
-| File                | Purpose         | When to modify                                         |
-|---------------------|-----------------|--------------------------------------------------------|
-| `src/cli/index.ts`  | CLI entry point | Adding or changing CLI commands                        |
-| `src/lib/config.ts` | Config loader   | Changing configuration shape or defaults               |
-| `package.json`      | Manifest        | Adding dependencies, changing scripts, bumping version |
-| `tsconfig.json`     | TS config       | Changing compiler options or path aliases              |
-| `CHANGELOG.md`      | Release notes   | Every user-facing change                               |
+| File | Purpose | When to modify |
+|------|---------|----------------|
+| Path | Purpose | Trigger        |
 -->
 
 ## Build and Tooling
@@ -99,192 +64,138 @@ List the most important files a contributor or AI agent should know about. Inclu
 ### Prerequisites
 
 <!--
-List every tool that must be installed before building, with minimum version requirements.
+Reference authoritative version declarations rather than copying mutable version numbers.
 
-| Tool    | Version | Purpose                     |
-|---------|---------|-----------------------------|
-| Node.js | >= 22.x | Runtime                     |
-| npm     | >= 10.x | Package manager             |
-| Docker  | >= 27.x | Container builds (optional) |
+| Tool | Version source                 | Purpose |
+|------|--------------------------------|---------|
+| Tool | Manifest or configuration path | Purpose |
 -->
 
 ### Commands
 
 <!--
-List every build, test, lint, and dev command available. Use the exact command the developer runs.
+List the exact supported commands and the directory from which they run.
 
-| Command         | What it does                             |
-|-----------------|------------------------------------------|
-| `npm install`   | Install all dependencies                 |
-| `npm run build` | Compile TypeScript to JavaScript         |
-| `npm run dev`   | Start development server with hot reload |
-| `npm run lint`  | Run ESLint across the project            |
-| `npm test`      | Run the test suite                       |
+| Command | What it does |
+|---------|--------------|
+| Command | Behavior     |
 -->
 
 ### Environment Variables
 
 <!--
-List every environment variable the project reads, its purpose, and whether it is required or optional.
+List every environment variable the repository reads. Explain its source, sensitivity, and whether
+it is required. State "None" when the repository reads no environment variables.
 
-| Variable    | Required | Purpose                                   |
-|-------------|----------|-------------------------------------------|
-| `API_KEY`   | Yes      | Authentication token for the external API |
-| `LOG_LEVEL` | No       | Logging verbosity (default: `info`)       |
+| Variable | Required | Sensitive | Purpose |
+|----------|----------|-----------|---------|
+| Variable | Yes / No | Yes / No  | Purpose |
 -->
 
 ## Workspace Rules
 
+### Workspace Inventory
+
+<!-- List every Nova workspace, its role, its policy, and its responsibility. -->
+
+### Versioning and Release Model
+
+<!-- Explain which workspaces are versioned, how their version strategies relate, and where those strategies are configured. Do not copy a mutable release number. -->
+
+### Manifest and Configuration Rules
+
+<!-- Record repository-specific rules for manifests and configuration files, including canonical ordering, ownership, and normalization behavior. -->
+
 ### Naming Conventions
 
-<!--
-Summarize the naming rules that apply specifically to this project (beyond the universal conventions). Include examples.
-
-| Entity          | Convention        | Example                            |
-|-----------------|-------------------|------------------------------------|
-| CLI commands    | kebab-case verb   | `sync-packages`, `write-changelog` |
-| Config keys     | camelCase         | `workingDir`, `packageName`        |
-| Database tables | snake_case plural | `user_sessions`, `api_tokens`      |
--->
+<!-- Record repository-specific naming rules that are not already owned by conventions/*.md. -->
 
 ### Do / Don't
 
 <!--
-Project-specific rules that are not covered by the language convention files. These are guardrails for contributors and AI agents.
+Record enforceable repository-wide guardrails with their rationale.
 
 **Do:**
-- Rule with rationale.
-- Rule with rationale.
+- Rule and rationale.
 
 **Don't:**
-- Anti-pattern with explanation of why.
-- Anti-pattern with explanation of why.
+- Prohibited pattern and rationale.
 -->
 
-## Project-Specific Patterns
+## Architecture and Data
 
 ### Architecture
 
-<!--
-Describe the high-level architecture pattern this project follows (e.g. layered, hexagonal, MVC, CLI pipeline). Include a diagram if helpful.
+<!-- Describe the current architectural layers, ownership boundaries, and dependency direction. -->
 
-```
-User Input
-  │
-  ▼
-CLI Layer (argument parsing, validation)
-  │
-  ▼
-Service Layer (business logic, orchestration)
-  │
-  ▼
-Data Layer (file I/O, API calls, database)
-```
--->
+### Data Flow and Ownership
 
-### Data Flow
-
-<!--
-Describe how data moves through the system from input to output. Name the key stages and the module responsible for each.
-
-1. **Input** — Where data enters (CLI args, HTTP request, file read). Module: `src/cli/index.ts`.
-2. **Validation** — How input is validated. Module: `src/lib/config.ts`.
-3. **Processing** — Core transformation or business logic. Module: `src/lib/processor.ts`.
-4. **Output** — Where results go (stdout, file write, API call). Module: `src/cli/index.ts`.
--->
+<!-- Explain how data enters, moves through, and leaves the system, including which component owns each persistent or externally visible state. -->
 
 ### Error Strategy
 
-<!--
-How does this project handle errors at each layer? List the approach per layer.
+<!-- Explain how each architectural layer reports, propagates, records, and presents failures. -->
 
-| Layer              | Strategy                                             |
-|--------------------|------------------------------------------------------|
-| CLI entry point    | Catch all, log, set `process.exitCode = 1`, return   |
-| Service functions  | Throw on failure (caller catches)                    |
-| External API calls | Zod `.parse()` for validation, try/catch for network |
-| File I/O           | try/catch, descriptive error message with file path  |
--->
+## Project Guardrails
 
-## Documentation Site
+### Security, Privacy, and Secrets
 
-### Framework
+<!-- Record authentication, authorization, secret-storage, privacy, and sensitive-data rules that contributors must preserve. -->
 
-<!--
-Which documentation framework is used, and where its source lives.
+### Platform and Domain Rules
 
-- **Framework:** Docusaurus / None
-- **Source directory:** `docs/`
-- **Build output:** `docs/build/`
--->
+<!-- Record rules imposed by the project's platforms or domain. Use fourth-level subsections here when different platforms need separate rules. -->
 
-### Site Structure
+### Compatibility
 
-<!--
-A directory tree of the documentation source showing every page and sidebar category.
+<!-- Identify supported environments and compatibility contracts by referencing their authoritative declarations rather than copying mutable versions. -->
 
-```
-docs/
-├── docusaurus.config.ts  — Site configuration
-├── sidebars.ts           — Sidebar navigation structure
-├── docs/
-│   ├── intro.md          — Getting started guide
-│   ├── installation.md   — Installation instructions
-│   ├── configuration.md  — Configuration reference
-│   └── api/
-│       ├── overview.md   — API overview
-│       └── endpoints.md  — Endpoint reference
-└── static/
-    └── img/              — Static images
-```
--->
+## Testing and Verification
 
-### Commands
+### Test Strategy
 
-<!--
-Commands for building and previewing the documentation site locally.
+<!-- Describe what is tested at each layer and which behaviors require regression coverage. -->
 
-| Command              | What it does                           |
-|----------------------|----------------------------------------|
-| `npm run docs:dev`   | Start local dev server with hot reload |
-| `npm run docs:build` | Build the static site for production   |
--->
+### Required Verification
+
+<!-- List the checks required for documentation, implementation, packaging, and release changes. Reference commands defined under Build and Tooling. -->
+
+## Documentation and Ownership
+
+### Documentation Structure
+
+<!-- Describe the documentation surfaces, their source directories, and the kind of information each owns. State when there is no dedicated documentation site. -->
+
+### Ownership and Maintenance
+
+<!-- State which files are generated, which are edited directly, and what must be updated when repository structure or behavior changes. -->
 
 ## Publishing and Deployment
 
 ### Release Process
 
-<!--
-Step-by-step description of how a new version goes from code to release.
-
-1. Run the project's clean install, check, and build gates.
-2. Preview and approve the command-generated changelog release before applying it.
-3. Run the changelog release to fold workspace entries, bump versions, stamp sentinels, and synchronize exact internal pins.
-4. Run check and build again.
-5. Use a separate concise thematic commit message; it is not the same text as the changelog block.
-6. Tag and push the release commit. The publish workflow trigger is project-config dependent; consult the generated workflow.
-7. Build the GitHub Release notes by combining the released workspace changelog files, retaining workspace names while omitting version/date headings.
--->
+<!-- Describe the current release sequence without embedding a release number or a mutable tool version. -->
 
 ### CI/CD Workflows
 
 <!--
-Map each GitHub Actions workflow to what it does and when it runs.
-
-| Workflow file              | Trigger            | What it does                             |
-|----------------------------|--------------------|------------------------------------------|
-| Generated publish workflow | Project-configured | Build and publish the configured targets |
-| `lock-inactive-issues.yml` | Weekly cron        | Lock issues inactive > 30 days           |
+| Workflow file | Trigger | What it does |
+|---------------|---------|--------------|
+| Path          | Trigger | Behavior     |
 -->
 
 ### Environments
 
 <!--
-List every deployment target and its URL or identifier.
+| Environment | URL / Identifier | Purpose |
+|-------------|------------------|---------|
+| Environment | Identifier       | Purpose |
+-->
 
-| Environment  | URL / Identifier                      | Purpose                 |
-|--------------|---------------------------------------|-------------------------|
-| npm          | `https://www.npmjs.com/package/name`  | Public package registry |
-| Docker Hub   | `https://hub.docker.com/r/owner/name` | Container registry      |
-| GitHub Pages | `https://owner.github.io/repo`        | Documentation site      |
+## Additional Project Rules
+
+<!--
+Place genuinely repository-specific enforceable rules here under descriptive third-level headings.
+Do not create additional second-level sections. Prefer a canonical section above whenever one fits,
+and move historical context or future intentions to VISION.md instead of placing them here.
 -->

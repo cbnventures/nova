@@ -1,0 +1,53 @@
+---
+id: "validate-token"
+title: "Validate Token"
+description: "Validate a Discord bot token without storing or printing the secret."
+keywords:
+  - "nova"
+  - "discord developer portal"
+  - "bot token"
+tags:
+  - "cli"
+  - "integration"
+  - "discord-developer-portal"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Validate a Discord bot token against Discord's current-application endpoint. Nova reports the non-secret application name and ID, but never stores or prints the token.
+
+Token resolution follows this order:
+
+1. The explicit `--token` CLI option.
+2. `DISCORD_TOKEN` in the selected workspace's `.env` file.
+3. `DISCORD_TOKEN` in the repository root `.env` file.
+
+No other environment variable or Nova configuration field is used.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova integration discord-developer-portal validate-token [options]
+    nova int ddp validate-token [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest integration discord-developer-portal validate-token [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                                                       |
+|---------------------------|-------------------------------------------------------------------|
+| `--token <token>`         | Discord bot token; otherwise resolve `DISCORD_TOKEN` from dotenv. |
+| `--workspace <workspace>` | Select a configured Discord workspace by name or path.            |

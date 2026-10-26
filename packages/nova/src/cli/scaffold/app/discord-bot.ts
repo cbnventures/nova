@@ -45,6 +45,10 @@ export class Runner {
   public static async run(options: Cli_Scaffold_App_DiscordBot_Runner_Run_Options): Cli_Scaffold_App_DiscordBot_Runner_Run_Returns {
     if (options['dockerImage'] === true) {
       await runScaffold(options, {
+        allowScriptProfiles: [
+          'esbuild',
+          'file-watching',
+        ],
         category: 'app',
         completionNotes,
         displayName: 'Discord Bot',
@@ -70,12 +74,14 @@ export class Runner {
         ],
         templateSubpath: 'scaffold/app/discord-bot',
         typeName: 'discord-bot',
-        workspaceFinalizer: async (workspaceDirectory) => {
+        projectFinalizer: async (workspaceDirectory, workspaceName, configRoot) => {
           await LibDockerPackaging.generateForTarget({
             profile: 'background-service',
+            projectDirectory: configRoot,
             reportFiles: false,
             replaceFile: true,
             workspaceDirectory,
+            workspaceName,
           });
 
           return;
@@ -86,6 +92,10 @@ export class Runner {
     }
 
     await runScaffold(options, {
+      allowScriptProfiles: [
+        'esbuild',
+        'file-watching',
+      ],
       category: 'app',
       completionNotes,
       displayName: 'Discord Bot',

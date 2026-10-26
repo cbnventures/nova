@@ -28,6 +28,10 @@ export class Runner {
    */
   public static async run(options: Cli_Scaffold_Package_GithubAction_Runner_Run_Options): Cli_Scaffold_Package_GithubAction_Runner_Run_Returns {
     await runScaffold(options, {
+      allowScriptProfiles: [
+        'esbuild',
+        'file-watching',
+      ],
       category: 'package',
       completionNotes: ['Set "INPUT_NAME" in the generated GitHub Action workspace .env file before running the local action.'],
       displayName: 'GitHub Action',

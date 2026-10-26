@@ -8,6 +8,7 @@ import type {
   Shared_CorepackPackageManager,
   Shared_CorepackSpawnInvocation,
   Shared_NovaConfigConfig,
+  Shared_NovaConfigSettings_RunWorkspaces_Root,
   Shared_NovaConfigSettings_RunWorkspacesCache,
   Shared_NovaConfigSettings_RunWorkspacesConcurrency,
   Shared_NovaConfigWorkspace,
@@ -31,6 +32,39 @@ import type {
   Shared_RunWorkspacesTaskResult,
   Shared_RunWorkspacesWorkspace,
 } from '../shared.d.ts';
+
+/**
+ * Lib - Run Workspaces - Add Root Tasks.
+ *
+ * @since 0.34.0
+ */
+export type Lib_RunWorkspaces_Runner_AddRootTasks_Tasks = Map<string, Shared_RunWorkspacesTask>;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_Root = Shared_RunWorkspacesWorkspace;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_Script = string;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_Returns = void;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_Prefix = string;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_IsParallel = boolean;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_WorkspaceKeys = string[];
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_PreviousKey = string | undefined;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_TypedRootScriptEntry = [string, string];
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_RootScriptName = string;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_RootScriptCommand = string;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_Key = string;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_Task = Shared_RunWorkspacesTask;
+
+export type Lib_RunWorkspaces_Runner_AddRootTasks_WorkspaceTask = Shared_RunWorkspacesTask | undefined;
 
 /**
  * Lib - Run Workspaces - Add Task.
@@ -344,6 +378,8 @@ export type Lib_RunWorkspaces_Runner_LoadProject_CacheSettings = Shared_NovaConf
 
 export type Lib_RunWorkspaces_Runner_LoadProject_ConcurrencySettings = Shared_NovaConfigSettings_RunWorkspacesConcurrency | undefined;
 
+export type Lib_RunWorkspaces_Runner_LoadProject_RootOrder = Shared_NovaConfigSettings_RunWorkspaces_Root;
+
 export type Lib_RunWorkspaces_Runner_LoadProject_CacheDirectoryValue = string;
 
 export type Lib_RunWorkspaces_Runner_LoadProject_CacheEnabled = boolean;
@@ -394,6 +430,18 @@ export type Lib_RunWorkspaces_Runner_LoadProject_ExistingWorkspace = Shared_RunW
 
 export type Lib_RunWorkspaces_Runner_LoadProject_InternalDependencies = string[];
 
+export type Lib_RunWorkspaces_Runner_LoadProject_RootScriptsValue = unknown;
+
+export type Lib_RunWorkspaces_Runner_LoadProject_RootScripts = Record<string, string>;
+
+export type Lib_RunWorkspaces_Runner_LoadProject_TypedRootScriptEntry = [string, unknown];
+
+export type Lib_RunWorkspaces_Runner_LoadProject_RootName = string;
+
+export type Lib_RunWorkspaces_Runner_LoadProject_IsNestedRun = boolean;
+
+export type Lib_RunWorkspaces_Runner_LoadProject_Root = Shared_RunWorkspacesWorkspace | undefined;
+
 /**
  * Lib - Run Workspaces - Parse Positive Integer.
  *
@@ -417,6 +465,42 @@ export type Lib_RunWorkspaces_Runner_ResolveConcurrency_ConfiguredConcurrency = 
 export type Lib_RunWorkspaces_Runner_ResolveConcurrency_Task = string;
 
 export type Lib_RunWorkspaces_Runner_ResolveConcurrency_Returns = number;
+
+/**
+ * Lib - Run Workspaces - Resolve Root Selection.
+ *
+ * @since 0.34.0
+ */
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_Root = Shared_RunWorkspacesWorkspace | undefined;
+
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_Requested = string[] | undefined;
+
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_Excluded = string[] | undefined;
+
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns_IncludeRoot = boolean;
+
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns_RootOnly = boolean;
+
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns_Requested = string[] | undefined;
+
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns_Excluded = string[] | undefined;
+
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns = {
+  includeRoot: Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns_IncludeRoot;
+  rootOnly: Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns_RootOnly;
+  requested: Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns_Requested;
+  excluded: Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns_Excluded;
+};
+
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_RootIdentifiers = string[];
+
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_RequestedNames = string[];
+
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_ExcludedNames = string[];
+
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_IsRootExcluded = boolean;
+
+export type Lib_RunWorkspaces_Runner_ResolveRootSelection_IsRootRequestedAlone = boolean;
 
 /**
  * Lib - Run Workspaces - Run.
@@ -488,6 +572,21 @@ export type Lib_RunWorkspaces_Runner_Run_ScriptArgs = string[];
 export type Lib_RunWorkspaces_Runner_Run_NodeEnv = 'development' | 'production' | 'test' | undefined;
 
 export type Lib_RunWorkspaces_Runner_Run_Project = Shared_RunWorkspacesProject;
+
+export type Lib_RunWorkspaces_Runner_Run_RootSelection_IncludeRoot = boolean;
+
+export type Lib_RunWorkspaces_Runner_Run_RootSelection_RootOnly = boolean;
+
+export type Lib_RunWorkspaces_Runner_Run_RootSelection_Requested = string[] | undefined;
+
+export type Lib_RunWorkspaces_Runner_Run_RootSelection_Excluded = string[] | undefined;
+
+export type Lib_RunWorkspaces_Runner_Run_RootSelection = {
+  includeRoot: Lib_RunWorkspaces_Runner_Run_RootSelection_IncludeRoot;
+  rootOnly: Lib_RunWorkspaces_Runner_Run_RootSelection_RootOnly;
+  requested: Lib_RunWorkspaces_Runner_Run_RootSelection_Requested;
+  excluded: Lib_RunWorkspaces_Runner_Run_RootSelection_Excluded;
+};
 
 export type Lib_RunWorkspaces_Runner_Run_SelectedWorkspaces = Shared_RunWorkspacesWorkspace[];
 

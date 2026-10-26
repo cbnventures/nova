@@ -81,12 +81,12 @@ jobs:
 
       - name: "Check project"
         run: |
-          npm run check
+          npm run check -- --workspace portfolio-app-cbnventures --workspace portfolio-app-mrjackyliang
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
         run: |
-          npm run build:workspaces -- --workspace portfolio-app-cbnventures --workspace portfolio-app-mrjackyliang
+          npm run build -- --workspace portfolio-app-cbnventures --workspace portfolio-app-mrjackyliang
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Upload build artifacts (cloudflare-workers/apps-cbnventures)"

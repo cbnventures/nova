@@ -73,6 +73,8 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_EntryContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_EntryPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_ExpectedVersion,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_HistoryContents,
+  Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_HistoryPath,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJson,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJsonContents,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_PackageJsonPath,
@@ -337,9 +339,9 @@ import type {
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SyncsExactPinnedReferencesToReleasedPackages_VersionKept,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SyncsExactPinnedReferencesToReleasedPackages_WorkspaceKept,
   Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_TemporaryDirectory,
-  Tests_Cli_Utility_Changelog_ValidateVersion_AllowsTheInitialCalVerSentinel_CurrentVersion,
   Tests_Cli_Utility_Changelog_ValidateVersion_RejectsFutureCalVer_FutureVersion,
   Tests_Cli_Utility_Changelog_ValidateVersion_RejectsMalformedCalVer_CurrentVersion,
+  Tests_Cli_Utility_Changelog_ValidateVersion_RejectsTheReservedCalVerSentinel_CurrentVersion,
   Tests_Cli_Utility_Changelog_ValidateVersion_ValidateVersion,
 } from '../../../types/tests/cli/utility/changelog.test.d.ts';
 
@@ -1077,8 +1079,8 @@ describe('CliUtilityChangelog.run', async () => {
     strictEqual((await readFile(rootScriptPath, 'utf-8')).includes('@since 0.0.0'), true);
     strictEqual((await readFile(docsConfigPath, 'utf-8')).includes('@since 0.0.0'), true);
     strictEqual((await readFile(docsSourcePath, 'utf-8')).includes('@since 0.0.0'), true);
-    strictEqual((await readFile(packageConfigPath, 'utf-8')).includes('@since 1.2.3'), true);
-    strictEqual((await readFile(packageSourcePath, 'utf-8')).includes('@since 1.2.3'), true);
+    strictEqual((await readFile(packageConfigPath, 'utf-8')).includes('@since UNRELEASED'), true);
+    strictEqual((await readFile(packageSourcePath, 'utf-8')).includes('@since UNRELEASED'), true);
     strictEqual(await readFile(join(projectDirectory, 'package.json'), 'utf-8'), rootManifest);
 
     await rejects(readFile(join(projectDirectory, 'CHANGELOG.md'), 'utf-8'), {
@@ -1765,10 +1767,13 @@ describe('CliUtilityChangelog.run', async () => {
 
     await writeFile(configPath, configContents, 'utf-8');
 
+    const expectedYear: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedYear = new Date().getUTCFullYear();
+    const expectedMonth: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedMonth = new Date().getUTCMonth() + 1;
+    const expectedVersion: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedVersion = `${expectedYear}.${expectedMonth}.0`;
     const workspacePackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspacePackagePath = join(workspaceDirectory, 'package.json');
     const workspacePackageContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspacePackageContents = JSON.stringify({
       name: '@test/core',
-      version: '0.0.0',
+      version: expectedVersion,
     }, null, 2);
 
     await writeFile(workspacePackagePath, workspacePackageContents, 'utf-8');
@@ -1799,10 +1804,6 @@ describe('CliUtilityChangelog.run', async () => {
     const updatedPackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_UpdatedPackagePath = join(workspaceDirectory, 'package.json');
     const packageJsonRaw: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJsonRaw = await readFile(updatedPackagePath, 'utf-8');
     const packageJson: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJson = JSON.parse(packageJsonRaw);
-
-    const expectedYear: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedYear = new Date().getFullYear();
-    const expectedMonth: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedMonth = new Date().getMonth() + 1;
-    const expectedVersion: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedVersion = `${expectedYear}.${expectedMonth}.0`;
 
     strictEqual(packageJson['version'], expectedVersion);
 
@@ -1854,8 +1855,8 @@ describe('CliUtilityChangelog.run', async () => {
 
     await writeFile(configPath, configContents, 'utf-8');
 
-    const currentYear: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentYear = new Date().getFullYear();
-    const currentMonth: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentMonth = new Date().getMonth() + 1;
+    const currentYear: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentYear = new Date().getUTCFullYear();
+    const currentMonth: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentMonth = new Date().getUTCMonth() + 1;
     const currentVersion: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_CurrentVersion = `${currentYear}.${currentMonth}.0`;
 
     const workspacePackagePath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_WorkspacePackagePath = join(workspaceDirectory, 'package.json');
@@ -1865,6 +1866,16 @@ describe('CliUtilityChangelog.run', async () => {
     }, null, 2);
 
     await writeFile(workspacePackagePath, workspacePackageContents, 'utf-8');
+
+    const historyPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_HistoryPath = join(workspaceDirectory, 'CHANGELOG.md');
+    const historyContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_HistoryContents = [
+      '# Core Changelog',
+      '',
+      `## ${currentVersion}`,
+      '',
+    ].join('\n');
+
+    await writeFile(historyPath, historyContents, 'utf-8');
 
     const entryPath: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_EntryPath = join(changelogDirectory, 'calver-increment-entry.md');
     const entryContents: Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_EntryContents = [
@@ -2098,10 +2109,10 @@ describe('CliUtilityChangelog.run', async () => {
 describe('validate version', () => {
   const validateVersion: Tests_Cli_Utility_Changelog_ValidateVersion_ValidateVersion = Reflect.get(CliUtilityChangelog, 'validateVersion') as Tests_Cli_Utility_Changelog_ValidateVersion_ValidateVersion;
 
-  it('allows the initial CalVer sentinel', () => {
-    const currentVersion: Tests_Cli_Utility_Changelog_ValidateVersion_AllowsTheInitialCalVerSentinel_CurrentVersion = '0.0.0';
+  it('rejects the reserved CalVer sentinel', () => {
+    const currentVersion: Tests_Cli_Utility_Changelog_ValidateVersion_RejectsTheReservedCalVerSentinel_CurrentVersion = '0.0.0';
 
-    validateVersion(currentVersion, 'calver', '/tmp/package.json');
+    throws(() => validateVersion(currentVersion, 'calver', '/tmp/package.json'));
 
     return;
   });
@@ -2115,7 +2126,7 @@ describe('validate version', () => {
   });
 
   it('rejects future CalVer', () => {
-    const futureVersion: Tests_Cli_Utility_Changelog_ValidateVersion_RejectsFutureCalVer_FutureVersion = `${new Date().getFullYear() + 1}.1.0`;
+    const futureVersion: Tests_Cli_Utility_Changelog_ValidateVersion_RejectsFutureCalVer_FutureVersion = `${new Date().getUTCFullYear() + 1}.1.0`;
 
     throws(() => validateVersion(futureVersion, 'calver', '/tmp/package.json'));
 

@@ -34,6 +34,7 @@ import type {
   Cli_Utility_Configure_Runner_PromptSettings_Returns,
   Cli_Utility_Configure_Runner_PromptWorkflows_Config,
   Cli_Utility_Configure_Runner_PromptWorkflows_Returns,
+  Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_Options,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_Returns,
   Cli_Utility_Configure_Runner_PromptWorkspacesForm_ReturnsApply,
@@ -45,6 +46,7 @@ import type {
 } from '../../../cli/utility/configure.d.ts';
 import type {
   Shared_BlueprintConfig_Workflows,
+  Shared_BlueprintConfigWorkflow,
   Shared_NovaConfig,
   Shared_NovaConfig_Github,
   Shared_NovaConfig_Recipes,
@@ -111,6 +113,15 @@ export type Tests_Cli_Utility_Configure_BuildConfigFieldCoverage<Value> = [NonNu
         };
 
 export type Tests_Cli_Utility_Configure_ConfigFieldCoverage = Tests_Cli_Utility_Configure_BuildConfigFieldCoverage<Shared_NovaConfig>;
+
+/**
+ * Tests - CLI - Utility - Configure - Is Ignore File Path Input.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Cli_Utility_Configure_CliUtilityConfigureIsIgnoreFilePathInput_AcceptsRootDockerAndNestedGitOrAssetPaths_Results = (true | string)[];
+
+export type Tests_Cli_Utility_Configure_CliUtilityConfigureIsIgnoreFilePathInput_RejectsAWorkspaceLocalDockerignore_Result = true | string;
 
 /**
  * Tests - CLI - Utility - Configure - Is Non Empty Literal Input - Returns The Error Message For An Empty String.
@@ -373,6 +384,27 @@ export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEve
 export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_EditsEveryPolicyRulesetAndSecurityField_SecurityResult = Awaited<Cli_Utility_Configure_Runner_PromptGithubSecurity_Returns>;
 
 /**
+ * Tests - CLI - Utility - Configure - Prompt GitHub Repository Contracts - Preserves And Unsets Explicit Empty Required Status Checks.
+ *
+ * @since 0.33.0
+ */
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_PromptGithubRulesets = (config: Cli_Utility_Configure_Runner_PromptGithubRulesets_Config) => Cli_Utility_Configure_Runner_PromptGithubRulesets_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_Result = Awaited<Cli_Utility_Configure_Runner_PromptGithubRulesets_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_PromptCall = readonly [PromptObject | PromptObject[], ...unknown[]] | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_Questions = PromptObject | PromptObject[] | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_ModeQuestion = PromptObject | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_UnsetConfig = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptGitHubRepositoryContracts_PreservesAndUnsetsExplicitEmptyRequiredStatusChecks_UnsetResult = Awaited<Cli_Utility_Configure_Runner_PromptGithubRulesets_Returns>;
+
+/**
  * Tests - CLI - Utility - Configure - Prompt Ignore Files - Adds Bundles And Patterns For A Physical Ignore File.
  *
  * @since 0.32.0
@@ -471,6 +503,62 @@ export type Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromW
 export type Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_PromptSettings = (config: Cli_Utility_Configure_Runner_PromptSettings_Config) => Cli_Utility_Configure_Runner_PromptSettings_Returns;
 
 export type Tests_Cli_Utility_Configure_PromptSettings_LocksVersionStrategyFromWorkspaceHistory_Result = Awaited<Cli_Utility_Configure_Runner_PromptSettings_Returns>;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Workflows - Does Not Offer Container Targets When Another Workflow Owns The Image.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Response = Record<string, unknown>;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Responses = Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Response[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_CapturedQuestions = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_QuestionList = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Next = Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Response | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_ContainerWorkflow = Shared_BlueprintConfigWorkflow;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Workflow = Shared_BlueprintConfigWorkflow;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_PromptWorkflowsForm = (workflow: Shared_BlueprintConfigWorkflow | undefined, mode: 'create' | 'update', workflows: Shared_BlueprintConfigWorkflow[], config: Shared_NovaConfig) => Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_Result = Awaited<Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_DoesNotOfferContainerTargetsWhenAnotherWorkflowOwnsTheImage_TargetTypeQuestion = PromptObject | undefined;
+
+/**
+ * Tests - CLI - Utility - Configure - Prompt Workflows - Keeps Container Identity Target Local While Pages Stay Additive.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Response = Record<string, unknown>;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Responses = Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Response[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_CapturedQuestions = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_QuestionList = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Next = Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Response | undefined;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Config = Shared_NovaConfig;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Workflow = Shared_BlueprintConfigWorkflow;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_PromptWorkflowsForm = (workflow: Shared_BlueprintConfigWorkflow | undefined, mode: 'create' | 'update', workflows: Shared_BlueprintConfigWorkflow[], config: Shared_NovaConfig) => Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_Result = Awaited<Cli_Utility_Configure_Runner_PromptWorkflowsForm_Returns>;
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_TargetWorkingDirQuestions = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_TargetTypeQuestions = PromptObject[];
+
+export type Tests_Cli_Utility_Configure_PromptWorkflows_KeepsContainerIdentityTargetLocalWhilePagesStayAdditive_ScopesQuestion = PromptObject | undefined;
 
 /**
  * Tests - CLI - Utility - Configure - Prompt Workflows - Preserves Workflow Run Trigger Objects When Syncing Existing Workflows.

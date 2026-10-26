@@ -1,3 +1,5 @@
+import type { BaseUrlUtils } from '@docusaurus/useBaseUrl';
+
 /**
  * Lib - Use Navbar Active Item.
  *
@@ -33,6 +35,8 @@ export type Lib_UseNavbarActiveItem_Returns = string | null;
 
 export type Lib_UseNavbarActiveItem_Pathname = string;
 
+export type Lib_UseNavbarActiveItem_WithBaseUrl = BaseUrlUtils['withBaseUrl'];
+
 export type Lib_UseNavbarActiveItem_BestKey = string | null;
 
 export type Lib_UseNavbarActiveItem_BestScore = number;
@@ -46,6 +50,8 @@ export type Lib_UseNavbarActiveItem_ClaimLength = number | null;
  */
 export type Lib_UseNavbarActiveItem_GetClaimLength_Pathname = string;
 
+export type Lib_UseNavbarActiveItem_GetClaimLength_WithBaseUrl = BaseUrlUtils['withBaseUrl'];
+
 export type Lib_UseNavbarActiveItem_GetClaimLength_Returns = number | null;
 
 export type Lib_UseNavbarActiveItem_GetClaimLength_Match = RegExpMatchArray | null;
@@ -57,6 +63,8 @@ export type Lib_UseNavbarActiveItem_GetClaimLength_ClaimBase = string | undefine
 export type Lib_UseNavbarActiveItem_GetClaimLength_To = string | undefined;
 
 export type Lib_UseNavbarActiveItem_GetClaimLength_Base = string | undefined;
+
+export type Lib_UseNavbarActiveItem_GetClaimLength_Resolved = string;
 
 export type Lib_UseNavbarActiveItem_GetClaimLength_Normalized = string;
 

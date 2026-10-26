@@ -1,13 +1,14 @@
 ---
 id: "dx-ignore"
 title: "DX - Ignore"
-description: "Exclude build output, source maps, and generated files from ESLint so linting only targets hand-written source code in the repository."
+description: "Exclude project-owned supporting files, build output, source maps, and generated files from ESLint while retaining assets documentation."
 keywords:
   - "nova"
   - "dx ignore"
   - "eslint ignores"
   - "build output"
   - "generated files"
+  - "project assets"
   - "source maps"
   - "flat config"
   - "next.js"
@@ -20,14 +21,15 @@ tags:
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 
-Exclude build output, source maps, and generated files from ESLint so linting only targets the source code you actually write.
+Exclude project-owned supporting files, build output, source maps, and generated files from ESLint while retaining the documentation that explains the root `assets` folder.
 
 ## Why Use This Preset?
 
-1. Skips `dist`, `build`, `out`, and `.output` directories so compiled artifacts never trigger lint failures.
-2. Drops `**/*.map` source maps and `generated`/`__generated__` folders so machine-written code stays out of your reports.
-3. Ignores Next.js `.next` output and the generated `next-env.d.ts` so framework scaffolding does not add noise.
-4. Sits first in the layer order so every later <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> inherits a clean file set.
+1. Skips project-owned working files beneath the root `assets` folder while continuing to lint `assets/README.md`.
+2. Skips `dist`, `build`, `out`, and `.output` directories so compiled artifacts never trigger lint failures.
+3. Drops `**/*.map` source maps and `generated`/`__generated__` folders so machine-written code stays out of your reports.
+4. Ignores Next.js `.next` output, the generated `next-env.d.ts`, and Wrangler state so framework tooling does not add noise.
+5. Sits first in the layer order so every later <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>preset</Terminology> inherits a clean file set.
 
 ## Usage
 
@@ -51,7 +53,16 @@ export default [
 
 ## What This Preset Configures
 
-The preset registers no plugins, parsers, or rules — it defines three named ignore groups, each scoped with glob patterns. Because they only exclude files, the groups apply globally rather than targeting a specific set of script extensions.
+The preset registers no plugins, parsers, or rules — it defines five named ignore groups, each scoped with glob patterns. Because they only exclude files, the groups apply globally rather than targeting a specific set of script extensions.
+
+### Assets
+
+| Pattern             | Excludes                                                                 |
+|---------------------|--------------------------------------------------------------------------|
+| `assets/**/*`       | Project-owned supporting files beneath the root `assets` folder.         |
+| `!assets/README.md` | Re-includes the root assets guide so its documentation remains lintable. |
+
+The root-relative patterns do not ignore folders such as `src/assets`, so application assets inside source trees remain linted.
 
 ### Build output
 
@@ -76,6 +87,12 @@ The preset registers no plugins, parsers, or rules — it defines three named ig
 |--------------------|---------------------------------------------|
 | `**/.next/**`      | The Next.js `.next` build cache.            |
 | `**/next-env.d.ts` | The generated Next.js `next-env.d.ts` file. |
+
+### Wrangler
+
+| Pattern           | Excludes                          |
+|-------------------|-----------------------------------|
+| `**/.wrangler/**` | Wrangler's generated local state. |
 
 ## Related
 

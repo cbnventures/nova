@@ -12,7 +12,11 @@ import {
   sys,
 } from 'typescript';
 
-import { getDiagnostics } from './type-check.js';
+import {
+  getDiagnostics,
+  isProjectOwnedFile,
+  normalizeDiagnosticFileName,
+} from './type-check.js';
 
 import type {
   Lib_Transpile_Compile_CompilerOptions,
@@ -36,6 +40,7 @@ import type {
   Lib_Transpile_FilterDiagnostics_FileName,
   Lib_Transpile_FilterDiagnostics_Returns,
   Lib_Transpile_GetConfigPath_CurrentDirectory,
+  Lib_Transpile_GetConfigPath_Discovered,
   Lib_Transpile_GetConfigPath_Project,
   Lib_Transpile_GetConfigPath_Resolved,
   Lib_Transpile_GetConfigPath_Returns,
@@ -93,7 +98,7 @@ function filterDiagnostics(diagnostics: Lib_Transpile_FilterDiagnostics_Diagnost
 
     const fileName: Lib_Transpile_FilterDiagnostics_FileName = diagnostic.file.fileName;
 
-    return fileName.startsWith(currentDirectory) === true && fileName.includes('node_modules') === false;
+    return isProjectOwnedFile(fileName, currentDirectory);
   });
 }
 
@@ -112,12 +117,14 @@ function filterDiagnostics(diagnostics: Lib_Transpile_FilterDiagnostics_Diagnost
  */
 function getConfigPath(project: Lib_Transpile_GetConfigPath_Project, currentDirectory: Lib_Transpile_GetConfigPath_CurrentDirectory): Lib_Transpile_GetConfigPath_Returns {
   if (project !== undefined) {
-    const resolved: Lib_Transpile_GetConfigPath_Resolved = resolve(currentDirectory, project);
+    const resolved: Lib_Transpile_GetConfigPath_Resolved = normalizeDiagnosticFileName(resolve(currentDirectory, project));
 
     return (sys.fileExists(resolved) === true) ? resolved : undefined;
   }
 
-  return findConfigFile(currentDirectory, sys.fileExists, 'tsconfig.json');
+  const discovered: Lib_Transpile_GetConfigPath_Discovered = findConfigFile(currentDirectory, sys.fileExists, 'tsconfig.json');
+
+  return (discovered === undefined) ? undefined : normalizeDiagnosticFileName(discovered);
 }
 
 /**
@@ -138,7 +145,7 @@ function printDiagnostics(diagnostics: Lib_Transpile_PrintDiagnostics_Diagnostic
   const fileSet: Lib_Transpile_PrintDiagnostics_FileSet = new Set();
 
   for (const diagnostic of diagnostics) {
-    const fileName: Lib_Transpile_PrintDiagnostics_FileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : 'unknown';
+    const fileName: Lib_Transpile_PrintDiagnostics_FileName = normalizeDiagnosticFileName((diagnostic.file !== undefined) ? diagnostic.file.fileName : 'unknown');
     const message: Lib_Transpile_PrintDiagnostics_Message = flattenDiagnosticMessageText(diagnostic.messageText, '\n');
 
     fileSet.add(fileName);

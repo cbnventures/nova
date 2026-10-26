@@ -1,5 +1,14 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.34.0 - 2026-10-26
+
+### FIXED
+- Fixed the blog list page and tag pages leaving out their meta description; the list page now uses the blog's `blogDescription` and a tag page uses its tag description, as Docusaurus does.
+- Fixed Docusaurus preset validation loading across native Node 22 and Node 24 plus Docusaurus Jiti by resolving both supported @docusaurus/utils-validation module shapes, with behavioral loader regression coverage.
+- Fixed translated sites leaving out the `hreflang` alternate links and `og:locale` that Docusaurus emits; every page now links each locale's version, plus an `x-default` pointing at the default locale.
+- Fixed navbar links such as `/blog/` never showing as active on sites served under a base path or in a non-default locale; plain links now resolve through the site's base URL before matching, with regression coverage.
+- Fixed the Stats block keying each stat by its value, which made stats with the same number clash; each stat is now keyed by its label.
+
 ## 0.33.0 - 2026-10-18
 
 ### FIXED

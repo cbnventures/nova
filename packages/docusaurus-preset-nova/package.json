@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/docusaurus-preset-nova",
-  "version": "0.33.0",
+  "version": "0.34.0",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",
@@ -95,6 +95,7 @@
     "build:fix-shiki-import": "node ../../scripts/fix-shiki-import.mjs",
     "build:copy-styles": "node ../../scripts/copy-styles.mjs",
     "build:fix-perms": "shx chmod +x ./build/src/cli/index.js",
+    "build:verify-module-loading": "node ../../scripts/verify-docusaurus-module-loading.mjs",
     "clean": "node ../../scripts/nova-run-scripts.mjs --parallel \"clean:*\"",
     "clean:build": "shx rm -rf ./build"
   },
@@ -102,7 +103,7 @@
     "node": "^22 || ^24"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.33.0",
+    "@cbnventures/nova": "0.34.0",
     "@codesandbox/sandpack-react": "2.20.0",
     "@docusaurus/plugin-content-blog": "3.10.2",
     "@docusaurus/plugin-content-docs": "3.10.2",

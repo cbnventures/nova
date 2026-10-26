@@ -57,12 +57,12 @@ jobs:
 
       - name: "Check project"
         run: |
-          npm run check
+          npm run check -- --workspace sandbox-core
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
         run: |
-          npm run build:workspaces -- --workspace sandbox-core
+          npm run build -- --workspace sandbox-core
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Upload build artifacts (npm/packages-core)"

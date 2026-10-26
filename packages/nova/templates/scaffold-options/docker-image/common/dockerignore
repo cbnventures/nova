@@ -1,0 +1,38 @@
+################
+#### Shared ####
+################
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.sample
+!.env.example
+!**/.env.sample
+!**/.env.example
+.secrets
+**/.secrets
+*.log
+**/*.log
+build
+**/build
+dist
+**/dist
+
+########################################
+#### Version Control - Git / GitHub ####
+########################################
+.git
+.github
+
+############################
+#### Language - Node.js ####
+############################
+node_modules
+**/node_modules
+npm-debug.log*
+**/npm-debug.log*
+
+########################
+#### Tooling - Nova ####
+########################
+.nova-backup*

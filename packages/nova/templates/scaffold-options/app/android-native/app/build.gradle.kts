@@ -13,7 +13,7 @@ android {
     minSdk = [__SCAFFOLD_VERSION_ANDROID_MIN_SDK__]
     targetSdk = [__SCAFFOLD_VERSION_ANDROID_TARGET_SDK__]
     versionCode = 1
-    versionName = "1.0"
+    versionName = "[__WORKSPACE_VERSION__]"
   }
 
   buildTypes {

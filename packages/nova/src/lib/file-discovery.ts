@@ -20,8 +20,8 @@ import type {
 /**
  * Lib - File Discovery - Discover Content Files.
  *
- * Recursively walks each content directory under the root, returning relative
- * paths (joined with the content directory) of every file whose extension matches it.
+ * Recursively walks each content directory under the root.
+ * Returns portable, slash-separated relative paths for matching files.
  * A missing content directory is skipped via the ENOENT guard.
  *
  * @param {Lib_FileDiscovery_DiscoverContentFiles_Options} [options] - Options.
@@ -57,7 +57,7 @@ export async function discoverContentFiles(options: Lib_FileDiscovery_DiscoverCo
       const ext: Lib_FileDiscovery_DiscoverContentFiles_Ext = extname(entry);
 
       if (fileExtensions.includes(ext) === true) {
-        mdFiles.push(join(contentDir, entry));
+        mdFiles.push(join(contentDir, entry).replaceAll('\\', '/'));
       }
     }
   }

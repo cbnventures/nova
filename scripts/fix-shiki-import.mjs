@@ -1,10 +1,10 @@
 import {
   existsSync,
   readFileSync,
-  watch,
+  watchFile,
   writeFileSync,
 } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { resolve } from 'node:path';
 
 import { PATTERN_SHIKI_CJS_REQUIRE } from './lib/regex.mjs';
 
@@ -17,16 +17,6 @@ import { PATTERN_SHIKI_CJS_REQUIRE } from './lib/regex.mjs';
  * @since 0.0.0
  */
 const file = resolve('build/src/lib/rehype-shiki.js');
-
-/**
- * Fix Shiki Import - File Dir.
- *
- * Directory that contains the compiled module, watched in --watch mode so the
- * rewrite re-applies whenever TypeScript regenerates the file.
- *
- * @since 0.0.0
- */
-const fileDir = dirname(file);
 
 /**
  * Fix Shiki Import - Is Watch.
@@ -67,59 +57,16 @@ function run() {
   return;
 }
 
-/**
- * Fix Shiki Import - Wait For Directory.
- *
- * Invokes the callback once the target directory exists, watching the parent
- * directory until it appears so --watch mode can start before the build runs.
- *
- * @param {string}   dir      - Dir.
- * @param {Function} callback - Callback.
- *
- * @returns {void}
- *
- * @since 0.0.0
- */
-function waitForDirectory(dir, callback) {
-  if (existsSync(dir) === true) {
-    callback();
-
-    return;
-  }
-
-  const parentDir = dirname(dir);
-  const targetName = dir.split('/').pop();
-  const parentWatcher = watch(parentDir, (_event, filename) => {
-    if (filename === targetName && existsSync(dir) === true) {
-      parentWatcher.close();
-
-      callback();
-    }
-
-    return;
-  });
-
-  return;
-}
-
 // Run once.
 run();
 
-// Watch mode: wait for target dir, then re-run when file changes.
+// Watch mode: poll the target file so the watcher can start before it exists.
 if (isWatch === true) {
   let timeout = /** @type {NodeJS.Timeout | undefined} */ (undefined);
 
-  waitForDirectory(fileDir, () => {
-    run();
-
-    watch(fileDir, { recursive: false }, (_event, filename) => {
-      if (filename === 'rehype-shiki.js') {
-        clearTimeout(timeout);
-        timeout = setTimeout(run, 200);
-      }
-
-      return;
-    });
+  watchFile(file, { interval: 200 }, () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(run, 200);
 
     return;
   });

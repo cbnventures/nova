@@ -64,6 +64,7 @@ export class Runner {
     let resolvedBundleIdentifier: Cli_Scaffold_App_Apple_Runner_Run_ResolvedBundleIdentifier = undefined;
 
     await runScaffold(options, {
+      allowScriptProfiles: ['file-watching'],
       category: 'app',
       displayName: 'Apple',
       importMetaUrl: import.meta.url,
@@ -85,6 +86,7 @@ export class Runner {
 
         return Runner.resolveReplacements(resolvedBundleIdentifier);
       },
+      rootTemplateSubpath: 'scaffold-options/app/apple-store-connect-root',
       templateSubpath: 'scaffold/app/apple',
       typeName: 'apple',
     });

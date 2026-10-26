@@ -13,6 +13,8 @@ import { join } from 'node:path';
 
 import {
   afterAll,
+  afterEach,
+  beforeEach,
   describe,
   expect,
   it,
@@ -53,9 +55,16 @@ import type {
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_DoesNotCacheFailedTasks_RunFailure_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_DoesNotCacheFailedTasks_WorkspacePackageJsonContents,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_ForwardsArgumentsAndMarksWorkspaceChildren_Returns,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_KeepsTheRootWhenFilteringWorkspaces_Returns,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_LeavesTheRootOutWhenItIsExcluded_Returns,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_NeverCachesRootSteps_Returns,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_NeverCachesRootSteps_SecondExitCode,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_PreviewsAWorkspaceTaskGraphWithoutExecutingScripts_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RejectsAnUnknownWorkspaceBeforeExecutingTasks_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RejectsInternalDependencyCyclesBeforeExecutingTasks_Returns,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RunsRootStepsBeforeWorkspaceTasks_Returns,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_SkipsTheRootInsideANestedRun_Returns,
+  Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_SkipsTheRootWhenConfiguredTo_Returns,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_StopsSchedulingPendingTasksAfterInterruption_ExitCode,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_StopsSchedulingPendingTasksAfterInterruption_ForbiddenOutputExists,
   Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_StopsSchedulingPendingTasksAfterInterruption_ForbiddenOutputPath,
@@ -77,6 +86,8 @@ import type {
   Tests_Cli_Utility_RunWorkspaces_PackageJsonContents,
   Tests_Cli_Utility_RunWorkspaces_ProjectRoot,
   Tests_Cli_Utility_RunWorkspaces_SandboxRoot,
+  Tests_Cli_Utility_RunWorkspaces_SavedLifecycleEvent,
+  Tests_Cli_Utility_RunWorkspaces_SavedRunnerMarker,
   Tests_Cli_Utility_RunWorkspaces_SourcePath,
   Tests_Cli_Utility_RunWorkspaces_Stderr,
   Tests_Cli_Utility_RunWorkspaces_TemporaryDirectory,
@@ -103,6 +114,34 @@ describe('LibRunWorkspaces.run', async () => {
       recursive: true,
       force: true,
     });
+
+    return;
+  });
+
+  // A migrated "npm run check" marks this process as a workspace child, which would hide the root.
+  const savedRunnerMarker: Tests_Cli_Utility_RunWorkspaces_SavedRunnerMarker = process.env['NOVA_WORKSPACE_RUNNER'];
+  const savedLifecycleEvent: Tests_Cli_Utility_RunWorkspaces_SavedLifecycleEvent = process.env['npm_lifecycle_event'];
+
+  beforeEach(() => {
+    Reflect.deleteProperty(process.env, 'NOVA_WORKSPACE_RUNNER');
+
+    Reflect.deleteProperty(process.env, 'npm_lifecycle_event');
+
+    return;
+  });
+
+  afterEach(() => {
+    Reflect.deleteProperty(process.env, 'NOVA_WORKSPACE_RUNNER');
+
+    Reflect.deleteProperty(process.env, 'npm_lifecycle_event');
+
+    if (savedRunnerMarker !== undefined) {
+      Reflect.set(process.env, 'NOVA_WORKSPACE_RUNNER', savedRunnerMarker);
+    }
+
+    if (savedLifecycleEvent !== undefined) {
+      Reflect.set(process.env, 'npm_lifecycle_event', savedLifecycleEvent);
+    }
 
     return;
   });
@@ -149,7 +188,7 @@ describe('LibRunWorkspaces.run', async () => {
     const corePackageJsonContents: Tests_Cli_Utility_RunWorkspaces_CorePackageJsonContents = JSON.stringify({
       name: '@example/core',
       scripts: {
-        build: 'node -e "require(\'node:fs\').appendFileSync(\'../../order.txt\', \'core-build\' + require(\'node:os\').EOL)"',
+        build: 'node -e "require(\'node:fs\').appendFileSync(\'../../order.txt\', \'core-build\' + String.fromCharCode(10))"',
       },
     }, null, 2);
     const appPackageJsonContents: Tests_Cli_Utility_RunWorkspaces_AppPackageJsonContents = JSON.stringify({
@@ -158,7 +197,7 @@ describe('LibRunWorkspaces.run', async () => {
         '@example/core': 'workspace:*',
       },
       scripts: {
-        check: 'node -e "require(\'node:fs\').appendFileSync(\'../../order.txt\', \'app-check\' + require(\'node:os\').EOL)"',
+        check: 'node -e "require(\'node:fs\').appendFileSync(\'../../order.txt\', \'app-check\' + String.fromCharCode(10))"',
       },
     }, null, 2);
 
@@ -939,6 +978,666 @@ describe('LibRunWorkspaces.run', async () => {
     strictEqual(independentOutput, 'completed');
     strictEqual(stderr.some((message) => message.includes('@example/blocked#build')), true);
     strictEqual(warnings.length, 0);
+
+    return;
+  });
+
+  it('runs root steps before workspace tasks', async (): Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_RunsRootStepsBeforeWorkspaceTasks_Returns => {
+    const projectRoot: Tests_Cli_Utility_RunWorkspaces_ProjectRoot = join(sandboxRoot, 'root-runsRootStepsBeforeWorkspaceTasks');
+    const appDirectory: Tests_Cli_Utility_RunWorkspaces_AppDirectory = join(projectRoot, 'apps', 'app');
+    const errors: Tests_Cli_Utility_RunWorkspaces_Errors = [];
+
+    await mkdir(appDirectory, { recursive: true });
+
+    const packageJsonContents: Tests_Cli_Utility_RunWorkspaces_PackageJsonContents = JSON.stringify({
+      name: 'workspace-project',
+      private: true,
+      packageManager: 'npm@11.18.0',
+      scripts: {
+        'check': 'nova utility run-workspaces check',
+        'check:lint': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-lint\' + String.fromCharCode(10))"',
+        'check:types': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-types\' + String.fromCharCode(10))"',
+        'check:workspaces': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'dispatcher\' + String.fromCharCode(10))"',
+      },
+    }, null, 2);
+    const novaConfigContents: Tests_Cli_Utility_RunWorkspaces_NovaConfigContents = JSON.stringify({
+      project: {
+        name: {
+          slug: 'workspace',
+          title: 'Workspace',
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'workspace-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+        './apps/app': {
+          name: '@example/app',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }, null, 2);
+    const appPackageJsonContents: Tests_Cli_Utility_RunWorkspaces_AppPackageJsonContents = JSON.stringify({
+      name: '@example/app',
+      scripts: {
+        check: 'node -e "require(\'node:fs\').appendFileSync(\'../../order.txt\', \'app-check\' + String.fromCharCode(10))"',
+      },
+    }, null, 2);
+
+    await writeFile(join(projectRoot, 'package.json'), `${packageJsonContents}\n`, 'utf-8');
+    await writeFile(join(projectRoot, 'nova.config.json'), `${novaConfigContents}\n`, 'utf-8');
+    await writeFile(join(appDirectory, 'package.json'), `${appPackageJsonContents}\n`, 'utf-8');
+
+    process.chdir(projectRoot);
+
+    const exitCode: Tests_Cli_Utility_RunWorkspaces_ExitCode = await LibRunWorkspaces.run({
+      task: 'check',
+      buffer: '10',
+      concurrency: undefined,
+      continueOnError: undefined,
+      dryRun: undefined,
+      excludeWorkspace: undefined,
+      nodeEnv: undefined,
+      scriptArgs: undefined,
+      workspace: undefined,
+      printError: (message) => {
+        errors.push(message);
+
+        return;
+      },
+      printInfo: (message) => {
+        process.stdout.write(`${message}\n`);
+
+        return;
+      },
+      printWarn: (message) => {
+        process.stderr.write(`${message}\n`);
+
+        return;
+      },
+      writeStderr: (message) => {
+        process.stderr.write(message);
+
+        return;
+      },
+      writeStdout: (message) => {
+        process.stdout.write(message);
+
+        return;
+      },
+    });
+
+    strictEqual(exitCode, 0, errors.join('\n'));
+
+    const outputPath: Tests_Cli_Utility_RunWorkspaces_OutputPath = join(projectRoot, 'order.txt');
+    const output: Tests_Cli_Utility_RunWorkspaces_Output = await readFile(outputPath, 'utf-8');
+
+    strictEqual(output, [
+      'root-lint',
+      'root-types',
+      'app-check',
+      '',
+    ].join('\n'));
+
+    return;
+  });
+
+  it('keeps the root when filtering workspaces', async (): Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_KeepsTheRootWhenFilteringWorkspaces_Returns => {
+    const projectRoot: Tests_Cli_Utility_RunWorkspaces_ProjectRoot = join(sandboxRoot, 'root-keepsTheRootWhenFilteringWorkspaces');
+    const appDirectory: Tests_Cli_Utility_RunWorkspaces_AppDirectory = join(projectRoot, 'apps', 'app');
+    const errors: Tests_Cli_Utility_RunWorkspaces_Errors = [];
+
+    await mkdir(appDirectory, { recursive: true });
+
+    const packageJsonContents: Tests_Cli_Utility_RunWorkspaces_PackageJsonContents = JSON.stringify({
+      name: 'workspace-project',
+      private: true,
+      packageManager: 'npm@11.18.0',
+      scripts: {
+        'check': 'nova utility run-workspaces check',
+        'check:lint': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-lint\' + String.fromCharCode(10))"',
+        'check:types': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-types\' + String.fromCharCode(10))"',
+        'check:workspaces': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'dispatcher\' + String.fromCharCode(10))"',
+      },
+    }, null, 2);
+    const novaConfigContents: Tests_Cli_Utility_RunWorkspaces_NovaConfigContents = JSON.stringify({
+      project: {
+        name: {
+          slug: 'workspace',
+          title: 'Workspace',
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'workspace-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+        './apps/app': {
+          name: '@example/app',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }, null, 2);
+    const appPackageJsonContents: Tests_Cli_Utility_RunWorkspaces_AppPackageJsonContents = JSON.stringify({
+      name: '@example/app',
+      scripts: {
+        check: 'node -e "require(\'node:fs\').appendFileSync(\'../../order.txt\', \'app-check\' + String.fromCharCode(10))"',
+      },
+    }, null, 2);
+
+    await writeFile(join(projectRoot, 'package.json'), `${packageJsonContents}\n`, 'utf-8');
+    await writeFile(join(projectRoot, 'nova.config.json'), `${novaConfigContents}\n`, 'utf-8');
+    await writeFile(join(appDirectory, 'package.json'), `${appPackageJsonContents}\n`, 'utf-8');
+
+    process.chdir(projectRoot);
+
+    const exitCode: Tests_Cli_Utility_RunWorkspaces_ExitCode = await LibRunWorkspaces.run({
+      task: 'check',
+      buffer: '10',
+      concurrency: undefined,
+      continueOnError: undefined,
+      dryRun: undefined,
+      excludeWorkspace: undefined,
+      nodeEnv: undefined,
+      scriptArgs: undefined,
+      workspace: ['@example/app'],
+      printError: (message) => {
+        errors.push(message);
+
+        return;
+      },
+      printInfo: (message) => {
+        process.stdout.write(`${message}\n`);
+
+        return;
+      },
+      printWarn: (message) => {
+        process.stderr.write(`${message}\n`);
+
+        return;
+      },
+      writeStderr: (message) => {
+        process.stderr.write(message);
+
+        return;
+      },
+      writeStdout: (message) => {
+        process.stdout.write(message);
+
+        return;
+      },
+    });
+
+    strictEqual(exitCode, 0, errors.join('\n'));
+
+    const outputPath: Tests_Cli_Utility_RunWorkspaces_OutputPath = join(projectRoot, 'order.txt');
+    const output: Tests_Cli_Utility_RunWorkspaces_Output = await readFile(outputPath, 'utf-8');
+
+    strictEqual(output, [
+      'root-lint',
+      'root-types',
+      'app-check',
+      '',
+    ].join('\n'));
+
+    return;
+  });
+
+  it('leaves the root out when it is excluded', async (): Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_LeavesTheRootOutWhenItIsExcluded_Returns => {
+    const projectRoot: Tests_Cli_Utility_RunWorkspaces_ProjectRoot = join(sandboxRoot, 'root-leavesTheRootOutWhenItIsExcluded');
+    const appDirectory: Tests_Cli_Utility_RunWorkspaces_AppDirectory = join(projectRoot, 'apps', 'app');
+    const errors: Tests_Cli_Utility_RunWorkspaces_Errors = [];
+
+    await mkdir(appDirectory, { recursive: true });
+
+    const packageJsonContents: Tests_Cli_Utility_RunWorkspaces_PackageJsonContents = JSON.stringify({
+      name: 'workspace-project',
+      private: true,
+      packageManager: 'npm@11.18.0',
+      scripts: {
+        'check': 'nova utility run-workspaces check',
+        'check:lint': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-lint\' + String.fromCharCode(10))"',
+        'check:types': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-types\' + String.fromCharCode(10))"',
+        'check:workspaces': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'dispatcher\' + String.fromCharCode(10))"',
+      },
+    }, null, 2);
+    const novaConfigContents: Tests_Cli_Utility_RunWorkspaces_NovaConfigContents = JSON.stringify({
+      project: {
+        name: {
+          slug: 'workspace',
+          title: 'Workspace',
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'workspace-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+        './apps/app': {
+          name: '@example/app',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }, null, 2);
+    const appPackageJsonContents: Tests_Cli_Utility_RunWorkspaces_AppPackageJsonContents = JSON.stringify({
+      name: '@example/app',
+      scripts: {
+        check: 'node -e "require(\'node:fs\').appendFileSync(\'../../order.txt\', \'app-check\' + String.fromCharCode(10))"',
+      },
+    }, null, 2);
+
+    await writeFile(join(projectRoot, 'package.json'), `${packageJsonContents}\n`, 'utf-8');
+    await writeFile(join(projectRoot, 'nova.config.json'), `${novaConfigContents}\n`, 'utf-8');
+    await writeFile(join(appDirectory, 'package.json'), `${appPackageJsonContents}\n`, 'utf-8');
+
+    process.chdir(projectRoot);
+
+    const exitCode: Tests_Cli_Utility_RunWorkspaces_ExitCode = await LibRunWorkspaces.run({
+      task: 'check',
+      buffer: '10',
+      concurrency: undefined,
+      continueOnError: undefined,
+      dryRun: undefined,
+      excludeWorkspace: ['workspace-project'],
+      nodeEnv: undefined,
+      scriptArgs: undefined,
+      workspace: undefined,
+      printError: (message) => {
+        errors.push(message);
+
+        return;
+      },
+      printInfo: (message) => {
+        process.stdout.write(`${message}\n`);
+
+        return;
+      },
+      printWarn: (message) => {
+        process.stderr.write(`${message}\n`);
+
+        return;
+      },
+      writeStderr: (message) => {
+        process.stderr.write(message);
+
+        return;
+      },
+      writeStdout: (message) => {
+        process.stdout.write(message);
+
+        return;
+      },
+    });
+
+    strictEqual(exitCode, 0, errors.join('\n'));
+
+    const outputPath: Tests_Cli_Utility_RunWorkspaces_OutputPath = join(projectRoot, 'order.txt');
+    const output: Tests_Cli_Utility_RunWorkspaces_Output = await readFile(outputPath, 'utf-8');
+
+    strictEqual(output, [
+      'app-check',
+      '',
+    ].join('\n'));
+
+    return;
+  });
+
+  it('skips the root when configured to', async (): Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_SkipsTheRootWhenConfiguredTo_Returns => {
+    const projectRoot: Tests_Cli_Utility_RunWorkspaces_ProjectRoot = join(sandboxRoot, 'root-skipsTheRootWhenConfiguredTo');
+    const appDirectory: Tests_Cli_Utility_RunWorkspaces_AppDirectory = join(projectRoot, 'apps', 'app');
+    const errors: Tests_Cli_Utility_RunWorkspaces_Errors = [];
+
+    await mkdir(appDirectory, { recursive: true });
+
+    const packageJsonContents: Tests_Cli_Utility_RunWorkspaces_PackageJsonContents = JSON.stringify({
+      name: 'workspace-project',
+      private: true,
+      packageManager: 'npm@11.18.0',
+      scripts: {
+        'check': 'nova utility run-workspaces check',
+        'check:lint': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-lint\' + String.fromCharCode(10))"',
+        'check:types': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-types\' + String.fromCharCode(10))"',
+        'check:workspaces': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'dispatcher\' + String.fromCharCode(10))"',
+      },
+    }, null, 2);
+    const novaConfigContents: Tests_Cli_Utility_RunWorkspaces_NovaConfigContents = JSON.stringify({
+      project: {
+        name: {
+          slug: 'workspace',
+          title: 'Workspace',
+        },
+      },
+      settings: {
+        runWorkspaces: {
+          root: 'skip',
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'workspace-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+        './apps/app': {
+          name: '@example/app',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }, null, 2);
+    const appPackageJsonContents: Tests_Cli_Utility_RunWorkspaces_AppPackageJsonContents = JSON.stringify({
+      name: '@example/app',
+      scripts: {
+        check: 'node -e "require(\'node:fs\').appendFileSync(\'../../order.txt\', \'app-check\' + String.fromCharCode(10))"',
+      },
+    }, null, 2);
+
+    await writeFile(join(projectRoot, 'package.json'), `${packageJsonContents}\n`, 'utf-8');
+    await writeFile(join(projectRoot, 'nova.config.json'), `${novaConfigContents}\n`, 'utf-8');
+    await writeFile(join(appDirectory, 'package.json'), `${appPackageJsonContents}\n`, 'utf-8');
+
+    process.chdir(projectRoot);
+
+    const exitCode: Tests_Cli_Utility_RunWorkspaces_ExitCode = await LibRunWorkspaces.run({
+      task: 'check',
+      buffer: '10',
+      concurrency: undefined,
+      continueOnError: undefined,
+      dryRun: undefined,
+      excludeWorkspace: undefined,
+      nodeEnv: undefined,
+      scriptArgs: undefined,
+      workspace: undefined,
+      printError: (message) => {
+        errors.push(message);
+
+        return;
+      },
+      printInfo: (message) => {
+        process.stdout.write(`${message}\n`);
+
+        return;
+      },
+      printWarn: (message) => {
+        process.stderr.write(`${message}\n`);
+
+        return;
+      },
+      writeStderr: (message) => {
+        process.stderr.write(message);
+
+        return;
+      },
+      writeStdout: (message) => {
+        process.stdout.write(message);
+
+        return;
+      },
+    });
+
+    strictEqual(exitCode, 0, errors.join('\n'));
+
+    const outputPath: Tests_Cli_Utility_RunWorkspaces_OutputPath = join(projectRoot, 'order.txt');
+    const output: Tests_Cli_Utility_RunWorkspaces_Output = await readFile(outputPath, 'utf-8');
+
+    strictEqual(output, [
+      'app-check',
+      '',
+    ].join('\n'));
+
+    return;
+  });
+
+  it('never caches root steps', async (): Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_NeverCachesRootSteps_Returns => {
+    const projectRoot: Tests_Cli_Utility_RunWorkspaces_ProjectRoot = join(sandboxRoot, 'root-neverCachesRootSteps');
+    const appDirectory: Tests_Cli_Utility_RunWorkspaces_AppDirectory = join(projectRoot, 'apps', 'app');
+    const errors: Tests_Cli_Utility_RunWorkspaces_Errors = [];
+
+    await mkdir(appDirectory, { recursive: true });
+
+    const packageJsonContents: Tests_Cli_Utility_RunWorkspaces_PackageJsonContents = JSON.stringify({
+      name: 'workspace-project',
+      private: true,
+      packageManager: 'npm@11.18.0',
+      scripts: {
+        'check': 'nova utility run-workspaces check',
+        'check:lint': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-lint\' + String.fromCharCode(10))"',
+        'check:types': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-types\' + String.fromCharCode(10))"',
+        'check:workspaces': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'dispatcher\' + String.fromCharCode(10))"',
+      },
+    }, null, 2);
+    const novaConfigContents: Tests_Cli_Utility_RunWorkspaces_NovaConfigContents = JSON.stringify({
+      project: {
+        name: {
+          slug: 'workspace',
+          title: 'Workspace',
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'workspace-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+        './apps/app': {
+          name: '@example/app',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }, null, 2);
+    const appPackageJsonContents: Tests_Cli_Utility_RunWorkspaces_AppPackageJsonContents = JSON.stringify({
+      name: '@example/app',
+      scripts: {
+        check: 'node -e "require(\'node:fs\').appendFileSync(\'../../order.txt\', \'app-check\' + String.fromCharCode(10))"',
+      },
+    }, null, 2);
+
+    await writeFile(join(projectRoot, 'package.json'), `${packageJsonContents}\n`, 'utf-8');
+    await writeFile(join(projectRoot, 'nova.config.json'), `${novaConfigContents}\n`, 'utf-8');
+    await writeFile(join(appDirectory, 'package.json'), `${appPackageJsonContents}\n`, 'utf-8');
+
+    process.chdir(projectRoot);
+
+    const exitCode: Tests_Cli_Utility_RunWorkspaces_ExitCode = await LibRunWorkspaces.run({
+      task: 'check',
+      buffer: '10',
+      concurrency: undefined,
+      continueOnError: undefined,
+      dryRun: undefined,
+      excludeWorkspace: undefined,
+      nodeEnv: undefined,
+      scriptArgs: undefined,
+      workspace: undefined,
+      printError: (message) => {
+        errors.push(message);
+
+        return;
+      },
+      printInfo: (message) => {
+        process.stdout.write(`${message}\n`);
+
+        return;
+      },
+      printWarn: (message) => {
+        process.stderr.write(`${message}\n`);
+
+        return;
+      },
+      writeStderr: (message) => {
+        process.stderr.write(message);
+
+        return;
+      },
+      writeStdout: (message) => {
+        process.stdout.write(message);
+
+        return;
+      },
+    });
+
+    strictEqual(exitCode, 0, errors.join('\n'));
+
+    const secondExitCode: Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_NeverCachesRootSteps_SecondExitCode = await LibRunWorkspaces.run({
+      task: 'check',
+      buffer: '10',
+      concurrency: undefined,
+      continueOnError: undefined,
+      dryRun: undefined,
+      excludeWorkspace: undefined,
+      nodeEnv: undefined,
+      scriptArgs: undefined,
+      workspace: undefined,
+      printError: (message) => {
+        errors.push(message);
+
+        return;
+      },
+      printInfo: (message) => {
+        process.stdout.write(`${message}\n`);
+
+        return;
+      },
+      printWarn: (message) => {
+        process.stderr.write(`${message}\n`);
+
+        return;
+      },
+      writeStderr: (message) => {
+        process.stderr.write(message);
+
+        return;
+      },
+      writeStdout: (message) => {
+        process.stdout.write(message);
+
+        return;
+      },
+    });
+
+    strictEqual(secondExitCode, 0, errors.join('\n'));
+
+    const outputPath: Tests_Cli_Utility_RunWorkspaces_OutputPath = join(projectRoot, 'order.txt');
+    const output: Tests_Cli_Utility_RunWorkspaces_Output = await readFile(outputPath, 'utf-8');
+
+    strictEqual(output, [
+      'root-lint',
+      'root-types',
+      'app-check',
+      'root-lint',
+      'root-types',
+      '',
+    ].join('\n'));
+
+    return;
+  });
+
+  it('skips the root inside a nested run', async (): Tests_Cli_Utility_RunWorkspaces_LibRunWorkspacesRun_SkipsTheRootInsideANestedRun_Returns => {
+    const projectRoot: Tests_Cli_Utility_RunWorkspaces_ProjectRoot = join(sandboxRoot, 'root-skipsTheRootInsideANestedRun');
+    const appDirectory: Tests_Cli_Utility_RunWorkspaces_AppDirectory = join(projectRoot, 'apps', 'app');
+    const errors: Tests_Cli_Utility_RunWorkspaces_Errors = [];
+
+    await mkdir(appDirectory, { recursive: true });
+
+    const packageJsonContents: Tests_Cli_Utility_RunWorkspaces_PackageJsonContents = JSON.stringify({
+      name: 'workspace-project',
+      private: true,
+      packageManager: 'npm@11.18.0',
+      scripts: {
+        'check': 'nova utility run-workspaces check',
+        'check:lint': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-lint\' + String.fromCharCode(10))"',
+        'check:types': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'root-types\' + String.fromCharCode(10))"',
+        'check:workspaces': 'node -e "require(\'node:fs\').appendFileSync(\'order.txt\', \'dispatcher\' + String.fromCharCode(10))"',
+      },
+    }, null, 2);
+    const novaConfigContents: Tests_Cli_Utility_RunWorkspaces_NovaConfigContents = JSON.stringify({
+      project: {
+        name: {
+          slug: 'workspace',
+          title: 'Workspace',
+        },
+      },
+      workspaces: {
+        './': {
+          name: 'workspace-project',
+          role: 'project',
+          policy: 'freezable',
+        },
+        './apps/app': {
+          name: '@example/app',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }, null, 2);
+    const appPackageJsonContents: Tests_Cli_Utility_RunWorkspaces_AppPackageJsonContents = JSON.stringify({
+      name: '@example/app',
+      scripts: {
+        check: 'node -e "require(\'node:fs\').appendFileSync(\'../../order.txt\', \'app-check\' + String.fromCharCode(10))"',
+      },
+    }, null, 2);
+
+    await writeFile(join(projectRoot, 'package.json'), `${packageJsonContents}\n`, 'utf-8');
+    await writeFile(join(projectRoot, 'nova.config.json'), `${novaConfigContents}\n`, 'utf-8');
+    await writeFile(join(appDirectory, 'package.json'), `${appPackageJsonContents}\n`, 'utf-8');
+
+    process.chdir(projectRoot);
+
+    Reflect.set(process.env, 'NOVA_WORKSPACE_RUNNER', 'true');
+
+    const exitCode: Tests_Cli_Utility_RunWorkspaces_ExitCode = await LibRunWorkspaces.run({
+      task: 'check',
+      buffer: '10',
+      concurrency: undefined,
+      continueOnError: undefined,
+      dryRun: undefined,
+      excludeWorkspace: undefined,
+      nodeEnv: undefined,
+      scriptArgs: undefined,
+      workspace: undefined,
+      printError: (message) => {
+        errors.push(message);
+
+        return;
+      },
+      printInfo: (message) => {
+        process.stdout.write(`${message}\n`);
+
+        return;
+      },
+      printWarn: (message) => {
+        process.stderr.write(`${message}\n`);
+
+        return;
+      },
+      writeStderr: (message) => {
+        process.stderr.write(message);
+
+        return;
+      },
+      writeStdout: (message) => {
+        process.stdout.write(message);
+
+        return;
+      },
+    });
+
+    strictEqual(exitCode, 0, errors.join('\n'));
+
+    const outputPath: Tests_Cli_Utility_RunWorkspaces_OutputPath = join(projectRoot, 'order.txt');
+    const output: Tests_Cli_Utility_RunWorkspaces_Output = await readFile(outputPath, 'utf-8');
+
+    strictEqual(output, [
+      'app-check',
+      '',
+    ].join('\n'));
 
     return;
   });

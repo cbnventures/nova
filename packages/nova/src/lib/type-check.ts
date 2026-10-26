@@ -1,4 +1,9 @@
-import { dirname, resolve } from 'node:path';
+import {
+  dirname,
+  isAbsolute,
+  relative,
+  resolve,
+} from 'node:path';
 
 import {
   createProgram,
@@ -16,6 +21,7 @@ import type {
   Lib_TypeCheck_FilterDiagnostics_FileName,
   Lib_TypeCheck_FilterDiagnostics_Returns,
   Lib_TypeCheck_GetConfigPath_CurrentDirectory,
+  Lib_TypeCheck_GetConfigPath_Discovered,
   Lib_TypeCheck_GetConfigPath_Project,
   Lib_TypeCheck_GetConfigPath_Resolved,
   Lib_TypeCheck_GetConfigPath_Returns,
@@ -27,6 +33,14 @@ import type {
   Lib_TypeCheck_GetDiagnostics_Returns,
   Lib_TypeCheck_GetDiagnostics_ShouldCheckDeclarations,
   Lib_TypeCheck_GetDiagnostics_TypedSourceFile,
+  Lib_TypeCheck_IsProjectOwnedFile_CurrentDirectory,
+  Lib_TypeCheck_IsProjectOwnedFile_FileName,
+  Lib_TypeCheck_IsProjectOwnedFile_NormalizedRelativeFileName,
+  Lib_TypeCheck_IsProjectOwnedFile_RelativeFileName,
+  Lib_TypeCheck_IsProjectOwnedFile_RelativeSegments,
+  Lib_TypeCheck_IsProjectOwnedFile_Returns,
+  Lib_TypeCheck_NormalizeDiagnosticFileName_FileName,
+  Lib_TypeCheck_NormalizeDiagnosticFileName_Returns,
   Lib_TypeCheck_PrintDiagnostics_Character,
   Lib_TypeCheck_PrintDiagnostics_Diagnostics,
   Lib_TypeCheck_PrintDiagnostics_FileName,
@@ -69,7 +83,7 @@ function filterDiagnostics(diagnostics: Lib_TypeCheck_FilterDiagnostics_Diagnost
 
     const fileName: Lib_TypeCheck_FilterDiagnostics_FileName = diagnostic.file.fileName;
 
-    return fileName.startsWith(currentDirectory) === true && fileName.includes('node_modules') === false;
+    return isProjectOwnedFile(fileName, currentDirectory);
   });
 }
 
@@ -88,12 +102,14 @@ function filterDiagnostics(diagnostics: Lib_TypeCheck_FilterDiagnostics_Diagnost
  */
 function getConfigPath(project: Lib_TypeCheck_GetConfigPath_Project, currentDirectory: Lib_TypeCheck_GetConfigPath_CurrentDirectory): Lib_TypeCheck_GetConfigPath_Returns {
   if (project !== undefined) {
-    const resolved: Lib_TypeCheck_GetConfigPath_Resolved = resolve(currentDirectory, project);
+    const resolved: Lib_TypeCheck_GetConfigPath_Resolved = normalizeDiagnosticFileName(resolve(currentDirectory, project));
 
     return (sys.fileExists(resolved) === true) ? resolved : undefined;
   }
 
-  return findConfigFile(currentDirectory, sys.fileExists, 'tsconfig.json');
+  const discovered: Lib_TypeCheck_GetConfigPath_Discovered = findConfigFile(currentDirectory, sys.fileExists, 'tsconfig.json');
+
+  return (discovered === undefined) ? undefined : normalizeDiagnosticFileName(discovered);
 }
 
 /**
@@ -121,7 +137,7 @@ export function getDiagnostics(program: Lib_TypeCheck_GetDiagnostics_Program, cu
   for (const sourceFile of program.getSourceFiles()) {
     const typedSourceFile: Lib_TypeCheck_GetDiagnostics_TypedSourceFile = sourceFile;
     const fileName: Lib_TypeCheck_GetDiagnostics_FileName = typedSourceFile.fileName;
-    const isProjectOwned: Lib_TypeCheck_GetDiagnostics_IsProjectOwned = fileName.startsWith(currentDirectory) === true && fileName.includes('node_modules') === false;
+    const isProjectOwned: Lib_TypeCheck_GetDiagnostics_IsProjectOwned = isProjectOwnedFile(fileName, currentDirectory);
 
     if (isProjectOwned === false) {
       continue;
@@ -138,6 +154,54 @@ export function getDiagnostics(program: Lib_TypeCheck_GetDiagnostics_Program, cu
   }
 
   return filterDiagnostics(sortAndDeduplicateDiagnostics(diagnostics), currentDirectory);
+}
+
+/**
+ * Lib - Type Check - Is Project Owned File.
+ *
+ * Resolves file ownership through a relative path so TypeScript's slash style
+ * cannot exclude Windows project files from diagnostics.
+ *
+ * @param {Lib_TypeCheck_IsProjectOwnedFile_FileName}         fileName         - File name.
+ * @param {Lib_TypeCheck_IsProjectOwnedFile_CurrentDirectory} currentDirectory - Current directory.
+ *
+ * @returns {Lib_TypeCheck_IsProjectOwnedFile_Returns}
+ *
+ * @since 0.34.0
+ */
+export function isProjectOwnedFile(fileName: Lib_TypeCheck_IsProjectOwnedFile_FileName, currentDirectory: Lib_TypeCheck_IsProjectOwnedFile_CurrentDirectory): Lib_TypeCheck_IsProjectOwnedFile_Returns {
+  const relativeFileName: Lib_TypeCheck_IsProjectOwnedFile_RelativeFileName = relative(currentDirectory, fileName);
+  const normalizedRelativeFileName: Lib_TypeCheck_IsProjectOwnedFile_NormalizedRelativeFileName = normalizeDiagnosticFileName(relativeFileName);
+
+  if (
+    normalizedRelativeFileName === ''
+    || normalizedRelativeFileName === '..'
+    || normalizedRelativeFileName.startsWith('../') === true
+    || isAbsolute(relativeFileName) === true
+  ) {
+    return false;
+  }
+
+  const relativeSegments: Lib_TypeCheck_IsProjectOwnedFile_RelativeSegments = normalizedRelativeFileName.split('/');
+
+  return relativeSegments.includes('node_modules') === false;
+}
+
+/**
+ * Lib - Type Check - Normalize Diagnostic File Name.
+ *
+ * Uses TypeScript's slash-separated path form.
+ * This keeps source-file and diagnostic identities equal on Windows while
+ * preserving stable rendered diagnostics across operating systems.
+ *
+ * @param {Lib_TypeCheck_NormalizeDiagnosticFileName_FileName} fileName - File name.
+ *
+ * @returns {Lib_TypeCheck_NormalizeDiagnosticFileName_Returns}
+ *
+ * @since 0.34.0
+ */
+export function normalizeDiagnosticFileName(fileName: Lib_TypeCheck_NormalizeDiagnosticFileName_FileName): Lib_TypeCheck_NormalizeDiagnosticFileName_Returns {
+  return fileName.replaceAll('\\', '/');
 }
 
 /**
@@ -158,7 +222,7 @@ function printDiagnostics(diagnostics: Lib_TypeCheck_PrintDiagnostics_Diagnostic
   const fileSet: Lib_TypeCheck_PrintDiagnostics_FileSet = new Set();
 
   for (const diagnostic of diagnostics) {
-    const fileName: Lib_TypeCheck_PrintDiagnostics_FileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : 'unknown';
+    const fileName: Lib_TypeCheck_PrintDiagnostics_FileName = normalizeDiagnosticFileName((diagnostic.file !== undefined) ? diagnostic.file.fileName : 'unknown');
     const message: Lib_TypeCheck_PrintDiagnostics_Message = flattenDiagnosticMessageText(diagnostic.messageText, '\n');
 
     fileSet.add(fileName);

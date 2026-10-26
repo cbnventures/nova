@@ -96,7 +96,7 @@ export const cliScaffoldAppViteTemplateQuestions: Cli_Scaffold_App_Vite_Template
       },
       {
         title: 'Yes',
-        description: 'Serve the production build from an unprivileged NGINX image',
+        description: 'Serve the production build as a service in the root s6 appliance image',
         value: 'enabled',
       },
     ],
@@ -156,6 +156,10 @@ export class Runner {
    */
   public static async run(options: Cli_Scaffold_App_Vite_Runner_Run_Options): Cli_Scaffold_App_Vite_Runner_Run_Returns {
     await runScaffold(options, {
+      allowScriptProfiles: [
+        'esbuild',
+        'file-watching',
+      ],
       category: 'app',
       displayName: 'Vite',
       importMetaUrl: import.meta.url,
@@ -200,13 +204,18 @@ export class Runner {
           devDependencies,
         });
 
+        return;
+      },
+      projectFinalizer: async (workspaceDirectory, workspaceName, configRoot, answers) => {
         if (answers.get('dockerImage') === 'enabled') {
           await LibDockerPackaging.generateForTarget({
             buildDirectory: 'dist',
             profile: 'static-site',
+            projectDirectory: configRoot,
             reportFiles: false,
             replaceFile: true,
             workspaceDirectory,
+            workspaceName,
           });
         }
 

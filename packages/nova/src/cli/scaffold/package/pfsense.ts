@@ -29,6 +29,7 @@ export class Runner {
    */
   public static async run(options: Cli_Scaffold_Package_Pfsense_Runner_Run_Options): Cli_Scaffold_Package_Pfsense_Runner_Run_Returns {
     await runScaffold(options, {
+      allowScriptProfiles: ['file-watching'],
       category: 'package',
       displayName: 'pfSense',
       importMetaUrl: import.meta.url,

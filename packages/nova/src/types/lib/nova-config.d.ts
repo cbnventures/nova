@@ -76,6 +76,7 @@ import type {
   Shared_NovaConfigSettings_RunWorkspacesConcurrency,
   Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkflow,
+  Shared_NovaConfigWorkflow_ContainerPlatforms,
   Shared_NovaConfigWorkflow_RunsOn,
   Shared_NovaConfigWorkflow_TimeoutMinutes,
   Shared_NovaConfigWorkflow_Triggers,
@@ -1261,6 +1262,10 @@ export type Lib_NovaConfig_Runner_ParseSettings_ConcurrencyScript = string;
 
 export type Lib_NovaConfig_Runner_ParseSettings_ConcurrencyLimit = unknown;
 
+export type Lib_NovaConfig_Runner_ParseSettings_RootValue = unknown;
+
+export type Lib_NovaConfig_Runner_ParseSettings_VersionStrategyValue = unknown;
+
 export type Lib_NovaConfig_Runner_ParseSettings_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy | undefined;
 
 /**
@@ -1366,6 +1371,10 @@ export type Lib_NovaConfig_Runner_ParseWorkflows_RunsOn = Shared_NovaConfigWorkf
 export type Lib_NovaConfig_Runner_ParseWorkflows_RawTimeoutMinutes = unknown;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_TimeoutMinutes = Shared_NovaConfigWorkflow_TimeoutMinutes | undefined;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_RawContainerPlatforms = unknown;
+
+export type Lib_NovaConfig_Runner_ParseWorkflows_ContainerPlatforms = Shared_NovaConfigWorkflow_ContainerPlatforms;
 
 export type Lib_NovaConfig_Runner_ParseWorkflows_RawBuild = unknown;
 

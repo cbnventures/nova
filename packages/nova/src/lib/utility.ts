@@ -135,14 +135,10 @@ import type {
   Lib_Utility_ExecuteShell_QuotePosix,
   Lib_Utility_ExecuteShell_QuotePosix_Pattern,
   Lib_Utility_ExecuteShell_QuotePosix_Returns,
-  Lib_Utility_ExecuteShell_QuoteWindows,
-  Lib_Utility_ExecuteShell_QuoteWindows_Pattern,
-  Lib_Utility_ExecuteShell_QuoteWindows_Returns,
   Lib_Utility_ExecuteShell_Returns,
   Lib_Utility_ExecuteShell_Shell,
   Lib_Utility_ExecuteShell_Stderr,
   Lib_Utility_ExecuteShell_Stdout,
-  Lib_Utility_ExecuteShell_WindowsString,
   Lib_Utility_IsCommandExists_Bin,
   Lib_Utility_IsCommandExists_ChildProcess,
   Lib_Utility_IsCommandExists_Command,
@@ -674,6 +670,7 @@ export async function executeShell(command: Lib_Utility_ExecuteShell_Command): L
   const commandName: Lib_Utility_ExecuteShell_CommandName = command.split(' ')[0] ?? '';
   const commandOnPath: Lib_Utility_ExecuteShell_CommandOnPath = await isCommandExists(commandName);
 
+  // Node's exec already invokes cmd.exe on Windows, so only POSIX shells need explicit wrappers.
   let fullCommand: Lib_Utility_ExecuteShell_FullCommand = command;
 
   /**
@@ -695,31 +692,6 @@ export async function executeShell(command: Lib_Utility_ExecuteShell_Command): L
 
     return posixString.replace(pattern, '\'\\\'\'');
   };
-
-  /**
-   * Lib - Utility - Execute Shell - Quote Windows.
-   *
-   * Escapes double quotes inside a command string so it can be
-   * safely embedded in a cmd.exe /c invocation on Windows.
-   *
-   * @param {Lib_Utility_ExecuteShell_WindowsString} windowsString - Windows string.
-   *
-   * @private
-   *
-   * @returns {Lib_Utility_ExecuteShell_QuoteWindows_Returns}
-   *
-   * @since 0.11.0
-   */
-  const quoteWindows: Lib_Utility_ExecuteShell_QuoteWindows = (windowsString: Lib_Utility_ExecuteShell_WindowsString): Lib_Utility_ExecuteShell_QuoteWindows_Returns => {
-    const pattern: Lib_Utility_ExecuteShell_QuoteWindows_Pattern = new RegExp(LIB_REGEX_CHARACTER_DOUBLE_QUOTE.source, 'g');
-
-    return windowsString.replace(pattern, '"');
-  };
-
-  // Windows.
-  if (shell === 'cmd.exe') {
-    fullCommand = `cmd.exe /d /s /c "${quoteWindows(fullCommand)}"`;
-  }
 
   // macOS.
   if (shell === '/bin/zsh' && commandOnPath === true) {

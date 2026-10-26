@@ -1,0 +1,353 @@
+import type { Dirent } from 'node:fs';
+
+import type { Runner as ApiAppStoreConnect } from '../../../api/app-store-connect.js';
+import type {
+  Shared_AppStoreConnectContextCache,
+  Shared_AppStoreConnectCredentials,
+  Shared_AppStoreConnectIntegrationOptions,
+  Shared_AppStoreConnectKeyCandidate,
+  Shared_AppStoreConnectRemoteContext,
+  Shared_AppStoreConnectResource,
+  Shared_AppStoreConnectWorkspaceContext,
+  Shared_IntegrationAssetTarget,
+  Shared_IntegrationMetadataTarget,
+  Shared_IntegrationWorkspace,
+} from '../../shared.d.ts';
+
+export type Cli_Integration_AppStoreConnect_Runner_CreateClient_Options = Shared_AppStoreConnectIntegrationOptions;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreateClient_Returns = Promise<ApiAppStoreConnect>;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreateClient_Credentials = Shared_AppStoreConnectCredentials;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Options = Shared_AppStoreConnectIntegrationOptions;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Returns = Promise<void>;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_WorkspaceContext = Shared_AppStoreConnectWorkspaceContext;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_AssetsDirectory = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_CollectedTargets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Targets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Lines = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_PlannedFile = Shared_IntegrationAssetTarget['files'][number] | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_FileName = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Client = ApiAppStoreConnect;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_App = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_AppId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_AssetLibrary = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_AssetLibraryId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_ContextCache = Shared_AppStoreConnectContextCache;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Context = Shared_AppStoreConnectRemoteContext;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_PlacementType = string | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_UploadedFile = Shared_IntegrationAssetTarget['files'][number] | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Buffers = Buffer[];
+
+export type Cli_Integration_AppStoreConnect_Runner_CreativeAssets_Image = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_FileBuffer_Buffers = Buffer[];
+
+export type Cli_Integration_AppStoreConnect_Runner_FileBuffer_Index = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_FileBuffer_FileName = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_FileBuffer_Returns = Buffer;
+
+export type Cli_Integration_AppStoreConnect_Runner_FileBuffer_Buffer = Buffer | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_FilterTargets_Target = Shared_IntegrationAssetTarget | Shared_IntegrationMetadataTarget;
+
+export type Cli_Integration_AppStoreConnect_Runner_FilterTargets_Targets<Target extends Cli_Integration_AppStoreConnect_Runner_FilterTargets_Target> = Target[];
+
+export type Cli_Integration_AppStoreConnect_Runner_FilterTargets_Options = Shared_AppStoreConnectIntegrationOptions;
+
+export type Cli_Integration_AppStoreConnect_Runner_FilterTargets_Returns<Target extends Cli_Integration_AppStoreConnect_Runner_FilterTargets_Target> = Target[];
+
+export type Cli_Integration_AppStoreConnect_Runner_FilterTargets_SelectedPlatforms = string[] | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_FilterTargets_SelectedLocales = string[] | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_FilterTargets_MatchesPlatform = boolean;
+
+export type Cli_Integration_AppStoreConnect_Runner_FilterTargets_MatchesLocale = boolean;
+
+export type Cli_Integration_AppStoreConnect_Runner_Metadata_Options = Shared_AppStoreConnectIntegrationOptions;
+
+export type Cli_Integration_AppStoreConnect_Runner_Metadata_Returns = Promise<void>;
+
+export type Cli_Integration_AppStoreConnect_Runner_Metadata_WorkspaceContext = Shared_AppStoreConnectWorkspaceContext;
+
+export type Cli_Integration_AppStoreConnect_Runner_Metadata_MetadataDirectory = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_Metadata_CollectedTargets = Shared_IntegrationMetadataTarget[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Metadata_Targets = Shared_IntegrationMetadataTarget[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Metadata_Lines = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Metadata_Client = ApiAppStoreConnect;
+
+export type Cli_Integration_AppStoreConnect_Runner_Metadata_App = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_Metadata_AppId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_Metadata_Context = Shared_AppStoreConnectRemoteContext;
+
+export type Cli_Integration_AppStoreConnect_Runner_Metadata_LocalizationId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Options = Shared_AppStoreConnectIntegrationOptions;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Returns = Promise<Shared_AppStoreConnectWorkspaceContext>;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Workspace = Shared_IntegrationWorkspace;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_BundleIdentifier = string | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Version = string | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_ProjectFilePath = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_ProjectFile = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_ParsedProject = unknown;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Project = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Settings = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_BaseSettings = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Targets = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_TargetValues = unknown[];
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_Target = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_TargetSettings = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_PrepareWorkspace_TargetBaseSettings = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReadFiles_Target = Shared_IntegrationAssetTarget;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReadFiles_Returns = Promise<Buffer[]>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReadKeyDirectory_Directory = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReadKeyDirectory_Returns = Promise<Shared_AppStoreConnectKeyCandidate[]>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReadKeyDirectory_Entries = Dirent[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReadKeyDirectory_PrefixLength = number;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReadKeyDirectory_KeyId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Client = ApiAppStoreConnect;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Context = Shared_AppStoreConnectRemoteContext;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementType = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementGroup = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_ImageIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Returns = Promise<void>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_LocalizationId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Query = URLSearchParams;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_Response = Shared_AppStoreConnectResource | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_ExistingPlacements = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementResponses = (Shared_AppStoreConnectResource | undefined)[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ReplacePlacement_PlacementIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_Cache = Shared_AppStoreConnectContextCache;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_Client = ApiAppStoreConnect;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_App = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_Version = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_Platform = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_Locale = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_Returns = Promise<Shared_AppStoreConnectRemoteContext>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_Key = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_CachedContext = Promise<Shared_AppStoreConnectRemoteContext> | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCachedContext_Context = Promise<Shared_AppStoreConnectRemoteContext>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveContext_Client = ApiAppStoreConnect;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveContext_App = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveContext_Version = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveContext_Platform = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveContext_Locale = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveContext_Returns = Promise<Shared_AppStoreConnectRemoteContext>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveContext_ApiPlatform = string | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveContext_VersionResource = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveContext_VersionId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveContext_Localizations = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveContext_Localization = Shared_AppStoreConnectResource | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveContext_Attributes = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCredentials_Options = Shared_AppStoreConnectIntegrationOptions;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCredentials_Returns = Promise<Shared_AppStoreConnectCredentials>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCredentials_Directories = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCredentials_CandidateGroups = Shared_AppStoreConnectKeyCandidate[][];
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCredentials_Candidates = Shared_AppStoreConnectKeyCandidate[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCredentials_SelectedCandidate = Shared_AppStoreConnectKeyCandidate | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCredentials_Answers = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCredentials_SelectedPath = unknown;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCredentials_PrivateKey = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveCredentials_Credentials = Shared_AppStoreConnectCredentials;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveDuoPlacementGroup_Client = ApiAppStoreConnect;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveDuoPlacementGroup_Returns = Promise<string>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveDuoPlacementGroup_Query = URLSearchParams;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveDuoPlacementGroup_Response = Shared_AppStoreConnectResource | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveDuoPlacementGroup_Resources = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveDuoPlacementGroup_Resource = Shared_AppStoreConnectResource | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveDuoPlacementGroup_Attributes = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveDuoPlacementGroup_Groups = unknown[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveDuoPlacementGroup_Group = Record<string, unknown> | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveDuoPlacementGroup_Keys = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ResolveDuoPlacementGroup_Value = unknown;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResourceId_Resource = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResourceId_Name = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_ResourceId_Returns = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Options = Shared_AppStoreConnectIntegrationOptions;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Returns = Promise<void>;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_WorkspaceContext = Shared_AppStoreConnectWorkspaceContext;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_ScreenshotsDirectory = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_CollectedTargets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Targets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Lines = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Client = ApiAppStoreConnect;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_App = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_AppId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_ContextCache = Shared_AppStoreConnectContextCache;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_DuoTargets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_StandardTargets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_StandardContext = Shared_AppStoreConnectRemoteContext;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_LocalizationId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_DisplayType = string | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Sets = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Set = Shared_AppStoreConnectResource | undefined;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Attributes = Record<string, unknown>;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_CreatedSet = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_SetId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Files = Promise<Buffer[]>;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_FileBuffers = Buffer[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Uploads = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_UploadIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_AssetLibrary = Shared_AppStoreConnectResource;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_AssetLibraryId = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_PlacementGroup = string;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_DuoContext = Shared_AppStoreConnectRemoteContext;
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Buffers = Buffer[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_Images = Shared_AppStoreConnectResource[];
+
+export type Cli_Integration_AppStoreConnect_Runner_Screenshots_ImageIds = string[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateCreativeTargets_Targets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateCreativeTargets_Returns = void;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotTargets_Targets = Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotTargets_Returns = void;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateScreenshotTargets_IsDuo = boolean;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateTargets_Targets = Shared_IntegrationMetadataTarget[] | Shared_IntegrationAssetTarget[];
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateTargets_Returns = void;
+
+export type Cli_Integration_AppStoreConnect_Runner_ValidateTargets_UnsupportedPlatforms = string[];

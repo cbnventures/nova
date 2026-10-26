@@ -195,8 +195,18 @@ export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
           'DOCKERHUB_USERNAME': {
             format: 'var',
             default: 'DOCKERHUB_USERNAME',
-            description: 'Docker Hub username or organization name',
+            description: 'Docker Hub username used only to authenticate the registry push',
             scope: 'account',
+          },
+        },
+        requiredLiterals: {
+          'IMAGE_NAMESPACE': {
+            description: 'Docker Hub namespace that owns the published image',
+            example: 'cbnventures',
+          },
+          'IMAGE_REPOSITORY': {
+            description: 'Docker Hub repository name for the published image',
+            example: 'nova',
           },
         },
         permissions: {
@@ -204,6 +214,10 @@ export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
           'attestations': 'write',
           'id-token': 'write',
         },
+        uniquenessKey: [
+          'IMAGE_NAMESPACE',
+          'IMAGE_REPOSITORY',
+        ],
       },
       'ghcr': {
         description: 'Publish Docker image to GitHub Container Registry',
@@ -215,12 +229,19 @@ export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
             auto: true,
           },
         },
+        requiredLiterals: {
+          'IMAGE_REPOSITORY': {
+            description: 'GHCR repository name published under github.repository_owner',
+            example: 'nova',
+          },
+        },
         permissions: {
           'contents': 'read',
           'packages': 'write',
           'attestations': 'write',
           'id-token': 'write',
         },
+        uniquenessKey: ['IMAGE_REPOSITORY'],
       },
       'cloudflare-pages-docusaurus': {
         description: 'Deploy Docusaurus to Cloudflare Pages',

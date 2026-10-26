@@ -125,6 +125,7 @@ export class Runner {
     }
 
     await runScaffold(options, {
+      allowScriptProfiles: ['file-watching'],
       category: 'app',
       displayName: 'Android',
       importMetaUrl: import.meta.url,
@@ -137,6 +138,7 @@ export class Runner {
         value: Runner.resolveApplicationId(workspaceName, options['applicationId']),
       }],
       resolveReplacements: (workspaceName) => Runner.resolveReplacements(workspaceName, options['applicationId']),
+      rootTemplateSubpath: 'scaffold-options/app/google-play-console-root',
       resolveWorkspaceTemplateSubpaths: () => [
         'scaffold-options/app/android-native',
         'scaffold-options/app/android-launchpad',

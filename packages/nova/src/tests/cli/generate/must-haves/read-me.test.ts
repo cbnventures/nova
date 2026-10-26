@@ -7,7 +7,10 @@ import {
   writeFile,
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import {
+  basename,
+  join,
+} from 'node:path';
 
 import {
   afterAll,
@@ -274,7 +277,7 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
 
     const calls: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_Calls = saveSpy['mock']['calls'];
 
-    const targetCall: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_TargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/README.md'));
+    const targetCall: Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_TargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === 'README.md');
 
     ok(targetCall !== undefined, 'Expected saveGeneratedFile to be called for README.md');
 

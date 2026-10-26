@@ -20,11 +20,19 @@ export type Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsComplete
 
 export type Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_BuildGradle = string;
 
+export type Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_GitAttributes = string;
+
+export type Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_Gitignore = string;
+
+export type Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_GooglePlayMetadata = string;
+
 export type Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_LauncherForeground = string;
 
 export type Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_MainScreen = string;
 
 export type Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_Manifest = string;
+
+export type Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_RunGradle = string;
 
 /**
  * Tests - CLI - Scaffold - App - Android - Run - Rejects Java Keyword Segments Before Writing Files.

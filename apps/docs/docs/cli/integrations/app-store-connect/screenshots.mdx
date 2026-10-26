@@ -1,0 +1,51 @@
+---
+id: "screenshots"
+title: "Screenshots"
+description: "Replace selected App Store screenshot sets from ordered repository-owned images."
+keywords:
+  - "nova"
+  - "app store connect"
+  - "screenshots"
+tags:
+  - "cli"
+  - "integration"
+  - "app-store-connect"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Replace only the App Store screenshot targets present under `assets/app-store-connect/{workspace}/screenshots`.
+
+```text
+ios/<locale>/iphone/01-name.png
+ios/<locale>/iphone-duo/01-name.png
+ios/<locale>/ipad/01-name.png
+ios/<locale>/apple-watch/01-name.png
+macos/<locale>/mac/01-name.png
+visionos/<locale>/vision-pro/01-name.png
+```
+
+Each PNG or JPEG filename begins with a unique position from `01` through `10`. Nova leaves absent targets untouched and rejects an existing empty target directory before authentication. iPhone Duo assets use Apple's asset-library placement flow; the other targets use App Store screenshot sets.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova integration app-store-connect screenshots [options]
+    nova int asc screenshots [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest integration app-store-connect screenshots [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+The command uses the same workspace, version, platform, locale, credential, dry-run, and confirmation options as [`metadata`](../metadata/). The complete replacement plan is shown before authentication or remote changes.

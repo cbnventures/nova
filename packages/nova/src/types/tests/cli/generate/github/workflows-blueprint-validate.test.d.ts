@@ -116,6 +116,37 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
  *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_Result = Shared_BlueprintValidationResult;
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_BoundaryRawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerCoordinateComponentsAreValidated_BoundaryResult = Shared_BlueprintValidationResult;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerIdentityMustBeTargetLocal_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerIdentityMustBeTargetLocal_Result = Shared_BlueprintValidationResult;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerPlatformsAreValidated_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ContainerPlatformsAreValidated_Result = Shared_BlueprintValidationResult;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
  * @since 0.21.0
  */
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_CrossWorkflowDestinationCollisionIsFlagged_Workspaces = Shared_NovaConfig_Workspaces;
@@ -406,6 +437,15 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
  *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MultipleContainerDeliverablesAreFlagged_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_MultipleContainerDeliverablesAreFlagged_Result = Shared_BlueprintValidationResult;
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
  * @since 0.21.0
  */
 export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_ObjectFormTriggersPass_Workspaces = Shared_NovaConfig_Workspaces;
@@ -510,6 +550,15 @@ export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValida
   workflows: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithInvalidPathsIsFlagged_ResultWorkflows;
   diagnostics: Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_PushTriggerWithInvalidPathsIsFlagged_ResultDiagnostics;
 };
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_RootBuildScopeIsFlagged_RawWorkflows = unknown[];
+
+export type Tests_Cli_Generate_Github_WorkflowsBlueprintValidate_ValidatorValidate_RootBuildScopeIsFlagged_Result = Shared_BlueprintValidationResult;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Blueprint Validate - Validator Validate.

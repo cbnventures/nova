@@ -124,6 +124,14 @@ export type Cli_Index_CLI_RegisterCommands_GenerateGitHub = Command;
 
 export type Cli_Index_CLI_RegisterCommands_GenerateMustHaves = Command;
 
+export type Cli_Index_CLI_RegisterCommands_Integration = Command;
+
+export type Cli_Index_CLI_RegisterCommands_IntegrationAppStoreConnect = Command;
+
+export type Cli_Index_CLI_RegisterCommands_IntegrationDiscordDeveloperPortal = Command;
+
+export type Cli_Index_CLI_RegisterCommands_IntegrationGooglePlayConsole = Command;
+
 export type Cli_Index_CLI_RegisterCommands_Recipe = Command;
 
 export type Cli_Index_CLI_RegisterCommands_RecipePackageJson = Command;

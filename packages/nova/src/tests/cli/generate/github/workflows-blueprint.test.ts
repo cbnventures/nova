@@ -697,7 +697,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
     );
 
     ok(
-      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], 'pnpm')).includes('pnpm run build:workspaces -- --workspace plain-app-app'),
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], 'pnpm')).includes('pnpm run build -- --workspace plain-app-app'),
       'the workspace build uses Nova',
     );
 
@@ -714,7 +714,7 @@ describe('WorkflowsBlueprint.buildPublish', () => {
     );
 
     ok(
-      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], 'yarn')).includes('yarn run build:workspaces -- --workspace plain-app-app'),
+      WorkflowsBlueprint.serialize(WorkflowsBlueprint.buildPublish(defaultsEntry, workspaces, {}, [], 'yarn')).includes('yarn run build -- --workspace plain-app-app'),
       'the workspace build uses Nova',
     );
 

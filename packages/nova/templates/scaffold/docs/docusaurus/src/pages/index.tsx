@@ -12,7 +12,7 @@ import type {
 } from '../types/pages/index.d.ts';
 
 /**
- * Index - Blog Enabled.
+ * Pages - Blog Enabled.
  *
  * Keeps the preset-native blog preview aligned with the content model selected
  * when Nova generated this documentation workspace.
@@ -22,7 +22,7 @@ import type {
 const blogEnabled: Pages_Index_Home_BlogEnabled = Boolean([__DOCUSAURUS_CONTENT__]);
 
 /**
- * Index - Home.
+ * Pages - Home.
  *
  * Composes a preset-native documentation landing page without the article and
  * table-of-contents frame used by ordinary MDX pages.

@@ -100,6 +100,20 @@ export type Tests_Lib_Scaffold_DetectMonorepoContext_DetectsWorkspaceModeAtMonor
 }>;
 
 /**
+ * Tests - Lib - Scaffold - Is Windows Reserved Path Segment - Accepts Names Outside The Windows Device Range.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Lib_Scaffold_IsWindowsReservedPathSegment_AcceptsNamesOutsideTheWindowsDeviceRange_Returns = void;
+
+/**
+ * Tests - Lib - Scaffold - Is Windows Reserved Path Segment - Rejects Windows Device Names And Normalized Variants.
+ *
+ * @since 0.34.0
+ */
+export type Tests_Lib_Scaffold_IsWindowsReservedPathSegment_RejectsWindowsDeviceNamesAndNormalizedVariants_Returns = void;
+
+/**
  * Tests - Lib - Scaffold - Prompts Mock Module.
  *
  * @since 0.26.0

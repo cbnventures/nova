@@ -1,5 +1,33 @@
 # @cbnventures/nova
 
+## 0.34.0 - 2026-10-26
+
+### UPDATED
+- Made the project root a node in run-workspaces, so each root lifecycle script runs the root's own steps first and then every workspace in one command.
+- Rebuilt Docker scaffolding and publishing around one s6-overlay image per repository, with root build and Compose entry points, private `packages/docker` assembly internals, declarative runtime assets, reserved internal service-name validation, and recursive build-context exclusions for single-service and multi-service appliances. Container workspaces now compile their selected dependency closure with npm, pnpm, Yarn Classic, or Yarn Berry inside the multi-stage build, preserving the matching production runtime layout. Buildx exports one immutable OCI artifact for the selected amd64 and arm64 platforms, and registry-specific jobs publish that artifact unchanged to Docker Hub and GHCR; image coordinates are configured independently from authentication, documentation remains opt-in, and the root project is no longer accepted as a workspace build selection.
+- Updated the normalize-tooling recipe to move generated root scripts onto run-workspaces and remove the *:workspaces scripts it used to add, leaving customized scripts untouched.
+- Simplified the generated publish workflow to one check step and one build step for the selected workspaces.
+- Updated changelog releases to validate and synchronize Android `versionName` and `versionCode` plus Apple `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION`, using `project.yml` as the authoritative Apple source when present, advancing native build numbers for each released entry, and including the resulting build in native changelog headings.
+- Expanded generated `VISION.md` and `PROJECT_RULES.md` structures with dedicated product-direction, architecture, guardrail, verification, documentation, deployment, and extension sections so repository-specific guidance has a stable home without creating top-level structural drift.
+- Updated generated publishing validation to reject CalVer for GitHub Action targets whose release branches require SemVer-compatible floating major aliases.
+- Updated pre-release SemVer and CalVer strategy changes to migrate workspace versions, exact internal dependency pins, and native version mirrors together, while blocking changes after release history or with pending changelog entries.
+
+### FIXED
+- Corrected generated agent documentation conventions to import Nova rules from the public ESLint preset entry point.
+- Clarified generated documentation conventions so standalone Docusaurus pages place their visible H1 title before the opening paragraph while documentation pages continue using synthesized titles.
+- Corrected CalVer releases to keep `.0` for the first release in a UTC month, increment MICRO for later releases in that month, reset MICRO when the month changes, and reject unsafe numeric overflow.
+- Corrected new trackable and distributable scaffolds to start at `0.0.1` with SemVer or the current UTC `YYYY.M.0` period with CalVer, while reserving `0.0.0` for freezable workspaces and inheriting the shared version in lock-step projects.
+- Ensured the installed Nova package includes its Docker ignore bundle so configured `.dockerignore` files can be generated outside the Nova repository.
+- Preserved explicit empty required-status-check lists when Nova reads and saves repository rulesets through the configuration editor.
+- Corrected scaffolded root `allowScripts` policies to compose only the reviewed lifecycle scripts required by each generated capability, including file watching, while preserving consumer decisions when a workspace is added to an existing monorepo.
+- Kept project-owned files beneath the root assets folder out of ESLint reports while continuing to lint the folder's README and similarly named source directories.
+- Limited changelog releases without pending entries to stamping unreleased annotations in freezable workspaces, preventing versioned workspaces from being silently restamped without a release.
+- Made the package identity recipe repair invalid workspace versions from their policy and configured strategy before release history exists, while rejecting established version drift before writing any manifests.
+- Made Nova's CLI, generated launchers, workspace execution, diagnostics, file discovery, Docker checks, and scaffold verification portable on Windows, while rejecting reserved Windows device names before scaffold files are written.
+
+### ADDED
+- Added interactive and scriptable App Store Connect, Google Play Console, and Discord Developer Portal integrations for local metadata, screenshots, vendor assets, and credential validation, with every scaffold seeding a documented project-owned asset folder and Apple and Android scaffolds extending it with their store-specific layouts.
+
 ## 0.33.0 - 2026-10-18
 
 ### UPDATED

@@ -23,9 +23,9 @@ Regenerate every physical ignore file declared under `ignoreFiles` in `nova.conf
 
 ## Why Use This Command?
 
-- Keeps `.gitignore`, workspace `.dockerignore`, and Cloudflare Astro `.assetsignore` files synchronized from one configuration.
+- Keeps the root `.gitignore`, root `.dockerignore`, and Cloudflare Astro `.assetsignore` files synchronized from one configuration.
 - Separates reusable Nova defaults from project-specific patterns.
-- Uses exact project-relative paths so each workspace receives only the ignore file it needs.
+- Uses exact project-relative paths so each generated file stays at its canonical scope.
 
 ## Requirements
 
@@ -68,7 +68,7 @@ Regenerate every physical ignore file declared under `ignoreFiles` in `nova.conf
 
 ## Config Fields
 
-Each `ignoreFiles` key is an exact project-relative output path beginning with `./`.
+Each `ignoreFiles` key is an exact project-relative output path beginning with `./`. Nova manages Docker build-context exclusions only at `./.dockerignore`; workspace-local `.dockerignore` paths are unsupported because Docker builds use the repository root context.
 
 | Field      | Type       | Description                                                         |
 |------------|------------|---------------------------------------------------------------------|
@@ -82,7 +82,7 @@ Each `ignoreFiles` key is an exact project-relative output path beginning with `
       "bundles": ["nova"],
       "patterns": ["graphify-out/"]
     },
-    "./apps/api/.dockerignore": {
+    "./.dockerignore": {
       "bundles": ["nova"],
       "patterns": []
     },
@@ -102,10 +102,12 @@ Each `ignoreFiles` key is an exact project-relative output path beginning with `
 | `.dockerignore` | `nova`             | Host-only dependencies, builds, secrets, and source-control metadata. |
 | `.assetsignore` | `cloudflare-astro` | Astro's `_worker.js` and `_routes.json` deployment control files.     |
 
-Nova validates that each path is project-relative and that every bundle belongs to the target file type before anything is written.
+Nova validates that each path is project-relative and that every bundle belongs to the target file type before anything is written. `.gitignore` and `.assetsignore` may be nested, while `.dockerignore` must be exactly `./.dockerignore`.
 
 ## How It Works
 
 The command loads every configured entry, joins the selected bundles in order, appends a **Project Excludes** section, and then appends the entry's custom patterns. The established `.gitignore` section layout and ordering remain unchanged. Generated files include the same Nova header as before, updated to point back to this command and documentation.
 
-Nova scaffolds register the physical ignore files they create. A root scaffold registers `./.gitignore`; Docker-enabled workspaces register their `.dockerignore`; and a server-rendered Cloudflare Astro workspace registers `public/.assetsignore`.
+For the root `.dockerignore`, the `nova` bundle excludes environment files, `.secrets`, dependency trees, build output, and log files at both the repository root and within nested workspaces. It re-includes `.env.sample` and `.env.example` at both levels. Running `nova generate must-haves ignore-files --replace-file` regenerates those rules from the canonical bundle.
+
+Nova scaffolds register the physical ignore files they create. A root scaffold registers `./.gitignore`; a Docker-enabled repository registers `./.dockerignore`; and a server-rendered Cloudflare Astro workspace registers `public/.assetsignore`.

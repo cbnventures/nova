@@ -16,13 +16,19 @@ import {
 } from '../../lib/item.js';
 import { Runner as LibNovaConfig } from '../../lib/nova-config.js';
 import {
-  LIB_REGEX_PATTERN_CALVER_STRICT,
+  LIB_REGEX_ANDROID_GRADLE_VERSION_CODE,
+  LIB_REGEX_ANDROID_GRADLE_VERSION_NAME,
+  LIB_REGEX_APPLE_PBXPROJ_CURRENT_PROJECT_VERSION,
+  LIB_REGEX_APPLE_PBXPROJ_MARKETING_VERSION,
+  LIB_REGEX_APPLE_XCODEGEN_CURRENT_PROJECT_VERSION,
+  LIB_REGEX_APPLE_XCODEGEN_MARKETING_VERSION,
   LIB_REGEX_PATTERN_DEPRECATED_UNRELEASED,
   LIB_REGEX_PATTERN_EXACT_SEMVER,
   LIB_REGEX_PATTERN_LEADING_NEWLINES,
   LIB_REGEX_PATTERN_SINCE_UNRELEASED,
 } from '../../lib/regex.js';
 import { Runner as LibReleaseHistory } from '../../lib/release-history.js';
+import { Runner as LibVersionContract } from '../../lib/version-contract.js';
 import { Logger } from '../../toolkit/index.js';
 
 import type {
@@ -100,6 +106,8 @@ import type {
   Cli_Utility_Changelog_Runner_Record_ValidPackageEntry,
   Cli_Utility_Changelog_Runner_Record_VersionStrategy,
   Cli_Utility_Changelog_Runner_Record_Workspaces,
+  Cli_Utility_Changelog_Runner_Release_AndroidBuild,
+  Cli_Utility_Changelog_Runner_Release_AppleBuild,
   Cli_Utility_Changelog_Runner_Release_ApplyPackageJsonPath,
   Cli_Utility_Changelog_Runner_Release_ApplyReleaseEntries,
   Cli_Utility_Changelog_Runner_Release_ApplyReleaseNewVersion,
@@ -108,13 +116,6 @@ import type {
   Cli_Utility_Changelog_Runner_Release_ApplyUpdatedContents,
   Cli_Utility_Changelog_Runner_Release_ApplyUpdatedPackageJson,
   Cli_Utility_Changelog_Runner_Release_BumpPriority,
-  Cli_Utility_Changelog_Runner_Release_CalverCurrentMicro,
-  Cli_Utility_Changelog_Runner_Release_CalverCurrentMonth,
-  Cli_Utility_Changelog_Runner_Release_CalverCurrentParts,
-  Cli_Utility_Changelog_Runner_Release_CalverCurrentYear,
-  Cli_Utility_Changelog_Runner_Release_CalverMonth,
-  Cli_Utility_Changelog_Runner_Release_CalverToday,
-  Cli_Utility_Changelog_Runner_Release_CalverYear,
   Cli_Utility_Changelog_Runner_Release_CategoryEntries,
   Cli_Utility_Changelog_Runner_Release_CategoryEntryMessage,
   Cli_Utility_Changelog_Runner_Release_CategoryLabel,
@@ -126,15 +127,9 @@ import type {
   Cli_Utility_Changelog_Runner_Release_ConfirmOutputValue,
   Cli_Utility_Changelog_Runner_Release_CurrentDirectory,
   Cli_Utility_Changelog_Runner_Release_CurrentVersion,
-  Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceCurrentVersion,
-  Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceDirectory,
-  Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePackageJsonPath,
-  Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePackageJsonRaw,
-  Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceParsedPackageJson,
-  Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePath,
-  Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePolicy,
-  Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceStampSucceeded,
-  Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceStampVersion,
+  Cli_Utility_Changelog_Runner_Release_EmptyFreezableStampSucceeded,
+  Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspaceDirectory,
+  Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspacePath,
   Cli_Utility_Changelog_Runner_Release_Entries,
   Cli_Utility_Changelog_Runner_Release_Existing,
   Cli_Utility_Changelog_Runner_Release_FilterFreezableWorkspaceConfig,
@@ -148,6 +143,7 @@ import type {
   Cli_Utility_Changelog_Runner_Release_FreezableWorkspacePath,
   Cli_Utility_Changelog_Runner_Release_FreezableWorkspaces,
   Cli_Utility_Changelog_Runner_Release_Groups,
+  Cli_Utility_Changelog_Runner_Release_HasReleaseHistory,
   Cli_Utility_Changelog_Runner_Release_HighestBump,
   Cli_Utility_Changelog_Runner_Release_HighestNewVersion,
   Cli_Utility_Changelog_Runner_Release_HighestParts,
@@ -169,6 +165,7 @@ import type {
   Cli_Utility_Changelog_Runner_Release_LockStepWorkspaceName,
   Cli_Utility_Changelog_Runner_Release_LockStepWorkspacePath,
   Cli_Utility_Changelog_Runner_Release_LockStepWorkspaces,
+  Cli_Utility_Changelog_Runner_Release_NativeBuild,
   Cli_Utility_Changelog_Runner_Release_NewVersion,
   Cli_Utility_Changelog_Runner_Release_Options,
   Cli_Utility_Changelog_Runner_Release_PackageDirectory,
@@ -189,10 +186,8 @@ import type {
   Cli_Utility_Changelog_Runner_Release_SummaryReleaseHighestBump,
   Cli_Utility_Changelog_Runner_Release_SummaryReleaseNewVersion,
   Cli_Utility_Changelog_Runner_Release_SummaryReleasePackageName,
-  Cli_Utility_Changelog_Runner_Release_VersionParts,
-  Cli_Utility_Changelog_Runner_Release_VersionPartsMajor,
-  Cli_Utility_Changelog_Runner_Release_VersionPartsMinor,
-  Cli_Utility_Changelog_Runner_Release_VersionPartsPatch,
+  Cli_Utility_Changelog_Runner_Release_ValidationAndroidBuild,
+  Cli_Utility_Changelog_Runner_Release_ValidationAppleBuild,
   Cli_Utility_Changelog_Runner_Release_VersionStrategy,
   Cli_Utility_Changelog_Runner_Release_WorkspaceEntry,
   Cli_Utility_Changelog_Runner_Release_WorkspacePath,
@@ -236,6 +231,55 @@ import type {
   Cli_Utility_Changelog_Runner_StampUnreleased_UpdatedContent,
   Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceCandidatePath,
   Cli_Utility_Changelog_Runner_StampUnreleased_WorkspaceEntries,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersion,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersionCode,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersionName,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_EntryCount,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_HasVersionCode,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_HasVersionName,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_NewVersion,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_NewVersionCode,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_PackageDirectory,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_ParsedVersionCode,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_Returns,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_ShouldWrite,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_UpdatedContent,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionCodePattern,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionCodes,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionCodeValue,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFileContent,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFilePaths,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFiles,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionNamePattern,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionNames,
+  Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionNameValue,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_BuildPattern,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_BuildValue,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_BuildVersions,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_CurrentBuild,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_CurrentMarketingVersion,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_CurrentVersion,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_DirectoryEntries,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_EntryCount,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_HasBuildVersion,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_HasMarketingVersion,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_HasXcodeGenProject,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_IsXcodeGen,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_MarketingPattern,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_MarketingValue,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_MarketingVersions,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_NewBuild,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_NewVersion,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_PackageDirectory,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_ParsedBuild,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_Returns,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_ShouldWrite,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_TypedBuildMatch,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_TypedMarketingMatch,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_UpdatedContent,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFileContent,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFilePaths,
+  Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFiles,
   Cli_Utility_Changelog_Runner_SyncPackageReferences_ActionVerb,
   Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateChanged,
   Cli_Utility_Changelog_Runner_SyncPackageReferences_CandidateParsed,
@@ -255,16 +299,9 @@ import type {
   Cli_Utility_Changelog_Runner_SyncPackageReferences_Workspaces,
   Cli_Utility_Changelog_Runner_ValidateMessage_MessageValue,
   Cli_Utility_Changelog_Runner_ValidateMessage_Returns,
-  Cli_Utility_Changelog_Runner_ValidateVersion_CalverCurrentMonth,
-  Cli_Utility_Changelog_Runner_ValidateVersion_CalverCurrentYear,
-  Cli_Utility_Changelog_Runner_ValidateVersion_CalverMonth,
-  Cli_Utility_Changelog_Runner_ValidateVersion_CalverParts,
-  Cli_Utility_Changelog_Runner_ValidateVersion_CalverToday,
-  Cli_Utility_Changelog_Runner_ValidateVersion_CalverYear,
   Cli_Utility_Changelog_Runner_ValidateVersion_CurrentVersion,
   Cli_Utility_Changelog_Runner_ValidateVersion_PackageJsonPath,
   Cli_Utility_Changelog_Runner_ValidateVersion_Returns,
-  Cli_Utility_Changelog_Runner_ValidateVersion_SemverParts,
   Cli_Utility_Changelog_Runner_ValidateVersion_VersionStrategy,
   Cli_Utility_Changelog_Runner_WriteChangelog_AfterHeading,
   Cli_Utility_Changelog_Runner_WriteChangelog_ByCategory,
@@ -275,6 +312,7 @@ import type {
   Cli_Utility_Changelog_Runner_WriteChangelog_Existing,
   Cli_Utility_Changelog_Runner_WriteChangelog_ExistingContent,
   Cli_Utility_Changelog_Runner_WriteChangelog_Messages,
+  Cli_Utility_Changelog_Runner_WriteChangelog_NativeBuild,
   Cli_Utility_Changelog_Runner_WriteChangelog_NewContent,
   Cli_Utility_Changelog_Runner_WriteChangelog_NewSection,
   Cli_Utility_Changelog_Runner_WriteChangelog_PackageDirectory,
@@ -837,80 +875,12 @@ export class Runner {
 
     if (entries.length === 0) {
       if (isDryRun !== true) {
-        for (const emptyWorkspace of Object.entries(workspaces)) {
-          const emptyWorkspacePath: Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePath = emptyWorkspace[0];
-          const emptyWorkspacePolicy: Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePolicy = emptyWorkspace[1]['policy'];
-          const emptyWorkspaceDirectory: Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceDirectory = resolve(process.cwd(), emptyWorkspacePath);
-          let emptyWorkspaceStampVersion: Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceStampVersion = '0.0.0';
+        for (const freezableWorkspace of freezableWorkspaces) {
+          const emptyFreezableWorkspacePath: Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspacePath = freezableWorkspace[0];
+          const emptyFreezableWorkspaceDirectory: Cli_Utility_Changelog_Runner_Release_EmptyFreezableWorkspaceDirectory = resolve(process.cwd(), emptyFreezableWorkspacePath);
+          const emptyFreezableStampSucceeded: Cli_Utility_Changelog_Runner_Release_EmptyFreezableStampSucceeded = await Runner.stampUnreleased(emptyFreezableWorkspaceDirectory, '0.0.0');
 
-          if (emptyWorkspacePolicy !== 'freezable') {
-            const emptyWorkspacePackageJsonPath: Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePackageJsonPath = join(emptyWorkspaceDirectory, 'package.json');
-            let emptyWorkspacePackageJsonRaw: Cli_Utility_Changelog_Runner_Release_EmptyWorkspacePackageJsonRaw = undefined;
-
-            try {
-              emptyWorkspacePackageJsonRaw = await fs.readFile(emptyWorkspacePackageJsonPath, 'utf-8');
-            } catch {
-              Logger.customize({
-                name: 'Runner.release',
-                purpose: 'readPackageJson',
-              }).error(`Unable to read "${emptyWorkspacePackageJsonPath}".`);
-
-              process.exitCode = 1;
-
-              return;
-            }
-
-            let emptyWorkspaceParsedPackageJson: Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceParsedPackageJson = undefined;
-
-            try {
-              emptyWorkspaceParsedPackageJson = JSON.parse(emptyWorkspacePackageJsonRaw);
-            } catch {
-              Logger.customize({
-                name: 'Runner.release',
-                purpose: 'parsePackageJson',
-              }).error(`Unable to parse "${emptyWorkspacePackageJsonPath}".`);
-
-              process.exitCode = 1;
-
-              return;
-            }
-
-            const emptyWorkspaceCurrentVersion: Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceCurrentVersion = (
-              emptyWorkspaceParsedPackageJson !== undefined
-              && emptyWorkspaceParsedPackageJson !== null
-              && typeof emptyWorkspaceParsedPackageJson['version'] === 'string'
-            ) ? emptyWorkspaceParsedPackageJson['version'] : undefined;
-
-            if (emptyWorkspaceCurrentVersion === undefined) {
-              Logger.customize({
-                name: 'Runner.release',
-                purpose: 'version',
-              }).error(`No "version" field found in "${emptyWorkspacePackageJsonPath}".`);
-
-              process.exitCode = 1;
-
-              return;
-            }
-
-            try {
-              Runner.validateVersion(emptyWorkspaceCurrentVersion, versionStrategy, emptyWorkspacePackageJsonPath);
-            } catch (error) {
-              Logger.customize({
-                name: 'Runner.release',
-                purpose: 'version',
-              }).error((error instanceof Error) ? error.message : `Unable to validate the version in "${emptyWorkspacePackageJsonPath}".`);
-
-              process.exitCode = 1;
-
-              return;
-            }
-
-            emptyWorkspaceStampVersion = emptyWorkspaceCurrentVersion;
-          }
-
-          const emptyWorkspaceStampSucceeded: Cli_Utility_Changelog_Runner_Release_EmptyWorkspaceStampSucceeded = await Runner.stampUnreleased(emptyWorkspaceDirectory, emptyWorkspaceStampVersion);
-
-          if (emptyWorkspaceStampSucceeded === false) {
+          if (emptyFreezableStampSucceeded === false) {
             process.exitCode = 1;
 
             return;
@@ -1153,54 +1123,17 @@ export class Runner {
 
       Runner.validateVersion(currentVersion, versionStrategy, packageJsonPath);
 
-      if (versionStrategy === 'calver') {
-        const calverToday: Cli_Utility_Changelog_Runner_Release_CalverToday = new Date();
-        const calverYear: Cli_Utility_Changelog_Runner_Release_CalverYear = calverToday.getFullYear();
-        const calverMonth: Cli_Utility_Changelog_Runner_Release_CalverMonth = calverToday.getMonth() + 1;
-        const calverCurrentParts: Cli_Utility_Changelog_Runner_Release_CalverCurrentParts = currentVersion.split('.').map(Number);
-        const calverCurrentYear: Cli_Utility_Changelog_Runner_Release_CalverCurrentYear = calverCurrentParts[0] ?? 0;
-        const calverCurrentMonth: Cli_Utility_Changelog_Runner_Release_CalverCurrentMonth = calverCurrentParts[1] ?? 0;
-        const calverCurrentMicro: Cli_Utility_Changelog_Runner_Release_CalverCurrentMicro = calverCurrentParts[2] ?? 0;
-
-        if (calverYear === calverCurrentYear && calverMonth === calverCurrentMonth) {
-          newVersion = `${calverYear}.${calverMonth}.${calverCurrentMicro + 1}`;
-        } else {
-          newVersion = `${calverYear}.${calverMonth}.0`;
-        }
-      } else {
+      if (versionStrategy === 'semver') {
         for (const packageEntry of packageEntries) {
           if (packageEntry['bump'] !== undefined && bumpPriority[packageEntry['bump']] > bumpPriority[highestBump]) {
             highestBump = packageEntry['bump'];
           }
         }
-
-        const versionParts: Cli_Utility_Changelog_Runner_Release_VersionParts = currentVersion.split('.').map(Number);
-
-        const versionPartsMajor: Cli_Utility_Changelog_Runner_Release_VersionPartsMajor = versionParts[0] ?? 0;
-        const versionPartsMinor: Cli_Utility_Changelog_Runner_Release_VersionPartsMinor = versionParts[1] ?? 0;
-        const versionPartsPatch: Cli_Utility_Changelog_Runner_Release_VersionPartsPatch = versionParts[2] ?? 0;
-
-        switch (highestBump) {
-          case 'major': {
-            newVersion = `${versionPartsMajor + 1}.0.0`;
-            break;
-          }
-
-          case 'minor': {
-            newVersion = `${versionPartsMajor}.${versionPartsMinor + 1}.0`;
-            break;
-          }
-
-          case 'patch': {
-            newVersion = `${versionPartsMajor}.${versionPartsMinor}.${versionPartsPatch + 1}`;
-            break;
-          }
-
-          default: {
-            break;
-          }
-        }
       }
+
+      const hasReleaseHistory: Cli_Utility_Changelog_Runner_Release_HasReleaseHistory = await LibReleaseHistory.hasHistory(packageDirectory);
+
+      newVersion = LibVersionContract.getNextVersion(currentVersion, versionStrategy, highestBump, hasReleaseHistory);
 
       releases.push({
         packageName,
@@ -1254,6 +1187,40 @@ export class Runner {
           entries: [],
         });
       }
+    }
+
+    // Validate native manifests before confirmation or any project file changes.
+    try {
+      for (const release of releases) {
+        const validationAndroidBuild: Cli_Utility_Changelog_Runner_Release_ValidationAndroidBuild = await Runner.syncAndroidVersion(
+          release['packageDirectory'],
+          release['currentVersion'],
+          release['newVersion'],
+          release['entries'].length,
+          false,
+        );
+
+        const validationAppleBuild: Cli_Utility_Changelog_Runner_Release_ValidationAppleBuild = await Runner.syncAppleVersion(
+          release['packageDirectory'],
+          release['currentVersion'],
+          release['newVersion'],
+          release['entries'].length,
+          false,
+        );
+
+        if (validationAndroidBuild !== undefined && validationAppleBuild !== undefined) {
+          throw new Error(`Native workspace "${release['packageDirectory']}" cannot define both Android and Apple version manifests.`);
+        }
+      }
+    } catch (error) {
+      Logger.customize({
+        name: 'Runner.release',
+        purpose: 'nativeVersion',
+      }).error((error instanceof Error) ? error.message : 'Unable to validate native version manifests.');
+
+      process.exitCode = 1;
+
+      return;
     }
 
     // Show summary.
@@ -1375,6 +1342,28 @@ export class Runner {
         throw new Error(`Invalid package.json at "${applyPackageJsonPath}": missing or non-string "version" field.`);
       }
 
+      const androidBuild: Cli_Utility_Changelog_Runner_Release_AndroidBuild = await Runner.syncAndroidVersion(
+        applyReleasePackageDirectory,
+        release['currentVersion'],
+        applyReleaseNewVersion,
+        applyReleaseEntries.length,
+        true,
+      );
+
+      const appleBuild: Cli_Utility_Changelog_Runner_Release_AppleBuild = await Runner.syncAppleVersion(
+        applyReleasePackageDirectory,
+        release['currentVersion'],
+        applyReleaseNewVersion,
+        applyReleaseEntries.length,
+        true,
+      );
+
+      if (androidBuild !== undefined && appleBuild !== undefined) {
+        throw new Error(`Native workspace "${applyReleasePackageDirectory}" cannot define both Android and Apple version manifests.`);
+      }
+
+      const nativeBuild: Cli_Utility_Changelog_Runner_Release_NativeBuild = androidBuild ?? appleBuild;
+
       Reflect.set(packageJson, 'version', applyReleaseNewVersion);
 
       const applyUpdatedPackageJson: Cli_Utility_Changelog_Runner_Release_ApplyUpdatedPackageJson = JSON.stringify(packageJson, null, 2);
@@ -1394,6 +1383,7 @@ export class Runner {
         applyReleaseNewVersion,
         applyReleaseEntries,
         versionStrategy,
+        nativeBuild,
       );
 
       Logger.customize({
@@ -1900,16 +1890,293 @@ export class Runner {
   }
 
   /**
+   * CLI - Utility - Changelog - Sync Android Version.
+   *
+   * Validates native Android version fields.
+   * Before project files change, versionName and versionCode must match package.json.
+   * Writing then synchronizes both fields in the root application module.
+   *
+   * @param {Cli_Utility_Changelog_Runner_SyncAndroidVersion_PackageDirectory} packageDirectory - Package directory.
+   * @param {Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersion}   currentVersion   - Current version.
+   * @param {Cli_Utility_Changelog_Runner_SyncAndroidVersion_NewVersion}       newVersion       - New version.
+   * @param {Cli_Utility_Changelog_Runner_SyncAndroidVersion_EntryCount}       entryCount       - Entry count.
+   * @param {Cli_Utility_Changelog_Runner_SyncAndroidVersion_ShouldWrite}      shouldWrite      - Should write.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_SyncAndroidVersion_Returns}
+   *
+   * @since 0.34.0
+   */
+  private static async syncAndroidVersion(packageDirectory: Cli_Utility_Changelog_Runner_SyncAndroidVersion_PackageDirectory, currentVersion: Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersion, newVersion: Cli_Utility_Changelog_Runner_SyncAndroidVersion_NewVersion, entryCount: Cli_Utility_Changelog_Runner_SyncAndroidVersion_EntryCount, shouldWrite: Cli_Utility_Changelog_Runner_SyncAndroidVersion_ShouldWrite): Cli_Utility_Changelog_Runner_SyncAndroidVersion_Returns {
+    const versionFilePaths: Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFilePaths = [
+      join(packageDirectory, 'app', 'build.gradle.kts'),
+      join(packageDirectory, 'app', 'build.gradle'),
+    ];
+    const versionFiles: Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFiles = [];
+    const versionNames: Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionNames = new Set();
+    const versionCodes: Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionCodes = new Set();
+
+    for (const versionFilePath of versionFilePaths) {
+      let versionFileContent: Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionFileContent = '';
+
+      try {
+        versionFileContent = await fs.readFile(versionFilePath, 'utf-8');
+      } catch (error) {
+        if (
+          typeof error === 'object'
+          && error !== null
+          && 'code' in error
+          && error.code === 'ENOENT'
+        ) {
+          continue;
+        }
+
+        throw new Error(`Unable to read Android version file "${versionFilePath}".`);
+      }
+
+      const versionNamePattern: Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionNamePattern = new RegExp(LIB_REGEX_ANDROID_GRADLE_VERSION_NAME.source, 'gm');
+      const versionCodePattern: Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionCodePattern = new RegExp(LIB_REGEX_ANDROID_GRADLE_VERSION_CODE.source, 'gm');
+      let hasVersionName: Cli_Utility_Changelog_Runner_SyncAndroidVersion_HasVersionName = false;
+      let hasVersionCode: Cli_Utility_Changelog_Runner_SyncAndroidVersion_HasVersionCode = false;
+
+      for (const versionNameMatch of versionFileContent.matchAll(versionNamePattern)) {
+        const versionNameValue: Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionNameValue = versionNameMatch[3];
+
+        if (versionNameValue !== undefined) {
+          hasVersionName = true;
+          versionNames.add(versionNameValue);
+        }
+      }
+
+      for (const versionCodeMatch of versionFileContent.matchAll(versionCodePattern)) {
+        const versionCodeValue: Cli_Utility_Changelog_Runner_SyncAndroidVersion_VersionCodeValue = versionCodeMatch[2];
+
+        if (versionCodeValue !== undefined) {
+          hasVersionCode = true;
+
+          const parsedVersionCode: Cli_Utility_Changelog_Runner_SyncAndroidVersion_ParsedVersionCode = Number(versionCodeValue);
+
+          if (
+            Number.isSafeInteger(parsedVersionCode) === false
+            || parsedVersionCode < 1
+            || parsedVersionCode > 2_100_000_000
+          ) {
+            throw new Error(`Android versionCode "${versionCodeValue}" in "${versionFilePath}" must be a whole number from 1 through 2100000000.`);
+          }
+
+          versionCodes.add(parsedVersionCode);
+        }
+      }
+
+      if (hasVersionName !== hasVersionCode) {
+        throw new Error(`Android version file "${versionFilePath}" must define both versionName and versionCode.`);
+      }
+
+      if (hasVersionName === true && hasVersionCode === true) {
+        versionFiles.push({
+          path: versionFilePath,
+          content: versionFileContent,
+        });
+      }
+    }
+
+    if (versionFiles.length === 0) {
+      return undefined;
+    }
+
+    const currentVersionName: Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersionName = [...versionNames][0];
+    const currentVersionCode: Cli_Utility_Changelog_Runner_SyncAndroidVersion_CurrentVersionCode = [...versionCodes][0];
+
+    if (versionNames.size !== 1 || currentVersionName !== currentVersion) {
+      throw new Error(`Android versionName values in "${packageDirectory}" must all match package.json version "${currentVersion}" before release.`);
+    }
+
+    if (versionCodes.size !== 1 || currentVersionCode === undefined) {
+      throw new Error(`Android versionCode values in "${packageDirectory}" must all use one valid whole number before release.`);
+    }
+
+    const newVersionCode: Cli_Utility_Changelog_Runner_SyncAndroidVersion_NewVersionCode = currentVersionCode + entryCount;
+
+    if (Number.isSafeInteger(newVersionCode) === false || newVersionCode > 2_100_000_000) {
+      throw new Error(`Android versionCode in "${packageDirectory}" cannot advance beyond 2100000000.`);
+    }
+
+    if (shouldWrite === false) {
+      return newVersionCode;
+    }
+
+    for (const versionFile of versionFiles) {
+      let updatedContent: Cli_Utility_Changelog_Runner_SyncAndroidVersion_UpdatedContent = versionFile['content'];
+
+      updatedContent = updatedContent.replace(new RegExp(LIB_REGEX_ANDROID_GRADLE_VERSION_NAME.source, 'gm'), `$1$2${newVersion}$4$5`);
+      updatedContent = updatedContent.replace(new RegExp(LIB_REGEX_ANDROID_GRADLE_VERSION_CODE.source, 'gm'), `$1${newVersionCode}$3`);
+
+      await fs.writeFile(versionFile['path'], updatedContent, 'utf-8');
+
+      Logger.customize({
+        name: 'Runner.syncAndroidVersion',
+        purpose: 'version',
+      }).info(`Updated Android versionName to ${newVersion} and versionCode to ${newVersionCode} in "${versionFile['path']}".`);
+    }
+
+    return newVersionCode;
+  }
+
+  /**
+   * CLI - Utility - Changelog - Sync Apple Version.
+   *
+   * Keeps Apple app marketing and build versions aligned with each Nova release.
+   * Supports Nova-owned XcodeGen definitions and checked-in top-level Xcode projects while
+   * advancing the native build number once for every released entry.
+   *
+   * @param {Cli_Utility_Changelog_Runner_SyncAppleVersion_PackageDirectory} packageDirectory - Package directory.
+   * @param {Cli_Utility_Changelog_Runner_SyncAppleVersion_CurrentVersion}   currentVersion   - Current version.
+   * @param {Cli_Utility_Changelog_Runner_SyncAppleVersion_NewVersion}       newVersion       - New version.
+   * @param {Cli_Utility_Changelog_Runner_SyncAppleVersion_EntryCount}       entryCount       - Entry count.
+   * @param {Cli_Utility_Changelog_Runner_SyncAppleVersion_ShouldWrite}      shouldWrite      - Should write.
+   *
+   * @private
+   *
+   * @returns {Cli_Utility_Changelog_Runner_SyncAppleVersion_Returns}
+   *
+   * @since 0.34.0
+   */
+  private static async syncAppleVersion(packageDirectory: Cli_Utility_Changelog_Runner_SyncAppleVersion_PackageDirectory, currentVersion: Cli_Utility_Changelog_Runner_SyncAppleVersion_CurrentVersion, newVersion: Cli_Utility_Changelog_Runner_SyncAppleVersion_NewVersion, entryCount: Cli_Utility_Changelog_Runner_SyncAppleVersion_EntryCount, shouldWrite: Cli_Utility_Changelog_Runner_SyncAppleVersion_ShouldWrite): Cli_Utility_Changelog_Runner_SyncAppleVersion_Returns {
+    const directoryEntries: Cli_Utility_Changelog_Runner_SyncAppleVersion_DirectoryEntries = await fs.readdir(packageDirectory, {
+      withFileTypes: true,
+    });
+    const versionFilePaths: Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFilePaths = [];
+
+    const hasXcodeGenProject: Cli_Utility_Changelog_Runner_SyncAppleVersion_HasXcodeGenProject = directoryEntries.some((directoryEntry) => directoryEntry.isFile() === true && directoryEntry.name === 'project.yml');
+
+    for (const directoryEntry of directoryEntries) {
+      if (hasXcodeGenProject === true) {
+        if (directoryEntry.isFile() === true && directoryEntry.name === 'project.yml') {
+          versionFilePaths.push(join(packageDirectory, directoryEntry.name));
+        }
+      } else if (directoryEntry.isDirectory() === true && directoryEntry.name.endsWith('.xcodeproj') === true) {
+        versionFilePaths.push(join(packageDirectory, directoryEntry.name, 'project.pbxproj'));
+      }
+    }
+
+    const marketingVersions: Cli_Utility_Changelog_Runner_SyncAppleVersion_MarketingVersions = new Set();
+    const buildVersions: Cli_Utility_Changelog_Runner_SyncAppleVersion_BuildVersions = new Set();
+    const versionFiles: Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFiles = [];
+
+    for (const versionFilePath of versionFilePaths) {
+      const versionFileContent: Cli_Utility_Changelog_Runner_SyncAppleVersion_VersionFileContent = await fs.readFile(versionFilePath, 'utf-8');
+      const isXcodeGen: Cli_Utility_Changelog_Runner_SyncAppleVersion_IsXcodeGen = basename(versionFilePath) === 'project.yml';
+      const marketingPattern: Cli_Utility_Changelog_Runner_SyncAppleVersion_MarketingPattern = new RegExp(
+        (isXcodeGen === true) ? LIB_REGEX_APPLE_XCODEGEN_MARKETING_VERSION.source : LIB_REGEX_APPLE_PBXPROJ_MARKETING_VERSION.source,
+        (isXcodeGen === true) ? 'gm' : 'g',
+      );
+      const buildPattern: Cli_Utility_Changelog_Runner_SyncAppleVersion_BuildPattern = new RegExp(
+        (isXcodeGen === true) ? LIB_REGEX_APPLE_XCODEGEN_CURRENT_PROJECT_VERSION.source : LIB_REGEX_APPLE_PBXPROJ_CURRENT_PROJECT_VERSION.source,
+        (isXcodeGen === true) ? 'gm' : 'g',
+      );
+      let hasMarketingVersion: Cli_Utility_Changelog_Runner_SyncAppleVersion_HasMarketingVersion = false;
+      let hasBuildVersion: Cli_Utility_Changelog_Runner_SyncAppleVersion_HasBuildVersion = false;
+
+      for (const marketingMatch of versionFileContent.matchAll(marketingPattern)) {
+        const typedMarketingMatch: Cli_Utility_Changelog_Runner_SyncAppleVersion_TypedMarketingMatch = marketingMatch;
+        const marketingValue: Cli_Utility_Changelog_Runner_SyncAppleVersion_MarketingValue = typedMarketingMatch[(isXcodeGen === true) ? 3 : 2];
+
+        if (marketingValue !== undefined) {
+          hasMarketingVersion = true;
+          marketingVersions.add(marketingValue.trim());
+        }
+      }
+
+      for (const buildMatch of versionFileContent.matchAll(buildPattern)) {
+        const typedBuildMatch: Cli_Utility_Changelog_Runner_SyncAppleVersion_TypedBuildMatch = buildMatch;
+        const buildValue: Cli_Utility_Changelog_Runner_SyncAppleVersion_BuildValue = typedBuildMatch[(isXcodeGen === true) ? 3 : 2];
+
+        if (buildValue !== undefined) {
+          hasBuildVersion = true;
+
+          const parsedBuild: Cli_Utility_Changelog_Runner_SyncAppleVersion_ParsedBuild = Number(buildValue);
+
+          if (Number.isSafeInteger(parsedBuild) === false) {
+            throw new Error(`Apple build number "${buildValue}" in "${versionFilePath}" is not a safe integer.`);
+          }
+
+          buildVersions.add(parsedBuild);
+        }
+      }
+
+      if (hasMarketingVersion !== hasBuildVersion) {
+        throw new Error(`Apple version file "${versionFilePath}" must define both MARKETING_VERSION and CURRENT_PROJECT_VERSION.`);
+      }
+
+      if (hasMarketingVersion === true && hasBuildVersion === true) {
+        versionFiles.push({
+          path: versionFilePath,
+          content: versionFileContent,
+          isXcodeGen,
+        });
+      }
+    }
+
+    if (versionFiles.length === 0) {
+      return undefined;
+    }
+
+    const currentMarketingVersion: Cli_Utility_Changelog_Runner_SyncAppleVersion_CurrentMarketingVersion = [...marketingVersions][0];
+    const currentBuild: Cli_Utility_Changelog_Runner_SyncAppleVersion_CurrentBuild = [...buildVersions][0];
+
+    if (marketingVersions.size !== 1 || currentMarketingVersion !== currentVersion) {
+      throw new Error(`Apple marketing versions in "${packageDirectory}" must all match package.json version "${currentVersion}" before release.`);
+    }
+
+    if (buildVersions.size !== 1 || currentBuild === undefined) {
+      throw new Error(`Apple build numbers in "${packageDirectory}" must all use one safe integer before release.`);
+    }
+
+    const newBuild: Cli_Utility_Changelog_Runner_SyncAppleVersion_NewBuild = currentBuild + entryCount;
+
+    if (Number.isSafeInteger(newBuild) === false) {
+      throw new Error(`Apple build number "${newBuild}" in "${packageDirectory}" is not a safe integer.`);
+    }
+
+    for (const versionFile of versionFiles) {
+      let updatedContent: Cli_Utility_Changelog_Runner_SyncAppleVersion_UpdatedContent = versionFile['content'];
+
+      if (versionFile['isXcodeGen'] === true) {
+        updatedContent = updatedContent.replace(new RegExp(LIB_REGEX_APPLE_XCODEGEN_MARKETING_VERSION.source, 'gm'), `$1$2${newVersion}$4$5`);
+        updatedContent = updatedContent.replace(new RegExp(LIB_REGEX_APPLE_XCODEGEN_CURRENT_PROJECT_VERSION.source, 'gm'), `$1$2${newBuild}$4$5`);
+      } else {
+        updatedContent = updatedContent.replace(new RegExp(LIB_REGEX_APPLE_PBXPROJ_MARKETING_VERSION.source, 'g'), `$1${newVersion}$3`);
+        updatedContent = updatedContent.replace(new RegExp(LIB_REGEX_APPLE_PBXPROJ_CURRENT_PROJECT_VERSION.source, 'g'), `$1${newBuild}$3`);
+      }
+
+      if (shouldWrite === false) {
+        continue;
+      }
+
+      await fs.writeFile(versionFile['path'], updatedContent, 'utf-8');
+
+      Logger.customize({
+        name: 'Runner.syncAppleVersion',
+        purpose: 'version',
+      }).info(`Updated Apple marketing version to ${newVersion} and build to ${newBuild} in "${versionFile['path']}".`);
+    }
+
+    return newBuild;
+  }
+
+  /**
    * CLI - Utility - Changelog - Write Changelog.
    *
    * Builds a dated version section grouped by category order and prepends it to the existing
    * CHANGELOG.md or creates the file if it does not exist.
    *
-   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_PackageDirectory}  packageDirectory - Package directory.
-   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_PackageName}       packageName      - Package name.
-   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_Version}           version          - Version.
-   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_Entries}           entries          - Entries.
-   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_VersionStrategy}   versionStrategy  - Version strategy.
+   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_PackageDirectory} packageDirectory - Package directory.
+   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_PackageName}      packageName      - Package name.
+   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_Version}          version          - Version.
+   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_Entries}          entries          - Entries.
+   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_VersionStrategy}  versionStrategy  - Version strategy.
+   * @param {Cli_Utility_Changelog_Runner_WriteChangelog_NativeBuild}      nativeBuild      - Native build.
    *
    * @private
    *
@@ -1917,13 +2184,13 @@ export class Runner {
    *
    * @since 0.13.0
    */
-  private static async writeChangelog(packageDirectory: Cli_Utility_Changelog_Runner_WriteChangelog_PackageDirectory, packageName: Cli_Utility_Changelog_Runner_WriteChangelog_PackageName, version: Cli_Utility_Changelog_Runner_WriteChangelog_Version, entries: Cli_Utility_Changelog_Runner_WriteChangelog_Entries, versionStrategy: Cli_Utility_Changelog_Runner_WriteChangelog_VersionStrategy): Cli_Utility_Changelog_Runner_WriteChangelog_Returns {
+  private static async writeChangelog(packageDirectory: Cli_Utility_Changelog_Runner_WriteChangelog_PackageDirectory, packageName: Cli_Utility_Changelog_Runner_WriteChangelog_PackageName, version: Cli_Utility_Changelog_Runner_WriteChangelog_Version, entries: Cli_Utility_Changelog_Runner_WriteChangelog_Entries, versionStrategy: Cli_Utility_Changelog_Runner_WriteChangelog_VersionStrategy, nativeBuild: Cli_Utility_Changelog_Runner_WriteChangelog_NativeBuild): Cli_Utility_Changelog_Runner_WriteChangelog_Returns {
     const changelogPath: Cli_Utility_Changelog_Runner_WriteChangelog_ChangelogPath = join(packageDirectory, 'CHANGELOG.md');
     const today: Cli_Utility_Changelog_Runner_WriteChangelog_Today = new Date();
     const dateString: Cli_Utility_Changelog_Runner_WriteChangelog_DateString = [
-      today.getFullYear(),
-      (today.getMonth() + 1).toString().padStart(2, '0'),
-      today.getDate().toString().padStart(2, '0'),
+      today.getUTCFullYear(),
+      (today.getUTCMonth() + 1).toString().padStart(2, '0'),
+      today.getUTCDate().toString().padStart(2, '0'),
     ].join('-');
 
     // Group entries by category.
@@ -1941,8 +2208,12 @@ export class Runner {
     const categoryOrder: Cli_Utility_Changelog_Runner_WriteChangelog_CategoryOrder = [...libItemChangelogOrderedCategories];
     const sectionParts: Cli_Utility_Changelog_Runner_WriteChangelog_SectionParts = [];
 
-    if (versionStrategy === 'calver') {
+    if (versionStrategy === 'calver' && nativeBuild === undefined) {
       sectionParts.push(`## ${version}`);
+    } else if (versionStrategy === 'calver') {
+      sectionParts.push(`## ${version} (${nativeBuild})`);
+    } else if (nativeBuild !== undefined) {
+      sectionParts.push(`## ${version} (${nativeBuild}) - ${dateString}`);
     } else {
       sectionParts.push(`## ${version} - ${dateString}`);
     }
@@ -2115,51 +2386,7 @@ export class Runner {
    * @since 0.26.0
    */
   private static validateVersion(currentVersion: Cli_Utility_Changelog_Runner_ValidateVersion_CurrentVersion, versionStrategy: Cli_Utility_Changelog_Runner_ValidateVersion_VersionStrategy, packageJsonPath: Cli_Utility_Changelog_Runner_ValidateVersion_PackageJsonPath): Cli_Utility_Changelog_Runner_ValidateVersion_Returns {
-    if (versionStrategy === 'calver') {
-      if (
-        currentVersion !== '0.0.0'
-        && LIB_REGEX_PATTERN_CALVER_STRICT.test(currentVersion) === false
-      ) {
-        throw new Error(`Invalid version "${currentVersion}" in "${packageJsonPath}": expected "YYYY.MM.MICRO" or the initial "0.0.0" sentinel.`);
-      }
-
-      const calverParts: Cli_Utility_Changelog_Runner_ValidateVersion_CalverParts = currentVersion.split('.').map(Number);
-
-      if (calverParts.some((calverPart) => Number.isSafeInteger(calverPart) === false) === true) {
-        throw new Error(`Invalid version "${currentVersion}" in "${packageJsonPath}": each CalVer part must be a safe integer.`);
-      }
-
-      const calverToday: Cli_Utility_Changelog_Runner_ValidateVersion_CalverToday = new Date();
-      const calverYear: Cli_Utility_Changelog_Runner_ValidateVersion_CalverYear = calverToday.getFullYear();
-      const calverMonth: Cli_Utility_Changelog_Runner_ValidateVersion_CalverMonth = calverToday.getMonth() + 1;
-      const calverCurrentYear: Cli_Utility_Changelog_Runner_ValidateVersion_CalverCurrentYear = calverParts[0] ?? 0;
-      const calverCurrentMonth: Cli_Utility_Changelog_Runner_ValidateVersion_CalverCurrentMonth = calverParts[1] ?? 0;
-
-      if (
-        currentVersion !== '0.0.0'
-        && (
-          calverCurrentYear > calverYear
-          || (
-            calverCurrentYear === calverYear
-            && calverCurrentMonth > calverMonth
-          )
-        )
-      ) {
-        throw new Error(`Invalid version "${currentVersion}" in "${packageJsonPath}": CalVer cannot be later than the current month.`);
-      }
-
-      return;
-    }
-
-    const semverParts: Cli_Utility_Changelog_Runner_ValidateVersion_SemverParts = currentVersion.split('.').map(Number);
-
-    if (
-      LIB_REGEX_PATTERN_EXACT_SEMVER.test(currentVersion) === false
-      || semverParts.length !== 3
-      || semverParts.some((semverPart) => Number.isSafeInteger(semverPart) === false) === true
-    ) {
-      throw new Error(`Invalid version "${currentVersion}" in "${packageJsonPath}": expected a clean numeric "x.y.z" to bump.`);
-    }
+    LibVersionContract.validate(currentVersion, 'trackable', versionStrategy, packageJsonPath);
 
     return;
   }

@@ -57,12 +57,12 @@ jobs:
 
       - name: "Check project"
         run: |
-          npm run check
+          npm run check -- --workspace @cbnventures/nova --workspace @cbnventures/docusaurus-preset-nova --workspace nova-docs
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
         run: |
-          npm run build:workspaces -- --workspace @cbnventures/nova --workspace @cbnventures/docusaurus-preset-nova --workspace nova-docs
+          npm run build -- --workspace @cbnventures/nova --workspace @cbnventures/docusaurus-preset-nova --workspace nova-docs
         working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Upload build artifacts (npm/packages-nova)"

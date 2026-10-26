@@ -375,11 +375,13 @@ import type {
   Lib_NovaConfig_Runner_ParseSettings_LockStepVersioning,
   Lib_NovaConfig_Runner_ParseSettings_Result,
   Lib_NovaConfig_Runner_ParseSettings_Returns,
+  Lib_NovaConfig_Runner_ParseSettings_RootValue,
   Lib_NovaConfig_Runner_ParseSettings_RunWorkspaces,
   Lib_NovaConfig_Runner_ParseSettings_RunWorkspacesValue,
   Lib_NovaConfig_Runner_ParseSettings_TypedConcurrencyEntry,
   Lib_NovaConfig_Runner_ParseSettings_Value,
   Lib_NovaConfig_Runner_ParseSettings_VersionStrategy,
+  Lib_NovaConfig_Runner_ParseSettings_VersionStrategyValue,
   Lib_NovaConfig_Runner_ParseUrls_FundSources,
   Lib_NovaConfig_Runner_ParseUrls_LoopIndex,
   Lib_NovaConfig_Runner_ParseUrls_ParsedUrl,
@@ -391,6 +393,7 @@ import type {
   Lib_NovaConfig_Runner_ParseUrls_Value,
   Lib_NovaConfig_Runner_ParseWorkflows_Build,
   Lib_NovaConfig_Runner_ParseWorkflows_CastItem,
+  Lib_NovaConfig_Runner_ParseWorkflows_ContainerPlatforms,
   Lib_NovaConfig_Runner_ParseWorkflows_Deploy,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployAfter,
   Lib_NovaConfig_Runner_ParseWorkflows_DeployPath,
@@ -403,6 +406,7 @@ import type {
   Lib_NovaConfig_Runner_ParseWorkflows_ParsedDeployWith,
   Lib_NovaConfig_Runner_ParseWorkflows_ParsedWith,
   Lib_NovaConfig_Runner_ParseWorkflows_RawBuild,
+  Lib_NovaConfig_Runner_ParseWorkflows_RawContainerPlatforms,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeploy,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeployAfter,
   Lib_NovaConfig_Runner_ParseWorkflows_RawDeployValue,
@@ -2039,6 +2043,8 @@ export class Runner {
         && rawTimeoutMinutes >= 1
         && rawTimeoutMinutes <= 360
       ) ? rawTimeoutMinutes : undefined;
+      const rawContainerPlatforms: Lib_NovaConfig_Runner_ParseWorkflows_RawContainerPlatforms = castItem['containerPlatforms'];
+      const containerPlatforms: Lib_NovaConfig_Runner_ParseWorkflows_ContainerPlatforms = (Array.isArray(rawContainerPlatforms) === true) ? rawContainerPlatforms.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as Lib_NovaConfig_Runner_ParseWorkflows_ContainerPlatforms : [];
       const rawBuild: Lib_NovaConfig_Runner_ParseWorkflows_RawBuild = castItem['build'];
       const build: Lib_NovaConfig_Runner_ParseWorkflows_Build = (Array.isArray(rawBuild) === true) ? rawBuild.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as Lib_NovaConfig_Runner_ParseWorkflows_Build : [];
       const rawDeploy: Lib_NovaConfig_Runner_ParseWorkflows_RawDeploy = castItem['deploy'];
@@ -2085,7 +2091,7 @@ export class Runner {
       const withMap: Lib_NovaConfig_Runner_ParseWorkflows_WithMap = castItem['with'];
 
       // Build workflow object with properties in type-definition order: template, name, triggers,
-      // runsOn, timeoutMinutes, build, deploy, with.
+      // runsOn, timeoutMinutes, containerPlatforms, build, deploy, with.
       const workflow: Lib_NovaConfig_Runner_ParseWorkflows_Workflow = {
         template,
         name,
@@ -2098,6 +2104,10 @@ export class Runner {
 
       if (timeoutMinutes !== undefined) {
         Reflect.set(workflow, 'timeoutMinutes', timeoutMinutes);
+      }
+
+      if (containerPlatforms.length > 0) {
+        Reflect.set(workflow, 'containerPlatforms', containerPlatforms);
       }
 
       if (build.length > 0) {
@@ -2620,7 +2630,7 @@ export class Runner {
         const rawEntry: Lib_NovaConfig_Runner_ParseIgnoreFiles_RawEntry = valueEntry[1];
 
         if (isSupportedIgnoreFileConfigPath(configPath) === false) {
-          this.pushError('Runner.parseIgnoreFiles', 'ignoreFiles', `Ignore file path "${configPath}" must start with "./", stay inside the project, and target .gitignore, .dockerignore, or .assetsignore. Skipping ...`);
+          this.pushError('Runner.parseIgnoreFiles', 'ignoreFiles', `Ignore file path "${configPath}" must start with "./", stay inside the project, target .gitignore or .assetsignore, or be the root path "./.dockerignore". Skipping ...`);
 
           continue;
         }
@@ -2761,9 +2771,26 @@ export class Runner {
           runWorkspaces.concurrency = concurrency;
         }
       }
+
+      const rootValue: Lib_NovaConfig_Runner_ParseSettings_RootValue = runWorkspacesValue['root'];
+
+      if (rootValue === 'first' || rootValue === 'skip') {
+        if (runWorkspaces === undefined) {
+          runWorkspaces = {};
+        }
+
+        runWorkspaces.root = rootValue;
+      } else if (rootValue !== undefined) {
+        this.pushError('Runner.parseSettings', 'settings', 'The "settings.runWorkspaces.root" field must be "first" or "skip". Skipping ...');
+      }
     }
 
-    const versionStrategy: Lib_NovaConfig_Runner_ParseSettings_VersionStrategy = (value['versionStrategy'] === 'semver' || value['versionStrategy'] === 'calver') ? value['versionStrategy'] : undefined;
+    const versionStrategyValue: Lib_NovaConfig_Runner_ParseSettings_VersionStrategyValue = value['versionStrategy'];
+    const versionStrategy: Lib_NovaConfig_Runner_ParseSettings_VersionStrategy = (versionStrategyValue === 'semver' || versionStrategyValue === 'calver') ? versionStrategyValue : undefined;
+
+    if (versionStrategyValue !== undefined && versionStrategy === undefined) {
+      this.pushError('Runner.parseSettings', 'settings', 'The "settings.versionStrategy" field must be "semver" or "calver". Skipping ...');
+    }
 
     if (lockStepVersioning !== undefined) {
       result.lockStepVersioning = lockStepVersioning;
@@ -3500,7 +3527,7 @@ export class Runner {
       result.requireConversationResolution = requireConversationResolution;
     }
 
-    const requiredStatusChecks: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequiredStatusChecks = this.getArrayOfNonEmptyStrings(value['requiredStatusChecks']);
+    const requiredStatusChecks: Lib_NovaConfig_Runner_GetGithubRulesetsDefaultBranch_RequiredStatusChecks = (Array.isArray(value['requiredStatusChecks']) === true) ? (this.getArrayOfNonEmptyStrings(value['requiredStatusChecks']) ?? []) : undefined;
 
     if (requiredStatusChecks !== undefined) {
       result.requiredStatusChecks = requiredStatusChecks;

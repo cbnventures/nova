@@ -32,7 +32,7 @@ function BlogListPage(props: Theme_BlogListPage_Index_BlogListPage_Props) {
       className={(props['className'] !== undefined) ? `nova-blog-list-page ${props['className']}` : 'nova-blog-list-page'}
       style={props['style']}
     >
-      <PageMetadata title={title} />
+      <PageMetadata title={title} description={props['metadata']['blogDescription']} />
       <BlogListPageStructuredData sidebar={props['sidebar']} metadata={props['metadata']} items={props['items']} />
       <BlogPostItems items={props['items']} />
       <BlogListPaginator metadata={props['metadata']} />

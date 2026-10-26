@@ -46,7 +46,9 @@ import {
   LIB_REGEX_PLACEHOLDER_WORKSPACE_PACKAGE_NAME,
   LIB_REGEX_PLACEHOLDER_WORKSPACE_RELATIVE_PATH,
   LIB_REGEX_PLACEHOLDER_WORKSPACE_TITLE,
+  LIB_REGEX_PLACEHOLDER_WORKSPACE_VERSION,
 } from '../lib/regex.js';
+import { resolveScaffoldAllowScripts } from '../lib/scaffold-allow-scripts.js';
 import {
   createMonorepoRoot,
   writeTemplateFiles,
@@ -106,9 +108,11 @@ import type {
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TrailingWhitespaceMessage,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Tsconfig,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigExtends,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigFileList,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigFiles,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigPath,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigRaw,
+  Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigReferences,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_UnresolvedFiles,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ChildScriptNames,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ContractViolations,
@@ -123,11 +127,14 @@ import type {
   Tests_ScaffoldOutputContract_VerifyScriptContract_RequireI18n,
   Tests_ScaffoldOutputContract_VerifyScriptContract_RequireRootScripts,
   Tests_ScaffoldOutputContract_VerifyScriptContract_Returns,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_RootParentCommand,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupModes,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupNodeEnvOptions,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptGroupOrder,
   Tests_ScaffoldOutputContract_VerifyScriptContract_ScriptNames,
   Tests_ScaffoldOutputContract_VerifyScriptContract_Scripts,
+  Tests_ScaffoldOutputContract_VerifyScriptContract_WorkspaceParentCommand,
+  Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedAllowScripts,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDependencies,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies,
   Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedMiscellaneousRecipes,
@@ -179,6 +186,7 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'scaffold-options/app/android-launchpad',
     ],
     expectedFiles: [
+      '.gitattributes',
       '.gitignore',
       'app/.gitignore',
       'app/build.gradle.kts',
@@ -425,6 +433,7 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'package.json',
       'sidebars.ts',
       'src/pages/index.tsx',
+      'src/tests/dotenv.test.ts',
       'src/tests/frontmatter.test.ts',
       'src/tests/link.test.ts',
       'src/tests/markdown-table.test.ts',
@@ -432,7 +441,10 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'src/tests/type-declarations.test.ts',
       'src/types/pages/index.d.ts',
       'static/images/nova.svg',
+      'tsconfig.app.json',
+      'tsconfig.config.json',
       'tsconfig.json',
+      'tsconfig.tests.json',
       'vitest.config.mts',
       'vitest.setup.ts',
     ],
@@ -915,7 +927,9 @@ async function verifyScriptContract(packageJsonPath: Tests_ScaffoldOutputContrac
     }
 
     const parentIndex: Tests_ScaffoldOutputContract_VerifyScriptContract_ParentIndex = scriptNames.indexOf(scriptGroup);
-    const expectedParentCommand: Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedParentCommand = `nova utility run-scripts --${scriptGroupModes[scriptGroup]}${scriptGroupNodeEnvOptions[scriptGroup]} "${scriptGroup}:*"`;
+    const workspaceParentCommand: Tests_ScaffoldOutputContract_VerifyScriptContract_WorkspaceParentCommand = `nova utility run-scripts --${scriptGroupModes[scriptGroup]}${scriptGroupNodeEnvOptions[scriptGroup]} "${scriptGroup}:*"`;
+    const rootParentCommand: Tests_ScaffoldOutputContract_VerifyScriptContract_RootParentCommand = `nova utility run-workspaces${scriptGroupNodeEnvOptions[scriptGroup]} ${scriptGroup}`;
+    const expectedParentCommand: Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedParentCommand = (requireRootScripts === true) ? rootParentCommand : workspaceParentCommand;
     const expectedGroupNames: Tests_ScaffoldOutputContract_VerifyScriptContract_ExpectedGroupNames = [
       scriptGroup,
       ...childScriptNames,
@@ -923,7 +937,12 @@ async function verifyScriptContract(packageJsonPath: Tests_ScaffoldOutputContrac
 
     strictEqual(parentIndex > previousParentIndex, true, `Generated lifecycle scripts are out of order in "${packageJsonPath}".`);
     strictEqual(scripts[scriptGroup], expectedParentCommand, `Generated parent script "${scriptGroup}" does not use the canonical Nova dispatcher in "${packageJsonPath}".`);
-    strictEqual(childScriptNames.length > 0, true, `Generated parent script "${scriptGroup}" has no child steps in "${packageJsonPath}".`);
+
+    // A project root runs the workspace tree, so its own child steps are optional.
+    if (requireRootScripts === false) {
+      strictEqual(childScriptNames.length > 0, true, `Generated parent script "${scriptGroup}" has no child steps in "${packageJsonPath}".`);
+    }
+
     deepStrictEqual(scriptNames.slice(parentIndex, parentIndex + expectedGroupNames.length), expectedGroupNames, `Generated child scripts for "${scriptGroup}" are not adjacent to their parent in "${packageJsonPath}".`);
 
     previousParentIndex = parentIndex;
@@ -953,7 +972,7 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
     cwd: targetDirectory,
     dot: true,
     nodir: true,
-  }).sort();
+  }).map((generatedFile) => generatedFile.replaceAll('\\', '/')).sort();
   const inventoryMessage: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_InventoryMessage = `Generated scaffold inventory drifted in "${targetDirectory}".`;
 
   deepStrictEqual(generatedFiles, expectedFiles, inventoryMessage);
@@ -1029,6 +1048,20 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
     const tsconfigPath: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigPath = join(targetDirectory, tsconfigFile);
     const tsconfigRaw: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigRaw = await readFile(tsconfigPath, 'utf-8');
     const tsconfig: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Tsconfig = JSON.parse(tsconfigRaw) as Tests_ScaffoldOutputContract_VerifyGeneratedOutput_Tsconfig;
+    const tsconfigReferences: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigReferences = tsconfig['references'];
+    const tsconfigFileList: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigFileList = tsconfig['files'];
+
+    // A solution-style config only references role configs, so it compiles nothing and needs no extends chain.
+    if (
+      tsconfig['extends'] === undefined
+      && Array.isArray(tsconfigReferences) === true
+      && tsconfigReferences.length > 0
+      && Array.isArray(tsconfigFileList) === true
+      && tsconfigFileList.length === 0
+    ) {
+      continue;
+    }
+
     const tsconfigExtends: Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigExtends = tsconfig['extends'] as Tests_ScaffoldOutputContract_VerifyGeneratedOutput_TsconfigExtends;
 
     strictEqual(Array.isArray(tsconfigExtends), true, `Generated TSConfig "${tsconfigFile}" must define an extends chain.`);
@@ -1090,12 +1123,13 @@ async function verifyGeneratedOutput(targetDirectory: Tests_ScaffoldOutputContra
 async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_VerifyStarterContract_SandboxRoot): Tests_ScaffoldOutputContract_VerifyStarterContract_Returns {
   const targetDirectory: Tests_ScaffoldOutputContract_VerifyStarterContract_TargetDirectory = join(sandboxRoot, 'starter');
 
-  await createMonorepoRoot(targetDirectory, 'contract-starter', ['nodejs']);
+  await createMonorepoRoot(targetDirectory, 'contract-starter', ['nodejs'], resolveScaffoldAllowScripts(['file-watching']));
 
   await verifyGeneratedOutput(targetDirectory, [
     '.env',
     '.env.sample',
     '.gitignore',
+    'assets/README.md',
     'eslint.config.mts',
     'nova.config.json',
     'package.json',
@@ -1121,19 +1155,22 @@ async function verifyStarterContract(sandboxRoot: Tests_ScaffoldOutputContract_V
   const generatedPackageJsonRecipes: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipes = generatedRecipes['package-json'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipes;
   const generatedRootPackageJsonRecipes: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRootPackageJsonRecipes = generatedPackageJsonRecipes['./'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedRootPackageJsonRecipes;
   const generatedPackageJsonRecipeNames: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedPackageJsonRecipeNames = Object.keys(generatedRootPackageJsonRecipes);
+  const generatedAllowScripts: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedAllowScripts = generatedPackageJson['allowScripts'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedAllowScripts;
   const generatedDependencies: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDependencies = generatedPackageJson['dependencies'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDependencies;
   const generatedDevDependencies: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies = generatedPackageJson['devDependencies'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedDevDependencies;
   const generatedScripts: Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedScripts = generatedPackageJson['scripts'] as Tests_ScaffoldOutputContract_VerifyStarterContract_GeneratedScripts;
 
   strictEqual(generatedDependencies['@cbnventures/nova'], novaPackageJson['version']);
+  deepStrictEqual(generatedAllowScripts, { fsevents: true });
   strictEqual(generatedDevDependencies['@cbnventures/nova'], undefined);
   strictEqual(generatedDevDependencies['turbo'], undefined);
-  strictEqual(generatedScripts['dev:workspaces'], 'nova utility run-workspaces --node-env development dev');
-  strictEqual(generatedScripts['prod:workspaces'], 'nova utility run-workspaces --node-env production prod');
-  strictEqual(generatedScripts['check:workspaces'], 'nova utility run-workspaces check');
-  strictEqual(generatedScripts['build:workspaces'], 'nova utility run-workspaces --node-env production build');
-  strictEqual(generatedScripts['deploy:workspaces'], 'nova utility run-workspaces --node-env production deploy');
-  strictEqual(generatedScripts['clean:workspaces'], 'nova utility run-workspaces clean');
+  strictEqual(generatedScripts['dev'], 'nova utility run-workspaces --node-env development dev');
+  strictEqual(generatedScripts['prod'], 'nova utility run-workspaces --node-env production prod');
+  strictEqual(generatedScripts['check'], 'nova utility run-workspaces check');
+  strictEqual(generatedScripts['build'], 'nova utility run-workspaces --node-env production build');
+  strictEqual(generatedScripts['deploy'], 'nova utility run-workspaces --node-env production deploy');
+  strictEqual(generatedScripts['clean'], 'nova utility run-workspaces clean');
+  strictEqual(Object.keys(generatedScripts).some((scriptName) => scriptName.endsWith(':workspaces')), false);
   strictEqual(generatedScripts['changelog'], 'nova utility changelog');
   strictEqual(generatedScripts['recipes'], 'nova utility run-recipes --replace-file');
   deepStrictEqual(generatedRunWorkspacesSettings['concurrency'], {
@@ -1217,6 +1254,8 @@ async function verifyTemplateContract(contract: Tests_ScaffoldOutputContract_Ver
   const targetDirectory: Tests_ScaffoldOutputContract_VerifyTemplateContract_TargetDirectory = join(sandboxRoot, contract['name']);
   const templateDirectory: Tests_ScaffoldOutputContract_VerifyTemplateContract_TemplateDirectory = join(packageDirectory, 'templates', 'scaffold', contract['templateSubpath']);
   const templateOptionSubpaths: Tests_ScaffoldOutputContract_VerifyTemplateContract_TemplateOptionSubpaths = contract['templateOptionSubpaths'] ?? [];
+
+  contract['replacements'].set(LIB_REGEX_PLACEHOLDER_WORKSPACE_VERSION, '0.0.1');
 
   await writeTemplateFiles(templateDirectory, targetDirectory, contract['replacements']);
 

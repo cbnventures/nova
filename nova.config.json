@@ -292,6 +292,7 @@
         "nova"
       ],
       "patterns": [
+        "/assets/",
         "!packages/nova/bin/",
         "!packages/docusaurus-preset-nova/bin/",
         "graphify-out/"
@@ -588,8 +589,8 @@
     "lockStepVersioning": true,
     "runWorkspaces": {
       "cache": {
-        "directory": "./node_modules/.cache/nova/run-workspaces",
         "enabled": true,
+        "directory": "./node_modules/.cache/nova/run-workspaces",
         "scripts": [
           "build",
           "check"

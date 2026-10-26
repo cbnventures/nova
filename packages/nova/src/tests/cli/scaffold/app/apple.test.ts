@@ -41,6 +41,9 @@ import type {
   Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RejectsInvalidValuesBeforeWritingOrRegistration_PackageJson,
   Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RejectsInvalidValuesBeforeWritingOrRegistration_PackageJsonPath,
   Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RejectsInvalidValuesBeforeWritingOrRegistration_RootDirectory,
+  Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_Gitignore,
+  Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_IosMetadata,
+  Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_MacosMetadata,
   Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_OutputPath,
   Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_ProjectYml,
   Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_SandboxRoot,
@@ -248,11 +251,17 @@ describe.sequential('CliScaffoldAppApple.run', async () => {
     });
 
     const projectYml: Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_ProjectYml = await readFile(join(outputPath, 'apps', 'apple', 'project.yml'), 'utf-8');
+    const gitignore: Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_Gitignore = await readFile(join(outputPath, '.gitignore'), 'utf-8');
+    const iosMetadata: Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_IosMetadata = await readFile(join(outputPath, 'assets', 'app-store-connect', 'apple', 'metadata', 'ios', 'en-US.json'), 'utf-8');
+    const macosMetadata: Tests_Cli_Scaffold_App_Apple_CliScaffoldAppAppleRun_RendersExactCustomBundleIdentifiers_MacosMetadata = await readFile(join(outputPath, 'assets', 'app-store-connect', 'apple', 'metadata', 'macos', 'en-US.json'), 'utf-8');
 
     strictEqual(projectYml.includes('PRODUCT_BUNDLE_IDENTIFIER: io.cbnventures.branded-short-links'), true);
     strictEqual(projectYml.includes('PRODUCT_BUNDLE_IDENTIFIER: io.cbnventures.branded-short-links.tests'), true);
     strictEqual(projectYml.includes('bundleIdPrefix'), false);
     strictEqual(projectYml.includes('com.example'), false);
+    strictEqual(gitignore.includes('/assets/'), false);
+    strictEqual(iosMetadata.includes('"description": null'), true);
+    strictEqual(macosMetadata.includes('"description": null'), true);
 
     return;
   });

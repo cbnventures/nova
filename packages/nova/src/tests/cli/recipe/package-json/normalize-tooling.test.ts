@@ -46,6 +46,14 @@ import type {
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_WorkspaceDirectory,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_WorkspacePackageJsonContents,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_DoesNotModifyFilesDuringDryRun_WorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_Output,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_Parsed,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_Scripts,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_OriginalCwd,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_AllowScripts,
   Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PreservesNonEmptyAllowScripts_NovaConfigContents,
@@ -354,13 +362,13 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
     const cases: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_AddsMissingCanonicalRootWorkspaceScriptsWithoutReplacingExistingCommands_Cases = [
       {
         directoryName: 'consumer-root-scripts',
-        dev: 'nova utility run-scripts --parallel --node-env development "dev:*"',
+        dev: 'nova utility run-workspaces --node-env development dev',
         runnerPrefix: 'nova utility run-workspaces',
         scriptRunnerPrefix: 'nova utility run-scripts',
       },
       {
         directoryName: 'bootstrap-root-scripts',
-        dev: 'node ./scripts/nova-run-scripts.mjs --parallel --node-env development "dev:*"',
+        dev: 'node ./scripts/nova-run-workspaces.mjs --node-env development dev',
         runnerPrefix: 'node ./scripts/nova-run-workspaces.mjs',
         scriptRunnerPrefix: 'node ./scripts/nova-run-scripts.mjs',
       },
@@ -422,10 +430,92 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
       strictEqual(scripts['dev:workspaces'], 'echo project-owned-workspace-dev');
       strictEqual(scripts['build'], 'echo project-owned-build');
       strictEqual(scripts['custom'], 'echo project-owned-custom');
-      strictEqual(scripts['prod'], `${testCase['scriptRunnerPrefix']} --sequential --node-env production "prod:*"`);
-      strictEqual(scripts['prod:workspaces'], `${testCase['runnerPrefix']} --node-env production prod`);
+      strictEqual(scripts['prod'], `${testCase['runnerPrefix']} --node-env production prod`);
+      strictEqual(scripts['prod:workspaces'], undefined);
       strictEqual(scripts['recipes'], 'nova utility run-recipes --replace-file');
     }
+
+    return;
+  });
+
+  it('moves exact legacy root scripts onto the workspace tree', async () => {
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_ProjectDirectory = join(sandboxRoot, 'legacy-root-scripts');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_PackageJsonContents = JSON.stringify({
+      'name': 'legacy-root-scripts',
+      'scripts': {
+        'dev': 'nova utility run-scripts --parallel --node-env development "dev:*"',
+        'dev:workspaces': 'nova utility run-workspaces --node-env development dev',
+        'prod': 'nova utility run-scripts --sequential --node-env production "prod:*"',
+        'prod:workspaces': 'nova utility run-workspaces --node-env production prod',
+        'check': 'nova utility run-scripts --sequential "check:*"',
+        'check:lint': 'eslint . --max-warnings=0',
+        'check:workspaces': 'nova utility run-workspaces --concurrency 2 check',
+        'build': 'nova utility run-scripts --sequential --node-env production "build:*"',
+        'build:workspaces': 'nova utility run-workspaces --node-env production build',
+        'deploy': 'nova utility run-scripts --sequential --node-env production "deploy:*"',
+        'deploy:container': 'docker compose up --build --detach',
+        'deploy:workspaces': 'nova utility run-workspaces --node-env production deploy',
+        'clean': 'node ./scripts/clean.mjs',
+        'clean:workspaces': 'nova utility run-workspaces clean',
+      },
+    }, null, 2);
+
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_NovaConfigContents = JSON.stringify({
+      workspaces: {
+        './': {
+          name: 'project',
+          role: 'project',
+          policy: 'freezable',
+        },
+      },
+      recipes: {
+        'package-json': {
+          './': {
+            'normalize-tooling': {
+              enabled: true,
+            },
+          },
+        },
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonNormalizeTooling.run({
+      replaceFile: true,
+    });
+
+    strictEqual(process.exitCode, undefined);
+
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_Output = await readFile(packageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_Parsed = JSON.parse(output);
+    const scripts: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_Scripts = parsed['scripts'] as Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_MovesExactLegacyRootScriptsOntoTheWorkspaceTree_Scripts;
+
+    strictEqual(scripts['dev'], 'nova utility run-workspaces --node-env development dev');
+    strictEqual(scripts['prod'], 'nova utility run-workspaces --node-env production prod');
+    strictEqual(scripts['check'], 'nova utility run-workspaces check');
+    strictEqual(scripts['build'], 'nova utility run-workspaces --node-env production build');
+    strictEqual(scripts['deploy'], 'nova utility run-workspaces --node-env production deploy');
+    strictEqual(scripts['dev:workspaces'], undefined);
+    strictEqual(scripts['prod:workspaces'], undefined);
+    strictEqual(scripts['build:workspaces'], undefined);
+    strictEqual(scripts['deploy:workspaces'], undefined);
+
+    // Customized scripts are never rewritten or deleted.
+    strictEqual(scripts['check:workspaces'], 'nova utility run-workspaces --concurrency 2 check');
+    strictEqual(scripts['clean'], 'node ./scripts/clean.mjs');
+    strictEqual(scripts['clean:workspaces'], 'nova utility run-workspaces clean');
+    strictEqual(scripts['check:lint'], 'eslint . --max-warnings=0');
+    strictEqual(scripts['deploy:container'], 'docker compose up --build --detach');
 
     return;
   });

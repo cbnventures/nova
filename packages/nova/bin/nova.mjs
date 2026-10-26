@@ -2,7 +2,10 @@
 
 import { existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import {
+  fileURLToPath,
+  pathToFileURL,
+} from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const cli = resolve(root, 'build', 'src', 'cli', 'index.js');
@@ -13,4 +16,4 @@ if (existsSync(cli) === false) {
   throw new Error('CLI build output not found');
 }
 
-import(cli);
+await import(pathToFileURL(cli).href);

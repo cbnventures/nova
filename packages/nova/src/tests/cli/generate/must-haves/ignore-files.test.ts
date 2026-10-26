@@ -2,6 +2,7 @@ import {
   ok,
   strictEqual,
 } from 'node:assert/strict';
+import { join } from 'node:path';
 
 import {
   describe,
@@ -98,7 +99,7 @@ describe('CliGenerateMustHavesIgnoreFiles.run', () => {
           bundles: ['nova'],
           patterns: ['graphify-out/'],
         },
-        './apps/api/.dockerignore': {
+        './.dockerignore': {
           bundles: ['nova'],
           patterns: ['local-output/'],
         },
@@ -113,9 +114,9 @@ describe('CliGenerateMustHavesIgnoreFiles.run', () => {
     await CliGenerateMustHavesIgnoreFiles.run({ replaceFile: true });
 
     const calls: Tests_Cli_Generate_MustHaves_IgnoreFiles_CliGenerateMustHavesIgnoreFilesRun_WritesEveryConfiguredIgnoreFile_Calls = saveSpy['mock']['calls'];
-    const gitignoreCall: Tests_Cli_Generate_MustHaves_IgnoreFiles_CliGenerateMustHavesIgnoreFilesRun_WritesEveryConfiguredIgnoreFile_GitignoreCall = calls.find((call) => call[0].endsWith('/.gitignore'));
-    const dockerignoreCall: Tests_Cli_Generate_MustHaves_IgnoreFiles_CliGenerateMustHavesIgnoreFilesRun_WritesEveryConfiguredIgnoreFile_DockerignoreCall = calls.find((call) => call[0].endsWith('/apps/api/.dockerignore'));
-    const assetsignoreCall: Tests_Cli_Generate_MustHaves_IgnoreFiles_CliGenerateMustHavesIgnoreFilesRun_WritesEveryConfiguredIgnoreFile_AssetsignoreCall = calls.find((call) => call[0].endsWith('/apps/site/public/.assetsignore'));
+    const gitignoreCall: Tests_Cli_Generate_MustHaves_IgnoreFiles_CliGenerateMustHavesIgnoreFilesRun_WritesEveryConfiguredIgnoreFile_GitignoreCall = calls.find((call) => call[0] === join(process.cwd(), '.gitignore'));
+    const dockerignoreCall: Tests_Cli_Generate_MustHaves_IgnoreFiles_CliGenerateMustHavesIgnoreFilesRun_WritesEveryConfiguredIgnoreFile_DockerignoreCall = calls.find((call) => call[0] === join(process.cwd(), '.dockerignore'));
+    const assetsignoreCall: Tests_Cli_Generate_MustHaves_IgnoreFiles_CliGenerateMustHavesIgnoreFilesRun_WritesEveryConfiguredIgnoreFile_AssetsignoreCall = calls.find((call) => call[0] === join(process.cwd(), 'apps', 'site', 'public', '.assetsignore'));
 
     strictEqual(calls.length, 3);
     ok(gitignoreCall !== undefined);
@@ -123,6 +124,20 @@ describe('CliGenerateMustHavesIgnoreFiles.run', () => {
     ok(assetsignoreCall !== undefined);
     ok(gitignoreCall[1].includes('graphify-out/'));
     ok(dockerignoreCall[1].includes('local-output/'));
+    ok(dockerignoreCall[1].includes('#### Shared ####'));
+    ok(dockerignoreCall[1].includes('#### Version Control - Git / GitHub ####'));
+    ok(dockerignoreCall[1].includes('#### Language - Node.js ####'));
+    ok(dockerignoreCall[1].includes('#### Tooling - Nova ####'));
+    ok(dockerignoreCall[1].includes('**/.env'));
+    ok(dockerignoreCall[1].includes('**/.env.*'));
+    ok(dockerignoreCall[1].includes('!**/.env.sample'));
+    ok(dockerignoreCall[1].includes('!**/.env.example'));
+    ok(dockerignoreCall[1].includes('**/.secrets'));
+    ok(dockerignoreCall[1].includes('**/build'));
+    ok(dockerignoreCall[1].includes('**/dist'));
+    ok(dockerignoreCall[1].includes('**/node_modules'));
+    ok(dockerignoreCall[1].includes('**/*.log'));
+    ok(dockerignoreCall[1].includes('**/npm-debug.log*'));
     ok(assetsignoreCall[1].includes('_worker.js'));
     ok(assetsignoreCall[1].includes('private-assets/'));
     ok(gitignoreCall[3] !== undefined);

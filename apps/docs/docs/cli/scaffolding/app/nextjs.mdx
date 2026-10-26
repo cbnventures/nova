@@ -31,7 +31,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 3. Provides `dev`, `prod`, `check`, `build`, and `clean` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner.
 4. Runs Next.js type generation before separate app, configuration, and Vitest type checks. Vite's test types never enter Next.js production compilation.
 5. Enables Nova's complete custom ESLint rules and a starter Vitest suite while leaving every rule open to consumer overrides.
-6. Optionally enables Next.js standalone output and adds a production Docker image without changing the platform-neutral default.
+6. Optionally enables Next.js standalone output and contributes it to the repository-wide s6 Docker appliance.
 
 ## Requirements
 
@@ -67,16 +67,16 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 ## Options
 
-| Flag                      | Description                                                                          |
-|---------------------------|--------------------------------------------------------------------------------------|
-| `-d, --dry-run`           | Run without writing any files.                                                       |
-| `--install`               | Install dependencies after scaffolding; this is the default.                         |
-| `--no-install`            | Skip dependency installation.                                                        |
-| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root.                 |
-| `--non-interactive`       | Use flags and defaults without opening prompts.                                      |
-| `--workspace-name <name>` | Workspace directory name.                                                            |
-| `--output <dir>`          | Output directory.                                                                    |
-| `--docker-image`          | Enable Next.js standalone output and add `.dockerignore`, `Dockerfile`, and Compose. |
+| Flag                      | Description                                                                      |
+|---------------------------|----------------------------------------------------------------------------------|
+| `-d, --dry-run`           | Run without writing any files.                                                   |
+| `--install`               | Install dependencies after scaffolding; this is the default.                     |
+| `--no-install`            | Skip dependency installation.                                                    |
+| `--name <name>`           | Project slug when creating a new monorepo; omit at an existing root.             |
+| `--non-interactive`       | Use flags and defaults without opening prompts.                                  |
+| `--workspace-name <name>` | Workspace directory name.                                                        |
+| `--output <dir>`          | Output directory.                                                                |
+| `--docker-image`          | Enable standalone output and add the Next.js service to the repository s6 image. |
 
 ## Output Structure
 
@@ -102,6 +102,10 @@ You can run this directly from an empty location; `scaffold starter base` is not
 │               └── globals.css
 └── packages/
 ```
+
+With `--docker-image`, Nova adds root `.dockerignore`, `Dockerfile`, and `compose.yml` entry points plus private assembly files under `packages/docker`. The standalone Next.js server runs as a supervised service inside the repository's one s6 image.
+
+See [Docker Images](/docs/cli/scaffolding/docker-images) for the shared runtime and layout contract.
 
 ## How It Works
 

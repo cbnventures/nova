@@ -34,6 +34,7 @@ import type {
   Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsABundleThatDoesNotBelongToTheTargetFile_DidReject,
   Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsABundleThatDoesNotBelongToTheTargetFile_RenderError,
   Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_AbsoluteResult,
+  Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_NestedDockerignoreResult,
   Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_TraversalResult,
   Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_UnsupportedResult,
   Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_WindowsResult,
@@ -53,7 +54,7 @@ import type {
 describe('ignore files', () => {
   it('returns file-specific bundle names', () => {
     const gitignoreBundles: Tests_Lib_IgnoreFiles_IgnoreFiles_ReturnsFileSpecificBundleNames_GitignoreBundles = getSupportedIgnoreFileBundles('./.gitignore');
-    const dockerignoreBundles: Tests_Lib_IgnoreFiles_IgnoreFiles_ReturnsFileSpecificBundleNames_DockerignoreBundles = getSupportedIgnoreFileBundles('./apps/api/.dockerignore');
+    const dockerignoreBundles: Tests_Lib_IgnoreFiles_IgnoreFiles_ReturnsFileSpecificBundleNames_DockerignoreBundles = getSupportedIgnoreFileBundles('./.dockerignore');
     const assetsignoreBundles: Tests_Lib_IgnoreFiles_IgnoreFiles_ReturnsFileSpecificBundleNames_AssetsignoreBundles = getSupportedIgnoreFileBundles('./apps/site/public/.assetsignore');
 
     deepStrictEqual(gitignoreBundles, ['nova']);
@@ -65,7 +66,7 @@ describe('ignore files', () => {
 
   it('accepts safe physical ignore file paths', () => {
     const gitignoreResult: Tests_Lib_IgnoreFiles_IgnoreFiles_AcceptsSafePhysicalIgnoreFilePaths_GitignoreResult = isSupportedIgnoreFileConfigPath('./.gitignore');
-    const dockerignoreResult: Tests_Lib_IgnoreFiles_IgnoreFiles_AcceptsSafePhysicalIgnoreFilePaths_DockerignoreResult = isSupportedIgnoreFileConfigPath('./apps/api/.dockerignore');
+    const dockerignoreResult: Tests_Lib_IgnoreFiles_IgnoreFiles_AcceptsSafePhysicalIgnoreFilePaths_DockerignoreResult = isSupportedIgnoreFileConfigPath('./.dockerignore');
     const assetsignoreResult: Tests_Lib_IgnoreFiles_IgnoreFiles_AcceptsSafePhysicalIgnoreFilePaths_AssetsignoreResult = isSupportedIgnoreFileConfigPath('./apps/site/public/.assetsignore');
 
     strictEqual(gitignoreResult, true);
@@ -77,11 +78,13 @@ describe('ignore files', () => {
 
   it('rejects unsafe or unsupported paths', () => {
     const absoluteResult: Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_AbsoluteResult = isSupportedIgnoreFileConfigPath('/tmp/.gitignore');
+    const nestedDockerignoreResult: Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_NestedDockerignoreResult = isSupportedIgnoreFileConfigPath('./apps/api/.dockerignore');
     const traversalResult: Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_TraversalResult = isSupportedIgnoreFileConfigPath('./apps/../.dockerignore');
     const unsupportedResult: Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_UnsupportedResult = isSupportedIgnoreFileConfigPath('./apps/api/.npmignore');
     const windowsResult: Tests_Lib_IgnoreFiles_IgnoreFiles_RejectsUnsafeOrUnsupportedPaths_WindowsResult = isSupportedIgnoreFileConfigPath('.\\apps\\api\\.dockerignore');
 
     strictEqual(absoluteResult, false);
+    strictEqual(nestedDockerignoreResult, false);
     strictEqual(traversalResult, false);
     strictEqual(unsupportedResult, false);
     strictEqual(windowsResult, false);
@@ -94,7 +97,7 @@ describe('ignore files', () => {
       bundles: ['nova'],
       patterns: ['graphify-out/'],
     });
-    const dockerignoreContent: Tests_Lib_IgnoreFiles_IgnoreFiles_CombinesBundlesWithProjectPatterns_DockerignoreContent = await renderIgnoreFile('./apps/api/.dockerignore', {
+    const dockerignoreContent: Tests_Lib_IgnoreFiles_IgnoreFiles_CombinesBundlesWithProjectPatterns_DockerignoreContent = await renderIgnoreFile('./.dockerignore', {
       bundles: ['nova'],
       patterns: ['local-output/'],
     });
@@ -115,6 +118,26 @@ describe('ignore files', () => {
     ].join('\n')));
     strictEqual(projectMarkerCount, 1);
     ok(dockerignoreContent.includes('.env'));
+    ok(dockerignoreContent.includes([
+      '################',
+      '#### Shared ####',
+      '################',
+    ].join('\n')));
+    ok(dockerignoreContent.includes([
+      '########################################',
+      '#### Version Control - Git / GitHub ####',
+      '########################################',
+    ].join('\n')));
+    ok(dockerignoreContent.includes([
+      '############################',
+      '#### Language - Node.js ####',
+      '############################',
+    ].join('\n')));
+    ok(dockerignoreContent.includes([
+      '########################',
+      '#### Tooling - Nova ####',
+      '########################',
+    ].join('\n')));
     ok(dockerignoreContent.includes('local-output/'));
     ok(assetsignoreContent.includes([
       '########################################',

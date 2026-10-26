@@ -3,12 +3,20 @@ import type { Presets_Eslint_DxIgnore_Config } from '../../types/presets/eslint/
 /**
  * Presets - ESLint - DX Ignore - Config.
  *
- * Excludes common build output directories and generated files from ESLint so linting only
- * targets hand-written source code.
+ * Excludes project-owned supporting files, common build output directories,
+ * and generated files from ESLint so linting only targets hand-written source code
+ * and assets documentation.
  *
  * @since 0.11.0
  */
 const config: Presets_Eslint_DxIgnore_Config = [
+  {
+    name: 'nova/dx-ignore/assets',
+    ignores: [
+      'assets/**/*',
+      '!assets/README.md',
+    ],
+  },
   {
     name: 'nova/dx-ignore/build-output',
     ignores: [

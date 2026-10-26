@@ -78,24 +78,35 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_TargetSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildCloudflareWorkersTarget_WorkflowSettings,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_AttestationSubjectPrefix,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_PlatformList,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Platforms,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_CheckImmutableTagsRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Context,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ExtraPermissions,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageTagPrefix,
-  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageTags,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageNamespace,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageRepository,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_LoginStep,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_PushRun,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_RegistryHost,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_RegistrySlug,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ResolveTagsRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_TagRun,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_VerifyRun,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_AppPath,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Context,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Environment,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageNamespace,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageRepository,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Metadata,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_TargetSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Variables,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_Context,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_ImageRepository,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_Metadata,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_TargetSettings,
@@ -163,15 +174,21 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildJob,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildValues,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ConfiguredTimeoutMinutes,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerArtifactSteps,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerPlatforms,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Context,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOn,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOnNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DependsOnTrigger,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployTarget,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DispatchInputs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Entry,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Env,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Environment,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasWorkflowRunNode,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_IsContainerTarget,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Jobs,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_JobsCondition,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_MergedBranches,
@@ -227,6 +244,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ScriptName,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_SelectedNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildTagPushTrigger_Returns,
@@ -246,6 +264,7 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildVercelNextjsTarget_WorkflowSettings,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigger_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildWorkflowRunTrigger_Workflows,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_CheckImmutableContainerTagsRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_CommandArguments,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_PackageManager,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_CorepackDownloadCommand_PackageName,
@@ -342,10 +361,12 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_NpmAuthRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_NpmPublishRun_Dollar,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_NpmPublishRun_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_PushContainerArtifactRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Quote_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_Quote_Value,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcRun_Dollar,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_RemoveDeprecatedNpmrcRun_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployJobId_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployJobId_Type,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveDeployJobId_WorkingDir,
@@ -439,6 +460,8 @@ import type {
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SlugifyWorkingDir_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SlugifyWorkingDir_WithoutPrefix,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_SlugifyWorkingDir_WorkingDir,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_TagContainerArtifactRun_Returns,
+  Cli_Generate_Github_WorkflowsBlueprint_Runner_VerifyContainerArtifactRun_Returns,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_WriteEnvRun_Dollar,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_WriteEnvRun_EscapedDefault,
   Cli_Generate_Github_WorkflowsBlueprint_Runner_WriteEnvRun_Lines,
@@ -538,7 +561,7 @@ export class Runner {
 
     // Validate the raw workflows. Diagnostics report each rejected workflow;
     // any diagnostic sets a non-zero exit while valid workflows still build.
-    const validation: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Validation = Validator.validate(rawWorkflows, workspaces);
+    const validation: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_Validation = Validator.validate(rawWorkflows, workspaces, (config['settings'] === undefined) ? 'semver' : config['settings']['versionStrategy']);
     const validatedWorkflows: Cli_Generate_Github_WorkflowsBlueprint_Runner_Generate_ValidatedWorkflows = validation['workflows'];
 
     for (const diagnosticEntry of validation['diagnostics']) {
@@ -1144,6 +1167,12 @@ export class Runner {
     const publishConditionParts: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_PublishConditionParts = [];
     const runNameParts: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_RunNameParts = [];
     const triggers: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Triggers = entry['triggers'];
+    const targets: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Targets = entry['deploy'] ?? [];
+    const hasContainerTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_HasContainerTarget = targets.some((target) => target['to'] === 'docker-hub' || target['to'] === 'ghcr');
+    const containerPlatforms: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerPlatforms = entry['containerPlatforms'] ?? [
+      'linux/amd64',
+      'linux/arm64',
+    ];
 
     // Resolve each workflow-run reference (a sibling's template-name key, now
     // carried on the trigger object as "workflows") to that workflow's display
@@ -1296,15 +1325,27 @@ export class Runner {
       }
     }
 
+    const dispatchInputs: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DispatchInputs = [{
+      name: 'dry-run',
+      description: 'Run without making changes',
+      required: false,
+      type: 'boolean',
+      default: true,
+    }];
+
+    if (hasContainerTarget === true) {
+      dispatchInputs.push({
+        name: 'tag',
+        description: 'Required image tag when manually publishing',
+        required: false,
+        type: 'string',
+        default: '',
+      });
+    }
+
     mergedOn.push({
       event: 'workflow_dispatch',
-      inputs: [{
-        name: 'dry-run',
-        description: 'Run without making changes',
-        required: false,
-        type: 'boolean',
-        default: true,
-      }],
+      inputs: dispatchInputs,
     });
 
     // Merge the PUBLISH gate and the run-name label from the per-trigger
@@ -1341,24 +1382,30 @@ export class Runner {
     ];
 
     // Resolve each scope directory to its workspace name for Nova's workspace
-    // selection list. Root checks remain the root package script's concern.
+    // selection list. The root runs as a node of the tree, so it is always checked.
     const scopes: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Scopes = entry['build'] ?? [];
     const names: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Names = scopes.map((scope) => {
       const workspace: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspace = workspaces[scope] as Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Workspace;
 
       return workspace['name'];
     });
-    const checkCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = Runner.runScriptCommand(packageManager, 'check');
+    const checkCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_CheckCommand = Runner.buildScopeCommand('check', names, packageManager);
     const buildCommand: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildCommand = Runner.buildScopeCommand('build', names, packageManager);
 
     const steps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Steps = [
       {
         name: 'Checkout repository',
         uses: getScaffoldVersion('workflowActionCheckout'),
-        with: [{
-          key: 'fetch-depth',
-          value: 0,
-        }],
+        with: [
+          {
+            key: 'fetch-depth',
+            value: 0,
+          },
+          ...((hasWorkflowRunNode === true) ? [{
+            key: 'ref',
+            value: Runner.expr('github.event.workflow_run.head_sha'),
+          }] : []),
+        ],
       },
       {
         name: 'Setup Node.js',
@@ -1413,17 +1460,35 @@ export class Runner {
       workingDirectory: Runner.expr('env.ROOT_DIR'),
     });
 
-    steps.push({
-      name: 'Build project',
-      run: buildCommand,
-      runBlock: true,
-      workingDirectory: Runner.expr('env.ROOT_DIR'),
-    });
+    if (names.length > 0) {
+      steps.push({
+        name: 'Build project',
+        run: buildCommand,
+        runBlock: true,
+        workingDirectory: Runner.expr('env.ROOT_DIR'),
+      });
+    }
+
+    if (hasContainerTarget === true) {
+      steps.push({
+        name: 'Validate manual container tag',
+        if: Runner.expr('github.event_name == \'workflow_dispatch\' && !inputs.dry-run'),
+        env: [{
+          key: 'MANUAL_TAG',
+          value: Runner.expr('inputs.tag || \'\''),
+        }],
+        run: [
+          'if [ -z "$MANUAL_TAG" ]; then',
+          '  echo "A non-empty tag input is required for a real manual container publish." >&2',
+          '  exit 1',
+          'fi',
+        ].join('\n'),
+        runBlock: true,
+      });
+    }
 
     // One upload-artifact step per target with declared artifact paths, in
-    // target order. A zero-path target (docker-hub, ghcr) rebuilds from the
-    // checkout inside its own deploy job, so it contributes no upload step.
-    const targets: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Targets = entry['deploy'] ?? [];
+    // target order. Container targets share the one OCI handoff appended below.
 
     for (const target of targets) {
       const uploadTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_UploadTarget = target;
@@ -1463,6 +1528,12 @@ export class Runner {
       steps.push(uploadStep);
     }
 
+    if (hasContainerTarget === true) {
+      const containerArtifactSteps: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ContainerArtifactSteps = Runner.buildContainerArtifactSteps(containerPlatforms);
+
+      steps.push(...containerArtifactSteps);
+    }
+
     const buildJob: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_BuildJob = {
       id: 'build',
       runsOn: 'ubuntu-latest',
@@ -1478,10 +1549,11 @@ export class Runner {
     for (const target of targets) {
       const deployTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_DeployTarget = target;
       const targetSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_TargetSettings = deployTarget['with'];
+      const isContainerTarget: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_IsContainerTarget = deployTarget['to'] === 'docker-hub' || deployTarget['to'] === 'ghcr';
       const context: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_Context = {
         workingDir: deployTarget['path'],
-        artifactName: `build-${deployTarget['to']}-${Runner.slugifyWorkingDir(deployTarget['path'])}`,
-        needs: Runner.resolveDeployNeeds(deployTarget),
+        artifactName: (isContainerTarget === true) ? 'container-oci' : `build-${deployTarget['to']}-${Runner.slugifyWorkingDir(deployTarget['path'])}`,
+        needs: (isContainerTarget === true) ? ['build'] : Runner.resolveDeployNeeds(deployTarget),
         targetSettings,
         workflowSettings,
         workspace: workspaces[deployTarget['path']],
@@ -1509,6 +1581,14 @@ export class Runner {
         jobs.push(Runner.buildGithubActionTarget(context));
       } else if (deployTarget['to'] === 'vercel-nextjs') {
         jobs.push(Runner.buildVercelNextjsTarget(context));
+      }
+    }
+
+    const configuredTimeoutMinutes: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildPublish_ConfiguredTimeoutMinutes = entry['timeoutMinutes'];
+
+    if (configuredTimeoutMinutes !== undefined) {
+      for (const configuredJob of jobs) {
+        configuredJob.timeoutMinutes = configuredTimeoutMinutes;
       }
     }
 
@@ -2037,8 +2117,8 @@ export class Runner {
   /**
    * CLI - Generate - GitHub - Workflows Blueprint - Build Docker Hub Target.
    *
-   * Returns the Docker Hub deploy job that rebuilds the image from the
-   * checkout with Buildx, pushes it to Docker Hub, and attests provenance.
+   * Returns the Docker Hub consumer job that authenticates, tags, pushes,
+   * verifies, and attests the shared immutable OCI handoff.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Context} context - Context.
    *
@@ -2053,10 +2133,14 @@ export class Runner {
     const variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Variables = (metadata === undefined) ? {} : metadata['variables'];
     const environment: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_Environment = context['environment'];
     const appPath: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_AppPath = context['workingDir'];
+    const imageNamespace: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageNamespace = (targetSettings === undefined) ? 'IMAGE_NAMESPACE' : targetSettings['IMAGE_NAMESPACE'] ?? 'IMAGE_NAMESPACE';
+    const imageRepository: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildDockerHubTarget_ImageRepository = (targetSettings === undefined) ? 'IMAGE_REPOSITORY' : targetSettings['IMAGE_REPOSITORY'] ?? 'IMAGE_REPOSITORY';
 
     return Runner.buildContainerRegistryTarget(context, {
       registrySlug: 'docker-hub',
-      imageTagPrefix: '',
+      registryHost: 'docker.io',
+      imageNamespace,
+      imageRepository,
       loginStep: {
         name: 'Login to Docker Hub',
         uses: getScaffoldVersion('workflowActionDockerLogin'),
@@ -2076,15 +2160,14 @@ export class Runner {
         ],
       },
       extraPermissions: {},
-      attestationSubjectPrefix: 'docker.io/',
     });
   }
 
   /**
    * CLI - Generate - GitHub - Workflows Blueprint - Build Ghcr Target.
    *
-   * Returns the GitHub Container Registry deploy job that rebuilds the
-   * image from the checkout with Buildx, pushes it, and attests provenance.
+   * Returns the GHCR consumer job that authenticates, tags, pushes, verifies,
+   * and attests the shared immutable OCI handoff.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_Context} context - Context.
    *
@@ -2097,10 +2180,13 @@ export class Runner {
     const workflowSettings: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_WorkflowSettings = context['workflowSettings'];
     const metadata: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_Metadata = Variables.getTargetMetadata('publish', 'ghcr');
     const variables: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_Variables = (metadata === undefined) ? {} : metadata['variables'];
+    const imageRepository: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildGhcrTarget_ImageRepository = (targetSettings === undefined) ? 'IMAGE_REPOSITORY' : targetSettings['IMAGE_REPOSITORY'] ?? 'IMAGE_REPOSITORY';
 
     return Runner.buildContainerRegistryTarget(context, {
       registrySlug: 'ghcr',
-      imageTagPrefix: 'ghcr.io/',
+      registryHost: 'ghcr.io',
+      imageNamespace: Runner.expr('github.repository_owner'),
+      imageRepository,
       loginStep: {
         name: 'Login to GitHub Container Registry',
         uses: getScaffoldVersion('workflowActionDockerLogin'),
@@ -2111,7 +2197,7 @@ export class Runner {
           },
           {
             key: 'username',
-            value: Runner.expr('github.repository_owner'),
+            value: Runner.expr('github.actor'),
           },
           {
             key: 'password',
@@ -2120,7 +2206,6 @@ export class Runner {
         ],
       },
       extraPermissions: { 'packages': 'write' },
-      attestationSubjectPrefix: 'ghcr.io/',
     });
   }
 
@@ -2586,10 +2671,101 @@ export class Runner {
   }
 
   /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Build Container Artifact Steps.
+   *
+   * Builds the repository-root Dockerfile once for every selected platform,
+   * records its immutable index digest, and uploads one transient OCI handoff.
+   *
+   * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Platforms} platforms - Platforms.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static buildContainerArtifactSteps(platforms: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Platforms): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_Returns {
+    const platformList: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerArtifactSteps_PlatformList = platforms.join(',');
+
+    return [
+      {
+        name: 'Set up QEMU',
+        uses: getScaffoldVersion('workflowActionDockerSetupQemu'),
+        with: [{
+          key: 'platforms',
+          value: platformList,
+        }],
+      },
+      {
+        name: 'Set up Docker Buildx',
+        uses: getScaffoldVersion('workflowActionDockerSetupBuildx'),
+      },
+      {
+        name: 'Prepare OCI handoff',
+        run: 'mkdir -p "$RUNNER_TEMP/container-oci"',
+      },
+      {
+        name: 'Build immutable OCI artifact',
+        id: 'build-oci',
+        uses: getScaffoldVersion('workflowActionDockerBuildPush'),
+        with: [
+          {
+            key: 'context',
+            value: './',
+          },
+          {
+            key: 'platforms',
+            value: platformList,
+          },
+          {
+            key: 'push',
+            value: false,
+          },
+          {
+            key: 'provenance',
+            value: false,
+          },
+          {
+            key: 'tags',
+            value: 'nova.local/container:nova-oci',
+          },
+          {
+            key: 'outputs',
+            value: `type=oci,dest=${Runner.expr('runner.temp')}/container-oci/layout,tar=false`,
+          },
+        ],
+      },
+      {
+        name: 'Record OCI digest',
+        run: `printf '%s' '${Runner.expr('steps.build-oci.outputs.digest')}' > "$RUNNER_TEMP/container-oci/container-image.digest"`,
+      },
+      {
+        name: 'Upload immutable OCI artifact',
+        uses: getScaffoldVersion('workflowActionUploadArtifact'),
+        with: [
+          {
+            key: 'name',
+            value: 'container-oci',
+          },
+          {
+            key: 'retention-days',
+            value: 1,
+          },
+          {
+            key: 'path',
+            value: `${Runner.expr('runner.temp')}/container-oci`,
+          },
+        ],
+      },
+    ];
+  }
+
+  /**
    * CLI - Generate - GitHub - Workflows Blueprint - Build Container Registry Target.
    *
-   * Returns a container registry deploy job that rebuilds the image from
-   * the checkout with Buildx, pushes it, and attests provenance.
+   * Returns a registry-specific consumer of the immutable OCI handoff. The
+   * consumer authenticates, applies tags, pushes, verifies, and attests; it
+   * never checks out source or invokes a container build.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Context} context - Context.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config}  config  - Config.
@@ -2602,20 +2778,21 @@ export class Runner {
    */
   private static buildContainerRegistryTarget(context: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Context, config: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Config): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_Returns {
     const registrySlug: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_RegistrySlug = config['registrySlug'];
-    const imageTagPrefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageTagPrefix = config['imageTagPrefix'];
+    const registryHost: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_RegistryHost = config['registryHost'];
+    const imageNamespace: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageNamespace = config['imageNamespace'];
+    const imageRepository: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageRepository = config['imageRepository'];
     const loginStep: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_LoginStep = config['loginStep'];
     const extraPermissions: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ExtraPermissions = config['extraPermissions'];
-    const attestationSubjectPrefix: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_AttestationSubjectPrefix = config['attestationSubjectPrefix'];
+    const resolveTagsRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ResolveTagsRun = Runner.resolveContainerTagsRun();
+    const checkImmutableTagsRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_CheckImmutableTagsRun = Runner.checkImmutableContainerTagsRun();
+    const pushRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_PushRun = Runner.pushContainerArtifactRun();
+    const verifyRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_VerifyRun = Runner.verifyContainerArtifactRun();
+    const tagRun: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_TagRun = Runner.tagContainerArtifactRun();
 
-    // The image is tagged latest plus the release tag, falling back to
-    // manual for workflow_dispatch runs without a release context.
-    const imageTags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildContainerRegistryTarget_ImageTags = [
-      `${imageTagPrefix}${Runner.expr('github.repository')}:latest`,
-      `${imageTagPrefix}${Runner.expr('github.repository')}:${Runner.expr('github.event.release.tag_name || \'manual\'')}`,
-    ].join('\n');
+    Reflect.set(loginStep, 'if', Runner.expr('env.PUBLISH == \'true\''));
 
     return {
-      id: `publish-${registrySlug}-${Runner.slugifyWorkingDir(context['workingDir'])}`,
+      id: `publish-${registrySlug}-root`,
       needs: context['needs'],
       runsOn: 'ubuntu-latest',
       timeoutMinutes: 15,
@@ -2628,45 +2805,106 @@ export class Runner {
       },
       steps: [
         {
-          name: 'Checkout repository',
-          uses: getScaffoldVersion('workflowActionCheckout'),
+          name: 'Download immutable OCI artifact',
+          uses: getScaffoldVersion('workflowActionDownloadArtifact'),
+          with: [
+            {
+              key: 'name',
+              value: context['artifactName'],
+            },
+            {
+              key: 'path',
+              value: `${Runner.expr('runner.temp')}/container-oci`,
+            },
+          ],
         },
         {
-          name: 'Set up QEMU',
-          uses: getScaffoldVersion('workflowActionDockerSetupQemu'),
+          name: 'Set up ORAS',
+          uses: getScaffoldVersion('workflowActionSetupOras'),
           with: [{
-            key: 'platforms',
-            value: 'linux/amd64,linux/arm64',
+            key: 'version',
+            value: '1.3.3',
           }],
         },
         {
-          name: 'Set up Docker Buildx',
-          uses: getScaffoldVersion('workflowActionDockerSetupBuildx'),
-        },
-        loginStep,
-        {
-          name: 'Build and push',
-          id: 'build-push',
-          uses: getScaffoldVersion('workflowActionDockerBuildPush'),
-          with: [
+          name: 'Resolve image coordinate and tags',
+          env: [
             {
-              key: 'context',
-              value: context['workingDir'],
+              key: 'EVENT_NAME',
+              value: Runner.expr('github.event_name'),
             },
             {
-              key: 'platforms',
-              value: 'linux/amd64,linux/arm64',
+              key: 'IMAGE_NAMESPACE',
+              value: imageNamespace,
             },
             {
-              key: 'push',
+              key: 'IMAGE_REPOSITORY',
+              value: imageRepository,
+            },
+            {
+              key: 'MANUAL_TAG',
+              value: Runner.expr('inputs.tag || \'\''),
+            },
+            {
+              key: 'PUBLISH',
               value: Runner.expr('env.PUBLISH'),
             },
             {
-              key: 'tags',
-              value: imageTags,
-              block: true,
+              key: 'REF_NAME',
+              value: Runner.expr('github.ref_name'),
+            },
+            {
+              key: 'REF_TYPE',
+              value: Runner.expr('github.ref_type'),
+            },
+            {
+              key: 'REGISTRY_HOST',
+              value: registryHost,
+            },
+            {
+              key: 'RELEASE_PRERELEASE',
+              value: Runner.expr('github.event.release.prerelease || false'),
+            },
+            {
+              key: 'RELEASE_TAG',
+              value: Runner.expr('github.event.release.tag_name || \'\''),
+            },
+            {
+              key: 'SOURCE_SHA',
+              value: Runner.expr('github.event_name == \'workflow_run\' && github.event.workflow_run.head_sha || github.sha'),
+            },
+            {
+              key: 'WORKFLOW_BRANCH',
+              value: Runner.expr('github.event.workflow_run.head_branch || \'\''),
             },
           ],
+          run: resolveTagsRun,
+          runBlock: true,
+        },
+        loginStep,
+        {
+          name: 'Reject conflicting immutable tags',
+          if: Runner.expr('env.PUBLISH == \'true\''),
+          run: checkImmutableTagsRun,
+          runBlock: true,
+        },
+        {
+          name: 'Push immutable OCI artifact',
+          if: Runner.expr('env.PUBLISH == \'true\''),
+          run: pushRun,
+          runBlock: true,
+        },
+        {
+          name: 'Apply image tags',
+          if: Runner.expr('env.PUBLISH == \'true\' && env.ADDITIONAL_TAGS != \'\''),
+          run: tagRun,
+          runBlock: true,
+        },
+        {
+          name: 'Verify immutable image tags',
+          if: Runner.expr('env.PUBLISH == \'true\''),
+          run: verifyRun,
+          runBlock: true,
         },
         {
           name: 'Generate build provenance',
@@ -2675,11 +2913,11 @@ export class Runner {
           with: [
             {
               key: 'subject-name',
-              value: `${attestationSubjectPrefix}${Runner.expr('github.repository')}`,
+              value: Runner.expr('env.IMAGE'),
             },
             {
               key: 'subject-digest',
-              value: Runner.expr('steps.build-push.outputs.digest'),
+              value: Runner.expr('env.IMAGE_DIGEST'),
             },
             {
               key: 'push-to-registry',
@@ -2687,15 +2925,285 @@ export class Runner {
             },
           ],
         },
+        {
+          name: 'Publish latest channel',
+          if: Runner.expr('env.PUBLISH == \'true\' && env.PUBLISH_LATEST == \'true\''),
+          run: 'oras tag "$IMAGE@$IMAGE_DIGEST" latest',
+        },
       ],
     };
   }
 
   /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Resolve Container Tags Run.
+   *
+   * Resolves the registry coordinate and tags. Immutable exact tags are
+   * separated from normalized branch/workflow channels, while latest waits
+   * for stable release publishing, verification, and attestation.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static resolveContainerTagsRun(): Cli_Generate_Github_WorkflowsBlueprint_Runner_ResolveContainerTagsRun_Returns {
+    return [
+      'set -euo pipefail',
+      '',
+      'image_namespace="$(printf "%s" "$IMAGE_NAMESPACE" | tr "[:upper:]" "[:lower:]")"',
+      '',
+      'if [[ ! "$image_namespace" =~ ^[a-z0-9]+([._-][a-z0-9]+)*$ ]]; then',
+      '  echo "Invalid image namespace: $IMAGE_NAMESPACE" >&2',
+      '  exit 1',
+      'fi',
+      '',
+      'if [[ ! "$IMAGE_REPOSITORY" =~ ^[a-z0-9]+([._-][a-z0-9]+)*$ ]]; then',
+      '  echo "Invalid image repository: $IMAGE_REPOSITORY" >&2',
+      '  exit 1',
+      'fi',
+      '',
+      'image="$REGISTRY_HOST/$image_namespace/$IMAGE_REPOSITORY"',
+      '',
+      `if [ "${'$'}{#image}" -gt 255 ] || [[ ! "$image" =~ ^(docker\\.io|ghcr\\.io)/[a-z0-9]+([._-][a-z0-9]+)*/[a-z0-9]+([._-][a-z0-9]+)*$ ]]; then`,
+      '  echo "Invalid final image coordinate: $image" >&2',
+      '  exit 1',
+      'fi',
+      '',
+      'source_sha="$(printf "%s" "$SOURCE_SHA" | tr "[:upper:]" "[:lower:]")"',
+      '',
+      'if [[ ! "$source_sha" =~ ^[0-9a-f]{7,64}$ ]]; then',
+      '  echo "Invalid source SHA: $SOURCE_SHA" >&2',
+      '  exit 1',
+      'fi',
+      '',
+      'tags=("sha-$source_sha")',
+      'immutable_tags=("sha-$source_sha")',
+      'publish_latest=false',
+      '',
+      'append_unique() {',
+      '  local candidate="$1"',
+      '  local existing',
+      '',
+      `  for existing in "${'$'}{tags[@]}"; do`,
+      '    if [ "$existing" = "$candidate" ]; then',
+      '      return',
+      '    fi',
+      '  done',
+      '',
+      '  tags+=("$candidate")',
+      '}',
+      '',
+      'append_immutable() {',
+      '  local candidate="$1"',
+      '  local existing',
+      '',
+      `  for existing in "${'$'}{immutable_tags[@]}"; do`,
+      '    if [ "$existing" = "$candidate" ]; then',
+      '      return',
+      '    fi',
+      '  done',
+      '',
+      '  immutable_tags+=("$candidate")',
+      '}',
+      '',
+      'validate_exact_tag() {',
+      '  local tag="$1"',
+      '  local source="$2"',
+      '',
+      '  if [ "$tag" = "latest" ]; then',
+      '    echo "The exact $source image tag latest is reserved for stable releases." >&2',
+      '    exit 1',
+      '  fi',
+      '',
+      '  if [[ ! "$tag" =~ ^[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}$ ]]; then',
+      '    echo "Invalid exact $source image tag: $tag" >&2',
+      '    exit 1',
+      '  fi',
+      '}',
+      '',
+      'normalize_channel() {',
+      '  local normalized',
+      '',
+      '  normalized="$(printf "%s" "$1" | tr "[:upper:]" "[:lower:]" | sed -E "s/[^a-z0-9_.-]+/-/g; s/^[.-]+//; s/[.-]+$//")"',
+      `  normalized="${'$'}{normalized:0:110}"`,
+      '',
+      '  if [ -z "$normalized" ]; then',
+      '    echo "Unable to derive a valid channel tag from: $1" >&2',
+      '    exit 1',
+      '  fi',
+      '',
+      '  printf "%s" "$normalized"',
+      '}',
+      '',
+      'case "$EVENT_NAME" in',
+      '  release)',
+      '    validate_exact_tag "$RELEASE_TAG" "release"',
+      '    append_unique "$RELEASE_TAG"',
+      '    append_immutable "$RELEASE_TAG"',
+      '',
+      '    if [ "$RELEASE_PRERELEASE" = "false" ]; then',
+      '      publish_latest=true',
+      '    fi',
+      '    ;;',
+      '  push)',
+      '    if [ "$REF_TYPE" = "tag" ]; then',
+      '      validate_exact_tag "$REF_NAME" "pushed"',
+      '      append_unique "$REF_NAME"',
+      '      append_immutable "$REF_NAME"',
+      '    else',
+      '      append_unique "branch-$(normalize_channel "$REF_NAME")"',
+      '    fi',
+      '    ;;',
+      '  workflow_run)',
+      '    append_unique "workflow-$(normalize_channel "$WORKFLOW_BRANCH")"',
+      '    ;;',
+      '  workflow_dispatch)',
+      '    if [ "$PUBLISH" = "true" ] && [ -z "$MANUAL_TAG" ]; then',
+      '      echo "A non-empty tag input is required for a real manual container publish." >&2',
+      '      exit 1',
+      '    fi',
+      '',
+      '    if [ -n "$MANUAL_TAG" ]; then',
+      '      validate_exact_tag "$MANUAL_TAG" "manual"',
+      '      append_unique "$MANUAL_TAG"',
+      '      append_immutable "$MANUAL_TAG"',
+      '    fi',
+      '    ;;',
+      '  *)',
+      '    echo "Unsupported container publish event: $EVENT_NAME" >&2',
+      '    exit 1',
+      '    ;;',
+      'esac',
+      '',
+      `additional_tags=("${'$'}{tags[@]:1}")`,
+      `additional_tags_csv="$(IFS=,; printf "%s" "${'$'}{additional_tags[*]}")"`,
+      `immutable_tags_csv="$(IFS=,; printf "%s" "${'$'}{immutable_tags[*]}")"`,
+      '',
+      '{',
+      '  echo "ADDITIONAL_TAGS=$additional_tags_csv"',
+      '  echo "IMAGE=$image"',
+      '  echo "IMMUTABLE_TAGS=$immutable_tags_csv"',
+      '  echo "PUBLISH_LATEST=$publish_latest"',
+      '  echo "SHA_TAG=sha-$source_sha"',
+      '} >> "$GITHUB_ENV"',
+    ].join('\n');
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Check Immutable Container Tags Run.
+   *
+   * Rejects a registry retry when an immutable tag already resolves to content
+   * other than the producer digest, while allowing an idempotent same-digest retry.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_CheckImmutableContainerTagsRun_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static checkImmutableContainerTagsRun(): Cli_Generate_Github_WorkflowsBlueprint_Runner_CheckImmutableContainerTagsRun_Returns {
+    return [
+      'set -euo pipefail',
+      '',
+      'expected_digest="$(cat "$RUNNER_TEMP/container-oci/container-image.digest")"',
+      'IFS="," read -r -a immutable_tags <<< "$IMMUTABLE_TAGS"',
+      '',
+      `for tag in "${'$'}{immutable_tags[@]}"; do`,
+      '  if resolve_output="$(oras resolve "$IMAGE:$tag" 2>&1)"; then',
+      '    actual_digest="$resolve_output"',
+      '',
+      '    if [ "$actual_digest" != "$expected_digest" ]; then',
+      '      echo "Immutable image tag conflict: $IMAGE:$tag already resolves to $actual_digest, expected $expected_digest." >&2',
+      '      exit 1',
+      '    fi',
+      '  else',
+      '    resolve_error="$(printf "%s" "$resolve_output" | tr "[:upper:]" "[:lower:]")"',
+      '',
+      '    if [[ "$resolve_error" != *"not found"* && "$resolve_error" != *"manifest unknown"* ]]; then',
+      '      echo "Unable to determine whether immutable image tag $IMAGE:$tag exists: $resolve_output" >&2',
+      '      exit 1',
+      '    fi',
+      '  fi',
+      'done',
+    ].join('\n');
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Push Container Artifact Run.
+   *
+   * Copies the exact OCI archive produced by Buildx to every event-derived tag
+   * in the selected registry without invoking a Docker build.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_PushContainerArtifactRun_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static pushContainerArtifactRun(): Cli_Generate_Github_WorkflowsBlueprint_Runner_PushContainerArtifactRun_Returns {
+    return 'oras cp --from-oci-layout "$RUNNER_TEMP/container-oci/layout@$(cat "$RUNNER_TEMP/container-oci/container-image.digest")" "$IMAGE:$SHA_TAG"';
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Tag Container Artifact Run.
+   *
+   * Applies release, manual, branch, or workflow-channel tags to the verified
+   * registry digest after the one OCI layout copy succeeds.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_TagContainerArtifactRun_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static tagContainerArtifactRun(): Cli_Generate_Github_WorkflowsBlueprint_Runner_TagContainerArtifactRun_Returns {
+    return [
+      'set -euo pipefail',
+      '',
+      'expected_digest="$(cat "$RUNNER_TEMP/container-oci/container-image.digest")"',
+      'IFS="," read -r -a additional_tags <<< "$ADDITIONAL_TAGS"',
+      `oras tag "$IMAGE@$expected_digest" "${'$'}{additional_tags[@]}"`,
+    ].join('\n');
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows Blueprint - Verify Container Artifact Run.
+   *
+   * Confirms every immutable registry tag resolves to the producer digest and
+   * exports that verified digest for provenance and the final latest update.
+   *
+   * @private
+   *
+   * @returns {Cli_Generate_Github_WorkflowsBlueprint_Runner_VerifyContainerArtifactRun_Returns}
+   *
+   * @since 0.26.0
+   */
+  private static verifyContainerArtifactRun(): Cli_Generate_Github_WorkflowsBlueprint_Runner_VerifyContainerArtifactRun_Returns {
+    return [
+      'set -euo pipefail',
+      '',
+      'expected_digest="$(cat "$RUNNER_TEMP/container-oci/container-image.digest")"',
+      'IFS="," read -r -a immutable_tags <<< "$IMMUTABLE_TAGS"',
+      '',
+      `for tag in "${'$'}{immutable_tags[@]}"; do`,
+      '  published_digest="$(oras resolve "$IMAGE:$tag")"',
+      '',
+      '  if [ "$published_digest" != "$expected_digest" ]; then',
+      '    echo "Published digest mismatch for $IMAGE:$tag: got $published_digest, expected $expected_digest." >&2',
+      '    exit 1',
+      '  fi',
+      'done',
+      '',
+      'echo "IMAGE_DIGEST=$expected_digest" >> "$GITHUB_ENV"',
+    ].join('\n');
+  }
+
+  /**
    * CLI - Generate - GitHub - Workflows Blueprint - Build Scope Command.
    *
-   * Emits a scoped workspace command through Nova's dependency-aware runner.
-   * The selected workspaces share one invocation so dependencies are deduplicated.
+   * Emits a lifecycle command that runs the root and the selected workspaces as one
+   * tree. With no workspaces selected, only the root (./) runs.
    *
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ScriptName}     scriptName     - Script name.
    * @param {Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames} workspaceNames - Workspace names.
@@ -2708,9 +3216,10 @@ export class Runner {
    * @since 0.26.0
    */
   private static buildScopeCommand(scriptName: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_ScriptName, workspaceNames: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceNames, packageManager: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_PackageManager): Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_Returns {
-    const workspaceFlags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags = workspaceNames.map((workspaceName) => `--workspace ${workspaceName}`).join(' ');
+    const selectedNames: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_SelectedNames = (workspaceNames.length > 0) ? workspaceNames : ['./'];
+    const workspaceFlags: Cli_Generate_Github_WorkflowsBlueprint_Runner_BuildScopeCommand_WorkspaceFlags = selectedNames.map((workspaceName) => `--workspace ${workspaceName}`).join(' ');
 
-    return `${packageManager} run ${scriptName}:workspaces -- ${workspaceFlags}`;
+    return `${packageManager} run ${scriptName} -- ${workspaceFlags}`;
   }
 
   /**

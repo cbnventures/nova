@@ -325,19 +325,6 @@ export type Lib_Utility_ExecuteShell_QuotePosix = (posixString: Lib_Utility_Exec
 
 export type Lib_Utility_ExecuteShell_QuotePosix_Pattern = RegExp;
 
-/**
- * Lib - Utility - Execute Shell - Quote Windows.
- *
- * @since 0.11.0
- */
-export type Lib_Utility_ExecuteShell_WindowsString = string;
-
-export type Lib_Utility_ExecuteShell_QuoteWindows_Returns = string;
-
-export type Lib_Utility_ExecuteShell_QuoteWindows = (windowsString: Lib_Utility_ExecuteShell_WindowsString) => Lib_Utility_ExecuteShell_QuoteWindows_Returns;
-
-export type Lib_Utility_ExecuteShell_QuoteWindows_Pattern = RegExp;
-
 export type Lib_Utility_ExecuteShell_ExecResult_Stdout = string;
 
 export type Lib_Utility_ExecuteShell_ExecResult_Stderr = string;

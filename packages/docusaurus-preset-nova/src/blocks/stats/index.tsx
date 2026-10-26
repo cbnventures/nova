@@ -37,7 +37,7 @@ function BlocksStats(props: Blocks_Stats_Index_BlocksStats_Props) {
             <div className="nova-stats-grid nova-grid">
               {
                 props['items'].map((statsItem) => (
-                  <div className="nova-stat nova-col-6 nova-col-sm-3" key={statsItem['value']}>
+                  <div className="nova-stat nova-col-6 nova-col-sm-3" key={statsItem['label']}>
                     <p
                       className={[
                         'nova-stat-value',
@@ -71,7 +71,7 @@ function BlocksStats(props: Blocks_Stats_Index_BlocksStats_Props) {
           <div className="nova-stats-grid nova-grid">
             {
               props['items'].map((statsItem) => (
-                <div className="nova-stat nova-col-6 nova-col-sm-3" key={statsItem['value']}>
+                <div className="nova-stat nova-col-6 nova-col-sm-3" key={statsItem['label']}>
                   <p
                     className={[
                       'nova-stat-value',

@@ -17,6 +17,20 @@ import {
 import { isPlainObject } from './utility.js';
 
 import type {
+  Lib_RunWorkspaces_Runner_AddRootTasks_IsParallel,
+  Lib_RunWorkspaces_Runner_AddRootTasks_Key,
+  Lib_RunWorkspaces_Runner_AddRootTasks_Prefix,
+  Lib_RunWorkspaces_Runner_AddRootTasks_PreviousKey,
+  Lib_RunWorkspaces_Runner_AddRootTasks_Returns,
+  Lib_RunWorkspaces_Runner_AddRootTasks_Root,
+  Lib_RunWorkspaces_Runner_AddRootTasks_RootScriptCommand,
+  Lib_RunWorkspaces_Runner_AddRootTasks_RootScriptName,
+  Lib_RunWorkspaces_Runner_AddRootTasks_Script,
+  Lib_RunWorkspaces_Runner_AddRootTasks_Task,
+  Lib_RunWorkspaces_Runner_AddRootTasks_Tasks,
+  Lib_RunWorkspaces_Runner_AddRootTasks_TypedRootScriptEntry,
+  Lib_RunWorkspaces_Runner_AddRootTasks_WorkspaceKeys,
+  Lib_RunWorkspaces_Runner_AddRootTasks_WorkspaceTask,
   Lib_RunWorkspaces_Runner_AddTask_DependencyBuildKey,
   Lib_RunWorkspaces_Runner_AddTask_DependencyWorkspace,
   Lib_RunWorkspaces_Runner_AddTask_ExistingTask,
@@ -138,16 +152,23 @@ import type {
   Lib_RunWorkspaces_Runner_LoadProject_Directory,
   Lib_RunWorkspaces_Runner_LoadProject_ExistingWorkspace,
   Lib_RunWorkspaces_Runner_LoadProject_InternalDependencies,
+  Lib_RunWorkspaces_Runner_LoadProject_IsNestedRun,
   Lib_RunWorkspaces_Runner_LoadProject_LoadedWorkspaces,
   Lib_RunWorkspaces_Runner_LoadProject_PackageJson,
   Lib_RunWorkspaces_Runner_LoadProject_PackageJsonPath,
   Lib_RunWorkspaces_Runner_LoadProject_PackageJsonRaw,
   Lib_RunWorkspaces_Runner_LoadProject_PackageManagerDescriptor,
   Lib_RunWorkspaces_Runner_LoadProject_Returns,
+  Lib_RunWorkspaces_Runner_LoadProject_Root,
+  Lib_RunWorkspaces_Runner_LoadProject_RootName,
+  Lib_RunWorkspaces_Runner_LoadProject_RootOrder,
+  Lib_RunWorkspaces_Runner_LoadProject_RootScripts,
+  Lib_RunWorkspaces_Runner_LoadProject_RootScriptsValue,
   Lib_RunWorkspaces_Runner_LoadProject_ScriptCommand,
   Lib_RunWorkspaces_Runner_LoadProject_ScriptName,
   Lib_RunWorkspaces_Runner_LoadProject_Scripts,
   Lib_RunWorkspaces_Runner_LoadProject_ScriptsValue,
+  Lib_RunWorkspaces_Runner_LoadProject_TypedRootScriptEntry,
   Lib_RunWorkspaces_Runner_LoadProject_TypedScriptEntry,
   Lib_RunWorkspaces_Runner_LoadProject_TypedWorkspaceEntry,
   Lib_RunWorkspaces_Runner_LoadProject_WorkspaceConfig,
@@ -165,6 +186,15 @@ import type {
   Lib_RunWorkspaces_Runner_ResolveConcurrency_ConfiguredConcurrency,
   Lib_RunWorkspaces_Runner_ResolveConcurrency_Returns,
   Lib_RunWorkspaces_Runner_ResolveConcurrency_Task,
+  Lib_RunWorkspaces_Runner_ResolveRootSelection_Excluded,
+  Lib_RunWorkspaces_Runner_ResolveRootSelection_ExcludedNames,
+  Lib_RunWorkspaces_Runner_ResolveRootSelection_IsRootExcluded,
+  Lib_RunWorkspaces_Runner_ResolveRootSelection_IsRootRequestedAlone,
+  Lib_RunWorkspaces_Runner_ResolveRootSelection_Requested,
+  Lib_RunWorkspaces_Runner_ResolveRootSelection_RequestedNames,
+  Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns,
+  Lib_RunWorkspaces_Runner_ResolveRootSelection_Root,
+  Lib_RunWorkspaces_Runner_ResolveRootSelection_RootIdentifiers,
   Lib_RunWorkspaces_Runner_Run_BufferMs,
   Lib_RunWorkspaces_Runner_Run_Concurrency,
   Lib_RunWorkspaces_Runner_Run_EffectiveConcurrency,
@@ -176,6 +206,7 @@ import type {
   Lib_RunWorkspaces_Runner_Run_Plan,
   Lib_RunWorkspaces_Runner_Run_Project,
   Lib_RunWorkspaces_Runner_Run_Returns,
+  Lib_RunWorkspaces_Runner_Run_RootSelection,
   Lib_RunWorkspaces_Runner_Run_ScriptArgs,
   Lib_RunWorkspaces_Runner_Run_SelectedWorkspaces,
   Lib_RunWorkspaces_Runner_Run_Task,
@@ -305,12 +336,21 @@ export class Runner {
 
       const nodeEnv: Lib_RunWorkspaces_Runner_Run_NodeEnv = nodeEnvOption;
       const project: Lib_RunWorkspaces_Runner_Run_Project = await Runner.loadProject();
-      const selectedWorkspaces: Lib_RunWorkspaces_Runner_Run_SelectedWorkspaces = Runner.selectWorkspaces(
-        project['workspaces'],
+      const rootSelection: Lib_RunWorkspaces_Runner_Run_RootSelection = Runner.resolveRootSelection(
+        project['root'],
         options['workspace'],
         options['excludeWorkspace'],
       );
+      const selectedWorkspaces: Lib_RunWorkspaces_Runner_Run_SelectedWorkspaces = (rootSelection['rootOnly'] === true) ? [] : Runner.selectWorkspaces(
+        project['workspaces'],
+        rootSelection['requested'],
+        rootSelection['excluded'],
+      );
       const plan: Lib_RunWorkspaces_Runner_Run_Plan = Runner.buildPlan(project['workspaces'], selectedWorkspaces, task);
+
+      if (project['root'] !== undefined && rootSelection['includeRoot'] === true) {
+        Runner.addRootTasks(plan['tasks'], project['root'], task);
+      }
       const orderedTasks: Lib_RunWorkspaces_Runner_Run_OrderedTasks = Runner.sortTasks(plan['tasks']);
 
       for (const skipped of plan['skipped']) {
@@ -397,9 +437,12 @@ export class Runner {
     let cacheSettings: Lib_RunWorkspaces_Runner_LoadProject_CacheSettings = undefined;
     let concurrencySettings: Lib_RunWorkspaces_Runner_LoadProject_ConcurrencySettings = undefined;
 
+    let rootOrder: Lib_RunWorkspaces_Runner_LoadProject_RootOrder = 'first';
+
     if (config['settings'] !== undefined && config['settings']['runWorkspaces'] !== undefined) {
       cacheSettings = config['settings']['runWorkspaces']['cache'];
       concurrencySettings = config['settings']['runWorkspaces']['concurrency'];
+      rootOrder = config['settings']['runWorkspaces']['root'] ?? 'first';
     }
 
     let cacheDirectoryValue: Lib_RunWorkspaces_Runner_LoadProject_CacheDirectoryValue = './node_modules/.cache/nova/run-workspaces';
@@ -499,6 +542,35 @@ export class Runner {
 
     Runner.detectDependencyCycles(workspaces);
 
+    const rootScriptsValue: Lib_RunWorkspaces_Runner_LoadProject_RootScriptsValue = packageJson['scripts'];
+    const rootScripts: Lib_RunWorkspaces_Runner_LoadProject_RootScripts = {};
+
+    if (isPlainObject(rootScriptsValue) === true) {
+      for (const rootScriptEntry of Object.entries(rootScriptsValue)) {
+        const typedRootScriptEntry: Lib_RunWorkspaces_Runner_LoadProject_TypedRootScriptEntry = rootScriptEntry;
+
+        if (typeof typedRootScriptEntry[1] === 'string') {
+          Reflect.set(rootScripts, typedRootScriptEntry[0], typedRootScriptEntry[1]);
+        }
+      }
+    }
+
+    const rootName: Lib_RunWorkspaces_Runner_LoadProject_RootName = (typeof packageJson['name'] === 'string' && packageJson['name'].length > 0) ? packageJson['name'] : './';
+
+    // A run started from inside the tree, or by a legacy "<task>:workspaces" script, must not
+    // add the root again, or its steps would run twice.
+    const isNestedRun: Lib_RunWorkspaces_Runner_LoadProject_IsNestedRun = (
+      process.env['NOVA_WORKSPACE_RUNNER'] === 'true'
+      || (process.env['npm_lifecycle_event'] ?? '').endsWith(':workspaces') === true
+    );
+    const root: Lib_RunWorkspaces_Runner_LoadProject_Root = (rootOrder === 'skip' || isNestedRun === true) ? undefined : {
+      path: './',
+      directory: currentDirectory,
+      name: rootName,
+      scripts: rootScripts,
+      dependencies: [],
+    };
+
     return {
       cache,
       concurrency,
@@ -506,6 +578,7 @@ export class Runner {
       packageManagerDescriptor: packageManagerDescriptor['value'],
       rootDirectory: currentDirectory,
       workspaces,
+      root,
     };
   }
 
@@ -617,6 +690,41 @@ export class Runner {
   }
 
   /**
+   * Lib - Run Workspaces - Resolve Root Selection.
+   *
+   * Pulls the root node out of the --workspace and --exclude-workspace lists. Filtering
+   * by workspace keeps the root, and only an explicit exclusion leaves it out.
+   *
+   * @param {Lib_RunWorkspaces_Runner_ResolveRootSelection_Root}      root      - Root.
+   * @param {Lib_RunWorkspaces_Runner_ResolveRootSelection_Requested} requested - Requested.
+   * @param {Lib_RunWorkspaces_Runner_ResolveRootSelection_Excluded}  excluded  - Excluded.
+   *
+   * @private
+   *
+   * @returns {Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns}
+   *
+   * @since 0.34.0
+   */
+  private static resolveRootSelection(root: Lib_RunWorkspaces_Runner_ResolveRootSelection_Root, requested: Lib_RunWorkspaces_Runner_ResolveRootSelection_Requested, excluded: Lib_RunWorkspaces_Runner_ResolveRootSelection_Excluded): Lib_RunWorkspaces_Runner_ResolveRootSelection_Returns {
+    // "./" always means the root, so a root-only selection still works when the root is skipped.
+    const rootIdentifiers: Lib_RunWorkspaces_Runner_ResolveRootSelection_RootIdentifiers = (root === undefined) ? ['./'] : [
+      root['name'],
+      './',
+    ];
+    const requestedNames: Lib_RunWorkspaces_Runner_ResolveRootSelection_RequestedNames = (requested ?? []).filter((name) => rootIdentifiers.includes(name) === false);
+    const excludedNames: Lib_RunWorkspaces_Runner_ResolveRootSelection_ExcludedNames = (excluded ?? []).filter((name) => rootIdentifiers.includes(name) === false);
+    const isRootExcluded: Lib_RunWorkspaces_Runner_ResolveRootSelection_IsRootExcluded = (excluded ?? []).some((name) => rootIdentifiers.includes(name));
+    const isRootRequestedAlone: Lib_RunWorkspaces_Runner_ResolveRootSelection_IsRootRequestedAlone = (requested ?? []).length > 0 && requestedNames.length === 0;
+
+    return {
+      includeRoot: isRootExcluded === false,
+      rootOnly: isRootRequestedAlone,
+      requested: (requestedNames.length > 0) ? requestedNames : undefined,
+      excluded: (excludedNames.length > 0) ? excludedNames : undefined,
+    };
+  }
+
+  /**
    * Lib - Run Workspaces - Select Workspaces.
    *
    * Applies explicit include and exclude filters against both Nova paths and
@@ -692,6 +800,76 @@ export class Runner {
   }
 
   /**
+   * Lib - Run Workspaces - Add Root Tasks.
+   *
+   * Adds the root node's own "<script>:*" steps in package.json order. Sequential
+   * lifecycles chain them and make every workspace task wait for the last one.
+   *
+   * @param {Lib_RunWorkspaces_Runner_AddRootTasks_Tasks}  tasks  - Tasks.
+   * @param {Lib_RunWorkspaces_Runner_AddRootTasks_Root}   root   - Root.
+   * @param {Lib_RunWorkspaces_Runner_AddRootTasks_Script} script - Script.
+   *
+   * @private
+   *
+   * @returns {Lib_RunWorkspaces_Runner_AddRootTasks_Returns}
+   *
+   * @since 0.34.0
+   */
+  private static addRootTasks(tasks: Lib_RunWorkspaces_Runner_AddRootTasks_Tasks, root: Lib_RunWorkspaces_Runner_AddRootTasks_Root, script: Lib_RunWorkspaces_Runner_AddRootTasks_Script): Lib_RunWorkspaces_Runner_AddRootTasks_Returns {
+    const prefix: Lib_RunWorkspaces_Runner_AddRootTasks_Prefix = `${script}:`;
+    const isParallel: Lib_RunWorkspaces_Runner_AddRootTasks_IsParallel = script === 'dev' || script === 'clean';
+    const workspaceKeys: Lib_RunWorkspaces_Runner_AddRootTasks_WorkspaceKeys = [...tasks.keys()];
+    let previousKey: Lib_RunWorkspaces_Runner_AddRootTasks_PreviousKey = undefined;
+
+    for (const rootScriptEntry of Object.entries(root['scripts'])) {
+      const typedRootScriptEntry: Lib_RunWorkspaces_Runner_AddRootTasks_TypedRootScriptEntry = rootScriptEntry;
+      const rootScriptName: Lib_RunWorkspaces_Runner_AddRootTasks_RootScriptName = typedRootScriptEntry[0];
+      const rootScriptCommand: Lib_RunWorkspaces_Runner_AddRootTasks_RootScriptCommand = typedRootScriptEntry[1];
+
+      if (rootScriptName.startsWith(prefix) === false) {
+        continue;
+      }
+
+      // The legacy "<script>:workspaces" dispatcher would run every workspace a second time.
+      if (rootScriptName === `${script}:workspaces`) {
+        continue;
+      }
+
+      const key: Lib_RunWorkspaces_Runner_AddRootTasks_Key = Runner.taskKey(root['name'], rootScriptName);
+      const task: Lib_RunWorkspaces_Runner_AddRootTasks_Task = {
+        key,
+        label: key,
+        script: rootScriptName,
+        command: rootScriptCommand,
+        workspaceName: root['name'],
+        directory: root['directory'],
+        dependencies: new Set(),
+        cacheable: false,
+      };
+
+      if (isParallel === false && previousKey !== undefined) {
+        task['dependencies'].add(previousKey);
+      }
+
+      tasks.set(key, task);
+
+      previousKey = key;
+    }
+
+    if (isParallel === false && previousKey !== undefined) {
+      for (const workspaceKey of workspaceKeys) {
+        const workspaceTask: Lib_RunWorkspaces_Runner_AddRootTasks_WorkspaceTask = tasks.get(workspaceKey);
+
+        if (workspaceTask !== undefined) {
+          workspaceTask['dependencies'].add(previousKey);
+        }
+      }
+    }
+
+    return;
+  }
+
+  /**
    * Lib - Run Workspaces - Add Task.
    *
    * Adds one task and recursively adds Nova's lifecycle prerequisites: upstream
@@ -728,6 +906,7 @@ export class Runner {
       workspaceName: workspace['name'],
       directory: workspace['directory'],
       dependencies: new Set(),
+      cacheable: true,
     };
 
     tasks.set(key, task);
@@ -1184,6 +1363,7 @@ export class Runner {
     const hasAllDependencyDigests: Lib_RunWorkspaces_Runner_RunTask_HasAllDependencyDigests = dependencyStateDigests.size === task['dependencies'].size;
     const cacheCandidate: Lib_RunWorkspaces_Runner_RunTask_CacheCandidate = (
       cache['enabled'] === true
+      && task['cacheable'] === true
       && cache['scripts'].has(task['script']) === true
       && hasAllDependencyDigests === true
     );
@@ -1418,6 +1598,14 @@ export class Runner {
 
     if (result['status'] !== 'succeeded') {
       return result;
+    }
+
+    // Root steps produce nothing a workspace consumes, so a fixed digest keeps dependents cacheable.
+    if (task['cacheable'] === false) {
+      return {
+        ...result,
+        stateDigest: 'root-step',
+      };
     }
 
     try {

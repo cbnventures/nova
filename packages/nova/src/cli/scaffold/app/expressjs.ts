@@ -31,6 +31,10 @@ export class Runner {
   public static async run(options: Cli_Scaffold_App_Expressjs_Runner_Run_Options): Cli_Scaffold_App_Expressjs_Runner_Run_Returns {
     if (options['dockerImage'] === true) {
       await runScaffold(options, {
+        allowScriptProfiles: [
+          'esbuild',
+          'file-watching',
+        ],
         category: 'app',
         displayName: 'Express.js',
         environmentVariables: [{
@@ -50,12 +54,14 @@ export class Runner {
         }],
         templateSubpath: 'scaffold/app/express',
         typeName: 'express',
-        workspaceFinalizer: async (workspaceDirectory) => {
+        projectFinalizer: async (workspaceDirectory, workspaceName, configRoot) => {
           await LibDockerPackaging.generateForTarget({
             profile: 'http-service',
+            projectDirectory: configRoot,
             reportFiles: false,
             replaceFile: true,
             workspaceDirectory,
+            workspaceName,
           });
 
           return;
@@ -66,6 +72,10 @@ export class Runner {
     }
 
     await runScaffold(options, {
+      allowScriptProfiles: [
+        'esbuild',
+        'file-watching',
+      ],
       category: 'app',
       displayName: 'Express.js',
       environmentVariables: [{

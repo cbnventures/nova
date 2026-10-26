@@ -32,6 +32,8 @@ export type Lib_TypeCheck_GetConfigPath_Returns = string | undefined;
 
 export type Lib_TypeCheck_GetConfigPath_Resolved = string;
 
+export type Lib_TypeCheck_GetConfigPath_Discovered = string | undefined;
+
 /**
  * Lib - Type Check - Get Diagnostics.
  *
@@ -52,6 +54,32 @@ export type Lib_TypeCheck_GetDiagnostics_TypedSourceFile = SourceFile;
 export type Lib_TypeCheck_GetDiagnostics_FileName = string;
 
 export type Lib_TypeCheck_GetDiagnostics_IsProjectOwned = boolean;
+
+/**
+ * Lib - Type Check - Is Project Owned File.
+ *
+ * @since 0.34.0
+ */
+export type Lib_TypeCheck_IsProjectOwnedFile_FileName = string;
+
+export type Lib_TypeCheck_IsProjectOwnedFile_CurrentDirectory = string;
+
+export type Lib_TypeCheck_IsProjectOwnedFile_Returns = boolean;
+
+export type Lib_TypeCheck_IsProjectOwnedFile_RelativeFileName = string;
+
+export type Lib_TypeCheck_IsProjectOwnedFile_NormalizedRelativeFileName = string;
+
+export type Lib_TypeCheck_IsProjectOwnedFile_RelativeSegments = string[];
+
+/**
+ * Lib - Type Check - Normalize Diagnostic File Name.
+ *
+ * @since 0.34.0
+ */
+export type Lib_TypeCheck_NormalizeDiagnosticFileName_FileName = string;
+
+export type Lib_TypeCheck_NormalizeDiagnosticFileName_Returns = string;
 
 /**
  * Lib - Type Check - Print Diagnostics.

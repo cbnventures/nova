@@ -1,0 +1,47 @@
+---
+id: "creative-assets"
+title: "Creative Assets"
+description: "Replace selected App Store creative assets from repository-owned images."
+keywords:
+  - "nova"
+  - "app store connect"
+  - "creative assets"
+tags:
+  - "cli"
+  - "integration"
+  - "app-store-connect"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Replace selected App Store creative assets from `assets/app-store-connect/{workspace}/creative-assets`.
+
+```text
+ios/<locale>/product-page-header/header.png
+ios/<locale>/search-results/search.png
+```
+
+Each target accepts exactly one PNG or JPEG. Nova uses Apple's placement names directly, leaves absent targets untouched, and rejects existing empty or multi-file targets before authentication.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova integration app-store-connect creative-assets [options]
+    nova int asc creative-assets [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest integration app-store-connect creative-assets [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+The command uses the same workspace, version, platform, locale, credential, dry-run, and confirmation options as [`metadata`](../metadata/). The complete replacement plan is shown before authentication or remote changes.

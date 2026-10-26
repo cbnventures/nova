@@ -26,7 +26,12 @@ import type {
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_FilePath,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasBindingGyp,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_IsNovaBootstrap,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_KeptWorkspaceDispatchers,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyRootScripts,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyScriptCommand,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyScriptName,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Manifest,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MigratedRootScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MissingCanonicalRootScriptEntries,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedPackageScriptEntries,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_NormalizedPackageScripts,
@@ -39,6 +44,8 @@ import type {
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageGypfile,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageScripts,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ParentRunsTree,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ParentScriptName,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PortableScriptCommand,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PortableScriptCommandsChanged,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Returns,
@@ -49,6 +56,7 @@ import type {
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptRunnerPrefix,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_SingleQuotedPattern,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedCanonicalRootScriptEntry,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedLegacyRootScriptEntry,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedNormalizedPackageScriptEntry,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Workspace,
   Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_ConfigRecipes,
@@ -284,10 +292,25 @@ export class Runner {
     }
 
     if (manifest['role'] === 'project') {
-      const isNovaBootstrap: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_IsNovaBootstrap = typeof normalizedPackageScripts['dev'] === 'string' && normalizedPackageScripts['dev'].includes('node ./scripts/nova-run-scripts.mjs');
+      const isNovaBootstrap: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_IsNovaBootstrap = typeof normalizedPackageScripts['dev'] === 'string' && (
+        normalizedPackageScripts['dev'].includes('node ./scripts/nova-run-scripts.mjs')
+        || normalizedPackageScripts['dev'].includes('node ./scripts/nova-run-workspaces.mjs')
+      );
       const runnerPrefix: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_RunnerPrefix = (isNovaBootstrap === true) ? 'node ./scripts/nova-run-workspaces.mjs' : 'nova utility run-workspaces';
       const scriptRunnerPrefix: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptRunnerPrefix = (isNovaBootstrap === true) ? 'node ./scripts/nova-run-scripts.mjs' : 'nova utility run-scripts';
       const canonicalRootScripts: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalRootScripts = {
+        'dev': `${runnerPrefix} --node-env development dev`,
+        'prod': `${runnerPrefix} --node-env production prod`,
+        'check': `${runnerPrefix} check`,
+        'build': `${runnerPrefix} --node-env production build`,
+        'deploy': `${runnerPrefix} --node-env production deploy`,
+        'clean': `${runnerPrefix} clean`,
+        'changelog': 'nova utility changelog',
+        'recipes': 'nova utility run-recipes --replace-file',
+      };
+
+      // Root scripts generated before the root became a node in the workspace tree.
+      const legacyRootScripts: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyRootScripts = {
         'dev': `${scriptRunnerPrefix} --parallel --node-env development "dev:*"`,
         'dev:workspaces': `${runnerPrefix} --node-env development dev`,
         'prod': `${scriptRunnerPrefix} --sequential --node-env production "prod:*"`,
@@ -300,9 +323,53 @@ export class Runner {
         'deploy:workspaces': `${runnerPrefix} --node-env production deploy`,
         'clean': `${scriptRunnerPrefix} --parallel "clean:*"`,
         'clean:workspaces': `${runnerPrefix} clean`,
-        'changelog': 'nova utility changelog',
-        'recipes': 'nova utility run-recipes --replace-file',
       };
+      let migratedRootScripts: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MigratedRootScripts = false;
+
+      for (const legacyRootScriptEntry of Object.entries(legacyRootScripts)) {
+        const typedLegacyRootScriptEntry: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedLegacyRootScriptEntry = legacyRootScriptEntry;
+        const legacyScriptName: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyScriptName = typedLegacyRootScriptEntry[0];
+        const legacyScriptCommand: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyScriptCommand = typedLegacyRootScriptEntry[1];
+
+        // Only exact generated commands move. Customized scripts stay as written.
+        if (normalizedPackageScripts[legacyScriptName] !== legacyScriptCommand) {
+          continue;
+        }
+
+        if (legacyScriptName.endsWith(':workspaces') === true) {
+          const parentScriptName: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ParentScriptName = legacyScriptName.slice(0, -':workspaces'.length);
+          const parentRunsTree: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ParentRunsTree = String(normalizedPackageScripts[parentScriptName]).includes('run-workspaces');
+
+          // A customized parent may still call this dispatcher, so it stays until the parent runs the tree.
+          if (parentRunsTree === false) {
+            continue;
+          }
+
+          Reflect.deleteProperty(normalizedPackageScripts, legacyScriptName);
+        } else {
+          Reflect.set(normalizedPackageScripts, legacyScriptName, canonicalRootScripts[legacyScriptName]);
+        }
+
+        migratedRootScripts = true;
+      }
+
+      if (migratedRootScripts === true) {
+        Reflect.set(fileContents, 'scripts', normalizedPackageScripts);
+
+        Logger.customize({
+          name: 'Runner.handle',
+          purpose: 'scripts',
+        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Moving Nova root scripts onto the workspace tree ...`);
+      }
+
+      const keptWorkspaceDispatchers: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_KeptWorkspaceDispatchers = Object.keys(legacyRootScripts).filter((scriptName) => scriptName.endsWith(':workspaces') === true && Reflect.has(normalizedPackageScripts, scriptName) === true);
+
+      for (const keptWorkspaceDispatcher of keptWorkspaceDispatchers) {
+        Logger.customize({
+          name: 'Runner.handle',
+          purpose: 'scripts',
+        }).warn(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Kept customized "${keptWorkspaceDispatcher}". The workspace tree skips it, so move anything it adds into the lifecycle script.`);
+      }
       const canonicalRootScriptEntries: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalRootScriptEntries = Object.entries(canonicalRootScripts);
       const missingCanonicalRootScriptEntries: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MissingCanonicalRootScriptEntries = canonicalRootScriptEntries.filter((canonicalRootScriptEntry) => Object.hasOwn(normalizedPackageScripts, canonicalRootScriptEntry[0]) === false);
 

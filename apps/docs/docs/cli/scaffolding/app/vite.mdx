@@ -27,7 +27,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 1. Selects one reviewed framework layer—Vanilla TypeScript, React, Vue, or Svelte—without copying an upstream preset wholesale.
 2. Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
 3. Provides `dev`, `prod`, `check`, `build`, and `clean` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner; the child steps run Vite and TypeScript directly.
-4. Optionally adds an auto-updating service worker and an unprivileged NGINX production image.
+4. Optionally adds an auto-updating service worker and a supervised static service in the repository-wide s6 image.
 5. Composes Nova's ESLint and TSConfig framework presets, enables all Nova rules, and includes Vitest for every framework choice.
 
 ## Requirements
@@ -75,7 +75,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 | `--output <dir>`                            | Output directory.                                                    |
 | `--framework <vanilla\|react\|vue\|svelte>` | Framework layer; defaults to `vanilla`.                              |
 | `--pwa`                                     | Add an auto-updating progressive web app service worker.             |
-| `--docker-image`                            | Serve the production `dist` directory from unprivileged NGINX.       |
+| `--docker-image`                            | Add the production `dist` directory to the repository-wide s6 image. |
 
 ## Output Structure
 
@@ -98,6 +98,10 @@ You can run this directly from an empty location; `scaffold starter base` is not
 │           └── {framework component}
 └── packages/
 ```
+
+With `--docker-image`, Nova adds root `.dockerignore`, `Dockerfile`, and `compose.yml` entry points plus private assembly files under `packages/docker`. The built Vite site runs as a supervised static service inside the repository's one s6 image.
+
+See [Docker Images](/docs/cli/scaffolding/docker-images) for the shared runtime and layout contract.
 
 ## Config Fields
 

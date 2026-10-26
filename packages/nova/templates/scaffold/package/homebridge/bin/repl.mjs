@@ -2,7 +2,10 @@
 
 import { existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import {
+  fileURLToPath,
+  pathToFileURL,
+} from 'node:url';
 
 /**
  * Repl - Root.
@@ -30,4 +33,4 @@ if (existsSync(entry) === false) {
   throw new Error('REPL build output not found');
 }
 
-await import(entry);
+await import(pathToFileURL(entry).href);

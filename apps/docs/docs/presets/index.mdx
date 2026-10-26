@@ -185,22 +185,20 @@ This example shows a minimal Node.js project using TypeScript, composed with Nov
 
 Every generated monorepo root has ESLint, TSConfig, and Vitest, even when it starts with no workspace. Every JavaScript or TypeScript workspace starts with `dxIgnore`, `dxCodeStyle`, `dx-essentials`, and `dx-strict`, enables `novaRules`, and includes a Vitest suite. Native-only workspace code keeps its native toolchain; Nova applies the JavaScript stack only to Node.js helpers that Nova generates.
 
-| Scaffold                 | Additional ESLint layers                                  | Source TSConfig layers            | Test owner                                                                |
-|--------------------------|-----------------------------------------------------------|-----------------------------------|---------------------------------------------------------------------------|
-| Starter - Base           | JavaScript, TypeScript, Node                              | Node                              | Vitest at the root                                                        |
-| App - Android            | JavaScript, TypeScript, Node for helper scripts           | Node for helper scripts           | Vitest for helpers; Gradle for native code                                |
-| App - Apple              | None inside the native workspace                          | None inside the native workspace  | XCTest; the monorepo root still uses Vitest                               |
-| App - Astro              | JavaScript, TypeScript, Astro, Browser                    | Browser, Astro                    | Vitest                                                                    |
-| App - Cloudflare Workers | JavaScript, TypeScript, Cloudflare Workers                | Cloudflare Workers                | Vitest                                                                    |
-| App - Discord Bot        | JavaScript, TypeScript, Node                              | Node                              | Vitest                                                                    |
-| App - Docker Image       | JavaScript, TypeScript, Node                              | Node for tooling                  | Vitest                                                                    |
-| App - Express.js         | JavaScript, TypeScript, Express.js, Node                  | Node, Express.js                  | Vitest                                                                    |
-| App - Next.js            | JavaScript, TypeScript, Next.js                           | Browser, Next.js                  | Vitest                                                                    |
-| App - Vite               | JavaScript, TypeScript, Browser, Vite, selected framework | Browser, Vite, selected framework | Vitest                                                                    |
-| Docs - Docusaurus        | JavaScript, MDX, TypeScript, Docusaurus, Browser          | Browser, Docusaurus               | Vitest and Nova documentation suites                                      |
-| Package - GitHub Action  | JavaScript, TypeScript, Node                              | Node                              | Vitest                                                                    |
-| Package - Homebridge     | JavaScript, TypeScript, Node                              | Node, Homebridge                  | Vitest                                                                    |
-| Package - Node CLI       | JavaScript, TypeScript, Node                              | Node                              | Vitest                                                                    |
-| Package - pfSense        | JavaScript, TypeScript, Node for packaging helpers        | Node for packaging helpers        | Vitest for helpers; package-specific structural checks for native sources |
+| Scaffold                | Additional ESLint layers                                  | Workspace TSConfig roles                   | Test owner                                                                |
+|-------------------------|-----------------------------------------------------------|--------------------------------------------|---------------------------------------------------------------------------|
+| Starter - Base          | JavaScript, TypeScript, Node                              | `role-config`, `role-tests`                | Vitest at the root                                                        |
+| App - Android           | JavaScript, TypeScript, Node for helper scripts           | `role-scripts`, `role-tests`               | Vitest for helpers; Gradle for native code                                |
+| App - Apple             | JavaScript, TypeScript, Node for helper scripts           | `role-scripts`, `role-tests`               | Vitest for helpers; XCTest for native code                                |
+| App - Astro             | JavaScript, TypeScript, Astro, Browser                    | `role-app`, `role-config`, `role-tests`    | Vitest                                                                    |
+| App - Discord Bot       | JavaScript, TypeScript, Node                              | `role-source`, `role-config`, `role-tests` | Vitest                                                                    |
+| App - Express.js        | JavaScript, TypeScript, Express.js, Node                  | `role-source`, `role-config`, `role-tests` | Vitest                                                                    |
+| App - Next.js           | JavaScript, TypeScript, Next.js                           | `role-app`, `role-config`, `role-tests`    | Vitest                                                                    |
+| App - Vite              | JavaScript, TypeScript, Browser, Vite, selected framework | `role-app`                                 | Vitest                                                                    |
+| Docs - Docusaurus       | JavaScript, MDX, TypeScript, Docusaurus, Browser          | `role-app`                                 | Vitest and Nova documentation suites                                      |
+| Package - GitHub Action | JavaScript, TypeScript, Node                              | `role-source`, `role-config`, `role-tests` | Vitest                                                                    |
+| Package - Homebridge    | JavaScript, TypeScript, Node                              | `role-source`, `role-config`, `role-tests` | Vitest                                                                    |
+| Package - pfSense       | JavaScript, TypeScript, Node for packaging helpers        | `role-scripts`, `role-tests`               | Vitest for helpers; package-specific structural checks for native sources |
+| Tool - Serverless       | JavaScript, TypeScript, Node, selected deployment runtime | `role-source`, `role-config`, `role-tests` | Vitest                                                                    |
 
 > Looking for individual custom ESLint rules and their options? See **[Nova Rules](/docs/rules/)**.

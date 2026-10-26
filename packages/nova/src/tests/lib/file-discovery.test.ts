@@ -70,9 +70,9 @@ describe('discoverContentFiles', async () => {
       ],
     });
 
-    strictEqual(filteredFiles.includes(join('docs', 'one.md')), true);
-    strictEqual(filteredFiles.includes(join('docs', 'two.mdx')), true);
-    strictEqual(filteredFiles.includes(join('docs', 'note.txt')), false);
+    strictEqual(filteredFiles.includes('docs/one.md'), true);
+    strictEqual(filteredFiles.includes('docs/two.mdx'), true);
+    strictEqual(filteredFiles.includes('docs/note.txt'), false);
 
     return;
   });
@@ -87,7 +87,7 @@ describe('discoverContentFiles', async () => {
       ],
     });
 
-    strictEqual(nestedFiles.includes(join('docs', 'nested', 'deep.md')), true);
+    strictEqual(nestedFiles.includes('docs/nested/deep.md'), true);
 
     return;
   });
@@ -105,7 +105,7 @@ describe('discoverContentFiles', async () => {
       ],
     });
 
-    strictEqual(missingFiles.includes(join('docs', 'one.md')), true);
+    strictEqual(missingFiles.includes('docs/one.md'), true);
     strictEqual(missingFiles.some((missingFile) => missingFile.startsWith('blog')), false);
 
     return;

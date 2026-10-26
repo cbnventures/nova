@@ -4,7 +4,10 @@ import {
   PageMetadata,
   useThemeConfig,
 } from '@docusaurus/theme-common';
-import { DEFAULT_SEARCH_TAG } from '@docusaurus/theme-common/internal';
+import {
+  DEFAULT_SEARCH_TAG,
+  useAlternatePageUtils,
+} from '@docusaurus/theme-common/internal';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { applyTrailingSlash } from '@docusaurus/utils-common';
@@ -14,12 +17,20 @@ import type {
   Theme_SiteMetadata_Index_MetadataEntry_Content,
   Theme_SiteMetadata_Index_MetadataEntry_Name,
   Theme_SiteMetadata_Index_SiteMetadata,
+  Theme_SiteMetadata_Index_SiteMetadata_AlternatePageUtils,
   Theme_SiteMetadata_Index_SiteMetadata_BaseUrl,
   Theme_SiteMetadata_Index_SiteMetadata_BaseUrlPath,
   Theme_SiteMetadata_Index_SiteMetadata_CanonicalPathname,
   Theme_SiteMetadata_Index_SiteMetadata_CanonicalUrl,
+  Theme_SiteMetadata_Index_SiteMetadata_CurrentHtmlLang,
   Theme_SiteMetadata_Index_SiteMetadata_CurrentLocale,
+  Theme_SiteMetadata_Index_SiteMetadata_CurrentLocaleConfig,
   Theme_SiteMetadata_Index_SiteMetadata_DefaultImage,
+  Theme_SiteMetadata_Index_SiteMetadata_DefaultLocale,
+  Theme_SiteMetadata_Index_SiteMetadata_EntryHtmlLang,
+  Theme_SiteMetadata_Index_SiteMetadata_EntryLocale,
+  Theme_SiteMetadata_Index_SiteMetadata_LocaleConfigs,
+  Theme_SiteMetadata_Index_SiteMetadata_LocaleEntries,
   Theme_SiteMetadata_Index_SiteMetadata_LocationData,
   Theme_SiteMetadata_Index_SiteMetadata_Pathname,
   Theme_SiteMetadata_Index_SiteMetadata_SiteConfig,
@@ -69,6 +80,14 @@ function SiteMetadata() {
 
   const canonicalUrl: Theme_SiteMetadata_Index_SiteMetadata_CanonicalUrl = siteUrl + canonicalPathname;
 
+  // Alternate-language links, as upstream Docusaurus emits them, so search engines pair each translation with the others.
+  const defaultLocale: Theme_SiteMetadata_Index_SiteMetadata_DefaultLocale = siteContext['i18n']['defaultLocale'] as Theme_SiteMetadata_Index_SiteMetadata_DefaultLocale;
+  const localeConfigs: Theme_SiteMetadata_Index_SiteMetadata_LocaleConfigs = siteContext['i18n']['localeConfigs'] as Theme_SiteMetadata_Index_SiteMetadata_LocaleConfigs;
+  const alternatePageUtils: Theme_SiteMetadata_Index_SiteMetadata_AlternatePageUtils = useAlternatePageUtils();
+  const localeEntries: Theme_SiteMetadata_Index_SiteMetadata_LocaleEntries = Object.entries(localeConfigs);
+  const currentLocaleConfig: Theme_SiteMetadata_Index_SiteMetadata_CurrentLocaleConfig = localeConfigs[currentLocale];
+  const currentHtmlLang: Theme_SiteMetadata_Index_SiteMetadata_CurrentHtmlLang = (currentLocaleConfig !== undefined) ? currentLocaleConfig['htmlLang'] : currentLocale;
+
   return (
     <>
       {(defaultImage !== undefined) && (
@@ -78,6 +97,31 @@ function SiteMetadata() {
       <Head>
         <meta property="og:url" content={canonicalUrl} />
         <link rel="canonical" href={canonicalUrl} />
+        {localeEntries.map((localeEntry) => {
+          const entryLocale: Theme_SiteMetadata_Index_SiteMetadata_EntryLocale = localeEntry[0];
+          const entryHtmlLang: Theme_SiteMetadata_Index_SiteMetadata_EntryHtmlLang = localeEntry[1]['htmlLang'];
+
+          return (
+            <link
+              key={entryLocale}
+              rel="alternate"
+              href={alternatePageUtils.createUrl({
+                locale: entryLocale,
+                fullyQualified: true,
+              })}
+              hrefLang={entryHtmlLang}
+            />
+          );
+        })}
+        <link
+          rel="alternate"
+          href={alternatePageUtils.createUrl({
+            locale: defaultLocale,
+            fullyQualified: true,
+          })}
+          hrefLang="x-default"
+        />
+        <meta property="og:locale" content={currentHtmlLang.replace('-', '_')} />
         {siteMetadata.map((metadataEntry) => {
           const metadataEntryName: Theme_SiteMetadata_Index_MetadataEntry_Name = metadataEntry['name'];
           const metadataEntryContent: Theme_SiteMetadata_Index_MetadataEntry_Content = metadataEntry['content'];

@@ -7,6 +7,21 @@ import type {
 } from '../shared.d.ts';
 
 /**
+ * Lib - Release History - Has History.
+ *
+ * @since 0.34.0
+ */
+export type Lib_ReleaseHistory_Runner_HasHistory_WorkspaceDirectory = string;
+
+export type Lib_ReleaseHistory_Runner_HasHistory_Returns = Promise<boolean>;
+
+export type Lib_ReleaseHistory_Runner_HasHistory_ChangelogPath = string;
+
+export type Lib_ReleaseHistory_Runner_HasHistory_Content = string | undefined;
+
+export type Lib_ReleaseHistory_Runner_HasHistory_Lines = string[];
+
+/**
  * Lib - Release History - Validate Strategy.
  *
  * @since 0.26.0

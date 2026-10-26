@@ -1,0 +1,69 @@
+---
+id: "metadata"
+title: "Metadata"
+description: "Update selected localized App Store version metadata from repository-owned JSON files."
+keywords:
+  - "nova"
+  - "app store connect"
+  - "metadata"
+  - "localization"
+tags:
+  - "cli"
+  - "integration"
+  - "app-store-connect"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Update localized App Store version metadata from `assets/app-store-connect/{workspace}/metadata/{platform}/{locale}.json`.
+
+Nova accepts `description`, `keywords`, `marketingUrl`, `promotionalText`, `supportUrl`, and `whatsNew`. A string updates that field. `null` is a local placeholder and is never sent to Apple. Files without any populated editable fields fail before authentication.
+
+## Credentials
+
+Nova discovers App Store Connect API keys only from Apple's conventional `AuthKey_{KEY_ID}.p8` locations:
+
+- `./private_keys`
+- `~/private_keys`
+- `~/.private_keys`
+- `~/.appstoreconnect/private_keys`
+
+Pass `--key-id` when more than one key exists and `--issuer-id` when the selected key requires an issuer. Nova never stores either value in `nova.config.json`.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova integration app-store-connect metadata [options]
+    nova int asc metadata [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest integration app-store-connect metadata [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                                                         |
+|---------------------------|---------------------------------------------------------------------|
+| `--bundle-id <id>`        | Override the bundle identifier derived from the Apple workspace.    |
+| `-d, --dry-run`           | Validate and print the complete plan without authenticating.        |
+| `--issuer-id <id>`        | App Store Connect API issuer ID when required by the selected key.  |
+| `--key-id <id>`           | Select one discovered App Store Connect API key.                    |
+| `--locales <locales>`     | Comma-separated locales to include.                                 |
+| `-n, --non-interactive`   | Disable prompts; mutations also require `-y, --yes`.                |
+| `--platforms <platforms>` | Comma-separated `ios`, `macos`, or `visionos` platforms to include. |
+| `--version <version>`     | Override the marketing version derived from `project.yml`.          |
+| `--workspace <workspace>` | Select a configured Apple workspace by name or path.                |
+| `-y, --yes`               | Confirm the complete mutation plan.                                 |
+
+Only local files and fields in the printed plan are changed. Missing platforms, locales, and fields remain untouched.

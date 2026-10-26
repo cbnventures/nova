@@ -26,7 +26,7 @@ Scaffold an **Astro** application with strict TypeScript checking and an explici
 2. Supports static output, a standalone Node.js server, or Cloudflare Workers without mixing incompatible adapter settings.
 3. Pins Astro's ESM cookie runtime directly so a mixed-framework monorepo cannot hoist an older CommonJS version into Astro's prerender build.
 4. Separates Astro source, Node-based configuration, and Vitest type-checking so one tool's declarations do not leak into another build.
-5. Can package static output or the Node.js server as a reviewed Docker image.
+5. Can contribute static output or the Node.js server to the repository-wide s6 Docker appliance.
 6. Supports both a new monorepo and an additional app workspace through the same command.
 
 ## Requirements
@@ -74,7 +74,7 @@ Scaffold an **Astro** application with strict TypeScript checking and an explici
 | `--output <dir>`               | Output directory.                                                         |
 | `--rendering <static\|server>` | Rendering mode; defaults to `static`.                                     |
 | `--adapter <node\|cloudflare>` | Server adapter when `--rendering server` is selected; defaults to `node`. |
-| `--docker-image`               | Add Docker packaging for static output or the Node.js server.             |
+| `--docker-image`               | Add the static or Node.js service to the repository-wide s6 image.        |
 
 ## Output Files
 
@@ -90,7 +90,9 @@ Scaffold an **Astro** application with strict TypeScript checking and an explici
 | `vitest.config.mts`     | Test discovery scoped to this workspace.                                  |
 | `package.json`          | Astro dependencies and Nova-managed workspace scripts.                    |
 
-When `--docker-image` is enabled, Nova also writes `.dockerignore`, `Dockerfile`, and `compose.yml`. Static sites use an unprivileged NGINX image; Node.js server rendering uses Astro's standalone server output. Cloudflare server rendering cannot be combined with `--docker-image` because Cloudflare owns that runtime.
+When `--docker-image` is enabled, Nova writes `.dockerignore`, `Dockerfile`, and `compose.yml` at the project root and keeps private assembly files under `packages/docker`. Static output becomes a supervised static service, while Node.js server rendering contributes Astro's standalone server to the same repository image.
+
+Cloudflare server rendering cannot be combined with `--docker-image` because Cloudflare owns that runtime. See [Docker Images](/docs/cli/scaffolding/docker-images) for the shared s6 contract.
 
 A server-rendered Cloudflare workspace also receives `public/.assetsignore`, which keeps `_worker.js` and `_routes.json` out of the copied public asset set. Nova registers that exact path in `ignoreFiles` with the `cloudflare-astro` bundle so the generic ignore-files generator can reproduce it later.
 

@@ -10,6 +10,7 @@ import {
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { stripVTControlCharacters } from 'node:util';
 
 import {
   afterAll,
@@ -422,7 +423,7 @@ describe('WorkflowsBlueprint.generate', async () => {
 
     ok(entries.includes('nova-publish-sites.yml') === true, 'missing publish workflow');
 
-    const stdoutText: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_StdoutText = stdoutChunks.join('');
+    const stdoutText: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_WritesTheExpectedFilesAndPrintsSetupLinesForAValidNovaShapedConfig_StdoutText = stripVTControlCharacters(stdoutChunks.join(''));
 
     ok(stdoutText.includes('Setup:') === true, 'missing Setup report');
 
@@ -796,7 +797,7 @@ describe('WorkflowsBlueprint.generate', async () => {
 
     stdoutSpy.mockRestore();
 
-    const stdoutText: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_StdoutText = stdoutChunks.join('');
+    const stdoutText: Tests_Cli_Generate_Github_WorkflowsBlueprintGenerate_WorkflowsBlueprintGenerate_BakesPublicDotenvVariablesAndListsThemInTheSetupReport_StdoutText = stripVTControlCharacters(stdoutChunks.join(''));
 
     // The reach-build environment values list under their prefixed GitHub names.
     ok(stdoutText.includes('Variable CBN_PUBLIC_SITE_KEY') === true, 'missing reach-build variable setup line');

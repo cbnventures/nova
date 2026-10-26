@@ -20,6 +20,10 @@ import { Runner as CliGenerateMustHavesEditorconfig } from './generate/must-have
 import { Runner as CliGenerateMustHavesIgnoreFiles } from './generate/must-haves/ignore-files.js';
 import { Runner as CliGenerateMustHavesLicense } from './generate/must-haves/license.js';
 import { Runner as CliGenerateMustHavesReadMe } from './generate/must-haves/read-me.js';
+import { Runner as CliIntegrationAppStoreConnect } from './integration/app-store-connect.js';
+import { Runner as CliIntegrationDiscordDeveloperPortal } from './integration/discord-developer-portal.js';
+import { Runner as CliIntegrationGooglePlayConsole } from './integration/google-play-console.js';
+import { Runner as CliIntegration } from './integration/index.js';
 import { Runner as CliRecipeGithubSyncActions } from './recipe/github/sync-actions.js';
 import { Runner as CliRecipeGithubSyncFeatures } from './recipe/github/sync-features.js';
 import { Runner as CliRecipeGithubSyncIdentity } from './recipe/github/sync-identity.js';
@@ -104,6 +108,10 @@ import type {
   Cli_Index_CLI_RegisterCommands_Generate,
   Cli_Index_CLI_RegisterCommands_GenerateGitHub,
   Cli_Index_CLI_RegisterCommands_GenerateMustHaves,
+  Cli_Index_CLI_RegisterCommands_Integration,
+  Cli_Index_CLI_RegisterCommands_IntegrationAppStoreConnect,
+  Cli_Index_CLI_RegisterCommands_IntegrationDiscordDeveloperPortal,
+  Cli_Index_CLI_RegisterCommands_IntegrationGooglePlayConsole,
   Cli_Index_CLI_RegisterCommands_Recipe,
   Cli_Index_CLI_RegisterCommands_RecipeGithub,
   Cli_Index_CLI_RegisterCommands_RecipeLicense,
@@ -374,6 +382,186 @@ class CLI {
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliGenerateMustHavesReadMe['run']);
+
+        return;
+      });
+
+    /**
+     * CLI - Register Commands - Integration.
+     *
+     * Parent command for developer-facing vendor services. Category invocations
+     * open interactive menus while leaf commands remain automation friendly.
+     *
+     * @since 0.34.0
+     */
+    const integration: Cli_Index_CLI_RegisterCommands_Integration = this.#program
+      .command('integration')
+      .alias('int')
+      .usage('[subcommand] [options]')
+      .description('Apply local project assets through supported vendor services')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false)
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliIntegration['run']);
+
+        return;
+      });
+
+    const integrationAppStoreConnect: Cli_Index_CLI_RegisterCommands_IntegrationAppStoreConnect = integration
+      .command('app-store-connect')
+      .alias('asc')
+      .usage('[subcommand] [options]')
+      .description('Upload metadata, screenshots, and creative assets to App Store Connect')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false)
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliIntegration['appStoreConnect']);
+
+        return;
+      });
+
+    integrationAppStoreConnect
+      .command('creative-assets')
+      .usage('[options]')
+      .description('Replace selected App Store creative assets')
+      .option('--bundle-id <id>', 'App Store application bundle identifier')
+      .option('-d, --dry-run', 'Validate and display the plan without authentication or changes')
+      .option('--issuer-id <id>', 'App Store Connect API issuer ID when required by the key')
+      .option('--key-id <id>', 'Select one discovered App Store Connect API key')
+      .option('--locales <locales>', 'Comma-separated locale selection')
+      .option('-n, --non-interactive', 'Disable prompts and require explicit mutation confirmation')
+      .option('--platforms <platforms>', 'Comma-separated platform selection')
+      .option('--version <version>', 'App Store marketing version')
+      .option('--workspace <workspace>', 'Configured Apple workspace name or path')
+      .option('-y, --yes', 'Confirm the complete mutation plan')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliIntegrationAppStoreConnect['creativeAssets']);
+
+        return;
+      });
+
+    integrationAppStoreConnect
+      .command('metadata')
+      .usage('[options]')
+      .description('Update selected App Store localized metadata')
+      .option('--bundle-id <id>', 'App Store application bundle identifier')
+      .option('-d, --dry-run', 'Validate and display the plan without authentication or changes')
+      .option('--issuer-id <id>', 'App Store Connect API issuer ID when required by the key')
+      .option('--key-id <id>', 'Select one discovered App Store Connect API key')
+      .option('--locales <locales>', 'Comma-separated locale selection')
+      .option('-n, --non-interactive', 'Disable prompts and require explicit mutation confirmation')
+      .option('--platforms <platforms>', 'Comma-separated platform selection')
+      .option('--version <version>', 'App Store marketing version')
+      .option('--workspace <workspace>', 'Configured Apple workspace name or path')
+      .option('-y, --yes', 'Confirm the complete mutation plan')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliIntegrationAppStoreConnect['metadata']);
+
+        return;
+      });
+
+    integrationAppStoreConnect
+      .command('screenshots')
+      .usage('[options]')
+      .description('Replace selected App Store screenshot sets')
+      .option('--bundle-id <id>', 'App Store application bundle identifier')
+      .option('-d, --dry-run', 'Validate and display the plan without authentication or changes')
+      .option('--issuer-id <id>', 'App Store Connect API issuer ID when required by the key')
+      .option('--key-id <id>', 'Select one discovered App Store Connect API key')
+      .option('--locales <locales>', 'Comma-separated locale selection')
+      .option('-n, --non-interactive', 'Disable prompts and require explicit mutation confirmation')
+      .option('--platforms <platforms>', 'Comma-separated platform selection')
+      .option('--version <version>', 'App Store marketing version')
+      .option('--workspace <workspace>', 'Configured Apple workspace name or path')
+      .option('-y, --yes', 'Confirm the complete mutation plan')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliIntegrationAppStoreConnect['screenshots']);
+
+        return;
+      });
+
+    const integrationDiscordDeveloperPortal: Cli_Index_CLI_RegisterCommands_IntegrationDiscordDeveloperPortal = integration
+      .command('discord-developer-portal')
+      .alias('ddp')
+      .usage('<subcommand> [options]')
+      .description('Validate local Discord developer credentials')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false)
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliIntegration['discordDeveloperPortal']);
+
+        return;
+      });
+
+    integrationDiscordDeveloperPortal
+      .command('validate-token')
+      .usage('[options]')
+      .description('Validate a Discord bot token without storing it')
+      .option('--token <token>', 'Discord bot token; otherwise read DISCORD_TOKEN from .env')
+      .option('--workspace <workspace>', 'Configured Discord workspace name or path')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliIntegrationDiscordDeveloperPortal['validateToken']);
+
+        return;
+      });
+
+    const integrationGooglePlayConsole: Cli_Index_CLI_RegisterCommands_IntegrationGooglePlayConsole = integration
+      .command('google-play-console')
+      .alias('gpc')
+      .usage('[subcommand] [options]')
+      .description('Upload metadata, screenshots, and graphic assets to Google Play Console')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false)
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliIntegration['googlePlayConsole']);
+
+        return;
+      });
+
+    integrationGooglePlayConsole
+      .command('graphic-assets')
+      .usage('[options]')
+      .description('Replace selected Google Play graphic assets')
+      .option('-d, --dry-run', 'Validate and display the plan without authentication or changes')
+      .option('--locales <locales>', 'Comma-separated locale selection')
+      .option('-n, --non-interactive', 'Disable prompts and require explicit mutation confirmation')
+      .option('--package-name <name>', 'Google Play Android package name')
+      .option('--workspace <workspace>', 'Configured Android workspace name or path')
+      .option('-y, --yes', 'Confirm the complete mutation plan')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliIntegrationGooglePlayConsole['graphicAssets']);
+
+        return;
+      });
+
+    integrationGooglePlayConsole
+      .command('metadata')
+      .usage('[options]')
+      .description('Update selected Google Play localized metadata')
+      .option('-d, --dry-run', 'Validate and display the plan without authentication or changes')
+      .option('--locales <locales>', 'Comma-separated locale selection')
+      .option('-n, --non-interactive', 'Disable prompts and require explicit mutation confirmation')
+      .option('--package-name <name>', 'Google Play Android package name')
+      .option('--workspace <workspace>', 'Configured Android workspace name or path')
+      .option('-y, --yes', 'Confirm the complete mutation plan')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliIntegrationGooglePlayConsole['metadata']);
+
+        return;
+      });
+
+    integrationGooglePlayConsole
+      .command('screenshots')
+      .usage('[options]')
+      .description('Replace selected Google Play screenshot sets')
+      .option('-d, --dry-run', 'Validate and display the plan without authentication or changes')
+      .option('--locales <locales>', 'Comma-separated locale selection')
+      .option('-n, --non-interactive', 'Disable prompts and require explicit mutation confirmation')
+      .option('--package-name <name>', 'Google Play Android package name')
+      .option('--workspace <workspace>', 'Configured Android workspace name or path')
+      .option('-y, --yes', 'Confirm the complete mutation plan')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliIntegrationGooglePlayConsole['screenshots']);
 
         return;
       });

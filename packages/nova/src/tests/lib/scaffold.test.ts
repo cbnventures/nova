@@ -30,6 +30,7 @@ import {
 } from '../../lib/regex.js';
 import {
   detectMonorepoContext,
+  isWindowsReservedPathSegment,
   normalizeWorkspaceRelativePath,
   promptScaffoldOptions,
   registerWorkspaceInConfig,
@@ -291,6 +292,56 @@ describe('workspace contract', () => {
       },
     }, 'api-admin'), 'W1_API_ADMIN_');
     strictEqual(resolveScaffoldEnvironmentPrefix({}, 'github'), 'W1_GITHUB_');
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Scaffold - Is Windows Reserved Path Segment.
+ *
+ * @since 0.34.0
+ */
+describe('isWindowsReservedPathSegment', () => {
+  it('rejects Windows device names and normalized variants', () => {
+    for (const value of [
+      'con',
+      'CON',
+      'con.txt',
+      'con.',
+      'con ',
+      'con .txt',
+      'prn',
+      'aux',
+      'nul',
+      'com1',
+      'com9',
+      'lpt1',
+      'lpt9',
+      'folder/NUL.log',
+      'folder\\COM1.txt',
+      'folder/LPT9:stream',
+    ]) {
+      strictEqual(isWindowsReservedPathSegment(value), true);
+    }
+
+    return;
+  });
+
+  it('accepts names outside the Windows device range', () => {
+    for (const value of [
+      'console',
+      'com0',
+      'com10',
+      'lpt10',
+      'auxiliary',
+      'folder/nullish.txt',
+      'report.txt',
+    ]) {
+      strictEqual(isWindowsReservedPathSegment(value), false);
+    }
 
     return;
   });

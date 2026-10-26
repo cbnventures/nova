@@ -318,16 +318,17 @@ Each entry in `labels` has these fields. An explicit empty array is valid and pe
 
 An array of GitHub Actions workflow entries consumed by [`nova generate github workflows`](/docs/cli/generators/github/workflows). Each entry maps to one generated `.yml` file.
 
-| Field            | Type       | Description                                                                                                                       |
-|------------------|------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| `template`       | `string`   | Name of a bundled workflow template: `"publish"`, `"lock-inactive-issues"`, or `"check-sponsor-gated-issues"`.                    |
-| `name`           | `string`   | Required label appended to the output filename and workflow name. Must be unique within the same template.                        |
-| `triggers`       | `array`    | Triggers for the template. Each is a bare string or an object such as `{ "name": "push", "branches": ["main"] }`.                 |
-| `runsOn`         | `string`   | Optional. Runner applied to every generated job. The only supported value is `"ubuntu-latest"`; omission keeps template defaults. |
-| `timeoutMinutes` | `number`   | Optional. Whole number from `1` through `360` applied to every generated job; omission keeps each template's existing timeout.    |
-| `build`          | `string[]` | Optional. Workspace paths (keys from `workspaces`) that the `check` / `build` step should filter to.                              |
-| `deploy`         | `object[]` | Optional. Publish destinations for the `publish` template. Each destination has `to`, `path`, `after`, `with`.                    |
-| `with`           | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.                     |
+| Field                | Type       | Description                                                                                                                         |
+|----------------------|------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `template`           | `string`   | Name of a bundled workflow template: `"publish"`, `"lock-inactive-issues"`, or `"check-sponsor-gated-issues"`.                      |
+| `name`               | `string`   | Required label appended to the output filename and workflow name. Must be unique within the same template.                          |
+| `triggers`           | `array`    | Triggers for the template. Each is a bare string or an object such as `{ "name": "push", "branches": ["main"] }`.                   |
+| `runsOn`             | `string`   | Optional. Runner applied to every generated job. The only supported value is `"ubuntu-latest"`; omission keeps template defaults.   |
+| `timeoutMinutes`     | `number`   | Optional. Whole number from `1` through `360` applied to every generated job; omission keeps each template's existing timeout.      |
+| `containerPlatforms` | `string[]` | Optional. Container platforms built into the one OCI artifact. Supports `"linux/amd64"` and `"linux/arm64"`; omission selects both. |
+| `build`              | `string[]` | Optional. Non-root workspace paths (keys from `workspaces`) that the `check` / `build` step should filter to. `"./"` is invalid.    |
+| `deploy`             | `object[]` | Optional. Publish destinations for the `publish` template. Each destination has `to`, `path`, `after`, `with`.                      |
+| `with`               | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.                       |
 
 Field names changed in the rebuilt generator: `suffix` is now `name`, `scopes` is now `build`, `targets` is now `deploy`, and `settings` is now `with`. The former top-level `depends-on` moved onto the workflow-run trigger object as a `workflows` array.
 
@@ -354,14 +355,23 @@ See [Configuring Workflow-Run Triggers](/docs/cli/generators/github/workflows#co
 
 ### Deploy Fields
 
-Each entry in the `deploy` array pins one publish destination to a workspace.
+Each entry in the `deploy` array pins one publish destination to a workspace or to the repository-wide container.
 
 | Field   | Type       | Description                                                                                                                                                                                 |
 |---------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `to`    | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages-docusaurus"`, `"cloudflare-workers"`, `"github-pages-docusaurus"`, `"vercel-nextjs"`. |
-| `path`  | `string`   | Path to the workspace that owns the destination (e.g., `"./packages/nova"`).                                                                                                                |
+| `path`  | `string`   | Workspace path that owns the destination, or `"./"` for `docker-hub` and `ghcr`.                                                                                                            |
 | `after` | `string[]` | Optional. Paths of other same-type destinations that must finish publishing before this one starts.                                                                                         |
 | `with`  | `object`   | Optional. Key-value pairs for this destination that remap names or supply literal values, overriding the workflow-level `with`.                                                             |
+
+Container targets describe one repository-wide image. Configure at most one `docker-hub` and one `ghcr` destination in the same publish workflow so both registries receive the same OCI artifact. Set `containerPlatforms` on that workflow to select `"linux/amd64"`, `"linux/arm64"`, or both; the field is invalid without a container target.
+
+| Target       | Required `with` literals              | Registry namespace                                     |
+|--------------|---------------------------------------|--------------------------------------------------------|
+| `docker-hub` | `IMAGE_NAMESPACE`, `IMAGE_REPOSITORY` | Explicit `IMAGE_NAMESPACE`; credentials are auth-only. |
+| `ghcr`       | `IMAGE_REPOSITORY`                    | Derived from `github.repository_owner`.                |
+
+Both targets use `path: "./"`. Container inputs do not belong in `build`; the root multi-stage Docker build compiles them inside the image build.
 
 ### Variable Formats
 
@@ -533,7 +543,7 @@ Maps exact project-relative paths to Nova-managed physical ignore files. The [`i
 | Target basename | Supported bundle   | Purpose                                                         |
 |-----------------|--------------------|-----------------------------------------------------------------|
 | `.gitignore`    | `nova`             | Git exclusions for the project root.                            |
-| `.dockerignore` | `nova`             | Docker build-context exclusions for a workspace.                |
+| `.dockerignore` | `nova`             | Docker build-context exclusions for the project root.           |
 | `.assetsignore` | `cloudflare-astro` | Cloudflare Astro asset exclusions for deployment control files. |
 
 ```json
@@ -543,7 +553,7 @@ Maps exact project-relative paths to Nova-managed physical ignore files. The [`i
       "bundles": ["nova"],
       "patterns": [".wrangler/", "coverage/"]
     },
-    "./apps/api/.dockerignore": {
+    "./.dockerignore": {
       "bundles": ["nova"],
       "patterns": []
     }
@@ -551,7 +561,7 @@ Maps exact project-relative paths to Nova-managed physical ignore files. The [`i
 }
 ```
 
-Paths must start with `./`, stay inside the project, and end in a supported physical ignore-file basename. The former `gitignore.projectExcludes` shape is not supported; configure every managed file through `ignoreFiles`.
+Paths must start with `./`, stay inside the project, and end in a supported physical ignore-file basename. `.dockerignore` must be exactly `./.dockerignore`; nested `.gitignore` and `.assetsignore` paths remain supported. The former `gitignore.projectExcludes` shape is not supported; configure every managed file through `ignoreFiles`.
 
 ## `agents`
 
@@ -768,11 +778,11 @@ Project-scoped variables support only `managed`. Their Local `.env` column is no
 
 Project-wide behavior toggles that affect how Nova commands operate.
 
-| Field                | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                        |
-|----------------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `lockStepVersioning` | `boolean` | When `true`, `nova utility changelog --release` moves every non-freezable workspace — both trackable and distributable — to the same version, even if some had no recorded changes. Before writing, Nova requires every participating `package.json` to exist, contain a valid version for the selected strategy, and start at the same version. Workspaces without changes receive a "No changes." entry in their `CHANGELOG.md`. |
-| `runWorkspaces`      | `object`  | Configures the native workspace runner. Its `cache` object controls verified local caching. Its `concurrency` object maps workspace script names to positive integer limits; scripts omitted from the map default to `10`, and an explicit CLI option overrides the map.                                                                                                                                                           |
-| `versionStrategy`    | `string`  | Version strategy for the project: `"semver"` (default) or `"calver"`. SemVer uses `major.minor.patch` with bump types. CalVer uses `YYYY.MM.MICRO` with automatic date-based versioning. Nova locks this setting to existing version headings found in the root or any non-freezable workspace changelog; missing changelogs and freezable workspaces do not lock it.                                                              |
+| Field                | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|----------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `lockStepVersioning` | `boolean` | When `true`, `nova utility changelog --release` moves every non-freezable workspace — both trackable and distributable — to the same version, even if some had no recorded changes. Before writing, Nova requires every participating `package.json` to exist, contain a valid version for the selected strategy, and start at the same version. Workspaces without changes receive a "No changes." entry in their `CHANGELOG.md`.                 |
+| `runWorkspaces`      | `object`  | Configures the native workspace runner. Its `cache` object controls verified local caching. Its `concurrency` object maps workspace script names to positive integer limits; scripts omitted from the map default to `10`, and an explicit CLI option overrides the map. Its `root` setting is `"first"` (default) to run the root's own steps before the workspaces, or `"skip"` to leave the root out.                                           |
+| `versionStrategy`    | `string`  | Version strategy for the project: `"semver"` (default) or `"calver"`. Non-freezable workspaces start at `0.0.1` for SemVer or the current UTC `YYYY.M.0` for CalVer; `0.0.0` remains reserved for freezable workspaces. Before history exists, the configure utility migrates manifests, exact internal pins, and native version mirrors when this value changes. Release history locks the setting, and pending changelog entries block a switch. |
 
 ```json title="nova.config.json"
 {

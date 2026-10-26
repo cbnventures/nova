@@ -9,6 +9,7 @@
  */
 
 import { useLocation } from '@docusaurus/router';
+import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 
 import type {
   Lib_UseNavbarActiveItem_BestKey,
@@ -20,8 +21,10 @@ import type {
   Lib_UseNavbarActiveItem_GetClaimLength_Matched,
   Lib_UseNavbarActiveItem_GetClaimLength_Normalized,
   Lib_UseNavbarActiveItem_GetClaimLength_Pathname,
+  Lib_UseNavbarActiveItem_GetClaimLength_Resolved,
   Lib_UseNavbarActiveItem_GetClaimLength_Returns,
   Lib_UseNavbarActiveItem_GetClaimLength_To,
+  Lib_UseNavbarActiveItem_GetClaimLength_WithBaseUrl,
   Lib_UseNavbarActiveItem_Item,
   Lib_UseNavbarActiveItem_Items,
   Lib_UseNavbarActiveItem_NonLinkTypes,
@@ -34,6 +37,7 @@ import type {
   Lib_UseNavbarActiveItem_UseNavbarActiveItem_Children,
   Lib_UseNavbarActiveItem_UseNavbarActiveItem_ItemType,
   Lib_UseNavbarActiveItem_UseNavbarActiveItem_Label,
+  Lib_UseNavbarActiveItem_WithBaseUrl,
 } from '../types/lib/use-navbar-active-item.d.ts';
 
 /**
@@ -75,18 +79,19 @@ function normalizeBase(base: Lib_UseNavbarActiveItem_NormalizeBase_Base): Lib_Us
 /**
  * Lib - Use Navbar Active Item - Get Claim Length.
  *
- * Returns the byte length of the URL prefix an item claims for the given
- * pathname, or null when the item does not claim it. Regex matches use
- * the matched substring length; prefix claims use the normalized base.
+ * Returns the byte length of the URL prefix an item claims for the given pathname, or
+ * null when it claims none. Regex matches use the matched length; prefix claims resolve
+ * the base against the site's base URL like links do, so `/blog/` claims `/repo/blog/`.
  *
- * @param {Lib_UseNavbarActiveItem_Item}                    item     - Item.
- * @param {Lib_UseNavbarActiveItem_GetClaimLength_Pathname} pathname - Pathname.
+ * @param {Lib_UseNavbarActiveItem_Item}                       item        - Item.
+ * @param {Lib_UseNavbarActiveItem_GetClaimLength_Pathname}    pathname    - Pathname.
+ * @param {Lib_UseNavbarActiveItem_GetClaimLength_WithBaseUrl} withBaseUrl - With base url.
  *
  * @returns {Lib_UseNavbarActiveItem_GetClaimLength_Returns}
  *
  * @since 0.18.0
  */
-function getClaimLength(item: Lib_UseNavbarActiveItem_Item, pathname: Lib_UseNavbarActiveItem_GetClaimLength_Pathname): Lib_UseNavbarActiveItem_GetClaimLength_Returns {
+export function getClaimLength(item: Lib_UseNavbarActiveItem_Item, pathname: Lib_UseNavbarActiveItem_GetClaimLength_Pathname, withBaseUrl: Lib_UseNavbarActiveItem_GetClaimLength_WithBaseUrl): Lib_UseNavbarActiveItem_GetClaimLength_Returns {
   if (item['activeBaseRegex'] !== undefined) {
     let match: Lib_UseNavbarActiveItem_GetClaimLength_Match = null;
 
@@ -112,10 +117,12 @@ function getClaimLength(item: Lib_UseNavbarActiveItem_Item, pathname: Lib_UseNav
     return null;
   }
 
-  const normalized: Lib_UseNavbarActiveItem_GetClaimLength_Normalized = normalizeBase(base);
+  // Doc items arrive with full paths, which come back unchanged.
+  const resolved: Lib_UseNavbarActiveItem_GetClaimLength_Resolved = withBaseUrl(base);
+  const normalized: Lib_UseNavbarActiveItem_GetClaimLength_Normalized = normalizeBase(resolved);
 
   if (
-    pathname === base
+    pathname === resolved
     || pathname === normalized
     || pathname.indexOf(`${normalized}/`) === 0
   ) {
@@ -140,6 +147,7 @@ function getClaimLength(item: Lib_UseNavbarActiveItem_Item, pathname: Lib_UseNav
  */
 export function useNavbarActiveItem(items: Lib_UseNavbarActiveItem_Items): Lib_UseNavbarActiveItem_Returns {
   const pathname: Lib_UseNavbarActiveItem_Pathname = useLocation()['pathname'];
+  const withBaseUrl: Lib_UseNavbarActiveItem_WithBaseUrl = useBaseUrlUtils()['withBaseUrl'];
 
   let bestKey: Lib_UseNavbarActiveItem_BestKey = null;
   let bestScore: Lib_UseNavbarActiveItem_BestScore = -1;
@@ -163,7 +171,7 @@ export function useNavbarActiveItem(items: Lib_UseNavbarActiveItem_Items): Lib_U
 
       for (let j = 0; j < children.length; j += 1) {
         const child: Lib_UseNavbarActiveItem_UseNavbarActiveItem_Child = children[j] as Lib_UseNavbarActiveItem_UseNavbarActiveItem_Child;
-        const childClaim: Lib_UseNavbarActiveItem_UseNavbarActiveItem_ChildClaim = getClaimLength(child, pathname);
+        const childClaim: Lib_UseNavbarActiveItem_UseNavbarActiveItem_ChildClaim = getClaimLength(child, pathname, withBaseUrl);
 
         if (childClaim !== null && childClaim > bestScore) {
           bestKey = label;
@@ -174,7 +182,7 @@ export function useNavbarActiveItem(items: Lib_UseNavbarActiveItem_Items): Lib_U
       continue;
     }
 
-    const claimLength: Lib_UseNavbarActiveItem_ClaimLength = getClaimLength(item, pathname);
+    const claimLength: Lib_UseNavbarActiveItem_ClaimLength = getClaimLength(item, pathname, withBaseUrl);
 
     if (claimLength !== null && claimLength > bestScore) {
       bestKey = label;

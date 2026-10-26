@@ -6,6 +6,7 @@ import { once } from 'node:events';
 import {
   access,
   chmod,
+  copyFile,
   mkdir,
   mkdtemp,
   readFile,
@@ -18,6 +19,7 @@ import {
   join,
   resolve,
 } from 'node:path';
+import { setTimeout as delay } from 'node:timers/promises';
 
 import {
   afterAll,
@@ -172,6 +174,112 @@ describe('Compiled Nova CLI integration', () => {
       expect(result.status).toBe(0);
 
       expect(collectOutput(result)).toContain('Usage:');
+    }
+
+    return;
+  });
+
+  it('loads the binary from a filesystem path containing spaces and an ampersand', async () => {
+    const packageDirectory = join(temporaryDirectory, 'launcher path & value');
+    const binDirectory = join(packageDirectory, 'bin');
+    const buildDirectory = join(packageDirectory, 'build', 'src', 'cli');
+    const copiedLauncherPath = join(binDirectory, 'nova.mjs');
+    const copiedCliPath = join(buildDirectory, 'index.js');
+
+    await Promise.all([
+      mkdir(binDirectory, { recursive: true }),
+      mkdir(buildDirectory, { recursive: true }),
+    ]);
+
+    await Promise.all([
+      copyFile(novaCliPath, copiedLauncherPath),
+      writeFile(copiedCliPath, 'process.stdout.write(\'launcher-loaded\');\n', 'utf-8'),
+    ]);
+
+    const result = spawnSync(process.execPath, [copiedLauncherPath], {
+      cwd: packageDirectory,
+      encoding: 'utf-8',
+    });
+
+    expect(result.error).toBeUndefined();
+
+    expect(result.status).toBe(0);
+
+    expect(result.stdout).toBe('launcher-loaded');
+
+    return;
+  });
+
+  it('converts every filesystem-backed launcher target to a file URL', async () => {
+    const launcherPaths = [
+      novaCliPath,
+      resolve(repositoryDirectory, 'packages', 'docusaurus-preset-nova', 'bin', 'theme-nova.mjs'),
+      resolve(repositoryDirectory, 'packages', 'nova', 'templates', 'scaffold-options', 'package', 'node-cli-core', 'bin', 'cli.mjs'),
+      resolve(repositoryDirectory, 'packages', 'nova', 'templates', 'scaffold', 'package', 'homebridge', 'bin', 'repl.mjs'),
+      resolve(repositoryDirectory, 'packages', 'nova', 'templates', 'scaffold', 'package', 'homebridge', 'bin', 'test-api.mjs'),
+    ];
+
+    for (const launcherPath of launcherPaths) {
+      const launcherContents = await readFile(launcherPath, 'utf-8');
+
+      expect(launcherContents).toContain('pathToFileURL');
+
+      expect(launcherContents).toContain('await import(pathToFileURL(');
+
+      expect(launcherContents).toContain(').href);');
+
+      expect(launcherContents).not.toContain('await import(cli);');
+
+      expect(launcherContents).not.toContain('await import(entry);');
+
+      expect(launcherContents).not.toContain('\nimport(cli);');
+    }
+
+    return;
+  });
+
+  it('starts the Shiki rewrite watcher before its nested build directory exists', async () => {
+    const projectDirectory = join(temporaryDirectory, 'shiki watcher path & value');
+    const compiledDirectory = join(projectDirectory, 'build', 'src', 'lib');
+    const compiledFilePath = join(compiledDirectory, 'rehype-shiki.js');
+    const watcherPath = resolve(repositoryDirectory, 'scripts', 'fix-shiki-import.mjs');
+    const originalContents = 'const shiki = Promise.resolve().then(() => __importStar(require("shiki")));\n';
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const watcherProcess = spawn(process.execPath, [
+      watcherPath,
+      '--watch',
+    ], {
+      cwd: projectDirectory,
+      stdio: 'pipe',
+    });
+    const closePromise = once(watcherProcess, 'close');
+
+    try {
+      await delay(100);
+
+      expect(watcherProcess.exitCode).toBeNull();
+
+      await mkdir(compiledDirectory, { recursive: true });
+
+      await writeFile(compiledFilePath, originalContents, 'utf-8');
+
+      await expect.poll(async () => {
+        try {
+          return await readFile(compiledFilePath, 'utf-8');
+        } catch {
+          return originalContents;
+        }
+      }, {
+        timeout: 5000,
+      }).toContain('import("shiki")');
+    } finally {
+      if (watcherProcess.exitCode === null) {
+        watcherProcess.kill();
+      }
+
+      await closePromise;
     }
 
     return;

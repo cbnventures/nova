@@ -123,8 +123,8 @@ The validation and preview steps finish before Nova writes any release files. Ve
 4. **Lock-step expansion** — Includes every non-freezable workspace in the release, even when it had no recorded entries. All workspaces move to the same computed version. Workspaces without entries receive a "No changes." section in their `CHANGELOG.md`.
 5. **Show summary** — Lists entries grouped by package with the computed version bump (highest bump wins).
 6. **Confirm** — Interactive only. Non-interactive mode (`--release`) skips this step.
-7. **Bump version** — Updates the `version` field in each affected `package.json`.
-8. **Write CHANGELOG.md** — Prepends a new version section. Creates the file if it does not exist.
+7. **Bump version** — Updates the `version` field in each affected `package.json`. Android app workspaces also synchronize Gradle `versionName` and advance `versionCode` once for every released changelog entry. Apple app workspaces synchronize `MARKETING_VERSION` in the root `project.yml` when present, otherwise in checked-in `.xcodeproj` files; `CURRENT_PROJECT_VERSION` advances by the same entry count.
+8. **Write CHANGELOG.md** — Prepends a new version section. Creates the file if it does not exist. Android and Apple app headings include the resulting native build number as `## X.Y.Z (build) - YYYY-MM-DD`.
 9. **Sync exact package references** — Updates exact-pinned references to co-released packages in workspace and template `package.json` files. Ranges and workspace protocols are left unchanged.
 10. **Stamp sentinels** — Replaces `@since UNRELEASED` and `@deprecated UNRELEASED` tags in supported code files directly inside each workspace root and recursively within Nova's known source trees: `src/`, `scripts/`, `bin/`, `api/`, Android `app/src/`, Apple `Sources/` and `Tests/`, and pfSense `port/files/usr/local/`. Supported files include JavaScript and TypeScript module variants, CSS, Astro, Java, Kotlin, PHP, Svelte, Swift, and Vue source. Releasing non-freezable workspaces use their new version, while freezable workspaces use `0.0.0` without a version bump or changelog. The curated source-tree list prevents a parent workspace from stamping nested workspaces, templates, or documentation examples. Prerelease versions (containing a hyphen) are skipped. A scanning or stamping failure leaves pending entries in place.
 11. **Clean up** — Deletes consumed entry files from `.changelog/` only after every workspace has completed successfully.
@@ -181,10 +181,10 @@ New ESLint rule for switch case blocks.
 
 When `settings.versionStrategy` is `"calver"` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, the changelog command switches to calendar-based versioning:
 
-- **Version format:** `YYYY.MM.MICRO` — full year, unpadded month, micro counter that resets each new month.
+- **Version format:** `YYYY.M.MICRO` — full year, unpadded month, micro counter that resets each new month.
 - **No bump field:** Changelog entries omit the `bump` field entirely. The `--bump` flag is not available in CalVer mode.
-- **Automatic version:** `--release` computes the version from today's date with no user prompt. If the current version shares the same year and month, the micro counter increments. Otherwise, the micro resets to `0`.
-- **Current-version validation:** A workspace must already use `YYYY.MM.MICRO`, or the initial `0.0.0` sentinel before its first release. Nova rejects invalid numbers and dates later than the current month before calculating the next version.
+- **Automatic version:** New non-freezable workspaces start at the current UTC `YYYY.M.0` period. Their first release keeps that `.0` version when no release history exists. Later releases in the same UTC month increment the micro counter, while a new month resets it to `0`.
+- **Current-version validation:** A non-freezable workspace must already use `YYYY.M.MICRO`; `0.0.0` is reserved exclusively for freezable workspaces. Nova rejects invalid numbers, unsafe integers, and dates later than the current UTC month before calculating the next version.
 - **Heading format:** CalVer changelog headings omit the date suffix since the date is already embedded in the version number.
 
 ```markdown title=".changelog/brave-cats-jump.md"
@@ -235,6 +235,17 @@ Empty headings are omitted. When lock-step versioning is enabled and a package h
 ## 1.3.0 - 2026-02-25
 
 No changes.
+```
+
+Native app workspaces use the same category order while including the Android `versionCode` or Apple build number:
+
+```markdown title="apps/apple/CHANGELOG.md"
+# example-app-apple
+
+## 1.4.1 (451) - 2026-10-19
+
+### FIXED
+- Kept the native app version synchronized during release.
 ```
 
 ## Examples

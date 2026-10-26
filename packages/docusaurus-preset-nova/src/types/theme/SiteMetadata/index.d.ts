@@ -1,3 +1,4 @@
+import type { I18nLocaleConfig } from '@docusaurus/types';
 import type { Location } from 'history';
 
 /**
@@ -61,3 +62,32 @@ export type Theme_SiteMetadata_Index_SiteMetadata_BaseUrlPath = string;
 export type Theme_SiteMetadata_Index_SiteMetadata_CanonicalPathname = string;
 
 export type Theme_SiteMetadata_Index_SiteMetadata_CanonicalUrl = string;
+
+export type Theme_SiteMetadata_Index_SiteMetadata_DefaultLocale = string;
+
+export type Theme_SiteMetadata_Index_SiteMetadata_LocaleConfigs = Record<string, I18nLocaleConfig>;
+
+export type Theme_SiteMetadata_Index_SiteMetadata_AlternatePageUtilsCreateUrlParams_Locale = string;
+
+export type Theme_SiteMetadata_Index_SiteMetadata_AlternatePageUtilsCreateUrlParams_FullyQualified = boolean;
+
+export type Theme_SiteMetadata_Index_SiteMetadata_AlternatePageUtilsCreateUrlParams = {
+  locale: Theme_SiteMetadata_Index_SiteMetadata_AlternatePageUtilsCreateUrlParams_Locale;
+  fullyQualified: Theme_SiteMetadata_Index_SiteMetadata_AlternatePageUtilsCreateUrlParams_FullyQualified;
+};
+
+export type Theme_SiteMetadata_Index_SiteMetadata_AlternatePageUtils_CreateUrl = (params: Theme_SiteMetadata_Index_SiteMetadata_AlternatePageUtilsCreateUrlParams) => string;
+
+export type Theme_SiteMetadata_Index_SiteMetadata_AlternatePageUtils = {
+  createUrl: Theme_SiteMetadata_Index_SiteMetadata_AlternatePageUtils_CreateUrl;
+};
+
+export type Theme_SiteMetadata_Index_SiteMetadata_LocaleEntries = [string, I18nLocaleConfig][];
+
+export type Theme_SiteMetadata_Index_SiteMetadata_CurrentLocaleConfig = I18nLocaleConfig | undefined;
+
+export type Theme_SiteMetadata_Index_SiteMetadata_CurrentHtmlLang = string;
+
+export type Theme_SiteMetadata_Index_SiteMetadata_EntryLocale = string;
+
+export type Theme_SiteMetadata_Index_SiteMetadata_EntryHtmlLang = string;

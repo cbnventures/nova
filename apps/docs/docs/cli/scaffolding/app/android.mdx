@@ -22,12 +22,15 @@ Scaffold a **native Android application** with Kotlin and Jetpack Compose.
 
 Nova owns the complete generated project: Gradle configuration and wrapper, Kotlin and Compose source, resources, tests, and workspace lifecycle scripts. Nova releases update the pinned Android toolchain deliberately, so two developers using the same Nova version receive the same project.
 
+The generated `package.json` and Gradle `versionName` share the strategy-aware initial version: `0.0.1` for SemVer or the current UTC `YYYY.M.0` period for CalVer. In an existing lock-step project, the app inherits the shared non-freezable version instead. Nova's changelog release flow keeps the two versions synchronized and advances `versionCode` from its initial value of `1` once for every released changelog entry.
+
 ## Why Use This Command?
 
 1. Generates a deterministic native Kotlin and Jetpack Compose application directly from Nova's reviewed template.
 2. Pins the Android Gradle Plugin, Kotlin, Compose, and Gradle versions as one tested scaffold contract.
 3. Includes Android linting, native unit tests, debug builds, and a development command that builds, deploys, and launches the app.
 4. Lints and type-checks Nova's Node.js Gradle adapter separately and includes a Vitest suite for generated helper tooling.
+5. Seeds editable Google Play Console metadata and asset directories under the repository's root `assets/` folder.
 
 ## Requirements
 
@@ -77,18 +80,19 @@ Nova owns the complete generated project: Gradle configuration and wrapper, Kotl
 
 ## Output Files
 
-| Path                     | Description                                                                                               |
-|--------------------------|-----------------------------------------------------------------------------------------------------------|
-| `app/`                   | Native Android source, Nova launcher and social assets, manifest, lint configuration, and tests.          |
-| `gradle/`                | Nova-managed version catalog and pinned Gradle wrapper.                                                   |
-| `build.gradle.kts`       | Root Android build configuration.                                                                         |
-| `settings.gradle.kts`    | Generated Gradle project and repository configuration.                                                    |
-| `gradlew`, `gradlew.bat` | Cross-platform Gradle wrapper scripts.                                                                    |
-| `package.json`           | Nova-managed development, check, build, and clean script groups.                                          |
-| `scripts/`               | Cross-platform adapters that discover the Android SDK, run Gradle, and build, deploy, and launch the app. |
-| `tests/project.test.ts`  | Vitest smoke suite for Nova-managed Node.js helper tooling.                                               |
-| `tsconfig.*.json`        | Separate strict TypeScript contracts for helper scripts and tests.                                        |
-| `vitest.config.mts`      | Test discovery scoped to Nova-managed helper tests.                                                       |
+| Path                                      | Description                                                                                               |
+|-------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| `app/`                                    | Native Android source, Nova launcher and social assets, manifest, lint configuration, and tests.          |
+| `gradle/`                                 | Nova-managed version catalog and pinned Gradle wrapper.                                                   |
+| `build.gradle.kts`                        | Root Android build configuration.                                                                         |
+| `settings.gradle.kts`                     | Generated Gradle project and repository configuration.                                                    |
+| `gradlew`, `gradlew.bat`                  | Cross-platform Gradle wrapper scripts.                                                                    |
+| `package.json`                            | Nova-managed development, check, build, and clean script groups.                                          |
+| `scripts/`                                | Cross-platform adapters that discover the Android SDK, run Gradle, and build, deploy, and launch the app. |
+| `tests/project.test.ts`                   | Vitest smoke suite for Nova-managed Node.js helper tooling.                                               |
+| `tsconfig.*.json`                         | Separate strict TypeScript contracts for helper scripts and tests.                                        |
+| `vitest.config.mts`                       | Test discovery scoped to Nova-managed helper tests.                                                       |
+| `assets/google-play-console/{workspace}/` | Root-owned Google Play metadata, screenshots, and graphic assets.                                         |
 
 ## Non-Interactive Mode
 
@@ -102,3 +106,5 @@ nova scaffold app android --non-interactive --workspace-name mobile --applicatio
 Nova registers the workspace with the `app` role and `trackable` policy only after every Nova-owned native and workspace file is written successfully, then adds `android` and `kotlin` to the root `project.platforms` list without removing existing entries. If generation fails, Nova does not record a partially prepared workspace.
 
 The package name follows `{projectSlug}-app-{workspaceName}`. The Android application ID defaults to `com.example.{normalizedWorkspaceName}` unless you provide `--application-id`.
+
+The scaffold creates an `en-US` Android listing placeholder plus documented screenshot and graphic-asset directories. Fill only the fields and asset targets you intend to change, then use [`nova integration google-play-console`](/docs/cli/integrations/google-play-console/metadata). Nova does not add `/assets/` to the generated `.gitignore`; store assets remain project-owned and trackable by default.

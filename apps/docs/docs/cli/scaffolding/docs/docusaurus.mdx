@@ -28,7 +28,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 2. Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
 3. Provides `dev`, `prod`, `check`, `build`, `clean`, and `i18n` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner; the child steps run Docusaurus, TypeScript, Vitest, and the preset's i18n commands directly.
 4. Pins TypeScript `6.0.3` and composes Nova's essentials, strict, and Docusaurus TSConfig presets with the local `@site/*` alias.
-5. Selects docs-only or docs-and-blog content, includes local search by default, and offers optional Docker packaging.
+5. Selects docs-only or docs-and-blog content, includes local search by default, and can contribute the site to the repository-wide s6 Docker appliance.
 
 ## Requirements
 
@@ -64,18 +64,18 @@ You can run this directly from an empty location; `scaffold starter base` is not
 
 ## Options
 
-| Flag                          | Description                                                          |
-|-------------------------------|----------------------------------------------------------------------|
-| `-d, --dry-run`               | Run without writing any files.                                       |
-| `--install`                   | Install dependencies after scaffolding; this is the default.         |
-| `--no-install`                | Skip dependency installation.                                        |
-| `--name <name>`               | Project slug when creating a new monorepo; omit at an existing root. |
-| `--non-interactive`           | Use flags and defaults without opening prompts.                      |
-| `--workspace-name <name>`     | Workspace directory name.                                            |
-| `--output <dir>`              | Output directory.                                                    |
-| `--preset <name>`             | Required Nova visual preset written to `docusaurus.config.ts`.       |
-| `--content <docs\|docs-blog>` | Content model; defaults to `docs`.                                   |
-| `--docker-image`              | Serve the production build from an unprivileged NGINX image.         |
+| Flag                          | Description                                                                 |
+|-------------------------------|-----------------------------------------------------------------------------|
+| `-d, --dry-run`               | Run without writing any files.                                              |
+| `--install`                   | Install dependencies after scaffolding; this is the default.                |
+| `--no-install`                | Skip dependency installation.                                               |
+| `--name <name>`               | Project slug when creating a new monorepo; omit at an existing root.        |
+| `--non-interactive`           | Use flags and defaults without opening prompts.                             |
+| `--workspace-name <name>`     | Workspace directory name.                                                   |
+| `--output <dir>`              | Output directory.                                                           |
+| `--preset <name>`             | Required Nova visual preset written to `docusaurus.config.ts`.              |
+| `--content <docs\|docs-blog>` | Content model; defaults to `docs`.                                          |
+| `--docker-image`              | Add the production site as a supervised service in the repository s6 image. |
 
 ## Output Structure
 
@@ -88,6 +88,9 @@ You can run this directly from an empty location; `scaffold starter base` is not
 │       ├── package.json
 │       ├── docusaurus.config.ts
 │       ├── tsconfig.json
+│       ├── tsconfig.app.json
+│       ├── tsconfig.config.json
+│       ├── tsconfig.tests.json
 │       ├── sidebars.ts
 │       ├── docs/
 │       │   ├── customize.mdx
@@ -102,6 +105,27 @@ You can run this directly from an empty location; `scaffold starter base` is not
 │               └── nova.svg
 └── packages/
 ```
+
+### Docusaurus-Only Container
+
+When this is the repository's only non-root workspace, `--docker-image` still produces the standard one-image layout:
+
+```text
+{project-slug}/
+├── .dockerignore
+├── Dockerfile
+├── compose.yml
+├── apps/
+│   └── {workspace-name}/    # Docusaurus source
+└── packages/
+    └── docker/              # Private s6 assembly
+```
+
+The resulting s6-overlay image supervises the static documentation service. It uses the same image structure as a multi-service repository instead of a Docusaurus-specific container layout.
+
+GitHub Pages and Cloudflare Pages are additive destinations. The same Docusaurus workspace can deploy to either or both Pages targets while also contributing the site to the container image.
+
+See [Docker Images](/docs/cli/scaffolding/docker-images) for the shared runtime and layout contract.
 
 ## Config Fields
 

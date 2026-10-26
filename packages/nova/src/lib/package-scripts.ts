@@ -18,6 +18,7 @@ import type {
   Lib_PackageScripts_HasChildScript,
   Lib_PackageScripts_HookPrefixes,
   Lib_PackageScripts_HookTarget,
+  Lib_PackageScripts_IsTreeDispatcher,
   Lib_PackageScripts_NpmLifecycleOrder,
   Lib_PackageScripts_NpmLifecycleScript,
   Lib_PackageScripts_OptionalGroupOrder,
@@ -469,7 +470,10 @@ export function findPackageScriptContractViolations(scripts: Lib_PackageScripts_
 
     const hasChildScript: Lib_PackageScripts_HasChildScript = actualScriptNames.some((scriptName) => scriptName.startsWith(`${scriptGroup}:`));
 
-    if (hasChildScript === false) {
+    // A lifecycle that runs the workspace tree needs no child steps of its own.
+    const isTreeDispatcher: Lib_PackageScripts_IsTreeDispatcher = String(Reflect.get(scripts, scriptGroup)).includes('run-workspaces');
+
+    if (hasChildScript === false && isTreeDispatcher === false) {
       violations.push(`Parent dispatcher "${scriptGroup}" requires at least one child script.`);
     }
   }

@@ -61,6 +61,22 @@ export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ScriptRunnerPr
 
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalRootScripts = Record<string, string>;
 
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyRootScripts = Record<string, string>;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MigratedRootScripts = boolean;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_TypedLegacyRootScriptEntry = [string, string];
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyScriptName = string;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_LegacyScriptCommand = string;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ParentScriptName = string;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_ParentRunsTree = boolean;
+
+export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_KeptWorkspaceDispatchers = string[];
+
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_CanonicalRootScriptEntries = [string, string][];
 
 export type Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_MissingCanonicalRootScriptEntries = [string, string][];

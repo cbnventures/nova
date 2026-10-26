@@ -8,6 +8,7 @@ import type {
   Shared_NovaConfig_Recipes_PackageJson,
   Shared_NovaConfig_Recipes_PackageJsonWorkspace,
   Shared_NovaConfigConfig,
+  Shared_NovaConfigSettings_VersionStrategy,
   Shared_NovaConfigWorkspace,
   Shared_WorkspaceManifest,
 } from '../../../shared.d.ts';
@@ -20,6 +21,8 @@ import type {
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Workspace = Shared_WorkspaceManifest;
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile = Shared_NovaConfigConfig;
+
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_HasReleaseHistory = boolean;
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Returns = Promise<void>;
 
@@ -61,6 +64,10 @@ export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkspaceRecipes =
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeEntry = Shared_NovaConfig_RecipeEntry | undefined;
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeSettings = Shared_NovaConfig_RecipeEntry_Settings | undefined;
+
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_VersionStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_VersionError = Error | undefined;
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidVersion = string;
 
@@ -128,6 +135,8 @@ export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_ReplaceFileNotice = s
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_NovaConfig = LibNovaConfig;
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFile = Shared_NovaConfigConfig;
+
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_ReleaseHistoryStrategy = Shared_NovaConfigSettings_VersionStrategy | undefined;
 
 export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFileWorkspaces = [string, Shared_NovaConfigWorkspace][];
 

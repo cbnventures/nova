@@ -1,4 +1,5 @@
 import { ok, strictEqual } from 'node:assert/strict';
+import { basename } from 'node:path';
 
 import {
   describe,
@@ -65,7 +66,7 @@ describe('CliGenerateMustHavesEditorconfig.run', () => {
 
     const calls: Tests_Cli_Generate_MustHaves_Editorconfig_CliGenerateMustHavesEditorconfigRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_Calls = saveSpy['mock']['calls'];
 
-    const targetCall: Tests_Cli_Generate_MustHaves_Editorconfig_CliGenerateMustHavesEditorconfigRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_TargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.editorconfig'));
+    const targetCall: Tests_Cli_Generate_MustHaves_Editorconfig_CliGenerateMustHavesEditorconfigRun_PassesTheCorrectHeaderMetadataToSaveGeneratedFile_TargetCall = calls.find((call) => typeof call[0] === 'string' && basename(call[0]) === '.editorconfig');
 
     ok(targetCall !== undefined, 'Expected saveGeneratedFile to be called for .editorconfig');
 

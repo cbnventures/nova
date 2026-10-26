@@ -118,6 +118,9 @@ import type {
   Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_RealProjectRoot,
   Tests_Lib_Utility_DiscoverPathsWithFile_SkipsOnlyExplicitlyExcludedRoots_RelativePaths,
   Tests_Lib_Utility_DiscoverPathsWithFile_TemporaryDirectory,
+  Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_OriginalCwd,
+  Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_Result,
+  Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_SandboxDirectory,
   Tests_Lib_Utility_ExecuteShell_ReturnsNonZeroCodeForFailingCommand_Result,
   Tests_Lib_Utility_ExecuteShell_RunsASimpleEchoCommand_IncludesHello,
   Tests_Lib_Utility_ExecuteShell_RunsASimpleEchoCommand_Result,
@@ -1099,6 +1102,29 @@ describe('pathExists', async () => {
  * @since 0.12.0
  */
 describe('executeShell', async () => {
+  it('preserves quoted commands from directories with shell metacharacters', async () => {
+    const originalCwd: Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_OriginalCwd = process.cwd();
+    const sandboxDirectory: Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_SandboxDirectory = await mkdtemp(join(tmpdir(), 'nova shell & spaces-'));
+
+    try {
+      process.chdir(sandboxDirectory);
+
+      const result: Tests_Lib_Utility_ExecuteShell_PreservesQuotedCommandsFromDirectoriesWithShellMetacharacters_Result = await executeShell('node -e "process.stdout.write(\'quoted & ready\')"');
+
+      strictEqual(result['code'], 0);
+      strictEqual(result['textOut'], 'quoted & ready');
+    } finally {
+      process.chdir(originalCwd);
+
+      await rm(sandboxDirectory, {
+        recursive: true,
+        force: true,
+      });
+    }
+
+    return;
+  });
+
   it('runs a simple echo command', async () => {
     const result: Tests_Lib_Utility_ExecuteShell_RunsASimpleEchoCommand_Result = await executeShell('echo hello');
 

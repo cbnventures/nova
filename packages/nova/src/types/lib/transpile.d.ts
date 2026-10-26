@@ -85,6 +85,8 @@ export type Lib_Transpile_GetConfigPath_Returns = string | undefined;
 
 export type Lib_Transpile_GetConfigPath_Resolved = string;
 
+export type Lib_Transpile_GetConfigPath_Discovered = string | undefined;
+
 /**
  * Lib - Transpile - Print Diagnostics.
  *

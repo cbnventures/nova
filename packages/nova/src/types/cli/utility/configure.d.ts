@@ -16,6 +16,7 @@ import type {
   Shared_BlueprintConfigTriggerObject_Workflows,
   Shared_BlueprintConfigWorkflow,
   Shared_BlueprintConfigWorkflow_Build,
+  Shared_BlueprintConfigWorkflow_ContainerPlatforms,
   Shared_BlueprintConfigWorkflow_Deploy,
   Shared_BlueprintConfigWorkflow_RunsOn,
   Shared_BlueprintConfigWorkflow_TimeoutMinutes,
@@ -102,6 +103,9 @@ import type {
   Shared_PromptWithCancelReject,
   Shared_PromptWithCancelResolved,
   Shared_UrlProtocol,
+  Shared_WorkflowTemplateTarget,
+  Shared_WorkflowTemplateTarget_RequiredLiterals,
+  Shared_WorkflowTemplateTargetRequiredLiteral,
   Shared_WorkflowTemplateTargets,
   Shared_WorkflowTemplateVariable,
   Shared_WorkflowTemplateVariables,
@@ -1689,6 +1693,8 @@ export type Cli_Utility_Configure_Runner_PromptGithubRulesets_ExistingRulesets =
 
 export type Cli_Utility_Configure_Runner_PromptGithubRulesets_Existing = Shared_NovaConfig_Github_Rulesets_DefaultBranch;
 
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksModeInitial = number;
+
 export type Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputKey =
   | 'enforcement'
   | 'blockDeletions'
@@ -1702,7 +1708,7 @@ export type Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputKey =
   | 'requireLastPushApproval'
   | 'requiredApprovals'
   | 'requireConversationResolution'
-  | 'requiredStatusChecks'
+  | 'requiredStatusChecksMode'
   | 'requireBranchesToBeUpToDate';
 
 export type Cli_Utility_Configure_Runner_PromptGithubRulesets_OutputValue = boolean | string | string[];
@@ -1715,9 +1721,17 @@ export type Cli_Utility_Configure_Runner_PromptGithubRulesets_AllowedMergeMethod
 
 export type Cli_Utility_Configure_Runner_PromptGithubRulesets_DefaultBranch = Shared_NovaConfig_Github_Rulesets_DefaultBranch;
 
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksMode = 'unset' | 'none' | 'list';
+
 export type Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredApprovalsRaw = string;
 
 export type Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredApprovals = number;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksOutputKey, string> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksOutputKey = 'requiredStatusChecks';
+
+export type Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksOutputResult = Record<Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecksOutputKey, string>;
 
 export type Cli_Utility_Configure_Runner_PromptGithubRulesets_RequiredStatusChecks = string[];
 
@@ -2424,6 +2438,16 @@ export type Cli_Utility_Configure_Runner_PromptSettings_CacheScriptsOutputResult
 
 export type Cli_Utility_Configure_Runner_PromptSettings_CacheScripts = string[];
 
+export type Cli_Utility_Configure_Runner_PromptSettings_RootIncludedInitial = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputKey = 'rootIncluded';
+
+export type Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputValue = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputKey, Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputValue> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputResult = Record<Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputKey, Cli_Utility_Configure_Runner_PromptSettings_RootIncludedOutputValue>;
+
 export type Cli_Utility_Configure_Runner_PromptSettings_RunWorkspaces = Shared_NovaConfigSettings_RunWorkspaces;
 
 export type Cli_Utility_Configure_Runner_PromptSettings_UpdatedSettings = Shared_NovaConfig_Settings;
@@ -2768,6 +2792,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingSuffix = st
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTimeoutMinutes = Shared_BlueprintConfigWorkflow_TimeoutMinutes | undefined;
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingContainerPlatforms = Shared_BlueprintConfigWorkflow_ContainerPlatforms;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTriggers = Shared_BlueprintConfigWorkflow_Triggers;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTriggerNames = string[];
@@ -2926,6 +2952,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_MatchedMetadata = L
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_WorkspaceKeys = string[];
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_BuildWorkspaceKeys = string[];
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargets = Shared_BlueprintConfigWorkflow_Deploy;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuChoice_Title = string;
@@ -2975,6 +3003,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetType
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ExistingTargetTypes = string[];
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTargetInAnotherWorkflow = boolean;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuChoices = Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuChoice[];
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTarget = Shared_BlueprintConfigDeployTarget | undefined;
@@ -2982,6 +3012,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTarget = Sha
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTargetType = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTargetWorkingDir = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_CurrentTargetIsContainer = boolean;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuOutputKey = 'targetAction';
 
@@ -2993,11 +3025,19 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuOutputRes
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuAction = Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetMenuChoice_Value;
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTargetCollision = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasDuplicateContainerTarget = boolean;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetToRemoveIndex = number;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEditIndex = number;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetToEdit = Shared_BlueprintConfigDeployTarget | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectableTargetTypes = string[];
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_AvailableTargetIsContainer = boolean;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeChoice_Title = string;
 
@@ -3022,6 +3062,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetTypeOutputRes
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetType = string;
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_IsContainerTarget = boolean;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice_Title = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice_Value = string;
@@ -3030,6 +3072,8 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirCho
   title: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice_Title;
   value: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirChoice_Value;
 };
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirInitial = number;
 
@@ -3042,8 +3086,6 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOut
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputResult> | Shared_PromptWithCancelReject;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputResultValue = Record<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetWorkingDirOutputResult>;
-
-export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetWorkingDir = string;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetIsDuplicate = boolean;
 
@@ -3087,6 +3129,32 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettingsOutpu
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetSettings = Shared_BlueprintConfigDeployTarget_With;
 
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedTargetMetadata = Shared_WorkflowTemplateTarget | undefined;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiterals = Shared_WorkflowTemplateTarget_RequiredLiterals;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralEntry = [string, Shared_WorkflowTemplateTargetRequiredLiteral];
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralEntries = Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralEntry[];
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralPromptCancelled = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralKey = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralMetadata = Shared_WorkflowTemplateTargetRequiredLiteral;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralInitial = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralPromptMessage = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralOutputKey = 'targetRequiredLiteral';
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralOutputResult = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetRequiredLiteralValue = string;
+
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry = {
   type: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry_Type;
   workingDir: Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry_WorkingDir;
@@ -3094,6 +3162,32 @@ export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_TargetEntry = {
 };
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_NewTarget = Shared_BlueprintConfigDeployTarget;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_HasContainerTarget = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedContainerPlatforms = Shared_BlueprintConfigWorkflow_ContainerPlatforms;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformChoice_Title = string;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformChoice_Value = Shared_BlueprintConfigWorkflow_ContainerPlatforms[number];
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformChoice_Selected = boolean;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformChoice = {
+  title: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformChoice_Title;
+  value: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformChoice_Value;
+  selected: Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformChoice_Selected;
+};
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformChoices = Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformChoice[];
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputKey = 'containerPlatforms';
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputResult = Shared_BlueprintConfigWorkflow_ContainerPlatforms;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutput = Shared_PromptWithCancelResolved<Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputResult> | Shared_PromptWithCancelReject;
+
+export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputResultValue = Record<Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputKey, Cli_Utility_Configure_Runner_PromptWorkflowsForm_ContainerPlatformsOutputResult>;
 
 export type Cli_Utility_Configure_Runner_PromptWorkflowsForm_SelectedScopes = Shared_BlueprintConfigWorkflow_Build;
 
@@ -3489,4 +3583,29 @@ export type Cli_Utility_Configure_Runner_Run_NovaConfig = LibNovaConfig;
 
 export type Cli_Utility_Configure_Runner_Run_WorkingFile = Shared_NovaConfig;
 
+export type Cli_Utility_Configure_Runner_Run_CurrentStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
 export type Cli_Utility_Configure_Runner_Run_PromptFlowResult = Exclude<Shared_DialogAction, 'back'>;
+
+export type Cli_Utility_Configure_Runner_Run_NextStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
+export type Cli_Utility_Configure_Runner_Run_MigrationPlan_CurrentStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
+export type Cli_Utility_Configure_Runner_Run_MigrationPlan_NextStrategy = Shared_NovaConfigSettings_VersionStrategy;
+
+export type Cli_Utility_Configure_Runner_Run_MigrationPlan_Write_Path = string;
+
+export type Cli_Utility_Configure_Runner_Run_MigrationPlan_Write_Content = string;
+
+export type Cli_Utility_Configure_Runner_Run_MigrationPlan_Write = {
+  path: Cli_Utility_Configure_Runner_Run_MigrationPlan_Write_Path;
+  content: Cli_Utility_Configure_Runner_Run_MigrationPlan_Write_Content;
+};
+
+export type Cli_Utility_Configure_Runner_Run_MigrationPlan_Writes = Cli_Utility_Configure_Runner_Run_MigrationPlan_Write[];
+
+export type Cli_Utility_Configure_Runner_Run_MigrationPlan = {
+  currentStrategy: Cli_Utility_Configure_Runner_Run_MigrationPlan_CurrentStrategy;
+  nextStrategy: Cli_Utility_Configure_Runner_Run_MigrationPlan_NextStrategy;
+  writes: Cli_Utility_Configure_Runner_Run_MigrationPlan_Writes;
+} | undefined;

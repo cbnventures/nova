@@ -1,0 +1,36 @@
+import type {
+  Shared_DiscordDeveloperPortalOptions,
+  Shared_IntegrationWorkspace,
+} from '../../shared.d.ts';
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ResolveToken_Options = Shared_DiscordDeveloperPortalOptions;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ResolveToken_Returns = Promise<string>;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ResolveToken_Workspace = Shared_IntegrationWorkspace;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ResolveToken_WorkspaceEnvPath = string;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ResolveToken_RootEnvPath = string;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ResolveToken_WorkspaceToken = string | undefined;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ResolveToken_RootToken = string | undefined;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Options = Shared_DiscordDeveloperPortalOptions;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Returns = Promise<void>;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Token = string;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Response = Response;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_ResponseText = string;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Data = unknown;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_Application = Record<string, unknown>;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_ApplicationId = string;
+
+export type Cli_Integration_DiscordDeveloperPortal_Runner_ValidateToken_ApplicationName = string;

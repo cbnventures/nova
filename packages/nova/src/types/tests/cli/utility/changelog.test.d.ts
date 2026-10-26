@@ -97,6 +97,12 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComp
 
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ConfigContents = string;
 
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedYear = number;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedMonth = number;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedVersion = string;
+
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspacePackagePath = string;
 
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_WorkspacePackageContents = string;
@@ -110,12 +116,6 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComp
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJsonRaw = string;
 
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_PackageJson = Record<string, unknown>;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedYear = number;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedMonth = number;
-
-export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ExpectedVersion = string;
 
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseComputesVersionFromDate_ChangelogPath = string;
 
@@ -157,6 +157,10 @@ export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncr
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_WorkspacePackagePath = string;
 
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_WorkspacePackageContents = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_HistoryPath = string;
+
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_HistoryContents = string;
 
 export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_CalverReleaseIncrementsMicroWithinSameMonth_EntryPath = string;
 
@@ -790,13 +794,6 @@ export type Tests_Cli_Utility_Changelog_ValidateVersion_ValidateVersion = (
 ) => Cli_Utility_Changelog_Runner_ValidateVersion_Returns;
 
 /**
- * Tests - CLI - Utility - Changelog - Validate Version - Allows The Initial CalVer Sentinel.
- *
- * @since 0.26.0
- */
-export type Tests_Cli_Utility_Changelog_ValidateVersion_AllowsTheInitialCalVerSentinel_CurrentVersion = string;
-
-/**
  * Tests - CLI - Utility - Changelog - Validate Version - Rejects Future CalVer.
  *
  * @since 0.26.0
@@ -809,3 +806,10 @@ export type Tests_Cli_Utility_Changelog_ValidateVersion_RejectsFutureCalVer_Futu
  * @since 0.26.0
  */
 export type Tests_Cli_Utility_Changelog_ValidateVersion_RejectsMalformedCalVer_CurrentVersion = string;
+
+/**
+ * Tests - CLI - Utility - Changelog - Validate Version - Rejects The Reserved CalVer Sentinel.
+ *
+ * @since 0.26.0
+ */
+export type Tests_Cli_Utility_Changelog_ValidateVersion_RejectsTheReservedCalVerSentinel_CurrentVersion = string;
