@@ -27,9 +27,9 @@ This gives every published Nova version a repeatable result:
 
 ## How Updates Reach the Snapshot
 
-Nova reviews the snapshot weekly. The maintenance workflow finds stable candidates from authoritative upstream sources, writes them to a review branch, and runs the complete project check and build—including the scaffold matrix—before opening a pull request.
+Nova maintainers review the snapshot explicitly before a release or whenever an upstream update needs consideration. The maintenance command finds stable candidates from authoritative upstream sources and can write them locally for review before the complete project check and build—including the scaffold matrix—are run.
 
-The workflow never merges its own pull request. Framework major versions, support ranges, Apple deployment targets, and Android SDK policy remain deliberate maintainer decisions.
+Framework major versions, support ranges, Apple deployment targets, and Android SDK policy remain deliberate maintainer decisions.
 
 Cloudflare's Wrangler version, Worker types, and compatibility date are reviewed together. Android libraries, Gradle, and the Gradle Wrapper are also validated as one platform set instead of unrelated numbers.
 
