@@ -275,7 +275,7 @@ private struct SocialLinkView: View {
     ///
     /// - Since: UNRELEASED
     ///
-    private let label: String
+    private let label: LocalizedStringKey
 
     ///
     /// Social Link View - Destination.
@@ -297,7 +297,7 @@ private struct SocialLinkView: View {
     ///
     /// - Since: UNRELEASED
     ///
-    fileprivate init(image: String, label: String, url: String) {
+    fileprivate init(image: String, label: LocalizedStringKey, url: String) {
         self.image = image
         self.label = label
         destination = URL(string: url)!
@@ -327,7 +327,7 @@ private struct SocialLinkView: View {
         }
         .buttonStyle(.plain)
         .foregroundStyle(.secondary)
-        .accessibilityLabel(label)
+        .accessibilityLabel(Text(label))
     }
 }
 
@@ -356,7 +356,7 @@ private struct LaunchStepView: View {
     ///
     /// - Since: UNRELEASED
     ///
-    private let title: String
+    private let title: LocalizedStringKey
 
     ///
     /// Launch Step View - Description.
@@ -365,7 +365,7 @@ private struct LaunchStepView: View {
     ///
     /// - Since: UNRELEASED
     ///
-    private let description: String
+    private let description: LocalizedStringKey
 
     ///
     /// Launch Step View - Constructor.
@@ -378,7 +378,7 @@ private struct LaunchStepView: View {
     ///
     /// - Since: UNRELEASED
     ///
-    fileprivate init(number: String, title: String, description: String) {
+    fileprivate init(number: String, title: LocalizedStringKey, description: LocalizedStringKey) {
         self.number = number
         self.title = title
         self.description = description

@@ -1,5 +1,6 @@
 package [__ANDROID_APPLICATION_ID__].ui.main
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -33,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
@@ -116,7 +118,7 @@ public fun MainScreen(
  */
 @Composable
 internal fun MainScreen(data: List<String>, modifier: Modifier = Modifier) {
-    val platformName = data.firstOrNull() ?: "Android"
+    val platformName = data.firstOrNull() ?: stringResource(R.string.platform_android)
     val uriHandler = LocalUriHandler.current
 
     Column(
@@ -196,11 +198,11 @@ private fun MainScreenHeader(
             Image(
                 modifier = Modifier.size(36.dp),
                 painter = painterResource(R.drawable.nova_logo),
-                contentDescription = "Nova",
+                contentDescription = stringResource(R.string.nova_logo_content_description),
             )
 
             Text(
-                text = "Nova × $platformName",
+                text = stringResource(R.string.nova_platform_name, platformName),
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.labelLarge,
             )
@@ -211,7 +213,7 @@ private fun MainScreenHeader(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("Read Nova Docs")
+                Text(stringResource(R.string.read_nova_docs))
 
                 Icon(
                     modifier = Modifier.size(16.dp),
@@ -242,7 +244,7 @@ private fun MainScreenIntroduction(
     Column(modifier = modifier) {
         Text(
             modifier = Modifier.semantics { heading() },
-            text = "[__WORKSPACE_TITLE__] starts here.",
+            text = stringResource(R.string.starter_title),
             fontSize = 48.sp,
             fontWeight = FontWeight.Bold,
             letterSpacing = (-1.8).sp,
@@ -252,7 +254,7 @@ private fun MainScreenIntroduction(
         Spacer(modifier = Modifier.height(18.dp))
 
         Text(
-            text = "A native Android workspace with strict checks, tests, and a clean path from first screen to release.",
+            text = stringResource(R.string.starter_description),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             lineHeight = 24.sp,
             style = MaterialTheme.typography.bodyLarge,
@@ -265,7 +267,7 @@ private fun MainScreenIntroduction(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("Explore Android docs")
+                Text(stringResource(R.string.explore_android_docs))
 
                 Icon(
                     modifier = Modifier.size(16.dp),
@@ -278,7 +280,7 @@ private fun MainScreenIntroduction(
         Spacer(modifier = Modifier.height(14.dp))
 
         Text(
-            text = "Start in ui/main/MainScreen.kt",
+            text = stringResource(R.string.starter_edit_hint),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = MaterialTheme.typography.labelMedium,
         )
@@ -299,7 +301,7 @@ private fun MainScreenIntroduction(
 private fun MainScreenFooter(onSocialClick: (String) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Text(
-            text = "Generated with Nova",
+            text = stringResource(R.string.generated_with_nova),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontWeight = FontWeight.SemiBold,
             letterSpacing = 1.1.sp,
@@ -309,43 +311,43 @@ private fun MainScreenFooter(onSocialClick: (String) -> Unit) {
         Row {
             MainScreenSocialLink(
                 icon = R.drawable.social_facebook,
-                label = "Facebook",
+                label = R.string.social_facebook,
                 url = "https://www.facebook.com/cbnventures",
                 onSocialClick = onSocialClick,
             )
             MainScreenSocialLink(
                 icon = R.drawable.social_x,
-                label = "X",
+                label = R.string.social_x,
                 url = "https://x.com/cbnventures",
                 onSocialClick = onSocialClick,
             )
             MainScreenSocialLink(
                 icon = R.drawable.social_youtube,
-                label = "YouTube",
+                label = R.string.social_youtube,
                 url = "https://www.youtube.com/@cbnventures",
                 onSocialClick = onSocialClick,
             )
             MainScreenSocialLink(
                 icon = R.drawable.social_instagram,
-                label = "Instagram",
+                label = R.string.social_instagram,
                 url = "https://www.instagram.com/cbnventures/",
                 onSocialClick = onSocialClick,
             )
             MainScreenSocialLink(
                 icon = R.drawable.social_github,
-                label = "GitHub",
+                label = R.string.social_github,
                 url = "https://github.com/cbnventures",
                 onSocialClick = onSocialClick,
             )
             MainScreenSocialLink(
                 icon = R.drawable.social_google_play,
-                label = "Google Play",
+                label = R.string.social_google_play,
                 url = "https://play.google.com/store/apps/dev?id=6419450160526226105",
                 onSocialClick = onSocialClick,
             )
             MainScreenSocialLink(
                 icon = R.drawable.social_linkedin,
-                label = "LinkedIn",
+                label = R.string.social_linkedin,
                 url = "https://www.linkedin.com/company/cbnventures/",
                 onSocialClick = onSocialClick,
             )
@@ -369,7 +371,7 @@ private fun MainScreenFooter(onSocialClick: (String) -> Unit) {
 @Composable
 private fun MainScreenSocialLink(
     icon: Int,
-    label: String,
+    @StringRes label: Int,
     url: String,
     onSocialClick: (String) -> Unit,
 ) {
@@ -397,7 +399,7 @@ private fun MainScreenSocialLink(
             Icon(
                 modifier = Modifier.size(18.dp),
                 painter = painterResource(icon),
-                contentDescription = label,
+                contentDescription = stringResource(label),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
@@ -425,7 +427,7 @@ private fun MainScreenSequence(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(22.dp),
     ) {
         Text(
-            text = "LAUNCH SEQUENCE",
+            text = stringResource(R.string.launch_sequence),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontWeight = FontWeight.Bold,
             letterSpacing = 1.2.sp,
@@ -433,21 +435,21 @@ private fun MainScreenSequence(modifier: Modifier = Modifier) {
         )
 
         MainScreenStep(
-            number = "01",
-            title = "Shape the experience",
-            description = "Replace this starter with your first real product experience.",
+            number = R.string.launch_step_one_number,
+            title = R.string.launch_step_one_title,
+            description = R.string.launch_step_one_description,
         )
 
         MainScreenStep(
-            number = "02",
-            title = "Keep the contract",
-            description = "Run the workspace checks while the project takes shape.",
+            number = R.string.launch_step_two_number,
+            title = R.string.launch_step_two_title,
+            description = R.string.launch_step_two_description,
         )
 
         MainScreenStep(
-            number = "03",
-            title = "Ship confidently",
-            description = "Build the same production artifact Nova already validates.",
+            number = R.string.launch_step_three_number,
+            title = R.string.launch_step_three_title,
+            description = R.string.launch_step_three_description,
         )
     }
 }
@@ -465,14 +467,18 @@ private fun MainScreenSequence(modifier: Modifier = Modifier) {
  * @since UNRELEASED
  */
 @Composable
-private fun MainScreenStep(number: String, title: String, description: String) {
+private fun MainScreenStep(
+    @StringRes number: Int,
+    @StringRes title: Int,
+    @StringRes description: Int,
+) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Row(verticalAlignment = Alignment.Top) {
             Text(
                 modifier =
                     Modifier
                         .width(34.dp),
-                text = number,
+                text = stringResource(number),
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.titleMedium,
@@ -482,7 +488,7 @@ private fun MainScreenStep(number: String, title: String, description: String) {
                 modifier =
                     Modifier
                         .weight(1f),
-                text = title,
+                text = stringResource(title),
                 fontWeight = FontWeight.SemiBold,
                 style = MaterialTheme.typography.titleMedium,
             )
@@ -490,7 +496,7 @@ private fun MainScreenStep(number: String, title: String, description: String) {
 
         Text(
             modifier = Modifier.padding(start = 34.dp),
-            text = description,
+            text = stringResource(description),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             lineHeight = 20.sp,
             style = MaterialTheme.typography.bodyMedium,
@@ -530,7 +536,7 @@ private fun MainScreenLoading(modifier: Modifier = Modifier) {
 private fun MainScreenError(message: String?, modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(
-            text = message ?: "Unable to load the starter experience.",
+            text = message ?: stringResource(R.string.starter_error),
             color = MaterialTheme.colorScheme.error,
             textAlign = TextAlign.Center,
         )
@@ -550,7 +556,7 @@ private fun MainScreenPreview() {
     [__WORKSPACE_IDENTIFIER__]Theme {
         Surface {
             MainScreen(
-                data = listOf("Android"),
+                data = emptyList(),
                 modifier = Modifier.padding(20.dp),
             )
         }

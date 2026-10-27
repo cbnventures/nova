@@ -32,6 +32,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 4. Runs Next.js type generation before separate app, configuration, and Vitest type checks. Vite's test types never enter Next.js production compilation.
 5. Enables Nova's complete custom ESLint rules and a starter Vitest suite while leaving every rule open to consumer overrides.
 6. Optionally enables Next.js standalone output and contributes it to the repository-wide s6 Docker appliance.
+7. Starts with official App Router locale segments, server-side JSON dictionaries, and an English-default proxy without third-party i18n packages.
 
 ## Requirements
 
@@ -96,16 +97,29 @@ You can run this directly from an empty location; `scaffold starter base` is not
 │       ├── tests/
 │       │   └── project.test.ts
 │       └── src/
-│           └── app/
-│               ├── layout.tsx
-│               ├── page.tsx
-│               └── globals.css
+│           ├── app/
+│           │   ├── [lang]/
+│           │   │   ├── dictionaries/
+│           │   │   │   └── en.json
+│           │   │   ├── dictionaries.ts
+│           │   │   ├── layout.tsx
+│           │   │   └── page.tsx
+│           │   └── globals.css
+│           ├── i18n/
+│           │   └── config.ts
+│           └── proxy.ts
 └── packages/
 ```
 
 With `--docker-image`, Nova adds root `.dockerignore`, `Dockerfile`, and `compose.yml` entry points plus private assembly files under `packages/docker`. The standalone Next.js server runs as a supervised service inside the repository's one s6 image.
 
 See [Docker Images](/docs/cli/scaffolding/docker-images) for the shared runtime and layout contract.
+
+## Localization
+
+The generated proxy redirects unprefixed application routes to `/en`, and the `[lang]` App Router segment validates every locale before loading its server-side dictionary. English is the only initial locale, so Nova does not add browser negotiation packages that would be unnecessary in a one-language project.
+
+Add a locale to `src/i18n/config.ts`, place its JSON dictionary beside `en.json`, and register its loader in `dictionaries.ts`. Next.js keeps dictionaries in Server Components, so message catalogs are not added to the client JavaScript bundle.
 
 ## How It Works
 

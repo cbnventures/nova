@@ -29,6 +29,7 @@ You can run this directly from an empty location; `scaffold starter base` is not
 3. Provides `dev`, `prod`, `check`, `build`, `clean`, and `i18n` script groups whose top-level commands delegate to adjacent `name:*` steps through Nova's script runner; the child steps run Docusaurus, TypeScript, Vitest, and the preset's i18n commands directly.
 4. Pins TypeScript `6.0.3` and composes Nova's essentials, strict, and Docusaurus TSConfig presets with the local `@site/*` alias.
 5. Selects docs-only or docs-and-blog content, includes local search by default, and can contribute the site to the repository-wide s6 Docker appliance.
+6. Enables Docusaurus's native English i18n configuration and marks generated homepage copy for official translation extraction.
 
 ## Requirements
 
@@ -126,6 +127,12 @@ The resulting s6-overlay image supervises the static documentation service. It u
 GitHub Pages and Cloudflare Pages are additive destinations. The same Docusaurus workspace can deploy to either or both Pages targets while also contributing the site to the container image.
 
 See [Docker Images](/docs/cli/scaffolding/docker-images) for the shared runtime and layout contract.
+
+## Localization
+
+The generated site declares English as its default locale and uses Docusaurus's `translate` API for the preset-native homepage. Documentation and blog content retain Docusaurus's whole-file translation model in either content mode.
+
+Add another locale to `docusaurus.config.ts`, then run `npm run i18n:sync` to create the official Docusaurus translation files. Nova's existing `i18n:check` and `i18n:coverage` scripts validate the resulting catalogs.
 
 ## Config Fields
 

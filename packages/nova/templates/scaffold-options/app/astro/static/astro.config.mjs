@@ -9,6 +9,13 @@ import { defineConfig } from 'astro/config';
  * @since 0.0.0
  */
 const config = defineConfig({
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   outDir: './build',
   output: 'static',
 });

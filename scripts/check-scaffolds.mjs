@@ -2162,10 +2162,10 @@ async function checkScaffolds() {
 
     verifyLaunchSequenceCopy([
       join(projectDirectory, 'apps', 'web', 'src', 'main.ts'),
-      join(projectDirectory, 'apps', 'android', 'app', 'src', 'main', 'java', 'io', 'cbnventures', 'scaffoldsmoke', 'ui', 'main', 'MainScreen.kt'),
-      join(projectDirectory, 'apps', 'apple', 'Sources', 'ContentView.swift'),
-      join(projectDirectory, 'apps', 'astro', 'src', 'pages', 'index.astro'),
-      join(projectDirectory, 'apps', 'nextjs', 'src', 'app', 'page.tsx'),
+      join(projectDirectory, 'apps', 'android', 'app', 'src', 'main', 'res', 'values', 'strings.xml'),
+      join(projectDirectory, 'apps', 'apple', 'Sources', 'Localizable.xcstrings'),
+      join(projectDirectory, 'apps', 'astro', 'src', 'i18n', 'en.json'),
+      join(projectDirectory, 'apps', 'nextjs', 'src', 'app', '[lang]', 'dictionaries', 'en.json'),
       join(projectDirectory, 'apps', 'vite', 'src', 'app.tsx'),
       join(projectDirectory, 'apps', 'vite-svelte', 'src', 'app.svelte'),
       join(projectDirectory, 'apps', 'vite-vue', 'src', 'app.vue'),

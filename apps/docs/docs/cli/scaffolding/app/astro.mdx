@@ -28,6 +28,7 @@ Scaffold an **Astro** application with strict TypeScript checking and an explici
 4. Separates Astro source, Node-based configuration, and Vitest type-checking so one tool's declarations do not leak into another build.
 5. Can contribute static output or the Node.js server to the repository-wide s6 Docker appliance.
 6. Supports both a new monorepo and an additional app workspace through the same command.
+7. Configures Astro's native i18n router for English and keeps homepage copy in an app-owned JSON catalog without adding a translation dependency.
 
 ## Requirements
 
@@ -80,9 +81,10 @@ Scaffold an **Astro** application with strict TypeScript checking and an explici
 
 | File                    | Description                                                               |
 |-------------------------|---------------------------------------------------------------------------|
-| `astro.config.mjs`      | Astro project configuration.                                              |
+| `astro.config.mjs`      | Astro project configuration with native English i18n routing.             |
 | `eslint.config.mts`     | Ordered Nova presets and the complete Nova custom-rule collection.        |
-| `src/pages/index.astro` | Starter page using the generated workspace title.                         |
+| `src/i18n/en.json`      | English message catalog for the generated launchpad.                      |
+| `src/pages/index.astro` | Locale-aware starter page using the English catalog.                      |
 | `tests/project.test.ts` | Starter Vitest workspace test.                                            |
 | `tsconfig.astro.json`   | Astro source contract with essentials, strict, browser, and Astro layers. |
 | `tsconfig.config.json`  | Node.js contract for configuration files.                                 |
@@ -97,6 +99,12 @@ Cloudflare server rendering cannot be combined with `--docker-image` because Clo
 A server-rendered Cloudflare workspace also receives `public/.assetsignore`, which keeps `_worker.js` and `_routes.json` out of the copied public asset set. Nova registers that exact path in `ignoreFiles` with the `cloudflare-astro` bundle so the generic ignore-files generator can reproduce it later.
 
 Astro does not enable MDX by default, so this scaffold does not pretend `.mdx` files are buildable. If you add Astro's MDX integration, also add `langMdx` to the ESLint config; Nova's MDX language preset composes with the Astro framework layer.
+
+## Localization
+
+Every static, Node.js, and Cloudflare variant enables Astro's native i18n router with English as the unprefixed default locale. Add another locale to `astro.config.mjs`, create its catalog beside `src/i18n/en.json`, and add the matching locale page route when the application is ready to translate.
+
+Nova does not install a translation library. Astro owns locale routing, while the application owns its message catalogs and translated routes.
 
 ## Non-Interactive Mode
 

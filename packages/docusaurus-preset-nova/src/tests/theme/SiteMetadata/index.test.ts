@@ -74,7 +74,7 @@ vi.mock('@theme/SearchMetadata', () => ({
 /**
  * Tests - Theme - Site Metadata - Site Metadata.
  *
- * @since UNRELEASED
+ * @since 0.35.0
  */
 describe('SiteMetadata', async () => {
   it('adds site description to Open Graph', () => {

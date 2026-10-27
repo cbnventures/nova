@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.35.0 - 2026-10-27
+
+### ADDED
+- Made Docusaurus, Astro, Next.js, Apple, and Android scaffolds translation-ready with their native localization systems and English defaults.
+
 ## 0.34.1 - 2026-10-27
 
 ### FIXED

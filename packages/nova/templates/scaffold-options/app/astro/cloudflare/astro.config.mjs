@@ -11,6 +11,13 @@ import { defineConfig } from 'astro/config';
  */
 const config = defineConfig({
   adapter: cloudflare(),
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   outDir: './build',
   output: 'server',
 });

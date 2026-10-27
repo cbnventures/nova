@@ -1,0 +1,48 @@
+{
+  "metadata": {
+    "title": "Nova × Astro"
+  },
+  "brand": {
+    "nova": "Nova",
+    "framework": "Astro"
+  },
+  "header": {
+    "readNovaDocs": "Read Nova Docs ↗"
+  },
+  "introduction": {
+    "title": "Astro",
+    "titleAccent": "starts here.",
+    "description": "A content-ready Astro workspace with strict checks, tests, and a clean path from first page to production.",
+    "exploreDocs": "Explore Astro docs ↗",
+    "editHint": "Start in"
+  },
+  "sequence": {
+    "label": "Launch sequence",
+    "stepOne": {
+      "number": "01",
+      "title": "Shape the experience",
+      "description": "Replace this starter with your first real product experience."
+    },
+    "stepTwo": {
+      "number": "02",
+      "title": "Keep the contract",
+      "description": "Run the workspace checks while the project takes shape."
+    },
+    "stepThree": {
+      "number": "03",
+      "title": "Ship confidently",
+      "description": "Build the same production artifact Nova already validates."
+    }
+  },
+  "footer": {
+    "credit": "Generated with Nova",
+    "socialLabel": "CBN Ventures social media",
+    "facebook": "Facebook",
+    "x": "X",
+    "youtube": "YouTube",
+    "instagram": "Instagram",
+    "github": "GitHub",
+    "googlePlay": "Google Play",
+    "linkedin": "LinkedIn"
+  }
+}

@@ -31,6 +31,7 @@ The generated `package.json` and Gradle `versionName` share the strategy-aware i
 3. Includes Android linting, native unit tests, debug builds, and a development command that builds, deploys, and launches the app.
 4. Lints and type-checks Nova's Node.js Gradle adapter separately and includes a Vitest suite for generated helper tooling.
 5. Seeds editable Google Play Console metadata and asset directories under the repository's root `assets/` folder.
+6. Stores launchpad and accessibility copy in Android string resources so additional locale resource directories can be added without rewriting Compose code.
 
 ## Requirements
 
@@ -83,6 +84,7 @@ The generated `package.json` and Gradle `versionName` share the strategy-aware i
 | Path                                      | Description                                                                                               |
 |-------------------------------------------|-----------------------------------------------------------------------------------------------------------|
 | `app/`                                    | Native Android source, Nova launcher and social assets, manifest, lint configuration, and tests.          |
+| `app/src/main/res/values/strings.xml`     | Default English application, launchpad, and accessibility strings.                                        |
 | `gradle/`                                 | Nova-managed version catalog and pinned Gradle wrapper.                                                   |
 | `build.gradle.kts`                        | Root Android build configuration.                                                                         |
 | `settings.gradle.kts`                     | Generated Gradle project and repository configuration.                                                    |
@@ -93,6 +95,12 @@ The generated `package.json` and Gradle `versionName` share the strategy-aware i
 | `tsconfig.*.json`                         | Separate strict TypeScript contracts for helper scripts and tests.                                        |
 | `vitest.config.mts`                       | Test discovery scoped to Nova-managed helper tests.                                                       |
 | `assets/google-play-console/{workspace}/` | Root-owned Google Play metadata, screenshots, and graphic assets.                                         |
+
+## Localization
+
+The generated Compose interface reads user-visible and accessibility copy through Android's `stringResource` API. English remains the complete default resource set in `res/values/strings.xml`, so the app has safe fallbacks before another locale exists.
+
+Add translated `strings.xml` files under Android's locale-qualified `values-*` directories when needed. Android selects the matching resources at runtime without an additional translation library.
 
 ## Non-Interactive Mode
 

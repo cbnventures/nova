@@ -220,7 +220,7 @@ describe.sequential('CliScaffoldAppNextjs.run', async () => {
     // Verify workspace files were created.
     const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_WorkspacePackageJsonPath = join(projectDirectory, 'my-app', 'apps', 'nextjs', 'package.json');
     const nextConfigPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_NextConfigPath = join(projectDirectory, 'my-app', 'apps', 'nextjs', 'next.config.mjs');
-    const pageTsxPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_PageTsxPath = join(projectDirectory, 'my-app', 'apps', 'nextjs', 'src', 'app', 'page.tsx');
+    const pageTsxPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_CreatesMonorepoInEmptyDirectory_PageTsxPath = join(projectDirectory, 'my-app', 'apps', 'nextjs', 'src', 'app', '[lang]', 'page.tsx');
 
     await access(workspacePackageJsonPath);
 
@@ -280,7 +280,7 @@ describe.sequential('CliScaffoldAppNextjs.run', async () => {
     // Verify workspace files were created.
     const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_WorkspacePackageJsonPath = join(projectDirectory, 'apps', 'nextjs', 'package.json');
     const nextConfigPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_NextConfigPath = join(projectDirectory, 'apps', 'nextjs', 'next.config.mjs');
-    const pageTsxPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_PageTsxPath = join(projectDirectory, 'apps', 'nextjs', 'src', 'app', 'page.tsx');
+    const pageTsxPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_AddsWorkspaceAtMonorepoRoot_PageTsxPath = join(projectDirectory, 'apps', 'nextjs', 'src', 'app', '[lang]', 'page.tsx');
 
     await access(workspacePackageJsonPath);
 

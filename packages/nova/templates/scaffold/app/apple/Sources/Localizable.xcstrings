@@ -1,0 +1,75 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "[__WORKSPACE_TITLE__]" : {
+
+    },
+    "A native Apple workspace with strict checks, tests, and a clean path from first view to release." : {
+
+    },
+    "Build the same production artifact Nova already validates." : {
+
+    },
+    "Explore SwiftUI" : {
+
+    },
+    "Facebook" : {
+
+    },
+    "Generated with Nova" : {
+
+    },
+    "GitHub" : {
+
+    },
+    "Google Play" : {
+
+    },
+    "Instagram" : {
+
+    },
+    "Keep the contract" : {
+
+    },
+    "LAUNCH SEQUENCE" : {
+
+    },
+    "LinkedIn" : {
+
+    },
+    "Nova" : {
+
+    },
+    "Nova × Apple" : {
+
+    },
+    "Ship confidently" : {
+
+    },
+    "Read Nova Docs ↗" : {
+
+    },
+    "Replace this starter with your first real product experience." : {
+
+    },
+    "Run the workspace checks while the project takes shape." : {
+
+    },
+    "Shape the experience" : {
+
+    },
+    "Start in Sources/ContentView.swift" : {
+
+    },
+    "starts here." : {
+
+    },
+    "X" : {
+
+    },
+    "YouTube" : {
+
+    }
+  },
+  "version" : "1.0"
+}

@@ -8,6 +8,24 @@ import type { Shared_ScaffoldOutputContract } from '../shared.d.ts';
 export type Tests_ScaffoldOutputContract_TemplateContracts = Shared_ScaffoldOutputContract[];
 
 /**
+ * Tests - Scaffold Output Contract - Translation Ready Contracts.
+ *
+ * @since 0.35.0
+ */
+export type Tests_ScaffoldOutputContract_TranslationReadyContracts_TranslationReadyContract_Path = string;
+
+export type Tests_ScaffoldOutputContract_TranslationReadyContracts_TranslationReadyContract_Marker = string;
+
+export type Tests_ScaffoldOutputContract_TranslationReadyContracts_TranslationReadyContract_Markers = Tests_ScaffoldOutputContract_TranslationReadyContracts_TranslationReadyContract_Marker[];
+
+export type Tests_ScaffoldOutputContract_TranslationReadyContracts_TranslationReadyContract = {
+  path: Tests_ScaffoldOutputContract_TranslationReadyContracts_TranslationReadyContract_Path;
+  markers: Tests_ScaffoldOutputContract_TranslationReadyContracts_TranslationReadyContract_Markers;
+};
+
+export type Tests_ScaffoldOutputContract_TranslationReadyContracts = Tests_ScaffoldOutputContract_TranslationReadyContracts_TranslationReadyContract[];
+
+/**
  * Tests - Scaffold Output Contract - Scaffold Output Contract.
  *
  * @since 0.26.0
@@ -19,6 +37,15 @@ export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_TemporaryPrefix 
 export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_SandboxRoot = string;
 
 export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_PackageDirectory = string;
+
+/**
+ * Tests - Scaffold Output Contract - Scaffold Output Contract - Keeps Every Translation Ready Scaffold On Its Native Localization Contract.
+ *
+ * @since 0.35.0
+ */
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyPath = string;
+
+export type Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyContent = string;
 
 /**
  * Tests - Scaffold Output Contract - Scaffold Output Contract - Matches Every Template Inventory.

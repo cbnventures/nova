@@ -31,6 +31,7 @@ The generated `package.json` and `MARKETING_VERSION` share the strategy-aware in
 3. Lints and type-checks the generated Node.js lifecycle helper while keeping native tests owned by Xcode.
 4. Keeps Xcode build data inside the workspace so local and automated builds do not depend on a global DerivedData location.
 5. Seeds editable App Store Connect metadata and asset directories under the repository's root `assets/` folder.
+6. Includes an English Xcode String Catalog and uses SwiftUI's native localizable string types across both Apple destinations.
 
 ## Requirements
 
@@ -86,6 +87,7 @@ The generated `package.json` and `MARKETING_VERSION` share the strategy-aware in
 | `Sources/App.swift`                     | SwiftUI application entry point.                                              |
 | `Sources/Assets.xcassets/`              | Nova app icon, launchpad mark, and social-link vector assets.                 |
 | `Sources/ContentView.swift`             | Starter interface shared by iOS and macOS.                                    |
+| `Sources/Localizable.xcstrings`         | English String Catalog shared by the iOS and macOS targets.                   |
 | `Tests/AppTests.swift`                  | Swift Testing smoke test.                                                     |
 | `package.json`                          | Nova script groups for project generation, checking, and building.            |
 | `eslint.config.mts`                     | Nova ESLint presets and custom rules for the Node.js lifecycle helper.        |
@@ -93,6 +95,12 @@ The generated `package.json` and `MARKETING_VERSION` share the strategy-aware in
 | `tsconfig.tests.json`                   | Strict type-checking for future helper tests and Vitest configuration.        |
 | `vitest.config.mts`                     | Helper-test discovery with an empty-suite-safe starting point.                |
 | `assets/app-store-connect/{workspace}/` | Root-owned App Store Connect metadata, screenshots, and creative assets.      |
+
+## Localization
+
+Xcode discovers localizable SwiftUI literals during builds and keeps their source language in `Sources/Localizable.xcstrings`. Add languages and translations through Xcode's String Catalog editor; the same catalog serves the generated iOS and macOS application.
+
+Nova types reusable launch-step and accessibility copy as `LocalizedStringKey` so moving a literal through a helper view does not silently make it untranslatable. No runtime localization dependency is required.
 
 ## Non-Interactive Mode
 

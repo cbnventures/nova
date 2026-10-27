@@ -28,6 +28,7 @@ import type {
   Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_Manifest,
   Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_OutputPath,
   Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_RunGradle,
+  Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_StringsXml,
   Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_RejectsJavaKeywordSegmentsBeforeWritingFiles_Exists,
   Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_RejectsJavaKeywordSegmentsBeforeWritingFiles_OutputPath,
   Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_SandboxRoot,
@@ -84,6 +85,7 @@ describe.sequential('CliScaffoldAppAndroid.run', async () => {
     const googlePlayMetadata: Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_GooglePlayMetadata = await readFile(join(outputPath, 'assets', 'google-play-console', 'mobile', 'metadata', 'android', 'en-US.json'), 'utf-8');
     const launcherForeground: Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_LauncherForeground = await readFile(join(outputPath, 'apps', 'mobile', 'app', 'src', 'main', 'res', 'drawable', 'ic_launcher_foreground.xml'), 'utf-8');
     const mainScreen: Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_MainScreen = await readFile(join(outputPath, 'apps', 'mobile', 'app', 'src', 'main', 'java', 'io', 'cbnventures', 'mobile', 'ui', 'main', 'MainScreen.kt'), 'utf-8');
+    const stringsXml: Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_StringsXml = await readFile(join(outputPath, 'apps', 'mobile', 'app', 'src', 'main', 'res', 'values', 'strings.xml'), 'utf-8');
     const manifest: Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_Manifest = await readFile(join(outputPath, 'apps', 'mobile', 'app', 'src', 'main', 'AndroidManifest.xml'), 'utf-8');
     const runGradle: Tests_Cli_Scaffold_App_Android_CliScaffoldAppAndroidRun_OwnsCompleteNativeProject_RunGradle = await readFile(join(outputPath, 'apps', 'mobile', 'scripts', 'run-gradle.mjs'), 'utf-8');
 
@@ -96,12 +98,14 @@ describe.sequential('CliScaffoldAppAndroid.run', async () => {
     strictEqual(gitignore.includes('/assets/'), false);
     strictEqual(googlePlayMetadata.includes('"fullDescription": null'), true);
     strictEqual(launcherForeground.includes('android:inset="30dp"'), true);
-    strictEqual(mainScreen.includes('text = "Mobile starts here."'), true);
-    strictEqual(mainScreen.includes('title = "Shape the experience"'), true);
-    strictEqual(mainScreen.includes('title = "Keep the contract"'), true);
-    strictEqual(mainScreen.includes('title = "Ship confidently"'), true);
+    strictEqual(mainScreen.includes('text = stringResource(R.string.starter_title)'), true);
+    strictEqual(mainScreen.includes('@StringRes title: Int'), true);
     strictEqual(mainScreen.includes('contentAlignment = Alignment.CenterStart'), true);
     strictEqual(mainScreen.includes('.offset(x = (-6).dp)'), false);
+    strictEqual(stringsXml.includes('<string name="starter_title">Mobile starts here.</string>'), true);
+    strictEqual(stringsXml.includes('<string name="launch_step_one_title">Shape the experience</string>'), true);
+    strictEqual(stringsXml.includes('<string name="launch_step_two_title">Keep the contract</string>'), true);
+    strictEqual(stringsXml.includes('<string name="launch_step_three_title">Ship confidently</string>'), true);
     strictEqual(manifest.includes('Theme.Mobile'), true);
     strictEqual(runGradle.includes('const executable = (isWindows === true) ? \'gradlew.bat\' : \'sh\';'), true);
     strictEqual(runGradle.includes('\'./gradlew\','), true);

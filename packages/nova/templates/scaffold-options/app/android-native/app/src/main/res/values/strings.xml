@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">[__WORKSPACE_TITLE__]</string>
+    <string name="explore_android_docs">Explore Android docs</string>
+    <string name="generated_with_nova">Generated with Nova</string>
+    <string name="launch_sequence">Launch sequence</string>
+    <string name="launch_step_one_description">Replace this starter with your first real product experience.</string>
+    <string name="launch_step_one_number">01</string>
+    <string name="launch_step_one_title">Shape the experience</string>
+    <string name="launch_step_three_description">Build the same production artifact Nova already validates.</string>
+    <string name="launch_step_three_number">03</string>
+    <string name="launch_step_three_title">Ship confidently</string>
+    <string name="launch_step_two_description">Run the workspace checks while the project takes shape.</string>
+    <string name="launch_step_two_number">02</string>
+    <string name="launch_step_two_title">Keep the contract</string>
+    <string name="nova_logo_content_description">Nova</string>
+    <string name="nova_platform_name">Nova × %1$s</string>
+    <string name="platform_android">Android</string>
+    <string name="read_nova_docs">Read Nova Docs</string>
+    <string name="social_facebook">Facebook</string>
+    <string name="social_github">GitHub</string>
+    <string name="social_google_play">Google Play</string>
+    <string name="social_instagram">Instagram</string>
+    <string name="social_linkedin">LinkedIn</string>
+    <string name="social_x">X</string>
+    <string name="social_youtube">YouTube</string>
+    <string name="starter_description">A native Android workspace with strict checks, tests, and a clean path from first screen to release.</string>
+    <string name="starter_edit_hint">Start in ui/main/MainScreen.kt</string>
+    <string name="starter_error">Unable to load the starter experience.</string>
+    <string name="starter_title">[__WORKSPACE_TITLE__] starts here.</string>
 </resources>

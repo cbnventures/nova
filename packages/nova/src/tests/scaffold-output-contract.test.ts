@@ -55,6 +55,8 @@ import {
 } from '../lib/scaffold.js';
 
 import type {
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyContent,
+  Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyPath,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_RejectedTemplateContract,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractPromises,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_MatchesEveryTemplateInventory_TemplateContractResults,
@@ -73,6 +75,7 @@ import type {
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_TemporaryDirectory,
   Tests_ScaffoldOutputContract_ScaffoldOutputContract_TemporaryPrefix,
   Tests_ScaffoldOutputContract_TemplateContracts,
+  Tests_ScaffoldOutputContract_TranslationReadyContracts,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_EslintBaseline,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_EslintConfigContent,
   Tests_ScaffoldOutputContract_VerifyGeneratedOutput_EslintConfigIndex,
@@ -308,6 +311,7 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'Sources/Assets.xcassets/SocialYouTube.imageset/Contents.json',
       'Sources/Assets.xcassets/SocialYouTube.imageset/youtube.svg',
       'Sources/ContentView.swift',
+      'Sources/Localizable.xcstrings',
       'Tests/AppTests.swift',
       'eslint.config.mts',
       'package.json',
@@ -368,6 +372,7 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'package.json',
       'public/favicon.svg',
       'public/nova-socials.svg',
+      'src/i18n/en.json',
       'src/pages/index.astro',
       'src/styles/nova-launchpad.css',
       'tsconfig.astro.json',
@@ -793,12 +798,19 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
       'package.json',
       'public/favicon.svg',
       'public/nova-socials.svg',
+      'src/app/[lang]/dictionaries.ts',
+      'src/app/[lang]/dictionaries/en.json',
+      'src/app/[lang]/layout.tsx',
+      'src/app/[lang]/page.tsx',
       'src/app/globals.css',
-      'src/app/layout.tsx',
-      'src/app/page.tsx',
+      'src/i18n/config.ts',
+      'src/proxy.ts',
       'src/styles/nova-launchpad.css',
-      'src/types/app/layout.d.ts',
-      'src/types/app/page.d.ts',
+      'src/types/app/[lang]/dictionaries.d.ts',
+      'src/types/app/[lang]/layout.d.ts',
+      'src/types/app/[lang]/page.d.ts',
+      'src/types/i18n/config.d.ts',
+      'src/types/proxy.d.ts',
       'tsconfig.config.json',
       'tsconfig.json',
       'tsconfig.tests.json',
@@ -861,6 +873,135 @@ const templateContracts: Tests_ScaffoldOutputContract_TemplateContracts = [
         'Vite',
       ],
     ]),
+  },
+];
+
+/**
+ * Tests - Scaffold Output Contract - Translation Ready Contracts.
+ *
+ * Records the native localization primitives that each supported scaffold and
+ * every mutually exclusive template option must preserve.
+ *
+ * @since 0.35.0
+ */
+const translationReadyContracts: Tests_ScaffoldOutputContract_TranslationReadyContracts = [
+  {
+    path: 'templates/scaffold/docs/docusaurus/docusaurus.config.ts',
+    markers: [
+      'i18n: {',
+      'defaultLocale: \'en\'',
+      'locales: [\'en\']',
+    ],
+  },
+  {
+    path: 'templates/scaffold/docs/docusaurus/src/pages/index.tsx',
+    markers: [
+      'import { translate } from \'@docusaurus/Translate\'',
+      'id: \'homepage.hero.heading\'',
+    ],
+  },
+  {
+    path: 'templates/scaffold/app/astro/src/i18n/en.json',
+    markers: [
+      '"metadata"',
+      '"sequence"',
+    ],
+  },
+  {
+    path: 'templates/scaffold/app/astro/src/pages/index.astro',
+    markers: [
+      'import messages from \'../i18n/en.json\'',
+      'Astro.currentLocale ?? \'en\'',
+    ],
+  },
+  {
+    path: 'templates/scaffold-options/app/astro/static/astro.config.mjs',
+    markers: [
+      'i18n: {',
+      'defaultLocale: \'en\'',
+      'prefixDefaultLocale: false',
+    ],
+  },
+  {
+    path: 'templates/scaffold-options/app/astro/node/astro.config.mjs',
+    markers: [
+      'i18n: {',
+      'defaultLocale: \'en\'',
+      'prefixDefaultLocale: false',
+    ],
+  },
+  {
+    path: 'templates/scaffold-options/app/astro/cloudflare/astro.config.mjs',
+    markers: [
+      'i18n: {',
+      'defaultLocale: \'en\'',
+      'prefixDefaultLocale: false',
+    ],
+  },
+  {
+    path: 'templates/scaffold/app/nextjs/src/i18n/config.ts',
+    markers: [
+      'defaultLocale: I18n_Config_DefaultLocale = \'en\'',
+      'locales: I18n_Config_Locales = [\'en\']',
+    ],
+  },
+  {
+    path: 'templates/scaffold/app/nextjs/src/proxy.ts',
+    markers: [
+      'function localizeRequest(',
+      'export default localizeRequest;',
+      'url.pathname =',
+    ],
+  },
+  {
+    path: 'templates/scaffold/app/nextjs/src/app/[lang]/dictionaries/en.json',
+    markers: [
+      '"metadataTitle"',
+      '"launchSequence"',
+    ],
+  },
+  {
+    path: 'templates/scaffold/app/nextjs/src/app/[lang]/layout.tsx',
+    markers: [
+      'export function generateStaticParams',
+      '<html lang={params[\'lang\']}>',
+    ],
+  },
+  {
+    path: 'templates/scaffold/app/nextjs/src/app/[lang]/page.tsx',
+    markers: [
+      'import { getDictionary } from \'./dictionaries\'',
+      'dictionary[\'title\']',
+    ],
+  },
+  {
+    path: 'templates/scaffold/app/apple/Sources/Localizable.xcstrings',
+    markers: [
+      '"sourceLanguage" : "en"',
+      '"strings"',
+    ],
+  },
+  {
+    path: 'templates/scaffold/app/apple/Sources/ContentView.swift',
+    markers: [
+      'private let label: LocalizedStringKey',
+      'private let title: LocalizedStringKey',
+      'private let description: LocalizedStringKey',
+    ],
+  },
+  {
+    path: 'templates/scaffold-options/app/android-native/app/src/main/res/values/strings.xml',
+    markers: [
+      '<string name="starter_title">',
+      '<string name="launch_sequence">',
+    ],
+  },
+  {
+    path: 'templates/scaffold-options/app/android-launchpad/app/src/main/java/[__ANDROID_PACKAGE_PATH__]/ui/main/MainScreen.kt',
+    markers: [
+      'import androidx.annotation.StringRes',
+      'stringResource(R.string.starter_title)',
+    ],
   },
 ];
 
@@ -1311,6 +1452,22 @@ describe('scaffold output contract', async () => {
 
     if (rejectedTemplateContract !== undefined) {
       throw rejectedTemplateContract.reason;
+    }
+
+    return;
+  });
+
+  it('keeps every translation-ready scaffold on its native localization contract', async () => {
+    for (const translationReadyContract of translationReadyContracts) {
+      const translationReadyPath: Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyPath = join(packageDirectory, translationReadyContract['path']);
+      const translationReadyContent: Tests_ScaffoldOutputContract_ScaffoldOutputContract_KeepsEveryTranslationReadyScaffoldOnItsNativeLocalizationContract_TranslationReadyContent = await readFile(translationReadyPath, 'utf-8');
+
+      for (const marker of translationReadyContract['markers']) {
+        ok(
+          translationReadyContent.includes(marker),
+          `Expected ${translationReadyContract['path']} to preserve localization marker: ${marker}`,
+        );
+      }
     }
 
     return;

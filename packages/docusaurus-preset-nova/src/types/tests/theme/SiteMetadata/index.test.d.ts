@@ -3,7 +3,7 @@ import type { vi } from 'vitest';
 /**
  * Tests - Theme - Site Metadata - Docusaurus Head - Mock Module.
  *
- * @since UNRELEASED
+ * @since 0.35.0
  */
 export type Tests_Theme_SiteMetadata_Index_DocusaurusHead_MockModule_Default = string;
 
@@ -14,7 +14,7 @@ export type Tests_Theme_SiteMetadata_Index_DocusaurusHead_MockModule = Readonly<
 /**
  * Tests - Theme - Site Metadata - Docusaurus Router - Mock Module.
  *
- * @since UNRELEASED
+ * @since 0.35.0
  */
 export type Tests_Theme_SiteMetadata_Index_DocusaurusRouter_MockModule_UseLocation = ReturnType<typeof vi['fn']>;
 
@@ -25,7 +25,7 @@ export type Tests_Theme_SiteMetadata_Index_DocusaurusRouter_MockModule = Readonl
 /**
  * Tests - Theme - Site Metadata - Docusaurus Theme Common - Mock Module.
  *
- * @since UNRELEASED
+ * @since 0.35.0
  */
 export type Tests_Theme_SiteMetadata_Index_DocusaurusThemeCommon_MockModule_PageMetadata = ReturnType<typeof vi['fn']>;
 
@@ -39,7 +39,7 @@ export type Tests_Theme_SiteMetadata_Index_DocusaurusThemeCommon_MockModule = Re
 /**
  * Tests - Theme - Site Metadata - Docusaurus Theme Common Internal - Mock Module.
  *
- * @since UNRELEASED
+ * @since 0.35.0
  */
 export type Tests_Theme_SiteMetadata_Index_DocusaurusThemeCommonInternal_MockModule_DefaultSearchTag = string;
 
@@ -53,7 +53,7 @@ export type Tests_Theme_SiteMetadata_Index_DocusaurusThemeCommonInternal_MockMod
 /**
  * Tests - Theme - Site Metadata - Docusaurus Use Base URL - Mock Module.
  *
- * @since UNRELEASED
+ * @since 0.35.0
  */
 export type Tests_Theme_SiteMetadata_Index_DocusaurusUseBaseUrl_MockModule_Default = ReturnType<typeof vi['fn']>;
 
@@ -64,7 +64,7 @@ export type Tests_Theme_SiteMetadata_Index_DocusaurusUseBaseUrl_MockModule = Rea
 /**
  * Tests - Theme - Site Metadata - Docusaurus Use Docusaurus Context - Mock Module.
  *
- * @since UNRELEASED
+ * @since 0.35.0
  */
 export type Tests_Theme_SiteMetadata_Index_DocusaurusUseDocusaurusContext_MockModule_Default = ReturnType<typeof vi['fn']>;
 
@@ -75,7 +75,7 @@ export type Tests_Theme_SiteMetadata_Index_DocusaurusUseDocusaurusContext_MockMo
 /**
  * Tests - Theme - Site Metadata - Docusaurus Utils Common - Mock Module.
  *
- * @since UNRELEASED
+ * @since 0.35.0
  */
 export type Tests_Theme_SiteMetadata_Index_DocusaurusUtilsCommon_MockModule_ApplyTrailingSlash = ReturnType<typeof vi['fn']>;
 
@@ -86,7 +86,7 @@ export type Tests_Theme_SiteMetadata_Index_DocusaurusUtilsCommon_MockModule = Re
 /**
  * Tests - Theme - Site Metadata - Site Metadata - Adds Site Description To Open Graph.
  *
- * @since UNRELEASED
+ * @since 0.35.0
  */
 export type Tests_Theme_SiteMetadata_Index_SiteMetadata_AddsSiteDescriptionToOpenGraph_Markup = string;
 
@@ -97,7 +97,7 @@ export type Tests_Theme_SiteMetadata_Index_SiteMetadata_AddsSiteDescriptionToOpe
 /**
  * Tests - Theme - Site Metadata - Theme Search Metadata - Mock Module.
  *
- * @since UNRELEASED
+ * @since 0.35.0
  */
 export type Tests_Theme_SiteMetadata_Index_ThemeSearchMetadata_MockModule_Default = ReturnType<typeof vi['fn']>;
 

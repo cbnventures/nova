@@ -37,7 +37,7 @@ vi.mock('@theme/Heading', () => ({
 /**
  * Tests - Theme - Blog Archive Page - Blog Archive Page.
  *
- * @since UNRELEASED
+ * @since 0.35.0
  */
 describe('BlogArchivePage', async () => {
   it('uses a descriptive archive summary', () => {
