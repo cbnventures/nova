@@ -1,5 +1,10 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.34.1 - 2026-10-27
+
+### FIXED
+- Gave pages without page-specific summaries a site-wide Open Graph description fallback and replaced the blog archive's generic metadata with a descriptive default.
+
 ## 0.34.0 - 2026-10-26
 
 ### FIXED

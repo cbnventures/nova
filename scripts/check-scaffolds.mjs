@@ -2316,12 +2316,16 @@ async function checkScaffolds() {
       runNpm([
         'run',
         'build',
+        '--',
+        '--exclude-workspace',
+        'scaffold-smoke-tool-docker',
       ], projectDirectory);
 
       // The installed smoke fixture points Nova dependencies at tarballs kept
-      // outside the generated project. Lint the complete multi-workspace
-      // Dockerfile here; the isolated runtime check below performs the full
-      // image build without those test-only external file dependencies.
+      // outside the generated project, so its assembly workspace cannot install
+      // them from inside a Docker build context. Lint the complete multi-workspace
+      // Dockerfile here; the isolated runtime check below performs the full image
+      // build without those test-only external file dependencies.
       runCommand('docker', [
         'build',
         '--check',

@@ -265,6 +265,7 @@ describe('LibDockerPackaging', async () => {
     strictEqual(dockerfileContent.includes('ENTRYPOINT ["/init"]'), true);
     strictEqual(dockerfileContent.includes('[__'), false);
     strictEqual(dockerfileContent.includes('RUN corepack enable npm && npm install'), true);
+    strictEqual(dockerfileContent.includes('COPY nova.config.json ./nova.config.json'), true);
     strictEqual(dockerfileContent.includes('COPY package-lock.json'), false);
     strictEqual(dockerfileContent.includes('COPY packages/docker/yarnrc.yml ./.yarnrc.yml'), false);
     strictEqual(dockerfileContent.includes('COPY ["packages/docker/workspace-manifests/apps/api/package.json","apps/api/package.json"]'), true);
@@ -311,10 +312,13 @@ describe('LibDockerPackaging', async () => {
     deepStrictEqual(assemblyPackage, {
       name: 'fixture-tool-docker',
       private: true,
+      scripts: {
+        check: 'docker build --check --file ../../Dockerfile ../..',
+        build: 'docker compose --file ../../compose.yml --project-directory ../.. build',
+      },
       type: 'module',
       version: '0.0.0',
     });
-    strictEqual(Object.hasOwn(assemblyPackage, 'scripts'), false);
     deepStrictEqual(containerBuildPackage['workspaces'], ['apps/api']);
     strictEqual(containerBuildPackage['packageManager'], 'npm@11.18.0');
     strictEqual(JSON.stringify(rootPackage['scripts']).includes('"deploy:container":"docker compose up --build --detach"'), true);

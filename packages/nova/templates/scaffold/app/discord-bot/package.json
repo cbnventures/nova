@@ -24,7 +24,7 @@
     "node": "[__SCAFFOLD_VERSION_NODE_ENGINE__]"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.34.0",
+    "@cbnventures/nova": "0.34.1",
     "discord.js": "[__SCAFFOLD_VERSION_DISCORD_JS__]"
   },
   "devDependencies": {

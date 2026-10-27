@@ -10,6 +10,7 @@ COPY packages/docker/pnpm-workspace.yaml ./pnpm-workspace.yaml
 [__DOCKER_PACKAGE_MANAGER_CONFIG_COPIES__]
 [__DOCKER_WORKSPACE_MANIFEST_COPIES__]
 [__DOCKER_INSTALL_COMMAND__]
+COPY nova.config.json ./nova.config.json
 [__DOCKER_WORKSPACE_SOURCE_COPIES__]
 [__DOCKER_WORKSPACE_MANIFEST_RESTORES__]
 [__DOCKER_BUILD_COMMANDS__]

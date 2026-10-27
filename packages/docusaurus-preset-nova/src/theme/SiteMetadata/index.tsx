@@ -35,6 +35,8 @@ import type {
   Theme_SiteMetadata_Index_SiteMetadata_Pathname,
   Theme_SiteMetadata_Index_SiteMetadata_SiteConfig,
   Theme_SiteMetadata_Index_SiteMetadata_SiteContext,
+  Theme_SiteMetadata_Index_SiteMetadata_SiteDescription,
+  Theme_SiteMetadata_Index_SiteMetadata_SiteDescriptionEntry,
   Theme_SiteMetadata_Index_SiteMetadata_SiteUrl,
   Theme_SiteMetadata_Index_SiteMetadata_ThemeConfigData,
   Theme_SiteMetadata_Index_SiteMetadata_ThemeConfigDataCast,
@@ -66,6 +68,10 @@ function SiteMetadata() {
   const currentLocale: Theme_SiteMetadata_Index_SiteMetadata_CurrentLocale = siteContext['i18n']['currentLocale'] as Theme_SiteMetadata_Index_SiteMetadata_CurrentLocale;
   const defaultImage: Theme_SiteMetadata_Index_SiteMetadata_DefaultImage = siteConfig['image'];
   const siteMetadata: Theme_SiteMetadata_Index_SiteMetadata = siteConfig['metadata'] as Theme_SiteMetadata_Index_SiteMetadata;
+  const siteDescriptionEntry: Theme_SiteMetadata_Index_SiteMetadata_SiteDescriptionEntry = siteMetadata.find(
+    (metadataEntry) => metadataEntry['name'] === 'description',
+  );
+  const siteDescription: Theme_SiteMetadata_Index_SiteMetadata_SiteDescription = (siteDescriptionEntry !== undefined) ? siteDescriptionEntry['content'] : undefined;
   const pathname: Theme_SiteMetadata_Index_SiteMetadata_Pathname = locationData['pathname'];
 
   const baseUrlPath: Theme_SiteMetadata_Index_SiteMetadata_BaseUrlPath = useBaseUrl(pathname);
@@ -122,6 +128,9 @@ function SiteMetadata() {
           hrefLang="x-default"
         />
         <meta property="og:locale" content={currentHtmlLang.replace('-', '_')} />
+        {(siteDescription !== undefined) && (
+          <meta property="og:description" content={siteDescription} />
+        )}
         {siteMetadata.map((metadataEntry) => {
           const metadataEntryName: Theme_SiteMetadata_Index_MetadataEntry_Name = metadataEntry['name'];
           const metadataEntryContent: Theme_SiteMetadata_Index_MetadataEntry_Content = metadataEntry['content'];

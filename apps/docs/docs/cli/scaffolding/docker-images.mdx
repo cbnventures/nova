@@ -75,7 +75,9 @@ The appliance writes only to paths declared writable by its service contract. Ad
 
 ## Build and Distribution
 
-The root `Dockerfile` compiles container inputs inside named stages and copies only runtime output into the final s6 image. A host-side workspace build is not an input to the container build.
+The root `Dockerfile` compiles container inputs inside named stages and copies only runtime output into the final s6 image. The build stage includes the root `nova.config.json` so workspace builds can resolve shared Nova identity and project settings. A host-side workspace build is not an input to the container build.
+
+The private `packages/docker` workspace connects the appliance to the normal repository lifecycle. Its `check` command validates the root Dockerfile with BuildKit, and its `build` command builds the root Compose image. Root `npm run check` and `npm run build` therefore exercise the container contract instead of silently skipping the Docker workspace.
 
 Workspace files needed after compilation are declared as workspace-relative runtime paths in the private assembly manifest. Nova copies those paths from the build stage into the same `/app/apps/...` or `/app/packages/...` runtime workspace; generated root Dockerfiles are not extended with hand-maintained `COPY` instructions.
 

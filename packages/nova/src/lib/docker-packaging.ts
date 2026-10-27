@@ -1690,8 +1690,8 @@ export class Runner {
   /**
    * Lib - Docker Packaging - Build Workspace Package.
    *
-   * Creates the private, non-publishable Docker assembly package manifest without
-   * publish or deployment scripts.
+   * Creates the private, non-publishable Docker assembly package manifest with
+   * validation and image-build scripts, but without publish or deployment scripts.
    *
    * @param {Lib_DockerPackaging_Runner_BuildWorkspacePackage_Slug} slug - Slug.
    *
@@ -1706,6 +1706,10 @@ export class Runner {
     return {
       name: `${slug}-tool-docker`,
       private: true,
+      scripts: {
+        check: 'docker build --check --file ../../Dockerfile ../..',
+        build: 'docker compose --file ../../compose.yml --project-directory ../.. build',
+      },
       type: 'module',
       version: '0.0.0',
     };

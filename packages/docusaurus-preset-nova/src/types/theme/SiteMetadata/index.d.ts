@@ -55,6 +55,10 @@ export type Theme_SiteMetadata_Index_SiteMetadata_CurrentLocale = string;
 
 export type Theme_SiteMetadata_Index_SiteMetadata_DefaultImage = string | undefined;
 
+export type Theme_SiteMetadata_Index_SiteMetadata_SiteDescriptionEntry = Theme_SiteMetadata_Index_MetadataEntry | undefined;
+
+export type Theme_SiteMetadata_Index_SiteMetadata_SiteDescription = string | undefined;
+
 export type Theme_SiteMetadata_Index_SiteMetadata_Pathname = string;
 
 export type Theme_SiteMetadata_Index_SiteMetadata_BaseUrlPath = string;

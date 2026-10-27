@@ -47,7 +47,7 @@ function BlogArchivePage(props: Theme_BlogArchivePage_Index_BlogArchivePage_Prop
   });
   const archiveDescription: Theme_BlogArchivePage_Index_BlogArchivePage_Description = translate({
     id: 'theme.blog.archive.description',
-    message: 'Archive',
+    message: 'Every post on this blog, newest first.',
     description: 'The meta description of the blog archive page',
   });
 

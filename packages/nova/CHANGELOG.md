@@ -1,5 +1,11 @@
 # @cbnventures/nova
 
+## 0.34.1 - 2026-10-27
+
+### FIXED
+- Made generated Docker assembly workspaces validate their Dockerfiles and build their images during project checks and builds.
+- Included the root Nova configuration in generated Docker build stages so workspace builds can resolve shared project identity and settings.
+
 ## 0.34.0 - 2026-10-26
 
 ### UPDATED
